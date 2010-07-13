@@ -14,9 +14,6 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "protocol/protocol.h"
 
-using namespace Common;
-using namespace MsgsSimToClient;
-
 namespace kernel
 {
     class Controller;
@@ -39,9 +36,9 @@ namespace script
 // Created: AGE 2008-06-13
 // =============================================================================
 class AgentNotifier : public kernel::Extension_ABC
-                    , public kernel::Updatable_ABC< MsgUnitCreation >
-                    , public kernel::Updatable_ABC< MsgUnitAttributes >
-                    , public kernel::Updatable_ABC< MsgUnitOrder >
+                    , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitCreation >
+                    , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
+                    , public kernel::Updatable_ABC< Common::MsgUnitOrder >
 {
 public:
     //! @name Constructors/Destructor
@@ -59,9 +56,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgUnitCreation&   message );
-    virtual void DoUpdate( const MsgUnitAttributes& message );
-    virtual void DoUpdate( const MsgUnitOrder&      message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitCreation&   message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
+    virtual void DoUpdate( const Common::MsgUnitOrder&               message );
     //@}
 
 private:

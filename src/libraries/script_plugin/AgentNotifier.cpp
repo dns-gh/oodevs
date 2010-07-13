@@ -11,6 +11,7 @@
 #include "AgentNotifier.h"
 #include "AgentEvents.h"
 #include "clients_kernel/Controller.h"
+#include "protocol/protocol.h"
 
 using namespace plugins::script;
 using namespace events;
@@ -39,7 +40,7 @@ AgentNotifier::~AgentNotifier()
 // Name: AgentNotifier::DoUpdate
 // Created: SBO 2009-08-19
 // -----------------------------------------------------------------------------
-void AgentNotifier::DoUpdate( const MsgUnitCreation& /*message*/ )
+void AgentNotifier::DoUpdate( const MsgsSimToClient::MsgUnitCreation& /*message*/ )
 {
     controller_.Update( AgentCreated( agent_ ) );
 }
@@ -48,7 +49,7 @@ void AgentNotifier::DoUpdate( const MsgUnitCreation& /*message*/ )
 // Name: AgentNotifier::DoUpdate
 // Created: AGE 2008-06-13
 // -----------------------------------------------------------------------------
-void AgentNotifier::DoUpdate( const MsgUnitAttributes& message )
+void AgentNotifier::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 {
     if( message.has_position()  )
         controller_.Update( AgentMoved( agent_ ) );
@@ -64,7 +65,7 @@ void AgentNotifier::DoUpdate( const MsgUnitAttributes& message )
 // Name: AgentNotifier::DoUpdate
 // Created: AGE 2008-06-17
 // -----------------------------------------------------------------------------
-void AgentNotifier::DoUpdate( const MsgUnitOrder& )
+void AgentNotifier::DoUpdate( const Common::MsgUnitOrder& )
 {
     controller_.Update( MissionStarted( agent_ ) );
 }

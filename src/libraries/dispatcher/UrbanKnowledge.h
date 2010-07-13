@@ -43,6 +43,7 @@ public:
 
     //! @name Operations
     //@{
+    using SimpleEntity< kernel::UrbanKnowledge_ABC >::Update;
     void Update( const MsgsSimToClient::MsgUrbanKnowledgeCreation& message );
     void Update( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& message );
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;

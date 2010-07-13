@@ -3,7 +3,16 @@
   <dotations infinite="false"/>
   <sides>
     <side id="1" name="red" type="enemy">
-      <objects/>
+      <objects>
+        <object id="33" name="Installation [33]" type="installation">
+          <shape type="point">
+            <points>
+              <point>31UEQ0337062510</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+      </objects>
       <tactical>
         <formation id="2" level="x" name="Formation [2]">
           <automat engaged="true" id="9" knowledge-group="3" name="Compagnie INF AMX 10 P [9]" type="Compagnie INF AMX 10 P">

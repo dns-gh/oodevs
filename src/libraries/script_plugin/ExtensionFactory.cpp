@@ -12,6 +12,7 @@
 #include "dispatcher/Agent.h"
 #include "dispatcher/AgentKnowledge.h"
 #include "dispatcher/Automat.h"
+#include "dispatcher/Object.h"
 #include "dispatcher/Population.h"
 #include "AgentNotifier.h"
 #include "AgentManipulator.h"
@@ -19,6 +20,8 @@
 #include "KnowledgeManipulator.h"
 #include "AutomatNotifier.h"
 #include "AutomatManipulator.h"
+#include "ObjectNotifier.h"
+#include "ObjectManipulator.h"
 #include "PopulationNotifier.h"
 #include "PopulationManipulator.h"
 
@@ -73,6 +76,16 @@ void ExtensionFactory::Create( dispatcher::Automat& entity )
 {
     entity.Attach( *new AutomatNotifier   ( controller_, entity ) );
     entity.Attach( *new AutomatManipulator( entity ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExtensionFactory::Create
+// Created: SBO 2010-07-13
+// -----------------------------------------------------------------------------
+void ExtensionFactory::Create( dispatcher::Object& entity )
+{
+    entity.Attach( *new ObjectNotifier   ( controller_, entity ) );
+    entity.Attach( *new ObjectManipulator( entity ) );
 }
 
 // -----------------------------------------------------------------------------

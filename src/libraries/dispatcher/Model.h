@@ -120,8 +120,8 @@ private:
     void CreateUpdate( tools::Resolver< Base >& resolver, unsigned id, const Message& message, const Parameter& parameter );
     template< typename T >
     void UpdateAnyAgent( unsigned id, const T& message );
-    template< typename T >
-    void Destroy( tools::Resolver< T >& resolver, unsigned id );
+    template< typename T, typename M >
+    void Destroy( tools::Resolver< T >& resolver, unsigned id, const M& message );
     //@}
 
 private:

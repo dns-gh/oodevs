@@ -18,6 +18,7 @@ namespace dispatcher
     class Agent;
     class AgentKnowledge;
     class Automat;
+    class Object_ABC;
     class Population;
 }
 
@@ -37,6 +38,7 @@ public:
     static void Trigger( BaseCondition& that, const dispatcher::Agent& entity );
     static void Trigger( BaseCondition& that, const dispatcher::AgentKnowledge& entity );
     static void Trigger( BaseCondition& that, const dispatcher::Automat& entity );
+    static void Trigger( BaseCondition& that, const dispatcher::Object_ABC& entity );
     static void Trigger( BaseCondition& that, const dispatcher::Population& entity );
 };
 
@@ -71,6 +73,10 @@ public:
         EntityConditionBase::Trigger( *this, entity );
     }
     void Trigger( const dispatcher::Automat& entity )
+    {
+        EntityConditionBase::Trigger( *this, entity );
+    }
+    void Trigger( const dispatcher::Object_ABC& entity )
     {
         EntityConditionBase::Trigger( *this, entity );
     }

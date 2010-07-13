@@ -19,6 +19,7 @@ namespace dispatcher
     class Agent;
     class AgentKnowledge;
     class Automat;
+    class Object_ABC;
     class Population;
 }
 
@@ -35,6 +36,9 @@ namespace script
 
 #define DECLARE_AUTOMAT_EVENT( name )                 \
     DECLARE_EVENT( name, const dispatcher::Automat&, entity )
+
+#define DECLARE_OBJECT_EVENT( name )                 \
+    DECLARE_EVENT( name, const dispatcher::Object_ABC&, entity )
 
 #define DECLARE_POPULATION_EVENT( name )                 \
     DECLARE_EVENT( name, const dispatcher::Population&, entity )
@@ -53,6 +57,8 @@ namespace script
         DECLARE_KNOWLEDGE_EVENT( PerceptionChanged );
 
         DECLARE_AUTOMAT_EVENT( AutomatMissionStarted );
+
+        DECLARE_OBJECT_EVENT( ObjectDestroyed );
 
         DECLARE_POPULATION_EVENT( PopulationMoved );
     }

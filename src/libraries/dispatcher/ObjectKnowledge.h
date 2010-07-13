@@ -56,6 +56,7 @@ public:
 
     //! @name Operations
     //@{
+    using SimpleEntity< kernel::ObjectKnowledge_ABC >::Update;
     void Update( const MsgsSimToClient::MsgObjectKnowledgeCreation& asnMsg );
     void Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg );
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;

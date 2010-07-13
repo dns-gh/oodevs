@@ -183,13 +183,13 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
     if( wrapper.message().has_unit_knowledge_update() )
         agentKnowledges_.Get( wrapper.message().unit_knowledge_update().oid() ).Update( wrapper.message().unit_knowledge_update() );
     if( wrapper.message().has_unit_knowledge_destruction() )
-        Destroy( agentKnowledges_, wrapper.message().unit_knowledge_destruction().oid() );
+        Destroy( agentKnowledges_, wrapper.message().unit_knowledge_destruction().oid(), wrapper.message().unit_knowledge_destruction() );
     if( wrapper.message().has_side_creation() )
         CreateUpdate< Side >( sides_, wrapper.message().side_creation() );
     if( wrapper.message().has_knowledge_group_creation() )
         CreateUpdate< KnowledgeGroup >( knowledgeGroups_, wrapper.message().knowledge_group_creation() );
     if( wrapper.message().has_knowledge_group_destruction() )
-        Destroy( knowledgeGroups_, wrapper.message().knowledge_group_destruction().oid() );
+        Destroy( knowledgeGroups_, wrapper.message().knowledge_group_destruction().oid(), wrapper.message().knowledge_group_destruction() );
     if( wrapper.message().has_knowledge_group_update() )
         knowledgeGroups_.Get( wrapper.message().knowledge_group_update().oid() ).Update( wrapper.message().knowledge_group_update() );
     if( wrapper.message().has_formation_creation() )
@@ -199,7 +199,7 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
     if( wrapper.message().has_unit_environment_type() )
         agents_.Get( wrapper.message().unit_environment_type().oid() ).Update( wrapper.message().unit_environment_type() );
     if( wrapper.message().has_unit_destruction() )
-        Destroy( agents_, wrapper.message().unit_destruction().oid() );
+        Destroy( agents_, wrapper.message().unit_destruction().oid(), wrapper.message().unit_destruction() );
     if( wrapper.message().has_automat_creation() )
         CreateUpdate< Automat >( automats_, wrapper.message().automat_creation() );
     if( wrapper.message().has_unit_attributes() )
@@ -214,11 +214,11 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
         agents_.Get( wrapper.message().start_unit_fire().firer_oid() ).Update( wrapper.message().start_unit_fire() );
     }
     if( wrapper.message().has_stop_unit_fire() )
-        Destroy( fires_, wrapper.message().stop_unit_fire().fire_oid() );
+        Destroy( fires_, wrapper.message().stop_unit_fire().fire_oid(), wrapper.message().stop_unit_fire() );
     if( wrapper.message().has_start_population_fire() )
         CreateUpdate< PopulationFire >( populationFires_, wrapper.message().start_population_fire().fire_oid(), wrapper.message().start_population_fire() );
     if( wrapper.message().has_stop_population_fire() )
-        Destroy( populationFires_, wrapper.message().stop_population_fire().fire_oid() );
+        Destroy( populationFires_, wrapper.message().stop_population_fire().fire_oid(), wrapper.message().stop_population_fire() );
     if( wrapper.message().has_explosion() )
     {} // $$$$ merge
 
@@ -226,7 +226,7 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
     if( wrapper.message().has_report() )
         CreateUpdate< Report >( reports_, wrapper.message().report().cr_oid(), wrapper.message().report() );
     if( wrapper.message().has_invalidate_report() )
-        Destroy( reports_, wrapper.message().invalidate_report().cr_oid() );
+        Destroy( reports_, wrapper.message().invalidate_report().cr_oid(), wrapper.message().invalidate_report() );
     if( wrapper.message().has_trace() )
 
           // $$$$ AGE 2007-04-18: Evenements, modèle client => rien, ou remanier
@@ -239,7 +239,7 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
     if( wrapper.message().has_start_fire_effect() )
         CreateUpdate< FireEffect >( fireEffects_, wrapper.message().start_fire_effect().effect_oid(), wrapper.message().start_fire_effect() );
     if( wrapper.message().has_stop_fire_effect() )
-        Destroy( fireEffects_, wrapper.message().stop_fire_effect().oid() );
+        Destroy( fireEffects_, wrapper.message().stop_fire_effect().oid(), wrapper.message().stop_fire_effect() );
     if( wrapper.message().has_unit_order() )
         agents_     .Get( wrapper.message().unit_order().oid() ).Update( wrapper.message().unit_order() );
     if( wrapper.message().has_automat_order() )
@@ -252,18 +252,18 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
     if( wrapper.message().has_object_update() )
         objects_.Get( wrapper.message().object_update().oid() ).Update( wrapper.message().object_update() );
     if( wrapper.message().has_object_destruction() )
-        Destroy( objects_, wrapper.message().object_destruction().oid() );
+        Destroy( objects_, wrapper.message().object_destruction().oid(), wrapper.message().object_destruction() );
     if( wrapper.message().has_object_knowledge_creation() )
         CreateUpdate< ObjectKnowledge >( objectKnowledges_, wrapper.message().object_knowledge_creation().oid(), wrapper.message().object_knowledge_creation() );
     if( wrapper.message().has_object_knowledge_update() )
         objectKnowledges_.Get( wrapper.message().object_knowledge_update().oid() ).Update( wrapper.message().object_knowledge_update() );
     if( wrapper.message().has_object_knowledge_destruction() )
-        Destroy( objectKnowledges_, wrapper.message().object_knowledge_destruction().oid() );
+        Destroy( objectKnowledges_, wrapper.message().object_knowledge_destruction().oid(), wrapper.message().object_knowledge_destruction() );
 
     if( wrapper.message().has_log_maintenance_handling_creation() )
         CreateUpdate< LogConsignMaintenance >( logConsignsMaintenance_, wrapper.message().log_maintenance_handling_creation().oid_consigne(), wrapper.message().log_maintenance_handling_creation() );
     if( wrapper.message().has_log_maintenance_handling_destruction() )
-        Destroy( logConsignsMaintenance_, wrapper.message().log_maintenance_handling_destruction().oid_consigne() );
+        Destroy( logConsignsMaintenance_, wrapper.message().log_maintenance_handling_destruction().oid_consigne(), wrapper.message().log_maintenance_handling_destruction() );
     if( wrapper.message().has_log_maintenance_handling_update() )
         logConsignsMaintenance_.Get( wrapper.message().log_maintenance_handling_update().oid_consigne() ).Update( wrapper.message().log_maintenance_handling_update() );
     if( wrapper.message().has_log_maintenance_state() )
@@ -272,7 +272,7 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
     if( wrapper.message().has_log_supply_handling_creation() )
         CreateUpdate< LogConsignSupply >( logConsignsSupply_, wrapper.message().log_supply_handling_creation().oid_consigne(), wrapper.message().log_supply_handling_creation() );
     if( wrapper.message().has_log_supply_handling_destruction() )
-        Destroy( logConsignsSupply_, wrapper.message().log_supply_handling_destruction().oid_consigne() );
+        Destroy( logConsignsSupply_, wrapper.message().log_supply_handling_destruction().oid_consigne(), wrapper.message().log_supply_handling_destruction() );
     if( wrapper.message().has_log_supply_handling_update() )
         logConsignsSupply_.Get( wrapper.message().log_supply_handling_update().oid_consigne() ).Update( wrapper.message().log_supply_handling_update() );
     if( wrapper.message().has_log_supply_state() )
@@ -283,7 +283,7 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
     if( wrapper.message().has_log_medical_handling_creation() )
         CreateUpdate< LogConsignMedical >( logConsignsMedical_, wrapper.message().log_medical_handling_creation().oid_consigne(),  wrapper.message().log_medical_handling_creation() );
     if( wrapper.message().has_log_medical_handling_destruction() )
-        Destroy( logConsignsMedical_, wrapper.message().log_medical_handling_destruction().oid_consigne() );
+        Destroy( logConsignsMedical_, wrapper.message().log_medical_handling_destruction().oid_consigne(), wrapper.message().log_medical_handling_destruction() );
     if( wrapper.message().has_log_medical_handling_update() )
         logConsignsMedical_.Get( wrapper.message().log_medical_handling_update().oid_consigne() ).Update( wrapper.message().log_medical_handling_update() );
     if( wrapper.message().has_log_medical_state() )
@@ -311,7 +311,7 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
     if( wrapper.message().has_population_knowledge_update() )
          populationKnowledges_.Get( wrapper.message().population_knowledge_update().oid_connaissance() ).Update( wrapper.message().population_knowledge_update() );
     if( wrapper.message().has_population_knowledge_destruction() )
-         Destroy( populationKnowledges_, wrapper.message().population_knowledge_destruction().oid_connaissance() );
+         Destroy( populationKnowledges_, wrapper.message().population_knowledge_destruction().oid_connaissance(), wrapper.message().population_knowledge_destruction() );
     if( wrapper.message().has_population_concentration_knowledge_creation() )
          populationKnowledges_.Get( wrapper.message().population_concentration_knowledge_creation().oid_connaissance_population() ).Update( wrapper.message().population_concentration_knowledge_creation() );
     if( wrapper.message().has_population_concentration_knowledge_update() )
@@ -338,7 +338,7 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
     if( wrapper.message().has_urban_knowledge_update() )
         urbanKnowledges_.Get( wrapper.message().urban_knowledge_update().oid() ).Update( wrapper.message().urban_knowledge_update() );
     if( wrapper.message().has_urban_knowledge_destruction() )
-        Destroy( urbanKnowledges_, wrapper.message().urban_knowledge_destruction().oid() );
+        Destroy( urbanKnowledges_, wrapper.message().urban_knowledge_destruction().oid(), wrapper.message().urban_knowledge_destruction() );
     if( wrapper.message().has_control_global_meteo() )
         meteoModel_->OnReceiveMsgGlobalMeteo( wrapper.message().control_global_meteo() );
     if( wrapper.message().has_control_local_meteo_creation() )
@@ -415,11 +415,12 @@ void Model::UpdateAnyAgent( unsigned id, const T& message )
 // Name: Model::Destroy
 // Created: SBO 2008-07-09
 // -----------------------------------------------------------------------------
-template< typename T >
-void Model::Destroy( tools::Resolver< T >& resolver, unsigned id )
+template< typename T, typename M >
+void Model::Destroy( tools::Resolver< T >& resolver, unsigned id, const M& message )
 {
     if( T* entity = resolver.Find( id ) )
     {
+        entity->Update( message );
         resolver.Remove( id );
         delete entity;
     }

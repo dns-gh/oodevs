@@ -23,6 +23,7 @@ namespace dispatcher
     class Agent;
     class AgentKnowledge;
     class Automat;
+    class Object;
     class Population;
     class SimulationPublisher_ABC;
 }
@@ -41,6 +42,7 @@ namespace script
 class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Agent >
                        , public dispatcher::ExtensionFactory_ABC< dispatcher::AgentKnowledge >
                        , public dispatcher::ExtensionFactory_ABC< dispatcher::Automat >
+                       , public dispatcher::ExtensionFactory_ABC< dispatcher::Object >
                        , public dispatcher::ExtensionFactory_ABC< dispatcher::Population >
 {
 public:
@@ -55,6 +57,7 @@ public:
     virtual void Create( dispatcher::Agent& entity );
     virtual void Create( dispatcher::AgentKnowledge& entity );
     virtual void Create( dispatcher::Automat& entity );
+    virtual void Create( dispatcher::Object& entity );
     virtual void Create( dispatcher::Population& entity );
     //@}
 

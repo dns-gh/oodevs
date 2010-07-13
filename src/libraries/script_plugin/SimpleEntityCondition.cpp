@@ -12,10 +12,12 @@
 #include "AgentManipulator.h"
 #include "KnowledgeManipulator.h"
 #include "AutomatManipulator.h"
+#include "ObjectManipulator.h"
 #include "PopulationManipulator.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/AgentKnowledge.h"
 #include "dispatcher/Automat.h"
+#include "dispatcher/Object_ABC.h"
 #include "dispatcher/Population.h"
 
 using namespace plugins::script;
@@ -43,12 +45,22 @@ void EntityConditionBase::Trigger( BaseCondition& that, const dispatcher::AgentK
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentConditionBase::Trigger
+// Name: EntityConditionBase::Trigger
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
 void EntityConditionBase::Trigger( BaseCondition& that, const dispatcher::Automat& entity )
 {
     if( const AutomatManipulator* manipulator = entity.Retrieve< AutomatManipulator >() )
+        that.Trigger( manipulator );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityConditionBase::Trigger
+// Created: SBO 2010-07-13
+// -----------------------------------------------------------------------------
+void EntityConditionBase::Trigger( BaseCondition& that, const dispatcher::Object_ABC& entity )
+{
+    if( const ObjectManipulator* manipulator = entity.Retrieve< ObjectManipulator >() )
         that.Trigger( manipulator );
 }
 
