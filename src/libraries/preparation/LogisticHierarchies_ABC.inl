@@ -11,7 +11,7 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "DotationsItem.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: LogisticHierarchies_ABC constructor

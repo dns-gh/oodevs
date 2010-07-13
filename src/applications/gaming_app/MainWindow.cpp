@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "MainWindow.h"
 #include "moc_MainWindow.cpp"
-
 #include "Dialogs.h"
 #include "EventToolbar.h"
 #include "InfoPanels.h"
@@ -59,14 +58,12 @@
 #include "IndicatorPlotFactory.h"
 #include "WeatherLayer.h"
 #include "ActionsLayer.h"
-
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
-
 #include "gaming/AgentServerMsgMgr.h"
 #include "gaming/Model.h"
 #include "gaming/Network.h"
@@ -78,7 +75,6 @@
 #include "gaming/ActionsScheduler.h"
 #include "gaming/IntelligencesModel.h"
 #include "gaming/Tools.h"
-
 #include "clients_gui/DisplayToolbar.h"
 #include "clients_gui/GlSelector.h"
 #include "clients_gui/GraphicPreferences.h"
@@ -122,11 +118,8 @@
 #include "clients_gui/WatershedLayer.h"
 #include "clients_gui/TerrainPicker.h"
 #include "clients_gui/TerrainProfilerLayer.h"
-
 #include "tools/SessionConfig.h"
-
-#include "xeumeuleu/xml.h"
-
+#include <xeumeuleu/xml.hpp>
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
 #include <boost/filesystem/path.hpp>
