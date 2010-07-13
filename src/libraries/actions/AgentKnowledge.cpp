@@ -53,7 +53,7 @@ AgentKnowledge::AgentKnowledge( const OrderParameter& parameter, unsigned long i
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 AgentKnowledge::AgentKnowledge( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
-    : Knowledge_ABC< AgentKnowledge_ABC >( OrderParameter( xml::attribute< std::string >( xis, "name" ), "agentknowledge", false ), converter.Find( resolver.GetAgent( xml::attribute< unsigned long >( xis, "value" ) ), owner ), controller )
+    : Knowledge_ABC< AgentKnowledge_ABC >( OrderParameter( xis.attribute< std::string >( "name" ), "agentknowledge", false ), converter.Find( resolver.GetAgent( xis.attribute< unsigned long >( "value" ) ), owner ), controller )
 {
     // NOTHING
 }
@@ -63,7 +63,7 @@ AgentKnowledge::AgentKnowledge( xml::xistream& xis, const kernel::EntityResolver
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 AgentKnowledge::AgentKnowledge( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
-    : Knowledge_ABC< AgentKnowledge_ABC >( parameter, converter.Find( resolver.GetAgent( xml::attribute< unsigned long >( xis, "value" ) ), owner ), controller )
+    : Knowledge_ABC< AgentKnowledge_ABC >( parameter, converter.Find( resolver.GetAgent( xis.attribute< unsigned long >( "value" ) ), owner ), controller )
 {
     // NOTHING
 }

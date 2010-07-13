@@ -25,7 +25,7 @@ using namespace parameters;
 // -----------------------------------------------------------------------------
 Enumeration::Enumeration( const OrderParameter& parameter, xml::xistream& xis )
     : Parameter< std::string >( parameter )
-    , value_( parameter.GetValue( xml::attribute< unsigned long >( xis, "value" ) ) )
+    , value_( parameter.GetValue( xis.attribute< unsigned long >( "value" ) ) )
 {
     SetValue( value_.GetName() );
 }

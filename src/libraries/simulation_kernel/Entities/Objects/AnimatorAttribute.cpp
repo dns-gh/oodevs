@@ -39,7 +39,7 @@ AnimatorAttribute::AnimatorAttribute( unsigned int maxAnimator )
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
 AnimatorAttribute::AnimatorAttribute( xml::xistream& xis )
-    : maxAnimators_( xml::attribute< int >( xis, "max-animator" ) )
+    : maxAnimators_( xis.attribute< int >( "max-animator" ) )
 {
     // NOTHING
 }

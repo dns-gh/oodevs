@@ -44,7 +44,7 @@ Direction::Direction( const kernel::OrderParameter& parameter, int value )
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
 Direction::Direction( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : Parameter< int >( parameter, xml::attribute< int >( xis, "value" ) )
+    : Parameter< int >( parameter, xis.attribute< int >( "value" ) )
 {
     direction_ = ComputeDirection( GetValue() );
 }

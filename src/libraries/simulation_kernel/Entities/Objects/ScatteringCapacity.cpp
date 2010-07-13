@@ -24,7 +24,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( ScatteringCapacity )
 // Created: MGD 2010-03-12
 // -----------------------------------------------------------------------------
 ScatteringCapacity::ScatteringCapacity( xml::xistream& xis )
-    : humanByTimeStep_( xml::attribute< unsigned int >( xis, "human-by-time-step" ) )
+    : humanByTimeStep_( xis.attribute< unsigned int >( "human-by-time-step" ) )
 {
     // NOTHING
 }

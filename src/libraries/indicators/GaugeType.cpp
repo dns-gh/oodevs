@@ -19,7 +19,7 @@ using namespace indicators;
 // Created: SBO 2009-05-05
 // -----------------------------------------------------------------------------
 GaugeType::GaugeType( xml::xistream& xis )
-    : name_( xml::attribute< std::string >( xis, "name" ).c_str() )
+    : name_( xis.attribute< std::string >( "name" ).c_str() )
 {
     // NOTHING
 }

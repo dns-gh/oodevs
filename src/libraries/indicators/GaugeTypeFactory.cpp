@@ -38,7 +38,7 @@ GaugeTypeFactory::~GaugeTypeFactory()
 // -----------------------------------------------------------------------------
 GaugeType* GaugeTypeFactory::Create( xml::xistream& xis )
 {
-    const std::string type = xml::attribute< std::string >( xis, "type" );
+    const std::string type = xis.attribute< std::string >( "type" );
     if( type == "text" )
         return new GaugeType( xis );
     else if( type == "icons" )

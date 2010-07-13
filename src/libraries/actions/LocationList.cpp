@@ -63,7 +63,7 @@ LocationList::~LocationList()
 // -----------------------------------------------------------------------------
 void LocationList::ReadLocation( xml::xistream& xis, const CoordinateConverter_ABC& converter )
 {
-    AddParameter( *new Location( OrderParameter( xml::attribute< std::string >( xis, "name" ), "location", false ), converter, xis ) );
+    AddParameter( *new Location( OrderParameter( xis.attribute< std::string >( "name" ), "location", false ), converter, xis ) );
 }
 
 namespace

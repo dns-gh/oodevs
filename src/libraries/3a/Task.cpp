@@ -95,8 +95,8 @@ void Task::Connect( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void Task::Connect( const std::string& , xml::xistream& xis )
 {
-    const std::string name  = xml::attribute< std::string >( xis, "id", "plot" );
-    const std::string input = xml::attribute< std::string >( xis, "input", "" );
+    const std::string name  = xis.attribute< std::string >( "id", "plot" );
+    const std::string input = xis.attribute< std::string >( "input", "" );
 
     if( !name.empty() && !input.empty() )
         Connect( name, input );

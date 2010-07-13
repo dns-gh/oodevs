@@ -47,7 +47,7 @@ Action_ABC::Action_ABC( xml::xistream& xis, kernel::Controller& controller, cons
     : controller_( controller )
     , type_      ( type )
     , id_        ( ++idManager_ )
-    , name_      ( xml::attribute< std::string >( xis, "name", type_.GetName() ).c_str() )
+    , name_      ( xis.attribute< std::string >( "name", type_.GetName() ).c_str() )
 {
     // NOTHING
 }

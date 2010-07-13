@@ -20,7 +20,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( WorkableCapacity )
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
 WorkableCapacity::WorkableCapacity( xml::xistream& xis )
-    : maxAnimators_ ( xml::attribute< int >( xis, "max-animator" ) )
+    : maxAnimators_ ( xis.attribute< int >( "max-animator" ) )
 {
     // NOTHING
 }

@@ -18,10 +18,10 @@ using namespace kernel;
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
 ObjectType::ObjectType( xml::xistream& xis )
-    : name_( xml::attribute< std::string >( xis, "name" ) )
-    , type_( xml::attribute< std::string >( xis, "type" ) )
-    , symbol_ ( xml::attribute< std::string >( xis, "symbol", "" ) )
-    , geometry_( xml::attribute< std::string >( xis, "geometry", "" ) )
+    : name_( xis.attribute< std::string >( "name" ) )
+    , type_( xis.attribute< std::string >( "type" ) )
+    , symbol_ ( xis.attribute< std::string >( "symbol", "" ) )
+    , geometry_( xis.attribute< std::string >( "geometry", "" ) )
     , canBeValorized_ ( false )
     , canBeBypassed_ ( false )
 {

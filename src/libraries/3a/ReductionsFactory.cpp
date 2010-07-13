@@ -45,7 +45,7 @@ template< typename T >
 void ReductionsFactory::Reduce( const std::string& name, xml::xistream& xis, Task& result ) const
 {
     typedef NumericValue K;
-    const std::string functionName = xml::attribute< std::string >( xis, "function" );
+    const std::string functionName = xis.attribute< std::string >( "function" );
 
     if( functionName == "select" )
         ReduceFunction< Selector< K, T > >( name, xis, result );

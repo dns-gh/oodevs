@@ -66,7 +66,7 @@ void ScoresModel::Load( const std::string& file )
 // -----------------------------------------------------------------------------
 void ScoresModel::ReadIndicators( xml::xistream& xis )
 {
-    scores_[ xml::attribute< std::string >( xis, "name" ) ] = new Score();
+    scores_[ xis.attribute< std::string >( "name" ) ] = new Score();
     xis >> xml::start( "indicators" )
             >> xml::list( "indicator", *this, &ScoresModel::ReadIndicator )
         >> xml::end;

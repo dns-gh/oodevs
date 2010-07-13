@@ -45,7 +45,7 @@ void MIL_PopulationMissionType::Initialize( xml::xistream& xis )
 //-----------------------------------------------------------------------------
 MIL_PopulationMissionType::MIL_PopulationMissionType( unsigned int nID, xml::xistream& xis )
     : MIL_MissionType_ABC( nID, xis )
-    , strDIABehavior_    ( xml::attribute< std::string >( xis, "dia-behavior" ) )
+    , strDIABehavior_    ( xis.attribute< std::string >( "dia-behavior" ) )
 {
     // NOTHING
 }

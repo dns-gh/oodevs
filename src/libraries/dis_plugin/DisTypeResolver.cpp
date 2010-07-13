@@ -60,5 +60,5 @@ EntityType DisTypeResolver::Find( const kernel::ComponentType& component ) const
 // -----------------------------------------------------------------------------
 void DisTypeResolver::ReadEntry( xml::xistream& xis )
 {
-    types_.Add( xml::attribute< std::string >( xis, "name" ), EntityType( xml::attribute< std::string >( xis, "dis" ) ) );
+    types_.Add( xis.attribute< std::string >( "name" ), EntityType( xis.attribute< std::string >( "dis" ) ) );
 }

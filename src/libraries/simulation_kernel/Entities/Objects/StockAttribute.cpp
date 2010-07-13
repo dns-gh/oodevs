@@ -56,11 +56,11 @@ StockAttribute::StockAttribute( const PHY_DotationCategory& dotation, uint nFull
 // -----------------------------------------------------------------------------
 void StockAttribute::LoadDotation( xml::xistream& xis )
 {
-    const PHY_DotationCategory* dotation = PHY_DotationType::FindDotationCategory( xml::attribute< std::string >( xis, "type" ) );
+    const PHY_DotationCategory* dotation = PHY_DotationType::FindDotationCategory( xis.attribute< std::string >( "type" ) );
     if( dotation )
     {
-        uint current = xml::attribute< uint >( xis, "current" );
-        uint max = xml::attribute< uint >( xis, "max" );
+        unsigned int current = xis.attribute< unsigned int >( "current" );
+        unsigned int max = xis.attribute< unsigned int >( "max" );
         stock_[ dotation ] = std::make_pair( current, max );
     }
 }

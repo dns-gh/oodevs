@@ -21,9 +21,9 @@ using namespace indicators;
 // Created: SBO 2009-04-06
 // -----------------------------------------------------------------------------
 PrimitiveParameter::PrimitiveParameter( xml::xistream& xis, const DataTypeFactory& types )
-    : name_( xml::attribute< std::string >( xis, "name" ).c_str() )
-    , attribute_( xml::attribute< std::string >( xis, "attribute", "input" ) )
-    , type_( xml::attribute< std::string >( xis, "type" ) )
+    : name_( xis.attribute< std::string >( "name" ).c_str() )
+    , attribute_( xis.attribute< std::string >( "attribute", "input" ) )
+    , type_( xis.attribute< std::string >( "type" ) )
     , types_( types )
 {
     // NOTHING

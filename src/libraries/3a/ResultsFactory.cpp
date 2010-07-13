@@ -41,12 +41,12 @@ ResultsFactory::~ResultsFactory()
 template< typename T >
 void ResultsFactory::Result( const std::string& /*name*/, xml::xistream& xis, Task& result ) const
 {
-    const std::string function = xml::attribute< std::string >( xis, "function" );
+    const std::string function = xis.attribute< std::string >( "function" );
     boost::shared_ptr< Result_ABC > f;
     if( function == "plot" )
         f.reset( new Plotter< NumericValue, T >( publisher_, context_ ) );
     else if( function == "indicator" )
-        f.reset( new Indicator< NumericValue, T >( publisher_, xml::attribute< std::string >( xis, "name" ) ) );
+        f.reset( new Indicator< NumericValue, T >( publisher_, xis.attribute< std::string >( "name" ) ) );
     else
         throw std::runtime_error( "Unknown result '" + function + "'" );
     result.SetResult( f );

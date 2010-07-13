@@ -78,7 +78,7 @@ private:
     virtual std::string GetName() const { return "Compare"; }
     static T_Operator MakeOperator( xml::xistream& xis )
     {
-        const std::string op = xml::attribute< std::string >( xis, "operator" );
+        const std::string op = xis.attribute< std::string >( "operator" );
         namespace bl = boost::lambda;
         if( op == "less" )          return bl::_1 < bl::_2;
         if( op == "greater" )       return bl::_1 > bl::_2;

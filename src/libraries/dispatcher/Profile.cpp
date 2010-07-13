@@ -91,7 +91,7 @@ Profile::~Profile()
 // -----------------------------------------------------------------------------
 void Profile::ReadAutomatRights( xml::xistream& xis, T_AutomatSet& container )
 {
-    const int id = xml::attribute< int >( xis, "id" );
+    const int id = xis.attribute< int >( "id" );
     if( const kernel::Automat_ABC* pAutomat = model_.Automats().Find( id ) )
         container.insert( pAutomat );
     else
@@ -104,7 +104,7 @@ void Profile::ReadAutomatRights( xml::xistream& xis, T_AutomatSet& container )
 // -----------------------------------------------------------------------------
 void Profile::ReadSideRights( xml::xistream& xis, T_SideSet& container )
 {
-    const int id = xml::attribute< int >( xis, "id" );
+    const int id = xis.attribute< int >( "id" );
     if( const kernel::Team_ABC* pSide = model_.Sides().Find( id ) )
         container.insert( pSide );
     else
@@ -117,7 +117,7 @@ void Profile::ReadSideRights( xml::xistream& xis, T_SideSet& container )
 // -----------------------------------------------------------------------------
 void Profile::ReadFormationRights( xml::xistream& xis, T_FormationSet&  container )
 {
-    const int id = xml::attribute< int >( xis, "id" );
+    const int id = xis.attribute< int >( "id" );
     if( const kernel::Formation_ABC* pFormation = model_.Formations().Find( id ) )
         container.insert( pFormation );
     else
@@ -130,7 +130,7 @@ void Profile::ReadFormationRights( xml::xistream& xis, T_FormationSet&  containe
 // -----------------------------------------------------------------------------
 void Profile::ReadPopulationRights( xml::xistream& xis, T_PopulationSet& container )
 {
-    const int id = xml::attribute< int >( xis, "id" );
+    const int id = xis.attribute< int >( "id" );
     if( const kernel::Population_ABC* pPopulation = model_.Populations().Find( id ) )
         container.insert( pPopulation );
     else

@@ -53,7 +53,7 @@ AgentFactory::~AgentFactory()
 // -----------------------------------------------------------------------------
 MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis )
 {
-    MIL_AgentPion* pPion = tools::Resolver< MIL_AgentPion >::Find( xml::attribute< unsigned long >( xis, "id" ) );
+    MIL_AgentPion* pPion = tools::Resolver< MIL_AgentPion >::Find( xis.attribute< unsigned long >( "id" ) );
     if( pPion )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "A unit with ID '%d' already exists.", pPion->GetID() ) );
 

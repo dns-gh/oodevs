@@ -27,7 +27,7 @@ PopulationAttribute::PopulationAttribute()
 // Created: LDC 2009-04-01
 // -----------------------------------------------------------------------------
 PopulationAttribute::PopulationAttribute( xml::xistream& xis )
-    : density_( xml::attribute< MT_Float >( xis, "density" ) )
+    : density_( xis.attribute< MT_Float >( "density" ) )
 {
     // NOTHING
 }

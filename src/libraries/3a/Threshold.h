@@ -79,14 +79,14 @@ private:
     std::map< double, double > ReadThresholds( xml::xistream& xis )
     {
         std::vector< std::string > split;
-        std::string list( xml::attribute< std::string >( xis, "thresholds" ) );
+        std::string list( xis.attribute< std::string >( "thresholds" ) );
         boost::algorithm::split( split, list, boost::algorithm::is_any_of( "," ) );
         std::set< double > ranges;
         for( std::vector< std::string >::const_iterator it = split.begin(); it != split.end(); ++it )
             ranges.insert( boost::lexical_cast< double, std::string >( *it ) );
         ranges.insert( std::numeric_limits< double >::max() );
 
-        list = xml::attribute< std::string >( xis, "values" );
+        list = xis.attribute< std::string >( "values" );
         boost::algorithm::split( split, list, boost::algorithm::is_any_of( "," ) );
         if( split.size() < ranges.size() )
         {

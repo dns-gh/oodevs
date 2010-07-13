@@ -84,7 +84,7 @@ void crossbow::OGR_Workspace::Initialize( xml::xistream& xis, const dispatcher::
 // -----------------------------------------------------------------------------
 void crossbow::OGR_Workspace::InitializeProperty( xml::xistream& xis, const dispatcher::Config& config )
 {
-    InitializeConnectionReference( xml::attribute< std::string >( xis, "name" ), config, xml::attribute< std::string >( xis, "connection" ) );
+    InitializeConnectionReference( xis.attribute< std::string >( "name" ), config, xis.attribute< std::string >( "connection" ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -51,7 +51,7 @@ public:
     inline
     static T ReadValue( xml::xistream& xis )
     {
-        return boost::lexical_cast< T >( xml::attribute< std::string >( xis, "value" )  );
+        return boost::lexical_cast< T >( xis.attribute< std::string >( "value" )  );
     }
     //@}
 

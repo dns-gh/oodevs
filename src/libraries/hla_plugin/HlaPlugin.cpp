@@ -39,11 +39,11 @@ HlaPlugin::HlaPlugin( dispatcher::Model& model, const dispatcher::Config& config
     : model_     ( model )
     , agentClass_( new AggregateEntityClass() )
     , factory_   ( new ExtensionFactory( *agentClass_ ) )
-    , federate_  ( new FederateFacade( xml::attribute< std::string >( xis, "name" ), ReadTimeStep( config.GetSessionFile() ) ) )
+    , federate_  ( new FederateFacade( xis.attribute< std::string >( "name" ), ReadTimeStep( config.GetSessionFile() ) ) )
 {
     model_.RegisterFactory( *factory_ );
     federate_->AddClass( *agentClass_ );
-    federate_->Join( xml::attribute< std::string >( xis, "federation" ) );
+    federate_->Join( xis.attribute< std::string >( "federation" ) );
 }
 
 // -----------------------------------------------------------------------------

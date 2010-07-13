@@ -40,7 +40,7 @@ UrbanBlock::UrbanBlock( const kernel::OrderParameter& parameter, const Common::M
 // Created: MGD 2009-11-05
 // -----------------------------------------------------------------------------
 UrbanBlock::UrbanBlock( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : Parameter< unsigned long >( parameter, xml::attribute< unsigned long >( xis, "value" ) )
+    : Parameter< unsigned long >( parameter, xis.attribute< unsigned long >( "value" ) )
 {
     // NOTHING
 }

@@ -52,7 +52,7 @@ public:
     TypeDispatcher( const std::string& name, xml::xistream& xis, Task& result, bool allowNull = false )
         : name_( name ), xis_( xis ), result_( result ), allowNullType_( allowNull ) {}
     TypeDispatcher( xml::xistream& xis, Task& result, bool allowNull = false )
-        : name_( xml::attribute< std::string >( xis, "id" ) ), xis_( xis ), result_( result ), allowNullType_( allowNull ) {}
+        : name_( xis.attribute< std::string >( "id" ) ), xis_( xis ), result_( result ), allowNullType_( allowNull ) {}
     virtual ~TypeDispatcher() {}
     //@}
 

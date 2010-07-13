@@ -27,8 +27,8 @@ namespace
 {
     const OrderType& ResolveType( xml::xistream& xis, const tools::Resolver_ABC< FragOrderType >& missions, const Entity_ABC& entity )
     {
-        const unsigned int id = xml::attribute< unsigned int >( xis, "id", 0 );
-        const std::string name = xml::attribute< std::string >( xis, "name", "" );
+        const unsigned int id = xis.attribute< unsigned int >( "id", 0 );
+        const std::string name = xis.attribute< std::string >( "name", "" );
         const OrderType* type = missions.Find( id );
         if( !type )
             throw std::exception( tools::translate( "FragOrder", "Entity '%1' (id: %2) cannot execute fragmentary order '%3' (id: %4)" )

@@ -33,7 +33,7 @@ namespace
     };
     int ReadMask( xml::xistream& xis, const std::string& attribute )
     {
-        if( xml::attribute< std::string >( xis, attribute ).empty() )
+        if( xis.attribute< std::string >( attribute ).empty() )
             return 1;
         FilterHelper< std::string > states( xis, attribute );
         int result = 0;
@@ -49,7 +49,7 @@ namespace
 // Created: SBO 2010-06-01
 // -----------------------------------------------------------------------------
 UnitDetection::UnitDetection( xml::xistream& xis )
-    : detectedUnitId_( xml::attribute< unsigned long >( xis, "detected" ) )
+    : detectedUnitId_( xis.attribute< unsigned long >( "detected" ) )
     , visibilityMask_( ReadMask( xis, "visibility" ) )
 {
     // NOTHING

@@ -69,8 +69,8 @@ void load_construct_data( Archive& archive, MIL_Army* army, const unsigned int /
 // -----------------------------------------------------------------------------
 MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory, MIL_ObjectManager& objectFactory
                   , PopulationFactory_ABC& populationFactory, KnowledgeGroupFactory_ABC& knowledgegroupFactory, const MT_Converter< std::string, E_Diplomacy >& diplomacyConverter )
-    : nID_                 ( xml::attribute< unsigned int >( xis, "id" ) )
-    , strName_             ( xml::attribute< std::string >( xis, "name") )
+    : nID_                 ( xis.attribute< unsigned int >( "id" ) )
+    , strName_             ( xis.attribute< std::string >( "name") )
     , nType_               ( eUnknown )
     , armyFactory_         ( armyFactory )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_Army( *this ) )

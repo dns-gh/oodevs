@@ -195,7 +195,7 @@ namespace
 {
     void ThrowUnexpected( const kernel::OrderParameter& expected, xml::xistream& xis )
     {
-        const std::string found = xml::attribute< std::string >( xis, "name" );
+        const std::string found = xis.attribute< std::string >( "name" );
         throw std::exception( tools::translate( "ActionParameterFactory", "Expecting '%1' found '%2'" ).arg( expected.GetName().c_str() ).arg( found.c_str() ) );
     }
 }
@@ -207,7 +207,7 @@ namespace
 actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity ) const
 {
     std::string expected = boost::algorithm::to_lower_copy( parameter.GetType() );
-    std::string type = boost::algorithm::to_lower_copy( xml::attribute< std::string >( xis, "type" ) );
+    std::string type = boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type" ) );
     if( type != expected )
         ThrowUnexpected( parameter, xis );
     std::auto_ptr< actions::Parameter_ABC > param;
@@ -230,7 +230,7 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
 actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis ) const
 {
     std::string expected = boost::algorithm::to_lower_copy( parameter.GetType() );
-    std::string type = boost::algorithm::to_lower_copy( xml::attribute< std::string >( xis, "type" ) );
+    std::string type = boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type" ) );
     if( type != expected )
         ThrowUnexpected( parameter, xis );
     std::auto_ptr< actions::Parameter_ABC > param;
@@ -248,8 +248,8 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
 // -----------------------------------------------------------------------------
 void ActionParameterFactory::CreateListParameter( xml::xistream& xis, actions::parameters::ParameterList& list ) const
 {
-    const std::string name = xml::attribute< std::string >( xis, "name" );
-    const std::string type = boost::algorithm::to_lower_copy( xml::attribute< std::string >( xis, "type" ) );
+    const std::string name = xis.attribute< std::string >( "name" );
+    const std::string type = boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type" ) );
     list.AddParameter( *CreateParameter( kernel::OrderParameter( name, type, false ), xis ) );
 }
 
@@ -259,8 +259,8 @@ void ActionParameterFactory::CreateListParameter( xml::xistream& xis, actions::p
 // -----------------------------------------------------------------------------
 void ActionParameterFactory::CreateListParameter( xml::xistream& xis, actions::parameters::ParameterList& list, const kernel::Entity_ABC& entity ) const
 {
-    const std::string name = xml::attribute< std::string >( xis, "name" );
-    const std::string type = boost::algorithm::to_lower_copy( xml::attribute< std::string >( xis, "type" ) );
+    const std::string name = xis.attribute< std::string >( "name" );
+    const std::string type = boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type" ) );
     list.AddParameter( *CreateParameter( kernel::OrderParameter( name, type, false ), xis, entity ) );
 }
 

@@ -32,7 +32,7 @@ Quantity::Quantity( const kernel::OrderParameter& parameter, int value )
 // Created: JSR 2010-04-14
 // -----------------------------------------------------------------------------
 Quantity::Quantity( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : Parameter< int >( parameter, xml::attribute< int >( xis, "value" ) )
+    : Parameter< int >( parameter, xis.attribute< int >( "value" ) )
 {
     // NOTHING
 }

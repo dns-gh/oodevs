@@ -41,9 +41,9 @@ Drawing::Drawing( unsigned int id, const MsgShapeCreationRequest& asn, const ker
 Drawing::Drawing( unsigned int id, xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
     : converter_( converter )
     , id_       ( id )
-    , category_ ( xml::attribute< std::string >( xis, "category" ) )
-    , color_    ( xml::attribute< std::string >( xis, "color" ) )
-    , template_ ( xml::attribute< std::string >( xis, "template" ) )
+    , category_ ( xis.attribute< std::string >( "category" ) )
+    , color_    ( xis.attribute< std::string >( "color" ) )
+    , template_ ( xis.attribute< std::string >( "template" ) )
 {
     xis >> xml::list( "point", *this, &Drawing::ReadPoint );
 }
@@ -79,7 +79,7 @@ Drawing::~Drawing()
 void Drawing::ReadPoint( xml::xistream& xis )
 {
     MsgCoordLatLong asn;
-    geometry::Point2f point( xml::attribute< float >( xis, "x" ), xml::attribute< float >( xis, "y" ) );
+    geometry::Point2f point( xis.attribute< float >( "x" ), xis.attribute< float >( "y" ) );
     converter_.ConvertToGeo( point, asn );
     points_.push_back( asn );
 }

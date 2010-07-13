@@ -54,7 +54,7 @@ namespace
         void LoadFile( const std::string&, xml::xistream& xis )
         {
             std::auto_ptr< xml::grammar > grammar( new xml::null_grammar() );
-            const std::string schema = xml::attribute< std::string >( xis, "xsi:noNamespaceSchemaLocation", "" );
+            const std::string schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
             if( !schema.empty() )
                 grammar.reset( new xml::external_grammar( config_.BuildResourceChildFile( schema ) ) );
             xml::xifstream input( path_, *grammar );

@@ -60,10 +60,10 @@ InputToxicCloudAttribute::InputToxicCloudAttribute()
 InputToxicCloudAttribute::InputToxicCloudAttribute( xml::xistream& xis )
     : extent_( ConvertTo( TER_World::GetWorld().GetExtent() ) )
     , quantities_( new T_Quantities( extent_ ) )
-    , filename_( xml::attribute< std::string >( xis, "source" ) )
-    , dataField_( xml::attribute< std::string >( xis, "data-field" ) )
+    , filename_( xis.attribute< std::string >( "source" ) )
+    , dataField_( xis.attribute< std::string >( "data-field" ) )
     , schedule_( new T_Schedule() )
-    , bExport_( xml::attribute< bool >( xis, "export", true ) )
+    , bExport_( xis.attribute< bool >( "export", true ) )
 {
     quantities_->SetRefinementPolicy( 20 );  // $$$$ JCR 2007-09-13: profiling?
     LoadConfig();

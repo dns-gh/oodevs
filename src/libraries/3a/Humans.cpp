@@ -51,7 +51,7 @@ namespace
     };
     int ReadMask( xml::xistream& xis, const char* attribute, const char** names, unsigned count )
     {
-        if( xml::attribute< std::string >( xis, attribute ).empty() )
+        if( xis.attribute< std::string >( attribute ).empty() )
             return 1;
         FilterHelper< std::string > states( xis, attribute );
         int result = 0;

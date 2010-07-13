@@ -79,7 +79,7 @@ ConstructionAttribute::~ConstructionAttribute()
 void ConstructionAttribute::Load( xml::xistream& xis )
 {
     assert( dotation_ );
-    const MT_Float completion = xml::attribute< MT_Float >( xis, "completion", 1.f );
+    const MT_Float completion = xis.attribute< MT_Float >( "completion", 1.f );
     if( completion > 0. && completion <= 1. )
         rConstructionPercentage_ = completion;
     nCurrentNbrDotation_ = unsigned int( rConstructionPercentage_ * nFullNbrDotation_ );

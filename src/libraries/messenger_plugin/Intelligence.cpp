@@ -113,8 +113,8 @@ Intelligence::Intelligence( unsigned int id, xml::xistream& xis, const Common::M
     , nature_   ( xml::attribute< std::string > ( xis, "nature" ) )
     , embarked_ ( xml::attribute< bool >        ( xis, "embarked" ) )
     , formation_( formation )
-    , level_    ( ResolveLevel( xml::attribute< std::string >( xis, "level" ) ) )
-    , diplomacy_( ResolveKarma( xml::attribute< std::string >( xis, "karma" ) ) )
+    , level_    ( ResolveLevel( xis.attribute< std::string >( "level" ) ) )
+    , diplomacy_( ResolveKarma( xis.attribute< std::string >( "karma" ) ) )
 {
     ReadPosition(xis,converter);
 }

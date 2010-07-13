@@ -18,8 +18,8 @@ using namespace kernel;
 // Created: SBO 2010-03-23
 // -----------------------------------------------------------------------------
 AgentComposition::AgentComposition( xml::xistream& xis, const tools::Resolver_ABC< ComponentType, std::string >& resolver )
-    : type_( resolver.Get( xml::attribute< std::string >( xis, "type" ) ) )
-    , count_( xml::attribute< unsigned int >( xis, "count" ) )
+    : type_( resolver.Get( xis.attribute< std::string >( "type" ) ) )
+    , count_( xis.attribute< unsigned int >( "count" ) )
 {
     // NOTHING
 }

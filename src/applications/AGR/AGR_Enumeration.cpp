@@ -23,7 +23,7 @@
 AGR_Enumeration::AGR_Enumeration( const std::string& strName )
     : strName_( strName )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -50,7 +50,7 @@ void AGR_Enumeration::Read( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void AGR_Enumeration::ReadValue( xml::xistream& xis )
 {
-    valueList_.push_back( xml::attribute< std::string >( xis, "value" ) );
+    valueList_.push_back( xis.attribute< std::string >( "value" ) );
 }
 
 // -----------------------------------------------------------------------------

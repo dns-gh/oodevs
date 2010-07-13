@@ -21,10 +21,10 @@
 // Created: SBO 2008-03-03
 // -----------------------------------------------------------------------------
 MIL_OrderTypeParameter::MIL_OrderTypeParameter( xml::xistream& xis )
-    : bIsOptional_  ( xml::attribute< bool >( xis, "optional", false ) )
-    , strName_      ( xml::attribute< std::string >( xis, "name" ) )
-    , strDiaName_   ( xml::attribute< std::string >( xis, "dia-name" ) )
-    , pParameter_   ( MIL_ParameterType_ABC::Find( xml::attribute< std::string >( xis, "type" ) ) )
+    : bIsOptional_  ( xis.attribute< bool >( "optional", false ) )
+    , strName_      ( xis.attribute< std::string >( "name" ) )
+    , strDiaName_   ( xis.attribute< std::string >( "dia-name" ) )
+    , pParameter_   ( MIL_ParameterType_ABC::Find( xis.attribute< std::string >( "type" ) ) )
 {
     if( !pParameter_ )
         xis.error( "Unknown parameter type" );
@@ -35,10 +35,10 @@ MIL_OrderTypeParameter::MIL_OrderTypeParameter( xml::xistream& xis )
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
 MIL_OrderTypeParameter::MIL_OrderTypeParameter( const MIL_OrderType_ABC& /*orderType*/, xml::xistream& xis )
-    : bIsOptional_  ( xml::attribute< bool >( xis, "optional", false ) )
-    , strName_      ( xml::attribute< std::string >( xis, "name" ) )
-    , strDiaName_   ( xml::attribute< std::string >( xis, "dia-name" ) )
-    , pParameter_   ( MIL_ParameterType_ABC::Find( xml::attribute< std::string >( xis, "type" ) ) )
+    : bIsOptional_  ( xis.attribute< bool >( "optional", false ) )
+    , strName_      ( xis.attribute< std::string >( "name" ) )
+    , strDiaName_   ( xis.attribute< std::string >( "dia-name" ) )
+    , pParameter_   ( MIL_ParameterType_ABC::Find( xis.attribute< std::string >( "type" ) ) )
 {
     if( !pParameter_ )
         xis.error( "Unknown parameter type" );

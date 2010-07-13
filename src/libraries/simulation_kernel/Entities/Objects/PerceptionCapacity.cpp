@@ -25,7 +25,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PerceptionCapacity )
 // Created: MGD 2010-03-12
 // -----------------------------------------------------------------------------
 PerceptionCapacity::PerceptionCapacity( xml::xistream& xis )
-:  modifier_( xml::attribute< bool >( xis, "blinded" ) )
+:  modifier_( xis.attribute< bool >( "blinded" ) )
 {
 }
 

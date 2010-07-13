@@ -25,8 +25,8 @@
 //-----------------------------------------------------------------------------
 MIL_OrderType_ABC::MIL_OrderType_ABC( unsigned int nID, xml::xistream& xis )
     : nID_    ( nID )
-    , strName_( xml::attribute< std::string >( xis, "name" ) )
-    , diaType_( xml::attribute< std::string >( xis, "dia-type" ) )
+    , strName_( xis.attribute< std::string >( "name" ) )
+    , diaType_( xis.attribute< std::string >( "dia-type" ) )
 {
     xis >> xml::list( "parameter", *this, &MIL_OrderType_ABC::ReadParameter );
 }

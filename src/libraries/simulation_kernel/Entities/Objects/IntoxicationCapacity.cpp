@@ -26,7 +26,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( IntoxicationCapacity )
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
 IntoxicationCapacity::IntoxicationCapacity( xml::xistream& xis )
-    : maxToxic_ ( xml::attribute< int >( xis, "max-toxic" ) )
+    : maxToxic_ ( xis.attribute< int >( "max-toxic" ) )
 {
     // NOTHING
 }

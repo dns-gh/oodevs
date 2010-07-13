@@ -81,7 +81,7 @@ void AGR_Workspace::ReadElement( const std::string& type, xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void AGR_Workspace::ReadImport( xml::xistream& xis )
 {
-    const std::string strFileName = xml::attribute< std::string >( xis, "schemaLocation" );
+    const std::string strFileName = xis.attribute< std::string >( "schemaLocation" );
     if( parsedFileSet_.find( strFileName ) == parsedFileSet_.end() )
     {
         Read( strFileName );
@@ -120,7 +120,7 @@ void AGR_Workspace::ReadSimpleTypeElement( const std::string& type, xml::xistrea
 // -----------------------------------------------------------------------------
 void AGR_Workspace::ReadSimpleType( xml::xistream& xis )
 {
-    const std::string strTypeName = xml::attribute< std::string >( xis, "name" );
+    const std::string strTypeName = xis.attribute< std::string >( "name" );
     xis >> xml::list( *this, &AGR_Workspace::ReadSimpleTypeElement, strTypeName );
 }
 

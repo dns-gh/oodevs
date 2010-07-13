@@ -42,7 +42,7 @@ AtlasNature::AtlasNature( const kernel::OrderParameter& parameter, const Common:
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 AtlasNature::AtlasNature( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::AtlasNatures& natures )
-    : Parameter< kernel::AtlasNature >( parameter, natures.MakeNature( xml::attribute< unsigned short >( xis, "value" ) ) )
+    : Parameter< kernel::AtlasNature >( parameter, natures.MakeNature( xis.attribute< unsigned short >( "value" ) ) )
 {
     // NOTHING
 }

@@ -41,9 +41,9 @@ Variable::Variable( const Element_ABC& element, const DataTypeFactory& types )
 // Created: SBO 2009-04-17
 // -----------------------------------------------------------------------------
 Variable::Variable( xml::xistream& xis, const DataTypeFactory& types )
-    : Constant< std::string >( xml::attribute< std::string >( xis, "id" )
-                             , types.Instanciate( xml::attribute< std::string >( xis, "type" ) )
-                             , xml::attribute< std::string >( xis, "value" ) )
+    : Constant< std::string >( xis.attribute< std::string >( "id" )
+                             , types.Instanciate( xis.attribute< std::string >( "type" ) )
+                             , xis.attribute< std::string >( "value" ) )
 {
     // NOTHING
 }

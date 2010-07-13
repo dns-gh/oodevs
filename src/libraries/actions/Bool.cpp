@@ -20,7 +20,7 @@ using namespace parameters;
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
 Bool::Bool( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : Parameter< bool >( parameter, xml::attribute< bool >( xis, "value" ) )
+    : Parameter< bool >( parameter, xis.attribute< bool >( "value" ) )
 {
     // NOTHING
 }

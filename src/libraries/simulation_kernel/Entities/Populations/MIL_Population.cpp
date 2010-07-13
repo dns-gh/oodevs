@@ -64,7 +64,7 @@ void load_construct_data( Archive& archive, MIL_Population* population, const un
 MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army& army, DEC_DataBase& database )
     : MIL_Entity_ABC          ( xis )
     , pType_                  ( &type )
-    , nID_                    ( xml::attribute< unsigned int >( xis, "id" ) )
+    , nID_                    ( xis.attribute< unsigned int >( "id" ) )
     , pArmy_                  ( &army )
     , pDefaultAttitude_       ( 0 )
     , nPeopleCount_           ( 0 )

@@ -44,7 +44,7 @@ IconsGaugeType::~IconsGaugeType()
 // -----------------------------------------------------------------------------
 void IconsGaugeType::LoadIcons( xml::xistream& xis )
 {
-    const std::string path = xml::attribute< std::string >( xis, "path" );
+    const std::string path = xis.attribute< std::string >( "path" );
     xis >> xml::list( "icon", *this, &IconsGaugeType::LoadIcon, path );
 }
 
@@ -54,9 +54,9 @@ void IconsGaugeType::LoadIcons( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void IconsGaugeType::LoadIcon( xml::xistream& xis, const std::string& path )
 {
-    const std::string filename( tools::GeneralConfig::BuildResourceChildFile( path + "/" + xml::attribute< std::string >( xis, "file" ) ) );
-    icons_[ xml::attribute< double >( xis, "key" ) ] = QPixmap( filename.c_str() );
-    if( icons_[ xml::attribute< double >( xis, "key" ) ].isNull() )
+    const std::string filename( tools::GeneralConfig::BuildResourceChildFile( path + "/" + xis.attribute< std::string >( "file" ) ) );
+    icons_[ xis.attribute< double >( "key" ) ] = QPixmap( filename.c_str() );
+    if( icons_[ xis.attribute< double >( "key" ) ].isNull() )
         throw std::runtime_error( __FUNCTION__ );
 }
 

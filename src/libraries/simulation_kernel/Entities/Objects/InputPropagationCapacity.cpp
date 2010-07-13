@@ -22,7 +22,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( InputPropagationCapacity )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 InputPropagationCapacity::InputPropagationCapacity( xml::xistream& xis )
-    : model_( xml::attribute< std::string >( xis, "model" ) )
+    : model_( xis.attribute< std::string >( "model" ) )
 {
     // NOTHING
 }

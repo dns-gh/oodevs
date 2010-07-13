@@ -32,9 +32,9 @@ DisExtensionFactory::DisExtensionFactory( UdpNetwork& network, const Time_ABC& t
     , time_( time )
     , converter_( converter )
     , resolver_( resolver )
-    , site_( xml::attribute< unsigned short >( xis, "site" ) )
-    , application_( xml::attribute< unsigned short >( xis, "application" ) )
-    , exercise_( (unsigned char)xml::attribute< unsigned short >( xis, "exercise" ) )
+    , site_( xis.attribute< unsigned short >( "site" ) )
+    , application_( xis.attribute< unsigned short >( "application" ) )
+    , exercise_( (unsigned char)xis.attribute< unsigned short >( "exercise" ) )
     , lag_( xml::attribute( xis, "lag", false ) )
     , id_( 1 )
 {

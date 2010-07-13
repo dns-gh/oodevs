@@ -79,11 +79,11 @@ void BuildableCapacity::ReadDotation( xml::xistream& xis )
 {
     if( dotation_ == 0 )
     {
-        std::string dotation( xml::attribute< std::string >( xis, "name" ) );
+        std::string dotation( xis.attribute< std::string >( "name" ) );
         dotation_ = PHY_DotationType::FindDotationCategory( dotation );
         if( !dotation_ )
             throw std::runtime_error( "Unknown dotation category - " + dotation + " - " );
-        nFullNbrDotation_ = xml::attribute< int >( xis, "count" );
+        nFullNbrDotation_ = xis.attribute< int >( "count" );
     }
 }
 

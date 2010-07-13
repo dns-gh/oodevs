@@ -20,11 +20,11 @@
 // Created: JCR 2008-08-25
 // -----------------------------------------------------------------------------
 ConstructionCapacity::ConstructionCapacity( ObjectPrototype& prototype, xml::xistream& xis )
-    : default_ ( PHY_ConsumptionType::FindConsumptionType( xml::attribute< std::string >( xis, "default-consumption-mode" ) ) )
+    : default_ ( PHY_ConsumptionType::FindConsumptionType( xis.attribute< std::string >( "default-consumption-mode" ) ) )
     , unit_type_ ( eRaw )
     , prototype_ ( prototype )
 {
-    std::string unit_type( xml::attribute< std::string >( xis, "unit-type" ) );
+    std::string unit_type( xis.attribute< std::string >( "unit-type" ) );
     if( unit_type == "raw" )
         unit_type_ = eRaw;
     else if( unit_type == "density" )

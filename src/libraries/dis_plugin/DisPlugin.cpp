@@ -40,14 +40,14 @@ namespace
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
 DisPlugin::DisPlugin( dispatcher::Model& model, const dispatcher::Config& config, xml::xistream& xis )
-    : model_( model )
-    , network_( new UdpNetwork( xml::attribute< std::string >( xis, "server" ), xml::attribute< unsigned short >( xis, "port" ) ) )
+    : model_    ( model )
+    , network_  ( new UdpNetwork( xis.attribute< std::string >( "server" ), xis.attribute< unsigned short >( "port" ) ) )
     , converter_( new kernel::CoordinateConverter( config ) )
-    , resolver_( new DisTypeResolver( config.BuildPhysicalChildFile( "dis.xml" ) ) )
-    , factory_( new DisExtensionFactory( *network_, *this, *converter_, *resolver_, xis ) )
-    , fires_( new FireManager( *network_, *this, (unsigned char)xml::attribute< unsigned short >( xis, "exercise"  ) ) )
-    , timeStep_( ReadTimeStep( config.GetSessionFile() ) )
-    , time_( 0 )
+    , resolver_ ( new DisTypeResolver( config.BuildPhysicalChildFile( "dis.xml" ) ) )
+    , factory_  ( new DisExtensionFactory( *network_, *this, *converter_, *resolver_, xis ) )
+    , fires_    ( new FireManager( *network_, *this, (unsigned char)xis.attribute< unsigned short >( "exercise"  ) ) )
+    , timeStep_ ( ReadTimeStep( config.GetSessionFile() ) )
+    , time_     ( 0 )
 {
     model_.RegisterFactory( *factory_ );
 }

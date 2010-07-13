@@ -24,13 +24,13 @@ namespace
 {
     std::string ReadProxyHost( xml::xistream& xis )
     {
-        const std::string proxy = xml::attribute< std::string >( xis, "proxy", "" );
+        const std::string proxy = xis.attribute< std::string >( "proxy", "" );
         return proxy.substr( 0, proxy.find_first_of( ':' ) );
     }
 
     unsigned short ReadProxyPort( xml::xistream& xis )
     {
-        const std::string proxy = xml::attribute< std::string >( xis, "proxy", "" );
+        const std::string proxy = xis.attribute< std::string >( "proxy", "" );
         if( proxy.empty() )
             return 0;
         return boost::lexical_cast< unsigned short >( proxy.substr( proxy.find_first_of( ':' ) + 1 ) );
@@ -42,7 +42,7 @@ namespace
 // Created: SBO 2008-04-02
 // -----------------------------------------------------------------------------
 Publisher::Publisher( xml::xistream& xis )
-    : endpoint_ ( xml::attribute< std::string >( xis, "endpoint" ) )
+    : endpoint_ ( xis.attribute< std::string >( "endpoint" ) )
     , proxyHost_( ReadProxyHost( xis ) )
     , proxyPort_( ReadProxyPort( xis ) )
 {

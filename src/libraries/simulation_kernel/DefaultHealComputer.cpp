@@ -8,9 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "simulation_kernel/DefaultHealComputer.h"
-#include "simulation_kernel/Entities/Agents/MIL_Agent_ABC.h"
 #include "simulation_kernel/Entities/Agents/Units/Humans/PHY_HumanWound.h"
 
 namespace human
@@ -51,7 +49,6 @@ void DefaultHealComputer::Heal( const PHY_HumanRank& rank, unsigned int nNbrToCh
 {
   PHY_ComposantePion::T_ComposantePionVector components = components_;
   std::random_shuffle( components.begin(), components.end() );
-
   PHY_ComposantePion::IT_ComposantePionVector itCurrentComp = components.begin();
   while( nNbrToChange && itCurrentComp != components.end() )
   {
@@ -80,7 +77,7 @@ void DefaultHealComputer::Wound( const PHY_HumanRank& rank, unsigned int nNbrToC
     PHY_ComposantePion::IT_ComposantePionVector itCurrentComp = composantes.begin();
     while( nNbrToChange && itCurrentComp != composantes.end() )
     {
-        uint nNbrChanged = (*itCurrentComp)->WoundHumans( rank, 1, PHY_HumanWound::killed_ );
+        unsigned int nNbrChanged = (*itCurrentComp)->WoundHumans( rank, 1, PHY_HumanWound::killed_ );
         if( nNbrChanged == 0 )
             itCurrentComp = composantes.erase( itCurrentComp );
         else
@@ -120,10 +117,8 @@ void DefaultHealComputer::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2
 bool DefaultHealComputer::HasWoundedHumansToEvacuate() const
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector it = components_.begin(); it != components_.end(); ++it )
-    {
         if( (**it).HasWoundedHumansToEvacuate() )
             return true;
-    }
     return false;
 }
 

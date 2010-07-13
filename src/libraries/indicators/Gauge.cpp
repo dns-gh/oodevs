@@ -21,7 +21,7 @@ using namespace indicators;
 // Created: SBO 2009-05-05
 // -----------------------------------------------------------------------------
 Gauge::Gauge( xml::xistream& xis, const GaugeTypes& types )
-    : type_( types.Get( xml::attribute< std::string >( xis, "type" ).c_str() ) )
+    : type_( types.Get( xis.attribute< std::string >( "type" ).c_str() ) )
     , normalizer_( new GaugeNormalizer( xis ) )
 {
     // NOTHING

@@ -19,8 +19,8 @@ using namespace kernel;
 // Created: SBO 2008-08-06
 // -----------------------------------------------------------------------------
 WeaponSystemType::WeaponSystemType( xml::xistream& xis, const tools::Resolver_ABC< VolumeType >& volumes )
-    : launcher_        ( xml::attribute< std::string >( xis, "launcher" ) )
-    , ammunition_      ( xml::attribute< std::string >( xis, "munition" ) )
+    : launcher_        ( xis.attribute< std::string >( "launcher" ) )
+    , ammunition_      ( xis.attribute< std::string >( "munition" ) )
     , maxIndirectRange_( 0 )
     , minIndirectRange_( std::numeric_limits< unsigned int >::max() )
     , maxDirectRange_  ( 0 )

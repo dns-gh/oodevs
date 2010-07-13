@@ -85,7 +85,7 @@ Karma::Karma( const kernel::OrderParameter& parameter, const Common::EnumDiploma
 // -----------------------------------------------------------------------------
 Karma::Karma( const kernel::OrderParameter& parameter, xml::xistream& xis )
     : Parameter< QString >( parameter )
-    , karma_( kernel::Karma::ResolveId( xml::attribute< std::string >( xis, "value" ) ) )
+    , karma_( kernel::Karma::ResolveId( xis.attribute< std::string >( "value" ) ) )
 {
     SetValue( karma_.GetName() );
 }

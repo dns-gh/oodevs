@@ -32,7 +32,7 @@ Numeric::Numeric( const kernel::OrderParameter& parameter, float value )
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
 Numeric::Numeric( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : Parameter< float >( parameter, xml::attribute< float >( xis, "value" ) )
+    : Parameter< float >( parameter, xis.attribute< float >( "value" ) )
 {
     // NOTHING
 }

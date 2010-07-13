@@ -96,7 +96,7 @@ void MIL_ObjectLoader::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_ObjectLoader::ReadObjectPrototype( xml::xistream& xis )
 {
-    const std::string type( xml::attribute< std::string >( xis, "type" ) );
+    const std::string type( xis.attribute< std::string >( "type" ) );
     boost::shared_ptr< ObjectPrototype >& prototype = prototypes_[ type ];
     if( prototype.get() )
         throw std::runtime_error( __FUNCTION__ " - Object type redefinition: " + type );
@@ -133,7 +133,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const std::string& type, MIL_Arm
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectLoader::CreateObject( xml::xistream& xis, MIL_Army_ABC& army ) const
 {
-    const std::string type( xml::attribute< std::string >( xis, "type" ) );
+    const std::string type( xis.attribute< std::string >( "type" ) );
 
     CIT_Prototypes it = prototypes_.find( type );
     if( it == prototypes_.end() )

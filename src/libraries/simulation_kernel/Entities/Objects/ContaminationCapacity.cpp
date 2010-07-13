@@ -37,7 +37,7 @@ ContaminationCapacity::ContaminationCapacity()
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
 ContaminationCapacity::ContaminationCapacity( xml::xistream& xis )
-    : maxToxic_ ( xml::attribute< int >( xis, "max-toxic" ) )
+    : maxToxic_ ( xis.attribute< int >( "max-toxic" ) )
 {
     // NOTHING
 }

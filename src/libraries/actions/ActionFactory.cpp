@@ -124,7 +124,7 @@ actions::Action_ABC* ActionFactory::CreateAction( const kernel::Entity_ABC& targ
 // -----------------------------------------------------------------------------
 actions::Action_ABC* ActionFactory::CreateAction( xml::xistream& xis, bool readonly /*= false*/ ) const
 {
-    const std::string type = xml::attribute< std::string >( xis, "type" );
+    const std::string type = xis.attribute< std::string >( "type" );
     if( type == "mission" )
         return CreateMission( xis, readonly );
     if( type == "fragorder" )
@@ -225,7 +225,7 @@ actions::Action_ABC* ActionFactory::CreateAction( const MsgsClientToSim::MsgFrag
 // -----------------------------------------------------------------------------
 actions::Action_ABC* ActionFactory::CreateMission( xml::xistream& xis, bool readonly ) const
 {
-    const unsigned long id = xml::attribute< unsigned long >( xis, "target" );
+    const unsigned long id = xis.attribute< unsigned long >( "target" );
     std::auto_ptr< actions::Mission > action;
     const kernel::Entity_ABC* target = entities_.FindAgent( id );
     if( target )
@@ -253,7 +253,7 @@ actions::Action_ABC* ActionFactory::CreateMission( xml::xistream& xis, bool read
 // -----------------------------------------------------------------------------
 actions::Action_ABC* ActionFactory::CreateFragOrder( xml::xistream& xis, bool readonly ) const
 {
-    const unsigned long id = xml::attribute< unsigned long >( xis, "target" );
+    const unsigned long id = xis.attribute< unsigned long >( "target" );
 
     std::auto_ptr< actions::FragOrder > action;
     const kernel::Entity_ABC* target = entities_.FindAgent( id );
@@ -281,7 +281,7 @@ actions::Action_ABC* ActionFactory::CreateFragOrder( xml::xistream& xis, bool re
 // -----------------------------------------------------------------------------
 actions::Action_ABC* ActionFactory::CreateMagicAction( xml::xistream& xis, bool readonly ) const
 {
-    const std::string id = xml::attribute< std::string >( xis, "id" );
+    const std::string id = xis.attribute< std::string >( "id" );
     std::auto_ptr< actions::MagicAction > action;
     action.reset( new actions::MagicAction( xis, controller_, magicActions_.Get( id ) ) );
     action->Attach( *new ActionTiming( xis, controller_, simulation_, *action ) );
@@ -301,8 +301,8 @@ actions::Action_ABC* ActionFactory::CreateMagicAction( xml::xistream& xis, bool 
 // -----------------------------------------------------------------------------
 actions::Action_ABC* ActionFactory::CreateUnitMagicAction( xml::xistream& xis, bool readonly ) const
 {
-    const unsigned long targetid = xml::attribute< unsigned long >( xis, "target" );
-    const std::string id = xml::attribute< std::string >( xis, "id" );
+    const unsigned long targetid = xis.attribute< unsigned long >( "target" );
+    const std::string id = xis.attribute< std::string >( "id" );
 
     std::auto_ptr< actions::UnitMagicAction > action;
     const kernel::Entity_ABC* target = entities_.FindAgent( targetid );
@@ -331,14 +331,14 @@ actions::Action_ABC* ActionFactory::CreateUnitMagicAction( xml::xistream& xis, b
 // -----------------------------------------------------------------------------
 actions::Action_ABC* ActionFactory::CreateObjectMagicAction( xml::xistream& xis, bool readonly ) const
 {
-    const std::string id = xml::attribute< std::string >( xis, "id" );
+    const std::string id = xis.attribute< std::string >( "id" );
 
     std::auto_ptr< actions::ObjectMagicAction > action;
 
     kernel::Entity_ABC* target = 0;
     if( id != "create_object" )
     {
-        const unsigned long targetid = xml::attribute< unsigned long >( xis, "target" );
+        const unsigned long targetid = xis.attribute< unsigned long >( "target" );
         target = entities_.FindObject( targetid );
         if( !target )
             throw TargetNotFound( targetid );
@@ -365,8 +365,8 @@ actions::Action_ABC* ActionFactory::CreateObjectMagicAction( xml::xistream& xis,
 // -----------------------------------------------------------------------------
 actions::Action_ABC* ActionFactory::CreateKnowledgeGroupMagicAction( xml::xistream& xis, bool readonly ) const
 {
-    const unsigned long targetid = xml::attribute< unsigned long >( xis, "target" );
-    const std::string id = xml::attribute< std::string >( xis, "id" );
+    const unsigned long targetid = xis.attribute< unsigned long >( "target" );
+    const std::string id = xis.attribute< std::string >( "id" );
 
     std::auto_ptr< actions::KnowledgeGroupMagicAction > action;
     const kernel::KnowledgeGroup_ABC* target = entities_.FindKnowledgeGroup( targetid );

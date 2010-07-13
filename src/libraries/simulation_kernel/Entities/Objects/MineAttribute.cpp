@@ -81,7 +81,7 @@ MineAttribute::MineAttribute( const Common::MsgMissionParameter_Value& attribute
 void MineAttribute::Load( xml::xistream& xis )
 {
     assert( dotation_ != 0 );
-    const MT_Float completion = xml::attribute< MT_Float >( xis, "completion", 1.f );
+    const MT_Float completion = xis.attribute< MT_Float >( "completion", 1.f );
     if( completion > 0. && completion <= 1. )
         rMiningPercentage_ = completion;
     nCurrentNbrDotation_ = static_cast< unsigned int >( rMiningPercentage_ * nFullNbrDotation_ );

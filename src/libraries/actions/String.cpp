@@ -30,7 +30,7 @@ String::String( const kernel::OrderParameter& parameter, const std::string& valu
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
 String::String( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : Parameter< QString >( parameter, xml::attribute< std::string >( xis, "value" ).c_str() )
+    : Parameter< QString >( parameter, xis.attribute< std::string >( "value" ).c_str() )
 {
     // NOTHING
 }

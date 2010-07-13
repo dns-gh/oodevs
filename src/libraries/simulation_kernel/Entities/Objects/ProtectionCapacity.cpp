@@ -21,8 +21,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( ProtectionCapacity )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 ProtectionCapacity::ProtectionCapacity( xml::xistream& xis )
-    : size_max_ ( xml::attribute< int >( xis, "max-size" ) )
-    , bGeniePrepared_ ( xml::attribute< bool >( xis, "geniePrepared" ) )
+    : size_max_ ( xis.attribute< int >( "max-size" ) )
+    , bGeniePrepared_ ( xis.attribute< bool >( "geniePrepared" ) )
 {
     // NOTHING
 }

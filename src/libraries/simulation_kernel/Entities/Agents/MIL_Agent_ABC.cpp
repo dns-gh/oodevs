@@ -21,7 +21,7 @@ MIL_IDManager MIL_Agent_ABC::idManager_;
 // -----------------------------------------------------------------------------
 MIL_Agent_ABC::MIL_Agent_ABC( xml::xistream& xis )
     : MIL_Entity_ABC ( xis )
-    , nID_           ( xml::attribute< unsigned long >( xis, "id" ) )
+    , nID_           ( xis.attribute< unsigned long >( "id" ) )
 {
     idManager_.Lock( nID_ );
 }

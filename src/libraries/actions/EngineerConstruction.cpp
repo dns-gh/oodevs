@@ -75,7 +75,7 @@ void EngineerConstruction::SetParameters( const Common::MsgPlannedWork& message,
 // -----------------------------------------------------------------------------
 EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, const kernel::EntityResolver_ABC& entities, xml::xistream& xis, kernel::Controller& controller )
     : Parameter< std::string >( parameter )
-    , type_( types.Get( xml::attribute< std::string >( xis, "value" ) ) )
+    , type_( types.Get( xis.attribute< std::string >( "value" ) ) )
 {
     xis >> list( "parameter", *this, &EngineerConstruction::ReadParameter, converter, entities, controller );
     SetValue( type_.GetName() );
@@ -86,8 +86,8 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
 EngineerConstruction::EngineerConstruction( const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, const kernel::EntityResolver_ABC& entities, xml::xistream& xis, kernel::Controller& controller )
-    : Parameter< std::string >( OrderParameter( xml::attribute< std::string >( xis, "name" ).c_str(), "obstacle", false ) )
-    , type_ ( types.Get( xml::attribute< std::string >( xis, "value" ) ) )
+    : Parameter< std::string >( OrderParameter( xis.attribute< std::string >( "name" ).c_str(), "obstacle", false ) )
+    , type_ ( types.Get( xis.attribute< std::string >( "value" ) ) )
 {
     xis >> list( "parameter", *this, &EngineerConstruction::ReadParameter, converter, entities, controller );
     SetValue( type_.GetName() );

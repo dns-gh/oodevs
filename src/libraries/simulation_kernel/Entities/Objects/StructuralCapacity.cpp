@@ -62,7 +62,7 @@ StructuralCapacity::~StructuralCapacity()
 // -----------------------------------------------------------------------------
 void StructuralCapacity::Load( xml::xistream& xis )
 {
-    structuralState_ = 0.01f * xml::attribute< int >( xis, "value" );
+    structuralState_ = 0.01f * xis.attribute< int >( "value" );
 }
 
 // -----------------------------------------------------------------------------

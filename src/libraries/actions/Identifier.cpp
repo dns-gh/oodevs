@@ -33,7 +33,7 @@ Identifier::Identifier( const kernel::OrderParameter& parameter, unsigned int va
 // Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------
 Identifier::Identifier( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : Parameter< unsigned int >( parameter, xml::attribute< unsigned int >( xis, "value" ) )
+    : Parameter< unsigned int >( parameter, xis.attribute< unsigned int >( "value" ) )
 {
     // NOTHING
 }

@@ -36,10 +36,10 @@ namespace
 // Created: SBO 2009-04-06
 // -----------------------------------------------------------------------------
 Primitive::Primitive( xml::xistream& xis, const DataTypeFactory& types )
-    : name_( xml::attribute< std::string >( xis, "name" ).c_str() )
-    , category_( xml::attribute< std::string >( xis, "category" ) )
+    : name_( xis.attribute< std::string >( "name" ).c_str() )
+    , category_( xis.attribute< std::string >( "category" ) )
     , comment_( ReadComment( xis ) )
-    , type_( xml::attribute< std::string >( xis, "type" ) )
+    , type_( xis.attribute< std::string >( "type" ) )
     , types_( types )
 {
     xis >> xml::optional >> xml::start( "parameters" )

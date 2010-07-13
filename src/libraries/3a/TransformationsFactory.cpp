@@ -63,7 +63,7 @@ template< typename T >
 void TransformationsFactory::Transform( const std::string& name, xml::xistream& xis, Task& result ) const
 {
     typedef NumericValue K;
-    const std::string function = xml::attribute< std::string >( xis, "function" );
+    const std::string function = xis.attribute< std::string >( "function" );
     if( function == "distance" )
         Transform2< Distance< K > >( name, xis, result ); // Numeric ( position, position )
     else if( function == "contains" )
