@@ -62,8 +62,8 @@ public:
 
     //! @name Types
     //@{
-    typedef std::set< const MIL_Agent_ABC* >  T_AgentSet;
-    typedef T_AgentSet::const_iterator  CIT_AgentSet;
+    typedef std::set< const MIL_Agent_ABC* > T_AgentSet;
+    typedef T_AgentSet::const_iterator     CIT_AgentSet;
     //@}
 
     const T_AgentSet& GetAnimators() const;
@@ -71,8 +71,8 @@ public:
 private:
     //! @name Member data
     //@{
-    T_AgentSet  animators_;
-    unsigned int        maxAnimators_;
+    T_AgentSet animators_;
+    unsigned int maxAnimators_;
     //@}
 };
 

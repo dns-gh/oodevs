@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "AnimatorAttribute.h"
 #include "Object.h"
-#include "MIL.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( AnimatorAttribute )
@@ -20,7 +19,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( AnimatorAttribute )
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 AnimatorAttribute::AnimatorAttribute()
-    : maxAnimators_ ( 0 )
+    : maxAnimators_( 0 )
 {
     // NOTHING
 }
@@ -30,7 +29,7 @@ AnimatorAttribute::AnimatorAttribute()
 // Created: JCR 2008-08-20
 // -----------------------------------------------------------------------------
 AnimatorAttribute::AnimatorAttribute( unsigned int maxAnimator )
-    : maxAnimators_ ( maxAnimator )
+    : maxAnimators_( maxAnimator )
 {
     // NOTHING
 }
@@ -40,7 +39,7 @@ AnimatorAttribute::AnimatorAttribute( unsigned int maxAnimator )
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
 AnimatorAttribute::AnimatorAttribute( xml::xistream& xis )
-    : maxAnimators_ ( xml::attribute< int >( xis, "max-animator" ) )
+    : maxAnimators_( xml::attribute< int >( xis, "max-animator" ) )
 {
     // NOTHING
 }

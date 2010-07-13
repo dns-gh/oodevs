@@ -8,10 +8,10 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "simulation_kernel/DefaultDotationComputer.h"
 #include "simulation_kernel/Entities/Agents/Units/Dotations/PHY_DotationGroupContainer.h"
 #include "simulation_kernel/Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+
 using namespace dotation;
 
 // -----------------------------------------------------------------------------
@@ -19,10 +19,10 @@ using namespace dotation;
 // Created: MGD 2009-09-30
 // -----------------------------------------------------------------------------
 DefaultDotationComputer::DefaultDotationComputer()
-: pDotationContainer_( 0 )
-, forbiddenAmmunition_(0 )
+    : pDotationContainer_ ( 0 )
+    , forbiddenAmmunition_( 0 )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -31,7 +31,7 @@ DefaultDotationComputer::DefaultDotationComputer()
 // -----------------------------------------------------------------------------
 DefaultDotationComputer::~DefaultDotationComputer()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -40,7 +40,7 @@ DefaultDotationComputer::~DefaultDotationComputer()
 // -----------------------------------------------------------------------------
 void DefaultDotationComputer::Reset()
 {
-        pDotationContainer_ = 0;
+    pDotationContainer_ = 0;
 }
 
 // -----------------------------------------------------------------------------

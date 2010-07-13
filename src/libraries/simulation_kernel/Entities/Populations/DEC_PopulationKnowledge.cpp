@@ -13,10 +13,8 @@
 #include "DEC_PopulationKnowledge.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
-#include "protocol/protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_PopulationKnowledge )
-
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const DEC_PopulationKnowledge* popKn, const unsigned int /*version*/ )
@@ -38,15 +36,9 @@ void load_construct_data( Archive& archive, DEC_PopulationKnowledge* popKn, cons
 // Created: NLD 2005-12-01
 // -----------------------------------------------------------------------------
 DEC_PopulationKnowledge::DEC_PopulationKnowledge( const MIL_Population& population )
-    : population_            ( population )
-    , attackers_             ()
-    , newAttackers_          ()
-    , securers_              ()
-    , newSecurers_           ()
-    , channelingLocations_   ()
-    , newChannelingLocations_()
-    , bNewChannelingChanged_ ( false )
-    , bChannelingChanged_    ( false )
+    : population_           ( population )
+    , bNewChannelingChanged_( false )
+    , bChannelingChanged_   ( false )
 {
     // NOTHING
 }
@@ -231,7 +223,7 @@ boost::shared_ptr< DEC_Knowledge_Urban > DEC_PopulationKnowledge::ResolveKnowled
 // Name: DEC_PopulationKnowledge::ResolveKnowledgeUrban
 // Created: SLG 2010-02-01
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Urban > DEC_PopulationKnowledge::ResolveKnowledgeUrban( uint /*nID*/ ) const
+boost::shared_ptr< DEC_Knowledge_Urban > DEC_PopulationKnowledge::ResolveKnowledgeUrban( unsigned int /*nID*/ ) const
 {
     return boost::shared_ptr< DEC_Knowledge_Urban >();
 }

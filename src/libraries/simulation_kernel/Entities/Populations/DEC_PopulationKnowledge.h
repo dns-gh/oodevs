@@ -37,15 +37,18 @@ public:
     //! @name Types
     //@{
     typedef std::set< const MIL_Agent_ABC* > T_AgentSet;
-    typedef T_AgentSet::const_iterator       CIT_AgentSet;
+    typedef T_AgentSet::const_iterator     CIT_AgentSet;
 
-    typedef std::vector< TER_Localisation >  T_LocationVector;
+    typedef std::vector< TER_Localisation >    T_LocationVector;
     typedef T_LocationVector::const_iterator CIT_LocationVector;
     //@}
 
 public:
-    DEC_PopulationKnowledge( const MIL_Population& population );
+    //! @name Constructors/Destructor
+    //@{
+             DEC_PopulationKnowledge( const MIL_Population& population );
     virtual ~DEC_PopulationKnowledge();
+    //@}
 
     //! @name Main operations
     //@{
@@ -55,29 +58,29 @@ public:
 
     //! @name tools::Resolver
     //@{
-    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent ( const Common::MsgUnitKnowledge&  asn ) const;
-    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent (       uint                   nID ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent ( const Common::MsgUnitKnowledge& asn ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent ( unsigned int nID ) const;
 
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const Common::MsgObjectKnowledge& asn ) const;
-    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject(       uint                   nID ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( unsigned int nID ) const;
 
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const Common::MsgPopulationKnowledge& asn ) const;
-    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation(       unsigned int                       nID ) const;
+    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( unsigned int nID ) const;
 
     virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( const Common::MsgUrbanKnowledge& asn ) const;
-    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban(       uint                   nID ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( unsigned int nID ) const;
     //@}
 
     //! @name Operations
     //@{
-    void NotifyAttackedBy ( const MIL_Agent_ABC& attacker );
-    std::vector< unsigned int > GetPionsAttacking( ) const;
-    void NotifySecuredBy  ( const MIL_Agent_ABC& securer );
-    std::vector< unsigned int > GetPionsSecuring ( ) const;
+    void NotifyAttackedBy( const MIL_Agent_ABC& attacker );
+    std::vector< unsigned int > GetPionsAttacking() const;
+    void NotifySecuredBy( const MIL_Agent_ABC& securer );
+    std::vector< unsigned int > GetPionsSecuring() const;
 
-          void              NotifyChanneled       ( const TER_Localisation& location );
+    void NotifyChanneled( const TER_Localisation& location );
     const T_LocationVector& GetChannelingLocations() const;
-          bool              HasChannelingChanged  () const;
+    bool HasChannelingChanged() const;
     //@}
 
     //! @name CheckPoints
@@ -93,17 +96,18 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const MIL_Population& population_;
     T_AgentSet attackers_;
     T_AgentSet newAttackers_;
-
     T_AgentSet securers_;
     T_AgentSet newSecurers_;
-
     T_LocationVector channelingLocations_;
     T_LocationVector newChannelingLocations_;
-    bool             bNewChannelingChanged_;
-    bool             bChannelingChanged_;
+    bool bNewChannelingChanged_;
+    bool bChannelingChanged_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_PopulationKnowledge )
