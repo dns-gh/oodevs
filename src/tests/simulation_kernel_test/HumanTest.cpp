@@ -1,18 +1,22 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
 #include "simulation_kernel_test_pch.h"
-
-
 #include "simulation_kernel/Checkpoints/MIL_CheckPointInArchive.h"
 #include "simulation_kernel/Checkpoints/MIL_CheckPointOutArchive.h"
-
 #include "simulation_kernel/Entities/Agents/Units/Humans/PHY_Human.h"
 #include "simulation_kernel/Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "simulation_kernel/Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "simulation_kernel/Entities/Objects/MIL_NbcAgentType.h"
 #include "simulation_kernel/Entities/Objects/MIL_ToxicEffectManipulator.h"
-
 #include "MockHumansComposante.h"
 #include "StubMIL_Time_ABC.h"
-
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -123,21 +127,22 @@ BOOST_AUTO_TEST_CASE( HumanApplyPoisonous )
     MOCK_EXPECT( composante, NotifyHumanRemoved );
     PHY_Human human = PHY_Human( time, composante);
 
-    xml::xistringstream xis( "<nbc>"
-        "<propagation wind-speed-limit='5' contamination-distance='300' contamination-quantity-given='0.5' />"
-        "<nbc-suit max-speed-modifier='0.4' reloading-time-modifier='1.5'/>"
-        "<agents>"
-        "<agent id='1' name='Biologique'>"
-        "<effects intoxication='true' type='liquid'>"
-        "<effect percentage='0' wound='nonblesse'/>"
-        "<effect percentage='0.2' wound='u1'/>"
-        "<effect percentage='0.15' wound='u2'/>"
-        "<effect percentage='0.25' wound='u3'/>"
-        "<effect percentage='0.2' wound='ue'/>"
-        "<effect percentage='0.2' wound='mort'/>"
-        "</effects>"
-        "</agent>"
-        "</agents>"
+    xml::xistringstream xis( 
+        "<nbc>"
+        "   <propagation wind-speed-limit='5' contamination-distance='300' contamination-quantity-given='0.5' />"
+        "   <nbc-suit max-speed-modifier='0.4' reloading-time-modifier='1.5'/>"
+        "   <agents>"
+        "       <agent id='1' name='Biologique'>"
+        "           <effects intoxication='true' type='liquid'>"
+        "               <effect percentage='0' wound='nonblesse'/>"
+        "               <effect percentage='0.2' wound='u1'/>"
+        "               <effect percentage='0.15' wound='u2'/>"
+        "               <effect percentage='0.25' wound='u3'/>"
+        "               <effect percentage='0.2' wound='ue'/>"
+        "               <effect percentage='0.2' wound='mort'/>"
+        "           </effects>"
+        "       </agent>"
+        "   </agents>"
         "</nbc>" );
     std::vector< const MIL_NbcAgentType* > nbcTypes;
     //MIL_NbcAgentType::Initialize( xis );
@@ -335,7 +340,6 @@ BOOST_AUTO_TEST_CASE( HumanNotifyBackToWar )
     MOCK_EXPECT( composante, NotifyHumanAdded );
     MOCK_EXPECT( composante, NotifyHumanRemoved );
     PHY_Human human = PHY_Human( time, composante);
-
 
     //human.NotifyBackToWar(); //@TODO MGD need PHY_MedicalHumanState to be set
     //Check notification to component and event

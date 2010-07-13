@@ -1,5 +1,4 @@
 #include "simulation_kernel_test_pch.h"
-
 #include <set>
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
@@ -12,7 +11,6 @@ using namespace mockpp;
 
 namespace
 {
-
     class MockAgentWithPosition : public MockAgent
     {
     public:
@@ -20,9 +18,11 @@ namespace
         {
             RegisterRole( *new MockRoleLocation() );
         }
-        virtual ~MockAgentWithPosition() {}
+        virtual ~MockAgentWithPosition()
+        {
+            // NOTHING
+        }
     };
-
 }
 
 // -----------------------------------------------------------------------------

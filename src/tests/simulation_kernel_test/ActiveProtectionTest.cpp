@@ -1,5 +1,13 @@
-#include "simulation_kernel_test_pch.h"
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
+#include "simulation_kernel_test_pch.h"
 #include "MockAgent.h"
 #include "MockArmy.h"
 #include "MockMIL_EntityManager_ABC.h"
@@ -14,7 +22,6 @@
 #include "StubDEC_Decision.h"
 #include "StubMIL_Object_ABC.h"
 #include "TestIndirectFireModifier.h"
-
 #include "AlgorithmsFactories.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_ActionIndirectFire_Position.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_RoleAction_IndirectFiring.h"

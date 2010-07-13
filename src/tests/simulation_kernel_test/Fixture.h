@@ -54,7 +54,7 @@ struct FixtureAutomate
     FixtureAutomate()
     {
         xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
-        xis.start( "main" );
+        xis >> xml::start( "main" );
         std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
         pModel_.reset( new DEC_Model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes ) );
         pType_.reset( new StubMIL_AutomateType( *pModel_ ) );

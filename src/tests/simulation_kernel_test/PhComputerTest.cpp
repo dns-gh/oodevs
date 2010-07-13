@@ -39,7 +39,6 @@
 
 #include "simulation_terrain/TER_World.h"
 
-
 // -----------------------------------------------------------------------------
 // Name: PhComputerTest
 // Created: SLG 2010-01-19
@@ -109,10 +108,10 @@ BOOST_AUTO_TEST_CASE( PhComputerTargetPositionTest )
 
     MIL_ObjectLoader loader;
     {
-        xml::xistringstream xis( "<objects>"
-            "<object type='urban block'/>"
-            "</objects>"
-            );
+        xml::xistringstream xis(
+            "<objects>"
+            "    <object type='urban block'/>"
+            "</objects>" );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
     MIL_Object_ABC* pObject = loader.CreateUrbanObject( *urbanBlock );
@@ -158,10 +157,10 @@ BOOST_AUTO_TEST_CASE( PhComputerIndirectPhModifier )
 
     MIL_ObjectLoader loader;
     {
-        xml::xistringstream xis( "<objects>"
-            "<object type='urban block'/>"
-            "</objects>"
-            );
+        xml::xistringstream xis(
+            "<objects>"
+            "    <object type='urban block'/>"
+            "</objects>" );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
     MIL_Object_ABC* pObject = loader.CreateUrbanObject( *urbanBlock );
@@ -179,5 +178,3 @@ BOOST_AUTO_TEST_CASE( PhComputerIndirectPhModifier )
 
     TER_World::DestroyWorld();
 }
-
-

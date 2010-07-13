@@ -16,8 +16,8 @@ namespace transport
 {
 
 // =============================================================================
-/** @class  ConsumptionChangeRequestHandler_ABC
-    @brief  ConsumptionChangeRequestHandler_ABC
+/** @class  DefaultTransportPermissionComputer
+    @brief  Default transport permission computer
 */
 // Created: AHC 2009-10-01
 // =============================================================================

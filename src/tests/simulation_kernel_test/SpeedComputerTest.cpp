@@ -8,34 +8,38 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
-
 #include "Entities/Agents/Actions/Moving/SpeedComputerStrategy.h"
 #include "MoveComputerFactory.h"
 #include "SpeedComputer_ABC.h"
-
 #include "MockAgent.h"
 
 // -----------------------------------------------------------------------------
 // Name: DefaultSpeedComputerTest
 // Created: LDC 2009-12-16
 // -----------------------------------------------------------------------------
-class ReentrantRole
+namespace
 {
-    public:
-        explicit ReentrantRole( moving::MoveComputerFactory& moveComputerFactory ) : factory_( moveComputerFactory ) {}
-
-        void Execute( moving::SpeedComputer_ABC& algorithm ) const
-        {
+    class ReentrantRole
+    {
+        public:
+            explicit ReentrantRole( moving::MoveComputerFactory& moveComputerFactory )
+                : factory_( moveComputerFactory )
             {
-                moving::SpeedComputerStrategy strategy( true, false, 0 );
-                factory_.CreateSpeedComputer( strategy );
+                // NOTHING
             }
-            MockAgent stubby;
-            algorithm.ApplyOnReinforcement( stubby );
-        }
-    private:
-        moving::MoveComputerFactory& factory_;
-};
+            void Execute( moving::SpeedComputer_ABC& algorithm ) const
+            {
+                {
+                    moving::SpeedComputerStrategy strategy( true, false, 0 );
+                    factory_.CreateSpeedComputer( strategy );
+                }
+                MockAgent stubby;
+                algorithm.ApplyOnReinforcement( stubby );
+            }
+        private:
+            moving::MoveComputerFactory& factory_;
+    };
+}
 
 BOOST_AUTO_TEST_CASE( DefaultSpeedComputerTest )
 {

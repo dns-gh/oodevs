@@ -55,7 +55,7 @@ BOOST_AUTO_TEST_CASE( InstantiateDEC_AutomateDecision )
 BOOST_AUTO_TEST_CASE( InstantiateDEC_PopulationDecision )
 {
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
-    xis.start( "main" );
+    xis >> xml::start( "main" );
     std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
     StubMIL_PopulationType type( model );
@@ -160,7 +160,7 @@ namespace
 BOOST_AUTO_TEST_CASE( ActivateOrderExecutesBehaviour )
 {
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
-    xis.start( "main" );
+    xis >> xml::start( "main" );
     std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
     StubMIL_PopulationType type( model );
@@ -174,7 +174,6 @@ BOOST_AUTO_TEST_CASE( ActivateOrderExecutesBehaviour )
     boost::shared_ptr< MIL_Mission_ABC > mission ( new StubMIL_Mission_ABC( missionType, resolver ) );
     decision.StartMissionBehavior( mission );
     missionType.verify();
-
     scriptMocker_.Call_mocker.expects( once() ).with(  eq< std::string >( "missionBehavior called" ) );
     decision.UpdateDecision( 1.f );
     scriptMocker_.verify();
@@ -187,7 +186,7 @@ BOOST_AUTO_TEST_CASE( ActivateOrderExecutesBehaviour )
 BOOST_AUTO_TEST_CASE( ActivateOrderPassesMissionToDecisional )
 {
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
-    xis.start( "main" );
+    xis >> xml::start( "main" );
     std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
     StubMIL_PopulationType type( model );
@@ -214,7 +213,7 @@ BOOST_AUTO_TEST_CASE( ActivateOrderPassesMissionToDecisional )
 BOOST_AUTO_TEST_CASE( DecisionalCanUseMissionParameters )
 {
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
-    xis.start( "main" );
+    xis >> xml::start( "main" );
     std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
     StubMIL_PopulationType type( model );
@@ -242,7 +241,7 @@ BOOST_AUTO_TEST_CASE( DecisionalCanUseMissionParameters )
 BOOST_AUTO_TEST_CASE( DEC_GetMissionPassesParametersToLua )
 {
     xml::xistringstream xis( "<main dia-type='PionTest' file='MissionParamTestBrain.bms'/>" );
-    xis.start( "main" );
+    xis >> xml::start( "main" );
     std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
     StubMIL_PopulationType type( model );
@@ -270,7 +269,7 @@ BOOST_AUTO_TEST_CASE( DEC_GetMissionPassesParametersToLua )
 BOOST_AUTO_TEST_CASE( DEC_GetMissionPassesParametersToLuaMission )
 {
     xml::xistringstream xis( "<main dia-type='PionTest' file='MissionParamTestBrain.bms'/>" );
-    xis.start( "main" );
+    xis >> xml::start( "main" );
     std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
     StubMIL_PopulationType type( model );
@@ -299,7 +298,7 @@ BOOST_AUTO_TEST_CASE( DEC_GetMissionPassesParametersToLuaMission )
 BOOST_AUTO_TEST_CASE( DEC_GetMissionPassesOtherMissionsParametersToLua )
 {
     xml::xistringstream xis( "<main dia-type='PionTest' file='MissionParamTestBrain.bms'/>" );
-    xis.start( "main" );
+    xis >> xml::start( "main" );
     std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
     StubMIL_PopulationType type( model );
@@ -334,7 +333,7 @@ BOOST_AUTO_TEST_CASE( DEC_GetMissionPassesOtherMissionsParametersToLua )
 BOOST_AUTO_TEST_CASE( DEC_Decision_GetterTest )
 {
     xml::xistringstream xis( "<main dia-type='PionTest' file='MissionParamTestBrain.bms'/>" );
-    xis.start( "main" );
+    xis >> xml::start( "main" );
     std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
     StubMIL_PopulationType type( model );

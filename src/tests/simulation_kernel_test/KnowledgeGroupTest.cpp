@@ -205,7 +205,6 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorArmyUnderKnowledgeGroup )
     MOCK_EXPECT( army, UnregisterKnowledgeGroup ).with( mock::same( groupArmy ) ).once();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: BOOST_AUTO_TEST_CASE
 // Created: FHD 2010-01-19:
@@ -216,12 +215,13 @@ BOOST_AUTO_TEST_CASE( ReceiveKnowledgeGroupSetType )
     MockKnowledgeGroupFactory mockKnowledgeGroupFactory;
 
     // define a new knowledge group type
-    const std::string initialisation ="<knowledge-groups><knowledge-group name=\"Standard\" communication-delay=\"01m\">"
-    "<unit-knowledge max-lifetime=\"03h\" max-unit-to-knowledge-distance=\"60000\"/>"
-    "<population-knowledge max-lifetime=\"2m\"/>"
-    "</knowledge-group>"
-    "</knowledge-groups>";
-    xml::xistringstream xis( initialisation );
+    xml::xistringstream xis(
+        "<knowledge-groups>"
+        "    <knowledge-group name='Standard' communication-delay='01m'>"
+        "        <unit-knowledge max-lifetime='03h' max-unit-to-knowledge-distance='60000'/>"
+        "        <population-knowledge max-lifetime='2m'/>"
+        "    </knowledge-group>"
+        "</knowledge-groups>" );
     double timeFactor = 0.5f;
     MIL_KnowledgeGroupType::Initialize(xis, timeFactor);
 

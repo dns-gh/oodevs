@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_CASE( PkComputerUrbanProtectionTest )
     {
         xml::xistringstream xis( 
             "<objects>"
-            "   <object type='urban block'/>"
+            "    <object type='urban block'/>"
             "</objects>" );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }

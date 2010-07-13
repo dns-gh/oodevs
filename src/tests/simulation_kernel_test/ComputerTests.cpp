@@ -1,5 +1,13 @@
-#include "simulation_kernel_test_pch.h"
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2009 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
+#include "simulation_kernel_test_pch.h"
 #include "simulation_kernel/DefaultTransportPermissionComputer.h"
 
 // -----------------------------------------------------------------------------

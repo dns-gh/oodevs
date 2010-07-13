@@ -31,14 +31,14 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Instance )
     TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
     MIL_ObjectLoader loader;
     {
-        xml::xistringstream xis( "<objects>"
-                "<object type='object'>"
-                    "<constructor unit-type='raw' default-consumption-mode='EnTravaux'>"
-                        "<buildable/>"
-                    "</constructor>"
-                "</object>"
-            "</objects>"
-            );
+        xml::xistringstream xis(
+            "<objects>"
+            "    <object type='object'>"
+            "       <constructor unit-type='raw' default-consumption-mode='EnTravaux'>"
+            "           <buildable/>"
+            "       </constructor>"
+            "   </object>"
+            "</objects>" );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
     const MIL_ObjectType_ABC& type = loader.GetType( "object" );

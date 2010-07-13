@@ -10,7 +10,6 @@
 #ifndef __TestPK_h_
 #define __TestPK_h_
 
-
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"

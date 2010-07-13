@@ -56,9 +56,9 @@ BOOST_AUTO_TEST_CASE( TestKnowledgeGroupType )
 {
     const std::string initialisation =
         "<knowledge-groups>"
-            "<knowledge-group name=\"GTIA\" communication-delay=\"01m\">"
-                "<unit-knowledge max-lifetime=\"03h\" max-unit-to-knowledge-distance=\"60000\" interpolation-time=\"010m\" />"
-                "<population-knowledge max-lifetime=\"2m\"/>"
+            "<knowledge-group name='GTIA' communication-delay='01m'>"
+                "<unit-knowledge max-lifetime='03h' max-unit-to-knowledge-distance='60000' interpolation-time='010m'/>"
+                "<population-knowledge max-lifetime='2m'/>"
             "</knowledge-group>"
         "</knowledge-groups>";
 

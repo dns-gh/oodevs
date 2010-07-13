@@ -46,7 +46,6 @@
 #include "StubMIL_Population.h"
 #include "StubMIL_PopulationType.h"
 
-
 #include "MockNET_Publisher_ABC.h"
 #include "MockBuilder.h"
 #include "MockArmy.h"
@@ -114,12 +113,12 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NoNBC )
 {
     MIL_ObjectLoader loader;
     {
-        xml::xistringstream xis( "<objects>"
-                "<object type='object'>"
-                    "<contamination type='nbc' max-toxic='1'/>"
-                "</object>"
-            "</objects>"
-            );
+        xml::xistringstream xis(
+            "<objects>"
+            "   <object type='object'>"
+            "       <contamination type='nbc' max-toxic='1'/>"
+            "   </object>"
+            "</objects>" );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
     const MIL_ObjectType_ABC& type = loader.GetType( "object" );

@@ -1,20 +1,25 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2009 MASA Group
+//
+// *****************************************************************************
+
 #include "simulation_kernel_test_pch.h"
-
 #include "protocol/protocol.h"
-
 #include "Fixture.h"
 #include "MockDEC_KnowledgeResolver_ABC.h"
 #include "MockMIL_EntityManager_ABC.h"
 #include "MockMIL_ObjectType_ABC.h"
 #include "MockMIL_Time_ABC.h"
-
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
-
 #include "Entities/Orders/MIL_AgentKnowledgeListParameter.h"
 #include "Entities/Orders/MIL_AgentKnowledgeParameter.h"
 #include "Entities/Orders/MIL_AgentListParameter.h"
@@ -47,15 +52,11 @@
 #include "Entities/Orders/MIL_RealParameter.h"
 #include "Entities/Orders/MIL_StringParameter.h"
 #include "Entities/Orders/MIL_TirIndirectParameter.h"
-
 #include "UrbanType.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
-
-
 #include "Network/NET_ASN_Tools.h"
-
 #include "simulation_terrain/TER_World.h"
 
 using namespace Common;
@@ -256,13 +257,23 @@ BOOST_AUTO_TEST_CASE( TestMIL_DirectionParameter_ToASN )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_DotationTypeParameter_ToASN )
 {
-    xml::xistringstream xisUrbanType( "<urban><urban-block-types><material-composition-types/>"
-        "<facade-types/><roof-shape-types/></urban-block-types></urban>" );
+    xml::xistringstream xisUrbanType(
+        "<urban>"
+        "   <urban-block-types>"
+        "       <material-composition-types/>"
+        "       <facade-types/>"
+        "       <roof-shape-types/>"
+        "   </urban-block-types>"
+        "</urban>" );
     UrbanType::Initialize( xisUrbanType );
-    xml::xistringstream xisNat( "<natures><nature type='Solid'/></natures>" );
+    xml::xistringstream xisNat(
+        "<natures>"
+        "   <nature type='Solid'/>"
+        "</natures>" );
     PHY_DotationNature::Initialize( xisNat );
-    xml::xistringstream xis( "<dotations>"
-        "<dotation category='Food' id='42' name='ration' nature='Solid' package-mass='0.015' package-size='10' package-volume='0.01'/>"
+    xml::xistringstream xis(
+        "<dotations>"
+        "   <dotation category='Food' id='42' name='ration' nature='Solid' package-mass='0.015' package-size='10' package-volume='0.01'/>"
         "</dotations>" );
     MockMIL_EntityManager_ABC entityManager;
     PHY_DotationType::Initialize( xis );
