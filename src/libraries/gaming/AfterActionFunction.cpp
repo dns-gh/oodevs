@@ -33,7 +33,7 @@ namespace
 // Created: AGE 2007-10-10
 // -----------------------------------------------------------------------------
 AfterActionFunction::AfterActionFunction( xml::xistream& xis )
-    : name_( xml::attribute< std::string >( xis, "name" ).c_str() )
+    : name_( xis.attribute< std::string >( "name" ).c_str() )
     , base_( ReadBase( xis ) )
 {
     std::string comments;
@@ -59,7 +59,7 @@ AfterActionFunction::~AfterActionFunction()
 // -----------------------------------------------------------------------------
 void AfterActionFunction::ReadParameter( xml::xistream& xis )
 {
-    const std::string name = xml::attribute< std::string >( xis, "name" );
+    const std::string name = xis.attribute< std::string >( "name" );
     Register( name, *new AfterActionParameter( xis ) );
 }
 

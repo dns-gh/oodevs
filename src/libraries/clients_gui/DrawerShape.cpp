@@ -49,7 +49,7 @@ namespace
 
     QColor ReadColor( xml::xistream& xis )
     {
-        const std::string name = xml::attribute< std::string >( xis, "color" );
+        const std::string name = xis.attribute< std::string >( "color" );
         return QColor( name.c_str() );
     }
 }

@@ -16,8 +16,8 @@
 // Created: SBO 2009-06-16
 // -----------------------------------------------------------------------------
 SuccessFactorActionTypeParameter::SuccessFactorActionTypeParameter( xml::xistream& xis )
-    : name_( xml::attribute< std::string >( xis, "name" ).c_str() )
-    , default_( xml::attribute< std::string >( xis, "default", "" ).c_str() )
+    : name_( xis.attribute< std::string >( "name" ).c_str() )
+    , default_( xis.attribute< std::string >( "default", "" ).c_str() )
 {
     // NOTHING
 }

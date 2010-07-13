@@ -18,9 +18,9 @@
 // Created: SBO 2009-06-16
 // -----------------------------------------------------------------------------
 SuccessFactorCondition::SuccessFactorCondition( xml::xistream& xis, const ScoresModel& model )
-    : score_( model.Get( xml::attribute< std::string >( xis, "property" ).c_str() ) )
-    , operator_( xml::attribute< std::string >( xis, "operator", "or" ) )
-    , value_( xml::attribute< float >( xis, "value" ) )
+    : score_( model.Get( xis.attribute< std::string >( "property" ).c_str() ) )
+    , operator_( xis.attribute< std::string >( "operator", "or" ) )
+    , value_( xis.attribute< float >( "value" ) )
 {
     // NOTHING
 }

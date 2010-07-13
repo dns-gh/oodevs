@@ -25,8 +25,8 @@ using namespace gui;
 TerrainPreference::TerrainPreference( xml::xistream& xis, kernel::Controllers& controllers )
     : controllers_( controllers )
     , options_( controllers_.options_ )
-    , type_( xml::attribute< std::string >( xis, "type" ) )
-    , name_( xml::attribute< std::string >( xis, "name" ) )
+    , type_( xis.attribute< std::string >( "type" ) )
+    , name_( xis.attribute< std::string >( "name" ) )
     , shown_( true )
 {
     std::string color;

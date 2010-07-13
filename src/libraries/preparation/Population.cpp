@@ -38,10 +38,10 @@ Population::Population( const kernel::PopulationType& type, kernel::Controller& 
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
 Population::Population( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const tools::Resolver_ABC< kernel::PopulationType, std::string >& types )
-    : kernel::EntityImplementation< kernel::Population_ABC >( controller, xml::attribute< int >( xis, "id" ), xml::attribute< std::string >( xis, "name" ).c_str() )
-    , type_( types.Get( xml::attribute< std::string >( xis, "type" ) ) )
-    , livingHumans_( xml::attribute< int >( xis, "humans" ) )
-    , attitude_( xml::attribute< std::string >( xis, "attitude" ).c_str() )
+    : kernel::EntityImplementation< kernel::Population_ABC >( controller, xis.attribute< int >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
+    , type_( types.Get( xis.attribute< std::string >( "type" ) ) )
+    , livingHumans_( xis.attribute< int >( "humans" ) )
+    , attitude_( xis.attribute< std::string >( "attitude" ).c_str() )
 {
     RegisterSelf( *this );
     idManager.Lock( id_ );

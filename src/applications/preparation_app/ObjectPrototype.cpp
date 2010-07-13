@@ -43,7 +43,7 @@ namespace
     void ConstructorAttribute( xml::xistream& /*xis*/, T_AttributeContainer& /*container*/, QWidget* /*parent*/, Object_ABC*& /*object*/ )
     {
         // $$$$ SBO 2009-06-09: TODO...
-//        const bool density = xml::attribute< std::string >( xis, "unit-type" ) == "density";
+//        const bool density = xis.attribute< std::string >( "unit-type" ) == "density";
 //        xis >> xml::optional() >> xml::list( "buildable", builder, &ConstructorBuilder::BuildPrototype, density );
 //        xis >> xml::optional() >> xml::list( "improvable", builder, &ConstructorBuilder::ImprovePrototype, density );
 //        container.push_back( new ConstructionPrototype( parent, object ) );
@@ -60,7 +60,7 @@ namespace
 
     void PropagationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const ObjectTypes& resolver, Object_ABC*& object )
     {
-        std::string model( xml::attribute< std::string >( xis, "model" ) );
+        std::string model( xis.attribute< std::string >( "model" ) );
         if( model == "input" )
             container.push_back( new InputPropagationPrototype( parent, object ) );
         if( model == "fire" )
@@ -69,7 +69,7 @@ namespace
 
     void ContaminationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const ObjectTypes& resolver, Object_ABC*& object )
     {
-        int toxic = xml::attribute< int >( xis, "max-toxic" );
+        int toxic = xis.attribute< int >( "max-toxic" );
         container.push_back( new NBCPrototype( parent, resolver, toxic, object ) );
     }
 

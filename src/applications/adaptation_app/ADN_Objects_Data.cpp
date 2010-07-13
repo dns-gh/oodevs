@@ -301,7 +301,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Constructor::ReadArchive( xml::xistream
     std::string strComsuption;
     xis >> xml::attribute( "default-consumption-mode", strComsuption );
     nDefaultConsumption_ = ADN_Tr::ConvertToConsumptionType( strComsuption );
-    unitType_ = xml::attribute< std::string >( xis, "unit-type" );
+    unitType_ = xis.attribute< std::string >( "unit-type" );
     xis >> xml::optional() >> xml::list( ADN_CapacityInfos_Buildable::TAG, *ptrBuildable_, &ADN_CapacityInfos_Buildable::ReadArchive );
     xis >> xml::optional() >> xml::list( ADN_CapacityInfos_Improvable::TAG, *ptrImprovable_, &ADN_CapacityInfos_Improvable::ReadArchive );
 }
@@ -347,7 +347,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Avoidable::ADN_CapacityInfos_Avoidable()
 void ADN_Objects_Data::ADN_CapacityInfos_Avoidable::ReadArchive( xml::xistream& xis )
 {
     ADN_TypeCapacity_Infos::ReadArchive( xis );
-    rDistance_ = xml::attribute< double >( xis, "distance" );
+    rDistance_ = xis.attribute< double >( "distance" );
 }
 
 // -----------------------------------------------------------------------------
@@ -453,7 +453,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Attrition::ADN_CapacityInfos_Attrition()
 void ADN_Objects_Data::ADN_CapacityInfos_Attrition::ReadArchive( xml::xistream& xis )
 {
     ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
-    std::string dotation( xml::attribute< std::string >( xis, "category" ) );
+    std::string dotation( xis.attribute< std::string >( "category" ) );
     if( dotation != "" )
     {
         ADN_Equipement_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( dotation );
@@ -587,7 +587,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Propagation::ADN_CapacityInfos_Propagation()
 void ADN_Objects_Data::ADN_CapacityInfos_Propagation::ReadArchive( xml::xistream& xis )
 {
     ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
-    model_ = xml::attribute< std::string >( xis, "model" );
+    model_ = xis.attribute< std::string >( "model" );
 }
 void ADN_Objects_Data::ADN_CapacityInfos_Propagation::WriteArchive( xml::xostream& xos )
 {
@@ -614,8 +614,8 @@ ADN_Objects_Data::ADN_CapacityInfos_Protection::ADN_CapacityInfos_Protection()
 void ADN_Objects_Data::ADN_CapacityInfos_Protection::ReadArchive( xml::xistream& xis )
 {
     ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
-    max_size_ = xml::attribute< int >( xis, "max-size" );
-    geniePrepared_ = xml::attribute< bool >( xis, "geniePrepared" );
+    max_size_ = xis.attribute< int >( "max-size" );
+    geniePrepared_ = xis.attribute< bool >( "geniePrepared" );
 }
 
 // -----------------------------------------------------------------------------
@@ -645,7 +645,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Workable::ADN_CapacityInfos_Workable()
 void ADN_Objects_Data::ADN_CapacityInfos_Workable::ReadArchive( xml::xistream& xis )
 {
     ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
-    worker_ = xml::attribute< int >( xis, "max-animator" );
+    worker_ = xis.attribute< int >( "max-animator" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1348,7 +1348,7 @@ void ADN_Objects_Data::ReadObject( xml::xistream& xis )
 //    if( nObjectType == (E_ObjectType)-1)
 //        throw ADN_DataException( "Object", "Le type d'objet " + type + " n'est pas connu" );
 //
-    std::string type = xml::attribute< std::string >( xis, "type" );
+    std::string type = xis.attribute< std::string >( "type" );
     ObjectInfos* pObjInfo = new ObjectInfos( type );
     if( pObjInfo )
     {

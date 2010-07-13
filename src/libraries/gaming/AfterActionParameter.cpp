@@ -18,8 +18,8 @@
 // Created: AGE 2007-09-24
 // -----------------------------------------------------------------------------
 AfterActionParameter::AfterActionParameter( xml::xistream& xis )
-    : name_ ( xml::attribute< std::string >( xis, "name" ) )
-    , type_ ( xml::attribute< std::string >( xis, "type" ) )
+    : name_ ( xis.attribute< std::string >( "name" ) )
+    , type_ ( xis.attribute< std::string >( "type" ) )
 {
     // NOTHING
 }

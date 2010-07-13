@@ -75,7 +75,7 @@ namespace
 {
     geometry::Point2f ReadPosition( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
     {
-        const std::string position = xml::attribute< std::string >( xis, "position" );
+        const std::string position = xis.attribute< std::string >( "position" );
         return converter.ConvertToXY( position );
     }
 }

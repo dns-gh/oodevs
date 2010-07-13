@@ -48,7 +48,7 @@ namespace
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
 Team::Team( xml::xistream& xis, kernel::Controller& controller, ObjectFactory_ABC& objectFactory, IdManager& idManager )
-    : EntityImplementation< Team_ABC >( controller, xml::attribute< unsigned long >( xis, "id" ), ReadName( xis ) )
+    : EntityImplementation< Team_ABC >( controller, xis.attribute< unsigned long >( "id" ), ReadName( xis ) )
     , objectFactory_( objectFactory )
 {
     RegisterSelf( *this );

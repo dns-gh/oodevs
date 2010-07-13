@@ -48,9 +48,9 @@ Object::Object( kernel::Controller& controller, const kernel::CoordinateConverte
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
 Object::Object( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, IdManager& idManager )
-    : EntityImplementation< Object_ABC >( controller, xml::attribute< unsigned long >( xis, "id" ), xml::attribute< std::string >( xis, "name" ).c_str() )
+    : EntityImplementation< Object_ABC >( controller, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
     , converter_( converter )
-    , type_( types.Get( xml::attribute< std::string >( xis, "type" ) ) )
+    , type_( types.Get( xis.attribute< std::string >( "type" ) ) )
 {
     idManager.Lock( id_ );
     RegisterSelf( *this );

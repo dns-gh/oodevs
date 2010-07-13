@@ -54,10 +54,10 @@ namespace
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
 Agent::Agent( xml::xistream& xis, Controller& controller, IdManager& idManager, const AgentTypes& agentTypes )
-    : EntityImplementation< Agent_ABC >( controller, xml::attribute< unsigned long >( xis, "id" ), ReadName( xis ) )
-    , type_( agentTypes.Resolver< AgentType, std::string >::Get( xml::attribute< std::string >( xis, "type" ) ) )
+    : EntityImplementation< Agent_ABC >( controller, xis.attribute< unsigned long >( "id" ), ReadName( xis ) )
+    , type_( agentTypes.Resolver< AgentType, std::string >::Get( xis.attribute< std::string >( "type" ) ) )
     , symbol_( type_.GetSymbol() )
-    , commandPost_( xml::attribute< bool >( xis, "command-post", false ) )
+    , commandPost_( xis.attribute< bool >( "command-post", false ) )
 {
     idManager.Lock( id_ );
     RegisterSelf( *this );

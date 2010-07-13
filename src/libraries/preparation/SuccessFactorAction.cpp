@@ -30,7 +30,7 @@ SuccessFactorAction::SuccessFactorAction( const SuccessFactorActionType& type )
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
 SuccessFactorAction::SuccessFactorAction( xml::xistream& xis, const SuccessFactorActionTypes& actions )
-    : type_( actions.Get( xml::attribute< std::string >( xis, "type" ).c_str() ) )
+    : type_( actions.Get( xis.attribute< std::string >( "type" ).c_str() ) )
 {
     xis >> xml::list( "parameter", *this, &SuccessFactorAction::ReadParameter );
 }

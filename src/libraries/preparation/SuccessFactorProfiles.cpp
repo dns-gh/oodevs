@@ -53,7 +53,7 @@ SuccessFactorProfiles::~SuccessFactorProfiles()
 // -----------------------------------------------------------------------------
 void SuccessFactorProfiles::ReadProfile( xml::xistream& xis, const ProfilesModel& model )
 {
-    const std::string name = xml::attribute< std::string >( xis, "name" );
+    const std::string name = xis.attribute< std::string >( "name" );
     if( const UserProfile* profile = model.Find( name.c_str() ) )
         Register( profile->GetLogin(), *profile );
 }

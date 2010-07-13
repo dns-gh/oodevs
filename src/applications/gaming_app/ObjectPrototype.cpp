@@ -73,7 +73,7 @@ namespace
     void ConstructorAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, ParameterList*& attributesList )
     {
         ConstructorBuilder builder( container, parent, attributesList );
-        std::string type( xml::attribute< std::string >( xis, "unit-type" ) );
+        std::string type( xis.attribute< std::string >( "unit-type" ) );
 
         bool density = ( type == "density" );
         xis >> xml::optional() >> xml::list( "buildable", builder, &ConstructorBuilder::BuildPrototype, density );
@@ -91,7 +91,7 @@ namespace
 
     void PropagationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const kernel::ObjectTypes& resolver, ParameterList*& attributesList )
     {
-        std::string model( xml::attribute< std::string >( xis, "model" ) );
+        std::string model( xis.attribute< std::string >( "model" ) );
         if( model == "input" )
         {
             // NOT ALLOWED DURING GAMING SESSION
@@ -103,7 +103,7 @@ namespace
 
     void ContaminationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const kernel::ObjectTypes& resolver, ParameterList*& attributesList )
     {
-        int toxic = xml::attribute< int >( xis, "max-toxic" );
+        int toxic = xis.attribute< int >( "max-toxic" );
         container.push_back( new NBCPrototype( parent, resolver, toxic, attributesList ) );
     }
 

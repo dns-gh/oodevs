@@ -561,7 +561,7 @@ void ADN_Missions_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::ReadFragOrder( xml::xistream& xis )
 {
-    std::auto_ptr< FragOrder > spNew( new FragOrder( xml::attribute< unsigned int >( xis, "id" ) ) );
+    std::auto_ptr< FragOrder > spNew( new FragOrder( xis.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( xis );
     fragOrders_.AddItem( spNew.release() );
 }
@@ -572,7 +572,7 @@ void ADN_Missions_Data::ReadFragOrder( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::ReadMission( xml::xistream& xis, T_Mission_Vector& missions, const bool& isAutomat )
 {
-    std::auto_ptr< ADN_Missions_Data::Mission > spNew( new Mission( xml::attribute< unsigned int >( xis, "id" ), isAutomat ) );
+    std::auto_ptr< ADN_Missions_Data::Mission > spNew( new Mission( xis.attribute< unsigned int >( "id" ), isAutomat ) );
     spNew->ReadArchive( xis );
     missions.AddItem( spNew.release() );
 }

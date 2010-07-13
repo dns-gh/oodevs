@@ -56,7 +56,7 @@ void GraphicPreferences::InitializeTerrainPreferences()
 // -----------------------------------------------------------------------------
 void GraphicPreferences::ReadTerrainPreference( xml::xistream& xis )
 {
-    const std::string type = xml::attribute< std::string >( xis, "type" );
+    const std::string type = xis.attribute< std::string >( "type" );
     displays_.push_back( new TerrainPreference( xis, controllers_ ) );
     terrainPrefs_[ TerrainData( type ) ] = displays_.back();
 }

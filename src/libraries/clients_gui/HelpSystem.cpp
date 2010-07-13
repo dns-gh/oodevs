@@ -49,7 +49,7 @@ HelpSystem::~HelpSystem()
 // -----------------------------------------------------------------------------
 void HelpSystem::ReadWidget( xml::xistream& xis )
 {
-    anchors_[ xml::attribute< std::string >( xis, "name" ) ] = xml::attribute< std::string >( xis, "page" );
+    anchors_[ xis.attribute< std::string >( "name" ) ] = xis.attribute< std::string >( "page" );
 }
 
 // -----------------------------------------------------------------------------

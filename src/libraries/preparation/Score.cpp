@@ -43,7 +43,7 @@ namespace
 Score::Score( xml::xistream& xis, kernel::Controller& controller, const indicators::Primitives& indicators, const indicators::GaugeFactory_ABC& gaugeFactory )
     : controller_( &controller )
     , indicators_( indicators )
-    , name_( xml::attribute< std::string >( xis, "name" ).c_str() )
+    , name_( xis.attribute< std::string >( "name" ).c_str() )
     , formula_( ReadFormula( xis ) )
     , gauge_( ReadGauge( xis, gaugeFactory ) )
     , variables_( new indicators::Variables( xis ) )

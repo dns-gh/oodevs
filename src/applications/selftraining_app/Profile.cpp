@@ -28,7 +28,7 @@ Profile::Profile()
 // Created: RDS 2008-09-10
 // -----------------------------------------------------------------------------
 Profile::Profile( xml::xistream& xis )
-    : login_( xml::attribute< std::string >( xis, "name" ) )
+    : login_( xis.attribute< std::string >( "name" ) )
     , supervisor_( false )
     , valid_( true )
 {

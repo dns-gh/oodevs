@@ -43,8 +43,8 @@ Automat::Automat( const AutomatType& type, Controller& controller, IdManager& id
 // Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
 Automat::Automat( xml::xistream& xis, Controller& controller, IdManager& idManager, const AgentTypes& agentTypes )
-    : EntityImplementation< Automat_ABC >( controller, xml::attribute< unsigned long >( xis, "id" ), xml::attribute< std::string >( xis, "name" ).c_str() )
-    , type_( agentTypes.Resolver< AutomatType, std::string >::Get( xml::attribute< std::string >( xis, "type" ) ) )
+    : EntityImplementation< Automat_ABC >( controller, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
+    , type_( agentTypes.Resolver< AutomatType, std::string >::Get( xis.attribute< std::string >( "type" ) ) )
 {
     RegisterSelf( *this );
     CreateDictionary( controller );

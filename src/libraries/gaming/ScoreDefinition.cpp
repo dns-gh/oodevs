@@ -40,7 +40,7 @@ namespace
 // Created: SBO 2009-04-29
 // -----------------------------------------------------------------------------
 ScoreDefinition::ScoreDefinition( xml::xistream& xis, const indicators::Primitives& primitives, const indicators::GaugeFactory_ABC& factory )
-    : name_( xml::attribute< std::string >( xis, "name" ).c_str() )
+    : name_( xis.attribute< std::string >( "name" ).c_str() )
     , formula_( ReadFormula( xis ) )
     , gauge_( ReadGauge( xis, factory ) )
     , variables_( new indicators::Variables( xis ) )

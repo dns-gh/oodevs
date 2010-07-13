@@ -27,8 +27,8 @@ SuccessFactorActionParameter::SuccessFactorActionParameter( const QString& name,
 // Created: SBO 2009-06-16
 // -----------------------------------------------------------------------------
 SuccessFactorActionParameter::SuccessFactorActionParameter( xml::xistream& xis )
-    : name_( xml::attribute< std::string >( xis, "name" ).c_str() )
-    , value_( xml::attribute< std::string >( xis, "value" ).c_str() )
+    : name_( xis.attribute< std::string >( "name" ).c_str() )
+    , value_( xis.attribute< std::string >( "value" ).c_str() )
 {
     // NOTHING
 }

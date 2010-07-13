@@ -176,7 +176,7 @@ bool Mapping::IsCommandPost( const std::string& type ) const
 // Name: Mapping::GetMissionParameterName
 // Created: LDC 2010-07-09
 // -----------------------------------------------------------------------------
-std::string Mapping::GetMissionParameterName( int index ) const
+std::string Mapping::GetMissionParameterName( int /*index*/ ) const
 {
     return "Location";
 }
@@ -185,7 +185,7 @@ std::string Mapping::GetMissionParameterName( int index ) const
 // Name: Mapping::GetMissionParameterType
 // Created: LDC 2010-07-09
 // -----------------------------------------------------------------------------
-std::string Mapping::GetMissionParameterType( int index ) const
+std::string Mapping::GetMissionParameterType( int /*index*/ ) const
 {
     return "point";
 }
@@ -194,7 +194,7 @@ std::string Mapping::GetMissionParameterType( int index ) const
 // Name: Mapping::GetMissionParameterLocationType
 // Created: LDC 2010-07-09
 // -----------------------------------------------------------------------------
-std::string Mapping::GetMissionParameterLocationType( int index ) const
+std::string Mapping::GetMissionParameterLocationType( int /*index*/ ) const
 {
     return "point";
 }

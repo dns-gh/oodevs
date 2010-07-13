@@ -35,9 +35,9 @@ namespace
 // -----------------------------------------------------------------------------
 ExportFilter::ExportFilter( xml::xistream& xis, const tools::ExerciseConfig& config )
     : config_( config )
-    , target_( xml::attribute< std::string >( xis, "target" ) )
-    , xsl_( xml::attribute< std::string >( xis, "xsl" ) )
-    , output_( xml::attribute< std::string >( xis, "output" ) )
+    , target_( xis.attribute< std::string >( "target" ) )
+    , xsl_( xis.attribute< std::string >( "xsl" ) )
+    , output_( xis.attribute< std::string >( "output" ) )
     , currentLanguage_( GetCurrentLang().ascii() )
 {
     try
@@ -146,8 +146,8 @@ void ExportFilter::Execute( const std::string& outputDirectory ) const
 // -----------------------------------------------------------------------------
 void ExportFilter::ReadDescription( xml::xistream& xis )
 {
-    const std::string lang = xml::attribute< std::string >( xis, "xml:lang" );
-    const std::string name = xml::attribute< std::string >( xis, "name" );
+    const std::string lang = xis.attribute< std::string >( "xml:lang" );
+    const std::string name = xis.attribute< std::string >( "name" );
     std::string description;
     xis >> description;
     descriptions_[lang] = std::make_pair( name.c_str(), description.c_str() );

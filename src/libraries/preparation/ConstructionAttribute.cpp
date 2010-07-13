@@ -32,7 +32,7 @@ ConstructionAttribute::ConstructionAttribute( kernel::PropertiesDictionary& dico
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 ConstructionAttribute::ConstructionAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico )
-    : completion_( unsigned int( xml::attribute< float >( xis, "completion", 1.f ) * 100 ), kernel::Units::percentage )
+    : completion_( unsigned int( xis.attribute< float >( "completion", 1.f ) * 100 ), kernel::Units::percentage )
     , dotationType_( 0 )
     , dotationCount_( 0 )
 {

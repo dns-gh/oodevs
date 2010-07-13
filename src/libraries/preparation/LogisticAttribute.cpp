@@ -34,7 +34,7 @@ LogisticAttribute::LogisticAttribute( kernel::PropertiesDictionary& dico, kernel
 // -----------------------------------------------------------------------------
 LogisticAttribute::LogisticAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::PropertiesDictionary& dico, kernel::Controllers& controllers )
     : controllers_( controllers )
-    , tc2_( automats.Find( xml::attribute< unsigned long >( xis, "id" ) ) )
+    , tc2_( automats.Find( xis.attribute< unsigned long >( "id" ) ) )
 {
     CreateDictionary( dico );
     controllers_.Register( *this );

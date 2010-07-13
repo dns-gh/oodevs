@@ -43,8 +43,8 @@ KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager, to
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
 KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, tools::Resolver_ABC< KnowledgeGroupType, std::string >& types )
-    : EntityImplementation< KnowledgeGroup_ABC >( controller, xml::attribute< unsigned int >( xis, "id" ), "" )
-    , type_( &types.Get( xml::attribute< std::string >( xis, "type" ) ) )
+    : EntityImplementation< KnowledgeGroup_ABC >( controller, xis.attribute< unsigned int >( "id" ), "" )
+    , type_( &types.Get( xis.attribute< std::string >( "type" ) ) )
 {
     std::string name;
     xis >> optional() >> attribute( "name", name );

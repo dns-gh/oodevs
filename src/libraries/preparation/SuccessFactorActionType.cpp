@@ -29,8 +29,8 @@ namespace
 // Created: SBO 2009-06-16
 // -----------------------------------------------------------------------------
 SuccessFactorActionType::SuccessFactorActionType( xml::xistream& xis )
-    : name_( xml::attribute< std::string >( xis, "name" ).c_str() )
-    , function_( xml::attribute< std::string >( xis, "function" ) )
+    : name_( xis.attribute< std::string >( "name" ).c_str() )
+    , function_( xis.attribute< std::string >( "function" ) )
     , description_( ReadDescription( xis ) )
 {
     xis >> xml::optional() >> xml::start( "parameters" )

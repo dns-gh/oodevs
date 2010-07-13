@@ -37,7 +37,7 @@ SuccessFactor::SuccessFactor( const QString& name, kernel::Controllers& controll
 // -----------------------------------------------------------------------------
 SuccessFactor::SuccessFactor( xml::xistream& xis, kernel::Controllers& controllers, const ProfilesModel& profiles, const ScoresModel& scores, const SuccessFactorActionTypes& actionTypes )
     : controller_( controllers.controller_ )
-    , name_( xml::attribute< std::string >( xis, "name" ).c_str() )
+    , name_( xis.attribute< std::string >( "name" ).c_str() )
     , profiles_( new SuccessFactorProfiles( controllers, xis, profiles ) )
     , conditions_( new SuccessFactorConditions( controllers, xis, scores ) )
     , actions_( new SuccessFactorActions( xis, actionTypes ) )

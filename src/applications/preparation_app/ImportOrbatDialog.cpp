@@ -151,7 +151,7 @@ void ImportOrbatDialog::LoadPreview()
 // -----------------------------------------------------------------------------
 void ImportOrbatDialog::ReadTeam( xml::xistream& xis )
 {
-    const std::string name = xml::attribute< std::string >( xis, "name" );
+    const std::string name = xis.attribute< std::string >( "name" );
     QListViewItem* item = new QListViewItem( preview_ );
     item->setText( 0, name.c_str() );
 }
