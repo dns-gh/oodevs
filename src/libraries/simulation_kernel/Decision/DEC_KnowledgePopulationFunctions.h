@@ -13,8 +13,8 @@
 #define __DEC_KnowledgePopulationFunctions_h_
 
 #include "MIL.h"
-
 class MIL_AgentPion;
+class PHY_DotationCategory;
 
 // =============================================================================
 // Created: NLD 2004-03-31
@@ -26,16 +26,16 @@ public:
     //@{
     template< typename T > static std::pair< float, int > GetDominationState( const T& caller, unsigned int knowledgeId );
     template< typename T > static unsigned int GetAttitude( const T& caller, unsigned int knowledgeId );
-                           static float GetDangerosity    ( const MIL_AgentPion& caller, int knowledgeId);
-                           static void Recon             ( const MIL_AgentPion& caller, int knowledgeId );
-    template< typename T > static bool IsRecon           ( const T& caller, unsigned int knowledgeId );
-    template< typename T > static bool IsInZone          ( const T& caller, unsigned int knowledgeId, TER_Localisation* pLoc );
+                           static float GetDangerosity( const MIL_AgentPion& caller, int knowledgeId);
+                           static void Recon( const MIL_AgentPion& caller, int knowledgeId );
+    template< typename T > static bool IsRecon( const T& caller, unsigned int knowledgeId );
+    template< typename T > static bool IsInZone( const T& caller, unsigned int knowledgeId, TER_Localisation* pLoc );
                            static bool IsPerceivedByAgent( const MIL_AgentPion& caller, int knowledgeId );
-                           static boost::shared_ptr<MT_Vector2D> ClosestPoint      ( const MIL_AgentPion& caller, int knowledgeId );
-                           static void Secure            ( const MIL_AgentPion& caller, int knowledgeId );
+                           static boost::shared_ptr<MT_Vector2D> ClosestPoint( const MIL_AgentPion& caller, int knowledgeId );
+                           static void Secure( const MIL_AgentPion& caller, int knowledgeId );
                            static boost::shared_ptr<MT_Vector2D> SecuringPoint ( const MIL_AgentPion& caller, int knowledgeId );
-                           static bool IsEnemy           ( const MIL_AgentPion& caller, int knowledgeId );
-                           static int Exterminate        ( MIL_AgentPion& caller, int knowledgeId, float surface, const PHY_DotationCategory* dotation );
+                           static bool IsEnemy( const MIL_AgentPion& caller, int knowledgeId );
+                           static int Exterminate( MIL_AgentPion& caller, int knowledgeId, float surface, const PHY_DotationCategory* dotation );
     //@}
 };
 

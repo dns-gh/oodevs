@@ -20,6 +20,7 @@ class DEC_Knowledge_Object;
 class MIL_Agent_ABC;
 class MIL_Mission_ABC;
 class MIL_Object_ABC;
+class PHY_DotationCategory;
 
 // =============================================================================
 // Created: NLD 2004-03-31

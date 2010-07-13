@@ -25,9 +25,12 @@ class PHY_SupplyConsign_ABC;
 class PHY_SupplyStockState : public PHY_SupplyState_ABC
 {
 public:
+    //! @name Constructors/Destructor
+    //@{
              PHY_SupplyStockState( MIL_AutomateLOG& suppliedAutomate, bool bPushedFlow );
              PHY_SupplyStockState();
     virtual ~PHY_SupplyStockState();
+    //@}
 
     //! @name CheckPoints
     //@{
@@ -36,21 +39,30 @@ public:
 
     //! @name Accessors
     //@{
-    bool             IsPushedFlow       () const;
-    bool             IsSupplying        ( const PHY_DotationCategory& dotationCategory ) const;
+    bool IsPushedFlow() const;
+    bool IsSupplying( const PHY_DotationCategory& dotationCategory ) const;
     MIL_AutomateLOG& GetSuppliedAutomate() const;
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::map< const PHY_DotationCategory*, PHY_SupplyStockRequest > T_RequestMap;
+    typedef T_RequestMap::iterator                                         IT_RequestMap;
+    typedef T_RequestMap::const_iterator                                  CIT_RequestMap;
+
+    typedef std::map< const PHY_DotationCategory*, MT_Float > T_MerchandiseToConvoyMap;
     //@}
 
     //! @name Operations
     //@{
-    void AddRequest                          ( const PHY_SupplyStockRequest& request );
+    void AddRequest( const PHY_SupplyStockRequest& request );
 
-    void GetMerchandiseToConvoy              ( T_MerchandiseToConvoyMap& container ) const;
-    void RemoveConvoyedMerchandise           ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
-    void AddConvoyedMerchandise              ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
+    void GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& container ) const;
+    void RemoveConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
+    void AddConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
     void CancelMerchandiseOverheadReservation();
 
-    void Supply      () const;
+    void Supply() const;
     void CancelSupply();
     //@}
 
@@ -61,10 +73,10 @@ public:
 
     //! @name Network
     //@{
-    void SendMsgCreation () const;
+    void SendMsgCreation() const;
     void SendChangedState() const;
-    void SendFullState   () const;
-    void Clean           ();
+    void SendFullState() const;
+    void Clean();
     //@}
 
 private:
@@ -73,21 +85,16 @@ private:
     void SendMsgDestruction() const;
     //@}
 
-public:
-    //! @name Types
-    //@{
-    typedef std::map< const PHY_DotationCategory*, PHY_SupplyStockRequest > T_RequestMap;
-    typedef T_RequestMap::iterator                                          IT_RequestMap;
-    typedef T_RequestMap::const_iterator                                    CIT_RequestMap;
-    //@}
-
 private:
-          MIL_AutomateLOG*       pSuppliedAutomate_;
-    const bool                   bPushedFlow_;
-          PHY_SupplyConsign_ABC* pConsign_;
-          bool                   bConsignChanged_;
-          bool                   bRequestsChanged_;
-          T_RequestMap           requests_;
+    //! @name Member data
+    //@{
+    MIL_AutomateLOG* pSuppliedAutomate_;
+    const bool bPushedFlow_;
+    PHY_SupplyConsign_ABC* pConsign_;
+    bool bConsignChanged_;
+    bool bRequestsChanged_;
+    T_RequestMap requests_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_SupplyStockState )

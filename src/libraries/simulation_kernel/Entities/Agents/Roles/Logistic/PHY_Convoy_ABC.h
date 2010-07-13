@@ -27,6 +27,7 @@ class MIL_MissionType_ABC;
 class MIL_Automate;
 class MIL_AutomateLOG;
 class PHY_Conveyor;
+class PHY_DotationCategory;
 
 // =============================================================================
 // @class  PHY_Convoy_ABC
@@ -53,23 +54,23 @@ public:
 
     //! @name Operations
     //@{
-    bool     ReserveTransporters();
-    MT_Float ModifySpeed        ( MT_Float rSpeed ) const;
+    bool ReserveTransporters();
+    MT_Float ModifySpeed( MT_Float rSpeed ) const;
     //@}
 
     //! @name Accessors
     //@{
-          MIL_AutomateLOG& GetSupplyingAutomate() const;
-          MIL_AutomateLOG& GetConvoyingAutomate() const;
-    const MIL_Automate&    GetSuppliedAutomate () const;
-          unsigned int             GetFormingTime      () const;
-          unsigned int             GetLoadingTime      () const;
-          unsigned int             GetUnloadingTime    () const;
+    MIL_AutomateLOG& GetSupplyingAutomate() const;
+    MIL_AutomateLOG& GetConvoyingAutomate() const;
+    const MIL_Automate& GetSuppliedAutomate () const;
+    unsigned int GetFormingTime() const;
+    unsigned int GetLoadingTime() const;
+    unsigned int GetUnloadingTime() const;
     //@}
 
     //! @name Events
     //@{
-    void EmptyOut               ();
+    void EmptyOut();
     void NotifyConveyorDestroyed( PHY_ComposantePion& composante );
     //@}
 
@@ -77,12 +78,12 @@ public:
     //! @name Types
     //@{
     typedef std::map< PHY_ComposantePion*, PHY_Conveyor* > T_ConveyorMap;
-    typedef T_ConveyorMap::const_iterator                  CIT_ConveyorMap;
+    typedef T_ConveyorMap::const_iterator                CIT_ConveyorMap;
     //@}
 
 protected:
     PHY_SupplyConsign_ABC* pConsign_;
-    T_ConveyorMap          conveyors_;
+    T_ConveyorMap conveyors_;
 
 private:
     //! @name Tools
@@ -99,6 +100,7 @@ private:
     static void InitializeInterpolatedTime ( xml::xistream& xis, const std::string& strTagName, MT_InterpolatedFunction< MT_Float >& data );
     static void InitializeSpeedModificators( xml::xistream& xis );
     //@}
+
     //! @name Helpers
     //@{
     struct LoadingWrapper;
@@ -106,14 +108,19 @@ private:
     static void ReadSpeedModifier( xml::xistream& xis, std::pair< unsigned int, MT_Float >& upperBound );
     //@}
 
-protected:
-    static       MT_InterpolatedFunction< MT_Float > formingTime_;
-    static       MT_InterpolatedFunction< MT_Float > loadingTime_;
-    static       MT_InterpolatedFunction< MT_Float > unloadingTime_;
-    static       MT_InterpolatedFunction< MT_Float > coefSpeedModificator_;
+    //! @name Types
+    //@{
+    typedef std::map< const PHY_DotationCategory*, MT_Float > T_MerchandiseToConvoyMap;
+    typedef T_MerchandiseToConvoyMap::iterator               IT_MerchandiseToConvoyMap;
+    //@}
 
-    static const MIL_AgentTypePion*                  pConvoyAgentType_;
-    static const MIL_MissionType_ABC*                pConvoyMissionType_;
+protected:
+    static MT_InterpolatedFunction< MT_Float > formingTime_;
+    static MT_InterpolatedFunction< MT_Float > loadingTime_;
+    static MT_InterpolatedFunction< MT_Float > unloadingTime_;
+    static MT_InterpolatedFunction< MT_Float > coefSpeedModificator_;
+    static const MIL_AgentTypePion* pConvoyAgentType_;
+    static const MIL_MissionType_ABC* pConvoyMissionType_;
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_Convoy_ABC )

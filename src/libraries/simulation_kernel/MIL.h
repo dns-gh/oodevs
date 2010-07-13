@@ -25,11 +25,6 @@ typedef std::vector< const PHY_HumanWound* >       T_MedicalPriorityVector;
 typedef T_MedicalPriorityVector::iterator         IT_MedicalPriorityVector;
 typedef T_MedicalPriorityVector::const_iterator  CIT_MedicalPriorityVector;
 
-class PHY_DotationCategory;
-typedef std::map< const PHY_DotationCategory*, MT_Float /*rNbrToConvoy*/ >   T_MerchandiseToConvoyMap;
-typedef T_MerchandiseToConvoyMap::iterator                                  IT_MerchandiseToConvoyMap;
-typedef T_MerchandiseToConvoyMap::const_iterator                           CIT_MerchandiseToConvoyMap;
-
 namespace boost
 {
     namespace archive

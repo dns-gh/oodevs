@@ -24,9 +24,12 @@ class PHY_SupplyStockState;
 class PHY_SupplyStockConsign : public PHY_SupplyConsign_ABC
 {
 public:
+    //! @name Constructors/Destructor
+    //@{
              PHY_SupplyStockConsign( MIL_AutomateLOG& supplyAutomate, PHY_SupplyStockState& supplyState );
              PHY_SupplyStockConsign();
     virtual ~PHY_SupplyStockConsign();
+    //@}
 
     //! @name CheckPoints
     //@{
@@ -38,15 +41,15 @@ public:
     virtual bool Update();
 
     // Scripts events
-    bool IsLoadingDone   () const;
-    bool IsUnloadingDone () const;
-    bool ConvoyLoad      ();
-    bool ConvoyUnload    ();
+    bool IsLoadingDone() const;
+    bool IsUnloadingDone() const;
+    bool ConvoyLoad();
+    bool ConvoyUnload();
     void ConvoyEndMission();
 
-    virtual void GetMerchandiseToConvoy              ( T_MerchandiseToConvoyMap& container ) const;
-    virtual void RemoveConvoyedMerchandise           ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
-    virtual void AddConvoyedMerchandise              ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
+    virtual void GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& container ) const;
+    virtual void RemoveConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
+    virtual void AddConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
     virtual void CancelMerchandiseOverheadReservation();
     //@}
 
@@ -58,21 +61,23 @@ public:
 private:
     //! @name Operations
     //@{
-    void EnterStateConvoyWaitingForTransporters ();
-    void EnterStateConvoyForming                ();
-    void EnterStateConvoyGoingToLoadingPoint    ();
-    void EnterStateConvoyLoading                ();
-    void EnterStateConvoyGoingToUnloadingPoint  ();
-    void EnterStateConvoyUnloading              ();
+    void EnterStateConvoyWaitingForTransporters();
+    void EnterStateConvoyForming();
+    void EnterStateConvoyGoingToLoadingPoint();
+    void EnterStateConvoyLoading();
+    void EnterStateConvoyGoingToUnloadingPoint();
+    void EnterStateConvoyUnloading();
     void EnterStateConvoyGoingBackToFormingPoint();
-    void EnterStateFinished                     ();
-
+    void EnterStateFinished();
     void DoSupply();
     //@}
 
 private:
+    //! @name Member data
+    //@{
     PHY_SupplyStockState* pSupplyState_;
-    PHY_StockConvoy*      pConvoy_;
+    PHY_StockConvoy* pConvoy_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_SupplyStockConsign )

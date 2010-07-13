@@ -27,9 +27,9 @@ class MIL_Injury_Wound : public MIL_Injury_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MIL_Injury_Wound();
+             MIL_Injury_Wound();
     explicit MIL_Injury_Wound( int injuryID );
-    MIL_Injury_Wound( const MIL_Injury_Wound& rhs );
+             MIL_Injury_Wound( const MIL_Injury_Wound& rhs );
     virtual ~MIL_Injury_Wound();
     //@}
 

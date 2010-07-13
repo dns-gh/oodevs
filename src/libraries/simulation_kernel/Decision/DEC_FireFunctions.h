@@ -17,6 +17,7 @@
 #include "Decision/DEC_Decision_ABC.h"
 
 class MIL_AgentPion;
+class PHY_DotationCategory;
 
 // =============================================================================
 // Created: NLD 2004-03-31

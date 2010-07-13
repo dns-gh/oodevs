@@ -17,6 +17,7 @@
 
 class MIL_Automate;
 class PHY_SupplyConsign_ABC;
+class PHY_DotationCategory;
 
 // =============================================================================
 // @class  PHY_SupplyDotationState
@@ -34,18 +35,23 @@ public:
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::map< const PHY_DotationCategory*, MT_Float > T_MerchandiseToConvoyMap;
+    //@}
+
     //! @name Operations
     //@{
-          void          AddRequest            ( const PHY_SupplyDotationRequest& request );
-    const MIL_Automate& GetSuppliedAutomate   () const;
-          bool          IsSupplying           ( const PHY_DotationCategory& dotationCategory ) const;
+    void AddRequest( const PHY_SupplyDotationRequest& request );
+    const MIL_Automate& GetSuppliedAutomate() const;
+    bool IsSupplying( const PHY_DotationCategory& dotationCategory ) const;
 
-          void          GetMerchandiseToConvoy              ( T_MerchandiseToConvoyMap& container ) const;
-          void          RemoveConvoyedMerchandise           ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
-          void          AddConvoyedMerchandise              ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
-          void          CancelMerchandiseOverheadReservation();
+    void GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& container ) const;
+    void RemoveConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
+    void AddConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
+    void CancelMerchandiseOverheadReservation();
 
-          void          Supply() const;
+    void Supply() const;
     //@}
 
     //! @name Consign
@@ -55,10 +61,10 @@ public:
 
     //! @name Network
     //@{
-    void SendMsgCreation () const;
+    void SendMsgCreation() const;
     void SendChangedState() const;
-    void SendFullState   () const;
-    void Clean           ();
+    void SendFullState() const;
+    void Clean();
     //@}
 
 private:
@@ -71,16 +77,16 @@ public:
     //! @name Types
     //@{
     typedef std::map< const PHY_DotationCategory*, PHY_SupplyDotationRequest > T_RequestMap;
-    typedef T_RequestMap::iterator                                             IT_RequestMap;
-    typedef T_RequestMap::const_iterator                                       CIT_RequestMap;
+    typedef T_RequestMap::iterator                                            IT_RequestMap;
+    typedef T_RequestMap::const_iterator                                     CIT_RequestMap;
     //@}
 
 private:
-    MIL_Automate*          pSuppliedAutomate_;
+    MIL_Automate* pSuppliedAutomate_;
     PHY_SupplyConsign_ABC* pConsign_;
-    bool                   bConsignChanged_;
-    bool                   bRequestsChanged_;
-    T_RequestMap           requests_;
+    bool bConsignChanged_;
+    bool bRequestsChanged_;
+    T_RequestMap requests_;
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_SupplyDotationState )

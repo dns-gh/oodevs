@@ -21,6 +21,7 @@ namespace client
 
 class MIL_AutomateLOG;
 class MIL_Automate;
+class PHY_DotationCategory;
 
 // =============================================================================
 // @class  PHY_SupplyConsign_ABC
@@ -29,9 +30,12 @@ class MIL_Automate;
 class PHY_SupplyConsign_ABC : private boost::noncopyable
 {
 public:
+    //! @name Constructors/Destructor
+    //@{
              PHY_SupplyConsign_ABC( MIL_AutomateLOG& supplyingAutomate, const MIL_Automate& suppliedAutomate, MIL_AutomateLOG& convoyingAutomate );
              PHY_SupplyConsign_ABC();
     virtual ~PHY_SupplyConsign_ABC();
+    //@}
 
     //! @name CheckPoints
     //@{
@@ -41,29 +45,33 @@ public:
     //! @name Operations
     //@{
     virtual bool Update() = 0;
-
-            void Clean     ();
-            bool HasChanged() const;
-
+    void Clean();
+    bool HasChanged() const;
     //@}
+
+    //! @name Types
+    //@{
+    typedef std::map< const PHY_DotationCategory*, MT_Float > T_MerchandiseToConvoyMap;
+    //@}
+
 
     //! @name Accessors
     //@{
-          MIL_AutomateLOG& GetSupplyingAutomate() const;
-          MIL_AutomateLOG& GetConvoyingAutomate() const;
-    const MIL_Automate&    GetSuppliedAutomate () const;
+    MIL_AutomateLOG& GetSupplyingAutomate() const;
+    MIL_AutomateLOG& GetConvoyingAutomate() const;
+    const MIL_Automate& GetSuppliedAutomate() const;
 
-    virtual void GetMerchandiseToConvoy              ( T_MerchandiseToConvoyMap& container ) const = 0;
-    virtual void RemoveConvoyedMerchandise           ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations ) = 0;
-    virtual void AddConvoyedMerchandise              ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations ) = 0;
+    virtual void GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& container ) const = 0;
+    virtual void RemoveConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations ) = 0;
+    virtual void AddConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations ) = 0;
     virtual void CancelMerchandiseOverheadReservation() = 0;
     //@}
 
     //! @name Network
     //@{
-            void SendChangedState( client::LogSupplyHandlingUpdate& asn ) const;
-    virtual void SendFullState   ( client::LogSupplyHandlingUpdate& asn ) const;
-    static  void SendDefaultState( client::LogSupplyHandlingUpdate& asn );
+    void SendChangedState( client::LogSupplyHandlingUpdate& asn ) const;
+    virtual void SendFullState( client::LogSupplyHandlingUpdate& asn ) const;
+    static void SendDefaultState( client::LogSupplyHandlingUpdate& asn );
     //@}
 
 protected:
@@ -86,18 +94,24 @@ protected:
     //! @name
     //@{
     E_State GetState() const;
-    void    SetState( E_State nNewState );
+    void SetState( E_State nNewState );
     //@}
 
 private:
-          MIL_AutomateLOG* pSupplyingAutomate_;
-          MIL_AutomateLOG* pConvoyingAutomate_;
-    const MIL_Automate*    pSuppliedAutomate_;
-          E_State          nState_;
-          bool             bHasChanged_;
+    //! @name Member data
+    //@{
+    MIL_AutomateLOG* pSupplyingAutomate_;
+    MIL_AutomateLOG* pConvoyingAutomate_;
+    const MIL_Automate* pSuppliedAutomate_;
+    E_State nState_;
+    bool bHasChanged_;
+    //@}
 
 protected:
-    int              nTimer_;
+    //! @name Member data
+    //@{
+    int nTimer_;
+    //@}
 };
 
 // -----------------------------------------------------------------------------
