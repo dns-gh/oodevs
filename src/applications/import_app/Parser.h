@@ -43,22 +43,15 @@ private:
     //@{
     void WriteWeather();
     void WriteOrbat();
-    void WriteDiplomacies();
-    void WriteSides();
-    void ReadRelations();
     void ReadRelation( xml::xistream& xis );
-    void ReadSides();
     void ReadSide( xml::xistream& xis );
-    void ReadPlan();
     void ReadNextPlan( xml::xistream& xis );
     void PlaceEntity( xml::xistream& xis );
     void ReadPlanData( xml::xistream& xis );
     void ReadPlanDatum( xml::xistream& xis );
-    void ReadTacticals( xml::xistream& xis );
     void ReadTactical( xml::xistream& xis );
     void ReadTacticalPointList( xml::xistream& xis, std::vector< std::vector< Position > >& positions );
     void ReadTacticalPoint( xml::xistream& xis, std::vector< Position >& positions );
-    void ReadMissions( xml::xistream& xis );
     void ReadMission( xml::xistream& xis );
 
     void WriteUnitInOrd( xml::xistream& xis, xml::xostream& xos, const std::string& timeName, const std::string& date );
@@ -72,13 +65,10 @@ private:
     //@}
 
 private:
-    //! @name Member data 
+    //! @name Member data
     //@{
     std::string outDir_;
     xml::xifstream xis_;
-    xml::xofstream xos_;
-    xml::xofstream xosWeather_;
-    std::string dateScenario_;
     unsigned int plan_;
     Mapping mapping_;
     std::map< std::string, std::vector< Diplomacy > > diplomacies_;
