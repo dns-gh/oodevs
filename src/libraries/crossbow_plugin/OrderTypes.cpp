@@ -15,7 +15,6 @@
 #include "dispatcher/Config.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace xml;
 using namespace plugins;
 using namespace plugins::crossbow;
 
@@ -26,9 +25,10 @@ using namespace plugins::crossbow;
 OrderTypes::OrderTypes( const dispatcher::Config& config )
 {
     xml::xifstream xis( config.GetPhysicalFile() );
-    xis >> start( "physical" );
+    xis >> xml::start( "physical" );
     std::string missions;
-    xis >> start( "missions" ) >> attribute( "file", missions );
+    xis >> xml::start( "missions" )
+        >> xml::attribute( "file", missions );
 
     Load( config.BuildPhysicalChildFile( missions ) );
 }
@@ -53,13 +53,13 @@ OrderTypes::~OrderTypes()
 // -----------------------------------------------------------------------------
 void OrderTypes::Load( const std::string& missions )
 {
-    xifstream xis( missions );
-    xis >> start( "missions" );
+    xml::xifstream xis( missions );
+    xis >> xml::start( "missions" );
     ReadMissions( xis, "units"      , unitMissions_ );
     ReadMissions( xis, "automats"   , automatMissions_ );
-    xis     >> start( "fragorders" )
-                >> list( "fragorder", *this, &OrderTypes::ReadFragOrderType )
-            >> end();
+    xis     >> xml::start( "fragorders" )
+                >> xml::list( "fragorder", *this, &OrderTypes::ReadFragOrderType )
+            >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -68,10 +68,10 @@ void OrderTypes::Load( const std::string& missions )
 // -----------------------------------------------------------------------------
 void OrderTypes::ReadMissions( xml::xistream& xis, const std::string& name, T_OrderTypes& missions )
 {
-    xis >> start( name );
+    xis >> xml::start( name );
     kernel::OrderContext context( xis );
-    xis     >> list( "mission", *this, &OrderTypes::ReadMissionType, missions, context )
-        >> end();
+    xis     >> xml::list( "mission", *this, &OrderTypes::ReadMissionType, missions, context )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------

@@ -16,7 +16,6 @@
 #include "dispatcher/AgentKnowledge.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace xml;
 using namespace plugins;
 using namespace plugins::crossbow;
 
@@ -29,13 +28,13 @@ ReportFactory::ReportFactory( const dispatcher::Config& config, const dispatcher
 {
     xml::xifstream main( config.GetPhysicalFile() );
     std::string reports;
-    main >> start( "physical" )
-            >> start( "reports" )
-            >> attribute( "file", reports );
-    xifstream xis( config.BuildPhysicalChildFile( reports ) );
-    xis >> start( "reports" )
-        >> xml::list( "report", *this, &ReportFactory::ReadReport )
-        >> end();
+    main >> xml::start( "physical" )
+            >> xml::start( "reports" )
+            >> xml::attribute( "file", reports );
+    xml::xifstream xis( config.BuildPhysicalChildFile( reports ) );
+    xis >> xml::start( "reports" )
+            >> xml::list( "report", *this, &ReportFactory::ReadReport )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------

@@ -18,7 +18,6 @@
 
 namespace po = boost::program_options;
 using namespace dispatcher;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: Config constructor
@@ -53,16 +52,16 @@ void Config::Parse( int argc, char** argv )
 
     int port;
     xml::xifstream xisGame( GetSessionFile() );
-    xisGame >> start( "session" )
-                >> start( "config" )
-                    >> start( "dispatcher" )
-                        >> start( "network" )
-                            >> attribute( "client", networkSimulationParameters_ )
-                            >> attribute( "server", port )
-                        >> end()
-                    >> end()
-                >> end()
-            >> end();
+    xisGame >> xml::start( "session" )
+                >> xml::start( "config" )
+                    >> xml::start( "dispatcher" )
+                        >> xml::start( "network" )
+                            >> xml::attribute( "client", networkSimulationParameters_ )
+                            >> xml::attribute( "server", port )
+                        >> xml::end()
+                    >> xml::end()
+                >> xml::end()
+            >> xml::end();
     if( ! networkClientsParameters_ )
         networkClientsParameters_ = unsigned short( port );
 }

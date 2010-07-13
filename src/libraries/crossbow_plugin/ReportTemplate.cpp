@@ -11,12 +11,10 @@
 #include "protocol/protocol.h"
 #include "ReportTemplate.h"
 #include "ReportFactory.h"
-
 #include <xeumeuleu/xml.hpp>
 
 using namespace Common;
 
-using namespace xml;
 using namespace plugins;
 using namespace plugins::crossbow;
 
@@ -28,8 +26,8 @@ ReportTemplate::ReportTemplate( xml::xistream& xis, const ReportFactory& factory
     : factory_( factory )
 {
     std::string message;
-    xis >> attribute( "id", (int&)id_ )
-        >> attribute( "message", message )
+    xis >> xml::attribute( "id", (int&)id_ )
+        >> xml::attribute( "message", message )
         >> xml::list( "parameter", *this, &ReportTemplate::ReadParameter );
     message_ = message.c_str();
 }
@@ -89,7 +87,7 @@ std::string ReportTemplate::RenderMessage( const MsgMissionParameters& message )
 void ReportTemplate::ReadParameter( xml::xistream& xis )
 {
     std::string type;
-    xis >> attribute( "type", type );
+    xis >> xml::attribute( "type", type );
     std::string lstring;
     lstring.resize( type.size() );
     std::transform( type.begin(), type.end(), lstring.begin(), tolower );
@@ -107,6 +105,6 @@ void ReportTemplate::ReadParameter( xml::xistream& xis )
 void ReportTemplate::ReadEnumeration( xml::xistream& xis )
 {
     std::string name;
-    xis >> attribute( "name", name );
+    xis >> xml::attribute( "name", name );
     enumerations_.back().push_back( name.c_str() );
 }
