@@ -50,6 +50,7 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
 
     new QLabel( tr( "Type:" ), this );
     objectTypes_ = new ValuedComboBox< const ObjectType* >( this );
+    objectTypes_->setSorting( true );
 
     position_ = new RichLabel( tr( "Location:" ), this );
     locationLabel_ = new QLabel( tr( "---" ), this );
