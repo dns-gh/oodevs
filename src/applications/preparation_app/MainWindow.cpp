@@ -466,11 +466,11 @@ namespace
 // -----------------------------------------------------------------------------
 bool MainWindow::Save()
 {
-    bool result ( false );
+    bool result = false;
     if( needsSaving_ )
     {
         SaveModelChecker checker( this );
-        const bool result = model_.Save( config_, checker );
+        result = model_.Save( config_, checker );
         if( result )
             SetWindowTitle( false );
     }
