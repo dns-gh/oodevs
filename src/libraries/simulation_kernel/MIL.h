@@ -14,12 +14,6 @@ enum E_Tristate
     eTristate_DontKnow,
 };
 
-/// $$$ NLD - Degueu à déplacer - ? Si pas possibilité d'encapsuler => mettre dans un 'Log.h'
-class PHY_ComposanteTypePion;
-typedef std::vector< const PHY_ComposanteTypePion* >   T_MaintenancePriorityVector;
-typedef T_MaintenancePriorityVector::iterator         IT_MaintenancePriorityVector;
-typedef T_MaintenancePriorityVector::const_iterator  CIT_MaintenancePriorityVector;
-
 namespace boost
 {
     namespace archive

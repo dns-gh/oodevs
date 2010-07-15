@@ -111,6 +111,10 @@ private:
 
     typedef std::vector< const MIL_Automate* > T_AutomateVector;
     typedef T_AutomateVector::const_iterator CIT_AutomateVector;
+
+    typedef std::vector< const PHY_ComposanteTypePion* >  T_MaintenancePriorityVector;
+    typedef T_MaintenancePriorityVector::iterator        IT_MaintenancePriorityVector;
+    typedef T_MaintenancePriorityVector::const_iterator CIT_MaintenancePriorityVector;
     //@}
 
 private:

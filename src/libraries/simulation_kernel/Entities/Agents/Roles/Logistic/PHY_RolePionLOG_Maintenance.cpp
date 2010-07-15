@@ -82,8 +82,11 @@ namespace boost
 {
     namespace serialization
     {
-        typedef std::vector< const MIL_Automate* > T_AutomateVector;
+        typedef std::vector< const MIL_Automate* > T_AutomateVector; // $$$$ _RC_ LGY 2010-07-15: à remanier
         typedef T_AutomateVector::const_iterator CIT_AutomateVector;
+
+        typedef std::vector< const PHY_ComposanteTypePion* >  T_MaintenancePriorityVector;
+        typedef T_MaintenancePriorityVector::const_iterator CIT_MaintenancePriorityVector;
 
         // =============================================================================
         // T_MaintenancePriorityVector

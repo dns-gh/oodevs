@@ -27,6 +27,7 @@ class MIL_FragOrder;
 class MIL_Mission_ABC;
 class MT_Vector2D;
 class PHY_DotationCategory;
+class PHY_ComposanteTypePion;
 
 namespace directia
 {

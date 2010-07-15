@@ -606,7 +606,7 @@ void GenObjectListFunctionBM( const directia::Brain& brain, directia::ScriptRef&
 }
 void MaintenancePrioritiesFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    T_MaintenancePriorityVector value;
+    std::vector< const PHY_ComposanteTypePion* > value;
     if( element.ToMaintenancePriorities( value ) )
         refMission.RegisterObject( name, value );
 }

@@ -291,7 +291,7 @@ MIL_FragOrder::T_MedicalPriorityVector MIL_FragOrder::GetOrderConduiteModifierPr
 // Name: MIL_FragOrder::GetOrderConduiteModifierPrioritesReparations
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-T_MaintenancePriorityVector MIL_FragOrder::GetOrderConduiteModifierPrioritesReparations() const
+MIL_FragOrder::T_MaintenancePriorityVector MIL_FragOrder::GetOrderConduiteModifierPrioritesReparations() const
 {
     unsigned int parametersNumber = parameters_.size();
     for (unsigned int i = 0; i < parametersNumber; ++i )

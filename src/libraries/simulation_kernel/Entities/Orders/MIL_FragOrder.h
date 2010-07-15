@@ -57,6 +57,8 @@ public:
     //! @name Types
     //@{
     typedef std::vector< const PHY_HumanWound* > T_MedicalPriorityVector;
+
+    typedef std::vector< const PHY_ComposanteTypePion* > T_MaintenancePriorityVector;
     //@}
 
     //! @name Accessors
@@ -73,7 +75,7 @@ public:
     int GetOrderConduiteChangerReglesEngagementPopulation() const;
     int GetOrderConduiteChangerReglesEngagement() const;
     T_MedicalPriorityVector GetOrderConduiteModifierPrioritesBlesses() const;
-    std::vector< const PHY_ComposanteTypePion* > GetOrderConduiteModifierPrioritesReparations() const;
+    T_MaintenancePriorityVector GetOrderConduiteModifierPrioritesReparations() const;
     std::vector< DEC_Decision_ABC* > GetOrderConduiteModifierPrioritesTactiquesBlesses() const;
     std::vector< DEC_Decision_ABC* > GetOrderConduiteModifierPrioritesTactiquesReparations() const;
     int GetOrderConduiteModifierRegimeTravailMaintenance() const;

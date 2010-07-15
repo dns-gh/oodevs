@@ -37,6 +37,8 @@ public:
     typedef PHY_RoleInterface_Maintenance RoleInterface;
 
     typedef std::vector< const MIL_Automate* > T_AutomateVector;
+
+    typedef std::vector< const PHY_ComposanteTypePion* > T_MaintenancePriorityVector;
     //@}
 
 public:
@@ -45,44 +47,45 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Update        ( bool bIsDead ) = 0;
+    virtual void Update( bool bIsDead ) = 0;
     virtual void UpdateLogistic( bool bIsDead ) = 0;
-    virtual void Clean         () = 0;
+    virtual void Clean() = 0;
     //@}
 
     //! @name Main
     //@{
-    virtual void EnableSystem () = 0;
+    virtual void EnableSystem() = 0;
     virtual void DisableSystem() = 0;
 
     virtual void ChangePriorities( const T_MaintenancePriorityVector& priorities ) = 0;
-    virtual void ChangePriorities( const T_AutomateVector&            priorities ) = 0;
-    virtual void ChangeWorkRate  ( const PHY_MaintenanceWorkRate&     workRate   ) = 0;
+    virtual void ChangePriorities( const T_AutomateVector& priorities ) = 0;
+    virtual void ChangeWorkRate( const PHY_MaintenanceWorkRate& workRate ) = 0;
 
-    virtual PHY_MaintenanceComposanteState* HandleComposanteForTransport    ( MIL_Agent_ABC& pion, PHY_ComposantePion& composante ) = 0;
-    virtual bool                            HandleComposanteForTransport    ( PHY_MaintenanceComposanteState& composanteState ) = 0;
-    virtual int                             GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante ) = 0;
+    virtual PHY_MaintenanceComposanteState* HandleComposanteForTransport( MIL_Agent_ABC& pion, PHY_ComposantePion& composante ) = 0;
+    virtual bool HandleComposanteForTransport( PHY_MaintenanceComposanteState& composanteState ) = 0;
+    virtual int GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante ) = 0;
 
-    virtual bool                            HandleComposanteForRepair    ( PHY_MaintenanceComposanteState& composanteState ) = 0;
-    virtual int                             GetAvailabilityScoreForRepair( PHY_MaintenanceComposanteState& composanteState ) = 0;
+    virtual bool HandleComposanteForRepair( PHY_MaintenanceComposanteState& composanteState ) = 0;
+    virtual int GetAvailabilityScoreForRepair( PHY_MaintenanceComposanteState& composanteState ) = 0;
     //@}
 
     //! @name Tools
     //@{
-    virtual PHY_ComposantePion* GetAvailableHauler      ( const PHY_ComposanteTypePion& composanteType ) const = 0;
-    virtual PHY_ComposantePion* GetAvailableRepairer    ( const PHY_Breakdown& breakdown ) const = 0;
-    virtual bool                HasUsableRepairer       ( const PHY_Breakdown& breakdown ) const = 0;
-    virtual bool                ConsumePartsForBreakdown( const PHY_Breakdown& breakdown ) = 0;
+    virtual PHY_ComposantePion* GetAvailableHauler( const PHY_ComposanteTypePion& composanteType ) const = 0;
+    virtual PHY_ComposantePion* GetAvailableRepairer( const PHY_Breakdown& breakdown ) const = 0;
+    virtual bool HasUsableRepairer( const PHY_Breakdown& breakdown ) const = 0;
+    virtual bool ConsumePartsForBreakdown( const PHY_Breakdown& breakdown ) = 0;
 
     virtual void StartUsingForLogistic( PHY_ComposantePion& composante ) = 0;
-    virtual void StopUsingForLogistic ( PHY_ComposantePion& composante ) = 0;
+    virtual void StopUsingForLogistic( PHY_ComposantePion& composante ) = 0;
     //@}
 
     //! @name Accessors
     //@{
-    virtual MIL_AutomateLOG&      GetAutomate() const = 0;
-    virtual const MIL_AgentPionLOG_ABC& GetPion    () const = 0;
+    virtual MIL_AutomateLOG& GetAutomate() const = 0;
+    virtual const MIL_AgentPionLOG_ABC& GetPion() const = 0;
     //@}
+
 private:
     //! @name Serialization
     //@{
