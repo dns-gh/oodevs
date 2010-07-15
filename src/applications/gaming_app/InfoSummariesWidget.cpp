@@ -27,7 +27,7 @@ InfoSummariesWidget::InfoSummariesWidget( QWidget* parent, Controllers& controll
 {
     QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, this );
     group->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Expanding );
-    group->setFixedWidth( 250 );
+    group->setMinimumWidth( 250 );
     display_.reset( new SummariesDisplayer( group ) );
     controllers_.Register( *this );
     group->hide();
