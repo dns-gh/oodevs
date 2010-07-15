@@ -12,8 +12,6 @@
 #ifndef __DEC_LogisticFunctions_h_
 #define __DEC_LogisticFunctions_h_
 
-#include "MIL.h"
-
 class DEC_Decision_ABC;
 class DEC_RolePion_Decision;
 class DEC_AutomateDecision;

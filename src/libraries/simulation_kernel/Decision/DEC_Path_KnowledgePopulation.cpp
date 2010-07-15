@@ -13,7 +13,6 @@
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
-#include "simulation_terrain/TER_Localisation.h"
 
 namespace
 {
@@ -106,7 +105,7 @@ MT_Float DEC_Path_KnowledgePopulation::ComputeClosestElementInRange( const MT_Ve
         if( rDistance < rMaxRange && rDistance < rMinDistance )
         {
             rMinDistance = rDistance;
-            pResult      = &*it;
+            pResult = &*it;
         }
     }
     return rMinDistance;

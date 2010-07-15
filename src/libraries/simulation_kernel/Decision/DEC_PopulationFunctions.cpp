@@ -11,20 +11,14 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PopulationFunctions.h"
-
 #include "DEC_FunctionsTools.h"
-#include "Decision/DEC_Decision_ABC.h"
-#include "Decision/DEC_Tools.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
-#include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
-#include "Entities/MIL_EntityManager.h"
-#include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 
@@ -35,8 +29,8 @@
 void DEC_PopulationFunctions::DecisionalState( const MIL_Population& callerPopulation, const std::string& key, const std::string& value )
 {
     client::DecisionalState msg;
-    msg().set_oid  ( callerPopulation.GetID() );
-    msg().set_key  ( key.c_str() );
+    msg().set_oid( callerPopulation.GetID() );
+    msg().set_key( key.c_str() );
     msg().set_value( value.c_str() );
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -61,10 +55,6 @@ unsigned int DEC_PopulationFunctions::GetAttitude( const MIL_Population& callerP
     return callerPopulation.GetAttitude().GetID() ;
 }
 
-// =============================================================================
-// KNOWLEDGE AGENTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::GetKnowledgeAgentRoePopulation
 // Created: NLD 2005-12-01
@@ -76,10 +66,6 @@ int DEC_PopulationFunctions::GetKnowledgeAgentRoePopulation( unsigned int agentI
     return pAgent->GetRole< DEC_RolePion_Decision >().GetRoePopulation().GetID();
 }
 
-// =============================================================================
-// KNOWLEDGE OBJECTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::GetObjectsInZone
 // Created: NLD 2005-12-05
@@ -87,21 +73,17 @@ int DEC_PopulationFunctions::GetKnowledgeAgentRoePopulation( unsigned int agentI
 std::vector< unsigned int > DEC_PopulationFunctions::GetObjectsInZone( const TER_Localisation* pZone, const std::vector< std::string >& parameters )
 {
     assert( pZone );
-
     std::vector< unsigned int > knowledges;
-
-    MIL_ObjectFilter                filter( parameters );
+    MIL_ObjectFilter filter( parameters );
     TER_Object_ABC::T_ObjectVector  objects;
     TER_World::GetWorld().GetObjectManager().GetListWithinLocalisation( *pZone, objects );
     for( TER_Object_ABC::CIT_ObjectVector it = objects.begin(); it != objects.end(); ++it )
     {
         MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **it );
-
         if( !object().CanBePerceived() || !filter.Test( object.GetType() ) )
             continue;
         knowledges.push_back( object.GetID() );
     }
-
     return knowledges;
 }
 
@@ -114,8 +96,7 @@ boost::shared_ptr<MT_Vector2D> DEC_PopulationFunctions::GetKnowledgeObjectLocali
     const MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( knowledgeId );
     if( !( pObject && (*pObject)().CanBePerceived() ) )
         return boost::shared_ptr<MT_Vector2D>();
-    else
-        return boost::shared_ptr<MT_Vector2D>((MT_Vector2D *)&pObject->GetLocalisation()) ;//, &DEC_Tools::GetTypeLocalisation(), 1 );
+    return boost::shared_ptr<MT_Vector2D>((MT_Vector2D *)&pObject->GetLocalisation()) ;//, &DEC_Tools::GetTypeLocalisation(), 1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +118,6 @@ int DEC_PopulationFunctions::DamageObject( int knowledgeId, double damageFactor 
     MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( knowledgeId );
     if( !( pObject && (*pObject)().CanBePerceived() ) )
         return  (int)eQueryInvalid ;
-
     (*pObject)().Destroy( damageFactor );
     return (int)eQueryValid;
 }
@@ -151,8 +131,7 @@ float DEC_PopulationFunctions::GetKnowledgeObjectDistance( const MIL_Population&
     const MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( knowledgeId );
     if( !( pObject && (*pObject)().CanBePerceived() ) )
         return 0.0f;
-    else
-        return (float)callerPopulation.GetDistanceTo( pObject->GetLocalisation() ) ;
+    return (float)callerPopulation.GetDistanceTo( pObject->GetLocalisation() ) ;
 }
 
 // -----------------------------------------------------------------------------
@@ -180,13 +159,8 @@ int DEC_PopulationFunctions::IsEnemy(const MIL_Population& callerPopulation, int
     const MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia(knowledgeId);
     if( !( pObject && (*pObject)().CanBePerceived() ) )
         return 0;
-    else
-        return (int)callerPopulation.GetArmy().IsAnEnemy( *pObject->GetArmy() ) ;
+    return (int)callerPopulation.GetArmy().IsAnEnemy( *pObject->GetArmy() ) ;
 }
-
-// =============================================================================
-// ETAT DECISIONNEL
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::NotifyDominationStateChanged

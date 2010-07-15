@@ -11,13 +11,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_MiscFunctions.h"
-
-#include "Entities/MIL_Entity_ABC.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
-#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
-#include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Decision/DEC_Representations.h"
 
 // -----------------------------------------------------------------------------
@@ -37,10 +32,6 @@ void DEC_MiscFunctions::SetMaxSpeedModificator( MIL_AgentPion& callerAgent, MT_F
 {
     callerAgent.GetRole< moving::PHY_RoleAction_Moving >().SetMaxSpeedModificator( rFactor );
 }
-
-// =============================================================================
-// REINFORCEMENT
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::GetReinforcements
@@ -87,6 +78,7 @@ std::vector< boost::shared_ptr< MIL_FragOrder > > DEC_MiscFunctions::GetOrdersCa
     DEC_Representations& role = callerAgent.GetRole< DEC_Representations >();
     return role.GetOrdersCategory();
 }
+
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::GetPointsCategory
 // Created: LDC 2009-04-03
@@ -179,7 +171,6 @@ void DEC_MiscFunctions::CopyDirectionDanger( MT_Vector2D* pPosSource, boost::sha
     assert( pPosSource );
     assert( !pPosSource->IsZero() );
     assert( MT_IsZero( pPosSource->SquareMagnitude() - 1. ) );
-
     pMission->AffectDirection( *pPosSource );
 }
 

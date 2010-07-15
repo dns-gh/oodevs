@@ -12,8 +12,6 @@
 #ifndef __DEC_PerceptionFunctions_h_
 #define __DEC_PerceptionFunctions_h_
 
-#include "MIL.h"
-
 class DEC_Decision_ABC;
 class DEC_Knowledge_Urban;
 class MIL_Agent_ABC;

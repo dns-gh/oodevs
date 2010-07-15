@@ -13,12 +13,10 @@
 #include "DEC_Agent_PathClass.h"
 #include "MIL_AgentServer.h"
 #include "Decision/DEC_PathType.h"
-#include "Decision/DEC_PathPoint.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_Rep_PathPoint_Front.h"
 #include "Decision/DEC_Rep_PathPoint_Special.h"
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
-#include "Entities/Orders/MIL_LimaOrder.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -32,7 +30,6 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
-#include "Network/NET_Publisher_ABC.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::Initialize

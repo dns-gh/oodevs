@@ -11,11 +11,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_NbcFunctions.h"
-
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
-#include "Entities/Objects/NBCTypeAttribute.h"
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
 
 // -----------------------------------------------------------------------------
@@ -26,14 +24,9 @@ int DEC_NbcFunctions::AnalyzeNbcAgent( MIL_AgentPion& callerAgent, boost::shared
 {
     assert( knowledge );
     MIL_Object_ABC* pObject = knowledge->GetObjectKnown();
-
     if( !pObject || pObject->IsMarkedForDestruction() )
-    {
         return 0;
-    }
-
     callerAgent.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *pObject );
-
     int value = 0; // $$$$ TODO : ( int ) pObject->GetAttribute< NBCTypeAttribute >().GetAgentType().GetID();
     return value;
 }

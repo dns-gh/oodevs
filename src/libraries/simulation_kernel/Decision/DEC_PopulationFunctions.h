@@ -12,8 +12,6 @@
 #ifndef __DEC_PopulationFunctions_h_
 #define __DEC_PopulationFunctions_h_
 
-#include "MIL.h"
-
 class DEC_Decision_ABC;
 class MIL_Population;
 class MIL_Mission_ABC;

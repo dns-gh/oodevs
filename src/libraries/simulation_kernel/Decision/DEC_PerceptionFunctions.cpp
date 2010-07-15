@@ -10,14 +10,12 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "DEC_PerceptionFunctions.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h"
-#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Tools/MIL_Tools.h"
 
@@ -106,10 +104,8 @@ void DEC_PerceptionFunctions::SetVisionModeNormal( MIL_Agent_ABC& callerAgent )
 int DEC_PerceptionFunctions::EnableRecognitionPoint( DEC_Decision_ABC& callerAgent, MT_Vector2D* pCenter, MT_Float rSize, MT_Float rGrowthSpeed )
 {
     assert( pCenter );
-
-    const MT_Float rSimSize        = MIL_Tools::ConvertMeterToSim   ( rSize );
+    const MT_Float rSimSize = MIL_Tools::ConvertMeterToSim( rSize );
     const MT_Float rSimGrowthSpeed = MIL_Tools::ConvertSpeedMosToSim( rGrowthSpeed );
-
     return callerAgent.GetPion().GetRole< PHY_RoleInterface_Perceiver >().EnableRecoPoint( *pCenter, rSimSize, rSimGrowthSpeed, callerAgent );
 }
 
@@ -130,7 +126,6 @@ int DEC_PerceptionFunctions::EnableObjectRecognitionLocalisation( DEC_Decision_A
 {
     assert( pLocalisation );
     assert( pCenter );
-
     return callerAgent.GetPion().GetRole< PHY_RoleInterface_Perceiver >().EnableRecoObjects( *pLocalisation, *pCenter, rGrowthSpeed, callerAgent );
 }
 
@@ -150,7 +145,6 @@ void DEC_PerceptionFunctions::DisableObjectRecognitionLocalisation( MIL_Agent_AB
 int DEC_PerceptionFunctions::EnableRecognitionLocalisation( MIL_Agent_ABC& callerAgent, const TER_Localisation* pLocalisation )
 {
     assert( pLocalisation );
-
     return callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableRecoLocalisation( *pLocalisation, callerAgent.GetRole< DEC_Decision_ABC >() );
 }
 
@@ -162,7 +156,6 @@ int DEC_PerceptionFunctions::EnableRecognitionLocalisation( MIL_Agent_ABC& calle
 int DEC_PerceptionFunctions::EnableRecognitionLocalisation( MIL_Agent_ABC& callerAgent, const TER_Localisation* pLocalisation, float rGrowthSpeed )
 {
     assert( pLocalisation );
-
     return callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableRecoLocalisation( *pLocalisation, rGrowthSpeed, callerAgent.GetRole< DEC_Decision_ABC >() );
 }
 
@@ -201,7 +194,6 @@ int DEC_PerceptionFunctions::EnableRadarOnLocalisation( MIL_Agent_ABC& callerAge
 {
     const PHY_RadarClass* pRadarClass = PHY_RadarClass::Find( nRadarClass );
     assert( pRadarClass );
-
     return callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableRadarOnLocalisation( *pRadarClass, *pLocalisation );
 }
 
@@ -213,7 +205,6 @@ void DEC_PerceptionFunctions::DisableRadarOnLocalisation( MIL_Agent_ABC& callerA
 {
     const PHY_RadarClass* pRadarClass = PHY_RadarClass::Find( nRadarClass );
     assert( pRadarClass );
-
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().DisableRadarOnLocalisation( *pRadarClass, id );
 }
 
@@ -226,7 +217,6 @@ void DEC_PerceptionFunctions::EnableRadar( MIL_Agent_ABC& callerAgent, int nRada
 {
     const PHY_RadarClass* pRadarClass = PHY_RadarClass::Find( nRadarClass );
     assert( pRadarClass );
-
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableRadar( *pRadarClass );
 }
 
@@ -238,7 +228,6 @@ void DEC_PerceptionFunctions::DisableRadar( MIL_Agent_ABC& callerAgent, int nRad
 {
     const PHY_RadarClass* pRadarClass = PHY_RadarClass::Find( nRadarClass );
     assert( pRadarClass );
-
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().DisableRadar( *pRadarClass );
 }
 
@@ -355,4 +344,3 @@ void DEC_PerceptionFunctions::EnableSensors( MIL_Agent_ABC& callerAgent )
 {
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableSensors();
 }
-

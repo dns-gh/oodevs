@@ -13,7 +13,6 @@
 #include "DEC_MedicalTreatmentFunctions.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-#include "Entities/Objects/MedicalTreatmentAttribute.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
 

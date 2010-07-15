@@ -12,8 +12,6 @@
 #ifndef __DEC_OrdersFunctions_h_
 #define __DEC_OrdersFunctions_h_
 
-#include "MIL.h"
-
 class DEC_Decision_ABC;
 class MIL_AgentPion;
 class MIL_Automate;

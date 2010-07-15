@@ -10,7 +10,6 @@
 #ifndef __DEC_Agent_Path_h_
 #define __DEC_Agent_Path_h_
 
-#include "MIL.h"
 #include "DEC_Path_KnowledgeAgent.h"
 #include "DEC_Path_KnowledgeObject.h"
 #include "DEC_Path_KnowledgePopulation.h"

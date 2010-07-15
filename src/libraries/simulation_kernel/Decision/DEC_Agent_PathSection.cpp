@@ -10,9 +10,7 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "DEC_Agent_PathSection.h"
-
 #include "DEC_Agent_Path.h"
 #include "DEC_Agent_PathfinderRule.h"
 
@@ -24,6 +22,7 @@ DEC_Agent_PathSection::DEC_Agent_PathSection( DEC_Agent_Path& path, const MT_Vec
     : DEC_PathSection_ABC( path, startPoint, endPoint )
     , rule_              ( *new DEC_Agent_PathfinderRule( path, startPoint, endPoint ) )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

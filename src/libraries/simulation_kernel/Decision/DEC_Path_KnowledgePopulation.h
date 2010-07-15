@@ -10,7 +10,6 @@
 #ifndef __DEC_Path_KnowledgePopulation_h_
 #define __DEC_Path_KnowledgePopulation_h_
 
-#include "MIL.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 
 class DEC_Agent_PathClass;
@@ -65,9 +64,9 @@ private:
     //@}
 
 private:
-          T_PopulationElements  elements_;
-    const DEC_Agent_PathClass*  pPathClass_;
-          bool                  bAvoidPolicy_;
+    T_PopulationElements elements_;
+    const DEC_Agent_PathClass* pPathClass_;
+    bool bAvoidPolicy_;
 };
 
 #endif // __DEC_Path_KnowledgePopulation_h_

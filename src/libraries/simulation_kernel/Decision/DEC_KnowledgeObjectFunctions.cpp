@@ -9,10 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeObjectFunctions.h"
-
-#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
-
 #include "Entities/Objects/Object.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/AnimatorAttribute.h"
@@ -20,13 +17,10 @@
 #include "Entities/Objects/ContaminationCapacity.h"
 #include "Entities/Objects/DecontaminationCapacity.h"
 #include "Entities/Objects/MineAttribute.h"
-#include "Entities/Objects/OccupantAttribute.h"
 #include "Entities/Objects/PopulationAttribute.h"
 #include "Entities/Objects/SupplyRouteAttribute.h"
 #include "Entities/Objects/StockAttribute.h"
-
 #include "Entities/Objects/MIL_ObjectFilter.h"
-
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Decision/DEC_Tools.h"
@@ -108,11 +102,9 @@ float DEC_KnowledgeObjectFunctions::GetAnimationLevel( boost::shared_ptr< DEC_Kn
 void DEC_KnowledgeObjectFunctions::DecontaminateZone( const MIL_Agent_ABC& callerAgent, const TER_Localisation* location )
 {
     assert( location );
-
     MIL_ObjectFilter filter;
     filter.Set( "nbc zone" );
     filter.Set( "nbc cloud" );
-
     T_KnowledgeObjectVector knownObjects;
     callerAgent.GetArmy().GetKnowledge().GetObjects( knownObjects, filter );
     for( CIT_KnowledgeObjectVector it = knownObjects.begin(); it != knownObjects.end(); ++it )
@@ -216,9 +208,7 @@ bool DEC_KnowledgeObjectFunctions::IsStockSupplied( boost::shared_ptr< DEC_Knowl
         {
             StockAttribute* pAttribute = pObject->RetrieveAttribute< StockAttribute >();
             if( pAttribute )
-            {
                 return pAttribute->IsFull();
-            }
         }
     }
     return false;
@@ -361,8 +351,7 @@ float DEC_KnowledgeObjectFunctions::GetConstructionLevel( boost::shared_ptr< DEC
             const ConstructionAttribute* capacity = object->RetrieveAttribute< ConstructionAttribute >();
             if( capacity )
                 return float(capacity->GetState());
-            else
-                return 1.f;
+            return 1.f;
         }
     }
     return 0.f;
@@ -380,8 +369,7 @@ float DEC_KnowledgeObjectFunctions::GetValorizationLevel( boost::shared_ptr< DEC
             const MineAttribute* capacity = object->RetrieveAttribute< MineAttribute >();
             if( capacity )
                 return float(capacity->GetState());
-            else
-                return 1.f;
+            return 1.f;
         }
     }
     return 0.f;

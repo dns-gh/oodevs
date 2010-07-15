@@ -10,8 +10,6 @@
 #ifndef __DEC_DIA3Model_h_
 #define __DEC_DIA3Model_h_
 
-#include "MIL.h"
-
 #include "DEC_Model_ABC.h"
 
 class DEC_DIAWorkspace ;

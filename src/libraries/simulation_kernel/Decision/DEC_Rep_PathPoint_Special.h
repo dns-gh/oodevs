@@ -12,7 +12,6 @@
 #ifndef __DEC_Rep_PathPoint_Special_h_
 #define __DEC_Rep_PathPoint_Special_h_
 
-#include "MIL.h"
 #include "DEC_Rep_PathPoint.h"
 
 
@@ -32,7 +31,7 @@ public:
     };
 
 public:
-    DEC_Rep_PathPoint_Special( const MT_Vector2D& vPos, E_TypePointParticulier nTypePoint, const TerrainData& nTypeTerrain );
+             DEC_Rep_PathPoint_Special( const MT_Vector2D& vPos, E_TypePointParticulier nTypePoint, const TerrainData& nTypeTerrain );
     virtual ~DEC_Rep_PathPoint_Special();
 
     //! @name Debug

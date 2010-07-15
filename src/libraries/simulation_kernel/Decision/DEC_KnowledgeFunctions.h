@@ -10,7 +10,6 @@
 #ifndef __DEC_KnowledgeFunctions_h_
 #define __DEC_KnowledgeFunctions_h_
 
-#include "MIL.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
 
 class DEC_Decision_ABC;

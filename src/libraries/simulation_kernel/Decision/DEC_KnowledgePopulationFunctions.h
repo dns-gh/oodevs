@@ -12,7 +12,6 @@
 #ifndef __DEC_KnowledgePopulationFunctions_h_
 #define __DEC_KnowledgePopulationFunctions_h_
 
-#include "MIL.h"
 class MIL_AgentPion;
 class PHY_DotationCategory;
 

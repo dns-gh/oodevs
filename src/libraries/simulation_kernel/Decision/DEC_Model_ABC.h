@@ -30,15 +30,15 @@ class DEC_Model_ABC : private boost::noncopyable
 public:
     //! @name Accessors
     //@{
-    const std::string& GetName       () const;
-    const std::string& GetScriptFile () const;
+    const std::string& GetName() const;
+    const std::string& GetScriptFile() const;
     const std::string& GetIncludePath() const;
-    const std::string& GetDIAType    () const;
+    const std::string& GetDIAType() const;
     //@}
 
     //! @name Operations
     //@{
-    bool IsMissionAvailable            ( const MIL_MissionType_ABC& missionType ) const;
+    bool IsMissionAvailable( const MIL_MissionType_ABC& missionType ) const;
     bool IsFragOrderAvailableForMission( const MIL_MissionType_ABC& missionType, const MIL_FragOrderType& fragOrderType ) const;
     //@}
 
@@ -56,18 +56,18 @@ protected:
 private:
     //! @name Initialization tools
     //@{
-    static bool FileChanged      ( const std::string& strFileName, time_t since );
+    static bool FileChanged( const std::string& strFileName, time_t since );
     //@}
 
     //! @name Initialization
     //@{
-    void InitializeMissions         ( xml::xistream& xis, const std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess >& missionTypes );
+    void InitializeMissions( xml::xistream& xis, const std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess >& missionTypes );
     void InitializeMissionFragOrders( xml::xistream& xis, const MIL_MissionType_ABC& missionType );
     //@}
 
     //! @name Helpers
     //@{
-    void ReadMission  ( xml::xistream& xis, const std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess >& missionTypes );
+    void ReadMission( xml::xistream& xis, const std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess >& missionTypes );
     void ReadFragOrder( xml::xistream& xis, const MIL_MissionType_ABC& missionType );
     //@}
 

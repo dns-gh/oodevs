@@ -12,7 +12,6 @@
 #ifndef __DEC_MedicalTreatmentFunctions_h_
 #define __DEC_MedicalTreatmentFunctions_h_
 
-#include "MIL.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 
 class MIL_AgentPion;
@@ -25,10 +24,10 @@ class DEC_MedicalTreatmentFunctions
 public:
     //! @name Functions
     //@{
-    static void TakeCareOfThePatient        ( MIL_AgentPion& callerAgent );
-    static void PutPatientInTransport       ( MIL_AgentPion& callerAgent );
-    static int GetMedicalTreatmentTypes     ( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > knowledge );
-    static void DoDiagnosis                 ( MIL_AgentPion& callerAgent );
+    static void TakeCareOfThePatient( MIL_AgentPion& callerAgent );
+    static void PutPatientInTransport( MIL_AgentPion& callerAgent );
+    static int GetMedicalTreatmentTypes( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > knowledge );
+    static void DoDiagnosis( MIL_AgentPion& callerAgent );
     //@}
 };
 

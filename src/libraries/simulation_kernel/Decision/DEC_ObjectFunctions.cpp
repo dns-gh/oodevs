@@ -12,14 +12,8 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_ObjectFunctions.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
-#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Decision/DEC_Gen_Object.h"
-#include "protocol/protocol.h"
 #include <xeumeuleu/xml.hpp>
-
-// =============================================================================
-// GEN OBJECT
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_ObjectFunctions::GetGenObjectType
@@ -99,11 +93,9 @@ bool DEC_ObjectFunctions::ActivateObject( boost::shared_ptr< DEC_Knowledge_Objec
 {
     if( !pKnowledge || !pKnowledge->IsValid() )
         return false;
-
     MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
     if( !pObject || !( *pObject )().CanBeActivated() )
         return false;
-
     ( *pObject )().Activate();
     return true;
 }

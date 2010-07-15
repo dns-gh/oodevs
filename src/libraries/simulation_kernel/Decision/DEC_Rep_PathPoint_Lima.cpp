@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Rep_PathPoint_Lima.h"
 #include "Entities/Orders/MIL_LimaFunction.h"
-#include "Decision/DEC_Tools.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint_Lima constructor
@@ -23,6 +22,7 @@ DEC_Rep_PathPoint_Lima::DEC_Rep_PathPoint_Lima( const MT_Vector2D& vPos, const T
     , typeLima_( (int)function.GetID() )
     , limaID_  ( nLimaID )
 {
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -31,6 +31,7 @@ DEC_Rep_PathPoint_Lima::DEC_Rep_PathPoint_Lima( const MT_Vector2D& vPos, const T
 //-----------------------------------------------------------------------------
 DEC_Rep_PathPoint_Lima::~DEC_Rep_PathPoint_Lima()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -63,4 +64,3 @@ unsigned int DEC_Rep_PathPoint_Lima::GetLimaID()
 {
     return limaID_;
 }
-

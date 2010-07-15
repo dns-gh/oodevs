@@ -11,12 +11,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgePopulationFunctions.h"
-
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/MIL_Army.h"
-#include "Knowledge/DEC_Knowledge_Population.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 
@@ -44,8 +42,7 @@ float DEC_KnowledgePopulationFunctions::GetDangerosity( const MIL_AgentPion& cal
         const MT_Float rDangerosity = pKnowledge->GetDangerosity( caller );
         return (float)( rDangerosity + 1. ) ;
     }
-    else
-        return 0.f;
+    return 0.f;
 }
 
 // -----------------------------------------------------------------------------

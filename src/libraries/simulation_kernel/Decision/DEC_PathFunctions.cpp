@@ -11,9 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathFunctions.h"
-
 #include "Decision/DEC_PathType.h"
-#include "Decision/DEC_PathPoint.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_Agent_Path.h"
 #include "Decision/DEC_AgentFunctions.h"
@@ -22,12 +20,8 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/MIL_Army.h"
-#include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
-#include "MIL_AgentServer.h"
 #include "Tools/MIL_Tools.h"
-#include "Decision/DEC_Rep_PathPoint.h"
-#include "Decision/DEC_Rep_PathPoint_Front.h"
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
 
 
@@ -65,10 +59,8 @@ bool DEC_PathFunctions::ShouldEmbark( MIL_AgentPion& callerAgent, boost::shared_
 boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_AgentPion& callerAgent, MT_Vector2D* pEnd, int pathType )
 {
     assert( pEnd );
-
     const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
     assert( pPathType );
-
     boost::shared_ptr< DEC_Path_ABC > pPath( new DEC_Agent_Path( callerAgent, *pEnd, *pPathType ) );
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pPath );
     return pPath;
@@ -81,10 +73,8 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_Agen
 boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_AgentPion& callerAgent, MT_Vector2D* pEnd, int pathType, bool loaded )
 {
     assert( pEnd );
-
     const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
     assert( pPathType );
-
     boost::shared_ptr< DEC_Path_ABC > pPath( new DEC_Agent_Path( callerAgent, *pEnd, *pPathType, loaded ) );
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pPath );
     return pPath;
@@ -97,10 +87,8 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_Agen
 boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointList( MIL_AgentPion& callerAgent, std::vector< boost::shared_ptr< MT_Vector2D > > listPt, int pathType  )
 {
     assert( !listPt.empty() );
-
     const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
     assert( pPathType );
-
     boost::shared_ptr< DEC_Path_ABC > pPath( new DEC_Agent_Path( callerAgent, listPt, *pPathType ) );
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pPath );
     return pPath;
@@ -136,27 +124,20 @@ boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::ExtrapolatePosition( const M
 std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > DEC_PathFunctions::GetNextObjectOnPath( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > /*oId*/, float /*oDistance*/, const std::vector< std::string >& params )
 {
     MIL_ObjectFilter filter( params );
-
     std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > result;
-
     boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
-
     MT_Float rDistanceCollision = 0.;
-
     const PHY_RoleInterface_Location& roleLocation = callerAgent.GetRole< PHY_RoleInterface_Location >();
-    const MT_Float                    rHeight      = roleLocation.GetHeight  ();
-    const MT_Vector2D&                position     = roleLocation.GetPosition();
-
+    const MT_Float rHeight = roleLocation.GetHeight  ();
+    const MT_Vector2D&  position = roleLocation.GetPosition();
     T_KnowledgeObjectVector knowledges;
     callerAgent.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, rHeight, filter );
-
     if( knowledges.empty() || !callerAgent.GetRole< moving::PHY_RoleAction_Moving >().ComputeFutureObjectCollision( position, knowledges, rDistanceCollision, pObjectColliding ) )
     {
         result.first = false;
         return result;
     }
     assert( pObjectColliding && pObjectColliding->IsValid() );
-
     result.first = true;
     result.second.first = pObjectColliding;
     result.second.second = MIL_Tools::ConvertSimToMeter( rDistanceCollision );

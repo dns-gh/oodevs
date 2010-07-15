@@ -12,7 +12,6 @@
 #ifndef __DEC_Rep_PathPoint_Front_h_
 #define __DEC_Rep_PathPoint_Front_h_
 
-#include "MIL.h"
 #include "Decision/DEC_PathPoint.h"
 
 class DEC_Rep_PathPoint;
@@ -41,7 +40,6 @@ public:
 
 private:
     boost::shared_ptr< DEC_PathPoint > destPoint_;
-
     mutable DEC_Representations* pSentToDiaAgent_;
 };
 

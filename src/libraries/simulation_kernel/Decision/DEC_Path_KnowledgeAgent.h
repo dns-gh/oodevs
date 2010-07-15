@@ -19,8 +19,6 @@
 #ifndef __DEC_Path_KnowledgeAgent_h_
 #define __DEC_Path_KnowledgeAgent_h_
 
-#include "MIL.h"
-
 class DEC_Knowledge_Agent;
 class DEC_Agent_PathClass;
 class MIL_Agent_ABC;
@@ -46,9 +44,9 @@ private:
     //! @name Member data
     //@{
     MT_Vector2D vEnemyPosition_;
-    MT_Float    rSecurityDistance_;
-    MT_Float    rFactor_;
-    MT_Float    rOffset_;
+    MT_Float rSecurityDistance_;
+    MT_Float rFactor_;
+    MT_Float rOffset_;
     //@}
 };
 

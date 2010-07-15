@@ -12,7 +12,6 @@
 #ifndef __DEC_MiscFunctions_h_
 #define __DEC_MiscFunctions_h_
 
-#include "MIL.h"
 #include <boost/shared_ptr.hpp>
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Network/NET_ASN_Tools.h"

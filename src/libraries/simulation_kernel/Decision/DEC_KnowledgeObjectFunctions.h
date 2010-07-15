@@ -10,7 +10,6 @@
 #ifndef __DEC_KnowledgeObjectFunctions_h_
 #define __DEC_KnowledgeObjectFunctions_h_
 
-#include "MIL.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeCrossingSite.h"

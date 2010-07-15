@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Rep_PathPoint.h"
-#include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Representations.h"
 
 //-----------------------------------------------------------------------------
@@ -23,7 +22,7 @@ DEC_Rep_PathPoint::DEC_Rep_PathPoint( const MT_Vector2D& vPos, E_TypePoint nType
     , nTypeTerrain_     ( nTypeTerrain )
     , pSentToDiaAgent_  ( 0 )
 {
-
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -42,10 +41,8 @@ void DEC_Rep_PathPoint::SendToDIA( DEC_Representations& agent, boost::shared_ptr
 {
     if( pSentToDiaAgent_ )
         return;
-
     // ATTENTION, si cette fonction est appelée, alors l'agent physique s'est automatiquement arrêté sur la position du point...
     agent.AddToPointsCategory( point );
-
     pSentToDiaAgent_ = &agent;
 }
 
@@ -57,9 +54,7 @@ void DEC_Rep_PathPoint::SendToDIA( DEC_Representations& agent, boost::shared_ptr
 void DEC_Rep_PathPoint::RemoveFromDIA( boost::shared_ptr< DEC_PathPoint > self )
 {
     if( pSentToDiaAgent_ )
-    {
         pSentToDiaAgent_->RemoveFromPointsCategory( self );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -75,4 +70,3 @@ void DEC_Rep_PathPoint::Dump() const
               << " - nTypePoint_ " << (unsigned int)GetTypePoint()
               << std::endl;
 }
-

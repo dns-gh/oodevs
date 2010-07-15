@@ -18,7 +18,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Path_KnowledgeAgent.h"
-
 #include "DEC_Agent_PathClass.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 
@@ -46,10 +45,6 @@ DEC_Path_KnowledgeAgent::~DEC_Path_KnowledgeAgent()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_KnowledgeAgent::ComputeCost
 // Created: AGE 2005-02-01
@@ -59,7 +54,6 @@ MT_Float DEC_Path_KnowledgeAgent::ComputeCost( const MT_Vector2D& from, const MT
     const MT_Line lineLink( from, to );
     const MT_Vector2D vPositionProjection = lineLink.ClosestPointOnLine( vEnemyPosition_ );
     const MT_Float rDistBtwUnitAndEnemy = vPositionProjection.Distance( vEnemyPosition_  );
-
     if( rDistBtwUnitAndEnemy > rSecurityDistance_ )
         return 0.;
     return rOffset_ - rFactor_ * rDistBtwUnitAndEnemy;

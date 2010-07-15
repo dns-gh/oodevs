@@ -10,7 +10,6 @@
 #ifndef __DEC_Path_KnowledgeObject_h_
 #define __DEC_Path_KnowledgeObject_h_
 
-#include "MIL.h"
 #include "simulation_terrain/TER_Localisation.h"
 
 class DEC_Knowledge_Object;

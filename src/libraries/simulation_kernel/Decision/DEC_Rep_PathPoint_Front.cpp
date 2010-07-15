@@ -10,11 +10,7 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "DEC_Rep_PathPoint_Front.h"
-
-#include "Decision/DEC_Rep_PathPoint.h"
-#include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Representations.h"
 
 //-----------------------------------------------------------------------------
@@ -26,6 +22,8 @@ DEC_Rep_PathPoint_Front::DEC_Rep_PathPoint_Front( const MT_Vector2D& vPos, boost
     , destPoint_        ( dest )
     , pSentToDiaAgent_  ( 0 )
 {
+    
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -34,6 +32,7 @@ DEC_Rep_PathPoint_Front::DEC_Rep_PathPoint_Front( const MT_Vector2D& vPos, boost
 //-----------------------------------------------------------------------------
 DEC_Rep_PathPoint_Front::~DEC_Rep_PathPoint_Front()
 {
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -45,9 +44,7 @@ void DEC_Rep_PathPoint_Front::SendToDIA( DEC_Representations& agent, boost::shar
 {
     if( pSentToDiaAgent_ )
         return;
-
     agent.AddToPointsCategory( point );
-
     pSentToDiaAgent_ = &agent;
 }
 
@@ -58,9 +55,7 @@ void DEC_Rep_PathPoint_Front::SendToDIA( DEC_Representations& agent, boost::shar
 void DEC_Rep_PathPoint_Front::RemoveFromDIA( boost::shared_ptr< DEC_PathPoint > self )
 {
     if( pSentToDiaAgent_ )
-    {
         pSentToDiaAgent_->RemoveFromPointsCategory( self );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -85,4 +80,3 @@ void DEC_Rep_PathPoint_Front::Dump() const
               << " - Dest Type : " << destPoint_->GetTypeTerrain().DumpToString()
               << std::endl;
 }
-

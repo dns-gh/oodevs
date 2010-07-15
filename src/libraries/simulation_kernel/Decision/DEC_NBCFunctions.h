@@ -12,7 +12,6 @@
 #ifndef __DEC_NbcFunctions_h_
 #define __DEC_NbcFunctions_h_
 
-#include "MIL.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 
 class MIL_AgentPion;
@@ -25,9 +24,9 @@ class DEC_NbcFunctions
 public:
     //! @name Functions
     //@{
-    static int AnalyzeNbcAgent     ( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > knowledge );
-    static void DecontaminateAgent  ( MIL_AgentPion& callerAgent );
-    static void DecontaminateSite   ( MIL_AgentPion& callerAgent );
+    static int AnalyzeNbcAgent( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > knowledge );
+    static void DecontaminateAgent( MIL_AgentPion& callerAgent );
+    static void DecontaminateSite( MIL_AgentPion& callerAgent );
     //@}
 };
 

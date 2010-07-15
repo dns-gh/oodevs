@@ -12,7 +12,6 @@
 #ifndef __DEC_Rep_PathPoint_Lima_h_
 #define __DEC_Rep_PathPoint_Lima_h_
 
-#include "MIL.h"
 #include "DEC_Rep_PathPoint.h"
 
 class MIL_LimaFunction;
@@ -38,7 +37,7 @@ public:
     //@}
 
 private:
-    int   typeLima_;
+    int typeLima_;
     unsigned int limaID_;
 };
 

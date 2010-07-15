@@ -10,8 +10,6 @@
 #ifndef __DEC_PathClass_h_
 #define __DEC_PathClass_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xistream;

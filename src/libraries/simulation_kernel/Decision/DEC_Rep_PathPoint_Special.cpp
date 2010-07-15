@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Rep_PathPoint_Special.h"
-#include "Decision/DEC_Tools.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint_Special constructor
@@ -21,6 +20,7 @@ DEC_Rep_PathPoint_Special::DEC_Rep_PathPoint_Special( const MT_Vector2D& vPos, E
     : DEC_Rep_PathPoint     ( vPos, DEC_Rep_PathPoint::eTypePointParticulier, nTypeTerrain, "Rep_PointParticulier" )
     , nTypePointParticulier_( nTypePoint )
 {
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -29,6 +29,7 @@ DEC_Rep_PathPoint_Special::DEC_Rep_PathPoint_Special( const MT_Vector2D& vPos, E
 //-----------------------------------------------------------------------------
 DEC_Rep_PathPoint_Special::~DEC_Rep_PathPoint_Special()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

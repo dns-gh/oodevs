@@ -12,7 +12,6 @@
 #ifndef __DEC_ObjectFunctions_h_
 #define __DEC_ObjectFunctions_h_
 
-#include "MIL.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "protocol/protocol.h"
 
@@ -30,20 +29,19 @@ public:
 
     //! @name Functions
     //@{
-    template< typename T > static void MagicCreateObject ( const T& caller, const std::string& type, const TER_Localisation* pLocalisation );
+    template< typename T > static void MagicCreateObject( const T& caller, const std::string& type, const TER_Localisation* pLocalisation );
     static void MagicDestroyObject( boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
     static bool ActivateObject( boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
-    static const TER_Localisation& GetGenObjectLocalisation     ( boost::shared_ptr< DEC_Gen_Object > knowledgeId );
+    static const TER_Localisation& GetGenObjectLocalisation( boost::shared_ptr< DEC_Gen_Object > knowledgeId );
     static boost::shared_ptr< DEC_Gen_Object > CreateDynamicGenObject( std::string type, boost::shared_ptr< TER_Localisation > location, bool preliminary );
 
     // Gen object
-    static std::string GetGenObjectType                       ( const DEC_Gen_Object* object );
-    static bool GetGenObjectReservedObstacle                  ( const DEC_Gen_Object* object );
-    static DEC_Decision_ABC* GetGenObjectTC2                  ( const DEC_Gen_Object* object );
+    static std::string GetGenObjectType( const DEC_Gen_Object* object );
+    static bool GetGenObjectReservedObstacle( const DEC_Gen_Object* object );
+    static DEC_Decision_ABC* GetGenObjectTC2( const DEC_Gen_Object* object );
 
     // Objects
-    static std::string ConvertTypeObjectToString    ( int id );
-
+    static std::string ConvertTypeObjectToString( int id );
     //@}
 };
 

@@ -10,12 +10,9 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "DEC_PathSection_ABC.h"
-
 #include "DEC_Path_ABC.h"
 #include "pathfind/TerrainPathfinder.h"
-
 #include <ctime>
 
 // -----------------------------------------------------------------------------
@@ -30,6 +27,7 @@ DEC_PathSection_ABC::DEC_PathSection_ABC( DEC_Path_ABC& path, const MT_Vector2D&
     , nAddedPoints_       ( 0 )
     , nComputationEndTime_( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -38,6 +36,7 @@ DEC_PathSection_ABC::DEC_PathSection_ABC( DEC_Path_ABC& path, const MT_Vector2D&
 // -----------------------------------------------------------------------------
 DEC_PathSection_ABC::~DEC_PathSection_ABC()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -47,23 +46,17 @@ DEC_PathSection_ABC::~DEC_PathSection_ABC()
 bool DEC_PathSection_ABC::Execute( TerrainPathfinder& pathfind, unsigned int nComputationEndTime )
 {
     geometry::Point2f from( float( startPoint_.rX_ ), float( startPoint_.rY_ ) );
-    geometry::Point2f to  ( float( endPoint_  .rX_ ), float( endPoint_  .rY_ ) );
-
+    geometry::Point2f to( float( endPoint_  .rX_ ), float( endPoint_  .rY_ ) );
     nComputationEndTime_ = nComputationEndTime;
     if( path_.NeedRefine() )
         pathfind.SetPathfindConfiguration( 1, 3 ); // $$$$ AGE 2005-03-30: whatever
     pathfind.SetChoiceRatio( path_.UseStrictClosest() ? 0.f : 1.f );
-
     pathfind.SetCallback( this );
     const bool bResult = pathfind.ComputePath( from, to, GetRule(), *this );
     pathfind.SetPathfindConfiguration( 0, 0 );
     pathfind.SetCallback( 0 );
     return bResult;
 }
-
-// =============================================================================
-// TOOLS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathSection_ABC::Handle
@@ -76,7 +69,6 @@ void DEC_PathSection_ABC::Handle( const TerrainPathPoint& point )
     path_.AddResultPoint( MT_Vector2D( p.X(), p.Y() ), point.DataAtPoint(), point.DataToNextPoint() );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_PathSection_ABC::ShouldEndComputation
 // Created: AGE 2005-02-28
@@ -85,13 +77,11 @@ bool DEC_PathSection_ABC::ShouldEndComputation( float /*rCostToCurrentNode*/, fl
 {
     if( bCanceled_ )
         return true;
-
     if( (unsigned int)time( 0 ) >= nComputationEndTime_ )
     {
         MT_LOG_ERROR_MSG( "Pathfind computation aborted - timeout" );
         return true;
     }
-
     return false;
 }
 

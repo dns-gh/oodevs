@@ -17,7 +17,7 @@
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include <xeumeuleu/xml.hpp>
 
-DEC_Agent_PathClass::T_Rules       DEC_Agent_PathClass::rules_;
+DEC_Agent_PathClass::T_Rules DEC_Agent_PathClass::rules_;
 
 struct DEC_Agent_PathClass::LoadingWrapper
 {
@@ -67,8 +67,8 @@ void DEC_Agent_PathClass::Initialize( xml::xistream& xis )
 void DEC_Agent_PathClass::ReadUnitRule( xml::xistream& xis )
 {
     std::string strType;
-    bool        bFlying;
-    bool        bAutonomous;
+    bool bFlying;
+    bool bAutonomous;
     xis >> xml::attribute( "type" , strType )
         >> xml::attribute( "flying" , bFlying )
         >> xml::attribute( "autonomous", bAutonomous );

@@ -10,9 +10,7 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "DEC_Population_Path.h"
-
 #include "DEC_Population_PathClass.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/DEC_PopulationKnowledge.h"
@@ -45,10 +43,6 @@ DEC_Population_Path::~DEC_Population_Path()
 {
 }
 
-//=============================================================================
-// INIT
-//=============================================================================
-
  // -----------------------------------------------------------------------------
 // Name: DEC_Population_Path::Initialize
 // Created: NLD 2005-02-22
@@ -61,7 +55,6 @@ void DEC_Population_Path::Initialize( const T_PointVector& points )
     for( DEC_PopulationKnowledge::CIT_LocationVector itChanLocation = channelingLocations.begin();
         itChanLocation != channelingLocations.end(); ++itChanLocation )
         channelers_.push_back( DEC_Population_Path_Channeler( pathClass_, *itChanLocation ) );
-
     assert( !points.empty() );
     const MT_Vector2D* pLastPoint = 0;
     for( CIT_PointVector itPoint = points.begin(); itPoint != points.end(); ++itPoint )
@@ -75,10 +68,6 @@ void DEC_Population_Path::Initialize( const T_PointVector& points )
     }
 }
 
-// =============================================================================
-// ACCESSORS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Population_Path::GetCostOutsideOfChanneling
 // Created: NLD 2007-03-07
@@ -87,10 +76,6 @@ MT_Float DEC_Population_Path::GetCostOutsideOfChanneling() const
 {
     return pathClass_.GetCostOutsideOfChanneling();
 }
-
-// =============================================================================
-// PATH CALCULATION
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Population_Path::CleanAfterComputation
@@ -116,11 +101,8 @@ void DEC_Population_Path::Execute( TerrainPathfinder& pathfind )
         MT_LOG_MESSAGE_MSG( GetPathAsString() );
         profiler_.Start();
     }
-
     assert( resultList_.empty() );
-
     DEC_Path_ABC::Execute( pathfind );
-
     if( MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
     {
         double rComputationTime = profiler_.Stop();

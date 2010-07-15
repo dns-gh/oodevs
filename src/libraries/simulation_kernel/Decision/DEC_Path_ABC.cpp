@@ -10,13 +10,10 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "DEC_Path_ABC.h"
-
 #include "DEC_PathSection_ABC.h"
 #include "DEC_Pathfind_Manager.h"
 #include "MIL_AgentServer.h"
-#include "MT_Tools/MT_CrashHandler.h"
 
 unsigned int DEC_Path_ABC::nIDIdx_ = 0;
 
@@ -29,6 +26,7 @@ DEC_Path_ABC::DEC_Path_ABC()
     , nState_      ( eComputing )
     , bJobCanceled_( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -50,10 +48,6 @@ void DEC_Path_ABC::CleanAfterComputation()
         delete *itPathSection;
     pathSections_.clear();
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_ABC::Cancel
@@ -85,13 +79,11 @@ MT_Float DEC_Path_ABC::GetLength() const
 void DEC_Path_ABC::DoExecute( TerrainPathfinder& pathfind )
 {
     unsigned int nComputationEndTime = 0;
-
     const unsigned int nMaxComputationDuration = MIL_AgentServer::GetWorkspace().GetPathFindManager().GetMaxComputationDuration();
     if( nMaxComputationDuration == std::numeric_limits< unsigned int >::max() )
         nComputationEndTime = std::numeric_limits< unsigned int >::max();
     else
         nComputationEndTime = time( 0 ) + nMaxComputationDuration;
-
     nState_ = eComputing;
     for( CIT_PathSectionVector itPathSection = pathSections_.begin(); itPathSection != pathSections_.end(); ++itPathSection )
     {
@@ -133,10 +125,6 @@ void DEC_Path_ABC::Execute( TerrainPathfinder& pathfind )
     }
 }
 
-// =============================================================================
-// DEBUG
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_ABC::GetStateAsString
 // Created: NLD 2003-08-14
@@ -167,5 +155,3 @@ std::string DEC_Path_ABC::GetPathAsString() const
         strTmp << " -> " << (**itSection).GetPosEnd();
     return strTmp.str();
 }
-
-

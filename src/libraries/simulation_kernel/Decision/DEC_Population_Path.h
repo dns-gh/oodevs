@@ -12,8 +12,6 @@
 #ifndef __DEC_Population_Path_h_
 #define __DEC_Population_Path_h_
 
-#include "MIL.h"
-
 #include "Decision/DEC_PathResult.h"
 #include "Decision/DEC_Population_Path_Channeler.h"
 #include "MT_Tools/MT_Profiler.h"

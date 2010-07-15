@@ -12,8 +12,6 @@
 #ifndef __DEC_Agent_PathSection_h_
 #define __DEC_Agent_PathSection_h_
 
-#include "MIL.h"
-
 #include "Decision/DEC_PathSection_ABC.h"
 
 class DEC_Agent_Path;

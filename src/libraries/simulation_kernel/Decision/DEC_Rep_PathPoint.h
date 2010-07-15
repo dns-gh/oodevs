@@ -12,7 +12,6 @@
 #ifndef __DEC_Rep_PathPoint_h_
 #define __DEC_Rep_PathPoint_h_
 
-#include "MIL.h"
 #include "Decision/DEC_PathPoint.h"
 
 class DEC_Representations;
@@ -43,8 +42,7 @@ public:
     //@}
 
 private:
-    TerrainData    nTypeTerrain_;
-
+    TerrainData nTypeTerrain_;
     mutable DEC_Representations* pSentToDiaAgent_;
 };
 

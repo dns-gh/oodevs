@@ -10,9 +10,7 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "DEC_Population_PathSection.h"
-
 #include "DEC_Population_PathfinderRule.h"
 #include "DEC_Population_Path.h"
 

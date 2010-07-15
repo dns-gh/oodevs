@@ -12,11 +12,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Model_ABC.h"
-#include "Decision/DEC_Workspace.h"
 #include "Entities/Orders/MIL_FragOrderType.h"
-
-#include <direct.h>
-#include <sys/types.h>
 #include <sys/stat.h>
 #include <xeumeuleu/xml.hpp>
 
@@ -50,7 +46,6 @@ DEC_Model_ABC::~DEC_Model_ABC()
 bool DEC_Model_ABC::FileChanged( const std::string& strFileName, time_t since )
 {
     static std::map< std::string, time_t > changedFiles; // $$$$ AGE 2005-03-22: ram ?
-
     std::map< std::string, time_t >::iterator itFile = changedFiles.find( strFileName );
     if( itFile == changedFiles.end() )
     {
@@ -74,7 +69,6 @@ void DEC_Model_ABC::InitializeMissions( xml::xistream& xis, const std::map< std:
 {
     availableMissions_.clear();
     availableFragOrdersPerMission_.clear();
-
     xis >> xml::optional >> xml::start( "missions" )
                            >> xml::list( "mission", *this, &DEC_Model_ABC::ReadMission, missionTypes )
                       >> xml::end;
@@ -88,20 +82,16 @@ void DEC_Model_ABC::ReadMission( xml::xistream& xis, const std::map< std::string
 {
     std::string strMission;
     xis >> xml::attribute( "name", strMission );
-
     std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess >::const_iterator it = missionTypes.find( strMission );
     if( it == missionTypes.end() )
         xis.error( "Invalid mission name '" + strMission + "' for model '" + GetName() + "'" );
     const MIL_MissionType_ABC* pType = it->second;
     if( !pType )
         xis.error( "Invalid mission name '" + strMission + "' for model '" + GetName() + "'" );
-
     availableMissions_.insert( pType ) ;
-
     // Check if the DIA behavior is present
     if( !IsMissionAvailable( *pType ) )
         xis.error( "Missing behaviors for mission" );
-
     InitializeMissionFragOrders( xis, *pType );
 }
 
@@ -121,17 +111,11 @@ void DEC_Model_ABC::ReadFragOrder( xml::xistream& xis, const MIL_MissionType_ABC
 {
     std::string strOrdreConduite;
     xis >> xml::attribute( "name", strOrdreConduite );
-
     const MIL_FragOrderType* pType = MIL_FragOrderType::Find( strOrdreConduite );
     if( !pType )
         xis.error( "Unknown orderConduite type" );
-
     availableFragOrdersPerMission_[ &missionType ].insert( pType ) ;
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Model_ABC::IsMissionAvailable
@@ -150,11 +134,9 @@ bool DEC_Model_ABC::IsFragOrderAvailableForMission( const MIL_MissionType_ABC& m
 {
     if( fragOrderType.IsAvailableForAllMissions() )
         return true;
-
     CIT_FragOrderPerMissionMap it = availableFragOrdersPerMission_.find( &missionType );
     if( it == availableFragOrdersPerMission_.end() )
         return false;
-
     return it->second.find( &fragOrderType ) != it->second.end();
 }
 

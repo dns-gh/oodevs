@@ -9,12 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeFunctions.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/MIL_Army.h"
-#include "Entities/Orders/MIL_Fuseau.h"
-#include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Urban.h"
 #include "urban/TerrainObject_ABC.h"
 
