@@ -27,7 +27,7 @@ LimitsLayer::LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, Co
     : TacticalLinesLayer( controllers, tools, strategy, parameters, view, profile )
     , tools_            ( tools )
     , factory_          ( factory )
-    , selectedEntity_   ( 0 )
+    , selectedEntity_   ( controllers )
 {
     // NOTHING
 }
@@ -104,7 +104,7 @@ void LimitsLayer::CreateLima( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 void LimitsLayer::BeforeSelection()
 {
-    selectedEntity_ = 0;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

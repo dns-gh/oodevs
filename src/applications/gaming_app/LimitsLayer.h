@@ -11,6 +11,7 @@
 #define __LimitsLayer_h_
 
 #include "clients_gui/TacticalLinesLayer.h"
+#include "tools/ElementObserver_ABC.h"
 
 class TacticalLineFactory;
 
@@ -57,7 +58,7 @@ private:
     //@{
     const kernel::GlTools_ABC& tools_;
     TacticalLineFactory& factory_;
-    const kernel::Entity_ABC* selectedEntity_;
+    kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     //@}
 };
 
