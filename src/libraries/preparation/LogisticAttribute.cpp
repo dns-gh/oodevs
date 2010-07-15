@@ -86,7 +86,7 @@ void LogisticAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "tc2" )
             << xml::attribute( "id", tc2_ ? tc2_->GetId() : 0 )
-        << xml::end();
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------

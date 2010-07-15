@@ -121,5 +121,5 @@ void LocationSerializer::SetPoints( const T_PointVector& points )
         const std::string coord = converter_.ConvertToMgrs( points[i] );
         *xos_ << xml::content( "point", coord.c_str() );
     }
-    *xos_ << xml::end();
+    *xos_ << xml::end;
 }

@@ -115,7 +115,7 @@ void CrossingSiteAttribute::SerializeAttributes( xml::xostream& xos ) const
             << xml::content( "depth", int( depth_.value_ ) )
             << xml::content( "speed", int( speed_.value_ ) )
             << xml::content( "construction-needed", needsConstruction_ )
-        << xml::end();
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------

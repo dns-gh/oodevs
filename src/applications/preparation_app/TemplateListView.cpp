@@ -116,7 +116,7 @@ void TemplateListView::SaveTemplates( const std::string& filename ) const
     output << xml::start( "templates" );
     for( CIT_Templates it = templates_.begin(); it != templates_.end(); ++it )
         (*it)->Serialize( output );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------

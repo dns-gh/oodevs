@@ -111,5 +111,5 @@ void SuccessFactor::Serialize( xml::xostream& xos ) const
     profiles_->Serialize( xos );
     conditions_->Serialize( xos );
     actions_->Serialize( xos );
-    xos << xml::end();
+    xos << xml::end;
 }

@@ -22,7 +22,7 @@ namespace
     std::string ReadFormula( xml::xistream& xis )
     {
         std::string formula;
-        xis >> xml::start( "formula" ) >> formula >> xml::end();
+        xis >> xml::start( "formula" ) >> formula >> xml::end;
         return formula;
     }
 
@@ -30,7 +30,7 @@ namespace
     {
         xis >> xml::start( "gauge" );
         indicators::Gauge* gauge = factory.Create( xis );
-        xis >> xml::end();
+        xis >> xml::end;
         return gauge;
     }
 }

@@ -64,7 +64,7 @@ void ADN_AvailabilityWarning::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "resource-availability-alert" )
             << xml::attribute( "availability-threshold", percentage_ )
-           << xml::end();
+           << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -76,5 +76,5 @@ void ADN_AvailabilityWarning::WriteArchive( xml::xostream& output, const std::st
     output << xml::start( "resource-availability-alert" )
             << xml::attribute( "availability-threshold", percentage_ )
             << xml::attribute( attribute, value )
-           << xml::end();
+           << xml::end;
 }

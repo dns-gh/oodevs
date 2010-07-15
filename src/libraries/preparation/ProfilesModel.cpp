@@ -72,7 +72,7 @@ void ProfilesModel::Serialize( const std::string& file ) const
     xos << xml::start( "profiles" );
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         (*it)->Serialize( xos );
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

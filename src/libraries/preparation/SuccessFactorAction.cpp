@@ -64,7 +64,7 @@ void SuccessFactorAction::Serialize( xml::xostream& xos ) const
             << xml::attribute( "type", type_.GetFunction() );
     BOOST_FOREACH( const T_Elements::value_type parameter, elements_ )
         parameter.second->Serialize( xos );
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

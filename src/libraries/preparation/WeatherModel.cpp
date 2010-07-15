@@ -67,16 +67,16 @@ void WeatherModel::Load( const std::string& filename )
     xis >> xml::start( "weather" )
         >> xml::start( "exercise-date" );
     ReadExerciseDate( xis );
-    xis >> xml::end()
+    xis >> xml::end
         >> xml::start( "ephemerides" );
     ReadEphemerides( xis );
-    xis >> xml::end()
+    xis >> xml::end
         >> xml::start( "theater" );
     ReadGlobalWeather( xis );
-    xis >> xml::end()
+    xis >> xml::end
         >> xml::start( "local-weather" )
             >> xml::list( "local", *this, &WeatherModel::ReadLocalWeather )
-        >> xml::end();
+        >> xml::end;
     controller_.Update( *this );
 }
 
@@ -90,26 +90,26 @@ void WeatherModel::Serialize( const std::string& filename ) const
     xos << xml::start( "weather" )
             << xml::start( "exercise-date" )
                 << xml::attribute( "value", time_.toString( "yyyyMMddThhmmss" ).ascii() )
-            << xml::end()
+            << xml::end
             << xml::start( "ephemerides" )
                 << xml::attribute( "sunrise", QString( "%1h%2m%3s" ).arg( sunrise_.hour() ).arg( sunrise_.minute() ).arg( sunrise_.second() ).ascii() )
                 << xml::attribute( "sunset", QString( "%1h%2m%3s" ).arg( sunset_.hour() ).arg( sunset_.minute() ).arg( sunset_.second() ).ascii() )
                 << xml::attribute( "day-lighting", tools::GetXmlSection( dayLighting_ ) )
                 << xml::attribute( "night-lighting", tools::GetXmlSection( nightLighting_ ) )
-            << xml::end()
+            << xml::end
             << xml::start( "theater" );
     globalWeather_->Serialize( xos );
-    xos     << xml::end()
+    xos     << xml::end
             << xml::start( "local-weather" );
     tools::Iterator< const LocalWeather& > it( CreateIterator() );
     while( it.HasMoreElements() )
     {
         xos << xml::start( "local" );
         it.NextElement().Serialize( xos );
-        xos << xml::end();
+        xos << xml::end;
     }
-    xos     << xml::end()
-        << xml::end();
+    xos     << xml::end
+        << xml::end;
 }
 
 namespace

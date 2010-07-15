@@ -45,12 +45,12 @@ void Exercise::Load( xml::xistream& xis )
                 >> xml::optional() >> xml::content( "name", name )
                 >> xml::optional() >> xml::start( "briefing" )
                     >> xml::list( "text", *this, &Exercise::ReadBriefing )
-                >> xml::end()
+                >> xml::end
                 >> xml::optional() >> xml::start( "resources" )
                     >> xml::list( "resource", *this, &Exercise::ReadResource )
-                >> xml::end()
-            >> xml::end();
-    xis >> xml::end();
+                >> xml::end
+            >> xml::end;
+    xis >> xml::end;
     name_ = name.c_str();
     generatorVersion_ = version.c_str();
     controller_.Create( *this );
@@ -103,7 +103,7 @@ namespace
         xml::xifstream xis( file );
         xis >> xml::start( "exercise" )
                 >> xml::list( boost::bind( &::CopyNode, _1, _2, boost::ref( xos ) ) )
-            >> xml::end();
+            >> xml::end;
     }
 }
 
@@ -118,12 +118,12 @@ void Exercise::Serialize( const std::string& file ) const
         << xml::attribute( "generator-version", generatorVersion_.ascii() )
             << xml::start( "meta" );
     if( ! name_.isEmpty() )
-        xos << xml::start( "name" ) << xml::cdata( name_.ascii() ) << xml::end();
+        xos << xml::start( "name" ) << xml::cdata( name_.ascii() ) << xml::end;
     SerializeBriefings( xos );
     SerializeResources( xos );
-    xos     << xml::end();
+    xos     << xml::end;
     CopyFromFile( file, xos );
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -138,8 +138,8 @@ void Exercise::SerializeBriefings( xml::xostream& xos ) const
             xos << xml::start( "text" )
                     << xml::attribute( "lang", it->first.ascii() )
                     << xml::cdata( it->second.ascii() )
-                << xml::end();
-    xos << xml::end();
+                << xml::end;
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -153,8 +153,8 @@ void Exercise::SerializeResources( xml::xostream& xos ) const
         xos << xml::start( "resource" )
                 << xml::attribute( "name", it->first.ascii() )
                 << xml::attribute( "file", it->second.ascii() )
-            << xml::end();
-    xos << xml::end();
+            << xml::end;
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

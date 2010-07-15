@@ -23,7 +23,7 @@ AgentNature::AgentNature( xml::xistream& xis )
             >> xml::attribute( "level", level_ )
             >> xml::attribute( "nature", nature_ )
             >> xml::attribute( "atlas-nature", atlas_ )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

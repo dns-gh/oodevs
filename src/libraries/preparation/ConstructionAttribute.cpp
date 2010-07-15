@@ -85,9 +85,9 @@ void ConstructionAttribute::SerializeAttributes( xml::xostream& xos ) const
                 << xml::start( "dotation" )
                     << xml::attribute( "name", dotationType_->GetCategory() )
                     << xml::attribute( "count", dotationCount_ )
-                << xml::end()
-            << xml::end();
-    xos << xml::end();
+                << xml::end
+            << xml::end;
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

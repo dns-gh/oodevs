@@ -223,7 +223,7 @@ bool Model::Save( const tools::ExerciseConfig& config, ModelChecker_ABC& checker
             xml::xofstream xos( config.GetOrbatFile(), xml::encoding( "ISO-8859-1" ) );
             xos << xml::start( "orbat" );
             teams_.Serialize( xos );
-            xos << xml::end();
+            xos << xml::end;
         }
         urban_.Serialize( config.GetUrbanStateFile() );
         weather_.Serialize( config.GetWeatherFile() );

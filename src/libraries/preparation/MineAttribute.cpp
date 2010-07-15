@@ -89,7 +89,7 @@ void MineAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "mine" )
             << xml::content( "density", density_.value_ )
-        << xml::end();
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------

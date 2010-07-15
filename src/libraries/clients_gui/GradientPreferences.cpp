@@ -66,7 +66,7 @@ void GradientPreferences::Load( xml::xistream& xis )
     DeleteAll();
     xis >> xml::start( "gradients" )
             >> xml::list( "gradient", *this, &GradientPreferences::ReadGradient )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

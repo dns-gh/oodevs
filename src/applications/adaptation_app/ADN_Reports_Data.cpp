@@ -71,7 +71,7 @@ void ADN_Reports_Data::ReportParameterValue::WriteArchive( xml::xostream& output
     output << xml::start( "value" )
             << xml::attribute( "id", id )
             << xml::attribute( "name", name_ )
-           << xml::end();
+           << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -152,7 +152,7 @@ void ADN_Reports_Data::ReportParameter::WriteArchive( xml::xostream& output )
            << xml::attribute( "type", ADN_Tr::ConvertFromMissionParameterType( type_.GetData()  ) );
     for( unsigned long i = 0; i < values_.size(); ++i )
         values_[i]->WriteArchive( output, i );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -232,7 +232,7 @@ void ADN_Reports_Data::ReportInfo::WriteArchive( xml::xostream& output )
             << xml::attribute( "message",  message_ );
     for( unsigned long i = 0; i < parameters_.size(); ++i )
         parameters_[i]->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -279,7 +279,7 @@ void ADN_Reports_Data::ReadArchive( xml::xistream& input )
 {
     input >> xml::start( "reports" )
             >> xml::list( "report", *this, &ADN_Reports_Data::ReadReport )
-          >> xml::end();
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -303,5 +303,5 @@ void ADN_Reports_Data::WriteArchive( xml::xostream& output )
     ADN_Tools::AddSchema( output, "Reports" );
     for( unsigned long i = 0; i < reports_.size(); ++i )
         reports_[i]->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 }

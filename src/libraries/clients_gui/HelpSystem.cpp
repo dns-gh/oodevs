@@ -29,7 +29,7 @@ HelpSystem::HelpSystem( QWidget* root, const std::string& config )
     xml::xifstream xis( config );
     xis >> xml::start( "widgets" )
             >> xml::list( "widget", *this, &HelpSystem::ReadWidget )
-        >> xml::end();
+        >> xml::end;
     QAction* helpAction = new QAction( "Help", QKeySequence( Qt::Key_F1 ), this );
     connect( helpAction, SIGNAL( activated() ), this, SLOT( ShowHelp() ) );
 }

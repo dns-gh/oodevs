@@ -66,35 +66,35 @@ void ExerciseConfig::LoadExercise( const std::string& file )
         xis >> xml::start( "exercise" )
                 >> xml::start( "terrain" )
                     >> xml::attribute( "name", terrain_ )
-                >> xml::end()
+                >> xml::end
                 >> xml::start( "model" )
                     >> xml::attribute( "dataset", dataset_ )
                     >> xml::attribute( "physical", physical_ )
-                >> xml::end()
+                >> xml::end
                 >> xml::start( "weather" )
                     >> xml::attribute( "file", weather_ )
-                >> xml::end()
+                >> xml::end
                 >> xml::start( "orbat" )
                     >> xml::attribute( "file", orbat_ )
-                >> xml::end()
+                >> xml::end
                 >> xml::start( "profiles" )
                     >> xml::attribute( "file", profiles_ )
-                >> xml::end()
+                >> xml::end
                 >> xml::optional() >> xml::start( "urban" )
                     >> xml::attribute( "file", urban_ )
-                >> xml::end()
+                >> xml::end
                 >> xml::optional() >> xml::start( "urbanstate" )
                     >> xml::attribute( "file", urbanState_ )
-                >> xml::end()
+                >> xml::end
                 >> xml::optional() >> xml::start( "population" )
                     >> xml::attribute( "name", population_ )
-                >> xml::end()
+                >> xml::end
                 >> xml::optional() >> xml::start( "scores" );
         scores_ = xis.attribute< std::string >( "file", "scores.xml" );
-        xis     >> xml::end()
+        xis     >> xml::end
                 >> xml::optional() >> xml::start( "success-factors" );
         successFactors_ = xis.attribute< std::string >( "file", "success-factors.xml" );
-        xis     >> xml::end();
+        xis     >> xml::end;
         if( GetExerciseFile() != file )
             SetExerciseName( file );
     }

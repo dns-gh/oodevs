@@ -50,7 +50,7 @@ void Populations::SerializeAttributes( xml::xostream& xos ) const
     {
         xos << xml::start( "population" );
         it->second->Interface().Apply( &Serializable_ABC::SerializeAttributes, xos );
-        xos << xml::end();
+        xos << xml::end;
     }
-    xos << xml::end();
+    xos << xml::end;
 }

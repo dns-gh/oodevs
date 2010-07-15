@@ -53,7 +53,7 @@ void ADN_HumanFactors_Data::ModifiersInfo::WriteArchive( xml::xostream& output )
             << xml::attribute( "sensor-distance", rSensorsModifier_ )
             << xml::attribute( "loading-time", rReloadModifier_ )
             << xml::attribute( "posture-setup-time", rStanceModifier_ )
-           << xml::end();
+           << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -108,11 +108,11 @@ void ADN_HumanFactors_Data::ReadArchive( xml::xistream& input )
     input >> xml::start( "humans-factors" )
             >> xml::start( "experience-factor" )
                 >> xml::list( "modifier", *this, &ADN_HumanFactors_Data::ReadModifier )
-            >> xml::end()
+            >> xml::end
             >> xml::start( "tiredness-factor" )
                 >> xml::list( "modifier", *this, &ADN_HumanFactors_Data::ReadModifier )
-            >> xml::end()
-          >> xml::end();
+            >> xml::end
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -148,13 +148,13 @@ void ADN_HumanFactors_Data::WriteArchive( xml::xostream& output )
     veteranModifiers_.WriteArchive( output );
     xpModifiers_.WriteArchive( output );
     newbieModifiers_.WriteArchive( output );
-    output << xml::end()
+    output << xml::end
 
         << xml::start( "tiredness-factor" );
     normalModifiers_.WriteArchive( output );
     tiredModifiers_.WriteArchive( output );
     exhaustedModifiers_.WriteArchive( output );
-    output << xml::end()
+    output << xml::end
 
-        << xml::end();
+        << xml::end;
 }

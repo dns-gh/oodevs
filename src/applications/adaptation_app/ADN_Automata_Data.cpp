@@ -94,7 +94,7 @@ void ADN_Automata_Data::UnitInfos::WriteArchive( xml::xostream& output, const AD
         output << xml::attribute( "max-occurs", max_ );
     if( ptrUnit_ == pc )
         output << xml::attribute( "command-post", true );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -211,7 +211,7 @@ void ADN_Automata_Data::AutomatonInfos::WriteArchive( xml::xostream& output, int
         output << xml::attribute( "force-ratio-feedback-time", strengthRatioFeedbackTime_ );
     for( IT_UnitInfosVector it = vSubUnits_.begin(); it != vSubUnits_.end(); ++it )
         (*it)->WriteArchive( output, ptrUnit_ );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -258,7 +258,7 @@ void ADN_Automata_Data::ReadArchive( xml::xistream& input )
 {
     input >> xml::start( "automats" )
             >> xml::list( "automat", *this, &ADN_Automata_Data::ReadAutomat )
-          >> xml::end();
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -284,7 +284,7 @@ void ADN_Automata_Data::WriteArchive( xml::xostream& output )
     int n = 0;
     for( IT_AutomatonInfosVector it = vAutomata_.begin(); it != vAutomata_.end(); ++it, ++n )
         (*it)->WriteArchive( output, nMosBaseId + n );
-    output  << xml::end();
+    output  << xml::end;
 }
 
 

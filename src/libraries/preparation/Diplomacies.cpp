@@ -108,7 +108,7 @@ void Diplomacies::Serialize( xml::xostream& xos ) const
             xos << xml::attribute( "diplomacy", it->second.GetId() );
         else
             xos << xml::attribute( "diplomacy", kernel::Karma::neutral_.GetId() );
-        xos << xml::end();
+        xos << xml::end;
     }
 }
 

@@ -30,7 +30,7 @@ SensorType::SensorType( const std::string& name, xml::xistream& xis )
     xis >> xml::start( "distance-modifiers" );
     InitializeEnvironnementFactors( xis );
     InitializeUrbanBlockMaterialFactors( xis );
-    xis >> xml::end();
+    xis >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -50,7 +50,7 @@ void SensorType::InitializeEnvironnementFactors( xml::xistream& xis )
 {
     xis >> xml::start( "terrain-modifiers" )
             >> xml::list( "distance-modifier", *this, &SensorType::ReadEnvironnementFactor )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +78,7 @@ void SensorType::InitializeUrbanBlockMaterialFactors( xml::xistream& xis )
 {
     xis >> xml::start( "urbanBlock-material-modifiers" )
         >> xml::list( "distance-modifier", *this, &SensorType::ReadUrbanBlockMaterialFactor )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -114,7 +114,7 @@ void SensorType::InitializeDistances( xml::xistream& xis )
     xis >> xml::start( "base-distances" )
             >> xml::attribute( "close-range", rSquareProximityDist_ )
             >> xml::list( "base-distance", *this, &SensorType::ReadDistance )
-        >> xml::end();
+        >> xml::end;
     rSquareProximityDist_ *= rSquareProximityDist_;
 }
 

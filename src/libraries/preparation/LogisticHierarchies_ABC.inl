@@ -49,6 +49,6 @@ void LogisticHierarchies_ABC< I >::SerializeLogistics( xml::xostream& xos ) cons
                 << xml::attribute( "id", long( entity.GetId() ) )
                 << xml::attribute( "link", GetLinkType() );
         static_cast< const LogisticHierarchies_ABC< I >& >( entity.Get< I >() ).SerializeQuotas( xos );
-        xos << xml::end();
+        xos << xml::end;
     }
 }

@@ -19,7 +19,7 @@ namespace
         std::string desc;
         xis >> xml::optional() >> xml::start( "description" )
                 >> desc
-            >> xml::end();
+            >> xml::end;
         return desc.c_str();
     }
 }
@@ -35,7 +35,7 @@ SuccessFactorActionType::SuccessFactorActionType( xml::xistream& xis )
 {
     xis >> xml::optional() >> xml::start( "parameters" )
             >> xml::list( "parameter", *this, &SuccessFactorActionType::ReadParameter )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

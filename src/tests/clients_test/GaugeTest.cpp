@@ -20,7 +20,7 @@ namespace
         {
             xis >> xml::optional() >> xml::start( "tests" )
                     >> xml::list( "test", *this, &TestReader::ReadTest )
-                >> xml::end();
+                >> xml::end;
         }
         void ReadTest( xml::xistream& xis )
         {

@@ -25,17 +25,17 @@ namespace
         xml::xofstream xos( file );
         xos << xml::start( "exercise" )
                 << xml::attribute( "generator-version", "V4.0.0" )
-                << xml::start( "profiles" ) << xml::attribute( "file", "profiles.xml" ) << xml::end()
-                << xml::start( "orbat" )    << xml::attribute( "file", "orbat.xml" ) << xml::end()
-                << xml::start( "weather" )  << xml::attribute( "file", "weather.xml" ) << xml::end()
+                << xml::start( "profiles" ) << xml::attribute( "file", "profiles.xml" ) << xml::end
+                << xml::start( "orbat" )    << xml::attribute( "file", "orbat.xml" ) << xml::end
+                << xml::start( "weather" )  << xml::attribute( "file", "weather.xml" ) << xml::end
                 << xml::start( "terrain" )
                     << xml::attribute( "name", terrain )
-                << xml::end()
+                << xml::end
                 << xml::start( "model" )
                     << xml::attribute( "dataset", model )
                     << xml::attribute( "physical", physical )
-                << xml::end()
-        << xml::end();
+                << xml::end
+        << xml::end;
     }
 }
 

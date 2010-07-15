@@ -74,7 +74,7 @@ void AfterActionModel::Load( const std::string& functions )
     xml::xifstream xis( functions );
     xis >> xml::start( "functions" )
         >> xml::list( "function", *this, &AfterActionModel::ReadFunction )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

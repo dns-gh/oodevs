@@ -45,7 +45,7 @@ void KnowledgeGroupCommunications::SerializeAttributes( xml::xostream& xos ) con
         {
             xos << xml::start( "knowledge-group" );
             element.Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
-            xos << xml::end();
+            xos << xml::end;
         }
     }
 }

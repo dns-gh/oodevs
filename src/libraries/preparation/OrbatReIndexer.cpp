@@ -24,8 +24,8 @@ OrbatReIndexer::OrbatReIndexer( xml::xistream& input, xml::xostream& output, IdM
     output_ << xml::start( "orbat" );
     input   >> xml::start( "orbat" )
                 >> xml::list( *this, &OrbatReIndexer::ReadField, filter )
-            >> xml::end();
-    output_ << xml::end();
+            >> xml::end;
+    output_ << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -53,7 +53,7 @@ void OrbatReIndexer::ReadField( const std::string& name, xml::xistream& xis, con
     // $$$$ SBO 2008-04-08: check for cdata
     if( !text.empty() )
         output_ << text;
-    output_ << xml::end();
+    output_ << xml::end;
 }
 
 namespace

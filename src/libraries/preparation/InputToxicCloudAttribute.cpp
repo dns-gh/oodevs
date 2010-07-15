@@ -84,7 +84,7 @@ void InputToxicCloudAttribute::SerializeAttributes( xml::xostream& xos ) const
             << xml::attribute( "data-field", dataField_ );
     if( ! bExport_ )
         xos << xml::attribute( "export", bExport_ );
-    xos << xml::end();
+    xos << xml::end;
 }
 
 namespace

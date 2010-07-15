@@ -74,7 +74,7 @@ void ADN_Supply_Data::ConvoyInfo< T >::WriteArchive( const std::string& section,
     output << xml::start( section )
             << xml::attribute( "truck-count", nNbrTrucks_ )
             << xml::attribute( attribute, value_ )
-           << xml::end();
+           << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -129,17 +129,17 @@ void ADN_Supply_Data::SupplyDataInfos::ReadArchive( xml::xistream& input )
                 >> xml::attribute( "mission", supplyMission )
                 >> xml::start( "constitution-times" )
                     >> xml::list( "unit-time", *this, &ADN_Supply_Data::SupplyDataInfos::ReadConstitutionTime )
-                >> xml::end()
+                >> xml::end
                 >> xml::start( "loading-times" )
                     >> xml::list( "unit-time", *this, &ADN_Supply_Data::SupplyDataInfos::ReadLoadingTime )
-                >> xml::end()
+                >> xml::end
                 >> xml::start( "unloading-times" )
                     >> xml::list( "unit-time", *this, &ADN_Supply_Data::SupplyDataInfos::ReadUnloadingTime )
-                >> xml::end()
+                >> xml::end
                 >> xml::start( "speed-modifiers" )
                     >> xml::list( "speed-modifier", *this, &ADN_Supply_Data::SupplyDataInfos::ReadSpeedModifier )
-                >> xml::end()
-            >> xml::end();
+                >> xml::end
+            >> xml::end;
     vConvoySetupInfos_.AddItem( 0 );
     vConvoyLoadingInfos_.AddItem( 0 );
     vConvoyUnloadingInfos_.AddItem( 0 );
@@ -159,8 +159,8 @@ void ADN_Supply_Data::SupplyDataInfos::ReadArchive( xml::xistream& input )
 
     input >> xml::start( "resource-availability-alerts" )
             >> xml::list( "resource-availability-alert", *this, &ADN_Supply_Data::SupplyDataInfos::ReadResourceAvailability )
-          >> xml::end()
-        >> xml::end();
+          >> xml::end
+        >> xml::end;
 
     vVectorWarnings_.AddItem( 0 );
 }
@@ -242,34 +242,34 @@ void ADN_Supply_Data::SupplyDataInfos::WriteArchive( xml::xostream& output )
         output << xml::start( "constitution-times" );
         for( IT_ConvoyTimeInfoVector it = vConvoySetupInfos_.begin(); it != vConvoySetupInfos_.end(); ++it )
             (*it)->WriteArchive( "unit-time", "time", output );
-        output << xml::end();
+        output << xml::end;
     }
     {
         output << xml::start( "loading-times" );
         for( IT_ConvoyTimeInfoVector it = vConvoyLoadingInfos_.begin(); it != vConvoyLoadingInfos_.end(); ++it )
             (*it)->WriteArchive( "unit-time", "time", output );
-        output << xml::end();
+        output << xml::end;
     }
     {
         output << xml::start( "unloading-times" );
         for( IT_ConvoyTimeInfoVector it = vConvoyUnloadingInfos_.begin(); it != vConvoyUnloadingInfos_.end(); ++it )
             (*it)->WriteArchive( "unit-time", "time", output );
-        output << xml::end();
+        output << xml::end;
     }
     {
         output << xml::start( "speed-modifiers" );
         for( IT_ConvoyDoubleInfoVector it = vConvoySpeedModificatorInfos_.begin(); it != vConvoySpeedModificatorInfos_.end(); ++it )
             (*it)->WriteArchive( "speed-modifier", "value", output );
-        output << xml::end();
+        output << xml::end;
     }
-    output << xml::end();
+    output << xml::end;
 
     output << xml::start( "resource-availability-alerts" );
     for( IT_AvailabilityWarning_Vector it = vVectorWarnings_.begin(); it != vVectorWarnings_.end(); ++it )
         (*it)->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 
-    output << xml::end();
+    output << xml::end;
 }
 
 

@@ -34,7 +34,7 @@ SuccessFactorProfiles::SuccessFactorProfiles( kernel::Controllers& controllers, 
 {
     xis >> xml::start( "profiles" )
             >> xml::list( "profile", *this, &SuccessFactorProfiles::ReadProfile, model )
-        >> xml::end();
+        >> xml::end;
     controllers_.Register( *this );
 }
 
@@ -68,8 +68,8 @@ void SuccessFactorProfiles::Serialize( xml::xostream& xos ) const
     BOOST_FOREACH( const T_Elements::value_type profile, elements_ )
         xos << xml::start( "profile" )
                 << xml::attribute( "name", profile.second->GetLogin() )
-            << xml::end();
-    xos << xml::end();
+            << xml::end;
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

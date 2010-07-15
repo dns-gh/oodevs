@@ -136,14 +136,14 @@ void ADN_Launchers_Data::LauncherInfos::WriteArchive( xml::xostream& output )
                 output << xml::start( "ph-modifier" )
                         << xml::attribute( "target-posture", ADN_Tools::ComputePostureScriptName((E_UnitPosture)iPostureCible) )
                         << xml::attribute( "value", tabModifs_.Get(iPostureTireur,iPostureCible).GetData() / 100.0 )
-                       << xml::end();
+                       << xml::end;
             }
-            output << xml::end();
+            output << xml::end;
         }
     if( bIndirect_.GetData() == true )
         output << xml::attribute( "indirect-fire", bIndirect_ );
 
-    output << xml::end();
+    output << xml::end;
 }
 
 
@@ -220,7 +220,7 @@ void ADN_Launchers_Data::ReadArchive( xml::xistream& input )
 {
     input >> xml::start( "launchers" )
             >> xml::list( "launcher", *this, &ADN_Launchers_Data::ReadLauncher )
-          >> xml::end();
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -233,5 +233,5 @@ void ADN_Launchers_Data::WriteArchive( xml::xostream& output )
     ADN_Tools::AddSchema( output, "Launchers" );
     for( T_LauncherInfos_Vector::iterator it = vLaunchers_.begin(); it != vLaunchers_.end(); ++it )
         (*it)->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 }

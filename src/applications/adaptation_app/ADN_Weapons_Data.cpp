@@ -125,7 +125,7 @@ void ADN_Weapons_Data::PhInfos::WriteArchive( xml::xostream& output )
     output << xml::start( "hit-probability" )
             << xml::attribute( "distance", nDistance_ )
             << xml::attribute( "percentage", rPerc_.GetData() / 100.0 )
-           << xml::end();
+           << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -200,7 +200,7 @@ void ADN_Weapons_Data::PhSizeInfos::WriteArchive( xml::xostream& output )
             << xml::attribute( "target", *ptrSize_.GetData() );
     for( IT_PhInfosVector it = vPhs_.begin(); it != vPhs_.end(); ++it )
         (*it)->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -327,21 +327,21 @@ void ADN_Weapons_Data::WeaponInfos::ReadArchive( xml::xistream& input )
     input >> xml::start( "burst" )
             >> xml::attribute( "munition", nRoundsPerBurst_ )
             >> xml::attribute( "duration", burstDuration_ )
-          >> xml::end()
+          >> xml::end
           >> xml::start( "reloading" )
             >> xml::attribute( "munition", nRoundsPerReload_ )
             >> xml::attribute( "duration", reloadDuration_ )
-          >> xml::end();
+          >> xml::end;
     input >> xml::optional()
           >> xml::start( "direct-fire" )
             >> xml::list( "hit-probabilities", *this, &ADN_Weapons_Data::WeaponInfos::ReadTargetSize )
-          >> xml::end()
+          >> xml::end
           >> xml::optional()
           >> xml::start( "indirect-fire" )
             >> xml::attribute( "average-speed", rAverageSpeed_ )
             >> xml::attribute( "min-range",     rMinRange_ )
             >> xml::attribute( "max-range",     rMaxRange_ )
-          >> xml::end();
+          >> xml::end;
 
     bIndirect_ = rMaxRange_ != .0;
 }
@@ -358,18 +358,18 @@ void ADN_Weapons_Data::WeaponInfos::WriteArchive( xml::xostream& output )
            << xml::start( "burst" )
             << xml::attribute( "munition", nRoundsPerBurst_ )
             << xml::attribute( "duration", burstDuration_ )
-           << xml::end()
+           << xml::end
            << xml::start( "reloading" )
             << xml::attribute( "munition", nRoundsPerReload_ )
             << xml::attribute( "duration", reloadDuration_ )
-           << xml::end();
+           << xml::end;
 
     if( bDirect_.GetData() )
     {
         output << xml::start( "direct-fire" );
         for( IT_PhSizeInfosVector it = phs_.begin(); it != phs_.end(); ++it )
             (*it)->WriteArchive( output );
-        output << xml::end();
+        output << xml::end;
     }
 
     if( bIndirect_.GetData() )
@@ -381,10 +381,10 @@ void ADN_Weapons_Data::WeaponInfos::WriteArchive( xml::xostream& output )
                 << xml::attribute( "average-speed", rAverageSpeed_ )
                 << xml::attribute( "min-range",     rMinRange_ )
                 << xml::attribute( "max-range",     rMaxRange_ )
-               << xml::end();
+               << xml::end;
     }
 
-    output << xml::end();
+    output << xml::end;
 }
 
 
@@ -436,7 +436,7 @@ void ADN_Weapons_Data::ReadArchive( xml::xistream& input )
 {
     input >> xml::start( "weapons" )
             >> xml::list( "weapon-system", *this, &ADN_Weapons_Data::ReadWeapon )
-           >> xml::end();
+           >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -460,7 +460,7 @@ void ADN_Weapons_Data::WriteArchive( xml::xostream& output )
     ADN_Tools::AddSchema( output, "WeaponSystems" );
     for( IT_WeaponInfosVector it = weapons_.begin(); it != weapons_.end(); ++it )
         (*it)->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------

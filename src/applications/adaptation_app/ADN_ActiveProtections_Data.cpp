@@ -106,7 +106,7 @@ void ADN_ActiveProtections_Data::WriteArchive( xml::xostream& xos )
             << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/physical/ActiveProtections.xsd" );
     for( IT_ActiveProtectionsInfosVector it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
         (*it)->WriteArchive( xos );
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -149,7 +149,7 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::WriteArchive( xm
     xos << xml::start( "weapon" )
         << xml::attribute( "name", ptrWeapon_.GetData()->strName_ )
         << xml::attribute( "coefficient", coefficient_)
-        << xml::end();
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -209,7 +209,7 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadArchive( xml::xistr
         >> xml::optional() >> xml::start( "dotation" )
             >> xml::attribute( "name", strAmmunition )
             >> xml::attribute( "usage", usage_ )
-        >> xml::end()
+        >> xml::end
         >> xml::list( "weapon", *this, &ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadWeapon );
 
     ADN_Equipement_Data::CategoryInfo* pAmmo = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( "munition", strAmmunition );
@@ -245,10 +245,10 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfos::WriteArchive( xml::xost
         xos << xml::start( "dotation" )
                 << xml::attribute( "name", ptrAmmunition_.GetData()->strName_ )
                 << xml::attribute( "usage", usage_ )
-            << xml::end();
+            << xml::end;
 
     for( IT_ActiveProtectionsInfosWeaponsVector it = weapons_.begin(); it != weapons_.end(); ++it )
         (*it)->WriteArchive(xos);
 
-    xos << xml::end();
+    xos << xml::end;
 }

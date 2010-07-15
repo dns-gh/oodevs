@@ -27,7 +27,7 @@ SymbolFactory::SymbolFactory()
         symbolRule_.reset( ReadRule( xis, "symbols", symbolBase_ ) );
         levelRule_ .reset( ReadRule( xis, "levels", levelBase_ ) );
                            ReadRule( xis, "automats", automatSymbol_ );
-    xis >> xml::end();
+    xis >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +49,7 @@ SymbolRule* SymbolFactory::ReadRule( xml::xistream& xis, const std::string& rule
     xis >> xml::start( ruleName )
             >> xml::attribute( "base", base )
             >> xml::list( "choice", *this, &SymbolFactory::ReadRule, result )
-        >> xml::end();
+        >> xml::end;
     return result;
 }
 

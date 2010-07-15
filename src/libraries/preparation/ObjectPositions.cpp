@@ -76,8 +76,8 @@ void ObjectPositions::ReadLocation( xml::xistream& xis )
         return;
     xis     >> xml::start( "points" )
                 >> xml::list( "point", *this, &ObjectPositions::ReadPoint )
-            >> xml::end()
-        >> xml::end();
+            >> xml::end
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -173,7 +173,7 @@ void ObjectPositions::SerializeAttributes( xml::xostream& xos ) const
     LocationSerializer serializer( converter_ );
     xos << xml::start( "shape" );
     serializer.Serialize( *location_, xos );
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

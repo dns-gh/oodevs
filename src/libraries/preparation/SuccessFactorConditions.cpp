@@ -37,7 +37,7 @@ SuccessFactorConditions::SuccessFactorConditions( kernel::Controllers& controlle
     xis >> xml::start( "conditions" )
             >> xml::attribute( "operator", operator_ )
             >> xml::list( "condition", *this, &SuccessFactorConditions::ReadCondition, model )
-        >> xml::end();
+        >> xml::end;
     controllers_.Register( *this );
 }
 
@@ -84,7 +84,7 @@ void SuccessFactorConditions::Serialize( xml::xostream& xos ) const
             << xml::attribute( "operator", operator_ );
     BOOST_FOREACH( const T_Elements::value_type condition, elements_ )
         condition.second->Serialize( xos );
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

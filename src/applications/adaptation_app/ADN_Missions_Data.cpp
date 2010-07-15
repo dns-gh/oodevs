@@ -80,7 +80,7 @@ void ADN_Missions_Data::MissionParameterValue::WriteArchive( xml::xostream& outp
     output << xml::start( "value" )
                 << xml::attribute( "id", id )
                 << xml::attribute( "name", name_ )
-           << xml::end();
+           << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -185,7 +185,7 @@ void ADN_Missions_Data::MissionParameter::WriteArchive( xml::xostream& output )
             << xml::attribute( "dia-name", diaName );
     for( unsigned int i = 0; i < values_.size(); ++i )
         values_[i]->WriteArchive( output, i );
-    output << xml::end();
+    output << xml::end;
 }
 
 // =============================================================================
@@ -268,9 +268,9 @@ void ADN_Missions_Data::Mission::ReadArchive( xml::xistream& input )
         >> xml::optional() >> xml::attribute( "cdt-dia-behavior", cdtDiaBehavior_ )
         >> xml::optional() >> xml::attribute( "mrt-dia-behavior", mrtDiaBehavior_ )
         >> xml::optional() >> xml::start( "descriptions" )
-            >> xml::optional() >> xml::start( "doctrine" ) >> doctrineDesc >> xml::end()
-            >> xml::optional() >> xml::start( "usage" ) >> usageDesc >> xml::end()
-        >> xml::end()
+            >> xml::optional() >> xml::start( "doctrine" ) >> doctrineDesc >> xml::end
+            >> xml::optional() >> xml::start( "usage" ) >> usageDesc >> xml::end
+        >> xml::end
         >> xml::list( "parameter", *this, &ADN_Missions_Data::Mission::ReadParameter );
     doctrineDescription_ = doctrineDesc;
     usageDescription_ = usageDesc;
@@ -334,15 +334,15 @@ void ADN_Missions_Data::Mission::WriteArchive( xml::xostream& output, const std:
     {
         output << xml::start( "descriptions" );
         if( ! doctrineDescription_.GetData().empty() )
-            output << xml::start( "doctrine" ) << xml::cdata( doctrineDescription_.GetData() ) << xml::end();
+            output << xml::start( "doctrine" ) << xml::cdata( doctrineDescription_.GetData() ) << xml::end;
         if( ! usageDescription_.GetData().empty() )
-            output << xml::start( "usage" ) << xml::cdata( usageDescription_.GetData() ) << xml::end();
-        output << xml::end();
+            output << xml::start( "usage" ) << xml::cdata( usageDescription_.GetData() ) << xml::end;
+        output << xml::end;
     }
     for( unsigned int i = 0; i < parameters_.size(); ++i )
         parameters_[i]->WriteArchive( output );
 
-    output << xml::end();
+    output << xml::end;
 }
 
 // =============================================================================
@@ -423,9 +423,9 @@ void ADN_Missions_Data::FragOrder::ReadArchive( xml::xistream& input )
           >> xml::optional() >> xml::attribute( "available-for-all-mission", isAvailableForAllMissions_ )
           >> xml::optional() >> xml::attribute( "available-without-mission", isAvailableWithoutMission_ )
           >> xml::optional() >> xml::start( "descriptions" )
-             >> xml::start( "doctrine" ) >> doctrineDesc >> xml::end()
-             >> xml::start( "usage" ) >> usageDesc >> xml::end()
-          >> xml::end()
+             >> xml::start( "doctrine" ) >> doctrineDesc >> xml::end
+             >> xml::start( "usage" ) >> usageDesc >> xml::end
+          >> xml::end
           >> xml::list( "parameter", *this, &ADN_Missions_Data::FragOrder::ReadParameter );
     doctrineDescription_ = doctrineDesc;
     usageDescription_ = usageDesc;
@@ -475,14 +475,14 @@ void ADN_Missions_Data::FragOrder::WriteArchive( xml::xostream& output )
     {
         output << xml::start( "descriptions" );
         if( ! doctrineDescription_.GetData().empty() )
-            output << xml::start( "doctrine" ) << xml::cdata( doctrineDescription_.GetData() ) << xml::end();
+            output << xml::start( "doctrine" ) << xml::cdata( doctrineDescription_.GetData() ) << xml::end;
         if( ! usageDescription_.GetData().empty() )
-            output << xml::start( "usage" ) << xml::cdata( usageDescription_.GetData() ) << xml::end();
-        output << xml::end();
+            output << xml::start( "usage" ) << xml::cdata( usageDescription_.GetData() ) << xml::end;
+        output << xml::end;
     }
     for( unsigned int i = 0; i < parameters_.size(); ++i )
         parameters_[i]->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 }
 
 // =============================================================================
@@ -540,19 +540,19 @@ void ADN_Missions_Data::ReadArchive( xml::xistream& input )
             >> xml::start( "units" )
                 >> xml::list( "context", *this, &ADN_Missions_Data::ReadContext, unitContext_ )
                 >> xml::list( "mission", *this, &ADN_Missions_Data::ReadMission, unitMissions_, (const bool&)false )
-            >> xml::end()
+            >> xml::end
             >> xml::start( "automats" )
                 >> xml::list( "context", *this, &ADN_Missions_Data::ReadContext, automatContext_ )
                 >> xml::list( "mission", *this, &ADN_Missions_Data::ReadMission, automatMissions_, (const bool&)true )
-            >> xml::end()
+            >> xml::end
             >> xml::start( "populations" )
                 >> xml::list( "context", *this, &ADN_Missions_Data::ReadContext, populationContext_ )
                 >> xml::list( "mission", *this, &ADN_Missions_Data::ReadMission, populationMissions_, (const bool&)false )
-            >> xml::end()
+            >> xml::end
             >> xml::start( "fragorders" )
                 >> xml::list( "fragorder", *this, &ADN_Missions_Data::ReadFragOrder )
-            >> xml::end()
-          >> xml::end();
+            >> xml::end
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -608,11 +608,11 @@ namespace
             output << xml::start( "context" );
             for( unsigned i = 0; i < context.size(); ++i )
                 context[i]->WriteArchive( output );
-            output << xml::end();
+            output << xml::end;
         }
         for( unsigned int i = 0; i < missions.size(); ++i )
             missions[i]->WriteArchive( output, name );
-        output << xml::end();
+        output << xml::end;
     }
 }
 
@@ -631,8 +631,8 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output )
     output << xml::start( "fragorders" );
     for( unsigned int i = 0; i < fragOrders_.size(); ++i )
         fragOrders_[i]->WriteArchive( output );
-    output << xml::end()
-        << xml::end();
+    output << xml::end
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------

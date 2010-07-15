@@ -56,7 +56,7 @@ void SuccessFactorCondition::Serialize( xml::xostream& xos )
             << xml::attribute( "property", score_.GetName() )
             << xml::attribute( "operator", operator_ )
             << xml::attribute( "value", value_ )
-        << xml::end();
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------

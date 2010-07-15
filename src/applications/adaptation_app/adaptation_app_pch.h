@@ -165,13 +165,13 @@ namespace xml
         friend xistream& operator>>( xml::xistream& xis, const content_manipulator& m )
         {
             T value;
-            xis >> xml::start( m.tag_ ) >> value >> xml::end();
+            xis >> xml::start( m.tag_ ) >> value >> xml::end;
             m.value_ = value;
             return xis;
         }
         friend xostream& operator<<( xostream& xos, const content_manipulator& m )
         {
-            return xos << xml::start( m.tag_ ) << m.value_.GetData() << xml::end();
+            return xos << xml::start( m.tag_ ) << m.value_.GetData() << xml::end;
         }
         //@}
 

@@ -53,7 +53,7 @@ void ScoreDefinitions::Update( const MsgsAarToClient::MsgAarInformation& asnMsg 
         xml::xistringstream xis( asnMsg.information() );
         xis >> xml::start( "scores" )
                 >> xml::list( "score", *this, &ScoreDefinitions::ReadDefinition )
-            >> xml::end();
+            >> xml::end;
     }
     catch( std::exception& e )
     {

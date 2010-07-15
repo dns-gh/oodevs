@@ -50,7 +50,7 @@ void ObjectAttributesContainer::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "attributes" );
         Interface( *this ).Apply( & Serializable_ABC::SerializeAttributes, xos );
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

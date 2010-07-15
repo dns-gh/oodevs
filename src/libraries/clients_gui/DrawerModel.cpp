@@ -47,7 +47,7 @@ void DrawerModel::Load( const std::string& filename )
     xml::xifstream xis( filename );
     xis >> xml::start( "shapes" )
             >> xml::list( "shape", *this, &DrawerModel::ReadShape )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +75,7 @@ void DrawerModel::Save( const std::string& filename ) const
     xml::xofstream xos( filename );
     xos << xml::start( "shapes" );
     std::for_each( elements_.begin(), elements_.end(), boost::bind( &Drawing_ABC::Serialize, boost::bind( &T_Elements::value_type::second, _1 ), boost::ref( xos ) ) );
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

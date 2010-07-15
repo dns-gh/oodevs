@@ -129,7 +129,7 @@ void SupplyRouteAttribute::SerializeAttributes( xml::xostream& xos ) const
             << xml::content( "length", int( length_.value_ ) )
             << xml::content( "max-weight", int( maxWeight_.value_ ) )
             << xml::content( "equipped", equipped_ )
-        << xml::end();
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------

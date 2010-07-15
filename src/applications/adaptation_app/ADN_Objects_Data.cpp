@@ -80,7 +80,7 @@ void ADN_Objects_Data::ScoreLocationInfos::WriteArchive( xml::xostream& output )
     output << xml::start( "terrain" )
              << xml::attribute( "type", ADN_Tr::ConvertFromLocation( nLocation_.GetData() ) )
              << xml::attribute( "value", nScore_ )
-           << xml::end();
+           << xml::end;
 }
 
 // =============================================================================
@@ -116,7 +116,7 @@ void ADN_Objects_Data::PopulationAttritionInfos::ReadArchive( xml::xistream& inp
     input >> xml::optional() >> xml::start( "population-attrition" )
                 >> xml::attribute( "surface", rSurface_ )
                 >> xml::attribute( "ph", rPh_ )
-            >> xml::end();
+            >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -128,7 +128,7 @@ void ADN_Objects_Data::PopulationAttritionInfos::WriteArchive( xml::xostream& ou
     output << xml::start( "population-attrition" )
                 << xml::attribute( "surface", rSurface_ )
                 << xml::attribute( "ph", rPh_ )
-            << xml::end();
+            << xml::end;
 }
 */
 
@@ -164,7 +164,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Buildable::ReadArchive( xml::xistream& 
     xis >> xml::optional()
         >> xml::start( "resources" )
             >> xml::list( "dotation", *this, &ADN_Objects_Data::ADN_CapacityInfos_Buildable::ReadDotation )
-        >> xml::end();
+        >> xml::end;
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_Buildable::ReadDotation( xml::xistream& xis )
@@ -202,9 +202,9 @@ void ADN_Objects_Data::ADN_CapacityInfos_Buildable::WriteArchive( xml::xostream&
         ADN_Composantes_Data::CategoryInfos* infos = reinterpret_cast< ADN_Composantes_Data::CategoryInfos* >(*it);
         xos << xml::start( "dotation" )
                 << xml::attribute( "name", infos->ptrCategory_.GetData()->strName_ ) << xml::attribute( "count", infos->rNbr_ )
-            << xml::end();
+            << xml::end;
     }
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // =============================================================================
@@ -229,7 +229,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Improvable::ReadArchive( xml::xistream&
     xis >> xml::optional()
          >> xml::start( "resources" )
             >> xml::list( "dotation", *this, &ADN_Objects_Data::ADN_CapacityInfos_Improvable::ReadDotation )
-        >> xml::end();
+        >> xml::end;
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_Improvable::ReadDotation( xml::xistream& xis )
@@ -266,9 +266,9 @@ void ADN_Objects_Data::ADN_CapacityInfos_Improvable::WriteArchive( xml::xostream
         ADN_Composantes_Data::CategoryInfos* infos = reinterpret_cast< ADN_Composantes_Data::CategoryInfos* >(*it);
         xos << xml::start( "dotation" )
                 << xml::attribute( "name", infos->ptrCategory_.GetData()->strName_ ) << xml::attribute( "count", infos->rNbr_ )
-            << xml::end();
+            << xml::end;
     }
-    xos << xml::end();
+    xos << xml::end;
 }
 
 
@@ -318,13 +318,13 @@ void ADN_Objects_Data::ADN_CapacityInfos_Constructor::WriteArchive( xml::xostrea
     {
         xos << xml::start( ADN_CapacityInfos_Buildable::TAG );
             ptrBuildable_->WriteArchive( xos );
-        xos << xml::end();
+        xos << xml::end;
     }
     if( ptrImprovable_->bPresent_.GetData() )
     {
         xos << xml::start( ADN_CapacityInfos_Improvable::TAG );
         ptrImprovable_->WriteArchive( xos );
-        xos << xml::end();
+        xos << xml::end;
     }
 }
 
@@ -817,7 +817,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Detection::ReadArchive( xml::xistream& 
     input >> xml::optional()
         >> xml::start( "acquisition-times" )
         >> xml::list( "acquisition-time", *this, &ADN_Objects_Data::ADN_CapacityInfos_Detection::ReadAcquisitionTime )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -860,18 +860,18 @@ void ADN_Objects_Data::ADN_CapacityInfos_Detection::WriteArchive( xml::xostream&
         output << xml::start( "acquisition-time" )
         << xml::attribute( "level", "detection" )
         << xml::attribute( "time", detectTime_ )
-        << xml::end();
+        << xml::end;
     if( bRecoTime_.GetData() )
         output << xml::start( "acquisition-time" )
         << xml::attribute( "level", "recognition" )
         << xml::attribute( "time", recoTime_ )
-        << xml::end();
+        << xml::end;
     if( bIdentTime_.GetData() )
         output << xml::start( "acquisition-time" )
         << xml::attribute( "level", "identification" )
         << xml::attribute( "time", identTime_ )
-        << xml::end();
-    output << xml::end();
+        << xml::end;
+    output << xml::end;
 }
 //@}
 
@@ -1293,9 +1293,9 @@ void ADN_Objects_Data::ObjectInfos::WriteArchive( xml::xostream& xos )
         {
             xos << xml::start( it->first );
             it->second->WriteArchive( xos );
-            xos << xml::end();
+            xos << xml::end;
         }
-    xos << xml::end();
+    xos << xml::end;
 }
 
 //-----------------------------------------------------------------------------
@@ -1377,7 +1377,7 @@ void ADN_Objects_Data::ReadArchive( xml::xistream& xis )
 {
     xis >> xml::start( "objects" )
             >> xml::list( "object", *this, &ADN_Objects_Data::ReadObject )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -1390,7 +1390,7 @@ void ADN_Objects_Data::WriteArchive( xml::xostream& xos )
     ADN_Tools::AddSchema( xos, "Objects" );
     for( IT_ObjectsInfos_Vector it = vObjectInfos_.begin(); it!= vObjectInfos_.end(); ++it)
         (*it)->WriteArchive( xos );
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

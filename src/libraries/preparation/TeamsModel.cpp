@@ -106,7 +106,7 @@ void TeamsModel::Serialize( xml::xostream& xos ) const
 {
     xos << xml::start( "dotations" )
             << xml::attribute( "infinite", infiniteDotations_ )
-        << xml::end();
+        << xml::end;
 
     xos << xml::start( "sides" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
@@ -114,18 +114,18 @@ void TeamsModel::Serialize( xml::xostream& xos ) const
         xos << xml::start( "side" );
         it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
         it->second->Interface().Apply( & Serializable_ABC::SerializeLogistics, xos );
-        xos << xml::end();
+        xos << xml::end;
     }
-    xos << xml::end();
+    xos << xml::end;
 
     xos << xml::start( "diplomacies" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         xos << xml::start( "side" );
         static_cast< const Diplomacies& >( it->second->Get< kernel::Diplomacies_ABC >() ).Serialize( xos ); // $$$$ SBO 2008-12-09: !
-        xos << xml::end();
+        xos << xml::end;
     }
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -146,14 +146,14 @@ void TeamsModel::Load( xml::xistream& xis, Model& model )
     xis >> xml::start( "orbat" )
             >> xml::optional() >> xml::start( "dotations" )
                 >> xml::attribute( "infinite", infiniteDotations_ )
-            >> xml::end()
+            >> xml::end
             >> xml::start( "sides" )
                 >> xml::list( "side", *this, &TeamsModel::ReadTeam, model )
-            >> xml::end()
+            >> xml::end
             >> xml::start( "diplomacies" )
                 >> xml::list( "side", *this, &TeamsModel::ReadDiplomacy )
-            >> xml::end()
-        >> xml::end();
+            >> xml::end
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -168,19 +168,19 @@ void TeamsModel::ReadTeam( xml::xistream& xis, Model& model )
     // $$$$ SBO 2006-10-05: forward to communications extension?
     xis >> xml::start( "communication" )
             >> xml::list( "knowledge-group", model.knowledgeGroups_, &KnowledgeGroupsModel::Create, *team, model )
-        >> xml::end();
+        >> xml::end;
     xis >> xml::start( "tactical" )
             >> xml::list( "formation", model.formations_, &FormationModel::Create, *team, model )
-        >> xml::end();
+        >> xml::end;
     xis >> xml::start( "logistic" )
             >> xml::list( "automat", model.agents_, &AgentsModel::ReadLogistic )
-        >> xml::end();
+        >> xml::end;
     xis >> xml::start( "objects" )
             >> xml::list( "object", static_cast< Team& >( *team ), &Team::CreateObject )
-        >> xml::end();
+        >> xml::end;
     xis >> xml::start( "populations" )
             >> xml::list( "population", model.agents_, &AgentsModel::CreatePopulation, *team )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

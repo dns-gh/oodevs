@@ -34,7 +34,7 @@ ReportFactory::ReportFactory( const dispatcher::Config& config, const dispatcher
     xml::xifstream xis( config.BuildPhysicalChildFile( reports ) );
     xis >> xml::start( "reports" )
             >> xml::list( "report", *this, &ReportFactory::ReadReport )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

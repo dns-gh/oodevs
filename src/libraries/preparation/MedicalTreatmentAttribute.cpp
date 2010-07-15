@@ -116,7 +116,7 @@ void MedicalTreatmentAttribute::SerializeAttributes( xml::xostream& xos ) const
         << xml::attribute( "availableDoctors", availableDoctors_ );
     for( T_MedicalTreatments::const_iterator it = treatmentTypes_.begin(); it != treatmentTypes_.end(); ++it )
         xos << xml::content( "type", (*it)->GetName() );
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

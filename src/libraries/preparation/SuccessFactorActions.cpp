@@ -31,7 +31,7 @@ SuccessFactorActions::SuccessFactorActions( xml::xistream& xis, const SuccessFac
 {
     xis >> xml::start( "actions" )
             >> xml::list( "action", *this, &SuccessFactorActions::ReadAction, actionsTypes )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +62,7 @@ void SuccessFactorActions::Serialize( xml::xostream& xos ) const
     xos << xml::start( "actions" );
     BOOST_FOREACH( const T_Elements::value_type action, elements_ )
         action.second->Serialize( xos );
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

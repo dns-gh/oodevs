@@ -93,11 +93,11 @@ void HierarchyTemplate::Serialize( xml::xostream& output ) const
                << xml::attribute( "y", referencePosition_.Y() )
                << xml::attribute( "name", name_.ascii() );
         element_->Serialize( output );
-        output << xml::end();
+        output << xml::end;
     }
     for( CIT_Templates it = subTemplates_.begin(); it != subTemplates_.end(); ++it )
         (*it)->Serialize( output );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -159,7 +159,7 @@ TemplateElement_ABC* HierarchyTemplate::CreateElement( AgentsModel& agents, Form
         result = new AutomatTemplateElement( agents, types, input );
     else if( type == "agent" )
         result = new AgentTemplateElement( agents, types, input );
-    input >> xml::end();
+    input >> xml::end;
     return result;
 }
 

@@ -39,7 +39,7 @@ Stocks::Stocks( xml::xistream& xis, Controller& controller, Entity_ABC& entity, 
     CreateDictionary( entity, dico );
     xis >> xml::optional() >> xml::start( "stocks" )
             >> xml::list( "dotation", *this, &Stocks::ReadDotation, resolver )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -76,9 +76,9 @@ void Stocks::SerializeAttributes( xml::xostream& xos ) const
     {
         xos << xml::start( "dotation" );
         it->second->SerializeAttributes( xos );
-        xos << xml::end();
+        xos << xml::end;
     }
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

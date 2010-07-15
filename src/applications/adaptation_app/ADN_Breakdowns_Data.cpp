@@ -92,7 +92,7 @@ void ADN_Breakdowns_Data::RepairPartInfo::WriteArchive( xml::xostream& output )
     output << xml::start( "part" )
             << xml::attribute( "dotation", ptrPart_.GetData()->strName_ )
             << xml::attribute( "quantity", nNbr_ )
-        << xml::end();
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -197,7 +197,7 @@ void ADN_Breakdowns_Data::BreakdownInfo::WriteArchive( xml::xostream& output )
            << xml::attribute( "variance", repairTimeVariance_ );
     for( IT_RepairPartInfoVector it = vRepairParts_.begin(); it != vRepairParts_.end(); ++it )
         (*it)->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -270,9 +270,9 @@ void ADN_Breakdowns_Data::ReadArchive( xml::xistream& input )
     input >> xml::start( "breakdowns" )
             >> xml::start( "diagnosis" )
                 >> xml::attribute( "time", strAverageDiagnosticTime_ )
-            >> xml::end()
+            >> xml::end
             >> xml::list( "category", *this, &ADN_Breakdowns_Data::ReadCategory )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -309,7 +309,7 @@ void ADN_Breakdowns_Data::WriteArchive( xml::xostream& output )
     ADN_Tools::AddSchema( output, "Breakdowns" );
     output    << xml::start( "diagnosis" )
                   << xml::attribute( "time", strAverageDiagnosticTime_ )
-              << xml::end();
+              << xml::end;
     for( uint i = 0; i < eNbrBreakdownNTI; ++i )
     {
         output << xml::start( "category" )
@@ -317,9 +317,9 @@ void ADN_Breakdowns_Data::WriteArchive( xml::xostream& output )
         for( IT_BreakdownInfoVector it = vBreakdowns_.begin(); it != vBreakdowns_.end(); ++it )
             if( (*it)->nNTI_ == ( E_BreakdownNTI )i )
                 (*it)->WriteArchive( output );
-        output << xml::end();
+        output << xml::end;
     }
-    output << xml::end();
+    output << xml::end;
 }
 
 

@@ -74,7 +74,7 @@ void ActivityTimeAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "activity-time" )
             << xml::attribute( "value", activityTime_.value_ )
-        << xml::end();
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------

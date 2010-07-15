@@ -111,9 +111,9 @@ void NBCAttribute::SerializeAttributes( xml::xostream& xos ) const
     {
         xos << xml::start( "nbc-agent" )
                 << xml::attribute( "type", (*it)->GetName() )
-            << xml::end();
+            << xml::end;
     }
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

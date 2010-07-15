@@ -118,9 +118,9 @@ void Team::SerializeAttributes( xml::xostream& xos ) const
     {
         xos << xml::start( "object" );
         it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
-        xos << xml::end();
+        xos << xml::end;
     }
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

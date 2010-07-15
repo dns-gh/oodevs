@@ -71,7 +71,7 @@ void EntityIntelligences::SerializeIntelligences( xml::xostream& xos ) const
             {
                 xos << xml::start( "intelligence" );
                 it->second->Interface().Apply( &Serializable_ABC::SerializeIntelligences, xos );
-                xos << xml::end();
+                xos << xml::end;
             }
 }
 

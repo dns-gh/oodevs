@@ -255,7 +255,7 @@ void CreatePackagePanel::WriteContent( zip::ozipfile& archive ) const
     xos << xml::start( "content" )
             << xml::content( "name", name )
             << xml::content( "description", description )
-        << xml::end();
+        << xml::end;
     {
         std::istringstream input( xos.str() );
         zip::ozipstream output( archive, "content.xml" );
@@ -399,10 +399,10 @@ QListViewItem* CreatePackagePanel::BuildExerciseData( const std::string& exercis
     std::string terrain, population, dataset, physical;
     xml::xifstream xis( config_.GetExerciseFile( exercise ) );
     xis >> xml::start( "exercise" )
-            >> xml::start( "terrain" ) >> xml::attribute( "name", terrain ) >> xml::end()
-            >> xml::optional() >> xml::start( "population" ) >> xml::attribute( "name", population ) >> xml::end()
-            >> xml::start( "model" ) >> xml::attribute( "dataset", dataset ) >> xml::attribute( "physical", physical ) >> xml::end()
-        >> xml::end();
+            >> xml::start( "terrain" ) >> xml::attribute( "name", terrain ) >> xml::end
+            >> xml::optional() >> xml::start( "population" ) >> xml::attribute( "name", population ) >> xml::end
+            >> xml::start( "model" ) >> xml::attribute( "dataset", dataset ) >> xml::attribute( "physical", physical ) >> xml::end
+        >> xml::end;
 
     QListViewItem* dataItem = new QListViewItem( content_, "data" );
     dataItem->setOpen( true );

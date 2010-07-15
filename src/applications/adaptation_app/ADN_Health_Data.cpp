@@ -49,7 +49,7 @@ void ADN_Health_Data::WoundInfo::WriteArchive( xml::xostream& output )
              << xml::attribute( "caring-time",     treatTime_ )
              << xml::attribute( "resting-time",    restingTime_ )
              << xml::attribute( "percentage",      rPercentage_ )
-           << xml::end();
+           << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -145,14 +145,14 @@ void ADN_Health_Data::ReadArchive( xml::xistream& input )
             >> xml::start( "times" )
                 >> xml::attribute( "diagnosis-time", diagnosticTime_ )
                 >> xml::attribute( "sorting-time", sortingTime_ )
-            >> xml::end()
+            >> xml::end
             >> xml::start( "injuries" )
                 >> xml::list( "injury", *this, &ADN_Health_Data::ReadInjury )
-            >> xml::end()
+            >> xml::end
             >> xml::start( "resource-availability-alerts" )
                 >> xml::list( "resource-availability-alert", *this, &ADN_Health_Data::ReadResourceAvailability )
-            >> xml::end()
-          >> xml::end();
+            >> xml::end
+          >> xml::end;
 
     vChangeOverWarnings_.AddItem( 0 );
     vCollectingWarnings_.AddItem( 0 );
@@ -170,7 +170,7 @@ void ADN_Health_Data::WriteArchive( xml::xostream& output )
     output  << xml::start( "times" )
                 << xml::attribute( "diagnosis-time", diagnosticTime_ )
                 << xml::attribute( "sorting-time", sortingTime_ )
-            << xml::end()
+            << xml::end
             << xml::start( "injuries" );
     for( int n = 0; n < eNbrDoctorSkills; ++n )
         wounds[n].WriteArchive( output );
@@ -179,13 +179,13 @@ void ADN_Health_Data::WriteArchive( xml::xostream& output )
                     << xml::attribute( "caring-time", shockTreatTime_ )
                     << xml::attribute( "resting-time", shockRestingTime_ )
                     << xml::attribute( "percentage", rShockPercentage_ )
-                << xml::end()
+                << xml::end
                 << xml::start( "injury" )
                     << xml::attribute( "category", "contaminated" )
                     << xml::attribute( "caring-time", contaminationTreatTime_ )
                     << xml::attribute( "resting-time", contaminationRestingTime_ )
-                << xml::end()
-            << xml::end()
+                << xml::end
+            << xml::end
             << xml::start( "resource-availability-alerts" );
     for( IT_AvailabilityWarning_Vector it = vChangeOverWarnings_.begin(); it != vChangeOverWarnings_.end(); ++it )
         (*it)->WriteArchive( output, "resource", "relieve" );
@@ -193,6 +193,6 @@ void ADN_Health_Data::WriteArchive( xml::xostream& output )
         (*it)->WriteArchive( output, "resource", "collection" );
     for( IT_AvailabilityWarning_Vector it = vDoctorsWarnings_.begin(); it != vDoctorsWarnings_.end(); ++it )
         (*it)->WriteArchive( output, "resource", "doctor" );
-    output  << xml::end()
-          << xml::end();
+    output  << xml::end
+          << xml::end;
 }

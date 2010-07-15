@@ -23,7 +23,7 @@ namespace
     QString ReadFormula( xml::xistream& xis )
     {
         std::string formula;
-        xis >> xml::start( "formula" ) >> formula >> xml::end();
+        xis >> xml::start( "formula" ) >> formula >> xml::end;
         return formula.c_str();
     }
 
@@ -31,7 +31,7 @@ namespace
     {
         xis >> xml::start( "gauge" );
         indicators::Gauge* result = gaugeFactory.Create( xis );
-        xis >> xml::end();
+        xis >> xml::end;
         return result;
     }
 }
@@ -139,13 +139,13 @@ void Score::Serialize( xml::xostream& xos ) const
 {
     xos << xml::start( "score")
             << xml::attribute( "name", name_.ascii() )
-            << xml::start( "formula" ) << xml::cdata( formula_.ascii() ) << xml::end();
+            << xml::start( "formula" ) << xml::cdata( formula_.ascii() ) << xml::end;
     xos << xml::start( "gauge" );
     GetGauge().Serialize( xos );
-    xos << xml::end();
+    xos << xml::end;
     variables_->Serialize( xos );
     SerializeIndicators( xos );
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -158,7 +158,7 @@ void Score::SerializeIndicators( xml::xostream& xos ) const
     SerializeIndicator( xos, QString( "indicator( '%1', %2 )" ).arg( name_ ).arg( formula_ ) );
     SerializeIndicator( xos, QString( "indicator( '%1/Tendency', derivate( %2, %3 ) )" )
                                 .arg( name_ ).arg( formula_ ).arg( 10 ) ); // $$$$ SBO 2009-06-05: 10 sec period, allow user customization if needed
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -183,7 +183,7 @@ void Score::CheckValidity() const
     xml::xostringstream xos;
     xos << xml::start( "indicators" );
     SerializeIndicator( xos, formula_ );
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

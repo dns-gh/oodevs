@@ -61,7 +61,7 @@ void ADN_Radars_Data::DetectTimes::ReadArchive( xml::xistream& input, bool bHq )
     input >> xml::optional()
           >> xml::start( "acquisition-times" )
             >> xml::list( "acquisition-time", *this, &ADN_Radars_Data::DetectTimes::ReadAcquisitionTime, bHq )
-          >> xml::end();
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -104,17 +104,17 @@ void ADN_Radars_Data::DetectTimes::WriteArchive( xml::xostream& output, bool bHq
         output << xml::start( "acquisition-time" )
                 << xml::attribute( "level", "detection" )
                 << xml::attribute( time, detectTime_ )
-               << xml::end();
+               << xml::end;
     if( bRecoTime_.GetData() )
         output << xml::start( "acquisition-time" )
                 << xml::attribute( "level", "recognition" )
                 << xml::attribute( time, recoTime_ )
-               << xml::end();
+               << xml::end;
     if( bIdentTime_.GetData() )
         output << xml::start( "acquisition-time" )
                 << xml::attribute( "level", "identification" )
                 << xml::attribute( time, identTime_ )
-               << xml::end();
+               << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -187,7 +187,7 @@ void ADN_Radars_Data::RadarInfos::ReadArchive( xml::xistream& input )
     input >> xml::optional()
           >> xml::start( "detectable-activities" )
             >> xml::list( "detectable-activity", *this, &ADN_Radars_Data::RadarInfos::ReadDetectableActivity )
-          >> xml::end();
+          >> xml::end;
     detectTimes_.ReadArchive( input, false );
     hqDetectTimes_.ReadArchive( input, true );
     bHasDetectTimes_ = detectTimes_.bDetectTime_.GetData()
@@ -239,9 +239,9 @@ void ADN_Radars_Data::RadarInfos::WriteArchive( xml::xostream& output )
                 output << xml::start( "detectable-activity" )
                         << xml::attribute( "type", ADN_Tr::ConvertFromConsumptionType( (E_ConsumptionType)n ) )
                         << xml::attribute( "value", true )
-                       << xml::end();
+                       << xml::end;
 
-        output << xml::end();
+        output << xml::end;
     }
 
     if( bHasDetectTimes_.GetData() || bHasHQDetectTimes_.GetData() )
@@ -249,9 +249,9 @@ void ADN_Radars_Data::RadarInfos::WriteArchive( xml::xostream& output )
         output << xml::start( "acquisition-times" );
         detectTimes_.WriteArchive( output, false );
         hqDetectTimes_.WriteArchive( output, true );
-        output << xml::end();
+        output << xml::end;
     }
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -311,7 +311,7 @@ void ADN_Radars_Data::ReadArchive( xml::xistream& input )
 {
     input >> xml::start( "radars" )
             >> xml::list( "radar", *this, &ADN_Radars_Data::ReadRadar )
-          >> xml::end();
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -334,5 +334,5 @@ void ADN_Radars_Data::WriteArchive( xml::xostream& output )
     output << xml::start( "radars" );
     for( IT_RadarInfos_Vector it = vRadars_.begin(); it != vRadars_.end(); ++it )
         (*it)->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 }

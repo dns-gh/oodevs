@@ -74,7 +74,7 @@ void BypassAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "bypass" )
             << xml::attribute( "value", rBypassConstructionPercentage_.value_ )
-        << xml::end();
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------

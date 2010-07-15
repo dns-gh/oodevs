@@ -195,7 +195,7 @@ namespace
             *xos_ << xml::start( "point" )
                     << xml::attribute( "x", point.X() )
                     << xml::attribute( "y", point.Y() )
-                  << xml::end();
+                  << xml::end;
         }
 
         xml::xostream* xos_;
@@ -215,7 +215,7 @@ void DrawerShape::Serialize( xml::xostream& xos ) const
         style_.Serialize( xos );
         XmlSerializer serializer( xos );
         location_.Accept( serializer );
-        xos << xml::end();
+        xos << xml::end;
     }
 }
 

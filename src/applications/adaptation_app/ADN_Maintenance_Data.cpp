@@ -73,7 +73,7 @@ void ADN_Maintenance_Data::WorkingSchemeInfo::WriteArchive( xml::xostream& outpu
         && warningDelay_ != "0m"
         && warningDelay_ != "0h" )
         output << xml::attribute( "time-before-warning", warningDelay_ );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -154,11 +154,11 @@ void ADN_Maintenance_Data::ReadArchive( xml::xistream& input )
     input >> xml::start( "maintenance" )
             >> xml::start( "working-schemes" )
                 >> xml::list( "working-scheme", *this, &ADN_Maintenance_Data::ReadWorkingScheme )
-            >> xml::end()
+            >> xml::end
             >> xml::start( "resource-availability-alerts" )
                 >> xml::list( "resource-availability-alert", *this, &ADN_Maintenance_Data::ReadAvailabilityAlert )
-            >> xml::end()
-          >> xml::end();
+            >> xml::end
+          >> xml::end;
     vRepairerWarnings_.AddItem( 0 );
     vHaulerWarnings_.AddItem( 0 );
 }
@@ -174,12 +174,12 @@ void ADN_Maintenance_Data::WriteArchive( xml::xostream& output )
     output << xml::start( "working-schemes" );
     for( IT_WorkingSchemeInfo_Vector it = vWorkingSchemes_.begin(); it != vWorkingSchemes_.end(); ++it )
         (*it)->WriteArchive( output );
-    output << xml::end()
+    output << xml::end
         << xml::start( "resource-availability-alerts" );
     for( IT_AvailabilityWarning_Vector it = vRepairerWarnings_.begin(); it != vRepairerWarnings_.end(); ++it )
         (*it)->WriteArchive( output, "resource", "AlerteDisponibiliteReparateurs" );
     for( IT_AvailabilityWarning_Vector it = vHaulerWarnings_.begin(); it != vHaulerWarnings_.end(); ++it )
         (*it)->WriteArchive( output, "resource", "AlerteDisponibiliteRemorqueurs" );
-    output << xml::end()
-        << xml::end();
+    output << xml::end
+        << xml::end;
 }

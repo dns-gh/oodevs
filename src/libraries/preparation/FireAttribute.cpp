@@ -76,7 +76,7 @@ void FireAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "fire" )
             << xml::attribute( "class", fireClass_->GetName() )
-        << xml::end();
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------

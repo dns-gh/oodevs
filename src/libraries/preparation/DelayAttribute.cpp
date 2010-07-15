@@ -73,7 +73,7 @@ void DelayAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "delay" )
             << xml::attribute( "value", delay_.value_ )
-        << xml::end();
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------

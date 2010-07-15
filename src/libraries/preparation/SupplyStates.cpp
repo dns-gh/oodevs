@@ -87,7 +87,7 @@ void SupplyStates::Load( xml::xistream& xis )
 {
     xis >> xml::start( "quotas" )
             >> xml::list( "dotation", *this, &SupplyStates::ReadDotation )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -113,7 +113,7 @@ void SupplyStates::SerializeQuotas( xml::xostream& xos ) const
     {
         xos << xml::start( "dotation" );
         it.NextElement().SerializeAttributes( xos );
-        xos << xml::end();
+        xos << xml::end;
     }
-    xos << xml::end();
+    xos << xml::end;
 }

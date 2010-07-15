@@ -49,6 +49,6 @@ void TacticalLines::SerializeAttributes( xml::xostream& xos ) const
     {
         xos << xml::start( it->second->IsLimit() ? "limit" : "lima" );
         it->second->Apply( &Serializable_ABC::SerializeAttributes, xos );
-        xos << xml::end();
+        xos << xml::end;
     }
 }

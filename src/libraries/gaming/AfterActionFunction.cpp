@@ -22,8 +22,8 @@ namespace
         xos << xml::start( "indicator" );
         xis >> xml::start( "indicator" )
                 >> xos
-            >> xml::end();
-        xos << xml::end();
+            >> xml::end;
+        xos << xml::end;
         return xos.str();
     }
 }
@@ -40,7 +40,7 @@ AfterActionFunction::AfterActionFunction( xml::xistream& xis )
     xis >> xml::content( "comments", comments )
         >> xml::start( "parameters" )
             >> xml::list( "parameter", *this, &AfterActionFunction::ReadParameter )
-        >> xml::end();
+        >> xml::end;
     comments_ = comments.c_str();
 }
 

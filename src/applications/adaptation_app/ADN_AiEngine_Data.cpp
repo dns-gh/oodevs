@@ -77,7 +77,7 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
                 >> xml::attribute( "max-accuracy", rPertinenceMaxDecrease_ )
                 >> xml::attribute( "max-operational-state", rOperationalStateMaxDecrease_ )
                 >> xml::attribute( "max-neutralized-state", rNeutralizedStateMaxDecrease_ )
-            >> xml::end();
+            >> xml::end;
 
     if( rPertinenceMaxDecrease_.GetData() < 0.0 || rPertinenceMaxDecrease_.GetData() > 100.0 )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Op. Indicators - Thread management - Invalid relevance effect value(must be >=0 and <= 100)" ).ascii() );
@@ -92,7 +92,7 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
             >> xml::attribute( "component", rMinorEquipmentWeight_ )
             >> xml::attribute( "major-component", rMajorEquipmentWeight_ )
             >> xml::attribute( "crew", rHumanWeight_ )
-          >> xml::end();
+          >> xml::end;
 
     if( rMinorEquipmentWeight_.GetData() < 0.0 || rMinorEquipmentWeight_.GetData() > 1.0 )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Op. Indicators - Op. state computation - Invalid equipment weight sum (must be >=0 and <= 1)" ).ascii() );
@@ -108,9 +108,9 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
 
     input >> xml::start( "force-ratio" )
             >> xml::attribute( "default-feedback-time", rDefaultFeedbackTime_ )
-          >> xml::end();
+          >> xml::end;
 
-    input >> xml::end();
+    input >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -125,14 +125,14 @@ void ADN_AiEngine_Data::WriteArchive( xml::xostream& output )
                 << xml::attribute( "max-accuracy", rPertinenceMaxDecrease_ )
                 << xml::attribute( "max-operational-state", rOperationalStateMaxDecrease_ )
                 << xml::attribute( "max-neutralized-state", rNeutralizedStateMaxDecrease_ )
-            << xml::end()
+            << xml::end
             << xml::start( "operational-state-weights" )
                 << xml::attribute( "component", rMinorEquipmentWeight_ )
                 << xml::attribute( "major-component", rMajorEquipmentWeight_ )
                 << xml::attribute( "crew", rHumanWeight_ )
-            << xml::end()
+            << xml::end
             << xml::start( "force-ratio" )
                 << xml::attribute( "default-feedback-time", rDefaultFeedbackTime_ )
-            << xml::end()
-           << xml::end();
+            << xml::end
+           << xml::end;
 }

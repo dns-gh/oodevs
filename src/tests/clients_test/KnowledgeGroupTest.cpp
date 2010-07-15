@@ -243,7 +243,7 @@ BOOST_AUTO_TEST_CASE( WriteKnowledgeGroupTest )
         xml::xostringstream xos;
         xos << xml::start( "knowledge-group" );
             kg.SerializeAttributes( xos );
-        xos << xml::end();
+        xos << xml::end;
         BOOST_CHECK_XML_EQUAL( expected, xos.str() );
     }
 }

@@ -39,7 +39,7 @@ void SuccessFactorActionTypes::Load( const std::string& file )
     xml::xifstream xis( file );
     xis >> xml::start( "actions" )
             >> xml::list( "action", *this, &SuccessFactorActionTypes::ReadAction )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

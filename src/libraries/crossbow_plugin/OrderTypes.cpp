@@ -59,7 +59,7 @@ void OrderTypes::Load( const std::string& missions )
     ReadMissions( xis, "automats"   , automatMissions_ );
     xis     >> xml::start( "fragorders" )
                 >> xml::list( "fragorder", *this, &OrderTypes::ReadFragOrderType )
-            >> xml::end();
+            >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +71,7 @@ void OrderTypes::ReadMissions( xml::xistream& xis, const std::string& name, T_Or
     xis >> xml::start( name );
     kernel::OrderContext context( xis );
     xis     >> xml::list( "mission", *this, &OrderTypes::ReadMissionType, missions, context )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

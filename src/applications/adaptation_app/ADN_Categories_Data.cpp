@@ -70,7 +70,7 @@ void ADN_Categories_Data::AttritionEffectOnHuman::WriteArchive( xml::xostream& o
             << xml::attribute( "equipment-state", ADN_Tr::ConvertFromEquipmentState( nEquipmentState_.GetData() ) )
             << xml::attribute( "injured-percentage", nInjuredPercentage_ )
             << xml::attribute( "dead-percentage", nDeadPercentage_ )
-           << xml::end();
+           << xml::end;
 }
 
 // =============================================================================
@@ -129,17 +129,17 @@ void ADN_Categories_Data::ArmorInfos::ReadArchive( xml::xistream& input )
     input >> xml::start( "neutralization" )
             >> xml::attribute( "average-time", neutralizationAverageTime_ )
             >> xml::attribute( "variance", neutralizationVariance_ )
-          >> xml::end();
+          >> xml::end;
 
     if( nType_ != eProtectionType_Human )
     {
         input >> xml::start( "random-breakdown-probability" )
                 >> xml::attribute( "eva", rBreakdownEVA_ )
                 >> xml::attribute( "neva", rBreakdownNEVA_ )
-              >> xml::end()
+              >> xml::end
               >> xml::start( "attrition-effects" )
                 >> xml::list( "attrition-effect", *this, &ADN_Categories_Data::ArmorInfos::ReadAttrition )
-              >> xml::end();
+              >> xml::end;
     }
 }
 
@@ -176,20 +176,20 @@ void ADN_Categories_Data::ArmorInfos::WriteArchive( xml::xostream& output )
     output << xml::start( "neutralization" )
             << xml::attribute( "average-time", neutralizationAverageTime_ )
             << xml::attribute( "variance", neutralizationVariance_ )
-          << xml::end();
+          << xml::end;
 
     if( nType_ != eProtectionType_Human )
     {
         output << xml::start( "random-breakdown-probability" )
                 << xml::attribute( "eva", rBreakdownEVA_ )
                 << xml::attribute( "neva", rBreakdownNEVA_ )
-               << xml::end()
+               << xml::end
                << xml::start( "attrition-effects" );
         for( IT_AttritionEffectOnHuman_Vector it = vAttritionEffects_.begin(); it != vAttritionEffects_.end(); ++it )
             (*it)->WriteArchive( output );
-        output << xml::end();
+        output << xml::end;
     }
-    output << xml::end();
+    output << xml::end;
 }
 
 //-----------------------------------------------------------------------------
@@ -364,7 +364,7 @@ void ADN_Categories_Data::ReadSizes( xml::xistream& input )
 {
     input >> xml::start( "volumes" )
             >> xml::list( "volume", *this, &ADN_Categories_Data::ReadVolume )
-          >> xml::end();
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -386,7 +386,7 @@ void ADN_Categories_Data::ReadArmors( xml::xistream& input )
 {
     input >> xml::start( "protections" )
             >> xml::list( "protection", *this, &ADN_Categories_Data::ReadProtection )
-          >> xml::end();
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -415,7 +415,7 @@ void ADN_Categories_Data::ReadDotationNatures( xml::xistream& input )
 {
     input >> xml::start( "natures" )
             >> xml::list( "nature", *this, &ADN_Categories_Data::ReadNature )
-          >> xml::end();
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -436,10 +436,10 @@ void ADN_Categories_Data::WriteSizes( xml::xostream& output )
             throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Categories - Invalid volume type name" ).ascii() );
         output << xml::start( "volume" )
                 << xml::attribute( "name", trim( (*itSize)->GetData() ) )
-               << xml::end();
+               << xml::end;
 
     }
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -456,7 +456,7 @@ void ADN_Categories_Data::WriteArmors( xml::xostream& output )
     ADN_Tools::AddSchema( output, "Armors" );
     for( T_ArmorInfos_Vector::const_iterator itArmor = vArmors_.begin(); itArmor != vArmors_.end(); ++itArmor )
         (*itArmor)->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -477,7 +477,7 @@ void ADN_Categories_Data::WriteDotationNatures( xml::xostream& output )
             throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Categories - Invalid resource nature" ).ascii() );
         output << xml::start( "nature" )
                 << xml::attribute( "type", trim( (*it)->GetData() ) )
-               << xml::end();
+               << xml::end;
     }
-    output << xml::end();
+    output << xml::end;
 }

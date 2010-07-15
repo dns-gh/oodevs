@@ -141,7 +141,7 @@ void AgentTypes::ReadOrderTypes( xml::xistream& xis )
     ReadMissions( xis, "populations", populationMissions_ );
     xis     >> xml::start( "fragorders" )
                 >> xml::list( "fragorder", *this, &AgentTypes::ReadFragOrderType )
-            >> xml::end();
+            >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +153,7 @@ void AgentTypes::ReadMissions( xml::xistream& xis, const std::string& name, T_Mi
     xis >> xml::start( name );
     OrderContext context( xis );
     xis     >> xml::list( "mission", *this, &AgentTypes::ReadMissionType, missions, context )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -191,13 +191,13 @@ void AgentTypes::ReadModels( xml::xistream& xis )
     xis >> xml::start( "models" )
             >> xml::start( "units" )
                 >> xml::list( "unit", *this, &AgentTypes::ReadModel, unitResolver, unitModels_ )
-            >> xml::end()
+            >> xml::end
             >> xml::start( "automats" )
                 >> xml::list( "automat", *this, &AgentTypes::ReadModel, automatResolver, automatModels_ )
-            >> xml::end()
+            >> xml::end
             >> xml::start( "populations" )
                 >> xml::list( "population", *this, &AgentTypes::ReadModel, populationResolver, populationModels_ )
-            >> xml::end();
+            >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

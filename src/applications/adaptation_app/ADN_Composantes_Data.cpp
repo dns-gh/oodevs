@@ -119,7 +119,7 @@ void ADN_Composantes_Data::AmbulanceInfos::WriteArchive( const std::string& sect
         output << xml::attribute( "nbc-transport", bTransportNBC_ );
     if( bTransportShock_.GetData() )
         output << xml::attribute( "reac-mental-transport", bTransportShock_ );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -253,9 +253,9 @@ void ADN_Composantes_Data::LogHealthInfos::WriteArchive( xml::xostream& output )
         if( bCuresShock_.GetData() )
             output << xml::attribute( "psychiatry", true );
 
-        output << xml::end();
+        output << xml::end;
     }
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -341,7 +341,7 @@ void ADN_Composantes_Data::NTIInfos::WriteArchive( xml::xostream& output )
         type = "M";
     if( ! type.empty() )
         output << xml::attribute( "type", type );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -441,12 +441,12 @@ void ADN_Composantes_Data::LogMaintenanceInfos::WriteArchive( xml::xostream& out
                 << xml::attribute( "capacity", rCapacity_ )
                 << xml::attribute( "loading-time", loadTime_ )
                 << xml::attribute( "unloading-time", unloadTime_ )
-               << xml::end();
+               << xml::end;
     }
     NTI1Infos_.WriteArchive( output );
     NTI2Infos_.WriteArchive( output );
     NTI3Infos_.WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -505,7 +505,7 @@ void ADN_Composantes_Data::LogSupplyInfos::ReadArchive( xml::xistream& input )
             >> xml::attribute( "mass", rWeight_ )
             >> xml::attribute( "volume", rVolume_ )
             >> xml::attribute( "nature", strNature )
-          >> xml::end();
+          >> xml::end;
     if( !strNature.empty() )
     {
         bIsCarrier_ = true;
@@ -528,8 +528,8 @@ void ADN_Composantes_Data::LogSupplyInfos::WriteArchive( xml::xostream& output )
                 << xml::attribute( "mass", rWeight_ )
                 << xml::attribute( "volume", rVolume_ )
                 << xml::attribute( "nature", ptrDotationNature_.GetData()->GetData() )
-               << xml::end();
-    output << xml::end();
+               << xml::end;
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -604,7 +604,7 @@ void ADN_Composantes_Data::LogInfos::ReadArchive( xml::xistream& input )
     input >> xml::optional()
             >> xml::start( "logistic-functions" )
                 >> xml::list( *this, &ADN_Composantes_Data::LogInfos::ReadLogisticFunction )
-            >> xml::end();
+            >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -623,7 +623,7 @@ void ADN_Composantes_Data::LogInfos::WriteArchive( xml::xostream& output )
         maintenanceInfos_.WriteArchive( output );
     if( bHasSupplyInfos_.GetData() )
         supplyInfos_.WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -695,7 +695,7 @@ void ADN_Composantes_Data::BreakdownInfos::WriteArchive( const std::string& orig
             << xml::attribute( "origin", origin )
             << xml::attribute( "type", ptrBreakdown_.GetData()->strName_ )
             << xml::attribute( "percentage", rPercentage_ )
-           << xml::end();
+           << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -769,7 +769,7 @@ void ADN_Composantes_Data::BreakdownGroupInfos::ReadArchive( xml::xistream& inpu
     input >> xml::optional()
           >> xml::start( "breakdowns" )
             >> xml::list( "breakdown", *this, &ADN_Composantes_Data::BreakdownGroupInfos::ReadBreakdown )
-          >> xml::end();
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -837,7 +837,7 @@ void ADN_Composantes_Data::SpeedInfos::WriteArchive( xml::xostream& output )
     output << xml::start( "speed" )
             << xml::attribute( "terrain", ADN_Tr::ConvertFromLocation( nTypeTerrain_ ) )
             << xml::attribute( "value", rSpeed_ )
-           << xml::end();
+           << xml::end;
 }
 
 //-----------------------------------------------------------------------------
@@ -907,7 +907,7 @@ void ADN_Composantes_Data::SensorInfos::WriteArchive( xml::xostream& output )
     output << xml::start( "sensor" )
             << xml::attribute( "height", rHeight_ )
             << xml::attribute( "type", ptrSensor_.GetData()->strName_ )
-           << xml::end();
+           << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -975,7 +975,7 @@ void ADN_Composantes_Data::RadarInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "radar" )
             << xml::attribute( "type", ptrRadar_.GetData()->strName_ )
-           << xml::end();
+           << xml::end;
 }
 
 //-----------------------------------------------------------------------------
@@ -1057,7 +1057,7 @@ void ADN_Composantes_Data::WeaponInfos::WriteArchive( xml::xostream& output )
     output << xml::start( "weapon-system" )
             << xml::attribute( "launcher", ptrWeapon_.GetData()->ptrLauncher_.GetData()->strName_ )
             << xml::attribute( "munition", ptrWeapon_.GetData()->ptrAmmunition_.GetData()->strName_ )
-           << xml::end();
+           << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -1102,7 +1102,7 @@ void ADN_Composantes_Data::HumanProtectionInfos::CopyFrom( HumanProtectionInfos&
 void ADN_Composantes_Data::HumanProtectionInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::optional() >> xml::start( "human-protections" )
-                             >> xml::end();
+                             >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -1111,7 +1111,7 @@ void ADN_Composantes_Data::HumanProtectionInfos::ReadArchive( xml::xistream& inp
 // -----------------------------------------------------------------------------
 void ADN_Composantes_Data::HumanProtectionInfos::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "human-protections" ) << xml::end();
+    output << xml::start( "human-protections" ) << xml::end;
 }
 
 
@@ -1192,7 +1192,7 @@ void ADN_Composantes_Data::ActiveProtectionsInfos::WriteArchive( xml::xostream& 
 {
     output << xml::start( "protection" )
             << xml::attribute( "name", ptrActiveProtections_.GetData()->strName_ )
-           << xml::end();
+           << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -1272,7 +1272,7 @@ void ADN_Composantes_Data::CategoryInfos::WriteArchive( xml::xostream& output )
             << xml::attribute( "capacity", rNbr_ )
             << xml::attribute( "logistic-threshold", rLogThreshold_ )
             << xml::attribute( "normalized-consumption", rNormalizedConsumption_ )
-           << xml::end();
+           << xml::end;
 }
 
 //-----------------------------------------------------------------------------
@@ -1367,7 +1367,7 @@ void ADN_Composantes_Data::DotationInfos::WriteArchive( xml::xostream& output )
                 (*it)->WriteArchive( output );
             }
         if( entered )
-            output << xml::end();
+            output << xml::end;
     }
 }
 
@@ -1531,7 +1531,7 @@ void ADN_Composantes_Data::ObjectInfos::WriteArchive( xml::xostream& output )
         output << xml::attribute( "non-bypassed-speed", rSpeedCirc_ );
     if( bSpeedNotCirc_.GetData() )
         output << xml::attribute( "bypassed-speed", rSpeedNotCirc_ );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -1594,7 +1594,7 @@ void ADN_Composantes_Data::ConsumptionItem::WriteArchive( xml::xostream& output 
             << xml::attribute( "category", ptrCategory_.GetData()->parentDotation_.strName_ )
             << xml::attribute( "name", ptrCategory_.GetData()->strName_ )
             << xml::attribute( "value", nQuantityUsedPerHour_ )
-           << xml::end();
+           << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -1672,7 +1672,7 @@ void ADN_Composantes_Data::ConsumptionsInfos::ReadArchive( xml::xistream& input 
 {
     input >> xml::start( "consumptions" )
             >> xml::list( "consumption", *this, &ADN_Composantes_Data::ConsumptionsInfos::ReadConsumption )
-          >> xml::end();
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -1697,9 +1697,9 @@ void ADN_Composantes_Data::ConsumptionsInfos::WriteArchive( xml::xostream& outpu
                 (*it)->WriteArchive( output );
             }
         if( entered )
-            output << xml::end();
+            output << xml::end;
     }
-    output << xml::end();
+    output << xml::end;
 }
 
 
@@ -1978,33 +1978,33 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
     input >> xml::start( "speeds" )
             >> xml::attribute( "max", rMaxSpeed_ )
             >> xml::list( "speed", *this, &ADN_Composantes_Data::ComposanteInfos::ReadSpeed )
-          >> xml::end();
+          >> xml::end;
 
     input >> xml::start( "composition" );
     dotations_.ReadArchive( input );
-    input >> xml::end();
+    input >> xml::end;
 
     input >> xml::start( "sensors" )
             >> xml::list( "sensor", *this, &ADN_Composantes_Data::ComposanteInfos::ReadSensor )
-          >> xml::end();
+          >> xml::end;
 
     input >> xml::optional() >> xml::start( "radars" )
             >> xml::list( "radar", *this, &ADN_Composantes_Data::ComposanteInfos::ReadRadar )
-          >> xml::end();
+          >> xml::end;
 
     input >> xml::start( "transports" )
             >> xml::optional()
             >> xml::start( "crew" )
                 >> xml::attribute( "man-boarding-time", embarkingTimePerPerson_ )
                 >> xml::attribute( "man-unloading-time", disembarkingTimePerPerson_ )
-            >> xml::end()
+            >> xml::end
             >> xml::optional()
             >> xml::start( "unit" )
                 >> xml::attribute( "capacity", rWeightTransportCapacity_ )
                 >> xml::attribute( "ton-loading-time", embarkingTimePerTon_ )
                 >> xml::attribute( "ton-unloading-time", disembarkingTimePerTon_ )
-            >> xml::end()
-          >> xml::end();
+            >> xml::end
+          >> xml::end;
     bTroopEmbarkingTimes_ = embarkingTimePerPerson_ != "0s" || disembarkingTimePerPerson_ != "0s";
     bCanCarryCargo_ = rWeightTransportCapacity_ != 0.;
 
@@ -2012,13 +2012,13 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
 
     input >> xml::start( "weapon-systems" )
             >> xml::list( "weapon-system", *this, &ADN_Composantes_Data::ComposanteInfos::ReadWeapon )
-          >> xml::end()
+          >> xml::end
           >> xml::optional() >> xml::start ( "active-protections" )
             >> xml::list( "protection", *this, &ADN_Composantes_Data::ComposanteInfos::ReadActiveProtection )
-          >> xml::end()
+          >> xml::end
           >> xml::start( "objects" )
             >> xml::list( "object", *this, &ADN_Composantes_Data::ComposanteInfos::ReadObject )
-          >> xml::end();
+          >> xml::end;
 
 
     logInfos_.ReadArchive( input );
@@ -2056,49 +2056,49 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
             << xml::attribute( "max", rMaxSpeed_ );
     for( IT_SpeedInfos_Vector itSpeed = vSpeeds_.begin(); itSpeed != vSpeeds_.end(); ++itSpeed )
         (*itSpeed)->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 
     output << xml::start( "composition" );
     dotations_.WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 
     output << xml::start( "sensors" );
     for( IT_SensorInfos_Vector itSensor = vSensors_.begin(); itSensor != vSensors_.end(); ++itSensor )
         (*itSensor)->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 
     output << xml::start( "radars" );
     for( IT_RadarInfos_Vector itRadar = vRadars_.begin(); itRadar != vRadars_.end(); ++itRadar )
         (*itRadar)->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 
     output << xml::start( "transports" );
     if( bTroopEmbarkingTimes_.GetData() )
         output << xml::start( "crew" )
                 << xml::attribute( "man-boarding-time", embarkingTimePerPerson_ )
                 << xml::attribute( "man-unloading-time", disembarkingTimePerPerson_ )
-            << xml::end();
+            << xml::end;
     if( bCanCarryCargo_.GetData() )
         output << xml::start( "unit" )
                 << xml::attribute( "capacity", rWeightTransportCapacity_ )
                 << xml::attribute( "ton-loading-time", embarkingTimePerTon_ )
                 << xml::attribute( "ton-unloading-time", disembarkingTimePerTon_ )
-               << xml::end();
-    output << xml::end();
+               << xml::end;
+    output << xml::end;
 
     consumptions_.WriteArchive( output );
 
     output << xml::start( "weapon-systems" );
     for( IT_WeaponInfos_Vector itWeapon = vWeapons_.begin(); itWeapon != vWeapons_.end(); ++itWeapon )
         (*itWeapon)->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 
     if( ! vActiveProtections_.empty() )
     {
         output << xml::start( "active-protections" );
         for( IT_ActiveProtectionsInfos_Vector itActiveProtections = vActiveProtections_.begin(); itActiveProtections != vActiveProtections_.end(); ++itActiveProtections )
             (*itActiveProtections)->WriteArchive( output );
-        output << xml::end();
+        output << xml::end;
     }
 
     humanProtections_.WriteArchive( output );
@@ -2106,7 +2106,7 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
     output << xml::start( "objects" );
     for( IT_ObjectInfos_Vector itObject = vObjects_.begin(); itObject != vObjects_.end(); ++itObject )
         (*itObject)->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 
     logInfos_.WriteArchive( output );
 
@@ -2115,13 +2115,13 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
         output << xml::start( "breakdowns" );
         randomBreakdowns_.WriteArchive( output );
         attritionBreakdowns_.WriteArchive( output );
-        output << xml::end();
+        output << xml::end;
     }
 
     if( bMaxSlope_.GetData() )
         output << xml::attribute( "max-slope", rMaxSlope_.GetData() / 100.0 );
 
-    output << xml::end();
+    output << xml::end;
 }
 
 //=============================================================================
@@ -2188,7 +2188,7 @@ void ADN_Composantes_Data::ReadArchive( xml::xistream& input )
 {
     input >> xml::start( "elements" )
             >> xml::list( "element", *this, &ADN_Composantes_Data::ReadElement )
-          >> xml::end();
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -2201,7 +2201,7 @@ void ADN_Composantes_Data::WriteArchive( xml::xostream& output )
     ADN_Tools::AddSchema( output, "Equipments" );
     for( IT_ComposanteInfos_Vector it = vComposantes_.begin(); it != vComposantes_.end(); ++it )
         (*it)->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------

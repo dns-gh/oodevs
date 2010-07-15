@@ -242,7 +242,7 @@ kernel::Object_ABC* TeamFactory::CreateObject( xml::xistream& xis, kernel::Team_
     result->Attach< ObjectAttributesContainer >( attributes );
     xis >> xml::start( "attributes" )
             >> xml::list( *this, &TeamFactory::ReadAttributes, attributes, dico )
-        >> xml::end();
+        >> xml::end;
 
     result->Polish();
     return result;

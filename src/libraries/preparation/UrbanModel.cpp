@@ -90,12 +90,12 @@ void UrbanModel::Serialize( const std::string& filename ) const
                 << xml::start( "capacities" )
                     << xml::start( "structural" )
                         << xml::attribute( "value", it->second->infrastructure_.structuralState_ )
-                    << xml::end()
-                << xml::end()
-            << xml::end();
+                    << xml::end
+                << xml::end
+            << xml::end;
     }
-    xos     << xml::end()
-        << xml::end();
+    xos     << xml::end
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -107,8 +107,8 @@ void UrbanModel::LoadUrbanState( xml::xistream& xis )
     xis >> xml::start( "urban-state" )
             >> xml::start( "blocks" )
                 >> xml::list( "block", boost::bind( &UrbanModel::ReadBlock, boost::ref( *this ), _1 ) )
-            >> xml::end()
-        >> xml::end();
+            >> xml::end
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -125,7 +125,7 @@ void UrbanModel::ReadBlock( xml::xistream& xis )
         xis >> xml::optional()
             >> xml::start( "capacities" )
                 >> xml::list( *this, &UrbanModel::ReadCapacity, *proxy )
-            >> xml::end();
+            >> xml::end;
     }
 }
 

@@ -54,7 +54,7 @@ void ScoresModel::Load( const std::string& file )
     xml::xifstream xis( file );
     xis >> xml::start( "scores" )
             >> xml::list( "score", *this, &ScoresModel::ReadScore )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +94,7 @@ void ScoresModel::Serialize( xml::xostream& xos ) const
     xos << xml::start( "scores" );
     BOOST_FOREACH( const T_Elements::value_type factor, elements_ )
         factor.second->Serialize( xos );
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

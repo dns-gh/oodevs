@@ -206,11 +206,11 @@ void ExerciseList::SelectExercise( QListViewItem* item )
             xis >> xml::start( "exercise" )
                     >> xml::start( "terrain" )
                         >> xml::attribute( "name", terrain )
-                    >> xml::end()
+                    >> xml::end
                     >> xml::start( "model" )
                         >> xml::attribute( "dataset", data )
                         >> xml::attribute( "physical", physical )
-                    >> xml::end()
+                    >> xml::end
                     >> xml::optional() >> xml::start( "meta" )
                         >> xml::optional() >> xml::start( "briefing" )
                             >> xml::optional()  >> xml::content( "image", image )

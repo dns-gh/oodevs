@@ -58,10 +58,10 @@ void Config::Parse( int argc, char** argv )
                         >> xml::start( "network" )
                             >> xml::attribute( "client", networkSimulationParameters_ )
                             >> xml::attribute( "server", port )
-                        >> xml::end()
-                    >> xml::end()
-                >> xml::end()
-            >> xml::end();
+                        >> xml::end
+                    >> xml::end
+                >> xml::end
+            >> xml::end;
     if( ! networkClientsParameters_ )
         networkClientsParameters_ = unsigned short( port );
 }

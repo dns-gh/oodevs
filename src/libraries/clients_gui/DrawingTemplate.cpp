@@ -57,7 +57,7 @@ DrawingTemplate::DrawingTemplate( xml::xistream& input, const DrawingCategory& c
     lineUnit = ReadUnit( input );
     line_ = factory.Compile( input, *references_, 1 ); // $$$$ AGE 2006-08-31:
 
-    input >> xml::end() // segment
+    input >> xml::end // segment
           >> xml::list( "marker-start", *this, &DrawingTemplate::ReadMarker, markerStart_, startUnit )
           >> xml::list( "marker-mid", *this, &DrawingTemplate::ReadMarker, markerMiddle_, middleUnit )
           >> xml::list( "marker-end", *this, &DrawingTemplate::ReadMarker, markerEnd_, endUnit )

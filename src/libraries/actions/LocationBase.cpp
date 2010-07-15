@@ -63,7 +63,7 @@ LocationBase::LocationBase( const kernel::CoordinateConverter_ABC& converter, xm
             >> xml::start( "location" )
                 >> xml::attribute( "type", type )
                 >> xml::list( "point", *this, &LocationBase::ReadPoint )
-            >> xml::end();
+            >> xml::end;
     type_ = tools::LocationFromString( type.c_str() );
     valid_ = CheckValidity();
 }
@@ -182,8 +182,8 @@ void LocationBase::Serialize( xml::xostream& xos ) const
         xos << xml::start( "location" )
             << xml::attribute( "type", tools::ToString( type_ ) );
         for( CIT_PointVector it = points_.begin(); it != points_.end(); ++it )
-            xos << xml::start( "point" ) << xml::attribute( "coordinates", converter_.ConvertToMgrs( *it ) ) << xml::end();
-        xos << xml::end();
+            xos << xml::start( "point" ) << xml::attribute( "coordinates", converter_.ConvertToMgrs( *it ) ) << xml::end;
+        xos << xml::end;
     }
 }
 

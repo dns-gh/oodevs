@@ -97,7 +97,7 @@ void ADN_Sensors_Data::LimitedToSensorsInfos::WriteArchive( xml::xostream& outpu
 {
     output << xml::start( "sensor" )
                 << xml::attribute( "name", strName_ )
-           << xml::end();
+           << xml::end;
 }
 
 // =============================================================================
@@ -156,7 +156,7 @@ void ADN_Sensors_Data::ModificatorSizeInfos::WriteArchive( xml::xostream& output
     output << xml::start( "distance-modifier" )
             << xml::attribute( "type", ptrSize_.GetData()->GetData() )
             << xml::attribute( "value", rCoeff_ )
-           << xml::end();
+           << xml::end;
 }
 
 // =============================================================================
@@ -214,7 +214,7 @@ void ADN_Sensors_Data::ModificatorIlluminationInfos::WriteArchive( xml::xostream
     output << xml::start( "distance-modifier" )
             << xml::attribute( "type", ADN_Tr::ConvertFromTimeCategory( eType_ ) )
             << xml::attribute( "value", rCoeff_ )
-           << xml::end();
+           << xml::end;
 }
 
 // =============================================================================
@@ -272,7 +272,7 @@ void ADN_Sensors_Data::ModificatorMeteoInfos::WriteArchive( xml::xostream& outpu
     output << xml::start( "distance-modifier" )
             << xml::attribute( "type", ADN_Tools::Scriptify( ADN_Tr::ConvertFromSensorWeatherModifiers( eType_ ) ) )
             << xml::attribute( "value", rCoeff_ )
-           << xml::end();
+           << xml::end;
 }
 
 // =============================================================================
@@ -330,7 +330,7 @@ void ADN_Sensors_Data::ModificatorEnvironmentInfos::WriteArchive( xml::xostream&
     output << xml::start( "distance-modifier" )
             << xml::attribute( "value", rCoeff_ )
             << xml::attribute( "type", ADN_Tr::ConvertFromVisionObject( eType_ ) )
-           << xml::end();
+           << xml::end;
 }
 
 // =============================================================================
@@ -390,7 +390,7 @@ void ADN_Sensors_Data::ModificatorUrbanBlockInfos::WriteArchive( xml::xostream& 
     output << xml::start( "distance-modifier" )
         << xml::attribute( "value", rCoeff_ )
         << xml::attribute( "type", ptrMaterial_.GetData()->GetData() )
-        << xml::end();
+        << xml::end;
 }
 
 // =============================================================================
@@ -447,7 +447,7 @@ void ADN_Sensors_Data::ModificatorPostureInfos::WriteArchive( xml::xostream& out
     output << xml::start( "distance-modifier" )
             << xml::attribute( "type", ADN_Tools::ComputePostureScriptName( eType_ ) )
             << xml::attribute( "value", rCoeff_ )
-           << xml::end();
+           << xml::end;
 }
 
 // =============================================================================
@@ -558,7 +558,7 @@ void ADN_Sensors_Data::TargetInfos::ReadArchive( xml::xistream& input )
     populationInfos_.ReadArchive( input );
     input >> xml::start( "source-posture-modifiers" )
             >> xml::list( "distance-modifier", *this, &ADN_Sensors_Data::TargetInfos::ReadPosture )
-          >> xml::end();
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -575,9 +575,9 @@ void ADN_Sensors_Data::TargetInfos::WriteArchive( xml::xostream& output )
     output << xml::start( "source-posture-modifiers" );
     for( IT_ModificatorPostureInfos_Vector it = vModifStance_.begin(); it != vModifStance_.end(); ++it )
         (*it)->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 
-    output << xml::end();
+    output << xml::end;
 }
 
 // =============================================================================
@@ -634,7 +634,7 @@ void ADN_Sensors_Data::PopulationInfos::ReadArchive( xml::xistream& input )
     input >> xml::start( "population-modifier" )
             >> xml::attribute( "density", rDensity_ )
             >> xml::attribute( "modifier", rModifier_ )
-          >> xml::end();
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -646,7 +646,7 @@ void ADN_Sensors_Data::PopulationInfos::WriteArchive( xml::xostream& output )
     output << xml::start( "population-modifier" )
             << xml::attribute( "density", rDensity_ )
             << xml::attribute( "modifier", rModifier_ )
-           << xml::end();
+           << xml::end;
 }
 
 // =============================================================================
@@ -996,35 +996,35 @@ void ADN_Sensors_Data::SensorInfos::ReadUnitDetection( xml::xistream& input )
     input >> xml::attribute( "angle", rAngle_ )
           >> xml::optional() >> xml::start( "limited-to-sensors" ) // LTO
             >> xml::list( "sensor", *this, &ADN_Sensors_Data::SensorInfos::ReadLimitedToSensorsList ) // LTO
-          >> xml::end() // LTO
+          >> xml::end // LTO
           >> xml::start( "base-distances" )
             >> xml::attribute( "close-range", rDistProximity_ )
             >> xml::list( "base-distance", *this, &ADN_Sensors_Data::SensorInfos::ReadBaseDistance )
-          >> xml::end()
+          >> xml::end
           >> xml::start( "distance-modifiers" )
             >> xml::start( "size-modifiers" )
                 >> xml::list( "distance-modifier", *this, &ADN_Sensors_Data::SensorInfos::ReadSize )
-            >> xml::end()
+            >> xml::end
             >> xml::start( "precipitation-modifiers" )
                 >> xml::list( "distance-modifier", *this, &ADN_Sensors_Data::SensorInfos::ReadPrecipitation )
-            >> xml::end()
+            >> xml::end
             >> xml::start( "visibility-modifiers" )
                 >> xml::list( "distance-modifier", *this, &ADN_Sensors_Data::SensorInfos::ReadVisibility )
-            >> xml::end()
+            >> xml::end
             >> xml::start( "source-posture-modifiers" )
                 >> xml::list( "distance-modifier", *this, &ADN_Sensors_Data::SensorInfos::ReadSourcePosture )
-            >> xml::end()
+            >> xml::end
             >> xml::start( "target-posture-modifiers" )
                 >> xml::list( "distance-modifier", *this, &ADN_Sensors_Data::SensorInfos::ReadTargetPosture )
-            >> xml::end()
+            >> xml::end
             >> xml::start( "terrain-modifiers" )
                 >> xml::list( "distance-modifier", *this, &ADN_Sensors_Data::SensorInfos::ReadTerrain )
-            >> xml::end()
+            >> xml::end
             >> xml::start( "urbanBlock-material-modifiers" )
                 >> xml::list( "distance-modifier", *this, &ADN_Sensors_Data::SensorInfos::ReadUrbanBlockMaterial )
-            >> xml::end();
+            >> xml::end;
     populationInfos_.ReadArchive( input );
-    input >> xml::end();
+    input >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -1095,7 +1095,7 @@ void ADN_Sensors_Data::SensorInfos::WriteArchive( xml::xostream& output )
             output << xml::start( "limited-to-sensors" );
             for( unsigned int i = 0; i < vLimitedToSensorsInfos_.size(); ++i )
                 vLimitedToSensorsInfos_[i]->WriteArchive( output );
-            output << xml::end();
+            output << xml::end;
         }
         // LTO end
 
@@ -1103,14 +1103,14 @@ void ADN_Sensors_Data::SensorInfos::WriteArchive( xml::xostream& output )
                     << xml::attribute( "close-range", rDistProximity_ )
                     << xml::start( "base-distance" )
                         << xml::attribute( "level", "identification" ) << xml::attribute( "distance", rDistIdent_ )
-                    << xml::end()
+                    << xml::end
                     << xml::start( "base-distance" )
                         << xml::attribute( "level", "recognition" ) << xml::attribute( "distance", rDistReco_ )
-                    << xml::end()
+                    << xml::end
                     << xml::start( "base-distance" )
                         << xml::attribute( "level", "detection" ) << xml::attribute( "distance", rDistDetection_ )
-                    << xml::end()
-                << xml::end(); //base-distances
+                    << xml::end
+                << xml::end; //base-distances
 
         output << xml::start( "distance-modifiers" );
 
@@ -1119,40 +1119,40 @@ void ADN_Sensors_Data::SensorInfos::WriteArchive( xml::xostream& output )
         output << xml::start( "size-modifiers" );
         for( IT_ModificatorSizeInfos_Vector it1 = vModifSizes_.begin(); it1 != vModifSizes_.end(); ++it1 )
             (*it1)->WriteArchive( output );
-        output << xml::end();
+        output << xml::end;
 
         output << xml::start( "precipitation-modifiers" );
         for( IT_ModificatorMeteoInfos_Vector it2 = vModifWeather_.begin(); it2 != vModifWeather_.end(); ++it2 )
             (*it2)->WriteArchive( output );
-        output << xml::end();
+        output << xml::end;
 
         output << xml::start( "visibility-modifiers" );
         for( IT_ModificatorIlluminationInfos_Vector it3 = vModifIlluminations_.begin(); it3 != vModifIlluminations_.end(); ++it3 )
             (*it3)->WriteArchive( output );
-        output << xml::end();
+        output << xml::end;
 
         output << xml::start( "source-posture-modifiers" );
         for( IT_ModificatorPostureInfos_Vector it4 = vModifStance_.begin(); it4 != vModifStance_.end(); ++it4 )
             (*it4)->WriteArchive( output );
-        output << xml::end();
+        output << xml::end;
 
         output << xml::start( "target-posture-modifiers" );
         for( IT_ModificatorPostureInfos_Vector it5 = vModifTargetStance_.begin(); it5 != vModifTargetStance_.end(); ++it5 )
             (*it5)->WriteArchive( output );
-        output << xml::end();
+        output << xml::end;
 
         output << xml::start( "terrain-modifiers" );
         for( IT_ModificatorEnvironmentInfos_Vector it6 = vModifEnvironments_.begin(); it6 != vModifEnvironments_.end(); ++it6 )
             (*it6)->WriteArchive( output );
-        output << xml::end();
+        output << xml::end;
 
         output << xml::start( "urbanBlock-material-modifiers" );
         for( IT_ModificatorUrbanBlockInfos_Vector it7 = vModifUrbanBlocks_.begin(); it7 != vModifUrbanBlocks_.end(); ++it7 )
             (*it7)->WriteArchive( output );
-        output << xml::end();
+        output << xml::end;
 
-        output << xml::end(); // distance-modifiers
-        output << xml::end(); // unit-detection
+        output << xml::end; // distance-modifiers
+        output << xml::end; // unit-detection
     }
 
     if( bCanDetectObjects_.GetData() )
@@ -1160,10 +1160,10 @@ void ADN_Sensors_Data::SensorInfos::WriteArchive( xml::xostream& output )
         output << xml::start( "object-detection" );
         for( IT_TargetsInfos_Vector it = vTargets_.begin(); it != vTargets_.end(); ++it )
             (*it)->WriteArchive( output );
-        output << xml::end();
+        output << xml::end;
     }
 
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -1205,7 +1205,7 @@ void ADN_Sensors_Data::ALATInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::start( "alat-monitoring-times" )
             >> xml::list( "alat-monitoring-time", *this, &ADN_Sensors_Data::ALATInfos::ReadTime )
-          >> xml::end();
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -1219,8 +1219,8 @@ void ADN_Sensors_Data::ALATInfos::WriteArchive( xml::xostream& output )
         output << xml::start( "alat-monitoring-time" )
                 << xml::attribute( "terrain", ADN_Tr::ConvertFromVisionObject( E_VisionObject(n) ) )
                 << xml::attribute( "time", surveyTimes_[ n-1 ] )
-               << xml::end();
-    output << xml::end();
+               << xml::end;
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -1248,7 +1248,7 @@ void ADN_Sensors_Data::CobraInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::start( "cobra-radar" )
             >> xml::attribute( "action-range", rRange_ )
-          >> xml::end();
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -1259,7 +1259,7 @@ void ADN_Sensors_Data::CobraInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "cobra-radar" )
             << xml::attribute( "action-range", rRange_ )
-           << xml::end();
+           << xml::end;
 }
 
 // =============================================================================
@@ -1326,11 +1326,11 @@ void ADN_Sensors_Data::ReadArchive( xml::xistream& input )
     input >> xml::start( "sensors" )
             >> xml::start( "sensors" )
                 >> xml::list( "sensor", *this, &ADN_Sensors_Data::ReadSensor )
-            >> xml::end();
+            >> xml::end;
     alatInfos_ .ReadArchive( input );
     cobraInfos_.ReadArchive( input );
     radarData_ .ReadArchive( input );
-    input >> xml::end();
+    input >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -1348,7 +1348,7 @@ void ADN_Sensors_Data::WriteArchive( xml::xostream& output )
     output << xml::start( "sensors" );
     for( IT_SensorsInfos_Vector it = vSensors_.begin(); it != vSensors_.end(); ++it )
         (*it)->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 
-    output << xml::end();
+    output << xml::end;
 }

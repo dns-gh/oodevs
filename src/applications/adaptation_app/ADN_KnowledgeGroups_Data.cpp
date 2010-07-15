@@ -38,7 +38,7 @@ void ADN_KnowledgeGroups_Data::AgentGroupInfo::ReadArchive( xml::xistream& input
             >> xml::attribute( "max-lifetime", maxLifetime_ )
             >> xml::optional() >> xml::attribute( "max-unit-to-knowledge-distance", rMaxDistance_ )
             >> xml::optional() >> xml::attribute( "interpolation-time", interpolationTime_ )
-          >> xml::end();
+          >> xml::end;
     bInterpolationTime_ = interpolationTime_ != "0s";
 }
 
@@ -54,7 +54,7 @@ void ADN_KnowledgeGroups_Data::AgentGroupInfo::WriteArchive( xml::xostream& outp
         output << xml::attribute( "max-unit-to-knowledge-distance", rMaxDistance_ );
     if( bInterpolationTime_.GetData() )
         output << xml::attribute( "interpolation-time", interpolationTime_ );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -76,7 +76,7 @@ void ADN_KnowledgeGroups_Data::PopulationGroupInfo::ReadArchive( xml::xistream& 
 {
     input >> xml::start( "population-knowledge" )
             >> xml::attribute( "max-lifetime", maxLifetime_ )
-          >> xml::end();
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +87,7 @@ void ADN_KnowledgeGroups_Data::PopulationGroupInfo::WriteArchive( xml::xostream&
 {
     output << xml::start( "population-knowledge" )
             << xml::attribute( "max-lifetime", maxLifetime_ )
-          << xml::end();
+          << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -147,7 +147,7 @@ void ADN_KnowledgeGroups_Data::GroupInfo::WriteArchive( xml::xostream& output )
         output << xml::attribute( "communication-delay", communicationDelay_ ); // LTO
     agentInfos_     .WriteArchive( output );
     populationInfos_.WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -193,7 +193,7 @@ void ADN_KnowledgeGroups_Data::ReadArchive( xml::xistream& input )
 {
     input >> xml::start( "knowledge-groups" )
             >> xml::list( "knowledge-group", *this, &ADN_KnowledgeGroups_Data::ReadKnowledgeGroup )
-          >> xml::end();
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -217,5 +217,5 @@ void ADN_KnowledgeGroups_Data::WriteArchive( xml::xostream& output )
     ADN_Tools::AddSchema( output, "KnowledgeGroups" );
     for( IT_GroupInfoVector it = vGroups_.begin(); it != vGroups_.end(); ++it )
         (*it)->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 }

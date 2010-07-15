@@ -67,7 +67,7 @@ void FormationHierarchies::SerializeAttributes( xml::xostream& xos ) const
         xos << xml::start( it->second->Retrieve< AutomatDecisions >() ? "automat" : "formation" ); // $$$$ SBO 2006-09-22: bof bof
         it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
         it->second->Interface().Apply( & Serializable_ABC::SerializeIntelligences, xos );
-        xos << xml::end();
+        xos << xml::end;
     }
 }
 
@@ -82,7 +82,7 @@ namespace
             {
                 xos << xml::start( "automat" );
                 automat.Interface().Apply( & kernel::Serializable_ABC::SerializeLogistics, xos );
-                xos << xml::end();
+                xos << xml::end;
             }
             return true;
         }

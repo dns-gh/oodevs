@@ -213,7 +213,7 @@ bool InstallPackagePanel::ReadContentFile()
         xis >> xml::start( "content" )
                 >> xml::content( "name", name )
                 >> xml::content( "description", description )
-            >> xml::end();
+            >> xml::end;
         name_->setText( name.c_str() );
         description_->setText( description.c_str() );
     }

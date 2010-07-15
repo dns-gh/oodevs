@@ -104,7 +104,7 @@ void XmlNode::Serialize( xml::xostream& xos ) const
     {
         xos << xml::start( it->first );
         it->second->Serialize( xos );
-        xos << xml::end();
+        xos << xml::end;
     }
     if( !text_.empty() )
         if( IsCData( text_ ) )

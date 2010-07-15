@@ -96,8 +96,8 @@ void ObstacleAttribute::SerializeAttributes( xml::xostream& xos ) const
             << xml::attribute( "activated", bActivated_ )
             << xml::start( "activation-time" )
                 << xml::attribute( "value", activationTime_ )
-            << xml::end()
-        << xml::end();
+            << xml::end
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------

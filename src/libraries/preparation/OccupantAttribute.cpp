@@ -72,7 +72,7 @@ void OccupantAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "max-size" )
             << xml::attribute( "max-size", iMaxSize_ )
-        << xml::end();
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------

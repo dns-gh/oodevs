@@ -141,7 +141,7 @@ void ADN_Equipement_Data::CategoryInfo::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "dotation" );
     WriteContent( output );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -230,7 +230,7 @@ void ADN_Equipement_Data::AttritionInfos::WriteArchive( xml::xostream& output, c
             << xml::attribute( "destruction", rDestroy_.GetData() / 100.0 )
             << xml::attribute( "repairable-with-evacuation", rRepairWithEvac_.GetData() / 100.0 )
             << xml::attribute( "repairable-without-evacuation", rRepairNoEvac_.GetData() / 100.0 )
-           << xml::end();
+           << xml::end;
 }
 
 // TEMP SLG
@@ -291,7 +291,7 @@ void ADN_Equipement_Data::UrbanAttritionInfos::WriteArchive( xml::xostream& outp
     output << xml::start( tag )
         << xml::attribute( "material-type", ptrMaterial_.GetData()->GetData() )
         << xml::attribute( "value", rCoeff_.GetData() )
-        << xml::end();
+        << xml::end;
 }
 // TEMP SLG
 //-----------------------------------------------------------------------------
@@ -344,7 +344,7 @@ void ADN_Equipement_Data::ModificatorPostureInfos::WriteArchive( xml::xostream& 
     output << xml::start( "ph" )
             << xml::attribute( "target-posture", ADN_Tools::ComputePostureScriptName( eType_ ) )
             << xml::attribute( "value", rCoeff_ )
-           << xml::end();
+           << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -483,7 +483,7 @@ void ADN_Equipement_Data::IndirectAmmoInfos::WriteArchive( xml::xostream& output
         break;
     }
 
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -608,7 +608,7 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadArchive( xml::xistream& input )
         input >> xml::start( "illuminating" )
                 >> xml::attribute( "range", fRange_ )
                 >> xml::attribute( "maintain", bMaintainIllumination_ )
-              >> xml::end();
+              >> xml::end;
     }
     if( input.has_child( "guided" ) )
     {
@@ -616,18 +616,18 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadArchive( xml::xistream& input )
         input >> xml::start( "guided" )
                 >> xml::attribute( "maintain", bMaintainGuidance_ )
                 >> xml::attribute( "range", fGuidanceRange_ )
-              >> xml::end();
+              >> xml::end;
     }
 
 
     input >> xml::optional()
           >> xml::start( "attritions" )
             >> xml::list( "attrition", *this, &ADN_Equipement_Data::AmmoCategoryInfo::ReadAttrition )
-          >> xml::end()
+          >> xml::end
           >> xml::optional()
           >> xml::start( "urbanModifiers" )
             >> xml::list( "urbanModifier", *this, &ADN_Equipement_Data::AmmoCategoryInfo::ReadUrbanModifer )
-          >> xml::end()
+          >> xml::end
           >> xml::list( "indirect-fire", *this, &ADN_Equipement_Data::AmmoCategoryInfo::ReadIndirectFire );
 }
 
@@ -647,7 +647,7 @@ void ADN_Equipement_Data::AmmoCategoryInfo::WriteArchive( xml::xostream& output 
         output << xml::start( "illuminating" )
                 << xml::attribute( "range", fRange_.GetData() )
                 << xml::attribute( "maintain", bMaintainIllumination_.GetData() )
-                << xml::end();
+                << xml::end;
 
     }
     if( bGuided_.GetData() == true )
@@ -655,7 +655,7 @@ void ADN_Equipement_Data::AmmoCategoryInfo::WriteArchive( xml::xostream& output 
         output << xml::start( "guided" )
                 << xml::attribute( "maintain", bMaintainGuidance_.GetData() )
                 << xml::attribute( "range", fGuidanceRange_.GetData() )
-               << xml::end();
+               << xml::end;
 
     }
     if( bDirect_.GetData() == true )
@@ -663,20 +663,20 @@ void ADN_Equipement_Data::AmmoCategoryInfo::WriteArchive( xml::xostream& output 
         output << xml::start( "attritions" );
         for( IT_AttritionInfos_Vector itAttrition = attritions_.begin(); itAttrition != attritions_.end(); ++itAttrition )
             (*itAttrition)->WriteArchive( output );
-        output << xml::end();
+        output << xml::end;
     }
     if( bUrbanAttrition_.GetData() == true )
     {
         output << xml::start( "urbanModifiers" );
         for( IT_UrbanAttritionInfos_Vector itUrbanAttrition = modifUrbanBlocks_.begin(); itUrbanAttrition != modifUrbanBlocks_.end(); ++itUrbanAttrition )
             (*itUrbanAttrition)->WriteArchive( output );
-        output << xml::end();
+        output << xml::end;
     }
 
     if( bIndirect_.GetData() == true )
         indirectAmmoInfos_.WriteArchive( output );
 
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -839,7 +839,7 @@ void ADN_Equipement_Data::ReadArchive( xml::xistream& input )
 {
     input >> xml::start( "dotations" )
             >> xml::list( "dotation", *this, &ADN_Equipement_Data::ReadDotation )
-          >> xml::end();
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -852,7 +852,7 @@ void ADN_Equipement_Data::WriteArchive( xml::xostream& output )
     ADN_Tools::AddSchema( output, "Resources" );
     for( IT_DotationInfos_Vector it = dotations_.begin(); it != dotations_.end(); ++it )
         (*it)->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------

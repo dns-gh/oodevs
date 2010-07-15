@@ -76,7 +76,7 @@ void ADN_Population_Data::FireEffectProtectionInfos::WriteArchive( xml::xostream
              << xml::attribute( "destruction",                   rDestruction_ )
              << xml::attribute( "repairable-with-evacuation",    rFixableWithEvacuation_ )
              << xml::attribute( "repairable-without-evacuation", rFixableWithoutEvacuation_ )
-           << xml::end();
+           << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -165,7 +165,7 @@ void ADN_Population_Data::FireEffectInfos::WriteArchive( xml::xostream& output )
              << xml::attribute( "population-attitude", ENT_Tr::ConvertFromPopulationAttitude( nAttitude_ ) );
     for( IT_FireEffectProtectionInfosVector it = vProtectionInfos_.begin(); it != vProtectionInfos_.end(); ++it )
         (*it)->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -263,7 +263,7 @@ void ADN_Population_Data::FireEffectRoeInfos::WriteArchive( xml::xostream& outpu
              << xml::attribute( "rule-of-engagment", ENT_Tr::ConvertFromPopulationRoe( nRoe_ ) )
              << xml::attribute( "attrition-surface", rAttritionSurface_ )
              << xml::attribute( "ph", rPH_ )
-           << xml::end();
+           << xml::end;
 }
 
 // =============================================================================
@@ -307,7 +307,7 @@ void ADN_Population_Data::SpeedEffectVolumeInfos::WriteArchive( xml::xostream& o
              << xml::attribute( "unit-size", *ptrVolume_.GetData() )
              << xml::attribute( "population-density", rDensity_  )
              << xml::attribute( "max-speed", rMaxSpeed_  )
-           << xml::end();
+           << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -388,7 +388,7 @@ void ADN_Population_Data::SpeedEffectInfos::WriteArchive( xml::xostream& output 
              << xml::attribute( "population-attitude" ,ENT_Tr::ConvertFromPopulationAttitude( nAttitude_ ) );
     for( IT_SpeedEffectVolumeInfosVector it = vVolumeInfos_.begin(); it != vVolumeInfos_.end(); ++it )
         (*it)->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -529,13 +529,13 @@ void ADN_Population_Data::PopulationInfos::ReadArchive( xml::xistream& input )
 
     input >> xml::start( "slowing-effects" )
             >> xml::list( "slowing-effect", *this, &ADN_Population_Data::PopulationInfos::ReadSlowingEffect )
-          >> xml::end()
+          >> xml::end
           >> xml::start( "attrition-effects" )
             >> xml::list( "attrition-effect", *this, &ADN_Population_Data::PopulationInfos::ReadAttritionEffect )
-          >> xml::end()
+          >> xml::end
           >> xml::start( "unit-fire-effects" )
             >> xml::list( "unit", *this, &ADN_Population_Data::PopulationInfos::ReadFireEffect )
-          >> xml::end();
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -597,19 +597,19 @@ void ADN_Population_Data::PopulationInfos::WriteArchive( xml::xostream& output, 
     output << xml::start( "slowing-effects" );
     for( IT_SpeedEffectInfosVector it = vSpeedEffectInfos_.begin(); it != vSpeedEffectInfos_.end(); ++it )
         ( *it )->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 
     output << xml::start( "attrition-effects" );
     for( IT_FireEffectInfosVector it = vFireEffectInfos_.begin(); it != vFireEffectInfos_.end(); ++it )
         ( *it )->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 
     output << xml::start( "unit-fire-effects" );
     for( IT_FireEffectRoeInfosVector it = vFireEffectRoeInfos_.begin(); it != vFireEffectRoeInfos_.end(); ++it )
         ( *it )->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 
-    output << xml::end();
+    output << xml::end;
 }
 
 // =============================================================================
@@ -646,7 +646,7 @@ void ADN_Population_Data::ReloadingSpeedEffectInfos::ReadArchive( xml::xistream&
     input >> xml::start( "reloading-time-effect" )
             >> xml::attribute( "population-density", rDensity_ )
             >> xml::attribute( "modifier", rModifier_ )
-          >> xml::end();
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -658,7 +658,7 @@ void ADN_Population_Data::ReloadingSpeedEffectInfos::WriteArchive( xml::xostream
     output << xml::start( "reloading-time-effect" )
             << xml::attribute( "population-density", rDensity_ )
             << xml::attribute( "modifier", rModifier_ )
-          << xml::end();
+          << xml::end;
 }
 
 
@@ -716,7 +716,7 @@ void ADN_Population_Data::ReadArchive( xml::xistream& input )
     input >> xml::start( "populations" );
     reloadingSpeedEffectInfos_.ReadArchive( input );
     input >> xml::list( "population", *this, &ADN_Population_Data::ReadPopulation )
-          >> xml::end();
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -742,7 +742,7 @@ void ADN_Population_Data::WriteArchive( xml::xostream& output )
     int n = 0;
     for( IT_PopulationInfosVector it = vPopulation_.begin(); it != vPopulation_.end(); ++it, ++n )
         (*it)->WriteArchive( output, n );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------

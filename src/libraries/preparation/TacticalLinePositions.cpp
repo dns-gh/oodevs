@@ -158,7 +158,7 @@ void TacticalLinePositions::Draw( const geometry::Point2f&, const kernel::Viewpo
 void TacticalLinePositions::SerializeAttributes( xml::xostream& xos ) const
 {
     for( CIT_PointVector itPoint = pointList_.begin() ; itPoint != pointList_.end() ; ++itPoint )
-        xos << xml::start( "point" ) << converter_.ConvertToMgrs( *itPoint ) << xml::end();
+        xos << xml::start( "point" ) << converter_.ConvertToMgrs( *itPoint ) << xml::end;
 }
 
 // -----------------------------------------------------------------------------

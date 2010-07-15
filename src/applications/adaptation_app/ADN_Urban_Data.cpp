@@ -143,8 +143,8 @@ void ADN_Urban_Data::ReadUrban( xml::xistream& input )
     ReadMaterials( input );
     ReadFacades( input );
     ReadRoofShapes( input );
-    input >> xml::end()
-          >> xml::end();
+    input >> xml::end
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -159,8 +159,8 @@ void ADN_Urban_Data::WriteUrban( xml::xostream& output )
     WriteMaterials( output );
     WriteFacades( output );
     WriteRoofShapes( output );
-    output  << xml::end()
-            << xml::end();
+    output  << xml::end
+            << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -171,7 +171,7 @@ void ADN_Urban_Data::ReadMaterials( xml::xistream& input )
 {
     input >> xml::start( "material-composition-types" )
           >> xml::list( "material-composition-type", *this, &ADN_Urban_Data::ReadMaterial )
-          >> xml::end();
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -207,10 +207,10 @@ void ADN_Urban_Data::WriteMaterials( xml::xostream& output )
             throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Material - Invalid volume type name" ).ascii() );
         output << xml::start( "material-composition-type" )
             << xml::attribute( "name", trim( (*itMaterial)->GetData() ) )
-            << xml::end();
+            << xml::end;
 
     }
-    output << xml::end();
+    output << xml::end;
 }
 
 
@@ -222,7 +222,7 @@ void ADN_Urban_Data::ReadFacades( xml::xistream& input )
 {
     input >> xml::start( "facade-types" )
         >> xml::list( "facade-type", *this, &ADN_Urban_Data::ReadFacade )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -258,10 +258,10 @@ void ADN_Urban_Data::WriteFacades( xml::xostream& output )
             throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Facade - Invalid volume type name" ).ascii() );
         output << xml::start( "facade-type" )
             << xml::attribute( "name", trim( (*itFacade)->GetData() ) )
-            << xml::end();
+            << xml::end;
 
     }
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -272,7 +272,7 @@ void ADN_Urban_Data::ReadRoofShapes( xml::xistream& input )
 {
     input >> xml::start( "roof-shape-types" )
         >> xml::list( "roof-shape-type", *this, &ADN_Urban_Data::ReadRoofShape )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -308,8 +308,8 @@ void ADN_Urban_Data::WriteRoofShapes( xml::xostream& output )
             throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "RoofShape - Invalid volume type name" ).ascii() );
         output << xml::start( "roof-shape-type" )
             << xml::attribute( "name", trim( (*itRoofShape)->GetData() ) )
-            << xml::end();
+            << xml::end;
 
     }
-    output << xml::end();
+    output << xml::end;
 }

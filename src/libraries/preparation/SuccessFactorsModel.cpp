@@ -55,7 +55,7 @@ void SuccessFactorsModel::Load( const std::string& file )
     xml::xifstream xis( file );
     xis >> xml::start( "factors" )
             >> xml::list( "factor", *this, &SuccessFactorsModel::ReadFactor )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -88,7 +88,7 @@ void SuccessFactorsModel::Serialize( xml::xostream& xos ) const
     xos << xml::start( "factors" );
     BOOST_FOREACH( const T_Elements::value_type factor, elements_ )
         factor.second->Serialize( xos );
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

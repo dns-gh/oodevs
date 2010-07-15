@@ -51,15 +51,15 @@ Weather::Weather( xml::xistream& xis )
     xis >> xml::start( "wind" )
         >> xml::attribute( "speed", windSpeed_ )
         >> xml::attribute( "direction", windDirection_ )
-        >> xml::end()
+        >> xml::end
         >> xml::start( "cloud-cover" )
         >> xml::attribute( "floor", cloudFloor_ )
         >> xml::attribute( "ceiling", cloudCeiling_ )
         >> xml::attribute( "density", cloudDensity_ )
-        >> xml::end()
+        >> xml::end
         >> xml::start( "precipitation" )
         >> xml::attribute( "value", precipitation )
-        >> xml::end();
+        >> xml::end;
     type_ = ConvertToWeatherType( precipitation.c_str() );
 }
 
@@ -81,13 +81,13 @@ void Weather::Serialize( xml::xostream& xos ) const
     xos << xml::start( "wind" )
         << xml::attribute( "speed", windSpeed_ )
         << xml::attribute( "direction", windDirection_ )
-        << xml::end()
+        << xml::end
         << xml::start( "cloud-cover" )
         << xml::attribute( "floor", cloudFloor_ )
         << xml::attribute( "ceiling", cloudCeiling_ )
         << xml::attribute( "density", cloudDensity_ )
-        << xml::end()
+        << xml::end
         << xml::start( "precipitation" )
         << xml::attribute( "value", tools::GetXmlSection( type_ ) ) // $$$$ SBO 2006-12-20:
-        << xml::end();
+        << xml::end;
 }

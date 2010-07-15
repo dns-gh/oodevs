@@ -133,7 +133,7 @@ void ADN_NBC_Datas::NbcIntoxInfos::WriteArchive( xml::xostream& output )
            << xml::attribute( "type", "liquid" )
            << xml::attribute( "intoxication", "false" );
     WriteContent( output );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -151,27 +151,27 @@ void ADN_NBC_Datas::NbcIntoxInfos::WriteContent( xml::xostream& output )
                << xml::start( "effect" )
                 << xml::attribute( "wound", "nonblesse" )
                 << xml::attribute( "percentage", rNbAlivedHumans_.GetData() / 100.0 )
-               << xml::end()
+               << xml::end
                << xml::start( "effect" )
                 << xml::attribute( "wound", "u1" )
                 << xml::attribute( "percentage", rNbHurtedHumans1_.GetData() / 100.0 )
-               << xml::end()
+               << xml::end
                << xml::start( "effect" )
                 << xml::attribute( "wound", "u2" )
                 << xml::attribute( "percentage", rNbHurtedHumans2_.GetData() / 100.0 )
-               << xml::end()
+               << xml::end
                << xml::start( "effect" )
                 << xml::attribute( "wound", "u3" )
                 << xml::attribute( "percentage", rNbHurtedHumans3_.GetData() / 100.0 )
-               << xml::end()
+               << xml::end
                << xml::start( "effect" )
                 << xml::attribute( "wound", "ue" )
                 << xml::attribute( "percentage", rNbHurtedHumansE_.GetData() / 100.0 )
-               << xml::end()
+               << xml::end
                << xml::start( "effect" )
                 << xml::attribute( "wound", "mort" )
                 << xml::attribute( "percentage", rNbDeadHumans_.GetData() / 100.0 )
-               << xml::end();
+               << xml::end;
     }
 
     if( bContaminationPresent_.GetData() )
@@ -244,7 +244,7 @@ void ADN_NBC_Datas::NbcGazInfos::WriteArchive( xml::xostream& output )
             << xml::attribute( "propagation", rSpreadAngle_ )
             << xml::attribute( "life-time", lifeTime_ );
     intoxInfos_.WriteContent( output );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -343,7 +343,7 @@ void ADN_NBC_Datas::NbcAgentInfos::WriteArchive( xml::xostream& output )
         liquidInfos_.WriteArchive( output );
     if( bGazPresent_.GetData() )
         gazInfos_.WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -407,14 +407,14 @@ void ADN_NBC_Datas::ReadArchive( xml::xistream& input )
                 >> xml::attribute( "wind-speed-limit", rWindSpeedLimitForSpreading_ )
                 >> xml::attribute( "contamination-distance", rContaminationDistance_ )
                 >> xml::attribute( "contamination-quantity-given", rContaminationQuantityGiven_ )
-            >> xml::end()
+            >> xml::end
             >> xml::start( "nbc-suit" )
                 >> xml::attribute( "max-speed-modifier", rNbcSuitMaxSpeedMultiplier_ )
                 >> xml::attribute( "reloading-time-modifier", rNbcSuitReloadSpeedMultiplier_ )
-            >> xml::end();
+            >> xml::end;
     input >> xml::start( "agents" )
             >> xml::list( "agent", *this, &ADN_NBC_Datas::ReadAgent )
-          >> xml::end();
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -429,17 +429,17 @@ void ADN_NBC_Datas::WriteArchive( xml::xostream& output )
                 << xml::attribute( "wind-speed-limit", rWindSpeedLimitForSpreading_ )
                 << xml::attribute( "contamination-distance", rContaminationDistance_ )
                 << xml::attribute( "contamination-quantity-given", rContaminationQuantityGiven_ )
-            << xml::end()
+            << xml::end
             << xml::start( "nbc-suit" )
                 << xml::attribute( "max-speed-modifier", rNbcSuitMaxSpeedMultiplier_ )
                 << xml::attribute( "reloading-time-modifier", rNbcSuitReloadSpeedMultiplier_ )
-            << xml::end();
+            << xml::end;
 
     output << xml::start( "agents" );
     for( T_NbcAgentInfos_Vector::iterator itAgent = vNbcAgent_.begin(); itAgent != vNbcAgent_.end(); ++itAgent )
         (*itAgent)->WriteArchive( output );
-    output << xml::end();
-    output << xml::end();
+    output << xml::end;
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------

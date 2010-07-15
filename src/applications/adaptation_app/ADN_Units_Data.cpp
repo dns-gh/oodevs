@@ -126,7 +126,7 @@ void ADN_Units_Data::ComposanteInfos::WriteArchive( xml::xostream& output, bool 
         output << xml::attribute( "convoyer", bConveyor_ );
     if( bLoadable_.GetData() )
         output << xml::attribute( "loadable", bLoadable_ );
-    output << xml::end();
+    output << xml::end;
 }
 
 // =============================================================================
@@ -190,7 +190,7 @@ void ADN_Units_Data::StockLogThresholdInfos::WriteArchive( xml::xostream& output
     output << xml::start( "stock" )
             << xml::attribute( "category", ADN_Tr::ConvertFromStockCategory( eCategory_.GetData() ) )
             << xml::attribute( "threshold", rLogThreshold_ )
-           << xml::end();
+           << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -256,7 +256,7 @@ void ADN_Units_Data::StockInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::optional() >> xml::start( "stocks" )
             >> xml::list( "stock", *this, &ADN_Units_Data::StockInfos::ReadStock )
-          >> xml::end();
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -268,7 +268,7 @@ void ADN_Units_Data::StockInfos::WriteArchive( const std::string& strName, xml::
     output << xml::start( strName );
     for( IT_StockLogThresholdInfos_Vector it = vLogThresholds_.begin(); it != vLogThresholds_.end(); ++it )
         (*it)->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -349,7 +349,7 @@ void ADN_Units_Data::PointInfos::WriteArchive( xml::xostream& output )
     output << xml::start( "distance-before-point" )
             << xml::attribute( "type", ADN_Tr::ConvertFromKeyPoint( nTypeTerrain_ ) )
             << xml::attribute( "value", nDistance_ )
-          << xml::end();
+          << xml::end;
 }
 
 // =============================================================================
@@ -405,7 +405,7 @@ void ADN_Units_Data::PostureInfos::WriteArchive( xml::xostream& output )
     output << xml::start( "posture" )
             << xml::attribute( "name", ADN_Tools::ComputePostureScriptName( nPosture_ ) )
             << xml::attribute( "setup-time", timeToActivate_ )
-           << xml::end();
+           << xml::end;
 }
 
 // =============================================================================
@@ -633,7 +633,7 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
             >> xml::attribute( "level", level )
             >> xml::attribute( "atlas-nature", atlas )
             >> xml::attribute( "nature", strNature_ )
-          >> xml::end();
+          >> xml::end;
 
     E_NatureLevel eNatureLevelType = ENT_Tr::ConvertToNatureLevel( level );
     if( eNatureLevelType == (E_NatureLevel)-1 )
@@ -647,13 +647,13 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
 
     input >> xml::start( "equipments" )
             >> xml::list( "equipment", *this, &ADN_Units_Data::UnitInfos::ReadEquipment )
-          >> xml::end()
+          >> xml::end
           >> xml::start( "crew-ranks" )
             >> xml::list( "crew-rank", *this, &ADN_Units_Data::UnitInfos::ReadCrew )
-          >> xml::end()
+          >> xml::end
           >> xml::optional() >> xml::start( "logistics" )
             >> xml::list( "category", contenancesTC1_, &ADN_Composantes_Data::DotationInfos::ReadCategory )
-          >> xml::end();
+          >> xml::end;
     bTC1_ = ! contenancesTC1_.categories_.empty();
     for( ADN_Composantes_Data::T_CategoryInfos_Vector::iterator it = contenancesTC1_.categories_.begin(); it != contenancesTC1_.categories_.end(); ++it )
         (*it)->rNormalizedConsumption_ = 0.;
@@ -662,27 +662,27 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
 
     input >> xml::start( "postures" )
             >> xml::list( "posture", *this, &ADN_Units_Data::UnitInfos::ReadPosture )
-          >> xml::end();
+          >> xml::end;
 
     input >> xml::optional()
             >> xml::start( "setup" )
                 >> xml::attribute( "installation-time", installationDelay_ )
                 >> xml::attribute( "uninstallation-time", uninstallationDelay_ )
-            >> xml::end();
+            >> xml::end;
     bInstallationDelay_ = installationDelay_ != "0s" || uninstallationDelay_ != "0s";
     input >> xml::start( "nbc" )
             >> xml::attribute( "decontamination-delay", decontaminationDelay_ )
-          >> xml::end()
+          >> xml::end
           >> xml::optional() >> xml::start( "distance-before-points" )
             >> xml::list( "distance-before-point", *this, &ADN_Units_Data::UnitInfos::ReadPointDistance )
-          >> xml::end()
+          >> xml::end
           >> xml::optional() >> xml::start( "drill-blow" )
             >> xml::attribute( "width", rProbeWidth_ )
             >> xml::attribute( "length", rProbeLength_ )
-          >> xml::end()
+          >> xml::end
           >> xml::optional() >> xml::start( "force-ratio" )
             >> xml::attribute( "feedback-time", strengthRatioFeedbackTime_ )
-          >> xml::end();
+          >> xml::end;
     bProbe_ = rProbeWidth_ != 0. || rProbeLength_ != 0.;
     bStrengthRatioFeedbackTime_ = strengthRatioFeedbackTime_ != "0s";
 
@@ -706,29 +706,29 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output )
             << xml::attribute( "level", ENT_Tr::ConvertFromNatureLevel( eNatureLevel_.GetData() ) )
             << xml::attribute( "atlas-nature", ADN_Tr::ConvertFromNatureAtlasType( eNatureAtlas_.GetData() ) )
             << xml::attribute( "nature", strNature_ )
-          << xml::end();
+          << xml::end;
 
     output << xml::start( "equipments" );
     for( IT_ComposanteInfos_Vector itComposante = vComposantes_.begin(); itComposante != vComposantes_.end(); ++itComposante )
         (*itComposante)->WriteArchive( output, bIsAutonomous_.GetData() );
-    output << xml::end();
+    output << xml::end;
 
     output << xml::start( "crew-ranks" )
             << xml::start( "crew-rank" )
              << xml::attribute( "type", "Officier" )
              << xml::attribute( "count", nNbOfficer_ )
-            << xml::end()
+            << xml::end
             << xml::start( "crew-rank" )
              << xml::attribute( "type", "SousOfficier" )
              << xml::attribute( "count", nNbNCOfficer_ )
-            << xml::end()
-           << xml::end();
+            << xml::end
+           << xml::end;
 
     if( bTC1_.GetData() )
     {
         output << xml::start( "logistics" );
         contenancesTC1_.WriteArchive( output );
-        output << xml::end();
+        output << xml::end;
     }
 
     if( bStock_.GetData() )
@@ -737,36 +737,36 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output )
     output << xml::start( "postures" );
     for( IT_PostureInfos_Vector itPosture = vPostures_.begin(); itPosture != vPostures_.end(); ++itPosture )
         (*itPosture)->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 
     if( bInstallationDelay_.GetData() )
         output << xml::start( "setup" )
                 << xml::attribute( "installation-time", installationDelay_ )
                 << xml::attribute( "uninstallation-time", uninstallationDelay_ )
-               << xml::end();
+               << xml::end;
 
     output << xml::start( "nbc" )
             << xml::attribute(  "decontamination-delay", decontaminationDelay_ )
-           << xml::end();
+           << xml::end;
 
     if( ! vPointInfos_.empty() )
     {
         output << xml::start( "distance-before-points" );
         for( IT_PointInfos_Vector itPoint = vPointInfos_.begin(); itPoint != vPointInfos_.end(); ++itPoint )
             (*itPoint)->WriteArchive( output );
-        output << xml::end();
+        output << xml::end;
     }
 
     if( bProbe_.GetData() )
         output << xml::start( "drill-blow" )
                 << xml::attribute( "width", rProbeWidth_ )
                 << xml::attribute( "length", rProbeLength_ )
-               << xml::end();
+               << xml::end;
 
     if( bStrengthRatioFeedbackTime_.GetData() )
         output << xml::start( "force-ratio" )
                 << xml::attribute( "feedback-time", strengthRatioFeedbackTime_ )
-               << xml::end();
+               << xml::end;
 
     if( bCanFly_.GetData() )
         output << xml::attribute( "can-fly", bCanFly_ );
@@ -774,7 +774,7 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output )
     if( bIsAutonomous_.GetData() )
         output << xml::attribute( "is-autonomous", bIsAutonomous_ );
 
-    output << xml::end();
+    output << xml::end;
 }
 
 // =============================================================================
@@ -847,7 +847,7 @@ void ADN_Units_Data::ReadArchive( xml::xistream& input )
 {
     input >> xml::start( "units" )
             >> xml::list( "unit", *this, &ADN_Units_Data::ReadUnit )
-          >> xml::end();
+          >> xml::end;
     vUnits_.AddItem( 0 );
 }
 
@@ -861,7 +861,7 @@ void ADN_Units_Data::WriteArchive( xml::xostream& output )
     ADN_Tools::AddSchema( output, "Units" );
     for( IT_UnitInfos_Vector it = vUnits_.begin(); it != vUnits_.end(); ++it )
         (*it)->WriteArchive( output );
-    output << xml::end();
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------

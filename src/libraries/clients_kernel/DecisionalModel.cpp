@@ -27,7 +27,7 @@ DecisionalModel::DecisionalModel( xml::xistream& xis, MissionFactory& factory, c
         >> xml::optional()
             >> xml::start( "missions" )
                 >> xml::list( "mission", *this, &DecisionalModel::ReadMission, factory, missionResolver )
-            >> xml::end();
+            >> xml::end;
     RegisterDefaultFragOrders( factory, fragOrders );
 }
 

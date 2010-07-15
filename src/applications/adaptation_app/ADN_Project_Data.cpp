@@ -38,14 +38,14 @@ namespace
     {
         input >> xml::start( file )
                 >> xml::attribute( "file", outfile )
-              >> xml::end();
+              >> xml::end;
     }
 
     void WriteFile( xml::xostream& output, const std::string& file, ADN_Type_String& outfile )
     {
         output << xml::start( file )
                  << xml::attribute( "file", outfile )
-               << xml::end();
+               << xml::end;
     }
 }
 
@@ -87,7 +87,7 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadFile( input, "models", szModels_);
     ReadFile( input, "missions", szMissions_);
     ReadFile( input, "urban", szUrban_ );
-    input >> xml::end();
+    input >> xml::end;
 }
 
 
@@ -130,7 +130,7 @@ void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
     WriteFile( output, "missions", szMissions_ );
     WriteFile( output, "object-names", szObjectNames_ );
     WriteFile( output, "urban", szUrban_ );
-    output << xml::end();
+    output << xml::end;
 }
 
 //-----------------------------------------------------------------------------

@@ -69,5 +69,5 @@ void SuccessFactorActionParameter::Serialize( xml::xostream& xos ) const
     xos << xml::start( "parameter" )
             << xml::attribute( "name", name_.ascii() )
             << xml::attribute( "value", value_.ascii() )
-        << xml::end();
+        << xml::end;
 }

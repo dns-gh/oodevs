@@ -33,7 +33,7 @@ AgentType::AgentType( xml::xistream& xis, const tools::Resolver_ABC< ComponentTy
     std::auto_ptr< AgentNature > nature( new AgentNature( xis ) );
     xis >> xml::start( "equipments" )
         >> xml::list( "equipment", *this, &AgentType::ReadEquipment, componentResolver )
-        >> xml::end();
+        >> xml::end;
     symbol_      = symbolFactory.CreateSymbol( nature->GetNature() );
     levelSymbol_ = symbolFactory.CreateLevelSymbol( nature->GetLevel() );
     hqSymbol_    = symbolFactory.CreateAutomatSymbol();

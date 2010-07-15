@@ -39,7 +39,7 @@ Dotations::Dotations( xml::xistream& xis, Controller& controller, Entity_ABC& en
     CreateDictionary( entity, dico );
     xis >> xml::optional() >> xml::start( "dotations" )
             >> xml::list( "dotation", *this, &Dotations::ReadDotation, resolver )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -76,9 +76,9 @@ void Dotations::SerializeAttributes( xml::xostream& xos ) const
     {
         xos << xml::start( "dotation" );
         it->second->SerializeAttributes( xos );
-        xos << xml::end();
+        xos << xml::end;
     }
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------
