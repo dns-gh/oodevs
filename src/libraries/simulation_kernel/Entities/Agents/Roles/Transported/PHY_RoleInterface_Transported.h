@@ -20,8 +20,6 @@ namespace client
     class UnitAttributes;
 }
 
-
-
 namespace transport
 {
 
@@ -33,36 +31,42 @@ class PHY_RoleInterface_Transported : public tools::Role_ABC
                                     , private boost::noncopyable
 {
 public:
+    //! @name Types
+    //@{
     typedef PHY_RoleInterface_Transported RoleInterface;
+    //@}
 
 public:
-             PHY_RoleInterface_Transported();
-    virtual ~PHY_RoleInterface_Transported();
-
-    //! @name Operations
+    //! @name Constructors/Destructor
     //@{
-    virtual bool IsTransported      () const = 0;
+             PHY_RoleInterface_Transported() {}
+    virtual ~PHY_RoleInterface_Transported() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update    ( bool bIsDead ) = 0;
-    virtual void Clean     () = 0;
+    virtual bool IsTransported() const = 0;
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Update( bool bIsDead ) = 0;
+    virtual void Clean() = 0;
     virtual bool HasChanged() const = 0;
     //@}
 
     //! @name Human transporters ... $$$
     //@{
-    virtual bool HasHumanTransportersReady    () const = 0;
-    virtual void DisableHumanTransporters     ( const MT_Vector2D& vPosition ) = 0;
-    virtual void RecoverHumanTransporters     () = 0;
+    virtual bool HasHumanTransportersReady() const = 0;
+    virtual void DisableHumanTransporters( const MT_Vector2D& vPosition ) = 0;
+    virtual void RecoverHumanTransporters() = 0;
     virtual bool HasHumanTransportersToRecover() const = 0;
     //@}
 private:
     //! @name Serialization
     //@{
     virtual void SendChangedState( client::UnitAttributes& msg ) const = 0;
-    virtual void SendFullState   ( client::UnitAttributes& msg ) const = 0;
+    virtual void SendFullState( client::UnitAttributes& msg ) const = 0;
 
     friend class boost::serialization::access;
     template< typename Archive > void serialize( Archive& ar, const uint )

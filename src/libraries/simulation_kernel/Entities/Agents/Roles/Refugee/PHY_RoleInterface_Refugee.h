@@ -29,11 +29,17 @@ class PHY_RoleInterface_Refugee : public tools::Role_ABC
                                 , private boost::noncopyable
 {
 public:
+    //! @name Types
+    //@{
     typedef PHY_RoleInterface_Refugee RoleInterface;
+    //@}
 
 public:
-             PHY_RoleInterface_Refugee();
-    virtual ~PHY_RoleInterface_Refugee();
+    //! @name Constructors/Destructor
+    //@{
+             PHY_RoleInterface_Refugee() {}
+    virtual ~PHY_RoleInterface_Refugee() {}
+    //@}
 
     //! @name Accessors
     //@{
@@ -43,15 +49,15 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Update    ( bool bIsDead ) = 0;
-    virtual void Clean     () = 0;
+    virtual void Update( bool bIsDead ) = 0;
+    virtual void Clean() = 0;
     //@}
 
 private:
     //! @name Serialization
     //@{
     virtual void SendChangedState( client::UnitAttributes& msg ) const = 0;
-    virtual void SendFullState   ( client::UnitAttributes& msg ) const = 0;
+    virtual void SendFullState( client::UnitAttributes& msg ) const = 0;
 
     friend class boost::serialization::access;
     template< typename Archive > void serialize( Archive& ar, const uint )

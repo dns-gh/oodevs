@@ -48,8 +48,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_RoleInterface_Medical();
-    virtual ~PHY_RoleInterface_Medical();
+             PHY_RoleInterface_Medical() {}
+    virtual ~PHY_RoleInterface_Medical() {}
     //@}
 
     //! @name Operations

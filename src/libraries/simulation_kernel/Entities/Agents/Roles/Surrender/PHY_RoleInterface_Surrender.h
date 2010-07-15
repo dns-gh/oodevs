@@ -34,29 +34,35 @@ class PHY_RoleInterface_Surrender : public tools::Role_ABC
                                   , private boost::noncopyable
 {
 public:
+    //! @name Types
+    //@{
     typedef PHY_RoleInterface_Surrender RoleInterface;
+    //@}
 
 public:
-             PHY_RoleInterface_Surrender();
-    virtual ~PHY_RoleInterface_Surrender();
+    //! @name Constructors/Destructor
+    //@{
+             PHY_RoleInterface_Surrender() {}
+    virtual ~PHY_RoleInterface_Surrender() {}
+    //@}
 
     //! @name Accessors
     //@{
     virtual const MIL_Army_ABC* GetArmySurrenderedTo() const = 0;
-    virtual       bool          IsSurrendered       () const = 0;
-    virtual       bool          IsPrisoner          () const = 0;
-    virtual       bool          IsImprisoned        ( const MIL_Object_ABC& camp ) = 0;
+    virtual bool IsSurrendered() const = 0;
+    virtual bool IsPrisoner() const = 0;
+    virtual bool IsImprisoned( const MIL_Object_ABC& camp ) = 0;
     //@}
 
     //! @name Operations
     //@{
-    virtual void NotifySurrendered      () = 0;
+    virtual void NotifySurrendered() = 0;
     virtual void NotifySurrenderCanceled() = 0;
-    virtual bool Capture ( const MIL_AgentPion& pionTakingPrisoner ) = 0;
-    virtual bool Release () = 0;
+    virtual bool Capture( const MIL_AgentPion& pionTakingPrisoner ) = 0;
+    virtual bool Release() = 0;
     virtual bool Imprison( const MIL_Object_ABC& camp ) = 0;
-    virtual void Update    ( bool bIsDead ) = 0;
-    virtual void Clean     () = 0;
+    virtual void Update( bool bIsDead ) = 0;
+    virtual void Clean() = 0;
     virtual bool HasChanged() const = 0;
     //@}
 
@@ -77,7 +83,3 @@ private:
 } // namespace surrender
 
 #endif // __PHY_RoleInterface_Surrender_h_
-
-
-//! @name Accessors
-//@{

@@ -47,8 +47,8 @@ public:
 public:
     //! @name Constructor/Destructor
     //@{
-             PHY_RoleInterface_Dotations();
-    virtual ~PHY_RoleInterface_Dotations();
+             PHY_RoleInterface_Dotations() {}
+    virtual ~PHY_RoleInterface_Dotations() {}
     //@}
 
     //! @name Operations
@@ -56,29 +56,29 @@ public:
     virtual const PHY_ConsumptionType& GetConsumptionMode() const = 0;
     //@}
 
-    virtual void ReadOverloading              ( xml::xistream& xis ) = 0;
+    virtual void ReadOverloading( xml::xistream& xis ) = 0;
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update    ( bool bIsDead ) = 0;
-    virtual void Clean     () = 0;
+    virtual void Update( bool bIsDead ) = 0;
+    virtual void Clean() = 0;
     virtual bool HasChanged() const = 0;
     //@}
 
     //! @name Dotations management
     //@{
-    virtual double SupplyDotation     ( const PHY_DotationCategory& category, double rNbr ) = 0;
-    virtual void   ResupplyDotations  () = 0;
-    virtual void   ResupplyDotations  ( const PHY_AmmoDotationClass& ammoDotationClass, double rFactor ) = 0;
-    virtual void   ResupplyDotations  ( const PHY_DotationType&      type             , double rFactor ) = 0;
+    virtual double SupplyDotation( const PHY_DotationCategory& category, double rNbr ) = 0;
+    virtual void ResupplyDotations() = 0;
+    virtual void ResupplyDotations( const PHY_AmmoDotationClass& ammoDotationClass, double rFactor ) = 0;
+    virtual void ResupplyDotations( const PHY_DotationType& type, double rFactor ) = 0;
     //@}
 
     //! @name Consumption management
     //@{
-    virtual bool                 SetConsumptionMode      ( const PHY_ConsumptionType& mode ) = 0;
-    virtual void                 RollbackConsumptionMode () = 0;
-    virtual double             GetMaxTimeForConsumption( const PHY_ConsumptionType& mode ) const = 0;
+    virtual bool SetConsumptionMode( const PHY_ConsumptionType& mode ) = 0;
+    virtual void RollbackConsumptionMode() = 0;
+    virtual double GetMaxTimeForConsumption( const PHY_ConsumptionType& mode ) const = 0;
     //@}
 
     //! @name Fire dotations
@@ -101,8 +101,8 @@ public:
 
     //! @name Logistic - Supply
     //@{
-    virtual void NotifySupplyNeeded          ( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const = 0; // Logistic
-    virtual void FillSupplyRequest           ( PHY_SupplyDotationRequestContainer& supplyRequest ) const = 0;
+    virtual void NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const = 0; // Logistic
+    virtual void FillSupplyRequest( PHY_SupplyDotationRequestContainer& supplyRequest ) const = 0;
     virtual void ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, double rCapacityFactor ) const = 0;
     //@}
 private:

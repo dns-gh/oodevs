@@ -29,43 +29,49 @@ class PHY_RoleInterface_Reinforcement : public tools::Role_ABC
                                       , private boost::noncopyable
 {
 public:
+    //! @name Types
+    //@{
     typedef PHY_RoleInterface_Reinforcement RoleInterface;
-    typedef std::set< MIL_AgentPion* > T_PionSet;
+
+    typedef std::set< MIL_AgentPion* >   T_PionSet;
     typedef T_PionSet::const_iterator  CIT_PionSet;
+    //@}
 
 public:
-             PHY_RoleInterface_Reinforcement();
-    virtual ~PHY_RoleInterface_Reinforcement();
-
-    //! @name Operations
+    //! @name Constructors/Destructor
     //@{
-    virtual void Update    ( bool bIsDead ) = 0;
-    virtual void Clean     () = 0;
-    virtual bool HasChanged() const = 0;
-
+             PHY_RoleInterface_Reinforcement() {}
+    virtual ~PHY_RoleInterface_Reinforcement() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual bool Reinforce          ( MIL_AgentPion& pion ) = 0;
+    virtual void Update( bool bIsDead ) = 0;
+    virtual void Clean() = 0;
+    virtual bool HasChanged() const = 0;
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual bool Reinforce( MIL_AgentPion& pion ) = 0;
     virtual void CancelReinforcement() = 0;
-    virtual bool IsReinforcing      () const = 0;
-    virtual bool IsReinforced       () const = 0;
-    virtual bool IsReinforcedBy     ( MIL_AgentPion& pion ) const = 0;
+    virtual bool IsReinforcing() const = 0;
+    virtual bool IsReinforced() const = 0;
+    virtual bool IsReinforcedBy( MIL_AgentPion& pion ) const = 0;
     //@}
 
 
     //! @name Network
     //@{
     virtual void SendChangedState( client::UnitAttributes& msg ) const = 0;
-    virtual void SendFullState   ( client::UnitAttributes& msg ) const = 0;
+    virtual void SendFullState( client::UnitAttributes& msg ) const = 0;
     //@}
 
     //! @name Accessors
     //@{
     virtual const T_PionSet& GetReinforcements() const = 0;
-    virtual bool       CanReinforce     () const = 0;
-    virtual bool       CanBeReinforced  () const = 0;
+    virtual bool CanReinforce() const = 0;
+    virtual bool CanBeReinforced() const = 0;
     //@}
 private:
     //! @name Serialization

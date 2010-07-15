@@ -22,6 +22,7 @@ class PHY_SupplyStockRequestContainer;
 class PHY_StockConvoy;
 class MIL_AutomateLOG;
 class MIL_AgentPionLOG_ABC;
+
 //@TODO make multiple interface/role with specifics methods for convoy and for stockage
 // =============================================================================
 // @class  PHY_RoleInterface_Supply
@@ -37,8 +38,11 @@ public:
     //@}
 
 public:
+    //! @name Constructors/Destructor
+    //@{
              PHY_RoleInterface_Supply();
     virtual ~PHY_RoleInterface_Supply();
+    //@}
 
     //! @name CheckPoints
     //@{
@@ -53,9 +57,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Update        ( bool bIsDead ) = 0;
+    virtual void Update( bool bIsDead ) = 0;
     virtual void UpdateLogistic( bool bIsDead );
-    virtual void Clean         () = 0;
+    virtual void Clean() = 0;
     //@}
 
     //! @name Init
@@ -68,44 +72,44 @@ public:
     virtual void EnableSystem ();
     virtual void DisableSystem();
 
-    virtual bool                CanContainStock              ( const PHY_DotationCategory& dotationCategory ) const;
-    virtual PHY_DotationStock*  AddStock                     ( const PHY_DotationCategory& dotationCategory ) const;
-    virtual PHY_DotationStock*  GetStock                     ( const PHY_DotationCategory& dotationCategory ) const;
-    virtual MT_Float            GetStockAvailablity          ( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue ) const;
-    virtual MT_Float            AddStockReservation          ( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue );
-    virtual void                RemoveStockReservation       ( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue ) ;
+    virtual bool CanContainStock( const PHY_DotationCategory& dotationCategory ) const;
+    virtual PHY_DotationStock* AddStock( const PHY_DotationCategory& dotationCategory ) const;
+    virtual PHY_DotationStock* GetStock( const PHY_DotationCategory& dotationCategory ) const;
+    virtual MT_Float GetStockAvailablity( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue ) const;
+    virtual MT_Float AddStockReservation( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue );
+    virtual void RemoveStockReservation( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue );
     virtual PHY_ComposantePion* GetAvailableConvoyTransporter( const PHY_DotationCategory& dotationCategory ) const;
 
     virtual void StartUsingForLogistic( PHY_ComposantePion& composante );
-    virtual void StopUsingForLogistic ( PHY_ComposantePion& composante );
+    virtual void StopUsingForLogistic( PHY_ComposantePion& composante );
     //@}
 
     //! @name Stock supply
     //@{
     virtual void NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const =0;
     virtual void FillSupplyRequest( PHY_SupplyStockRequestContainer& supplyRequest ) const;
-    virtual void ResupplyStocks   ();
-    virtual void ResupplyStocks   ( const PHY_DotationCategory& category, MT_Float rNbr );
+    virtual void ResupplyStocks();
+    virtual void ResupplyStocks( const PHY_DotationCategory& category, MT_Float rNbr );
     //@}
 
     //! @name Convoy
     //@{
-    virtual       void             AssignConvoy              ( PHY_StockConvoy& convoy );
-    virtual       void             UnassignConvoy            ( PHY_StockConvoy& convoy );
+    virtual void AssignConvoy( PHY_StockConvoy& convoy );
+    virtual void UnassignConvoy( PHY_StockConvoy& convoy );
 
-    virtual       bool             ConvoyLoad                () const;
-    virtual       bool             ConvoyUnload              () const;
-    virtual       bool             ConvoyIsLoadingDone       () const;
-    virtual       bool             ConvoyIsUnloadingDone     () const;
+    virtual bool ConvoyLoad() const;
+    virtual bool ConvoyUnload() const;
+    virtual bool ConvoyIsLoadingDone() const;
+    virtual bool ConvoyIsUnloadingDone() const;
     virtual const MIL_AutomateLOG* ConvoyGetSupplyingAutomate() const;
     virtual const MIL_AutomateLOG* ConvoyGetConvoyingAutomate() const;
-    virtual const MIL_Automate*    ConvoyGetSuppliedAutomate () const;
-    virtual       void             ConvoyEndMission          () ;
+    virtual const MIL_Automate* ConvoyGetSuppliedAutomate () const;
+    virtual void ConvoyEndMission();
 
     //@}
 
 private:
-    MIL_AgentPionLOG_ABC*       pPion_; //$$$Hack
+    MIL_AgentPionLOG_ABC* pPion_; //$$$Hack
 
     //! @name Serialization
     //@{

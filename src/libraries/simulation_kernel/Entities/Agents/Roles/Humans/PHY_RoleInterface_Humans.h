@@ -36,39 +36,40 @@ public:
     //! @name Types
     //@{
     typedef PHY_RoleInterface_Humans RoleInterface;
-    //! @name Types
-    //@{
+
     enum E_EvacuationMode
     {
         eEvacuationMode_Auto,  // TC2 or IMEX
         eEvacuationMode_Manual // IMEX
     };
     //@}
-    //@}
 
 public:
-             PHY_RoleInterface_Humans();
-    virtual ~PHY_RoleInterface_Humans();
+    //! @name Constructors/Destructor
+    //@{
+             PHY_RoleInterface_Humans() {}
+    virtual ~PHY_RoleInterface_Humans() {}
+    //@}
 
     virtual unsigned int GetNbrUsableHumans() const = 0;
-    virtual unsigned int GetNbrAliveHumans ( const PHY_HumanRank& rank ) const = 0;
-    virtual unsigned int GetNbrHumans      ( const PHY_HumanRank& rank ) const = 0;
+    virtual unsigned int GetNbrAliveHumans( const PHY_HumanRank& rank ) const = 0;
+    virtual unsigned int GetNbrHumans( const PHY_HumanRank& rank ) const = 0;
     //@}
 
     //! @name Medical
     //@{
-    virtual void                   EvacuateWoundedHumans           ( MIL_AutomateLOG& destinationTC2 ) const = 0;
-    virtual bool                   HasWoundedHumansToEvacuate      () const = 0;
-    virtual void                   ChangeEvacuationMode            ( E_EvacuationMode nMode ) = 0;
+    virtual void EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const = 0;
+    virtual bool HasWoundedHumansToEvacuate() const = 0;
+    virtual void ChangeEvacuationMode( E_EvacuationMode nMode ) = 0;
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update        ( bool bIsDead ) = 0;
-    virtual void Clean         () = 0;
-    virtual bool HasChanged    () const = 0;
+    virtual void Update( bool bIsDead ) = 0;
+    virtual void Clean() = 0;
+    virtual bool HasChanged() const = 0;
 
-    virtual void HealAllHumans           () = 0;
+    virtual void HealAllHumans() = 0;
     virtual void ChangeHumansAvailability( const PHY_HumanRank& rank, unsigned int nNbrAvailable ) = 0;
     //@}
 
@@ -76,10 +77,10 @@ private:
     //! @name Serialization
     //@{
     virtual void SendChangedState( client::UnitAttributes& asn ) const = 0;
-    virtual void SendFullState   ( client::UnitAttributes& asn ) const = 0;
+    virtual void SendFullState( client::UnitAttributes& asn ) const = 0;
 
     virtual void SendLogisticChangedState() const = 0;
-    virtual void SendLogisticFullState   () const = 0;
+    virtual void SendLogisticFullState() const = 0;
 
     friend class boost::serialization::access;
     template< typename Archive > void serialize( Archive& ar, const uint )

@@ -32,33 +32,38 @@ class PHY_RoleInterface_NBC : public tools::Role_ABC
                             , private boost::noncopyable
 {
 public:
+    //! @name Types
+    //@{
     typedef PHY_RoleInterface_NBC RoleInterface;
+    //@}
 
 public:
-             PHY_RoleInterface_NBC();
-    virtual ~PHY_RoleInterface_NBC();
-
-    //! @name Operations
+    //! @name Constructors/Destructor
     //@{
-    virtual bool IsContaminated() const = 0;
-    virtual void Poison        ( const MIL_ToxicEffectManipulator& contamination ) = 0;
-    virtual void Contaminate   ( const MIL_ToxicEffectManipulator& contamination ) = 0;
-    virtual void Decontaminate () = 0;
-    virtual void Decontaminate ( MT_Float rRatioAgentsWorking ) = 0;
-    virtual MT_Float GetContaminationQuantity() const = 0;
-
+             PHY_RoleInterface_NBC() {}
+    virtual ~PHY_RoleInterface_NBC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update    ( bool bIsDead ) = 0;
-    virtual void Clean     () = 0;
+    virtual bool IsContaminated() const = 0;
+    virtual void Poison( const MIL_ToxicEffectManipulator& contamination ) = 0;
+    virtual void Contaminate( const MIL_ToxicEffectManipulator& contamination ) = 0;
+    virtual void Decontaminate() = 0;
+    virtual void Decontaminate( MT_Float rRatioAgentsWorking ) = 0;
+    virtual MT_Float GetContaminationQuantity() const = 0;
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Update( bool bIsDead ) = 0;
+    virtual void Clean() = 0;
     virtual bool HasChanged() const = 0;
     //@}
 
     //! @name Main
     //@{
-    virtual void WearNbcProtectionSuit  () = 0;
+    virtual void WearNbcProtectionSuit() = 0;
     virtual void RemoveNbcProtectionSuit() = 0;
 
     //@}

@@ -22,11 +22,17 @@ class PHY_RoleInterface_Population : public tools::Role_ABC
                                    , private boost::noncopyable
 {
 public:
+    //! @name Types
+    //@{
     typedef PHY_RoleInterface_Population RoleInterface;
+    //@}
 
 public:
-             PHY_RoleInterface_Population();
-    virtual ~PHY_RoleInterface_Population();
+    //! @name Constructors/Destructor
+    //@{
+             PHY_RoleInterface_Population() {}
+    virtual ~PHY_RoleInterface_Population() {}
+    //@}
 
     //! @name Accessors
     //@{
@@ -35,8 +41,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Update    ( bool bIsDead ) = 0;
-    virtual void Clean     () = 0;
+    virtual void Update( bool bIsDead ) = 0;
+    virtual void Clean() = 0;
     virtual bool HasChanged() const = 0;
     virtual MT_Float GetCollidingPopulationDensity() const = 0;
     //@}

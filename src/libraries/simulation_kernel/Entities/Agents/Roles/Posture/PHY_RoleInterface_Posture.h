@@ -30,39 +30,45 @@ class PHY_RoleInterface_Posture : public tools::Role_ABC
                                 , private boost::noncopyable
 {
 public:
+    //! @name Types
+    //@{
     typedef PHY_RoleInterface_Posture RoleInterface;
+    //@}
 
 public:
-             PHY_RoleInterface_Posture();
-    virtual ~PHY_RoleInterface_Posture();
+    //! @name Constructors/Destructor
+    //@{
+             PHY_RoleInterface_Posture() {}
+    virtual ~PHY_RoleInterface_Posture() {}
+    //@}
 
     //! @name Accessors
     //@{
-    virtual const PHY_Posture& GetLastPosture                () const = 0;
-    virtual const PHY_Posture& GetCurrentPosture             () const = 0;
-    virtual       MT_Float     GetPostureCompletionPercentage() const = 0;
+    virtual const PHY_Posture& GetLastPosture() const = 0;
+    virtual const PHY_Posture& GetCurrentPosture() const = 0;
+    virtual MT_Float GetPostureCompletionPercentage() const = 0;
 
-    virtual       void         SetPosturePostePrepareGenie   () = 0;
-    virtual       void         UnsetPosturePostePrepareGenie () = 0;
-    virtual       void         SetTimingFactor               ( MT_Float rFactor ) = 0;
+    virtual void SetPosturePostePrepareGenie() = 0;
+    virtual void UnsetPosturePostePrepareGenie() = 0;
+    virtual void SetTimingFactor( MT_Float rFactor ) = 0;
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update    ( bool bIsDead ) = 0;
-    virtual void Clean     () = 0;
+    virtual void Update( bool bIsDead ) = 0;
+    virtual void Clean() = 0;
     virtual bool HasChanged() const = 0;
 
     // Override automatic postures
-    virtual void EnableDiscreteMode () = 0;
+    virtual void EnableDiscreteMode() = 0;
     virtual void DisableDiscreteMode() = 0;
     //@}
 
     //! @name Installation
     //@{
-    virtual bool IsInstalled  () const = 0;
+    virtual bool IsInstalled() const = 0;
     virtual bool IsUninstalled() const = 0;
-    virtual void Install      () = 0;
+    virtual void Install() = 0;
     //@}
 
     //! @name Perception
@@ -72,7 +78,7 @@ public:
 
     //! @name Elongation
     //@{
-    virtual void     SetElongationFactor( MT_Float ) = 0;
+    virtual void SetElongationFactor( MT_Float ) = 0;
     virtual MT_Float GetElongationFactor() const = 0;
     //@}
 

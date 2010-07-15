@@ -32,37 +32,42 @@ class PHY_RoleInterface_Communications : public tools::Role_ABC
                                        , private boost::noncopyable
 {
 public:
+    //! @name Types
+    //@{
     typedef PHY_RoleInterface_Communications RoleInterface;
+    //@}
 
 public:
-             PHY_RoleInterface_Communications();
-    virtual ~PHY_RoleInterface_Communications();
+    //! @name Constructor/Destructor
+    //@{
+             PHY_RoleInterface_Communications() {}
+    virtual ~PHY_RoleInterface_Communications() {}
+    //@}
 
     //! @name Operations
     //@{
     virtual bool CanEmit() const = 0;
     virtual bool CanReceive() const = 0;
-    virtual void Jam           ( const MIL_Object_ABC& jammer ) = 0;
-    virtual void Unjam         ( const MIL_Object_ABC& jammer ) = 0;
+    virtual void Jam( const MIL_Object_ABC& jammer ) = 0;
+    virtual void Unjam( const MIL_Object_ABC& jammer ) = 0;
     virtual void ActivateBlackout  () = 0;
     virtual void ActivatePartialBlackout  () = 0;
     virtual void DeactivateBlackout() = 0;
     virtual void UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception ) = 0;
-    virtual void UpdateKnowledgesFromObjectCollision ( const DEC_Knowledge_ObjectCollision& collision ) = 0;
-
+    virtual void UpdateKnowledgesFromObjectCollision( const DEC_Knowledge_ObjectCollision& collision ) = 0;
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update    ( bool bIsDead ) = 0;
-    virtual void Clean     () = 0;
+    virtual void Update( bool bIsDead ) = 0;
+    virtual void Clean() = 0;
     //@}
 
 
     //! @name Network
     //@{
     virtual void SendChangedState( client::UnitAttributes& msg ) const = 0;
-    virtual void SendFullState   ( client::UnitAttributes& msg ) const = 0;
+    virtual void SendFullState( client::UnitAttributes& msg ) const = 0;
     //@}
 
 private:

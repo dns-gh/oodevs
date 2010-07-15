@@ -31,44 +31,51 @@ class PHY_RoleInterface_HumanFactors : public tools::Role_ABC
                                      , private boost::noncopyable
 {
 public:
+    //! @name Types
+    //@{
     typedef PHY_RoleInterface_HumanFactors RoleInterface;
+    //@}
 
 public:
-             PHY_RoleInterface_HumanFactors();
-    virtual ~PHY_RoleInterface_HumanFactors();
+    //! @name Constructors/Destructor
+    //@{
+             PHY_RoleInterface_HumanFactors() {}
+    virtual ~PHY_RoleInterface_HumanFactors() {}
+    //@}
 
 public:
     //! @name Operations
     //@{
-    virtual void Update    ( bool bIsDead ) = 0;
-    virtual void Clean     () = 0;
+    virtual void Update( bool bIsDead ) = 0;
+    virtual void Clean() = 0;
     virtual bool HasChanged() const = 0;
     //@}
 
     //! @name Main
     //@{
     virtual void ReadOverloading( xml::xistream& xis ) = 0;
-    virtual void SetMorale      ( const PHY_Morale& morale         ) = 0;
-    virtual void SetExperience  ( const PHY_Experience& experience ) = 0;
-    virtual void SetTiredness   ( const PHY_Tiredness&  tiredness  ) = 0;
+    virtual void SetMorale( const PHY_Morale& morale ) = 0;
+    virtual void SetExperience( const PHY_Experience& experience ) = 0;
+    virtual void SetTiredness( const PHY_Tiredness&  tiredness  ) = 0;
     //@}
 
     //! @name Accessors
     //@{
-    virtual const PHY_Morale&     GetMorale    () const = 0;
-    virtual const PHY_Tiredness&  GetTiredness () const = 0;
+    virtual const PHY_Morale& GetMorale() const = 0;
+    virtual const PHY_Tiredness& GetTiredness () const = 0;
     //@}
 
     //! @name Operations
     //@{
-    virtual MT_Float ModifyPH                    ( MT_Float rPH       ) const = 0;
+    virtual MT_Float ModifyPH ( MT_Float rPH ) const = 0;
     //@}
 
     //! @name Network
     //@{
     virtual void SendChangedState( client::UnitAttributes& msg ) const = 0;
-    virtual void SendFullState   ( client::UnitAttributes& msg ) const = 0;
+    virtual void SendFullState( client::UnitAttributes& msg ) const = 0;
     //@}
+
 private:
     //! @name Serialization
     //@{

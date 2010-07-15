@@ -12,7 +12,6 @@
 #ifndef __PHY_RoleInterface_Maintenance_h_
 #define __PHY_RoleInterface_Maintenance_h_
 
-#include "MIL.h" //@TODO Replace by log include
 #include "MT_Tools/Role_ABC.h"
 
 class PHY_MaintenanceComposanteState;
@@ -24,6 +23,7 @@ class PHY_Breakdown;
 class MIL_AgentPionLOG_ABC;
 class MIL_AutomateLOG;
 class MIL_Automate;
+
 // =============================================================================
 // @class  PHY_RoleInterface_Maintenance
 // Created: JVT 2004-08-03
@@ -42,8 +42,8 @@ public:
     //@}
 
 public:
-             PHY_RoleInterface_Maintenance();
-    virtual ~PHY_RoleInterface_Maintenance();
+             PHY_RoleInterface_Maintenance() {}
+    virtual ~PHY_RoleInterface_Maintenance() {}
 
     //! @name Operations
     //@{
