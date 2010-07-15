@@ -345,7 +345,7 @@ SectionGroup "Shortcuts" s_sc
     Section "Quick Launch" s_quick
         SetOutPath "$INSTDIR\applications"
         StrCmp $QUICKLAUNCH $TEMP +2
-        CreateShortCut "$QUICKLAUNCH\${PRODUCT_NAME}.lnk" "$INSTDIR\applications\frontend_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
+        CreateShortCut "$QUICKLAUNCH\${PRODUCT_NAME}.lnk" "$INSTDIR\applications\selftraining_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
     SectionEnd
 
 SectionGroupEnd
