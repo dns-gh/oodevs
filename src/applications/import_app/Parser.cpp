@@ -325,8 +325,7 @@ void Parser::WriteWeather()
             >> xml::start( "plan" )
                 >> xml::start( "content" )
                     >> xml::start( "ns6:beginTrigger" )
-                        >> xml::optional
-                        >> xml::content( "ns6:date-trigger", date )
+                        >> xml::optional >> xml::content( "ns6:date-trigger", date )
                     >> xml::end
                 >> xml::end
             >> xml::end

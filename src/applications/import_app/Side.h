@@ -52,8 +52,8 @@ private:
     //@{
     Mapping* mapping_;
     unsigned int id_;
-    unsigned int knowledgeGroupId_;
     std::string name_;
+    unsigned int knowledgeGroupId_;
     boost::shared_ptr< Entity > root_;
     std::map< std::string, Object > objects_;
     //@}

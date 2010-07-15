@@ -9,6 +9,8 @@
 
 #include "Parser.h"
 #pragma warning( push, 0 )
+#include <qapplication.h>
+#include <qmessagebox.h>
 #include <boost/program_options.hpp>
 #pragma warning( pop )
 #include <iostream>
@@ -17,6 +19,7 @@ namespace po = boost::program_options;
 
 int main( int argc, char** argv )
 {
+    QApplication app( argc, argv );
     std::string inputFile, outputFile, rootDir;
     po::options_description desc( "Options" );
     desc.add_options()
@@ -33,12 +36,12 @@ int main( int argc, char** argv )
     }
     catch( std::exception& e )
     {
-        std::cerr << e.what() << std::endl;
+        QMessageBox::critical( 0, "Error", e.what() );
         return EXIT_FAILURE;
     }
     catch( ... )
     {
-        std::cerr << "Unknown error" << std::endl;
+        QMessageBox::critical( 0, "Error", "Unknown error" );
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;
