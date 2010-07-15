@@ -28,7 +28,7 @@ class OptionsPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             OptionsPage( QWidgetStack* pages, Page_ABC& previous, const Config& config );
+             OptionsPage( QWidgetStack* pages, Page_ABC& previous, Config& config );
     virtual ~OptionsPage();
     //@}
 
@@ -60,7 +60,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const Config& config_;
+    Config& config_;
     T_Languages languages_;
     std::string selectedLanguage_;
     QLineEdit* dataDirectory_;

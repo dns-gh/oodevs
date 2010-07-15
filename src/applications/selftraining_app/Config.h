@@ -43,7 +43,7 @@ public:
     //@{
     unsigned short GetListServerPort() const;
     unsigned short GetListClientPort() const;
-    void SetProfile( EProfile profile ) const;
+    void SetProfile( EProfile profile );
     EProfile GetProfile() const;
     //@}
 
@@ -63,7 +63,7 @@ private:
     //@{
     unsigned short listServerPort_;
     unsigned short listClientPort_;
-    mutable EProfile profile_;
+    EProfile profile_;
     //@}
 };
 

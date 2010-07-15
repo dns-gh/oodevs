@@ -65,7 +65,7 @@ unsigned short Config::GetListClientPort() const
 // Name: Config::SetProfile
 // Created: JSR 2010-07-12
 // -----------------------------------------------------------------------------
-void Config::SetProfile( EProfile profile ) const
+void Config::SetProfile( EProfile profile )
 {
     profile_ = profile;
 }

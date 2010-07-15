@@ -34,7 +34,7 @@ class HomePage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-             HomePage( QWidgetStack* pages, const Config& config, kernel::Controllers& controllers, NetworkExerciseLister& lister );
+             HomePage( QWidgetStack* pages, Config& config, kernel::Controllers& controllers, NetworkExerciseLister& lister );
     virtual ~HomePage();
     //@}
 
@@ -48,7 +48,7 @@ public:
 private:
     //! @name Member data
     //@{
-    const Config& config_;
+    Config& config_;
     OptionsPage* optionsPage_;
     MenuButton* adapt_;
     MenuButton* prepare_;

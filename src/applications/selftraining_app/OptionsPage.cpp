@@ -33,7 +33,7 @@ namespace
 // Name: OptionsPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-OptionsPage::OptionsPage( QWidgetStack* pages, Page_ABC& previous, const Config& config )
+OptionsPage::OptionsPage( QWidgetStack* pages, Page_ABC& previous, Config& config )
     : ContentPage( pages, tools::translate( "OptionsPage", "Options" ), previous, eButtonBack | eButtonQuit )
     , config_( config )
     , selectedLanguage_( ReadLang() )

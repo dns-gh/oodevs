@@ -22,7 +22,7 @@
 // Name: HomePage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-HomePage::HomePage( QWidgetStack* pages, const Config& config, kernel::Controllers& controllers, NetworkExerciseLister& lister )
+HomePage::HomePage( QWidgetStack* pages, Config& config, kernel::Controllers& controllers, NetworkExerciseLister& lister )
     : MenuPage( pages, *this, eButtonOptions | eButtonQuit )
     , config_( config )
     , optionsPage_( new OptionsPage( pages, *this, config ) )
