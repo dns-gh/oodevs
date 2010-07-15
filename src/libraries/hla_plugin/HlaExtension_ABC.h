@@ -24,10 +24,9 @@ namespace plugins
 {
 namespace hla
 {
-
 // =============================================================================
 /** @class  HlaExtension_ABC
-    @brief  HlaExtension_ABC
+    @brief  Hla extension declaration
 */
 // Created: SBO 2008-02-18
 // =============================================================================

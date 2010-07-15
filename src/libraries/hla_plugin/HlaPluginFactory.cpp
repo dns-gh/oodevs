@@ -32,7 +32,7 @@ HlaPluginFactory::~HlaPluginFactory()
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::auto_ptr< dispatcher::Plugin_ABC > HlaPluginFactory::Create
+// Name: HlaPluginFactory::Create
 // Created: SBO 2008-02-28
 // -----------------------------------------------------------------------------
 std::auto_ptr< dispatcher::Plugin_ABC > HlaPluginFactory::Create( const std::string& name, xml::xistream& xis, const dispatcher::Config& config, dispatcher::Model& model, const kernel::StaticModel& , dispatcher::SimulationPublisher_ABC& /*simulation*/, dispatcher::ClientPublisher_ABC& /*clients*/, tools::MessageDispatcher_ABC& /*clientCommands*/ , dispatcher::LinkResolver_ABC&, dispatcher::CompositeRegistrable& ) const

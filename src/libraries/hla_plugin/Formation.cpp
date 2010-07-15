@@ -82,7 +82,7 @@ void Formation::SerializeDimension( UpdateFunctor_ABC& functor ) const
 // Name: Formation::IsOnRoad
 // Created: AGE 2008-02-25
 // -----------------------------------------------------------------------------
-bool Formation::IsOnRoad( const MsgUnitEnvironmentType& message )
+bool Formation::IsOnRoad( const MsgsSimToClient::MsgUnitEnvironmentType& message )
 {
     const unsigned int mask = TerrainData::motorway_  | TerrainData::largeroad_  | TerrainData::mediumroad_
                             | TerrainData::smallroad_ | TerrainData::bridge_;
@@ -93,7 +93,7 @@ bool Formation::IsOnRoad( const MsgUnitEnvironmentType& message )
 // Name: Formation::Update
 // Created: AGE 2008-02-25
 // -----------------------------------------------------------------------------
-void Formation::Update( const MsgUnitEnvironmentType& message )
+void Formation::Update( const MsgsSimToClient::MsgUnitEnvironmentType& message )
 {
     bool onRoad = IsOnRoad( message );
     changed_ = onRoad != onRoad_;

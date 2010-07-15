@@ -181,7 +181,9 @@ namespace
     {
         SilentEntitiesSerializer()
             : count_( 0 )
-        {}
+        {
+            // NOTHING
+        }
         void SerializeEquipment( const dispatcher::Equipment& e )
         {
             ++count_;

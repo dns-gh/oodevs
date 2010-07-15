@@ -14,7 +14,6 @@ namespace plugins
 {
 namespace hla
 {
-
 // =============================================================================
 /** @class  EntityType
     @brief  EntityTypeStruct complex data type
@@ -27,7 +26,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              EntityType();
-    explicit EntityType( const std::string& value);
+    explicit EntityType( const std::string& value );
     virtual ~EntityType();
     //@}
 

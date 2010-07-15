@@ -12,10 +12,6 @@
 
 #include "protocol/protocol.h"
 
-using namespace Common;
-using namespace MsgsSimToClient;
-
-
 namespace hla
 {
     class UpdateFunctor_ABC;
@@ -25,7 +21,6 @@ namespace plugins
 {
 namespace hla
 {
-
 // =============================================================================
 /** @class  Formation
     @brief  Formation
@@ -44,7 +39,7 @@ public:
     //! @name Operations
     //@{
     void Serialize( ::hla::UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
-    void Update( const MsgUnitEnvironmentType& message );
+    void Update( const MsgsSimToClient::MsgUnitEnvironmentType& message );
     //@}
 
 private:
@@ -56,7 +51,7 @@ private:
 
     //! @name Helpers
     //@{
-    static bool IsOnRoad( const MsgUnitEnvironmentType& message );
+    static bool IsOnRoad( const MsgsSimToClient::MsgUnitEnvironmentType& message );
     void SerializeFormation( ::hla::UpdateFunctor_ABC& functor ) const;
     void SerializeDimension( ::hla::UpdateFunctor_ABC& functor ) const;
     //@}

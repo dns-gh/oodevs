@@ -14,7 +14,6 @@ namespace plugins
 {
 namespace hla
 {
-
 // =============================================================================
 /** @class  Dimension
     @brief  Dimension

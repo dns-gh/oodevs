@@ -16,7 +16,6 @@ namespace plugins
 {
 namespace hla
 {
-
 // =============================================================================
 /** @class  Spatial
     @brief  Spatial
@@ -37,7 +36,7 @@ public:
     template< typename Archive >
     void Serialize( Archive& archive )
     {
-        unsigned char padding[7] = { 0, 0, 0, 0, 0, 0, 0 };
+        unsigned char padding[ 7 ] = { 0, 0, 0, 0, 0, 0, 0 };
         archive << deadReckoningAlgorithm_  << padding;
         fpw_.Serialize( archive );
     }
@@ -52,7 +51,7 @@ private:
         template< typename Archive >
         void Serialize( Archive& archive )
         {
-            unsigned char  padding_[3] = { 0, 0, 0 };
+            unsigned char  padding_[ 3 ] = { 0, 0, 0 };
             worldLocation_.Serialize( archive );
             archive << isFrozen_ << padding_;
             orientation_.Serialize( archive );

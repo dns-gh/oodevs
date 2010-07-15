@@ -19,7 +19,7 @@ namespace hla
 
 // =============================================================================
 /** @class  HlaPluginFactory
-    @brief  HlaPluginFactory
+    @brief  Hla plugin factory
 */
 // Created: SBO 2008-02-28
 // =============================================================================

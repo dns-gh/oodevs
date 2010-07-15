@@ -25,7 +25,7 @@ namespace hla
 
 // =============================================================================
 /** @class  ExtensionFactory
-    @brief  ExtensionFactory
+    @brief  Extension factory
 */
 // Created: SBO 2008-02-18
 // =============================================================================

@@ -26,7 +26,7 @@ namespace hla
 
 // =============================================================================
 /** @class  AggregateEntityClass
-    @brief  AggregateEntityClass
+    @brief  Aggregate entity class
 */
 // Created: AGE 2008-02-22
 // =============================================================================

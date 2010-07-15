@@ -14,10 +14,9 @@ namespace plugins
 {
 namespace hla
 {
-
 // =============================================================================
 /** @class  AggregateMarking
-    @brief  AggregateMarking
+    @brief  Aggregate marking
 */
 // Created: AGE 2008-02-21
 // =============================================================================

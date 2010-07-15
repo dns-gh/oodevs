@@ -16,9 +16,6 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "protocol/protocol.h"
 
-using namespace Common;
-using namespace MsgsSimToClient;
-
 namespace dispatcher
 {
     class Agent_ABC;
@@ -28,7 +25,6 @@ namespace plugins
 {
 namespace hla
 {
-
 // =============================================================================
 /** @class  AgentExtension
     @brief  Agent extension
@@ -36,8 +32,8 @@ namespace hla
 // Created: SBO 2008-02-18
 // =============================================================================
 class AgentExtension : public HlaExtension_ABC
-                     , public kernel::Updatable_ABC< MsgUnitAttributes >
-                     , public kernel::Updatable_ABC< MsgUnitEnvironmentType >
+                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
+                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitEnvironmentType >
 {
 public:
     //! @name Constructors/Destructor
@@ -49,8 +45,8 @@ public:
     //! @name Operations
     //@{
     virtual void Serialize( ::hla::UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
-    virtual void DoUpdate( const MsgUnitAttributes& attributes );
-    virtual void DoUpdate( const MsgUnitEnvironmentType& attributes );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& attributes );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitEnvironmentType& attributes );
     //@}
 
 private:
@@ -79,7 +75,6 @@ private:
     Formation formation_;
     mutable bool spatialChanged_;
     mutable bool compositionChanged_;
-
     //@}
 };
 

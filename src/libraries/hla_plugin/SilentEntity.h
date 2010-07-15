@@ -16,10 +16,9 @@ namespace plugins
 {
 namespace hla
 {
-
 // =============================================================================
 /** @class  SilentEntity
-    @brief  SilentEntity
+    @brief  Silent entity
 */
 // Created: AGE 2008-02-21
 // =============================================================================

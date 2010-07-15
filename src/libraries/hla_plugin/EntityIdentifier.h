@@ -14,7 +14,6 @@ namespace plugins
 {
 namespace hla
 {
-
 // =============================================================================
 /** @class  EntityIdentifier
     @brief  EntityIdentifierStruct complex data type
