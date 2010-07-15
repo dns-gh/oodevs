@@ -75,7 +75,7 @@ void ScorePlugin::Receive( const MsgSimToClient& wrapper )
 // -----------------------------------------------------------------------------
 void ScorePlugin::Receive( const MsgAarToClient& wrapper )
 {
-    if( wrapper.message().has_indicator())
+    if( wrapper.message().has_indicator() )
         scores_->Update( wrapper.message().indicator() );
 }
 
@@ -85,7 +85,7 @@ void ScorePlugin::Receive( const MsgAarToClient& wrapper )
 // -----------------------------------------------------------------------------
 void ScorePlugin::OnReceive( const std::string& client, const MsgClientToAar& wrapper )
 {
-    if( wrapper.message().has_plot_request())
+    if( wrapper.message().has_plot_request() )
     {
         const MsgPlotRequest& request = wrapper.message().plot_request();
         if( boost::starts_with( request.request(), "indicator://" ) )

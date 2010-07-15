@@ -57,6 +57,6 @@ void Score::Send( dispatcher::ClientPublisher_ABC& publisher, int context ) cons
     result().set_identifier( context );
     result().set_error( "" );
     for( std::vector< double >::const_iterator it = values_.begin(); it != values_.end(); ++it )
-        result().mutable_values()->Add( float( *it ) );
+        result().mutable_values()->Add( static_cast< float >( *it ) );
     result.Send( publisher );
 }
