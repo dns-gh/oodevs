@@ -111,6 +111,25 @@
     </message>
 </context>
 <context>
+    <name>CreateExerciceWidget</name>
+    <message>
+        <source>Create new exercise:</source>
+        <translation>Créer un exercice:</translation>
+    </message>
+    <message>
+        <source>Enter exercise name</source>
+        <translation>Saisir le nom de l&apos;exercice</translation>
+    </message>
+    <message>
+        <source>Terrain:</source>
+        <translation>Terrain:</translation>
+    </message>
+    <message>
+        <source>Model:</source>
+        <translation>Modèle:</translation>
+    </message>
+</context>
+<context>
     <name>CreateTerrainPage</name>
     <message>
         <source>Create Terrain</source>
@@ -160,6 +179,25 @@
     </message>
 </context>
 <context>
+    <name>ExportWidget</name>
+    <message>
+        <source>Create a package</source>
+        <translation>Créer un paquetage</translation>
+    </message>
+    <message>
+        <source>Exercise to package:</source>
+        <translation>Exercice à packager:</translation>
+    </message>
+    <message>
+        <source>Package description:</source>
+        <translation>Description du paquetage:</translation>
+    </message>
+    <message>
+        <source>Package content:</source>
+        <translation>Contenu du paquetage:</translation>
+    </message>
+</context>
+<context>
     <name>HomePage</name>
     <message>
         <source>Prepare</source>
@@ -193,13 +231,60 @@
         <source>Start single player or multiplayer training session</source>
         <translation>Démarrer une session d&apos;entraînement solo ou multi-joueur</translation>
     </message>
+</context>
+<context>
+    <name>ImportWidget</name>
     <message>
-        <source>Import</source>
-        <translation>Importer</translation>
+        <source>Package to be installed:</source>
+        <translation>Paquetage à installer:</translation>
     </message>
     <message>
-        <source>Importer depuis l&apos;editeur de scenario</source>
-        <translation>Importer depuis l&apos;editeur de scenario</translation>
+        <source>Browse...</source>
+        <translation>Parcourir...</translation>
+    </message>
+    <message>
+        <source>Package content:</source>
+        <translation>Contenu du paquetage</translation>
+    </message>
+    <message>
+        <source>Package</source>
+        <translation>Paquetage</translation>
+    </message>
+    <message>
+        <source>Scenario</source>
+        <translation>Scénario</translation>
+    </message>
+    <message>
+        <source>Model: </source>
+        <translation>Modèle: </translation>
+    </message>
+    <message>
+        <source>Model:</source>
+        <translation>Modèle:</translation>
+    </message>
+    <message>
+        <source>Scenario Name</source>
+        <translation>Nom du scénario</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation>...</translation>
+    </message>
+    <message>
+        <source>Terrain:</source>
+        <translation>Terrain:</translation>
+    </message>
+    <message>
+        <source>Select a package</source>
+        <translation>Sélectionner un paquetage</translation>
+    </message>
+    <message>
+        <source>Output Scenario Name: </source>
+        <translation>Nom du scénario à exporter: </translation>
+    </message>
+    <message>
+        <source>Input Scenario: </source>
+        <translation>Scénario à importer: </translation>
     </message>
 </context>
 <context>
@@ -250,6 +335,26 @@
         <source>...</source>
         <translation>...</translation>
     </message>
+    <message>
+        <source>Profile: </source>
+        <translation>Profil: </translation>
+    </message>
+    <message>
+        <source>Terrain</source>
+        <translation>Terrain</translation>
+    </message>
+    <message>
+        <source>User</source>
+        <translation>Utilisation</translation>
+    </message>
+    <message>
+        <source>Advanced User</source>
+        <translation>Validation</translation>
+    </message>
+    <message>
+        <source>Administrator</source>
+        <translation>Administration</translation>
+    </message>
 </context>
 <context>
     <name>Page_ABC</name>
@@ -290,41 +395,6 @@
     </message>
 </context>
 <context>
-    <name>ProfilesPage</name>
-    <message>
-        <source>Terrain</source>
-        <translation>Terrain</translation>
-    </message>
-    <message>
-        <source>Select Terrain as profile</source>
-        <translation>Sélectionner le profil Terrain</translation>
-    </message>
-    <message>
-        <source>User</source>
-        <translation>Utilisation</translation>
-    </message>
-    <message>
-        <source>Select User as profile</source>
-        <translation>Sélectionner le profil Utilisation</translation>
-    </message>
-    <message>
-        <source>Advanced User</source>
-        <translation>Validation</translation>
-    </message>
-    <message>
-        <source>Select Advanced User as profile</source>
-        <translation>Sélectionner le profil Validation</translation>
-    </message>
-    <message>
-        <source>Administrator</source>
-        <translation>Administration</translation>
-    </message>
-    <message>
-        <source>Select Administrator as profile</source>
-        <translation>Sélectionner le profil Administration</translation>
-    </message>
-</context>
-<context>
     <name>QuitPage</name>
     <message>
         <source>Yes</source>
@@ -357,14 +427,6 @@
         <translation>Scénario</translation>
     </message>
     <message>
-        <source>Enter exercise name</source>
-        <translation>Saisir le nom de l&apos;exercice</translation>
-    </message>
-    <message>
-        <source>Create new exercise:</source>
-        <translation>Créer un exercice:</translation>
-    </message>
-    <message>
         <source>Create</source>
         <translation>Créer</translation>
     </message>
@@ -383,6 +445,18 @@
     <message>
         <source>Exercise parameters:</source>
         <translation>Parametres d&apos;exercice:</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Editer</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation>Importer</translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <translation type="obsolete">Exporter</translation>
     </message>
 </context>
 <context>
@@ -418,6 +492,18 @@
     <message>
         <source>Random</source>
         <translation>Aléatoire</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation>Configuration</translation>
+    </message>
+    <message>
+        <source>Plugins</source>
+        <translation>Plugins</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>Avancé</translation>
     </message>
 </context>
 <context>

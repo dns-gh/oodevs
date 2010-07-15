@@ -14,6 +14,7 @@
 #include "ProcessDialogs.h"
 #include "ProgressPage.h"
 #include "CompositeProcessWrapper.h"
+#include "frontend/AdvancedConfigPanel.h"
 #include "frontend/CheckpointConfigPanel.h"
 #include "frontend/CreateSession.h"
 #include "frontend/CrossbowPluginConfigPanel.h"
@@ -25,6 +26,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/Tools.h"
 #include <boost/foreach.hpp>
+#include <qtabbar.h>
 #include <qtabwidget.h>
 
 #pragma warning( push )
@@ -33,6 +35,21 @@
 #pragma warning( pop )
 
 namespace bpt = boost::posix_time;
+
+namespace
+{
+    class TabWidget : public QTabWidget
+    {
+    public:
+        TabWidget( QWidget* parent )
+            : QTabWidget( parent )
+        {
+            setBackgroundOrigin( QWidget::WindowOrigin );
+            tabBar()->setBackgroundOrigin( QWidget::WindowOrigin );
+            setMargin( 0 );
+        }
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: ScenarioLauncherPage constructor
@@ -49,22 +66,41 @@ ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previ
     box->setBackgroundOrigin( QWidget::WindowOrigin );
     box->setMargin( 5 );
     {
-        QTabWidget* tabs = new QTabWidget( box );
-        tabs->setMargin( 5 );
+        TabWidget* tabs = new TabWidget( box );
         {
-            exercises_ = new ExerciseList( tabs, config_, lister_ );
-            tabs->addTab( exercises_, tr( "General" ) );
+            exercises_ = new ExerciseList( tabs, config_, lister_, "", true, true, true, false );
+            exercises_->setBackgroundOrigin( QWidget::WindowOrigin );
             connect( exercises_, SIGNAL( Select( const QString&, const Profile& ) ), this, SLOT( OnSelect( const QString&, const Profile& ) ) );
+            tabs->addTab( exercises_, tools::translate( "ScenarioLauncherPage", "General" ) );
         }
         {
-            frontend::CheckpointConfigPanel* panel = AddPlugin< frontend::CheckpointConfigPanel >( tabs, tools::translate( "ScenarioLauncherPage", "Checkpoints" ) );
-            connect( exercises_, SIGNAL( Select( const QString&, const Profile& ) ), panel, SLOT( Select( const QString& ) ) );
-            connect( panel, SIGNAL( CheckpointSelected( const QString&, const QString& ) ), SLOT( OnSelectCheckpoint( const QString&, const QString& ) ) );
+            QGroupBox* configBox = new QGroupBox( 1, Qt::Vertical, tabs );
+            configBox->setMargin( 5 );
+            configBox->setFrameShape( QFrame::NoFrame );
+            configBox->setBackgroundOrigin( QWidget::WindowOrigin );
+            TabWidget* config = new TabWidget( configBox );
+            tabs->addTab( configBox, tools::translate( "ScenarioLauncherPage", "Settings" ) );
+            {
+                frontend::CheckpointConfigPanel* panel = AddPlugin< frontend::CheckpointConfigPanel >( config, tools::translate( "ScenarioLauncherPage", "Checkpoints" ) );
+                connect( exercises_, SIGNAL( Select( const QString&, const Profile& ) ), panel, SLOT( Select( const QString& ) ) );
+                connect( panel, SIGNAL( CheckpointSelected( const QString&, const QString& ) ), SLOT( OnSelectCheckpoint( const QString&, const QString& ) ) );
+                AddPlugin< frontend::RandomPluginConfigPanel >( config, tools::translate( "ScenarioLauncherPage", "Random" ) );
+                AddPlugin< frontend::AdvancedConfigPanel >( config, tools::translate( "ScenarioLauncherPage", "Advanced" ) );
+            }
         }
-        AddPlugin< frontend::DisPluginConfigPanel >( tabs, tools::translate( "ScenarioLauncherPage", "DIS" ) );
-        AddPlugin< frontend::HlaPluginConfigPanel >( tabs, tools::translate( "ScenarioLauncherPage", "HLA" ) );
-        AddPlugin< frontend::CrossbowPluginConfigPanel >( tabs, tools::translate( "ScenarioLauncherPage", "Crossbow" ) );
-        AddPlugin< frontend::RandomPluginConfigPanel >( tabs, tools::translate( "ScenarioLauncherPage", "Random" ) );
+        {
+            QGroupBox* pluginsBox = new QGroupBox( 1, Qt::Vertical, tabs );
+            pluginsBox->setMargin( 5 );
+            pluginsBox->setFrameShape( QFrame::NoFrame );
+            pluginsBox->setBackgroundOrigin( QWidget::WindowOrigin );
+            TabWidget* plugins = new TabWidget( pluginsBox );
+            tabs->addTab( pluginsBox, tools::translate( "ScenarioLauncherPage", "Plugins" ) );
+            {
+                AddPlugin< frontend::DisPluginConfigPanel >( plugins, tools::translate( "ScenarioLauncherPage", "DIS" ) );
+                AddPlugin< frontend::HlaPluginConfigPanel >( plugins, tools::translate( "ScenarioLauncherPage", "HLA" ) );
+                AddPlugin< frontend::CrossbowPluginConfigPanel >( plugins, tools::translate( "ScenarioLauncherPage", "Crossbow" ) );
+            }
+        }
     }
     EnableButton( eButtonStart, false );
     AddContent( box );

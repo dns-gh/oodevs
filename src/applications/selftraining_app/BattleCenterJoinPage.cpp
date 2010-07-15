@@ -53,7 +53,7 @@ BattleCenterJoinPage::BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previ
         connect( pButton, SIGNAL( clicked() ), this, SLOT( ReloadExerciseList() ) );
     }
     {
-        exercises_ = new ExerciseList( box, config_, exerciseLister_ );
+        exercises_ = new ExerciseList( box, config_, exerciseLister_, "", true, true, true, false );
         exerciseLister_.AddList( exercises_ );
         connect( exercises_, SIGNAL( Select( const QString&, const Profile& ) ), this, SLOT( SelectExercise( const QString&, const Profile& ) ) );
     }

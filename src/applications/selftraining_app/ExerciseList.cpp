@@ -71,7 +71,7 @@ namespace
 // Name: ExerciseList constructor
 // Created: RDS 2008-08-27
 // -----------------------------------------------------------------------------
-ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const ExerciseLister_ABC& lister, const std::string& subDir /*= ""*/, bool showBrief /*= true*/, bool showProfile /*=true*/ )
+ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const ExerciseLister_ABC& lister, const std::string& subDir /*= ""*/, bool showBrief /*= true*/, bool showProfile /*=true*/, bool showParams /*= true*/, bool enableParams /*= true*/ )
     : QVBox      ( parent )
     , config_    ( config )
     , subDir_    ( subDir )
@@ -79,11 +79,13 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
     , lister_    ( lister )
     , language_  ( ReadLang() )
     , parametersChanged_( false )
+    , editTerrainList_( 0 )
+    , editModelList_( 0 )
 {
     QHBox* box = new QHBox( this );
+    box->setMargin( 5 );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
     box->setSpacing( 50 );
-
     {
         QVBox* leftBox = new QVBox( box );
         leftBox->setSpacing( 5 );
@@ -91,6 +93,7 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
         QLabel* label = new QLabel( tools::translate( "ExerciseList", "Exercise:" ), leftBox );
         label->setBackgroundOrigin( QWidget::WindowOrigin );
         exercises_ = new QListView( leftBox );
+        exercises_->setBackgroundOrigin( QWidget::WindowOrigin );
         exercises_->addColumn( "exercise" );
         exercises_->addColumn( "fullpath", 0 );
         exercises_->header()->hide();
@@ -109,38 +112,46 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
         connect( exercises_, SIGNAL( currentChanged( QListViewItem* ) ), this, SLOT( SelectExercise( QListViewItem* ) ) );
     }
 
-    QVBox* parametersRightBox = new QVBox( box );
-    parametersRightBox->setMinimumWidth( 200 );
-    parametersRightBox->setBackgroundOrigin( QWidget::WindowOrigin );
-    parametersRightBox->setSpacing( 5 );
-        
-    if( showBrief )
+    if( showBrief || showParams )
     {
-        QVBox* rightBox = new QVBox( parametersRightBox );
-        rightBox->setMinimumWidth( 200 );
-        rightBox->setBackgroundOrigin( QWidget::WindowOrigin );
-        rightBox->setSpacing( 5 );
-        briefingImage_ = new QLabel( rightBox );
-        briefingImage_->setBackgroundOrigin( QWidget::WindowOrigin );
-        briefingText_ = new QTextEdit( rightBox );
-        briefingText_->setBackgroundOrigin( QWidget::WindowOrigin );
-        briefingText_->setFont( QFont( "Georgia", 10, QFont::Normal, true ) );
-        briefingText_->setReadOnly( true );
+        QVBox* parametersRightBox = new QVBox( box );
+        parametersRightBox->setMinimumWidth( 200 );
+        parametersRightBox->setBackgroundOrigin( QWidget::WindowOrigin );
+        parametersRightBox->setSpacing( 5 );
+            
+        if( showBrief )
+        {
+            QVBox* rightBox = new QVBox( parametersRightBox );
+            rightBox->setMinimumWidth( 200 );
+            rightBox->setBackgroundOrigin( QWidget::WindowOrigin );
+            rightBox->setSpacing( 5 );
+            briefingImage_ = new QLabel( rightBox );
+            briefingImage_->setBackgroundOrigin( QWidget::WindowOrigin );
+            briefingText_ = new QTextEdit( rightBox );
+            briefingText_->setBackgroundOrigin( QWidget::WindowOrigin );
+            briefingText_->setFont( QFont( "Georgia", 10, QFont::Normal, true ) );
+            briefingText_->setReadOnly( true );
+        }
+        if( showParams )
+        {
+            QGroupBox* paramBox = new QGroupBox( 1, Qt::Vertical, parametersRightBox );
+            paramBox->setEnabled( enableParams );
+            paramBox->setMaximumHeight( 100 );
+            paramBox->setBackgroundOrigin( QWidget::WindowOrigin );
+            QVBox* editBox = new QVBox( paramBox );
+            editBox->setMinimumWidth( 200 );
+            editBox->setBackgroundOrigin( QWidget::WindowOrigin );
+            editBox->setSpacing( 5 );
+            QLabel* label = new QLabel( tools::translate( "ScenarioEditPage", "Exercise parameters:" ), editBox );
+            label->setBackgroundOrigin( QWidget::WindowOrigin );
+            editTerrainList_ = new QComboBox( editBox );
+            editTerrainList_->setBackgroundOrigin( QWidget::WindowOrigin );
+            connect( editTerrainList_, SIGNAL( activated( int ) ), SLOT( ComboChanged( int ) ) );
+            editModelList_ = new QComboBox( editBox );
+            editModelList_->setBackgroundOrigin( QWidget::WindowOrigin );
+            connect( editModelList_, SIGNAL( activated( int ) ), SLOT( ComboChanged( int ) ) );
+        }
     }
-    QGroupBox* paramBox = new QGroupBox( 1, Qt::Vertical, parametersRightBox );
-    paramBox->setMaximumHeight( 100 );
-    box->setBackgroundOrigin( QWidget::WindowOrigin );
-    QVBox* editBox = new QVBox( paramBox );
-    editBox->setMinimumWidth( 200 );
-    editBox->setBackgroundOrigin( QWidget::WindowOrigin );
-    editBox->setSpacing( 5 );
-
-    QLabel* label = new QLabel( tools::translate( "ScenarioEditPage", "Exercise parameters:" ), editBox );
-    label->setBackgroundOrigin( QWidget::WindowOrigin );
-    editTerrainList_ = new QComboBox( editBox );
-    connect( editTerrainList_, SIGNAL( activated( int ) ), SLOT( ComboChanged( int ) ) );
-    editModelList_ = new QComboBox( editBox );
-    connect( editModelList_, SIGNAL( activated( int ) ), SLOT( ComboChanged( int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -158,22 +169,25 @@ ExerciseList::~ExerciseList()
 // -----------------------------------------------------------------------------
 void ExerciseList::Update()
 {
-    editTerrainList_->clear();
-    editTerrainList_->insertItem( tools::translate( "ScenarioEditPage", "Terrain:" ) );
-    editTerrainList_->insertStringList( frontend::commands::ListTerrains( config_ ) );
-    editModelList_->clear();
-    editModelList_->insertItem( tools::translate( "ScenarioEditPage", "Model:" ) );
-    QStringList decisionalModels = frontend::commands::ListModels( config_ );
-    int index = 1;
-    for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
+    if( editTerrainList_ && editModelList_ )
     {
-        const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).ascii() );
-        for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP, ++index )
-            editModelList_->insertItem( QString( "%1/%2" ).arg( *it ).arg( *itP ), index );
+        editTerrainList_->clear();
+        editTerrainList_->insertItem( tools::translate( "ScenarioEditPage", "Terrain:" ) );
+        editTerrainList_->insertStringList( frontend::commands::ListTerrains( config_ ) );
+        editModelList_->clear();
+        editModelList_->insertItem( tools::translate( "ScenarioEditPage", "Model:" ) );
+        QStringList decisionalModels = frontend::commands::ListModels( config_ );
+        int index = 1;
+        for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
+        {
+            const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).ascii() );
+            for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP, ++index )
+                editModelList_->insertItem( QString( "%1/%2" ).arg( *it ).arg( *itP ), index );
+        }
+        if( editModelList_->count() == 2 )
+            editModelList_->setCurrentItem( 1 );
+        editModelList_->setShown( editModelList_->count() > 2 );
     }
-    if( editModelList_->count() == 2 )
-        editModelList_->setCurrentItem( 1 );
-    editModelList_->setShown( editModelList_->count() > 2 );
     QApplication::postEvent( this, new QCustomEvent( 4242 ) );
 }
 
@@ -219,19 +233,22 @@ void ExerciseList::SelectExercise( QListViewItem* item )
             const std::string imagePath = config_.GetExerciseDir( MakePath( exercise.ascii(), image ).ascii() );
             const QImage pix( imagePath.c_str() );
             briefingImage_->setPixmap( pix );
-            const QStringList terrainList = frontend::commands::ListTerrains( config_ );
-            int index = terrainList.findIndex( terrain.c_str() );
-            editTerrainList_->setCurrentItem( index + 1 );
-
-            QStringList decisionalModels = frontend::commands::ListModels( config_ );
-            for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
+            if( editTerrainList_ && editModelList_ )
             {
-                const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).ascii() );
-                int index = physicalModels.findIndex( QString( physical.c_str() ) );
-                if( index != -1 )
-                    editModelList_->setCurrentItem( index + 1 );
+                const QStringList terrainList = frontend::commands::ListTerrains( config_ );
+                int index = terrainList.findIndex( terrain.c_str() );
+                editTerrainList_->setCurrentItem( index + 1 );
+
+                QStringList decisionalModels = frontend::commands::ListModels( config_ );
+                for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
+                {
+                    const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).ascii() );
+                    int index = physicalModels.findIndex( QString( physical.c_str() ) );
+                    if( index != -1 )
+                        editModelList_->setCurrentItem( index + 1 );
+                }
             }
-         }
+        }
         catch( ... )
         {
             // $$$$ SBO 2008-10-07: error in exercise.xml meta, just don't show briefing
@@ -390,7 +407,7 @@ void ExerciseList::ChangeExerciceParameters( const std::string& exerciceName )
 {
     if( parametersChanged_ )
     {
-        if( editTerrainList_->currentItem() > 0 && editModelList_->currentItem() > 0 )
+        if( editTerrainList_ && editTerrainList_->currentItem() > 0 && editModelList_ && editModelList_->currentItem() > 0 )
         {
             const std::string terrain = editTerrainList_->currentText().ascii();
             const QStringList model = QStringList::split( "/", editModelList_->currentText() );

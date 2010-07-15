@@ -12,7 +12,7 @@
 #include "moc_OptionsPage.cpp"
 #include "Application.h"
 #include "clients_gui/Tools.h"
-#include "tools/GeneralConfig.h"
+#include "Config.h"
 #include <qcombobox.h>
 #include <qfiledialog.h>
 #include <qsettings.h>
@@ -33,8 +33,9 @@ namespace
 // Name: OptionsPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-OptionsPage::OptionsPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config )
+OptionsPage::OptionsPage( QWidgetStack* pages, Page_ABC& previous, const Config& config )
     : ContentPage( pages, tools::translate( "OptionsPage", "Options" ), previous, eButtonBack | eButtonQuit )
+    , config_( config )
     , selectedLanguage_( ReadLang() )
 {
     languages_[ tools::translate( "OptionsPage", "English" ) ]  = "en";
@@ -68,6 +69,17 @@ OptionsPage::OptionsPage( QWidgetStack* pages, Page_ABC& previous, const tools::
         QButton* browse = new QPushButton( tools::translate( "OptionsPage", "..." ), hbox );
         connect( browse, SIGNAL( clicked() ), SLOT( OnChangeDataDirectory() ) );
     }
+    {
+        QLabel* label = new QLabel( tools::translate( "OptionsPage", "Profile: " ), box );
+        label->setBackgroundOrigin( QWidget::WindowOrigin );
+        QComboBox* combo = new QComboBox( box );
+        combo->insertItem( tools::translate( "OptionsPage", "Terrain" ), Config::eTerrain );
+        combo->insertItem( tools::translate( "OptionsPage", "User" ), Config::eUser );
+        combo->insertItem( tools::translate( "OptionsPage", "Advanced User" ), Config::eAdvancedUser );
+        combo->insertItem( tools::translate( "OptionsPage", "Administrator" ), Config::eAdministrator );
+        combo->setCurrentItem( config_.GetProfile() );
+        connect( combo, SIGNAL( activated( int ) ), SLOT( OnChangeProfile( int ) ) );
+   }
 
     AddContent( mainBox );
 }
@@ -115,4 +127,13 @@ void OptionsPage::OnChangeDataDirectory()
         return;
     dataDirectory_->setText( directory );
     Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: OptionsPage::OnChangeProfile
+// Created: JSR 2010-07-13
+// -----------------------------------------------------------------------------
+void OptionsPage::OnChangeProfile( int index )
+{
+    config_.SetProfile( static_cast< Config::EProfile >( index ) );
 }

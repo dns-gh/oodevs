@@ -12,11 +12,7 @@
 
 #include "ContentPage.h"
 
-namespace tools
-{
-    class GeneralConfig;
-}
-
+class Config;
 class QLineEdit;
 
 // =============================================================================
@@ -32,7 +28,7 @@ class OptionsPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             OptionsPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config );
+             OptionsPage( QWidgetStack* pages, Page_ABC& previous, const Config& config );
     virtual ~OptionsPage();
     //@}
 
@@ -41,6 +37,7 @@ private slots:
     //@{
     void OnChangeLanguage( const QString& lang );
     void OnChangeDataDirectory();
+    void OnChangeProfile( int index );
     //@}
 
 private:
@@ -63,6 +60,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const Config& config_;
     T_Languages languages_;
     std::string selectedLanguage_;
     QLineEdit* dataDirectory_;

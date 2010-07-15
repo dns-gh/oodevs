@@ -96,10 +96,6 @@
 <context>
     <name>Application</name>
     <message>
-        <source>sword-ot@masagroup.net</source>
-        <translation type="obsolete">sword-ot@masagroup.net</translation>
-    </message>
-    <message>
         <source>SWORD</source>
         <translation>SWORD</translation>
     </message>
@@ -178,60 +174,6 @@
     <message>
         <source>Package successfully created.</source>
         <translation>Le paquetage a été créé avec succès.</translation>
-    </message>
-</context>
-<context>
-    <name>CrossbowPluginConfigPanel</name>
-    <message>
-        <source>Enable Crossbow export</source>
-        <translation type="obsolete">Activer l&apos;export Crossbow</translation>
-    </message>
-    <message>
-        <source>Format for gdb: filename.{gdb|mdb}</source>
-        <translation type="obsolete">Format pour gdb: nomdefichier.{gdb|mdb}</translation>
-    </message>
-    <message>
-        <source>Format for sde connection: sde://user:password@host:port/db_name.sword</source>
-        <translation type="obsolete">Format pour connectionsde: sde://user:password@host:port/db_name.sword</translation>
-    </message>
-    <message>
-        <source>Geodatabase export:</source>
-        <translation type="obsolete">Export Geodatabase</translation>
-    </message>
-    <message>
-        <source>Geodatabase population export:</source>
-        <translation type="obsolete">Export de population Geodatabase:</translation>
-    </message>
-    <message>
-        <source>Geodatabase order import:</source>
-        <translation type="obsolete">Import d&apos;ordre Geodatabase</translation>
-    </message>
-</context>
-<context>
-    <name>DisPluginConfigPanel</name>
-    <message>
-        <source>Enable DIS export</source>
-        <translation type="obsolete">Activer l&apos;export DIS</translation>
-    </message>
-    <message>
-        <source>Disaggregate units:</source>
-        <translation type="obsolete">Désagréger les unités:</translation>
-    </message>
-    <message>
-        <source>Host: </source>
-        <translation type="obsolete">Hote: </translation>
-    </message>
-    <message>
-        <source>Site Id: </source>
-        <translation type="obsolete">Id du site: </translation>
-    </message>
-    <message>
-        <source>Application Id: </source>
-        <translation type="obsolete">Id de l&apos;application: </translation>
-    </message>
-    <message>
-        <source>Exercise Id: </source>
-        <translation type="obsolete">Id de l&apos;exercice: </translation>
     </message>
 </context>
 <context>
@@ -321,21 +263,6 @@
     <message>
         <source>Check ODB Composition</source>
         <translation>Vérifier la composition de l&apos;ODB</translation>
-    </message>
-</context>
-<context>
-    <name>HlaPluginConfigPanel</name>
-    <message>
-        <source>Enable HLA RPR-FOM export</source>
-        <translation type="obsolete">Activer l&apos;export HLA RPR_FOM</translation>
-    </message>
-    <message>
-        <source>Federation: </source>
-        <translation type="obsolete">Fédération: </translation>
-    </message>
-    <message>
-        <source>Federate name: </source>
-        <translation type="obsolete">Nom du fédéré: </translation>
     </message>
 </context>
 <context>

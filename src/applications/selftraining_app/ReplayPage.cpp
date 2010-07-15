@@ -42,7 +42,7 @@ ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, kernel::Control
         hbox->setMargin( 10 );
         hbox->setSpacing( 10 );
         {
-            exercises_ = new ExerciseList( hbox, config, *lister_, "", false, true );
+            exercises_ = new ExerciseList( hbox, config, *lister_, "", false, true, false );
             connect( exercises_, SIGNAL( Select( const QString&, const Profile& ) ), this, SLOT( OnSelectExercise( const QString&, const Profile& ) ) );
         }
         {

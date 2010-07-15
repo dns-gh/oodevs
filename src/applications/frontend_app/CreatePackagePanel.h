@@ -82,7 +82,6 @@ private:
     const frontend::Config& config_;
     QListBox*  list_;
     T_Package package_;
-    QLineEdit* name_;
     QTextEdit* description_;
     QListView* content_;
     QProgressBar* progress_;

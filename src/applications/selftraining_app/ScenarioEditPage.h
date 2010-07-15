@@ -23,9 +23,13 @@ namespace kernel
     class Controllers;
 }
 
+class CreateExerciceWidget;
 class ExerciseList;
+class ExportWidget;
+class ImportWidget;
 class Profile;
 class ProgressPage;
+class QTabWidget;
 
 // =============================================================================
 /** @class  ScenarioEditPage
@@ -35,7 +39,6 @@ class ProgressPage;
 // =============================================================================
 class ScenarioEditPage : public ContentPage
 {
-
     Q_OBJECT;
 
 public:
@@ -45,15 +48,24 @@ public:
     virtual ~ScenarioEditPage();
     //@}
 
+public:
+    //! @name Helpers
+    //@{
+    void Edit( const QString& exercise );
+    bool ExerciceExists( const QString& string );
+    void LaunchScenarioImport( const QString& inputScenario, const QString& outputScenario );
+    void LaunchPreparation( const QString& outputScenario );
+    //@}
+
 private slots:
     //! @name Operations
     //@{
     virtual void OnEdit();
     void Update();
-    void CreateExercise();
     void OnSelect( const QString& exercise, const Profile& profile );
     void EditNameChanged( const QString& string );
     void ComboChanged( int index );
+    void UpdateEditButton( QWidget* );
     //@}
 
 private:
@@ -61,12 +73,6 @@ private:
     //@{
     ScenarioEditPage( const ScenarioEditPage& );            //!< Copy constructor
     ScenarioEditPage& operator=( const ScenarioEditPage& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    void Edit( const QString& exercise );
-    void UpdateCreateButton();
     //@}
 
 private:
@@ -78,10 +84,10 @@ private:
     ProgressPage* progressPage_;
     ExerciseList* exercises_;
     QString exercise_;
-    QComboBox* editTerrainList_;
-    QComboBox* editModelList_;
-    QLineEdit* editName_;
-    QPushButton* createButton_;
+    QTabWidget* mainTabs_;
+    CreateExerciceWidget* createExerciceWidget_;
+    ImportWidget* importWidget_;
+    ExportWidget* exportWidget_;
     //@}
 };
 

@@ -1,6 +1,7 @@
 HEADERS = 
 
-SOURCES = Config.cpp \
+SOURCES = AdvancedConfigPanel.cpp\
+Config.cpp \
 CreateTerrain.cpp \
 CheckpointConfigPanel.cpp \
 CheckpointList.cpp \

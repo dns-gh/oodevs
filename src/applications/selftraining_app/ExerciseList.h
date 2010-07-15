@@ -40,7 +40,7 @@ class ExerciseList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const ExerciseLister_ABC& lister, const std::string& subDir = "", bool showBrief = true, bool showProfile = true );
+             ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const ExerciseLister_ABC& lister, const std::string& subDir = "", bool showBrief = true, bool showProfile = true, bool showParams = true, bool enableParams = true );
     virtual ~ExerciseList();
     //@}
 
@@ -100,10 +100,9 @@ private:
     bool                         showBrief_;
     const ExerciseLister_ABC&    lister_;
     const QString                language_;
-    bool                         parametersChanged_;
-    
-    QComboBox* editTerrainList_;
-    QComboBox* editModelList_;
+    bool                         parametersChanged_;    
+    QComboBox*                   editTerrainList_;
+    QComboBox*                   editModelList_;
  //@}
 };
 

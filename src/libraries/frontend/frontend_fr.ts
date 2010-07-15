@@ -1,5 +1,48 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>AdvancedConfigPanel</name>
+    <message>
+        <source>Session name:</source>
+        <translation>Nom de la session:</translation>
+    </message>
+    <message>
+        <source>Session comments:</source>
+        <translation>Commentaires de la session:</translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translation>Temps</translation>
+    </message>
+    <message>
+        <source>Time step:</source>
+        <translation>Pas de temps:</translation>
+    </message>
+    <message>
+        <source>Time factor:</source>
+        <translation>Facteur de temps:</translation>
+    </message>
+    <message>
+        <source>End tick:</source>
+        <translation>Tic de fin:</translation>
+    </message>
+    <message>
+        <source>Pathfind</source>
+        <translation>Pathfind</translation>
+    </message>
+    <message>
+        <source>Number of threads:</source>
+        <translation>Nombre de threads:</translation>
+    </message>
+    <message>
+        <source>Exercise number:</source>
+        <translation>Numéro de l&apos;exercice:</translation>
+    </message>
+    <message>
+        <source>Exercise</source>
+        <translation>Exercice</translation>
+    </message>
+</context>
+<context>
     <name>Application</name>
     <message>
         <source>SWORD</source>
@@ -25,20 +68,8 @@
         <translation>Reprise sur sauvegarde: </translation>
     </message>
     <message>
-        <source>Select session:</source>
-        <translation type="obsolete">Sélectionner la session:</translation>
-    </message>
-    <message>
-        <source>Select checkpoint:</source>
-        <translation type="obsolete">Sélectionner la sauvegarde:</translation>
-    </message>
-    <message>
         <source>No session</source>
         <translation>Pas de session</translation>
-    </message>
-    <message>
-        <source>No checkpoint</source>
-        <translation type="obsolete">Pas de sauvegarde</translation>
     </message>
     <message>
         <source>Session:</source>
@@ -198,10 +229,6 @@ Connexion SDE: sde://user:password@host:port/db_name.sword</translation>
     <message>
         <source>Started</source>
         <translation>Démarré</translation>
-    </message>
-    <message>
-        <source>Could not start process: %1</source>
-        <translation type="obsolete">Impossible de démarrer le processus: %1</translation>
     </message>
     <message>
         <source>Could not start process: %1, error: %2</source>

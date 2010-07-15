@@ -59,7 +59,7 @@ private:
     //! @name Helpers
     //@{
     virtual void showEvent( QShowEvent* event );
-    virtual void Update() {};
+    virtual void Update() {}
     //@}
 
 private slots:

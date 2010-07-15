@@ -13,6 +13,7 @@
 #include "CheckpointList.h"
 #include "commands.h"
 #include "CreateSession.h"
+#include "clients_gui/Tools.h"
 #include <qdatetimeedit.h>
 #include <qgroupbox.h>
 #include <qlabel.h>
@@ -21,6 +22,16 @@
 #include <qvbox.h>
 
 using namespace frontend;
+
+namespace
+{
+    template< typename T >
+    T* Style( T* widget )
+    {
+        widget->setBackgroundOrigin( QWidget::WindowOrigin );
+        return widget;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: CheckpointConfigPanel constructor
@@ -32,34 +43,34 @@ CheckpointConfigPanel::CheckpointConfigPanel( QWidget* parent, const tools::Gene
 {
     QVBox* vbox = new QVBox( this );
     {
-        checkpointsGroup_ = new QGroupBox( 2, Qt::Vertical, tr( "Checkpoint configuration: " ), vbox );
+        checkpointsGroup_ = Style( new QGroupBox( 2, Qt::Vertical, tools::translate( "CheckpointConfigPanel", "Checkpoint configuration: " ), vbox ) );
         checkpointsGroup_->setCheckable( true );
         checkpointsGroup_->setChecked( false );
         {
-            QHBox* frequencyBox = new QHBox( checkpointsGroup_ );
-            new QLabel( tr( "Frequency:" ), frequencyBox );
-            frequency_ = new QTimeEdit( frequencyBox );
+            QHBox* frequencyBox = Style( new QHBox( checkpointsGroup_ ) );
+            Style( new QLabel( tools::translate( "CheckpointConfigPanel", "Frequency:" ), frequencyBox ) );
+            frequency_ = Style( new QTimeEdit( frequencyBox ) );
             frequency_->setTime( QTime().addSecs( 3600 ) );
         }
         {
-            QHBox* keepBox = new QHBox( checkpointsGroup_ );
-            new QLabel( tr( "Keep:" ), keepBox );
-            keep_ = new QSpinBox( 1, 100, 1, keepBox );
+            QHBox* keepBox = Style( new QHBox( checkpointsGroup_ ) );
+            Style( new QLabel( tools::translate( "CheckpointConfigPanel", "Keep:" ), keepBox ) );
+            keep_ = Style( new QSpinBox( 1, 100, 1, keepBox ) );
         }
     }
     {
-        loadGroup_ = new QGroupBox( 2, Qt::Horizontal, tr( "Load checkpoint: " ), vbox );
+        loadGroup_ = Style( new QGroupBox( 2, Qt::Horizontal, tools::translate( "CheckpointConfigPanel", "Load checkpoint: " ), vbox ) );
         loadGroup_->setCheckable( true );
         loadGroup_->setChecked( false );
         {
-            QVBox* box = new QVBox( loadGroup_ );
-            new QLabel( tr( "Session:" ), box );
-            sessions_ = new QListBox( box );
+            QVBox* box = Style( new QVBox( loadGroup_ ) );
+            Style( new QLabel( tools::translate( "CheckpointConfigPanel", "Session:" ), box ) );
+            sessions_ = Style( new QListBox( box ) );
             connect( sessions_, SIGNAL( highlighted( const QString& ) ), SLOT( SessionSelected( const QString& ) ) );
         }
         {
-            QVBox* box = new QVBox( loadGroup_ );
-            checkpoints_ = new CheckpointList( box, config_ );
+            QVBox* box = Style( new QVBox( loadGroup_ ) );
+            checkpoints_ = Style( new CheckpointList( box, config_ ) );
             connect( checkpoints_, SIGNAL( Select( const QString& ) ), SLOT( OnCheckpointSelected( const QString& ) ) );
         }
         connect( loadGroup_, SIGNAL( toggled( bool ) ), checkpoints_, SLOT( Toggle( bool ) ) );
@@ -88,7 +99,7 @@ void CheckpointConfigPanel::Select( const QString& exercise )
         sessions_->insertStringList( commands::ListSessionsWithCheckpoint( config_, exercise_.ascii() ) );
         sessions_->setEnabled( sessions_->count() );
         if( !sessions_->count() )
-            sessions_->insertItem( tr( "No session" ) );
+            sessions_->insertItem( tools::translate( "CheckpointConfigPanel", "No session" ) );
         sessions_->setSelected( 0, true );
     }
 }

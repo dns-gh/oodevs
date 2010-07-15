@@ -29,7 +29,7 @@ namespace bfs = boost::filesystem;
 // Created: NLD 2003-12-04
 // -----------------------------------------------------------------------------
 MIL_Config::MIL_Config()
-    : endTick_                  ( std::numeric_limits< unsigned int >::max() )
+    : endTick_                  ( 0 )
     , diaDebuggerPort_          ( 0 )
     , networkLoggerPort_        ( 0 )
     , bCheckPointOrbat_         ( false )
