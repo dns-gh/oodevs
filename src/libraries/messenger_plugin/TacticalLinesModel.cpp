@@ -17,14 +17,14 @@
 #include "IdManager.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "tools/Iterator.h"
-#include <xeumeuleu/xml.hpp>
-
 #include "protocol/protocol.h"
 #include "protocol/messengersenders.h"
+#include <xeumeuleu/xml.hpp>
 
 using namespace plugins::messenger;
 using namespace Common;
 using namespace MsgsClientToMessenger;
+
 // -----------------------------------------------------------------------------
 // Name: TacticalLinesModel constructor
 // Created: NLD 2006-11-13
@@ -112,7 +112,6 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
 {
     plugins::messenger::LimitUpdateRequestAck ack;
     ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_no_error );
-
     Limit* limit = limits_.Find( asn.oid() );
     if( limit )
     {
@@ -132,7 +131,6 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
 {
     plugins::messenger::LimitDestructionRequestAck ack;
     ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_no_error );
-
     Limit* limit = limits_.Find( asn.oid() );
     if( limit )
     {
@@ -168,7 +166,6 @@ void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& pub
 {
     plugins::messenger::LimaUpdateRequestAck ack ;
     ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_no_error );
-
     Lima* lima = limas_.Find( asn.oid() );
     if( lima )
     {
@@ -188,7 +185,6 @@ void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& pub
 {
     plugins::messenger::LimaDestructionRequestAck ack ;
     ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_no_error );
-
     Lima* lima = limas_.Find( asn.oid() );
     if( lima )
     {

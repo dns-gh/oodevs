@@ -98,7 +98,7 @@ void Model::Save( const std::string& name ) const
     for( std::map< unsigned int, std::set< const Entity_ABC* > >::iterator it = formations.begin(); it != formations.end(); ++it )
     {
         xos << xml::start( "formation" )
-            << xml::attribute( "id", it->first );
+                << xml::attribute( "id", it->first );
         for( std::set< const Entity_ABC*>::iterator eit = it->second.begin(); eit != it->second.end(); ++eit)
             (*eit)->Write( xos, *converter_ );
         xos << xml::end;
@@ -106,7 +106,7 @@ void Model::Save( const std::string& name ) const
     for( std::map< unsigned int, std::set< const Entity_ABC* > >::iterator it = automats.begin(); it!=automats.end(); ++it )
     {
         xos << xml::start( "automat" )
-            << xml::attribute( "id", it->first );
+                << xml::attribute( "id", it->first );
         for( std::set< const Entity_ABC* >::iterator eit = it->second.begin(); eit != it->second.end(); ++eit )
             (*eit)->Write( xos, *converter_ );
         xos << xml::end;

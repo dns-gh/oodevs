@@ -30,10 +30,9 @@ namespace plugins
 {
 namespace messenger
 {
-
 // =============================================================================
 /** @class  TacticalLine_ABC
-    @brief  TacticalLine_ABC
+    @brief  Tactical line declaration
 */
 // Created: SBO 2006-11-15
 // =============================================================================

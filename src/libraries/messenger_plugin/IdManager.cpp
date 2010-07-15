@@ -22,7 +22,6 @@ IdManager::IdManager()
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: IdManager::~IdManager
 // Created: RDS 2008-04-04

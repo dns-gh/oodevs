@@ -8,11 +8,9 @@
 // *****************************************************************************
 
 #include "messenger_plugin_pch.h"
-
 #include "TacticalLine_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/CoordinateConverter.h"
-
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::messenger;

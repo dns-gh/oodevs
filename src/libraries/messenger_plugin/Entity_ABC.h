@@ -27,7 +27,7 @@ namespace messenger
 
 // =============================================================================
 /** @class  Entity_ABC
-    @brief  Entity_ABC
+    @brief  Entity declaration
 */
 // Created: RDS 2008-04-09
 // =============================================================================
@@ -36,8 +36,8 @@ class Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Entity_ABC() {};
-    virtual ~Entity_ABC() {};
+             Entity_ABC() {}
+    virtual ~Entity_ABC() {}
     //@}
 
     //! @name xml read / write
