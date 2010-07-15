@@ -116,6 +116,4 @@ private:
     //@}
 };
 
-#include "DEC_LogisticFunctions.inl"
-
 #endif // __DEC_LogisticFunctions_h_

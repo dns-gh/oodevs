@@ -61,6 +61,4 @@ public:
     //@}
 };
 
-#include "DEC_KnowledgeAgentFunctions.inl"
-
 #endif // __DEC_KnowledgeAgentFunctions_h_

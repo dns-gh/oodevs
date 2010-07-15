@@ -90,7 +90,4 @@ namespace directia
     void ReleasedByDIA( urban::Block* );
 }
 
-#include "DEC_Tools.inl"
-
-
 #endif // __DEC_Tools_h_
