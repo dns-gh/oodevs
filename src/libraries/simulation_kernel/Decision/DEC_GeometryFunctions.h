@@ -10,7 +10,6 @@
 #ifndef __DEC_GeometryFunctions_h_
 #define __DEC_GeometryFunctions_h_
 
-#include "MIL.h"
 #include <boost/shared_ptr.hpp>
 
 class DEC_Decision_ABC;

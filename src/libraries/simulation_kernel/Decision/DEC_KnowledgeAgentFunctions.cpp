@@ -11,8 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeAgentFunctions.h"
-
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Roles/Illumination/PHY_RoleInterface_Illumination.h"
@@ -20,8 +18,6 @@
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Units/Categories/PHY_NatureAtlas.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
-#include "MT_Tools/MT_Sector.h"
 #include "Tools/MIL_Tools.h"
 
 // -----------------------------------------------------------------------------
@@ -68,7 +64,7 @@ bool DEC_KnowledgeAgentFunctions::IsInDetectionCone( const MIL_AgentPion& caller
         return false;
     assert( direction );
     const MT_Vector2D& vOrigin = callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition();
-    const MT_Float     rDist   = callerAgent.GetRole< PHY_RoleInterface_Perceiver >().GetMaxAgentPerceptionDistance();
+    const MT_Float rDist = callerAgent.GetRole< PHY_RoleInterface_Perceiver >().GetMaxAgentPerceptionDistance();
     return MT_Sector( vOrigin, *direction, angle * MT_PI / 180. ).IsInCone( pKnowledge->GetPosition(), rDist );
 }
 

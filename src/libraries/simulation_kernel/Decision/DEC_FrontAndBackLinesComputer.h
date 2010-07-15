@@ -10,8 +10,6 @@
 #ifndef __DEC_FrontAndBackLinesComputer_h_
 #define __DEC_FrontAndBackLinesComputer_h_
 
-#include "MIL.h"
-
 class MIL_AgentPion;
 class MIL_Automate;
 
@@ -36,8 +34,8 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< MIL_AgentPion* >   T_PionVector;
-    typedef T_PionVector::const_iterator  CIT_PionVector;
+    typedef std::vector< MIL_AgentPion* >  T_PionVector;
+    typedef T_PionVector::const_iterator CIT_PionVector;
 
     typedef std::vector< MIL_Automate* >       T_AutomateVector;
     typedef T_AutomateVector::const_iterator CIT_AutomateVector;

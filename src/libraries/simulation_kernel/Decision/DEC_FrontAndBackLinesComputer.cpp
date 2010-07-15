@@ -55,7 +55,7 @@ DEC_FrontAndBackLinesComputer::~DEC_FrontAndBackLinesComputer()
 void DEC_FrontAndBackLinesComputer::Compute()
 {
     const unsigned int nCurrentTime = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
-    assert( nLastTimeComputed_ <=  nCurrentTime );
+    assert( nLastTimeComputed_ <= nCurrentTime );
     if( nLastTimeComputed_ == nCurrentTime )
         return;
     nLastTimeComputed_ = nCurrentTime;
@@ -65,9 +65,9 @@ void DEC_FrontAndBackLinesComputer::Compute()
     // Vecteur perpendiculaire direction globale du fuseau
     MT_Vector2D vDirPerpendicularFuseau( fuseauGlobalDirLine.GetPosEnd() - fuseauGlobalDirLine.GetPosStart() );
     vDirPerpendicularFuseau.Normalize();
-    MT_Float rTmp                 = vDirPerpendicularFuseau.rX_;
-    vDirPerpendicularFuseau.rX_   = vDirPerpendicularFuseau.rY_;
-    vDirPerpendicularFuseau.rY_   = -rTmp;
+    MT_Float rTmp = vDirPerpendicularFuseau.rX_;
+    vDirPerpendicularFuseau.rX_ = vDirPerpendicularFuseau.rY_;
+    vDirPerpendicularFuseau.rY_ = -rTmp;
     TER_DistanceLess cmp ( fuseauGlobalDirLine.GetPosStart() );
     T_PointSet projectedPointSet( cmp );
     // Project all the positions on the fuseau global direction
@@ -89,9 +89,9 @@ void DEC_FrontAndBackLinesComputer::Compute()
     }
     else
     {
-        const MT_Vector2D& vBackLinePoint_  = *projectedPointSet.begin ();
+        const MT_Vector2D& vBackLinePoint_ = *projectedPointSet.begin ();
         const MT_Vector2D& vFrontLinePoint_ = *projectedPointSet.rbegin();
-        backLineDroite_  = MT_Droite( vBackLinePoint_ , vBackLinePoint_  + vDirPerpendicularFuseau );
+        backLineDroite_ = MT_Droite( vBackLinePoint_, vBackLinePoint_ + vDirPerpendicularFuseau );
         frontLineDroite_ = MT_Droite( vFrontLinePoint_, vFrontLinePoint_ + vDirPerpendicularFuseau );
     }
 }
@@ -103,8 +103,8 @@ void DEC_FrontAndBackLinesComputer::Compute()
 MT_Float DEC_FrontAndBackLinesComputer::ComputeDistanceFromFrontLine( const MT_Vector2D& vPoint )
 {
     Compute();
-    const MT_Float          rDistFromFrontLine = frontLineDroite_.GetDistanceToPoint( vPoint );
-    const MT_Droite::E_Side nFrontLineSide     = frontLineDroite_.GetSide( vPoint );
+    const MT_Float rDistFromFrontLine = frontLineDroite_.GetDistanceToPoint( vPoint );
+    const MT_Droite::E_Side nFrontLineSide = frontLineDroite_.GetSide( vPoint );
     // Front line behind
     if( nFrontLineSide == MT_Droite::eOnNegativeSide )
         return -rDistFromFrontLine;
@@ -119,8 +119,8 @@ MT_Float DEC_FrontAndBackLinesComputer::ComputeDistanceFromFrontLine( const MT_V
 MT_Float DEC_FrontAndBackLinesComputer::ComputeDistanceFromBackLine( const MT_Vector2D& vPoint )
 {
     Compute();
-    const MT_Float          rDistFromBackLine  = backLineDroite_ .GetDistanceToPoint( vPoint );
-    const MT_Droite::E_Side nBackLineSide      = backLineDroite_ .GetSide( vPoint );
+    const MT_Float rDistFromBackLine = backLineDroite_.GetDistanceToPoint( vPoint );
+    const MT_Droite::E_Side nBackLineSide = backLineDroite_.GetSide( vPoint );
     // Back line behind
     if( nBackLineSide == MT_Droite::eOnNegativeSide )
         return -rDistFromBackLine;

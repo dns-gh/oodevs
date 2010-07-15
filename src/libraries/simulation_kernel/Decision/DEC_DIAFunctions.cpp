@@ -10,22 +10,12 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "DEC_DIAFunctions.h"
 #include "Meteo/PHY_MeteoDataManager.h"
-#include "Meteo/PHY_Ephemeride.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Orders/MIL_MissionParameterFactory.h"
-#include "simulation_terrain/TER_Localisation.h"
-#include "Knowledge/DEC_Knowledge_Object.h"
 #include <iostream>
-
-class DEC_Path_ABC;
-
-// =============================================================================
-// DEBUG
-// =============================================================================
 
 //-----------------------------------------------------------------------------
 // Name: DEC_DIAFunctions::PointToString
@@ -60,10 +50,6 @@ std::string DEC_DIAFunctions::PathToString( DEC_Path_ABC* pPath )
     strTmp << "0x" << pPath;
     return strTmp.str();
 }
-
-//=============================================================================
-// PARAMETERS COPY
-//=============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_DIAFunctions::CopyLocalisationToLocationListMission
@@ -104,9 +90,7 @@ void DEC_DIAFunctions::CopyPoint( MT_Vector2D* pPosSource, boost::shared_ptr< MT
     if( pPosDest )
         (*pPosDest) = (*pPosSource);
     else
-    {
         throw std::runtime_error( "Can't assign a point into a nil variable of lua" );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -173,10 +157,6 @@ void DEC_DIAFunctions::CopyGenObjectToGenObjectListMission( boost::shared_ptr< M
     pMission->AppendToParameter( parameter, pGenObjectSource );
 }
 
-// =============================================================================
-// TIME MANAGEMENT
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_DIAFunctions::IsNight
 // Created: NLD 2004-05-25
@@ -203,10 +183,6 @@ float DEC_DIAFunctions::GetRealTime()
 {
     return static_cast< float >( MIL_AgentServer::GetWorkspace().GetRealTime() );
 }
-
-// =============================================================================
-// DIA USER TYPES LIST MANIPULATION
-// =============================================================================
 
 //-----------------------------------------------------------------------------
 // Name: DEC_DIAFunctions::ListPoint_Size

@@ -12,8 +12,6 @@
 #ifndef __DEC_ActionFunctions_h_
 #define __DEC_ActionFunctions_h_
 
-#include "MIL.h"
-
 class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;

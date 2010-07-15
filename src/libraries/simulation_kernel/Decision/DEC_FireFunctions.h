@@ -12,7 +12,6 @@
 #ifndef __DEC_FireFunctions_h_
 #define __DEC_FireFunctions_h_
 
-#include "MIL.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Decision/DEC_Decision_ABC.h"
 

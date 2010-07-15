@@ -10,10 +10,7 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "DEC_ActionFunctions.h"
-#include "Entities/Actions/PHY_Action_ABC.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
@@ -21,9 +18,7 @@
 //#include "Entities/Objects/LogisticCapacity.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-
 #include "simulation_kernel/RefugeeActionsNotificationHandler_ABC.h"
-#include "simulation_kernel/TransportNotificationHandler_ABC.h"
 
 namespace
 {
@@ -67,7 +62,6 @@ void DEC_ActionFunctions::Prisoners_UnloadInCamp( MIL_AgentPion& callerAgent, bo
 {
     if( IsNotCampKnowledgeOrHasLogisticCapacity( pKnowledge, pCampKnowledge ) )
         return;
-
     callerAgent.GetRole< transport::PHY_RoleAction_Transport >().MagicUnloadPion( pKnowledge->GetAgentKnown() );
     pKnowledge->GetAgentKnown().GetRole< surrender::PHY_RoleInterface_Surrender >().Imprison( *pCampKnowledge->GetObjectKnown() );
 }
@@ -80,8 +74,7 @@ bool DEC_ActionFunctions::Prisoners_IsUnloadedInCamp( boost::shared_ptr< DEC_Kno
 {
     if( IsNotCampKnowledgeOrHasLogisticCapacity( pKnowledge, pCampKnowledge ) )
         return false;
-    else
-        return pKnowledge->GetAgentKnown().GetRole< surrender::PHY_RoleInterface_Surrender >().IsImprisoned( *pCampKnowledge->GetObjectKnown() ) ;
+    return pKnowledge->GetAgentKnown().GetRole< surrender::PHY_RoleInterface_Surrender >().IsImprisoned( *pCampKnowledge->GetObjectKnown() ) ;
 }
 
 // -----------------------------------------------------------------------------
@@ -124,8 +117,7 @@ bool DEC_ActionFunctions::PrisonnersRefugees_IsLoaded( MIL_AgentPion& callerAgen
 {
     if( !pKnowledge || !pKnowledge->IsValid() )
         return false;
-    else
-        return callerAgent.GetRole< transport::PHY_RoleAction_Transport >().IsLoaded( pKnowledge->GetAgentKnown() ) ;
+    return callerAgent.GetRole< transport::PHY_RoleAction_Transport >().IsLoaded( pKnowledge->GetAgentKnown() ) ;
 }
 
 // -----------------------------------------------------------------------------
@@ -136,13 +128,8 @@ bool DEC_ActionFunctions::Refugees_IsUnloadedInCamp( boost::shared_ptr< DEC_Know
 {
     if( IsNotCampKnowledgeOrHasLogisticCapacity( pKnowledge, pCampKnowledge ) )
         return false;
-    else
-        return pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Refugee >().IsManaged( *pCampKnowledge->GetObjectKnown() );
+    return pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Refugee >().IsManaged( *pCampKnowledge->GetObjectKnown() );
 }
-
-// =============================================================================
-// TRANSPORT
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_ActionFunctions::Transport_AddPion

@@ -10,8 +10,6 @@
 #ifndef __DEC_FunctionsTools_h_
 #define __DEC_FunctionsTools_h_
 
-#include "MIL.h"
-
 class MIL_Object_ABC;
 
 // =============================================================================

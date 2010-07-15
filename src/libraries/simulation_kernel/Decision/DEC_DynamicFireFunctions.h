@@ -10,7 +10,6 @@
 #ifndef __DEC_DynamicFireFunctions_h_
 #define __DEC_DynamicFireFunctions_h_
 
-#include "MIL.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 
 class MIL_AgentPion;

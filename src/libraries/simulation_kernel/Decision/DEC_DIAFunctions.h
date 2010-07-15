@@ -12,7 +12,6 @@
 #ifndef __DEC_DIAFunctions_h_
 #define __DEC_DIAFunctions_h_
 
-#include "MIL.h"
 class MIL_Mission_ABC;
 class DEC_Gen_Object;
 class DEC_Knowledge_Object;

@@ -10,8 +10,6 @@
 #ifndef __DEC_AutomateFunctions_h_
 #define __DEC_AutomateFunctions_h_
 
-#include "MIL.h"
-
 class DEC_Decision_ABC;
 class DEC_Knowledge_Object;
 class MIL_Automate;

@@ -11,14 +11,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_AgentFunctions.h"
-#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
@@ -29,24 +27,17 @@
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
-#include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Morale.h"
-#include "Entities/Agents/Units/HumanFactors/PHY_Experience.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Tiredness.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Effects/MIL_Effect_Suicide.h"
 #include "Entities/Objects/ActivableCapacity.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
-#include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/MIL_Army.h"
-#include "Entities/MIL_EntityManager.h"
-#include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Decision/DEC_Decision_ABC.h"
-#include "Tools/MIL_Tools.h"
 #include "DEC_AutomateFunctions.h"
 #include "DEC_GeometryFunctions.h"
 #include "protocol/ClientSenders.h"
@@ -141,7 +132,6 @@ void DEC_AgentFunctions::SetFlyingHeight( MIL_Agent_ABC& callerAgent, MT_Float h
     assert( height >= 0. && "T'as deja essaye de voler à cette hauteur ?");
     callerAgent.GetRole< PHY_RoleAction_InterfaceFlying >().SetFlyingHeight( height );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsFlying
@@ -625,10 +615,6 @@ boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetInterceptionPoint( const
     return result;
 }
 
-// =============================================================================
-// POPULATION
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetRoePopulation
 // Created: SBO 2005-11-23
@@ -647,10 +633,6 @@ void DEC_AgentFunctions::ChannelPopulations( const TER_Localisation* location )
     assert( location );
     MIL_AgentServer::GetWorkspace().GetEntityManager().ChannelPopulations( *location );
 }
-
-// =============================================================================
-// INSTALLATION
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsInstalled

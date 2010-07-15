@@ -12,7 +12,6 @@
 #ifndef __DEC_KnowledgeAgentFunctions_h_
 #define __DEC_KnowledgeAgentFunctions_h_
 
-#include "MIL.h"
 #include "Knowledge/DEC_Knowledge_Urban.h"
 
 class DEC_Decision_ABC;
