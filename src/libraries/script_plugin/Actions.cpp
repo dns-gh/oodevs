@@ -15,7 +15,6 @@
 #include "actions/ActionsModel.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/Time_ABC.h"
-#include "directia/Brain.h"
 #include "dispatcher/AgentKnowledgeConverter.h"
 #include "dispatcher/ModelAdapter.h"
 #include "dispatcher/ObjectKnowledgeConverter.h"
@@ -25,6 +24,7 @@
 #include "protocol/ServerPublisher_ABC.h"
 #include "tools/ExerciseConfig.h"
 #include <xeumeuleu/xml.hpp>
+#include <directia/Brain.h>
 
 using namespace plugins::script;
 
@@ -44,8 +44,11 @@ namespace
 // -----------------------------------------------------------------------------
 struct Actions::Publisher : public Publisher_ABC
 {
-    explicit Publisher( dispatcher::SimulationPublisher_ABC& sim ) : sim_( &sim ) {}
-
+    explicit Publisher( dispatcher::SimulationPublisher_ABC& sim )
+        : sim_( &sim )
+    {
+        // NOTHING
+    }
     virtual void Send( const MsgsClientToSim::MsgClientToSim& message )
     {
         sim_->Send( message );
@@ -62,15 +65,15 @@ struct Actions::Publisher : public Publisher_ABC
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
 Actions::Actions( kernel::Controller& controller, const tools::ExerciseConfig& config, const dispatcher::Model& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& sim )
-    : entities_( new dispatcher::ModelAdapter( model ) )
-    , publisher_( new Publisher( sim ) )
-    , converter_( new kernel::CoordinateConverter( config ) )
-    , time_( new SimulationTime() )
-    , agentsKnowledges_( new dispatcher::AgentKnowledgeConverter( model ) )
+    : entities_         ( new dispatcher::ModelAdapter( model ) )
+    , publisher_        ( new Publisher( sim ) )
+    , converter_        ( new kernel::CoordinateConverter( config ) )
+    , time_             ( new SimulationTime() )
+    , agentsKnowledges_ ( new dispatcher::AgentKnowledgeConverter( model ) )
     , objectsKnowledges_( new dispatcher::ObjectKnowledgeConverter( model ) )
-    , parameters_( new actions::ActionParameterFactory( *converter_, *entities_, staticModel, *agentsKnowledges_, *objectsKnowledges_, controller ) )
-    , factory_( new actions::ActionFactory( controller, *parameters_, *entities_, staticModel, *time_ ) )
-    , file_   ( config.BuildExerciseChildFile( "scripts/resources/orders.ord" ) )
+    , parameters_       ( new actions::ActionParameterFactory( *converter_, *entities_, staticModel, *agentsKnowledges_, *objectsKnowledges_, controller ) )
+    , factory_          ( new actions::ActionFactory( controller, *parameters_, *entities_, staticModel, *time_ ) )
+    , file_             ( config.BuildExerciseChildFile( "scripts/resources/orders.ord" ) )
 {
     // NOTHING
 }

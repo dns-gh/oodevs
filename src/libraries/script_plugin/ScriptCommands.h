@@ -21,10 +21,9 @@ namespace plugins
 {
 namespace script
 {
-
 // =============================================================================
 /** @class  ScriptCommands
-    @brief  ScriptCommands
+    @brief  Script commands
 */
 // Created: SBO 2008-07-02
 // =============================================================================

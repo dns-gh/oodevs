@@ -32,7 +32,7 @@ namespace script
 
 // =============================================================================
 /** @class  ConditionFacade
-    @brief  ConditionFacade
+    @brief  Condition facade
 */
 // Created: AGE 2008-06-12
 // =============================================================================

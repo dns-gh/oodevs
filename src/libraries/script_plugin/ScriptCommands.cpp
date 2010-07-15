@@ -10,7 +10,7 @@
 #include "script_plugin_pch.h"
 #include "ScriptCommands.h"
 #include "MiscEvents.h"
-#include "directia/Brain.h"
+#include <directia/Brain.h>
 #include "clients_kernel/Controller.h"
 
 using namespace plugins::script;

@@ -14,12 +14,12 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-#include "directia/Brain.h"
 #include "dispatcher/Population.h"
 #include "dispatcher/PopulationConcentration.h"
 #include "dispatcher/PopulationFlow.h"
 #include "PopulationManipulator.h"
 #include "SimpleEntityCondition.h"
+#include <directia/Brain.h>
 
 using namespace plugins::script;
 using namespace dispatcher;
@@ -56,8 +56,8 @@ void PopulationConditions::RegisterIn( directia::Brain& brain )
 
 namespace directia
 {
-    template< > inline void UsedByDIA    ( dispatcher::Population* ) { }
-    template< > inline void ReleasedByDIA( dispatcher::Population* ) { }
+    template<> inline void UsedByDIA    ( dispatcher::Population* ) {}
+    template<> inline void ReleasedByDIA( dispatcher::Population* ) {}
 }
 
 namespace
@@ -66,8 +66,9 @@ namespace
     {
         explicit PositionComputer( const kernel::CoordinateConverter_ABC& converter )
             : converter_( &converter )
-        {}
-
+        {
+            // NOTHING
+        }
         virtual void Visit( const kernel::Entity_ABC& entity )
         {
             if( const dispatcher::PopulationConcentration_ABC* c = dynamic_cast< const dispatcher::PopulationConcentration_ABC* >( &entity ) )
@@ -82,7 +83,7 @@ namespace
                 f->GetLocation().Send( location );
                 for( int i = 0; i < location.coordinates().elem_size(); ++i )
                 {
-                    const geometry::Point2f p = converter_->ConvertToXY( location.coordinates().elem(i) );
+                    const geometry::Point2f p = converter_->ConvertToXY( location.coordinates().elem( i ) );
                     points_.push_back( p );
                     box_.Incorporate( p );
                 }
@@ -99,9 +100,9 @@ namespace
     public:
         Enters( const Zone& zone, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter )
             : SimpleEntityCondition< events::PopulationMoved >( controller )
-            , zone_      ( ToPolygon( zone ) )
-            , box_       ( zone_.BoundingBox() )
-            , converter_ ( converter )
+            , zone_     ( ToPolygon( zone ) )
+            , box_      ( zone_.BoundingBox() )
+            , converter_( converter )
         {
             // NOTHING
         }
@@ -112,7 +113,7 @@ namespace
             move.entity.Accept( position );
             if( ! box_.Intersect( position.box_ ).IsEmpty() )
                 for( unsigned int i = 0; i < position.points_.size(); ++i )
-                    if( zone_.IsInside( position.points_[i] ) )
+                    if( zone_.IsInside( position.points_[ i ] ) )
                     {
                         Trigger( move.entity );
                         return;

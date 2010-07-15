@@ -12,11 +12,11 @@
 #include "SimpleEntityCondition.h"
 #include "AgentEvents.h"
 #include "AgentManipulator.h"
-#include "directia/Brain.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/AgentKnowledge.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include <directia/Brain.h>
 
 using namespace plugins::script;
 using namespace dispatcher;
@@ -62,8 +62,8 @@ void AgentConditions::RegisterIn( directia::Brain& brain )
 
 namespace directia
 {
-    template< > inline void UsedByDIA    ( dispatcher::Agent* ) { }
-    template< > inline void ReleasedByDIA( dispatcher::Agent* ) { }
+    template<> inline void UsedByDIA    ( dispatcher::Agent* ) {}
+    template<> inline void ReleasedByDIA( dispatcher::Agent* ) {}
 }
 
 namespace
@@ -74,9 +74,9 @@ namespace
     public:
         Enters( const Zone& zone, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter )
             : SimpleEntityCondition< E >( controller )
-            , zone_      ( ToPolygon( zone ) )
-            , box_       ( zone_.BoundingBox() )
-            , converter_ ( converter )
+            , zone_     ( ToPolygon( zone ) )
+            , box_      ( zone_.BoundingBox() )
+            , converter_( converter )
         {
             // NOTHING
         }

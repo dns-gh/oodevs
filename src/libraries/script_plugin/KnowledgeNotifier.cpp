@@ -9,9 +9,9 @@
 
 #include "script_plugin_pch.h"
 #include "KnowledgeNotifier.h"
+#include "AgentEvents.h"
 #include "dispatcher/AgentKnowledge.h"
 #include "clients_kernel/Controller.h"
-#include "AgentEvents.h"
 
 using namespace MsgsSimToClient;
 

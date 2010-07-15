@@ -31,7 +31,7 @@ namespace script
 
 // =============================================================================
 /** @class  AutomatConditions
-    @brief  AutomatConditions
+    @brief  Automat conditions
 */
 // Created: SBO 2008-08-13
 // =============================================================================

@@ -33,7 +33,7 @@ namespace script
 
 // =============================================================================
 /** @class  AgentConditions
-    @brief  AgentConditions
+    @brief  Agent conditions
 */
 // Created: AGE 2008-06-13
 // =============================================================================

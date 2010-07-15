@@ -28,10 +28,9 @@ namespace plugins
 {
 namespace script
 {
-
 // =============================================================================
 /** @class  AgentNotifier
-    @brief  AgentNotifier
+    @brief  Agent notifier
 */
 // Created: AGE 2008-06-13
 // =============================================================================

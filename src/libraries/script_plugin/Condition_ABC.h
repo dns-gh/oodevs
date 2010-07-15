@@ -22,7 +22,7 @@ namespace script
 
 // =============================================================================
 /** @class  Condition_ABC
-    @brief  Condition_ABC
+    @brief  Condition declaration
 */
 // Created: AGE 2008-06-12
 // =============================================================================
@@ -31,8 +31,8 @@ class Condition_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Condition_ABC() {};
-    virtual ~Condition_ABC() {};
+             Condition_ABC() {}
+    virtual ~Condition_ABC() {}
     //@}
 
     //! @name Operations

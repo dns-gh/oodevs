@@ -27,10 +27,9 @@ namespace plugins
 {
 namespace script
 {
-
 // =============================================================================
 /** @class  ClientCommands
-    @brief  ClientCommands
+    @brief  Client commands
 */
 // Created: AGE 2008-06-24
 // =============================================================================

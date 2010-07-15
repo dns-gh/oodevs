@@ -50,4 +50,3 @@ void Event::Deactivate()
 {
     condition_->Activate( false );
 }
-

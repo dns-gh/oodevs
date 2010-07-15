@@ -44,6 +44,6 @@ PopulationNotifier::~PopulationNotifier()
 // -----------------------------------------------------------------------------
 void PopulationNotifier::DoUpdate( const MsgPopulationFlowUpdate& message )
 {
-    if( (unsigned int)message.oid_population() == population_.GetId() && message.has_flux() )
+    if( static_cast< unsigned int >( message.oid_population() ) == population_.GetId() && message.has_flux() )
         controller_.Update( events::PopulationMoved( population_ ) );
 }

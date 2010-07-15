@@ -32,10 +32,9 @@ namespace plugins
 {
 namespace script
 {
-
 // =============================================================================
 /** @class  AutomatNotifier
-    @brief  AutomatNotifier
+    @brief  Automat notifier
 */
 // Created: SBO 2008-08-13
 // =============================================================================

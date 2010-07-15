@@ -32,10 +32,9 @@ namespace plugins
 {
 namespace script
 {
-
 // =============================================================================
 /** @class  ExtensionFactory
-    @brief  ExtensionFactory
+    @brief  Extension factory
 */
 // Created: AGE 2008-06-12
 // =============================================================================

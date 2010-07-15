@@ -11,7 +11,7 @@
 #include "ObjectConditions.h"
 #include "SimpleEntityCondition.h"
 #include "AgentEvents.h"
-#include "directia/Brain.h"
+#include <directia/Brain.h>
 
 using namespace plugins::script;
 
@@ -46,8 +46,8 @@ void ObjectConditions::RegisterIn( directia::Brain& brain )
 
 namespace directia
 {
-    template< > inline void UsedByDIA    ( dispatcher::Object_ABC* ) { }
-    template< > inline void ReleasedByDIA( dispatcher::Object_ABC* ) { }
+    template<> inline void UsedByDIA    ( dispatcher::Object_ABC* ) {}
+    template<> inline void ReleasedByDIA( dispatcher::Object_ABC* ) {}
 }
 
 // -----------------------------------------------------------------------------

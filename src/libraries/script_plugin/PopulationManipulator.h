@@ -22,10 +22,9 @@ namespace plugins
 {
 namespace script
 {
-
 // =============================================================================
 /** @class  PopulationManipulator
-    @brief  PopulationManipulator
+    @brief  Population manipulator
 */
 // Created: SBO 2008-11-18
 // =============================================================================
@@ -44,8 +43,8 @@ public:
     {
         virtual void RegisterIn( directia::Brain& brain );
     };
-    void UsedByDIA    () {};
-    void ReleasedByDIA() {};
+    void UsedByDIA    () {}
+    void ReleasedByDIA() {}
     //@}
 
 private:
@@ -58,7 +57,7 @@ private:
     //! @name Helpers
     //@{
     unsigned int GetIdentifier() const;
-    std::string  GetName() const;
+    std::string GetName() const;
     //@}
 
 private:

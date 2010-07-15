@@ -12,7 +12,7 @@
 #include "EventCondition.h"
 #include "MiscEvents.h"
 #include "tools/ElementObserver_ABC.h"
-#include "directia/Brain.h"
+#include <directia/Brain.h>
 
 using namespace plugins::script;
 
@@ -54,13 +54,14 @@ boost::shared_ptr< Condition_ABC > ScriptConditions::PhaseChanged()
     struct PhaseChanged : public SimpleEventCondition< events::PhaseChanged >
     {
         PhaseChanged( kernel::Controller& controller )
-            : SimpleEventCondition( controller ) {}
-
+            : SimpleEventCondition( controller )
+        {
+            // NOTHING
+        }
         virtual void NotifyUpdated( const events::PhaseChanged& ev )
         {
             Trigger( ev.phase );
         };
     };
-
     return boost::shared_ptr< Condition_ABC >( new PhaseChanged( controller_ ) );
 }

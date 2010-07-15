@@ -19,7 +19,7 @@
 #include "ScriptConditions.h"
 #include "IndicatorConditions.h"
 #include "MiscEvents.h"
-#include "directia/Brain.h"
+#include <directia/Brain.h>
 
 using namespace plugins::script;
 
@@ -62,14 +62,17 @@ void ConditionFacade::RegisterIn( directia::Brain& brain )
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< Condition_ABC > ConditionFacade::Once
+// Name: ConditionFacade::Once
 // Created: AGE 2008-06-25
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > ConditionFacade::Once()
 {
     struct Once : public BaseCondition
     {
-        Once() : triggered_( false ) {}
+        Once() : triggered_( false )
+        {
+            // NOTHING
+        }
         virtual void Activate( bool active )
         {
             BaseCondition::Activate( active );
@@ -85,7 +88,7 @@ boost::shared_ptr< Condition_ABC > ConditionFacade::Once()
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< Condition_ABC > ConditionFacade::Timer
+// Name: ConditionFacade::Timer
 // Created: AGE 2008-06-25
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > ConditionFacade::Timer( float seconds )
@@ -94,8 +97,10 @@ boost::shared_ptr< Condition_ABC > ConditionFacade::Timer( float seconds )
     {
         Timer( kernel::Controller& controller, float time )
             : SimpleEventCondition( controller )
-            , time_( time ){}
-
+            , time_( time )
+        {
+            // NOTHING
+        }
         virtual void NotifyUpdated( const events::TimeFlowed& time )
         {
             time_ -= time.delta;
@@ -104,6 +109,5 @@ boost::shared_ptr< Condition_ABC > ConditionFacade::Timer( float seconds )
         };
         float time_;
     };
-
     return boost::shared_ptr< Condition_ABC >( new Timer( controller_, seconds ) );
 }

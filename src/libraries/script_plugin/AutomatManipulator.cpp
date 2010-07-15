@@ -9,7 +9,7 @@
 
 #include "script_plugin_pch.h"
 #include "AutomatManipulator.h"
-#include "directia/Brain.h"
+#include <directia/Brain.h>
 #include "dispatcher/Automat.h"
 
 using namespace plugins::script;

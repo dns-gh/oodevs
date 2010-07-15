@@ -22,16 +22,14 @@ namespace plugins
 {
 namespace script
 {
-
 // =============================================================================
 /** @class  ObjectManipulator
-    @brief  ObjectManipulator
+    @brief  Object manipulator
 */
 // Created: SBO 2010-07-13
 // =============================================================================
 class ObjectManipulator : public kernel::Extension_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -45,8 +43,8 @@ public:
     {
         virtual void RegisterIn( directia::Brain& brain );
     };
-    void UsedByDIA    () {};
-    void ReleasedByDIA() {};
+    void UsedByDIA() {}
+    void ReleasedByDIA() {}
     //@}
 
 private:

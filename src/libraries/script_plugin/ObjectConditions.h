@@ -31,13 +31,12 @@ namespace script
 
 // =============================================================================
 /** @class  ObjectConditions
-    @brief  ObjectConditions
+    @brief  Object conditions
 */
 // Created: SBO 2010-07-13
 // =============================================================================
 class ObjectConditions : public dispatcher::Registrable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -11,7 +11,7 @@
 #include "FiniteStateMachine.h"
 #include "Event.h"
 #include "Condition_ABC.h"
-#include "directia/Brain.h"
+#include <directia/Brain.h>
 #include <boost/bind.hpp>
 
 using namespace plugins::script;
@@ -21,7 +21,7 @@ using namespace plugins::script;
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
 FiniteStateMachine::FiniteStateMachine( directia::Brain& brain )
-    : state_   ( "start" )
+    : state_( "start" )
 {
     brain.RegisterObject  ( "fsm", this );
     brain.RegisterFunction( "DeclareEvent", &FiniteStateMachine::DeclareEvent );
@@ -76,4 +76,3 @@ void FiniteStateMachine::Deactivate()
 {
     std::for_each( events_.begin(), events_.end(), boost::bind( &Event::Deactivate, _1 ) );
 }
-

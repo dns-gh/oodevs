@@ -10,7 +10,7 @@
 #include "script_plugin_pch.h"
 #include "ObjectManipulator.h"
 #include "clients_kernel/ObjectType.h"
-#include "directia/Brain.h"
+#include <directia/Brain.h>
 #include "dispatcher/Object_ABC.h"
 
 using namespace plugins::script;

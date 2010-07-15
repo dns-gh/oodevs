@@ -9,7 +9,7 @@
 
 #include "script_plugin_pch.h"
 #include "PopulationManipulator.h"
-#include "directia/Brain.h"
+#include <directia/Brain.h>
 #include "dispatcher/Population.h"
 
 using namespace plugins::script;
@@ -41,7 +41,7 @@ PopulationManipulator::~PopulationManipulator()
 void PopulationManipulator::Registrar::RegisterIn( directia::Brain& brain )
 {
     brain.RegisterFunction( "GetIdentifier", &PopulationManipulator::GetIdentifier );
-    brain.RegisterFunction( "GetName",       &PopulationManipulator::GetName );
+    brain.RegisterFunction( "GetName", &PopulationManipulator::GetName );
 }
 
 // -----------------------------------------------------------------------------

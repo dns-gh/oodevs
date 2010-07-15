@@ -20,7 +20,7 @@ using namespace plugins::script;
 // -----------------------------------------------------------------------------
 ObjectNotifier::ObjectNotifier( kernel::Controller& controller, const dispatcher::Object_ABC& entity )
     : controller_( controller )
-    , entity_( entity )
+    , entity_    ( entity )
 {
     // NOTHING
 }

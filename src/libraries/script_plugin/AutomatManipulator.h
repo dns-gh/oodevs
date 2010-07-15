@@ -22,10 +22,9 @@ namespace plugins
 {
 namespace script
 {
-
 // =============================================================================
 /** @class  AutomatManipulator
-    @brief  AutomatManipulator
+    @brief  Automat manipulator
 */
 // Created: SBO 2008-08-13
 // =============================================================================
@@ -44,8 +43,8 @@ public:
     {
         virtual void RegisterIn( directia::Brain& brain );
     };
-    void UsedByDIA    () {};
-    void ReleasedByDIA() {};
+    void UsedByDIA() {}
+    void ReleasedByDIA() {}
     //@}
 
 private:

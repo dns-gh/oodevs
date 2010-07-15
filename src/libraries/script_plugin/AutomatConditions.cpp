@@ -11,8 +11,8 @@
 #include "AutomatConditions.h"
 #include "SimpleEntityCondition.h"
 #include "AgentEvents.h"
-#include "directia/Brain.h"
 #include "dispatcher/Automat.h"
+#include <directia/Brain.h>
 
 using namespace plugins::script;
 

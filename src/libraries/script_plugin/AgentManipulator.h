@@ -29,10 +29,9 @@ namespace plugins
 {
 namespace script
 {
-
 // =============================================================================
 /** @class  AgentManipulator
-    @brief  AgentManipulator
+    @brief  Agent manipulator
 */
 // Created: AGE 2008-06-17
 // =============================================================================
@@ -51,8 +50,8 @@ public:
     {
         virtual void RegisterIn( directia::Brain& brain );
     };
-    void UsedByDIA    () {};
-    void ReleasedByDIA() {};
+    void UsedByDIA() {}
+    void ReleasedByDIA() {}
     //@}
 
 private:

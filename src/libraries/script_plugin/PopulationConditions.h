@@ -33,7 +33,7 @@ namespace script
 
 // =============================================================================
 /** @class  PopulationConditions
-    @brief  PopulationConditions
+    @brief  Population conditions
 */
 // Created: SBO 2008-11-18
 // =============================================================================

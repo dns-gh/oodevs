@@ -44,7 +44,6 @@ namespace plugins
 {
 namespace script
 {
-
 // =============================================================================
 /** @class  Actions
     @brief  Actions

@@ -27,7 +27,7 @@ namespace script
 
 // =============================================================================
 /** @class  ScriptConditions
-    @brief  ScriptConditions
+    @brief  Script conditions
 */
 // Created: SBO 2008-07-02
 // =============================================================================

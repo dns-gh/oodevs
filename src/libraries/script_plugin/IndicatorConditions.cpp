@@ -11,7 +11,7 @@
 #include "IndicatorConditions.h"
 #include "EventCondition.h"
 #include "MiscEvents.h"
-#include "directia/Brain.h"
+#include <directia/Brain.h>
 
 using namespace plugins::script;
 
@@ -53,8 +53,10 @@ boost::shared_ptr< Condition_ABC > IndicatorConditions::IndicatorChanged()
     struct IndicatorChanged : public SimpleEventCondition< events::IndicatorChanged >
     {
         IndicatorChanged( kernel::Controller& controller )
-            : SimpleEventCondition( controller ) {}
-
+            : SimpleEventCondition( controller )
+        {
+            // NOTHING
+        }
         virtual void NotifyUpdated( const events::IndicatorChanged& message )
         {
             double& value = indicators_[message.name];

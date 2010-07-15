@@ -30,7 +30,7 @@ namespace script
 
 // =============================================================================
 /** @class  SimulationCommands
-    @brief  SimulationCommands
+    @brief  Simulation commands
 */
 // Created: AGE 2008-06-12
 // =============================================================================

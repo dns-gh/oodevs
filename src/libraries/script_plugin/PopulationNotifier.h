@@ -31,10 +31,9 @@ namespace plugins
 {
 namespace script
 {
-
 // =============================================================================
 /** @class  PopulationNotifier
-    @brief  PopulationNotifier
+    @brief  Population notifier
 */
 // Created: SBO 2008-11-18
 // =============================================================================

@@ -57,8 +57,14 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit SimpleEntityCondition( kernel::Controller& controller )
-        : EventCondition( controller ) {}
-    virtual ~SimpleEntityCondition() { Activate( false ); };
+        : EventCondition( controller )
+    {
+        // NOTHING
+    }
+    virtual ~SimpleEntityCondition()
+    {
+        Activate( false );
+    }
     //@}
 
 public:

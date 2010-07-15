@@ -12,7 +12,7 @@
 #include "EventCondition.h"
 #include "MiscEvents.h"
 #include "tools/ElementObserver_ABC.h"
-#include "directia/Brain.h"
+#include <directia/Brain.h>
 
 using namespace plugins::script;
 
@@ -48,7 +48,7 @@ void SimulationConditions::RegisterIn( directia::Brain& brain )
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< Condition_ABC > SimulationConditions::TickEnded
+// Name: SimulationConditions::TickEnded
 // Created: AGE 2008-06-17
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > SimulationConditions::TickEnded()
@@ -56,19 +56,20 @@ boost::shared_ptr< Condition_ABC > SimulationConditions::TickEnded()
     struct ClientConnected : public SimpleEventCondition< events::TickEnded >
     {
         ClientConnected( kernel::Controller& controller )
-            : SimpleEventCondition( controller ) {}
-
+            : SimpleEventCondition( controller )
+        {
+            // NOTHING
+        }
         virtual void NotifyUpdated( const events::TickEnded& ev )
         {
             Trigger( ev.tick, ev.duration );
         };
     };
-
     return boost::shared_ptr< Condition_ABC >( new ClientConnected( controller_ ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< Condition_ABC > SimulationConditions::ClientConnected
+// Name: SimulationConditions::ClientConnected
 // Created: AGE 2008-06-17
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > SimulationConditions::ClientConnected()
@@ -76,19 +77,20 @@ boost::shared_ptr< Condition_ABC > SimulationConditions::ClientConnected()
     struct ClientConnected : public SimpleEventCondition< events::ClientJoined >
     {
         ClientConnected( kernel::Controller& controller )
-            : SimpleEventCondition( controller ) {}
-
+            : SimpleEventCondition( controller )
+        {
+            // NOTHING
+        }
         virtual void NotifyUpdated( const events::ClientJoined& client )
         {
             Trigger( client.client, client.profile );
         };
     };
-
     return boost::shared_ptr< Condition_ABC >( new ClientConnected( controller_ ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< Condition_ABC > SimulationConditions::ClientLeft
+// Name: SimulationConditions::ClientLeft
 // Created: AGE 2008-07-09
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > SimulationConditions::ClientLeft()
@@ -96,13 +98,14 @@ boost::shared_ptr< Condition_ABC > SimulationConditions::ClientLeft()
     struct ClientLeft : public SimpleEventCondition< events::ClientLeft >
     {
         ClientLeft( kernel::Controller& controller )
-            : SimpleEventCondition( controller ) {}
-
+            : SimpleEventCondition( controller )
+        {
+            // NOTHING
+        }
         virtual void NotifyUpdated( const events::ClientLeft& client )
         {
             Trigger( client.client );
         };
     };
-
     return boost::shared_ptr< Condition_ABC >( new ClientLeft( controller_ ) );
 }

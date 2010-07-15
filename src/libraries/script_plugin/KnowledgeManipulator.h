@@ -28,10 +28,9 @@ namespace plugins
 {
 namespace script
 {
-
 // =============================================================================
 /** @class  KnowledgeManipulator
-    @brief  KnowledgeManipulator
+    @brief  Knowledge manipulator
 */
 // Created: AGE 2008-06-17
 // =============================================================================

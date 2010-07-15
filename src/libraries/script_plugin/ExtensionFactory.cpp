@@ -33,8 +33,8 @@ using namespace plugins::script;
 // -----------------------------------------------------------------------------
 ExtensionFactory::ExtensionFactory( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, dispatcher::SimulationPublisher_ABC& publisher )
     : controller_( controller )
-    , converter_( converter )
-    , publisher_( publisher )
+    , converter_ ( converter )
+    , publisher_ ( publisher )
 {
     // NOTHING
 }
@@ -54,7 +54,7 @@ ExtensionFactory::~ExtensionFactory()
 // -----------------------------------------------------------------------------
 void ExtensionFactory::Create( dispatcher::Agent& entity )
 {
-    entity.Attach( *new AgentNotifier   ( controller_, entity ) );
+    entity.Attach( *new AgentNotifier( controller_, entity ) );
     entity.Attach( *new AgentManipulator( converter_, entity, publisher_ ) );
 }
 
@@ -64,7 +64,7 @@ void ExtensionFactory::Create( dispatcher::Agent& entity )
 // -----------------------------------------------------------------------------
 void ExtensionFactory::Create( dispatcher::AgentKnowledge& entity )
 {
-    entity.Attach( *new KnowledgeNotifier   ( controller_, entity ) );
+    entity.Attach( *new KnowledgeNotifier( controller_, entity ) );
     entity.Attach( *new KnowledgeManipulator( converter_, entity ) );
 }
 
@@ -74,7 +74,7 @@ void ExtensionFactory::Create( dispatcher::AgentKnowledge& entity )
 // -----------------------------------------------------------------------------
 void ExtensionFactory::Create( dispatcher::Automat& entity )
 {
-    entity.Attach( *new AutomatNotifier   ( controller_, entity ) );
+    entity.Attach( *new AutomatNotifier( controller_, entity ) );
     entity.Attach( *new AutomatManipulator( entity ) );
 }
 
@@ -84,7 +84,7 @@ void ExtensionFactory::Create( dispatcher::Automat& entity )
 // -----------------------------------------------------------------------------
 void ExtensionFactory::Create( dispatcher::Object& entity )
 {
-    entity.Attach( *new ObjectNotifier   ( controller_, entity ) );
+    entity.Attach( *new ObjectNotifier( controller_, entity ) );
     entity.Attach( *new ObjectManipulator( entity ) );
 }
 
@@ -94,6 +94,6 @@ void ExtensionFactory::Create( dispatcher::Object& entity )
 // -----------------------------------------------------------------------------
 void ExtensionFactory::Create( dispatcher::Population& entity )
 {
-    entity.Attach( *new PopulationNotifier   ( controller_, entity ) );
+    entity.Attach( *new PopulationNotifier( controller_, entity ) );
     entity.Attach( *new PopulationManipulator( entity ) );
 }

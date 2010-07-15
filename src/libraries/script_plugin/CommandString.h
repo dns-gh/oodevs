@@ -14,10 +14,9 @@ namespace plugins
 {
 namespace script
 {
-
 // =============================================================================
 /** @class  CommandString
-    @brief  CommandString
+    @brief  Command string
 */
 // Created: SBO 2008-06-30
 // =============================================================================

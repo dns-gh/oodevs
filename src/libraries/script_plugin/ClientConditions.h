@@ -32,7 +32,7 @@ namespace script
 
 // =============================================================================
 /** @class  ClientConditions
-    @brief  ClientConditions
+    @brief  Client conditions
 */
 // Created: SBO 2008-06-27
 // =============================================================================

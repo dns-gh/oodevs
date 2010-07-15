@@ -28,7 +28,7 @@ using namespace plugins::script;
 // -----------------------------------------------------------------------------
 ClientConditions::ClientConditions( kernel::Controller& controller, const dispatcher::Model& model )
     : controller_( controller )
-    , model_( model )
+    , model_     ( model )
 {
     // NOTHING
 }
@@ -63,8 +63,10 @@ boost::shared_ptr< Condition_ABC > ClientConditions::UserChose()
     struct UserChoice : public SimpleEventCondition< Common::MsgTextMessage >
     {
         UserChoice( kernel::Controller& controller )
-            : SimpleEventCondition( controller ) {}
-
+            : SimpleEventCondition( controller )
+        {
+            // NOTHING
+        }
         virtual void NotifyUpdated( const Common::MsgTextMessage& message )
         {
             CommandString command( message.message() );
@@ -72,7 +74,6 @@ boost::shared_ptr< Condition_ABC > ClientConditions::UserChose()
                 Trigger( command.Arg( 1 ), command.Arg( 2 ) );
         };
     };
-
     return boost::shared_ptr< Condition_ABC >( new UserChoice( controller_ ) );
 }
 
@@ -86,8 +87,10 @@ boost::shared_ptr< Condition_ABC > ClientConditions::MissionChosen()
     {
         MissionChoice( kernel::Controller& controller, const dispatcher::Model& model )
             : SimpleEventCondition( controller )
-            , resolver_( new ModelResolver( model ) ){}
-
+            , resolver_( new ModelResolver( model ) )
+        {
+            // NOTHING
+        }
         virtual void NotifyUpdated( const Common::MsgTextMessage& message )
         {
             CommandString command( message.message() );
@@ -106,7 +109,6 @@ boost::shared_ptr< Condition_ABC > ClientConditions::MissionChosen()
         };
         std::auto_ptr< ModelResolver > resolver_;
     };
-
     return boost::shared_ptr< Condition_ABC >( new MissionChoice( controller_, model_ ) );
 }
 
@@ -119,8 +121,10 @@ boost::shared_ptr< Condition_ABC > ClientConditions::EntitySelected()
     struct EntitySelected : public SimpleEventCondition< Common::MsgTextMessage >
     {
         EntitySelected( kernel::Controller& controller, const dispatcher::Model& model )
-            : SimpleEventCondition( controller ), resolver_( new ModelResolver( model ) ) {}
-
+            : SimpleEventCondition( controller ), resolver_( new ModelResolver( model ) )
+        {
+            // NOTHING
+        }
         virtual void NotifyUpdated( const Common::MsgTextMessage& message )
         {
             CommandString command( message.message() );
@@ -138,6 +142,5 @@ boost::shared_ptr< Condition_ABC > ClientConditions::EntitySelected()
         };
         std::auto_ptr< ModelResolver > resolver_;
     };
-
     return boost::shared_ptr< Condition_ABC >( new EntitySelected( controller_, model_ ) );
 }

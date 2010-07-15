@@ -26,7 +26,7 @@ namespace script
 
 // =============================================================================
 /** @class  EventCondition
-    @brief  EventCondition
+    @brief  Event condition
 */
 // Created: AGE 2008-06-17
 // =============================================================================
@@ -62,7 +62,7 @@ private:
 
 // =============================================================================
 /** @class  SimpleEventCondition
-    @brief  SimpleEventCondition
+    @brief  Simple event condition
 */
 // Created: AGE 2008-06-17
 // =============================================================================
@@ -73,11 +73,15 @@ class SimpleEventCondition : public EventCondition
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit SimpleEventCondition( kernel::Controller& controller ) : EventCondition( controller ) {};
+    explicit SimpleEventCondition( kernel::Controller& controller )
+        : EventCondition( controller )
+    {
+        // NOTHING
+    }
     virtual ~SimpleEventCondition()
     {
         Activate( false );
-    };
+    }
     //@}
 
     //! @name Operations

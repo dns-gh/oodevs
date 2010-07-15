@@ -30,10 +30,9 @@ namespace plugins
 {
 namespace script
 {
-
 // =============================================================================
 /** @class  KnowledgeNotifier
-    @brief  KnowledgeNotifier
+    @brief  Knowledge notifier
 */
 // Created: AGE 2008-07-16
 // =============================================================================

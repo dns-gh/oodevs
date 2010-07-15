@@ -9,7 +9,6 @@
 
 #include "script_plugin_pch.h"
 #include "AgentManipulator.h"
-#include "directia/Brain.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/AgentOrder.h"
 #include "dispatcher/Automat.h"
@@ -17,6 +16,7 @@
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "protocol/SimulationSenders.h"
+#include <directia/Brain.h>
 
 using namespace plugins::script;
 using namespace dispatcher;
@@ -56,9 +56,8 @@ void AgentManipulator::Registrar::RegisterIn( directia::Brain& brain )
     brain.RegisterFunction( "IsMounted",           &AgentManipulator::IsMounted );
     brain.RegisterFunction( "GetForceRatio",       &AgentManipulator::GetForceRatio );
     brain.RegisterFunction( "GetMission",          &AgentManipulator::GetMission );
-    
-    brain.RegisterFunction( "Teleport",   &AgentManipulator::Teleport );
-    brain.RegisterFunction( "RecoverAll", &AgentManipulator::RecoverAll );
+    brain.RegisterFunction( "Teleport",            &AgentManipulator::Teleport );
+    brain.RegisterFunction( "RecoverAll",          &AgentManipulator::RecoverAll );
 }
 
 // -----------------------------------------------------------------------------

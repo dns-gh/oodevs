@@ -27,7 +27,7 @@ namespace script
 
 // =============================================================================
 /** @class  SimulationConditions
-    @brief  SimulationConditions
+    @brief  Simulation conditions
 */
 // Created: AGE 2008-06-12
 // =============================================================================

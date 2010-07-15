@@ -32,17 +32,15 @@ namespace plugins
 {
 namespace script
 {
-
 // =============================================================================
 /** @class  ObjectNotifier
-    @brief  ObjectNotifier
+    @brief  Object notifier
 */
 // Created: SBO 2010-07-13
 // =============================================================================
 class ObjectNotifier : public kernel::Extension_ABC
                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectDestruction >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
