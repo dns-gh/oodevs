@@ -20,11 +20,6 @@ typedef std::vector< const PHY_ComposanteTypePion* >   T_MaintenancePriorityVect
 typedef T_MaintenancePriorityVector::iterator         IT_MaintenancePriorityVector;
 typedef T_MaintenancePriorityVector::const_iterator  CIT_MaintenancePriorityVector;
 
-class PHY_HumanWound;
-typedef std::vector< const PHY_HumanWound* >       T_MedicalPriorityVector;
-typedef T_MedicalPriorityVector::iterator         IT_MedicalPriorityVector;
-typedef T_MedicalPriorityVector::const_iterator  CIT_MedicalPriorityVector;
-
 namespace boost
 {
     namespace archive

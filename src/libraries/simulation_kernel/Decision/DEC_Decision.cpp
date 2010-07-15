@@ -612,7 +612,7 @@ void MaintenancePrioritiesFunction( const directia::ScriptRef& refMission, const
 }
 void MedicalPrioritiesFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    T_MedicalPriorityVector value;
+    std::vector< const PHY_HumanWound* > value;
     if( element.ToMedicalPriorities( value ) )
         refMission.RegisterObject( name, value );
 }

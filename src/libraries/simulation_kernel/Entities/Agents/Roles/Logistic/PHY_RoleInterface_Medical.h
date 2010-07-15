@@ -26,7 +26,8 @@ class PHY_MedicalEvacuationConsign;
 class PHY_MedicalCollectionConsign;
 class PHY_MedicalEvacuationAmbulance;
 class PHY_MedicalCollectionAmbulance;
-class MIL_Automate;
+class PHY_HumanWound;
+
 // =============================================================================
 // @class  PHY_RoleInterface_Medical
 // Created: JVT 2004-08-03
@@ -40,6 +41,8 @@ public:
     typedef PHY_RoleInterface_Medical RoleInterface;
 
     typedef std::vector< const MIL_Automate* > T_AutomateVector;
+
+    typedef std::vector< const PHY_HumanWound* > T_MedicalPriorityVector;
     //@}
 
 public:

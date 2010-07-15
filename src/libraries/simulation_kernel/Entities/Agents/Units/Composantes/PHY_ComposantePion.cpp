@@ -11,9 +11,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_ComposantePion.h"
-
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationGroupContainer.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
@@ -39,15 +37,12 @@
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_SmokeData.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
-
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/AttritionCapacity.h"
-
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Actions/PHY_FireDamages_Agent.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "MIL_Singletons.h"
-
 #include "simulation_kernel/WeaponAvailabilityComputer_ABC.h"
 
 double  PHY_ComposantePion::rOpStateWeightHumans_ = 0.;

@@ -65,9 +65,6 @@ class PHY_ComposanteTypePion;
 class PHY_HumanWound;
 class TER_Localisation;
 
-typedef std::vector< const PHY_ComposanteTypePion* > T_MaintenancePriorityVector;
-typedef std::vector< const PHY_HumanWound* >         T_MedicalPriorityVector;
-
 // =============================================================================
 /** @class  MIL_MissionParameter_ABC
     @brief  MIL Mission parameter definition
@@ -81,6 +78,13 @@ public:
     //@{
              MIL_MissionParameter_ABC() {}
     virtual ~MIL_MissionParameter_ABC() {}
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< const PHY_ComposanteTypePion* > T_MaintenancePriorityVector;
+
+    typedef std::vector< const PHY_HumanWound* > T_MedicalPriorityVector;
     //@}
 
     //! @name Type checking

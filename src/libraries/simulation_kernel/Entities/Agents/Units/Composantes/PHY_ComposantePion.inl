@@ -51,4 +51,3 @@ void PHY_ComposantePion::ApplyOnRadars( T& func ) const
 {
     GetType().ApplyOnRadars( func );
 }
-

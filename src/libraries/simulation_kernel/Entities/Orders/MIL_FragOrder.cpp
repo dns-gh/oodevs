@@ -19,7 +19,6 @@
 #include "simulation_orders/MIL_MissionParameter_ABC.h"
 #include "simulation_orders/MIL_ParameterType_MedicalPriorities.h"
 #include "simulation_orders/MIL_ParameterType_MaintenancePriorities.h"
-
 #include <directia/Brain.h>
 
 // -----------------------------------------------------------------------------
@@ -27,7 +26,7 @@
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MsgsClientToSim::MsgFragOrder& asn )
-    : type_           ( type )
+    : type_( type )
 {
     MIL_MissionParameterFactory::Copy( asn.parametres(), parameters_, knowledgeResolver );
 }
@@ -37,8 +36,8 @@ MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, const DEC_Knowledge
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, const MIL_FragOrder& rhs )
-    : type_           ( type )
-    , parameters_     ( rhs.parameters_ )
+    : type_      ( type )
+    , parameters_( rhs.parameters_ )
 {
     // NOTHING
 }
@@ -273,7 +272,7 @@ int MIL_FragOrder::GetOrderConduiteChangerReglesEngagement() const
 // Name: MIL_FragOrder::GetOrderConduiteModifierPrioritesBlesses
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-T_MedicalPriorityVector MIL_FragOrder::GetOrderConduiteModifierPrioritesBlesses() const
+MIL_FragOrder::T_MedicalPriorityVector MIL_FragOrder::GetOrderConduiteModifierPrioritesBlesses() const
 {
     unsigned int parametersNumber = parameters_.size();
     for (unsigned int i = 0; i < parametersNumber; ++i )

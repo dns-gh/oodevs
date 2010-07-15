@@ -54,6 +54,11 @@ public:
     static void Register( directia::Brain& brain );
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::vector< const PHY_HumanWound* > T_MedicalPriorityVector;
+    //@}
+
     //! @name Accessors
     //@{
     std::string GetDIAType() const;
@@ -67,7 +72,7 @@ public:
     boost::shared_ptr< MT_Vector2D > GetOrderConduiteChangerPositionDebarquement() const;
     int GetOrderConduiteChangerReglesEngagementPopulation() const;
     int GetOrderConduiteChangerReglesEngagement() const;
-    std::vector< const PHY_HumanWound* > GetOrderConduiteModifierPrioritesBlesses() const;
+    T_MedicalPriorityVector GetOrderConduiteModifierPrioritesBlesses() const;
     std::vector< const PHY_ComposanteTypePion* > GetOrderConduiteModifierPrioritesReparations() const;
     std::vector< DEC_Decision_ABC* > GetOrderConduiteModifierPrioritesTactiquesBlesses() const;
     std::vector< DEC_Decision_ABC* > GetOrderConduiteModifierPrioritesTactiquesReparations() const;
@@ -84,8 +89,11 @@ public:
     //@}
 
 private:
-    const MIL_FragOrderType&   type_;
-          std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters_;
+    //! @name Member data
+    //@{
+    const MIL_FragOrderType& type_;
+    std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters_;
+    //@}
 };
 
 #endif // __MIL_FragOrder_h_

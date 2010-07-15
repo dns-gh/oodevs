@@ -147,6 +147,10 @@ private:
 
     typedef std::vector< const MIL_Automate* > T_AutomateVector;
     typedef T_AutomateVector::const_iterator CIT_AutomateVector;
+
+    typedef std::vector< const PHY_HumanWound* >      T_MedicalPriorityVector;
+    typedef T_MedicalPriorityVector::iterator        IT_MedicalPriorityVector;
+    typedef T_MedicalPriorityVector::const_iterator CIT_MedicalPriorityVector;
     //@}
 
 private:
