@@ -10,9 +10,9 @@
 #include "script_plugin_pch.h"
 #include "ModelResolver.h"
 #include "CommandString.h"
-#include "dispatcher/Model.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
+#include "dispatcher/Model.h"
 #include <boost/lexical_cast.hpp>
 
 using namespace plugins::script;
@@ -51,10 +51,9 @@ const kernel::Entity_ABC* ModelResolver::Resolve( const CommandString& command )
 // -----------------------------------------------------------------------------
 const kernel::Entity_ABC* ModelResolver::Resolve( const std::string& type, const std::string& id )
 {
-    kernel::Entity_ABC* entity = 0;
     if( type == "agent" )
-        entity = model_.Agents().Find( boost::lexical_cast< unsigned int >( id ) );
-    else if( type == "automat" )
-        entity = model_.Automats().Find( boost::lexical_cast< unsigned int >( id ) );
-    return entity;
+        return model_.Agents().Find( boost::lexical_cast< unsigned int >( id ) );
+    if( type == "automat" )
+        return model_.Automats().Find( boost::lexical_cast< unsigned int >( id ) );
+    return 0;
 }
