@@ -9,7 +9,6 @@
 
 #include "ENT_Tr_Gen.h"
 
-
 ENT_Tr::T_ConverterChangeHierarchyErrorCode ENT_Tr::ChangeHierarchyErrorCodeConverter_[] =
 {
     T_ConverterChangeHierarchyErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eChangeHierarchyErrorCode_NoError ),
@@ -466,9 +465,6 @@ ENT_Tr::T_ConverterPopulationAttitude ENT_Tr::PopulationAttitudeConverter_[] =
     T_ConverterPopulationAttitude( "", "", (E_PopulationAttitude)-1 )
 };
 
-
-
-
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::InitTranslations
 // Created: AGR
@@ -520,7 +516,6 @@ void ENT_Tr::InitTranslations()
     InitTr( PopulationAttitudeConverter_, "ENT_Tr" );
 
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromChangeHierarchyErrorCode
@@ -909,10 +904,6 @@ const std::string& ENT_Tr::ConvertFromPopulationAttitude( E_PopulationAttitude n
     return ENT_Tr::InverseFindInConverter( PopulationAttitudeConverter_, nValue, nConverterType );
 }
 
-
-
-
-
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToChangeHierarchyErrorCode
 // Created: AGR
@@ -1246,7 +1237,6 @@ E_DemolitionTargetType ENT_Tr::ConvertToDemolitionTargetType( const std::string&
     return ENT_Tr::FindInConverter( DemolitionTargetTypeConverter_, strName );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToOrderErrorCode
 // Created: AGR
@@ -1291,6 +1281,3 @@ E_PopulationAttitude ENT_Tr::ConvertToPopulationAttitude( const std::string& str
 {
     return ENT_Tr::FindInConverter( PopulationAttitudeConverter_, strName );
 }
-
-
-

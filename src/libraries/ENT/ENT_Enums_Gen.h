@@ -27,7 +27,6 @@ enum E_ChangeHierarchyErrorCode
     eNbrChangeHierarchyErrorCode
 };
 
-
 enum E_LocationType
 {
     eLocationType_Circle,
@@ -39,7 +38,6 @@ enum E_LocationType
     eLocationType_Sector,
     eNbrLocationType
 };
-
 
 enum E_DotationFamily
 {
@@ -53,7 +51,6 @@ enum E_DotationFamily
     eNbrDotationFamily
 };
 
-
 enum E_AmmunitionFamily
 {
     eAmmunitionFamily_Obus,
@@ -63,7 +60,6 @@ enum E_AmmunitionFamily
     eNbrAmmunitionFamily
 };
 
-
 enum E_UnitIdentificationLevel
 {
     eUnitIdentificationLevel_Identifiee,
@@ -72,7 +68,6 @@ enum E_UnitIdentificationLevel
     eUnitIdentificationLevel_Signale,
     eNbrUnitIdentificationLevel
 };
-
 
 enum E_NatureLevel
 {
@@ -91,7 +86,6 @@ enum E_NatureLevel
     eNbrNatureLevel
 };
 
-
 enum E_HumanWound
 {
     eHumanWound_NonBlesse,
@@ -103,7 +97,6 @@ enum E_HumanWound
     eNbrHumanWound
 };
 
-
 enum E_HumanRank
 {
     eHumanRank_Officier,
@@ -111,7 +104,6 @@ enum E_HumanRank
     eHumanRank_Mdr,
     eNbrHumanRank
 };
-
 
 enum E_Diplomacy
 {
@@ -122,14 +114,12 @@ enum E_Diplomacy
     eNbrDiplomacy
 };
 
-
 enum E_ChangeDiplomacyErrorCode
 {
     eChangeDiplomacyErrorCode_NoError,
     eChangeDiplomacyErrorCode_ErrorInvalidCamp,
     eNbrChangeDiplomacyErrorCode
 };
-
 
 enum E_ForceRatioStatus
 {
@@ -140,7 +130,6 @@ enum E_ForceRatioStatus
     eNbrForceRatioStatus
 };
 
-
 enum E_MeetingEngagementStatus
 {
     eMeetingEngagementStatus_None,
@@ -150,7 +139,6 @@ enum E_MeetingEngagementStatus
     eNbrMeetingEngagementStatus
 };
 
-
 enum E_OperationalStatus
 {
     eOperationalStatus_DetruitTotalement,
@@ -158,7 +146,6 @@ enum E_OperationalStatus
     eOperationalStatus_Operationnel,
     eNbrOperationalStatus
 };
-
 
 enum E_Roe
 {
@@ -169,7 +156,6 @@ enum E_Roe
     eNbrRoe
 };
 
-
 enum E_UnitErrorCode
 {
     eUnitErrorCode_NoError,
@@ -179,7 +165,6 @@ enum E_UnitErrorCode
     eUnitErrorCode_ErrorUnitSurrendered,
     eNbrUnitErrorCode
 };
-
 
 enum E_UnitPosture
 {
@@ -193,7 +178,6 @@ enum E_UnitPosture
     eNbrUnitPosture
 };
 
-
 enum E_FireAvailability
 {
     eFireAvailability_None,
@@ -201,7 +185,6 @@ enum E_FireAvailability
     eFireAvailability_Indisponible,
     eNbrFireAvailability
 };
-
 
 enum E_PopulationRoe
 {
@@ -213,7 +196,6 @@ enum E_PopulationRoe
     eNbrPopulationRoe
 };
 
-
 enum E_UnitTiredness
 {
     eUnitTiredness_Normal,
@@ -221,7 +203,6 @@ enum E_UnitTiredness
     eUnitTiredness_Epuise,
     eNbrUnitTiredness
 };
-
 
 enum E_UnitMorale
 {
@@ -232,7 +213,6 @@ enum E_UnitMorale
     eNbrUnitMorale
 };
 
-
 enum E_UnitExperience
 {
     eUnitExperience_Veteran,
@@ -241,14 +221,12 @@ enum E_UnitExperience
     eNbrUnitExperience
 };
 
-
 enum E_AutomatMode
 {
     eAutomatMode_Embraye,
     eAutomatMode_Debraye,
     eNbrAutomatMode
 };
-
 
 enum E_SetAutomatModeErrorCode
 {
@@ -257,7 +235,6 @@ enum E_SetAutomatModeErrorCode
     eSetAutomatModeErrorCode_ErrorNotAllowed,
     eNbrSetAutomatModeErrorCode
 };
-
 
 enum E_ControlErrorCode
 {
@@ -270,7 +247,6 @@ enum E_ControlErrorCode
     eNbrControlErrorCode
 };
 
-
 enum E_SimulationState
 {
     eSimulationState_Running,
@@ -278,7 +254,6 @@ enum E_SimulationState
     eSimulationState_Stopped,
     eNbrSimulationState
 };
-
 
 enum E_LightingType
 {
@@ -296,7 +271,6 @@ enum E_LightingType
     eNbrLightingType
 };
 
-
 enum E_WeatherType
 {
     eWeatherType_None,
@@ -309,14 +283,12 @@ enum E_WeatherType
     eNbrWeatherType
 };
 
-
 enum E_FireEffectType
 {
     eFireEffectType_Fumigene,
     eFireEffectType_Eclairant,
     eNbrFireEffectType
 };
-
 
 enum E_InfoContextErrorCode
 {
@@ -327,7 +299,6 @@ enum E_InfoContextErrorCode
     eInfoContextErrorCode_ErrorInvalidDiffusion,
     eNbrInfoContextErrorCode
 };
-
 
 enum E_LimaType
 {
@@ -344,7 +315,6 @@ enum E_LimaType
     eNbrLimaType
 };
 
-
 enum E_LogMaintenanceRegimeTravail
 {
     eLogMaintenanceRegimeTravail_Regime1,
@@ -353,7 +323,6 @@ enum E_LogMaintenanceRegimeTravail
     eLogMaintenanceRegimeTravail_Regime4,
     eNbrLogMaintenanceRegimeTravail
 };
-
 
 enum E_LogMaintenanceHandlingStatus
 {
@@ -373,7 +342,6 @@ enum E_LogMaintenanceHandlingStatus
     eNbrLogMaintenanceHandlingStatus
 };
 
-
 enum E_LogSupplyHandlingStatus
 {
     eLogSupplyHandlingStatus_ConvoiEnAttenteCamions,
@@ -387,7 +355,6 @@ enum E_LogSupplyHandlingStatus
     eNbrLogSupplyHandlingStatus
 };
 
-
 enum E_MsgLogSupplyChangeQuotasAck
 {
     eMsgLogSupplyChangeQuotasAck_NoError,
@@ -396,7 +363,6 @@ enum E_MsgLogSupplyChangeQuotasAck
     eNbrMsgLogSupplyChangeQuotasAck
 };
 
-
 enum E_MsgLogSupplyPushFlowAck
 {
     eMsgLogSupplyPushFlowAck_NoError,
@@ -404,7 +370,6 @@ enum E_MsgLogSupplyPushFlowAck
     eMsgLogSupplyPushFlowAck_ErrorInvalidReceveur,
     eNbrMsgLogSupplyPushFlowAck
 };
-
 
 enum E_LogMedicalHandlingStatus
 {
@@ -432,14 +397,12 @@ enum E_LogMedicalHandlingStatus
     eNbrLogMedicalHandlingStatus
 };
 
-
 enum E_DemolitionTargetType
 {
     eDemolitionTargetType_Preliminary,
     eDemolitionTargetType_Reserved,
     eNbrDemolitionTargetType
 };
-
 
 enum E_ObjectErrorCode
 {
@@ -452,7 +415,6 @@ enum E_ObjectErrorCode
     eObjectErrorCode_ErrorInvalidSpecificAttributes,
     eNbrObjectErrorCode
 };
-
 
 enum E_OrderErrorCode
 {
@@ -472,7 +434,6 @@ enum E_OrderErrorCode
     eNbrOrderErrorCode
 };
 
-
 enum E_ReportType
 {
     eReportType_Message,
@@ -482,14 +443,12 @@ enum E_ReportType
     eNbrReportType
 };
 
-
 enum E_AutomatOrderFormation
 {
     eAutomatOrderFormation_UnEchelon,
     eAutomatOrderFormation_DeuxEchelons,
     eNbrAutomatOrderFormation
 };
-
 
 enum E_PopulationErrorCode
 {
@@ -499,7 +458,6 @@ enum E_PopulationErrorCode
     eNbrPopulationErrorCode
 };
 
-
 enum E_PopulationAttitude
 {
     ePopulationAttitude_Calme,
@@ -508,8 +466,5 @@ enum E_PopulationAttitude
     ePopulationAttitude_Agressive,
     eNbrPopulationAttitude
 };
-
-
-
 
 #endif // __ENT_Enums_Gen_h_

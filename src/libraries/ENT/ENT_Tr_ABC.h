@@ -12,11 +12,9 @@
 
 #include <qapplication.h>
 #include <assert.h>
-
 #include <string>
 #include <algorithm>
 #include <cctype>
-
 
 // =============================================================================
 /** @class  ENT_Tr_ABC
@@ -50,7 +48,6 @@ public:
         converter& operator = ( const converter& rhs ) { type_ = rhs.type_; simname_ = rhs.simname_; appname_ = rhs.appname_; trname_ = rhs.trname_; return *this; }
     };
 
-
     //-----------------------------------------------------------------------------
     // Name: FindInConverter
     // Created: JVT 03-01-08
@@ -66,7 +63,6 @@ public:
         }
         // Unreachable
     }
-
 
     //-----------------------------------------------------------------------------
     // Name: InverseFindInConverter
@@ -95,7 +91,6 @@ public:
         }
         return strBadName_;
     }
-
 
     //-----------------------------------------------------------------------------
     // Name: InitTr
