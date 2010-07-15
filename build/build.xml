@@ -494,7 +494,7 @@
     </target>
 
     <target name="application.import_app" description="build Import LTO executable" depends="">
-        <build-app name="import_app" subsystem="console" depends="terrain,xerces,boost"
+        <build-app name="import_app" subsystem="console" depends="terrain,xerces,boost,qt"
                    libs="lib${ant.project.name}_tools-${platform}-mt">
             <syslibset libs="gdi32,psapi,dbghelp,htmlhelp,advapi32"/>
         </build-app>
