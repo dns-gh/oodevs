@@ -10,7 +10,7 @@
 #ifndef __ImprovableCapacity_h_
 #define __ImprovableCapacity_h_
 
-#include "simulation_kernel/MIL.h"
+#include "MIL.h"
 #include "ObjectCapacity_ABC.h"
 #include "ConstructionCapacity.h"
 

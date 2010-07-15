@@ -10,7 +10,6 @@
 #ifndef __ControlZoneCapacity_h_
 #define __ControlZoneCapacity_h_
 
-#include "MIL.h"
 #include "ObjectCapacity_ABC.h"
 #include "MIL_Random.h"
 

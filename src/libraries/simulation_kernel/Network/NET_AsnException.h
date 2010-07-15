@@ -10,8 +10,6 @@
 #ifndef __NET_AsnException_h_
 #define __NET_AsnException_h_
 
-#include "MIL.h"
-
 // =============================================================================
 /** @class  NET_AsnException
     @brief  NET_AsnException

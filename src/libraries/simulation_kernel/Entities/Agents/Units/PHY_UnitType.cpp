@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_UnitType.h"
 #include "Postures/PHY_Posture.h"
 #include "Composantes/PHY_ComposanteTypePion.h"
@@ -20,8 +19,6 @@
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.hpp>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_UnitType::sComposanteTypeData::sComposanteTypeData

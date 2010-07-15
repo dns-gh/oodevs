@@ -12,7 +12,6 @@
 #ifndef __NET_ASN_Tools_h_
 #define __NET_ASN_Tools_h_
 
-#include "MIL.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
 
 namespace Common

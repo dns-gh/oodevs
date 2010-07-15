@@ -10,7 +10,6 @@
 #ifndef __BridgingCapacity_h_
 #define __BridgingCapacity_h_
 
-#include "MIL.h"
 #include "ObjectCapacity_ABC.h"
 #include "MIL_DynamicPathDataHandler.h"
 

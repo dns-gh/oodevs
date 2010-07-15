@@ -12,8 +12,6 @@
 #ifndef __PHY_AmmoEffect_h_
 #define __PHY_AmmoEffect_h_
 
-#include "MIL.h"
-
 namespace weather
 {
     class PHY_Lighting;

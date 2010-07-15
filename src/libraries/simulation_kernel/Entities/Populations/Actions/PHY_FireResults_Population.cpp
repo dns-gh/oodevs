@@ -14,7 +14,6 @@
 #include "Entities/Populations/MIL_Population.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "Tools/MIL_IDManager.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_FireResults_Population constructor
@@ -22,8 +21,8 @@
 // -----------------------------------------------------------------------------
 PHY_FireResults_Population::PHY_FireResults_Population( const MIL_Population& firer )
     : PHY_FireResults_ABC()
-    , firer_             ( firer )
-    , nID_               ( idManager_.GetFreeId() )
+    , firer_( firer )
+    , nID_  ( idManager_.GetFreeId() )
 {
     client::StartPopulationFire asnMsg;
     asnMsg().set_fire_oid( nID_ );
@@ -42,4 +41,3 @@ PHY_FireResults_Population::~PHY_FireResults_Population()
     Serialize( *asnMsg().mutable_units_damages() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
-

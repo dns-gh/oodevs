@@ -10,11 +10,8 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AutomateType.h"
-
 #include "MIL_Automate.h"
-
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Decision/DEC_Workspace.h"
@@ -28,8 +25,6 @@
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.hpp>
-
-
 
 MIL_AutomateType::T_AutomateTypeAllocatorMap  MIL_AutomateType::automateTypeAllocators_;
 MIL_AutomateType::T_AutomateTypeMap           MIL_AutomateType::automateTypes_;

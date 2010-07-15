@@ -12,8 +12,6 @@
 #ifndef __MIL_ProfilerMgr_h_
 #define __MIL_ProfilerMgr_h_
 
-#include "MIL.h"
-
 #include "MT_Tools/MT_Profiler.h"
 
 class MIL_AgentPion;
@@ -39,16 +37,16 @@ public:
 
     //! @name Operations
     //@{
-    void    NotifyTickBegin        ( unsigned int nTick );
-    void    NotifyTickEnd          ( unsigned int nTick );
-    double  GetLastTickDuration    ();
-    double  GetAverageTickDuration ();
+    void NotifyTickBegin( unsigned int nTick );
+    void NotifyTickEnd( unsigned int nTick );
+    double GetLastTickDuration();
+    double GetAverageTickDuration();
 
     template< typename T >
     void NotifyDecFunctionCalled( const T& agent, const std::string& strFunction, MT_Float rTime );
-    void NotifyDecisionUpdated  ( const MIL_AgentPion&  pion      , MT_Float rTime );
-    void NotifyDecisionUpdated  ( const MIL_Automate&   automate  , MT_Float rTime );
-    void NotifyDecisionUpdated  ( const MIL_Population& population, MT_Float rTime );
+    void NotifyDecisionUpdated( const MIL_AgentPion& pion, MT_Float rTime );
+    void NotifyDecisionUpdated( const MIL_Automate& automate, MT_Float rTime );
+    void NotifyDecisionUpdated( const MIL_Population& population, MT_Float rTime );
     //@}
 
 private:
@@ -56,23 +54,23 @@ private:
     //@{
     struct sDecFunctionProfiling
     {
-        unsigned int        nAgentID_;
+        unsigned int nAgentID_;
         std::string strFunction_;
-        MT_Float    rTime_;
+        MT_Float rTime_;
     };
 
     typedef std::vector< sDecFunctionProfiling >           T_DecFunctionProfilingVector;
-    typedef T_DecFunctionProfilingVector::const_iterator   CIT_DecFunctionProfilingVector;
+    typedef T_DecFunctionProfilingVector::const_iterator CIT_DecFunctionProfilingVector;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const bool                   bEnabled_;
+    const bool bEnabled_;
     T_DecFunctionProfilingVector decFunctionProfilingVector_;
-    MT_Profiler                  tickDurationProfiler_;
-    std::ofstream                decFunctionsFile_;
-    std::ofstream                decisionUpdateFile_;
+    MT_Profiler tickDurationProfiler_;
+    std::ofstream decFunctionsFile_;
+    std::ofstream decisionUpdateFile_;
     //@}
 };
 

@@ -12,7 +12,6 @@
 #ifndef __NET_AS_MOSServerMsgMgr_h_
 #define __NET_AS_MOSServerMsgMgr_h_
 
-#include "MIL.h"
 #include "NET_Publisher_ABC.h"
 
 namespace MsgsSimToClient

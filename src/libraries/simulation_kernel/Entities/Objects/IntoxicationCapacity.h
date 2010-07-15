@@ -10,7 +10,6 @@
 #ifndef __IntoxicationCapacity_h_
 #define __IntoxicationCapacity_h_
 
-#include "MIL.h"
 #include "ObjectCapacity_ABC.h"
 #include "MIL_InteractiveContainer_ABC.h"
 

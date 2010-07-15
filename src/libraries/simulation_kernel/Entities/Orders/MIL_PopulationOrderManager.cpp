@@ -13,12 +13,9 @@
 #include "MIL_PopulationMission.h"
 #include "MIL_FragOrder.h"
 #include "MIL_FragOrderType.h"
-#include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Representations.h"
-#include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
-#include "Entities/Populations/DEC_PopulationKnowledge.h"
 #include "Network/NET_AsnException.h"
 #include "protocol/protocol.h"
 
@@ -28,7 +25,7 @@
 // -----------------------------------------------------------------------------
 MIL_PopulationOrderManager::MIL_PopulationOrderManager( MIL_Population& population )
     : MIL_OrderManager_ABC()
-    , population_         ( population )
+    , population_( population )
 {
     // NOTHING
 }
@@ -51,7 +48,6 @@ void MIL_PopulationOrderManager::OnReceiveMission( const Common::MsgPopulationOr
     const MIL_MissionType_ABC* pMissionType = MIL_PopulationMissionType::Find( asnMsg.mission() );
     if( !pMissionType || !IsMissionAvailable( *pMissionType ) )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission );
-
     boost::shared_ptr< MIL_Mission_ABC > pMission ( new MIL_PopulationMission( *pMissionType, population_, asnMsg ) );
     MIL_OrderManager_ABC::ReplaceMission( pMission );
 }
@@ -65,10 +61,8 @@ void MIL_PopulationOrderManager::OnReceiveFragOrder( const MsgsClientToSim::MsgF
     const MIL_FragOrderType* pType = MIL_FragOrderType::Find( asn.frag_order() );
     if( !pType )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_order_conduite );
-
     if( !pType->IsAvailableWithoutMission() && ( !GetCurrentMission() || !GetCurrentMission()->IsFragOrderAvailable( *pType ) ) )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_order_conduite );
-
     DEC_Representations& representation = population_.GetRole<DEC_Representations>();
     boost::shared_ptr< MIL_FragOrder > pFragOrder ( new MIL_FragOrder( *pType, population_.GetKnowledge(), asn ) );
     representation.AddToOrdersCategory( pFragOrder );

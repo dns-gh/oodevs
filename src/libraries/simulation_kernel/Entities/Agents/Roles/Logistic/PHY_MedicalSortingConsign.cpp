@@ -26,7 +26,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalSortingConsign )
 // -----------------------------------------------------------------------------
 PHY_MedicalSortingConsign::PHY_MedicalSortingConsign( PHY_RoleInterface_Medical& medical, PHY_MedicalHumanState& humanState )
     : PHY_MedicalConsign_ABC( medical, humanState )
-    , pDoctor_              ( 0 )
+    , pDoctor_( 0 )
 {
     if( humanState.NeedSorting() )
         EnterStateWaitingForSorting();
@@ -40,7 +40,7 @@ PHY_MedicalSortingConsign::PHY_MedicalSortingConsign( PHY_RoleInterface_Medical&
 // -----------------------------------------------------------------------------
 PHY_MedicalSortingConsign::PHY_MedicalSortingConsign()
     : PHY_MedicalConsign_ABC()
-    , pDoctor_              ( 0 )
+    , pDoctor_( 0 )
 {
     // NOTHING
 }

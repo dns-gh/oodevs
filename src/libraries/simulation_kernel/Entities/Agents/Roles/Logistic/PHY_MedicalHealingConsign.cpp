@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_MedicalHealingConsign.h"
 #include "PHY_RoleInterface_Medical.h"
 #include "PHY_MedicalHumanState.h"
@@ -28,7 +27,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalHealingConsign )
 // -----------------------------------------------------------------------------
 PHY_MedicalHealingConsign::PHY_MedicalHealingConsign( PHY_RoleInterface_Medical& medical, PHY_MedicalHumanState& humanState )
     : PHY_MedicalConsign_ABC( medical, humanState )
-    , pDoctor_              ( 0 )
+    , pDoctor_( 0 )
 {
     EnterStateWaitingForHealing();
 }
@@ -39,7 +38,7 @@ PHY_MedicalHealingConsign::PHY_MedicalHealingConsign( PHY_RoleInterface_Medical&
 // -----------------------------------------------------------------------------
 PHY_MedicalHealingConsign::PHY_MedicalHealingConsign()
     : PHY_MedicalConsign_ABC()
-    , pDoctor_              ( 0 )
+    , pDoctor_( 0 )
 {
 }
 
@@ -49,11 +48,8 @@ PHY_MedicalHealingConsign::PHY_MedicalHealingConsign()
 // -----------------------------------------------------------------------------
 PHY_MedicalHealingConsign::~PHY_MedicalHealingConsign()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalHealingConsign::serialize
@@ -65,10 +61,6 @@ void PHY_MedicalHealingConsign::serialize( Archive& file, const unsigned int )
     file & boost::serialization::base_object< PHY_MedicalConsign_ABC >( *this )
          & pDoctor_;
 }
-
-// =============================================================================
-// STATES
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalHealingConsign::EnterStateWaitingForHealing

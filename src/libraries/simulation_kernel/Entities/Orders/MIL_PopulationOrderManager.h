@@ -10,7 +10,6 @@
 #ifndef __MIL_PopulationOrderManager_h_
 #define __MIL_PopulationOrderManager_h_
 
-#include "MIL.h"
 #include "MIL_OrderManager_ABC.h"
 
 namespace Common

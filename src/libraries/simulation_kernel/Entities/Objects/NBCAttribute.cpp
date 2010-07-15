@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "NBCAttribute.h"
 #include "Object.h"
-#include "MIL.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeNBC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "hla/HLA_UpdateFunctor.h"

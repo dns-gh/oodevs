@@ -12,7 +12,6 @@
 #ifndef __PHY_SupplyStockRequestContainer_h_
 #define __PHY_SupplyStockRequestContainer_h_
 
-#include "MIL.h"
 #include "PHY_SupplyStockRequest.h"
 
 namespace Common

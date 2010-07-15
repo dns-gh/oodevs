@@ -10,7 +10,6 @@
 #ifndef __ContaminationCapacity_h_
 #define __ContaminationCapacity_h_
 
-#include "simulation_kernel/MIL.h"
 #include "ObjectCapacity_ABC.h"
 #include "MIL_InteractiveContainer_ABC.h"
 #include <boost/ptr_container/ptr_vector.hpp>

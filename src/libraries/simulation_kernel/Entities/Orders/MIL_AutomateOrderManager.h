@@ -10,7 +10,6 @@
 #ifndef __MIL_AutomateOrderManager_h_
 #define __MIL_AutomateOrderManager_h_
 
-#include "MIL.h"
 #include "MIL_OrderManager_ABC.h"
 #include "MIL_AutomateMRT.h"
 

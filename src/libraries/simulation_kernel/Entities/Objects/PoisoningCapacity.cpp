@@ -15,7 +15,6 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Entities/Agents/Units/Humans/MIL_Injury_Poison.h"
-
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PoisoningCapacity )

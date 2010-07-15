@@ -12,8 +12,6 @@
 #ifndef __MIL_AutomateType_h_
 #define __MIL_AutomateType_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xistream;

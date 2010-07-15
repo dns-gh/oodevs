@@ -12,7 +12,6 @@
 #ifndef __MIL_AgentTypeInjuredHumanPion_h_
 #define __MIL_AgentTypeInjuredHumanPion_h_
 
-#include "MIL.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 
 namespace xml
@@ -31,7 +30,7 @@ class MIL_AgentTypeInjuredHumanPion : public MIL_AgentTypePion
     MT_COPYNOTALLOWED( MIL_AgentTypeInjuredHumanPion )
 
 public:
-    MIL_AgentTypeInjuredHumanPion( const std::string& strName, xml::xistream& xis );
+             MIL_AgentTypeInjuredHumanPion( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AgentTypeInjuredHumanPion();
 
     //! @name Instanciation

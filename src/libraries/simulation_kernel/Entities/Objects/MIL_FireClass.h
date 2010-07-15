@@ -10,7 +10,6 @@
 #ifndef __MIL_FireClass_h_
 #define __MIL_FireClass_h_
 
-#include "MIL.h"
 #include <map>
 
 namespace xml

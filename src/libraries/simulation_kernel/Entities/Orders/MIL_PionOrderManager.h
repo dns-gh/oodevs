@@ -10,7 +10,6 @@
 #ifndef __MIL_PionOrderManager_h_
 #define __MIL_PionOrderManager_h_
 
-#include "MIL.h"
 #include "MIL_OrderManager_ABC.h"
 
 namespace Common

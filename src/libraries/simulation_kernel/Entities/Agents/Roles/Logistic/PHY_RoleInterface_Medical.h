@@ -12,7 +12,6 @@
 #ifndef __PHY_RoleInterface_Medical_h_
 #define __PHY_RoleInterface_Medical_h_
 
-#include "MIL.h" //@TODO replace by log specific include
 #include "MT_Tools/Role_ABC.h"
 
 class PHY_MedicalHumanState;

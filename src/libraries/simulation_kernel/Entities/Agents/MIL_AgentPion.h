@@ -12,7 +12,6 @@
 #ifndef __MIL_AgentPion_h_
 #define __MIL_AgentPion_h_
 
-#include "MIL.h"
 #include "MIL_Agent_ABC.h"
 #include "MIL_AgentTypePion.h"
 #include "Entities/Orders/MIL_PionOrderManager.h"

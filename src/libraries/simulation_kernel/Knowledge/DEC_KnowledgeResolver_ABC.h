@@ -10,8 +10,6 @@
 #ifndef __DEC_KnowledgeResolver_ABC_h_
 #define __DEC_KnowledgeResolver_ABC_h_
 
-#include "MIL.h"
-
 namespace Common
 {
     class MsgObjectKnowledge;

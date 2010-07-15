@@ -12,8 +12,6 @@
 #ifndef __MIL_NbcAgentType_h_
 #define __MIL_NbcAgentType_h_
 
-#include "MIL.h"
-
 #include "MIL_Random.h"
 
 namespace xml

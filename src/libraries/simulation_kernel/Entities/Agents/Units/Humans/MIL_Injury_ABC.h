@@ -10,7 +10,6 @@
 #ifndef __MIL_Injury_ABC_h_
 #define __MIL_Injury_ABC_h_
 
-#include "MIL.h"
 #include "Entities/Objects/MIL_MedicalTreatmentType.h"
 
 class PHY_ComposantePion;

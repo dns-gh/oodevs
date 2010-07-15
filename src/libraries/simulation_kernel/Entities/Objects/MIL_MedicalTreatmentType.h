@@ -10,7 +10,6 @@
 #ifndef __MIL_MedicalTreatmentType_h_
 #define __MIL_MedicalTreatmentType_h_
 
-#include "MIL.h"
 #include <map>
 
 namespace xml

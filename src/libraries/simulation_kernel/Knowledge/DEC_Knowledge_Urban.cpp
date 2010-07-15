@@ -9,17 +9,11 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_Urban.h"
-#include "Network/NET_ASN_Tools.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_UrbanPerception.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
-#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "simulation_kernel/Entities/Automates/MIL_Automate.h"
-#include "simulation_kernel/Entities/MIL_EntityManager.h"
-#include "simulation_kernel/MIL_AgentServer.h"
 #include <urban/Architecture.h>
-#include <urban/TerrainObject_ABC.h>
 #include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Urban )

@@ -15,19 +15,12 @@
 #include "Tools/MIL_Tools.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
-
 #include <xeumeuleu/xml.hpp>
 #include "tools/xmlcodecs.h"
 
 MIL_FireClass::T_FireClassMap MIL_FireClass::classes_;
 unsigned int MIL_FireClass::length_;
 unsigned int MIL_FireClass::width_;
-
-// =============================================================================
-// FACTORY
-// Created: RFT 19/05/2008
-// Modified: none
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_FireClass::ReadClass

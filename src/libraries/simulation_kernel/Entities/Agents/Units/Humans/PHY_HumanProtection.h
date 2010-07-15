@@ -12,8 +12,6 @@
 #ifndef __PHY_HumanProtection_h_
 #define __PHY_HumanProtection_h_
 
-#include "MIL.h"
-
 #include "MT_Tools/MT_GaussianRandom.h"
 #include "MIL_Random.h"
 

@@ -10,7 +10,6 @@
 #ifndef __TimeLimitedCapacity_h_
 #define __TimeLimitedCapacity_h_
 
-#include "simulation_kernel/MIL.h"
 #include "ObjectCapacity_ABC.h"
 #include "MIL_InteractiveContainer_ABC.h"
 

@@ -10,18 +10,12 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
-#include "MIL.h"
 #include "MIL_Injury_MentalDisease.h"
-
 #include "PHY_InjuredHuman.h"
-
 #include "MIL_Random.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-
 #include "Entities/Objects/FireAttribute.h"
 #include "Entities/Objects/MIL_MedicalTreatmentType.h"
-
 #include "Entities/Agents/Units/Humans/PHY_HumanProtection.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Injury_MentalDisease )

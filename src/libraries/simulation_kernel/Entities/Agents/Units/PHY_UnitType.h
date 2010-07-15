@@ -12,7 +12,6 @@
 #ifndef __PHY_UnitType_h_
 #define __PHY_UnitType_h_
 
-#include "MIL.h"
 #include "Dotations/PHY_DotationCapacities.h"
 
 namespace xml

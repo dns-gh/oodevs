@@ -11,11 +11,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_ProfilerMgr.h"
-
 #include "Entities/Populations/MIL_Population.h"
 #include "MIL_AgentServer.h"
 #include "Entities/Automates/MIL_Automate.h"
-
 #include <direct.h>
 
 //-----------------------------------------------------------------------------
@@ -52,7 +50,6 @@ MIL_ProfilerMgr::~MIL_ProfilerMgr()
 void MIL_ProfilerMgr::NotifyTickEnd( unsigned int nTick )
 {
     tickDurationProfiler_.Stop();
-
     if( !decFunctionProfilingVector_.empty() )
     {
         for( CIT_DecFunctionProfilingVector itData = decFunctionProfilingVector_.begin(); itData != decFunctionProfilingVector_.end(); ++itData )

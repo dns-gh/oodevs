@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AutomateTypeInjuredHuman.h"
 #include "MIL_AutomateInjuredHuman.h"
 #include "Decision/DEC_Tools.h"

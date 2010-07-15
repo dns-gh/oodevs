@@ -12,7 +12,6 @@
 #ifndef __PHY_RawVisionData_h_
 #define __PHY_RawVisionData_h_
 
-#include "MIL.h"
 #include "meteo/PHY_Meteo.h"
 #include "meteo/PHY_RawVisionData_ABC.h"
 

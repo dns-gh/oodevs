@@ -10,20 +10,12 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
-#include "MIL_AgentServer.h"
 #include "MIL_Report.h"
-#include "MIL_MissionParameterFactory.h"
-#include "Entities/Effects/MIL_Effect_IndirectFire.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_orders/MIL_ParameterType_ABC.h"
 #include <xeumeuleu/xml.hpp>
-
-// =============================================================================
-// FACTORY
-// =============================================================================
 
 MIL_Report::T_ReportMap      MIL_Report::reports_;
 MIL_Report::T_DiaEventVector MIL_Report::diaEvents_( MIL_Report::eNbrReport );
@@ -134,10 +126,6 @@ void MIL_Report::ReadReport( xml::xistream& xis )
         xis.error( "Report id already defined" );
     pReport = new MIL_Report( id, xis );
 }
-
-// =============================================================================
-// INSTANCE
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Report constructor

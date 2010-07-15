@@ -12,8 +12,6 @@
 #ifndef __MIL_AutomateTypeInjuredHuman_h_
 #define __MIL_AutomateTypeInjuredHuman_h_
 
-#include "MIL.h"
-
 #include "Entities/Automates/MIL_AutomateType.h"
 
 namespace xml
@@ -32,7 +30,7 @@ class MIL_AutomateTypeInjuredHuman : public MIL_AutomateType
     MT_COPYNOTALLOWED( MIL_AutomateTypeInjuredHuman )
 
 public:
-    MIL_AutomateTypeInjuredHuman( const std::string& strName, xml::xistream& xis );
+             MIL_AutomateTypeInjuredHuman( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AutomateTypeInjuredHuman();
 
     //! @name Accessors

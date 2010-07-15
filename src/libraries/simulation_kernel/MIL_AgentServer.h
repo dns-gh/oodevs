@@ -59,8 +59,11 @@ public:
     //@}
 
 public:
+    //! @name Constructors/Destructor
+    //@{
     explicit MIL_AgentServer( MIL_Config& config );
     virtual ~MIL_AgentServer();
+    //@}
 
     //! @name Checkpoints
     //@{
@@ -82,8 +85,8 @@ public:
 
     //! @name Simulation main loop
     //@{
-    E_SimState Update     ();
-    void       MainSimLoop();
+    E_SimState Update();
+    void MainSimLoop();
     //@}
 
     //! @name Network
@@ -93,27 +96,27 @@ public:
 
     //! @name Accessors
     //@{
-    MIL_EntityManager&       GetEntityManager      () const;
-    MIL_Folk&                GetFolkManager        () const;
-    UrbanModel&              GetUrbanModel         () const;
-    DEC_Workspace&           GetWorkspaceDIA       () const;
-    NET_AgentServer&         GetAgentServer        () const;
+    MIL_EntityManager& GetEntityManager() const;
+    MIL_Folk& GetFolkManager() const;
+    UrbanModel& GetUrbanModel() const;
+    DEC_Workspace& GetWorkspaceDIA() const;
+    NET_AgentServer& GetAgentServer() const;
     MIL_TacticalLineManager& GetTacticalLineManager() const;
-    DEC_PathFind_Manager&    GetPathFindManager    () const;
-    PHY_MeteoDataManager&    GetMeteoDataManager   () const;
-    MIL_ProfilerMgr&         GetProfilerManager    () const;
-    MIL_CheckPointManager&   GetCheckPointManager  () const;
-    MT_TimerManager&         GetTimerManager       ();
-    HLA_Federate*            GetHLAFederate        () const;
-    E_SimState               GetSimState           () const;
-    MIL_Config&              GetConfig             ();
+    DEC_PathFind_Manager& GetPathFindManager() const;
+    PHY_MeteoDataManager& GetMeteoDataManager() const;
+    MIL_ProfilerMgr& GetProfilerManager() const;
+    MIL_CheckPointManager& GetCheckPointManager() const;
+    MT_TimerManager& GetTimerManager();
+    HLA_Federate* GetHLAFederate() const;
+    E_SimState GetSimState() const;
+    MIL_Config& GetConfig();
     //@}
 
     //! @name Workspace management
     //@{
-    static MIL_AgentServer& GetWorkspace    ();
-    static void             CreateWorkspace ( MIL_Config& config );
-    static void             DestroyWorkspace();
+    static MIL_AgentServer& GetWorkspace();
+    static void CreateWorkspace( MIL_Config& config );
+    static void DestroyWorkspace();
     //@}
 
     //! @name Time management
@@ -134,8 +137,8 @@ private:
     //! @name
     //@{
     void ReadStaticData();
-    void ReadTerData   ();
-    void ReadHLA       ();
+    void ReadTerData();
+    void ReadHLA();
     //@}
 
     //! @name Timer
@@ -147,7 +150,7 @@ private:
     //! @name Tools
     //@{
     void SendMsgBeginTick() const;
-    void SendMsgEndTick  () const;
+    void SendMsgEndTick() const;
     //@}
 
 private:
@@ -161,25 +164,25 @@ private:
     unsigned int nSimTime_;
     unsigned int nInitialRealTime_;
     unsigned int nRealTime_;
-    MIL_EffectManager*           pEffectManager_;
-    MIL_EntityManager*           pEntityManager_;
-    DEC_Workspace*               pWorkspaceDIA_;
-    PHY_MeteoDataManager*        pMeteoDataManager_;
-    MT_TimerManager              timerManager_;
-    MIL_TacticalLineManager*     pTacticalLineManager_;
-    DEC_PathFind_Manager*        pPathFindManager_;
-    MIL_ProfilerMgr*             pProfilerMgr_;
-    MIL_CheckPointManager*       pCheckPointManager_;
-    NET_AgentServer*             pAgentServer_;
-    HLA_Federate*                pFederate_;
-    MIL_Folk*                    pFolk_;
-    UrbanModel*                  pUrbanModel_;
-    ProcessMonitor*              pProcessMonitor_;
+    MIL_EffectManager* pEffectManager_;
+    MIL_EntityManager* pEntityManager_;
+    DEC_Workspace* pWorkspaceDIA_;
+    PHY_MeteoDataManager* pMeteoDataManager_;
+    MT_TimerManager timerManager_;
+    MIL_TacticalLineManager* pTacticalLineManager_;
+    DEC_PathFind_Manager* pPathFindManager_;
+    MIL_ProfilerMgr* pProfilerMgr_;
+    MIL_CheckPointManager* pCheckPointManager_;
+    NET_AgentServer* pAgentServer_;
+    HLA_Federate* pFederate_;
+    MIL_Folk* pFolk_;
+    UrbanModel* pUrbanModel_;
+    ProcessMonitor*  pProcessMonitor_;
     long lastStep_;
     //@}
 
 private:
-    static MIL_AgentServer*      pTheAgentServer_;
+    static MIL_AgentServer* pTheAgentServer_;
 };
 
 #include "MIL_AgentServer.inl"

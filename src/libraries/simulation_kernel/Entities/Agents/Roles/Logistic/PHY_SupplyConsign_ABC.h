@@ -12,8 +12,6 @@
 #ifndef __PHY_SupplyConsign_ABC_h_
 #define __PHY_SupplyConsign_ABC_h_
 
-#include "MIL.h"
-
 namespace client
 {
     class LogSupplyHandlingUpdate;

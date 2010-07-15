@@ -10,6 +10,7 @@
 #ifndef __PHY_Speeds_h_
 #define __PHY_Speeds_h_
 
+#include "MIL.h"
 
 namespace xml
 {

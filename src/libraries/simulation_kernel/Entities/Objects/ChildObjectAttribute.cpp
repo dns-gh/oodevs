@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "ChildObjectAttribute.h"
 #include "Object.h"
-#include "MIL.h"
 
 BOOST_CLASS_EXPORT_GUID( ChildObjectAttribute, "ChildObjectAttribute" )
 

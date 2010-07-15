@@ -10,7 +10,6 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "NET_AS_MOSServerMsgMgr.h"
 #include "MIL_AgentServer.h"
 #include "NET_AgentServer.h"
@@ -29,8 +28,8 @@
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
 NET_AS_MOSServerMsgMgr::NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer, NET_Simulation_ABC& simulation )
-    : agentServer_   ( agentServer )
-    , simulation_    ( simulation )
+    : agentServer_( agentServer )
+    , simulation_ ( simulation )
 {
     agentServer.RegisterMessage( *this, & NET_AS_MOSServerMsgMgr::OnReceiveClient );
     agentServer.RegisterMessage( *this, & NET_AS_MOSServerMsgMgr::OnReceiveMiddle );

@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "MIL.h"
 #include "MIL_Injury_Fire.h"
 #include "MIL_Random.h"
 #include "PHY_InjuredHuman.h"

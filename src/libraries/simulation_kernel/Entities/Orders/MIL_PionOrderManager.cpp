@@ -13,7 +13,6 @@
 #include "MIL_PionMissionType.h"
 #include "MIL_PionMission.h"
 #include "MIL_FragOrderType.h"
-#include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Representations.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -52,15 +51,12 @@ void MIL_PionOrderManager::OnReceiveMission( const Common::MsgUnitOrder& asnMsg 
     // Check if the agent can receive this order (automate must be debraye)
     if( pion_.GetAutomate().IsEngaged() || pion_.IsDead() )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_unit_cannot_receive_order );
-
     if( pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_unit_surrendered );
-
     // Instanciate and check the new mission
     const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::Find( asnMsg.mission() );
     if( !pMissionType || !IsMissionAvailable( *pMissionType ) )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission );
-
     boost::shared_ptr< MIL_Mission_ABC > pMission ( new MIL_PionMission( *pMissionType, pion_, asnMsg ) );
     MIL_OrderManager_ABC::ReplaceMission( pMission );
 }
@@ -83,17 +79,13 @@ void MIL_PionOrderManager::OnReceiveFragOrder( const MsgsClientToSim::MsgFragOrd
 {
     if( pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_unit_surrendered );
-
     if( pion_.GetAutomate().IsEngaged() )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_unit_cannot_receive_order );
-
     const MIL_FragOrderType* pType = MIL_FragOrderType::Find( asn.frag_order() );
     if( !pType )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_order_conduite );
-
     if( !pType->IsAvailableWithoutMission() && ( !GetCurrentMission() || !GetCurrentMission()->IsFragOrderAvailable( *pType ) ) )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_order_conduite );
-
     DEC_Representations& representation = pion_.GetRole<DEC_Representations>();
     boost::shared_ptr< MIL_FragOrder > pFragOrder ( new MIL_FragOrder( *pType, pion_.GetKnowledge(), asn ) );
     representation.AddToOrdersCategory( pFragOrder );
@@ -110,7 +102,6 @@ const MIL_Fuseau& MIL_PionOrderManager::GetFuseau() const
         return *pFuseau;
     if( GetCurrentMission() )
         return GetCurrentMission()->GetFuseau();
-
     return pion_.GetAutomate().GetOrderManager().GetFuseau();
 }
 
@@ -167,11 +158,9 @@ bool MIL_PionOrderManager::CanRelievePion( const MIL_AgentPion& pion ) const
 {
     if( pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
         return false;
-
     const MIL_MissionType_ABC* pRelievedMissionType = pion.GetOrderManager().GetCurrentMissionType();
     if( !pRelievedMissionType )
         return false;
-
     return IsMissionAvailable( *pRelievedMissionType );
 }
 
@@ -183,14 +172,11 @@ bool MIL_PionOrderManager::RelievePion( const MIL_AgentPion& pion )
 {
     if( !CanRelievePion( pion ) )
         return false;
-
     boost::shared_ptr< MIL_Mission_ABC > pPionMission = pion.GetOrderManager().GetCurrentMission();
     if( !pPionMission )
         return false;
-
     boost::shared_ptr< MIL_Mission_ABC > newMission = static_cast< MIL_PionMission* >( pPionMission.get() )->CreateCopy( pion_ );
     MIL_OrderManager_ABC::ReplaceMission( newMission );
     return true;
 }
-
 

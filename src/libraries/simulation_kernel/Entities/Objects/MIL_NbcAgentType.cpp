@@ -17,19 +17,12 @@
 #include <numeric>
 #include <xeumeuleu/xml.hpp>
 
-
-
 MIL_NbcAgentType::T_NbcAgentTypeMap MIL_NbcAgentType::nbcAgentTypes_;
 MT_Float                            MIL_NbcAgentType::rCoefMaxSpeedModificator_      = 1.;
 MT_Float                            MIL_NbcAgentType::rCoefReloadingTimeModificator_ = 1.;
 MT_Float                            MIL_NbcAgentType::rMinPropagationSpeed_          = 0.;
 MT_Float                            MIL_NbcAgentType::rContaminationDistance_        = 100.;
 MT_Float                            MIL_NbcAgentType::rContaminationQuantityGiven_    = 0.5;
-
-
-// =============================================================================
-// FACTORY
-// =============================================================================
 
 struct MIL_NbcAgentType::LoadingWrapper
 {
@@ -109,10 +102,6 @@ void MIL_NbcAgentType::Terminate()
         delete it->second;
     nbcAgentTypes_.clear();
 }
-
-// =============================================================================
-// INSTANCE
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_NbcAgentType constructor
@@ -251,4 +240,3 @@ const PHY_HumanWound& MIL_NbcAgentType::GetRandomWound( const T_HumanPoisonousVe
     assert( false );
     return PHY_HumanWound::killed_;
 }
-

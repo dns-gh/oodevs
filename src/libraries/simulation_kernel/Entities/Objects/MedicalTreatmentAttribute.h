@@ -10,6 +10,7 @@
 #ifndef __MedicalTreatmentAttribute_h_
 #define __MedicalTreatmentAttribute_h_
 
+#include "MIL.h"
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
 #include "MIL_MedicalTreatmentType.h"

@@ -10,6 +10,7 @@
 #ifndef __NBCTypeAttribute_h_
 #define __NBCTypeAttribute_h_
 
+#include "MIL.h"
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
 #include "MIL_NBCType.h"

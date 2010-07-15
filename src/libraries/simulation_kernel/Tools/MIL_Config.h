@@ -12,8 +12,6 @@
 #ifndef __MIL_Config_h_
 #define __MIL_Config_h_
 
-#include "MIL.h"
-
 #include "MIL_Random.h"
 #include "tools/SessionConfig.h"
 

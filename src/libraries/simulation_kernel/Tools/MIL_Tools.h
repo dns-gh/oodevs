@@ -12,9 +12,7 @@
 #ifndef __MIL_Tools_h_
 #define __MIL_Tools_h_
 
-#include "MIL.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
-
 #pragma warning ( push )
 #pragma warning ( disable : 4244 4245 )
 #include <boost/CRC.hpp>
@@ -38,24 +36,24 @@ public:
     /** @name Units converters */
     //-------------------------------------------------------------------------
     //@{
-    static MT_Float    ConvertMeterSquareToSim( MT_Float );
-    static float       ConvertSimToMeterSquare( MT_Float );
-    static MT_Float    ConvertMeterToSim      ( MT_Float );
-    static float       ConvertSimToMeter      ( MT_Float );
-    static void        ConvertCoordMosToSim   ( const std::string& strMosPos, MT_Vector2D& vSimPos );
-    static void        ConvertCoordMosToSim   ( const Common::MsgCoordLatLong& asnCoordUTM, MT_Vector2D& vSimPos );
-    static std::string ConvertCoordSimToMos   ( const MT_Vector2D& vSimPos );
-    static void        ConvertCoordSimToMos   ( const MT_Vector2D& vSimPos, Common::MsgCoordLatLong& asnCoordUTM );
+    static MT_Float ConvertMeterSquareToSim( MT_Float );
+    static float ConvertSimToMeterSquare( MT_Float );
+    static MT_Float ConvertMeterToSim( MT_Float );
+    static float ConvertSimToMeter( MT_Float );
+    static void ConvertCoordMosToSim( const std::string& strMosPos, MT_Vector2D& vSimPos );
+    static void ConvertCoordMosToSim( const Common::MsgCoordLatLong& asnCoordUTM, MT_Vector2D& vSimPos );
+    static std::string ConvertCoordSimToMos( const MT_Vector2D& vSimPos );
+    static void ConvertCoordSimToMos( const MT_Vector2D& vSimPos, Common::MsgCoordLatLong& asnCoordUTM );
 
     static MT_Float ConvertSpeedMosToSim( MT_Float ); // km/h         -> pixel/DeltaT
     static MT_Float ConvertSpeedSimToMos( MT_Float ); // pixel/DeltaT -> km/h
-    static MT_Float ConvertSecondsToSim ( MT_Float ); // s            -> DeltaT
-    static MT_Float ConvertMinutesToSim ( MT_Float ); // min          -> DeltaT
-    static MT_Float ConvertHoursToSim   ( MT_Float ); // h            -> DeltaT
-    static MT_Float ConvertSimToMinutes ( MT_Float ); // DeltaT       -> min
+    static MT_Float ConvertSecondsToSim( MT_Float ); // s            -> DeltaT
+    static MT_Float ConvertMinutesToSim( MT_Float ); // min          -> DeltaT
+    static MT_Float ConvertHoursToSim( MT_Float ); // h            -> DeltaT
+    static MT_Float ConvertSimToMinutes( MT_Float ); // DeltaT       -> min
 
-    static       MT_Float              GetAltitude( const MT_Vector2D& );
-    static const weather::PHY_Meteo::sWindData& GetWind    ( const MT_Vector2D& );
+    static MT_Float GetAltitude( const MT_Vector2D& );
+    static const weather::PHY_Meteo::sWindData& GetWind( const MT_Vector2D& );
     //@}
 
     //-------------------------------------------------------------------------
@@ -70,7 +68,7 @@ public:
     //-------------------------------------------------------------------------
     //@{
     static const std::string& GetEnvironnementTypeName( PHY_RawVisionData::E_VisionObject );
-    static       std::string  GetLandTypeName         ( const TerrainData& data );
+    static std::string  GetLandTypeName( const TerrainData& data );
     //@}
 
     //! @name CRC
@@ -89,8 +87,7 @@ private:
     template < typename type > struct converter
     {
         const std::string name_;
-        const type        type_;
-
+        const type type_;
         converter( const char* name, type t ) : name_( name ), type_( t ) {};
         converter& operator = ( const converter& rhs ) { name_ = rhs.name_; type_ = rhs.type_; return *this;};
     };
@@ -102,8 +99,7 @@ private:
     template< typename type > struct mutableConverter
     {
         const std::string name_;
-        type*             type_;
-
+        type* type_;
         mutableConverter( const char* name, type& t ) : name_( name ), type_( &t ) {};
         mutableConverter& operator = ( const mutableConverter& rhs ) { name_ = rhs.name_; type_ = rhs.type_; return *this;};
     };
@@ -124,7 +120,6 @@ private:
         for ( unsigned int i = 0; ; ++i )
         {
             const std::string& sCurrentName = conv[i].name_;
-
             if( sCurrentName.empty() || sCaseInsensitiveEqual()( sCurrentName, str ) )
                 return conv[i].type_;
         }

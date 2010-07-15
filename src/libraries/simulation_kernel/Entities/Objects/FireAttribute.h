@@ -10,6 +10,7 @@
 #ifndef __FireAttribute_h_
 #define __FireAttribute_h_
 
+#include "MIL.h"
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
 #include "MIL_FireClass.h"

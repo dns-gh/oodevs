@@ -75,8 +75,8 @@ MIL_Config::~MIL_Config()
 void MIL_Config::Parse( int argc, char** argv )
 {
     tools::SessionConfig::Parse( argc, argv );
-    bDataTestMode_    = IsSet( "testdata" );
-    bTestMode_        = bDataTestMode_ || IsSet( "test" );
+    bDataTestMode_ = IsSet( "testdata" );
+    bTestMode_ = bDataTestMode_ || IsSet( "test" );
     bSaveCheckpointTestMode_ = IsSet( "savecheckpoint" );
     bCheckPointOrbat_ = IsSet( "checkpointorbat" );
     bDeleteCheckpointTestMode_ = IsSet( "deletecheckpoint" );

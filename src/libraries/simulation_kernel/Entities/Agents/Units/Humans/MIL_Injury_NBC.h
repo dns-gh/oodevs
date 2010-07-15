@@ -12,14 +12,11 @@
 #ifndef __MIL_Injury_NBC_h_
 #define __MIL_Injury_NBC_h_
 
-#include "MIL.h"
 #include "MIL_Injury_ABC.h"
-
 #include "Entities/Objects/MIL_MedicalTreatmentType.h"
 
 class PHY_ComposantePion;
 class NBCTypeAttribute;
-
 
 class MIL_Injury_NBC : public MIL_Injury_ABC
 {

@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AgentTypeInjuredHumanPion.h"
 #include "MIL_AgentInjuredHumanPion.h"
 #include "AlgorithmsFactories.h"

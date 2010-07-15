@@ -9,8 +9,6 @@
 #include "Decision/DEC_Workspace.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Entities/Orders/MIL_TacticalLineManager.h"
-#include "Entities/Populations/MIL_PopulationConcentration.h"
-#include "Entities/Populations/MIL_PopulationFlow.h"
 #include "MIL_Folk.h"
 #include "UrbanModel.h"
 #include "CheckPoints/MIL_CheckPointManager.h"
@@ -19,16 +17,9 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_ProfilerMgr.h"
-#include "Tools/MIL_Tools.h"
 #include "Hla/HLA_Federate.h"
-#include "simulation_terrain/TER_World.h"
-#include "MT_Tools/MT_ScipioException.h"
-#include "MT_Tools/MT_Profiler.h"
-#include "MT/MT_Archive/MT_InputArchive_ABC.h"
 #include "tools/thread/Thread.h"
 #include "tools/win32/ProcessMonitor.h"
-#include "protocol/simulationsenders.h"
-#include "protocol/clientsenders.h"
 #include <xeumeuleu/xml.hpp>
 
 MIL_AgentServer* MIL_AgentServer::pTheAgentServer_ = 0;
@@ -109,10 +100,6 @@ MIL_AgentServer::~MIL_AgentServer()
     //    MT_LOG_INFO_MSG( "Terminating Terrain" );
 //    TER_World::DestroyWorld();
 }
-
-//=============================================================================
-// INIT
-//=============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::ReadStaticData
@@ -274,12 +261,12 @@ void MIL_AgentServer::SendMsgEndTick() const
 {
     assert( pProcessMonitor_ );
     client::ControlEndTick msgEndTick;
-    msgEndTick().set_current_tick      ( GetCurrentTimeStep() );
-    msgEndTick().set_tick_duration     ( (int)pProfilerMgr_->GetLastTickDuration() );
-    msgEndTick().set_short_pathfinds   ( pPathFindManager_->GetNbrShortRequests() );
-    msgEndTick().set_long_pathfinds    ( pPathFindManager_->GetNbrLongRequests () );
-    msgEndTick().set_memory            ( pProcessMonitor_->GetMemory() );
-    msgEndTick().set_virtual_memory    ( pProcessMonitor_->GetVirtualMemory() );
+    msgEndTick().set_current_tick( GetCurrentTimeStep() );
+    msgEndTick().set_tick_duration ( static_cast< int >( pProfilerMgr_->GetLastTickDuration() ) );
+    msgEndTick().set_short_pathfinds( pPathFindManager_->GetNbrShortRequests() );
+    msgEndTick().set_long_pathfinds( pPathFindManager_->GetNbrLongRequests () );
+    msgEndTick().set_memory( pProcessMonitor_->GetMemory() );
+    msgEndTick().set_virtual_memory( pProcessMonitor_->GetVirtualMemory() );
     msgEndTick.Send( NET_Publisher_ABC::Publisher() );
 }
 

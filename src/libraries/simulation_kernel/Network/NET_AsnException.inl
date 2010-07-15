@@ -15,6 +15,7 @@ template< typename T > inline
 NET_AsnException< T >::NET_AsnException( T nErrorID )
     : nErrorID_( nErrorID )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -24,7 +25,7 @@ NET_AsnException< T >::NET_AsnException( T nErrorID )
 template< typename T > inline
 NET_AsnException< T >::~NET_AsnException()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

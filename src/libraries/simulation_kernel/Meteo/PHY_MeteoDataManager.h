@@ -10,7 +10,6 @@
 #ifndef __PHY_MeteoDataManager_h_
 #define __PHY_MeteoDataManager_h_
 
-#include "MIL.h"
 #include "meteo/MeteoManager_ABC.h"
 #include "meteo/PHY_Precipitation.h"
 #include "meteo/PHY_Meteo.h"

@@ -12,7 +12,6 @@
 #ifndef __PHY_RoleInterface_Transported_h_
 #define __PHY_RoleInterface_Transported_h_
 
-#include "MIL.h"
 #include "MT_Tools/Role_ABC.h"
 
 namespace client

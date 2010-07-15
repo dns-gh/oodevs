@@ -10,7 +10,6 @@
 #ifndef __MIL_Report_h_
 #define __MIL_Report_h_
 
-#include "MIL.h"
 #include "MT/MT_Tools/MT_IdentifierManager.h"
 #include "MIL_MissionParameterFactory.h"
 
