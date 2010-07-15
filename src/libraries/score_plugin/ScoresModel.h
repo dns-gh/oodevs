@@ -43,7 +43,12 @@ namespace score
     struct Variable
     {
         Variable( const std::string& name, const std::string& type, const std::string& value )
-            : name_( name ), type_( type ), value_( value ) {}
+            : name_( name )
+            , type_( type )
+            , value_( value )
+        {
+            // NOTHING
+        }
         std::string name_;
         std::string type_;
         std::string value_;

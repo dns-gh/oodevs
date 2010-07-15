@@ -18,7 +18,6 @@ artillery =
         ["Obus 122 ACED"]   = 53,
     },
 
-
     _Fire = function( firerId, target, dotation, iteration )
         local dotation  = dotation or artillery.dotations["Obus 122 OE"]
         local iteration = iteration or 1

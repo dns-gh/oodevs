@@ -169,7 +169,6 @@ std::string ExerciseConfig::BuildDecisionalChildFile( const std::string& file ) 
     return BuildChildPath( GetDecisionalFile(), file );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ExerciseConfig::GetTerrainFile
 // Created: AGE 2008-03-13
