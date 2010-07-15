@@ -52,7 +52,7 @@ void AutomatType::ReadAgent( xml::xistream& xis, const tools::Resolver_ABC< Agen
 {
     units_.push_back( new AutomatComposition( xis, agentResolver ) );
     bool commandPost = false;
-    xis >> xml::optional() >> xml::attribute( "command-post", commandPost );
+    xis >> xml::optional >> xml::attribute( "command-post", commandPost );
     if( commandPost )
         pcType_ = & units_.back()->GetType();
 }

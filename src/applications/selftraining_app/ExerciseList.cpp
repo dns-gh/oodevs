@@ -211,9 +211,9 @@ void ExerciseList::SelectExercise( QListViewItem* item )
                         >> xml::attribute( "dataset", data )
                         >> xml::attribute( "physical", physical )
                     >> xml::end
-                    >> xml::optional() >> xml::start( "meta" )
-                        >> xml::optional() >> xml::start( "briefing" )
-                            >> xml::optional()  >> xml::content( "image", image )
+                    >> xml::optional >> xml::start( "meta" )
+                        >> xml::optional >> xml::start( "briefing" )
+                            >> xml::optional  >> xml::content( "image", image )
                                 >> xml::list( "text", *this, &ExerciseList::ReadBriefingText );
 
             const std::string imagePath = config_.GetExerciseDir( MakePath( exercise.ascii(), image ).ascii() );
@@ -251,8 +251,8 @@ QString ExerciseList::GetExerciseDisplayName( const QString& exercise ) const
     {
         xml::xifstream xis( config_.GetExerciseFile( MakePath( subDir_, exercise.ascii() ).ascii() ) );
         xis >> xml::start( "exercise" )
-                >> xml::optional() >> xml::start( "meta" )
-                    >> xml::optional() >> xml::content( "name", displayName );
+                >> xml::optional >> xml::start( "meta" )
+                    >> xml::optional >> xml::content( "name", displayName );
     }
     catch( ... )
     {

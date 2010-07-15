@@ -42,8 +42,8 @@ DrawingTemplate::DrawingTemplate( xml::xistream& input, const DrawingCategory& c
     std::string name, type, code, description;
     input >> xml::attribute( "name", name )
           >> xml::attribute( "type", type )
-          >> xml::optional() >> xml::attribute( "code", code )
-          >> xml::optional() >> xml::content( "description", description )
+          >> xml::optional >> xml::attribute( "code", code )
+          >> xml::optional >> xml::content( "description", description )
           >> xml::start( "segment" );
 
     name_ = name.c_str();
@@ -154,7 +154,7 @@ void DrawingTemplate::ReadMarker( xml::xistream& input, svg::Node_ABC*& node, Un
 DrawingTemplate::Unit DrawingTemplate::ReadUnit( xml::xistream& input )
 {
     std::string unit( "m" );
-    input >> xml::optional() >> xml::attribute( "unit", unit );
+    input >> xml::optional >> xml::attribute( "unit", unit );
     if( unit == "m" )
         return eMeter;
     if( unit == "px" )

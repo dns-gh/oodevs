@@ -144,7 +144,7 @@ tools::Iterator< const Entity_ABC& > TeamsModel::CreateEntityIterator() const
 void TeamsModel::Load( xml::xistream& xis, Model& model )
 {
     xis >> xml::start( "orbat" )
-            >> xml::optional() >> xml::start( "dotations" )
+            >> xml::optional >> xml::start( "dotations" )
                 >> xml::attribute( "infinite", infiniteDotations_ )
             >> xml::end
             >> xml::start( "sides" )

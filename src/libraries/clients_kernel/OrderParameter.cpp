@@ -24,7 +24,7 @@ OrderParameter::OrderParameter( xml::xistream& xis )
     std::string name;
     xis >> xml::attribute( "name", name_ )
         >> xml::attribute( "type", type_ )
-        >> xml::optional() >> xml::attribute( "optional", optional_ )
+        >> xml::optional >> xml::attribute( "optional", optional_ )
         >> xml::list( "value", *this, &OrderParameter::ReadValue );
 }
 

@@ -25,9 +25,9 @@ FragOrderType::FragOrderType( xml::xistream& xis )
     , isDefaultOrder_  ( false )
     , isWithoutMission_( false )
 {
-    xis >> xml::optional() >> xml::attribute( "available-for-all-mission", isDefaultOrder_ )
-        >> xml::optional() >> xml::attribute( "available-without-mission", isWithoutMission_ )
-        >> xml::optional() >> xml::attribute( "dia-type", diaType_ )
+    xis >> xml::optional >> xml::attribute( "available-for-all-mission", isDefaultOrder_ )
+        >> xml::optional >> xml::attribute( "available-without-mission", isWithoutMission_ )
+        >> xml::optional >> xml::attribute( "dia-type", diaType_ )
         >> xml::list( "parameter", *this, &FragOrderType::ReadParameter );
     ReadDescriptions( xis );
 }

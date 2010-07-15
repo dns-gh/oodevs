@@ -76,8 +76,8 @@ void ADN_Automata_Data::UnitInfos::ReadArchive( xml::xistream& input )
     if( ! pUnit )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Automat - Invalid unit type '%1'" ).arg( type.c_str() ).ascii() );
     ptrUnit_ = pUnit;
-    input >> xml::optional() >> xml::attribute( "min-occurs", min_ )
-          >> xml::optional() >> xml::attribute( "max-occurs", max_ );
+    input >> xml::optional >> xml::attribute( "min-occurs", min_ )
+          >> xml::optional >> xml::attribute( "max-occurs", max_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -169,7 +169,7 @@ void ADN_Automata_Data::AutomatonInfos::ReadUnit( xml::xistream& input )
     std::auto_ptr<UnitInfos> spNew( new UnitInfos() );
     spNew->ReadArchive( input );
     bool cp = false;
-    input >> xml::optional() >> xml::attribute( "command-post", cp );
+    input >> xml::optional >> xml::attribute( "command-post", cp );
     if( cp )
         ptrUnit_ = spNew->ptrUnit_.GetData();
     vSubUnits_.AddItem( spNew.release() );
@@ -185,7 +185,7 @@ void ADN_Automata_Data::AutomatonInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "name", strName_ )
           >> xml::attribute( "type", strType )
           >> xml::attribute( "decisional-model", strModel )
-          >> xml::optional() >> xml::attribute( "force-ratio-feedback-time", strengthRatioFeedbackTime_ );
+          >> xml::optional >> xml::attribute( "force-ratio-feedback-time", strengthRatioFeedbackTime_ );
     bStrengthRatioFeedbackTime_ = strengthRatioFeedbackTime_ != "0s";
     nAgentType_ = ADN_Tr::ConvertToAgentTypeAutomate( strType );
     ADN_Models_Data::ModelInfos* pModel = ADN_Workspace::GetWorkspace().GetModels().GetData().FindAutomataModel( strModel );

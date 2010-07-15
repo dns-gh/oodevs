@@ -140,7 +140,7 @@ void ADN_Missions_Data::MissionParameter::ReadArchive( xml::xistream& input )
     std::string type;
     input >> xml::attribute( "name", strName_ )
             >> xml::attribute( "type", type )
-            >> xml::optional() >> xml::attribute( "optional", isOptional_ )
+            >> xml::optional >> xml::attribute( "optional", isOptional_ )
             >> xml::attribute( "dia-name", diaName_ );
     type_ = ADN_Tr::ConvertToMissionParameterType( type );
     input >> xml::list( "value", *this, &ADN_Missions_Data::MissionParameter::ReadValue );
@@ -264,12 +264,12 @@ void ADN_Missions_Data::Mission::ReadArchive( xml::xistream& input )
     std::string doctrineDesc, usageDesc;
     input >> xml::attribute( "name", strName_ )
         >> xml::attribute( "dia-type", diaType_ )
-        >> xml::optional() >> xml::attribute( "dia-behavior", diaBehavior_ )
-        >> xml::optional() >> xml::attribute( "cdt-dia-behavior", cdtDiaBehavior_ )
-        >> xml::optional() >> xml::attribute( "mrt-dia-behavior", mrtDiaBehavior_ )
-        >> xml::optional() >> xml::start( "descriptions" )
-            >> xml::optional() >> xml::start( "doctrine" ) >> doctrineDesc >> xml::end
-            >> xml::optional() >> xml::start( "usage" ) >> usageDesc >> xml::end
+        >> xml::optional >> xml::attribute( "dia-behavior", diaBehavior_ )
+        >> xml::optional >> xml::attribute( "cdt-dia-behavior", cdtDiaBehavior_ )
+        >> xml::optional >> xml::attribute( "mrt-dia-behavior", mrtDiaBehavior_ )
+        >> xml::optional >> xml::start( "descriptions" )
+            >> xml::optional >> xml::start( "doctrine" ) >> doctrineDesc >> xml::end
+            >> xml::optional >> xml::start( "usage" ) >> usageDesc >> xml::end
         >> xml::end
         >> xml::list( "parameter", *this, &ADN_Missions_Data::Mission::ReadParameter );
     doctrineDescription_ = doctrineDesc;
@@ -420,9 +420,9 @@ void ADN_Missions_Data::FragOrder::ReadArchive( xml::xistream& input )
     std::string doctrineDesc, usageDesc;
     input >> xml::attribute( "name", strName_ )
           >> xml::attribute( "dia-type", diaType_ )
-          >> xml::optional() >> xml::attribute( "available-for-all-mission", isAvailableForAllMissions_ )
-          >> xml::optional() >> xml::attribute( "available-without-mission", isAvailableWithoutMission_ )
-          >> xml::optional() >> xml::start( "descriptions" )
+          >> xml::optional >> xml::attribute( "available-for-all-mission", isAvailableForAllMissions_ )
+          >> xml::optional >> xml::attribute( "available-without-mission", isAvailableWithoutMission_ )
+          >> xml::optional >> xml::start( "descriptions" )
              >> xml::start( "doctrine" ) >> doctrineDesc >> xml::end
              >> xml::start( "usage" ) >> usageDesc >> xml::end
           >> xml::end

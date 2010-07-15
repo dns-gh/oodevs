@@ -41,12 +41,12 @@ void Exercise::Load( xml::xistream& xis )
     std::string name, version;
     xis >> xml::start( "exercise" )
         >> xml::attribute( "generator-version", version )
-        >> xml::optional() >> xml::start( "meta" )
-                >> xml::optional() >> xml::content( "name", name )
-                >> xml::optional() >> xml::start( "briefing" )
+        >> xml::optional >> xml::start( "meta" )
+                >> xml::optional >> xml::content( "name", name )
+                >> xml::optional >> xml::start( "briefing" )
                     >> xml::list( "text", *this, &Exercise::ReadBriefing )
                 >> xml::end
-                >> xml::optional() >> xml::start( "resources" )
+                >> xml::optional >> xml::start( "resources" )
                     >> xml::list( "resource", *this, &Exercise::ReadResource )
                 >> xml::end
             >> xml::end;

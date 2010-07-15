@@ -18,7 +18,7 @@ namespace
     public:
         explicit TestReader( xml::xistream& xis )
         {
-            xis >> xml::optional() >> xml::start( "tests" )
+            xis >> xml::optional >> xml::start( "tests" )
                     >> xml::list( "test", *this, &TestReader::ReadTest )
                 >> xml::end;
         }

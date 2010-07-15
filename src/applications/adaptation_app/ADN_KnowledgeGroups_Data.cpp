@@ -36,8 +36,8 @@ void ADN_KnowledgeGroups_Data::AgentGroupInfo::ReadArchive( xml::xistream& input
 {
     input >> xml::start( "unit-knowledge" )
             >> xml::attribute( "max-lifetime", maxLifetime_ )
-            >> xml::optional() >> xml::attribute( "max-unit-to-knowledge-distance", rMaxDistance_ )
-            >> xml::optional() >> xml::attribute( "interpolation-time", interpolationTime_ )
+            >> xml::optional >> xml::attribute( "max-unit-to-knowledge-distance", rMaxDistance_ )
+            >> xml::optional >> xml::attribute( "interpolation-time", interpolationTime_ )
           >> xml::end;
     bInterpolationTime_ = interpolationTime_ != "0s";
 }
@@ -129,7 +129,7 @@ std::string ADN_KnowledgeGroups_Data::GroupInfo::GetItemName()
 void ADN_KnowledgeGroups_Data::GroupInfo::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "name", strName_ )
-          >> xml::optional() >> xml::attribute( "communication-delay", communicationDelay_ ); // LTO
+          >> xml::optional >> xml::attribute( "communication-delay", communicationDelay_ ); // LTO
 
     agentInfos_     .ReadArchive( input );
     populationInfos_.ReadArchive( input );

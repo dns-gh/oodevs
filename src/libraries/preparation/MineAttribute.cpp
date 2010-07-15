@@ -40,7 +40,7 @@ MineAttribute::MineAttribute( xml::xistream& xis, kernel::PropertiesDictionary& 
     , density_     ( 1, Units::minesPerMeter )
 {
     std::string density;
-    xis >> xml::optional() >> xml::content( "density", density );
+    xis >> xml::optional >> xml::content( "density", density );
     density_.value_ = QString( density.c_str() ).toDouble();
     CreateDictionary( dico );
 }

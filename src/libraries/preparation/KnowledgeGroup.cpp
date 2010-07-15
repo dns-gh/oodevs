@@ -46,7 +46,7 @@ KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, kernel::Controller& controll
     , type_( &types.Get( xis.attribute< std::string >( "type" ) ) )
 {
     std::string name;
-    xis >> xml::optional() >> xml::attribute( "name", name );
+    xis >> xml::optional >> xml::attribute( "name", name );
     UpdateCommunicationDelay(); // LTO
     name_ = name.empty() ? tools::translate( "KnowledgeGroup", "Knowledge group [%1]" ).arg( id_ ) : name.c_str();
     idManager.Lock( id_ );

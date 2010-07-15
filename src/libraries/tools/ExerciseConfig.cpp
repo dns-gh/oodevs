@@ -80,19 +80,19 @@ void ExerciseConfig::LoadExercise( const std::string& file )
                 >> xml::start( "profiles" )
                     >> xml::attribute( "file", profiles_ )
                 >> xml::end
-                >> xml::optional() >> xml::start( "urban" )
+                >> xml::optional >> xml::start( "urban" )
                     >> xml::attribute( "file", urban_ )
                 >> xml::end
-                >> xml::optional() >> xml::start( "urbanstate" )
+                >> xml::optional >> xml::start( "urbanstate" )
                     >> xml::attribute( "file", urbanState_ )
                 >> xml::end
-                >> xml::optional() >> xml::start( "population" )
+                >> xml::optional >> xml::start( "population" )
                     >> xml::attribute( "name", population_ )
                 >> xml::end
-                >> xml::optional() >> xml::start( "scores" );
+                >> xml::optional >> xml::start( "scores" );
         scores_ = xis.attribute< std::string >( "file", "scores.xml" );
         xis     >> xml::end
-                >> xml::optional() >> xml::start( "success-factors" );
+                >> xml::optional >> xml::start( "success-factors" );
         successFactors_ = xis.attribute< std::string >( "file", "success-factors.xml" );
         xis     >> xml::end;
         if( GetExerciseFile() != file )

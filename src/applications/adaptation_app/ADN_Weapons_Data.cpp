@@ -332,11 +332,11 @@ void ADN_Weapons_Data::WeaponInfos::ReadArchive( xml::xistream& input )
             >> xml::attribute( "munition", nRoundsPerReload_ )
             >> xml::attribute( "duration", reloadDuration_ )
           >> xml::end;
-    input >> xml::optional()
+    input >> xml::optional
           >> xml::start( "direct-fire" )
             >> xml::list( "hit-probabilities", *this, &ADN_Weapons_Data::WeaponInfos::ReadTargetSize )
           >> xml::end
-          >> xml::optional()
+          >> xml::optional
           >> xml::start( "indirect-fire" )
             >> xml::attribute( "average-speed", rAverageSpeed_ )
             >> xml::attribute( "min-range",     rMinRange_ )

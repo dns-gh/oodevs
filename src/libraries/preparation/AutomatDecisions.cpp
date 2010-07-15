@@ -37,7 +37,7 @@ AutomatDecisions::AutomatDecisions( xml::xistream& xis, kernel::Controller& cont
     , agent_( agent )
 {
     std::string engaged;
-    xis >> xml::optional() >> xml::attribute( "engaged", engaged );
+    xis >> xml::optional >> xml::attribute( "engaged", engaged );
     bEmbraye_ = engaged.empty() || engaged == "true";
 }
 

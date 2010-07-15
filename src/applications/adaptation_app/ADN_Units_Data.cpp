@@ -96,10 +96,10 @@ void ADN_Units_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
     std::string strName;
     input >> xml::attribute( "type", strName )
           >> xml::attribute( "count", nNb_ )
-          >> xml::optional() >> xml::attribute( "major", bMajor_ )
-          >> xml::optional() >> xml::attribute( "crew", nNbrHumanInCrew_ )
-          >> xml::optional() >> xml::attribute( "convoyer", bConveyor_ )
-          >> xml::optional() >> xml::attribute( "loadable", bLoadable_ );
+          >> xml::optional >> xml::attribute( "major", bMajor_ )
+          >> xml::optional >> xml::attribute( "crew", nNbrHumanInCrew_ )
+          >> xml::optional >> xml::attribute( "convoyer", bConveyor_ )
+          >> xml::optional >> xml::attribute( "loadable", bLoadable_ );
     ADN_Composantes_Data::ComposanteInfos* pComposante = ADN_Workspace::GetWorkspace().GetComposantes().GetData().FindComposante( strName );
     if( pComposante == 0 )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Unit types - Invalid equipment '%1'" ).arg( strName.c_str() ).ascii() );
@@ -254,7 +254,7 @@ void ADN_Units_Data::StockInfos::ReadStock( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::StockInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::optional() >> xml::start( "stocks" )
+    input >> xml::optional >> xml::start( "stocks" )
             >> xml::list( "stock", *this, &ADN_Units_Data::StockInfos::ReadStock )
           >> xml::end;
 }
@@ -651,7 +651,7 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
           >> xml::start( "crew-ranks" )
             >> xml::list( "crew-rank", *this, &ADN_Units_Data::UnitInfos::ReadCrew )
           >> xml::end
-          >> xml::optional() >> xml::start( "logistics" )
+          >> xml::optional >> xml::start( "logistics" )
             >> xml::list( "category", contenancesTC1_, &ADN_Composantes_Data::DotationInfos::ReadCategory )
           >> xml::end;
     bTC1_ = ! contenancesTC1_.categories_.empty();
@@ -664,7 +664,7 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
             >> xml::list( "posture", *this, &ADN_Units_Data::UnitInfos::ReadPosture )
           >> xml::end;
 
-    input >> xml::optional()
+    input >> xml::optional
             >> xml::start( "setup" )
                 >> xml::attribute( "installation-time", installationDelay_ )
                 >> xml::attribute( "uninstallation-time", uninstallationDelay_ )
@@ -673,21 +673,21 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
     input >> xml::start( "nbc" )
             >> xml::attribute( "decontamination-delay", decontaminationDelay_ )
           >> xml::end
-          >> xml::optional() >> xml::start( "distance-before-points" )
+          >> xml::optional >> xml::start( "distance-before-points" )
             >> xml::list( "distance-before-point", *this, &ADN_Units_Data::UnitInfos::ReadPointDistance )
           >> xml::end
-          >> xml::optional() >> xml::start( "drill-blow" )
+          >> xml::optional >> xml::start( "drill-blow" )
             >> xml::attribute( "width", rProbeWidth_ )
             >> xml::attribute( "length", rProbeLength_ )
           >> xml::end
-          >> xml::optional() >> xml::start( "force-ratio" )
+          >> xml::optional >> xml::start( "force-ratio" )
             >> xml::attribute( "feedback-time", strengthRatioFeedbackTime_ )
           >> xml::end;
     bProbe_ = rProbeWidth_ != 0. || rProbeLength_ != 0.;
     bStrengthRatioFeedbackTime_ = strengthRatioFeedbackTime_ != "0s";
 
-    input >> xml::optional() >> xml::attribute( "can-fly", bCanFly_ );
-    input >> xml::optional() >> xml::attribute( "is-autonomous", bIsAutonomous_ );
+    input >> xml::optional >> xml::attribute( "can-fly", bCanFly_ );
+    input >> xml::optional >> xml::attribute( "is-autonomous", bIsAutonomous_ );
 }
 
 // -----------------------------------------------------------------------------

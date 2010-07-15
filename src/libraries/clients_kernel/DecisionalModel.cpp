@@ -24,7 +24,7 @@ using namespace kernel;
 DecisionalModel::DecisionalModel( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver, const tools::Resolver_ABC< FragOrderType >& fragOrders )
 {
     xis >> xml::attribute( "name", name_ )
-        >> xml::optional()
+        >> xml::optional
             >> xml::start( "missions" )
                 >> xml::list( "mission", *this, &DecisionalModel::ReadMission, factory, missionResolver )
             >> xml::end;

@@ -58,7 +58,7 @@ ADN_Radars_Data::DetectTimes::~DetectTimes()
 // -----------------------------------------------------------------------------
 void ADN_Radars_Data::DetectTimes::ReadArchive( xml::xistream& input, bool bHq )
 {
-    input >> xml::optional()
+    input >> xml::optional
           >> xml::start( "acquisition-times" )
             >> xml::list( "acquisition-time", *this, &ADN_Radars_Data::DetectTimes::ReadAcquisitionTime, bHq )
           >> xml::end;
@@ -72,7 +72,7 @@ void ADN_Radars_Data::DetectTimes::ReadAcquisitionTime( xml::xistream& input, bo
 {
     const std::string timeKey = bHq ? "command-post-time" : "base-time";
     std::string time, level;
-    input >> xml::optional() >> xml::attribute( timeKey, time )
+    input >> xml::optional >> xml::attribute( timeKey, time )
           >> xml::attribute( "level", level );
     if( time.empty() )
         return;
@@ -179,12 +179,12 @@ void ADN_Radars_Data::RadarInfos::ReadArchive( xml::xistream& input )
         throw ADN_DataException( "Invalid data", tr( "Sensors - Invalid radar type '%1'" ).arg( type.c_str() ).ascii() );
 
     input >> xml::attribute( "action-range", rRange_ )
-          >> xml::optional() >> xml::attribute( "min-height", rMinHeight_ )
-          >> xml::optional() >> xml::attribute( "max-height", rMaxHeight_ );
+          >> xml::optional >> xml::attribute( "min-height", rMinHeight_ )
+          >> xml::optional >> xml::attribute( "max-height", rMaxHeight_ );
     bHasMinHeight_ = rMinHeight_ != 0;
     bHasMaxHeight_ = rMaxHeight_ != 0;
 
-    input >> xml::optional()
+    input >> xml::optional
           >> xml::start( "detectable-activities" )
             >> xml::list( "detectable-activity", *this, &ADN_Radars_Data::RadarInfos::ReadDetectableActivity )
           >> xml::end;
@@ -207,7 +207,7 @@ void ADN_Radars_Data::RadarInfos::ReadDetectableActivity( xml::xistream& input )
     std::string consumption;
     bool value = false;
     input >> xml::attribute( "type", consumption )
-          >> xml::optional() >> xml::attribute( "value", value );
+          >> xml::optional >> xml::attribute( "value", value );
     unsigned n = (unsigned)ADN_Tr::ConvertToConsumptionType( consumption );
     if( n == unsigned( -1 ) )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Sensors - Invalid activity '%1'" ).arg( consumption.c_str() ).ascii() );

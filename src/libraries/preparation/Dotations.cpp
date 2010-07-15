@@ -37,7 +37,7 @@ Dotations::Dotations( xml::xistream& xis, Controller& controller, Entity_ABC& en
     : controller_( controller )
 {
     CreateDictionary( entity, dico );
-    xis >> xml::optional() >> xml::start( "dotations" )
+    xis >> xml::optional >> xml::start( "dotations" )
             >> xml::list( "dotation", *this, &Dotations::ReadDotation, resolver )
         >> xml::end;
 }

@@ -37,7 +37,7 @@ Stocks::Stocks( xml::xistream& xis, Controller& controller, Entity_ABC& entity, 
     : controller_( controller )
 {
     CreateDictionary( entity, dico );
-    xis >> xml::optional() >> xml::start( "stocks" )
+    xis >> xml::optional >> xml::start( "stocks" )
             >> xml::list( "dotation", *this, &Stocks::ReadDotation, resolver )
         >> xml::end;
 }

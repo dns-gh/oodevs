@@ -17,7 +17,7 @@ namespace
     QString ReadDescription( xml::xistream& xis )
     {
         std::string desc;
-        xis >> xml::optional() >> xml::start( "description" )
+        xis >> xml::optional >> xml::start( "description" )
                 >> desc
             >> xml::end;
         return desc.c_str();
@@ -33,7 +33,7 @@ SuccessFactorActionType::SuccessFactorActionType( xml::xistream& xis )
     , function_( xis.attribute< std::string >( "function" ) )
     , description_( ReadDescription( xis ) )
 {
-    xis >> xml::optional() >> xml::start( "parameters" )
+    xis >> xml::optional >> xml::start( "parameters" )
             >> xml::list( "parameter", *this, &SuccessFactorActionType::ReadParameter )
         >> xml::end;
 }

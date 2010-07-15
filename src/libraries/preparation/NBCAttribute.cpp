@@ -33,7 +33,7 @@ NBCAttribute::NBCAttribute( kernel::PropertiesDictionary& dico )
 NBCAttribute::NBCAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::NBCAgent, std::string >& nbcAgents, kernel::PropertiesDictionary& dico )
     : state_ ( "gaseous" )
 {
-    xis >> xml::optional() >> xml::attribute( "state", state_ );
+    xis >> xml::optional >> xml::attribute( "state", state_ );
     xis >> xml::list( "nbc-agent", *this, &NBCAttribute::ReadNbcAgent, nbcAgents );
     CreateDictionary( dico );
 }

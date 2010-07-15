@@ -54,8 +54,8 @@ void ExerciseMenu::NotifyUpdated( const kernel::ModelLoaded& model )
     Reset();
     xml::xifstream xis( model.config_.GetExerciseFile() );
     xis >> xml::start( "exercise" )
-            >> xml::optional() >> xml::start( "meta" )
-                >> xml::optional() >> xml::start( "resources" )
+            >> xml::optional >> xml::start( "meta" )
+                >> xml::optional >> xml::start( "resources" )
                     >> xml::list( "resource", *this, &ExerciseMenu::ReadResource, model.config_ );
 }
 

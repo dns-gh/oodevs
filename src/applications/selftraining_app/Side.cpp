@@ -18,7 +18,7 @@
 Side::Side( xml::xistream& xis )
     : id_ ( xis.attribute< unsigned int >( "id" ) )
 {
-    xis >> xml::optional() >> xml::attribute<std::string>( "name", name_ ) ;
+    xis >> xml::optional >> xml::attribute<std::string>( "name", name_ ) ;
 }
 
 // -----------------------------------------------------------------------------

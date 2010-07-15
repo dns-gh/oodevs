@@ -113,7 +113,7 @@ ADN_Objects_Data::PopulationAttritionInfos::~PopulationAttritionInfos()
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::PopulationAttritionInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::optional() >> xml::start( "population-attrition" )
+    input >> xml::optional >> xml::start( "population-attrition" )
                 >> xml::attribute( "surface", rSurface_ )
                 >> xml::attribute( "ph", rPh_ )
             >> xml::end;
@@ -161,7 +161,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Buildable::ReadArchive( xml::xistream& 
 {
     ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
 
-    xis >> xml::optional()
+    xis >> xml::optional
         >> xml::start( "resources" )
             >> xml::list( "dotation", *this, &ADN_Objects_Data::ADN_CapacityInfos_Buildable::ReadDotation )
         >> xml::end;
@@ -226,7 +226,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Improvable::ReadArchive( xml::xistream&
 {
     ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
 
-    xis >> xml::optional()
+    xis >> xml::optional
          >> xml::start( "resources" )
             >> xml::list( "dotation", *this, &ADN_Objects_Data::ADN_CapacityInfos_Improvable::ReadDotation )
         >> xml::end;
@@ -302,8 +302,8 @@ void ADN_Objects_Data::ADN_CapacityInfos_Constructor::ReadArchive( xml::xistream
     xis >> xml::attribute( "default-consumption-mode", strComsuption );
     nDefaultConsumption_ = ADN_Tr::ConvertToConsumptionType( strComsuption );
     unitType_ = xis.attribute< std::string >( "unit-type" );
-    xis >> xml::optional() >> xml::list( ADN_CapacityInfos_Buildable::TAG, *ptrBuildable_, &ADN_CapacityInfos_Buildable::ReadArchive );
-    xis >> xml::optional() >> xml::list( ADN_CapacityInfos_Improvable::TAG, *ptrImprovable_, &ADN_CapacityInfos_Improvable::ReadArchive );
+    xis >> xml::optional >> xml::list( ADN_CapacityInfos_Buildable::TAG, *ptrBuildable_, &ADN_CapacityInfos_Buildable::ReadArchive );
+    xis >> xml::optional >> xml::list( ADN_CapacityInfos_Improvable::TAG, *ptrImprovable_, &ADN_CapacityInfos_Improvable::ReadArchive );
 }
 
 // -----------------------------------------------------------------------------
@@ -814,7 +814,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Detection::ADN_CapacityInfos_Detection()
 void ADN_Objects_Data::ADN_CapacityInfos_Detection::ReadArchive( xml::xistream& input )
 {
     bPresent_ = true;
-    input >> xml::optional()
+    input >> xml::optional
         >> xml::start( "acquisition-times" )
         >> xml::list( "acquisition-time", *this, &ADN_Objects_Data::ADN_CapacityInfos_Detection::ReadAcquisitionTime )
         >> xml::end;
@@ -827,7 +827,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Detection::ReadArchive( xml::xistream& 
 void ADN_Objects_Data::ADN_CapacityInfos_Detection::ReadAcquisitionTime( xml::xistream& input )
 {
     std::string time, level;
-    input >> xml::optional()
+    input >> xml::optional
           >> xml::attribute( "time", time )
           >> xml::attribute( "level", level );
     if( time.empty() )
@@ -1269,7 +1269,7 @@ void ADN_Objects_Data::ObjectInfos::ReadArchive( xml::xistream& xis )
     xis >> xml::attribute( "name", strName_ )
         >> xml::attribute( "type", strType_ )
         >> xml::attribute( "geometry", geometries_ )
-        >> xml::optional() >> xml::attribute( "symbol", symbol_ )
+        >> xml::optional >> xml::attribute( "symbol", symbol_ )
         >> xml::list( *this, &ADN_Objects_Data::ObjectInfos::ReadCapacityArchive );
 }
 

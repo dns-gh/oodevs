@@ -31,7 +31,7 @@ XmlNode::XmlNode( const std::string& filename )
         xml::xifstream xis( filename );
         xis >> xml::attributes( *this, &XmlNode::ReadAttribute )
             >> xml::list( *this, &XmlNode::ReadChild )
-            >> xml::optional() >> text_;
+            >> xml::optional >> text_;
     }
 }
 
@@ -43,7 +43,7 @@ XmlNode::XmlNode( xml::xistream& xis )
 {
     xis >> xml::attributes( *this, &XmlNode::ReadAttribute )
         >> xml::list( *this, &XmlNode::ReadChild )
-        >> xml::optional() >> text_;
+        >> xml::optional >> text_;
 }
 
 // -----------------------------------------------------------------------------

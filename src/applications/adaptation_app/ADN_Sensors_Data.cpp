@@ -994,7 +994,7 @@ void ADN_Sensors_Data::SensorInfos::ReadUnitDetection( xml::xistream& input )
     input >> xml::attribute( "firer-detection-distance", rFirerDetectionRange_ );
 
     input >> xml::attribute( "angle", rAngle_ )
-          >> xml::optional() >> xml::start( "limited-to-sensors" ) // LTO
+          >> xml::optional >> xml::start( "limited-to-sensors" ) // LTO
             >> xml::list( "sensor", *this, &ADN_Sensors_Data::SensorInfos::ReadLimitedToSensorsList ) // LTO
           >> xml::end // LTO
           >> xml::start( "base-distances" )

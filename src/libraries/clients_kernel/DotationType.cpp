@@ -25,7 +25,7 @@ DotationType::DotationType( xml::xistream& xis )
     xis >> xml::attribute( "id", id_ )
         >> xml::attribute( "name", xmlName )
         >> xml::attribute( "category", category_ )
-        >> xml::optional() >> xml::attribute( "d-type", dType_ );
+        >> xml::optional >> xml::attribute( "d-type", dType_ );
     nameId_ = tools::DotationFamilyFromString( xmlName );
     name_ = tools::ToString( E_DotationFamily( nameId_ ) );
 

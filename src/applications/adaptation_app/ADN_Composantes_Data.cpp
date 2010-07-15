@@ -84,9 +84,9 @@ void ADN_Composantes_Data::AmbulanceInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "capacity", rCapacity_ )
           >> xml::attribute( "man-loading-time", loadTimePerPerson_ )
           >> xml::attribute( "man-unloading-time", unloadTimePerPerson_ )
-          >> xml::optional() >> xml::attribute( "wounded-transport", woundedTransport )
-          >> xml::optional() >> xml::attribute( "nbc-transport", bTransportNBC_ )
-          >> xml::optional() >> xml::attribute( "reac-mental-transport", bTransportShock_ );
+          >> xml::optional >> xml::attribute( "wounded-transport", woundedTransport )
+          >> xml::optional >> xml::attribute( "nbc-transport", bTransportNBC_ )
+          >> xml::optional >> xml::attribute( "reac-mental-transport", bTransportShock_ );
 
     for( int n = 0; n < eNbrDoctorSkills; ++n )
     {
@@ -196,10 +196,10 @@ void ADN_Composantes_Data::LogHealthInfos::ReadInfo( const std::string& type, xm
     {
         bIsDoctor_ = true;
         std::string caring;
-        input >> xml::optional() >> xml::attribute( "sorting", bIsSortingDoctor_ )
-              >> xml::optional() >> xml::attribute( "nbc", bCuresNBC_ )
-              >> xml::optional() >> xml::attribute( "psychiatry", bCuresShock_ )
-              >> xml::optional() >> xml::attribute( "caring", caring );
+        input >> xml::optional >> xml::attribute( "sorting", bIsSortingDoctor_ )
+              >> xml::optional >> xml::attribute( "nbc", bCuresNBC_ )
+              >> xml::optional >> xml::attribute( "psychiatry", bCuresShock_ )
+              >> xml::optional >> xml::attribute( "caring", caring );
         bIsCuringDoctor_ = ! caring.empty();
         for( int n = 0; n < eNbrDoctorSkills; ++n )
         {
@@ -312,8 +312,8 @@ void ADN_Composantes_Data::NTIInfos::ReadArchive( xml::xistream& input )
 {
     bIsPresent_ = true;
     std::string type;
-    input >> xml::optional() >> xml::attribute( "max-reparation-time", maxRepairTime_ )
-          >> xml::optional() >> xml::attribute( "type", type );
+    input >> xml::optional >> xml::attribute( "max-reparation-time", maxRepairTime_ )
+          >> xml::optional >> xml::attribute( "type", type );
 
     bHasMaxRepairTime_ = maxRepairTime_ != "0s";
     bCanRepairEA_ = type.find( "EA" ) != std::string::npos;
@@ -500,7 +500,7 @@ void ADN_Composantes_Data::LogSupplyInfos::CopyFrom( LogSupplyInfos& src )
 void ADN_Composantes_Data::LogSupplyInfos::ReadArchive( xml::xistream& input )
 {
     std::string strNature;
-    input >> xml::optional()
+    input >> xml::optional
           >> xml::start( "carrying" )
             >> xml::attribute( "mass", rWeight_ )
             >> xml::attribute( "volume", rVolume_ )
@@ -601,7 +601,7 @@ void ADN_Composantes_Data::LogInfos::ReadLogisticFunction( const std::string& ty
 // -----------------------------------------------------------------------------
 void ADN_Composantes_Data::LogInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::optional()
+    input >> xml::optional
             >> xml::start( "logistic-functions" )
                 >> xml::list( *this, &ADN_Composantes_Data::LogInfos::ReadLogisticFunction )
             >> xml::end;
@@ -766,7 +766,7 @@ void ADN_Composantes_Data::BreakdownGroupInfos::ReadBreakdown( xml::xistream& in
 // -----------------------------------------------------------------------------
 void ADN_Composantes_Data::BreakdownGroupInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::optional()
+    input >> xml::optional
           >> xml::start( "breakdowns" )
             >> xml::list( "breakdown", *this, &ADN_Composantes_Data::BreakdownGroupInfos::ReadBreakdown )
           >> xml::end;
@@ -1101,7 +1101,7 @@ void ADN_Composantes_Data::HumanProtectionInfos::CopyFrom( HumanProtectionInfos&
 // -----------------------------------------------------------------------------
 void ADN_Composantes_Data::HumanProtectionInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::optional() >> xml::start( "human-protections" )
+    input >> xml::optional >> xml::start( "human-protections" )
                              >> xml::end;
 }
 
@@ -1254,7 +1254,7 @@ void ADN_Composantes_Data::CategoryInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "name", strCategory )
           >> xml::attribute( "capacity", rNbr_ )
           >> xml::attribute( "logistic-threshold", rLogThreshold_ )
-          >> xml::optional() >> xml::attribute( "normalized-consumption", rNormalizedConsumption_ );
+          >> xml::optional >> xml::attribute( "normalized-consumption", rNormalizedConsumption_ );
     ADN_Equipement_Data::CategoryInfo* pCat = ptrDotation_.GetData()->FindCategory( strCategory );
     if( !pCat )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid resource type '%1'" ).arg( strCategory.c_str() ).ascii() );
@@ -1484,15 +1484,15 @@ void ADN_Composantes_Data::ObjectInfos::ReadArchive( xml::xistream& input )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid object type '%1'" ).arg( strType.c_str() ).ascii() );
     ptrObject_ = pObject;
 
-    input >> xml::optional() >> xml::attribute( "initial-construction-time", initialBuildTime_ )
-          >> xml::optional() >> xml::attribute( "initial-destruction-time", initialDestructionTime_ )
-          >> xml::optional() >> xml::attribute( "construction-time-factor", coeffBuildTime_ )
-          >> xml::optional() >> xml::attribute( "destruction-time-factor", coeffDestructionTime_ )
-          >> xml::optional() >> xml::attribute( "valorization-time", valorizationTime_ )
-          >> xml::optional() >> xml::attribute( "devalorization-time", devalorizationTime_ )
-          >> xml::optional() >> xml::attribute( "bypass-gain-factor", rCoeffCirc_ )
-          >> xml::optional() >> xml::attribute( "non-bypassed-speed", rSpeedCirc_ )
-          >> xml::optional() >> xml::attribute( "bypassed-speed", rSpeedNotCirc_ );
+    input >> xml::optional >> xml::attribute( "initial-construction-time", initialBuildTime_ )
+          >> xml::optional >> xml::attribute( "initial-destruction-time", initialDestructionTime_ )
+          >> xml::optional >> xml::attribute( "construction-time-factor", coeffBuildTime_ )
+          >> xml::optional >> xml::attribute( "destruction-time-factor", coeffDestructionTime_ )
+          >> xml::optional >> xml::attribute( "valorization-time", valorizationTime_ )
+          >> xml::optional >> xml::attribute( "devalorization-time", devalorizationTime_ )
+          >> xml::optional >> xml::attribute( "bypass-gain-factor", rCoeffCirc_ )
+          >> xml::optional >> xml::attribute( "non-bypassed-speed", rSpeedCirc_ )
+          >> xml::optional >> xml::attribute( "bypassed-speed", rSpeedNotCirc_ );
 
     bInitialBuildTime_          = initialBuildTime_ != "-1s";
     bInitialDestructionTime_    = initialDestructionTime_ != "-1s";
@@ -1960,10 +1960,10 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
     strCodeEMAT8_ = strName_.GetData();
     strCodeLFRIL_ = strName_.GetData();
     strCodeNNO_ = strName_.GetData();
-    input >> xml::optional() >> xml::attribute( "codeEMAT6", strCodeEMAT6_ )
-          >> xml::optional() >> xml::attribute( "codeEMAT8", strCodeEMAT8_ )
-          >> xml::optional() >> xml::attribute( "codeLFRIL", strCodeLFRIL_ )
-          >> xml::optional() >> xml::attribute( "codeNNO",   strCodeNNO_   );
+    input >> xml::optional >> xml::attribute( "codeEMAT6", strCodeEMAT6_ )
+          >> xml::optional >> xml::attribute( "codeEMAT8", strCodeEMAT8_ )
+          >> xml::optional >> xml::attribute( "codeLFRIL", strCodeLFRIL_ )
+          >> xml::optional >> xml::attribute( "codeNNO",   strCodeNNO_   );
 
     std::string strArmor, strSize;
     input >> xml::attribute( "protection", strArmor )
@@ -1988,17 +1988,17 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
             >> xml::list( "sensor", *this, &ADN_Composantes_Data::ComposanteInfos::ReadSensor )
           >> xml::end;
 
-    input >> xml::optional() >> xml::start( "radars" )
+    input >> xml::optional >> xml::start( "radars" )
             >> xml::list( "radar", *this, &ADN_Composantes_Data::ComposanteInfos::ReadRadar )
           >> xml::end;
 
     input >> xml::start( "transports" )
-            >> xml::optional()
+            >> xml::optional
             >> xml::start( "crew" )
                 >> xml::attribute( "man-boarding-time", embarkingTimePerPerson_ )
                 >> xml::attribute( "man-unloading-time", disembarkingTimePerPerson_ )
             >> xml::end
-            >> xml::optional()
+            >> xml::optional
             >> xml::start( "unit" )
                 >> xml::attribute( "capacity", rWeightTransportCapacity_ )
                 >> xml::attribute( "ton-loading-time", embarkingTimePerTon_ )
@@ -2013,7 +2013,7 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
     input >> xml::start( "weapon-systems" )
             >> xml::list( "weapon-system", *this, &ADN_Composantes_Data::ComposanteInfos::ReadWeapon )
           >> xml::end
-          >> xml::optional() >> xml::start ( "active-protections" )
+          >> xml::optional >> xml::start ( "active-protections" )
             >> xml::list( "protection", *this, &ADN_Composantes_Data::ComposanteInfos::ReadActiveProtection )
           >> xml::end
           >> xml::start( "objects" )
@@ -2026,7 +2026,7 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
     randomBreakdowns_.ReadArchive( input );
     attritionBreakdowns_.ReadArchive( input );
 
-    input >> xml::optional() >> xml::attribute( "max-slope", rMaxSlope_ );
+    input >> xml::optional >> xml::attribute( "max-slope", rMaxSlope_ );
     if( rMaxSlope_ != 60. )
     {
         bMaxSlope_ = true;

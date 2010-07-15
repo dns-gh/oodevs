@@ -39,7 +39,7 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
     xis >> xml::attribute( "name", login )
         >> xml::attribute( "password", pass )
         >> xml::attribute( "supervision", supervisor_ )
-        >> xml::optional() >> xml::attribute( "scipio-role", role )
+        >> xml::optional >> xml::attribute( "scipio-role", role )
         >> xml::start( "rights" )
             >> xml::start( "readonly" )
                 >> xml::list( "side"      , *this, &UserProfile::ReadRights, readSides_, teamChecker )

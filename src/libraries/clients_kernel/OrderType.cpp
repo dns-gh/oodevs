@@ -95,8 +95,8 @@ void OrderType::AddParameter( const OrderParameter& parameter )
 // -----------------------------------------------------------------------------
 void OrderType::ReadDescriptions( xml::xistream& xis )
 {
-    xis >> xml::optional() >> xml::start( "descriptions" )
-            >> xml::optional() >> xml::start( "doctrine" ) >> doctrine_ >> xml::end
-            >> xml::optional() >> xml::start( "usage" ) >> usage_ >> xml::end
+    xis >> xml::optional >> xml::start( "descriptions" )
+            >> xml::optional >> xml::start( "doctrine" ) >> doctrine_ >> xml::end
+            >> xml::optional >> xml::start( "usage" ) >> usage_ >> xml::end
         >> xml::end;
 }

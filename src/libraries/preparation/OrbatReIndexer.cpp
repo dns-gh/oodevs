@@ -49,7 +49,7 @@ void OrbatReIndexer::ReadField( const std::string& name, xml::xistream& xis, con
     std::string text;
     xis >> xml::attributes( *this, &OrbatReIndexer::ReadAttribute )
             >> xml::list( *this, &OrbatReIndexer::ReadField, filter )
-            >> xml::optional() >> text;
+            >> xml::optional >> text;
     // $$$$ SBO 2008-04-08: check for cdata
     if( !text.empty() )
         output_ << text;

@@ -44,8 +44,8 @@ namespace
     {
         // $$$$ SBO 2009-06-09: TODO...
 //        const bool density = xis.attribute< std::string >( "unit-type" ) == "density";
-//        xis >> xml::optional() >> xml::list( "buildable", builder, &ConstructorBuilder::BuildPrototype, density );
-//        xis >> xml::optional() >> xml::list( "improvable", builder, &ConstructorBuilder::ImprovePrototype, density );
+//        xis >> xml::optional >> xml::list( "buildable", builder, &ConstructorBuilder::BuildPrototype, density );
+//        xis >> xml::optional >> xml::list( "improvable", builder, &ConstructorBuilder::ImprovePrototype, density );
 //        container.push_back( new ConstructionPrototype( parent, object ) );
     }
 

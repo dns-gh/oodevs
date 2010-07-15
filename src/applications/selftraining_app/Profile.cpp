@@ -32,7 +32,7 @@ Profile::Profile( xml::xistream& xis )
     , supervisor_( false )
     , valid_( true )
 {
-    xis >> xml::optional() >> xml::attribute( "supervision", supervisor_ );
+    xis >> xml::optional >> xml::attribute( "supervision", supervisor_ );
 }
 
 // -----------------------------------------------------------------------------

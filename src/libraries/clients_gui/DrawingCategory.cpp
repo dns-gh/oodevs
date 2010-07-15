@@ -24,7 +24,7 @@ DrawingCategory::DrawingCategory( xml::xistream& xis, svg::TextRenderer& rendere
 {
     std::string name, description;
     xis >> xml::attribute( "name", name )
-        >> xml::optional() >> xml::content( "description", description )
+        >> xml::optional >> xml::content( "description", description )
         >> xml::list( "template", *this, &DrawingCategory::ReadTemplate, renderer );
     name_ = name.c_str();
     description_ = description.c_str();

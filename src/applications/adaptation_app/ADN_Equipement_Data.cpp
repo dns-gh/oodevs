@@ -119,10 +119,10 @@ void ADN_Equipement_Data::CategoryInfo::ReadArchive( xml::xistream& input )
     strCodeNNO_   = strName_.GetData();
 
     std::string strNature;
-    input >> xml::optional() >> xml::attribute( "codeEMAT6", strCodeEMAT6_ )
-          >> xml::optional() >> xml::attribute( "codeEMAT8", strCodeEMAT8_ )
-          >> xml::optional() >> xml::attribute( "codeLFRIL", strCodeLFRIL_ )
-          >> xml::optional() >> xml::attribute( "codeNNO", strCodeNNO_ )
+    input >> xml::optional >> xml::attribute( "codeEMAT6", strCodeEMAT6_ )
+          >> xml::optional >> xml::attribute( "codeEMAT8", strCodeEMAT8_ )
+          >> xml::optional >> xml::attribute( "codeLFRIL", strCodeLFRIL_ )
+          >> xml::optional >> xml::attribute( "codeNNO", strCodeNNO_ )
           >> xml::attribute( "package-size", rNbrInPackage_ )
           >> xml::attribute( "package-mass", rPackageWeight_ )
           >> xml::attribute( "package-volume", rPackageVolume_ )
@@ -593,8 +593,8 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadArchive( xml::xistream& input )
     CategoryInfo::ReadArchive( input );
 
     std::string type;
-    input >> xml::optional() >> xml::attribute( "d-type", bTrancheD_ );
-    input >> xml::optional() >> xml::attribute( "type", type );
+    input >> xml::optional >> xml::attribute( "d-type", bTrancheD_ );
+    input >> xml::optional >> xml::attribute( "type", type );
     if( !type.empty() )
     {
         nType_ = ADN_Tr::ConvertToMunitionType( type );
@@ -620,11 +620,11 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadArchive( xml::xistream& input )
     }
 
 
-    input >> xml::optional()
+    input >> xml::optional
           >> xml::start( "attritions" )
             >> xml::list( "attrition", *this, &ADN_Equipement_Data::AmmoCategoryInfo::ReadAttrition )
           >> xml::end
-          >> xml::optional()
+          >> xml::optional
           >> xml::start( "urbanModifiers" )
             >> xml::list( "urbanModifier", *this, &ADN_Equipement_Data::AmmoCategoryInfo::ReadUrbanModifer )
           >> xml::end

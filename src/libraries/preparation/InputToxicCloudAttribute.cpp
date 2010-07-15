@@ -37,7 +37,7 @@ InputToxicCloudAttribute::InputToxicCloudAttribute( xml::xistream& xis, kernel::
     std::string source, dataField;
     xis >> xml::attribute( "source", source );
     xis >> xml::attribute( "data-field", dataField );
-    xis >> xml::optional() >> xml::attribute( "export", bExport_ );
+    xis >> xml::optional >> xml::attribute( "export", bExport_ );
 
     source_ = source.c_str();
     dataField_ = dataField.c_str();

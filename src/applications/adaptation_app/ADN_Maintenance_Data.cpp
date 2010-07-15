@@ -56,7 +56,7 @@ std::string ADN_Maintenance_Data::WorkingSchemeInfo::GetItemName()
 void ADN_Maintenance_Data::WorkingSchemeInfo::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "working-time", nWorkTime_ )
-          >> xml::optional() >> xml::attribute( "time-before-warning", warningDelay_ );
+          >> xml::optional >> xml::attribute( "time-before-warning", warningDelay_ );
 }
 
 // -----------------------------------------------------------------------------

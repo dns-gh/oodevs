@@ -400,7 +400,7 @@ QListViewItem* CreatePackagePanel::BuildExerciseData( const std::string& exercis
     xml::xifstream xis( config_.GetExerciseFile( exercise ) );
     xis >> xml::start( "exercise" )
             >> xml::start( "terrain" ) >> xml::attribute( "name", terrain ) >> xml::end
-            >> xml::optional() >> xml::start( "population" ) >> xml::attribute( "name", population ) >> xml::end
+            >> xml::optional >> xml::start( "population" ) >> xml::attribute( "name", population ) >> xml::end
             >> xml::start( "model" ) >> xml::attribute( "dataset", dataset ) >> xml::attribute( "physical", physical ) >> xml::end
         >> xml::end;
 

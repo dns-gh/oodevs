@@ -206,7 +206,7 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadArchive( xml::xistr
     xis >> xml::attribute( "name"       , strName_ )
         >> xml::attribute( "coefficient", coefficient_ )
         >> xml::attribute( "hard-kill"  , hardKill_ )
-        >> xml::optional() >> xml::start( "dotation" )
+        >> xml::optional >> xml::start( "dotation" )
             >> xml::attribute( "name", strAmmunition )
             >> xml::attribute( "usage", usage_ )
         >> xml::end

@@ -143,7 +143,7 @@ TemplateElement_ABC* HierarchyTemplate::CreateElement( AgentsModel& agents, Form
 {
     std::string type, name;
     float x = 0, y = 0;
-    input >> xml::optional()
+    input >> xml::optional
           >> xml::start( "element" )
              >> xml::attribute( "type", type )
              >> xml::attribute( "x", x )

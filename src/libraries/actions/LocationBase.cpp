@@ -59,7 +59,7 @@ LocationBase::LocationBase( const kernel::CoordinateConverter_ABC& converter, xm
     : converter_( converter )
 {
     std::string type;
-    xis >> xml::optional()
+    xis >> xml::optional
             >> xml::start( "location" )
                 >> xml::attribute( "type", type )
                 >> xml::list( "point", *this, &LocationBase::ReadPoint )

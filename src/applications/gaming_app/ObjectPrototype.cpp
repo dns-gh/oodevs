@@ -76,8 +76,8 @@ namespace
         std::string type( xis.attribute< std::string >( "unit-type" ) );
 
         bool density = ( type == "density" );
-        xis >> xml::optional() >> xml::list( "buildable", builder, &ConstructorBuilder::BuildPrototype, density );
-        xis >> xml::optional() >> xml::list( "improvable", builder, &ConstructorBuilder::ImprovePrototype, density );
+        xis >> xml::optional >> xml::list( "buildable", builder, &ConstructorBuilder::BuildPrototype, density );
+        xis >> xml::optional >> xml::list( "improvable", builder, &ConstructorBuilder::ImprovePrototype, density );
     }
 
     //void BypassableAttribute( T_AttributeContainer& /*container*/, QWidget* /*parent*/, Object_ABC*& /*object*/ )

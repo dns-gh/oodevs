@@ -114,7 +114,7 @@ void ADN_Launchers_Data::LauncherInfos::ReadPh( xml::xistream& input, const std:
 void ADN_Launchers_Data::LauncherInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "name", strName_ )
-          >> xml::optional() >> xml::attribute( "indirect-fire", bIndirect_ )
+          >> xml::optional >> xml::attribute( "indirect-fire", bIndirect_ )
           >> xml::list( "ph-modifiers", *this, &ADN_Launchers_Data::LauncherInfos::ReadPosture );
 }
 

@@ -120,7 +120,7 @@ void ADN_NBC_Datas::NbcIntoxInfos::ReadArchive( xml::xistream& input )
         if( rNbAlivedHumans_.GetData() + rNbHurtedHumans1_.GetData() + rNbHurtedHumans2_.GetData() + rNbHurtedHumans3_.GetData() + rNbHurtedHumansE_.GetData() + rNbDeadHumans_.GetData() != 100.0 )
             throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "NBC - Agent '%1' - Poisoning effect data sum < 100" ).arg( GetParentNode()->GetNodeName().c_str() ).ascii() );
     }
-    input >> xml::optional() >> xml::attribute( "contamination", bContaminationPresent_ );
+    input >> xml::optional >> xml::attribute( "contamination", bContaminationPresent_ );
 }
 
 // -----------------------------------------------------------------------------

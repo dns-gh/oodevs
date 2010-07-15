@@ -122,7 +122,7 @@ void UrbanModel::ReadBlock( xml::xistream& xis )
     gui::TerrainObjectProxy* proxy = Resolver< gui::TerrainObjectProxy >::Find( id );
     if( proxy )
     {
-        xis >> xml::optional()
+        xis >> xml::optional
             >> xml::start( "capacities" )
                 >> xml::list( *this, &UrbanModel::ReadCapacity, *proxy )
             >> xml::end;
