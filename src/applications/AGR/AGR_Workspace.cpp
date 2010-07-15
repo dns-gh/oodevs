@@ -29,6 +29,7 @@ AGR_Workspace::AGR_Workspace()
 // -----------------------------------------------------------------------------
 AGR_Workspace::~AGR_Workspace()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +104,6 @@ void AGR_Workspace::ReadSimpleTypeElement( const std::string& type, xml::xistrea
             for( IT_Enumeration_Vector it = enumerationList_.begin(); it != enumerationList_.end(); ++it )
                 if( (*it)->GetName() == strTypeName )
                     bFound = true;
-
             if( ! bFound )
             {
                 AGR_Enumeration* pEnum = new AGR_Enumeration( strTypeName );
@@ -141,7 +141,6 @@ void AGR_Workspace::ReplaceInString( std::string& strToProcess, const std::strin
 {
     const std::string::size_type nSize = strToSearch.size();
     std::string::size_type nPos = 0;
-
     std::string::size_type newPos = strToProcess.find( strToSearch, nPos );
     while( newPos != std::string::npos )
     {

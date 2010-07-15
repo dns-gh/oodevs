@@ -32,7 +32,7 @@ AGR_Enumeration::AGR_Enumeration( const std::string& strName )
 // -----------------------------------------------------------------------------
 AGR_Enumeration::~AGR_Enumeration()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -60,12 +60,9 @@ void AGR_Enumeration::ReadValue( xml::xistream& xis )
 std::string AGR_Enumeration::HumanName( const std::string& strValue ) const
 {
     std::string strResult = strValue;
-
     boost::replace_all( strResult, "_", " " );
-
     if( boost::is_lower()( strResult[ 0 ] ) )
         strResult[ 0 ] = strResult[ 0 ] + 'A' - 'a';
-
     std::string::iterator prevIt = strResult.begin();
     for( std::string::iterator it = strResult.begin(); it != strResult.end(); )
     {

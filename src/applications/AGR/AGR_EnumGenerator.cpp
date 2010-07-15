@@ -18,8 +18,8 @@
 // -----------------------------------------------------------------------------
 AGR_EnumGenerator::AGR_EnumGenerator()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AGR_EnumGenerator destructor
@@ -27,6 +27,7 @@ AGR_EnumGenerator::AGR_EnumGenerator()
 // -----------------------------------------------------------------------------
 AGR_EnumGenerator::~AGR_EnumGenerator()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -54,23 +55,16 @@ void AGR_EnumGenerator::GenerateEnumFile( const AGR_Workspace& workspace, const 
     std::stringstream strEnumsDeclaration;
     const T_Enumeration_Vector& enums = workspace.Enums();
     std::stringstream strContent;
-
     for( CIT_Enumeration_Vector it = enums.begin(); it != enums.end(); ++it )
     {
         std::string strEnumName = (*it)->GetName();
         const T_String_Vector& enumValues = (*it)->GetEnumValueSet();
-
         strEnumsDeclaration << "enum " << CreatePrettyEnumName( strEnumName ) << "\n{\n";
-
         for( CIT_String_Vector itValues = enumValues.begin(); itValues != enumValues.end(); ++itValues )
-        {
             strEnumsDeclaration << "    " << CreatePrettyValueName( strEnumName, *itValues ) << ",\n";
-        }
-
         strEnumsDeclaration << "    eNbr" << GetCoreEnumName( strEnumName ) << "\n};\n\n\n";
     }
-
-    std::string strBaseContent = "";
+    std::string strBaseContent;
     workspace.ReadStringFile( AGR_SKEL_DIR "AGR_ENT_Enums_Skeleton.h", strBaseContent );
     workspace.ReplaceInString( strBaseContent, "$Enums$", strEnumsDeclaration.str() );
     workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/libraries/ENT/ENT_Enums_Gen.h" );
@@ -87,31 +81,23 @@ void AGR_EnumGenerator::GenerateTranslatorHeader( const AGR_Workspace& workspace
     std::stringstream strTypedefs;
     std::stringstream strConverters;
     const T_Enumeration_Vector& enums = workspace.Enums();
-
     for( CIT_Enumeration_Vector it = enums.begin(); it != enums.end(); ++it )
     {
         std::string strEnumName = (*it)->GetName();
         std::string strPrettyEnumName = CreatePrettyEnumName( strEnumName );
         std::string strCoreEnumName = GetCoreEnumName( strEnumName );
-
         // static E_BreakdownType ConvertToBreakdownType( const std::string& );
-
         strConvertToFunctions << "    static " << strPrettyEnumName << " ConvertTo" << strCoreEnumName
                               << "( const std::string& );\n";
-
         // static const std::string& ConvertFromObjectType( E_ObjectType, E_Conversion = eToSim );
-
         strConvertFromFunctions << "    static const std::string& ConvertFrom" << strCoreEnumName
                                 << "( " << strPrettyEnumName << ", E_Conversion = eToSim );\n";
-
         // typedef ENT_Tr::converter<E_ObjectType> T_ConverterObject;
         strTypedefs << "    typedef ENT_Tr::converter<" << strPrettyEnumName << "> T_Converter" << strCoreEnumName << ";\n";
-
         // static T_ConverterObject objectTypeConverter_[];
         strConverters << "    static T_Converter" << strCoreEnumName << " " << strCoreEnumName << "Converter_ [];\n";
     }
-
-    std::string strBaseContent = "";
+    std::string strBaseContent;
     workspace.ReadStringFile( AGR_SKEL_DIR "AGR_ENT_Tr_Skeleton.h", strBaseContent );
     workspace.ReplaceInString( strBaseContent, "$ConvertFromFunctions$", strConvertFromFunctions.str() );
     workspace.ReplaceInString( strBaseContent, "$ConvertToFunctions$", strConvertToFunctions.str() );
@@ -119,7 +105,6 @@ void AGR_EnumGenerator::GenerateTranslatorHeader( const AGR_Workspace& workspace
     workspace.ReplaceInString( strBaseContent, "$Converters$", strConverters.str() );
     workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/libraries/ENT/ENT_Tr_Gen.h" );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AGR_EnumGenerator::GenerateTranslatorImplementation
@@ -131,9 +116,7 @@ void AGR_EnumGenerator::GenerateTranslatorImplementation( const AGR_Workspace& w
     std::stringstream strConvertFromFunctions;
     std::stringstream strConvertToFunctions;
     std::stringstream strInitTr;
-
     const T_Enumeration_Vector& enums = workspace.Enums();
-
     for( CIT_Enumeration_Vector it = enums.begin(); it != enums.end(); ++it )
     {
         std::string strEnumName = (*it)->GetName();
@@ -144,9 +127,7 @@ void AGR_EnumGenerator::GenerateTranslatorImplementation( const AGR_Workspace& w
         std::string strConvertToFctName = "ConvertTo" + strCoreEnumName;
         std::string strConvertFromFctName = "ConvertFrom" + strCoreEnumName;
         const T_String_Vector& enumValues = (*it)->GetEnumValueSet();
-
         strConverters << "ENT_Tr::" << strConverterType << " ENT_Tr::" << strConverterName << "[] =\n{\n";
-
         for( CIT_String_Vector itValue = enumValues.begin(); itValue != enumValues.end(); ++itValue )
         {
             std::string strScriptName = CreateScriptName( *itValue );
@@ -155,8 +136,6 @@ void AGR_EnumGenerator::GenerateTranslatorImplementation( const AGR_Workspace& w
         }
         strConverters << "    " << strConverterType << "( \"\", \"\", (" << strPrettyEnumName << ")-1 )\n"
                       << "};\n\n";
-
-
         //-----------------------------------------------------------------------------
         // Name: ENT_Tr::ConvertPostureType
         // Created: AGR
@@ -173,7 +152,6 @@ void AGR_EnumGenerator::GenerateTranslatorImplementation( const AGR_Workspace& w
                               << "{\n"
                               << "    return ENT_Tr::FindInConverter( " << strConverterName << ", strName );\n"
                               << "}\n\n";
-
         //-----------------------------------------------------------------------------
         // Name: ENT_Tr::GetPostureTypeName
         // Created: JDY 03-07-24
@@ -190,12 +168,10 @@ void AGR_EnumGenerator::GenerateTranslatorImplementation( const AGR_Workspace& w
                                 << "{\n"
                                 << "    return ENT_Tr::InverseFindInConverter( " << strConverterName << ", nValue, nConverterType );\n"
                                 << "}\n\n";
-
         //     InitTr(carriedAmmoConverter_);
         strInitTr << "    InitTr( " << strConverterName << ", \"ENT_Tr\" );\n";
     }
-
-    std::string strBaseContent = "";
+    std::string strBaseContent;
     workspace.ReadStringFile( AGR_SKEL_DIR "AGR_ENT_Tr_Skeleton.cpp", strBaseContent );
     workspace.ReplaceInString( strBaseContent, "$ConvertFromFunctions$", strConvertFromFunctions.str() );
     workspace.ReplaceInString( strBaseContent, "$ConvertToFunctions$", strConvertToFunctions.str() );
@@ -263,7 +239,6 @@ std::string AGR_EnumGenerator::CreatePrettyValueName( const std::string strEnumN
     return strPrettyName;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: AGR_EnumGenerator::CreateScriptName
 /*
@@ -286,7 +261,6 @@ std::string AGR_EnumGenerator::CreateScriptName( const std::string strValue ) co
     return strScriptName;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: AGR_EnumGenerator::GetCoreEnumName
 /*
@@ -301,11 +275,8 @@ std::string AGR_EnumGenerator::GetCoreEnumName( const std::string strEnumName ) 
 {
     if( strEnumName.length() <= 4 )
         return strEnumName;
-
     if( strEnumName.substr( 0, 4 ) == "Enum" )
         return strEnumName.substr( 4, strEnumName.length() - 4 );
     else
         return strEnumName;
 }
-
-
