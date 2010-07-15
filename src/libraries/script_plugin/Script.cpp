@@ -11,8 +11,8 @@
 #include "Script.h"
 #include "FiniteStateMachine.h"
 #include "dispatcher/Registrable_ABC.h"
-#include "directia/Brain.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
+#include <directia/Brain.h>
 
 using namespace plugins::script;
 

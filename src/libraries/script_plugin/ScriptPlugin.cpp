@@ -9,14 +9,6 @@
 
 #include "script_plugin_pch.h"
 #include "ScriptPlugin.h"
-#include "dispatcher/Config.h"
-#include "dispatcher/Model.h"
-#include "protocol/ClientPublisher_ABC.h"
-#include "dispatcher/Profile_ABC.h"
-#include "clients_kernel/Controller.h"
-#include "clients_kernel/CoordinateConverter.h"
-#include "directia/Brain.h"
-#include "dispatcher/Registrable_ABC.h"
 #include "Actions.h"
 #include "Script.h"
 #include "MiscEvents.h"
@@ -30,9 +22,17 @@
 #include "ClientCommands.h"
 #include "ScriptCommands.h"
 #include "ExtensionFactory.h"
-#include "tools/MessageDispatcher_ABC.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/CoordinateConverter.h"
 #include "dispatcher/CompositeRegistrable.h"
+#include "dispatcher/Config.h"
+#include "dispatcher/Model.h"
+#include "dispatcher/Profile_ABC.h"
+#include "dispatcher/Registrable_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
+#include "tools/MessageDispatcher_ABC.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
+#include <directia/Brain.h>
 #include <boost/filesystem.hpp>
 #include <boost/bind.hpp>
 
@@ -47,14 +47,14 @@ using namespace MsgsClientToMessenger;
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
 ScriptPlugin::ScriptPlugin( Model& model, const kernel::StaticModel& staticModel, const Config& config, SimulationPublisher_ABC& publisher, tools::MessageDispatcher_ABC& dispatcher, ClientPublisher_ABC& clients, LinkResolver_ABC& resolver, CompositeRegistrable& registrables )
-    : model_     ( model )
-    , config_    ( config )
+    : model_       ( model )
+    , config_      ( config )
     , registrables_( registrables )
-    , controller_( new kernel::Controller() )
-    , converter_ ( new kernel::CoordinateConverter( config ) )
-    , factory_   ( new ExtensionFactory( *controller_, *converter_, publisher ) )
-    , time_      ( -1 )
-    , reset_     ( true )
+    , controller_  ( new kernel::Controller() )
+    , converter_   ( new kernel::CoordinateConverter( config ) )
+    , factory_     ( new ExtensionFactory( *controller_, *converter_, publisher ) )
+    , time_        ( -1 )
+    , reset_       ( true )
     , tickDuration_( 10 )
 {
     model_.RegisterFactory( *factory_ );
@@ -148,13 +148,11 @@ void ScriptPlugin::Update()
         reset_ = false;
         LoadScripts();
     }
-
     ApplyPendings();
-
     long newTime = clock();
     if( time_ > 0 )
     {
-        const float delta = float( newTime - time_ ) / float( CLOCKS_PER_SEC );
+        const float delta = static_cast< float >( newTime - time_ ) / static_cast< float >( CLOCKS_PER_SEC );
         controller_->Update( events::TimeFlowed( delta ) );
     }
     time_ = newTime;
@@ -251,6 +249,5 @@ void ScriptPlugin::ApplyPendings()
 {
     boost::ptr_vector< directia::ScriptRef > pending;
     pending.swap( pending_ );
-    std::for_each( pending.begin(), pending.end(), boost::apply<bool>() );
+    std::for_each( pending.begin(), pending.end(), boost::apply< bool >() );
 }
-
