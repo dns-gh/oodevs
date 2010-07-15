@@ -96,7 +96,8 @@ void MIL_Config::ReadSessionFile( const std::string& file )
                 >> xml::start( "decisional" )
                     >> xml::attribute( "useonlybinaries", bUseOnlyDIAArchive_ )
                 >> xml::end
-                >> xml::optional >> xml::start( "experimental" )
+                >> xml::optional
+                >> xml::start( "experimental" )
                     >> xml::attribute( "frozenmode", bFrozenMode_ )
                 >> xml::end
                 >> xml::start( "orbat" )
@@ -124,26 +125,33 @@ void MIL_Config::ReadSessionFile( const std::string& file )
                     >> xml::attribute( "federation", hlaFederation_ )
                     >> xml::attribute( "federate"  , hlaFederate_ )
                 >> xml::end
-                >> xml::optional >> xml::start( "random" )
+                >> xml::optional
+                >> xml::start( "random" )
                     >> xml::attribute( "seed", randomSeed_ )
                 >> xml::end;
+    ConfigureRandom( xis );
+    ReadCheckPointConfiguration( xis );
+    ReadDebugConfiguration     ( xis );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::ConfigureRandom
+// Created: SLI 2010-07-15
+// -----------------------------------------------------------------------------
+void MIL_Config::ConfigureRandom( xml::xistream& xis )
+{
     for( int i = 0; i < MIL_Random::eContextsNbr; ++i )
     {
         randomGaussian_[ i ] = false;
         randomDeviation_[ i ] = 0.;
         randomMean_[ i ] = 0.;
-        std::stringstream stream;
-        stream << "random";
-        stream << i;
         xis >> xml::optional
-            >> xml::start( stream.str() )
+            >> xml::start( "random" + boost::lexical_cast< int >( i ) )
                 >> xml::attribute( "distribution", randomGaussian_[ i ] )
                 >> xml::attribute( "deviation", randomDeviation_[ i ] )
                 >> xml::attribute( "mean", randomMean_[ i ] )
             >> xml::end;
     }
-    ReadCheckPointConfiguration( xis );
-    ReadDebugConfiguration     ( xis );
 }
 
 // -----------------------------------------------------------------------------
