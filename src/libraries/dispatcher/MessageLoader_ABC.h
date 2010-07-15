@@ -33,8 +33,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             MessageLoader_ABC() {};
-    virtual ~MessageLoader_ABC() {};
+             MessageLoader_ABC() {}
+    virtual ~MessageLoader_ABC() {}
     //@}
 
     //! @name Operations

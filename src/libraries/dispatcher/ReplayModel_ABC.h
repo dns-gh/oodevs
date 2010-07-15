@@ -24,8 +24,8 @@ class ReplayModel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ReplayModel_ABC() {};
-    virtual ~ReplayModel_ABC() {};
+             ReplayModel_ABC() {}
+    virtual ~ReplayModel_ABC() {}
     //@}
 
     //! @name Operations

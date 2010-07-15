@@ -17,7 +17,7 @@ namespace dispatcher
 
 // =============================================================================
 /** @class  LinkResolver_ABC
-    @brief  LinkResolver_ABC
+    @brief  Link resolver declaration
 */
 // Created: AGE 2007-08-24
 // =============================================================================
@@ -26,8 +26,8 @@ class LinkResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LinkResolver_ABC() {};
-    virtual ~LinkResolver_ABC() {};
+             LinkResolver_ABC() {}
+    virtual ~LinkResolver_ABC() {}
     //@}
 
     //! @name Operations

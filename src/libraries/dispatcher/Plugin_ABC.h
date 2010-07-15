@@ -20,7 +20,7 @@ namespace dispatcher
 
 // =============================================================================
 /** @class  Plugin_ABC
-    @brief  Plugin_ABC
+    @brief  Plugin declaration
 */
 // Created: AGE 2007-08-24
 // =============================================================================
@@ -29,8 +29,8 @@ class Plugin_ABC : public MessageHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Plugin_ABC() {};
-    virtual ~Plugin_ABC() {};
+             Plugin_ABC() {}
+    virtual ~Plugin_ABC() {}
     //@}
 
     //! @name Operations

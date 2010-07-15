@@ -29,16 +29,16 @@ class Registrable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Registrable_ABC() {};
-    virtual ~Registrable_ABC() {};
+             Registrable_ABC() {}
+    virtual ~Registrable_ABC() {}
     //@}
 
     //! @name Operations
     //@{
     virtual void RegisterIn( directia::Brain& brain ) = 0;
 
-    virtual void UsedByDIA    () {};
-    virtual void ReleasedByDIA() {};
+    virtual void UsedByDIA    () {}
+    virtual void ReleasedByDIA() {}
     //@}
 };
 
