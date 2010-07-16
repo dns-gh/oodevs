@@ -13,6 +13,7 @@
 #define __PHY_ActionOccupyObject_h_
 
 #include "Entities/Actions/PHY_Action_ABC.h"
+#include <boost/shared_ptr.hpp>
 
 class PHY_RoleAction_Objects;
 class MIL_AgentPion;
@@ -33,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Execute         ();
+    virtual void Execute();
     virtual void ExecuteSuspended();
     virtual void Stop();
     //@}

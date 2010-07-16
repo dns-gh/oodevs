@@ -32,15 +32,15 @@ public:
     //@{
     unsigned int GetId() const;
     void Suspend();
-    void Resume ();
-    void Update ();
+    void Resume();
+    void Update();
     virtual void Stop();
     //@}
 
 protected:
     //! @name Operations
     //@{
-    virtual void Execute         () = 0;
+    virtual void Execute() = 0;
     virtual void ExecuteSuspended() = 0;
     //@}
 

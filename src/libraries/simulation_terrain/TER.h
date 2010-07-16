@@ -15,7 +15,6 @@
 #include "MT_Tools/MT_Vector2DTypes.h"
 #include "MT_Tools/MT_Vector3D.h"
 #include "pathfind/TerrainData.h"
-#include <boost/shared_ptr.hpp>
 
 namespace boost
 {

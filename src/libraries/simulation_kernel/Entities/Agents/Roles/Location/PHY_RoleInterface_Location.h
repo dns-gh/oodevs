@@ -14,6 +14,7 @@
 
 #include "MT_Tools/Role_ABC.h"
 #include "simulation_terrain/TER_Agent_ABC.h"
+#include <boost/shared_ptr.hpp>
 
 namespace client
 {
@@ -65,7 +66,7 @@ public:
     //@{
     virtual MT_Float GetHeight() const = 0;
     virtual MT_Float GetAltitude() const = 0;
-    virtual const MT_Vector2D&  GetPosition() const = 0;
+    virtual const MT_Vector2D& GetPosition() const = 0;
     virtual boost::shared_ptr<MT_Vector2D> GetSharedPosition() const = 0;
     virtual const MT_Vector2D& GetDirection() const = 0;
     virtual MIL_Agent_ABC& GetAgent() const = 0;
@@ -76,7 +77,7 @@ public:
     //@}
 
 //    virtual void SendChangedState( client::UnitAttributes& asnMsg ) const = 0;
-//    virtual void SendFullState   ( client::UnitAttributes& asnMsg ) const = 0;
+//    virtual void SendFullState( client::UnitAttributes& asnMsg ) const = 0;
 
     virtual void Serialize( HLA_UpdateFunctor& functor ) const = 0;
 private:

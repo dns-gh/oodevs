@@ -13,6 +13,7 @@
 #define __MIL_OrderManager_ABC_h_
 
 #include "MIL_LimaOrder.h"
+#include <boost/shared_ptr.hpp>
 
 class MIL_KnowledgeGroup;
 class MIL_Mission_ABC;
@@ -36,25 +37,25 @@ public:
 
     // @name Events
     //@{
-    void ReplaceMission( boost::shared_ptr< MIL_Mission_ABC > pMission  ); // asynchronous
+    void ReplaceMission( boost::shared_ptr< MIL_Mission_ABC > pMission ); // asynchronous
     void CancelMission(); // asynchronous
     virtual void StopAllMissions(); // synchronous
     //@}
 
     // @name Accessors
     //@{
-          virtual MIL_LimaOrder* FindLima             ( const MIL_LimaFunction& function ) const;
-          virtual MIL_LimaOrder* FindLima             ( unsigned int nID ) const;
-          virtual MIL_LimaOrder* FindNextScheduledLima() const;
-    const T_LimaVector&  GetLimas             () const;
-    const MT_Vector2D&   GetDirDanger         () const;
-    const std::string&   GetMissionName       () const;
-    void                 Accept               ( MIL_IntelligenceOrdersVisitor_ABC& visitor ) const;
+    virtual MIL_LimaOrder* FindLima( const MIL_LimaFunction& function ) const;
+    virtual MIL_LimaOrder* FindLima( unsigned int nID ) const;
+    virtual MIL_LimaOrder* FindNextScheduledLima() const;
+    const T_LimaVector& GetLimas() const;
+    const MT_Vector2D& GetDirDanger() const;
+    const std::string& GetMissionName() const;
+    void Accept( MIL_IntelligenceOrdersVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Missions accessors
     //@{
-          bool                 IsNewMissionStarted  () const;
+    bool IsNewMissionStarted() const;
     const MIL_MissionType_ABC* GetCurrentMissionType() const;
     //@}
 
@@ -68,7 +69,7 @@ protected:
 private:
     boost::shared_ptr< MIL_Mission_ABC > pMission_;
     boost::shared_ptr< MIL_Mission_ABC > pNextMission_;
-    bool             bNewMissionStarted_;
+    bool bNewMissionStarted_;
 };
 
 #endif // __MIL_OrderManager_ABC_h_

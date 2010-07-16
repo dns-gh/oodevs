@@ -10,10 +10,13 @@
 #ifndef __DEC_TelepathyFunctions_h_
 #define __DEC_TelepathyFunctions_h_
 
+#include <boost/shared_ptr.hpp>
+
 namespace directia
 {
     class Brain;
 }
+
 class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;

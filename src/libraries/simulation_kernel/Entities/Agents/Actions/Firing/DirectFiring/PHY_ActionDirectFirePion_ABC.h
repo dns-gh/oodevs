@@ -13,7 +13,6 @@
 #define __PHY_ActionDirectFirePion_ABC_h_
 
 #include "MIL.h"
-
 #include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 #include "PHY_RoleAction_DirectFiring.h"
 
@@ -36,21 +35,20 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Execute         ();
+    virtual void Execute();
     virtual void ExecuteSuspended();
     virtual void StopAction();
     //@}
 
 private:
-          firing::PHY_RoleAction_DirectFiring&       role_;
-          boost::shared_ptr< DEC_Knowledge_Agent >   pEnemy_;
-    const MT_Float                                   rPercentageComposantesToUse_;
-    const firing::PHY_DirectFireData::E_FiringMode           nFiringMode_;
+    firing::PHY_RoleAction_DirectFiring& role_;
+    boost::shared_ptr< DEC_Knowledge_Agent > pEnemy_;
+    const MT_Float rPercentageComposantesToUse_;
+    const firing::PHY_DirectFireData::E_FiringMode nFiringMode_;
     const firing::PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType_;
-    const firing::PHY_DirectFireData::E_ComposanteFiredType  nComposanteFiredType_;
-    const PHY_AmmoDotationClass*                     pAmmoDotationClass_;
-
-          PHY_FireResults_Pion*                      pFireResult_;
+    const firing::PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType_;
+    const PHY_AmmoDotationClass* pAmmoDotationClass_;
+    PHY_FireResults_Pion* pFireResult_;
 };
 
 #endif // __PHY_ActionDirectFirePion_ABC_h_

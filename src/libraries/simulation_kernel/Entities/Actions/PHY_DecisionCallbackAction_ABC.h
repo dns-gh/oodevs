@@ -12,6 +12,7 @@
 
 #include "PHY_Action_ABC.h"
 #include "Decision/DEC_Decision_ABC.h"
+#include <boost/shared_ptr.hpp>
 
 class DEC_Knowledge_Object;
 class MIL_Entity_ABC;

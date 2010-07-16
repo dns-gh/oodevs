@@ -11,6 +11,7 @@
 #define __DEC_PathPoint_h_
 
 #include "MIL.h"
+#include <boost/shared_ptr.hpp>
 
 class DEC_PathPoint;
 class DEC_Representations;
@@ -55,10 +56,10 @@ protected:
 public:
     //! @name Accessors
     //@{
-    const MT_Vector2D& GetPos                   () const;
-    E_Type             GetType                  () const;
-    E_TypePoint        GetTypePoint             () const;
-    const TerrainData& GetObjectTypes           () const;
+    const MT_Vector2D& GetPos() const;
+    E_Type GetType() const;
+    E_TypePoint GetTypePoint() const;
+    const TerrainData& GetObjectTypes() const;
     const TerrainData& GetObjectTypesToNextPoint() const;
     virtual boost::shared_ptr< DEC_PathPoint > GetDestPoint() const;
     virtual int GetTypeLima();
@@ -68,13 +69,13 @@ public:
 
     //! @name Main
     //@{
-    bool IsInObject    ( const TerrainData& data ) const;
+    bool IsInObject( const TerrainData& data ) const;
     bool WillBeInObject( const TerrainData& data ) const;
     //@}
 
     //! @name DIA
     //@{
-    virtual void SendToDIA    ( DEC_Representations& agent, boost::shared_ptr< DEC_PathPoint > point ) const;
+    virtual void SendToDIA( DEC_Representations& agent, boost::shared_ptr< DEC_PathPoint > point ) const;
     virtual void RemoveFromDIA( boost::shared_ptr< DEC_PathPoint > self );
     const std::string& GetDIAType() const;
     //@}
@@ -88,7 +89,7 @@ protected:
     //! @name Member data
     //@{
     MT_Vector2D vPos_;
-    E_Type      nType_;
+    E_Type nType_;
     E_TypePoint nPointType_;
     TerrainData nObjectTypes_;
     TerrainData nObjectTypesToNextPoint_;

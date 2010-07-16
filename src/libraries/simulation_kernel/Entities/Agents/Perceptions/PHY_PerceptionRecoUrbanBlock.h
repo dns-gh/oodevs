@@ -12,6 +12,7 @@
 
 #include "PHY_PerceptionWithLocation.h"
 #include "PHY_PerceptionLocalisation.h"
+#include <boost/shared_ptr.hpp>
 
 class DEC_Knowledge_Urban;
 
@@ -20,9 +21,9 @@ class PHY_PerceptionRecoUrbanBlockReco : public PHY_PerceptionLocalisation
 public:
     PHY_PerceptionRecoUrbanBlockReco( const boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock );
 
-    bool IsInside        ( const PHY_RoleInterface_Perceiver& perceiver, const MT_Vector2D& vPoint )        const;
-    void GetAgentsInside ( const PHY_RoleInterface_Perceiver& perceiver, TER_Agent_ABC::T_AgentPtrVector& ) const;
-    bool CanSeeIt        () const;
+    bool IsInside( const PHY_RoleInterface_Perceiver& perceiver, const MT_Vector2D& vPoint ) const;
+    void GetAgentsInside( const PHY_RoleInterface_Perceiver& perceiver, TER_Agent_ABC::T_AgentPtrVector& ) const;
+    bool CanSeeIt() const;
 
 private:
     PHY_PerceptionRecoUrbanBlockReco& operator = ( const PHY_PerceptionRecoUrbanBlockReco& );
@@ -54,7 +55,7 @@ public:
     //@{
     virtual const PHY_PerceptionLevel& Compute( const MT_Vector2D& vPoint ) const;
 
-    virtual void                       Execute( const TER_Agent_ABC::T_AgentPtrVector& perceivableAgents, const detection::DetectionComputerFactory_ABC& detectionComputer );
+    virtual void Execute( const TER_Agent_ABC::T_AgentPtrVector& perceivableAgents, const detection::DetectionComputerFactory_ABC& detectionComputer );
     virtual const PHY_PerceptionLevel& Compute( const MIL_Agent_ABC& agent ) const;
     virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Agent & knowledge ) const;
     //@}

@@ -15,6 +15,7 @@
 #include "PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Effects/MIL_Effect_Fly.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
+#include <boost/shared_ptr.hpp>
 
 class PHY_ActionFly;
 class MIL_Agent_ABC;
@@ -51,16 +52,16 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Update ( bool bIsDead );
-    virtual void Clean  ();
+    virtual void Update( bool bIsDead );
+    virtual void Clean();
     virtual bool CanMove() const;
     //@}
 
     //! @name Action interface
     //@{
-    virtual void Fly            ();
+    virtual void Fly();
     virtual void SetFlyingHeight( double rHeight );
-    virtual bool IsFlying       () const;
+    virtual bool IsFlying() const;
     //@}
 
     //! @name Effect interface
@@ -86,7 +87,7 @@ private:
     MIL_Agent_ABC& entity_;
     MIL_Effect_Fly effectFly_;
     boost::shared_ptr< PHY_ActionFly > pActionFly_;
-    double         rHeight_;
+    double rHeight_;
     //@}
 };
 
