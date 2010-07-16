@@ -53,6 +53,7 @@
 #include <shlobj.h>
 #include <qsettings.h>
 #include <qapplication.h>
+#include <xeumeuleu/xml.hpp>
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4511 4512 )
@@ -81,6 +82,21 @@ namespace
         SHGetSpecialFolderPath( 0, myDocuments, CSIDL_PERSONAL, 0 );
         return ( bfs::path( myDocuments, bfs::native ) / appName ).native_file_string();
     }
+
+    QString ReadPassword()
+    {
+        try
+        {
+            xml::xifstream xis( tools::GeneralConfig::BuildResourceChildFile( "authoring.xml" ) );
+            xis >> xml::start( "authoring" )
+                    >> xml::start( "restricted-access" );
+            return xis.attribute< std::string >( "password" ).c_str();
+        }
+        catch( ... )
+        {
+            return ""; // default password is empty
+        }
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -99,7 +115,7 @@ ADN_MainWindow::ADN_MainWindow( ADN_Config& config )
     , pCoheranceTablesMenu_( 0 )
     , pHelpMenu_        ( 0 )
     , bNeedSave_        ( false )
-    , strAdminPassword_ ( "" )
+    , strAdminPassword_ ( ReadPassword() )
 {
     generalConfig_->Parse( qApp->argc(), qApp->argv() );
     setMinimumSize( 640, 480 );
