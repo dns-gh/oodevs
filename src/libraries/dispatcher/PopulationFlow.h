@@ -56,7 +56,7 @@ public:
 
     virtual unsigned int GetDeadHumans() const;
     virtual unsigned int GetLivingHumans() const;
-    virtual unsigned int GetDensity() const;
+    virtual float        GetDensity() const;
     virtual QString      GetAttitude() const;
 
     const Localisation& GetLocation() const;

@@ -35,7 +35,7 @@ public:
     //@{
     virtual unsigned int GetDeadHumans() const = 0;
     virtual unsigned int GetLivingHumans() const = 0;
-    virtual unsigned int GetDensity() const = 0;
+    virtual float        GetDensity() const = 0;
     virtual QString      GetAttitude() const = 0;
     //@}
 };

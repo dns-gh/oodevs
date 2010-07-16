@@ -126,7 +126,7 @@ unsigned int PopulationConcentration::GetLivingHumans() const
 // Name: PopulationConcentration::GetDensity
 // Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
-unsigned int PopulationConcentration::GetDensity() const
+float PopulationConcentration::GetDensity() const
 {
     throw std::runtime_error( __FUNCTION__ " not implemented" );
 }

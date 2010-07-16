@@ -108,9 +108,9 @@ unsigned int PopulationConcentration::GetDeadHumans() const
 // Name: PopulationConcentration::GetDensity
 // Created: AGE 2006-02-20
 // -----------------------------------------------------------------------------
-unsigned int PopulationConcentration::GetDensity() const
+float PopulationConcentration::GetDensity() const
 {
-    return unsigned int( density_ );
+    return density_;
 }
 
 // -----------------------------------------------------------------------------

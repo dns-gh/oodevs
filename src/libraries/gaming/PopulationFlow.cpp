@@ -114,9 +114,9 @@ void PopulationFlow::DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate& m
 // Name: PopulationFlow::GetDensity
 // Created: AGE 2006-02-20
 // -----------------------------------------------------------------------------
-unsigned int PopulationFlow::GetDensity() const
+float PopulationFlow::GetDensity() const
 {
-    return unsigned int( rDensity_ );
+    return rDensity_;
 }
 
 // -----------------------------------------------------------------------------

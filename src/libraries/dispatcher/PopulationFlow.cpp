@@ -140,7 +140,7 @@ unsigned int PopulationFlow::GetLivingHumans() const
 // Name: PopulationFlow::GetDensity
 // Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
-unsigned int PopulationFlow::GetDensity() const
+float PopulationFlow::GetDensity() const
 {
     throw std::runtime_error( __FUNCTION__ " not implemented" );
 }
