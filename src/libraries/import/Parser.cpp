@@ -11,6 +11,7 @@
 #include "Position.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/filesystem.hpp>
+#include <fstream>
 
 namespace
 {
@@ -33,7 +34,6 @@ namespace
 Parser::Parser( const std::string& inputFile, const std::string& rootDir, const std::string& exerciseFile, const std::string& outputDir )
     : outputDir_( outputDir )
     , xis_      ( inputFile )
-    , log_      ( ( outputDir + "/traduction.log" ).c_str() )
     , mapping_  ( GetMappingFile( rootDir, exerciseFile ) )
     , plan_     ( 0 )
 {
@@ -93,7 +93,8 @@ void Parser::Generate()
          >> xml::end;
     WriteWeather( xis_ );
     WriteOrbat();
-    mapping_.LogWarnings( log_ );
+    std::ofstream log( ( outputDir_ + "/traduction.log" ).c_str() );
+    mapping_.LogWarnings( log );
 }
 
 // -----------------------------------------------------------------------------

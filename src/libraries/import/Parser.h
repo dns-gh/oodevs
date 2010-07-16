@@ -15,7 +15,6 @@
 #include "Mission.h"
 #include "Side.h"
 #include <xeumeuleu/xml.hpp>
-#include <fstream>
 #include <string>
 #include <vector>
 
@@ -69,7 +68,6 @@ private:
     //@{
     std::string outputDir_;
     xml::xifstream xis_;
-    std::ofstream log_;
     unsigned int plan_;
     Mapping mapping_;
     std::map< std::string, std::vector< Diplomacy > > diplomacies_;
