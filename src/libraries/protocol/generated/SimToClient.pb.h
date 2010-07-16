@@ -15160,21 +15160,21 @@ class MsgPopulationConcentrationKnowledgeUpdate : public ::google::protobuf::Mes
   inline ::google::protobuf::int32 oid_groupe_possesseur() const;
   inline void set_oid_groupe_possesseur(::google::protobuf::int32 value);
   
-  // optional int32 oid_concentration_reelle = 4 [default = 0];
+  // optional int32 oid_concentration_reelle = 4;
   inline bool has_oid_concentration_reelle() const;
   inline void clear_oid_concentration_reelle();
   static const int kOidConcentrationReelleFieldNumber = 4;
   inline ::google::protobuf::int32 oid_concentration_reelle() const;
   inline void set_oid_concentration_reelle(::google::protobuf::int32 value);
   
-  // optional int32 nb_humains_vivants = 5 [default = 0];
+  // optional int32 nb_humains_vivants = 5;
   inline bool has_nb_humains_vivants() const;
   inline void clear_nb_humains_vivants();
   static const int kNbHumainsVivantsFieldNumber = 5;
   inline ::google::protobuf::int32 nb_humains_vivants() const;
   inline void set_nb_humains_vivants(::google::protobuf::int32 value);
   
-  // optional int32 nb_humains_morts = 6 [default = 0];
+  // optional int32 nb_humains_morts = 6;
   inline bool has_nb_humains_morts() const;
   inline void clear_nb_humains_morts();
   static const int kNbHumainsMortsFieldNumber = 6;
@@ -15188,14 +15188,14 @@ class MsgPopulationConcentrationKnowledgeUpdate : public ::google::protobuf::Mes
   inline Common::EnumPopulationAttitude attitude() const;
   inline void set_attitude(Common::EnumPopulationAttitude value);
   
-  // optional int32 pertinence = 8 [default = 0];
+  // optional int32 pertinence = 8;
   inline bool has_pertinence() const;
   inline void clear_pertinence();
   static const int kPertinenceFieldNumber = 8;
   inline ::google::protobuf::int32 pertinence() const;
   inline void set_pertinence(::google::protobuf::int32 value);
   
-  // optional bool est_percu = 9 [default = false];
+  // optional bool est_percu = 9;
   inline bool has_est_percu() const;
   inline void clear_est_percu();
   static const int kEstPercuFieldNumber = 9;
@@ -15710,7 +15710,7 @@ class MsgPopulationFlowKnowledgeUpdate : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 oid_groupe_possesseur() const;
   inline void set_oid_groupe_possesseur(::google::protobuf::int32 value);
   
-  // optional int32 oid_flux_reel = 4 [default = 0];
+  // optional int32 oid_flux_reel = 4;
   inline bool has_oid_flux_reel() const;
   inline void clear_oid_flux_reel();
   static const int kOidFluxReelFieldNumber = 4;
@@ -15731,21 +15731,21 @@ class MsgPopulationFlowKnowledgeUpdate : public ::google::protobuf::Message {
   inline const ::Common::MsgHeading& direction() const;
   inline ::Common::MsgHeading* mutable_direction();
   
-  // optional int32 vitesse = 7 [default = 0];
+  // optional int32 vitesse = 7;
   inline bool has_vitesse() const;
   inline void clear_vitesse();
   static const int kVitesseFieldNumber = 7;
   inline ::google::protobuf::int32 vitesse() const;
   inline void set_vitesse(::google::protobuf::int32 value);
   
-  // optional int32 nb_humains_vivants = 8 [default = 0];
+  // optional int32 nb_humains_vivants = 8;
   inline bool has_nb_humains_vivants() const;
   inline void clear_nb_humains_vivants();
   static const int kNbHumainsVivantsFieldNumber = 8;
   inline ::google::protobuf::int32 nb_humains_vivants() const;
   inline void set_nb_humains_vivants(::google::protobuf::int32 value);
   
-  // optional int32 nb_humains_morts = 9 [default = 0];
+  // optional int32 nb_humains_morts = 9;
   inline bool has_nb_humains_morts() const;
   inline void clear_nb_humains_morts();
   static const int kNbHumainsMortsFieldNumber = 9;
@@ -15759,7 +15759,7 @@ class MsgPopulationFlowKnowledgeUpdate : public ::google::protobuf::Message {
   inline Common::EnumPopulationAttitude attitude() const;
   inline void set_attitude(Common::EnumPopulationAttitude value);
   
-  // optional bool est_percu = 11 [default = false];
+  // optional bool est_percu = 11;
   inline bool has_est_percu() const;
   inline void clear_est_percu();
   static const int kEstPercuFieldNumber = 11;
@@ -28766,7 +28766,7 @@ inline void MsgPopulationConcentrationKnowledgeUpdate::set_oid_groupe_possesseur
   oid_groupe_possesseur_ = value;
 }
 
-// optional int32 oid_concentration_reelle = 4 [default = 0];
+// optional int32 oid_concentration_reelle = 4;
 inline bool MsgPopulationConcentrationKnowledgeUpdate::has_oid_concentration_reelle() const {
   return _has_bit(3);
 }
@@ -28782,7 +28782,7 @@ inline void MsgPopulationConcentrationKnowledgeUpdate::set_oid_concentration_ree
   oid_concentration_reelle_ = value;
 }
 
-// optional int32 nb_humains_vivants = 5 [default = 0];
+// optional int32 nb_humains_vivants = 5;
 inline bool MsgPopulationConcentrationKnowledgeUpdate::has_nb_humains_vivants() const {
   return _has_bit(4);
 }
@@ -28798,7 +28798,7 @@ inline void MsgPopulationConcentrationKnowledgeUpdate::set_nb_humains_vivants(::
   nb_humains_vivants_ = value;
 }
 
-// optional int32 nb_humains_morts = 6 [default = 0];
+// optional int32 nb_humains_morts = 6;
 inline bool MsgPopulationConcentrationKnowledgeUpdate::has_nb_humains_morts() const {
   return _has_bit(5);
 }
@@ -28831,7 +28831,7 @@ inline void MsgPopulationConcentrationKnowledgeUpdate::set_attitude(Common::Enum
   attitude_ = value;
 }
 
-// optional int32 pertinence = 8 [default = 0];
+// optional int32 pertinence = 8;
 inline bool MsgPopulationConcentrationKnowledgeUpdate::has_pertinence() const {
   return _has_bit(7);
 }
@@ -28847,7 +28847,7 @@ inline void MsgPopulationConcentrationKnowledgeUpdate::set_pertinence(::google::
   pertinence_ = value;
 }
 
-// optional bool est_percu = 9 [default = false];
+// optional bool est_percu = 9;
 inline bool MsgPopulationConcentrationKnowledgeUpdate::has_est_percu() const {
   return _has_bit(8);
 }
@@ -29101,7 +29101,7 @@ inline void MsgPopulationFlowKnowledgeUpdate::set_oid_groupe_possesseur(::google
   oid_groupe_possesseur_ = value;
 }
 
-// optional int32 oid_flux_reel = 4 [default = 0];
+// optional int32 oid_flux_reel = 4;
 inline bool MsgPopulationFlowKnowledgeUpdate::has_oid_flux_reel() const {
   return _has_bit(3);
 }
@@ -29151,7 +29151,7 @@ inline ::Common::MsgHeading* MsgPopulationFlowKnowledgeUpdate::mutable_direction
   return direction_;
 }
 
-// optional int32 vitesse = 7 [default = 0];
+// optional int32 vitesse = 7;
 inline bool MsgPopulationFlowKnowledgeUpdate::has_vitesse() const {
   return _has_bit(6);
 }
@@ -29167,7 +29167,7 @@ inline void MsgPopulationFlowKnowledgeUpdate::set_vitesse(::google::protobuf::in
   vitesse_ = value;
 }
 
-// optional int32 nb_humains_vivants = 8 [default = 0];
+// optional int32 nb_humains_vivants = 8;
 inline bool MsgPopulationFlowKnowledgeUpdate::has_nb_humains_vivants() const {
   return _has_bit(7);
 }
@@ -29183,7 +29183,7 @@ inline void MsgPopulationFlowKnowledgeUpdate::set_nb_humains_vivants(::google::p
   nb_humains_vivants_ = value;
 }
 
-// optional int32 nb_humains_morts = 9 [default = 0];
+// optional int32 nb_humains_morts = 9;
 inline bool MsgPopulationFlowKnowledgeUpdate::has_nb_humains_morts() const {
   return _has_bit(8);
 }
@@ -29216,7 +29216,7 @@ inline void MsgPopulationFlowKnowledgeUpdate::set_attitude(Common::EnumPopulatio
   attitude_ = value;
 }
 
-// optional bool est_percu = 11 [default = false];
+// optional bool est_percu = 11;
 inline bool MsgPopulationFlowKnowledgeUpdate::has_est_percu() const {
   return _has_bit(10);
 }

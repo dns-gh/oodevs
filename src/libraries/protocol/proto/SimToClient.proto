@@ -973,12 +973,12 @@ message MsgPopulationConcentrationKnowledgeUpdate {
    required int32                          oid_connaissance_concentration = 1;
    required int32                          oid_connaissance_population    = 2;
    required int32                          oid_groupe_possesseur          = 3;
-   optional int32                          oid_concentration_reelle       = 4 [default = 0];
-   optional int32                          nb_humains_vivants             = 5 [default = 0];
-   optional int32                          nb_humains_morts               = 6 [default = 0];
+   optional int32                          oid_concentration_reelle       = 4;
+   optional int32                          nb_humains_vivants             = 5;
+   optional int32                          nb_humains_morts               = 6;
    optional Common.EnumPopulationAttitude  attitude                       = 7;
-   optional int32                          pertinence                     = 8 [default = 0];
-   optional bool                           est_percu                      = 9 [default = false];
+   optional int32                          pertinence                     = 8;
+   optional bool                           est_percu                      = 9;
 }
 
 message MsgPopulationFlowKnowledgeCreation {
@@ -1007,14 +1007,14 @@ message MsgPopulationFlowKnowledgeUpdate {
    required int32                          oid_connaissance_flux       = 1;
    required int32                          oid_connaissance_population = 2;
    required int32                          oid_groupe_possesseur       = 3;
-   optional int32                          oid_flux_reel               = 4 [default = 0];
+   optional int32                          oid_flux_reel               = 4;
    optional SeqOfFlowPart                  portions_flux               = 5;
    optional Common.MsgHeading              direction                   = 6;
-   optional int32                          vitesse                     = 7 [default = 0];
-   optional int32                          nb_humains_vivants          = 8 [default = 0];
-   optional int32                          nb_humains_morts            = 9 [default = 0];
+   optional int32                          vitesse                     = 7;
+   optional int32                          nb_humains_vivants          = 8;
+   optional int32                          nb_humains_morts            = 9;
    optional Common.EnumPopulationAttitude  attitude                    = 10;
-   optional bool                           est_percu                   = 11 [default = false];
+   optional bool                           est_percu                   = 11;
 }
 
 // Folk
