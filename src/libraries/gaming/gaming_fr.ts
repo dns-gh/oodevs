@@ -526,19 +526,19 @@
     </message>
     <message>
         <source>Communications/Radio Emitter silence</source>
-        <translation type="unfinished"></translation>
+        <translation>Communications/Silence radio émission</translation>
     </message>
     <message>
         <source>Communications/Radio Receiver silence</source>
-        <translation type="unfinished"></translation>
+        <translation>Communications/Silence radio réception</translation>
     </message>
     <message>
         <source>Radio Emitter silence:</source>
-        <translation type="unfinished"></translation>
+        <translation>Silence radio émission:</translation>
     </message>
     <message>
         <source>Radio Receiver silence:</source>
-        <translation type="unfinished"></translation>
+        <translation>Silence radio réception:</translation>
     </message>
 </context>
 <context>
@@ -759,19 +759,19 @@
     </message>
     <message>
         <source>Info/Identifier</source>
-        <translation type="unfinished">Info/Identifiant</translation>
+        <translation>Info/Identifiant</translation>
     </message>
     <message>
         <source>Info/Name</source>
-        <translation type="unfinished">Info/Nom</translation>
+        <translation>Info/Nom</translation>
     </message>
     <message>
         <source>Type/Name</source>
-        <translation type="unfinished">Type/Nom</translation>
+        <translation>Type/Nom</translation>
     </message>
     <message>
         <source>Type/Delay</source>
-        <translation type="unfinished">Type/Délai</translation>
+        <translation>Type/Délai</translation>
     </message>
 </context>
 <context>
@@ -1300,11 +1300,11 @@
     </message>
     <message>
         <source>Associated concentration:</source>
-        <translation>Concentration associée:</translation>
+        <translation type="obsolete">Concentration associée:</translation>
     </message>
     <message>
         <source>Location:</source>
-        <translation>Position:</translation>
+        <translation type="obsolete">Position:</translation>
     </message>
     <message>
         <source>Alive people:</source>
@@ -1336,7 +1336,7 @@
     </message>
     <message>
         <source>Associated flow:</source>
-        <translation>Flux associé:</translation>
+        <translation type="obsolete">Flux associé:</translation>
     </message>
     <message>
         <source>Speed:</source>
@@ -1344,7 +1344,7 @@
     </message>
     <message>
         <source>Known chunks:</source>
-        <translation>Portions connues:</translation>
+        <translation type="obsolete">Portions connues:</translation>
     </message>
     <message>
         <source>Details</source>

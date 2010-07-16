@@ -48,9 +48,6 @@ PopulationKnowledgePanel::PopulationKnowledgePanel( QWidget* parent, PanelStack_
                 .AddLabel( tr( "Side:" ) );
 
     display_->AddGroup( tr( "Concentration" ) )
-                .AddLabel( tr( "Identifier:" ) )
-                .AddLabel( tr( "Associated concentration:" ) )
-                .AddLabel( tr( "Location:" ) )
                 .AddLabel( tr( "Alive people:" ) )
                 .AddLabel( tr( "Dead people:" ) )
                 .AddLabel( tr( "Mood:" ) )
@@ -58,15 +55,12 @@ PopulationKnowledgePanel::PopulationKnowledgePanel( QWidget* parent, PanelStack_
                 .AddLabel( tr( "Relevance:" ) );
 
     display_->AddGroup( tr( "Flow" ) )
-                .AddLabel( tr( "Identifier:" ) )
-                .AddLabel( tr( "Associated flow:" ) )
                 .AddLabel( tr( "Heading:" ) )
                 .AddLabel( tr( "Speed:" ) )
                 .AddLabel( tr( "Alive people:" ) )
                 .AddLabel( tr( "Dead people:" ) )
                 .AddLabel( tr( "Mood:" ) )
-                .AddLabel( tr( "Perceived:" ) )
-                .AddLabel( tr( "Known chunks:" ) );
+                .AddLabel( tr( "Perceived:" ) );
 
     connect( knowledgeList_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
     connect( knowledgeList_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint& ) ) );
@@ -129,12 +123,19 @@ void PopulationKnowledgePanel::OnSelectionChanged( QListViewItem* i )
     ValuedListItem* item = (ValuedListItem*)( i );
     display_->Group( tr( "Flow" ) ).Hide();
     display_->Group( tr( "Concentration" ) ).Hide();
-    if( item && item->IsA< const PopulationKnowledge_ABC >() ) {
+    if( item && item->IsA< const PopulationKnowledge_ABC >() )
+    {
         subSelected_ = item->GetValue< const PopulationKnowledge_ABC >();
         subSelected_->Display( *display_ );
     }
-    else if( item && item->IsA< const PopulationPartKnowledge_ABC >() ) {
-        selectedPart_ = item->GetValue< const PopulationPartKnowledge_ABC >();
+    else if( item && item->IsA< const PopulationConcentrationKnowledge >() )
+    {
+        selectedPart_ = item->GetValue< const PopulationConcentrationKnowledge >();
+        selectedPart_->Display( *display_ );
+    }
+    else if( item && item->IsA< const PopulationFlowKnowledge >() )
+    {
+        selectedPart_ = item->GetValue< const PopulationFlowKnowledge >();
         selectedPart_->Display( *display_ );
     }
 }
@@ -147,15 +148,8 @@ void PopulationKnowledgePanel::NotifyUpdated( const PopulationKnowledges& elemen
 {
     if( ! IsVisible() || selected_ != &element )
         return;
-
-    knowledgeList_->DeleteTail(
-        knowledgeList_->DisplayList( element.CreateIterator() )
-        );
-    ValuedListItem* item = FindItem( subSelected_, knowledgeList_->firstChild() );
-    if( item )
-        knowledgeList_->setSelected( item, true );
-    else
-        subSelected_ = 0;
+    knowledgeList_->DeleteTail( knowledgeList_->DisplayList( element.CreateIterator() ) );
+    selected_ = &element;
 }
 
 // -----------------------------------------------------------------------------

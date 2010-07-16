@@ -86,12 +86,9 @@ void PopulationConcentrationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopul
 void PopulationConcentrationKnowledge::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Population", "Concentration" ) )
-                .Display( tools::translate( "Population", "Identifier:" ), nID_ )
-                .Display( tools::translate( "Population", "Associated concentration:" ), resolver_.FindConcentration( concentrationId_ ) )
-                .Display( tools::translate( "Population", "Location:" ), position_ )
                 .Display( tools::translate( "Population", "Alive people:" ), nNbrAliveHumans_ )
                 .Display( tools::translate( "Population", "Dead people:" ), nNbrDeadHumans_ )
-                .Display( tools::translate( "Population", "Mood:" ), eAttitude_ )
+                .Display( tools::translate( "Population", "Mood:" ), tools::ToString( eAttitude_ ) )
                 .Display( tools::translate( "Population", "Perceived:" ), bIsPerceived_ )
                 .Display( tools::translate( "Population", "Relevance:" ), rRelevance_ );
 }

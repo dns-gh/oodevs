@@ -1052,11 +1052,11 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Communication: radio emitter silence</source>
-        <translation type="unfinished"></translation>
+        <translation>Communication: silence radio émission</translation>
     </message>
     <message>
         <source>Communication: radio receiver silence</source>
-        <translation type="unfinished"></translation>
+        <translation>Communication: silence radio réception</translation>
     </message>
 </context>
 <context>
@@ -2103,7 +2103,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <name>NoteDialog</name>
     <message>
         <source>Create note</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer une note</translation>
     </message>
 </context>
 <context>
@@ -2158,31 +2158,31 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>The current note edited will be recreated</source>
-        <translation type="unfinished">La note courante va être recréee</translation>
+        <translation>La note courante va être recréee</translation>
     </message>
     <message>
         <source>Delete note and children notes</source>
-        <translation type="unfinished">Effacer la note et ses descendants</translation>
+        <translation>Effacer la note et ses descendants</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished">Oui</translation>
+        <translation>Oui</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished">Non</translation>
+        <translation>Non</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Nom</translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuler</translation>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>
@@ -2798,11 +2798,11 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Associated concentration:</source>
-        <translation>Concentration associée:</translation>
+        <translation type="obsolete">Concentration associée:</translation>
     </message>
     <message>
         <source>Location:</source>
-        <translation>Position:</translation>
+        <translation type="obsolete">Position:</translation>
     </message>
     <message>
         <source>Alive people:</source>
@@ -2830,7 +2830,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Associated flow:</source>
-        <translation>Flux associé:</translation>
+        <translation type="obsolete">Flux associé:</translation>
     </message>
     <message>
         <source>Heading:</source>
@@ -2842,7 +2842,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Known chunks:</source>
-        <translation>Portions connues:</translation>
+        <translation type="obsolete">Portions connues:</translation>
     </message>
 </context>
 <context>
@@ -3480,7 +3480,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <name>gui</name>
     <message>
         <source>Weather parameters</source>
-        <translation type="unfinished">Paramètres de météo</translation>
+        <translation>Paramètres de météo</translation>
     </message>
 </context>
 <context>

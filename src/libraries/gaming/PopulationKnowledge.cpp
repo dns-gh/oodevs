@@ -72,10 +72,6 @@ void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationKnowledg
     }
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-17
@@ -173,7 +169,8 @@ void PopulationKnowledge::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 {
-    displayer.Display( tools::translate( "Population", "Side:" ), popu_.Get< TacticalHierarchies >().GetTop() );
+    displayer.Display( tools::translate( "Population", "Side:" ), popu_.Get< TacticalHierarchies >().GetTop() )
+             .Display( tools::translate( "Population", "Domination:" ), domination_ );
 }
 
 // -----------------------------------------------------------------------------
