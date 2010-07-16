@@ -24,15 +24,11 @@ typedef T_PointVector::reverse_iterator         RIT_PointVector;
 typedef T_PointVector::const_reverse_iterator   CRIT_PointVector;
 
 typedef std::set< MT_Vector2D, TER_DistanceLess > T_PointSet;
-typedef const T_PointSet                    CT_PointSet;
-typedef T_PointSet::iterator                IT_PointSet;
-typedef T_PointSet::const_iterator          CIT_PointSet;
+typedef T_PointSet::iterator                     IT_PointSet;
+typedef T_PointSet::const_iterator              CIT_PointSet;
 
 typedef std::vector< MT_Vector2D* >         T_PointPtrVector;
-typedef const T_PointPtrVector              CT_PointPtrVector;
-typedef T_PointPtrVector::iterator          IT_PointPtrVector;
 typedef T_PointPtrVector::const_iterator    CIT_PointPtrVector;
-typedef T_PointPtrVector::reverse_iterator  RIT_PointPtrVector;
 
 extern MT_Vector2D MT_ComputeBarycenter     ( const T_PointVector& points );
 

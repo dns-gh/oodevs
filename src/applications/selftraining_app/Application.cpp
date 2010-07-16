@@ -16,7 +16,7 @@
 #include "TrayMenu.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
-#include "tools/ProcessList.h"
+#include "frontend/ProcessList.h"
 #include <qsettings.h>
 #include <qtextcodec.h>
 
@@ -46,7 +46,7 @@ Application::Application( int argc, char** argv )
     setMainWidget( mainWindow_ );
 
     // check for previous instances running
-    tools::ProcessList processes;
+    frontend::ProcessList processes;
     if( processes.Contains( "selftraining_app.exe" ) )
     {
         MessageDialog message( mainWindow_, tools::translate( "Application", "Already running" ), tools::translate( "Application", "The FrontEnd is already running. Close ?"  ), QMessageBox::Yes, QMessageBox::No );

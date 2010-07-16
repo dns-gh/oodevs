@@ -14,7 +14,7 @@
 #include <boost/ptr_container/ptr_map.hpp>
 #pragma warning( pop )
 
-namespace tools
+namespace frontend
 {
 
 // =============================================================================

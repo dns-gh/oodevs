@@ -7,13 +7,13 @@
 //
 // *****************************************************************************
 
-#include "tools_pch.h"
+#include "frontend_pch.h"
 #include "ProcessList.h"
 #include <windows.h>
 #include <tlhelp32.h>
 #include <boost/bind.hpp>
 
-using namespace tools ;
+using namespace frontend;
 
 class ProcessList::ProcInfo : public boost::noncopyable
 {

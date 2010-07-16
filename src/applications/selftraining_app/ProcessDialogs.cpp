@@ -11,13 +11,13 @@
 #include "ProcessDialogs.h"
 #include "MessageDialog.h"
 #include "clients_gui/Tools.h"
-#include "tools/ProcessList.h"
+#include "frontend/ProcessList.h"
 
 namespace
 {
     bool HasRunningProcess()
     {
-        tools::ProcessList processes;
+        frontend::ProcessList processes;
         return processes.Contains( "simulation_app.exe" )
             || processes.Contains( "gaming_app.exe" )
             || processes.Contains( "replayer_app.exe" )
@@ -29,7 +29,7 @@ namespace
 
     void StopRunningProcess()
     {
-        tools::ProcessList processes;
+        frontend::ProcessList processes;
         processes.KillAll( "simulation_app.exe" );
         processes.KillAll( "gaming_app.exe" );
         processes.KillAll( "replayer_app.exe" );
