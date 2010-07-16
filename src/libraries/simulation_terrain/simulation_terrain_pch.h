@@ -40,6 +40,4 @@
 #include <boost/serialization/string.hpp>
 #pragma warning( pop )
 
-#include "TER.h"
-
 #endif // __TER_pch_h_

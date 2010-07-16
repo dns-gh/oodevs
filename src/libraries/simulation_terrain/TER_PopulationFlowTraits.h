@@ -10,6 +10,8 @@
 #ifndef __TER_PopulationFlowTraits_h_
 #define __TER_PopulationFlowTraits_h_
 
+#include "MT_Tools/MT_Tools_Types.h"
+
 class TER_PopulationFlow_ABC;
 
 // =============================================================================

@@ -10,8 +10,6 @@
 #ifndef __PHY_Speeds_h_
 #define __PHY_Speeds_h_
 
-#include "simulation_terrain/TER.h"
-
 namespace xml
 {
     class xistream;

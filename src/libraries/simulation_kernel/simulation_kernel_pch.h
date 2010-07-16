@@ -43,7 +43,6 @@
 #include "MT_Tools/MT_ScipioException.h"
 #include "MIL_Random.h"
 
-#include "simulation_terrain/TER.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_PathFindRequest_ABC.h"

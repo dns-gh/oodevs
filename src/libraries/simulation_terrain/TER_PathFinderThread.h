@@ -10,6 +10,7 @@
 #ifndef __TER_PathFinderThread_h_
 #define __TER_PathFinderThread_h_
 
+#include "MT_Tools/MT_Vector2DTypes.h"
 #include "tools/thread/RequestProcessor_ABC.h"
 #pragma warning( push, 1 )
 #pragma warning( disable : 4244 4275 )

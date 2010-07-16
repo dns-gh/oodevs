@@ -10,7 +10,7 @@
 #ifndef __MIL_LimaOrder_h_
 #define __MIL_LimaOrder_h_
 
-#include "simulation_terrain/TER.h"
+#include "MT_Tools/MT_Vector2DTypes.h"
 
 namespace Common
 {

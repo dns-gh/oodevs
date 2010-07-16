@@ -10,6 +10,8 @@
 #ifndef __TER_PopulationConcentrationTraits_h_
 #define __TER_PopulationConcentrationTraits_h_
 
+#include "MT_Tools/MT_Tools_Types.h"
+
 class TER_PopulationConcentration_ABC;
 
 // =============================================================================

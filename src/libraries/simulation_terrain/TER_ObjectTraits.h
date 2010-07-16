@@ -19,6 +19,8 @@
 #ifndef __TER_ObjectTraits_h_
 #define __TER_ObjectTraits_h_
 
+#include "MT_Tools/MT_Tools_Types.h"
+
 class TER_Object_ABC;
 
 // =============================================================================

@@ -19,6 +19,8 @@
 #ifndef __TER_NodeFunctor_ABC_h_
 #define __TER_NodeFunctor_ABC_h_
 
+#include "MT_Tools/MT_Vector2DTypes.h"
+
 class TerrainData;
 
 // =============================================================================
