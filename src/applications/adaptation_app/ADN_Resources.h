@@ -27,6 +27,7 @@ DECLARE_ICON( fileopen );
 DECLARE_ICON( filesave );
 DECLARE_ICON( filenew  );
 DECLARE_ICON( testdata );
+DECLARE_ICON( application );
 
 #include "XmlResources.cpp"
 

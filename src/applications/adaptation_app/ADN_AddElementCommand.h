@@ -33,8 +33,7 @@
 // Created: AGN 2004-05-13
 // =============================================================================
 template< class ObjectType >
-class ADN_AddElementCommand
-: public QtCommand
+class ADN_AddElementCommand : public QtCommand
 {
 public:
     //! @name Constructors/Destructor

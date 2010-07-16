@@ -40,7 +40,7 @@ ADN_ChangeValueCommand_Pointer.inl \
 ADN_ChangeValueCommand_String.cpp \
 ADN_Communications_GUI.cpp \
 ADN_Composante_Wizard.cpp \
-ADN_Composantes_ActiveProtectionsListView \
+ADN_Composantes_ActiveProtectionsListView.cpp \
 ADN_Composantes_BreakdownsTable.cpp \
 ADN_Composantes_ConsumptionsTable.cpp \
 ADN_Composantes_Data.cpp \
