@@ -8,14 +8,16 @@
 // *****************************************************************************
 
 #include "Mapping.h"
+#include "Warnings.h"
 #include <boost/lexical_cast.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: Mapping constructor
 // Created: LDC 2010-07-07
 // -----------------------------------------------------------------------------
-Mapping::Mapping( const std::string& file )
-    : maxId_( 0 )
+Mapping::Mapping( const std::string& file, Warnings& warnings )
+    : warnings_( warnings )
+    , maxId_   ( 0 )
 {
     xml::xifstream xis( file );
     xis >> xml::start( "mapping" )
@@ -81,27 +83,8 @@ std::string Mapping::operator[]( const std::string& key ) const
     std::map< std::string, std::string >::const_iterator it = mapping_.find( key );
     if( it != mapping_.end() )
         return it->second;
-    unknownKeys_.insert( key );
+    warnings_.Add( key );
     return key;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Mapping::AddWarning
-// Created: LDC 2010-07-09
-// -----------------------------------------------------------------------------
-void Mapping::AddWarning( const std::string& id )
-{
-    unknownKeys_.insert( id );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Mapping::LogWarnings
-// Created: LDC 2010-07-07
-// -----------------------------------------------------------------------------
-void Mapping::LogWarnings( std::ostream& os ) const
-{
-    for( std::set< std::string >::const_iterator it = unknownKeys_.begin(); it != unknownKeys_.end(); ++it )
-        os << "Identifiant non reconnu: " << *it << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -151,7 +134,7 @@ std::string Mapping::GetSuperiorId( const std::string& type ) const
     std::map< std::string, std::string >::const_iterator it = units_.find( type );
     if( it != units_.end() )
         return it->second;
-    unknownKeys_.insert( type );
+    warnings_.Add( type );
     return type;
 }
 

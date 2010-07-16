@@ -15,6 +15,8 @@
 #include <map>
 #include <set>
 
+class Warnings;
+
 // =============================================================================
 /** @class  Mapping
     @brief  Mapping
@@ -26,15 +28,12 @@ class Mapping
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Mapping( const std::string& file );
+             Mapping( const std::string& file, Warnings& warnings );
     virtual ~Mapping();
     //@}
 
     //! @name Operations
     //@{
-    void AddWarning( const std::string& id );
-    void LogWarnings( std::ostream& os ) const;
-
     unsigned int AddId( const std::string& editorId );
     unsigned int AddId();
     //@}
@@ -73,11 +72,11 @@ private:
 private:
     //! @name Member data
     //@{
+    Warnings& warnings_;
     std::map< std::string, std::string > mapping_;
     std::set< std::string > automats_;
     std::set< std::string > commandPosts_;
     std::map< std::string, std::string > units_;
-    mutable std::set< std::string > unknownKeys_;
     unsigned int maxId_;
     //@}
 };

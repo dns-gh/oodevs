@@ -11,10 +11,12 @@
 #define import_Parser_h
 
 #include "Diplomacy.h"
+#include "Warnings.h"
 #include "Mapping.h"
 #include "Mission.h"
 #include "Side.h"
 #include <xeumeuleu/xml.hpp>
+#include <fstream>
 #include <string>
 #include <vector>
 
@@ -68,8 +70,9 @@ private:
     //@{
     std::string outputDir_;
     xml::xifstream xis_;
-    unsigned int plan_;
+    Warnings warnings_;
     Mapping mapping_;
+    unsigned int plan_;
     std::map< std::string, std::vector< Diplomacy > > diplomacies_;
     std::map< std::string, Side > sides_;
     std::map< std::string, std::vector< std::vector< Position > > > tacticals_;

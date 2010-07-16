@@ -21,9 +21,7 @@ BOOST_AUTO_TEST_CASE( ImportGeneratesSomeFiles )
 {
     const bfs::path outdir = "./import_test";
     bfs::remove_all( outdir );
-    {
-        Parser( "../../data/tests/import_lto/scenarioExemple.xml", "../../data", "/tests/import_lto/exercise.xml", outdir.string() ).Generate();
-    }
+    Parser( "../../data/tests/import_lto/scenarioExemple.xml", "../../data", "/tests/import_lto/exercise.xml", outdir.string() ).Generate();
     BOOST_CHECK( bfs::exists( outdir ) );
     BOOST_CHECK( bfs::exists( outdir / "orbat.xml" ) );
     BOOST_CHECK( bfs::exists( outdir / "traduction.log" ) );
@@ -39,11 +37,9 @@ BOOST_AUTO_TEST_CASE( ImportGeneratesSomeFiles )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( ImportGeneratesSomeFiles2 )
 {
-    const bfs::path outdir = "./import_test";
+    const bfs::path outdir = "./import_test2";
     bfs::remove_all( outdir );
-    {
-        Parser( "../../data/tests/import_lto/Test_pour_import_OEC.xml", "../../data", "/tests/import_lto/exercise.xml", outdir.string() ).Generate();
-    }
+    Parser( "../../data/tests/import_lto/Test_pour_import_OEC.xml", "../../data", "/tests/import_lto/exercise.xml", outdir.string() ).Generate();
     BOOST_CHECK( bfs::exists( outdir ) );
     BOOST_CHECK( bfs::exists( outdir / "orbat.xml" ) );
     BOOST_CHECK( bfs::exists( outdir / "traduction.log" ) );

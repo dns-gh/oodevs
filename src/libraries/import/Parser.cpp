@@ -11,10 +11,14 @@
 #include "Position.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/filesystem.hpp>
-#include <fstream>
 
 namespace
 {
+    const std::string& MakeDirectories( const std::string& dir )
+    {
+        boost::filesystem::create_directories( dir );
+        return dir;
+    }
     std::string GetMappingFile( const std::string& rootDir, const std::string& exerciseFile )
     {
         std::string data, physical;
@@ -32,12 +36,13 @@ namespace
 // Created: LDC 2010-07-06
 // -----------------------------------------------------------------------------
 Parser::Parser( const std::string& inputFile, const std::string& rootDir, const std::string& exerciseFile, const std::string& outputDir )
-    : outputDir_( outputDir )
+    : outputDir_( MakeDirectories( outputDir ) )
     , xis_      ( inputFile )
-    , mapping_  ( GetMappingFile( rootDir, exerciseFile ) )
+    , warnings_ ( ( outputDir + "/traduction.log" ).c_str() )
+    , mapping_  ( GetMappingFile( rootDir, exerciseFile ), warnings_ )
     , plan_     ( 0 )
 {
-    boost::filesystem::create_directories( outputDir );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -93,8 +98,6 @@ void Parser::Generate()
          >> xml::end;
     WriteWeather( xis_ );
     WriteOrbat();
-    std::ofstream log( ( outputDir_ + "/traduction.log" ).c_str() );
-    mapping_.LogWarnings( log );
 }
 
 // -----------------------------------------------------------------------------
@@ -270,7 +273,9 @@ void Parser::WriteMissionInOrd( xml::xistream& xis, xml::xostream& xos, const st
         >> xml::optional >> xml::start( "ns6:missionId"  )
             >> xml::content( "ns2:id", missionId )
         >> xml::end;
-    if( !missionId.empty() && missions_.find( missionId ) != missions_.end() )
+    if( missionId.empty() )
+        return;
+    if( missions_.find( missionId ) != missions_.end() )
     {
         xos << xml::start( "action" )
                 << xml::attribute( "target", mapping_[ id ] )
@@ -278,7 +283,9 @@ void Parser::WriteMissionInOrd( xml::xistream& xis, xml::xostream& xos, const st
                 << xml::attribute( "type", "mission" )
                 << missions_[ missionId ]
             << xml::end;
-    } // $$$$ MCO : else warning ?
+    }
+    else
+        warnings_.Add( missionId );
 }
 
 // -----------------------------------------------------------------------------
@@ -299,7 +306,7 @@ void Parser::PlaceEntity( xml::xistream& xis )
     if( entity )
         entity->SetPosition( position );
     else
-        mapping_.AddWarning( id );
+        warnings_.Add( id );
     xis >> xml::optional >> xml::start( "ns6:members" )
             >> xml::list( "ns6:content", *this, &Parser::PlaceEntity );
 }
