@@ -39,8 +39,6 @@ class ADN_ListView_Composantes;
 // =============================================================================
 class ADN_Composantes_ConsumptionsTable : public ADN_Table2
 {
-    Q_OBJECT;
-
     MT_COPYNOTALLOWED( ADN_Composantes_ConsumptionsTable )
 
 public:
