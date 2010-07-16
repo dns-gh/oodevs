@@ -146,7 +146,7 @@ void MIL_Config::ConfigureRandom( xml::xistream& xis )
         randomDeviation_[ i ] = 0.;
         randomMean_[ i ] = 0.;
         xis >> xml::optional
-            >> xml::start( "random" + boost::lexical_cast< int >( i ) )
+            >> xml::start( "random" + boost::lexical_cast< std::string >( i ) )
                 >> xml::attribute( "distribution", randomGaussian_[ i ] )
                 >> xml::attribute( "deviation", randomDeviation_[ i ] )
                 >> xml::attribute( "mean", randomMean_[ i ] )
