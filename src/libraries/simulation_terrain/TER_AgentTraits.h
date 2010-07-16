@@ -19,6 +19,8 @@
 #ifndef __TER_AgentTraits_h_
 #define __TER_AgentTraits_h_
 
+#include "MT_Tools/MT_Vector2DTypes.h"
+
 class TER_Agent_ABC;
 
 // =============================================================================

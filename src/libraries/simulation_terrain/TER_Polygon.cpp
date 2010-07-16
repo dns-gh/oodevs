@@ -10,9 +10,7 @@
 //*****************************************************************************
 #include "simulation_terrain_pch.h"
 #include "TER_Polygon.h"
-
 #include "TER_Polygon.inl"
-
 #include "MT_Tools/MT_Polyline.h"
 
 

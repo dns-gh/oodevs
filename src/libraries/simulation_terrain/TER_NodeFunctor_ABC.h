@@ -19,7 +19,6 @@
 #ifndef __TER_NodeFunctor_ABC_h_
 #define __TER_NodeFunctor_ABC_h_
 
-#include "TER.h"
 class TerrainData;
 
 // =============================================================================

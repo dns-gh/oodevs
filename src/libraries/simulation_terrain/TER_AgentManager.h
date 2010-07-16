@@ -19,7 +19,6 @@
 #ifndef __TER_AgentManager_h_
 #define __TER_AgentManager_h_
 
-#include "TER.h"
 #include "TER_AgentTraits.h"
 #include "TER_Agent_ABC.h"
 #include "pathfind/SpatialContainer.h"

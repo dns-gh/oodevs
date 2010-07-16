@@ -19,8 +19,6 @@
 #ifndef __TER_PathFindManager_h_
 #define __TER_PathFindManager_h_
 
-#include "TER.h"
-
 #include "TER_PathFinderThread.h"
 
 class TER_NodeFunctor_ABC;

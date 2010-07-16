@@ -12,8 +12,6 @@
 #ifndef __TER_Polygon_h_
 #define __TER_Polygon_h_
 
-#include "TER.h"
-
 #include "MT_Tools/MT_Shared.h"
 #include "MT_Tools/MT_Rect.h"
 

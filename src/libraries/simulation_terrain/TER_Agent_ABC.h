@@ -19,7 +19,6 @@
 #ifndef __TER_Agent_ABC_h_
 #define __TER_Agent_ABC_h_
 
-#include "TER.h"
 #include "TER_AgentTraits.h"
 
 class TER_AgentManager;

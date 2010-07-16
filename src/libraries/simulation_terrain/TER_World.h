@@ -19,7 +19,6 @@
 #ifndef __TER_World_h_
 #define __TER_World_h_
 
-#include "TER.h"
 #include "TER_NodeFunctor_ABC.h"
 #include "TER_CoordinateManager.h"
 
