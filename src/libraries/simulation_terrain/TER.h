@@ -16,15 +16,4 @@
 #include "MT_Tools/MT_Vector3D.h"
 #include "pathfind/TerrainData.h"
 
-namespace boost
-{
-    namespace archive
-    {
-        class binary_oarchive;
-        class binary_iarchive;
-    };
-};
-
-#include <boost/serialization/split_member.hpp>
-
 #endif // __TER_h_
