@@ -10,6 +10,8 @@
 #ifndef __MIL_LimaOrder_h_
 #define __MIL_LimaOrder_h_
 
+#include "simulation_terrain/TER.h"
+
 namespace Common
 {
     class MsgLimaOrder;

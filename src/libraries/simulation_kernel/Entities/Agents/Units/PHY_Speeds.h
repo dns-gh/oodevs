@@ -11,6 +11,7 @@
 #define __PHY_Speeds_h_
 
 #include "MIL.h"
+#include "simulation_terrain/TER.h"
 
 namespace xml
 {
