@@ -28,8 +28,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_ObjectInteraction )
 DEC_KS_ObjectInteraction::DEC_KS_ObjectInteraction( DEC_KnowledgeBlackBoard_AgentPion& blackBoard )
     : DEC_KnowledgeSource_ABC( blackBoard, 1 )
     , pBlackBoard_           ( &blackBoard )
-    , objectInteractions_    ()
-    , objectCollisions_      ()
 {
     // NOTHING
 }
@@ -41,8 +39,6 @@ DEC_KS_ObjectInteraction::DEC_KS_ObjectInteraction( DEC_KnowledgeBlackBoard_Agen
 DEC_KS_ObjectInteraction::DEC_KS_ObjectInteraction()
     : DEC_KnowledgeSource_ABC()
     , pBlackBoard_           ( 0 )
-    , objectInteractions_    ()
-    , objectCollisions_      ()
 {
     // NOTHING
 }
@@ -86,7 +82,6 @@ void DEC_KS_ObjectInteraction::Prepare()
 DEC_Knowledge_ObjectPerception& DEC_KS_ObjectInteraction::GetKnowledgeObjectPerception( MIL_Object_ABC& object ) const
 {
     assert( pBlackBoard_ );
-
     DEC_Knowledge_ObjectPerception* pKnowledge = pBlackBoard_->GetKnowledgeObjectPerceptionContainer().GetKnowledgeObjectPerception( object );
     if( !pKnowledge )
         pKnowledge = &pBlackBoard_->GetKnowledgeObjectPerceptionContainer().CreateKnowledgeObjectPerception( pBlackBoard_->GetPion(), object );
@@ -100,7 +95,6 @@ DEC_Knowledge_ObjectPerception& DEC_KS_ObjectInteraction::GetKnowledgeObjectPerc
 DEC_Knowledge_ObjectCollision& DEC_KS_ObjectInteraction::GetKnowledgeObjectCollision( MIL_Object_ABC& object ) const
 {
     assert( pBlackBoard_ );
-
     DEC_Knowledge_ObjectCollision* pKnowledge = pBlackBoard_->GetKnowledgeObjectCollisionContainer().GetKnowledgeObjectCollision( object );
     if( !pKnowledge )
         pKnowledge = &pBlackBoard_->GetKnowledgeObjectCollisionContainer().CreateKnowledgeObjectCollision( pBlackBoard_->GetPion(), object );

@@ -39,14 +39,14 @@ public:
     //! @name Operations
     //@{
     virtual void Prepare();
-    virtual void Talk   ( int currentTimeStep );
-    virtual void Clean  ();
+    virtual void Talk( int currentTimeStep );
+    virtual void Clean();
     //@}
 
     //! @name Events
     //@{
     void NotifyObjectInteraction( MIL_Object_ABC& object );
-    void NotifyObjectCollision  ( MIL_Object_ABC& object, const MT_Vector2D& vPosition );
+    void NotifyObjectCollision( MIL_Object_ABC& object, const MT_Vector2D& vPosition );
     //@}
 
     //! @name CheckPoints
@@ -57,12 +57,12 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< MIL_Object_ABC* > T_ObjectVector;
-    typedef T_ObjectVector::const_iterator     CIT_ObjectVector;
+    typedef std::vector< MIL_Object_ABC* >   T_ObjectVector;
+    typedef T_ObjectVector::const_iterator CIT_ObjectVector;
 
     typedef std::pair< MIL_Object_ABC*, MT_Vector2D > T_ObjectCollisionPair;
-    typedef std::vector< T_ObjectCollisionPair >          T_ObjectCollisionVector;
-    typedef T_ObjectCollisionVector::const_iterator       CIT_ObjectCollisionVector;
+    typedef std::vector< T_ObjectCollisionPair >      T_ObjectCollisionVector;
+    typedef T_ObjectCollisionVector::const_iterator CIT_ObjectCollisionVector;
     //@}
 
 private:
@@ -79,8 +79,8 @@ private:
 
 private:
     DEC_KnowledgeBlackBoard_AgentPion* pBlackBoard_;
-    T_ObjectVector                     objectInteractions_;
-    T_ObjectCollisionVector            objectCollisions_;
+    T_ObjectVector objectInteractions_;
+    T_ObjectCollisionVector objectCollisions_;
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_KS_ObjectInteraction )
