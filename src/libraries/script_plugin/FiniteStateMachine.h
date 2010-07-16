@@ -44,8 +44,8 @@ public:
 
     //! @name Operations
     //@{
-    void UsedByDIA    () {};
-    void ReleasedByDIA() {};
+    void UsedByDIA    () {}
+    void ReleasedByDIA() {}
     //@}
 
 private:
