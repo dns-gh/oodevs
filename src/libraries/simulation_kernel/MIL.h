@@ -6,6 +6,8 @@
 #include "simulation_terrain/TER.h"
 #include "CheckPoints/MIL_CheckPointInArchive.h"
 #include "CheckPoints/MIL_CheckPointOutArchive.h"
+#include "MT_Tools/MT_Vector3D.h"
+#include <boost/serialization/split_member.hpp>
 
 enum E_Tristate
 {
@@ -22,8 +24,6 @@ namespace boost
         class binary_iarchive;
     };
 };
-
-#include <boost/serialization/split_member.hpp>
 
 std::ostream& operator<<( std::ostream&, const MT_Vector3D& );
 std::ostream& operator<<( std::ostream&, const MT_Vector2D& );
