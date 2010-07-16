@@ -13,6 +13,7 @@
 #define __MIL_Tools_h_
 
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
+#include "pathfind/TerrainData.h"
 #pragma warning ( push )
 #pragma warning ( disable : 4244 4245 )
 #include <boost/CRC.hpp>

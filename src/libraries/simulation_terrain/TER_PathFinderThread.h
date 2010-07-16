@@ -21,6 +21,7 @@ class TerrainRetractationHandle;
 class TER_NodeFunctor_ABC;
 class TER_PathFindRequest_ABC;
 class TER_DynamicData;
+class TerrainData;
 
 // =============================================================================
 // Created: AGE 2005-02-23

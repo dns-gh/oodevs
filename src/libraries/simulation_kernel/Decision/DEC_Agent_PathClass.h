@@ -10,6 +10,8 @@
 #ifndef __DEC_PathClass_h_
 #define __DEC_PathClass_h_
 
+#include "pathfind/TerrainData.h"
+
 namespace xml
 {
     class xistream;

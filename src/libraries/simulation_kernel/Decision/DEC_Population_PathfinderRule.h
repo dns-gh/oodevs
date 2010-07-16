@@ -20,6 +20,7 @@
 #define __DEC_Population_PathfinderRule_h_
 
 #include "pathfind/TerrainRule_ABC.h"
+#include "pathfind/TerrainData.h"
 
 class DEC_Population_Path;
 

@@ -22,8 +22,6 @@
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
 
-//$$$ Refactorer gestion collisions objets
-
 // -----------------------------------------------------------------------------
 // Name: DEC_PathWalker constructor
 // Created: NLD 2005-09-30
@@ -49,12 +47,8 @@ DEC_PathWalker::DEC_PathWalker( PHY_MovingEntity_ABC& movingEntity )
 // -----------------------------------------------------------------------------
 DEC_PathWalker::~DEC_PathWalker()
 {
-
+    // NOTHING
 }
-
-// =============================================================================
-// TOOLS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathWalker::ComputeFutureObjectCollision
@@ -86,10 +80,6 @@ MT_Vector2D DEC_PathWalker::ExtrapolatePosition( const MT_Vector2D& position, co
         return movingEntity_.GetPosition();
     return pCurrentPath_->GetFuturePosition( position, rTime * rSpeed, bBoundOnPath );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathWalker::ComputeCurrentSpeed
@@ -175,7 +165,6 @@ bool DEC_PathWalker::GoToNextNavPoint( const DEC_PathResult& path )
         ++itNextPathPoint_;
         return false;
     }
-
     // points particuliers -> EVT vers DEC
     do
     {
@@ -483,10 +472,6 @@ void DEC_PathWalker::Apply()
     if( movingEntity_.CanMove() )
         movingEntity_.ApplyMove( vNewPos_, vNewDir_, rCurrentSpeed_, rWalkedDistance_ );
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathWalker::SerializeEnvironmentType

@@ -10,7 +10,6 @@
 #ifndef __PHY_Speeds_h_
 #define __PHY_Speeds_h_
 
-#include "MIL.h"
 #include "simulation_terrain/TER.h"
 
 namespace xml
@@ -20,8 +19,10 @@ namespace xml
 
 namespace moving
 {
-class PHY_RoleAction_Moving;
+    class PHY_RoleAction_Moving;
 }
+
+class TerrainData;
 
 // =============================================================================
 /** @class  PHY_Speeds

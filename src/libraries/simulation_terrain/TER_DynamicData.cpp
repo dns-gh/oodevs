@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-02-01 $
-// $Archive: /MVW_v10/Build/SDK/TER/src/TER_DynamicData.cpp $
-// $Author: Age $
-// $Modtime: 24/03/05 15:39 $
-// $Revision: 3 $
-// $Workfile: TER_DynamicData.cpp $
-//
-// *****************************************************************************
 
 #include "simulation_terrain_pch.h"
 #include "TER_DynamicData.h"
@@ -31,7 +22,7 @@ TER_DynamicData::TER_DynamicData( const T_PointVector& points, const TerrainData
     , points_     ( points )
     , terrainData_( terrainData )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

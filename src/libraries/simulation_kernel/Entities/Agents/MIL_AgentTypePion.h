@@ -11,6 +11,7 @@
 #define __MIL_AgentTypePion_h_
 
 #include "MIL.h"
+#include "pathfind/TerrainData.h"
 #include "MIL_AgentType_ABC.h"
 
 namespace xml
