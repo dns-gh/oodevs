@@ -68,9 +68,7 @@ void Mapping::ReadUnit( xml::xistream& xis )
     xis >> xml::attribute( "key", key )
         >> xml::attribute( "superior", superior );
     units_[ key ] = superior;
-    bool command = false;
-    xis >> xml::optional >> xml::attribute( "command-post", command );
-    if( command )
+    if( xis.attribute( "command-post", false ) )
         commandPosts_.insert( key );
 }
 

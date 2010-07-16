@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Mapping_h_
-#define __Mapping_h_
+#ifndef import_Mapping_h
+#define import_Mapping_h
 
 #include <xeumeuleu/xml.hpp>
 #include <string>
@@ -32,18 +32,28 @@ public:
 
     //! @name Operations
     //@{
-    std::string operator[]( const std::string& key ) const;
     void AddWarning( const std::string& id );
     void LogWarnings( std::ostream& os ) const;
+
     unsigned int AddId( const std::string& editorId );
     unsigned int AddId();
+    //@}
+
+    //! @name Accessors
+    //@{
     bool IsUnit( const std::string& type ) const;
     bool IsAutomat( const std::string& type ) const;
     bool IsCommandPost( const std::string& type ) const;
+
     std::string GetSuperiorId( const std::string& type ) const;
     std::string GetMissionParameterName( int index ) const;
     std::string GetMissionParameterType( int index ) const;
     std::string GetMissionParameterLocationType( int index ) const;
+    //@}
+
+    //! @name Operators
+    //@{
+    std::string operator[]( const std::string& key ) const;
     //@}
 
 private:
@@ -72,4 +82,4 @@ private:
     //@}
 };
 
-#endif // __Mapping_h_
+#endif // import_Mapping_h

@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Position_h_
-#define __Position_h_
+#ifndef import_Position_h
+#define import_Position_h
 
 #include <xeumeuleu/xml.hpp>
 
@@ -28,7 +28,7 @@ public:
     virtual ~Position();
     //@}
 
-    //! @name Operations
+    //! @name Operators
     //@{
     friend xml::xostream& operator<<( xml::xostream& xos, const Position& position );
     //@}
@@ -41,4 +41,4 @@ private:
     //@}
 };
 
-#endif // __Position_h_
+#endif // import_Position_h

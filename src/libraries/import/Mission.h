@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Mission_h_
-#define __Mission_h_
+#ifndef import_Mission_h
+#define import_Mission_h
 
 #include "Position.h"
 #include <xeumeuleu/xml.hpp>
@@ -33,7 +33,7 @@ public:
     virtual ~Mission();
     //@}
 
-    //! @name Operations
+    //! @name Operators
     //@{
     friend xml::xostream& operator<<( xml::xostream& xos, const Mission& mission );
     //@}
@@ -47,4 +47,4 @@ private:
     //@}
 };
 
-#endif // __Mission_h_
+#endif // import_Mission_h

@@ -14,16 +14,14 @@
 
 namespace frontend
 {
-
 // =============================================================================
 /** @class  ImportExercise
-    @brief  ImportExercise
+    @brief  Import exercise
 */
 // Created: LDC 2010-07-06
 // =============================================================================
 class ImportExercise : public SpawnCommand
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

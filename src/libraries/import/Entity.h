@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Entity_h_
-#define __Entity_h_
+#ifndef import_Entity_h
+#define import_Entity_h
 
 #include "Mapping.h"
 #include "Position.h"
@@ -87,4 +87,4 @@ private:
     //@}
 };
 
-#endif // __Entity_h_
+#endif // import_Entity_h

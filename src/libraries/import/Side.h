@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Side_h_
-#define __Side_h_
+#ifndef import_Side_h
+#define import_Side_h
 
 #include "Entity.h"
 #include "Object.h"
@@ -35,7 +35,7 @@ public:
     virtual ~Side();
     //@}
 
-    //! @name Operations
+    //! @name Operators
     //@{
     friend xml::xostream& operator<<( xml::xostream& xos, const Side& side );
     //@}
@@ -59,4 +59,4 @@ private:
     //@}
 };
 
-#endif // __Side_h_
+#endif // import_Side_h

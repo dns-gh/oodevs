@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Diplomacy_h_
-#define __Diplomacy_h_
+#ifndef import_Diplomacy_h
+#define import_Diplomacy_h
 
 #include <xeumeuleu/xml.hpp>
 
@@ -43,4 +43,4 @@ private:
     //@}
 };
 
-#endif // __Diplomacy_h_
+#endif // import_Diplomacy_h

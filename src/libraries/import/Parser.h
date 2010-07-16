@@ -7,14 +7,15 @@
 //
 // *****************************************************************************
 
-#ifndef __Parser_h_
-#define __Parser_h_
+#ifndef import_Parser_h
+#define import_Parser_h
 
 #include "Diplomacy.h"
 #include "Mapping.h"
 #include "Mission.h"
 #include "Side.h"
 #include <xeumeuleu/xml.hpp>
+#include <fstream>
 #include <string>
 #include <vector>
 
@@ -41,7 +42,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void WriteWeather();
+    void WriteWeather( xml::xisubstream xis );
     void WriteOrbat();
     void ReadRelation( xml::xistream& xis );
     void ReadSide( xml::xistream& xis );
@@ -53,7 +54,7 @@ private:
     void ReadTacticalPoint( xml::xistream& xis, std::vector< Position >& positions );
     void ReadMission( xml::xistream& xis );
 
-    void WriteUnitInOrd( xml::xistream& xis, xml::xostream& xos, const std::string& timeName, const std::string& date );
+    void WriteUnitInOrd( xml::xistream& xis, xml::xosubstream xos, const std::string& timeName, const std::string& date );
     void WriteMissionInOrd( xml::xistream& xis, xml::xostream& xos, const std::string& timeName, const std::string& date );
     //@}
 
@@ -68,6 +69,7 @@ private:
     //@{
     std::string outputDir_;
     xml::xifstream xis_;
+    std::ofstream log_;
     unsigned int plan_;
     Mapping mapping_;
     std::map< std::string, std::vector< Diplomacy > > diplomacies_;
@@ -77,4 +79,4 @@ private:
     //@}
 };
 
-#endif // __Parser_h_
+#endif // import_Parser_h
