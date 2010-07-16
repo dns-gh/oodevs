@@ -27,10 +27,10 @@ class MIL_Singletons
 public:
     //! @name Operations
     //@{
-    static MIL_Time_ABC&          GetTime();
+    static MIL_Time_ABC& GetTime();
     static MIL_EntityManager_ABC& GetEntityManager();
-    static HLA_Federate*          GetHla();
-    static MIL_ProfilerMgr&       GetProfiler();
+    static HLA_Federate* GetHla();
+    static MIL_ProfilerMgr& GetProfiler();
 
     static void RegisterTime( MIL_Time_ABC& time );
     static void UnregisterTime( MIL_Time_ABC& time );

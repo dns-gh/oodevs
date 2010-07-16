@@ -28,9 +28,4 @@ namespace boost
 
 #include <boost/serialization/split_member.hpp>
 
-class TER_Localisation;
-typedef std::vector< boost::shared_ptr< TER_Localisation > > T_LocalisationPtrVector;
-typedef T_LocalisationPtrVector::iterator                   IT_LocalisationPtrVector;
-typedef T_LocalisationPtrVector::const_iterator            CIT_LocalisationPtrVector;
-
 #endif // __TER_h_

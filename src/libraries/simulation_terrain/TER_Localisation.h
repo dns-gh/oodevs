@@ -12,7 +12,6 @@
 #ifndef __TER_Localisation_h_
 #define __TER_Localisation_h_
 
-#include "TER.h"
 #include "TER_Polygon.h"
 #include "MT/MT_IO/MT_FormatString.h"
 #include "MT_Tools/MT_Polyline.h"
@@ -53,11 +52,11 @@ public:
     //@}
 
 public:
-     TER_Localisation();
-     TER_Localisation( const TER_Localisation& );
-     TER_Localisation( E_LocationType, const T_PointVector& );
-     TER_Localisation( const TER_Polygon&  );
-     TER_Localisation( const MT_Vector2D& vPos, MT_Float rRadius );
+             TER_Localisation();
+             TER_Localisation( const TER_Localisation& );
+             TER_Localisation( E_LocationType, const T_PointVector& );
+             TER_Localisation( const TER_Polygon&  );
+             TER_Localisation( const MT_Vector2D& vPos, MT_Float rRadius );
     virtual ~TER_Localisation();
 
     //! @name CheckPoints
@@ -68,6 +67,11 @@ public:
     void load( Archive&, const unsigned int );
     template< class Archive >
     void save( Archive&, const unsigned int ) const;
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< boost::shared_ptr< TER_Localisation > > T_LocalisationPtrVector;
     //@}
 
     //-------------------------------------------------------------------------

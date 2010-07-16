@@ -127,6 +127,9 @@ private:
     typedef std::vector< T_PointVector* >           T_ItinerairePtrVector;
     typedef T_ItinerairePtrVector::iterator        IT_ItinerairePtrVector;
     typedef T_ItinerairePtrVector::const_iterator CIT_ItinerairePtrVector;
+
+    typedef std::vector< boost::shared_ptr< TER_Localisation > > T_LocalisationPtrVector;
+    typedef T_LocalisationPtrVector::const_iterator            CIT_LocalisationPtrVector;
     //@}
 
 public:
