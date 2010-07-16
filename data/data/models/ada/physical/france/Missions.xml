@@ -958,7 +958,7 @@
       <parameter dia-name="entities" name="cible" optional="false" type="AgentKnowledgeListBM"/>
       <parameter dia-name="allies" name="tireur allie" optional="false" type="AgentListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Interdire" dia-type="T_Mission_Pion_InterdireBu" id="2066" name="MELEE Interdire Bloc Urbain">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Interdire" dia-type="T_Mission_Pion_InterdireBu" id="2066" name="MELEE Interdire un Bloc Urbain">
       <parameter dia-name="objectives" name="objectifs" optional="false" type="UrbanBlockBM"/>
       <parameter dia-name="positions" name="positions d'interdiction" optional="false" type="PointListBM"/>
       <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
@@ -988,6 +988,11 @@
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.platoon.tasks.Seize" dia-type="T_Mission_Pion_Emparer_BU" id="2072" name="MELEE S'emparer d'un Bloc Urbain">
       <parameter dia-name="objectives" name="bloc urbain" optional="false" type="UrbanBlockBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Boucler" dia-type="T_Mission_Pion_BouclerBU" id="2073" name="MELEE Boucler un Bloc Urbain">
+      <parameter dia-name="objectives" name="objectifs" optional="false" type="UrbanBlockBM"/>
+      <parameter dia-name="positions" name="positions d'installation" optional="false" type="PointListBM"/>
+      <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
   </units>
   <automats>
