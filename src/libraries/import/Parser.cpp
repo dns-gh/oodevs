@@ -10,15 +10,15 @@
 #include "Parser.h"
 #include "Position.h"
 #include <boost/lexical_cast.hpp>
+#include <boost/filesystem.hpp>
 #include <fstream>
 
 namespace
 {
     std::string GetMappingFile( const std::string& rootDir, const std::string& exerciseFile )
     {
+        std::string data, physical;
         xml::xifstream xis( rootDir + exerciseFile );
-        std::string data;
-        std::string physical;
         xis >> xml::start( "exercise" )
                 >> xml::start( "model" )
                     >> xml::attribute( "dataset", data )
@@ -31,13 +31,13 @@ namespace
 // Name: Parser constructor
 // Created: LDC 2010-07-06
 // -----------------------------------------------------------------------------
-Parser::Parser( const std::string& inputFile, const std::string& rootDir, const std::string& outputFile )
-    : outDir_ ( rootDir + outputFile )
-    , xis_    ( inputFile )
-    , mapping_( GetMappingFile( rootDir, outputFile + "/exercise.xml" ) )
-    , plan_   ( 0 )
+Parser::Parser( const std::string& inputFile, const std::string& rootDir, const std::string& exerciseFile, const std::string& outputDir )
+    : outputDir_( outputDir )
+    , xis_      ( inputFile )
+    , mapping_  ( GetMappingFile( rootDir, exerciseFile ) )
+    , plan_     ( 0 )
 {
-    // NOTHING
+    boost::filesystem::create_directories( outputDir );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,7 +93,7 @@ void Parser::Generate()
          >> xml::end;
     WriteWeather();
     WriteOrbat();
-    std::ofstream log( ( outDir_ + "/traduction.log" ).c_str() );
+    std::ofstream log( ( outputDir_ + "/traduction.log" ).c_str() );
     mapping_.LogWarnings( log );
 }
 
@@ -129,17 +129,17 @@ void Parser::ReadNextPlan( xml::xistream& xis )
 {
     std::string name;
     std::string date( "2000-01-01T12:00:00" );
-    xis >> xml::content( "ns2:name", name );
-    if( name.empty() )
-        name = std::string( "Temps de manoeuvre " ) + boost::lexical_cast< std::string >( plan_ );
-    xis >> xml::optional >> xml::start( "ns6:beginTrigger" )
+    xis >> xml::content( "ns2:name", name )
+        >> xml::optional >> xml::start( "ns6:beginTrigger" )
             >> xml::optional >> xml::content( "ns6:date-trigger", date )
         >> xml::end
         >> xml::start( "ns6:sides" )
             >> xml::list( "ns6:content", *this, &Parser::ReadPlanDatum )
         >> xml::end;
+    if( name.empty() )
+        name = "Temps de manoeuvre " + boost::lexical_cast< std::string >( plan_ ); // $$$$ MCO : shouldn't the prefix be TM ? or default from XSD ?
     date = date.substr( 0, 19 );
-    xml::xofstream xos( outDir_ + "/" + name + ".ord" );
+    xml::xofstream xos( outputDir_ + "/" + name + ".ord" );
     xos << xml::start( "actions" );
     xis >> xml::start( "ns6:sides" )
             >> xml::start( "ns6:content" )
@@ -331,7 +331,7 @@ void Parser::WriteWeather()
             >> xml::end
         >> xml::end;
     const std::string formattedDate = date.substr( 0, 4 ) + date.substr( 5, 2 ) + date.substr( 8, 5 ) + date.substr( 14, 2 ) + date.substr( 17, 2 );
-    xml::xofstream xos( outDir_ + "/weather.xml" );
+    xml::xofstream xos( outputDir_ + "/weather.xml" );
     xos << xml::start( "weather" )
         << xml::start( "exercise-date" )
             << xml::attribute( "value", formattedDate )
@@ -365,7 +365,7 @@ void Parser::WriteWeather()
 // -----------------------------------------------------------------------------
 void Parser::WriteOrbat()
 {
-    xml::xofstream xos( outDir_ + "/orbat.xml" );
+    xml::xofstream xos( outputDir_ + "/orbat.xml" );
     xos << xml::start( "orbat" )
             << xml::start( "dotations" )
                 << xml::attribute( "infinite", false )

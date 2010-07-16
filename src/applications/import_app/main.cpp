@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "Parser.h"
+#include "import/Parser.h"
 #pragma warning( push, 0 )
 #include <qapplication.h>
 #include <qmessagebox.h>
@@ -31,7 +31,7 @@ int main( int argc, char** argv )
     {
         po::store( po::parse_command_line( argc, argv, desc ), vm );
         po::notify( vm );
-        Parser parser( inputFile, rootDir, "/exercises/" + outputFile );
+        Parser parser( inputFile, rootDir, "/exercises/" + outputFile + "/exercise.xml", rootDir + "/exercises/" + outputFile );
         parser.Generate();
     }
     catch( std::exception& e )

@@ -19,12 +19,15 @@ Side::Side( xml::xisubstream xis, Mapping& mapping )
     , id_              ( mapping.AddId( xis.attribute< std::string >( "id" ) ) )
     , name_            ( xis.content< std::string >( "ns2:name" ) )
     , knowledgeGroupId_( mapping.AddId( "Groupe de connaissance de " + name_ ) )
-    , root_            ( new Entity( xis, mapping, knowledgeGroupId_ ) )
 {
     xis >> xml::start( "ns5:data" )
             >> xml::list( "ns5:installations", *this, &Side::ReadObjects )
             >> xml::list( "ns5:obstacles", *this, &Side::ReadObjects )
-            >> xml::list( "ns5:zones", *this, &Side::ReadObjects );
+            >> xml::list( "ns5:zones", *this, &Side::ReadObjects )
+        >> xml::end
+        >> xml::start( "ns5:order-of-battle" )
+            >> xml::start( "ns5:content" ); // Formation of highest level
+    root_.reset( new Entity( xis, mapping, knowledgeGroupId_ ) );
 }
 
 // -----------------------------------------------------------------------------

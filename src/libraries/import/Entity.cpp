@@ -19,18 +19,16 @@ Entity::Entity( xml::xistream& xis, Mapping& mapping, unsigned int knowledgeGrou
     : mapping_         ( mapping )
     , knowledgeGroupId_( knowledgeGroup )
 {
-    std::string editorId;
-    xis >> xml::attribute( "id", editorId );
-    map_[ editorId ] = this;
-    id_ = mapping.AddId( editorId );
-    xis >> xml::start( "ns5:order-of-battle" )
-            >> xml::start( "ns5:content" ) // Formation of highest level;
-                >> xml::content( "ns2:name", name_ )
-                >> xml::start( "ns2:meta-entity-ref" )
-                    >> xml::content( "ns2:id", type_ )
-                >> xml::end
-                >> xml::optional >> xml::start( "ns5:members" )
-                    >> xml::list( "ns5:content", *this, &Entity::ReadChild, knowledgeGroup );
+    std::string id;
+    xis >> xml::attribute( "id", id );
+    map_[ id ] = this;
+    id_ = mapping.AddId( id );
+    xis >> xml::content( "ns2:name", name_ )
+        >> xml::start( "ns2:meta-entity-ref" )
+            >> xml::content( "ns2:id", type_ )
+        >> xml::end
+        >> xml::optional >> xml::start( "ns5:members" )
+            >> xml::list( "ns5:content", *this, &Entity::ReadChild, knowledgeGroup );
 }
 
 // -----------------------------------------------------------------------------

@@ -29,7 +29,7 @@ class Parser
 public:
     //! @name Constructors/Destructor
     //@{
-             Parser( const std::string& inputFile, const std::string& rootDir, const std::string& outputFile );
+             Parser( const std::string& inputFile, const std::string& rootDir, const std::string& exerciseFile, const std::string& outputDir );
     virtual ~Parser();
     //@}
 
@@ -66,7 +66,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string outDir_;
+    std::string outputDir_;
     xml::xifstream xis_;
     unsigned int plan_;
     Mapping mapping_;
