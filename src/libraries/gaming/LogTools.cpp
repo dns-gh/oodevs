@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "LogTools.h"
-#include "Types.h"
+#include "clients_kernel/Types.h"
 #include "clients_kernel/Logger_ABC.h"
 
 namespace log_tools

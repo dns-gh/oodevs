@@ -10,7 +10,7 @@
 #ifndef __Surface_h_
 #define __Surface_h_
 
-#include "Types.h"
+#include "clients_kernel/Types.h"
 #include "Sector.h"
 
 #include "tools/Resolver_ABC.h"

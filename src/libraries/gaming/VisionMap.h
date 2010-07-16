@@ -10,7 +10,7 @@
 #ifndef __VisionMap_h_
 #define __VisionMap_h_
 
-#include "Types.h"
+#include "clients_kernel/Types.h"
 
 namespace kernel
 {
