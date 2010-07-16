@@ -21,7 +21,6 @@
 
 #include "TER_PathFinderThread.h"
 
-class TER_NodeFunctor_ABC;
 class TerrainData;
 class TER_DynamicData;
 class TER_PathFindRequest_ABC;

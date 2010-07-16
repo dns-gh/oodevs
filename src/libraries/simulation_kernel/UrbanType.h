@@ -39,12 +39,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    UrbanType( const UrbanType& );            //!< Copy constructor
-    UrbanType& operator=( const UrbanType& ); //!< Assignment operator
-    //@}
-
     //! @name Constructors/Destructor
     //@{
              UrbanType( xml::xistream& xis );

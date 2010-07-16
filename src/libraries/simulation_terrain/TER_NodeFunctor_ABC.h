@@ -34,8 +34,8 @@ class TER_NodeFunctor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TER_NodeFunctor_ABC() {};
-    virtual ~TER_NodeFunctor_ABC() {};
+             TER_NodeFunctor_ABC() {}
+    virtual ~TER_NodeFunctor_ABC() {}
     //@}
 
     //! @name Operations
