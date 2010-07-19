@@ -39,24 +39,6 @@ bool PreparationProfile::IsVisible( const kernel::Entity_ABC& ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PreparationProfile::IsKnown
-// Created: SBO 2010-06-09
-// -----------------------------------------------------------------------------
-bool PreparationProfile::IsKnown( const kernel::Entity_ABC& /*entity*/ ) const
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PreparationProfile::CanGetKnowledgeFrom
-// Created: SBO 2010-06-09
-// -----------------------------------------------------------------------------
-bool PreparationProfile::CanGetKnowledgeFrom( const kernel::Entity_ABC& /*entity*/ ) const
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PreparationProfile::CanBeOrdered
 // Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------

@@ -163,23 +163,6 @@ bool ProfileFilter::IsChildSubordinateOf( const D& down, const U& /*up*/ ) const
     return false;
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: ProfileFilter::IsKnown
-// Created: SLG 2009-11-29
-// -----------------------------------------------------------------------------
-bool ProfileFilter::IsKnown( const kernel::Entity_ABC& entity ) const
-{
-    if( ! entity_ || entity_ == &entity )
-        return true;
-
-    const kernel::TacticalHierarchies*      t = entity.Retrieve< kernel::TacticalHierarchies >();
-    const kernel::CommunicationHierarchies* c = entity.Retrieve< kernel::CommunicationHierarchies >();
-    const kernel::IntelligenceHierarchies*  i = entity.Retrieve< kernel::IntelligenceHierarchies >();
-
-    return IsKnown( t, c, i, entity );
-}
-
 // -----------------------------------------------------------------------------
 // Name: ProfileFilter::IsKnown
 // Created: LDC 2010-03-25
@@ -249,21 +232,4 @@ bool ProfileFilter::IsObjectOfSameTeam( const kernel::Entity_ABC& entity ) const
             return hierarchy->GetSuperior() == &( tacticalSuperior->GetTop() );
     }
     return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ProfileFilter::CanGetKnowledgeFrom
-// Created: LDC 2010-04-07
-// -----------------------------------------------------------------------------
-bool ProfileFilter::CanGetKnowledgeFrom( const kernel::Entity_ABC& entity ) const
-{
-    if( cHierarchies_ && !cHierarchies_->CanCommunicate() )
-    {
-        const kernel::CommunicationHierarchies* hierarchy = entity.Retrieve< kernel::CommunicationHierarchies >();
-        if( !hierarchy )
-            return false;
-        return( &hierarchy->GetEntity() == cHierarchies_->GetSuperior() );
-    }
-
-    return IsKnown( entity );
 }
