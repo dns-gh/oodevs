@@ -5183,6 +5183,14 @@ du tireur</translation>
 <context>
     <name>ADN_NBC_GUI</name>
     <message>
+        <source>Propagation</source>
+        <translation>Propagation</translation>
+    </message>
+    <message>
+        <source>Contamination distance</source>
+        <translation>Distance de contamination</translation>
+    </message>
+    <message>
         <source>NBC Agent</source>
         <translation>Agent NBC</translation>
     </message>
@@ -5257,6 +5265,30 @@ du tireur</translation>
     <message>
         <source>Span</source>
         <translation>Période</translation>
+    </message>
+    <message>
+        <source>m</source>
+        <translation>m</translation>
+    </message>
+    <message>
+        <source>Contamination quantity given</source>
+        <translation>Dose de contaminant</translation>
+    </message>
+    <message>
+        <source>Wind speed limit</source>
+        <translation>Vitesse maximum du vent</translation>
+    </message>
+    <message>
+        <source>NBC Suit</source>
+        <translation>Combinaison NBC</translation>
+    </message>
+    <message>
+        <source>Max speed modifier</source>
+        <translation>Modificateur de vitesse maximum</translation>
+    </message>
+    <message>
+        <source>Reloading time modifier</source>
+        <translation>Modificateur de temps de rechargement</translation>
     </message>
 </context>
 <context>
@@ -8049,7 +8081,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <name>ADN_Units_Data::UnitInfos</name>
     <message>
         <source>Invalid data</source>
-        <translation type="unfinished">Donnée invalide</translation>
+        <translation>Donnée invalide</translation>
     </message>
     <message>
         <source>Unit types - Invalid stance &apos;%1&apos;</source>
@@ -8236,49 +8268,49 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <name>ADN_Urban_GUI</name>
     <message>
         <source>Materials</source>
-        <translation type="unfinished"></translation>
+        <translation>Matériaux</translation>
     </message>
     <message>
         <source>Material</source>
-        <translation type="unfinished">Matériau</translation>
+        <translation>Matériau</translation>
     </message>
     <message>
         <source>Facades</source>
-        <translation type="unfinished"></translation>
+        <translation>Façades</translation>
     </message>
     <message>
         <source>Facade</source>
-        <translation type="unfinished">Façade</translation>
+        <translation>Façade</translation>
     </message>
     <message>
         <source>RoofShapes</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes des toîts</translation>
     </message>
     <message>
         <source>RoofShape</source>
-        <translation type="unfinished">Forme de toît</translation>
+        <translation>Forme de toît</translation>
     </message>
 </context>
 <context>
     <name>ADN_Weapon_Wizard</name>
     <message>
         <source>New weapon creation</source>
-        <translation type="unfinished"></translation>
+        <translation>Création d&apos;un système d&apos;arme</translation>
     </message>
     <message>
         <source>Creation completed</source>
-        <translation type="unfinished">Création terminée</translation>
+        <translation>Création terminée</translation>
     </message>
     <message>
         <source>Click &quot;Done&quot; to create the new weapon.</source>
-        <translation type="unfinished"></translation>
+        <translation>Cliquer sur &quot;Terminer&quot; pour créer le nouveau système d&apos;arme.</translation>
     </message>
 </context>
 <context>
     <name>ADN_Weapon_Wizard_Page0</name>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Avertissement</translation>
     </message>
     <message>
         <source>A weapon using the same launcher and ammunition already exists. Please modify your choices.</source>
@@ -8289,26 +8321,26 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <name>ADN_Weapons_Data</name>
     <message>
         <source>Create new</source>
-        <translation type="unfinished">Créer</translation>
+        <translation>Créer</translation>
     </message>
     <message>
         <source>Create a copy of:</source>
-        <translation type="unfinished">Créer une copie de:</translation>
+        <translation>Créer une copie de:</translation>
     </message>
     <message>
         <source>Weapon systems</source>
-        <translation type="unfinished">Systèmes d&apos;armes</translation>
+        <translation>Systèmes d&apos;armes</translation>
     </message>
     <message>
         <source>New weapon creation</source>
-        <translation type="unfinished"></translation>
+        <translation>Création d&apos;une nouvelle arme</translation>
     </message>
 </context>
 <context>
     <name>ADN_Weapons_Data::WeaponInfos</name>
     <message>
         <source>Invalid data</source>
-        <translation type="unfinished">Donnée invalide</translation>
+        <translation>Donnée invalide</translation>
     </message>
     <message>
         <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid launcher type</source>
@@ -8327,142 +8359,142 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <name>ADN_Weapons_GUI</name>
     <message>
         <source>Weapon system</source>
-        <translation type="unfinished"></translation>
+        <translation>Système d&apos;arme</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Nom</translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <source>Launcher</source>
-        <translation type="unfinished">Lanceur</translation>
+        <translation>Lanceur</translation>
     </message>
     <message>
         <source>Ammo</source>
-        <translation type="unfinished"></translation>
+        <translation>Munition</translation>
     </message>
     <message>
         <source>Rounds per burst</source>
-        <translation type="unfinished"></translation>
+        <translation>Munition par rafale</translation>
     </message>
     <message>
         <source>Burst duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Durée de la rafale</translation>
     </message>
     <message>
         <source>Rounds per reload</source>
-        <translation type="unfinished"></translation>
+        <translation>Munition par recharge</translation>
     </message>
     <message>
         <source>Reload duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Durée de rechargement</translation>
     </message>
     <message>
         <source>Direct fire</source>
-        <translation type="unfinished">Tir direct</translation>
+        <translation>Tir direct</translation>
     </message>
     <message>
         <source>Ph (%)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ph (%)</translation>
     </message>
     <message>
         <source>Distance (m)</source>
-        <translation type="unfinished">Distance (m)</translation>
+        <translation>Distance (m)</translation>
     </message>
     <message>
         <source>Simulation</source>
-        <translation type="unfinished">Simulation</translation>
+        <translation>Simulation</translation>
     </message>
     <message>
         <source>Fire posture</source>
-        <translation type="unfinished"></translation>
+        <translation>Posture de tir</translation>
     </message>
     <message>
         <source>Target posture</source>
-        <translation type="unfinished"></translation>
+        <translation>Posture cible</translation>
     </message>
     <message>
         <source>Experience</source>
-        <translation type="unfinished"></translation>
+        <translation>Expérience</translation>
     </message>
     <message>
         <source>Tiredness</source>
-        <translation type="unfinished"></translation>
+        <translation>Fatigue</translation>
     </message>
     <message>
         <source>Indirect fire</source>
-        <translation type="unfinished">Tir indirect</translation>
+        <translation>Tir indirect</translation>
     </message>
     <message>
         <source>Average speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Vitesse moyenne</translation>
     </message>
     <message>
         <source>km/h</source>
-        <translation type="unfinished">km/h</translation>
+        <translation>km/h</translation>
     </message>
     <message>
         <source>Min range</source>
-        <translation type="unfinished"></translation>
+        <translation>Portée min</translation>
     </message>
     <message>
         <source>m</source>
-        <translation type="unfinished">m</translation>
+        <translation>m</translation>
     </message>
     <message>
         <source>Max range</source>
-        <translation type="unfinished"></translation>
+        <translation>Portée max</translation>
     </message>
     <message>
         <source>Rnd per burst</source>
-        <translation type="unfinished"></translation>
+        <translation>Munition par rafale</translation>
     </message>
     <message>
         <source>Burst duration (s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Durée de rafale (s)</translation>
     </message>
     <message>
         <source>Rnd per reload</source>
-        <translation type="unfinished"></translation>
+        <translation>Munition par recharge</translation>
     </message>
     <message>
         <source>Reload duration (s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Durée de rechargement (s)</translation>
     </message>
     <message>
         <source>Target size</source>
-        <translation type="unfinished">Volume de la cible</translation>
+        <translation>Volume de la cible</translation>
     </message>
     <message>
         <source>Weapon systems</source>
-        <translation type="unfinished">Systèmes d&apos;armes</translation>
+        <translation>Systèmes d&apos;armes</translation>
     </message>
     <message>
         <source>PHs</source>
-        <translation type="unfinished"></translation>
+        <translation>PHs</translation>
     </message>
     <message>
         <source>WeaponSystems/</source>
-        <translation type="unfinished"></translation>
+        <translation>SystèmesDArme/</translation>
     </message>
     <message>
         <source>Weapon Systems</source>
-        <translation type="unfinished"></translation>
+        <translation>Systèmes d&apos;arme</translation>
     </message>
     <message>
         <source>WeaponSystem_%1.htm</source>
-        <translation type="unfinished"></translation>
+        <translation>SystèmeDArme_%1.htm</translation>
     </message>
 </context>
 <context>
     <name>ADN_Weapons_ListView</name>
     <message>
         <source>Weapon system</source>
-        <translation type="unfinished"></translation>
+        <translation>Système d&apos;arme</translation>
     </message>
     <message>
         <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
-        <translation type="unfinished">&lt;b&gt;Utilisé par:&lt;/b&gt;&lt;br&gt;</translation>
+        <translation>&lt;b&gt;Utilisé par:&lt;/b&gt;&lt;br&gt;</translation>
     </message>
 </context>
 <context>

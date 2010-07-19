@@ -11,7 +11,6 @@
 #define __ADN_NBC_Datas_h_
 
 #include "ADN_Data_ABC.h"
-
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
 
@@ -34,7 +33,7 @@ public:
         MT_COPYNOTALLOWED( NbcIntoxInfos )
 
     public:
-        NbcIntoxInfos( const std::string& nodeName );
+                 NbcIntoxInfos( const std::string& nodeName );
         virtual ~NbcIntoxInfos() {}
 
         virtual std::string GetNodeName();
@@ -48,15 +47,15 @@ public:
         void WriteContent( xml::xostream& output );
 
     public:
-        std::string     nodeName_;
-        ADN_Type_Bool   bIntoxPresent_;
+        std::string nodeName_;
+        ADN_Type_Bool bIntoxPresent_;
         ADN_Type_Double rNbAlivedHumans_;
         ADN_Type_Double rNbHurtedHumans1_;
         ADN_Type_Double rNbHurtedHumans2_;
         ADN_Type_Double rNbHurtedHumans3_;
         ADN_Type_Double rNbHurtedHumansE_;
         ADN_Type_Double rNbDeadHumans_;
-        ADN_Type_Bool   bContaminationPresent_;
+        ADN_Type_Bool bContaminationPresent_;
     };
 
     class NbcGazInfos
@@ -78,8 +77,8 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        NbcIntoxInfos   intoxInfos_;
-        ADN_Type_Time   lifeTime_;
+        NbcIntoxInfos intoxInfos_;
+        ADN_Type_Time lifeTime_;
         ADN_Type_Double rSpreadAngle_;
     };
 
@@ -104,13 +103,12 @@ public:
 
     public:
         ADN_Type_String strName_;
-        int             nMosId_;
-        NbcIntoxInfos   liquidInfos_;
-        ADN_Type_Bool   bGazPresent_;
-        ADN_Type_Bool   bLiquidPresent_;
-        NbcGazInfos     gazInfos_;
+        int nMosId_;
+        NbcIntoxInfos liquidInfos_;
+        ADN_Type_Bool bGazPresent_;
+        ADN_Type_Bool bLiquidPresent_;
+        NbcGazInfos gazInfos_;
     };
-
     typedef ADN_Type_Vector_ABC< NbcAgentInfos > T_NbcAgentInfos_Vector;
 
 
@@ -118,7 +116,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_NBC_Datas();
+             ADN_NBC_Datas();
     virtual ~ADN_NBC_Datas();
     //@}
 
@@ -129,6 +127,13 @@ public:
 
     int GetNextId();
 
+public:
+    ADN_Type_Double rNbcSuitMaxSpeedMultiplier_;
+    ADN_Type_Double rNbcSuitReloadSpeedMultiplier_;
+    ADN_Type_Double rWindSpeedLimitForSpreading_;
+    ADN_Type_Double rContaminationDistance_;
+    ADN_Type_Double rContaminationQuantityGiven_;
+
 private:
     void ReadAgent( xml::xistream& input );
     void ReadArchive( xml::xistream& input );
@@ -136,13 +141,7 @@ private:
 
 private:
     int nNextId_;
-
     T_NbcAgentInfos_Vector vNbcAgent_;
-    ADN_Type_Double rNbcSuitMaxSpeedMultiplier_;
-    ADN_Type_Double rNbcSuitReloadSpeedMultiplier_;
-    ADN_Type_Double rWindSpeedLimitForSpreading_;
-    ADN_Type_Double rContaminationDistance_;
-    ADN_Type_Double rContaminationQuantityGiven_;
 };
 
 
@@ -155,6 +154,5 @@ ADN_NBC_Datas::T_NbcAgentInfos_Vector& ADN_NBC_Datas::GetNbcAgentVector()
 {
     return vNbcAgent_;
 }
-
 
 #endif // __ADN_NBC_Datas_h_

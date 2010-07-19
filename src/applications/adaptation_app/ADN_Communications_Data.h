@@ -38,7 +38,7 @@ class ADN_Communications_Data : public ADN_Data_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_Communications_Data();
+             ADN_Communications_Data();
     virtual ~ADN_Communications_Data();
     //@}
 

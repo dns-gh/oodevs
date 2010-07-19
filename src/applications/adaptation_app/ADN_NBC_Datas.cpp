@@ -9,7 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_NBC_Datas.h"
-
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_DataException.h"
@@ -24,14 +23,14 @@
 ADN_NBC_Datas::NbcIntoxInfos::NbcIntoxInfos( const std::string& nodeName )
     : ADN_Ref_ABC()
     , ADN_DataTreeNode_ABC()
-    , nodeName_( nodeName )
-    , bIntoxPresent_( false )
-    , rNbAlivedHumans_( 100.0 )
-    , rNbHurtedHumans1_( 0.0 )
-    , rNbHurtedHumans2_( 0.0 )
-    , rNbHurtedHumans3_( 0.0 )
-    , rNbHurtedHumansE_( 0.0 )
-    , rNbDeadHumans_( 0.0 )
+    , nodeName_             ( nodeName )
+    , bIntoxPresent_        ( false )
+    , rNbAlivedHumans_      ( 100.0 )
+    , rNbHurtedHumans1_     ( 0.0 )
+    , rNbHurtedHumans2_     ( 0.0 )
+    , rNbHurtedHumans3_     ( 0.0 )
+    , rNbHurtedHumansE_     ( 0.0 )
+    , rNbDeadHumans_        ( 0.0 )
     , bContaminationPresent_( false )
 {
     rNbAlivedHumans_.SetDataName( "le pourcentage d'humains survivants dans" );
@@ -146,7 +145,6 @@ void ADN_NBC_Datas::NbcIntoxInfos::WriteContent( xml::xostream& output )
     {
         if( rNbAlivedHumans_.GetData() + rNbHurtedHumans1_.GetData() + rNbHurtedHumans2_.GetData() + rNbHurtedHumans3_.GetData() + rNbHurtedHumansE_.GetData() + rNbDeadHumans_.GetData() != 100.0 )
             throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "NBC - Agent '%1' - Poisoning effect data sum < 100" ).arg( GetParentNode()->GetNodeName().c_str() ).ascii() );
-
         output << xml::attribute( "intoxication", "true" )
                << xml::start( "effect" )
                 << xml::attribute( "wound", "nonblesse" )
@@ -173,7 +171,6 @@ void ADN_NBC_Datas::NbcIntoxInfos::WriteContent( xml::xostream& output )
                 << xml::attribute( "percentage", rNbDeadHumans_.GetData() / 100.0 )
                << xml::end;
     }
-
     if( bContaminationPresent_.GetData() )
         output << xml::attribute( "contamination", bContaminationPresent_ );
 }
@@ -183,8 +180,8 @@ void ADN_NBC_Datas::NbcIntoxInfos::WriteContent( xml::xostream& output )
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
 ADN_NBC_Datas::NbcGazInfos::NbcGazInfos()
-    : intoxInfos_( "gaz" )
-    , lifeTime_( "0s" )
+    : intoxInfos_  ( "gaz" )
+    , lifeTime_    ( "0s" )
     , rSpreadAngle_( 0.0 )
 {
     lifeTime_.SetDataName( "la durée de vie d'" );
@@ -351,8 +348,8 @@ void ADN_NBC_Datas::NbcAgentInfos::WriteArchive( xml::xostream& output )
 // Created: AGN 2004-05-06
 // -----------------------------------------------------------------------------
 ADN_NBC_Datas::ADN_NBC_Datas()
-: ADN_Data_ABC()
-, nNextId_    ( 1 )
+    : ADN_Data_ABC()
+    , nNextId_( 1 )
 {
     vNbcAgent_.SetItemTypeName( "un agent NBC" );
 }
@@ -434,7 +431,6 @@ void ADN_NBC_Datas::WriteArchive( xml::xostream& output )
                 << xml::attribute( "max-speed-modifier", rNbcSuitMaxSpeedMultiplier_ )
                 << xml::attribute( "reloading-time-modifier", rNbcSuitReloadSpeedMultiplier_ )
             << xml::end;
-
     output << xml::start( "agents" );
     for( T_NbcAgentInfos_Vector::iterator itAgent = vNbcAgent_.begin(); itAgent != vNbcAgent_.end(); ++itAgent )
         (*itAgent)->WriteArchive( output );
