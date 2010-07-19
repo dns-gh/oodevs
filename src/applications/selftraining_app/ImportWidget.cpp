@@ -56,7 +56,11 @@ ImportWidget::ImportWidget( ScenarioEditPage& page, QWidget* parent, const tools
     tabs_ = new TabWidget( this );
     connect( tabs_, SIGNAL( currentChanged( QWidget* ) ), &page, SLOT( UpdateEditButton( QWidget* ) ) );
     {
-        QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, parent );
+        QGroupBox* importGroup = new QGroupBox( 2, Qt::Vertical, parent );
+        importGroup->setFrameShape( QFrame::NoFrame );
+        importGroup->setBackgroundOrigin( QWidget::WindowOrigin );
+        importGroup->setMargin( 0 );
+        QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, importGroup );
         group->setFrameShape( QFrame::NoFrame );
         group->setBackgroundOrigin( QWidget::WindowOrigin );
         {
@@ -87,9 +91,9 @@ ImportWidget::ImportWidget( ScenarioEditPage& page, QWidget* parent, const tools
             packageContent_ = new QListBox( vBox );
             packageContent_->setBackgroundOrigin( QWidget::WindowOrigin );
         }
-        packageProgress_ = new QProgressBar( group );
+        packageProgress_ = new QProgressBar( importGroup );
         packageProgress_->hide();
-        tabs_->addTab( group, tools::translate( "ImportWidget", "Package" ) );
+        tabs_->addTab( importGroup, tools::translate( "ImportWidget", "Package" ) );
     }
     // LTO begin
     {
@@ -170,6 +174,7 @@ void ImportWidget::InstallPackage()
             setCursor( QCursor::waitCursor );
             frontend::commands::InstallPackageFile( archive, config_.GetRootDir(), Progress( packageProgress_ ) );
             setCursor( QCursor::arrowCursor );
+            packageProgress_->hide();
         }
     }
 }
