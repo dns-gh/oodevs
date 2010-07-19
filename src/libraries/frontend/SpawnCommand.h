@@ -54,7 +54,7 @@ protected:
     void AddRootDirArgument();
     void AddExerciseArgument( const QString& exercise );
     void AddSessionArgument ( const QString& session );
-    void addArgument( QString arg );
+    void AddArgument( const QString& arg );
     void SetWorkingDirectory( const QString& directory );
     //@}
 

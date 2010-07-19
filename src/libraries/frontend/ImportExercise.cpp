@@ -21,7 +21,7 @@ ImportExercise::ImportExercise( const tools::GeneralConfig& config, const QStrin
 {
     AddRootDirArgument();
     AddExerciseArgument( outputScenario );
-    addArgument( "--import=\"" + inputScenario + "\"" );
+    AddArgument( "--import=\"" + inputScenario + "\"" );
 }
 
 // -----------------------------------------------------------------------------

@@ -27,7 +27,7 @@ StartReplay::StartReplay( const tools::GeneralConfig& config, const QString& exe
     AddExerciseArgument( exercise );
     AddSessionArgument ( session );
     const std::string portArg = "--port=" + boost::lexical_cast< std::string >( port );
-    addArgument( portArg.c_str() );
+    AddArgument( portArg.c_str() );
 }
 
 // -----------------------------------------------------------------------------

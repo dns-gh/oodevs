@@ -24,7 +24,8 @@ namespace
     class StartDispatcher : public SpawnCommand
     {
     public:
-        StartDispatcher( const tools::GeneralConfig& config, bool attach, const QString& dispatcher_path, const QString& exercise, const QString& session )
+        StartDispatcher( const tools::GeneralConfig& config, bool attach, const QString& dispatcher_path,
+                         const QString& exercise, const QString& session, const QString& checkpoint = "" )
             : SpawnCommand( config, "dispatcher_app.exe", attach )
         {
             if( dispatcher_path.length() > 0 )
@@ -32,11 +33,8 @@ namespace
             AddRootDirArgument();
             AddExerciseArgument( exercise );
             AddSessionArgument( session );
-        }
-
-        void addArgument( const QString& arg )
-        {
-            SpawnCommand::addArgument( arg );
+            if( !checkpoint.isEmpty() )
+                AddArgument( "--checkpoint=" + checkpoint );
         }
     };
 
@@ -84,16 +82,14 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
     if( ! HasEmbeddedDispatcher( *configManipulator_ ) )
     {
         std::string dispatcher_path( GetEmbeddedDispatcherPath( *configManipulator_ ) );
-        std::auto_ptr< StartDispatcher > dispatcher( new ::StartDispatcher( config, attach, QString( dispatcher_path.c_str() ), exercise, session ) );
-        if( !checkpoint.isEmpty() )
-            dispatcher->addArgument( "--checkpoint=" + checkpoint );
+        std::auto_ptr< StartDispatcher > dispatcher( new ::StartDispatcher( config, attach, QString( dispatcher_path.c_str() ), exercise, session, checkpoint ) );
         dispatcher_ = dispatcher;
     }
     AddRootDirArgument();
     AddExerciseArgument( exercise );
     AddSessionArgument( session );
     if( !checkpoint.isEmpty() )
-        addArgument( "--checkpoint=" + checkpoint );
+        AddArgument( "--checkpoint=" + checkpoint );
 }
 
 // -----------------------------------------------------------------------------

@@ -35,7 +35,7 @@ SpawnCommand::SpawnCommand( const tools::GeneralConfig& config, const char* exe,
 // $$$$ AGE 2007-10-09:
 //    connect( this, SIGNAL( processExited() ), parent, SLOT( OnExit() ) );
 //    connect( this, SIGNAL( processExited() ), SLOT( deleteLater() ) );
-    addArgument( exe );
+    AddArgument( exe );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +54,7 @@ SpawnCommand::~SpawnCommand()
 // -----------------------------------------------------------------------------
 void SpawnCommand::AddRootDirArgument()
 {
-    addArgument( ( "--root-dir=\"" + config_.GetRootDir() + "\"" ).c_str() );
+    AddArgument( ( "--root-dir=\"" + config_.GetRootDir() + "\"" ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,7 +63,7 @@ void SpawnCommand::AddRootDirArgument()
 // -----------------------------------------------------------------------------
 void SpawnCommand::AddExerciseArgument( const QString& exercise )
 {
-    addArgument( "--exercise=\"" + exercise +"\"" );
+    AddArgument( "--exercise=\"" + exercise +"\"" );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +72,7 @@ void SpawnCommand::AddExerciseArgument( const QString& exercise )
 // -----------------------------------------------------------------------------
 void SpawnCommand::AddSessionArgument( const QString& session )
 {
-    addArgument( "--session=\"" + session +"\"" );
+    AddArgument( "--session=\"" + session +"\"" );
 }
 
 // -----------------------------------------------------------------------------
@@ -185,7 +185,7 @@ unsigned int SpawnCommand::GetPercentage() const
 // Name: SpawnCommand::addArgument
 // Created: AGE 2007-10-09
 // -----------------------------------------------------------------------------
-void SpawnCommand::addArgument( QString arg )
+void SpawnCommand::AddArgument( const QString& arg )
 {
     if( !commandLine_.isEmpty() )
         commandLine_ += ' ';

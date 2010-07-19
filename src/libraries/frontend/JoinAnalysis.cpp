@@ -28,13 +28,13 @@ JoinAnalysis::JoinAnalysis( const tools::GeneralConfig& config, const QString& e
     if( !session.isEmpty() )
         AddSessionArgument( session );
     if( profile.isEmpty() )
-        addArgument( "--login=\"anonymous\"" );
+        AddArgument( "--login=\"anonymous\"" );
     else
-        addArgument( "--login=\"" + profile +"\"" );
+        AddArgument( "--login=\"" + profile +"\"" );
 
     const std::string host = "--host=localhost:"  // $$$$ AGE 2008-01-07:
                            + boost::lexical_cast< std::string >( port );
-    addArgument( host.c_str() );
+    AddArgument( host.c_str() );
 }
 
 // -----------------------------------------------------------------------------
