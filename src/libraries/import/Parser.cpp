@@ -140,7 +140,7 @@ void Parser::ReadNextPlan( xml::xistream& xis )
             >> xml::list( "ns6:content", *this, &Parser::ReadPlanDatum )
         >> xml::end;
     if( name.empty() )
-        name = "Temps de manoeuvre " + boost::lexical_cast< std::string >( plan_ ); // $$$$ MCO : shouldn't the prefix be TM ? or default from XSD ?
+        name = "Temps de manoeuvre " + boost::lexical_cast< std::string >( plan_ );
     date = date.substr( 0, 19 );
     xml::xofstream xos( outputDir_ + "/" + name + ".ord" );
     xos << xml::start( "actions" );
@@ -151,7 +151,7 @@ void Parser::ReadNextPlan( xml::xistream& xis )
                         >> xml::start( "ns6:members" )
                             >> xml::list( "ns6:content", *this, &Parser::WriteMissionInOrd, xos, name, date );
     if( plan_ ) // don't teleport units when they are already placed
-        xis                >> xml::list( "ns6:content", *this, &Parser::WriteUnitInOrd, xos, name, date );
+        xis                >> xml::list( "ns6:content", *this, &Parser::WriteUnitInOrd, xos, date );
     xis                 >> xml::end
                     >> xml::end
                 >> xml::end
@@ -221,7 +221,7 @@ void Parser::ReadMission( xml::xistream& xis )
             >> xml::content( "ns2:id", missionId )
         >> xml::end
         >> xml::optional >> xml::start( "ns6:tacticals" )
-            >> xml::start( "ns6:tac-data-ref" ) // xml::list... there may be several args.
+            >> xml::start( "ns6:tac-data-ref" ) // $$$$ LDC : xml::list... there may be several args.
                 >> xml::content( "ns2:id", tacId );
     missions_[ id ] = Mission( missionId, tacticals_[ tacId ], mapping_ );
 }
@@ -230,10 +230,10 @@ void Parser::ReadMission( xml::xistream& xis )
 // Name: Parser::WriteUnitInOrd
 // Created: LDC 2010-07-09
 // -----------------------------------------------------------------------------
-void Parser::WriteUnitInOrd( xml::xistream& xis, xml::xosubstream xos, const std::string& timeName, const std::string& date )
+void Parser::WriteUnitInOrd( xml::xistream& xis, xml::xosubstream xos, const std::string& date )
 {
     xis >> xml::optional >> xml::start( "ns6:members" )
-            >> xml::list( "ns6:content", *this, &Parser::WriteUnitInOrd, xos, timeName, date )
+            >> xml::list( "ns6:content", *this, &Parser::WriteUnitInOrd, xos, date )
         >> xml::end;
     std::string id;
     xis >> xml::start( "ns6:entity-ref" )
@@ -244,17 +244,18 @@ void Parser::WriteUnitInOrd( xml::xistream& xis, xml::xosubstream xos, const std
     const Position position( xis );
     xos << xml::start( "action" )
             << xml::attribute( "id", "teleport" )
-            << xml::attribute( "name", timeName )
+            << xml::attribute( "name", "" )
             << xml::attribute( "target", mapping_[ id ] )
             << xml::attribute( "time", date )
             << xml::attribute( "type", "magicunit" )
-            << xml::start( "parameter" )
-                << xml::attribute( "name", "Location" )
-                << xml::attribute( "type", "point" )
-                << xml::start( "location" )
+            << xml::start( "parameters" )
+                << xml::start( "parameter" )
+                    << xml::attribute( "name", "Location" )
                     << xml::attribute( "type", "point" )
-                    << xml::start( "point" )
-                        << xml::attribute( "coordinates", position );
+                    << xml::start( "location" )
+                        << xml::attribute( "type", "point" )
+                        << xml::start( "point" )
+                            << xml::attribute( "coordinates", position );
 }
 
 // -----------------------------------------------------------------------------
