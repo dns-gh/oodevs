@@ -982,7 +982,7 @@
       <parameter dia-name="siteDeFranchissements" name="site de franchissement" optional="false" type="ObjectKnowledgeBM"/>
       <parameter dia-name="destinations" name="point de destination" optional="false" type="PointBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.military.platoon.combat.tasks.Seize" dia-type="T_Mission_Pion_Emparer_BU" id="2072" name="MELEE S'emparer d'un Bloc Urbain">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Semparer" dia-type="T_Mission_Pion_Emparer_BU" id="2072" name="MELEE S'emparer d'un Bloc Urbain">
       <parameter dia-name="objectives" name="objectif" optional="false" type="UrbanBlockBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Boucler" dia-type="T_Mission_Pion_BouclerBU" id="2073" name="MELEE Boucler un Bloc Urbain">
