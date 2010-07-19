@@ -30,9 +30,9 @@
 BattleCenterJoinPage::BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, NetworkExerciseLister& lister )
     : ContentPage    ( pages, tools::translate( "BattleCenterJoinPage", "Join" ), previous, eButtonBack | eButtonJoin )
     , controllers_   ( controllers )
-    , progressPage_  ( new ProgressPage( pages, *this, tools::translate( "BattleCenterJoinPage", "Joining host" ), controllers ) )
     , config_        ( config )
     , exerciseLister_( lister )
+    , progressPage_  ( new ProgressPage( pages, *this, tools::translate( "BattleCenterJoinPage", "Joining host" ), controllers ) )
 {
     QVBox* box = new QVBox( this );
     box->setMargin( 10 );

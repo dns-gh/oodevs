@@ -30,10 +30,6 @@ public:
     virtual ~StartAuthoring();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{

@@ -59,12 +59,12 @@ private:
 private:
     //! @name Member data
     //@{
-    const Config&           config_;
-    kernel::Controllers&    controllers_;
-    ProgressPage*           progressPage_;
-    QLineEdit*              editName_;
-    QLabel*                 label_;
-    QStringList             existingTerrains_;
+    const Config& config_;
+    kernel::Controllers& controllers_;
+    ProgressPage* progressPage_;
+    QLineEdit* editName_;
+    QLabel* label_;
+    QStringList existingTerrains_;
     //@}
 };
 

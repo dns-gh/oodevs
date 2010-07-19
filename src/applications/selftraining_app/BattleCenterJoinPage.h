@@ -64,15 +64,15 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers&          controllers_;
-    const Config&                 config_;
-    std::auto_ptr< ProgressPage > progressPage_;
-    QLineEdit*                    host_;
-    QSpinBox*                     port_;
-    ExerciseList*                 exercises_;
-    QString                       exercise_;
-    Profile                       profile_;
-    NetworkExerciseLister&        exerciseLister_;
+    kernel::Controllers& controllers_;
+    const Config& config_;
+    NetworkExerciseLister& exerciseLister_;
+    ProgressPage* progressPage_;
+    QLineEdit* host_;
+    QSpinBox* port_;
+    ExerciseList* exercises_;
+    QString exercise_;
+    Profile profile_;
     //@}
 };
 
