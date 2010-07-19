@@ -92,7 +92,6 @@ private:
     //@{
     typedef std::map< const actions::Action_ABC*, TimelineActionItem* > T_Actions;
     typedef std::map< const kernel::Entity_ABC*, T_Actions >            T_EntityActions;
-    typedef std::vector< const kernel::Entity_ABC* >                    T_Entities;
     //@}
 
 private:
@@ -106,7 +105,6 @@ private:
     kernel::Controllers&   controllers_;
     actions::ActionsModel& model_;
     T_EntityActions        actions_;
-    T_Entities             entities_;
     TimelineRuler&         ruler_;
     TimelineMarker*        marker_;
     TimelineItem_ABC*      selectedItem_;

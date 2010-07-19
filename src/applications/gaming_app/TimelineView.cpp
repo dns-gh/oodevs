@@ -15,10 +15,10 @@
 #include "actions/Action_ABC.h"
 #include "actions/ActionsFilter_ABC.h"
 #include "actions/ActionTasker.h"
+#include "clients_kernel/ActionController.h"
+#include "clients_kernel/Controllers.h"
 #include "gaming/Simulation.h"
 #include "gaming/Tools.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/ActionController.h"
 #include "icons.h"
 #include <qpainter.h>
 
@@ -66,14 +66,10 @@ void TimelineView::NotifyCreated( const Action_ABC& action )
     const kernel::Entity_ABC* entity = 0;
     if( const ActionTasker* tasker = action.Retrieve< ActionTasker >() )
         entity = tasker->GetTasker();
-    T_Entities::iterator it = std::find( entities_.begin(), entities_.end(), entity );
-    if( it == entities_.end() )
-    {
-        entities_.push_back( entity );
+    T_Actions& actions = actions_[ entity ];
+    if( actions.empty() )
         canvas()->resize( canvas()->width(), canvas()->height() + rowHeight_ );
-    }
-    actions_[ entity ][ &action ] = new TimelineActionItem( canvas(), ruler_, controllers_, model_, action );
-
+    actions[ &action ] = new TimelineActionItem( canvas(), ruler_, controllers_, model_, action );
     Update();
 }
 
@@ -119,9 +115,8 @@ void TimelineView::NotifyDeleted( const kernel::Entity_ABC& entity )
             delete itAction->second;
         }
         actions_.erase( it );
-        T_Entities::iterator itEntity = std::find( entities_.begin(), entities_.end(), &entity );
-        entities_.erase( itEntity );
-        canvas()->resize( canvas()->width(), canvas()->height() - rowHeight_ );
+        if( actions_.empty() )
+            canvas()->resize( canvas()->width(), canvas()->height() - rowHeight_ );
         Update();
     }
 }
@@ -132,10 +127,10 @@ void TimelineView::NotifyDeleted( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void TimelineView::Update()
 {
-    for( T_Entities::iterator it = entities_.begin(); it != entities_.end(); ++it )
+    int row = 0;
+    for( T_EntityActions::iterator it = actions_.begin(); it != actions_.end(); ++it )
     {
-        const int row = std::distance( entities_.begin(), it );
-        T_Actions& actions = actions_[ *it ];
+        T_Actions& actions = it->second;
         for( T_Actions::iterator itAction = actions.begin(); itAction != actions.end(); ++itAction )
         {
             TimelineActionItem& item = *itAction->second;
@@ -144,6 +139,7 @@ void TimelineView::Update()
             item.setVisible( !filter_ || filter_->Allows( *itAction->first ) );
             item.Update();
         }
+        ++row;
     }
     marker_->Update();
     canvas()->setAllChanged();
@@ -274,7 +270,6 @@ void TimelineView::ClearSelection()
         controllers_.actions_.Select( (const actions::Action_ABC*)0 );
     }
     selectedItem_ = 0;
-
 }
 
 // -----------------------------------------------------------------------------
