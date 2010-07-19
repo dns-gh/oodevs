@@ -416,13 +416,13 @@ void MainWindow::LoadExercise()
     try
     {
         loading_ = true;
-        model_.Load( config_ );
+        std::string loadingErrors;
+        model_.Load( config_, loadingErrors );
         loading_ = false;
         SetWindowTitle( false );
-        std::string loadingErrors = model_.agents_.GetLoadingErrors();
         if( !loadingErrors.empty() )
             QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
-                                   , ( tr( "Error loading exercise: " ) + "\n" + loadingErrors.c_str() ).ascii() );
+                , ( tr( "The following entities cannot be loaded: " ) + "\n" + loadingErrors.c_str() ).ascii() );
     }
     catch( std::exception& e )
     {

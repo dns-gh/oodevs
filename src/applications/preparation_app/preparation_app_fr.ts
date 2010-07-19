@@ -1432,5 +1432,9 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>Error loading exercise: </source>
         <translation>Erreur lors du chargement de l&apos;exercice: </translation>
     </message>
+    <message>
+        <source>The following entities cannot be loaded: </source>
+        <translation>Les entités suivantes n'ont pas pu être chargées: </translation>
+    </message>
 </context>
 </TS>

@@ -81,16 +81,16 @@ Object_ABC* Team::CreateObject( const kernel::ObjectType& type, const QString& n
 // Name: Team::CreateObject
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
-void Team::CreateObject( xml::xistream& xis )
+void Team::CreateObject( xml::xistream& xis, std::string& loadingErrors )
 {
     try
     {
         Object_ABC* object = objectFactory_.CreateObject( xis, *this );
         tools::Resolver< Object_ABC >::Register( object->GetId(), *object );
     }
-    catch( std::exception& /*e*/ )
+    catch( std::exception& e )
     {
-        // Unknown object type, skip it
+        loadingErrors += std::string( e.what() ) + "\n";
     }
 }
 

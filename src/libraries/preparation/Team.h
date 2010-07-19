@@ -54,7 +54,7 @@ public:
     //! @name Operations
     //@{
     kernel::Object_ABC* CreateObject( const kernel::ObjectType& type, const QString& name, const kernel::Location_ABC& location );
-    void CreateObject( xml::xistream& xis );
+    void CreateObject( xml::xistream& xis, std::string& loadingErrors );
     void Rename( const QString& name );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}

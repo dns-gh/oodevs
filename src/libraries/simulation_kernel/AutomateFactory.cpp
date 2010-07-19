@@ -45,6 +45,8 @@ MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Automate& parent 
     const unsigned int id = xis.attribute< unsigned int >( "id" );
     const std::string strType = xis.attribute< std::string >( "type" );
     const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( strType );
+    if( !pType )
+        throw std::exception( std::string( "Unknown automat type: " + strType ).c_str() );
     MIL_Automate& automate = pType->InstanciateAutomate( id, parent, xis, database_ );
     automate.ReadOverloading( xis );
     tools::Resolver< MIL_Automate >::Register( automate.GetID(), automate );
@@ -61,7 +63,7 @@ MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Formation& parent
     const std::string strType = xis.attribute< std::string >( "type" );
     const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( strType );
     if( !pType )
-        xis.error( "Unknown automat type" );
+        throw std::exception( std::string( "Unknown automat type: " + strType ).c_str() );
     MIL_Automate& automate = pType->InstanciateAutomate( id, parent, xis, database_ );
     automate.ReadOverloading( xis );
     tools::Resolver< MIL_Automate >::Register( automate.GetID(), automate );

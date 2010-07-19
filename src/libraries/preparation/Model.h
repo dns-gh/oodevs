@@ -76,8 +76,8 @@ public:
 
     //! @name Operations
     //@
-    void Load( const tools::ExerciseConfig& config );
-    void Import( const std::string& orbat, const OrbatImportFilter& filter );
+    void Load( const tools::ExerciseConfig& config, std::string& loadingErrors );
+    void Import( const std::string& orbat, const OrbatImportFilter& filter, std::string& loadingErrors );
     bool Save( const tools::ExerciseConfig& config, ModelChecker_ABC& checker );
     void Purge();
     QString GetName() const;

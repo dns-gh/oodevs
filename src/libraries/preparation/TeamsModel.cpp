@@ -141,14 +141,14 @@ tools::Iterator< const Entity_ABC& > TeamsModel::CreateEntityIterator() const
 // Name: TeamsModel::Load
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-void TeamsModel::Load( xml::xistream& xis, Model& model )
+void TeamsModel::Load( xml::xistream& xis, Model& model, std::string& loadingErrors )
 {
     xis >> xml::start( "orbat" )
             >> xml::optional >> xml::start( "dotations" )
                 >> xml::attribute( "infinite", infiniteDotations_ )
             >> xml::end
             >> xml::start( "sides" )
-                >> xml::list( "side", *this, &TeamsModel::ReadTeam, model )
+                >> xml::list( "side", *this, &TeamsModel::ReadTeam, model, loadingErrors )
             >> xml::end
             >> xml::start( "diplomacies" )
                 >> xml::list( "side", *this, &TeamsModel::ReadDiplomacy )
@@ -160,7 +160,7 @@ void TeamsModel::Load( xml::xistream& xis, Model& model )
 // Name: TeamsModel::ReadTeam
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-void TeamsModel::ReadTeam( xml::xistream& xis, Model& model )
+void TeamsModel::ReadTeam( xml::xistream& xis, Model& model, std::string& loadingErrors )
 {
     Team_ABC* team = factory_.CreateTeam( xis );
     Register( team->GetId(), *team );
@@ -170,13 +170,13 @@ void TeamsModel::ReadTeam( xml::xistream& xis, Model& model )
             >> xml::list( "knowledge-group", model.knowledgeGroups_, &KnowledgeGroupsModel::Create, *team, model )
         >> xml::end;
     xis >> xml::start( "tactical" )
-            >> xml::list( "formation", model.formations_, &FormationModel::Create, *team, model )
+            >> xml::list( "formation", model.formations_, &FormationModel::Create, *team, model, loadingErrors )
         >> xml::end;
     xis >> xml::start( "logistic" )
             >> xml::list( "automat", model.agents_, &AgentsModel::ReadLogistic )
         >> xml::end;
     xis >> xml::start( "objects" )
-            >> xml::list( "object", static_cast< Team& >( *team ), &Team::CreateObject )
+            >> xml::list( "object", static_cast< Team& >( *team ), &Team::CreateObject, loadingErrors  )
         >> xml::end;
     xis >> xml::start( "populations" )
             >> xml::list( "population", model.agents_, &AgentsModel::CreatePopulation, *team )

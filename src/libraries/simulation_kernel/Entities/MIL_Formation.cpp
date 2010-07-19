@@ -89,7 +89,14 @@ void MIL_Formation::InitializeFormation( xml::xistream& xis, FormationFactory_AB
 // -----------------------------------------------------------------------------
 void MIL_Formation::InitializeAutomate( xml::xistream& xis, AutomateFactory_ABC& automateFactory )
 {
-    automateFactory.Create( xis, *this );
+    try
+    {
+        automateFactory.Create( xis, *this );
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( e.what() );
+    }
 }
 
 namespace boost

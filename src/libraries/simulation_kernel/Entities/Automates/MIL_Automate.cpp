@@ -350,11 +350,13 @@ void MIL_Automate::ReadUnitSubordinate( xml::xistream& xis )
 
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( strType );
     if( !pType )
-        xis.error( "Unknown pawn type" );
-
-    MIL_AgentPion& pion = MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, xis ); // Auto-registration
-    if( isPc )
-        pPionPC_ = &pion;
+        MT_LOG_ERROR_MSG( std::string( "Unknown pawn type: " + strType ).c_str() )
+    else
+    {
+        MIL_AgentPion& pion = MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, xis ); // Auto-registration
+        if( isPc )
+            pPionPC_ = &pion;
+    }
 }
 
 // -----------------------------------------------------------------------------

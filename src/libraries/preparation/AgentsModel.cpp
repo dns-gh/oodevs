@@ -60,7 +60,6 @@ void AgentsModel::Purge()
     tools::Resolver< Agent_ABC >::DeleteAll();
     tools::Resolver< Automat_ABC >::DeleteAll();
     tools::Resolver< Population_ABC >::DeleteAll();
-    errors_ = "";
 }
 
 // -----------------------------------------------------------------------------
@@ -101,20 +100,20 @@ void AgentsModel::CreateAutomat( kernel::Entity_ABC& parent, const kernel::Autom
 // Name: AgentsModel::CreateAutomat
 // Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateAutomat( xml::xistream& xis, kernel::Entity_ABC& parent, LimitsModel& limits )
+void AgentsModel::CreateAutomat( xml::xistream& xis, kernel::Entity_ABC& parent, LimitsModel& limits, std::string& loadingErrors )
 {
     try
     {
         Automat_ABC* agent = agentFactory_.Create( xis, parent );
         tools::Resolver< Automat_ABC >::Register( agent->GetId(), *agent );
-        xis >> xml::list( "automat", *this , &AgentsModel::CreateAutomat, *agent, limits )
-            >> xml::list( "unit"   , *this , &AgentsModel::CreateAgent, *agent )
+        xis >> xml::list( "automat", *this , &AgentsModel::CreateAutomat, *agent, limits, loadingErrors )
+            >> xml::list( "unit"   , *this , &AgentsModel::CreateAgent, *agent, loadingErrors )
             >> xml::list( "lima"   , limits, &LimitsModel::CreateLima , *(Entity_ABC*)agent )
             >> xml::list( "limit"  , limits, &LimitsModel::CreateLimit, *(Entity_ABC*)agent );
     }
     catch( std::exception& e )
     {
-        errors_ += std::string( e.what() ) + "\n";
+        loadingErrors += std::string( e.what() ) + "\n";
     }
 }
 
@@ -151,7 +150,7 @@ kernel::Agent_ABC& AgentsModel::CreateAgent( Automat_ABC& parent, const AgentTyp
 // Name: AgentsModel::CreateAgent
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateAgent( xml::xistream& xis, Automat_ABC& parent )
+void AgentsModel::CreateAgent( xml::xistream& xis, Automat_ABC& parent, std::string& loadingErrors )
 {
     try
     {
@@ -160,7 +159,7 @@ void AgentsModel::CreateAgent( xml::xistream& xis, Automat_ABC& parent )
     }
     catch( std::exception& e )
     {
-        errors_ += std::string( e.what() ) + "\n";
+        loadingErrors += std::string( e.what() ) + "\n";
     }
 }
 
@@ -322,13 +321,4 @@ bool AgentsModel::CheckValidity( ModelChecker_ABC& checker ) const
 void AgentsModel::NotifyUpdated( const kernel::ModelLoaded& model )
 {
     parameters_.Load( model.config_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentsModel::GetLoadingError
-// Created: SBO 2010-07-08
-// -----------------------------------------------------------------------------
-std::string AgentsModel::GetLoadingErrors() const
-{
-    return errors_;
 }

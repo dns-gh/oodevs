@@ -152,7 +152,7 @@ namespace
 // Name: Model::Load
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-void Model::Load( const tools::ExerciseConfig& config )
+void Model::Load( const tools::ExerciseConfig& config, std::string& loadingErrors )
 {
     {
         xml::xifstream xis( config.GetExerciseFile() );
@@ -164,7 +164,7 @@ void Model::Load( const tools::ExerciseConfig& config )
         {
             UpdateName( config.GetOrbatFile() );
             xml::xifstream xis( config.GetOrbatFile() );
-            teams_.Load( xis, *this );
+            teams_.Load( xis, *this, loadingErrors );
         }
     }
     {
@@ -196,13 +196,13 @@ void Model::Load( const tools::ExerciseConfig& config )
 // Name: Model::Import
 // Created: SBO 2008-04-07
 // -----------------------------------------------------------------------------
-void Model::Import( const std::string& orbat, const OrbatImportFilter& filter )
+void Model::Import( const std::string& orbat, const OrbatImportFilter& filter, std::string& loadingErrors )
 {
     xml::xifstream xis( orbat );
     xml::xostringstream xos;
     OrbatReIndexer reindexer( xis, xos, idManager_, filter );
     xml::xistringstream newXis( xos.str() );
-    teams_.Load( newXis, *this );
+    teams_.Load( newXis, *this, loadingErrors );
 }
 
 // -----------------------------------------------------------------------------

@@ -10,9 +10,11 @@
 #include "preparation_app_pch.h"
 #include "ImportOrbatDialog.h"
 #include "moc_ImportOrbatDialog.cpp"
+#include "clients_kernel/tools.h"
 #include "preparation/Model.h"
 #include "preparation/OrbatImportFilter.h"
 #include "tools/ExerciseConfig.h"
+
 #include <xeumeuleu/xml.hpp>
 #include <qlistview.h>
 
@@ -93,8 +95,12 @@ void ImportOrbatDialog::OnAccept()
 {
     if( !filename_->text().isEmpty() )
     {
-        model_.Import( filename_->text().ascii(), OrbatImportFilter( importObjects_, importPopulations_ ) );
+        std::string loadingErrors;
+        model_.Import( filename_->text().ascii(), OrbatImportFilter( importObjects_, importPopulations_ ), loadingErrors );
         accept();
+        if( !loadingErrors.empty() )
+            QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
+                , ( tr( "The following entities cannot be loaded: " ) + "\n" + loadingErrors.c_str() ).ascii() );
     }
 }
 

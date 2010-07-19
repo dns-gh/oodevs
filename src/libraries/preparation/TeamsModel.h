@@ -54,7 +54,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( xml::xistream& xis, Model& model );
+    void Load( xml::xistream& xis, Model& model, std::string& loadingErrors );
     void Purge();
     void CreateTeam();
     kernel::Object_ABC* CreateObject( const kernel::Team_ABC& team, const kernel::ObjectType& type, const QString& name, const kernel::Location_ABC& location );
@@ -78,7 +78,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
-    void ReadTeam( xml::xistream& xis, Model& model );
+    void ReadTeam( xml::xistream& xis, Model& model, std::string& loadingErrors );
     void ReadDiplomacy( xml::xistream& xis );
     //@}
 
