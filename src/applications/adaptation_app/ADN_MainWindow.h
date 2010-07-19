@@ -10,8 +10,6 @@
 #ifndef __ADN_MainWindow_h_
 #define __ADN_MainWindow_h_
 
-#include "ADN.h"
-
 #include <qmainwindow.h>
 #include "ADN_Callback.h"
 
@@ -48,8 +46,8 @@ public:
     virtual ~ADN_MainWindow();
 
     void Build();
-    void AddPage    ( const QString& strPageName, QWidget& page );
-    void AddTable   ( const QString& strTableName, ADN_Callback_ABC<ADN_Table*>*    pCallback );
+    void AddPage( const QString& strPageName, QWidget& page );
+    void AddTable( const QString& strTableName, ADN_Callback_ABC<ADN_Table*>*    pCallback );
     void AddListView( const QString& strTableName, ADN_Callback_ABC<ADN_ListView*>* pCallback );
 
     void OpenProject( const std::string& filename, const bool isNormalMode = false );
@@ -89,37 +87,30 @@ private:
 private:
     typedef std::pair< QString, ADN_Callback_ABC<ADN_Table*>* > T_TableRegistrationItem;
     typedef std::map< int, T_TableRegistrationItem >            T_TableRegistrationMap;
-    typedef T_TableRegistrationMap::iterator                    IT_TableRegistrationMap;
+    typedef T_TableRegistrationMap::iterator                   IT_TableRegistrationMap;
 
     typedef std::pair< QString, ADN_Callback_ABC<ADN_ListView*>* > T_ListViewRegistrationItem;
     typedef std::map< int, T_ListViewRegistrationItem >            T_ListViewRegistrationMap;
-    typedef T_ListViewRegistrationMap::iterator                    IT_ListViewRegistrationMap;
+    typedef T_ListViewRegistrationMap::iterator                   IT_ListViewRegistrationMap;
 
 private:
     std::auto_ptr< tools::GeneralConfig > generalConfig_;
     const QString strAdminPassword_;
-
-    ADN_Workspace&          workspace_;
-    ADN_Config&             config_;
-
-    QTabWidget*                 pTab_;
-
-    QPopupMenu*             pProjectMenu_;
-    QPopupMenu*             pCoheranceTablesMenu_;
-    QPopupMenu*             pConfigurationMenu_;
-    QPopupMenu*             pHelpMenu_;
-
-    QAction*                pActionSave_;
-
-    int                     rIdSaveAs_;
-    int                     rIdClose_;
-    int                     nIdSaveTable_;
-    int                     nIdPrint_;
-    int                     nIdChangeOpenMode_;
-
+    ADN_Workspace& workspace_;
+    ADN_Config& config_;
+    QTabWidget* pTab_;
+    QPopupMenu* pProjectMenu_;
+    QPopupMenu* pCoheranceTablesMenu_;
+    QPopupMenu* pConfigurationMenu_;
+    QPopupMenu* pHelpMenu_;
+    QAction* pActionSave_;
+    int rIdSaveAs_;
+    int rIdClose_;
+    int nIdSaveTable_;
+    int nIdPrint_;
+    int nIdChangeOpenMode_;
     bool bNeedSave_;
-
-    T_TableRegistrationMap    vTableRegistrations_;
+    T_TableRegistrationMap vTableRegistrations_;
     T_ListViewRegistrationMap vListViewRegistrations_;
 };
 

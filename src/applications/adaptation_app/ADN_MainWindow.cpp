@@ -10,7 +10,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_MainWindow.h"
 #include "moc_ADN_MainWindow.cpp"
-
 #include "ADN_Workspace.h"
 #include "ADN_Config.h"
 #include "ADN_Resources.h"
@@ -20,20 +19,15 @@
 #include "ADN_ListView.h"
 #include "ADN_ListViewDialog.h"
 #include "ADN_Enums.h"
-
 #include "ADN_DataException.h"
 #include "ADN_OpenFile_Exception.h"
-
 #include "ADN_OpenMode_Dialog.h"
 #include "ADN_RunProcessDialog.h"
-
 #include "ADN_Project_Data.h"
-
 #include "ADN_ProgressBar.h"
 #include "ADN_SplashScreen.h"
 #include "tools/GeneralConfig.h"
 #include "qtundo.h"
-
 #include <qimage.h>
 #include <qpixmap.h>
 #include <qtoolbar.h>
@@ -54,7 +48,6 @@
 #include <qsettings.h>
 #include <qapplication.h>
 #include <xeumeuleu/xml.hpp>
-
 #pragma warning( push )
 #pragma warning( disable: 4127 4511 4512 )
 #include <boost/program_options.hpp>
