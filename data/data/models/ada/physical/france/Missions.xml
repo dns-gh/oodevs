@@ -943,7 +943,7 @@
     <mission dia-behavior="net.masagroup.sword.france.military.tasks.commun.SoutenirSurPositionEnMesureDeBM" dia-type="net.masagroup.sword.france.military.tasks.commun.SoutenirSurPositionEnMesureDeBM" id="2060" name="COMMUNES SoutenirSurPositionEnMesureDe">
       <parameter dia-name="position" name="position" optional="false" type="PointBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.tasks.commun.Appuyer" dia-type="net.masagroup.sword.france.military.tasks.commun.Appuyer" id="2062" name="MELEE Appuyer">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Appuyer" dia-type="net.masagroup.sword.france.military.tasks.commun.Appuyer" id="2062" name="MELEE Appuyer">
       <parameter dia-name="objectives" name="unite a appuyer" optional="false" type="AgentListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.PrendreEnComptePrisonniers" dia-type="net.masagroup.sword.france.military.platoon.tasks.PrendreEnComptePrisonniers" id="2063" name="COMMUNES Prendre En Compte Prisonniers">
