@@ -3000,7 +3000,7 @@
         <mission name="Deploy"/>
       </missions>
     </automat>
-    <automat dia-type="BMAutomat" file="BMAutomat.bms" name="net.masagroup.sword.military.company.terrorism.roles.SniperCompany">
+    <automat dia-type="net.masagroup.sword.military.company.terrorism.roles.SniperCompany" file="BMAutomat.bms" name="net.masagroup.sword.military.company.terrorism.roles.SniperCompany">
       <missions>
         <mission name="FaireMouvementVersPosition"/>
         <mission name="FaireMouvementVersBU"/>
