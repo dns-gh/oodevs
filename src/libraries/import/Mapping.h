@@ -10,8 +10,11 @@
 #ifndef import_Mapping_h
 #define import_Mapping_h
 
+#include "Position.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/tuple/tuple.hpp>
 #include <string>
+#include <vector>
 #include <map>
 #include <set>
 
@@ -34,8 +37,10 @@ public:
 
     //! @name Operations
     //@{
-    unsigned int AddId( const std::string& editorId );
+    unsigned int AddId( const std::string& id );
     unsigned int AddId();
+
+    void Serialize( xml::xostream& xos, const std::string& id, const std::vector< std::vector< Position > >& tacticals ) const;
     //@}
 
     //! @name Accessors
@@ -45,14 +50,11 @@ public:
     bool IsCommandPost( const std::string& type ) const;
 
     std::string GetSuperiorId( const std::string& type ) const;
-    std::string GetMissionParameterName( int index ) const;
-    std::string GetMissionParameterType( int index ) const;
-    std::string GetMissionParameterLocationType( int index ) const;
     //@}
 
     //! @name Operators
     //@{
-    std::string operator[]( const std::string& key ) const;
+    std::string operator[]( const std::string& id ) const;
     //@}
 
 private:
@@ -67,6 +69,18 @@ private:
     void ReadAssociation( xml::xistream& xis );
     void ReadAutomat( xml::xistream& xis );
     void ReadUnit( xml::xistream& xis );
+    void ReadMission( xml::xistream& xis );
+    void ReadParameter( xml::xistream& xis, const std::string& key );
+
+    template< int >
+    std::string GetParameter( const std::string& id, std::size_t index ) const;
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::map< std::string, std::vector< boost::tuple< std::string, std::string, std::string > > > T_Missions;
+    typedef T_Missions::const_iterator                                                                  CIT_Missions;
     //@}
 
 private:
@@ -77,6 +91,7 @@ private:
     std::set< std::string > automats_;
     std::set< std::string > commandPosts_;
     std::map< std::string, std::string > units_;
+    T_Missions missions_;
     unsigned int maxId_;
     //@}
 };

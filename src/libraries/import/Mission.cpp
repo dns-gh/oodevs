@@ -47,22 +47,6 @@ Mission::~Mission()
 // -----------------------------------------------------------------------------
 xml::xostream& operator<<( xml::xostream& xos, const Mission& mission )
 {
-    xos << xml::attribute( "id", (*mission.mapping_)[ mission.id_ ] )
-        << xml::attribute( "name", "" );
-    int i = 0;
-    for( std::vector< std::vector< Position > >::const_iterator it = mission.tacticals_.begin(); it != mission.tacticals_.end(); ++it, ++i )
-    {
-        xos << xml::start( "parameter" )
-                << xml::attribute( "name", mission.mapping_->GetMissionParameterName( i ) )
-                << xml::attribute( "type", mission.mapping_->GetMissionParameterType( i ) )
-                << xml::start( "location" )
-                    << xml::attribute( "type", mission.mapping_->GetMissionParameterLocationType( i ) );
-        for( std::vector< Position >::const_iterator itPos = it->begin(); itPos != it->end(); ++itPos )
-            xos << xml::start( "point" )
-                    << xml::attribute( "coordinates", *itPos )
-                << xml::end;
-        xos     << xml::end
-            << xml::end;
-    }
+    mission.mapping_->Serialize( xos, mission.id_, mission.tacticals_ );
     return xos;
 }

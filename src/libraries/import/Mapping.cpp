@@ -23,7 +23,8 @@ Mapping::Mapping( const std::string& file, Warnings& warnings )
     xis >> xml::start( "mapping" )
             >> xml::list( "association", *this, &Mapping::ReadAssociation )
             >> xml::list( "automat", *this, &Mapping::ReadAutomat )
-            >> xml::list( "unit", *this, &Mapping::ReadUnit );
+            >> xml::list( "unit", *this, &Mapping::ReadUnit )
+            >> xml::list( "mission", *this, &Mapping::ReadMission );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,25 +76,50 @@ void Mapping::ReadUnit( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Mapping::ReadMission
+// Created: MCO 2010-07-16
+// -----------------------------------------------------------------------------
+void Mapping::ReadMission( xml::xistream& xis )
+{
+    ReadAssociation( xis );
+    std::string key;
+    xis >> xml::attribute( "key", key )
+        >> xml::list( "parameter", *this, &Mapping::ReadParameter, key );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Mapping::ReadParameter
+// Created: MCO 2010-07-16
+// -----------------------------------------------------------------------------
+void Mapping::ReadParameter( xml::xistream& xis, const std::string& key )
+{
+    std::string name, type, location;
+    xis >> xml::attribute( "name", name )
+        >> xml::attribute( "type", type )
+        >> xml::attribute( "location", location );
+    missions_[ key ].push_back( boost::make_tuple( name, type, location ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Mapping::operator[]
 // Created: LDC 2010-07-07
 // -----------------------------------------------------------------------------
-std::string Mapping::operator[]( const std::string& key ) const
+std::string Mapping::operator[]( const std::string& id ) const
 {
-    std::map< std::string, std::string >::const_iterator it = mapping_.find( key );
+    std::map< std::string, std::string >::const_iterator it = mapping_.find( id );
     if( it != mapping_.end() )
         return it->second;
-    warnings_.Add( key );
-    return key;
+    warnings_.Add( id );
+    return id;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Mapping::AddId
 // Created: LDC 2010-07-07
 // -----------------------------------------------------------------------------
-unsigned int Mapping::AddId( const std::string& editorId )
+unsigned int Mapping::AddId( const std::string& id )
 {
-    mapping_[ editorId ] = boost::lexical_cast< std::string >( ++maxId_ );
+    mapping_[ id ] = boost::lexical_cast< std::string >( ++maxId_ );
     return maxId_;
 }
 
@@ -148,28 +174,44 @@ bool Mapping::IsCommandPost( const std::string& type ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Mapping::GetMissionParameterName
-// Created: LDC 2010-07-09
+// Name: Mapping::Serialize
+// Created: LDC 2010-07-19
 // -----------------------------------------------------------------------------
-std::string Mapping::GetMissionParameterName( int /*index*/ ) const
+void Mapping::Serialize( xml::xostream& xos, const std::string& id, const std::vector< std::vector< Position > >& tacticals ) const
 {
-    return "Location";
+    xos << xml::attribute( "id", (*this)[ id ] )
+        << xml::attribute( "name", "" );
+    std::size_t i = 0;
+    for( std::vector< std::vector< Position > >::const_iterator it = tacticals.begin(); it != tacticals.end(); ++it, ++i )
+    {
+        xos << xml::start( "parameter" )
+                << xml::attribute( "name", GetParameter< 0 >( id, i ) )
+                << xml::attribute( "type", GetParameter< 1 >( id, i ) )
+                << xml::start( "location" )
+                    << xml::attribute( "type", GetParameter< 2 >( id, i ) );
+        for( std::vector< Position >::const_iterator itPos = it->begin(); itPos != it->end(); ++itPos )
+            xos << xml::start( "point" )
+                    << xml::attribute( "coordinates", *itPos )
+                << xml::end;
+        xos     << xml::end
+            << xml::end;
+    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: Mapping::GetMissionParameterType
-// Created: LDC 2010-07-09
+// Name: Mapping::GetParameter
+// Created: LDC 2010-07-19
 // -----------------------------------------------------------------------------
-std::string Mapping::GetMissionParameterType( int /*index*/ ) const
+template< int I >
+std::string Mapping::GetParameter( const std::string& id, std::size_t index ) const
 {
-    return "point";
-}
-
-// -----------------------------------------------------------------------------
-// Name: Mapping::GetMissionParameterLocationType
-// Created: LDC 2010-07-09
-// -----------------------------------------------------------------------------
-std::string Mapping::GetMissionParameterLocationType( int /*index*/ ) const
-{
-    return "point";
+    CIT_Missions it = missions_.find( id );
+    if( it == missions_.end() )
+    {
+        warnings_.Add( id );
+        return "?";
+    }
+    if( index >= it->second.size() )
+        return "?"; // $$$$ MCO : add warning ?
+    return it->second[ index ].get< I >();
 }
