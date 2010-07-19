@@ -816,16 +816,10 @@
       <parameter dia-name="objectives" name="objectives" optional="false" type="AgentBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.platoon.tasks.ObserveToward" dia-type="net.masagroup.testSword.military.platoon.tasks.ObserveToward" id="2017" name="ObservePoint">
-      <parameter dia-name="objectives" name="target" optional="false" type="PointBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.testSword.military.platoon.tasks.ObserveToward" dia-type="T_Mission_Pion_ObserveUrbanBlock" id="2018" name="ObserveUrbanBlock">
-      <parameter dia-name="objectives" name="target" optional="false" type="UrbanBlockBM"/>
+      <parameter dia-name="objectives" name="target" optional="false" type="PointListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.platoon.tasks.ObserveToward" dia-type="T_Mission_Pion_ObserveAgent" id="2019" name="ObserveAgent">
-      <parameter dia-name="objectives" name="target" optional="false" type="AgentKnowledgeBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.testSword.military.platoon.tasks.ObserveToward" dia-type="T_Mission_Pion_ObserveObject" id="2020" name="ObserveObject">
-      <parameter dia-name="objectives" name="target" optional="false" type="ObjectKnowledgeBM"/>
+      <parameter dia-name="objectives" name="target" optional="false" type="AgentKnowledgeListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.platoon.tasks.tmp.Load" dia-type="T_Mission_Pion_Load" id="2022" name="Load">
       <parameter dia-name="objectives" name="objectives" optional="false" type="AgentBM"/>
