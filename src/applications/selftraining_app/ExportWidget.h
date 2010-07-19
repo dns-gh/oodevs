@@ -13,12 +13,18 @@
 #include <qgroupbox.h>
 
 class QListView;
+class QListViewItem;
 class QProgressBar;
 class ScenarioEditPage;
 
 namespace tools
 {
     class GeneralConfig;
+}
+
+namespace zip
+{
+    class ozipfile;
 }
 
 // =============================================================================
@@ -40,18 +46,32 @@ public:
 
     //! @name Operations
     //@{
+    void Update();
     void ExportPackage();
+    bool EnableEditButton();
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnSelectionChanged( QListBoxItem* item );
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    void UpdateExercises();
+    void BuildCategory( QListViewItem* parent, const QStringList& list, const QString& base, const std::string& category );
+    QListViewItem* BuildExerciseFeatures( const std::string& exercise );
+    QListViewItem* BuildExerciseData( const std::string& exercise );
+    bool BrowseClicked();
+    void WriteContent( zip::ozipfile& archive ) const;
+    //@}
+
     //! @name Copy/Assignment
     //@{
     ExportWidget( const ExportWidget& );            //!< Copy constructor
     ExportWidget& operator=( const ExportWidget& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

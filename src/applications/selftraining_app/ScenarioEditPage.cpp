@@ -69,11 +69,10 @@ ScenarioEditPage::ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, con
             importWidget_ = new ImportWidget( *this, mainTabs_, config );
             mainTabs_->addTab( importWidget_, tools::translate( "ScenarioEditPage", "Import" ) );
         }
-        // $$$$ JSR 2010-07-15: en cours
-        /*{
+        {
             exportWidget_ = new ExportWidget( *this, box, config );
             mainTabs_->addTab( exportWidget_, tools::translate( "ScenarioEditPage", "Export" ) );
-        }*/
+        }
     }
     EnableButton( eButtonEdit, false );
     AddContent( box );
@@ -105,6 +104,7 @@ void ScenarioEditPage::Update()
 {
     createExerciceWidget_->Update();
     exercises_->Update();
+    exportWidget_->Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -155,7 +155,7 @@ void ScenarioEditPage::Edit( const QString& exercise )
 void ScenarioEditPage::OnSelect( const QString& exercise, const Profile& )
 {
     exercise_ = exercise;
-    UpdateEditButton( 0 );
+    UpdateEditButton();
 }
 
 // -----------------------------------------------------------------------------
@@ -164,7 +164,7 @@ void ScenarioEditPage::OnSelect( const QString& exercise, const Profile& )
 // -----------------------------------------------------------------------------
 void ScenarioEditPage::EditNameChanged( const QString& )
 {
-    UpdateEditButton( 0 );
+    UpdateEditButton();
 }
 
 // -----------------------------------------------------------------------------
@@ -173,8 +173,40 @@ void ScenarioEditPage::EditNameChanged( const QString& )
 // -----------------------------------------------------------------------------
 void ScenarioEditPage::ComboChanged( int )
 {
-    UpdateEditButton( 0 );
+    UpdateEditButton();
 }
+
+// -----------------------------------------------------------------------------
+// Name: ScenarioEditPage::UpdateEditButton
+// Created: JSR 2010-07-19
+// -----------------------------------------------------------------------------
+void ScenarioEditPage::UpdateEditButton()
+{
+    bool enable = true;
+    switch( mainTabs_->currentPageIndex() )
+    {
+    case 0: //edit
+        enable = !exercise_.isEmpty();
+        SetButtonText( eButtonEdit, tools::translate( "Page_ABC", "Edit" ) );
+        break;
+    case 1: // create
+        enable = createExerciceWidget_->EnableEditButton();
+        SetButtonText( eButtonEdit, tools::translate( "ScenarioEditPage", "Create" ) );
+        break;
+    case 2: // import
+        enable = importWidget_->EnableEditButton();
+        SetButtonText( eButtonEdit, tools::translate( "ScenarioEditPage", "Import" ) );
+        break;
+    case 3: // export
+        enable = exportWidget_->EnableEditButton();
+        SetButtonText( eButtonEdit, tools::translate( "ScenarioEditPage", "Export" ) );
+        break;
+    default:
+        break;
+    }
+    EnableButton( eButtonEdit, enable );
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: ScenarioEditPage::UpdateEditButton
@@ -182,37 +214,7 @@ void ScenarioEditPage::ComboChanged( int )
 // -----------------------------------------------------------------------------
 void ScenarioEditPage::UpdateEditButton( QWidget* )
 {
-    // TODO
-    bool enable = true;
-    switch( mainTabs_->currentPageIndex() )
-    {
-    case 0: //edit
-        enable = !exercise_.isEmpty();
-        break;
-    case 1: // create
-        enable = createExerciceWidget_->EnableEditButton();
-        break;
-    case 2: // import
-        // TODO
-        /*switch( importTabs_->currentPageIndex() )
-        {
-        case 0: // OTPAK
-            break;
-        // LTO begin
-        case 1: // Scenario
-            break;
-        // LTO end
-        default:
-            break;
-        }*/
-        break;
-    case 3: // export
-        // TODO
-        break;
-    default:
-        break;
-    }
-    EnableButton( eButtonEdit, enable );
+    UpdateEditButton();
 }
 
 // -----------------------------------------------------------------------------

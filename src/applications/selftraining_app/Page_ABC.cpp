@@ -153,6 +153,20 @@ void Page_ABC::EnableButton( unsigned short flags, bool enable )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Page_ABC::SetButtonText
+// Created: JSR 2010-07-19
+// -----------------------------------------------------------------------------
+void Page_ABC::SetButtonText( unsigned short flags, const QString& text )
+{
+    if( ( flags & eButtonStart ) && startButton_ )
+        startButton_->setText( text );
+    if( ( flags & eButtonJoin ) && joinButton_ )
+        joinButton_->setText( text );
+    if( ( flags & eButtonEdit ) && editButton_ )
+        editButton_->setText( text );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Page_ABC::Previous
 // Created: RDS 2008-09-09
 // -----------------------------------------------------------------------------

@@ -54,6 +54,7 @@ ImportWidget::ImportWidget( ScenarioEditPage& page, QWidget* parent, const tools
     setMargin( 5 );
     setBackgroundOrigin( QWidget::WindowOrigin );
     tabs_ = new TabWidget( this );
+    connect( tabs_, SIGNAL( currentChanged( QWidget* ) ), &page, SLOT( UpdateEditButton( QWidget* ) ) );
     {
         QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, parent );
         group->setFrameShape( QFrame::NoFrame );
@@ -142,6 +143,18 @@ void ImportWidget::InstallExercise()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ImportWidget::EnableEditButton
+// Created: JSR 2010-07-19
+// -----------------------------------------------------------------------------
+bool ImportWidget::EnableEditButton()
+{
+    if( tabs_->currentPageIndex() == 0 ) // OTPAK
+        return packageContent_->count() != 0;
+    else // LTO
+        return ( !terrain_.isEmpty() && !outputScenario_.isEmpty() && !inputScenario_.isEmpty()); // LTO
+}
+
+// -----------------------------------------------------------------------------
 // Name: ImportWidget::InstallPackage
 // Created: JSR 2010-07-13
 // -----------------------------------------------------------------------------
@@ -155,10 +168,8 @@ void ImportWidget::InstallPackage()
             packageProgress_->show();
             packageProgress_->setProgress( 0, packageContent_->count() );
             setCursor( QCursor::waitCursor );
-            //okay_->setDisabled( true );
             frontend::commands::InstallPackageFile( archive, config_.GetRootDir(), Progress( packageProgress_ ) );
             setCursor( QCursor::arrowCursor );
-            //okay_->setDisabled( false );
         }
     }
 }
@@ -205,7 +216,6 @@ bool ImportWidget::ReadPackageContentFile()
     }
     catch( xml::exception& )
     {
-        //bubble_->ShowError( e.what() );
         return false;
     }
     return true;
@@ -301,19 +311,9 @@ void ImportWidget::PackageBrowseClicked()
         packageDescription_->setText( "" );
         packageContent_->clear();
         if( ReadPackageContentFile() )
-        {
-            // TODO
-            //EnableButton( eButtonEdit, true );
-            //bubble_->ShowInfo( tr( "Click \"Install package\" button to install the content of the package.\nPackage will be installed to: %1" ).arg( GetDestinationDirectory().c_str() ) );
             packageContent_->insertStringList( frontend::commands::ListPackageFiles( package_->text().ascii() ) );
-        }
-        else
-        {
-            // TODO
-            //EnableButton( eButtonEdit, false );
-            //bubble_->ShowError( tr( "Selected file is not a valid %1 package." ).arg( tools::translate( "Application", "SWORD" ) ) );
-        }
     }
+    page_.UpdateEditButton();
 }
 
 // -----------------------------------------------------------------------------
@@ -324,6 +324,7 @@ void ImportWidget::PackageBrowseClicked()
 void ImportWidget::OnModelChanged( const QString & model )
 {
     model_ = model;
+    page_.UpdateEditButton();
 }
 
 // -----------------------------------------------------------------------------
@@ -334,6 +335,7 @@ void ImportWidget::OnModelChanged( const QString & model )
 void ImportWidget::OnTerrainChanged( const QString& terrain )
 {
     terrain_ = terrain;
+    page_.UpdateEditButton();
 }
 
 // -----------------------------------------------------------------------------
@@ -344,6 +346,7 @@ void ImportWidget::OnTerrainChanged( const QString& terrain )
 void ImportWidget::OnOutputName( const QString& scenario )
 {
     outputScenario_ = scenario;
+    page_.UpdateEditButton();
 }
 
 // -----------------------------------------------------------------------------
@@ -355,4 +358,5 @@ void ImportWidget::OnChangeScenario()
 {
     inputScenario_ = QFileDialog::getOpenFileName( QString::null, "*.xml", this );
     browse_->setText( inputScenario_ );
+    page_.UpdateEditButton();
 }

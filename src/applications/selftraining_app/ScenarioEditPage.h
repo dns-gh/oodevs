@@ -55,6 +55,7 @@ public:
     bool ExerciceExists( const QString& string );
     void LaunchScenarioImport( const QString& inputScenario, const QString& outputScenario );
     void LaunchPreparation( const QString& outputScenario );
+    void UpdateEditButton();
     //@}
 
 private slots:

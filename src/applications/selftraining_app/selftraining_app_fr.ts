@@ -196,6 +196,18 @@
         <source>Package content:</source>
         <translation>Contenu du paquetage:</translation>
     </message>
+    <message>
+        <source>Select a package</source>
+        <translation>Sélectionner un paquetage</translation>
+    </message>
+    <message>
+        <source>Overwrite File?</source>
+        <translation>Ecraser le fichier existant ?</translation>
+    </message>
+    <message>
+        <source>A file called %1 already exists. Do you want to overwrite it?</source>
+        <translation>>Un fichier appelé %1 existe déjà. Voulez-vous l&apos;écraser ?</translation>
+    </message>
 </context>
 <context>
     <name>HomePage</name>
@@ -456,7 +468,7 @@
     </message>
     <message>
         <source>Export</source>
-        <translation type="obsolete">Exporter</translation>
+        <translation>Exporter</translation>
     </message>
 </context>
 <context>

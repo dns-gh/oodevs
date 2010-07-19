@@ -31,15 +31,16 @@ namespace frontend
 
     namespace commands
     {
-        QStringList ListTerrains      ( const tools::GeneralConfig& config );
-        QStringList ListExercises     ( const tools::GeneralConfig& config, const std::string& subDirs = ""  );
-        QStringList ListSessions      ( const tools::GeneralConfig& config, const std::string& exercise );
+        QStringList ListTerrains        ( const tools::GeneralConfig& config );
+        QStringList ListExercises       ( const tools::GeneralConfig& config, const std::string& subDirs = ""  );
+        QStringList ListSessions        ( const tools::GeneralConfig& config, const std::string& exercise );
         QStringList ListSessionsWithCheckpoint( const tools::GeneralConfig& config, const std::string& exercise );
-        QStringList ListCheckpoints   ( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session );
-        QStringList ListModels        ( const tools::GeneralConfig& config );
-        QStringList ListPhysicalModels( const tools::GeneralConfig& config, const std::string& model );
-        QStringList ListScripts       ( const tools::GeneralConfig& config, const std::string& exercise );
-        QStringList ListOrders        ( const tools::GeneralConfig& config, const std::string& exercise );
+        QStringList ListCheckpoints     ( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session );
+        QStringList ListModels          ( const tools::GeneralConfig& config );
+        QStringList ListPhysicalModels  ( const tools::GeneralConfig& config, const std::string& model );
+        QStringList ListScripts         ( const tools::GeneralConfig& config, const std::string& exercise );
+        QStringList ListOrders          ( const tools::GeneralConfig& config, const std::string& exercise );
+        QStringList ListOtherDirectories( const tools::GeneralConfig& config, const std::string& exercise );
 
         QStringList ListPackageFiles  ( const std::string& filename );
 

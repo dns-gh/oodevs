@@ -47,6 +47,7 @@ protected:
     void AddContent( QWidget* widget );
     void AddTitle( const QString& title );
     void EnableButton( unsigned short flags, bool enable );
+    void SetButtonText( unsigned short flags, const QString& text );
     void Previous();
 
 private:

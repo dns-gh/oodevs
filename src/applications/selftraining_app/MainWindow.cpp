@@ -46,7 +46,8 @@ MainWindow::MainWindow( kernel::Controllers& controllers )
 {
     setCaption( tools::translate( "Application", "SWORD" ) + tools::translate( "MainWindow", " - release " ) + tools::AppVersion() );
     setIcon( MAKE_PIXMAP( csword ) );
-    setFixedSize( 800, 600 );
+    setFixedWidth( 800 );
+    setMinimumHeight( 600 );
     SetStyle();
     pages_ = new QWidgetStack( this );
     new HomePage( pages_, *config_, controllers, *exerciseLister_ );
@@ -115,4 +116,17 @@ void MainWindow::Maximize()
 {
     show();
     setActiveWindow();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::resizeEvent
+// Created: JSR 2010-07-16
+// -----------------------------------------------------------------------------
+void MainWindow::resizeEvent( QResizeEvent * )
+{
+    QImage background = QImage( "resources/images/selftraining/background.jpg" ).scale( width(), height() );
+    QPalette p( palette() );
+    p.setBrush( QPalette::Active, QColorGroup::Base, QBrush( QColor( 32, 32, 48 ), background ) );
+    setPalette( p );
+    setPaletteBackgroundPixmap( background );
 }

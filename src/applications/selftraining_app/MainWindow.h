@@ -47,6 +47,12 @@ public slots:
     void Maximize();
     //@}
 
+protected:
+    //! @name From QWidget
+    //@{
+    virtual void resizeEvent( QResizeEvent * );
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{

@@ -53,6 +53,24 @@ namespace frontend
             return result;
         }
 
+        template< typename Validator >
+        QStringList ListDirectoriesNoRecursive( const std::string& base, Validator v )
+        {
+            QStringList result;
+            const bfs::path root = bfs::path( base, bfs::native );
+            if( ! bfs::exists( root ) )
+                return result;
+
+            bfs::directory_iterator end;
+            for( bfs::directory_iterator it( root ); it != end; ++it )
+            {
+                const bfs::path child = *it;
+                if( v( child ) )
+                    result.append( child.leaf().c_str() );
+            }
+            return result;
+        }
+
         bool IsValidTerrain( const bfs::path& dir )
         {
             return bfs::is_directory( dir )
@@ -162,6 +180,17 @@ namespace frontend
         {
             std::string  dir( ( bfs::path( config.GetExerciseDir( exercise ), bfs::native ) / "orders" ).native_directory_string() );
             return ListDirectories( dir, &IsValidOrder );
+        }
+
+        bool IsOther( const bfs::path& child )
+        {
+            return bfs::is_directory( child ) && child.leaf() != "sessions" && child.leaf() != ".svn";
+        }
+
+        QStringList ListOtherDirectories( const tools::GeneralConfig& config, const std::string& exercise )
+        {
+            std::string dir( ( bfs::path( config.GetExerciseDir( exercise ), bfs::native ) ).native_directory_string() );
+            return ListDirectoriesNoRecursive( dir, &IsOther );
         }
 
         QStringList ListPackageFiles( const std::string& filename )

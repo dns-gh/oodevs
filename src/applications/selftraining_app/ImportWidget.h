@@ -44,6 +44,7 @@ public:
     //! @name Operations
     //@{
     void InstallExercise();
+    bool EnableEditButton();
     //@}
 
 private:
