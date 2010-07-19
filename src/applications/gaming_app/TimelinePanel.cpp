@@ -15,6 +15,7 @@
 #include "actions/Action_ABC.h"
 #include "actions/ActionsFilter_ABC.h"
 #include "actions/ActionTasker.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "gaming/Tools.h"
 #include <qtabbar.h>
 
@@ -22,20 +23,55 @@ using namespace actions;
 
 namespace
 {
-    struct GlobalFilter : public actions::ActionsFilter_ABC
+    struct ProfileActionFilter : private boost::noncopyable
+                               , public actions::ActionsFilter_ABC
     {
-        virtual bool Allows( const actions::Action_ABC& /*action*/ ) const
+        explicit ProfileActionFilter( const kernel::Profile_ABC& profile )
+            : profile_( profile )
         {
-            return true;
+            // NOTHING
+        }
+
+        virtual bool Allows( const actions::Action_ABC& action ) const
+        {
+            if( const ActionTasker* tasker = action.Retrieve< ActionTasker >() )
+                if( const kernel::Entity_ABC* entity = tasker->GetTasker() )
+                    return profile_.IsVisible( *entity );
+            return false;
+        }
+
+        const kernel::Profile_ABC& profile_;
+    };
+    struct GlobalFilter : public ProfileActionFilter
+    {
+        explicit GlobalFilter( const kernel::Profile_ABC& profile )
+            : ProfileActionFilter( profile )
+        {
+            // NOTHING
+        }
+
+        virtual bool Allows( const actions::Action_ABC& action ) const
+        {
+            return ProfileActionFilter::Allows( action );
         }
     };
 
-    struct CurrentSessionFilter : public actions::ActionsFilter_ABC
+    struct CurrentSessionFilter : public ProfileActionFilter
     {
+        explicit CurrentSessionFilter( const kernel::Profile_ABC& profile )
+            : ProfileActionFilter( profile )
+        {
+            // NOTHING
+        }
+
         virtual bool Allows( const actions::Action_ABC& action ) const
         {
-            const ActionTasker* tasker = action.Retrieve< ActionTasker >();
-            return !tasker || !tasker->IsSimulation();
+            if( ProfileActionFilter::Allows( action ) )
+            {
+                const ActionTasker* tasker = action.Retrieve< ActionTasker >();
+                return !tasker || !tasker->IsSimulation();
+            }
+            return false;
         }
     };
 
@@ -53,7 +89,7 @@ namespace
 // Name: TimelinePanel constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler, const tools::SessionConfig& config, gui::ItemFactory_ABC& factory )
+TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler, const tools::SessionConfig& config, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile )
     : QDockWindow( parent, "timeline" )
 {
     setResizeEnabled( true );
@@ -66,11 +102,11 @@ TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controll
     timeline_ = new TimelineWidget( box, controllers, model, scheduler, factory );
     {
         tabs_->addTab( box, tools::translate( "TimelinePanel", "Global view" ) );
-        filters_.push_back( new GlobalFilter() );
+        filters_.push_back( new GlobalFilter( profile ) );
     }
     {
         tabs_->addTab( box, tools::translate( "TimelinePanel", "Current session" ) );
-        filters_.push_back( new CurrentSessionFilter() );
+        filters_.push_back( new CurrentSessionFilter( profile ) );
     }
     setWidget( tabs_ );
 }

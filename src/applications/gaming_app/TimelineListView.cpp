@@ -11,6 +11,7 @@
 #include "TimelineListView.h"
 #include "moc_TimelineListView.cpp"
 #include "actions/Action_ABC.h"
+#include "actions/ActionsFilter_ABC.h"
 #include "actions/ActionTasker.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -50,9 +51,9 @@ using namespace actions;
 TimelineListView::TimelineListView( QWidget* parent, kernel::Controllers& controllers )
     : QListView( parent, "TimelineListView" )
     , controllers_( controllers )
+    , filter_( 0 )
 {
     setMinimumWidth( 200 );
-    addColumn( "action count", 0 );
     addColumn( tr( "Units" ) );
     setResizeMode( LastColumn );
     setHScrollBarMode( QScrollView::AlwaysOn ); //--> to have the same height as canvasview
@@ -85,11 +86,12 @@ void TimelineListView::NotifyCreated( const Action_ABC& action )
         if( entity )
             name = entity->GetName();
     }
-
     gui::ValuedListItem* item = gui::FindItem( entity, firstChild() );
     if( !item )
         item = new TimeLineEntityListItem( this, lastItem() );
-    item->Set( entity, QString::number( item->text( 0 ).toInt() + 1 ), name );
+    item->Set( entity, name );
+    item->setVisible( !filter_ || filter_->Allows( action ) );
+    actions_[ entity ].push_back( &action );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,11 +106,15 @@ void TimelineListView::NotifyDeleted( const Action_ABC& action )
 
     if( gui::ValuedListItem* item = gui::FindItem( entity, firstChild() ) )
     {
-        const int actions = item->text( 0 ).toInt();
-        if( actions == 1 )
+        T_Actions& actions = actions_[ entity ];
+        T_Actions::iterator it = std::find( actions.begin(), actions.end(), &action );
+        if( it != actions.end() )
+            actions.erase( it );
+        if( actions.empty() )
+        {
             delete item;
-        else
-            item->setText( 0, QString::number( actions - 1 ) );
+            Update();
+        }
     }
 }
 
@@ -119,7 +125,10 @@ void TimelineListView::NotifyDeleted( const Action_ABC& action )
 void TimelineListView::NotifyDeleted( const kernel::Entity_ABC& entity )
 {
     if( gui::ValuedListItem* item = gui::FindItem( &entity, firstChild() ) )
+    {
+        actions_.erase( &entity );
         delete item;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -141,4 +150,47 @@ void TimelineListView::OnSelectionChange( QListViewItem* item )
 {
     if( gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( item ) )
         valuedItem->Select( controllers_.actions_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineListView::SetFilter
+// Created: SBO 2010-07-19
+// -----------------------------------------------------------------------------
+void TimelineListView::SetFilter( const actions::ActionsFilter_ABC& filter )
+{
+    if( filter_ != &filter )
+    {
+        filter_ = &filter;
+        Update();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineListView::Update
+// Created: SBO 2010-07-19
+// -----------------------------------------------------------------------------
+void TimelineListView::Update()
+{
+    QListViewItemIterator it( this );
+    while( it.current() )
+    {
+        gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( it.current() );
+        item->setVisible( ShouldDisplay( *item->GetValue< const kernel::Entity_ABC >() ) );
+        ++it;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineListView::ShouldDisplay
+// Created: SBO 2010-07-19
+// -----------------------------------------------------------------------------
+bool TimelineListView::ShouldDisplay( const kernel::Entity_ABC& entity ) const
+{
+    if( !filter_ )
+        return true;
+    T_EntityActions::const_iterator actions = actions_.find( &entity );
+    for( T_Actions::const_iterator it = actions->second.begin(); it != actions->second.end(); ++it )
+        if( filter_->Allows( **it ) )
+            return true;
+    return false;
 }

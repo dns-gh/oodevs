@@ -27,6 +27,7 @@ namespace gui
 }
 
 class ActionsScheduler;
+class TimelineListView;
 class TimelineView;
 
 // =============================================================================
@@ -59,6 +60,7 @@ private:
 private:
     //! @name Member data
     //@{
+    TimelineListView* list_;
     TimelineView* view_;
     //@}
 };

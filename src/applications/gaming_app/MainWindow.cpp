@@ -312,7 +312,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticM
 
     // Actions panel
     {
-        TimelinePanel* timelinePanel = new TimelinePanel( this, controllers_, model_.actions_, *scheduler, config_, *factory );
+        TimelinePanel* timelinePanel = new TimelinePanel( this, controllers_, model_.actions_, *scheduler, config_, *factory, profile );
         moveDockWindow( timelinePanel, Qt::DockTop );
         timelinePanel->hide();
     }

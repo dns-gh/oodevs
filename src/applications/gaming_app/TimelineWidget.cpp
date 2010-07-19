@@ -60,15 +60,15 @@ TimelineWidget::TimelineWidget( QWidget* parent, kernel::Controllers& controller
     : QHBox( parent, "TimelineWidget" )
 {
     QSplitter* splitter = new QSplitter( this );
-    QListView* list = new TimelineListView( splitter, controllers );
+    list_ = new TimelineListView( splitter, controllers );
     QVBox* box = new QVBox( splitter );
-    TimelineRuler* ruler = new TimelineRuler( box, controllers, list->header()->height() );
+    TimelineRuler* ruler = new TimelineRuler( box, controllers, list_->header()->height() );
     view_ = new TimelineView( box, new TimelineCanvas( this, 25 ), controllers, model, scheduler, *ruler );
     new ActionProperties( this, controllers, factory );
 
-    connect( view_, SIGNAL( contentsMoving( int, int ) ), list  , SLOT( setContentsPos( int, int ) ) );
-    connect( list , SIGNAL( contentsMoving( int, int ) ), view_, SLOT( setContentsPos( int, int ) ) );
-    connect( view_, SIGNAL( contentsMoving( int, int ) ), ruler , SLOT( SetContentsPos( int, int ) ) );
+    connect( view_, SIGNAL( contentsMoving( int, int ) ), list_, SLOT( setContentsPos( int, int ) ) );
+    connect( list_, SIGNAL( contentsMoving( int, int ) ), view_, SLOT( setContentsPos( int, int ) ) );
+    connect( view_, SIGNAL( contentsMoving( int, int ) ), ruler, SLOT( SetContentsPos( int, int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,5 +86,6 @@ TimelineWidget::~TimelineWidget()
 // -----------------------------------------------------------------------------
 void TimelineWidget::SetFilter( const actions::ActionsFilter_ABC& filter )
 {
+    list_->SetFilter( filter );
     view_->SetFilter( filter );
 }

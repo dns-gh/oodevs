@@ -67,8 +67,6 @@ void TimelineView::NotifyCreated( const Action_ABC& action )
     if( const ActionTasker* tasker = action.Retrieve< ActionTasker >() )
         entity = tasker->GetTasker();
     T_Actions& actions = actions_[ entity ];
-    if( actions.empty() )
-        canvas()->resize( canvas()->width(), canvas()->height() + rowHeight_ );
     actions[ &action ] = new TimelineActionItem( canvas(), ruler_, controllers_, model_, action );
     Update();
 }
@@ -115,8 +113,6 @@ void TimelineView::NotifyDeleted( const kernel::Entity_ABC& entity )
             delete itAction->second;
         }
         actions_.erase( it );
-        if( actions_.empty() )
-            canvas()->resize( canvas()->width(), canvas()->height() - rowHeight_ );
         Update();
     }
 }
@@ -131,16 +127,21 @@ void TimelineView::Update()
     for( T_EntityActions::iterator it = actions_.begin(); it != actions_.end(); ++it )
     {
         T_Actions& actions = it->second;
+        bool actionVisible = false;
         for( T_Actions::iterator itAction = actions.begin(); itAction != actions.end(); ++itAction )
         {
             TimelineActionItem& item = *itAction->second;
             item.setY( row * rowHeight_ );
             item.setSize( item.width(), rowHeight_ );
-            item.setVisible( !filter_ || filter_->Allows( *itAction->first ) );
+            const bool visible = !filter_ || filter_->Allows( *itAction->first );
+            item.setVisible( visible );
             item.Update();
+            actionVisible |= visible;
         }
-        ++row;
+        if( actionVisible )
+            ++row;
     }
+    canvas()->resize( canvas()->width(), rowHeight_ * row );
     marker_->Update();
     canvas()->setAllChanged();
     canvas()->update();

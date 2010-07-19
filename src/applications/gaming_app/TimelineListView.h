@@ -10,8 +10,8 @@
 #ifndef __TimelineListView_h_
 #define __TimelineListView_h_
 
-#include <qlistview.h>
 #include "tools/ElementObserver_ABC.h"
+#include <qlistview.h>
 
 namespace kernel
 {
@@ -22,6 +22,7 @@ namespace kernel
 namespace actions
 {
     class Action_ABC;
+    class ActionsFilter_ABC;
 }
 
 // =============================================================================
@@ -44,6 +45,11 @@ public:
     virtual ~TimelineListView();
     //@}
 
+    //! @name Operations
+    //@{
+    void SetFilter( const actions::ActionsFilter_ABC& filter );
+    //@}
+
 private slots:
     //! @name Operations
     //@{
@@ -59,16 +65,26 @@ private:
 
     //! @name Helpers
     //@{
+    void Update();
+    bool ShouldDisplay( const kernel::Entity_ABC& entity ) const;
     virtual void NotifyCreated( const actions::Action_ABC& action );
     virtual void NotifyDeleted( const actions::Action_ABC& action );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
     virtual void setContentsPos( int x, int y );
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::vector< const actions::Action_ABC* >        T_Actions;
+    typedef std::map< const kernel::Entity_ABC*, T_Actions > T_EntityActions;
+    //@}
+
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    T_EntityActions actions_;
+    const actions::ActionsFilter_ABC* filter_;
     //@}
 };
 
