@@ -83,7 +83,6 @@
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
         <mission name="COMMUNES Se Faire Transporter"/>
-        <mission name="MELEE Surveiller"/>
         <mission name="MELEE Surveiller un Bloc Urbain"/>
         <mission name="TakeCover"/>
       </missions>
