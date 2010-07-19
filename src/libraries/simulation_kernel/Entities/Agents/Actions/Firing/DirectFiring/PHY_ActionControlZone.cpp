@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_ActionControlZone.h"
-
 #include "PHY_RoleAction_DirectFiring.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -63,9 +61,9 @@ namespace
         }
 
     private:
-        ControlZoneType         type_;
+        ControlZoneType type_;
         const TER_Localisation& location_;
-        MIL_Agent_ABC&          pion_;
+        MIL_Agent_ABC& pion_;
     };
 }
 
@@ -113,10 +111,6 @@ PHY_ActionControlZone::~PHY_ActionControlZone()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionControlZone::Stop
 // Created: LDC 2010-03-11
@@ -124,13 +118,10 @@ PHY_ActionControlZone::~PHY_ActionControlZone()
 void PHY_ActionControlZone::Stop()
 {
     rolePerceiver_.DisableRecoLocalisation( perceptionZoneID_ );
-
     if( pFireResult_ )
         pFireResult_->DecRef();
-
     if( pZoneControlled_ )
         pZoneControlled_->MarkForDestruction();
-
     pZoneControlled_   = 0;
     pFireResult_       = 0;
     perceptionZoneID_ = 0;
@@ -144,7 +135,6 @@ void PHY_ActionControlZone::Execute()
 {
     if( !pZoneControlled_ )
         return;
-
     const bool bMustRefResult = ( pFireResult_ == 0 );
     roleDirectFiring_.FireZone( *pZoneControlled_, pFireResult_ );
     if( pFireResult_ && bMustRefResult )

@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_ActionSupplyObject.h"
-
 #include "PHY_RoleAction_Objects.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Decision/DEC_Tools.h"
@@ -22,8 +21,8 @@
 // -----------------------------------------------------------------------------
 PHY_ActionSupplyObject::PHY_ActionSupplyObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > object )
     : PHY_DecisionCallbackAction_ABC( pion )
-    , role_         ( pion.GetRole< PHY_RoleAction_Objects >() )
-    , object_   ( object_ )
+    , role_  ( pion.GetRole< PHY_RoleAction_Objects >() )
+    , object_( object_ )
 {
     Callback( role_.GetInitialReturnCode() );
 }
@@ -45,10 +44,6 @@ void PHY_ActionSupplyObject::StopAction()
 {
     Callback( role_.GetFinalReturnCode() );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionSupplyObject::Execute

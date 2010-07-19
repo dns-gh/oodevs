@@ -3,11 +3,8 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "DEC_Workspace.h"
-
 #include "DEC_Model.h"
-
 #include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
@@ -37,10 +34,7 @@
 #include "tools/InputBinaryStream.h"
 #include <boost/filesystem/operations.hpp>
 #include <boost/algorithm/string.hpp>
-
-
 #include <sys/stat.h>
-
 
 namespace
 {
@@ -285,7 +279,6 @@ void DEC_Workspace::ReadModel( xml::xistream& xis, const std::map< std::string, 
     const DEC_Model_ABC*& pModel = (*pModels)[ strName ];
     if( pModel )
         xis.error( "Duplicate model name" );
-
 
     //Extract namespace from name
     std::vector<std::string> namespaceComponent;

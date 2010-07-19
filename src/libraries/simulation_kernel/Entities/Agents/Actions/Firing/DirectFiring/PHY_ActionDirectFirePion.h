@@ -12,10 +12,7 @@
 #ifndef __PHY_ActionDirectFirePion_h_
 #define __PHY_ActionDirectFirePion_h_
 
-#include "MIL.h"
-
 #include "PHY_ActionDirectFirePion_ABC.h"
-
 
 // =============================================================================
 // @class  PHY_ActionDirectFirePion

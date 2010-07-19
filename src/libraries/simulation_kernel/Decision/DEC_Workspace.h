@@ -5,8 +5,6 @@
 #ifndef __DEC_Workspace_h_
 #define __DEC_Workspace_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xistream;
@@ -31,7 +29,7 @@ namespace directia
 class DEC_Workspace : private boost::noncopyable
 {
 public:
-     DEC_Workspace( MIL_Config& config );
+             DEC_Workspace( MIL_Config& config );
     virtual ~DEC_Workspace();
 
     //! @name Fonction dia
@@ -41,9 +39,9 @@ public:
 
     //! @name Models management
     //@{
-    const DEC_Model_ABC*       FindModelPion         ( const std::string& strModelName  ) const;
-    const DEC_Model_ABC*       FindModelAutomate     ( const std::string& strModelName  ) const;
-    const DEC_Model_ABC*       FindModelPopulation   ( const std::string& strModelName  ) const;
+    const DEC_Model_ABC* FindModelPion( const std::string& strModelName ) const;
+    const DEC_Model_ABC* FindModelAutomate( const std::string& strModelName ) const;
+    const DEC_Model_ABC* FindModelPopulation( const std::string& strModelName ) const;
     //@}
 
     void InitKnowledges( directia::Brain& brain ) const;
@@ -52,20 +50,20 @@ public:
 private:
     //! @name Init
     //@{
-    void InitializeConfig      ( MIL_Config& config );
-    void InitializeObjectNames ( MIL_Config& config );
-    void InitializeMissions    ( MIL_Config& config );
-    void InitializeDIA         ( MIL_Config& config );
-    void InitializeModels      ( MIL_Config& config, const std::map< std::string, std::string >& strSourcePaths );
+    void InitializeConfig( MIL_Config& config );
+    void InitializeObjectNames( MIL_Config& config );
+    void InitializeMissions( MIL_Config& config );
+    void InitializeDIA( MIL_Config& config );
+    void InitializeModels( MIL_Config& config, const std::map< std::string, std::string >& strSourcePaths );
     //@}
 
 private:
     //! @name Types
     //@{
     typedef std::map< std::string, const DEC_Model_ABC*, sCaseInsensitiveLess > T_ModelMap;
-    typedef T_ModelMap::const_iterator                                          CIT_ModelMap;
-    typedef std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > T_MissionTypeNameMap;
+    typedef T_ModelMap::const_iterator                                        CIT_ModelMap;
     typedef std::map< std::string, T_ModelMap* >                                T_ModelTypeMap;
+    typedef std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > T_MissionTypeNameMap;
     //@}
 
     //! @name Helpers
@@ -75,15 +73,13 @@ private:
     //@}
 
 private:
-    T_ModelMap                          automateModels_;
-    T_ModelMap                          pionModels_;
-    T_ModelMap                          populationModels_;
-    T_ModelTypeMap                      modelTypes_;
-
-    T_MissionTypeNameMap                unitMissionsNames_ ;
-    T_MissionTypeNameMap                automatMissionsNames_ ;
-    T_MissionTypeNameMap                populationMissionsNames_ ;
-
+    T_ModelMap automateModels_;
+    T_ModelMap pionModels_;
+    T_ModelMap populationModels_;
+    T_ModelTypeMap modelTypes_;
+    T_MissionTypeNameMap unitMissionsNames_ ;
+    T_MissionTypeNameMap automatMissionsNames_ ;
+    T_MissionTypeNameMap populationMissionsNames_ ;
     std::auto_ptr< DEC_DataBase > dataBase_;
 };
 

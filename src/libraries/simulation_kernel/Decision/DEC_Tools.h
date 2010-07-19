@@ -12,8 +12,6 @@
 #ifndef __DEC_Tools_h_
 #define __DEC_Tools_h_
 
-#include "MIL.h"
-
 #include "MIL_AgentServer.h"
 #include "Tools/MIL_ProfilerMgr.h"
 

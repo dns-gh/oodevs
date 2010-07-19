@@ -12,7 +12,7 @@
 #ifndef __DEC_Model_ABC_h_
 #define __DEC_Model_ABC_h_
 
-#include "MIL.h"
+#include "MT_Tools/MT_Tools_Types.h"
 
 namespace xml
 {

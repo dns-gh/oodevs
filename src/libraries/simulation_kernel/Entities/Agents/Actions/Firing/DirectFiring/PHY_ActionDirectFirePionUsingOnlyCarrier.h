@@ -12,8 +12,6 @@
 #ifndef __PHY_ActionDirectFirePionUsingOnlyCarrier_h_
 #define __PHY_ActionDirectFirePionUsingOnlyCarrier_h_
 
-#include "MIL.h"
-
 #include "PHY_ActionDirectFirePion_ABC.h"
 
 // =============================================================================

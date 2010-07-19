@@ -10,8 +10,6 @@
 #ifndef __PHY_ActionIllumination_h_
 #define __PHY_ActionIllumination_h_
 
-#include "MIL.h"
-
 #include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 #include "Entities/Agents/Actions/Firing/DirectFiring/PHY_RoleAction_DirectFiring.h"
 
@@ -35,15 +33,15 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Execute         ();
+    virtual void Execute();
     virtual void ExecuteSuspended();
     virtual void StopAction();
     //@}
 
 private:
-          firing::PHY_RoleAction_DirectFiring&       role_;
-          boost::shared_ptr< DEC_Knowledge_Agent >   pEnemy_;
-          MIL_KnowledgeGroup& knowledgeGroup_;
+    firing::PHY_RoleAction_DirectFiring& role_;
+    boost::shared_ptr< DEC_Knowledge_Agent > pEnemy_;
+    MIL_KnowledgeGroup& knowledgeGroup_;
 };
 
 #endif // __PHY_ActionIllumination_h_

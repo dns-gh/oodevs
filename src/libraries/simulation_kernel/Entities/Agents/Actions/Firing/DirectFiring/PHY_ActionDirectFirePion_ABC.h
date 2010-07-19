@@ -12,7 +12,6 @@
 #ifndef __PHY_ActionDirectFirePion_ABC_h_
 #define __PHY_ActionDirectFirePion_ABC_h_
 
-#include "MIL.h"
 #include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 #include "PHY_RoleAction_DirectFiring.h"
 

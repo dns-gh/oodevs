@@ -10,7 +10,6 @@
 #ifndef __DEC_Decision_h_
 #define __DEC_Decision_h_
 
-#include "MIL.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 

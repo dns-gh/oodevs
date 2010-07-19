@@ -18,8 +18,7 @@
 // Created: NLD 2007-05-14
 // -----------------------------------------------------------------------------
 DEC_Objective::DEC_Objective( const Common::MsgMissionObjective& asn )
-    : localisation_()
-    , bFlag_       ( false )
+    : bFlag_( false )
 {
     NET_ASN_Tools::ReadTick( asn.horaire(), nSchedule_);
     if( !NET_ASN_Tools::ReadLocation( asn.localisation(), localisation_ ) )
@@ -42,7 +41,7 @@ DEC_Objective::~DEC_Objective()
 void DEC_Objective::operator=( const DEC_Objective& rhs )
 {
     localisation_ = rhs.localisation_;
-    nSchedule_    = rhs.nSchedule_;
+    nSchedule_ = rhs.nSchedule_;
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +50,6 @@ void DEC_Objective::operator=( const DEC_Objective& rhs )
 // -----------------------------------------------------------------------------
 void DEC_Objective::Serialize( Common::MsgMissionObjective& asn ) const
 {
-    NET_ASN_Tools::WriteTick    ( nSchedule_, *asn.mutable_horaire() );
+    NET_ASN_Tools::WriteTick( nSchedule_, *asn.mutable_horaire() );
     NET_ASN_Tools::WriteLocation( localisation_, *asn.mutable_localisation() );
 }
-
