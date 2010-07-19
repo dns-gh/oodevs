@@ -177,10 +177,11 @@ bool Mapping::IsCommandPost( const std::string& type ) const
 // Name: Mapping::Serialize
 // Created: LDC 2010-07-19
 // -----------------------------------------------------------------------------
-void Mapping::Serialize( xml::xostream& xos, const std::string& id, const std::vector< std::vector< Position > >& tacticals ) const
+void Mapping::Serialize( xml::xosubstream xos, const std::string& id, const std::vector< std::vector< Position > >& tacticals ) const
 {
     xos << xml::attribute( "id", (*this)[ id ] )
-        << xml::attribute( "name", "" );
+        << xml::attribute( "name", "" )
+        << xml::start( "parameters" );
     std::size_t i = 0;
     for( std::vector< std::vector< Position > >::const_iterator it = tacticals.begin(); it != tacticals.end(); ++it, ++i )
     {

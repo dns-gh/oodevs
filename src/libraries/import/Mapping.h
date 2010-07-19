@@ -40,7 +40,7 @@ public:
     unsigned int AddId( const std::string& id );
     unsigned int AddId();
 
-    void Serialize( xml::xostream& xos, const std::string& id, const std::vector< std::vector< Position > >& tacticals ) const;
+    void Serialize( xml::xosubstream xos, const std::string& id, const std::vector< std::vector< Position > >& tacticals ) const;
     //@}
 
     //! @name Accessors

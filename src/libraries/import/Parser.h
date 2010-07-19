@@ -55,7 +55,7 @@ private:
     void ReadTacticalPoint( xml::xistream& xis, std::vector< Position >& positions );
     void ReadMission( xml::xistream& xis );
 
-    void WriteUnitInOrd( xml::xistream& xis, xml::xosubstream xos, const std::string& timeName, const std::string& date );
+    void WriteUnitInOrd( xml::xistream& xis, xml::xosubstream xos, const std::string& date );
     void WriteMissionInOrd( xml::xistream& xis, xml::xostream& xos, const std::string& timeName, const std::string& date );
     //@}
 
