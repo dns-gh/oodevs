@@ -92,9 +92,8 @@ private:
     QListBox* packageContent_;
     QProgressBar* packageProgress_;
     // LTO begin
-    QButton* browse_;
     QString model_;
-    QString inputScenario_;
+    QLineEdit* inputEdit_;
     QString outputScenario_;
     QString terrain_;
     //@}

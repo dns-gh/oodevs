@@ -206,7 +206,7 @@
     </message>
     <message>
         <source>A file called %1 already exists. Do you want to overwrite it?</source>
-        <translation>>Un fichier appelé %1 existe déjà. Voulez-vous l&apos;écraser ?</translation>
+        <translation>Un fichier appelé %1 existe déjà. Voulez-vous l&apos;écraser ?</translation>
     </message>
 </context>
 <context>
@@ -277,10 +277,6 @@
     <message>
         <source>Scenario Name</source>
         <translation>Nom du scénario</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation>...</translation>
     </message>
     <message>
         <source>Terrain:</source>

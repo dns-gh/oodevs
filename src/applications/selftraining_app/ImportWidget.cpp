@@ -98,8 +98,8 @@ ImportWidget::ImportWidget( ScenarioEditPage& page, QWidget* parent, const tools
         hbox->setBackgroundOrigin( QWidget::WindowOrigin );
         hbox->setInsideSpacing( 10 );
         AddModelChoice( hbox );
-        AddOutput( hbox );
         AddInput( hbox );
+        AddOutput( hbox );
         AddTerrainChoice( hbox );
         tabs_->addTab( hbox, tools::translate( "ImportWidget", "Scenario" ) );
     }
@@ -151,7 +151,7 @@ bool ImportWidget::EnableEditButton()
     if( tabs_->currentPageIndex() == 0 ) // OTPAK
         return packageContent_->count() != 0;
     else // LTO
-        return ( !terrain_.isEmpty() && !outputScenario_.isEmpty() && !inputScenario_.isEmpty()); // LTO
+        return ( !terrain_.isEmpty() && !outputScenario_.isEmpty() && !inputEdit_->text().isEmpty() ); // LTO
 }
 
 // -----------------------------------------------------------------------------
@@ -181,11 +181,11 @@ void ImportWidget::InstallPackage()
 // -----------------------------------------------------------------------------
 void ImportWidget::ImportScenario()
 {
-    if( !terrain_.isEmpty() && !outputScenario_.isEmpty() )
+    if( !terrain_.isEmpty() && !outputScenario_.isEmpty() && !inputEdit_->text().isEmpty() )
     {
         const QStringList model = QStringList::split( "/", model_ );
         frontend::CreateExercise( config_, outputScenario_.ascii(), terrain_.ascii(), model.front().ascii(), model.back().ascii() );
-        page_.LaunchScenarioImport( inputScenario_, outputScenario_ );
+        page_.LaunchScenarioImport( inputEdit_->text(), outputScenario_ );
         // $$$$ Wait for import to complete, and then launch prepa or have import app launch prepa itself.
         //page_.LaunchPreparation( outputScenario_ );
     }
@@ -277,9 +277,13 @@ void ImportWidget::AddInput( QGroupBox* box )
     hbox->setBackgroundOrigin( QWidget::WindowOrigin );
     QLabel* label = new QLabel( tools::translate( "ImportWidget", "Input Scenario: " ), hbox );
     label->setBackgroundOrigin( QWidget::WindowOrigin );
-    browse_ = new QPushButton( tools::translate( "ImportWidget", "..." ), hbox );
-    browse_->setBackgroundOrigin( QWidget::WindowOrigin );
-    connect( browse_, SIGNAL( clicked() ), SLOT( OnChangeScenario() ) );
+    QHBox* browseBox = new QHBox( hbox );
+    browseBox->setBackgroundOrigin( QWidget::WindowOrigin );
+    inputEdit_ = new QLineEdit( browseBox );
+    inputEdit_->setBackgroundOrigin( QWidget::WindowOrigin );
+    QButton* browseBtn = new QPushButton( tools::translate( "ImportWidget", "Browse..." ), browseBox );
+    browseBtn->setBackgroundOrigin( QWidget::WindowOrigin );
+    connect( browseBtn, SIGNAL( clicked() ), SLOT( OnChangeScenario() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -356,7 +360,7 @@ void ImportWidget::OnOutputName( const QString& scenario )
 // -----------------------------------------------------------------------------
 void ImportWidget::OnChangeScenario()
 {
-    inputScenario_ = QFileDialog::getOpenFileName( QString::null, "*.xml", this );
-    browse_->setText( inputScenario_ );
+    const QString filename = QFileDialog::getOpenFileName( QString::null, "*.xml", this );
+    inputEdit_->setText( filename );
     page_.UpdateEditButton();
 }
