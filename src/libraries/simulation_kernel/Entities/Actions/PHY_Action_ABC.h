@@ -10,6 +10,7 @@
 #ifndef __PHY_Action_ABC_h_
 #define __PHY_Action_ABC_h_
 
+#include "MIL.h"
 #include "Tools/MIL_IDManager.h"
 
 class PHY_Actor;

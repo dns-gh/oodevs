@@ -12,6 +12,7 @@
 #ifndef __DEC_Gen_Object_h_
 #define __DEC_Gen_Object_h_
 
+#include "MIL.h"
 #include "Entities/Objects/ObstacleAttribute.h"
 #include "simulation_terrain/TER_Localisation.h"
 

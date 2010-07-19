@@ -12,6 +12,8 @@
 #ifndef __DEC_PathType_h_
 #define __DEC_PathType_h_
 
+#include "MIL.h"
+
 
 //*****************************************************************************
 // Created: JDY 03-04-10
@@ -31,7 +33,7 @@ public:
     static const DEC_PathType logistic_;
 
     typedef std::map< std::string, const DEC_PathType*, sCaseInsensitiveLess > T_PathTypeMap;
-    typedef T_PathTypeMap::const_iterator                                    CIT_PathTypeMap;
+    typedef T_PathTypeMap::const_iterator                                      CIT_PathTypeMap;
     //@}
 
 public:

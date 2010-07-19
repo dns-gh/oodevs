@@ -10,10 +10,10 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+
 #include "PHY_ActionDirectFirePionUsingOnlyLoadable.h"
 
 using namespace firing;
-
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionDirectFirePionUsingOnlyLoadable constructor
 // Created: NLD 2004-08-18
@@ -21,7 +21,6 @@ using namespace firing;
 PHY_ActionDirectFirePionUsingOnlyLoadable::PHY_ActionDirectFirePionUsingOnlyLoadable( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, MT_Float percentage, int firingMode )
     : PHY_ActionDirectFirePion_ABC( pion, pEnemy, percentage, firingMode, -1, PHY_DirectFireData::eFireUsingOnlyComposantesLoadable, PHY_DirectFireData::eFireOnAllComposantes )
 {
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -30,5 +29,4 @@ PHY_ActionDirectFirePionUsingOnlyLoadable::PHY_ActionDirectFirePionUsingOnlyLoad
 // -----------------------------------------------------------------------------
 PHY_ActionDirectFirePionUsingOnlyLoadable::~PHY_ActionDirectFirePionUsingOnlyLoadable()
 {
-    // NOTHING
 }

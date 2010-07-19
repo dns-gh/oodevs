@@ -10,9 +10,12 @@
 #ifndef __PHY_RoleAction_DirectFiring_h_
 #define __PHY_RoleAction_DirectFiring_h_
 
+#include "MIL.h"
+
 #include "MT_Tools/Role_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
 #include "PHY_DirectFireData.h"
+
 class PHY_AmmoDotationClass;
 class PHY_FireResults_Pion;
 class PHY_FireResults_Default;
@@ -49,24 +52,26 @@ public:
     //! @name Operations
     //@{
     void Update( bool bIsDead );
-    void Clean();
+    void Clean ();
     //@}
 
     //! @name Operations
     //@{
-    int FirePopulation( unsigned int nTargetKnowledgeID, PHY_FireResults_Pion*& pFireResult );
+    int  FirePopulation         ( unsigned int nTargetKnowledgeID, PHY_FireResults_Pion*& pFireResult );
     void FirePopulationSuspended( unsigned int nTargetKnowledgeID );
-    int FirePion( boost::shared_ptr< DEC_Knowledge_Agent > pAgent, PHY_DirectFireData::E_FiringMode nFiringMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType, PHY_FireResults_Pion*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass = 0 );
-    void FirePionSuspended( boost::shared_ptr< DEC_Knowledge_Agent > pAgent );
-    int IlluminatePion( boost::shared_ptr< DEC_Knowledge_Agent > pEnemy );
+
+    int  FirePion               ( boost::shared_ptr< DEC_Knowledge_Agent > pAgent, PHY_DirectFireData::E_FiringMode nFiringMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType, PHY_FireResults_Pion*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass = 0 );
+    void FirePionSuspended      ( boost::shared_ptr< DEC_Knowledge_Agent > pAgent );
+    int  IlluminatePion         ( boost::shared_ptr< DEC_Knowledge_Agent > pEnemy );
     void IlluminatePionSuspended( boost::shared_ptr< DEC_Knowledge_Agent > pEnemy );
-    void FireZone( const MIL_Object_ABC& zone, PHY_FireResults_Default*& pFireResult );
+
+    void FireZone               ( const MIL_Object_ABC& zone, PHY_FireResults_Default*& pFireResult );
     //@}
 
     //! @name Return codes
     //@{
     int GetInitialReturnCode() const;
-    int GetFinalReturnCode() const;
+    int GetFinalReturnCode  () const;
     //@}
 
 private:
@@ -87,7 +92,7 @@ private:
     //! @name Tools
     //@{
     MIL_Population* GetPopulationTarget( unsigned int nTargetKnowledgeID );
-    void FirePion( PHY_DirectFireData& firerWeapons, MIL_Agent_ABC& target, const PHY_Composante_ABC::T_ComposanteVector& compTargets, PHY_FireResults_Pion& fireResult );
+    void            FirePion           ( PHY_DirectFireData& firerWeapons, MIL_Agent_ABC& target, const PHY_Composante_ABC::T_ComposanteVector& compTargets, PHY_FireResults_Pion& fireResult );
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_DirectFiring* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_DirectFiring* role, const unsigned int /*version*/ );
     //@}

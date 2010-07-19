@@ -12,6 +12,8 @@
 #ifndef __PHY_ActionSupplyObject_h_
 #define __PHY_ActionSupplyObject_h_
 
+#include "MIL.h"
+
 #include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 
@@ -30,12 +32,12 @@ public:
     typedef MIL_AgentPion ActorType;
 
 public:
-             PHY_ActionSupplyObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    PHY_ActionSupplyObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     virtual ~PHY_ActionSupplyObject();
 
     //! @name Operations
     //@{
-    virtual void Execute();
+    virtual void Execute         ();
     virtual void ExecuteSuspended();
     virtual void StopAction();
     //@}

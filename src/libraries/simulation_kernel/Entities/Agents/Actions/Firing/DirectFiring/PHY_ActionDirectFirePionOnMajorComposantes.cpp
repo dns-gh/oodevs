@@ -10,10 +10,10 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+
 #include "PHY_ActionDirectFirePionOnMajorComposantes.h"
 
 using namespace firing;
-
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionDirectFirePionOnMajorComposantes constructor
 // Created: NLD 2004-08-18
@@ -21,7 +21,6 @@ using namespace firing;
 PHY_ActionDirectFirePionOnMajorComposantes::PHY_ActionDirectFirePionOnMajorComposantes( MIL_AgentPion& pion, int ammoDotationClass, boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, MT_Float percentage, int firingMode )
     : PHY_ActionDirectFirePion_ABC( pion, pEnemy, percentage, firingMode, ammoDotationClass, PHY_DirectFireData::eFireUsingAllComposantes, PHY_DirectFireData::eFireOnlyOnMajorComposantes )
 {
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -30,5 +29,4 @@ PHY_ActionDirectFirePionOnMajorComposantes::PHY_ActionDirectFirePionOnMajorCompo
 // -----------------------------------------------------------------------------
 PHY_ActionDirectFirePionOnMajorComposantes::~PHY_ActionDirectFirePionOnMajorComposantes()
 {
-    // NOTHING
 }

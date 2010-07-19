@@ -10,6 +10,7 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
+
 #include "DEC_PathType.h"
 
 const DEC_PathType DEC_PathType::movement_     ( eMovement     , "movement"     );
@@ -21,9 +22,14 @@ const DEC_PathType DEC_PathType::backup_       ( eBackup       , "backup"       
 const DEC_PathType DEC_PathType::mineClearance_( eMineClearance, "minesweep"    );
 const DEC_PathType DEC_PathType::logistic_     ( eLogistic     , "logistic"     );
 
+
+
 DEC_PathType::T_PathTypeFromIDVector DEC_PathType::pathTypesFromID_;
 DEC_PathType::T_PathTypeMap          DEC_PathType::pathTypes_;
 
+// =============================================================================
+// MANAGER
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathType::Initialize
@@ -54,8 +60,12 @@ void DEC_PathType::Initialize()
 // -----------------------------------------------------------------------------
 void DEC_PathType::Terminate()
 {
-    // NOTHING
+
 }
+
+// =============================================================================
+// INSTANCE
+// =============================================================================
 
 //-----------------------------------------------------------------------------
 // Name: DEC_PathType constructor
@@ -65,8 +75,8 @@ DEC_PathType::DEC_PathType( E_PathType nType, const std::string& strName )
     : nPathType_( nType   )
     , strName_  ( strName )
 {
-    // NOTHING
 }
+
 
 //-----------------------------------------------------------------------------
 // Name: DEC_PathType destructor
@@ -74,5 +84,5 @@ DEC_PathType::DEC_PathType( E_PathType nType, const std::string& strName )
 //-----------------------------------------------------------------------------
 DEC_PathType::~DEC_PathType()
 {
-    // NOTHING
 }
+
