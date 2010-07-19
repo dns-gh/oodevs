@@ -78,6 +78,7 @@ private:
     void OnReceiveMsgProfileCreationRequest   ( ClientPublisher_ABC& client, const MsgsClientToAuthentication::MsgProfileCreationRequest&    message );
     void OnReceiveMsgProfileUpdateRequest     ( ClientPublisher_ABC& client, const MsgsClientToAuthentication::MsgProfileUpdateRequest&      message );
     void OnReceiveMsgProfileDestructionRequest( ClientPublisher_ABC& client, const MsgsClientToAuthentication::MsgProfileDestructionRequest& message );
+    bool IsAuthenticated( const std::string& login ) const;
     //@}
 
     //! @name Types

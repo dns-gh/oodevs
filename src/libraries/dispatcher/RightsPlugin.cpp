@@ -9,24 +9,19 @@
 
 #include "dispatcher_pch.h"
 #include "RightsPlugin.h"
-#include "tools/MessageDispatcher_ABC.h"
+#include "Client.h"
+#include "CompositeRegistrable.h"
+#include "DefaultProfile.h"
 #include "LinkResolver_ABC.h"
+#include "NoopPublisher.h"
+#include "Profile.h"
 #include "Profile_ABC.h"
+#include "ProfileManager.h"
+#include "Services.h"
+#include "protocol/authenticationsenders.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ProtocolVersionChecker.h"
-#include "ProfileManager.h"
-#include "Profile.h"
-#include "DefaultProfile.h"
-#include "Client.h"
-#include "NoopPublisher.h"
-#include "CompositeRegistrable.h"
-#include "Services.h"
-//#include "protocol/protocol.h"
-
-#include "protocol/authenticationsenders.h"
-
-//using namespace Common;
-//using namespace MsgsAuthenticationToClient;
+#include "tools/MessageDispatcher_ABC.h"
 
 using namespace dispatcher;
 
@@ -166,8 +161,8 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
 void RightsPlugin::OnReceiveMsgProfileCreationRequest( ClientPublisher_ABC& client, const MsgsClientToAuthentication::MsgProfileCreationRequest& message )
 {
     authentication::ProfileCreationRequestAck ack;
-    ack().set_error_code ( profiles_->Create( message ) );
-    ack().set_login      ( message.profile().login() );
+    ack().set_error_code( profiles_->Create( message ) );
+    ack().set_login( message.profile().login() );
     ack.Send( client );
 }
 
@@ -178,8 +173,8 @@ void RightsPlugin::OnReceiveMsgProfileCreationRequest( ClientPublisher_ABC& clie
 void RightsPlugin::OnReceiveMsgProfileUpdateRequest( ClientPublisher_ABC& client, const MsgsClientToAuthentication::MsgProfileUpdateRequest& message )
 {
     authentication::ProfileUpdateRequestAck ack;
-    ack().set_error_code ( profiles_->Update( message ) );
-    ack().set_login      ( message.login() );
+    ack().set_error_code( profiles_->Update( message ) );
+    ack().set_login( message.login() );
     ack.Send( client );
 }
 
@@ -190,9 +185,24 @@ void RightsPlugin::OnReceiveMsgProfileUpdateRequest( ClientPublisher_ABC& client
 void RightsPlugin::OnReceiveMsgProfileDestructionRequest( ClientPublisher_ABC& client, const MsgsClientToAuthentication::MsgProfileDestructionRequest& message )
 {
     authentication::ProfileDestructionRequestAck ack;
-    ack().set_error_code ( profiles_->Destroy( message ) );
-    ack().set_login      ( message.login() );
+    if( IsAuthenticated( message.login() ) )
+        ack().set_error_code( MsgsAuthenticationToClient::MsgProfileDestructionRequestAck_ErrorCode_invalid_profile );
+    else
+        ack().set_error_code( profiles_->Destroy( message ) );
+    ack().set_login( message.login() );
     ack.Send( client );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RightsPlugin::IsAuthenticated
+// Created: SBO 2010-07-19
+// -----------------------------------------------------------------------------
+bool RightsPlugin::IsAuthenticated( const std::string& login ) const
+{
+    for( T_Profiles::const_iterator it = authenticated_.begin(); it != authenticated_.end(); ++it )
+        if( it->second->GetName() == login )
+            return true;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
