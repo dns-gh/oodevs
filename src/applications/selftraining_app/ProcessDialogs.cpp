@@ -21,10 +21,7 @@ namespace
         return processes.Contains( "simulation_app.exe" )
             || processes.Contains( "gaming_app.exe" )
             || processes.Contains( "replayer_app.exe" )
-            || processes.Contains( "preparation_app.exe" )
-            || processes.Contains( "adaptation_app.exe" )
-            || processes.Contains( "generation_app.exe" )
-            || processes.Contains( "terrain_workshop_app.exe" );
+            || processes.Contains( "preparation_app.exe" );
     }
 
     void StopRunningProcess()
@@ -34,9 +31,6 @@ namespace
         processes.KillAll( "gaming_app.exe" );
         processes.KillAll( "replayer_app.exe" );
         processes.KillAll( "preparation_app.exe" );
-        processes.KillAll( "adaptation_app.exe" );
-        processes.KillAll( "generation_app.exe" );
-        processes.KillAll( "terrain_workshop_app.exe" );
     }
 }
 
