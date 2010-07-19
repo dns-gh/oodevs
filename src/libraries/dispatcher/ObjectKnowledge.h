@@ -63,7 +63,10 @@ public:
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
     void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    //@}
 
+    //! @name Accessors
+    //@{
     virtual const kernel::Entity_ABC* GetRecognizedEntity() const;
     virtual const kernel::Object_ABC* GetEntity() const;
     virtual const kernel::Team_ABC&   GetOwner() const;
@@ -78,15 +81,10 @@ private:
     void CreateOrUpdate( const Common::MsgObjectAttributes& message );
     template< typename T >
     void CreateOrUpdate( const Common::MsgObjectAttributes& message, const Model_ABC& model );
-    //@}
-
-    //! @name Attributes
-    //@{
     void Initialize( const Model_ABC& model, const Common::MsgObjectAttributes& message );
     void AddAttribute( ObjectAttribute_ABC* attribute );
     //@}
 
-private:
     //! @name Types
     //@{
     //$$$ bullshit
@@ -107,26 +105,26 @@ private:
     };
     //@}
 
-    const Model_ABC&             model_;
-    const kernel::Team_ABC&      team_;
-    const kernel::Object_ABC*    pObject_;
-    const std::string            nType_;
-    const kernel::KnowledgeGroup_ABC* knowledgeGroup_;
-
-    unsigned int                   nRelevance_;
-    Localisation                   localisation_;
-    bool                           bPerceived_;
-    std::vector< const kernel::Automat_ABC* >  automatPerceptions_;
-
-private:
     //! @name Types
     //@{
     typedef boost::ptr_vector< ObjectAttribute_ABC > T_ObjectAttributes;
     //@}
 
 private:
-    T_ObjectAttributes           attributes_;
-    T_Optionals                  optionals_;
+    //! @name Member data
+    //@{
+    const Model_ABC& model_;
+    const kernel::Team_ABC& team_;
+    const kernel::Object_ABC* pObject_;
+    const std::string nType_;
+    const kernel::KnowledgeGroup_ABC* knowledgeGroup_;
+    unsigned int nRelevance_;
+    Localisation localisation_;
+    bool bPerceived_;
+    std::vector< const kernel::Automat_ABC* > automatPerceptions_;
+    T_ObjectAttributes attributes_;
+    T_Optionals optionals_;
+    //@}
 };
 
 }

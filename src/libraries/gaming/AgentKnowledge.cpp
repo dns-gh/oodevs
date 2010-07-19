@@ -83,7 +83,7 @@ void AgentKnowledge::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& me
     if( message.has_speed()  )
         nSpeed_ = message.speed();
 
-    if( message.has_camp()  )
+    if( message.has_camp() )
         team_ = & teamResolver_.Get( message.camp() );
 
     if( message.has_nature_pc()  )

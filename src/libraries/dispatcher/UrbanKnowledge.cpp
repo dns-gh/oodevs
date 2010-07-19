@@ -10,11 +10,11 @@
 #include "dispatcher_pch.h"
 #include "UrbanKnowledge.h"
 #include "Automat.h"
-#include "protocol/ClientPublisher_ABC.h"
 #include "Model_ABC.h"
 #include "Side.h"
 #include "UrbanObject.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
 
 using namespace dispatcher;
@@ -25,12 +25,12 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 UrbanKnowledge::UrbanKnowledge( const Model_ABC& model, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message )
     : SimpleEntity< kernel::UrbanKnowledge_ABC >( message.oid() )
-    , model_                        ( model )
-    , team_                         ( model.Sides().Get( message.team() ) )
-    , pUrban_                       ( model.UrbanBlocks().Find( message.real_urban() ) )
-    , bPerceived_                   ( false )
-    , automatPerceptions_           ()
+    , model_                                    ( model )
+    , team_                                     ( model.Sides().Get( message.team() ) )
+    , pUrban_                                   ( model.UrbanBlocks().Find( message.real_urban() ) )
+    , bPerceived_                               ( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -48,9 +48,7 @@ UrbanKnowledge::~UrbanKnowledge()
 // -----------------------------------------------------------------------------
 void UrbanKnowledge::Update( const MsgsSimToClient::MsgUrbanKnowledgeCreation& message )
 {
-    const bool realUrbanChanged = ( message.real_urban() && ! pUrban_ )
-                               || ( pUrban_ && pUrban_->GetId() != unsigned int( message.real_urban() ) );
-    if( realUrbanChanged )
+    if( ( message.real_urban() && ! pUrban_ ) || ( pUrban_ && pUrban_->GetId() != unsigned int( message.real_urban() ) ) )
         pUrban_ = model_.UrbanBlocks().Find( message.real_urban() );
     ApplyUpdate( message );
 }
@@ -68,19 +66,14 @@ void UrbanKnowledge::Update( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& mes
         for( int i = 0; i < message.automat_perception().elem_size(); ++i )
             automatPerceptions_.push_back( &model_.Automats().Get( message.automat_perception().elem( i ) ) );
     }
-
     if( message.has_real_urban() )
         pUrban_ = model_.UrbanBlocks().Find( message.real_urban() );
-
     if( message.has_perceived() )
         bPerceived_ = message.perceived();
-
     if( message.has_identification_level())
         nIdentificationLevel_ = message.identification_level();
-
     if( message.has_relevance() )
         nRelevance_ = message.relevance();
-
     if( message.has_progress() )
         nProgress_ = message.progress();
 }
@@ -92,11 +85,9 @@ void UrbanKnowledge::Update( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& mes
 void UrbanKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::UrbanKnowledgeCreation message;
-
     message().set_oid( GetId() );
     message().set_team( team_.GetId() );
     message().set_real_urban( pUrban_ ? pUrban_->GetId() : 0 );
-
     message.Send( publisher );
 }
 
@@ -107,24 +98,20 @@ void UrbanKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 void UrbanKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::UrbanKnowledgeUpdate message;
-
     message().set_oid( GetId() );
     message().set_team( team_.GetId() );
-
     message().set_real_urban( pUrban_ ? pUrban_->GetId() : 0 );
-
-    if( optionals_.automat_perceptionPresent )
-        for( std::vector< const kernel::Automat_ABC* >::const_iterator it = automatPerceptions_.begin(); it != automatPerceptions_.end(); ++it )
-            message().mutable_automat_perception()->add_elem( (*it)->GetId() );
     if( optionals_.perceivedPresent )
-        message().set_perceived( 1 );
+        message().set_perceived( bPerceived_ );
+    if( optionals_.progressPresent )
+        message().set_progress( nProgress_ );
     if( optionals_.relevancePresent )
         message().set_relevance( nRelevance_ );
     if( optionals_.identification_levelPresent )
         message().set_identification_level( nIdentificationLevel_ );
-    if( optionals_.progressPresent )
-        message().set_progress( nProgress_ );
-
+    if( optionals_.automat_perceptionPresent )
+        for( std::vector< const kernel::Automat_ABC* >::const_iterator it = automatPerceptions_.begin(); it != automatPerceptions_.end(); ++it )
+            message().mutable_automat_perception()->add_elem( (*it)->GetId() );
     message.Send( publisher );
 }
 

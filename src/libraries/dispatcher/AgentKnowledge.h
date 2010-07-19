@@ -18,20 +18,6 @@ namespace kernel
     class KnowledgeGroup_ABC;
 }
 
-namespace Common
-{
-    class MsgCoordLatLong;
-    class MsgUnitType;
-}
-
-namespace MsgsSimToClient
-{
-    class MsgUnitKnowledgeCreation;
-    class MsgUnitKnowledgeUpdate;
-    enum EnumUnitIdentificationLevel;
-    class AutomatPerception;
-}
-
 namespace dispatcher
 {
     class Model;
@@ -57,8 +43,8 @@ public:
     //! @name Operations
     //@{
     virtual void DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg );
-    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendCreation( ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
@@ -77,29 +63,29 @@ private:
     //! @name Types
     //@{
     typedef std::vector< MsgsSimToClient::AutomatPerception > T_AutomatePerceptionVector;
+    //@}
 
 private:
     //! @name Member data
     //@{
-    const Model&                        model_;
-    const kernel::KnowledgeGroup_ABC&   knowledgeGroup_;
-    const dispatcher::Agent_ABC&        agent_;
-    const Common::MsgUnitType           type_;
-
-    unsigned int                        nRelevance_;
-    MsgsSimToClient::EnumUnitIdentificationLevel   nPerceptionLevel_;
-    MsgsSimToClient::EnumUnitIdentificationLevel   nMaxPerceptionLevel_;
-    unsigned int                        nOperationalState_;
-    bool                                bDead_;
-    geometry::Point2d                   position_; // $$$$ _RC_ SBO 2010-05-27: x = latitude, y = longitude !
-    unsigned int                        nDirection_;
-    unsigned int                        nSpeed_;
-    const kernel::Team_ABC*             team_;
-    bool                                bPC_; //$$$ A VIRER
-    T_AutomatePerceptionVector          automatePerceptions_;
-    bool                                bSurrendered_;
-    bool                                bPrisoner_;
-    bool                                bRefugeeManaged_;
+    const Model& model_;
+    const kernel::KnowledgeGroup_ABC& knowledgeGroup_;
+    const dispatcher::Agent_ABC& agent_;
+    const Common::MsgUnitType type_;
+    unsigned int nRelevance_;
+    MsgsSimToClient::EnumUnitIdentificationLevel nPerceptionLevel_;
+    MsgsSimToClient::EnumUnitIdentificationLevel nMaxPerceptionLevel_;
+    unsigned int nOperationalState_;
+    bool bDead_;
+    geometry::Point2d position_; // $$$$ _RC_ SBO 2010-05-27: x = latitude, y = longitude !
+    unsigned int nDirection_;
+    unsigned int nSpeed_;
+    const kernel::Team_ABC* team_;
+    bool bPC_; //$$$ A VIRER
+    T_AutomatePerceptionVector automatePerceptions_;
+    unsigned long surrendered_;
+    bool bPrisoner_;
+    bool bRefugeeManaged_;
     //@}
 };
 

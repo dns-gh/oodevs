@@ -34,6 +34,7 @@ namespace dispatcher
 // =============================================================================
 class UrbanKnowledge : public SimpleEntity< kernel::UrbanKnowledge_ABC >
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -46,17 +47,21 @@ public:
     using SimpleEntity< kernel::UrbanKnowledge_ABC >::Update;
     void Update( const MsgsSimToClient::MsgUrbanKnowledgeCreation& message );
     void Update( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& message );
-    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    void SendCreation( ClientPublisher_ABC& publisher ) const;
+    void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
     void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    //@}
 
+    //! @name Accessors
+    //@{
     virtual const kernel::Entity_ABC* GetRecognizedEntity() const;
     virtual const UrbanObject* GetEntity() const;
-    virtual const kernel::Team_ABC&   GetOwner() const;
+    virtual const kernel::Team_ABC& GetOwner() const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInList( kernel::Displayer_ABC& displayer ) const;
     //@}
+
 private:
     //! @name Types
     //@{
@@ -72,17 +77,18 @@ private:
     //@}
 
 public:
-    const Model_ABC&             model_;
-    const kernel::Team_ABC&      team_;
-    const UrbanObject*           pUrban_;
-
-    unsigned int                 nRelevance_;
-    unsigned int                 nProgress_;
-    bool                         bPerceived_;
+    //! @name Member data
+    //@{
+    const Model_ABC& model_;
+    const kernel::Team_ABC& team_;
+    const UrbanObject* pUrban_;
+    unsigned int nRelevance_;
+    unsigned int nProgress_;
+    bool bPerceived_;
     MsgsSimToClient::EnumUnitIdentificationLevel nIdentificationLevel_;
     std::vector< const kernel::Automat_ABC* > automatPerceptions_;
-
-    T_Optionals                  optionals_;
+    T_Optionals optionals_;
+    //@}
 
 };
 

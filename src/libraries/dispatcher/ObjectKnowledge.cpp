@@ -137,17 +137,10 @@ void ObjectKnowledge::AddAttribute( ObjectAttribute_ABC* attribute )
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::Update( const MsgsSimToClient::MsgObjectKnowledgeCreation& message )
 {
-    bool realObjectChanged = ( message.real_object() && ! pObject_ )
-                          || ( pObject_ && pObject_->GetId() != ( unsigned int )message.real_object() );
-    if( realObjectChanged )
+    if( ( message.real_object() && ! pObject_ ) || ( pObject_ && pObject_->GetId() != ( unsigned int )message.real_object() ) )
         pObject_ = model_.Objects().Find( message.real_object() );
-
     ApplyUpdate( message );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge::Update
@@ -160,7 +153,6 @@ void ObjectKnowledge::Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& a
         localisation_.Update( asnMsg.location() );
         optionals_.locationPresent = 1;
     }
-
     if( asnMsg.has_automat_perception()  )
     {
         optionals_.automat_perceptionPresent = 1;
@@ -168,10 +160,8 @@ void ObjectKnowledge::Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& a
         for( int i = 0; i < asnMsg.automat_perception().elem_size(); ++i )
             automatPerceptions_.push_back( &model_.Automats().Get( asnMsg.automat_perception().elem( i )) );
     }
-
     if( asnMsg.has_real_object()  )
         pObject_ = model_.Objects().Find( asnMsg.real_object() );
-
     if( asnMsg.attributes().has_construction() )
         CreateOrUpdate< ConstructionAttribute >( asnMsg.attributes() );
     if( asnMsg.attributes().has_obstacle() )
@@ -205,17 +195,15 @@ void ObjectKnowledge::Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& a
 void ObjectKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::ObjectKnowledgeCreation asn;
-
     asn().set_oid( GetId() );
     asn().set_team( team_.GetId() );
     if( knowledgeGroup_ )
         asn().set_group( knowledgeGroup_->GetId() );
-    asn().set_real_object( pObject_ ? pObject_->GetId() : 0 );
+    if( pObject_ )
+        asn().set_real_object( pObject_->GetId() );
     asn().set_type( nType_.c_str() );
-
     std::for_each( attributes_.begin(), attributes_.end(),
                    boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
-
     asn.Send( publisher );
 }
 
@@ -230,16 +218,13 @@ void ObjectKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     asn().set_team( team_.GetId() );
     if( knowledgeGroup_ )
         asn().set_group( knowledgeGroup_->GetId() );
-    asn().set_real_object( pObject_ ? pObject_->GetId() : 0 );
-
+    if( pObject_ )
+        asn().set_real_object( pObject_->GetId() );
     if( optionals_.locationPresent )
         localisation_.Send( *asn().mutable_location() );
-
     if( optionals_.automat_perceptionPresent )
-    {
         for( std::vector< const kernel::Automat_ABC* >::const_iterator it = automatPerceptions_.begin(); it != automatPerceptions_.end(); ++it )
             asn().mutable_automat_perception()->add_elem( (*it)->GetId() );
-    }
     asn().mutable_attributes();
     std::for_each( attributes_.begin(), attributes_.end(),
                    boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
@@ -253,8 +238,8 @@ void ObjectKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 void ObjectKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::ObjectKnowledgeDestruction asn;
-    asn().set_oid  ( GetId() );
-    asn().set_team ( team_.GetId());
+    asn().set_oid( GetId() );
+    asn().set_team( team_.GetId() );
     asn.Send( publisher );
 }
 

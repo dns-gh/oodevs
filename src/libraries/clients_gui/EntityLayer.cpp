@@ -33,10 +33,10 @@ EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& t
     , tools_      ( tools )
     , strategy_   ( strategy )
     , view_       ( view )
-    , profile_    ( profile )
     , tooltiped_  ( std::numeric_limits< unsigned >::max() )
     , tooltip_    ( 0 )
     , selected_   ( 0 )
+    , profile_    ( profile )
 {
     // NOTHING
 }
