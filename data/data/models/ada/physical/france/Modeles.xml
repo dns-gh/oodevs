@@ -63,9 +63,7 @@
         <mission name="ObserveAndReconnoiterUrbanBlock"/>
         <mission name="ObservePoint"/>
         <mission name="ObserveDirection"/>
-        <mission name="ObserveUrbanBlock"/>
         <mission name="ObserveAgent"/>
-        <mission name="ObserveObject"/>
         <mission name="MELEE Reconnaitre Itineraire"/>
         <mission name="ReconnoiterPoint"/>
         <mission name="ReconnoiterUrbanBlock"/>
