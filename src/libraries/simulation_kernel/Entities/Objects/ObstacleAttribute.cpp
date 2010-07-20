@@ -69,8 +69,8 @@ namespace
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
 ObstacleAttribute::ObstacleAttribute( xml::xistream& xis )
-    : obstacle_      ( ExtractObstacle( xml::attribute( xis, "type", std::string() ) ) )
-    , bActivated_    ( xml::attribute( xis, "activated", false ) )
+    : obstacle_      ( ExtractObstacle( xis.attribute< std::string >( "type", std::string() ) ) )
+    , bActivated_    ( xis.attribute< bool >( "activated", false ) )
     , activationTime_( 0 )
 {
     xis >> xml::optional

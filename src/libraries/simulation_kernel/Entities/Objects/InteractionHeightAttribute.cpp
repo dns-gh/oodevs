@@ -42,7 +42,7 @@ InteractionHeightAttribute::InteractionHeightAttribute( const Common::MsgMission
 // Created: LDC 2009-03-09
 // -----------------------------------------------------------------------------
 InteractionHeightAttribute::InteractionHeightAttribute( xml::xistream& xis )
-    : height_( xml::attribute( xis, "height", 0.f ) )
+    : height_( xis.attribute< float >( "height", 0.f ) )
 {
     // NOTHING
 }

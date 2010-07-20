@@ -181,7 +181,7 @@ void DEC_Agent_PathClass::ReadObjectsCost( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void DEC_Agent_PathClass::ReadObject( xml::xistream& xis )
 {
-    std::string strType( xml::attribute( xis, "type", std::string() ) );
+    std::string strType( xis.attribute< std::string >( "type", std::string() ) );
     try
     {
         const MIL_ObjectType_ABC& objectType = MIL_ObjectFactory::FindType( strType );

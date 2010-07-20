@@ -37,7 +37,7 @@ public:
     FilterHelper() {};
     FilterHelper( xml::xistream& xis, const std::string& attribute )
     {
-        const std::string values = xml::attribute( xis, attribute, std::string() );
+        const std::string values = xis.attribute< std::string >( attribute, std::string() );
         if( ! values.empty() )
         {
             std::vector< std::string > split;

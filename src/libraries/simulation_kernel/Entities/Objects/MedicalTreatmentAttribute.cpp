@@ -45,7 +45,7 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute()
 MedicalTreatmentAttribute::MedicalTreatmentAttribute( xml::xistream& xis )
     : medicalTreatmentMap_()
 {
-    std::string typeName( xml::attribute( xis, "medical-treatment", std::string() ) );
+    std::string typeName( xis.attribute< std::string >( "medical-treatment", std::string() ) );
     const MIL_MedicalTreatmentType* pType = MIL_MedicalTreatmentType::Find( typeName );
     if( !pType )
         xis.error( "Unknown 'Medical treatment type' '" + typeName + "' for medical treatment attribute" );

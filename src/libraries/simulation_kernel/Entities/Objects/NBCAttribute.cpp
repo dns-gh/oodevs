@@ -29,7 +29,7 @@ using namespace hla;
 // -----------------------------------------------------------------------------
 NBCAttribute::NBCAttribute( xml::xistream& xis )
     : nForm_ ( eGas )
-    , danger_( xml::attribute( xis, "danger", 0 ) )
+    , danger_( xis.attribute< unsigned int >( "danger", 0 ) )
 {
     std::string state( "gaseous" );
     xis >> xml::optional
@@ -96,7 +96,7 @@ bool NBCAttribute::Insert( const T& type )
 // -----------------------------------------------------------------------------
 void NBCAttribute::ReadNBCAgent( xml::xistream& xis )
 {
-    std::string type( xml::attribute( xis, "type", std::string() ) );
+    std::string type( xis.attribute< std::string >( "type", std::string() ) );
     if( ! Insert( type ) )
         xis.error( "Unknown 'AgentNBC' '" + type + "' for NBC object" );
 }

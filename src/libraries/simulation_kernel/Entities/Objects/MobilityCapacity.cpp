@@ -53,7 +53,7 @@ void MobilityCapacity::InitializeSpeed( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MobilityCapacity::InitializeSpeedPolicy( xml::xistream& xis )
 {
-    std::string strSpeedPolicy( xml::attribute( xis, "unit-speed-impact-mode", std::string() ) );
+    std::string strSpeedPolicy( xis.attribute< std::string >( "unit-speed-impact-mode", std::string() ) );
     if( sCaseInsensitiveEqual()( strSpeedPolicy, "AuPlusLent" ) )
         nSpeedPolicy_ = eSpeedPolicy_Slowest;
     else if( sCaseInsensitiveEqual()( strSpeedPolicy, "VitesseMaxObjet" ) )

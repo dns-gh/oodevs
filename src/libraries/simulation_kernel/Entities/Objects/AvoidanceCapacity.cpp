@@ -23,7 +23,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( AvoidanceCapacity )
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 AvoidanceCapacity::AvoidanceCapacity( xml::xistream& xis )
-    : distance_ ( MIL_Tools::ConvertMeterToSim( xml::attribute( xis, "distance", 0. ) ) )
+    : distance_ ( MIL_Tools::ConvertMeterToSim( xis.attribute< float >( "distance", 0. ) ) )
 {
     // NOTHING
 }

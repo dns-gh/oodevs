@@ -29,7 +29,7 @@ NBCTypeAttribute::NBCTypeAttribute( xml::xistream& xis )
     , propagationAngle_  ( 0 )
     , sourceLifeDuration_( 0 )
 {
-    std::string agentType( xml::attribute( xis, "type", std::string() ) );
+    std::string agentType( xis.attribute< std::string >( "type", std::string() ) );
     pAgent_ = MIL_NBCType::Find( agentType );
     if( !pAgent_ )
         xis.error( "Unknown 'AgentNBC' '" + agentType + "' for NBC object" );

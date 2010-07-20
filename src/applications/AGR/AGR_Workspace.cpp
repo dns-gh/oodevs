@@ -98,7 +98,7 @@ void AGR_Workspace::ReadSimpleTypeElement( const std::string& type, xml::xistrea
 {
     if( type == "xsd:restriction" )
     {
-        if( xml::attribute( xis, "base", std::string() ) == "xsd:token" )
+        if( xis.attribute< std::string >( "base", std::string() ) == "xsd:token" )
         {
             bool bFound = false;
             for( IT_Enumeration_Vector it = enumerationList_.begin(); it != enumerationList_.end(); ++it )

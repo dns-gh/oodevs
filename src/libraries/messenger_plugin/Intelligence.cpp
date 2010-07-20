@@ -109,9 +109,9 @@ Intelligence::Intelligence( unsigned int id, const MsgsClientToMessenger::MsgInt
 // -----------------------------------------------------------------------------
 Intelligence::Intelligence( unsigned int id, xml::xistream& xis, const Common::MsgFormation& formation, const kernel::CoordinateConverter_ABC& converter )
     : id_       ( id )
-    , name_     ( xml::attribute< std::string > ( xis, "name" ) )
-    , nature_   ( xml::attribute< std::string > ( xis, "nature" ) )
-    , embarked_ ( xml::attribute< bool >        ( xis, "embarked" ) )
+    , name_     ( xis.attribute< std::string >( "name" ) )
+    , nature_   ( xis.attribute< std::string >( "nature" ) )
+    , embarked_ ( xis.attribute< bool >( "embarked" ) )
     , formation_( formation )
     , level_    ( ResolveLevel( xis.attribute< std::string >( "level" ) ) )
     , diplomacy_( ResolveKarma( xis.attribute< std::string >( "karma" ) ) )

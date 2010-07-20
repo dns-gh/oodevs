@@ -239,6 +239,6 @@ void DrawingsModel::Publish( const Drawing& drawing )
 // -----------------------------------------------------------------------------
 void DrawingsModel::ReadNamedShape( xml::xistream& xis, std::auto_ptr< Drawing >& result, const std::string& name )
 {
-    if( xml::attribute( xis, "name", std::string() ) == name )
+    if( xis.attribute< std::string >( "name", std::string() ) == name )
         result.reset( new Drawing( idManager_.NextId(), xis, converter_ ) );
 }

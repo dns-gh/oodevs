@@ -35,7 +35,7 @@ DisExtensionFactory::DisExtensionFactory( UdpNetwork& network, const Time_ABC& t
     , site_( xis.attribute< unsigned short >( "site" ) )
     , application_( xis.attribute< unsigned short >( "application" ) )
     , exercise_( (unsigned char)xis.attribute< unsigned short >( "exercise" ) )
-    , lag_( xml::attribute( xis, "lag", false ) )
+    , lag_( xis.attribute< bool >( "lag", false ) )
     , id_( 1 )
 {
     // NOTHING

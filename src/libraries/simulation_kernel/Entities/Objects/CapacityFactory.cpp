@@ -63,7 +63,7 @@ namespace
 
     void AddPropagation( ObjectPrototype& prototype, xml::xistream& xis, MIL_PropagationManager& propagation )
     {
-        const std::string model( xml::attribute( xis, "model", std::string() ) );
+        const std::string model( xis.attribute< std::string >( "model", std::string() ) );
         if( model == "input" )
             prototype.AddCapacity< PropagationCapacity_ABC >( new InputPropagationCapacity( xis ) );
         if( model == "fire" )

@@ -29,7 +29,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( AttritionCapacity )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 AttritionCapacity::AttritionCapacity( xml::xistream& xis )
-    : category_ ( xml::attribute( xis, "category", std::string() ) )
+    : category_ ( xis.attribute< std::string >( "category", std::string() ) )
     , dotation_ ( PHY_DotationType::FindDotationCategory( category_ ) )
 {
     if( !dotation_ )
