@@ -1597,7 +1597,7 @@
     <mission cdt-dia-behavior="net.masagroup.testSword.military.company.tasks.GiveOrderMoveTo" dia-type="T_Mission_Automate_GiveOrderMoveToPoint" id="1002" mrt-dia-behavior="net.masagroup.testSword.military.company.tasks.GiveOrderMoveTo" name="GiveOrderMoveToPoint">
       <parameter dia-name="objective" name="destination" optional="false" type="PointBM"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.military.company.tasks.FaireMouvementVersPosition" dia-type="T_Mission_Automate_FaireMouvementVersPosition" id="1003" mrt-dia-behavior="net.masagroup.sword.military.company.tasks.FaireMouvementVersPosition" name="FaireMouvementVersPosition">
+    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.FaireMouvementVersPosition" dia-type="net.masagroup.sword.france.military.company.tasks.FaireMouvementVersPosition" id="1003" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.FaireMouvementVersPosition" name="FaireMouvementVersPosition">
       <parameter dia-name="objectives" name="objectives" optional="false" type="PathBM"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.tasks.commun.automat.FaireMouvementVersBU" dia-type="T_Mission_Automate_FaireMouvementVersBU" id="1004" mrt-dia-behavior="net.masagroup.sword.france.military.tasks.commun.automat.FaireMouvementVersBU" name="FaireMouvementVersBU">
