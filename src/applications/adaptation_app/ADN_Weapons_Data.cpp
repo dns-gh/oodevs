@@ -297,7 +297,7 @@ ADN_Weapons_Data::WeaponInfos* ADN_Weapons_Data::WeaponInfos::CreateCopy()
 void ADN_Weapons_Data::WeaponInfos::ReadTargetSize( xml::xistream& input )
 {
     bDirect_ = true;
-    std::string target = xml::attribute< std::string >( input, "target" );
+    std::string target = input.attribute< std::string >( "target" );
     IT_PhSizeInfosVector itPhSizeInfo = std::find_if( phs_.begin(), phs_.end(), PhSizeInfos::Cmp( target ));
     if( itPhSizeInfo != phs_.end() )
         (*itPhSizeInfo)->ReadArchive( input );

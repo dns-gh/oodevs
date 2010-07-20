@@ -530,7 +530,7 @@ ADN_Sensors_Data::TargetInfos* ADN_Sensors_Data::TargetInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::TargetInfos::ReadPosture( xml::xistream& input )
 {
-    const std::string type = xml::attribute< std::string >( input, "type" );
+    const std::string type = input.attribute< std::string >( "type" );
     for( unsigned i = 0; i < eNbrUnitPosture; ++i )
         if( type == ADN_Tools::ComputePostureScriptName( E_UnitPosture( i ) ) )
         {
@@ -873,7 +873,7 @@ void ADN_Sensors_Data::SensorInfos::ReadLimitedToSensorsList( xml::xistream& inp
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::SensorInfos::ReadBaseDistance( xml::xistream& input )
 {
-    std::string level = xml::attribute< std::string >( input, "level" );
+    std::string level = input.attribute< std::string >( "level" );
     if( level == "identification" )
         input >> xml::attribute( "distance", rDistIdent_ );
     else if( level == "recognition" )
@@ -888,7 +888,7 @@ void ADN_Sensors_Data::SensorInfos::ReadBaseDistance( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::SensorInfos::ReadSize( xml::xistream& input )
 {
-    const std::string type = xml::attribute< std::string >( input, "type" );
+    const std::string type = input.attribute< std::string >( "type" );
     IT_ModificatorSizeInfos_Vector it = std::find_if( vModifSizes_.begin(), vModifSizes_.end(), ModificatorSizeInfos::Cmp( type ) );
     if( it != vModifSizes_.end() )
         (*it)->ReadArchive( input );
@@ -902,7 +902,7 @@ void ADN_Sensors_Data::SensorInfos::ReadSize( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::SensorInfos::ReadPrecipitation( xml::xistream& input )
 {
-    const std::string type = xml::attribute< std::string >( input, "type" );
+    const std::string type = input.attribute< std::string >( "type" );
     for( unsigned i = 0; i < eNbrSensorWeatherModifiers; ++i )
         if( ADN_Tools::Scriptify( ADN_Tr::ConvertFromSensorWeatherModifiers( E_SensorWeatherModifiers( i ) ) ) == type )
         {
@@ -919,7 +919,7 @@ void ADN_Sensors_Data::SensorInfos::ReadPrecipitation( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::SensorInfos::ReadVisibility( xml::xistream& input )
 {
-    const std::string type = xml::attribute< std::string >( input, "type" );
+    const std::string type = input.attribute< std::string >( "type" );
     E_TimeCategory n = ADN_Tr::ConvertToTimeCategory( type );
     vModifIlluminations_.at( n )->ReadArchive( input );
 }
@@ -930,7 +930,7 @@ void ADN_Sensors_Data::SensorInfos::ReadVisibility( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::SensorInfos::ReadSourcePosture( xml::xistream& input )
 {
-    const std::string type = xml::attribute< std::string >( input, "type" );
+    const std::string type = input.attribute< std::string >( "type" );
     for( unsigned i = 0; i < eNbrUnitPosture; ++i )
         if( type == ADN_Tools::ComputePostureScriptName( E_UnitPosture( i ) ) )
         {
@@ -946,7 +946,7 @@ void ADN_Sensors_Data::SensorInfos::ReadSourcePosture( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::SensorInfos::ReadTargetPosture( xml::xistream& input )
 {
-    const std::string type = xml::attribute< std::string >( input, "type" );
+    const std::string type = input.attribute< std::string >( "type" );
     for( unsigned i = 0; i < eNbrUnitPosture; ++i )
         if( type == ADN_Tools::ComputePostureScriptName( E_UnitPosture( i ) ) )
         {
@@ -962,7 +962,7 @@ void ADN_Sensors_Data::SensorInfos::ReadTargetPosture( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::SensorInfos::ReadTerrain( xml::xistream& input )
 {
-    const std::string type = xml::attribute< std::string >( input, "type" );
+    const std::string type = input.attribute< std::string >( "type" );
     E_VisionObject n = ADN_Tr::ConvertToVisionObject( type );
     vModifEnvironments_.at( n )->ReadArchive( input );
 }
@@ -973,7 +973,7 @@ void ADN_Sensors_Data::SensorInfos::ReadTerrain( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::SensorInfos::ReadUrbanBlockMaterial( xml::xistream& input )
 {
-    const std::string type = xml::attribute< std::string >( input, "type" );
+    const std::string type = input.attribute< std::string >( "type" );
     IT_ModificatorUrbanBlockInfos_Vector it = std::find_if( vModifUrbanBlocks_.begin(), vModifUrbanBlocks_.end(), ModificatorUrbanBlockInfos::Cmp( type ) );
     if( it != vModifUrbanBlocks_.end() )
         (*it)->ReadArchive( input );

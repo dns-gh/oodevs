@@ -302,7 +302,7 @@ ADN_NBC_Datas::NbcAgentInfos* ADN_NBC_Datas::NbcAgentInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_NBC_Datas::NbcAgentInfos::ReadEffect( xml::xistream& input )
 {
-    const std::string type = xml::attribute< std::string >( input, "type" );
+    const std::string type = input.attribute< std::string >( "type" );
     if( type == "liquid" )
     {
         bLiquidPresent_ = true;

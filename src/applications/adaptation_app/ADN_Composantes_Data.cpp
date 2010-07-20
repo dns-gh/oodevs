@@ -752,7 +752,7 @@ void ADN_Composantes_Data::BreakdownGroupInfos::CopyFrom( BreakdownGroupInfos& s
 // -----------------------------------------------------------------------------
 void ADN_Composantes_Data::BreakdownGroupInfos::ReadBreakdown( xml::xistream& input )
 {
-    if( xml::attribute< std::string >( input, "origin" ) == strName_ )
+    if( input.attribute< std::string >( "origin" ) == strName_ )
     {
         std::auto_ptr<BreakdownInfos> spNew( new BreakdownInfos() );
         spNew->ReadArchive( input );
@@ -1319,7 +1319,7 @@ void ADN_Composantes_Data::DotationInfos::CopyFrom( ADN_Composantes_Data::Dotati
 // -----------------------------------------------------------------------------
 void ADN_Composantes_Data::DotationInfos::ReadCategory( xml::xistream& input )
 {
-    std::string name = xml::attribute< std::string >( input, "name" );
+    std::string name = input.attribute< std::string >( "name" );
     E_DotationFamily family = ENT_Tr::ConvertToDotationFamily( name );
     ADN_Equipement_Data::DotationInfos& dotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( family );
 

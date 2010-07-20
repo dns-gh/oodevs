@@ -346,7 +346,7 @@ namespace
 // -----------------------------------------------------------------------------
 void ADN_Categories_Data::ReadVolume( xml::xistream& input )
 {
-    std::string strName = xml::attribute< std::string >( input, "name" );
+    std::string strName = input.attribute< std::string >( "name" );
     T_SizeInfos_Vector::iterator foundSize = std::find_if( vSizes_.begin(), vSizes_.end(), ADN_String_Cmp( strName ) );
     if( foundSize != vSizes_.end() )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Categories - Duplicated volume type name '%1'" ).arg( strName.c_str() ).ascii() );

@@ -590,7 +590,7 @@ void ADN_Units_Data::UnitInfos::ReadCrew( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::UnitInfos::ReadPosture( xml::xistream& input )
 {
-    std::string posture = xml::attribute< std::string >( input, "name" );
+    std::string posture = input.attribute< std::string >( "name" );
     IT_PostureInfos_Vector itPosture = std::find_if( vPostures_.begin(), vPostures_.end(), PostureInfos::Cmp( posture ) );
     if( itPosture != vPostures_.end() )
         (*itPosture)->ReadArchive( input );

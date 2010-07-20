@@ -31,7 +31,7 @@ namespace
 {
     const kernel::AutomatType& ReadType( const tools::Resolver_ABC< kernel::AutomatType, std::string >& types, xml::xistream& input )
     {
-        return types.Get( xml::attribute< std::string >( input, "automatType" ) );
+        return types.Get( input.attribute< std::string >( "automatType" ) );
     }
 
     void ReadName( xml::xistream& input, QString& name )

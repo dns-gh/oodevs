@@ -126,7 +126,7 @@ void ADN_Health_Data::ReadResourceAvailability( xml::xistream& input )
 {
     std::auto_ptr< ADN_AvailabilityWarning > pNew( new ADN_AvailabilityWarning() );
     pNew->ReadArchive( input );
-    const std::string resource = xml::attribute< std::string >( input, "resource" );
+    const std::string resource = input.attribute< std::string >( "resource" );
     if( resource == "relieve" )
         vChangeOverWarnings_.AddItem( pNew.release() );
     else if( resource == "collection" )

@@ -180,7 +180,7 @@ void ADN_Urban_Data::ReadMaterials( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::ReadMaterial( xml::xistream& input )
 {
-    std::string strName = xml::attribute< std::string >( input, "name" );
+    std::string strName = input.attribute< std::string >( "name" );
     T_UrbanInfos_Vector::iterator foundMaterial = std::find_if( vMaterials_.begin(), vMaterials_.end(), ADN_String_Cmp( strName ) );
     if( foundMaterial != vMaterials_.end() )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Material - Duplicated material type name '%1'" ).arg( strName.c_str() ).ascii() );
@@ -231,7 +231,7 @@ void ADN_Urban_Data::ReadFacades( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::ReadFacade( xml::xistream& input )
 {
-    std::string strName = xml::attribute< std::string >( input, "name" );
+    std::string strName = input.attribute< std::string >( "name" );
     T_UrbanInfos_Vector::iterator foundFacade = std::find_if( vFacades_.begin(), vFacades_.end(), ADN_String_Cmp( strName ) );
     if( foundFacade != vFacades_.end() )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Facade - Duplicated material type name '%1'" ).arg( strName.c_str() ).ascii() );
@@ -281,7 +281,7 @@ void ADN_Urban_Data::ReadRoofShapes( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::ReadRoofShape( xml::xistream& input )
 {
-    std::string strName = xml::attribute< std::string >( input, "name" );
+    std::string strName = input.attribute< std::string >( "name" );
     T_UrbanInfos_Vector::iterator foundRoofShape = std::find_if( vRoofShapes_.begin(), vRoofShapes_.end(), ADN_String_Cmp( strName ) );
     if( foundRoofShape != vRoofShapes_.end() )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Facade - Duplicated material type name '%1'" ).arg( strName.c_str() ).ascii() );

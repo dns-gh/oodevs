@@ -19,7 +19,7 @@ using namespace kernel;
 // Created: AGE 2006-09-05
 // -----------------------------------------------------------------------------
 AutomatComposition::AutomatComposition( xml::xistream& input, const tools::Resolver_ABC< AgentType, std::string >& agentResolver )
-    : type_( agentResolver.Get( xml::attribute< std::string >( input, "type" ) ) )
+    : type_( agentResolver.Get( input.attribute< std::string >( "type" ) ) )
     , min_( 0 )
     , max_( std::numeric_limits< unsigned >::max() )
 {

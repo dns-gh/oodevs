@@ -86,7 +86,7 @@ std::string ADN_Launchers_Data::LauncherInfos::GetItemName()
 void ADN_Launchers_Data::LauncherInfos::ReadPosture( xml::xistream& input )
 {
     bDirect_ = true;
-    const std::string posture = xml::attribute< std::string >( input, "posture" );
+    const std::string posture = input.attribute< std::string >( "posture" );
     input >> xml::list( "ph-modifier", *this, &ADN_Launchers_Data::LauncherInfos::ReadPh, posture );
 }
 
@@ -96,7 +96,7 @@ void ADN_Launchers_Data::LauncherInfos::ReadPosture( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Launchers_Data::LauncherInfos::ReadPh( xml::xistream& input, const std::string& posture )
 {
-    const std::string targetPosture = xml::attribute< std::string >( input, "target-posture" );
+    const std::string targetPosture = input.attribute< std::string >( "target-posture" );
     int fire = -1, target = -1;
     for( int iPosture =0; iPosture < eNbrUnitPosture; ++iPosture )
     {
@@ -104,7 +104,7 @@ void ADN_Launchers_Data::LauncherInfos::ReadPh( xml::xistream& input, const std:
         if( posture == current )       fire   = iPosture;
         if( targetPosture == current ) target = iPosture;
     }
-    tabModifs_.Get( fire, target ) = xml::attribute< double >( input, "value" ) * 100;
+    tabModifs_.Get( fire, target ) = input.attribute< double >( "value" ) * 100;
 }
 
 // -----------------------------------------------------------------------------

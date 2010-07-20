@@ -121,7 +121,7 @@ void ADN_HumanFactors_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_HumanFactors_Data::ReadModifier( xml::xistream& input )
 {
-    const std::string state = xml::attribute< std::string >( input, "state" );
+    const std::string state = input.attribute< std::string >( "state" );
     if( state == "Veteran" )
         veteranModifiers_.ReadArchive( input );
     else if( state == "Experimente" )

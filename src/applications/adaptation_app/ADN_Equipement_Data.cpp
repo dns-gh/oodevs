@@ -553,7 +553,7 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::AmmoCategoryInfo::Create
 void ADN_Equipement_Data::AmmoCategoryInfo::ReadAttrition( xml::xistream& input )
 {
     bDirect_ = true;
-    std::string protection = xml::attribute< std::string >( input, "protection" );
+    std::string protection = input.attribute< std::string >( "protection" );
     IT_AttritionInfos_Vector itAttrition = std::find_if( attritions_.begin(), attritions_.end(),AttritionInfos::Cmp( protection ));
     if( itAttrition == attritions_.end() )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid armor type '%1'" ).arg( protection.c_str() ).ascii() );
@@ -567,7 +567,7 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadAttrition( xml::xistream& input 
 void ADN_Equipement_Data::AmmoCategoryInfo::ReadUrbanModifer( xml::xistream& input )
 {
     bUrbanAttrition_ = true;
-    std::string material = xml::attribute< std::string >( input, "material-type" );
+    std::string material = input.attribute< std::string >( "material-type" );
     IT_UrbanAttritionInfos_Vector it = std::find_if( modifUrbanBlocks_.begin(), modifUrbanBlocks_.end(), UrbanAttritionInfos::Cmp( material ) );
     if( it == modifUrbanBlocks_.end() )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid urban Material type '%1'" ).arg( material.c_str() ).ascii() );

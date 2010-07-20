@@ -32,7 +32,7 @@ namespace
 {
     const kernel::AgentType& ReadType( const tools::Resolver_ABC< kernel::AgentType, std::string >& types, xml::xistream& input )
     {
-        return types.Get( xml::attribute< std::string >( input, "agentType" ) );
+        return types.Get( input.attribute< std::string >( "agentType" ) );
     }
 
     void ReadName( xml::xistream& input, QString& name )
