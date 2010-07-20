@@ -54,15 +54,15 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_ComposantePion )
 // Created: NLD 2004-08-12
 // -----------------------------------------------------------------------------
 PHY_ComposantePion::PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_ComposanteTypePion& type, PHY_RolePion_Composantes& role, unsigned int nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy )
-    : PHY_Composante_ABC           ( )
+    : PHY_Composante_ABC()
     , time_                        ( time )
     , pState_                      ( &PHY_ComposanteState::undamaged_ )
-    , pRole_                       ( &role              )
-    , pType_                       ( &type              )
-    , bMajor_                      ( bMajor             )
-    , bLoadable_                   ( bLoadable          )
+    , pRole_                       ( &role )
+    , pType_                       ( &type )
+    , bMajor_                      ( bMajor )
+    , bLoadable_                   ( bLoadable )
     , bCanBePartOfConvoy_          ( bCanBePartOfConvoy )
-    , bUsedForLogistic_            ( false              )
+    , bUsedForLogistic_            ( false )
     , nAutoRepairTimeStep_         ( 0 )
     , pBreakdown_                  ( 0 )
     , pMaintenanceState_           ( 0 )
@@ -128,10 +128,6 @@ PHY_ComposantePion::~PHY_ComposantePion()
 
     delete pHumans_;
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::load
@@ -206,10 +202,6 @@ void PHY_ComposantePion::save( MIL_CheckPointOutArchive& file, const unsigned in
     }
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::TransferComposante
 // Created: JVT 2005-01-17
@@ -236,10 +228,6 @@ void PHY_ComposantePion::TransferComposante( PHY_RoleInterface_Composantes& newR
     pRole_ = &newRole;
     pRole_->NotifyComposanteAdded( *this );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::ReinitializeState
@@ -268,10 +256,6 @@ void PHY_ComposantePion::ReinitializeState( const PHY_ComposanteState& tmpState 
     assert( pRole_ );
     pRole_->NotifyComposanteChanged ( *this, *pOldState );
 }
-
-// =============================================================================
-// ACCESSORS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::GetMaxSpeed
@@ -323,10 +307,6 @@ const PHY_ConsumptionType& PHY_ComposantePion::GetConsumptionMode( const MIL_Obj
     assert( pType_ );
     return pType_->GetConsumptionMode( objectType );
 }
-
-// =============================================================================
-// FIRE / DANGEROSITY
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::ApplyFire
@@ -720,10 +700,6 @@ void PHY_ComposantePion::Repair()
         ReinitializeState( PHY_ComposanteState::undamaged_ );
     HealAllHumans();
 }
-
-// =============================================================================
-// MAIN
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::Update

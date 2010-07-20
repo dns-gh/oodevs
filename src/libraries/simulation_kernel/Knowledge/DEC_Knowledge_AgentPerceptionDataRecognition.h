@@ -12,7 +12,9 @@
 #ifndef __DEC_Knowledge_AgentPerceptionDataRecognition_h_
 #define __DEC_Knowledge_AgentPerceptionDataRecognition_h_
 
+#include "MIL.h"
 #include "DEC_Knowledge_Def.h"
+#include "DEC_Knowledge_AgentComposante.h"
 #include <boost/serialization/export.hpp>
 
 class MIL_Agent_ABC;

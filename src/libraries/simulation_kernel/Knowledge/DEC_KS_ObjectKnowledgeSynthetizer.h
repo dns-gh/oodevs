@@ -13,6 +13,7 @@
 #define __DEC_KS_ObjectKnowledgeSynthetizer_h_
 
 #include "DEC_KnowledgeSource_ABC.h"
+#include "DEC_Knowledge_Def.h"
 
 class DEC_KnowledgeBlackBoard_Army;
 class DEC_Knowledge_ObjectPerception;

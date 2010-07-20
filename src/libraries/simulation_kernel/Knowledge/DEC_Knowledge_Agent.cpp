@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_Agent.h"
 #include "DEC_Knowledge_AgentPerception.h"
+#include "DEC_Knowledge_AgentComposante.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentType_ABC.h"

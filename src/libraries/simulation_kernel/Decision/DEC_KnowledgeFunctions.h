@@ -14,6 +14,7 @@
 
 class DEC_Decision_ABC;
 class MIL_AgentPion;
+class MIL_Agent_ABC;
 
 namespace directia
 {
@@ -29,19 +30,19 @@ class DEC_KnowledgeFunctions
 public:
     //! @name Rapport de force
     //@{
-    static MT_Float GetRapForLocal     ( const MIL_AgentPion& callerAgent );
+    static MT_Float GetRapForLocal( const MIL_AgentPion& callerAgent );
 
-    static T_ConstKnowledgeAgentVector GetDetectedAgentsInFuseau        ( const MIL_AgentPion& callerAgent );
-    static T_ConstKnowledgeAgentVector GetDetectedAgentsInZone          ( const MIL_AgentPion& callerAgent, const TER_Localisation* area );
-    static T_ConstKnowledgeAgentVector GetAgentsAttacking               ( const MIL_AgentPion& callerAgent );
-    static T_ConstKnowledgeAgentVector GetAgentsAttackingAlly           ( const DEC_Decision_ABC* agentAlly);
+    static T_ConstKnowledgeAgentVector GetDetectedAgentsInFuseau( const MIL_AgentPion& callerAgent );
+    static T_ConstKnowledgeAgentVector GetDetectedAgentsInZone( const MIL_AgentPion& callerAgent, const TER_Localisation* area );
+    static T_ConstKnowledgeAgentVector GetAgentsAttacking( const MIL_AgentPion& callerAgent );
+    static T_ConstKnowledgeAgentVector GetAgentsAttackingAlly( const DEC_Decision_ABC* agentAlly);
 
-    static T_ConstKnowledgeAgentVector GetDangerousEnemies              ( const MIL_AgentPion& callerAgent );
-    static T_ConstKnowledgeAgentVector GetLivingEnemiesPerceived        ( const MIL_AgentPion& callerAgent );
+    static T_ConstKnowledgeAgentVector GetDangerousEnemies( const MIL_AgentPion& callerAgent );
+    static T_ConstKnowledgeAgentVector GetLivingEnemiesPerceived( const MIL_AgentPion& callerAgent );
     static T_ConstKnowledgeAgentVector GetLivingEnemiesPerceivedInFuseau( const MIL_AgentPion& callerAgent );
-    static T_ConstKnowledgeAgentVector GetLivingEnemiesInZone           ( const MIL_AgentPion& callerAgent, TER_Localisation* pZone );
-    static T_ConstKnowledgeAgentVector GetLivingEnemiesInFuseau         ( const MIL_AgentPion& callerAgent );
-    static T_ConstKnowledgeAgentVector GetLivingEnemiesInCircle         ( const MIL_AgentPion& callerAgent, const MT_Vector2D* pCenter, float radius );
+    static T_ConstKnowledgeAgentVector GetLivingEnemiesInZone( const MIL_AgentPion& callerAgent, TER_Localisation* pZone );
+    static T_ConstKnowledgeAgentVector GetLivingEnemiesInFuseau( const MIL_AgentPion& callerAgent );
+    static T_ConstKnowledgeAgentVector GetLivingEnemiesInCircle( const MIL_AgentPion& callerAgent, const MT_Vector2D* pCenter, float radius );
 
     static void GetObservableKnowledge( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table );
     static void GetUrbanBlockKnowledge( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table );
@@ -54,18 +55,18 @@ public:
 
     template< typename T > static T_ConstKnowledgeAgentVector GetLivingEnemiesPerceivedByPion( const T& caller, const DEC_Decision_ABC* perceiver );
 
-    static T_ConstKnowledgeAgentVector GetNearbyRefugees                ( const MIL_AgentPion& callerAgent, MT_Float radius );
-    static T_ConstKnowledgeAgentVector GetNearbySurrenderedAgents       ( const MIL_AgentPion& callerAgent, MT_Float radius );
+    static T_ConstKnowledgeAgentVector GetNearbyRefugees( const MIL_AgentPion& callerAgent, MT_Float radius );
+    static T_ConstKnowledgeAgentVector GetNearbySurrenderedAgents( const MIL_AgentPion& callerAgent, MT_Float radius );
     static bool EnemyPresenceInCircle( const MIL_AgentPion& callerAgent, const MT_Vector2D* center, MT_Float radius );
     template< typename T > static T_ConstKnowledgeAgentVector GetFriendsInZone( const T& caller, const TER_Localisation* location );
-    template< typename T > static void ShareKnowledgesWith      ( const T& caller, DEC_Decision_ABC* receiver, float minutes );
+    template< typename T > static void ShareKnowledgesWith( const T& caller, DEC_Decision_ABC* receiver, float minutes );
     template< typename T > static void ShareKnowledgesInZoneWith( const T& caller, DEC_Decision_ABC* receiver, const MT_Vector2D* center, float radius );
 
-    static boost::shared_ptr< DEC_Knowledge_Object > GetClosestObject      ( const MIL_Agent_ABC& callerAgent, const std::string& type );
+    static boost::shared_ptr< DEC_Knowledge_Object > GetClosestObject( const MIL_Agent_ABC& callerAgent, const std::string& type );
     static boost::shared_ptr< DEC_Knowledge_Object > GetClosestFriendObject( const MIL_Agent_ABC& callerAgent, const std::string& type );
     static T_KnowledgeObjectDiaIDVector GetObjectsColliding( const MIL_AgentPion& callerAgent );
     template< typename T > static T_KnowledgeObjectDiaIDVector GetObjectsInCircle( const T& caller, const MT_Vector2D* pCenter, MT_Float rRadius, const std::vector< std::string >& filters );
-    template< typename T > static T_KnowledgeObjectDiaIDVector GetObjectsInZone  ( const T& caller, const TER_Localisation* pLoc, const std::vector< std::string >& parameters );
+    template< typename T > static T_KnowledgeObjectDiaIDVector GetObjectsInZone( const T& caller, const TER_Localisation* pLoc, const std::vector< std::string >& parameters );
     template< typename T > static T_KnowledgeObjectDiaIDVector GetObjectsInFuseau( const T& caller, const std::string& type );
 
     static T_KnowledgePopulationDiaIDVector GetPopulationsColliding( const MIL_AgentPion& callerAgent );

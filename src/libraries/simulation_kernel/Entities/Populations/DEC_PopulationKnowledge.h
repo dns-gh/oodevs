@@ -12,6 +12,7 @@
 #ifndef __DEC_PopulationKnowledge_h_
 #define __DEC_PopulationKnowledge_h_
 
+#include "MIL.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
 #include "Knowledge/DEC_KnowledgeResolver_ABC.h"
 

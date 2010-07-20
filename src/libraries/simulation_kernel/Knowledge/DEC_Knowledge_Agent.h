@@ -12,7 +12,6 @@
 #ifndef __DEC_Knowledge_Agent_h_
 #define __DEC_Knowledge_Agent_h_
 
-#include "MIL.h"
 #include "DEC_Knowledge_ABC.h"
 #include "DEC_Knowledge_AgentDataDetection.h"
 #include "DEC_Knowledge_AgentDataRecognition.h"

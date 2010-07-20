@@ -13,6 +13,7 @@
 #define __DEC_Knowledge_AgentPerceptionDataDetection_h_
 
 #include "DEC_Knowledge_Def.h"
+#include "MIL.h"
 #include <boost/serialization/export.hpp>
 
 class MIL_Agent_ABC;

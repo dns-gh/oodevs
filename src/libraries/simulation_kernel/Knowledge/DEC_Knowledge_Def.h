@@ -10,8 +10,6 @@
 #ifndef __DEC_Knowledge_Def_h_
 #define __DEC_Knowledge_Def_h_
 
-#include "DEC_Knowledge_AgentComposante.h"
-
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_AgentPerception;
 class DEC_Knowledge_Object;
@@ -21,6 +19,7 @@ class DEC_Knowledge_Population;
 class DEC_Knowledge_PopulationCollision;
 class DEC_Knowledge_Urban;
 class PHY_Volume;
+class DEC_Knowledge_AgentComposante;
 
 //! @name Types
 //@{

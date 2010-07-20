@@ -8,6 +8,7 @@
 class DEC_KnowledgeBlackBoard_KnowledgeGroup;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Population;
+class DEC_Knowledge_Object;
 
 // =============================================================================
 /** @class  DEC_KS_KnowledgeSynthetizer

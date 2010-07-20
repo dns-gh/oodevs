@@ -12,7 +12,7 @@
 #ifndef __DEC_KnowledgeSource_ABC_h_
 #define __DEC_KnowledgeSource_ABC_h_
 
-#include "DEC_Knowledge_Def.h"
+#include "MIL.h"
 
 class DEC_KnowledgeBlackBoard_ABC;
 

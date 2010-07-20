@@ -28,7 +28,8 @@ class PHY_ComposanteHLA;
 class HLA_InteractionManager_ABC;
 class MIL_Entity_ABC;
 
-namespace hla {
+namespace hla
+{
     class AttributeIdentifier;
 }
 

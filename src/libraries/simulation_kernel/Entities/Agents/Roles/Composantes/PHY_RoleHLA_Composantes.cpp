@@ -18,18 +18,17 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleHLA_Composantes.h"
+#include "Knowledge/DEC_Knowledge_AgentComposante.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteHLA.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteTypePion.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Roles/hla/HLA_RoleInterface.h"
 #include "Entities/MIL_Entity_ABC.h"
-
 #include "Hla/HLA_Serialization.h"
 #include "Hla/HLA_DirectFire.h"
 #include "Hla/HLA_IndirectFire.h"
 #include "Hla/HLA_InteractionManager_ABC.h"
 #include "Hla/HLA_Neutralization.h"
-
 #include "hla/AttributeIdentifier.h"
 
 using namespace hla;

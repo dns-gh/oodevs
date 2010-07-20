@@ -20,6 +20,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteType_ABC.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "protocol/ClientSenders.h"
+#include "DEC_Knowledge_AgentComposante.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentDataRecognition )
 

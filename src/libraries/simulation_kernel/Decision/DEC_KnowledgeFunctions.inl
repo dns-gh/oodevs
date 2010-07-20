@@ -13,9 +13,7 @@
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
-
 #include "Entities/Objects/MIL_ObjectFilter.h"
-
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
@@ -70,12 +68,9 @@ template< typename T >
 T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInCircle( const T& caller, const MT_Vector2D* pCenter, MT_Float rRadius, const std::vector< std::string >& filters )
 {
     assert( pCenter );
-
     MIL_ObjectFilter filter( filters );
-    
     T_KnowledgeObjectDiaIDVector knowledges;
     caller.GetArmy().GetKnowledge().GetObjectsInCircle( knowledges, filter, *pCenter, rRadius );
-
     return knowledges;
 }
 
@@ -87,12 +82,9 @@ template< typename T >
 T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInZone( const T& caller, const TER_Localisation* pLoc, const std::vector< std::string >& parameters )
 {
     assert( pLoc );
-
     MIL_ObjectFilter filter( parameters );
-    
     T_KnowledgeObjectDiaIDVector knowledges;
     caller.GetArmy().GetKnowledge().GetObjectsInZone( knowledges, filter, *pLoc );
-
     return knowledges;
 }
 
@@ -106,7 +98,6 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInFuseau( const T
     std::vector< std::string > types;
     types.push_back( type );
     MIL_ObjectFilter filter( types );
-    
     T_KnowledgeObjectDiaIDVector results;
     caller.GetArmy().GetKnowledge().GetObjectsInZone( results, filter, caller.GetOrderManager().GetFuseau() );
     return results;
@@ -144,9 +135,8 @@ std::vector< unsigned int > DEC_KnowledgeFunctions::GetPopulations( const T& cal
 template< typename T, typename B >
 float DEC_KnowledgeFunctions::ComputeEnemiesRatio( const T& caller, const B& boundaries, bool unloaded )
 {
-    unsigned int nNbrTotalLivingEnemies    = 0;
+    unsigned int nNbrTotalLivingEnemies = 0;
     unsigned int nNbrSelectedLivingEnemies = 0;
-
     const T_KnowledgeAgentVector& enemies = caller.GetKnowledgeGroup().GetKnowledge().GetEnemies();
     for( CIT_KnowledgeAgentVector itKnowledgeAgent = enemies.begin(); itKnowledgeAgent != enemies.end(); ++itKnowledgeAgent )
     {

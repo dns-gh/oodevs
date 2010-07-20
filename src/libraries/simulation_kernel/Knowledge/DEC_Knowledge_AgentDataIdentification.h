@@ -12,7 +12,7 @@
 #ifndef __DEC_Knowledge_AgentDataIdentification_h_
 #define __DEC_Knowledge_AgentDataIdentification_h_
 
-#include "DEC_Knowledge_Def.h"
+#include "MIL.h"
 
 namespace MsgsSimToClient
 {

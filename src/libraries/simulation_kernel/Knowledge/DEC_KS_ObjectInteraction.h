@@ -18,6 +18,7 @@ class DEC_KnowledgeBlackBoard_AgentPion;
 class MIL_Object_ABC;
 class MIL_AgentPion;
 class DEC_Knowledge_ObjectCollision;
+class DEC_Knowledge_ObjectPerception;
 
 // =============================================================================
 /** @class  DEC_KS_ObjectInteraction
