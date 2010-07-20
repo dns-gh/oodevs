@@ -44,7 +44,7 @@
       </indicator>
     </indicators>
   </score>
-  <score name="mounted">
+  <score name="Dismounted">
     <formula><![CDATA[select( mounted(), $unit )]]></formula>
     <gauge type="Default"/>
     <constants>
@@ -54,13 +54,13 @@
       <indicator>
         <extract function="mounted" id="1"/>
         <reduce function="select" id="2" input="1" key="11" type="float"/>
-        <result function="indicator" input="2" name="mounted" type="float"/>
+        <result function="indicator" input="2" name="Dismounted" type="float"/>
       </indicator>
       <indicator>
         <extract function="mounted" id="1"/>
         <reduce function="select" id="2" input="1" key="11" type="float"/>
         <transform function="derivate" id="4" input="2" period="10" type="float"/>
-        <result function="indicator" input="4" name="mounted/Tendency" type="float"/>
+        <result function="indicator" input="4" name="Dismounted/Tendency" type="float"/>
       </indicator>
     </indicators>
   </score>

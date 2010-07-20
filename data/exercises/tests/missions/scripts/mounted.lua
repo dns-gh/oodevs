@@ -61,8 +61,10 @@ function Start()
             events.agents:MountedStateChanged(),
             { "mounted_test_mountedstatechanged" },
             function( entity )
-                Display( { message = "Entity " .. tostring( entity:GetIdentifier() ) .. " mounting state is now: " .. tostring( entity:IsMounted() ) } )
-                ChangeState( "mounted_test_end" )
+                if entity:GetIdentifier() == config.id.redUnit then
+                    Display( { message = "Entity " .. tostring( entity:GetIdentifier() ) .. " mounting state is now: " .. tostring( entity:IsMounted() ) } )
+                    ChangeState( "mounted_test_end" )
+                end
             end
         },
 
