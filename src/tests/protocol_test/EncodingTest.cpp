@@ -74,7 +74,7 @@ namespace
                 BOOST_REQUIRE_NO_THROW( decoder.reset( new tools::MessageDecoder< M >( StripHeader( encodedCopy ) ) ) );
                 const M& decodedMessage = *decoder;
                 BOOST_CHECK( message == decodedMessage );
-                BOOST_CHECK_EQUAL( message.ByteSize(), encodedMessage.Size() - headerSize_ );
+                BOOST_CHECK_EQUAL( static_cast< unsigned long >( message.ByteSize() ), encodedMessage.Size() - headerSize_ );
             }
             BOOST_TEST_MESSAGE( "Encoded " << count << " '" << typeid( message ).name() << "' message(s) in " << boost::posix_time::microsec_clock::universal_time() - start );
         }
@@ -109,7 +109,7 @@ BOOST_AUTO_TEST_CASE( ProtobufTest_EncodeSimpleTest )
 {
     SimpleTest message;
     message.set_name( "My name" );
-    Verify( message, 10 );
+    Verify( message, 10u );
 //    Verify( message, 100 );
 //    Verify( message, 1000 );
 //    Verify( message, 10000 );
@@ -127,7 +127,7 @@ BOOST_AUTO_TEST_CASE( ProtobufTest_EncodeCompositeStringTest )
     CompositeStringTest message;
     for( unsigned int i = 0; i < count; ++i )
         message.add_test()->set_name( "My name" );
-    Verify( message, 1 );
+    Verify( message, 1u );
 //    Verify( message, 10 );
 //    Verify( message, 100 );
 //    Verify( message, 1000 );
@@ -146,7 +146,7 @@ BOOST_AUTO_TEST_CASE( ProtobufTest_EncodeCompositeIntegerTest )
     CompositeIntegerTest message;
     for( unsigned int i = 0; i < count; ++i )
         message.add_test( 42 );
-    Verify( message, 1 );
+    Verify( message, 1u );
 //    Verify( message, 10 );
 //    Verify( message, 100 );
 //    Verify( message, 1000 );
