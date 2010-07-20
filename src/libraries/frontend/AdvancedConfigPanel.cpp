@@ -106,7 +106,6 @@ AdvancedConfigPanel::~AdvancedConfigPanel()
 void AdvancedConfigPanel::Commit( const std::string& exercise, const std::string& session )
 {
     frontend::CreateSession action( config_, exercise, session );
-    action.SetDefaultValues();
     {
         action.SetOption( "session/meta/date", session );
         action.SetOption( "session/meta/name", sessionName_->text().ascii() );
