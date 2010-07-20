@@ -28,6 +28,7 @@ DEC_Knowledge_PopulationPerception::DEC_Knowledge_PopulationPerception( const MI
     : DEC_Knowledge_ABC()
     , pAgentPerceiving_    ( &agentPerceiving )
     , pPopulationPerceived_( &populationPerceived )
+    , bAttacker_( false )
 
 {
     // NOTHING
@@ -41,6 +42,7 @@ DEC_Knowledge_PopulationPerception::DEC_Knowledge_PopulationPerception()
     : DEC_Knowledge_ABC()
     , pAgentPerceiving_    ( 0 )
     , pPopulationPerceived_( 0 )
+    , bAttacker_( false )
 {
     // NOTHING
 }
