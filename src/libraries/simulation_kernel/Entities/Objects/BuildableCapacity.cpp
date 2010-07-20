@@ -226,7 +226,7 @@ void BuildableCapacity::ChangeConstructionPercentage( MIL_Object_ABC& object, fl
 {
     if( object.IsMarkedForDestruction() )
         return;
-    const MT_Float rDeltaPercentage = rNewConstructionPercentage - object.GetAttribute< ConstructionAttribute >().GetState();
+    const float rDeltaPercentage = rNewConstructionPercentage - static_cast< float >( object.GetAttribute< ConstructionAttribute >().GetState() );
     if( rDeltaPercentage == 0 )
         return;
     if( rDeltaPercentage > 0 )

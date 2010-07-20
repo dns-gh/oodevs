@@ -1198,10 +1198,10 @@ double MIL_AgentPion::GetDangerosity( boost::shared_ptr< DEC_Knowledge_Agent > p
 double MIL_AgentPion::Distance( const MIL_Agent_ABC& target ) const
 {
     const PHY_RoleInterface_Location& firerLocation = GetRole< PHY_RoleInterface_Location >();
-    const geometry::Point2f firerPosition( firerLocation.GetPosition().rX_, firerLocation.GetPosition().rY_ );
+    const geometry::Point2f firerPosition( static_cast< float >( firerLocation.GetPosition().rX_ ), static_cast< float >( firerLocation.GetPosition().rY_ ) );
 
     const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();
-    const geometry::Point2f targetPosition( targetLocation.GetPosition().rX_, targetLocation.GetPosition().rY_ );
+    const geometry::Point2f targetPosition( static_cast< float >( targetLocation.GetPosition().rX_ ), static_cast< float >( targetLocation.GetPosition().rY_ ) );
 
     const PHY_RoleInterface_UrbanLocation& firerUrbanRole = GetRole< PHY_RoleInterface_UrbanLocation >();
     const PHY_RoleInterface_UrbanLocation& targetUrbanRole = target.GetRole< PHY_RoleInterface_UrbanLocation >();

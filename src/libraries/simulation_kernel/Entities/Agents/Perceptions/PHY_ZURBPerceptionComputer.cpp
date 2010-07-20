@@ -100,9 +100,9 @@ const PHY_ZURBPerceptionComputer::Polygons PHY_ZURBPerceptionComputer::ComputePe
     else
     {
         const MT_Vector2D& perceiverPosition = perceiver_.GetRole< PHY_RoleInterface_Location >().GetPosition();
-        returnValue.identificationPolygon = MakePolygon ( geometry::Point2f( perceiverPosition .rX_, perceiverPosition .rY_), distancePerception.identificationDist );
-        returnValue.recognitionPolygon = MakePolygon    ( geometry::Point2f( perceiverPosition .rX_, perceiverPosition .rY_), distancePerception.recognitionDist    );
-        returnValue.detectionPolygon = MakePolygon      ( geometry::Point2f( perceiverPosition .rX_, perceiverPosition .rY_), distancePerception.detectionDist      );
+        returnValue.identificationPolygon = MakePolygon( geometry::Point2f( static_cast< float >( perceiverPosition.rX_ ), static_cast< float >( perceiverPosition.rY_ ) ), distancePerception.identificationDist );
+        returnValue.recognitionPolygon = MakePolygon( geometry::Point2f( static_cast< float >( perceiverPosition.rX_ ), static_cast< float >( perceiverPosition.rY_ ) ), distancePerception.recognitionDist );
+        returnValue.detectionPolygon = MakePolygon( geometry::Point2f( static_cast< float >( perceiverPosition.rX_ ), static_cast< float >( perceiverPosition.rY_ ) ), distancePerception.detectionDist );
     }
     return returnValue;
 }
@@ -123,10 +123,10 @@ geometry::Polygon2f PHY_ZURBPerceptionComputer::MakePolygon( const urban::Terrai
 // -----------------------------------------------------------------------------
 geometry::Polygon2f PHY_ZURBPerceptionComputer::MakePolygon( const geometry::Point2f targetPosition, double distance ) const
 {
-    geometry::Point2f bottomLeftPoint   ( ( targetPosition.X() - distance ), ( targetPosition.Y() - static_cast< float >( distance ) ) );
-    geometry::Point2f topLeftPoint      ( ( targetPosition.X() - distance ), ( targetPosition.Y() + static_cast< float >( distance ) ) );
-    geometry::Point2f topRightPoint     ( ( targetPosition.X() + distance ), ( targetPosition.Y() + static_cast< float >( distance ) ) );
-    geometry::Point2f bottomeRightPoint ( ( targetPosition.X() + distance ), ( targetPosition.Y() - static_cast< float >( distance ) ) );
+    geometry::Point2f bottomLeftPoint( static_cast< float >( targetPosition.X() - distance ), static_cast< float >( targetPosition.Y() - distance ) );
+    geometry::Point2f topLeftPoint( static_cast< float >( targetPosition.X() - distance ), static_cast< float >( targetPosition.Y() + distance ) );
+    geometry::Point2f topRightPoint( static_cast< float >( targetPosition.X() + distance ), static_cast< float >( targetPosition.Y() + distance ) );
+    geometry::Point2f bottomeRightPoint( static_cast< float >( targetPosition.X() + distance ), static_cast< float >( targetPosition.Y() - distance ) );
     geometry::Polygon2f polygon;
     polygon.Add( bottomLeftPoint );
     polygon.Add( topLeftPoint );
