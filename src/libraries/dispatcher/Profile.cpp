@@ -294,7 +294,7 @@ namespace
 // -----------------------------------------------------------------------------
 void Profile::Send( MsgsAuthenticationToClient::MsgProfile& message ) const
 {
-    message.set_login( strLogin_.c_str() );
+    message.set_login( strLogin_ );
     message.set_superviseur( bSupervision_ );
     if( role_ != eRoleUndefined )
         message.set_role( static_cast< MsgsAuthenticationToClient::Role >( role_ ) );
@@ -315,7 +315,7 @@ void Profile::Send( MsgsAuthenticationToClient::MsgProfile& message ) const
 // -----------------------------------------------------------------------------
 void Profile::Send( MsgsAuthenticationToClient::MsgProfileDescription& message ) const
 {
-    message.set_login( strLogin_.c_str() );
+    message.set_login( strLogin_ );
     message.set_password( !strPassword_.empty() );
     message.set_supervisor( bSupervision_ );
 }
@@ -328,7 +328,7 @@ void Profile::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     authentication::ProfileCreation message;
     Send( *message().mutable_profile() );
-    message().mutable_profile()->set_password( strPassword_.c_str() );
+    message().mutable_profile()->set_password( strPassword_ );
     message.Send( publisher );
 }
 
@@ -347,7 +347,7 @@ void Profile::Update( const MsgsClientToAuthentication::MsgProfileUpdateRequest&
     authentication::ProfileUpdate updatemessage;
     updatemessage().set_login( message.login() );
     if( updatemessage().profile().has_password()  )
-        updatemessage().mutable_profile()->set_password( strPassword_.c_str() );
+        updatemessage().mutable_profile()->set_password( strPassword_ );
     if( updatemessage().profile().has_role()  )
         updatemessage().mutable_profile()->set_role( static_cast< MsgsAuthenticationToClient::Role >( role_ ) );
     Send( *updatemessage().mutable_profile() );
@@ -379,7 +379,7 @@ void Profile::SetRight( const kernel::Automat_ABC& entity, bool readonly, bool r
         readWriteAutomats_.erase( &entity );
 
     authentication::ProfileUpdate updatemessage;
-    updatemessage().set_login( strLogin_.c_str() );
+    updatemessage().set_login( strLogin_ );
     Send( *updatemessage().mutable_profile() );
     updatemessage.Send( clients_ );
 }

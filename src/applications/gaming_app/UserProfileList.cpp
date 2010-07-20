@@ -111,7 +111,10 @@ void UserProfileList::NotifyDeleted( const UserProfile& profile )
     T_UserProfiles::iterator it = std::find( userProfiles_.begin(), userProfiles_.end(), &profile );
     if( it != userProfiles_.end() )
     {
-        list_->removeItem( std::distance( userProfiles_.begin(), it ) );
+        const int index = std::distance( userProfiles_.begin(), it );
+        if( index == list_->currentItem() )
+            list_->setSelected( 0, true );
+        list_->removeItem( index );
         userProfiles_.erase( it );
     }
 }

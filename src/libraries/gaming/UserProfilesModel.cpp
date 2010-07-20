@@ -60,7 +60,7 @@ void UserProfilesModel::CreateProfile( const MsgsAuthenticationToClient::MsgProf
 void UserProfilesModel::DeleteProfile( const MsgsAuthenticationToClient::MsgProfileDestruction& message )
 {
     for( T_UserProfiles::iterator it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
-        if( message.login().c_str() == (*it)->GetLogin().ascii() )
+        if( message.login() == (*it)->GetLogin().ascii() )
         {
             const UserProfile* element = *it;
             userProfiles_.erase( it );

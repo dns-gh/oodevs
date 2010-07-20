@@ -105,16 +105,10 @@ void UserProfile::RequestDeletion()
 namespace
 {
     template< typename List >
-    bool CopyList( const std::vector< unsigned long >& from, List& to )
+    void CopyList( const std::vector< unsigned long >& from, List& to )
     {
-        to.set_n( from.size() );
-        to.mutable_elem() = 0;
-        if( from.empty() )
-            return true; // $$$$ SBO 2007-01-23: send empty lists to SIM to reset rights
-        to.elem = new OID[ to.elem_size() ];
         for( unsigned int i = 0; i < from.size(); ++i )
-            to.mutable_elem( i ) = from[i];
-        return true;
+            to.add_elem()->set_oid( from[i] );
     }
 }
 
@@ -126,16 +120,19 @@ void UserProfile::RequestUpdate( const QString& newLogin )
 {
     authentication::ProfileUpdateRequest message;
     message().set_login( login_.ascii() );
-
     MsgsAuthenticationToClient::MsgProfile& profile = *message().mutable_profile();
     profile.set_login( newLogin.ascii() );
-
     profile.set_password( password_.ascii() );
     profile.set_superviseur( supervision_ );
-
+    CopyList( readSides_, *profile.mutable_read_only_camps() );
+    CopyList( writeSides_, *profile.mutable_read_write_camps() );
+    CopyList( readFormations_, *profile.mutable_read_only_formations() );
+    CopyList( writeFormations_, *profile.mutable_read_write_formations() );
+    CopyList( readAutomats_, *profile.mutable_read_only_automates() );
+    CopyList( writeAutomats_, *profile.mutable_read_write_automates() );
+    CopyList( readPopulations_, *profile.mutable_read_only_populations() );
+    CopyList( writePopulations_, *profile.mutable_read_write_populations() );
     message.Send( publisher_ );
-
-    profile.Clear();
 }
 
 // -----------------------------------------------------------------------------
