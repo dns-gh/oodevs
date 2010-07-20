@@ -220,6 +220,16 @@ unsigned int MIL_Config::GetEndTick() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Config::GetPausedAtStartup
+// Created: JSR 2010-07-20
+// -----------------------------------------------------------------------------
+inline
+bool MIL_Config::GetPausedAtStartup() const
+{
+    return bPausedAtStartup_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Config::GetNetworkPort
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------

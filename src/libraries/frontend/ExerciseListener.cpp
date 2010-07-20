@@ -60,16 +60,15 @@ bool ExerciseListener::Wait()
         boost::asio::ip::tcp::iostream stream( strHost_, boost::lexical_cast< std::string >( nPort_ ) );
         if( stream.good() )
         {
-            unsigned int count = 5 ; //!< tick count
             unsigned int lineCount = 0;
-            while( count > 0 && stream.good() )
+            while( stream.good() )
             {
                 std::string line;
                 std::getline( stream, line );
                 ++lineCount;
                 percentage_ = lineCount * 100 / 300;
-                if( line.find( "tick" ) != std::string::npos )
-                    --count;
+                if( line.find( "SIM Initialized" ) != std::string::npos )
+                    break;
             }
             percentage_ = 100;
             return true;

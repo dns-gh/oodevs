@@ -17,6 +17,7 @@ namespace tools
     class GeneralConfig;
 }
 
+class QCheckBox;
 class QLineEdit;
 class QSpinBox;
 class QTextEdit;
@@ -65,6 +66,7 @@ private:
     QSpinBox* stepSpin_;
     QSpinBox* factorSpin_;
     QSpinBox* endtickSpin_;
+    QCheckBox* pausedCheckBox_;
     QSpinBox* pathThreads_;
     //@}
 };

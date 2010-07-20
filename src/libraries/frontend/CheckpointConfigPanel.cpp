@@ -41,7 +41,8 @@ CheckpointConfigPanel::CheckpointConfigPanel( QWidget* parent, const tools::Gene
     : PluginConfig_ABC( parent )
     , config_( config )
 {
-    QVBox* vbox = new QVBox( this );
+    QVBox* vbox = Style( new QVBox( this ) );
+    vbox->setMargin( 5 );
     {
         checkpointsGroup_ = Style( new QGroupBox( 2, Qt::Vertical, tools::translate( "CheckpointConfigPanel", "Checkpoint configuration: " ), vbox ) );
         checkpointsGroup_->setCheckable( true );

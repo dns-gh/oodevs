@@ -37,6 +37,8 @@ DisPluginConfigPanel::DisPluginConfigPanel( QWidget* parent, const tools::Genera
     : PluginConfig_ABC( parent )
     , config_( config )
 {
+    setMargin( 5 );
+    setBackgroundOrigin( QWidget::WindowOrigin );
     box_ = Style( new QGroupBox( 2, Horizontal, tools::translate( "DisPluginConfigPanel", "Enable DIS export" ), this ) );
     box_->setCheckable( true );
     box_->setChecked( false );

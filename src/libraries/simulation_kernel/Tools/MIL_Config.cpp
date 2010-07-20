@@ -46,6 +46,7 @@ MIL_Config::MIL_Config()
     , bDeleteCheckpointTestMode_( false )
     , bFrozenMode_              ( false )
     , bEmbeddedDispatcher_      ( false )
+    , bPausedAtStartup_         ( false )
     , randomSeed_               ( 0 )
 {
     po::options_description desc( "Simulation options" );
@@ -116,6 +117,7 @@ void MIL_Config::ReadSessionFile( const std::string& file )
                     >> xml::attribute( "step", timeStep_ )
                     >> xml::attribute( "factor", timeFactor_ )
                     >> xml::optional >> xml::attribute( "end-tick", endTick_ )
+                    >> xml::optional >> xml::attribute( "paused", bPausedAtStartup_ )
                 >> xml::end
                 >> xml::start( "pathfinder" )
                     >> xml::attribute( "threads", pathFinderThreads_ )

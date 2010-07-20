@@ -41,6 +41,10 @@
         <source>Exercise</source>
         <translation>Exercice</translation>
     </message>
+    <message>
+        <source>  Paused at startup</source>
+        <translation>  Démarrage en pause</translation>
+    </message>
 </context>
 <context>
     <name>Application</name>

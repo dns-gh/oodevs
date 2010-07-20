@@ -127,8 +127,10 @@ RandomPluginConfigPanel::RandomPluginConfigPanel( QWidget* parent, const tools::
     : PluginConfig_ABC( parent )
     , config_( config )
 {
-    QGroupBox* hbox = Style( new QGroupBox( 2, Qt::Horizontal, tools::translate( "RandomPluginConfigPanel", "Random Generator" ), this ) );
+    setMargin( 5 );
+    setBackgroundOrigin( QWidget::WindowOrigin );
 
+    QGroupBox* hbox = Style( new QGroupBox( 2, Qt::Horizontal, tools::translate( "RandomPluginConfigPanel", "Random Generator" ), this ) );
     hasSeed_ = Style( new QCheckBox( tools::translate( "RandomPluginConfigPanel", "Seed:" ), hbox ) );
     connect( hasSeed_, SIGNAL( toggled( bool ) ), SLOT( OnSeedToggled() ) );
     seed_ = Style( new QSpinBox( 1, std::numeric_limits< int >::max(), 1, hbox ) );

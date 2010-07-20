@@ -12,6 +12,7 @@
 #include "clients_gui/tools.h"
 #include "frontend/CommandLineTools.h"
 #include "frontend/CreateSession.h"
+#include <qcheckbox.h>
 #include <qgroupbox.h>
 #include <qlabel.h>
 #include <qlineedit.h>
@@ -40,6 +41,7 @@ AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralC
     , config_( config )
 {
     QVBox* box = Style( new QVBox( this ) );
+    box->setMargin( 5 );
     QGroupBox* exerciseBox = Style( new QGroupBox( 3, Qt::Vertical, tools::translate( "AdvancedConfigPanel", "Exercise" ), box ) );
     {
         QHBox* sessionBox = Style( new QHBox( exerciseBox ) );
@@ -81,6 +83,10 @@ AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralC
         endtickSpin_ = Style( new QSpinBox( 0, std::numeric_limits< int >::max(), 1, endTickBox ) );
         endtickSpin_->setValue( 0 );
     }
+    {
+        pausedCheckBox_ = Style( new QCheckBox( tools::translate( "AdvancedConfigPanel", "  Paused at startup" ), timeBox ) );
+        pausedCheckBox_->setChecked( false );
+    }
     QGroupBox* pathfindBox = Style( new QGroupBox( 2, Qt::Horizontal, tools::translate( "AdvancedConfigPanel", "Pathfind" ), box ) );
     {
         QHBox* threadBox = Style( new QHBox( pathfindBox ) );
@@ -116,6 +122,7 @@ void AdvancedConfigPanel::Commit( const std::string& exercise, const std::string
         action.SetOption( "session/config/simulation/time/@step", stepSpin_->value() );
         action.SetOption( "session/config/simulation/time/@factor", factorSpin_->value() );
         action.SetOption( "session/config/simulation/time/@end-tick", endtickSpin_->value() );
+        action.SetOption( "session/config/simulation/time/@paused", pausedCheckBox_->isChecked() );
         action.SetOption( "session/config/simulation/pathfinder/@threads", pathThreads_->value() );
     }
     {

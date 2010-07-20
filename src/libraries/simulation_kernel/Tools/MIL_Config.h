@@ -63,6 +63,7 @@ public:
     unsigned int       GetTimeStep               () const;
     unsigned int       GetTimeFactor             () const;
     unsigned int       GetEndTick                () const;
+    bool               GetPausedAtStartup        () const;
     unsigned int       GetPathFinderThreads      () const;
     bool               IsHLAEnabled              () const;
     const std::string& GetHLAFederation          () const;
@@ -143,6 +144,7 @@ private:
     bool           bFrozenMode_;
     bool           bEmbeddedDispatcher_;
     bool           bHLAEnabled_;
+    bool           bPausedAtStartup_;
     std::string    hlaFederation_;
     std::string    hlaFederate_;
     std::string    strCheckPointNameTestMode_;
