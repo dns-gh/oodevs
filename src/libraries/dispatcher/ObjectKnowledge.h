@@ -11,8 +11,7 @@
 #define __ObjectKnowledge_h_
 
 #include "Localisation.h"
-#include "SimpleEntity.h"
-#include "clients_kernel/ObjectKnowledge_ABC.h"
+#include "ObjectKnowledge_ABC.h"
 #include <boost/ptr_container/ptr_vector.hpp>
 
 namespace Common
@@ -45,7 +44,10 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class ObjectKnowledge : public SimpleEntity< kernel::ObjectKnowledge_ABC >
+class ObjectKnowledge : public dispatcher::ObjectKnowledge_ABC
+                      , public kernel::Extension_ABC
+                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectKnowledgeCreation >
+                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectKnowledgeUpdate >
 {
 public:
     //! @name Constructors/Destructor
@@ -56,22 +58,20 @@ public:
 
     //! @name Operations
     //@{
-    using SimpleEntity< kernel::ObjectKnowledge_ABC >::Update;
-    void Update( const MsgsSimToClient::MsgObjectKnowledgeCreation& asnMsg );
-    void Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg );
-    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
-    void SendDestruction( ClientPublisher_ABC& publisher ) const;
-    void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeCreation& asnMsg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg );
+    virtual void SendCreation( ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
+    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Accessors
     //@{
     virtual const kernel::Entity_ABC* GetRecognizedEntity() const;
     virtual const kernel::Object_ABC* GetEntity() const;
-    virtual const kernel::Team_ABC&   GetOwner() const;
-    virtual void Display( kernel::Displayer_ABC& displayer ) const;
-    virtual void DisplayInList( kernel::Displayer_ABC& displayer ) const;
+    virtual const kernel::Team_ABC& GetOwner() const;
+    virtual QString GetTypeName() const;
     //@}
 
 private:
@@ -83,6 +83,8 @@ private:
     void CreateOrUpdate( const Common::MsgObjectAttributes& message, const Model_ABC& model );
     void Initialize( const Model_ABC& model, const Common::MsgObjectAttributes& message );
     void AddAttribute( ObjectAttribute_ABC* attribute );
+    virtual void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual void DisplayInList( kernel::Displayer_ABC& displayer ) const;
     //@}
 
     //! @name Types
@@ -118,6 +120,7 @@ private:
     const kernel::Object_ABC* pObject_;
     const std::string nType_;
     const kernel::KnowledgeGroup_ABC* knowledgeGroup_;
+    const QString typename_;
     unsigned int nRelevance_;
     Localisation localisation_;
     bool bPerceived_;

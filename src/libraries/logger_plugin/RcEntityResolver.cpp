@@ -50,9 +50,9 @@ QString RcEntityResolver::CreateLink( const QString& type, unsigned long id ) co
     if( type == Agent_ABC::typeName_ )
         entity = model_.Agents().Find( id );
     else if( type == ObjectKnowledge_ABC::typeName_ )
-        entity = model_.AgentKnowledges().Find( id );
-    else if( type == AgentKnowledge_ABC::typeName_ )
         entity = model_.ObjectKnowledges().Find( id );
+    else if( type == AgentKnowledge_ABC::typeName_ )
+        entity = model_.AgentKnowledges().Find( id );
     else if( type == PopulationKnowledge_ABC::typeName_ )
         entity = model_.PopulationKnowledges().Find( id );
     else

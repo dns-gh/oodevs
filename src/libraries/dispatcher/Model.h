@@ -145,7 +145,7 @@ public:
     virtual const tools::Resolver_ABC< dispatcher::Object_ABC >&         Objects() const { return objects_; }
     virtual const tools::Resolver_ABC< dispatcher::Population_ABC >&     Populations() const { return populations_; }
     virtual const tools::Resolver_ABC< dispatcher::AgentKnowledge_ABC >& AgentKnowledges() const { return agentKnowledges_; }
-    virtual const tools::Resolver_ABC< ObjectKnowledge >&       ObjectKnowledges() const { return objectKnowledges_; }
+    virtual const tools::Resolver_ABC< dispatcher::ObjectKnowledge_ABC >&  ObjectKnowledges() const { return objectKnowledges_; }
     virtual const tools::Resolver_ABC< PopulationKnowledge >&   PopulationKnowledges() const { return populationKnowledges_; }
     virtual const tools::Resolver_ABC< LogConsignMaintenance >& LogConsignsMaintenance() const { return logConsignsMaintenance_; }
     virtual const tools::Resolver_ABC< LogConsignSupply >&      LogConsignsSupply() const { return logConsignsSupply_; }
@@ -168,9 +168,9 @@ private:
     tools::Resolver< dispatcher::Object_ABC >         objects_;
     tools::Resolver< dispatcher::Population_ABC >     populations_;
     tools::Resolver< dispatcher::AgentKnowledge_ABC > agentKnowledges_;
+    tools::Resolver< dispatcher::ObjectKnowledge_ABC > objectKnowledges_;
 
 public:
-    tools::Resolver< ObjectKnowledge >        objectKnowledges_;
     tools::Resolver< PopulationKnowledge >    populationKnowledges_;
     tools::Resolver< LogConsignMaintenance >  logConsignsMaintenance_;
     tools::Resolver< LogConsignSupply >       logConsignsSupply_;

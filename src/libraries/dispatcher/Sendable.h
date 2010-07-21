@@ -39,8 +39,8 @@ class Sendable : public SimpleEntity< B >
 
     //! @name Operations
     //@{
-    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const = 0;
-    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const = 0;
+    virtual void SendCreation( ClientPublisher_ABC& publisher ) const = 0;
+    virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const = 0;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const = 0;
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const = 0;
     //@}

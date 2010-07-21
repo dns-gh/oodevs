@@ -26,7 +26,7 @@ namespace dispatcher
     class LogConsignMedical;
     class LogConsignSupply;
     class Object_ABC;
-    class ObjectKnowledge;
+    class ObjectKnowledge_ABC;
     class Population_ABC;
     class PopulationFire;
     class PopulationKnowledge;
@@ -60,7 +60,7 @@ public:
     virtual const tools::Resolver_ABC< dispatcher::Object_ABC >&         Objects() const = 0;
     virtual const tools::Resolver_ABC< dispatcher::Population_ABC >&     Populations() const = 0;
     virtual const tools::Resolver_ABC< dispatcher::AgentKnowledge_ABC >& AgentKnowledges() const = 0;
-    virtual const tools::Resolver_ABC< ObjectKnowledge >&       ObjectKnowledges() const = 0;
+    virtual const tools::Resolver_ABC< dispatcher::ObjectKnowledge_ABC >& ObjectKnowledges() const = 0;
     virtual const tools::Resolver_ABC< PopulationKnowledge >&   PopulationKnowledges() const = 0;
     virtual const tools::Resolver_ABC< LogConsignMaintenance >& LogConsignsMaintenance() const = 0;
     virtual const tools::Resolver_ABC< LogConsignSupply >&      LogConsignsSupply() const = 0;

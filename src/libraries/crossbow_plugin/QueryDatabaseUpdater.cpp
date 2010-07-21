@@ -179,7 +179,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeCrea
 {
     InsertQueryBuilder builder( database_.GetTableName( "KnowledgeObjects" ) );
 
-    const dispatcher::ObjectKnowledge* knowledge = model_.objectKnowledges_.Find( msg.oid() );
+    const dispatcher::ObjectKnowledge_ABC* knowledge = model_.ObjectKnowledges().Find( msg.oid() );
     const kernel::Object_ABC* entity = knowledge->GetEntity();
     if( !entity ) // $$$$ _RC_ SBO 2010-06-10: no real object => giving up
         return;
@@ -316,7 +316,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeUpda
     if( msg.has_attributes() && msg.attributes().has_construction() )
         builder.SetField( "state", msg.attributes().construction().percentage() );
 
-    const dispatcher::ObjectKnowledge* knowledge = model_.objectKnowledges_.Find( msg.oid() );
+    const dispatcher::ObjectKnowledge_ABC* knowledge = model_.ObjectKnowledges().Find( msg.oid() );
     const kernel::Object_ABC* entity = knowledge->GetEntity();
     if( !entity ) // $$$$ _RC_ SBO 2010-06-10: no real object => giving up
         return;

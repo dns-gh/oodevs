@@ -40,10 +40,10 @@ ObjectKnowledgeConverter::~ObjectKnowledgeConverter()
 // -----------------------------------------------------------------------------
 const kernel::ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const kernel::Object_ABC& base, const kernel::Team_ABC& owner ) const
 {
-    tools::Iterator< const dispatcher::ObjectKnowledge& > it = model_.ObjectKnowledges().CreateIterator();
+    tools::Iterator< const dispatcher::ObjectKnowledge_ABC& > it = model_.ObjectKnowledges().CreateIterator();
     while( it.HasMoreElements() )
     {
-        const dispatcher::ObjectKnowledge& k = it.NextElement();
+        const dispatcher::ObjectKnowledge_ABC& k = it.NextElement();
         if( & k.GetOwner() == &owner && k.GetEntity() == &base )
             return &k;
     }

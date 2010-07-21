@@ -177,7 +177,7 @@ void DatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeCreation&
 {
     std::auto_ptr< Table_ABC > table( geometryDb_.OpenTable( "KnowledgeObjects" ) );
 
-    const dispatcher::ObjectKnowledge* knowledge = model_.objectKnowledges_.Find( msg.oid() );
+    const dispatcher::ObjectKnowledge_ABC* knowledge = model_.ObjectKnowledges().Find( msg.oid() );
     const kernel::Object_ABC* entity = knowledge->GetEntity();
     if( !entity ) // $$$$ _RC_ SBO 2010-06-10: no real object => giving up
         return;
@@ -310,7 +310,7 @@ void DatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& m
         if( msg.has_attributes() && msg.attributes().has_construction() )
             row->SetField( "state", FieldVariant( msg.attributes().construction().percentage() ) );
 
-        const dispatcher::ObjectKnowledge* knowledge = model_.objectKnowledges_.Find( msg.oid() );
+        const dispatcher::ObjectKnowledge_ABC* knowledge = model_.ObjectKnowledges().Find( msg.oid() );
         const kernel::Object_ABC* entity = knowledge->GetEntity();
         if( !entity ) // $$$$ _RC_ SBO 2010-06-10: no real object => giving up
             return;

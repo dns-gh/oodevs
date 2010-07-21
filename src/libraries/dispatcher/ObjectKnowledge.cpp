@@ -37,19 +37,19 @@ using namespace dispatcher;
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
 ObjectKnowledge::ObjectKnowledge( const Model_ABC& model, const MsgsSimToClient::MsgObjectKnowledgeCreation& asnMsg )
-    : SimpleEntity< kernel::ObjectKnowledge_ABC >( asnMsg.oid() )
-    , model_                        ( model )
-    , team_                         ( model.Sides().Get( asnMsg.team() ) )
-    , pObject_                      ( model.Objects().Find( asnMsg.real_object() ) )
-    , nType_                        ( asnMsg.type() )
-    , knowledgeGroup_               ( 0 )
-    , localisation_                 ( )
-    , bPerceived_                   ( false )
-    , automatPerceptions_           ()
+    : dispatcher::ObjectKnowledge_ABC( asnMsg.oid() )
+    , model_                         ( model )
+    , team_                          ( model.Sides().Get( asnMsg.team() ) )
+    , pObject_                       ( model.Objects().Find( asnMsg.real_object() ) )
+    , nType_                         ( asnMsg.type() )
+    , knowledgeGroup_                ( asnMsg.has_group() ? &model.KnowledgeGroups().Get( asnMsg.group() ) : 0 )
+    , localisation_                  ( )
+    , bPerceived_                    ( false )
+    , automatPerceptions_            ()
+    , typename_                      ( "objectKnowledge" )
 {
-    if( asnMsg.has_group() )
-        knowledgeGroup_ = &model.KnowledgeGroups().Get( asnMsg.group() );
     Initialize( model, asnMsg.attributes() );
+    RegisterSelf( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,9 +61,8 @@ ObjectKnowledge::~ObjectKnowledge()
     // NOTHING
 }
 
-
 #define CHECK_ASN_ATTRIBUTE_CREATION( ASN, CLASS ) \
-    if( attributes.has_##ASN##()  ) \
+    if( attributes.has_##ASN##()  )                \
         AddAttribute( new CLASS( attributes ) )
 
 // -----------------------------------------------------------------------------
@@ -132,10 +131,10 @@ void ObjectKnowledge::AddAttribute( ObjectAttribute_ABC* attribute )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::Update
+// Name: ObjectKnowledge::DoUpdate
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::Update( const MsgsSimToClient::MsgObjectKnowledgeCreation& message )
+void ObjectKnowledge::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeCreation& message )
 {
     if( ( message.real_object() && ! pObject_ ) || ( pObject_ && pObject_->GetId() != ( unsigned int )message.real_object() ) )
         pObject_ = model_.Objects().Find( message.real_object() );
@@ -143,10 +142,10 @@ void ObjectKnowledge::Update( const MsgsSimToClient::MsgObjectKnowledgeCreation&
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::Update
+// Name: ObjectKnowledge::DoUpdate
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg )
+void ObjectKnowledge::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg )
 {
     if( asnMsg.has_location()  )
     {
@@ -201,7 +200,7 @@ void ObjectKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
         asn().set_group( knowledgeGroup_->GetId() );
     if( pObject_ )
         asn().set_real_object( pObject_->GetId() );
-    asn().set_type( nType_.c_str() );
+    asn().set_type( nType_ );
     std::for_each( attributes_.begin(), attributes_.end(),
                    boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
     asn.Send( publisher );
@@ -280,19 +279,28 @@ const kernel::Team_ABC& ObjectKnowledge::GetOwner() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::Display
-// Created: AGE 2008-06-20
+// Name: ObjectKnowledge::GetTypeName
+// Created: PHC 2010-07-20
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::Display( kernel::Displayer_ABC& ) const
+QString ObjectKnowledge::GetTypeName() const
 {
-    // NOTHING
+    return typename_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::Display
+// Created: PHC 2010-07-21
+// -----------------------------------------------------------------------------
+void ObjectKnowledge::Display( kernel::Displayer_ABC& displayer ) const
+{
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge::DisplayInList
-// Created: AGE 2008-06-20
+// Created: PHC 2010-07-21
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::DisplayInList( kernel::Displayer_ABC& ) const
+void ObjectKnowledge::DisplayInList( kernel::Displayer_ABC& displayer ) const
 {
-    // NOTHING
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
 }
