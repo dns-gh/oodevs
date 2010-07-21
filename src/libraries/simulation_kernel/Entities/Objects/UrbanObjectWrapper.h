@@ -30,17 +30,18 @@ class UrbanObjectWrapper : public MIL_Object_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, const urban::TerrainObject_ABC& object );
+             UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, const urban::TerrainObject_ABC& object );
+             UrbanObjectWrapper();
     virtual ~UrbanObjectWrapper();
     //@}
 
-    /*//! @name CheckPoints
+    //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
 
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
-    //@}*/
+    //@}
 
     //! @name ODB
     //@{
@@ -121,7 +122,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const urban::TerrainObject_ABC& object_;
+    const urban::TerrainObject_ABC* object_;
     unsigned int                    id_;
     MIL_ObjectManipulator_ABC& manipulator_;
     T_Capacities            capacities_;
@@ -134,7 +135,6 @@ private:
     //@}
 };
 
-/*
-BOOST_CLASS_EXPORT_KEY( Object )
-*/
+BOOST_CLASS_EXPORT_KEY( UrbanObjectWrapper )
+
 #endif

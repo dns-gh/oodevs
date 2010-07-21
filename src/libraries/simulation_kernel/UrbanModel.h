@@ -49,7 +49,7 @@ public:
     //@{
     void ReadUrbanModel( const MIL_Config& config );
     void SendCreation( urban::TerrainObject_ABC& UrbanBlock ) const;
-    urban::TerrainObject_ABC* FindUrbanBlock( unsigned id ) const;
+    const urban::TerrainObject_ABC* FindUrbanObject( unsigned id ) const;
     MT_Float GetUrbanBlockCost( MT_Float weight, const MT_Vector2D& from, const MT_Vector2D& to ) const;
     void CreateObjectWrapper( urban::TerrainObject_ABC& object );
     //@}

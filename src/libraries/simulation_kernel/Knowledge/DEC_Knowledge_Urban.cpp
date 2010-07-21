@@ -26,8 +26,8 @@ MIL_IDManager DEC_Knowledge_Urban::idManager_;
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Urban::DEC_Knowledge_Urban( const MIL_Army_ABC& army, const urban::TerrainObject_ABC& object )
     : DEC_Knowledge_ABC()
-    , army_                          ( army )
-    , object_                        ( object )
+    , army_                          ( &army )
+    , object_                        ( &object )
     , nID_                           ( idManager_.GetFreeId() )
     , pCurrentPerceptionLevel_       ( &PHY_PerceptionLevel::notSeen_ )
     , pPreviousPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
@@ -48,6 +48,32 @@ DEC_Knowledge_Urban::DEC_Knowledge_Urban( const MIL_Army_ABC& army, const urban:
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Urban constructor
+// Created: JSR 2010-07-20
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Urban::DEC_Knowledge_Urban()
+    : DEC_Knowledge_ABC()
+    , army_                          ( 0 )
+    , object_                        ( 0 )
+    , nID_                           ( 0 )
+    , pCurrentPerceptionLevel_       ( 0 )
+    , pPreviousPerceptionLevel_      ( 0 )
+    , pMaxPerceptionLevel_           ( 0 )
+    , nTimeLastUpdate_               ( 0 )
+    , rRelevance_                    ( 0 )
+    , rProgressPercent_              ( 0. )
+    , bCreatedOnNetwork_             ( false )
+    , bRelevanceUpdated_             ( false )
+    , bCurrentPerceptionLevelUpdated_( false )
+    , bMaxPerceptionLevelUpdated_    ( false )
+    , bLastPerceived_                ( false )
+    , rLastRelevanceSent_            ( 0. )
+    , rLastProgressSent_             ( 0. )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Urban destructor
 // Created: MGD 2009-11-26
 // -----------------------------------------------------------------------------
@@ -57,14 +83,6 @@ DEC_Knowledge_Urban::~DEC_Knowledge_Urban()
         SendMsgDestruction();
 }
 
-
- // $$$$ _RC_ SLG 2010-02-11: CHECKPOINTS mis en commentaire car pas de fonction de serialization dans URBAN,
-// A decommenter des que c'est fait dans la lib urban
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-// $$$$ LDC - RC Serialization is commented because urban lib doesn't offer serialisation yet.
-/*
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Urban::load
 // Created: MGD 2009-11-26
@@ -74,6 +92,12 @@ void DEC_Knowledge_Urban::load( MIL_CheckPointInArchive& file, const uint )
     file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          >> const_cast< uint& >( nID_ )
          >> nTimeLastUpdate_;
+
+    unsigned long urbanId;
+    file >> urbanId;
+    object_ = UrbanModel::GetSingleton().FindUrbanObject( urbanId );
+
+    file >> const_cast< MIL_Army_ABC*& >( army_ );
 
     uint nID;
     file >> nID;
@@ -98,12 +122,15 @@ void DEC_Knowledge_Urban::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Urban::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    unsigned current  = pCurrentPerceptionLevel_->GetID(),
+    unsigned int current  = pCurrentPerceptionLevel_->GetID(),
              previous = pPreviousPerceptionLevel_->GetID(),
              max      = pMaxPerceptionLevel_->GetID();
+    unsigned long urbanId = object_->GetId();
     file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          << nID_
          << nTimeLastUpdate_
+         << urbanId
+         << army_
          << current
          << previous
          << max
@@ -113,10 +140,6 @@ void DEC_Knowledge_Urban::save( MIL_CheckPointOutArchive& file, const uint ) con
          << bCurrentPerceptionLevelUpdated_
          << bMaxPerceptionLevelUpdated_;
 }
-*/
-// =============================================================================
-// INTERNAL UPDATERS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Urban::Prepare
@@ -134,7 +157,7 @@ void DEC_Knowledge_Urban::Prepare()
 void DEC_Knowledge_Urban::Update( const DEC_Knowledge_UrbanPerception& perception )
 {
     const PHY_PerceptionLevel& level = perception.GetCurrentPerceptionLevel();
-    float complexity = object_.ComputeComplexity(); // ALGO TEMPORAIRE
+    float complexity = object_->ComputeComplexity(); // ALGO TEMPORAIRE
     float progress = level.GetID() * 100 / complexity;//@TODO MGD Add true physical in ADN
     rProgressPercent_ = rProgressPercent_ + progress;
     if( rProgressPercent_ > 1.0 )
@@ -167,10 +190,6 @@ void DEC_Knowledge_Urban::SetPerceptionLevel( const PHY_PerceptionLevel& level )
     pCurrentPerceptionLevel_ = &level;
     rProgressPercent_ = 0.0;
 }
-
-// =============================================================================
-// RELEVANCE
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Urban::ChangeRelevance
@@ -234,10 +253,6 @@ void DEC_Knowledge_Urban::UpdateRelevance()
 
     nTimeLastUpdate_ = GetCurrentTimeStep();
 }
-
-// =============================================================================
-// NETWORK UPDATERS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent::WriteMsgPerceptionSources
@@ -318,8 +333,8 @@ void DEC_Knowledge_Urban::SendChangedState()
     {
         nTimeLastUpdate_ = GetCurrentTimeStep();
         message().set_oid( nID_ );
-        message().set_team( army_.GetID() );
-        message().set_real_urban( object_.GetId() );
+        message().set_team( army_->GetID() );
+        message().set_real_urban( object_->GetId() );
         message.Send( NET_Publisher_ABC::Publisher() );
     }
 }
@@ -332,8 +347,8 @@ void DEC_Knowledge_Urban::SendFullState()
 {
     client::UrbanKnowledgeUpdate message;
     message().set_oid( nID_ );
-    message().set_team( army_.GetID() );
-    message().set_real_urban( object_.GetId() );
+    message().set_team( army_->GetID() );
+    message().set_real_urban( object_->GetId() );
 
     message().set_relevance( static_cast< int >( rRelevance_ * 100. ) );
     rLastRelevanceSent_ = rRelevance_;
@@ -388,8 +403,8 @@ void DEC_Knowledge_Urban::SendMsgCreation() const
 {
     client::UrbanKnowledgeCreation message;
     message().set_oid( nID_ );
-    message().set_team( army_.GetID() );
-    message().set_real_urban( object_.GetId() );
+    message().set_team( army_->GetID() );
+    message().set_real_urban( object_->GetId() );
 
     message.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -402,14 +417,10 @@ void DEC_Knowledge_Urban::SendMsgDestruction() const
 {
     client::UrbanKnowledgeDestruction message;
     message().set_oid( nID_ );
-    message().set_team( army_.GetID() );
+    message().set_team( army_->GetID() );
 
     message.Send( NET_Publisher_ABC::Publisher() );
 }
-
-// =============================================================================
-// ACCESSORS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Urban::GetRelevance
@@ -475,12 +486,12 @@ double DEC_Knowledge_Urban::GetProgress() const
 // -----------------------------------------------------------------------------
 const geometry::Point2f DEC_Knowledge_Urban::GetBarycenter() const
 {
-    return object_.GetFootprint()->Barycenter();
+    return object_->GetFootprint()->Barycenter();
 }
 
 const urban::TerrainObject_ABC& DEC_Knowledge_Urban::GetTerrainObjectKnown() const
 {
-    return object_;
+    return *object_;
 }
 
 // -----------------------------------------------------------------------------
@@ -498,7 +509,7 @@ bool DEC_Knowledge_Urban::IsValid() const
 // -----------------------------------------------------------------------------
 const float DEC_Knowledge_Urban::GetPathfindCost( float weight ) const
 {
-    const urban::Architecture* architecture = object_.RetrievePhysicalFeature< urban::Architecture >();
+    const urban::Architecture* architecture = object_->RetrievePhysicalFeature< urban::Architecture >();
     if( architecture )
         return architecture->GetPathfindCost( weight );
     return 0;

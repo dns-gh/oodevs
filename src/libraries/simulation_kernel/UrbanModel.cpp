@@ -13,7 +13,7 @@
 #include <Urban/Model.h>
 #include <Urban/TerrainObject_ABC.h>
 #include <Urban/WorldParameters.h>
-#include <Urban/TerrainObjectVisitor_ABC.h>
+#include <Urban/ObjectVisitor_ABC.h>
 #include "Tools/MIL_Config.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -96,34 +96,34 @@ void UrbanModel::WriteUrbanModel( xml::xostream& /*xos*/ ) const
 
 namespace
 {
-    class FindUrbanBlockVisitor : public urban::TerrainObjectVisitor_ABC
+    class FindUrbanObjectVisitor : public urban::ObjectVisitor_ABC
     {
     public:
-        FindUrbanBlockVisitor( unsigned id )
+        FindUrbanObjectVisitor( unsigned id )
             : id_         ( id )
             , foundObject_( 0 )
         {}
-        ~FindUrbanBlockVisitor()
+        ~FindUrbanObjectVisitor()
         {}
-        virtual void VisitBlock( urban::TerrainObject_ABC& object )
+        virtual void Visit( const urban::TerrainObject_ABC& object )
         {
             if( object.GetId() == id_ )
                 foundObject_ = &object;
         }
-        urban::TerrainObject_ABC* GetObject(){ return foundObject_; }
+        const urban::TerrainObject_ABC* GetObject(){ return foundObject_; }
     private:
         unsigned id_;
-        urban::TerrainObject_ABC* foundObject_;
+        const urban::TerrainObject_ABC* foundObject_;
     };
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanModel::FindUrbanBlock
+// Name: UrbanModel::FindUrbanObject
 // Created: SLG 2009-10-29
 // -----------------------------------------------------------------------------
-urban::TerrainObject_ABC* UrbanModel::FindUrbanBlock( unsigned id ) const
+const urban::TerrainObject_ABC* UrbanModel::FindUrbanObject( unsigned id ) const
 {
-    FindUrbanBlockVisitor visitor( id );
+    FindUrbanObjectVisitor visitor( id );
     model_->Accept( visitor );
     return visitor.GetObject();
 }

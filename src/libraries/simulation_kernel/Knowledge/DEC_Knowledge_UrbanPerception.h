@@ -12,6 +12,7 @@
 
 #include "MIL.h"
 #include "DEC_Knowledge_ABC.h"
+#include "UrbanModel.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Tools/MIL_IDManager.h"
@@ -95,9 +96,9 @@ template< typename Archive >
 inline void save_construct_data( Archive& archive, const DEC_Knowledge_UrbanPerception* perception, const unsigned int /*version*/ )
 {
     const MIL_Agent_ABC* const perceiver = &perception->perceiver_;
-    const urban::TerrainObject_ABC* const object = &perception->object_;
+    unsigned long id = perception->object_.GetId();
     archive << perceiver
-            << object;
+            << id;
 }
 
 // -----------------------------------------------------------------------------
@@ -108,10 +109,12 @@ template< typename Archive >
 inline void load_construct_data( Archive& archive, DEC_Knowledge_UrbanPerception* perception, const unsigned int /*version*/ )
 {
     MIL_Agent_ABC* perceiver;
-    urban::TerrainObject_ABC* object;
+    unsigned long id;
     archive >> perceiver
-            >> object;
-    ::new( perception )DEC_Knowledge_UrbanPerception( *perceiver, *object );
+            >> id;
+    const urban::TerrainObject_ABC* object = UrbanModel::GetSingleton().FindUrbanObject( id );
+    if( object )
+        ::new( perception )DEC_Knowledge_UrbanPerception( *perceiver, *object );
 }
 
 

@@ -10,6 +10,7 @@
 #ifndef __DEC_Knowledge_Urban_h_
 #define __DEC_Knowledge_Urban_h_
 
+#include "MIL.h"
 #include "DEC_Knowledge_ABC.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Tools/MIL_IDManager.h"
@@ -42,15 +43,16 @@ public:
     //! @name Constructors/Destructor
     //@{
              DEC_Knowledge_Urban( const MIL_Army_ABC& army, const urban::TerrainObject_ABC& object );
+             DEC_Knowledge_Urban();
     virtual ~DEC_Knowledge_Urban();
     //@}
 
     //! @name CheckPoints
     //@{
-    /*BOOST_SERIALIZATION_SPLIT_MEMBER()
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
 
     void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;*/
+    void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
 
     //! @name Operations
@@ -109,17 +111,12 @@ private:
     void SendFullState();
     //@}
 
-    //! @name CheckPoints
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const DEC_Knowledge_Urban* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, DEC_Knowledge_Urban* role, const unsigned int /*version*/ );
-    //@}
-
 private:
     //! @name Member data
     //@{
     const unsigned nID_;
-    const MIL_Army_ABC& army_;
-    const urban::TerrainObject_ABC& object_;
+    const MIL_Army_ABC* army_;
+    const urban::TerrainObject_ABC* object_;
     // Internal attributes
     const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
     const PHY_PerceptionLevel* pPreviousPerceptionLevel_;
@@ -142,32 +139,5 @@ private:
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_Urban )
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_UrbanPerception::save_construct_data
-// Created: MGD 2009-12-07
-// -----------------------------------------------------------------------------
-template< typename Archive >
-inline void save_construct_data( Archive& /*archive*/, const DEC_Knowledge_Urban* /*knowledge*/, const unsigned int /*version*/ )
-{
-    /*const MIL_Army_ABC* const army = &knowledge->army_;
-    const urban::TerrainObject_ABC* const object = &knowledge->object_;
-    archive << army
-            << object;*/
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_UrbanPerception::load_construct_data
-// Created: MGD 2009-12-07
-// -----------------------------------------------------------------------------
-template< typename Archive >
-inline void load_construct_data( Archive& /*archive*/, DEC_Knowledge_Urban* /*knowledge*/, const unsigned int /*version*/ )
-{
-   /* MIL_Army_ABC* army;
-    urban::TerrainObject_ABC* object;
-    archive >> army
-            >> object;
-    ::new( knowledge )DEC_Knowledge_Urban( *army, *object );*/
-}
 
 #endif // __DEC_Knowledge_Urban_h_

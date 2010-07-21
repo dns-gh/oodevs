@@ -8,20 +8,21 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "UrbanObjectWrapper.h"
-#include "StructuralCapacity.h"
-#include "Knowledge/DEC_Knowledge_Object.h"
 #include "MIL_ObjectManipulator.h"
+#include "StructuralCapacity.h"
+#include "UrbanModel.h"
+#include "UrbanObjectWrapper.h"
+#include "UrbanType.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Objects/MIL_ObjectLoader.h"
 #include "Entities/Objects/MIL_ObjectBuilder_ABC.h"
+#include "geometry/Types.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_terrain/TER_Localisation.h"
-#include "geometry/Types.h"
-#include "UrbanType.h"
 #include <Urban/ColorRGBA.h>
 #include <Urban/PhysicalFeature_ABC.h>
 #include <Urban/Architecture.h>
@@ -34,13 +35,15 @@
 #include "HLA/HLA_Object_ABC.h"
 #include "HLA/HLA_UpdateFunctor.h"
 
+BOOST_CLASS_EXPORT_IMPLEMENT( UrbanObjectWrapper )
+
 // -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper constructor
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
 UrbanObjectWrapper::UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, const urban::TerrainObject_ABC& object )
     : MIL_Object_ABC( 0, builder.GetType() )
-    , object_( object )
+    , object_( &object )
     , id_( idManager_.GetFreeId() )
     , manipulator_( *new MIL_ObjectManipulator( *this ) )
 {
@@ -54,11 +57,54 @@ UrbanObjectWrapper::UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, co
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper constructor
+// Created: JSR 2010-07-20
+// -----------------------------------------------------------------------------
+UrbanObjectWrapper::UrbanObjectWrapper()
+    : MIL_Object_ABC()
+    , object_( 0 )
+    , id_( 0 )
+    , manipulator_( *new MIL_ObjectManipulator( *this ) )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper destructor
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
 UrbanObjectWrapper::~UrbanObjectWrapper()
 {
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::load
+// Created: JSR 2010-07-20
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::load( MIL_CheckPointInArchive& file, const unsigned int )
+{
+    unsigned long urbanId;
+    file >> boost::serialization::base_object< MIL_Object_ABC >( *this );
+    file >> id_
+         >> urbanId;
+    object_ = UrbanModel::GetSingleton().FindUrbanObject( urbanId );
+    T_Capacities capacities;
+    file >> capacities;
+    std::for_each( capacities.begin(), capacities.end(), boost::bind( &ObjectCapacity_ABC::Register, _1, boost::ref( *this ) ) );
+    idManager_.Lock( id_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::save
+// Created: JSR 2010-07-20
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    unsigned long urbanId = object_->GetId();
+    file << boost::serialization::base_object< MIL_Object_ABC >( *this );
+    file << id_;
+    file << urbanId;
+    file << capacities_;
 }
 
 // -----------------------------------------------------------------------------
@@ -270,13 +316,13 @@ MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdate(
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::SendCreation() const
 {
-    if( object_.HasChild() )
+    if( object_->HasChild() )
         return;
     client::UrbanCreation message;
-    message().set_oid( object_.GetId() );
-    message().set_name( object_.GetName() );
+    message().set_oid( object_->GetId() );
+    message().set_name( object_->GetName() );
     message().mutable_location()->set_type( Common::MsgLocation_Geometry_polygon );
-    const geometry::Polygon2f::T_Vertices& points = object_.GetFootprint()->Vertices();
+    const geometry::Polygon2f::T_Vertices& points = object_->GetFootprint()->Vertices();
     for( geometry::Polygon2f::CIT_Vertices it = points.begin(); it != points.end(); ++it )
     {
         Common::MsgCoordLatLong* point = message().mutable_location()->mutable_coordinates()->add_elem();
@@ -285,7 +331,7 @@ void UrbanObjectWrapper::SendCreation() const
 
     }
 
-    const ColorRGBA* color = object_.GetColor();
+    const ColorRGBA* color = object_->GetColor();
     if( color != 0 )
     {
         message().mutable_attributes()->mutable_color()->set_red( color->Red() );
@@ -294,7 +340,7 @@ void UrbanObjectWrapper::SendCreation() const
         message().mutable_attributes()->mutable_color()->set_alpha( color->Alpha() );
     }
 
-    const urban::Architecture* architecture = object_.RetrievePhysicalFeature< urban::Architecture >();
+    const urban::Architecture* architecture = object_->RetrievePhysicalFeature< urban::Architecture >();
     if( architecture != 0 )
     {
         message().mutable_attributes()->mutable_architecture()->set_height( architecture->GetHeight() );
@@ -335,10 +381,10 @@ void UrbanObjectWrapper::SendFullState() const
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::UpdateState()
 {
-    if( object_.HasChild() )
+    if( object_->HasChild() )
         return;
     client::UrbanUpdate message;
-    message().set_oid( object_.GetId() );
+    message().set_oid( object_->GetId() );
     Retrieve< StructuralCapacity >()->SendState( *message().mutable_attributes() );
     message.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -358,7 +404,7 @@ unsigned int UrbanObjectWrapper::GetID() const
 // -----------------------------------------------------------------------------
 const urban::TerrainObject_ABC& UrbanObjectWrapper::GetObject()
 {
-    return object_;
+    return *object_;
 }
 
 // -----------------------------------------------------------------------------
@@ -367,7 +413,7 @@ const urban::TerrainObject_ABC& UrbanObjectWrapper::GetObject()
 // -----------------------------------------------------------------------------
 const urban::TerrainObject_ABC& UrbanObjectWrapper::GetObject() const
 {
-    return object_;
+    return *object_;
 }
 
 // -----------------------------------------------------------------------------
@@ -403,7 +449,7 @@ void UrbanObjectWrapper::Register( ObjectCapacity_ABC* capacity )
 // -----------------------------------------------------------------------------
 unsigned int UrbanObjectWrapper::GetMaterial() const
 {
-    const urban::Architecture* architecture = object_.RetrievePhysicalFeature< urban::Architecture >();
+    const urban::Architecture* architecture = object_->RetrievePhysicalFeature< urban::Architecture >();
     if( architecture )
         return UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId();
     return std::numeric_limits< unsigned int >::max();
