@@ -286,6 +286,8 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< void ( int, int, int ) >( boost::bind( &DEC_MiscFunctions::ReportPopulationKnowledge< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_RC_TirPion",
         boost::function< void ( int, int, int ) >( boost::bind( &DEC_MiscFunctions::ReportTirPion< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
+    brain.RegisterFunction( "DEC_RC_String",
+        boost::function< void ( int, int, const std::string& ) >( boost::bind( &DEC_MiscFunctions::ReportString< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
 
     // Geometry
     brain.RegisterFunction( "DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau",
