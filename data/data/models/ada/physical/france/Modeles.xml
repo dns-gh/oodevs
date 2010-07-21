@@ -2985,6 +2985,7 @@
         <mission name="SuivreBM"/>
         <mission name="SoutenirSurPositionEnMesureDeBM"/>
         <mission name="ReconnaitreItineraire"/>
+        <mission name="COMMUNES Decrocher"/>
       </missions>
     </automat>
     <automat dia-type="net.masagroup.sword.military.company.combat.support.artillery.roles.Company" file="BMAutomat.bms" name="net.masagroup.sword.military.company.combat.support.artillery.roles.Company">
@@ -2995,12 +2996,14 @@
         <mission name="SuivreBM"/>
         <mission name="SoutenirSurPositionEnMesureDeBM"/>
         <mission name="Deploy"/>
+        <mission name="COMMUNES Decrocher"/>
       </missions>
     </automat>
     <automat dia-type="net.masagroup.sword.military.company.terrorism.roles.SniperCompany" file="BMAutomat.bms" name="net.masagroup.sword.military.company.terrorism.roles.SniperCompany">
       <missions>
         <mission name="FaireMouvementVersPosition"/>
         <mission name="FaireMouvementVersBU"/>
+        <mission name="COMMUNES Decrocher"/>
       </missions>
     </automat>
     <automat dia-type="StrategicBomberSquadron" file="Air\Automates\Escadrille Assaut\Model.bms" name="Groupe Assaut AIR">

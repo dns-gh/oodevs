@@ -1597,6 +1597,9 @@
     <mission cdt-dia-behavior="net.masagroup.testSword.military.company.tasks.GiveOrderMoveTo" dia-type="T_Mission_Automate_GiveOrderMoveToPoint" id="1002" mrt-dia-behavior="net.masagroup.testSword.military.company.tasks.GiveOrderMoveTo" name="GiveOrderMoveToPoint">
       <parameter dia-name="objective" name="destination" optional="false" type="PointBM"/>
     </mission>
+    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Decrocher" dia-type="net.masagroup.sword.france.military.company.tasks.Decrocher" id="1011" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Decrocher" name="COMMUNES Decrocher">
+      <parameter dia-name="objectives" name="point de regroupement" optional="false" type="PointBM"/>
+    </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.FaireMouvementVersPosition" dia-type="net.masagroup.sword.france.military.company.tasks.FaireMouvementVersPosition" id="1003" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.FaireMouvementVersPosition" name="FaireMouvementVersPosition">
       <parameter dia-name="objectives" name="objectives" optional="false" type="PathBM"/>
     </mission>
