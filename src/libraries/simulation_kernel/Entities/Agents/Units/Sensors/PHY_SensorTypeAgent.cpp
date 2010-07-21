@@ -65,7 +65,7 @@ namespace
             C::const_iterator it = container_.find( containerType );
             if( it != container_.end() )
             {
-                assert( factors.size() > it->second->GetID() );
+                assert( static_cast< int >( factors.size() ) > it->second->GetID() );
                 MT_Float& rFactor = factors[ it->second->GetID() ];
 
                 xis >> xml::attribute( "value", rFactor );
