@@ -10,6 +10,8 @@
 #ifndef __Dotation_h_
 #define __Dotation_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace Common
 {
     class MsgDotationStock;
@@ -29,13 +31,13 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Dotation
+class Dotation : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
     explicit Dotation( const MsgsSimToClient::ResourceDotations_ResourceDotation& asnMsg );
-    explicit Dotation( const Common::MsgDotationStock    & asnMsg );
+    explicit Dotation( const Common::MsgDotationStock& asnMsg );
     virtual ~Dotation();
     //@}
 
@@ -43,13 +45,13 @@ public:
     //@{
     void Update( const MsgsSimToClient::ResourceDotations_ResourceDotation& asnMsg );
     void Update( const Common::MsgDotationStock& asnMsg );
-    void Send  ( MsgsSimToClient::ResourceDotations_ResourceDotation& asnMsg ) const ;
-    void Send  ( Common::MsgDotationStock& asnMsg ) const ;
+    void Send( MsgsSimToClient::ResourceDotations_ResourceDotation& asnMsg ) const ;
+    void Send( Common::MsgDotationStock& asnMsg ) const ;
     //@}
 
 private:
     const unsigned int nDotationType_; // XML reference - no resolved by dispatcher
-          unsigned int nNbr_;
+    unsigned int nNbr_;
 };
 
 }

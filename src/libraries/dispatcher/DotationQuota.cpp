@@ -51,4 +51,3 @@ void DotationQuota::Send( Common::MsgDotationQuota& message ) const
     message.set_ressource_id( nDotationType_ );
     message.set_quota_disponible( nQuota_ );
 }
-

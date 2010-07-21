@@ -10,6 +10,8 @@
 #ifndef __Loan_h_
 #define __Loan_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace MsgsSimToClient
 {
     class BorrowedEquipments_BorrowedEquipment;
@@ -31,20 +33,20 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Loan
+class Loan : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
              Loan( const Model_ABC& model, const MsgsSimToClient::BorrowedEquipments_BorrowedEquipment& message );
-             Loan( const Model_ABC& model, const MsgsSimToClient::LentEquipments_LentEquipment&         message );
+             Loan( const Model_ABC& model, const MsgsSimToClient::LentEquipments_LentEquipment& message );
     virtual ~Loan();
     //@}
 
     //! @name Operations
     //@{
-    void Send( MsgsSimToClient::BorrowedEquipments_BorrowedEquipment&   message ) const;
-    void Send( MsgsSimToClient::LentEquipments_LentEquipment&           message ) const;
+    void Send( MsgsSimToClient::BorrowedEquipments_BorrowedEquipment& message ) const;
+    void Send( MsgsSimToClient::LentEquipments_LentEquipment& message ) const;
     //@}
 
 private:

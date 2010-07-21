@@ -10,6 +10,8 @@
 #ifndef __DotationQuota_h_
 #define __DotationQuota_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace Common
 {
     class MsgDotationQuota;
@@ -25,7 +27,7 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class DotationQuota
+class DotationQuota : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -37,12 +39,12 @@ public:
     //! @name Operations
     //@{
     void Update( const Common::MsgDotationQuota& message );
-    void Send  ( Common::MsgDotationQuota& message ) const;
+    void Send( Common::MsgDotationQuota& message ) const;
     //@}
 
 private:
     const unsigned int nDotationType_; // XML reference - no resolved by dispatcher
-          unsigned int nQuota_;
+    unsigned int nQuota_;
 };
 
 }

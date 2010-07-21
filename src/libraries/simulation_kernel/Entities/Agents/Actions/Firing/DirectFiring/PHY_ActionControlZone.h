@@ -13,7 +13,6 @@
 #define __PHY_ActionControlZone_h_
 
 #include "MIL.h"
-
 #include "Entities/Actions/PHY_Action_ABC.h"
 
 namespace firing
@@ -42,17 +41,17 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Execute         ();
+    virtual void Execute();
     virtual void ExecuteSuspended();
     virtual void Stop();
     //@}
 
 private:
-    PHY_RoleInterface_Perceiver&      rolePerceiver_;
+    PHY_RoleInterface_Perceiver& rolePerceiver_;
     firing::PHY_RoleAction_DirectFiring& roleDirectFiring_;
-    MIL_Object_ABC*              pZoneControlled_;
-    PHY_FireResults_Default*     pFireResult_;
-    int                          perceptionZoneID_;
+    MIL_Object_ABC* pZoneControlled_;
+    PHY_FireResults_Default* pFireResult_;
+    int perceptionZoneID_;
 };
 
 #endif // __PHY_ActionControlZone_h_

@@ -63,9 +63,9 @@ namespace
         }
 
     private:
-        ControlZoneType         type_;
+        ControlZoneType type_;
         const TER_Localisation& location_;
-        MIL_Agent_ABC&          pion_;
+        MIL_Agent_ABC& pion_;
     };
 }
 
@@ -74,12 +74,12 @@ namespace
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 PHY_ActionControlZone::PHY_ActionControlZone( MIL_AgentPion& pion, const TER_Localisation* pLocalisation, MT_Float rRadius, bool bFire )
-    : PHY_Action_ABC    ()
-    , rolePerceiver_    ( pion.GetRole< PHY_RoleInterface_Perceiver      >() )
-    , roleDirectFiring_ ( pion.GetRole< PHY_RoleAction_DirectFiring >() )
-    , pFireResult_      ( 0 )
-    , pZoneControlled_  ( 0 )
-    , perceptionZoneID_ ( 0 )
+    : PHY_Action_ABC()
+    , rolePerceiver_   ( pion.GetRole< PHY_RoleInterface_Perceiver >() )
+    , roleDirectFiring_( pion.GetRole< PHY_RoleAction_DirectFiring >() )
+    , pFireResult_     ( 0 )
+    , pZoneControlled_ ( 0 )
+    , perceptionZoneID_( 0 )
 {
     // Fire
     if( bFire )
@@ -96,12 +96,11 @@ PHY_ActionControlZone::PHY_ActionControlZone( MIL_AgentPion& pion, const TER_Loc
         }
         //@}
     }
-
     // Detection
     if( pLocalisation->GetArea() <= rRadius * rRadius * MT_PI )
         perceptionZoneID_ = rolePerceiver_.EnableControlLocalisation( *pLocalisation, pion.GetRole< DEC_Decision_ABC >() );
     else
-        perceptionZoneID_ = rolePerceiver_.EnableRecoLocalisation   ( *pLocalisation, rRadius, pion.GetRole< DEC_Decision_ABC >() );
+        perceptionZoneID_ = rolePerceiver_.EnableRecoLocalisation( *pLocalisation, static_cast< float >( rRadius ), pion.GetRole< DEC_Decision_ABC >() );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,10 +112,6 @@ PHY_ActionControlZone::~PHY_ActionControlZone()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionControlZone::Stop
 // Created: LDC 2010-03-11
@@ -124,15 +119,12 @@ PHY_ActionControlZone::~PHY_ActionControlZone()
 void PHY_ActionControlZone::Stop()
 {
     rolePerceiver_.DisableRecoLocalisation( perceptionZoneID_ );
-
     if( pFireResult_ )
         pFireResult_->DecRef();
-
     if( pZoneControlled_ )
         pZoneControlled_->MarkForDestruction();
-
-    pZoneControlled_   = 0;
-    pFireResult_       = 0;
+    pZoneControlled_ = 0;
+    pFireResult_ = 0;
     perceptionZoneID_ = 0;
 }
 
@@ -144,7 +136,6 @@ void PHY_ActionControlZone::Execute()
 {
     if( !pZoneControlled_ )
         return;
-
     const bool bMustRefResult = ( pFireResult_ == 0 );
     roleDirectFiring_.FireZone( *pZoneControlled_, pFireResult_ );
     if( pFireResult_ && bMustRefResult )
