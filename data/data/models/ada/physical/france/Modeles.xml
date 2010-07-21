@@ -2979,8 +2979,8 @@
   <automats>
     <automat dia-type="net.masagroup.sword.military.company.roles.Company" file="BMAutomat.bms" name="net.masagroup.sword.military.company.roles.Company">
       <missions>
-        <mission name="FaireMouvementVersPosition"/>
-        <mission name="FaireMouvementVersBU"/>
+        <mission name="COMMUNES FaireMouvement"/>
+        <mission name="COMMUNES Franchir"/>
         <mission name="StationnerBM"/>
         <mission name="SuivreBM"/>
         <mission name="SoutenirSurPositionEnMesureDeBM"/>
@@ -2990,8 +2990,7 @@
     </automat>
     <automat dia-type="net.masagroup.sword.military.company.combat.support.artillery.roles.Company" file="BMAutomat.bms" name="net.masagroup.sword.military.company.combat.support.artillery.roles.Company">
       <missions>
-        <mission name="FaireMouvementVersPosition"/>
-        <mission name="FaireMouvementVersBU"/>
+        <mission name="COMMUNES FaireMouvement"/>
         <mission name="StationnerBM"/>
         <mission name="SuivreBM"/>
         <mission name="SoutenirSurPositionEnMesureDeBM"/>
@@ -3001,8 +3000,7 @@
     </automat>
     <automat dia-type="net.masagroup.sword.military.company.terrorism.roles.SniperCompany" file="BMAutomat.bms" name="net.masagroup.sword.military.company.terrorism.roles.SniperCompany">
       <missions>
-        <mission name="FaireMouvementVersPosition"/>
-        <mission name="FaireMouvementVersBU"/>
+        <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Decrocher"/>
       </missions>
     </automat>

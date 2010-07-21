@@ -973,8 +973,8 @@
       <parameter dia-name="positions" name="positions de surveillance" optional="false" type="PointListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Franchir" dia-type="net.masagroup.sword.france.military.platoon.tasks.Franchir" id="2071" name="COMMUNES Franchir">
-      <parameter dia-name="siteDeFranchissements" name="site de franchissement" optional="false" type="ObjectKnowledgeBM"/>
-      <parameter dia-name="destinations" name="point de destination" optional="false" type="PointBM"/>
+      <parameter dia-name="crossingSite" name="site de franchissement" optional="false" type="ObjectKnowledgeBM"/>
+      <parameter dia-name="objective" name="point de destination" optional="false" type="PointBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Semparer" dia-type="T_Mission_Pion_Emparer_BU" id="2072" name="MELEE S'emparer d'un Bloc Urbain">
       <parameter dia-name="objectives" name="objectif" optional="false" type="UrbanBlockBM"/>
@@ -1591,20 +1591,11 @@
       <parameter dia-name="MedicalPriorities_" name="MedicalPrioritiesParam" optional="true" type="MedicalPriorities"/>
       <parameter dia-name="ObjectiveList_" name="ObjectiveListParam" optional="true" type="ObjectiveList"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.testSword.military.company.tasks.GiveOrderMoveTo" dia-type="T_Mission_Automate_GiveOrderMoveToUrbanBlock" id="1001" mrt-dia-behavior="net.masagroup.testSword.military.company.tasks.GiveOrderMoveTo" name="GiveOrderMoveToUrbanBlock">
-      <parameter dia-name="objective" name="destination" optional="false" type="UrbanBlockBM"/>
-    </mission>
-    <mission cdt-dia-behavior="net.masagroup.testSword.military.company.tasks.GiveOrderMoveTo" dia-type="T_Mission_Automate_GiveOrderMoveToPoint" id="1002" mrt-dia-behavior="net.masagroup.testSword.military.company.tasks.GiveOrderMoveTo" name="GiveOrderMoveToPoint">
-      <parameter dia-name="objective" name="destination" optional="false" type="PointBM"/>
+    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.FaireMouvement" dia-type="net.masagroup.sword.france.military.company.tasks.FaireMouvement" id="1003" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.FaireMouvement" name="COMMUNES FaireMouvement">
+       <parameter dia-name="objectives" name="objectives" optional="false" type="PathBM"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Decrocher" dia-type="net.masagroup.sword.france.military.company.tasks.Decrocher" id="1011" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Decrocher" name="COMMUNES Decrocher">
       <parameter dia-name="objectives" name="point de regroupement" optional="false" type="PointBM"/>
-    </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.FaireMouvementVersPosition" dia-type="net.masagroup.sword.france.military.company.tasks.FaireMouvementVersPosition" id="1003" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.FaireMouvementVersPosition" name="FaireMouvementVersPosition">
-      <parameter dia-name="objectives" name="objectives" optional="false" type="PathBM"/>
-    </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.tasks.commun.automat.FaireMouvementVersBU" dia-type="T_Mission_Automate_FaireMouvementVersBU" id="1004" mrt-dia-behavior="net.masagroup.sword.france.military.tasks.commun.automat.FaireMouvementVersBU" name="FaireMouvementVersBU">
-      <parameter dia-name="position" name="destination" optional="false" type="UrbanBlockBM"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.tasks.commun.automat.StationnerBM" dia-type="T_Mission_Automate_StationnerBM" id="1005" mrt-dia-behavior="net.masagroup.sword.france.military.tasks.commun.automat.StationnerBM" name="StationnerBM">
       <parameter dia-name="position" name="point de stationnement" optional="false" type="PointBM"/>
@@ -1620,6 +1611,10 @@
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.tasks.SGTIA.ReconnaitreItineraire" dia-type="T_Mission_Automate_ReconnaitreItineraire" id="1009" mrt-dia-behavior="net.masagroup.sword.france.military.tasks.SGTIA.ReconnaitreItineraire" name="ReconnaitreItineraire">
       <parameter dia-name="objectives" name="destination" optional="false" type="PathBM"/>
+    </mission>
+    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Franchir" dia-type="net.masagroup.sword.france.military.company.tasks.Franchir" id="1010" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Franchir" name="COMMUNES Franchir">
+      <parameter dia-name="crossingSite" name="site de franchissement" optional="false" type="ObjectKnowledgeBM"/>
+      <parameter dia-name="objective" name="point de destination" optional="false" type="PointBM"/>
     </mission>
   </automats>
   <populations>
