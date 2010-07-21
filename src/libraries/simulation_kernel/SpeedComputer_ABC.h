@@ -10,6 +10,8 @@
 #ifndef __moving_SpeedComputer_ABC_H__
 #define __moving_SpeedComputer_ABC_H__
 
+#include <boost/noncopyable.hpp>
+
 class DEC_Knowledge_PopulationCollision;
 class MIL_Agent_ABC;
 class PHY_ComposantePion;
@@ -25,7 +27,7 @@ class SpeedStrategy_ABC;
 */
 // Created: AHC 2009-10-01
 // =============================================================================
-class SpeedComputer_ABC
+class SpeedComputer_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

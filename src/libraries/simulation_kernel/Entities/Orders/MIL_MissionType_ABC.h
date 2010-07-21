@@ -46,7 +46,7 @@ public:
     //! @name Types
     //@{
     typedef std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > T_MissionNameMap;
-    typedef T_MissionNameMap::const_iterator                                          CIT_MissionNameMap;
+    typedef T_MissionNameMap::const_iterator                                        CIT_MissionNameMap;
     //@}
 
 protected:
@@ -55,7 +55,7 @@ protected:
     //! @name Types
     //@{
     typedef std::map< unsigned int, const MIL_MissionType_ABC* > T_MissionIDMap;
-    typedef T_MissionIDMap::const_iterator               CIT_MissionIDMap;
+    typedef T_MissionIDMap::const_iterator                     CIT_MissionIDMap;
     //@}
 
 protected:

@@ -11,7 +11,6 @@
 #define __PHY_RoleAction_DirectFiring_h_
 
 #include "MIL.h"
-
 #include "MT_Tools/Role_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
 #include "PHY_DirectFireData.h"

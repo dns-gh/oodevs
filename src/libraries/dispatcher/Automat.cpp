@@ -122,7 +122,7 @@ void Automat::DoUpdate( const MsgsSimToClient::MsgAutomatCreation& msg )
         ( msg.oid_parent().has_automate()  ||
         ( msg.oid_parent().has_formation() && msg.oid_parent().formation().oid() != parentFormation_->GetId() ) ) )
         ChangeSuperior( msg.oid_parent() );
-    if( parentAutomat_ && ( msg.oid_parent().has_formation() || ( msg.oid_parent().has_automate()  && msg.oid_parent().automate().oid()  != parentAutomat_  ->GetId() ) ) )
+    if( parentAutomat_ && ( msg.oid_parent().has_formation() || ( msg.oid_parent().has_automate()  && msg.oid_parent().automate().oid()  != parentAutomat_->GetId() ) ) )
        ChangeSuperior( msg.oid_parent() );
     decisionalInfos_.Clear();
 }

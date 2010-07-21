@@ -11,6 +11,7 @@
 #define __MIL_MedicalTreatmentType_h_
 
 #include <map>
+#include <boost/noncopyable.hpp>
 
 namespace xml
 {
@@ -23,7 +24,7 @@ namespace xml
 // Modified: RFT 19/05/2008
 // =============================================================================
 
-class MIL_MedicalTreatmentType
+class MIL_MedicalTreatmentType : private boost::noncopyable
 {
 public:
     enum E_InjuryCategories{

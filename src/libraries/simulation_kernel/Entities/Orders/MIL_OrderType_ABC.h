@@ -10,6 +10,8 @@
 #ifndef __MIL_OrderType_ABC_h_
 #define __MIL_OrderType_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace Common
 {
     class MsgMissionParameters;
@@ -32,7 +34,7 @@ class MIL_ParameterType_ABC;
 */
 // Created: NLD 2006-11-14
 // =============================================================================
-class MIL_OrderType_ABC
+class MIL_OrderType_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

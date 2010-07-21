@@ -13,6 +13,7 @@
 #define __MIL_NBCType_h_
 
 #include "MIL_Random.h"
+#include <boost/noncopyable.hpp>
 
 namespace xml
 {
@@ -23,7 +24,7 @@ namespace xml
 // Created: JVT 03-01-06
 // Modified: JVT 2004-10-28
 //*****************************************************************************
-class MIL_NBCType
+class MIL_NBCType : private boost::noncopyable
 {
 public:
     //!@name Enum
