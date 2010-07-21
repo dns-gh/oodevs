@@ -21,6 +21,7 @@
 MIL_OrderManager_ABC::MIL_OrderManager_ABC()
     : bNewMissionStarted_( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

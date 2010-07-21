@@ -21,22 +21,20 @@ class PHY_Weapon;
 
 namespace firing
 {
+class FireData_ABC : private boost::noncopyable
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+             FireData_ABC() {}
+    virtual ~FireData_ABC() {}
+    //@}
 
-    class FireData_ABC : private boost::noncopyable
-    {
-
-    public:
-        //! @name Constructors/Destructor
-        //@{
-                 FireData_ABC() {}
-        virtual ~FireData_ABC() {}
-        //@}
-
-        //! @name Operation
-        //@{
-        virtual void operator()( const PHY_ComposantePion& firer, PHY_Weapon& weapon ) = 0;
-        //@}
-    };
+    //! @name Operation
+    //@{
+    virtual void operator()( const PHY_ComposantePion& firer, PHY_Weapon& weapon ) = 0;
+    //@}
+};
 
 } // namespace firing
 

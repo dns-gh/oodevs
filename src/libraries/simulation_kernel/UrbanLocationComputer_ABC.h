@@ -27,27 +27,32 @@ namespace urbanLocation
 class UrbanLocationComputer_ABC
 {
 public:
-
+    //! @name Types
+    //@{
     struct Results
     {
+        Results()
+            : urbanDeployment_( 0.f )
+            , position_( 0.f, 0.f )
+        {
+            // NOTHING
+        }
         float urbanDeployment_;
         geometry::Point2f position_;
-        Results();
     };
-
+    //@}
 
 public:
-
     //! @name Constructors/Destructor
     //@{
-             UrbanLocationComputer_ABC(){}
-    virtual ~UrbanLocationComputer_ABC(){}
+             UrbanLocationComputer_ABC() {}
+    virtual ~UrbanLocationComputer_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void SetUrbanDeployment ( float urbanDeployment ) = 0;
-    virtual void SetPosition        ( geometry::Point2f position ) = 0;
+    virtual void SetUrbanDeployment( float urbanDeployment ) = 0;
+    virtual void SetPosition( geometry::Point2f position ) = 0;
     virtual Results& Result() = 0;
     //@}
 };

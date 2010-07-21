@@ -134,7 +134,7 @@ void MIL_Mission_ABC::Accept( MIL_IntelligenceOrdersVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 void MIL_Mission_ABC::UsedByDIA()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -143,7 +143,7 @@ void MIL_Mission_ABC::UsedByDIA()
 // -----------------------------------------------------------------------------
 void MIL_Mission_ABC::ReleasedByDIA()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -159,7 +159,6 @@ void MIL_Mission_ABC::Visit( MIL_MissionParameterVisitor_ABC& parameterVisitor )
         const MIL_ParameterType_ABC& paramType = type_.GetParameterType( i );
         if( parameters_[i] )
             parameterVisitor.Accept( paramName, paramType, *parameters_[i] );
-
     }
 }
 
