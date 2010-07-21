@@ -45,7 +45,7 @@ StockAttribute::StockAttribute( xml::xistream& xis )
 // Name: StockAttribute constructor
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-StockAttribute::StockAttribute( const PHY_DotationCategory& dotation, uint nFullNbrDotation )
+StockAttribute::StockAttribute( const PHY_DotationCategory& dotation, unsigned int nFullNbrDotation )
 {
     stock_[ &dotation ] = std::make_pair( 0, nFullNbrDotation );
 }
@@ -107,7 +107,7 @@ StockAttribute& StockAttribute::operator=( const StockAttribute& rhs )
 // Name: StockAttribute::load
 // Created: JCR 2008-09-15
 // -----------------------------------------------------------------------------
-void StockAttribute::load( MIL_CheckPointInArchive& ar, const uint )
+void StockAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
     unsigned size = 0;
     ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this )
@@ -121,7 +121,6 @@ void StockAttribute::load( MIL_CheckPointInArchive& ar, const uint )
         const PHY_DotationCategory* dotation = PHY_DotationType::FindDotationCategory( type );
         if( !dotation )
            throw std::runtime_error( "Unknown dotation category - " + type + " - " );
-
     }
 }
 
@@ -129,7 +128,7 @@ void StockAttribute::load( MIL_CheckPointInArchive& ar, const uint )
 // Name: StockAttribute::save
 // Created: JCR 2008-09-15
 // -----------------------------------------------------------------------------
-void StockAttribute::save( MIL_CheckPointOutArchive& ar, const uint ) const
+void StockAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
     unsigned size = stock_.size();
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
@@ -238,11 +237,10 @@ bool StockAttribute::IsFull() const
 // Name: StockAttribute::Fill
 // Created: JCR 2009-06-03
 // -----------------------------------------------------------------------------
-uint StockAttribute::Supply( const PHY_DotationCategory& category, uint quantity )
+unsigned int StockAttribute::Supply( const PHY_DotationCategory& category, unsigned int quantity )
 {
-    std::pair< uint, uint > stock = stock_[ &category ];
-
-    uint filled = std::max( stock.first + quantity, stock.second );
+    T_pair stock = stock_[ &category ];
+    unsigned int filled = std::max( stock.first + quantity, stock.second );
     stock_[ &category ].first = filled;
     return filled - stock.first;
 }
@@ -251,15 +249,12 @@ uint StockAttribute::Supply( const PHY_DotationCategory& category, uint quantity
 // Name: StockAttribute::Distribute
 // Created: JCR 2009-06-04
 // -----------------------------------------------------------------------------
-uint StockAttribute::Distribute( const PHY_DotationCategory& category, uint quantity )
+unsigned int StockAttribute::Distribute( const PHY_DotationCategory& category, unsigned int quantity )
 {
-    typedef T_DotationProgress::iterator IT_DotationProgress;
-
     IT_DotationProgress it = stock_.find( &category );
     if( it == stock_.end() )
         return 0;
-
-    uint stock = it->second.first;
+    unsigned int stock = it->second.first;
     it->second.first = stock - std::min( quantity, stock );
     return it->second.first - stock;
 }
@@ -268,12 +263,12 @@ namespace
 {
     struct SelectPredicate
     {
-        explicit SelectPredicate( std::vector< std::pair< const PHY_DotationCategory*, uint > >& selection, bool select_full )
-            : selection_ ( selection )
-            , select_full_ ( select_full )
+        SelectPredicate( std::vector< std::pair< const PHY_DotationCategory*, unsigned int > >& selection, bool select_full )
+            : selection_  ( selection )
+            , select_full_( select_full )
         {
+            // NOTHING
         }
-
         template< typename T >
         void operator()( const T& it ) const
         {
@@ -281,8 +276,7 @@ namespace
             if( select_full_ || ! is_full( it ) )
                 selection_.push_back( std::make_pair( it.first, it.second.second - it.second.first ) );
         }
-
-        std::vector< std::pair< const PHY_DotationCategory*, uint >>& selection_;
+        std::vector< std::pair< const PHY_DotationCategory*, unsigned int > >& selection_;
         bool select_full_;
     };
 }
@@ -291,7 +285,7 @@ namespace
 // Name: StockAttribute::SelectDotations
 // Created: JCR 2009-06-04
 // -----------------------------------------------------------------------------
-void StockAttribute::SelectDotations( std::vector< std::pair< const PHY_DotationCategory*, uint > >& selection, bool select_full ) const
+void StockAttribute::SelectDotations( std::vector< std::pair< const PHY_DotationCategory*, unsigned int > >& selection, bool select_full ) const
 {
     std::for_each( stock_.begin(), stock_.end(), SelectPredicate( selection, select_full ) );
 }

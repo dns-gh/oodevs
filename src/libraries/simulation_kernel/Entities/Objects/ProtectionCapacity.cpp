@@ -132,6 +132,6 @@ void ProtectionCapacity::ProcessAgentInside( MIL_Object_ABC& /*object*/, MIL_Age
 void ProtectionCapacity::ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
     CIT_AgentContainer it = container_.find( &agent );
-    if( it == container_.end() && container_.size() < size_max_ )
+    if( it == container_.end() && static_cast< int >( container_.size() ) < size_max_ )
         container_.insert( &agent );
 }

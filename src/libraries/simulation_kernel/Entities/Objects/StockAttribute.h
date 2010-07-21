@@ -37,15 +37,15 @@ public:
     //@{
              StockAttribute();
     explicit StockAttribute( xml::xistream& xis );
-             StockAttribute( const PHY_DotationCategory& category, uint nFullNbrDotation );
+             StockAttribute( const PHY_DotationCategory& category, unsigned int nFullNbrDotation );
     virtual ~StockAttribute();
     //@}
 
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Knowledge
@@ -73,9 +73,9 @@ public:
     //! @name Operations
     //@{
     bool IsFull() const;
-    uint Supply( const PHY_DotationCategory& category, uint quantity );
-    uint Distribute( const PHY_DotationCategory& category, uint quantity );
-    void SelectDotations( std::vector< std::pair< const PHY_DotationCategory*, uint >>& selection, bool select_full ) const;
+    unsigned int Supply( const PHY_DotationCategory& category, unsigned int quantity );
+    unsigned int Distribute( const PHY_DotationCategory& category, unsigned int quantity );
+    void SelectDotations( std::vector< std::pair< const PHY_DotationCategory*, unsigned int > >& selection, bool select_full ) const;
     //@}
 
     //! @name Copy
@@ -89,18 +89,20 @@ public:
     void Send( Common::MsgObjectAttributeStock& attribute, bool send_max ) const;
     //@}
 
-public:
+private:
     //! @name Types
     // <Dotation, <current, max>>
     //@{
-    typedef std::map< const PHY_DotationCategory*, std::pair< uint, uint > >    T_DotationProgress;
-    typedef T_DotationProgress::const_iterator                                  CIT_DotationProgress;
+    typedef std::pair< unsigned int, unsigned int >         T_pair;
+    typedef std::map< const PHY_DotationCategory*, T_pair > T_DotationProgress;
+    typedef T_DotationProgress::iterator                   IT_DotationProgress;
+    typedef T_DotationProgress::const_iterator            CIT_DotationProgress;
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_DotationProgress  stock_;
+    T_DotationProgress stock_;
     //@}
 };
 

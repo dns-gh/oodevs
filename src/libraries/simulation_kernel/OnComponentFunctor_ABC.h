@@ -23,8 +23,8 @@ class OnComponentFunctor_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             OnComponentFunctor_ABC();
-    virtual ~OnComponentFunctor_ABC();
+             OnComponentFunctor_ABC() {}
+    virtual ~OnComponentFunctor_ABC() {}
     //@}
 
     //! @name Operation

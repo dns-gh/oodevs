@@ -17,7 +17,6 @@ namespace client
 
 namespace network
 {
-
 // =============================================================================
 /** @class  NetworkUnitMessageNotificationHandler_ABC
     @brief  NetworkUnitMessageNotificationHandler_ABC
@@ -29,14 +28,14 @@ class NetworkUnitMessageNotificationHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NetworkUnitMessageNotificationHandler_ABC();
-    virtual ~NetworkUnitMessageNotificationHandler_ABC();
+             NetworkUnitMessageNotificationHandler_ABC() {}
+    virtual ~NetworkUnitMessageNotificationHandler_ABC() {}
     //@}
 
     //! @name Operations
     //@{
     virtual void SendChangedState( client::UnitAttributes& asnMsg ) const = 0;
-    virtual void SendFullState   ( client::UnitAttributes& asnMsg ) const = 0;
+    virtual void SendFullState( client::UnitAttributes& asnMsg ) const = 0;
     //@}
 };
 

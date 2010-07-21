@@ -24,8 +24,8 @@ class OnComponentComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             OnComponentComputer_ABC();
-    virtual ~OnComponentComputer_ABC();
+             OnComponentComputer_ABC() {}
+    virtual ~OnComponentComputer_ABC() {}
     //@}
 
     //! @name Operations

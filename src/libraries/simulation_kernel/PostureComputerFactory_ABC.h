@@ -11,8 +11,10 @@
 #define __PostureComputerFactory_ABC_h_
 
 #include "simulation_kernel/PostureComputer_ABC.h"
+
 class PHY_Posture;
 class PHY_UnitType;
+
 namespace posture
 {
 // =============================================================================
@@ -26,8 +28,8 @@ class PostureComputerFactory_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             PostureComputerFactory_ABC();
-    virtual ~PostureComputerFactory_ABC();
+             PostureComputerFactory_ABC() {}
+    virtual ~PostureComputerFactory_ABC() {}
     //@}
 
     //! @name Operations
