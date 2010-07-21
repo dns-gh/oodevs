@@ -5290,6 +5290,10 @@ du tireur</translation>
         <source>Reloading time modifier</source>
         <translation>Modificateur de temps de rechargement</translation>
     </message>
+    <message>
+        <source>km/h</source>
+        <translation>km/h</translation>
+    </message>
 </context>
 <context>
     <name>ADN_NBC_Intox_GUI</name>

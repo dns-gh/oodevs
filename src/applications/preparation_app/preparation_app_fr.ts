@@ -1434,7 +1434,7 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>The following entities cannot be loaded: </source>
-        <translation>Les entités suivantes n'ont pas pu être chargées: </translation>
+        <translation>Les entités suivantes n&apos;ont pas pu être chargées: </translation>
     </message>
 </context>
 </TS>
