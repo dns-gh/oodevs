@@ -7,41 +7,34 @@
 //
 // *****************************************************************************
 
-#ifndef __MockObject_h_
-#define __MockObject_h_
+#ifndef __MockObjectKnowledge_h_
+#define __MockObjectKnowledge_h_
 
-#include "dispatcher/Object_ABC.h"
+#include "dispatcher/ObjectKnowledge_ABC.h"
 
 // =============================================================================
-/** @class  MockObject
-    @brief  MockObject
+/** @class  MockObjectKnowledge
+    @brief  MockObjectKnowledge
 */
-// Created: SBO 2010-06-09
+// Created: PHC 2010-07-20
 // =============================================================================
-MOCK_BASE_CLASS( MockObject, dispatcher::Object_ABC )
+MOCK_BASE_CLASS( MockObjectKnowledge, dispatcher::ObjectKnowledge_ABC )
 {
-    explicit MockObject( unsigned int id ) : dispatcher::Object_ABC( id ) {}
+    explicit MockObjectKnowledge( unsigned int id ) : dispatcher::ObjectKnowledge_ABC( id ) {}
 
     // kernel::Entity_ABC
-    MOCK_METHOD( GetName, 0 );
-    MOCK_METHOD( GetId, 0 );
+    MOCK_METHOD( GetEntity, 0 );
+    MOCK_METHOD( GetOwner, 0 );
     MOCK_METHOD( GetTypeName, 0 );
     MOCK_METHOD( Select, 1 );
     MOCK_METHOD( ContextMenu, 2 );
     MOCK_METHOD( Activate, 1 );
 
-    // kernel::Object_ABC
-    MOCK_METHOD( Display, 1 );
-    MOCK_METHOD( GetType, 0 );
-
-    // dispatcher::Sendable< kernel::Object_ABC >
+    // dispatcher::Sendable< kernel::ObjectKnowledge_ABC >
     MOCK_METHOD( SendCreation, 1 );
     MOCK_METHOD( SendFullUpdate, 1 );
     MOCK_METHOD( SendDestruction, 1 );
     MOCK_METHOD( Accept, 1 );
-
-    // dispatcher::Object_ABC
-    MOCK_METHOD( GetTeam, 0 );
 };
 
-#endif // __MockObject_h_
+#endif // __MockObjectKnowledge_h_

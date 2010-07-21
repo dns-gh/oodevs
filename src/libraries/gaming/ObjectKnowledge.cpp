@@ -37,10 +37,9 @@ ObjectKnowledge::ObjectKnowledge( const Entity_ABC& owner, const MsgsSimToClient
     , owner_         ( owner )
     , objectResolver_( objectResolver )
     , type_          ( & typeResolver.Get( message.type() ) )
-    , pRealObject_   ( 0 )
+    , pRealObject_   ( objectResolver_.Find( message.real_object() ) )
 {
     RegisterSelf( *this );
-    pRealObject_ = objectResolver_.Find( message.real_object() );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,12 +57,12 @@ ObjectKnowledge::~ObjectKnowledge()
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
-    if( message.has_real_object()  )
+    if( message.has_real_object() )
         pRealObject_ = objectResolver_.Find( message.real_object() );
-
-    if( message.has_relevance()  )
+    if( message.has_relevance() )
         nRelevance_ = message.relevance();
-
+    if( message.has_perceived() )
+        bIsPerceived_ = message.perceived();
     Touch();
 }
 

@@ -55,8 +55,6 @@ private:
     //! @name Member data
     //@{
     const kernel::ObjectKnowledge_ABC& knowledge_;
-    bool realObjectKnown_;
-    bool perceived_;
     //@}
 };
 

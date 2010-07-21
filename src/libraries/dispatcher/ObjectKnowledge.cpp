@@ -48,6 +48,7 @@ ObjectKnowledge::ObjectKnowledge( const Model_ABC& model, const MsgsSimToClient:
     , automatPerceptions_            ()
     , typename_                      ( "objectKnowledge" )
 {
+    optionals_.realObjectPresent = pObject_ != 0;
     Initialize( model, asnMsg.attributes() );
     RegisterSelf( *this );
 }
@@ -152,15 +153,28 @@ void ObjectKnowledge::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate&
         localisation_.Update( asnMsg.location() );
         optionals_.locationPresent = 1;
     }
-    if( asnMsg.has_automat_perception()  )
+    if( asnMsg.has_perceived() )
+    {
+        bPerceived_ = asnMsg.perceived();
+        optionals_.perceivedPresent = 1;
+    }
+    if( asnMsg.has_relevance() )
+    {
+        nRelevance_ = asnMsg.relevance();
+        optionals_.relevancePresent = 1;
+    }
+    if( asnMsg.has_automat_perception() )
     {
         optionals_.automat_perceptionPresent = 1;
         automatPerceptions_.clear();
         for( int i = 0; i < asnMsg.automat_perception().elem_size(); ++i )
             automatPerceptions_.push_back( &model_.Automats().Get( asnMsg.automat_perception().elem( i )) );
     }
-    if( asnMsg.has_real_object()  )
+    if( asnMsg.has_real_object() )
+    {
         pObject_ = model_.Objects().Find( asnMsg.real_object() );
+        optionals_.realObjectPresent = 1;
+    }
     if( asnMsg.attributes().has_construction() )
         CreateOrUpdate< ConstructionAttribute >( asnMsg.attributes() );
     if( asnMsg.attributes().has_obstacle() )
@@ -198,8 +212,8 @@ void ObjectKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().set_team( team_.GetId() );
     if( knowledgeGroup_ )
         asn().set_group( knowledgeGroup_->GetId() );
-    if( pObject_ )
-        asn().set_real_object( pObject_->GetId() );
+    if( optionals_.realObjectPresent )
+        asn().set_real_object( pObject_ ? pObject_->GetId() : 0 );
     asn().set_type( nType_ );
     std::for_each( attributes_.begin(), attributes_.end(),
                    boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
@@ -212,22 +226,26 @@ void ObjectKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
-    client::ObjectKnowledgeUpdate asn;
-    asn().set_oid( GetId() );
-    asn().set_team( team_.GetId() );
+    client::ObjectKnowledgeUpdate message;
+    message().set_oid( GetId() );
+    message().set_team( team_.GetId() );
     if( knowledgeGroup_ )
-        asn().set_group( knowledgeGroup_->GetId() );
-    if( pObject_ )
-        asn().set_real_object( pObject_->GetId() );
+        message().set_group( knowledgeGroup_->GetId() );
+    if( optionals_.realObjectPresent )
+        message().set_real_object( pObject_ ? pObject_->GetId() : 0 );
     if( optionals_.locationPresent )
-        localisation_.Send( *asn().mutable_location() );
+        localisation_.Send( *message().mutable_location() );
+    if( optionals_.perceivedPresent )
+        message().set_perceived( bPerceived_ );
+    if( optionals_.relevancePresent )
+        message().set_relevance( nRelevance_ );
     if( optionals_.automat_perceptionPresent )
         for( std::vector< const kernel::Automat_ABC* >::const_iterator it = automatPerceptions_.begin(); it != automatPerceptions_.end(); ++it )
-            asn().mutable_automat_perception()->add_elem( (*it)->GetId() );
-    asn().mutable_attributes();
+            message().mutable_automat_perception()->add_elem( (*it)->GetId() );
+    message().mutable_attributes();
     std::for_each( attributes_.begin(), attributes_.end(),
-                   boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
-    asn.Send( publisher );
+                   boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( *message().mutable_attributes() ) ) );
+    message.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -291,7 +309,7 @@ QString ObjectKnowledge::GetTypeName() const
 // Name: ObjectKnowledge::Display
 // Created: PHC 2010-07-21
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::Display( kernel::Displayer_ABC& displayer ) const
+void ObjectKnowledge::Display( kernel::Displayer_ABC& /*displayer*/ ) const
 {
     throw std::runtime_error( __FUNCTION__ " not implemented" );
 }
@@ -300,7 +318,7 @@ void ObjectKnowledge::Display( kernel::Displayer_ABC& displayer ) const
 // Name: ObjectKnowledge::DisplayInList
 // Created: PHC 2010-07-21
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::DisplayInList( kernel::Displayer_ABC& displayer ) const
+void ObjectKnowledge::DisplayInList( kernel::Displayer_ABC& /*displayer*/ ) const
 {
     throw std::runtime_error( __FUNCTION__ " not implemented" );
 }

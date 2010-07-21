@@ -92,18 +92,12 @@ private:
     //$$$ bullshit
     struct T_Optionals
     {
-        unsigned relevancePresent : 1;
-        unsigned locationPresent : 1;
-        unsigned construction_percentagePresent : 1;
-        unsigned mining_percentagePresent : 1;
-        unsigned bypass_construction_percentagePresent : 1;
-        unsigned reserved_obstacle_activatedPresent : 1;
-        unsigned perceivedPresent : 1;
-        unsigned specific_attributesPresent : 1;
-        unsigned automat_perceptionPresent : 1;
-        unsigned construction_dotation_nbrPresent : 1;
-        unsigned mining_dotation_nbrPresent : 1;
-        unsigned obstacle_typePresent : 1;
+        unsigned char realObjectPresent : 1;
+        unsigned char relevancePresent : 1;
+        unsigned char locationPresent : 1;
+        unsigned char perceivedPresent : 1;
+        unsigned char specific_attributesPresent : 1;
+        unsigned char automat_perceptionPresent : 1;
     };
     //@}
 

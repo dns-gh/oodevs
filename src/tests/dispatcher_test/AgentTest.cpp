@@ -174,8 +174,8 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
                 message.set_etat_installation( 60 );
                 message.set_en_tenue_de_protection_nbc( true );
 //            message.mutable_contamine_par_agents_nbc();
-            message.mutable_etat_contamination()->set_percentage( 0 );
-            message.mutable_etat_contamination()->set_quantity( 2.f );
+                message.mutable_etat_contamination()->set_percentage( 0 );
+                message.mutable_etat_contamination()->set_quantity( 2.f );
                 message.mutable_communications()->set_jammed( true );
                 message.mutable_communications()->set_knowledge_group( 0 );
                 message.set_radio_emitter_disabled( true );

@@ -83,14 +83,11 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver_;
     const kernel::Entity_ABC& owner_;
-
     const kernel::ObjectType* type_;
-
     std::string position_;
     kernel::Object_ABC* pRealObject_;
-
-    kernel::OptionalValue< bool >           bIsPerceived_;
-    kernel::OptionalValue< uint >           nRelevance_;
+    kernel::OptionalValue< bool > bIsPerceived_;
+    kernel::OptionalValue< uint > nRelevance_;
     //@}
 };
 

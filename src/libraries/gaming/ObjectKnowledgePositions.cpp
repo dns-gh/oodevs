@@ -19,8 +19,6 @@
 ObjectKnowledgePositions::ObjectKnowledgePositions( const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectKnowledge_ABC& knowledge )
     : LocationPositions( converter )
     , knowledge_( knowledge )
-    , realObjectKnown_( false )
-    , perceived_( false )
 {
     // NOTHING
 }
@@ -42,10 +40,6 @@ void ObjectKnowledgePositions::DoUpdate( const MsgsSimToClient::MsgObjectKnowled
 {
     if( message.has_location()  )
         Update( message.location() );
-    if( message.has_perceived()  )
-        perceived_ = message.perceived() != 0;
-    if( message.has_real_object()  )
-        realObjectKnown_ = true;
 }
 
 // -----------------------------------------------------------------------------
