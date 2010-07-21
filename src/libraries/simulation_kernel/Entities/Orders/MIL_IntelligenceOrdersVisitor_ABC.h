@@ -10,13 +10,15 @@
 #ifndef __MIL_IntelligenceOrdersVisitor_ABC_h_
 #define __MIL_IntelligenceOrdersVisitor_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 // =============================================================================
 /** @class  MIL_IntelligenceOrdersVisitor_ABC
     @brief  MIL_IntelligenceOrdersVisitor_ABC
 */
 // Created: SBO 2007-11-12
 // =============================================================================
-class MIL_IntelligenceOrdersVisitor_ABC
+class MIL_IntelligenceOrdersVisitor_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

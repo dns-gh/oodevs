@@ -12,9 +12,9 @@
 
 class PHY_Posture;
 class PHY_UnitType;
+
 namespace posture
 {
-
 // =============================================================================
 /** @class  PostureComputer_ABC
     @brief  PostureComputer_ABC
@@ -24,9 +24,16 @@ namespace posture
 class PostureComputer_ABC
 {
 public:
-
+    //! @name Types
+    //@{
     struct Parameters
     {
+        Parameters( const PHY_UnitType& unitType, const PHY_Posture& posture )
+            : unitType_( unitType )
+            , posture_ ( posture )
+        {
+            // NOTHING
+        }
         const PHY_UnitType& unitType_;
         const PHY_Posture& posture_;
         bool bIsDead_;
@@ -34,23 +41,27 @@ public:
         bool bDiscreteModeEnabled_;
         double rStealthFactor_;
         double rTimingFactor_;
-
-        Parameters( const PHY_UnitType& unitType, const PHY_Posture& posture );
     };
 
     struct Results
     {
+        explicit Results( double completion = 0. )
+            : newPosture_                 ( 0 )
+            , postureCompletionPercentage_( completion )
+            , bIsStealth_                 ( false )
+        {
+            // NOTHING
+        }
         const PHY_Posture* newPosture_;
         double postureCompletionPercentage_;
         bool bIsStealth_;
-
-        explicit Results( double completion = 0. );
     };
+    //@}
 
     //! @name Constructors/Destructor
     //@{
-             PostureComputer_ABC();
-    virtual ~PostureComputer_ABC();
+             PostureComputer_ABC() {}
+    virtual ~PostureComputer_ABC() {}
     //@}
 
     //! @name Operations
