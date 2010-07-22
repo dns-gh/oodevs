@@ -10,6 +10,8 @@
 #ifndef __OnComponentLendFunctorComputer_ABC_h_
 #define __OnComponentLendFunctorComputer_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 class OnComponentFunctor_ABC;
 class PHY_ComposantePion;
 
@@ -19,7 +21,7 @@ class PHY_ComposantePion;
 */
 // Created: MGD 2009-09-15
 // =============================================================================
-class OnComponentLendedFunctorComputer_ABC
+class OnComponentLendedFunctorComputer_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

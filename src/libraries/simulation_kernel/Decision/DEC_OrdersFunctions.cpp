@@ -15,6 +15,7 @@
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Orders/MIL_PionMissionType.h"
 #include "Entities/Orders/MIL_AutomateMissionType.h"
+#include <boost/noncopyable.hpp>
 
 //-----------------------------------------------------------------------------
 // Name: DEC_OrdersFunctions::MRT_CreatePionMission
@@ -205,7 +206,7 @@ MIL_Automate& DEC_OrdersFunctions::GetHigherEngagedAutomate( MIL_Automate& autom
 
 namespace
 {
-    class FlagMissionLima
+    class FlagMissionLima : private boost::noncopyable
     {
     public:
         FlagMissionLima( unsigned int nLimaID, bool bValue ) : nLimaID_( nLimaID ), bValue_( bValue ) {}
@@ -222,7 +223,7 @@ namespace
         const bool bValue_;
     };
 
-    class FlagScheduleMissionLima
+    class FlagScheduleMissionLima : private boost::noncopyable
     {
     public:
         FlagScheduleMissionLima( unsigned int nLimaID, bool bValue ) : nLimaID_( nLimaID ), bValue_( bValue ) {}

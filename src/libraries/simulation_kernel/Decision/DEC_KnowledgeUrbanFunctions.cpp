@@ -30,6 +30,7 @@
 #include "urban/TerrainObject_ABC.h"
 #include "urban/Architecture.h"
 #include "MT_Tools/MT_LinearInterpolation.h"
+#include <boost/noncopyable.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeUrbanFunctions::GetCurrentPerceptionLevel
@@ -116,7 +117,7 @@ float DEC_KnowledgeUrbanFunctions::GetRapForLocal( const MIL_AgentPion& callerAg
 
 namespace
 {
-    class SensorFunctor
+    class SensorFunctor : private boost::noncopyable
     {
     public:
          SensorFunctor( const MIL_Agent_ABC& perceiver, const MT_Vector2D& point, const MT_Vector2D& target )

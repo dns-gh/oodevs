@@ -13,9 +13,9 @@
 #define __PHY_ComposantePredicates_h_
 
 #include "MIL.h"
-
 #include "OnComponentFunctor_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
+#include <boost/noncopyable.hpp>
 
 class PHY_ComposantePion;
 class PHY_ComposanteTypePion;
@@ -24,7 +24,7 @@ class PHY_ComposanteTypePion;
 // @class  ComponentPredicate_ABC
 // Created: MGD 2009-09-28
 // =============================================================================
-class ComponentPredicate_ABC
+class ComponentPredicate_ABC : private boost::noncopyable
 {
 public:
     virtual ~ComponentPredicate_ABC() {}
@@ -121,7 +121,7 @@ public:
 // @class  ComponentTypePredicate_ABC
 // Created: MGD 2009-09-28
 // =============================================================================
-class ComponentTypePredicate_ABC
+class ComponentTypePredicate_ABC : private boost::noncopyable
 {
 public:
     virtual ~ComponentTypePredicate_ABC() {}

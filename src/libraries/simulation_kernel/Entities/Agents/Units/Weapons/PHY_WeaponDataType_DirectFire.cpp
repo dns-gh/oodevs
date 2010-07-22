@@ -54,6 +54,7 @@
 #include "UrbanModel.h"
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/noncopyable.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_WeaponDataType_DirectFire constructor
@@ -393,7 +394,7 @@ void PHY_WeaponDataType_DirectFire::NotifyFirerPerception( MIL_Agent_ABC& firer,
 
 namespace
 {
-    class SensorFunctor
+    class SensorFunctor : private boost::noncopyable
     {
     public:
         SensorFunctor(const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target )

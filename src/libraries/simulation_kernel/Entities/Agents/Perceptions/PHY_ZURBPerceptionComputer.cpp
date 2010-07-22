@@ -33,6 +33,7 @@
 #pragma warning( disable : 4127 4100 )
 #include <boost/geometry/geometry.hpp>
 #pragma warning( pop )
+#include <boost/noncopyable.hpp>
 
 namespace bg = boost::geometry;
 // -----------------------------------------------------------------------------
@@ -148,7 +149,7 @@ const PHY_PerceptionLevel& PHY_ZURBPerceptionComputer::GetLevelWithDelay( unsign
 
 namespace
 {
-    class SensorFunctor
+    class SensorFunctor : private boost::noncopyable
     {
     public:
         SensorFunctor(const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target )

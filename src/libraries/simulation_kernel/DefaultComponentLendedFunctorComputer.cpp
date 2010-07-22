@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "simulation_kernel/DefaultComponentLendedFunctorComputer.h"
 #include "simulation_kernel/OnComponentFunctor_ABC.h"
 
