@@ -20,12 +20,22 @@ namespace bfs = boost::filesystem;
 
 namespace
 {
-    void CreateExerciseXml( const std::string& file, const std::string& terrain, const std::string& model, const std::string& physical )
+    void CreateExerciseXml( const std::string& file, const std::string& terrain, const std::string& model, const std::string& physical, bool keepMeta )
     {
         xml::xofstream xos( file );
         xos << xml::start( "exercise" )
-                << xml::attribute( "generator-version", "V4.0.0" )
-                << xml::start( "profiles" ) << xml::attribute( "file", "profiles.xml" ) << xml::end
+                << xml::attribute( "generator-version", "V4.0.0" );
+        if( keepMeta && boost::filesystem::exists( file ) )
+        {
+            xml::xifstream xis( file );
+            xis >> xml::start( "exercise" );
+            if( xis.has_child( "meta" ) )
+            {
+                xis >> xml::start( "meta" );
+                xos << xml::content( "meta", xis );
+            }
+        }
+        xos     << xml::start( "profiles" ) << xml::attribute( "file", "profiles.xml" ) << xml::end
                 << xml::start( "orbat" )    << xml::attribute( "file", "orbat.xml" ) << xml::end
                 << xml::start( "weather" )  << xml::attribute( "file", "weather.xml" ) << xml::end
                 << xml::start( "terrain" )
@@ -46,11 +56,11 @@ namespace frontend
         const std::string dir = config.GetExerciseDir( name );
         bfs::create_directories( dir );
 
-        CreateExerciseXml( ( bfs::path( dir, bfs::native ) / "exercise.xml" ).native_file_string(), terrain, model, physical );
+        CreateExerciseXml( ( bfs::path( dir, bfs::native ) / "exercise.xml" ).native_file_string(), terrain, model, physical, false );
     }
     void EditExerciseParameters( const tools::GeneralConfig& config, const std::string& name, const std::string& terrain, const std::string& model, const std::string& physical )
     {
         const std::string dir = config.GetExerciseDir( name );
-        CreateExerciseXml( ( bfs::path( dir, bfs::native ) / "exercise.xml" ).native_file_string(), terrain, model, physical );
+        CreateExerciseXml( ( bfs::path( dir, bfs::native ) / "exercise.xml" ).native_file_string(), terrain, model, physical, true );
     }
 }
