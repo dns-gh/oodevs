@@ -9,7 +9,10 @@
 
 #include "tools_pch.h"
 #include "WinArguments.h"
+#pragma warning( push )
+#pragma warning( disable: 4512 )
 #include <boost/program_options.hpp>
+#pragma warning( pop )
 
 // -----------------------------------------------------------------------------
 // Name: WinArguments constructor
@@ -47,4 +50,3 @@ int WinArguments::Argc() const
 {
     return cArgv_.size();
 }
-
