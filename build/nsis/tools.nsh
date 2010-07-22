@@ -180,10 +180,12 @@
     File /r /x ".svn" "${DOCDIR}\fr\final\Guide_de_Reference.pdf"
     File /r /x ".svn" "${DOCDIR}\fr\final\Guide_Utilisateur_Animateur.pdf"
     File /r /x ".svn" "${DOCDIR}\fr\final\Guide_Utilisateur_Superviseur.pdf"
+    File /r /x ".svn" "${DOCDIR}\fr\final\Guide_Utilisateur_Outil_Adaptation.pdf"
     CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français"
     CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français\Guide de Reference.lnk" "$INSTDIR\doc\fr\Guide_de_Reference.pdf"
     CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français\Guide Utilisateur Animateur.lnk" "$INSTDIR\doc\fr\Guide_Utilisateur_Animateur.pdf"
     CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français\Guide Utilisateur Superviseur.lnk" "$INSTDIR\doc\fr\Guide_Utilisateur_Superviseur.pdf"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français\Guide Utilisateur Outil Adaptation.lnk" "$INSTDIR\doc\fr\Guide_Utilisateur_Outil_Adaptation.pdf"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
 !macroend
