@@ -10,13 +10,11 @@
 #include "dispatcher_pch.h"
 #include "ArchitectureAttribute.h"
 #include "CapacityAttribute.h"
-#include "protocol/ClientPublisher_ABC.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 #include "ColorAttribute.h"
-#include "Model.h"
 #include "UrbanObject.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
-
 #include <boost/bind.hpp>
 
 using namespace dispatcher;
@@ -25,13 +23,12 @@ using namespace dispatcher;
 // Name: UrbanObject constructor
 // Created: SLG 2009-09-26
 // -----------------------------------------------------------------------------
-UrbanObject::UrbanObject( Model& model, const MsgsSimToClient::MsgUrbanCreation& msg )
-    : SimpleEntity<>( msg.oid(), msg.name().c_str() )
-    , model_        ( model )
-    , strName_      ( msg.name()  )
-    , localisation_ ( msg.location() )
+UrbanObject::UrbanObject( Model_ABC& /*model*/, const MsgsSimToClient::MsgUrbanCreation& msg )
+    : dispatcher::UrbanObject_ABC( msg.oid(), msg.name().c_str() )
+    , strName_                   ( msg.name()  )
+    , localisation_              ( msg.location() )
 {
-    Initialize( model, msg.attributes() );
+    Initialize( msg.attributes() );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,22 +37,23 @@ UrbanObject::UrbanObject( Model& model, const MsgsSimToClient::MsgUrbanCreation&
 // -----------------------------------------------------------------------------
 UrbanObject::~UrbanObject()
 {
+    // NOTHING
 }
 
 
 #define MSG_ASN_CREATION( ASN, CLASS ) \
     if( attributes.has_##ASN##() ) \
-    AddAttribute( new CLASS( model, attributes ) )
+    AddAttribute( new CLASS( attributes ) )
 
 // -----------------------------------------------------------------------------
 // Name: UrbanObject::Initialize
 // Created: SLG 2009-09-26
 // -----------------------------------------------------------------------------
-void UrbanObject::Initialize( Model& model, const MsgsSimToClient::MsgUrbanAttributes& attributes )
+void UrbanObject::Initialize( const MsgsSimToClient::MsgUrbanAttributes& attributes )
 {
-    MSG_ASN_CREATION( color         , ColorAttribute );
-    MSG_ASN_CREATION( architecture  , ArchitectureAttribute );
-    MSG_ASN_CREATION( capacity  , CapacityAttribute );
+    MSG_ASN_CREATION( color       , ColorAttribute );
+    MSG_ASN_CREATION( architecture, ArchitectureAttribute );
+    MSG_ASN_CREATION( capacity    , CapacityAttribute );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,14 +72,11 @@ void UrbanObject::AddAttribute( UrbanObjectAttribute_ABC* attribute )
 void UrbanObject::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::UrbanCreation asn;
-
     asn().set_oid( GetId() );
     asn().set_name( strName_ );
     localisation_.Send( *asn().mutable_location() );
-
     std::for_each( attributes_.begin(), attributes_.end(),
         boost::bind( &UrbanObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
-
     asn.Send( publisher );
 }
 
@@ -92,12 +87,9 @@ void UrbanObject::SendCreation( ClientPublisher_ABC& publisher ) const
 void UrbanObject::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::UrbanUpdate asn;
-
     asn().set_oid( GetId() );
-
     std::for_each( attributes_.begin(), attributes_.end(),
         boost::bind( &UrbanObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
-
     asn.Send( publisher );
 }
 
@@ -107,23 +99,14 @@ void UrbanObject::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void UrbanObject::SendDestruction( ClientPublisher_ABC& /*publisher*/ ) const
 {
-    //TODO
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: UrbanObject::Update
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void UrbanObject::Update( const MsgsSimToClient::MsgUrbanCreation& msg )
-{
-    ApplyUpdate( msg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObject::Update
-// Created: AGE 2007-04-12
-// -----------------------------------------------------------------------------
-void UrbanObject::Update( const MsgsSimToClient::MsgUrbanUpdate& msg )
+void UrbanObject::DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& msg )
 {
     if( msg.has_attributes() )
         std::for_each( attributes_.begin(), attributes_.end(),
@@ -137,4 +120,13 @@ void UrbanObject::Update( const MsgsSimToClient::MsgUrbanUpdate& msg )
 void UrbanObject::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObject::Display
+// Created: PHC 2010-07-22
+// -----------------------------------------------------------------------------
+void UrbanObject::Display( kernel::Displayer_ABC& /*displayer*/ ) const
+{
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
 }

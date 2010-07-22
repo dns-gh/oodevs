@@ -14,11 +14,6 @@
 
 class ColorRGBA;
 
-namespace MsgsSimToClient
-{
-    class MsgUrbanAttributes;
-}
-
 namespace dispatcher
 {
     class Model;
@@ -34,15 +29,14 @@ class ColorAttribute : public UrbanObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ColorAttribute( const Model& model, const MsgsSimToClient::MsgUrbanAttributes& message );
+    explicit ColorAttribute( const MsgsSimToClient::MsgUrbanAttributes& message );
     virtual ~ColorAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const MsgsSimToClient::MsgUrbanAttributes& message );
-    virtual void Send     ( MsgsSimToClient::MsgUrbanAttributes& message ) const;
-    virtual void AsnDelete( MsgsSimToClient::MsgUrbanAttributes& message ) const;
+    virtual void Update( const MsgsSimToClient::MsgUrbanAttributes& message );
+    virtual void Send  ( MsgsSimToClient::MsgUrbanAttributes& message ) const;
     //@}
 
 private:

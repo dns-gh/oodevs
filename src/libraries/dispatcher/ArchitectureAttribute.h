@@ -12,18 +12,13 @@
 
 #include "UrbanObjectAttribute_ABC.h"
 
-namespace MsgsSimToClient
-{
-    class MsgUrbanAttributes;
-}
-
 namespace dispatcher
 {
-class Model;
+    class Model;
 
 // =============================================================================
 /** @class  ArchitectureAttribute
-@brief  ArchitectureAttribute
+    @brief  ArchitectureAttribute
 */
 // Created: SLG 2009-12-04
 // =============================================================================
@@ -32,15 +27,14 @@ class ArchitectureAttribute : public UrbanObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ArchitectureAttribute( const Model& model, const MsgsSimToClient::MsgUrbanAttributes& message );
+    explicit ArchitectureAttribute( const MsgsSimToClient::MsgUrbanAttributes& message );
     virtual ~ArchitectureAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const MsgsSimToClient::MsgUrbanAttributes& message );
-    virtual void Send     (       MsgsSimToClient::MsgUrbanAttributes& message ) const;
-    virtual void AsnDelete(       MsgsSimToClient::MsgUrbanAttributes& message ) const;
+    virtual void Update( const MsgsSimToClient::MsgUrbanAttributes& message );
+    virtual void Send  (       MsgsSimToClient::MsgUrbanAttributes& message ) const;
     //@}
 
 private:

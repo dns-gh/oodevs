@@ -137,15 +137,17 @@ private:
 public:
     //! @name Dynamic model
     //@{
-    virtual const tools::Resolver_ABC< dispatcher::Team_ABC >&           Sides() const { return sides_; }
-    virtual const tools::Resolver_ABC< dispatcher::KnowledgeGroup_ABC >& KnowledgeGroups() const { return knowledgeGroups_; }
-    virtual const tools::Resolver_ABC< dispatcher::Formation_ABC >&      Formations() const { return formations_; }
-    virtual const tools::Resolver_ABC< dispatcher::Automat_ABC >&        Automats() const { return automats_; }
-    virtual const tools::Resolver_ABC< dispatcher::Agent_ABC >&          Agents() const { return agents_; }
-    virtual const tools::Resolver_ABC< dispatcher::Object_ABC >&         Objects() const { return objects_; }
-    virtual const tools::Resolver_ABC< dispatcher::Population_ABC >&     Populations() const { return populations_; }
-    virtual const tools::Resolver_ABC< dispatcher::AgentKnowledge_ABC >& AgentKnowledges() const { return agentKnowledges_; }
-    virtual const tools::Resolver_ABC< dispatcher::ObjectKnowledge_ABC >&  ObjectKnowledges() const { return objectKnowledges_; }
+    virtual const tools::Resolver_ABC< dispatcher::Team_ABC >&            Sides() const { return sides_; }
+    virtual const tools::Resolver_ABC< dispatcher::KnowledgeGroup_ABC >&  KnowledgeGroups() const { return knowledgeGroups_; }
+    virtual const tools::Resolver_ABC< dispatcher::Formation_ABC >&       Formations() const { return formations_; }
+    virtual const tools::Resolver_ABC< dispatcher::Automat_ABC >&         Automats() const { return automats_; }
+    virtual const tools::Resolver_ABC< dispatcher::Agent_ABC >&           Agents() const { return agents_; }
+    virtual const tools::Resolver_ABC< dispatcher::Object_ABC >&          Objects() const { return objects_; }
+    virtual const tools::Resolver_ABC< dispatcher::UrbanObject_ABC >&     UrbanBlocks() const { return urbanBlocks_; };
+    virtual const tools::Resolver_ABC< dispatcher::Population_ABC >&      Populations() const { return populations_; }
+    virtual const tools::Resolver_ABC< dispatcher::AgentKnowledge_ABC >&  AgentKnowledges() const { return agentKnowledges_; }
+    virtual const tools::Resolver_ABC< dispatcher::ObjectKnowledge_ABC >& ObjectKnowledges() const { return objectKnowledges_; }
+    virtual const tools::Resolver_ABC< dispatcher::UrbanKnowledge_ABC >&  UrbanKnowledges() const { return urbanKnowledges_; }
     virtual const tools::Resolver_ABC< PopulationKnowledge >&   PopulationKnowledges() const { return populationKnowledges_; }
     virtual const tools::Resolver_ABC< LogConsignMaintenance >& LogConsignsMaintenance() const { return logConsignsMaintenance_; }
     virtual const tools::Resolver_ABC< LogConsignSupply >&      LogConsignsSupply() const { return logConsignsSupply_; }
@@ -154,34 +156,33 @@ public:
     virtual const tools::Resolver_ABC< PopulationFire >&        PopulationFires() const { return populationFires_; }
     virtual const tools::Resolver_ABC< FireEffect >&            FireEffects() const { return fireEffects_; }
     virtual const tools::Resolver_ABC< Report >&                Reports() const { return reports_; }
-    virtual const tools::Resolver_ABC< UrbanObject >&           UrbanBlocks() const { return urbanBlocks_; }
     //@}
 
     //! @name Dynamic model
     //@{
 private:
-    tools::Resolver< dispatcher::Team_ABC >           sides_;
-    tools::Resolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroups_;
-    tools::Resolver< dispatcher::Formation_ABC >      formations_;
-    tools::Resolver< dispatcher::Automat_ABC >        automats_;
-    tools::Resolver< dispatcher::Agent_ABC >          agents_;
-    tools::Resolver< dispatcher::Object_ABC >         objects_;
-    tools::Resolver< dispatcher::Population_ABC >     populations_;
-    tools::Resolver< dispatcher::AgentKnowledge_ABC > agentKnowledges_;
+    tools::Resolver< dispatcher::Team_ABC >            sides_;
+    tools::Resolver< dispatcher::KnowledgeGroup_ABC >  knowledgeGroups_;
+    tools::Resolver< dispatcher::Formation_ABC >       formations_;
+    tools::Resolver< dispatcher::Automat_ABC >         automats_;
+    tools::Resolver< dispatcher::Agent_ABC >           agents_;
+    tools::Resolver< dispatcher::Object_ABC >          objects_;
+    tools::Resolver< dispatcher::UrbanObject_ABC >     urbanBlocks_;
+    tools::Resolver< dispatcher::Population_ABC >      populations_;
+    tools::Resolver< dispatcher::AgentKnowledge_ABC >  agentKnowledges_;
     tools::Resolver< dispatcher::ObjectKnowledge_ABC > objectKnowledges_;
+    tools::Resolver< dispatcher::UrbanKnowledge_ABC >  urbanKnowledges_;
 
 public:
-    tools::Resolver< PopulationKnowledge >    populationKnowledges_;
-    tools::Resolver< LogConsignMaintenance >  logConsignsMaintenance_;
-    tools::Resolver< LogConsignSupply >       logConsignsSupply_;
-    tools::Resolver< LogConsignMedical >      logConsignsMedical_;
-    tools::Resolver< Fire >                   fires_;
-    tools::Resolver< PopulationFire >         populationFires_;
-    tools::Resolver< FireEffect >             fireEffects_;
-    tools::Resolver< Report >                 reports_;
-    tools::Resolver< UrbanObject >            urbanBlocks_;
-    tools::Resolver< UrbanKnowledge >         urbanKnowledges_;
-    std::auto_ptr< kernel::FormationLevels >  levels_;
+    tools::Resolver< PopulationKnowledge >   populationKnowledges_;
+    tools::Resolver< LogConsignMaintenance > logConsignsMaintenance_;
+    tools::Resolver< LogConsignSupply >      logConsignsSupply_;
+    tools::Resolver< LogConsignMedical >     logConsignsMedical_;
+    tools::Resolver< Fire >                  fires_;
+    tools::Resolver< PopulationFire >        populationFires_;
+    tools::Resolver< FireEffect >            fireEffects_;
+    tools::Resolver< Report >                reports_;
+    std::auto_ptr< kernel::FormationLevels > levels_;
     //@}
 };
 

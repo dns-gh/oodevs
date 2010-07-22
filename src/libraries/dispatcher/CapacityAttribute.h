@@ -12,18 +12,12 @@
 
 #include "UrbanObjectAttribute_ABC.h"
 
-namespace MsgsSimToClient
-{
-    class MsgUrbanAttributes;
-}
-
 namespace dispatcher
 {
-class Model;
 
 // =============================================================================
 /** @class  CapacityAttribute
-@brief  CapacityAttribute
+    @brief  CapacityAttribute
 */
 // Created: SLG 2009-12-04
 // =============================================================================
@@ -32,15 +26,14 @@ class CapacityAttribute : public UrbanObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    CapacityAttribute( const Model& model, const MsgsSimToClient::MsgUrbanAttributes& message );
+    explicit CapacityAttribute( const MsgsSimToClient::MsgUrbanAttributes& message );
     virtual ~CapacityAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const MsgsSimToClient::MsgUrbanAttributes& message );
-    virtual void Send     (       MsgsSimToClient::MsgUrbanAttributes& message ) const;
-    virtual void AsnDelete(       MsgsSimToClient::MsgUrbanAttributes& message ) const;
+    virtual void Update( const MsgsSimToClient::MsgUrbanAttributes& message );
+    virtual void Send  (       MsgsSimToClient::MsgUrbanAttributes& message ) const;
     //@}
 
 private:

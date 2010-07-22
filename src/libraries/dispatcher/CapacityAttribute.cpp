@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "CapacityAttribute.h"
 #include "protocol/Simulation.h"
 
@@ -18,9 +17,8 @@ using namespace dispatcher;
 // Name: CapacityAttribute constructor
 // Created: SLG 2009-12-04
 // -----------------------------------------------------------------------------
-CapacityAttribute::CapacityAttribute( const Model& model, const MsgsSimToClient::MsgUrbanAttributes& message )
-: UrbanObjectAttribute_ABC( model, message )
-, structuralState_( 1. )
+CapacityAttribute::CapacityAttribute( const MsgsSimToClient::MsgUrbanAttributes& message )
+    : structuralState_( 1. )
 {
     Update( message );
 }
@@ -31,7 +29,7 @@ CapacityAttribute::CapacityAttribute( const Model& model, const MsgsSimToClient:
 // -----------------------------------------------------------------------------
 CapacityAttribute::~CapacityAttribute()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -41,10 +39,8 @@ CapacityAttribute::~CapacityAttribute()
 void CapacityAttribute::Update( const MsgsSimToClient::MsgUrbanAttributes& message )
 {
     if( message.has_capacity() )
-    {
         if( message.capacity().has_structuralstate() )
             structuralState_ = message.capacity().structuralstate();
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -54,13 +50,4 @@ void CapacityAttribute::Update( const MsgsSimToClient::MsgUrbanAttributes& messa
 void CapacityAttribute::Send( MsgsSimToClient::MsgUrbanAttributes& message ) const
 {
     message.mutable_capacity()->set_structuralstate( structuralState_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: CapacityAttribute::AsnDelete
-// Created: SLG 2009-12-04
-// -----------------------------------------------------------------------------
-void CapacityAttribute::AsnDelete( MsgsSimToClient::MsgUrbanAttributes& /*message*/ ) const
-{
-    // NOTHING
 }

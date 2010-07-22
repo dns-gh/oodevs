@@ -11,7 +11,7 @@
 #define __UrbanObject_h_
 
 #include "Localisation.h"
-#include "SimpleEntity.h"
+#include "UrbanObject_ABC.h"
 #include <boost/ptr_container/ptr_vector.hpp>
 
 namespace MsgsSimToClient
@@ -28,7 +28,7 @@ namespace kernel
 }
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
     class UrbanObjectAttribute_ABC;
     class ClientPublisher_ABC;
 
@@ -38,23 +38,25 @@ namespace dispatcher
 */
 // Created: SLG 2009-12-03
 // =============================================================================
-class UrbanObject : public SimpleEntity<>
+    class UrbanObject : public UrbanObject_ABC
+                      , public kernel::Extension_ABC
+                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanObject( Model& model, const MsgsSimToClient::MsgUrbanCreation& msg );
+             UrbanObject( Model_ABC& model, const MsgsSimToClient::MsgUrbanCreation& msg );
     virtual ~UrbanObject();
     //@}
 
     //! @name Operations
     //@{
-    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
-    void SendDestruction( ClientPublisher_ABC& publisher ) const;
-    void Accept         ( kernel::ModelVisitor_ABC& visitor ) const;
-    void Update         ( const MsgsSimToClient::MsgUrbanCreation& msg );
-    void Update         ( const MsgsSimToClient::MsgUrbanUpdate& msg  );
+    virtual void SendCreation( ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
+    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& msg  );
+    virtual void Display( kernel::Displayer_ABC& displayer ) const;
     //@}
 
 private:
@@ -66,7 +68,7 @@ private:
 
     //! @name Attributes
     //@{
-    void Initialize( Model& model, const MsgsSimToClient::MsgUrbanAttributes& attributes );
+    void Initialize( const MsgsSimToClient::MsgUrbanAttributes& attributes );
     void AddAttribute( UrbanObjectAttribute_ABC* attribute );
     //@}
 
@@ -75,13 +77,13 @@ private:
     typedef boost::ptr_vector< UrbanObjectAttribute_ABC > T_UrbanObjectAttributes;
     //@}
 
-public:
-
-    Model&                      model_;
-    const std::string           strName_;
-    Localisation                localisation_;
-    unsigned long               id_;
-    T_UrbanObjectAttributes     attributes_;
+private:
+    //! @name Member data
+    //@{
+    const std::string       strName_;
+    Localisation            localisation_;
+    T_UrbanObjectAttributes attributes_;
+    //@}
 };
 
 }

@@ -13,6 +13,7 @@
 #include "Model_ABC.h"
 #include "Side.h"
 #include "UrbanObject.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -24,11 +25,11 @@ using namespace dispatcher;
 // Created: MGD 2009-12-11
 // -----------------------------------------------------------------------------
 UrbanKnowledge::UrbanKnowledge( const Model_ABC& model, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message )
-    : SimpleEntity< kernel::UrbanKnowledge_ABC >( message.oid() )
-    , model_                                    ( model )
-    , team_                                     ( model.Sides().Get( message.team() ) )
-    , pUrban_                                   ( model.UrbanBlocks().Find( message.real_urban() ) )
-    , bPerceived_                               ( false )
+    : dispatcher::UrbanKnowledge_ABC( message.oid() )
+    , model_                        ( model )
+    , team_                         ( model.Sides().Get( message.team() ) )
+    , pUrban_                       ( model.UrbanBlocks().Find( message.real_urban() ) )
+    , bPerceived_                   ( false )
 {
     // NOTHING
 }
@@ -46,18 +47,17 @@ UrbanKnowledge::~UrbanKnowledge()
 // Name: UrbanKnowledge::Update
 // Created: MGD 2009-12-11
 // -----------------------------------------------------------------------------
-void UrbanKnowledge::Update( const MsgsSimToClient::MsgUrbanKnowledgeCreation& message )
+void UrbanKnowledge::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeCreation& message )
 {
     if( ( message.real_urban() && ! pUrban_ ) || ( pUrban_ && pUrban_->GetId() != unsigned int( message.real_urban() ) ) )
         pUrban_ = model_.UrbanBlocks().Find( message.real_urban() );
-    ApplyUpdate( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UrbanKnowledge::Update
 // Created: MGD 2009-12-11
 // -----------------------------------------------------------------------------
-void UrbanKnowledge::Update( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& message )
+void UrbanKnowledge::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& message )
 {
     if( message.has_automat_perception() )
     {
@@ -149,7 +149,7 @@ const kernel::Entity_ABC* UrbanKnowledge::GetRecognizedEntity() const
 // Name: UrbanKnowledge::GetEntity
 // Created: MGD 2009-12-11
 // -----------------------------------------------------------------------------
-const UrbanObject* UrbanKnowledge::GetEntity() const
+const kernel::Entity_ABC* UrbanKnowledge::GetEntity() const
 {
     return pUrban_;
 }
@@ -165,18 +165,18 @@ const kernel::Team_ABC& UrbanKnowledge::GetOwner() const
 
 // -----------------------------------------------------------------------------
 // Name: UrbanKnowledge::Display
-// Created: MGD 2009-12-11
+// Created: PHC 2010-07-22
 // -----------------------------------------------------------------------------
-void UrbanKnowledge::Display( kernel::Displayer_ABC& ) const
+void UrbanKnowledge::Display( kernel::Displayer_ABC& /*displayer*/ ) const
 {
-    // NOTHING
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UrbanKnowledge::DisplayInList
-// Created: MGD 2009-12-11
+// Created: PHC 2010-07-22
 // -----------------------------------------------------------------------------
-void UrbanKnowledge::DisplayInList( kernel::Displayer_ABC& ) const
+void UrbanKnowledge::DisplayInList( kernel::Displayer_ABC& /*displayer*/ ) const
 {
-    // NOTHING
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
 }

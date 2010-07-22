@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "ArchitectureAttribute.h"
 #include "protocol/Simulation.h"
 
@@ -18,15 +17,14 @@ using namespace dispatcher;
 // Name: ArchitectureAttribute constructor
 // Created: SLG 2009-12-04
 // -----------------------------------------------------------------------------
-ArchitectureAttribute::ArchitectureAttribute( const Model& model, const MsgsSimToClient::MsgUrbanAttributes& message )
-: UrbanObjectAttribute_ABC( model, message )
-, height_ ( 0. )
-, floorNumber_     ( 0 )
-, basementLevelNumber_ ( 0 )
-, roofShape_ ( "" )
-, material_ ( "" )
-, occupation_ ( 0. )
-, trafficability_ ( 0. )
+ArchitectureAttribute::ArchitectureAttribute( const MsgsSimToClient::MsgUrbanAttributes& message )
+    : height_ ( 0. )
+    , floorNumber_     ( 0 )
+    , basementLevelNumber_ ( 0 )
+    , roofShape_ ( "" )
+    , material_ ( "" )
+    , occupation_ ( 0. )
+    , trafficability_ ( 0. )
 {
     Update( message );
 }
@@ -37,7 +35,7 @@ ArchitectureAttribute::ArchitectureAttribute( const Model& model, const MsgsSimT
 // -----------------------------------------------------------------------------
 ArchitectureAttribute::~ArchitectureAttribute()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -75,13 +73,4 @@ void ArchitectureAttribute::Send( MsgsSimToClient::MsgUrbanAttributes& message )
     message.mutable_architecture()->set_material( material_.c_str() );
     message.mutable_architecture()->set_occupation( occupation_ );
     message.mutable_architecture()->set_trafficability( trafficability_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ArchitectureAttribute::AsnDelete
-// Created: SLG 2009-12-04
-// -----------------------------------------------------------------------------
-void ArchitectureAttribute::AsnDelete( MsgsSimToClient::MsgUrbanAttributes& /*message*/ ) const
-{
-    // NOTHING
 }

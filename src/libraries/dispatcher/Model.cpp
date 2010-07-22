@@ -484,8 +484,8 @@ void Model::Accept( kernel::ModelVisitor_ABC& visitor ) const
     populationFires_       .Apply( boost::bind( &PopulationFire::Accept, _1, boost::ref( visitor ) ) );
     fireEffects_           .Apply( boost::bind( &FireEffect::Accept, _1, boost::ref( visitor ) ) );
     reports_               .Apply( boost::bind( &Report::Accept, _1, boost::ref( visitor ) ) );
-    urbanBlocks_           .Apply( boost::bind( &UrbanObject::Accept, _1, boost::ref( visitor ) ) );
-    urbanKnowledges_       .Apply( boost::bind( &UrbanKnowledge::Accept, _1, boost::ref( visitor ) ) );
+    urbanBlocks_           .Apply( boost::bind( &dispatcher::UrbanObject_ABC::Accept, _1, boost::ref( visitor ) ) );
+    urbanKnowledges_       .Apply( boost::bind( &dispatcher::UrbanKnowledge_ABC::Accept, _1, boost::ref( visitor ) ) );
     meteoModel_->Accept( visitor );
 }
 

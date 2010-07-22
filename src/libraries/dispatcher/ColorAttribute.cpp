@@ -18,9 +18,8 @@ using namespace dispatcher;
 // Name: ColorAttribute constructor
 // Created: RPD 2010-01-06
 // -----------------------------------------------------------------------------
-ColorAttribute::ColorAttribute( const Model& model, const MsgsSimToClient::MsgUrbanAttributes& message )
-    : UrbanObjectAttribute_ABC( model, message )
-    , color_( new ColorRGBA( static_cast< unsigned short >( message.color().red() ),
+ColorAttribute::ColorAttribute( const MsgsSimToClient::MsgUrbanAttributes& message )
+    : color_( new ColorRGBA( static_cast< unsigned short >( message.color().red() ),
                              static_cast< unsigned short >( message.color().green() ),
                              static_cast< unsigned short >( message.color().blue() ),
                              message.color().alpha() ) )
@@ -52,18 +51,9 @@ void ColorAttribute::Update( const MsgsSimToClient::MsgUrbanAttributes& /*messag
 // -----------------------------------------------------------------------------
 void ColorAttribute::Send( MsgsSimToClient::MsgUrbanAttributes& message ) const
 {
-    MsgsSimToClient::MsgColorRGBA* color = message.mutable_color();
-    color->set_red( color_->Red() );
-    color->set_green( color_->Green() );
-    color->set_blue( color_->Blue() );
-    color->set_alpha( color_->Alpha() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorAttribute::AsnDelete
-// Created: RPD 2010-01-06
-// -----------------------------------------------------------------------------
-void ColorAttribute::AsnDelete( MsgsSimToClient::MsgUrbanAttributes& /*message*/ ) const
-{
-    // NOTHING
+    MsgsSimToClient::MsgColorRGBA& color = *message.mutable_color();
+    color.set_red( color_->Red() );
+    color.set_green( color_->Green() );
+    color.set_blue( color_->Blue() );
+    color.set_alpha( color_->Alpha() );
 }

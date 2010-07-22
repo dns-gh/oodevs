@@ -26,7 +26,9 @@ namespace dispatcher
     class LogConsignMedical;
     class LogConsignSupply;
     class Object_ABC;
+    class UrbanObject_ABC;
     class ObjectKnowledge_ABC;
+    class UrbanKnowledge_ABC;
     class Population_ABC;
     class PopulationFire;
     class PopulationKnowledge;
@@ -40,7 +42,6 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-
 class Model_ABC
 {
 public:
@@ -52,15 +53,17 @@ public:
 
     //! @name data accessor
     //@{
-    virtual const tools::Resolver_ABC< dispatcher::Team_ABC >&           Sides() const = 0;
-    virtual const tools::Resolver_ABC< dispatcher::KnowledgeGroup_ABC >& KnowledgeGroups() const = 0;
-    virtual const tools::Resolver_ABC< dispatcher::Formation_ABC >&      Formations() const = 0;
-    virtual const tools::Resolver_ABC< dispatcher::Automat_ABC >&        Automats() const = 0;
-    virtual const tools::Resolver_ABC< dispatcher::Agent_ABC >&          Agents() const = 0;
-    virtual const tools::Resolver_ABC< dispatcher::Object_ABC >&         Objects() const = 0;
-    virtual const tools::Resolver_ABC< dispatcher::Population_ABC >&     Populations() const = 0;
-    virtual const tools::Resolver_ABC< dispatcher::AgentKnowledge_ABC >& AgentKnowledges() const = 0;
+    virtual const tools::Resolver_ABC< dispatcher::Team_ABC >&            Sides() const = 0;
+    virtual const tools::Resolver_ABC< dispatcher::KnowledgeGroup_ABC >&  KnowledgeGroups() const = 0;
+    virtual const tools::Resolver_ABC< dispatcher::Formation_ABC >&       Formations() const = 0;
+    virtual const tools::Resolver_ABC< dispatcher::Automat_ABC >&         Automats() const = 0;
+    virtual const tools::Resolver_ABC< dispatcher::Agent_ABC >&           Agents() const = 0;
+    virtual const tools::Resolver_ABC< dispatcher::Object_ABC >&          Objects() const = 0;
+    virtual const tools::Resolver_ABC< dispatcher::UrbanObject_ABC >&     UrbanBlocks() const = 0;
+    virtual const tools::Resolver_ABC< dispatcher::Population_ABC >&      Populations() const = 0;
+    virtual const tools::Resolver_ABC< dispatcher::AgentKnowledge_ABC >&  AgentKnowledges() const = 0;
     virtual const tools::Resolver_ABC< dispatcher::ObjectKnowledge_ABC >& ObjectKnowledges() const = 0;
+    virtual const tools::Resolver_ABC< dispatcher::UrbanKnowledge_ABC >&  UrbanKnowledges() const = 0;
     virtual const tools::Resolver_ABC< PopulationKnowledge >&   PopulationKnowledges() const = 0;
     virtual const tools::Resolver_ABC< LogConsignMaintenance >& LogConsignsMaintenance() const = 0;
     virtual const tools::Resolver_ABC< LogConsignSupply >&      LogConsignsSupply() const = 0;
@@ -69,7 +72,6 @@ public:
     virtual const tools::Resolver_ABC< PopulationFire >&        PopulationFires() const = 0;
     virtual const tools::Resolver_ABC< FireEffect >&            FireEffects() const = 0;
     virtual const tools::Resolver_ABC< Report >&                Reports() const = 0;
-    virtual const tools::Resolver_ABC< UrbanObject >&           UrbanBlocks() const = 0;
     //@}
 };
 

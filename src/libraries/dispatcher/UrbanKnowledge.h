@@ -10,14 +10,13 @@
 #ifndef __UrbanKnowledge_h_
 #define __UrbanKnowledge_h_
 
-#include "SimpleEntity.h"
-#include "UrbanObject.h"
-#include "clients_kernel/UrbanKnowledge_ABC.h"
+#include "UrbanKnowledge_ABC.h"
 #include "protocol/Simulation.h"
 
 namespace kernel
 {
     class Automat_ABC;
+    class Entity_ABC;
     class ModelVisitor_ABC;
 }
 
@@ -25,6 +24,7 @@ namespace dispatcher
 {
     class Model_ABC;
     class ClientPublisher_ABC;
+    class UrbanObject_ABC;
 
 // =============================================================================
 /** @class  UrbanKnowledge
@@ -32,7 +32,10 @@ namespace dispatcher
 */
 // Created: MGD 2009-12-11
 // =============================================================================
-class UrbanKnowledge : public SimpleEntity< kernel::UrbanKnowledge_ABC >
+class UrbanKnowledge : public UrbanKnowledge_ABC
+                     , public kernel::Extension_ABC
+                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanKnowledgeCreation >
+                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanKnowledgeUpdate >
 {
 
 public:
@@ -44,25 +47,28 @@ public:
 
     //! @name Operations
     //@{
-    using SimpleEntity< kernel::UrbanKnowledge_ABC >::Update;
-    void Update( const MsgsSimToClient::MsgUrbanKnowledgeCreation& message );
-    void Update( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& message );
-    void SendCreation( ClientPublisher_ABC& publisher ) const;
-    void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
-    void SendDestruction( ClientPublisher_ABC& publisher ) const;
-    void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeCreation& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& message );
+    virtual void SendCreation( ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
+    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Accessors
     //@{
     virtual const kernel::Entity_ABC* GetRecognizedEntity() const;
-    virtual const UrbanObject* GetEntity() const;
+    virtual const Entity_ABC* GetEntity() const;
     virtual const kernel::Team_ABC& GetOwner() const;
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInList( kernel::Displayer_ABC& displayer ) const;
     //@}
 
-private:
     //! @name Types
     //@{
     //$$$ bullshit
@@ -74,14 +80,13 @@ private:
         unsigned identification_levelPresent : 1;
         unsigned progressPresent : 1;
     };
-    //@}
 
-public:
+private:
     //! @name Member data
     //@{
     const Model_ABC& model_;
     const kernel::Team_ABC& team_;
-    const UrbanObject* pUrban_;
+    const UrbanObject_ABC* pUrban_;
     unsigned int nRelevance_;
     unsigned int nProgress_;
     bool bPerceived_;
