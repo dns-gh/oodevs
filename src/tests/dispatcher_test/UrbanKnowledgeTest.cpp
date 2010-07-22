@@ -11,7 +11,6 @@
 #include "Helpers.h"
 #include "MockClientPublisher.h"
 #include "MockAutomat.h"
-#include "MockKnowledgeGroup.h"
 #include "MockModel.h"
 #include "MockUrbanObject.h"
 #include "MockSide.h"
@@ -39,7 +38,6 @@ public:
         message.set_oid( 1 );
         message.set_team( side.GetId() );
         message.set_real_urban( urban.GetId() );
-        // creation
         result.reset( new dispatcher::UrbanKnowledge( model, message ) );
         MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
         result->SendCreation( publisher );
@@ -74,20 +72,41 @@ BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeDestroyedWithoutAttributes, Fixture
     MsgsSimToClient::MsgUrbanKnowledgeDestruction& message = *expected.mutable_message()->mutable_urban_knowledge_destruction();
     message.set_oid( 1 );
     message.set_team( side.GetId() );
-    // network serialization
     MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
     result->SendDestruction( publisher );
     publisher.verify();
 }
 
-
-
-// UPDATE
-//oid                   
-//team                  
-//real_urban            
-//relevance             
-//identification_level  
-//progress              
-//perceived             
-//automat_perception    
+// -----------------------------------------------------------------------------
+// Name: UrbanKnowledge_CanBeUpdatedWithoutAttributes
+// Created: PHC 2010-07-21
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeUpdatedWithoutAttributes, Fixture )
+{
+    createUrbanKnowledge();
+    {
+        MockAutomat automat( 5 );
+        MsgsSimToClient::MsgUrbanKnowledgeUpdate& message = *expected.mutable_message()->mutable_urban_knowledge_update();
+        message.set_oid( 1 );
+        message.set_real_urban( 0 );
+        message.set_team( side.GetId() );
+        message.set_relevance( 4 );
+        message.set_progress( 5 );
+        message.set_perceived( true );
+        message.set_identification_level( MsgsSimToClient::EnumUnitIdentificationLevel::reconnue );
+        message.mutable_automat_perception()->add_elem( automat.GetId() );
+        MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+        result->SendFullUpdate( publisher );
+        publisher.verify();
+    }
+    {
+        expected.mutable_message()->Clear();
+        MsgsSimToClient::MsgUrbanKnowledgeCreation& message = *expected.mutable_message()->mutable_urban_knowledge_creation();
+        message.set_oid( 1 );
+        message.set_team( side.GetId() );
+        message.set_real_urban( 0 );
+        MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+        result->SendCreation( publisher );
+        publisher.verify();
+    }
+}
