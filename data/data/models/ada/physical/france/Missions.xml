@@ -1600,11 +1600,8 @@
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Suivre" dia-type="net.masagroup.sword.france.military.company.tasks.Suivre" id="1012" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Suivre" name="COMMUNES Suivre">
       <parameter dia-name="objectives" name="Unite a suivre" optional="false" type="AgentBM"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.tasks.commun.automat.StationnerBM" dia-type="T_Mission_Automate_StationnerBM" id="1005" mrt-dia-behavior="net.masagroup.sword.france.military.tasks.commun.automat.StationnerBM" name="StationnerBM">
-      <parameter dia-name="position" name="point de stationnement" optional="false" type="PointBM"/>
-    </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.tasks.commun.automat.SuivreBM" dia-type="T_Mission_Automate_SuivreBM" id="1006" mrt-dia-behavior="net.masagroup.sword.france.military.tasks.commun.automat.SuivreBM" name="SuivreBM">
-      <parameter dia-name="objective" name="unite a suivre" optional="false" type="AgentBM"/>
+    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Stationner" dia-type="net.masagroup.sword.france.military.company.tasks.Stationner" id="1013" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Stationner" name="COMMUNES Stationner">
+      <parameter dia-name="objectives" name="Point de stationnement" optional="false" type="PointBM"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.military.company.combat.support.artillery.tasks.Deploy" dia-type="T_Mission_Automate_Deploy" id="1008" mrt-dia-behavior="net.masagroup.sword.military.company.combat.support.artillery.tasks.Deploy" name="Deploy">
       <parameter dia-name="deploymentArea" name="zone de deploiement" optional="false" type="AreaBM"/>

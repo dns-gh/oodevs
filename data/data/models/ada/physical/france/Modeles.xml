@@ -2981,23 +2981,21 @@
       <missions>
         <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Franchir"/>
-        <mission name="StationnerBM"/>
-        <mission name="SuivreBM"/>
         <mission name="SoutenirSurPositionEnMesureDeBM"/>
         <mission name="ReconnaitreItineraire"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Suivre"/>
+        <mission name="COMMUNES Stationner"/>
       </missions>
     </automat>
     <automat dia-type="net.masagroup.sword.military.company.combat.support.artillery.roles.Company" file="BMAutomat.bms" name="net.masagroup.sword.military.company.combat.support.artillery.roles.Company">
       <missions>
         <mission name="COMMUNES FaireMouvement"/>
-        <mission name="StationnerBM"/>
-        <mission name="SuivreBM"/>
         <mission name="SoutenirSurPositionEnMesureDeBM"/>
         <mission name="Deploy"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Suivre"/>
+        <mission name="COMMUNES Stationner"/>
       </missions>
     </automat>
     <automat dia-type="net.masagroup.sword.military.company.terrorism.roles.SniperCompany" file="BMAutomat.bms" name="net.masagroup.sword.military.company.terrorism.roles.SniperCompany">
@@ -3005,6 +3003,7 @@
         <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Suivre"/>
+        <mission name="COMMUNES Stationner"/>
       </missions>
     </automat>
     <automat dia-type="StrategicBomberSquadron" file="Air\Automates\Escadrille Assaut\Model.bms" name="Groupe Assaut AIR">
