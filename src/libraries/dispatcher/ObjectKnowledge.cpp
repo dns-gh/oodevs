@@ -139,7 +139,6 @@ void ObjectKnowledge::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeCreatio
 {
     if( ( message.real_object() && ! pObject_ ) || ( pObject_ && pObject_->GetId() != ( unsigned int )message.real_object() ) )
         pObject_ = model_.Objects().Find( message.real_object() );
-    ApplyUpdate( message );
 }
 
 // -----------------------------------------------------------------------------
