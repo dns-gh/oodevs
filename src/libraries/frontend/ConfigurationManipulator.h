@@ -40,7 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ConfigurationManipulator( const std::string& filename );
-    explicit ConfigurationManipulator( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session );
+             ConfigurationManipulator( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session );
     virtual ~ConfigurationManipulator();
     //@}
 
