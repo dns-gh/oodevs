@@ -10,6 +10,8 @@
 #ifndef __LogSupplyDotation_h_
 #define __LogSupplyDotation_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace MsgsSimToClient
 {
     class MsgDotationQuery;
@@ -25,12 +27,12 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class LogSupplyDotation
+class LogSupplyDotation : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    LogSupplyDotation( const Model& model, const MsgsSimToClient::MsgDotationQuery& asnMsg );
+             LogSupplyDotation( const Model& model, const MsgsSimToClient::MsgDotationQuery& asnMsg );
     virtual ~LogSupplyDotation();
     //@}
 
@@ -42,9 +44,9 @@ public:
 
 private:
     const unsigned int nDotationType_; // XML reference - no resolved by dispatcher
-          unsigned int nNbrRequested_;
-          unsigned int nNbrGranted_;
-          unsigned int nNbrConvoyed_;
+    unsigned int nNbrRequested_;
+    unsigned int nNbrGranted_;
+    unsigned int nNbrConvoyed_;
 };
 
 }

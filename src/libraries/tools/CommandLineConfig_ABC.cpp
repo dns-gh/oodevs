@@ -9,12 +9,10 @@
 
 #include "tools_pch.h"
 #include "CommandLineConfig_ABC.h"
-
 #include <iostream>
 #include <sstream>
-
 #pragma warning( push )
-#pragma warning( disable: 4127 )
+#pragma warning( disable: 4127 4512 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
 

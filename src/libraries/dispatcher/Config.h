@@ -38,13 +38,13 @@ public:
     //! @name Accessors
     //@{
     const std::string& GetNetworkSimulationParameters() const;
-    unsigned short     GetNetworkClientsParameters   () const;
+    unsigned short GetNetworkClientsParameters() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::string    networkSimulationParameters_;
+    std::string networkSimulationParameters_;
     unsigned short networkClientsParameters_;
     //@}
 };

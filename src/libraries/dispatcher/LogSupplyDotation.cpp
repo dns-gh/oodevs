@@ -32,7 +32,7 @@ LogSupplyDotation::LogSupplyDotation( const Model& /*model*/, const MsgsSimToCli
 // -----------------------------------------------------------------------------
 LogSupplyDotation::~LogSupplyDotation()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
