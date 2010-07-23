@@ -35,9 +35,12 @@ namespace
         virtual bool Allows( const actions::Action_ABC& action ) const
         {
             if( const ActionTasker* tasker = action.Retrieve< ActionTasker >() )
+            {
                 if( const kernel::Entity_ABC* entity = tasker->GetTasker() )
                     return profile_.IsVisible( *entity );
-            return false;
+                return false;
+            }
+            return true;
         }
 
         const kernel::Profile_ABC& profile_;
