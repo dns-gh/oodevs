@@ -313,6 +313,7 @@
     <spawn action-range="1000" object="sensorsDetectionZone"/>
   </object>
   <object geometry="polygon" name="Urban Block" symbol="" type="urban block">
+    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseBlocUrbain"/>
     <structural value="100"/>
   </object>
 </objects>

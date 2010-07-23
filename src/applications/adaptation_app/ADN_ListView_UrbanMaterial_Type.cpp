@@ -102,7 +102,7 @@ void ADN_ListView_UrbanMaterial_Type::ConnectItem( bool bConnect )
 // Name: ADN_ListView_UrbanMaterial_Type::OnContextMenu
 // Created: SLG 2010-03-10
 //-----------------------------------------------------------------------------
-void  ADN_ListView_UrbanMaterial_Type::OnContextMenu( const QPoint& pt)
+void  ADN_ListView_UrbanMaterial_Type::OnContextMenu( const QPoint& /*pt*/)
 {
     QPopupMenu popuMenu( this );
 

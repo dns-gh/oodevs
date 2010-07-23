@@ -4334,15 +4334,15 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Slowest</source>
-        <translation type="unfinished"></translation>
+        <translation>Au plus lent</translation>
     </message>
     <message>
         <source>Object, Max speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Vitesse max objet</translation>
     </message>
     <message>
         <source>Unit, Max speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Vitesse max agent</translation>
     </message>
     <message>
         <source>no rainfall</source>
@@ -4687,6 +4687,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>UrbanBlockBM</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Urban block speed</source>
+        <translation>Vitesse bloc urbain</translation>
     </message>
 </context>
 <context>

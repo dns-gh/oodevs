@@ -263,10 +263,11 @@ void ADN_Categories_Data::WriteSizes( xml::xostream& output )
     ADN_Tools::AddSchema( output, "Volumes" );
     for( T_SizeInfos_Vector::const_iterator itSize = vSizes_.begin(); itSize != vSizes_.end(); ++itSize )
     {
-        if( (*itSize)->GetData().empty() )
+        if( ( *itSize )->GetData().empty() )
             throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Categories - Invalid volume type name" ).ascii() );
+        std::string strData( ( *itSize )->GetData() );
         output << xml::start( "volume" )
-                << xml::attribute( "name", trim( (*itSize)->GetData() ) )
+                << xml::attribute( "name", trim( strData ) )
                << xml::end;
 
     }
@@ -304,10 +305,11 @@ void ADN_Categories_Data::WriteDotationNatures( xml::xostream& output )
     ADN_Tools::AddSchema( output, "ResourceNatures" );
     for( T_DotationNatureInfos_Vector::const_iterator it = vDotationNatures_.begin(); it != vDotationNatures_.end(); ++it )
     {
-        if( (*it)->GetData().empty() )
+        if( ( *it )->GetData().empty() )
             throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Categories - Invalid resource nature" ).ascii() );
+        std::string strData( ( *it )->GetData() );
         output << xml::start( "nature" )
-                << xml::attribute( "type", trim( (*it)->GetData() ) )
+                << xml::attribute( "type", trim( strData ) )
                << xml::end;
     }
     output << xml::end;

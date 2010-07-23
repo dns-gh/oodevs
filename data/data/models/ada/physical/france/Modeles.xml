@@ -3006,7 +3006,7 @@
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
-        <mission name="COMMUNES Suivre"/>     
+        <mission name="COMMUNES Suivre"/>
       </missions>
     </automat>
     <automat dia-type="StrategicBomberSquadron" file="Air\Automates\Escadrille Assaut\Model.bms" name="Groupe Assaut AIR">

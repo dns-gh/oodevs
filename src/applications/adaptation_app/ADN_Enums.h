@@ -186,6 +186,7 @@ enum E_SpeedImpact
     eSpeedImpact_AuPlusLent,
     eSpeedImpact_VitesseMaxObjet,
     eSpeedImpact_VitesseMaxAgent,
+    eSpeedImpact_VitesseBlocUrbain,
     eNbrSpeedImpact
 };
 

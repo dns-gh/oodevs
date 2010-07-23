@@ -198,9 +198,10 @@ ADN_Tr::T_ConverterNatureAtlasType ADN_Tr::natureAtlasTypeConverter_[] =
 
 ADN_Tr::T_ConverterSpeedImpact ADN_Tr::speedImpactConverter_[] =
 {
-    T_ConverterSpeedImpact( "AuPlusLent",      QT_TRANSLATE_NOOP( "ADN_Tr", "Slowest" ),      eSpeedImpact_AuPlusLent ),
-    T_ConverterSpeedImpact( "VitesseMaxObjet", QT_TRANSLATE_NOOP( "ADN_Tr", "Object, Max speed" ), eSpeedImpact_VitesseMaxObjet ),
-    T_ConverterSpeedImpact( "VitesseMaxAgent", QT_TRANSLATE_NOOP( "ADN_Tr", "Unit, Max speed" ), eSpeedImpact_VitesseMaxAgent ),
+    T_ConverterSpeedImpact( "AuPlusLent",        QT_TRANSLATE_NOOP( "ADN_Tr", "Slowest" ),      eSpeedImpact_AuPlusLent ),
+    T_ConverterSpeedImpact( "VitesseMaxObjet",   QT_TRANSLATE_NOOP( "ADN_Tr", "Object, Max speed" ), eSpeedImpact_VitesseMaxObjet ),
+    T_ConverterSpeedImpact( "VitesseMaxAgent",   QT_TRANSLATE_NOOP( "ADN_Tr", "Unit, Max speed" ), eSpeedImpact_VitesseMaxAgent ),
+    T_ConverterSpeedImpact( "VitesseBlocUrbain", QT_TRANSLATE_NOOP( "ADN_Tr", "Urban block speed" ), eSpeedImpact_VitesseBlocUrbain ),
     T_ConverterSpeedImpact( "", "", (E_SpeedImpact)-1 )
 };
 
