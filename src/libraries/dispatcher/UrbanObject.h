@@ -55,7 +55,7 @@ public:
     virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
-    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& msg  );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& msg );
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     //@}
 
@@ -77,12 +77,22 @@ private:
     typedef boost::ptr_vector< UrbanObjectAttribute_ABC > T_UrbanObjectAttributes;
     //@}
 
+    //! @name Types
+    //@{
+    //$$$ bullshit
+    struct T_Optionals
+    {
+        unsigned localisationPresent : 1;
+        unsigned attributesPresent : 1;
+    };
+
 private:
     //! @name Member data
     //@{
-    const std::string       strName_;
-    Localisation            localisation_;
+    const std::string strName_;
+    Localisation localisation_;
     T_UrbanObjectAttributes attributes_;
+    T_Optionals optionals_;
     //@}
 };
 

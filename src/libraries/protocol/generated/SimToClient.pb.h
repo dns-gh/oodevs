@@ -194,7 +194,6 @@ class MsgUrbanAttributes;
 class MsgUrbanCreation;
 class MsgUrbanDetection;
 class MsgUrbanUpdate;
-class MsgUrbanDestruction;
 class MsgKnowledgeGroupCreation;
 class MsgKnowledgeGroupUpdate;
 class KnowledgeGroupAck;
@@ -18273,93 +18272,6 @@ class MsgUrbanUpdate : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgUrbanDestruction : public ::google::protobuf::Message {
- public:
-  MsgUrbanDestruction();
-  virtual ~MsgUrbanDestruction();
-  
-  MsgUrbanDestruction(const MsgUrbanDestruction& from);
-  
-  inline MsgUrbanDestruction& operator=(const MsgUrbanDestruction& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgUrbanDestruction& default_instance();
-  void Swap(MsgUrbanDestruction* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgUrbanDestruction* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgUrbanDestruction& from);
-  void MergeFrom(const MsgUrbanDestruction& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required uint32 oid = 1;
-  inline bool has_oid() const;
-  inline void clear_oid();
-  static const int kOidFieldNumber = 1;
-  inline ::google::protobuf::uint32 oid() const;
-  inline void set_oid(::google::protobuf::uint32 value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::google::protobuf::uint32 oid_;
-  friend void  protobuf_AddDesc_SimToClient_2eproto();
-  friend void protobuf_AssignDesc_SimToClient_2eproto();
-  friend void protobuf_ShutdownFile_SimToClient_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgUrbanDestruction* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class MsgKnowledgeGroupCreation : public ::google::protobuf::Message {
  public:
   MsgKnowledgeGroupCreation();
@@ -30241,26 +30153,6 @@ inline ::MsgsSimToClient::MsgUrbanAttributes* MsgUrbanUpdate::mutable_attributes
   _set_bit(2);
   if (attributes_ == NULL) attributes_ = new ::MsgsSimToClient::MsgUrbanAttributes;
   return attributes_;
-}
-
-// -------------------------------------------------------------------
-
-// MsgUrbanDestruction
-
-// required uint32 oid = 1;
-inline bool MsgUrbanDestruction::has_oid() const {
-  return _has_bit(0);
-}
-inline void MsgUrbanDestruction::clear_oid() {
-  oid_ = 0u;
-  _clear_bit(0);
-}
-inline ::google::protobuf::uint32 MsgUrbanDestruction::oid() const {
-  return oid_;
-}
-inline void MsgUrbanDestruction::set_oid(::google::protobuf::uint32 value) {
-  _set_bit(0);
-  oid_ = value;
 }
 
 // -------------------------------------------------------------------

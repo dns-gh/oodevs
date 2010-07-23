@@ -1130,9 +1130,6 @@ message MsgUrbanUpdate {
    optional Common.MsgLocation location   = 2;
    optional MsgUrbanAttributes attributes = 3;
 }
-message MsgUrbanDestruction {
-   required uint32 oid = 1;
-}
 
 // Knowledge groups
 message MsgKnowledgeGroupCreation {

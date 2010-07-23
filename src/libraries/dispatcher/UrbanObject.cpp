@@ -29,6 +29,9 @@ UrbanObject::UrbanObject( Model_ABC& /*model*/, const MsgsSimToClient::MsgUrbanC
     , localisation_              ( msg.location() )
 {
     Initialize( msg.attributes() );
+    RegisterSelf( *this );
+    optionals_.localisationPresent = 0;
+    optionals_.attributesPresent = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -40,9 +43,8 @@ UrbanObject::~UrbanObject()
     // NOTHING
 }
 
-
-#define MSG_MSG_CREATION( MSG, CLASS ) \
-    if( attributes.has_##MSG##() ) \
+#define MSG_MSG_CREATION( MSG, CLASS )     \
+    if( attributes.has_##MSG##() )         \
     AddAttribute( new CLASS( attributes ) )
 
 // -----------------------------------------------------------------------------
@@ -88,8 +90,11 @@ void UrbanObject::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::UrbanUpdate msg;
     msg().set_oid( GetId() );
-    std::for_each( attributes_.begin(), attributes_.end(),
-        boost::bind( &UrbanObjectAttribute_ABC::Send, _1, boost::ref( *msg().mutable_attributes() ) ) );
+    if( optionals_.localisationPresent )
+        localisation_.Send( *msg().mutable_location() );
+    if( optionals_.attributesPresent )
+        std::for_each( attributes_.begin(), attributes_.end(),
+            boost::bind( &UrbanObjectAttribute_ABC::Send, _1, boost::ref( *msg().mutable_attributes() ) ) );
     msg.Send( publisher );
 }
 
@@ -99,7 +104,7 @@ void UrbanObject::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void UrbanObject::SendDestruction( ClientPublisher_ABC& /*publisher*/ ) const
 {
-    // NOTHING
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,9 +113,17 @@ void UrbanObject::SendDestruction( ClientPublisher_ABC& /*publisher*/ ) const
 // -----------------------------------------------------------------------------
 void UrbanObject::DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& msg )
 {
+    if( msg.has_location() )
+    {
+        localisation_.Update( msg.location() );
+        optionals_.localisationPresent = 1;
+    }
     if( msg.has_attributes() )
+    {
+        optionals_.attributesPresent = 1;
         std::for_each( attributes_.begin(), attributes_.end(),
             boost::bind( &UrbanObjectAttribute_ABC::Update, _1, boost::cref( msg.attributes() ) ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
