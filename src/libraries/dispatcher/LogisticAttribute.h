@@ -12,6 +12,7 @@
 
 #include "ObjectAttribute_ABC.h"
 #include "tools/Resolver.h"
+#include <boost/noncopyable.hpp>
 
 namespace dispatcher
 {
@@ -24,7 +25,8 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class LogisticAttribute : public ObjectAttribute_ABC
+class LogisticAttribute : private boost::noncopyable
+                        , public ObjectAttribute_ABC
 {
 public:
     //! @name Constructors/Destructor

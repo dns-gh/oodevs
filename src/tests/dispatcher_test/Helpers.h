@@ -22,7 +22,8 @@ namespace
 {
     bool operator==( const MsgsSimToClient::MsgSimToClient& lhs, const MsgsSimToClient::MsgSimToClient& rhs )
     {
-        return lhs.SerializeAsString() == rhs.SerializeAsString();
+        BOOST_CHECK_EQUAL( lhs.DebugString(), rhs.DebugString() );
+        return true;
     }
 }
 

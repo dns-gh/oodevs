@@ -18,58 +18,60 @@
 #include "dispatcher/ObjectKnowledge.h"
 #include "protocol/ClientSenders.h"
 
-class Fixture
+namespace
 {
-public:
-    Fixture()
-        : side          ( 2 )
-        , knowledgeGroup( 3 )
-        , object        ( 4 )
-        , automat       ( 5 )
+    struct Fixture
     {
-        MOCK_EXPECT( side, GetId ).returns( 2 );
-        sides.Register( side.GetId(), side );
-        MOCK_EXPECT( knowledgeGroup, GetId ).returns( 3 );
-        knowledgeGroups.Register( knowledgeGroup.GetId(), knowledgeGroup );
-        MOCK_EXPECT( object, GetId ).returns( 4 );
-        objects.Register( object.GetId(), object );
-        MOCK_EXPECT( automat, GetId ).returns( 5 );
-        automats.Register( automat.GetId(), automat );
-        MOCK_EXPECT( model, Sides ).returns( boost::ref( sides ) );
-        MOCK_EXPECT( model, KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
-        MOCK_EXPECT( model, Objects ).returns( boost::ref( objects ) );
-        MOCK_EXPECT( model, Automats ).returns( boost::ref( automats ) );
-        expected.set_context( 0 );
-    }
-    void createObjectKnowledge()
-    {
-        MsgsSimToClient::MsgObjectKnowledgeCreation& message = *expected.mutable_message()->mutable_object_knowledge_creation();
-        message.set_oid( 1 );
-        message.set_team( side.GetId() );
-        message.set_real_object( object.GetId() );
-        message.set_type( "mines" );
-        message.set_group( knowledgeGroup.GetId() );
-        message.mutable_attributes();
-        // creation
-        result.reset( new dispatcher::ObjectKnowledge( model, message ) );
-        MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
-        result->SendCreation( publisher );
-        publisher.verify();
-        expected.mutable_message()->Clear();
-    }
-    MockSide side;
-    MockKnowledgeGroup knowledgeGroup;
-    MockObject object;
-    MockAutomat automat;
-    MockModel model;
-    tools::Resolver< dispatcher::Team_ABC > sides;
-    tools::Resolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroups;
-    tools::Resolver< dispatcher::Object_ABC > objects;
-    tools::Resolver< dispatcher::Automat_ABC > automats;
-    std::auto_ptr< dispatcher::ObjectKnowledge_ABC > result;
-    MsgsSimToClient::MsgSimToClient expected;
-    MockClientPublisher publisher;
-};
+        Fixture()
+            : side          ( 2 )
+            , knowledgeGroup( 3 )
+            , object        ( 4 )
+            , automat       ( 5 )
+        {
+            MOCK_EXPECT( side, GetId ).returns( 2 );
+            sides.Register( side.GetId(), side );
+            MOCK_EXPECT( knowledgeGroup, GetId ).returns( 3 );
+            knowledgeGroups.Register( knowledgeGroup.GetId(), knowledgeGroup );
+            MOCK_EXPECT( object, GetId ).returns( 4 );
+            objects.Register( object.GetId(), object );
+            MOCK_EXPECT( automat, GetId ).returns( 5 );
+            automats.Register( automat.GetId(), automat );
+            MOCK_EXPECT( model, Sides ).returns( boost::ref( sides ) );
+            MOCK_EXPECT( model, KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
+            MOCK_EXPECT( model, Objects ).returns( boost::ref( objects ) );
+            MOCK_EXPECT( model, Automats ).returns( boost::ref( automats ) );
+            expected.set_context( 0 );
+        }
+        void createObjectKnowledge()
+        {
+            MsgsSimToClient::MsgObjectKnowledgeCreation& message = *expected.mutable_message()->mutable_object_knowledge_creation();
+            message.set_oid( 1 );
+            message.set_team( side.GetId() );
+            message.set_real_object( object.GetId() );
+            message.set_type( "mines" );
+            message.set_group( knowledgeGroup.GetId() );
+            message.mutable_attributes();
+            // creation
+            result.reset( new dispatcher::ObjectKnowledge( model, message ) );
+            MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+            result->SendCreation( publisher );
+            publisher.verify();
+            expected.mutable_message()->Clear();
+        }
+        MockSide side;
+        MockKnowledgeGroup knowledgeGroup;
+        MockObject object;
+        MockAutomat automat;
+        MockModel model;
+        tools::Resolver< dispatcher::Team_ABC > sides;
+        tools::Resolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroups;
+        tools::Resolver< dispatcher::Object_ABC > objects;
+        tools::Resolver< dispatcher::Automat_ABC > automats;
+        std::auto_ptr< dispatcher::ObjectKnowledge_ABC > result;
+        MsgsSimToClient::MsgSimToClient expected;
+        MockClientPublisher publisher;
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge_CanBeCreatedWithoutAttributes

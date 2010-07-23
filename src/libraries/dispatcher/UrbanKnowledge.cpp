@@ -39,6 +39,7 @@ UrbanKnowledge::UrbanKnowledge( const Model_ABC& model, const MsgsSimToClient::M
     optionals_.automat_perceptionPresent = 0;
     optionals_.identification_levelPresent = 0;
     optionals_.progressPresent = 0;
+    RegisterSelf( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,13 +67,6 @@ void UrbanKnowledge::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeCreation&
 // -----------------------------------------------------------------------------
 void UrbanKnowledge::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& message )
 {
-    if( message.has_automat_perception() )
-    {
-        optionals_.automat_perceptionPresent = 1;
-        automatPerceptions_.clear();
-        for( int i = 0; i < message.automat_perception().elem_size(); ++i )
-            automatPerceptions_.push_back( &model_.Automats().Get( message.automat_perception().elem( i ) ) );
-    }
     if( message.has_real_urban() )
         pUrban_ = model_.UrbanBlocks().Find( message.real_urban() );
     if( message.has_perceived() )
@@ -80,7 +74,7 @@ void UrbanKnowledge::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& m
         optionals_.perceivedPresent = 1;
         bPerceived_ = message.perceived();
     }
-    if( message.has_identification_level())
+    if( message.has_identification_level() )
     {
         optionals_.identification_levelPresent = 1;
         nIdentificationLevel_ = message.identification_level();
@@ -94,6 +88,13 @@ void UrbanKnowledge::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& m
     {
         optionals_.progressPresent = 1;
         nProgress_ = message.progress();
+    }
+    if( message.has_automat_perception() )
+    {
+        optionals_.automat_perceptionPresent = 1;
+        automatPerceptions_.clear();
+        for( int i = 0; i < message.automat_perception().elem_size(); ++i )
+            automatPerceptions_.push_back( &model_.Automats().Get( message.automat_perception().elem( i ) ) );
     }
 }
 
