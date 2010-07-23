@@ -218,11 +218,11 @@ Section "Documentation" s_doc
 
     SetOutPath "$INSTDIR\doc\en"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${DOCDIR}\en\Trainee_User_Guide.pdf"
-    File /r /x ".svn" "${DOCDIR}\en\Trainer_User_Guide.pdf"
+    File /r /x ".svn" "${DOCDIR}\en\Controller_User_Guide.pdf"
+    File /r /x ".svn" "${DOCDIR}\en\Instructor_User_Guide.pdf"
     File /r /x ".svn" "${DOCDIR}\en\Reference_Guide.pdf"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Documentation\Trainee Guide.lnk" "$INSTDIR\doc\en\Trainee_User_Guide.pdf"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Documentation\Trainer Guide.lnk" "$INSTDIR\doc\en\Trainer_User_Guide.pdf"
+    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Documentation\Controller User Guide.lnk" "$INSTDIR\doc\en\Controller_User_Guide.pdf"
+    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Documentation\Instructor User Guide.lnk" "$INSTDIR\doc\en\Instructor_User_Guide.pdf"
     CreateShortCut "$SMPROGRAMS\${APP_NAME}\Documentation\Reference Guide.lnk" "$INSTDIR\doc\en\Reference_Guide.pdf"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     
