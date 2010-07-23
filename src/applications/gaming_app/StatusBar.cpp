@@ -53,9 +53,10 @@ StatusBar::StatusBar( QStatusBar* parent, gui::TerrainPicker& picker, const Dete
     precipitationType_ = new QLabel( parent );
     lightingType_ = new QLabel( parent );
 
-    pSpeed_ = new MyButton( "---", parent );
+    pSpeed_ = new MyButton( "--/--", parent );
     pSpeed_->setMinimumWidth( 50 );
     connect( pSpeed_, SIGNAL( clicked() ), profilingDock, SLOT( show() ) );
+    QToolTip::add( pSpeed_, tr( "Last tick speed factor/Mean speed factor" ) );
 
     pTime_ = new MyButton( "---", parent );
     pTime_->setMinimumWidth( 50 );
@@ -116,8 +117,11 @@ void StatusBar::NotifyUpdated( const Simulation& simulation )
     lastSimulationStatus_ = simulation.IsConnected();
 
     pTime_->setText( QString( "%1 - %2" ).arg( simulation.GetDateAsString() ).arg( simulation.GetTimeAsString() ) );
-    const float speed = simulation.GetEffectiveSpeed();
-    pSpeed_->setText( speed > 0 ? QString::number( speed ) : QString( "---" ) );
+    const float actualSpeed = simulation.GetActualSpeed();
+    const float effectiveSpeed = simulation.GetEffectiveSpeed();
+    pSpeed_->setText( QString( "%1/%2" )
+                        .arg( actualSpeed > 0 ? QString::number( actualSpeed ) : QString( "--" ), 4 )
+                        .arg( effectiveSpeed > 0 ? QString::number( effectiveSpeed ) : QString( "--" ), 4 ) );
 }
 
 // -----------------------------------------------------------------------------

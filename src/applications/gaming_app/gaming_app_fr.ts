@@ -3482,6 +3482,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Weather parameters</source>
         <translation>Paramètres de météo</translation>
     </message>
+    <message>
+        <source>Last tick speed factor/Mean speed factor</source>
+        <translation>Facteur d&apos;accélération dernier tick/moyen</translation>
+    </message>
 </context>
 <context>
     <name>kernel</name>

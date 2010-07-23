@@ -43,6 +43,7 @@ public:
     void Update( const MsgsSimToClient::MsgControlProfilingInformation& message );
     void Update( const MsgsSimToClient::MsgControlEndTick& message );
     float EffectiveSpeed() const;
+    float ActualTickDuration() const;
     unsigned long GetMemory() const;
     unsigned long GetVirtualMemory() const;
     unsigned long GetShortPathfinds() const;
@@ -78,6 +79,7 @@ private:
     unsigned long virtualMemory_;
     unsigned long shortPathfinds_;
     unsigned long longPathfinds_;
+    float actualTickDuration_;
     //@}
 };
 

@@ -82,6 +82,7 @@ public:
 
     int  GetSpeed() const;
     float GetEffectiveSpeed() const;         //!< average speed on last ten updates
+    float GetActualSpeed() const;            //!< tick duration based on last 2 end-ticks
 
     unsigned long GetMemory() const;                //!< last memory usage
     unsigned long GetVirtualMemory() const;         //!< last virtual memory usage

@@ -22,6 +22,7 @@ Profiling::Profiling()
     , virtualMemory_( 0 )
     , shortPathfinds_( 0 )
     , longPathfinds_( 0 )
+    , actualTickDuration_( 10 )
 {
     // NOTHING
 }
@@ -78,6 +79,7 @@ void Profiling::Tick()
         tickSum_ += tickLength;
         if( ticks_.size() > meanCount )
             tickSum_ -= ticks_[ ticks_.size() - meanCount ];
+        actualTickDuration_ = tickLength > 0 ? tickLength : 9999;
     }
     lastCall_ = now;
 }
@@ -105,6 +107,15 @@ float Profiling::EffectiveSpeed() const
         return 1.f / mean;
     }
     return -1.f;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profiling::ActualTickDuration
+// Created: SBO 2010-07-23
+// -----------------------------------------------------------------------------
+float Profiling::ActualTickDuration() const
+{
+    return actualTickDuration_;
 }
 
 // -----------------------------------------------------------------------------

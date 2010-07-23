@@ -280,6 +280,15 @@ float Simulation::GetEffectiveSpeed() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Simulation::GetActualSpeed
+// Created: SBO 2010-07-23
+// -----------------------------------------------------------------------------
+float Simulation::GetActualSpeed() const
+{
+    return std::floor( tickDuration_ / profiling_.ActualTickDuration() + 0.5f );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Simulation::GetTimeAsString
 // Created: AGE 2007-10-12
 // -----------------------------------------------------------------------------
