@@ -957,7 +957,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestUnitDetection )
                              "    <extract function='detecting-unit' id='1' detected='69' visibility='detected,recognized,identified'/>"
                              "    <transform function='domain' id='2' input='1' select='42,51' type='unsigned long'/>"
                              "    <reduce type='int' function='sum' input='2' id='sum'/>"
-                             "     <result function='plot' input='sum' type='int'/>"
+                             "    <result function='plot' input='sum' type='int'/>"
                              "</indicator>" );
 
     MockPublisher publisher;
