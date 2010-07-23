@@ -27,11 +27,11 @@ Localisation::Localisation()
 // Name: Localisation constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Localisation::Localisation( const Common::MsgLocation& asn )
-    : nType_ ( asn.type() )
+Localisation::Localisation( const Common::MsgLocation& msg )
+    : nType_ ( msg.type() )
 {
-    points_.reserve( asn.coordinates().elem_size() );
-    std::copy( asn.coordinates().elem().begin(), asn.coordinates().elem().end(), std::back_inserter( points_ ) );
+    points_.reserve( msg.coordinates().elem_size() );
+    std::copy( msg.coordinates().elem().begin(), msg.coordinates().elem().end(), std::back_inserter( points_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,21 +47,21 @@ Localisation::~Localisation()
 // Name: Localisation::Update
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Localisation::Update( const Common::MsgLocation& asn )
+void Localisation::Update( const Common::MsgLocation& msg )
 {
-    nType_ = asn.type();
+    nType_ = msg.type();
     points_.resize( 0 );
-    points_.reserve( asn.coordinates().elem_size() );
-    std::copy( asn.coordinates().elem().begin(), asn.coordinates().elem().end(), std::back_inserter( points_ ) );
+    points_.reserve( msg.coordinates().elem_size() );
+    std::copy( msg.coordinates().elem().begin(), msg.coordinates().elem().end(), std::back_inserter( points_ ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Localisation::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Localisation::Send( Common::MsgLocation& asn ) const
+void Localisation::Send( Common::MsgLocation& msg ) const
 {
-    asn.set_type( nType_ );
+    msg.set_type( nType_ );
     for( T_PositionVector::const_iterator it = points_.begin(); it != points_.end(); ++it )
-        *asn.mutable_coordinates()->add_elem() = *it;
+        *msg.mutable_coordinates()->add_elem() = *it;
 }

@@ -36,20 +36,20 @@ using namespace dispatcher;
 // Name: ObjectKnowledge constructor
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const Model_ABC& model, const MsgsSimToClient::MsgObjectKnowledgeCreation& asnMsg )
-    : dispatcher::ObjectKnowledge_ABC( asnMsg.oid() )
+ObjectKnowledge::ObjectKnowledge( const Model_ABC& model, const MsgsSimToClient::MsgObjectKnowledgeCreation& message )
+    : dispatcher::ObjectKnowledge_ABC( message.oid() )
     , model_                         ( model )
-    , team_                          ( model.Sides().Get( asnMsg.team() ) )
-    , pObject_                       ( model.Objects().Find( asnMsg.real_object() ) )
-    , nType_                         ( asnMsg.type() )
-    , knowledgeGroup_                ( asnMsg.has_group() ? &model.KnowledgeGroups().Get( asnMsg.group() ) : 0 )
-    , localisation_                  ( )
+    , team_                          ( model.Sides().Get( message.team() ) )
+    , pObject_                       ( model.Objects().Find( message.real_object() ) )
+    , nType_                         ( message.type() )
+    , knowledgeGroup_                ( message.has_group() ? &model.KnowledgeGroups().Get( message.group() ) : 0 )
+    , localisation_                  ()
     , bPerceived_                    ( false )
     , automatPerceptions_            ()
     , typename_                      ( "objectKnowledge" )
 {
     optionals_.realObjectPresent = pObject_ != 0;
-    Initialize( model, asnMsg.attributes() );
+    Initialize( model, message.attributes() );
     RegisterSelf( *this );
 }
 
@@ -62,8 +62,8 @@ ObjectKnowledge::~ObjectKnowledge()
     // NOTHING
 }
 
-#define CHECK_ASN_ATTRIBUTE_CREATION( ASN, CLASS ) \
-    if( attributes.has_##ASN##()  )                \
+#define CHECK_MSG_ATTRIBUTE_CREATION( MSG, CLASS ) \
+    if( attributes.has_##MSG##()  )                \
         AddAttribute( new CLASS( attributes ) )
 
 // -----------------------------------------------------------------------------
@@ -108,18 +108,18 @@ void ObjectKnowledge::CreateOrUpdate( const Common::MsgObjectAttributes& message
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::Initialize( const Model_ABC& model, const Common::MsgObjectAttributes& attributes )
 {
-    CHECK_ASN_ATTRIBUTE_CREATION( construction      , ConstructionAttribute );
-    CHECK_ASN_ATTRIBUTE_CREATION( obstacle          , ObstacleAttribute );
-    CHECK_ASN_ATTRIBUTE_CREATION( mine              , MineAttribute );
+    CHECK_MSG_ATTRIBUTE_CREATION( construction      , ConstructionAttribute );
+    CHECK_MSG_ATTRIBUTE_CREATION( obstacle          , ObstacleAttribute );
+    CHECK_MSG_ATTRIBUTE_CREATION( mine              , MineAttribute );
     if( attributes.has_logistic() )
         AddAttribute( new LogisticAttribute( model, attributes ) );
-    CHECK_ASN_ATTRIBUTE_CREATION( bypass            , BypassAttribute );
-    CHECK_ASN_ATTRIBUTE_CREATION( crossing_site     , CrossingSiteAttribute );
-    CHECK_ASN_ATTRIBUTE_CREATION( supply_route      , SupplyRouteAttribute );
-    CHECK_ASN_ATTRIBUTE_CREATION( nbc               , NBCAttribute );
-    CHECK_ASN_ATTRIBUTE_CREATION( fire              , FireAttribute );
-    CHECK_ASN_ATTRIBUTE_CREATION( medical_treatment , MedicalTreatmentAttribute );
-    CHECK_ASN_ATTRIBUTE_CREATION( effect_delay      , DelayAttribute );
+    CHECK_MSG_ATTRIBUTE_CREATION( bypass            , BypassAttribute );
+    CHECK_MSG_ATTRIBUTE_CREATION( crossing_site     , CrossingSiteAttribute );
+    CHECK_MSG_ATTRIBUTE_CREATION( supply_route      , SupplyRouteAttribute );
+    CHECK_MSG_ATTRIBUTE_CREATION( nbc               , NBCAttribute );
+    CHECK_MSG_ATTRIBUTE_CREATION( fire              , FireAttribute );
+    CHECK_MSG_ATTRIBUTE_CREATION( medical_treatment , MedicalTreatmentAttribute );
+    CHECK_MSG_ATTRIBUTE_CREATION( effect_delay      , DelayAttribute );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,59 +145,59 @@ void ObjectKnowledge::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeCreatio
 // Name: ObjectKnowledge::DoUpdate
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg )
+void ObjectKnowledge::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
-    if( asnMsg.has_location()  )
+    if( message.has_location()  )
     {
-        localisation_.Update( asnMsg.location() );
+        localisation_.Update( message.location() );
         optionals_.locationPresent = 1;
     }
-    if( asnMsg.has_perceived() )
+    if( message.has_perceived() )
     {
-        bPerceived_ = asnMsg.perceived();
+        bPerceived_ = message.perceived();
         optionals_.perceivedPresent = 1;
     }
-    if( asnMsg.has_relevance() )
+    if( message.has_relevance() )
     {
-        nRelevance_ = asnMsg.relevance();
+        nRelevance_ = message.relevance();
         optionals_.relevancePresent = 1;
     }
-    if( asnMsg.has_automat_perception() )
+    if( message.has_automat_perception() )
     {
         optionals_.automat_perceptionPresent = 1;
         automatPerceptions_.clear();
-        for( int i = 0; i < asnMsg.automat_perception().elem_size(); ++i )
-            automatPerceptions_.push_back( &model_.Automats().Get( asnMsg.automat_perception().elem( i )) );
+        for( int i = 0; i < message.automat_perception().elem_size(); ++i )
+            automatPerceptions_.push_back( &model_.Automats().Get( message.automat_perception().elem( i )) );
     }
-    if( asnMsg.has_real_object() )
+    if( message.has_real_object() )
     {
-        pObject_ = model_.Objects().Find( asnMsg.real_object() );
+        pObject_ = model_.Objects().Find( message.real_object() );
         optionals_.realObjectPresent = 1;
     }
-    if( asnMsg.attributes().has_construction() )
-        CreateOrUpdate< ConstructionAttribute >( asnMsg.attributes() );
-    if( asnMsg.attributes().has_obstacle() )
-        CreateOrUpdate< ObstacleAttribute >( asnMsg.attributes() );
-    if( asnMsg.attributes().has_mine() )
-        CreateOrUpdate< MineAttribute >( asnMsg.attributes() );
-    if( asnMsg.attributes().has_logistic() )
-        CreateOrUpdate< LogisticAttribute >( asnMsg.attributes(), model_ );
-    if( asnMsg.attributes().has_mine() )
-        CreateOrUpdate< MineAttribute >( asnMsg.attributes() );
-    if( asnMsg.attributes().has_bypass() )
-        CreateOrUpdate< BypassAttribute >( asnMsg.attributes() );
-    if( asnMsg.attributes().has_crossing_site() )
-        CreateOrUpdate< CrossingSiteAttribute >( asnMsg.attributes() );
-    if( asnMsg.attributes().has_supply_route() )
-        CreateOrUpdate< SupplyRouteAttribute >( asnMsg.attributes() );
-    if( asnMsg.attributes().has_nbc() )
-        CreateOrUpdate< NBCAttribute >( asnMsg.attributes() );
-    if( asnMsg.attributes().has_fire() )
-        CreateOrUpdate< FireAttribute >( asnMsg.attributes() );
-    if( asnMsg.attributes().has_medical_treatment() )
-        CreateOrUpdate< MedicalTreatmentAttribute >( asnMsg.attributes() );
-    if( asnMsg.attributes().has_effect_delay() )
-        CreateOrUpdate< DelayAttribute >( asnMsg.attributes() );
+    if( message.attributes().has_construction() )
+        CreateOrUpdate< ConstructionAttribute >( message.attributes() );
+    if( message.attributes().has_obstacle() )
+        CreateOrUpdate< ObstacleAttribute >( message.attributes() );
+    if( message.attributes().has_mine() )
+        CreateOrUpdate< MineAttribute >( message.attributes() );
+    if( message.attributes().has_logistic() )
+        CreateOrUpdate< LogisticAttribute >( message.attributes(), model_ );
+    if( message.attributes().has_mine() )
+        CreateOrUpdate< MineAttribute >( message.attributes() );
+    if( message.attributes().has_bypass() )
+        CreateOrUpdate< BypassAttribute >( message.attributes() );
+    if( message.attributes().has_crossing_site() )
+        CreateOrUpdate< CrossingSiteAttribute >( message.attributes() );
+    if( message.attributes().has_supply_route() )
+        CreateOrUpdate< SupplyRouteAttribute >( message.attributes() );
+    if( message.attributes().has_nbc() )
+        CreateOrUpdate< NBCAttribute >( message.attributes() );
+    if( message.attributes().has_fire() )
+        CreateOrUpdate< FireAttribute >( message.attributes() );
+    if( message.attributes().has_medical_treatment() )
+        CreateOrUpdate< MedicalTreatmentAttribute >( message.attributes() );
+    if( message.attributes().has_effect_delay() )
+        CreateOrUpdate< DelayAttribute >( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------

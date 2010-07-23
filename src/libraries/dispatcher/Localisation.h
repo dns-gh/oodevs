@@ -34,14 +34,14 @@ public:
     //! @name Constructors/Destructor
     //@{
              Localisation();
-    explicit Localisation( const Common::MsgLocation& asn );
+    explicit Localisation( const Common::MsgLocation& msg );
     virtual ~Localisation();
     //@}
 
     //! @name Main
     //@{
-    void Update( const Common::MsgLocation& asn );
-    void Send( Common::MsgLocation& asn ) const;
+    void Update( const Common::MsgLocation& msg );
+    void Send( Common::MsgLocation& msg ) const;
     //@}
 
 private:
@@ -52,7 +52,7 @@ private:
 
 private:
     Common::MsgLocation_Geometry nType_;
-    T_PositionVector             points_;
+    T_PositionVector points_;
 };
 
 }

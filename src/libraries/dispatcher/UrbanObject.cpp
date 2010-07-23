@@ -41,8 +41,8 @@ UrbanObject::~UrbanObject()
 }
 
 
-#define MSG_ASN_CREATION( ASN, CLASS ) \
-    if( attributes.has_##ASN##() ) \
+#define MSG_MSG_CREATION( MSG, CLASS ) \
+    if( attributes.has_##MSG##() ) \
     AddAttribute( new CLASS( attributes ) )
 
 // -----------------------------------------------------------------------------
@@ -51,9 +51,9 @@ UrbanObject::~UrbanObject()
 // -----------------------------------------------------------------------------
 void UrbanObject::Initialize( const MsgsSimToClient::MsgUrbanAttributes& attributes )
 {
-    MSG_ASN_CREATION( color       , ColorAttribute );
-    MSG_ASN_CREATION( architecture, ArchitectureAttribute );
-    MSG_ASN_CREATION( capacity    , CapacityAttribute );
+    MSG_MSG_CREATION( color       , ColorAttribute );
+    MSG_MSG_CREATION( architecture, ArchitectureAttribute );
+    MSG_MSG_CREATION( capacity    , CapacityAttribute );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,13 +71,13 @@ void UrbanObject::AddAttribute( UrbanObjectAttribute_ABC* attribute )
 // -----------------------------------------------------------------------------
 void UrbanObject::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    client::UrbanCreation asn;
-    asn().set_oid( GetId() );
-    asn().set_name( strName_ );
-    localisation_.Send( *asn().mutable_location() );
+    client::UrbanCreation msg;
+    msg().set_oid( GetId() );
+    msg().set_name( strName_ );
+    localisation_.Send( *msg().mutable_location() );
     std::for_each( attributes_.begin(), attributes_.end(),
-        boost::bind( &UrbanObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
-    asn.Send( publisher );
+        boost::bind( &UrbanObjectAttribute_ABC::Send, _1, boost::ref( *msg().mutable_attributes() ) ) );
+    msg.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,11 +86,11 @@ void UrbanObject::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void UrbanObject::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
-    client::UrbanUpdate asn;
-    asn().set_oid( GetId() );
+    client::UrbanUpdate msg;
+    msg().set_oid( GetId() );
     std::for_each( attributes_.begin(), attributes_.end(),
-        boost::bind( &UrbanObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
-    asn.Send( publisher );
+        boost::bind( &UrbanObjectAttribute_ABC::Send, _1, boost::ref( *msg().mutable_attributes() ) ) );
+    msg.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------
