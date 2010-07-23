@@ -30,8 +30,15 @@ UrbanKnowledge::UrbanKnowledge( const Model_ABC& model, const MsgsSimToClient::M
     , team_                         ( model.Sides().Get( message.team() ) )
     , pUrban_                       ( model.UrbanBlocks().Find( message.real_urban() ) )
     , bPerceived_                   ( false )
+    , nRelevance_                   ( 0 )
+    , nProgress_                    ( 0 )
+    , nIdentificationLevel_         ( MsgsSimToClient::signale )
 {
-    // NOTHING
+    optionals_.relevancePresent = 0;
+    optionals_.perceivedPresent = 0;
+    optionals_.automat_perceptionPresent = 0;
+    optionals_.identification_levelPresent = 0;
+    optionals_.progressPresent = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -69,13 +76,25 @@ void UrbanKnowledge::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& m
     if( message.has_real_urban() )
         pUrban_ = model_.UrbanBlocks().Find( message.real_urban() );
     if( message.has_perceived() )
+    {
+        optionals_.perceivedPresent = 1;
         bPerceived_ = message.perceived();
+    }
     if( message.has_identification_level())
+    {
+        optionals_.identification_levelPresent = 1;
         nIdentificationLevel_ = message.identification_level();
+    }
     if( message.has_relevance() )
+    {
+        optionals_.relevancePresent = 1;
         nRelevance_ = message.relevance();
+    }
     if( message.has_progress() )
+    {
+        optionals_.progressPresent = 1;
         nProgress_ = message.progress();
+    }
 }
 
 // -----------------------------------------------------------------------------
