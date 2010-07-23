@@ -132,3 +132,37 @@ BOOST_FIXTURE_TEST_CASE( Object_IsUpdated, Fixture )
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: Object_IsUpdated_With_No_Optional
+// Created: PHC 2010-07-23
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Object_IsUpdated_With_No_Optional, Fixture )
+{
+    {
+        createObject();
+        MsgsSimToClient::MsgObjectUpdate& message = *expected.mutable_message()->mutable_object_update();
+        message.set_oid( 1 );
+        message.mutable_attributes();
+        result->Update( message );
+        MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+        result->SendFullUpdate( publisher );
+        publisher.verify();
+    }
+    {
+        expected.mutable_message()->Clear();
+        MsgsSimToClient::MsgObjectCreation& message = *expected.mutable_message()->mutable_object_creation();
+        message.set_oid( 1 );
+        message.set_type( "my_type" );
+        message.set_name( "test" );
+        message.set_team( team.GetId() );
+        message.mutable_location()->set_type( Common::MsgLocation::point );
+        message.mutable_location()->mutable_coordinates()->add_elem();
+        message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 42. );
+        message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_longitude( 1. );
+        message.mutable_attributes();
+        MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+        result->SendCreation( publisher );
+        publisher.verify();
+    }
+}
+

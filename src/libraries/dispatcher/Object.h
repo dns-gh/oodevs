@@ -80,14 +80,21 @@ private:
     typedef boost::ptr_vector< ObjectAttribute_ABC > T_ObjectAttributes;
     //@}
 
+    //! @name Types
+    //@{
+    //$$$ bullshit
+    struct T_Optionals
+    {
+        unsigned localisationPresent : 1;
+    };
+
 private:
-    const kernel::ObjectType&    type_;
-
-    const std::string            strName_;
-          Localisation           localisation_;
-          dispatcher::Team_ABC&  side_;
-
-    T_ObjectAttributes           attributes_;
+    const kernel::ObjectType& type_;
+    const std::string strName_;
+    Localisation localisation_;
+    dispatcher::Team_ABC& side_;
+    T_ObjectAttributes attributes_;
+    T_Optionals optionals_;
 };
 
 }
