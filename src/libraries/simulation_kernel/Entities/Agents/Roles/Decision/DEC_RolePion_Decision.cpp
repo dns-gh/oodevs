@@ -303,6 +303,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
             boost::function< unsigned int() >( boost::bind( &DEC_ActionFunctions::StartAction  < transport::PHY_ActionUnload >, boost::ref( GetPion() ) ) ) );
     brain.RegisterFunction( "DEC_StartIlluminer",
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent >, DEC_Decision_ABC* ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionIllumination, boost::shared_ptr< DEC_Knowledge_Agent >, DEC_Decision_ABC* >, boost::ref( GetPion() ), _1, _2 ) ) );
+    brain.RegisterFunction( "DEC_Orientate", 
+        boost::function< void( boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_ActionFunctions::Orientate, boost::ref( GetPion() ), _1 ) ) );
 
     // Embarquement / debarquement
     brain.RegisterFunction( "DEC_Agent_EstEmbarque",

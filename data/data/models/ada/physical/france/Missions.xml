@@ -1818,5 +1818,8 @@
       <parameter dia-name="pointCible_" name="target" optional="false" type="PointBM"/>
     </fragorder>
     <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadioPartiel" id="389" name="Passer En Silence Radio Partiel"/>
+    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="net.masagroup.sword.france.military.platoon.tasks.Observer" id="390" name="Pion Observer">
+      <parameter dia-name="pointCible_" name="objective" optional="false" type="PointBM"/>
+    </fragorder>
   </fragorders>
 </missions>

@@ -13,6 +13,7 @@
 #include "DEC_ActionFunctions.h"
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Roles/Refugee/PHY_RoleInterface_Refugee.h"
 //#include "Entities/Objects/LogisticCapacity.h"
@@ -221,4 +222,13 @@ bool DEC_ActionFunctions::CanTransportPion( const MIL_AgentPion& callerAgent, co
 bool DEC_ActionFunctions::Transport_IsTransporting( const MIL_AgentPion& callerAgent )
 {
     return callerAgent.GetRole< transport::PHY_RoleAction_Transport >().IsTransporting();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ActionFunctions::Orientate
+// Created: MGD 2010-07-22
+// -----------------------------------------------------------------------------
+void DEC_ActionFunctions::Orientate( MIL_AgentPion& callerAgent, boost::shared_ptr< MT_Vector2D > dir )
+{
+    callerAgent.GetRole< PHY_RoleInterface_Location >().Move( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), *dir, 0. );
 }
