@@ -236,7 +236,7 @@ public:
         MT_COPYNOTALLOWED( ModificatorUrbanBlockInfos )
 
     public:
-        ModificatorUrbanBlockInfos(ADN_Urban_Data::UrbanInfos* ptr);
+        ModificatorUrbanBlockInfos(ADN_Urban_Data::UrbanMaterialInfos* ptr);
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -245,11 +245,11 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_TypePtr_InVector_ABC<ADN_Urban_Data::UrbanInfos>         ptrMaterial_;
+        ADN_TypePtr_InVector_ABC<ADN_Urban_Data::UrbanMaterialInfos>         ptrMaterial_;
         ADN_Type_Double                                                rCoeff_;
 
     public:
-        typedef ADN_Urban_Data::UrbanInfos                  T_Item;
+        typedef ADN_Urban_Data::UrbanMaterialInfos                  T_Item;
 
         class Cmp : public std::unary_function< ModificatorUrbanBlockInfos* , bool >
         {
@@ -258,7 +258,7 @@ public:
             ~Cmp() {}
 
             bool operator()( ModificatorUrbanBlockInfos* tgtnfos ) const
-            { return tgtnfos->ptrMaterial_.GetData() && tgtnfos->ptrMaterial_.GetData()->GetData()==val_; }
+            { return tgtnfos->ptrMaterial_.GetData() && tgtnfos->ptrMaterial_.GetData()->strName_ == val_; }
 
         private:
             std::string val_;
@@ -266,14 +266,14 @@ public:
         class CmpRef : public std::unary_function< ModificatorUrbanBlockInfos* , bool >
         {
         public:
-            CmpRef(ADN_Urban_Data::UrbanInfos* val) : val_(val) {}
+            CmpRef(ADN_Urban_Data::UrbanMaterialInfos* val) : val_(val) {}
             ~CmpRef(){}
 
             bool operator()( ModificatorUrbanBlockInfos* tgtnfos ) const
             {   return tgtnfos->ptrMaterial_.GetData() == val_;}
 
         private:
-            ADN_Urban_Data::UrbanInfos* val_;
+            ADN_Urban_Data::UrbanMaterialInfos* val_;
         };
     };
 

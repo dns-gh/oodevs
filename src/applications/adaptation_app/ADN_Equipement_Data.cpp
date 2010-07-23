@@ -165,85 +165,14 @@ void ADN_Equipement_Data::CategoryInfo::WriteContent( xml::xostream& output )
 
 // -----------------------------------------------------------------------------
 // Name: AttritionInfos::AttritionInfos
-// Created: APE 2004-11-16
-// -----------------------------------------------------------------------------
-ADN_Equipement_Data::AttritionInfos::AttritionInfos(ADN_Categories_Data::ArmorInfos* ptr)
-: ptrArmor_         ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), ptr )
-, rDestroy_         ( 0.0 )
-, rRepairWithEvac_  ( 0.0 )
-, rRepairNoEvac_    ( 0.0 )
-{
-    this->BindExistenceTo( &ptrArmor_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AttritionInfos::GetNodeName
-// Created: APE 2004-12-13
-// -----------------------------------------------------------------------------
-std::string ADN_Equipement_Data::AttritionInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AttritionInfos::GetItemName
-// Created: APE 2004-12-13
-// -----------------------------------------------------------------------------
-std::string ADN_Equipement_Data::AttritionInfos::GetItemName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AttritionInfos::CopyFrom
-// Created: APE 2005-01-19
-// -----------------------------------------------------------------------------
-void ADN_Equipement_Data::AttritionInfos::CopyFrom( ADN_Equipement_Data::AttritionInfos& attritions )
-{
-    rDestroy_ = attritions.rDestroy_.GetData();
-    rRepairNoEvac_ = attritions.rRepairNoEvac_.GetData();
-    rRepairWithEvac_ = attritions.rRepairWithEvac_.GetData();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AttritionInfos::ReadArchive
-// Created: APE 2004-11-15
-// -----------------------------------------------------------------------------
-void ADN_Equipement_Data::AttritionInfos::ReadArchive( xml::xistream& input )
-{
-    input >> xml::attribute( "destruction", rDestroy_ )
-          >> xml::attribute( "repairable-with-evacuation", rRepairWithEvac_ )
-          >> xml::attribute( "repairable-without-evacuation", rRepairNoEvac_ );
-    rDestroy_        = rDestroy_.GetData() * 100.0;
-    rRepairWithEvac_ = rRepairWithEvac_.GetData() * 100.0;
-    rRepairNoEvac_   = rRepairNoEvac_.GetData() * 100.0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AttritionInfos::WriteArchive
-// Created: APE 2004-11-15
-// -----------------------------------------------------------------------------
-void ADN_Equipement_Data::AttritionInfos::WriteArchive( xml::xostream& output, const std::string& tag /*= "attrition"*/ )
-{
-    output << xml::start( tag )
-            << xml::attribute( "protection", ptrArmor_.GetData()->strName_ )
-            << xml::attribute( "destruction", rDestroy_.GetData() / 100.0 )
-            << xml::attribute( "repairable-with-evacuation", rRepairWithEvac_.GetData() / 100.0 )
-            << xml::attribute( "repairable-without-evacuation", rRepairNoEvac_.GetData() / 100.0 )
-           << xml::end;
-}
-
-// TEMP SLG
-// -----------------------------------------------------------------------------
-// Name: AttritionInfos::AttritionInfos
 // Created: SLG 2010-04-13
 // -----------------------------------------------------------------------------
-ADN_Equipement_Data::UrbanAttritionInfos::UrbanAttritionInfos( ADN_Urban_Data::UrbanInfos* ptr )
-: ptrMaterial_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), ptr )
-, strName_( *ptrMaterial_.GetData() )
-, rCoeff_( 0.0 )
+ADN_Equipement_Data::UrbanAttritionInfos::UrbanAttritionInfos( ADN_Urban_Data::UrbanMaterialInfos* ptr )
+	: ptrMaterial_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), ptr )
+    , rCoeff_     ( 0. )
+	, strName_    ( ptrMaterial_.GetData()->strName_ )
 {
-    this->BindExistenceTo( &ptrMaterial_ );
+    BindExistenceTo( &ptrMaterial_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -289,11 +218,11 @@ void ADN_Equipement_Data::UrbanAttritionInfos::ReadArchive( xml::xistream& input
 void ADN_Equipement_Data::UrbanAttritionInfos::WriteArchive( xml::xostream& output, const std::string& tag /*= "urbanModifier"*/ )
 {
     output << xml::start( tag )
-        << xml::attribute( "material-type", ptrMaterial_.GetData()->GetData() )
+        << xml::attribute( "material-type", ptrMaterial_.GetData()->strName_ )
         << xml::attribute( "value", rCoeff_.GetData() )
         << xml::end;
 }
-// TEMP SLG
+
 //-----------------------------------------------------------------------------
 // Name: ModificatorPostureInfos::ModificatorPostureInfos
 // Created: JDY 03-09-29
@@ -491,21 +420,21 @@ void ADN_Equipement_Data::IndirectAmmoInfos::WriteArchive( xml::xostream& output
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::AmmoCategoryInfo::AmmoCategoryInfo( DotationInfos& parentDotation )
-: CategoryInfo      ( parentDotation )
-, bDirect_          ( false )
-, bUrbanAttrition_  ( false )
-, bTrancheD_        ( false )
-, bIndirect_        ( false )
-, bIlluminating_    ( false )
-, fRange_           ( 0 )
+: CategoryInfo          ( parentDotation )
+, bDirect_              ( false )
+, bUrbanAttrition_      ( false )
+, bTrancheD_            ( false )
+, bIndirect_            ( false )
+, bIlluminating_        ( false )
+, fRange_               ( 0 )
 , bMaintainIllumination_( false )
-, bGuided_          ( false )
-, bMaintainGuidance_( false )
-, fGuidanceRange_   ( 0 )
-, attritions_       ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos() )
-, modifUrbanBlocks_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos() )
-, indirectAmmoInfos_()
+, bGuided_              ( false )
+, bMaintainGuidance_    ( false )
+, fGuidanceRange_       ( 0 )
+, attritions_           ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos() )
+, modifUrbanBlocks_     ( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos() )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -554,7 +483,7 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadAttrition( xml::xistream& input 
 {
     bDirect_ = true;
     std::string protection = input.attribute< std::string >( "protection" );
-    IT_AttritionInfos_Vector itAttrition = std::find_if( attritions_.begin(), attritions_.end(),AttritionInfos::Cmp( protection ));
+    helpers::IT_AttritionInfos_Vector itAttrition = std::find_if( attritions_.begin(), attritions_.end(), helpers::AttritionInfos::Cmp( protection ));
     if( itAttrition == attritions_.end() )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid armor type '%1'" ).arg( protection.c_str() ).ascii() );
     (*itAttrition)->ReadArchive( input );
@@ -619,7 +548,6 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadArchive( xml::xistream& input )
               >> xml::end;
     }
 
-
     input >> xml::optional
           >> xml::start( "attritions" )
             >> xml::list( "attrition", *this, &ADN_Equipement_Data::AmmoCategoryInfo::ReadAttrition )
@@ -661,7 +589,7 @@ void ADN_Equipement_Data::AmmoCategoryInfo::WriteArchive( xml::xostream& output 
     if( bDirect_.GetData() == true )
     {
         output << xml::start( "attritions" );
-        for( IT_AttritionInfos_Vector itAttrition = attritions_.begin(); itAttrition != attritions_.end(); ++itAttrition )
+        for( helpers::IT_AttritionInfos_Vector itAttrition = attritions_.begin(); itAttrition != attritions_.end(); ++itAttrition )
             (*itAttrition)->WriteArchive( output );
         output << xml::end;
     }

@@ -211,7 +211,7 @@ ADN_Project_Data& ADN_Workspace::GetProject()
 inline
 ADN_WorkspaceElement< ADN_Categories_Data, ADN_Categories_GUI >& ADN_Workspace::GetCategories()
 {
-    return (ADN_WorkspaceElement< ADN_Categories_Data, ADN_Categories_GUI >&)(*elements_[eCategories]);
+    return ( ADN_WorkspaceElement< ADN_Categories_Data, ADN_Categories_GUI >& )( *elements_[ eCategories ] );
 }
 
 // -----------------------------------------------------------------------------

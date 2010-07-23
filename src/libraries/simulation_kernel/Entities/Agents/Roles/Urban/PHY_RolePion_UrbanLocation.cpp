@@ -275,16 +275,10 @@ void PHY_RolePion_UrbanLocation::Execute( posture::PostureComputer_ABC& algorith
 // -----------------------------------------------------------------------------
 void PHY_RolePion_UrbanLocation::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
-   if( urbanObject_ )
-   {
-       // Occupation Speed Modifier
+    if( urbanObject_ )
+    {    
         const urban::Architecture* architecture = urbanObject_->GetObject().RetrievePhysicalFeature< urban::Architecture >();
         if( architecture )
-            algorithm.AddModifier( 1. - architecture->GetOccupation() , true);
-
-        //Structural Speed Modifier
-        const StructuralCapacity* capacity = urbanObject_->Retrieve< StructuralCapacity >();
-        if( capacity )
-            algorithm.AddModifier( capacity->GetStructuralState() );
+            algorithm.AddModifier( 1. - architecture->GetOccupation() , true );
     }
 }

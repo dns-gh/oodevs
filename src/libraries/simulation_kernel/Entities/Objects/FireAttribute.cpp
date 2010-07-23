@@ -153,7 +153,7 @@ void FireAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 // Name: FireAttribute::Register
 // Created: JSR 2010-03-12
 // -----------------------------------------------------------------------------
-void FireAttribute::Register( Object& object ) const
+void FireAttribute::Register( MIL_Object_ABC& object ) const
 {
     object.SetAttribute< FireAttribute, FireAttribute >( *this );
 }

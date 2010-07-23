@@ -37,7 +37,7 @@ public:
 
     //! @name From ObjectAttribute_ABC
     //@{
-    virtual void Register( Object& object ) const;
+    virtual void Register( MIL_Object_ABC& object ) const;
     //@}
 
     //! @name Operations

@@ -21,6 +21,7 @@
 #include "WorkableCapacity.h"
 #include "DetectionCapacity.h"
 #include "SpawnCapacity.h"
+#include "StructuralCapacity.h"
 
 #include "AnimatorAttribute.h"
 #include "ConstructionAttribute.h"
@@ -355,8 +356,9 @@ bool MIL_ObjectManipulator::CanBeAnimatedBy( const MIL_Agent_ABC& agent ) const
 MT_Float MIL_ObjectManipulator::ApplySpeedPolicy( MT_Float rAgentSpeedWithinObject, MT_Float rAgentSpeedWithinEnvironment, MT_Float rAgentMaxSpeed ) const
 {
     const MobilityCapacity* capacity = object_.Retrieve< MobilityCapacity >();
-    if( capacity )
-        return capacity->ApplySpeedPolicy( rAgentSpeedWithinObject, rAgentSpeedWithinEnvironment, rAgentMaxSpeed );
+    const StructuralCapacity* structuralcapacity = object_.Retrieve< StructuralCapacity >();
+    if ( capacity )
+        return capacity->ApplySpeedPolicy( rAgentSpeedWithinObject, rAgentSpeedWithinEnvironment, rAgentMaxSpeed, structuralcapacity? structuralcapacity->GetStructuralState() : 1. );
     return std::numeric_limits< MT_Float >::max();
 }
 

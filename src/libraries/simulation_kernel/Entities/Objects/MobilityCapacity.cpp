@@ -29,7 +29,7 @@ MobilityCapacity::MobilityCapacity( xml::xistream& xis )
 // Name: MobilityCapacity constructor
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
-MobilityCapacity::MobilityCapacity( )
+MobilityCapacity::MobilityCapacity()
 {
     // NOTHING
 }
@@ -66,6 +66,8 @@ void MobilityCapacity::InitializeSpeedPolicy( xml::xistream& xis )
             xis.error( "max-unit-percentage-speed not in [0..100]" );
         rSpeedPolicyMaxSpeedAgentFactor_ /= 100.;
     }
+    else if( sCaseInsensitiveEqual()( strSpeedPolicy, "VitesseBlocUrbain" ) )
+        nSpeedPolicy_ = eSpeedPolicy_UrbanObjectMaxSpeed;
 }
 
 // -----------------------------------------------------------------------------
@@ -133,16 +135,27 @@ MT_Float MobilityCapacity::GetDefaultSpeed() const
 // Name: MobilityCapacity::ApplySpeedPolicy
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-MT_Float MobilityCapacity::ApplySpeedPolicy( MT_Float rAgentSpeedWithinObject, MT_Float rAgentSpeedWithinEnvironment, MT_Float rAgentMaxSpeed ) const
+MT_Float MobilityCapacity::ApplySpeedPolicy( MT_Float rAgentSpeedWithinObject, MT_Float rAgentSpeedWithinEnvironment, MT_Float rAgentMaxSpeed, MT_Float structural ) const
 {
     assert( rAgentSpeedWithinObject      <= rAgentMaxSpeed );
     assert( rAgentSpeedWithinEnvironment <= rAgentMaxSpeed );
 
     switch( nSpeedPolicy_ )
     {
-        case eSpeedPolicy_Slowest        : return std::min( rAgentSpeedWithinObject, rAgentSpeedWithinEnvironment );
-        case eSpeedPolicy_AgentMaxSpeed  : return rAgentMaxSpeed * rSpeedPolicyMaxSpeedAgentFactor_;
-        case eSpeedPolicy_ObjectMaxSpeed : return rAgentSpeedWithinObject; // rDefaultSpeed_ ?
+        case eSpeedPolicy_Slowest             : return std::min( rAgentSpeedWithinObject, rAgentSpeedWithinEnvironment );
+        case eSpeedPolicy_AgentMaxSpeed       : return rAgentMaxSpeed * rSpeedPolicyMaxSpeedAgentFactor_;
+        case eSpeedPolicy_ObjectMaxSpeed      : return rAgentSpeedWithinObject; // rDefaultSpeed_ ?
+        case eSpeedPolicy_UrbanObjectMaxSpeed : return rAgentSpeedWithinObject * ComputeStructuralFactor( structural );
     }
     return 0.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MobilityCapacity::ComputeFactor
+// Created: SLG 2010-06-29
+// -----------------------------------------------------------------------------
+MT_Float MobilityCapacity::ComputeStructuralFactor( const MT_Float structural ) const
+{
+    const MT_Float min = 0.2;
+    return  min + structural * ( 1 - min );
 }

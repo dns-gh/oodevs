@@ -119,7 +119,7 @@ void SpawnCapacity::Instanciate( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void SpawnCapacity::AddCreator( MIL_Object_ABC& object, const MIL_Agent_ABC& agent )
 {
-    Object* childObject = object.RetrieveAttribute< ChildObjectAttribute >()->GetChildObject();
+    MIL_Object_ABC* childObject = object.RetrieveAttribute< ChildObjectAttribute >()->GetChildObject();
     if( childObject )
         childObject->operator ()().AddDetector( agent );
 }

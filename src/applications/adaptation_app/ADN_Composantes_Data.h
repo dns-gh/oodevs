@@ -684,7 +684,7 @@ public:
         ADN_Type_String                                                           strCodeLFRIL_;
         ADN_Type_String                                                           strCodeNNO_;
 
-        ADN_TypePtr_InVector_ABC<ADN_Categories_Data::ArmorInfos>                 ptrArmor_;
+        ADN_TypePtr_InVector_ABC<helpers::ArmorInfos>                 ptrArmor_;
         ADN_TypePtr_InVector_ABC<ADN_Categories_Data::SizeInfos>                  ptrSize_;
         ADN_Type_Double                                                           rWeight_;
         ADN_Type_Double                                                           rMaxSpeed_;

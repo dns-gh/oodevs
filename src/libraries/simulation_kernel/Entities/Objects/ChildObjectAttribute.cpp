@@ -27,7 +27,7 @@ ChildObjectAttribute::ChildObjectAttribute()
 // Name: ChildObjectAttribute constructor
 // Created: SLG 2010-02-16
 // -----------------------------------------------------------------------------
-ChildObjectAttribute::ChildObjectAttribute( Object& object )
+ChildObjectAttribute::ChildObjectAttribute( MIL_Object_ABC& object )
     : childObject_( &object )
 {
     // NOTHING
@@ -56,7 +56,7 @@ void ChildObjectAttribute::serialize( Archive& /*file*/, const uint )
 // Name: ChildObjectAttribute::Register
 // Created: JSR 2010-03-15
 // -----------------------------------------------------------------------------
-void ChildObjectAttribute::Register( Object& object ) const
+void ChildObjectAttribute::Register( MIL_Object_ABC& object ) const
 {
     object.SetAttribute< ChildObjectAttribute, ChildObjectAttribute >( *this );
 }
@@ -65,7 +65,7 @@ void ChildObjectAttribute::Register( Object& object ) const
 // Name: ChildObjectAttribute::AddAnimator
 // Created: SLG 2010-02-16
 // -----------------------------------------------------------------------------
-void ChildObjectAttribute::AddChildObject( Object& object )
+void ChildObjectAttribute::AddChildObject( MIL_Object_ABC& object )
 {
     if( childObject_ )
         throw( std::exception( " Detector already registered" ) );
@@ -76,7 +76,7 @@ void ChildObjectAttribute::AddChildObject( Object& object )
 // Name: ChildObjectAttribute::GetChildObject
 // Created: SLG 2010-02-16
 // -----------------------------------------------------------------------------
-Object* ChildObjectAttribute::GetChildObject() const
+MIL_Object_ABC* ChildObjectAttribute::GetChildObject() const
 {
     return childObject_;
 }

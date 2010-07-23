@@ -78,7 +78,7 @@ void AnimatorAttribute::serialize( Archive& file, const unsigned int )
 // Name: AnimatorAttribute::Register
 // Created: JSR 2010-03-15
 // -----------------------------------------------------------------------------
-void AnimatorAttribute::Register( Object& object ) const
+void AnimatorAttribute::Register( MIL_Object_ABC& object ) const
 {
     object.SetAttribute< AnimatorAttribute, AnimatorAttribute >( *this );
 }

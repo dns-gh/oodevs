@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DelayAttribute.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include "Tools/MIL_Tools.h"
 #include "protocol/protocol.h"
 #include <xeumeuleu/xml.hpp>
@@ -102,7 +102,7 @@ void DelayAttribute::serialize( Archive& file, const unsigned int )
 // Name: DelayAttribute::Register
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-void DelayAttribute::Register( Object& object ) const
+void DelayAttribute::Register( MIL_Object_ABC& object ) const
 {
     object.SetAttribute< DelayAttribute, DelayAttribute >( *this );
 }

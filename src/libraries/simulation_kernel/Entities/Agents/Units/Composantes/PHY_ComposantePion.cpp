@@ -38,7 +38,10 @@
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/AttritionCapacity.h"
+#include "Entities/Objects/StructuralCapacity.h"
+
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Actions/PHY_FireDamages_Agent.h"
 #include "Entities/Orders/MIL_Report.h"
@@ -324,21 +327,12 @@ void PHY_ComposantePion::ApplyFire( const PHY_AttritionData& attritionData, MT_F
     const PHY_ComposanteState* pNewState = &attritionData.ComputeComposanteState( urbanProtection );
 
     pRole_->WoundLoadedHumans( *this, *pNewState, fireDamages );
-    ApplyHumansWounds( *pNewState, fireDamages );
+    ApplyHumansWounds( *pNewState, fireDamages );  
 
     if( pType_->GetProtection().IsHuman() && ( *pNewState == PHY_ComposanteState::repairableWithEvacuation_ || *pNewState == PHY_ComposanteState::repairableWithoutEvacuation_ ) )
         pNewState = &PHY_ComposanteState::undamaged_;
 
-    if( *pNewState < *pState_ )
-    {
-        pState_ = pNewState;
-
-        if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
-            pBreakdown_ = new PHY_Breakdown( pType_->GetAttritionBreakdownType() );
-        ManageEndMaintenance();
-
-        pRole_->NotifyComposanteChanged( *this, oldState );
-    }
+    ApplyNewComposanteState( *pNewState, oldState );
 
     fireDamages.NotifyComposanteStateChanged( *this, oldState, *pState_ );
 }
@@ -372,6 +366,52 @@ void PHY_ComposantePion::ApplyDirectFire( const PHY_DotationCategory& dotationCa
     assert( pType_ );
     MT_Float urbanProtection = pRole_->GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().ComputeUrbanProtection( dotationCategory );
     ApplyFire( dotationCategory.GetAttritionData( pType_->GetProtection() ), urbanProtection, fireDamages );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::ApplyUrbanObjectCrumbling
+// Created: SLG 2010-07-01
+// -----------------------------------------------------------------------------
+void PHY_ComposantePion::ApplyUrbanObjectCrumbling( const MIL_Object_ABC& object )
+{
+    //$$$ FACTORISER AVEC REINITIALIZESTATE()
+    assert( pRole_ );
+    assert( pType_ );
+    assert( CanBeFired() );
+    assert( pState_ );
+
+    const PHY_ComposanteState& oldState  = *pState_;
+    const PHY_ComposanteState* pNewState = pState_; 
+    StructuralCapacity* capacity = const_cast< MIL_Object_ABC& >( object ).Retrieve< StructuralCapacity >();
+    if ( capacity )
+        pNewState = &capacity->ComputeComposanteState( object, pType_->GetProtection() );
+
+    PHY_FireDamages_Agent fireDamages;
+    pRole_->WoundLoadedHumans( *this, *pNewState, fireDamages );
+    ApplyHumansWounds( *pNewState, fireDamages ); 
+
+    if( pType_->GetProtection().IsHuman() && ( *pNewState == PHY_ComposanteState::repairableWithEvacuation_ || *pNewState == PHY_ComposanteState::repairableWithoutEvacuation_ ) )
+        pNewState = &PHY_ComposanteState::undamaged_;
+
+    ApplyNewComposanteState( *pNewState, oldState );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::ApplyNewComposanteState
+// Created: SLG 2010-07-02
+// -----------------------------------------------------------------------------
+void PHY_ComposantePion::ApplyNewComposanteState( const PHY_ComposanteState& pNewState, const PHY_ComposanteState& oldState )
+{ 
+    if( pNewState < *pState_ )
+    {
+        pState_ = &pNewState;
+
+        if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
+            pBreakdown_ = new PHY_Breakdown( pType_->GetAttritionBreakdownType() );
+        ManageEndMaintenance();
+
+        pRole_->NotifyComposanteChanged( *this, oldState );
+    }
 }
 
 // -----------------------------------------------------------------------------

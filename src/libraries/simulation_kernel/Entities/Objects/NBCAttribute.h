@@ -63,7 +63,7 @@ public:
 
     //! @name From ObjectAttribute_ABC
     //@{
-    void Register( Object& object ) const;
+    void Register( MIL_Object_ABC& object ) const;
     //@}
 
     //! @name Network update

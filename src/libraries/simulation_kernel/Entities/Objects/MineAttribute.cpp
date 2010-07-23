@@ -164,7 +164,7 @@ void MineAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 // Name: MineAttribute::Register
 // Created: JSR 2010-03-15
 // -----------------------------------------------------------------------------
-void MineAttribute::Register( Object& object ) const
+void MineAttribute::Register( MIL_Object_ABC& object ) const
 {
     object.SetAttribute< MineAttribute, MineAttribute >( *this );
 }

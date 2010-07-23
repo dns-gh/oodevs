@@ -138,24 +138,26 @@ public:
 
     //! @name Fire / Dangerosity
     //@{
-    void ApplyPopulationFire( const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireDamages_Agent& fireDamages );
-    void ApplyDirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireDamages_Agent& fireDamages );
-    void ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireDamages_Agent& fireDamages, MT_Float ratio );
-    void ApplyExplosion( const AttritionCapacity& capacity, PHY_FireDamages_Agent& fireDamages );
-    void ApplyContamination( const MIL_ToxicEffectManipulator& contamination );
-    void ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination );
-    void ApplyInjury( MIL_Injury_ABC& injury );
-    unsigned int GetNeutralizationTime() const;
-    void ApplyHumansWounds( const PHY_ComposanteState& composanteNewState, PHY_FireDamages_Agent& fireDamages );
-    double GetDangerosity( const DEC_Knowledge_AgentComposante& compTarget, double rDistBtwFirerAndTarget ) const;
-    double GetOnlyLoadableMaxRangeToFireOn( const DEC_Knowledge_AgentComposante& compTarget, double rWantedPH ) const;
-    double GetMaxRangeToFireOn( const DEC_Knowledge_AgentComposante& compTarget, double rWantedPH ) const;
-    double GetMinRangeToFireOn( const DEC_Knowledge_AgentComposante& compTarget, double rWantedPH ) const;
-    double GetMaxRangeToFireOnWithPosture( const DEC_Knowledge_AgentComposante& compTarget, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
-    double GetMinRangeToFireOnWithPosture( const DEC_Knowledge_AgentComposante& compTarget, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
-    double GetMaxRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
-    double GetMinRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
-    double GetMaxRangeToFire( const MIL_Agent_ABC& pion, double rWantedPH ) const;
+    void ApplyPopulationFire            ( const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireDamages_Agent& fireDamages );
+    void ApplyDirectFire                ( const PHY_DotationCategory& dotationCategory                                              , PHY_FireDamages_Agent& fireDamages );
+    void ApplyIndirectFire              ( const PHY_DotationCategory& dotationCategory                                              , PHY_FireDamages_Agent& fireDamages, MT_Float ratio );
+    void ApplyExplosion                 ( const AttritionCapacity& capacity                                                         , PHY_FireDamages_Agent& fireDamages );
+    void ApplyContamination             ( const MIL_ToxicEffectManipulator& contamination );
+    void ApplyPoisonous                 ( const MIL_ToxicEffectManipulator& contamination );
+    void ApplyInjury                    ( MIL_Injury_ABC& injury );
+    void ApplyUrbanObjectCrumbling      ( const MIL_Object_ABC& object );
+
+    unsigned int GetNeutralizationTime      () const;
+    void     ApplyHumansWounds              ( const PHY_ComposanteState& composanteNewState, PHY_FireDamages_Agent& fireDamages );
+    double   GetDangerosity                 ( const DEC_Knowledge_AgentComposante& compTarget, double rDistBtwFirerAndTarget ) const;
+    double GetOnlyLoadableMaxRangeToFireOn  ( const DEC_Knowledge_AgentComposante& compTarget, double rWantedPH              ) const;
+    double GetMaxRangeToFireOn              ( const DEC_Knowledge_AgentComposante& compTarget, double rWantedPH              ) const;
+    double GetMinRangeToFireOn              ( const DEC_Knowledge_AgentComposante& compTarget, double rWantedPH              ) const;
+    double GetMaxRangeToFireOnWithPosture   ( const DEC_Knowledge_AgentComposante& compTarget, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
+    double GetMinRangeToFireOnWithPosture   ( const DEC_Knowledge_AgentComposante& compTarget, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
+    double GetMaxRangeToIndirectFire        ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
+    double GetMinRangeToIndirectFire        ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
+    double GetMaxRangeToFire                ( const MIL_Agent_ABC& pion, double rWantedPH ) const;
     //@}
 
     //! @name Accessors
@@ -251,10 +253,11 @@ private:
 private:
     //! @name Tools
     //@{
-    void ApplyFire( const PHY_AttritionData& attritionData, MT_Float urbanProtection, PHY_FireDamages_Agent& fireDamages );
-    bool CanBeUsed() const;
-    bool CanBeUsedForMove() const;
-    void ManageEndMaintenance();
+    void ApplyFire              ( const PHY_AttritionData& attritionData, MT_Float urbanProtection, PHY_FireDamages_Agent& fireDamages );
+    void ApplyNewComposanteState( const PHY_ComposanteState& pNewState, const PHY_ComposanteState& oldState );
+    bool CanBeUsed              () const;
+    bool CanBeUsedForMove       () const;
+    void ManageEndMaintenance   ();
     //@}
 
 private:

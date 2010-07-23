@@ -380,6 +380,14 @@ void AddCells( ADN_Table* pTable, void* pData, int nRow, int& nCol, T& vVector, 
     nCol += nVectorSize;
 }
 
+namespace
+{
+    void Convert( const ADN_Urban_Data::T_UrbanMaterialInfos_Vector& vector, ADN_Categories_Data::T_SizeInfos_Vector& result )
+    {
+       for ( ADN_Urban_Data::CIT_UrbanMaterialInfos_Vector it = vector.begin(); it != vector.end(); ++it )
+           result.AddItem( &( *it )->strName_ );
+    }
+}     
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_GUI::CreateAgentDetectionTable
@@ -388,7 +396,8 @@ void AddCells( ADN_Table* pTable, void* pData, int nRow, int& nCol, T& vVector, 
 ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
 {
     ADN_Categories_Data::T_SizeInfos_Vector& sizes = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos();
-    ADN_Categories_Data::T_SizeInfos_Vector& materials = ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos();
+    ADN_Categories_Data::T_SizeInfos_Vector materials;
+    Convert( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), materials );
 
     ADN_GuiBuilder builder;
     ADN_Table* pTable = builder.CreateTable( 0 );

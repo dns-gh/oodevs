@@ -98,7 +98,7 @@ void ConstructionAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 // Name: ConstructionAttribute::Register
 // Created: JSR 2010-03-15
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::Register( Object& object ) const
+void ConstructionAttribute::Register( MIL_Object_ABC& object ) const
 {
     object.SetAttribute< ConstructionAttribute, ConstructionAttribute >( *this );
 }

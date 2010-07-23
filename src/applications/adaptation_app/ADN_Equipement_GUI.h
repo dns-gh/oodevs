@@ -124,7 +124,7 @@ public:
 
     void UpdateGraph();
     void InitializeSimulationCombos();
-    ADN_Categories_Data::ArmorInfos* GetSelectedArmor() const;
+    helpers::ArmorInfos* GetSelectedArmor() const;
     ADN_Equipement_Data::UrbanAttritionInfos* GetSelectedMaterial() const;
     //@}
 
@@ -150,7 +150,7 @@ private:
 
     ADN_ComboBox* pIndirectTypeCombo_;
     ADN_Equipement_AttritionGraph* pAttritionGraph_;
-    ADN_ComboBox_Vector< ADN_Categories_Data::ArmorInfos >* pArmorCombo_;
+    ADN_ComboBox_Vector< helpers::ArmorInfos >* pArmorCombo_;
     ADN_ComboBox_Vector< ADN_Equipement_Data::UrbanAttritionInfos >* pMaterialCombo_;
 
     QGroupBox* pExplosiveParametersGroup_;

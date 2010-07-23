@@ -48,7 +48,7 @@ public:
         MT_COPYNOTALLOWED( FireEffectProtectionInfos )
 
     public:
-         FireEffectProtectionInfos( ADN_Categories_Data::ArmorInfos* ptr );
+         FireEffectProtectionInfos( helpers::ArmorInfos* ptr );
         ~FireEffectProtectionInfos();
 
         virtual std::string GetNodeName();
@@ -59,25 +59,25 @@ public:
 
     public:
         ADN_Type_String                                           strName_;
-        ADN_TypePtr_InVector_ABC<ADN_Categories_Data::ArmorInfos> ptrProtection_;
+        ADN_TypePtr_InVector_ABC<helpers::ArmorInfos> ptrProtection_;
         ADN_Type_Double                                           rDestruction_;
         ADN_Type_Double                                           rFixableWithEvacuation_;
         ADN_Type_Double                                           rFixableWithoutEvacuation_;
 
     public:
-        typedef ADN_Categories_Data::ArmorInfos T_Item;
+        typedef helpers::ArmorInfos T_Item;
 
         class CmpRef : public std::unary_function< FireEffectProtectionInfos* , bool >
         {
         public:
-            CmpRef(ADN_Categories_Data::ArmorInfos* val) : val_(val) {}
+            CmpRef(helpers::ArmorInfos* val) : val_(val) {}
             ~CmpRef(){}
 
             bool operator()( FireEffectProtectionInfos* tgtnfos ) const
             {   return tgtnfos->ptrProtection_.GetData() == val_;}
 
         private:
-            ADN_Categories_Data::ArmorInfos* val_;
+            helpers::ArmorInfos* val_;
         };
     };
 
@@ -205,7 +205,7 @@ public:
         MT_COPYNOTALLOWED( SpeedEffectInfos )
 
     public:
-        SpeedEffectInfos( E_PopulationAttitude nAttitude );
+        explicit SpeedEffectInfos( E_PopulationAttitude nAttitude );
         ~SpeedEffectInfos();
 
         virtual std::string GetNodeName();

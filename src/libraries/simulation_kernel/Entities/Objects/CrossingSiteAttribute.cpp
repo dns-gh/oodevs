@@ -122,7 +122,7 @@ void CrossingSiteAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 // Name: CrossingSiteAttribute::Register
 // Created: JSR 2010-03-15
 // -----------------------------------------------------------------------------
-void CrossingSiteAttribute::Register( Object& object ) const
+void CrossingSiteAttribute::Register( MIL_Object_ABC& object ) const
 {
     object.SetAttribute< CrossingSiteAttribute, CrossingSiteAttribute >( *this );
 }

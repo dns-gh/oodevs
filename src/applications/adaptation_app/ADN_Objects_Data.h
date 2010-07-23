@@ -81,7 +81,7 @@ public:
 
 
 //*****************************************************************************
-//    typedef ADN_Equipement_Data::AttritionInfos AttritionInfos;
+//    typedef helpers::AttritionInfos AttritionInfos; 
 //    typedef ADN_Type_VectorFixed_ABC<AttritionInfos> T_AttritionInfosVector;
 //    typedef T_AttritionInfosVector::iterator        IT_AttritionInfosVector;
 

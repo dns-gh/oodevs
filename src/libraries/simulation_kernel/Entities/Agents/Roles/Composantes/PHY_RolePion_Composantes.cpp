@@ -896,6 +896,20 @@ void PHY_RolePion_Composantes::ApplyExplosion( const AttritionCapacity& capacity
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::ApplyUrbanObjectCrumbling
+// Created: SLG 2010-06-29
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::ApplyUrbanObjectCrumbling( const MIL_Object_ABC& object )
+{
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    {
+        PHY_ComposantePion& composante = **it;
+        if( composante.CanBeFired() )
+            composante.ApplyUrbanObjectCrumbling( object );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::ApplyIndirectFire
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------

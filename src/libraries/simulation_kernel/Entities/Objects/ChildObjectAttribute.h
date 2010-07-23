@@ -24,7 +24,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ChildObjectAttribute();
-    explicit ChildObjectAttribute( Object& object );
+    explicit ChildObjectAttribute( MIL_Object_ABC& object );
     virtual ~ChildObjectAttribute();
     //@}
 
@@ -35,19 +35,19 @@ public:
 
     //! @name From ObjectAttribute_ABC
     //@{
-    virtual void Register( Object& object ) const;
+    virtual void Register( MIL_Object_ABC& object ) const;
     //@}
 
     //! @name Operations
     //@{
-    void AddChildObject( Object& object );
-    Object* GetChildObject() const;
+    void AddChildObject( MIL_Object_ABC& object );
+    MIL_Object_ABC* GetChildObject() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    Object*    childObject_;
+    MIL_Object_ABC*    childObject_;
     //@}
 };
 

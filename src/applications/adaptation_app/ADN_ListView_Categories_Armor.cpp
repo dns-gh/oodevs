@@ -20,7 +20,7 @@
 #include "ADN_GuiTools.h"
 
 
-typedef ADN_Categories_Data::ArmorInfos ArmorInfos;
+typedef helpers::ArmorInfos ArmorInfos;
 
 
 //-----------------------------------------------------------------------------

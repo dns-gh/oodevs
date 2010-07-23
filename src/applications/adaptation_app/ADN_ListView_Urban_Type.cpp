@@ -88,7 +88,8 @@ void ADN_ListView_Urban_Type::ConnectItem( bool bConnect )
     if( pCurData_ == 0 )
         return;
 
-    UrbanInfos* pInfos = (UrbanInfos*) pCurData_;
+    UrbanInfos* pInfos = ( UrbanInfos* )pCurData_;
+
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Urban_GUI::eNbrUrbanGuiElements );
 
     vItemConnectors_[ADN_Urban_GUI::eUrbanName]->Connect( pInfos, bConnect );
@@ -113,7 +114,7 @@ void  ADN_ListView_Urban_Type::OnContextMenu( const QPoint& pt)
         {
             // create new sensor & add it to list
             UrbanInfos* pNewInfo = new UrbanInfos();
-            pNewInfo->SetDataName( "le nom de la catégorie de volume" );
+            pNewInfo->SetDataName( "le nom de la catégorie du type urbain" );
 
             ADN_Connector_Vector_ABC* pCList = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
             pCList->AddItem( pNewInfo );

@@ -60,7 +60,7 @@ void UrbanModel::Create( const MsgsSimToClient::MsgUrbanCreation& message )
         const geometry::Point2f point( float( location.latitude() ), float( location.longitude() ) );
         footPrint.Add( point );
     }
-    urban::TerrainObject_ABC* object = model_->GetFactory().CreateUrbanObject( id, name, footPrint );
+    urban::TerrainObject_ABC* object = model_->GetFactory().CreateUrbanObject( id, name, &footPrint );
     UrbanBlockDeserializer urbanBlockDeserializer( message );
     object->Accept( urbanBlockDeserializer );
     gui::InfrastructureParameters infrastructure;

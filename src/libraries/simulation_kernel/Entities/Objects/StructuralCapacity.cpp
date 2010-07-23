@@ -10,12 +10,21 @@
 #include "simulation_kernel_pch.h"
 #include "StructuralCapacity.h"
 #include "MIL_Object_ABC.h"
+#include "MaterialAttribute.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "geometry/Types.h"
 #include "tools/MIL_Geometry.h"
 #include "protocol/ClientSenders.h"
-#include <xeumeuleu/xml.hpp>
-
+#include <urban/Architecture.h>
+#include <urban/StaticModel.h>
+#include <urban/MaterialCompositionType.h>
+#include <urban/TerrainObject_ABC.h>
+#include <UrbanType.h>
+#include <xeumeuleu/xml.h>
 BOOST_CLASS_EXPORT_IMPLEMENT( StructuralCapacity )
 
 // -----------------------------------------------------------------------------
@@ -24,6 +33,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( StructuralCapacity )
 // -----------------------------------------------------------------------------
 StructuralCapacity::StructuralCapacity()
     : structuralState_( 1 )
+    , materialType_( 0 )
 {
     // NOTHING
 }
@@ -96,6 +106,33 @@ void StructuralCapacity::Instanciate( MIL_Object_ABC& object ) const
     StructuralCapacity* capacity = new StructuralCapacity( *this );
     object.AddCapacity( capacity );
     object.Register( static_cast< MIL_InteractiveContainer_ABC* >( capacity ) );
+    UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( &object );
+    if( wrapper )
+    {
+        const urban::Architecture* architecture = wrapper->GetObject().RetrievePhysicalFeature< urban::Architecture >();
+        if( architecture )
+        {
+            urban::MaterialCompositionType* material = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() );
+            object.GetAttribute< MaterialAttribute >() = MaterialAttribute( *material );
+        }
+    }
+}
+
+namespace
+{
+    geometry::Polygon2f EllipseToPolygon( const MT_Ellipse& ellipse )
+    {
+        geometry::Polygon2f polygon;
+        polygon.Add( geometry::Point2f( float( ellipse.GetMajorAxisHighPoint().rX_ + ellipse.GetMinorAxisHighPoint().rX_ - ellipse.GetCenter().rX_ ), 
+            float( ellipse.GetMajorAxisHighPoint().rY_ + ellipse.GetMinorAxisHighPoint().rY_ - ellipse.GetCenter().rY_ ) ) );
+        polygon.Add( geometry::Point2f( float( ellipse.GetMajorAxisHighPoint().rX_ - ellipse.GetMinorAxisHighPoint().rX_ + ellipse.GetCenter().rX_ ),
+            float( ellipse.GetMajorAxisHighPoint().rY_ - ellipse.GetMinorAxisHighPoint().rY_ + ellipse.GetCenter().rY_ ) ) );
+        polygon.Add( geometry::Point2f( float( 3 * ellipse.GetCenter().rX_ - ellipse.GetMajorAxisHighPoint().rX_ - ellipse.GetMinorAxisHighPoint().rX_ ),
+            float( 3 * ellipse.GetCenter().rY_ - ellipse.GetMajorAxisHighPoint().rY_ - ellipse.GetMinorAxisHighPoint().rY_ ) ) );
+        polygon.Add( geometry::Point2f( float( ellipse.GetCenter().rX_ - ellipse.GetMajorAxisHighPoint().rX_ + ellipse.GetMinorAxisHighPoint().rX_ ),
+            float( ellipse.GetCenter().rY_ - ellipse.GetMajorAxisHighPoint().rY_ + ellipse.GetMinorAxisHighPoint().rY_ ) ) );
+        return polygon;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -107,24 +144,55 @@ void StructuralCapacity::ApplyIndirectFire( const MIL_Object_ABC& object, const 
     const float urbanObjectArea = static_cast< float >( object.GetLocalisation().GetArea() );
     if( !urbanObjectArea )
         return;
-    geometry::Polygon2f attritionPolygon;
-    attritionPolygon.Add( geometry::Point2f( float( attritionSurface.GetMajorAxisHighPoint().rX_ + attritionSurface.GetMinorAxisHighPoint().rX_ - attritionSurface.GetCenter().rX_ ),
-        float( attritionSurface.GetMajorAxisHighPoint().rY_ + attritionSurface.GetMinorAxisHighPoint().rY_ - attritionSurface.GetCenter().rY_ ) ) );
-    attritionPolygon.Add( geometry::Point2f( float( attritionSurface.GetMajorAxisHighPoint().rX_ - attritionSurface.GetMinorAxisHighPoint().rX_ + attritionSurface.GetCenter().rX_ ),
-        float( attritionSurface.GetMajorAxisHighPoint().rY_ - attritionSurface.GetMinorAxisHighPoint().rY_ + attritionSurface.GetCenter().rY_ ) ) );
-    attritionPolygon.Add( geometry::Point2f( float( 3 * attritionSurface.GetCenter().rX_ - attritionSurface.GetMajorAxisHighPoint().rX_ - attritionSurface.GetMinorAxisHighPoint().rX_ ),
-        float( 3 * attritionSurface.GetCenter().rY_ - attritionSurface.GetMajorAxisHighPoint().rY_ - attritionSurface.GetMinorAxisHighPoint().rY_ ) ) );
-    attritionPolygon.Add( geometry::Point2f( float( attritionSurface.GetCenter().rX_ - attritionSurface.GetMajorAxisHighPoint().rX_ + attritionSurface.GetMinorAxisHighPoint().rX_ ),
-        float( attritionSurface.GetCenter().rY_ - attritionSurface.GetMajorAxisHighPoint().rY_ + attritionSurface.GetMinorAxisHighPoint().rY_ ) ) );
-    geometry::Polygon2f p;
+    geometry::Polygon2f attritionPolygon = EllipseToPolygon( attritionSurface );
     CT_PointVector points = object.GetLocalisation().GetPoints();
+    geometry::Polygon2f p;
     for( T_PointVector::const_iterator it = points.begin(); it != points.end(); ++it )
         p.Add( geometry::Point2f( static_cast< float >( it->rX_ ), static_cast< float >( it->rY_ ) ) );
-    const float ratio = MIL_Geometry::IntersectionArea( attritionPolygon, p ) / urbanObjectArea;
-    const float modifier = static_cast< float >( dotation.GetAttrition( object.GetMaterial() ) );
-    structuralState_ -= ratio * modifier;
+    float ratio = MIL_Geometry::IntersectionArea( attritionPolygon, p ) / urbanObjectArea;
+
+    float oldStructuralState = structuralState_;
+    const MaterialAttribute* materialAttribute = object.RetrieveAttribute< MaterialAttribute >();
+    // $$$$  SLG 2010-07-22: TODO Dans le cas où ce n'est pas un bloc urbain (objet, ou quartier/ville), voir comment appliquer des dégats.
+    if( !materialAttribute )
+        return;
+    structuralState_ -= ratio * float( dotation.GetAttrition(  materialAttribute->GetMaterial().GetId()) );
     if( structuralState_ < 0 )
         structuralState_ = 0;
+
+    float delta = oldStructuralState - structuralState_;
+    if ( MIL_Random::rand_io( MIL_Random::eFire ) <= delta )
+    {
+        for ( IT_Agents it = agents_.begin(); it != agents_.end(); ++it )
+            ( *it )->GetRole< PHY_RoleInterface_Composantes >().ApplyUrbanObjectCrumbling( object );
+    }
+}
+// -----------------------------------------------------------------------------
+// Name: StructuralCapacity::ComputeComposanteState
+// Created: SLG 2010-07-01
+// -----------------------------------------------------------------------------
+const PHY_ComposanteState& StructuralCapacity::ComputeComposanteState( const MIL_Object_ABC& object, const PHY_Protection& targetProtection )
+{
+    const MaterialAttribute* materialAttribute = object.RetrieveAttribute< MaterialAttribute >();
+    // $$$$  SLG 2010-07-22: TODO Dans le cas où ce n'est pas un bloc urbain (objet, ou quartier/ville), voir comment appliquer des dégats.
+    if( !materialAttribute )
+        return PHY_ComposanteState::undamaged_;
+
+    urban::MaterialCompositionType& material = materialAttribute->GetMaterial();
+    urban::MaterialCompositionType::AttritionData* attrition = material.FindAttrition( targetProtection.GetName() );
+    if( !attrition ) 
+        throw std::exception( "Error in searching protection" );
+    // Tirage de l'état opérationnel
+    MT_Float rRand = MIL_Random::rand_io( MIL_Random::eFire );
+
+    double destruction = attrition->destruction_;
+    double repairableWithEvac = attrition->repairableWithEvac_ + destruction;
+    double repairableNoEvac = attrition->repairableNoEvac_ + repairableWithEvac;
+
+    return rRand <= destruction         ? PHY_ComposanteState::dead_:
+           rRand <= repairableWithEvac  ? PHY_ComposanteState::repairableWithEvacuation_   :
+           rRand <= repairableNoEvac    ? PHY_ComposanteState::repairableWithoutEvacuation_:
+                                          PHY_ComposanteState::undamaged_;
 }
 
 // -----------------------------------------------------------------------------
@@ -136,7 +204,11 @@ void StructuralCapacity::ApplyDirectFire( const MIL_Object_ABC& object, const PH
     const float area = static_cast< float >( object.GetLocalisation().GetArea() );
     if( area )
     {
-        const float modifier = static_cast< float >( dotation.GetAttrition( object.GetMaterial() ) );
+        const MaterialAttribute* materialAttribute = object.RetrieveAttribute< MaterialAttribute >();
+        // $$$$  SLG 2010-07-22: TODO Dans le cas où ce n'est pas un bloc urbain (objet, ou quartier/ville), voir comment appliquer des dégats.
+        if( !materialAttribute )
+            return;
+        const float modifier = static_cast< float >( dotation.GetAttrition( materialAttribute->GetMaterial().GetId() ) );
         structuralState_-= modifier / area;
     }
 }
@@ -157,4 +229,22 @@ void StructuralCapacity::SendState( MsgsSimToClient::MsgUrbanAttributes& message
 float StructuralCapacity::GetStructuralState() const
 {
     return structuralState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: StructuralCapacity::ProcessAgentEntering
+// Created: SLG 2010-06-29
+// -----------------------------------------------------------------------------
+void StructuralCapacity::ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
+{
+    agents_.push_back( &agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StructuralCapacity::ProcessAgentExiting
+// Created: SLG 2010-06-29
+// -----------------------------------------------------------------------------
+void StructuralCapacity::ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
+{
+    agents_.erase( std::find( agents_.begin(), agents_.end(), &agent ) );
 }

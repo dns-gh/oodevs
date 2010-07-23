@@ -56,7 +56,7 @@ void PopulationAttribute::serialize( Archive& file, const unsigned int )
 // Name: PopulationAttribute::Register
 // Created: JSR 2010-03-15
 // -----------------------------------------------------------------------------
-void PopulationAttribute::Register( Object& object ) const
+void PopulationAttribute::Register( MIL_Object_ABC& object ) const
 {
     object.SetAttribute< PopulationAttribute, PopulationAttribute >( *this );
 }

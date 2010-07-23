@@ -107,7 +107,7 @@ void LogisticAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 // Name: LogisticAttribute::Register
 // Created: JSR 2010-03-15
 // -----------------------------------------------------------------------------
-void LogisticAttribute::Register( Object& object ) const
+void LogisticAttribute::Register( MIL_Object_ABC& object ) const
 {
     object.SetAttribute< LogisticAttribute, LogisticAttribute >( *this );
 }

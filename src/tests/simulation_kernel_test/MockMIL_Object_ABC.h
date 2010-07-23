@@ -51,7 +51,6 @@ public:
     MOCK_METHOD( Update, 1 );
     MOCK_METHOD( Instanciate, 1 );
     MOCK_METHOD( Finalize, 0 );
-    MOCK_METHOD( GetMaterial, 0 );
     MOCK_METHOD_EXT( Register, 1, void (ObjectCapacity_ABC *), RegisterCapacity );
     MOCK_METHOD_EXT( Register, 1, void (ObjectAttribute_ABC *), RegisterAttribute );
     MOCK_METHOD_EXT( Register, 1, void (MIL_InteractiveContainer_ABC *), RegisterContainer );

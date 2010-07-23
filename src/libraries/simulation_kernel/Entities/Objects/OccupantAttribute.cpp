@@ -68,7 +68,7 @@ void OccupantAttribute::serialize( Archive& file, const unsigned int )
 // Name: OccupantAttribute::Register
 // Created: JSR 2010-03-15
 // -----------------------------------------------------------------------------
-void OccupantAttribute::Register( Object& object ) const
+void OccupantAttribute::Register( MIL_Object_ABC& object ) const
 {
     object.SetAttribute< OccupantAttribute, OccupantAttribute >( *this );
 }

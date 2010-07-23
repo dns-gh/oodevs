@@ -38,7 +38,7 @@ public:
         if( pItem == 0 )
             return false;
 
-        graph_->AddAttrition( *( ADN_Equipement_Data::AttritionInfos* ) pItem );
+        graph_->AddAttrition( *( helpers::AttritionInfos* ) pItem );
         return true;
     }
 
@@ -49,7 +49,7 @@ public:
 
     bool RemItemPrivate( void* pItem, bool /*bCreateCommand*/ = false )
     {
-        graph_->RemoveAttrition( *( ADN_Equipement_Data::AttritionInfos* ) pItem );
+        graph_->RemoveAttrition( *( helpers::AttritionInfos* ) pItem );
         return true;
     }
 
@@ -146,7 +146,7 @@ ADN_Equipement_AttritionGraph::~ADN_Equipement_AttritionGraph()
 // Name: ADN_Equipement_AttritionGraph::AddAttrition
 // Created: JSR 2010-04-29
 // -----------------------------------------------------------------------------
-void ADN_Equipement_AttritionGraph::AddAttrition( ADN_Equipement_Data::AttritionInfos& info )
+void ADN_Equipement_AttritionGraph::AddAttrition( helpers::AttritionInfos& info )
 {
     attritions_.push_back( &info );
 }
@@ -155,7 +155,7 @@ void ADN_Equipement_AttritionGraph::AddAttrition( ADN_Equipement_Data::Attrition
 // Name: ADN_Equipement_AttritionGraph::RemoveAttrition
 // Created: JSR 2010-04-30
 // -----------------------------------------------------------------------------
-void ADN_Equipement_AttritionGraph::RemoveAttrition( ADN_Equipement_Data::AttritionInfos& info )
+void ADN_Equipement_AttritionGraph::RemoveAttrition( helpers::AttritionInfos& info )
 {
     for( IT_Attritions it = attritions_.begin(); it != attritions_.end(); ++it )
         if( *it == &info )
@@ -180,7 +180,7 @@ void ADN_Equipement_AttritionGraph::ClearAttritions()
 // -----------------------------------------------------------------------------
 void ADN_Equipement_AttritionGraph::Update()
 {
-    ADN_Categories_Data::ArmorInfos* info = ADN_Workspace::GetWorkspace().GetEquipements().GetGui().GetSelectedArmor();
+    helpers::ArmorInfos* info = ADN_Workspace::GetWorkspace().GetEquipements().GetGui().GetSelectedArmor();
     if( info == 0 )
         return;
 
@@ -196,7 +196,7 @@ void ADN_Equipement_AttritionGraph::Update()
         {
             columns_.clear();
 
-            ADN_Equipement_Data::AttritionInfos& attrition = **it;
+            helpers::AttritionInfos& attrition = **it;
             double rReparableWithoutEvacuation = attrition.rRepairNoEvac_.GetData();
             double rReparableWithEvacuation = attrition.rRepairWithEvac_.GetData();
             double rDestroyed = attrition.rDestroy_.GetData();
@@ -225,7 +225,7 @@ void ADN_Equipement_AttritionGraph::Update()
             visuWithEvac.value_ = ( int )rReparableWithEvacuation;
             visuDestroyed.value_ = ( int )rDestroyed;
 
-            for( ADN_Type_Vector_ABC< ADN_Categories_Data::AttritionEffectOnHuman >::CIT_PtrVector effect = info->vAttritionEffects_.begin(); effect != info->vAttritionEffects_.end(); ++effect )
+            for( ADN_Type_Vector_ABC< helpers::AttritionEffectOnHuman >::CIT_PtrVector effect = info->vAttritionEffects_.begin(); effect != info->vAttritionEffects_.end(); ++effect )
             {
                 int injured = ( *effect )->nInjuredPercentage_.GetData();
                 int dead = ( *effect )->nDeadPercentage_.GetData();

@@ -57,7 +57,8 @@ BOOST_AUTO_TEST_CASE( PhComputerFirerPositionTest )
     vertices.push_back( geometry::Point2f( 1, -1 ) );
 
     std::auto_ptr< urban::UrbanObject > urbanBlock;
-    urbanBlock.reset( new urban::UrbanObject ( 0, "test", geometry::Polygon2f( vertices ), 0 ) );
+    geometry::Polygon2f poly( vertices );
+    urbanBlock.reset( new urban::UrbanObject ( 0, "test", &poly, 0 ) );
 
     MIL_ObjectLoader loader;
     {
@@ -104,7 +105,8 @@ BOOST_AUTO_TEST_CASE( PhComputerTargetPositionTest )
     vertices.push_back( geometry::Point2f( 1, -1 ) );
 
     std::auto_ptr< urban::UrbanObject > urbanBlock;
-    urbanBlock.reset( new urban::UrbanObject ( 0, "test", geometry::Polygon2f( vertices ), 0 ) );
+    geometry::Polygon2f poly( vertices );
+    urbanBlock.reset( new urban::UrbanObject ( 0, "test", &poly, 0 ) );
 
     MIL_ObjectLoader loader;
     {
@@ -153,7 +155,8 @@ BOOST_AUTO_TEST_CASE( PhComputerIndirectPhModifier )
     vertices.push_back( geometry::Point2f( 1, -1 ) );
 
     std::auto_ptr< urban::UrbanObject > urbanBlock;
-    urbanBlock.reset( new urban::UrbanObject ( 0, "test", geometry::Polygon2f( vertices ), 0 ) );
+    geometry::Polygon2f poly( vertices );
+    urbanBlock.reset( new urban::UrbanObject ( 0, "test", &poly, 0 ) );
 
     MIL_ObjectLoader loader;
     {

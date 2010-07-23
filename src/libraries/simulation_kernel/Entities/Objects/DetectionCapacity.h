@@ -57,8 +57,8 @@ public:
 
     //! @name Types
     //@{
-    typedef std::map< MIL_Agent_ABC* , int >                        T_AgentMap;
-    typedef T_AgentMap::const_iterator                              CIT_AgentMap;
+    typedef std::map< MIL_Agent_ABC*, int > T_AgentMap;
+    typedef T_AgentMap::const_iterator    CIT_AgentMap;
     //@}
 
 private:
@@ -73,7 +73,6 @@ private:
         float rDetectionTime_;
         float rRecognitionTime_;
         float rIdentificationTime_;
-
         T_AgentMap agentInsideMap_;
     //@}
 

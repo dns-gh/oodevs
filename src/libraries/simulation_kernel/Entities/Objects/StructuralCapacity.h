@@ -20,6 +20,13 @@ namespace MsgsSimToClient
     class MsgUrbanAttributes;
 }
 
+namespace urban
+{
+    class MaterialCompositionType;
+}
+
+class PHY_ComposanteState;
+class PHY_Protection;
 // =============================================================================
 /** @class  StructuralCapacity
     @brief  Structural capacity
@@ -43,15 +50,17 @@ public:
     template< typename Archive > void serialize( Archive& file, const unsigned int );
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
-    virtual void CanInteractWith( const MIL_Object_ABC& /*object*/, const MIL_Agent_ABC& /*agent*/, bool& /*canInteract*/ ){};
-    virtual void ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ){};
-    virtual void ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ){};
+    virtual void CanInteractWith         ( const MIL_Object_ABC& /*object*/, const MIL_Agent_ABC& /*agent*/, bool& /*canInteract*/ ){};
+    virtual void ProcessAgentEntering    ( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ );
+    virtual void ProcessAgentExiting     ( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ );
     virtual void ProcessAgentMovingInside( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ){};
     virtual void ProcessAgentInside( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ){};
     void ApplyIndirectFire( const MIL_Object_ABC& object, const MT_Ellipse& attritionSurface, const PHY_DotationCategory& dotation );
     void ApplyDirectFire( const MIL_Object_ABC& object, const PHY_DotationCategory& dotation );
     void SendState( MsgsSimToClient::MsgUrbanAttributes& message ) const;
     float GetStructuralState() const;
+    const PHY_ComposanteState& ComputeComposanteState( const MIL_Object_ABC& object, const PHY_Protection& targetProtection );
+
     //@}
 
     //! @name Operations on population
@@ -66,10 +75,18 @@ private:
     StructuralCapacity& operator=( const StructuralCapacity& ); //!< Assignment operator
     //@}
 
+    //! @name types
+    //@{
+    typedef std::vector< MIL_Agent_ABC* > T_Agents;
+    typedef T_Agents::iterator          IT_Agents;
+    //@}
+
 private:
     //! @name Member data
     //@{
     float structuralState_;
+    T_Agents agents_;
+    urban::MaterialCompositionType* materialType_;
     //@}
 };
 

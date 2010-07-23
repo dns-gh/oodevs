@@ -49,7 +49,7 @@ DEC_BlackBoard_CanContainKnowledgeUrban::DEC_BlackBoard_CanContainKnowledgeUrban
     : army_( army )
 {
     UrbanBlockKnowledgeCreator visitor( urbanMapFromConcrete_, army );
-    UrbanModel::GetSingleton().GetModel().Accept( visitor );
+    UrbanModel::GetSingleton().Accept( visitor );
 }
 
 // -----------------------------------------------------------------------------

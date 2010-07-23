@@ -72,7 +72,7 @@ void BypassAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 // Name: BypassAttribute::Register
 // Created: JSR 2010-03-15
 // -----------------------------------------------------------------------------
-void BypassAttribute::Register( Object& object ) const
+void BypassAttribute::Register( MIL_Object_ABC& object ) const
 {
     object.SetAttribute< BypassAttribute, BypassAttribute >( *this );
 }

@@ -26,7 +26,7 @@ public:
     //@{
     static void SetVisionModeDirection              ( MIL_Agent_ABC& callerAgent, boost::shared_ptr< MT_Vector2D > );
     static void SetVisionModePoint                  ( MIL_Agent_ABC& callerAgent, const MT_Vector2D* pPoint );
-    static void SetVisionModePointPtr                ( MIL_Agent_ABC& callerAgent, boost::shared_ptr< MT_Vector2D > point );
+    static void SetVisionModePointPtr               ( MIL_Agent_ABC& callerAgent, boost::shared_ptr< MT_Vector2D > point );
     static void SetVisionModeNormal                 ( MIL_Agent_ABC& callerAgent );
     static void SetStealthFactor                    ( MIL_Agent_ABC& callerAgent, float factor );
     static bool IsPointVisible                      ( const MIL_Agent_ABC& callerAgent, MT_Vector2D* pPt );
@@ -38,7 +38,7 @@ public:
     static int  EnableObjectRecognitionLocalisation ( DEC_Decision_ABC& callerAgent, const TER_Localisation* pLocalisation, const MT_Vector2D* pCenter, MT_Float rGrowthSpeed );
     static void DisableObjectRecognitionLocalisation( MIL_Agent_ABC& callerAgent, int id );
     static int  EnableRecognitionLocalisation       ( MIL_Agent_ABC& callerAgent, const TER_Localisation* pLocalisation );
-    static int  EnableRecognitionLocalisation( MIL_Agent_ABC& callerAgent, const TER_Localisation* pLocalisation, float rGrowthSpeed );
+    static int  EnableRecognitionLocalisation       ( MIL_Agent_ABC& callerAgent, const TER_Localisation* pLocalisation, float rGrowthSpeed );
     static int  EnableRecognitionUrbanBlock         ( MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock );
     static void DisableRecognitionLocalisation      ( MIL_Agent_ABC& callerAgent, int id );
     static void DisableRecognitionUrbanBlock        ( MIL_Agent_ABC& callerAgent, int id );

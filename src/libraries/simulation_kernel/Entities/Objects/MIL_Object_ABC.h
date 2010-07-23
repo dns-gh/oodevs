@@ -124,6 +124,7 @@ public:
     //! @name
     //@{
     template< typename T> void ProcessAgentsInside( T functor ) const;
+    template< typename T, typename I > void SetAttribute( const T& attribute );
     //@}
 
     //! @name Instanciate / Build / Copy object
@@ -172,7 +173,6 @@ public:
     const MIL_ObjectType_ABC& GetType() const;
     const MIL_Army_ABC* GetArmy() const;
           MIL_Army_ABC* GetArmy();
-    virtual unsigned int  GetMaterial() const = 0;
     //@}
 
     //! @name Extensions

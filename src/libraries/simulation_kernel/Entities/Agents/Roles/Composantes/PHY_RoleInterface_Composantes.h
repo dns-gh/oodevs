@@ -20,6 +20,7 @@ class AttritionCapacity;
 class HLA_UpdateFunctor;
 class MIL_Agent_ABC;
 class MIL_Injury_ABC;
+class MIL_Object_ABC;
 class MIL_PopulationAttitude;
 class MIL_PopulationType;
 class PHY_Composante_ABC;
@@ -32,10 +33,6 @@ class Human_ABC;
 class PHY_MaintenanceComposanteState;
 class PHY_SensorTypeAgent;
 class PHY_Volume;
-
-namespace firing
-{
-}
 
 // =============================================================================
 // @class  PHY_RoleInterface_Composantes
@@ -140,7 +137,8 @@ public:
     virtual void ApplyIndirectFire          ( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result, MT_Float ratio ) = 0;
     virtual void ApplyDirectFireOnMajorComposantes( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& fireResult ) = 0;
     virtual void ApplyExplosion             ( const AttritionCapacity& capacity, PHY_FireResults_ABC& result ) = 0;
-    virtual double GetDangerosity           ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget ) const = 0;
+    virtual void ApplyUrbanObjectCrumbling  ( const MIL_Object_ABC& object ) = 0;
+    virtual double GetDangerosity           ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget ) const = 0;   
     virtual double GetOnlyLoadableMaxRangeToFireOn  ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
     virtual double GetMaxRangeToFireOn              ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
     virtual double GetMinRangeToFireOn              ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;

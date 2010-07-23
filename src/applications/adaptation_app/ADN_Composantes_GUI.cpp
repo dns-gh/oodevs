@@ -104,7 +104,7 @@ void ADN_Composantes_GUI::Build()
     builder.AddField<ADN_EditLine_String>( pParamHolder, tr( "Comments" ), vInfosConnectors[eComments] );
 
     // Armors
-    QComboBox* pCombo = builder.AddField< ADN_ComboBox_Vector<ADN_Categories_Data::ArmorInfos> >( pParamHolder, tr( "Armor-Plating" ), vInfosConnectors[eArmor]  );
+    QComboBox* pCombo = builder.AddField< ADN_ComboBox_Vector<helpers::ArmorInfos> >( pParamHolder, tr( "Armor-Plating" ), vInfosConnectors[eArmor]  );
     connect( pCombo, SIGNAL( activated( const QString& ) ), this, SLOT( OnProtectionTypeChanged() ) );
 
     // Size

@@ -341,10 +341,10 @@ void ADN_Sensors_Data::ModificatorEnvironmentInfos::WriteArchive( xml::xostream&
 // Name: ModificatorEnvironmentInfos::ModificatorUrbanBlockInfos
 // Created: SLG 2010-03-02
 //-----------------------------------------------------------------------------
-ADN_Sensors_Data::ModificatorUrbanBlockInfos::ModificatorUrbanBlockInfos( ADN_Urban_Data::UrbanInfos* ptr )
+ADN_Sensors_Data::ModificatorUrbanBlockInfos::ModificatorUrbanBlockInfos( ADN_Urban_Data::UrbanMaterialInfos* ptr )
 : ADN_Ref_ABC()
 , ADN_DataTreeNode_ABC()
-, ptrMaterial_(ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(),(ADN_Urban_Data::UrbanInfos*)ptr)
+, ptrMaterial_(ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(),(ADN_Urban_Data::UrbanMaterialInfos*)ptr)
 , rCoeff_(0.0)
 {
     BindExistenceTo(&ptrMaterial_);
@@ -360,7 +360,7 @@ ADN_Sensors_Data::ModificatorUrbanBlockInfos::ModificatorUrbanBlockInfos( ADN_Ur
 std::string ADN_Sensors_Data::ModificatorUrbanBlockInfos::GetNodeName()
 {
     std::string strResult( "au type de materiaux " );
-    return strResult + ptrMaterial_.GetData()->GetData();
+    return ( QString( strResult.c_str() ) + QString( ptrMaterial_.GetData()->strName_.GetData().c_str() ) ).ascii();
 }
 
 // -----------------------------------------------------------------------------
@@ -369,7 +369,7 @@ std::string ADN_Sensors_Data::ModificatorUrbanBlockInfos::GetNodeName()
 // -----------------------------------------------------------------------------
 std::string ADN_Sensors_Data::ModificatorUrbanBlockInfos::GetItemName()
 {
-    return ptrMaterial_.GetData()->GetData();
+    return ptrMaterial_.GetData()->strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -389,7 +389,7 @@ void ADN_Sensors_Data::ModificatorUrbanBlockInfos::WriteArchive( xml::xostream& 
 {
     output << xml::start( "distance-modifier" )
         << xml::attribute( "value", rCoeff_ )
-        << xml::attribute( "type", ptrMaterial_.GetData()->GetData() )
+        << xml::attribute( "type", ptrMaterial_.GetData()->strName_ )
         << xml::end;
 }
 

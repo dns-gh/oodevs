@@ -80,7 +80,7 @@ void InteractionHeightAttribute::Instanciate( DEC_Knowledge_Object& object ) con
 // Name: InteractionHeightAttribute::Register
 // Created: JSR 2010-03-15
 // -----------------------------------------------------------------------------
-void InteractionHeightAttribute::Register( Object& object ) const
+void InteractionHeightAttribute::Register( MIL_Object_ABC& object ) const
 {
     object.SetAttribute< InteractionHeightAttribute, InteractionHeightAttribute >( *this );
 }

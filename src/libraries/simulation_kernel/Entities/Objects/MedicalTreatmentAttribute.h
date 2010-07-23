@@ -64,7 +64,7 @@ public:
     //! @name
     //@{
     void Instanciate( DEC_Knowledge_Object& object ) const;
-    void Register( Object& object ) const;
+    void Register( MIL_Object_ABC& object ) const;
     void SendFullState( Common::MsgObjectAttributes& asn ) const;
     void SendUpdate( Common::MsgObjectAttributes& asn ) const;
     void WriteODB( xml::xostream& xos ) const;

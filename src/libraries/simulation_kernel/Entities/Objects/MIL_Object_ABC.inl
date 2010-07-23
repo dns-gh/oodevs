@@ -121,3 +121,14 @@ void MIL_Object_ABC::ProcessAgentsInside( Functor functor ) const
 {
     interaction_.ProcessInteraction( functor );
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: template< typename T > void Object::SetAttribute
+// Created: JCR 2008-05-30
+// -----------------------------------------------------------------------------
+template< typename T, typename I >
+void MIL_Object_ABC::SetAttribute( const T& attribute )
+{
+    GetAttribute< T, I >() = attribute;
+}

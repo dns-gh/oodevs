@@ -1,0 +1,127 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+//
+// $Created: APE 2004-12-29 $
+// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Urban_AttritionTable.cpp $
+// $Author: Ape $
+// $Modtime: 20/04/05 17:04 $
+// $Revision: 7 $
+// $Workfile: ADN_Urban_AttritionTable.cpp $
+//
+// *****************************************************************************
+
+#include "adaptation_app_pch.h"
+#include "ADN_Urban_AttritionTable.h"
+
+#include "ADN_Urban_Data.h"
+#include "ADN_Urban_GUI.h"
+#include "ADN_Connector_Table_ABC.h"
+#include "ADN_TableItem_Edit.h"
+
+//-----------------------------------------------------------------------------
+// Internal Table connector to be connected with
+//-----------------------------------------------------------------------------
+class ADN_Urban_AttritionTable_Connector
+: public ADN_Connector_Table_ABC
+{
+    MT_COPYNOTALLOWED( ADN_Urban_AttritionTable_Connector )
+
+public:
+    ADN_Urban_AttritionTable_Connector( ADN_Urban_AttritionTable& tab ) 
+        : ADN_Connector_Table_ABC( tab, false )
+    {}
+
+    void  AddSubItems( int i, void* pObj )
+    {
+        assert( pObj != 0 );
+        ADN_Urban_Data::UrbanMaterialInfos::AttritionData* pAttrition = (ADN_Urban_Data::UrbanMaterialInfos::AttritionData*)pObj;
+
+        tab_.verticalHeader()->setLabel( i, pAttrition->sProtection_.GetData().c_str() );
+
+        // add a new row & set new values
+        ADN_TableItem_Double* pItem0 = new ADN_TableItem_Double( &tab_, pObj );
+        pItem0->UseColor( true );
+        pItem0->SetRangeForColor( 0.0, 100.0 );
+        tab_.setItem( i, 0, pItem0 );
+        ADN_PercentageValidator* pValidator0 = new ADN_PercentageValidator( pItem0 );
+        pValidator0->AddLinkedValue( pAttrition->rRepairableWithEvac_ );
+        pValidator0->AddLinkedValue( pAttrition->rRepairableNoEvac_ );
+        pItem0->SetValidator( pValidator0 );
+        pItem0->GetConnector().Connect( & pAttrition->rDestruction_ );
+
+        ADN_TableItem_Double* pItem1 = new ADN_TableItem_Double( &tab_, pObj );
+        pItem1->UseColor( true );
+        pItem1->SetRangeForColor( 0.0, 100.0 );
+        tab_.setItem( i, 1, pItem1 );
+        ADN_PercentageValidator* pValidator1 = new ADN_PercentageValidator( pItem0 );
+        pValidator1->AddLinkedValue( pAttrition->rDestruction_ );
+        pValidator1->AddLinkedValue( pAttrition->rRepairableNoEvac_ );
+        pItem1->SetValidator( pValidator1 );
+        pItem1->GetConnector().Connect( & pAttrition->rRepairableWithEvac_ );
+
+        ADN_TableItem_Double* pItem2 = new ADN_TableItem_Double( &tab_, pObj );
+        pItem2->UseColor( true );
+        pItem2->SetRangeForColor( 0.0, 100.0 );
+        tab_.setItem( i, 2, pItem2 );
+        ADN_PercentageValidator* pValidator2 = new ADN_PercentageValidator( pItem0 );
+        pValidator2->AddLinkedValue( pAttrition->rDestruction_ );
+        pValidator2->AddLinkedValue( pAttrition->rRepairableWithEvac_ );
+        pItem2->SetValidator( pValidator2 );
+        pItem2->GetConnector().Connect( & pAttrition->rRepairableNoEvac_ );
+    }
+};
+
+
+
+//-----------------------------------------------------------------------------
+// Name: ADN_Urban_AttritionTable constructor
+// Created: JDY 03-07-03
+//-----------------------------------------------------------------------------
+ADN_Urban_AttritionTable::ADN_Urban_AttritionTable( QWidget* pParent )
+: ADN_Table2( pParent, "ADN_Urban_AttritionTable" )
+{
+    // Selection and style.
+    //$$$$ Find a better policy
+    setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
+    setMinimumHeight( 160 );
+    setSelectionMode( QTable::NoSelection );
+    setShowGrid( false );
+
+    // Set up the columns.
+    setNumCols(3);
+    horizontalHeader()->setLabel( 0, tr( "% destroyed" ) );
+    horizontalHeader()->setLabel( 1, tr( "% maintenance support needed" ) );
+    horizontalHeader()->setLabel( 2, tr( "% on site fixable" ) );
+    setColumnStretchable( 0, true );
+    setColumnStretchable( 1, true );
+    setColumnStretchable( 2, true );
+
+    // Connector creation.
+    pConnector_ = new ADN_Urban_AttritionTable_Connector( *this );
+}
+
+
+//-----------------------------------------------------------------------------
+// Name: ADN_Urban_AttritionTable destructor
+// Created: JDY 03-07-03
+//-----------------------------------------------------------------------------
+ADN_Urban_AttritionTable::~ADN_Urban_AttritionTable()
+{
+    delete pConnector_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_AttritionTable::doValueChanged
+// Created: JSR 2010-04-30
+// -----------------------------------------------------------------------------
+void ADN_Urban_AttritionTable::doValueChanged( int row, int col )
+{
+    ADN_Table2::doValueChanged( row, col );
+    //ADN_Workspace::GetWorkspace().GetUrban().GetGui().UpdateGraph();
+}

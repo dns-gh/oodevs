@@ -177,7 +177,7 @@ void ObstacleAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 // Name: ObstacleAttribute::Register
 // Created: JSR 2010-03-15
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::Register( Object& object ) const
+void ObstacleAttribute::Register( MIL_Object_ABC& object ) const
 {
     object.SetAttribute< ObstacleAttribute, ObstacleAttribute >( *this );
 }

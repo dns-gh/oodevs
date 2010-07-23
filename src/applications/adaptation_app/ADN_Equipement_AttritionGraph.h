@@ -13,6 +13,7 @@
 #include "ADN_Gfx_ABC.h"
 #include "ADN_Equipement_Data.h"
 #include "ADN_Categories_Data.h"
+#include "ADN_AttritionInfos.h"
 #include <qwidget.h>
 
 // =============================================================================
@@ -69,8 +70,8 @@ public:
 
     //! @name Operations
     //@{
-    void AddAttrition( ADN_Equipement_Data::AttritionInfos& info );
-    void RemoveAttrition( ADN_Equipement_Data::AttritionInfos& info );
+    void AddAttrition( helpers::AttritionInfos& info );
+    void RemoveAttrition( helpers::AttritionInfos& info );
     void ClearAttritions();
     void Update();
     QString GetTextTooltip( const QPoint& point, QRect& rc ) const;
@@ -90,7 +91,7 @@ private:
     typedef T_Columns::const_iterator CIT_Columns;
     T_Columns columns_;
 
-    typedef std::vector< ADN_Equipement_Data::AttritionInfos* > T_Attritions;
+    typedef std::vector< helpers::AttritionInfos* > T_Attritions;
     typedef T_Attritions::iterator                             IT_Attritions;
     T_Attritions attritions_;
 

@@ -442,15 +442,3 @@ void UrbanObjectWrapper::Register( ObjectCapacity_ABC* capacity )
 {
     capacities_.push_back( capacity );
 }
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::GetMaterial
-// Created: SLG 2010-06-24
-// -----------------------------------------------------------------------------
-unsigned int UrbanObjectWrapper::GetMaterial() const
-{
-    const urban::Architecture* architecture = object_->RetrievePhysicalFeature< urban::Architecture >();
-    if( architecture )
-        return UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId();
-    return std::numeric_limits< unsigned int >::max();
-}

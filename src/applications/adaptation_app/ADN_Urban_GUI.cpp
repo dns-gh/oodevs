@@ -12,13 +12,17 @@
 #include "moc_ADN_Urban_GUI.cpp"
 
 #include "ADN_App.h"
+#include "ADN_AttritionInfos.h"
 #include "ADN_Workspace.h"
 #include "ADN_CommonGfx.h"
 #include "ADN_Urban_Data.h"
 #include "ADN_ListView_Urban_Type.h"
+#include "ADN_ListView_UrbanMaterial_Type.h"
+#include "ADN_Urban_AttritionTable.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_Tr.h"
 #include "ADN_TimeField.h"
+#include "ADN_Equipement_Data.h"
 
 #include <qframe.h>
 #include <qlabel.h>
@@ -81,8 +85,8 @@ void ADN_Urban_GUI::Build()
     QHBox* pGroupMaterial = new QHBox(pGroupMaterials);
 
     // materials list
-    T_ConnectorVector    vMaterialInfosConnectors(eNbrUrbanGuiElements,(ADN_Connector_ABC*)0 );
-    pListMaterial_= new ADN_ListView_Urban_Type( pGroupMaterial, "Material" );
+    T_ConnectorVector    vMaterialInfosConnectors(eNbrUrbanMaterialGuiElements,(ADN_Connector_ABC*)0 );
+    pListMaterial_= new ADN_ListView_UrbanMaterial_Type( pGroupMaterial, "Material" );
     static_cast<ADN_Connector_Vector_ABC*>( &pListMaterial_->GetConnector() )->Connect( &data_.GetMaterialsInfos() );
 
     // material
@@ -90,7 +94,10 @@ void ADN_Urban_GUI::Build()
     pGroupMaterials->setInsideMargin(20);
     pGroupMaterials->setInsideSpacing(20);
     pEdit = new ADN_EditLine_String(pGroupMaterials);
-    vMaterialInfosConnectors[eUrbanName]=&pEdit->GetConnector();
+    vMaterialInfosConnectors[eUrbanMaterialName]=&pEdit->GetConnector();
+
+    pAttritionTable_ = new ADN_Urban_AttritionTable( pGroupMaterials );
+    vMaterialInfosConnectors[eUrbanMaterialAttrition] = &pAttritionTable_->GetConnector();
 
     ///////////////////
     // Facades

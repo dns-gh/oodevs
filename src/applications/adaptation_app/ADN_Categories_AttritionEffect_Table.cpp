@@ -16,7 +16,7 @@
 #include "ADN_TableItem_Edit.h"
 #include "ADN_Tr.h"
 
-typedef ADN_Categories_Data::AttritionEffectOnHuman AttritionEffectOnHuman;
+typedef helpers::AttritionEffectOnHuman AttritionEffectOnHuman;
 
 //-----------------------------------------------------------------------------
 // Internal table connector

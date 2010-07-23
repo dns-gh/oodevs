@@ -618,32 +618,6 @@ Arrêt moteur allumé</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Categories_Data::ArmorInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Categories - Invalid armor type &apos;%1&apos;</source>
-        <translation>Catégories - Type de blindage invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated armor type name</source>
-        <translation>Catégories - Deux types de blindage ont le même nom</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Categories_Data::AttritionEffectOnHuman</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Categories - Invalid equipment state &apos;%1&apos;</source>
-        <translation>Catégories - Etat de composante invalide &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Categories_GUI</name>
     <message>
         <source>Name</source>
@@ -4958,15 +4932,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation>Donnée invalide</translation>
     </message>
     <message>
-        <source>Material - Duplicated material type name &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Material - Duplicated volume type names</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Material - Invalid volume type name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

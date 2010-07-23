@@ -23,8 +23,9 @@
 #include "ADN_Equipement_GUI.h"
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_TableItem_Edit.h"
+#include "ADN_AttritionInfos.h"
 
-typedef ADN_Equipement_Data::AttritionInfos AttritionInfos;
+typedef helpers::AttritionInfos AttritionInfos;
 
 //-----------------------------------------------------------------------------
 // Internal Table connector to be connected with

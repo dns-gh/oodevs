@@ -65,7 +65,6 @@ public:
     //@{
     virtual void Register( ObjectCapacity_ABC* capacity );
     virtual void Register( MIL_InteractiveContainer_ABC* capacity );
-    template< typename T, typename I > void SetAttribute( const T& attribute );
     //@}
 
     //! @name Construction
@@ -193,15 +192,5 @@ private:
 };
 
 BOOST_CLASS_EXPORT_KEY( Object )
-
-// -----------------------------------------------------------------------------
-// Name: template< typename T > void Object::SetAttribute
-// Created: JCR 2008-05-30
-// -----------------------------------------------------------------------------
-template< typename T, typename I >
-void Object::SetAttribute( const T& attribute )
-{
-    GetAttribute< T, I >() = attribute;
-}
 
 #endif

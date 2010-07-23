@@ -16,7 +16,10 @@
 #include "ADN_Enums.h"
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
+#include "ADN_Type_VectorFixed_ABC.h"
 #include "ADN_Tools.h"
+#include "ADN_Categories_Data.h"
+#include "ADN_AttritionInfos.h"
 
 class xml::xistream;
 
@@ -27,59 +30,151 @@ class ADN_Urban_Data : public ADN_Data_ABC
 {
     MT_COPYNOTALLOWED(ADN_Urban_Data)
 
+        
+//*****************************************************************************
 public:
+    class UrbanMaterialInfos : public ADN_Ref_ABC
+                             , public ADN_DataTreeNode_ABC
+    {
+        MT_COPYNOTALLOWED( UrbanMaterialInfos )
 
+    public:
+        //! @name Types
+        //@{
+        struct AttritionData : public ADN_Ref_ABC, public ADN_DataTreeNode_ABC
+        {
+            AttritionData( xml::xistream& xis )
+                : sProtection_        ( xis.attribute< std::string >( "protection" ) )
+                , rDestruction_       ( xis.attribute< double >( "destruction" ) * 100 )
+                , rRepairableWithEvac_( xis.attribute< double >( "repairable-with-evacuation" )  * 100 )
+                , rRepairableNoEvac_  ( xis.attribute< double >( "repairable-without-evacuation" ) * 100 )
+            {
+                // NOTHING
+            }
+            virtual std::string GetNodeName()
+            {
+                return std::string();
+            }
+            std::string GetItemName()
+            {
+                return sProtection_.GetData();
+            }
+            bool operator==( const std::string& str )
+            {
+                return sProtection_.GetData() == str;
+            }
+            void WriteAttrition( xml::xostream& output );
+            ADN_Type_String sProtection_;
+            ADN_Type_Double rDestruction_;
+            ADN_Type_Double rRepairableWithEvac_;
+            ADN_Type_Double rRepairableNoEvac_;
+        };
+
+        typedef ADN_Type_Vector_ABC< AttritionData >      T_AttritionData_Vector;
+        typedef T_AttritionData_Vector::iterator        IT_AttritionData_Vector;
+        typedef T_AttritionData_Vector::const_iterator CIT_AttritionData_Vector;
+        //@}
+
+    public:
+                  UrbanMaterialInfos( xml::xistream& input );
+         virtual ~UrbanMaterialInfos();
+
+        virtual std::string GetNodeName();
+        virtual std::string GetItemName();
+        bool operator==( const std::string& str );
+        void WriteMaterial( xml::xostream& output );
+
+        AttritionData* FindAttritions( const std::string& strName );
+    private:
+    //! @name Helpers 
+    //@{
+    void ReadAttrition( xml::xistream& input );
+    //@}
+
+    public:
+    //! @name Member Data
+    //@{
+        ADN_Type_String strName_;
+        T_AttritionData_Vector vAttritionInfos_;
+    //@}
+    };
+
+    typedef ADN_Type_Vector_ABC< UrbanMaterialInfos >     T_UrbanMaterialInfos_Vector;
+    typedef T_UrbanMaterialInfos_Vector::iterator        IT_UrbanMaterialInfos_Vector;
+    typedef T_UrbanMaterialInfos_Vector::const_iterator CIT_UrbanMaterialInfos_Vector;
+
+
+//*****************************************************************************
+
+public:
+    
     typedef ADN_Type_String UrbanInfos;
-    typedef ADN_Type_Vector_ABC<UrbanInfos>         T_UrbanInfos_Vector;
-    typedef T_UrbanInfos_Vector::iterator           IT_UrbanInfos_Vector;
 
+    typedef ADN_Type_Vector_ABC< UrbanInfos > T_UrbanInfos_Vector;
+    typedef T_UrbanInfos_Vector::iterator    IT_UrbanInfos_Vector;
+   
 public:
-
              ADN_Urban_Data();
     virtual ~ADN_Urban_Data();
 
-    void            FilesNeeded(T_StringList& l) const;
-    void            Reset();
-    void            Load();
-    void            Save();
+    void FilesNeeded(T_StringList& l) const;
+    void Reset();
+    void Load();
+    void Save();
 
-    T_UrbanInfos_Vector&           GetMaterialsInfos();
-    UrbanInfos*                    FindMaterial( const std::string& strName );
-    T_UrbanInfos_Vector&           GetFacadesInfos();
-    UrbanInfos*                    FindFacade( const std::string& strName );
-    T_UrbanInfos_Vector&           GetRoofShapesInfos();
-    UrbanInfos*                    FindRoofShape( const std::string& strName );
-
-
-private:
-    void ReadUrban( xml::xistream& input );
-    void WriteUrban( xml::xostream& output );
-    void ReadMaterial( xml::xistream& input );
-    void ReadMaterials( xml::xistream& input );
-    void WriteMaterials( xml::xostream& output );
-    void ReadFacade( xml::xistream& input );
-    void ReadFacades( xml::xistream& input );
-    void WriteFacades( xml::xostream& output );
-    void ReadRoofShape( xml::xistream& input );
-    void ReadRoofShapes( xml::xistream& input );
-    void WriteRoofShapes( xml::xostream& output );
+    T_UrbanMaterialInfos_Vector&  GetMaterialsInfos();  
+    UrbanMaterialInfos*           FindMaterial( const std::string& strName );
+    T_UrbanInfos_Vector&          GetFacadesInfos();  
+    UrbanInfos*                   FindFacade( const std::string& strName );
+    T_UrbanInfos_Vector&          GetRoofShapesInfos();  
+    UrbanInfos*                   FindRoofShape( const std::string& strName );
 
 private:
-    T_UrbanInfos_Vector  vMaterials_;
-    T_UrbanInfos_Vector  vRoofShapes_;
-    T_UrbanInfos_Vector  vFacades_;
+    //! @name Helpers
+    //@{
+    void ReadUrban      ( xml::xistream& input  );
+    void WriteUrban     ( xml::xostream& output ) const;
+
+    void ReadMaterial   ( xml::xistream& input  );
+    void ReadMaterials  ( xml::xistream& input  );
+    void WriteMaterials ( xml::xostream& output ) const;
+
+    void ReadFacade     ( xml::xistream& input  );
+    void ReadFacades    ( xml::xistream& input  );
+    void WriteFacades   ( xml::xostream& output ) const;
+
+    void ReadRoofShape  ( xml::xistream& input  );
+    void ReadRoofShapes ( xml::xistream& input );
+    void WriteRoofShapes( xml::xostream& output )  const;
+    //@}
+
+private:
+    //! @name Member Data
+    //@{
+    T_UrbanMaterialInfos_Vector      vMaterials_;
+    T_UrbanInfos_Vector              vRoofShapes_;
+    T_UrbanInfos_Vector              vFacades_;
+    //@}
 };
-
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Urban_Data::GetMaterialsInfos
 // Created: SLG 2010-03-08
 //-----------------------------------------------------------------------------
 inline
-ADN_Urban_Data::T_UrbanInfos_Vector& ADN_Urban_Data::GetMaterialsInfos()
+ADN_Urban_Data::T_UrbanMaterialInfos_Vector& ADN_Urban_Data::GetMaterialsInfos()
 {
     return vMaterials_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::UrbanMaterialInfos::operator==
+// Created: SLG 2010-07-01
+// -----------------------------------------------------------------------------
+inline
+bool ADN_Urban_Data::UrbanMaterialInfos::operator==( const std::string& str )
+{
+    return ADN_Tools::CaselessCompare( strName_.GetData(), str );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,10 +182,10 @@ ADN_Urban_Data::T_UrbanInfos_Vector& ADN_Urban_Data::GetMaterialsInfos()
 // Created: SLG 2010-03-08
 // -----------------------------------------------------------------------------
 inline
-ADN_Urban_Data::UrbanInfos* ADN_Urban_Data::FindMaterial( const std::string& strName )
+ADN_Urban_Data::UrbanMaterialInfos* ADN_Urban_Data::FindMaterial( const std::string& strName )
 {
-    for( IT_UrbanInfos_Vector it = vMaterials_.begin(); it != vMaterials_.end(); ++it )
-        if( ADN_Tools::CaselessCompare( (*it)->GetData(), strName ) )
+    for( CIT_UrbanMaterialInfos_Vector it = vMaterials_.begin(); it != vMaterials_.end(); ++it )
+        if( **it == strName )
             return *it;
     return 0;
 }

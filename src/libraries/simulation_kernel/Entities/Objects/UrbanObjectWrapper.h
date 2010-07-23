@@ -101,7 +101,6 @@ public:
     virtual unsigned int              GetID() const;
     const urban::TerrainObject_ABC&   GetObject();
     const urban::TerrainObject_ABC&   GetObject() const;
-    virtual unsigned int  GetMaterial() const;
     //@}
 
 protected:

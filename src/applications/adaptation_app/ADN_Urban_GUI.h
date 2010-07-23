@@ -13,8 +13,11 @@
 #include "ADN_GUI_ABC.h"
 #include <qobject.h>
 
+class ADN_Table;
 class ADN_Urban_Data;
 class ADN_ListView_Urban_Type;
+class ADN_ListView_UrbanMaterial_Type;
+class ADN_Urban_AttritionTable;
 
 // =============================================================================
 /** @class  ADN_Categories_GUI
@@ -35,6 +38,13 @@ public:
         eNbrUrbanGuiElements
     };
 
+    enum E_UrbanMaterialGuiElements
+    {
+        eUrbanMaterialName,
+        eUrbanMaterialAttrition,
+        eNbrUrbanMaterialGuiElements
+    };
+
 public:
     explicit ADN_Urban_GUI( ADN_Urban_Data& data );
     virtual ~ADN_Urban_GUI();
@@ -42,11 +52,20 @@ public:
     void Build();
 
 private:
+    //! @name helpers
+    //@{
+    //ADN_Table* CreatePKTable();
+    //@}
+
+private:
     ADN_Urban_Data& data_;
 
-    ADN_ListView_Urban_Type*           pListMaterial_;
+    ADN_ListView_UrbanMaterial_Type*   pListMaterial_;
     ADN_ListView_Urban_Type*           pListFacade_;
     ADN_ListView_Urban_Type*           pListRoofShape_;
+
+    ADN_Urban_AttritionTable*     pAttritionTable_;
+//    ADN_Equipement_AttritionTable*     pAttritionTable_;
 };
 
 

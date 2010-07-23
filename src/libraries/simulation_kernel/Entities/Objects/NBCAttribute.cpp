@@ -154,7 +154,7 @@ void NBCAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 // Name: NBCAttribute::Register
 // Created: JSR 2010-03-15
 // -----------------------------------------------------------------------------
-void NBCAttribute::Register( Object& object ) const
+void NBCAttribute::Register( MIL_Object_ABC& object ) const
 {
     object.SetAttribute< NBCAttribute, NBCAttribute >( *this );
 }

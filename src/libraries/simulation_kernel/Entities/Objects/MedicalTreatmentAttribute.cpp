@@ -190,7 +190,7 @@ void MedicalTreatmentAttribute::Instanciate( DEC_Knowledge_Object& object ) cons
 // Name: MedicalTreatmentAttribute::Register
 // Created: JSR 2010-03-15
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::Register( Object& object ) const
+void MedicalTreatmentAttribute::Register( MIL_Object_ABC& object ) const
 {
     object.SetAttribute< MedicalTreatmentAttribute, MedicalTreatmentAttribute >( *this );
 }

@@ -24,7 +24,7 @@ namespace hla
 }
 
 class HLA_UpdateFunctor;
-class Object;
+class MIL_Object_ABC;
 class DEC_Knowledge_Object;
 struct ASN1T_ObjectAttributes;
 
@@ -60,7 +60,7 @@ public:
     //! @name Knowledge instance
     //@{
     virtual void Instanciate( DEC_Knowledge_Object& /*object*/ ) const { /*NOTHING*/ }
-    virtual void Register( Object& /*object*/ ) const { /*NOTHING*/ }
+    virtual void Register( MIL_Object_ABC& /*object*/ ) const { /*NOTHING*/ }
     //@}
 
     //! @name ASN Network update

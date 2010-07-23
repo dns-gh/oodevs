@@ -87,7 +87,7 @@ void StockAttribute::Instanciate( DEC_Knowledge_Object& /*object*/ ) const
 // Name: StockAttribute::Register
 // Created: JSR 2010-03-15
 // -----------------------------------------------------------------------------
-void StockAttribute::Register( Object& object ) const
+void StockAttribute::Register( MIL_Object_ABC& object ) const
 {
     object.SetAttribute< StockAttribute, StockAttribute >( *this );
 }

@@ -206,7 +206,7 @@ void InputToxicCloudAttribute::Instanciate( DEC_Knowledge_Object& /*object*/ ) c
 // Name: InputToxicCloudAttribute::Register
 // Created: JSR 2010-03-15
 // -----------------------------------------------------------------------------
-void InputToxicCloudAttribute::Register( Object& object ) const
+void InputToxicCloudAttribute::Register( MIL_Object_ABC& object ) const
 {
     object.SetAttribute< InputToxicCloudAttribute, InputToxicCloudAttribute >( *this );
 }

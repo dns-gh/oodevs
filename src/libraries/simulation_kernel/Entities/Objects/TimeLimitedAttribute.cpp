@@ -113,7 +113,7 @@ void TimeLimitedAttribute::serialize( Archive& file, const unsigned int )
 // Name: TimeLimitedAttribute::Register
 // Created: JSR 2010-03-15
 // -----------------------------------------------------------------------------
-void TimeLimitedAttribute::Register( Object& object ) const
+void TimeLimitedAttribute::Register( MIL_Object_ABC& object ) const
 {
     object.SetAttribute< TimeLimitedAttribute, TimeLimitedAttribute >( *this );
 }

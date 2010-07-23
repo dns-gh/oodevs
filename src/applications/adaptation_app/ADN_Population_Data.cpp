@@ -36,7 +36,7 @@
 // Name: ADN_Population_Data::FireEffectProtectionInfos::FireEffectProtectionInfos
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
-ADN_Population_Data::FireEffectProtectionInfos::FireEffectProtectionInfos( ADN_Categories_Data::ArmorInfos* ptr )
+ADN_Population_Data::FireEffectProtectionInfos::FireEffectProtectionInfos( helpers::ArmorInfos* ptr )
 : ADN_Ref_ABC                ()
 , ADN_DataTreeNode_ABC       ()
 , strName_                   ( ptr->strName_.GetData() )

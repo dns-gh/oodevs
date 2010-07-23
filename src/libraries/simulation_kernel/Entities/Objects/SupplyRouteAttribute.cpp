@@ -142,7 +142,7 @@ void SupplyRouteAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 // Name: SupplyRouteAttribute::Register
 // Created: JSR 2010-03-15
 // -----------------------------------------------------------------------------
-void SupplyRouteAttribute::Register( Object& object ) const
+void SupplyRouteAttribute::Register( MIL_Object_ABC& object ) const
 {
     object.SetAttribute< SupplyRouteAttribute, SupplyRouteAttribute >( *this );
 }

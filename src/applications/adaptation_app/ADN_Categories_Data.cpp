@@ -10,7 +10,6 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Categories_Data.h"
-
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_OpenFile_Exception.h"
@@ -23,174 +22,6 @@
 // =============================================================================
 // AttritionEffectOnHuman
 // =============================================================================
-
-
-// -----------------------------------------------------------------------------
-// Name: AttritionEffectOnHuman::AttritionEffectOnHuman
-// Created: SBO 2006-07-28
-// -----------------------------------------------------------------------------
-ADN_Categories_Data::AttritionEffectOnHuman::AttritionEffectOnHuman()
-    :  nInjuredPercentage_( 0 )
-    ,  nDeadPercentage_( 0 )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: AttritionEffectOnHuman::GetItemName
-// Created: SBO 2006-07-28
-// -----------------------------------------------------------------------------
-std::string ADN_Categories_Data::AttritionEffectOnHuman::GetItemName()
-{
-    return "";
-}
-
-// -----------------------------------------------------------------------------
-// Name: AttritionEffectOnHuman::ReadArchive
-// Created: SBO 2006-07-28
-// -----------------------------------------------------------------------------
-void ADN_Categories_Data::AttritionEffectOnHuman::ReadArchive( xml::xistream& input )
-{
-    std::string equipment;
-    input >> xml::attribute( "equipment-state", equipment )
-          >> xml::attribute( "injured-percentage", nInjuredPercentage_ )
-          >> xml::attribute( "dead-percentage", nDeadPercentage_ );
-    nEquipmentState_ = ADN_Tr::ConvertToEquipmentState( equipment );
-    if( nEquipmentState_ == E_EquipmentState( -1 ) )
-        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Categories - Invalid equipment state '%1'" ).arg( equipment.c_str() ).ascii() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AttritionEffectOnHuman::WriteArchive
-// Created: SBO 2006-07-28
-// -----------------------------------------------------------------------------
-void ADN_Categories_Data::AttritionEffectOnHuman::WriteArchive( xml::xostream& output )
-{
-    output << xml::start( "attrition-effect" )
-            << xml::attribute( "equipment-state", ADN_Tr::ConvertFromEquipmentState( nEquipmentState_.GetData() ) )
-            << xml::attribute( "injured-percentage", nInjuredPercentage_ )
-            << xml::attribute( "dead-percentage", nDeadPercentage_ )
-           << xml::end;
-}
-
-// =============================================================================
-// ArmorInfos
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: ArmorInfos::ArmorInfos
-// Created: APE 2004-11-09
-// -----------------------------------------------------------------------------
-ADN_Categories_Data::ArmorInfos::ArmorInfos()
-: strName_      ()
-, neutralizationAverageTime_ ( "0s" )
-, neutralizationVariance_    ( "0s" )
-, rBreakdownEVA_  ( 0 )
-, rBreakdownNEVA_ ( 0 )
-{
-    strName_.SetDataName( "le nom de la catégorie de blindage" );
-    strName_.SetParentNode( *this );
-
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Categories_Data::CreateDefaultAttrition
-// Created: HBD 2010-05-06
-// -----------------------------------------------------------------------------
-void ADN_Categories_Data::ArmorInfos::CreateDefaultAttrition()
-{
-    AttritionEffectOnHuman* pNewEffect = new AttritionEffectOnHuman();
-    pNewEffect->nEquipmentState_ = eEquipmentState_FixableWithEvac ;
-    pNewEffect->strName_ = ADN_Tr::ConvertFromEquipmentState(eEquipmentState_FixableWithEvac );
-    vAttritionEffects_.AddItem( pNewEffect );
-    pNewEffect = new AttritionEffectOnHuman();
-    pNewEffect->nEquipmentState_ = eEquipmentState_FixableInPlace ;
-    pNewEffect->strName_ = ADN_Tr::ConvertFromEquipmentState(eEquipmentState_FixableInPlace );
-    vAttritionEffects_.AddItem( pNewEffect );
-    pNewEffect = new AttritionEffectOnHuman();
-    pNewEffect->nEquipmentState_ =  eEquipmentState_Destroyed ;
-    pNewEffect->strName_ = ADN_Tr::ConvertFromEquipmentState(eEquipmentState_Destroyed );
-    vAttritionEffects_.AddItem( pNewEffect );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ArmorInfos::ReadArchive
-// Created: APE 2004-11-16
-// -----------------------------------------------------------------------------
-void ADN_Categories_Data::ArmorInfos::ReadArchive( xml::xistream& input )
-{
-    std::string type;
-    input >> xml::attribute( "name", strName_ )
-          >> xml::attribute( "type", type );
-    nType_ = ADN_Tr::ConvertToProtectionType( type );
-    if( nType_ == E_ProtectionType( -1 ) )
-        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Categories - Invalid armor type '%1'" ).arg( type.c_str() ).ascii() );
-
-    input >> xml::start( "neutralization" )
-            >> xml::attribute( "average-time", neutralizationAverageTime_ )
-            >> xml::attribute( "variance", neutralizationVariance_ )
-          >> xml::end;
-
-    if( nType_ != eProtectionType_Human )
-    {
-        input >> xml::start( "random-breakdown-probability" )
-                >> xml::attribute( "eva", rBreakdownEVA_ )
-                >> xml::attribute( "neva", rBreakdownNEVA_ )
-              >> xml::end
-              >> xml::start( "attrition-effects" )
-                >> xml::list( "attrition-effect", *this, &ADN_Categories_Data::ArmorInfos::ReadAttrition )
-              >> xml::end;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Categories_Data::ArmorInfos::ReadAttrition
-// Created: AGE 2007-08-21
-// -----------------------------------------------------------------------------
-void ADN_Categories_Data::ArmorInfos::ReadAttrition( xml::xistream& input )
-{
-    AttritionEffectOnHuman* pNewEffect = new AttritionEffectOnHuman();
-    pNewEffect->ReadArchive( input );
-    vAttritionEffects_.AddItem( pNewEffect );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ArmorInfos::WriteArchive
-// Created: APE 2004-11-16
-// -----------------------------------------------------------------------------
-void ADN_Categories_Data::ArmorInfos::WriteArchive( xml::xostream& output )
-{
-    if( strName_.GetData().empty() )
-        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Categories - Duplicated armor type name" ).ascii() );
-
-    if( nType_ == eProtectionType_Human )
-    {
-        rBreakdownEVA_  = 0.;
-        rBreakdownNEVA_ = 0.;
-    }
-
-    output << xml::start( "protection" )
-            << xml::attribute( "name", trim( strName_.GetData() ) )
-            << xml::attribute( "type", ADN_Tr::ConvertFromProtectionType( nType_.GetData() ) );
-
-    output << xml::start( "neutralization" )
-            << xml::attribute( "average-time", neutralizationAverageTime_ )
-            << xml::attribute( "variance", neutralizationVariance_ )
-          << xml::end;
-
-    if( nType_ != eProtectionType_Human )
-    {
-        output << xml::start( "random-breakdown-probability" )
-                << xml::attribute( "eva", rBreakdownEVA_ )
-                << xml::attribute( "neva", rBreakdownNEVA_ )
-               << xml::end
-               << xml::start( "attrition-effects" );
-        for( IT_AttritionEffectOnHuman_Vector it = vAttritionEffects_.begin(); it != vAttritionEffects_.end(); ++it )
-            (*it)->WriteArchive( output );
-        output << xml::end;
-    }
-    output << xml::end;
-}
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Categories_Data constructor
@@ -333,7 +164,7 @@ namespace
 
     struct ArmorExtractor
     {
-        std::string operator()( ADN_Categories_Data::ArmorInfos& armor ) const
+        std::string operator()( helpers::ArmorInfos& armor ) const
         {
             return armor.strName_.GetData();
         }
@@ -373,7 +204,7 @@ void ADN_Categories_Data::ReadSizes( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Categories_Data::ReadProtection( xml::xistream& input )
 {
-    std::auto_ptr<ArmorInfos> spNewArmor( new ArmorInfos() );
+    std::auto_ptr< helpers::ArmorInfos > spNewArmor( new helpers::ArmorInfos() );
     spNewArmor->ReadArchive( input );
     vArmors_.AddItem( spNewArmor.release() );
 }
@@ -454,8 +285,8 @@ void ADN_Categories_Data::WriteArmors( xml::xostream& output )
 
     output << xml::start( "protections" );
     ADN_Tools::AddSchema( output, "Armors" );
-    for( T_ArmorInfos_Vector::const_iterator itArmor = vArmors_.begin(); itArmor != vArmors_.end(); ++itArmor )
-        (*itArmor)->WriteArchive( output );
+    for( helpers::T_ArmorInfos_Vector::const_iterator itArmor = vArmors_.begin(); itArmor != vArmors_.end(); ++itArmor )
+        ( *itArmor )->WriteArchive( output );
     output << xml::end;
 }
 

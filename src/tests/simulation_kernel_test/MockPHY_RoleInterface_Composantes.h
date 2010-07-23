@@ -51,6 +51,7 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Composantes, PHY_RoleInterface_Composante
     MOCK_METHOD( ApplyIndirectFire, 3 );
     MOCK_METHOD( ApplyDirectFireOnMajorComposantes, 2 );
     MOCK_METHOD( ApplyExplosion, 2 );
+    MOCK_METHOD( ApplyUrbanObjectCrumbling, 1 );
     MOCK_METHOD( GetDangerosity, 2 );
     MOCK_METHOD( GetOnlyLoadableMaxRangeToFireOn, 2 );
     MOCK_METHOD( GetMaxRangeToFireOn, 2 );

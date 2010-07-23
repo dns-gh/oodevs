@@ -34,7 +34,7 @@ public:
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     MT_Float GetDefaultSpeed() const;
-    MT_Float ApplySpeedPolicy( MT_Float rAgentSpeedWithinObject, MT_Float rAgentSpeedWithinEnvironment, MT_Float rAgentMaxSpeed ) const;
+    MT_Float ApplySpeedPolicy( MT_Float rAgentSpeedWithinObject, MT_Float rAgentSpeedWithinEnvironment, MT_Float rAgentMaxSpeed, MT_Float structural ) const;
     //@}
 
 private:
@@ -47,6 +47,7 @@ private:
     //@{
     void InitializeSpeed( xml::xistream& xis );
     void InitializeSpeedPolicy( xml::xistream& xis );
+    MT_Float ComputeStructuralFactor( const MT_Float structural ) const;
     //@}
 
     //! @name Types
@@ -55,7 +56,8 @@ private:
     {
         eSpeedPolicy_Slowest,
         eSpeedPolicy_AgentMaxSpeed,
-        eSpeedPolicy_ObjectMaxSpeed
+        eSpeedPolicy_ObjectMaxSpeed,
+        eSpeedPolicy_UrbanObjectMaxSpeed
     };
     //@}
 
@@ -63,7 +65,7 @@ private:
     //! @name Member data
     //@{
     E_SpeedPolicy nSpeedPolicy_;
-    float         rDefaultSpeed_;
+    MT_Float      rDefaultSpeed_;
     float         rSpeedPolicyMaxSpeedAgentFactor_;
     //@}
 };

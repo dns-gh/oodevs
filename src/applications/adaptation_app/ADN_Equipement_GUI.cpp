@@ -186,7 +186,7 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
 
     QWidget* pComboGroup = builder.AddFieldHolder( pAttritionVisualisation );
 
-    pArmorCombo_ = builder.AddField< ADN_ComboBox_Vector< ADN_Categories_Data::ArmorInfos > >( pComboGroup, tr( "Armor-Plating" ), vConnectors[eArmor] );
+    pArmorCombo_ = builder.AddField< ADN_ComboBox_Vector< helpers::ArmorInfos > >( pComboGroup, tr( "Armor-Plating" ), vConnectors[eArmor] );
     connect( pArmorCombo_, SIGNAL( activated( int ) ), this, SLOT( SimulationCombosActivated( int ) ) );
 
     pMaterialCombo_ = builder.AddField< ADN_ComboBox_Vector< ADN_Equipement_Data::UrbanAttritionInfos > >( pComboGroup, tr( "Urban material" ), vConnectors[eMaterial] );
@@ -277,7 +277,7 @@ void ADN_Equipement_GUI::InitializeSimulationCombos()
     if( pArmorCombo_ )
     {
         for( int i = pArmorCombo_->count() - 1; i >= 0; --i )
-            if( ( ( ADN_Categories_Data::ArmorInfos* )pArmorCombo_->GetItem( i )->GetData() )->nType_ == eProtectionType_Human )
+            if( ( ( helpers::ArmorInfos* )pArmorCombo_->GetItem( i )->GetData() )->nType_ == eProtectionType_Human )
                 pArmorCombo_->removeItem( i );
         if( pArmorCombo_->GetItem( 0 ) )
             pArmorCombo_->setCurrentItem( 0 );
@@ -296,9 +296,9 @@ void ADN_Equipement_GUI::InitializeSimulationCombos()
 // Name: ADN_Equipement_GUI::GetSelectedArmor
 // Created: JSR 2010-04-30
 // -----------------------------------------------------------------------------
-ADN_Categories_Data::ArmorInfos* ADN_Equipement_GUI::GetSelectedArmor() const
+helpers::ArmorInfos* ADN_Equipement_GUI::GetSelectedArmor() const
 {
-    return ( ADN_Categories_Data::ArmorInfos* ) pArmorCombo_->GetCurrentData();
+    return ( helpers::ArmorInfos* ) pArmorCombo_->GetCurrentData();
 }
 
 // -----------------------------------------------------------------------------
@@ -349,7 +349,7 @@ void ADN_Equipement_GUI::SimulationCombosActivated( int /*nIndex*/ )
 // -----------------------------------------------------------------------------
 ADN_Table* ADN_Equipement_GUI::CreatePKTable()
 {
-    ADN_Categories_Data::T_ArmorInfos_Vector& armorInfos = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos();
+    helpers::T_ArmorInfos_Vector& armorInfos = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos();
 
     ADN_GuiBuilder builder;
     ADN_Table* pTable = builder.CreateTable( 0 );
@@ -388,7 +388,7 @@ ADN_Table* ADN_Equipement_GUI::CreatePKTable()
         pTable->AddBoldGridRow( nRow );
         builder.AddTableCell<ADN_TableItem_String>( pTable, *it, nRow, 0, armorInfos.size(), 1, ammoCategory.strName_, eNone, QTableItem::Never );
         int nSubRow = 0;
-        for( ADN_Equipement_Data::IT_AttritionInfos_Vector it2 = ammoCategory.attritions_.begin(); it2 != ammoCategory.attritions_.end(); ++it2, ++nSubRow )
+        for( helpers::IT_AttritionInfos_Vector it2 = ammoCategory.attritions_.begin(); it2 != ammoCategory.attritions_.end(); ++it2, ++nSubRow )
         {
             ADN_TableItem_Double* pCell = 0;
             builder.AddTableCell<ADN_TableItem_String>( pTable, *it, nRow + nSubRow, 1, (*it2)->ptrArmor_.GetData()->strName_, eNone, QTableItem::Never );

@@ -57,7 +57,7 @@ void DetectorAttribute::serialize( Archive& /*file*/, const uint )
 // Name: DetectorAttribute::Register
 // Created: JSR 2010-03-15
 // -----------------------------------------------------------------------------
-void DetectorAttribute::Register( Object& object ) const
+void DetectorAttribute::Register( MIL_Object_ABC& object ) const
 {
     object.SetAttribute< DetectorAttribute, DetectorAttribute >( *this );
 }

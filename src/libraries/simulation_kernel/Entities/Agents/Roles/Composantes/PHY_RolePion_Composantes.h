@@ -159,17 +159,18 @@ public:
 
     //! @name Fire / Dangerosity
     //@{
-    virtual bool     IsNeutralized                   () const;
-    virtual void     GetComposantesAbleToBeFired     ( PHY_Composante_ABC::T_ComposanteVector& targets, unsigned int nNbrFirer, bool bFireOnlyOnMajorComposantes = false ) const;
-    virtual void     GetComposantesAbleToBeFired     ( PHY_Composante_ABC::T_ComposanteVector& targets, bool bFireOnlyOnMajorComposantes = false ) const;
-    virtual void     Neutralize                      ();
-    virtual void     ApplyPopulationFire             ( PHY_Composante_ABC& compTarget, const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireResults_ABC& result );
-    virtual void     ApplyDirectFire                 ( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result );
+    virtual bool     IsNeutralized                    () const;
+    virtual void     GetComposantesAbleToBeFired      ( PHY_Composante_ABC::T_ComposanteVector& targets, unsigned int nNbrFirer, bool bFireOnlyOnMajorComposantes = false ) const;
+    virtual void     GetComposantesAbleToBeFired      ( PHY_Composante_ABC::T_ComposanteVector& targets, bool bFireOnlyOnMajorComposantes = false ) const;
+    virtual void     Neutralize                       ();
+    virtual void     ApplyPopulationFire              ( PHY_Composante_ABC& compTarget, const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireResults_ABC& result );
+    virtual void     ApplyDirectFire                  ( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result );
     virtual void     ApplyDirectFireOnMajorComposantes( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& fireResult );
-    virtual void     ApplyIndirectFire               ( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result, MT_Float ratio );
-    virtual void     ApplyExplosion                  ( const AttritionCapacity& capacity, PHY_FireResults_ABC& result );
-    virtual void     ApplyContamination              ( const MIL_ToxicEffectManipulator& contamination );
-    virtual void     ApplyPoisonous                  ( const MIL_ToxicEffectManipulator& contamination );
+    virtual void     ApplyIndirectFire                ( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result, MT_Float ratio );
+    virtual void     ApplyExplosion                   ( const AttritionCapacity& capacity, PHY_FireResults_ABC& result );
+    virtual void     ApplyContamination               ( const MIL_ToxicEffectManipulator& contamination );
+    virtual void     ApplyPoisonous                   ( const MIL_ToxicEffectManipulator& contamination );
+    virtual void     ApplyUrbanObjectCrumbling        ( const MIL_Object_ABC& object );
 
     virtual double   GetDangerosity                 ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget ) const;
     virtual MT_Float GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
