@@ -109,6 +109,9 @@ void DefaultPostureComputer::Update()
         return;
     }
 
+    // Mode furtif
+    results_.bIsStealth_ = !( MIL_Random::rand_oi( 0., 1., MIL_Random::ePerception ) <= params_->rStealthFactor_ );
+
     if( bForceMovement_ )
     {
         if( !bIsLoaded_ )
@@ -123,9 +126,6 @@ void DefaultPostureComputer::Update()
     if( bForceStop_ && ( &params_->posture_ == &PHY_Posture::mouvement_
                       || &params_->posture_ == &PHY_Posture::mouvementDiscret_ ) )
             results_.newPosture_ = &PHY_Posture::arret_;
-
-    // Mode furtif
-    results_.bIsStealth_ = !( MIL_Random::rand_oi( 0., 1., MIL_Random::ePerception ) <= params_->rStealthFactor_ );
 
     if( results_.postureCompletionPercentage_ == 1. )
     {
