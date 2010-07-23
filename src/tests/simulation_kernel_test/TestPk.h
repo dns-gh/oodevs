@@ -24,9 +24,20 @@ public:
 
     TestPK()
     {
-        xml::xistringstream xisUrbanType( "<urban><urban-block-types><material-composition-types><material-composition-type name='Bois'/>"
-            "<material-composition-type name='Beton'/><material-composition-type name='Brique'/><material-composition-type name='Metal'/>"
-            "<material-composition-type name='Torchis'/><material-composition-type name='Prefabrique'/><material-composition-type name='Vegetation'/>"
+        xml::xistringstream xisUrbanType( "<urban><urban-block-types><material-composition-types><material-composition-type name='Bois'>"
+            "<attritions><attrition destruction=\"0\" protection=\"CharLourd\" repairable-with-evacuation=\"0\" repairable-without-evacuation=\"0.05\"/></attritions></material-composition-type>"
+            "<material-composition-type name='Beton'>"
+            "<attritions><attrition destruction=\"0\" protection='CharLourd' repairable-with-evacuation='0' repairable-without-evacuation='0.05'/></attritions></material-composition-type>"
+            "<material-composition-type name='Brique'>"
+            "<attritions><attrition destruction=\"0\" protection='CharLourd' repairable-with-evacuation='0' repairable-without-evacuation='0.05'/></attritions></material-composition-type>"
+            "<material-composition-type name='Metal'>"
+            "<attritions><attrition destruction=\"0\" protection='CharLourd' repairable-with-evacuation='0' repairable-without-evacuation='0.05'/></attritions></material-composition-type>"
+            "<material-composition-type name='Torchis'>"
+            "<attritions><attrition destruction=\"0\" protection=\"CharLourd\" repairable-with-evacuation=\"0\" repairable-without-evacuation=\"0.05\"/></attritions></material-composition-type>"
+            "<material-composition-type name='Prefabrique'>"
+            "<attritions><attrition destruction=\"0\" protection=\"CharLourd\" repairable-with-evacuation=\"0\" repairable-without-evacuation=\"0.05\"/></attritions></material-composition-type>"
+            "<material-composition-type name='Vegetation'>"
+            "<attritions><attrition destruction=\"0\" protection=\"CharLourd\" repairable-with-evacuation=\"0\" repairable-without-evacuation=\"0.05\"/></attritions></material-composition-type>"
             "</material-composition-types><facade-types/><roof-shape-types/></urban-block-types></urban>" );
         UrbanType::Initialize( xisUrbanType );
         xml::xistringstream xisProtection( "<protections><protection name='protection1' type='humain'><neutralization average-time='10s' variance='1s'/></protection></protections>" );
