@@ -2985,11 +2985,9 @@
   <automats>
     <automat dia-type="net.masagroup.sword.military.company.roles.Company" file="BMAutomat.bms" name="net.masagroup.sword.military.company.roles.Company">
       <missions>
-        <mission name="ReconnaitreItineraire"/>
         <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Franchir"/>
         <mission name="SoutenirSurPositionEnMesureDeBM"/>
-        <mission name="ReconnaitreItineraire"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>

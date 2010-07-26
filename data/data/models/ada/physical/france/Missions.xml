@@ -1603,19 +1603,19 @@
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Stationner" dia-type="net.masagroup.sword.france.military.company.tasks.Stationner" id="1013" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Stationner" name="COMMUNES Stationner">
       <parameter dia-name="objectives" name="Point de stationnement" optional="false" type="PointBM"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.OrienterRefugies" dia-type="net.masagroup.sword.france.military.company.tasks.OrienterRefugies" id="1013" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.OrienterRefugies" name="COMMUNES Orienter Refugies">
+    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.OrienterRefugies" dia-type="net.masagroup.sword.france.military.company.tasks.OrienterRefugies" id="1014" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.OrienterRefugies" name="COMMUNES Orienter Refugies">
       <parameter dia-name="people" name="refugies" optional="false" type="AgentKnowledgeBM"/>
       <parameter dia-name="camp" name="camp de refugies" optional="false" type="ObjectKnowledgeBM"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.PrendreEnComptePrisonniers" dia-type="net.masagroup.sword.france.military.company.tasks.PrendreEnComptePrisonniers" id="1014" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.PrendreEnComptePrisonniers" name="COMMUNES Prendre en compte Prisonniers">
+    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.PrendreEnComptePrisonniers" dia-type="net.masagroup.sword.france.military.company.tasks.PrendreEnComptePrisonniers" id="1015" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.PrendreEnComptePrisonniers" name="COMMUNES Prendre en compte Prisonniers">
       <parameter dia-name="people" name="prisonniers" optional="false" type="AgentKnowledgeBM"/>
       <parameter dia-name="camp" name="camp de prisonniers" optional="false" type="ObjectKnowledgeBM"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeFaireDecontaminer" dia-type="net.masagroup.sword.france.military.company.tasks.SeFaireDecontaminer" id="1015" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeFaireDecontaminer" name="COMMUNES Se Faire Decontaminer">
+    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeFaireDecontaminer" dia-type="net.masagroup.sword.france.military.company.tasks.SeFaireDecontaminer" id="1016" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeFaireDecontaminer" name="COMMUNES Se Faire Decontaminer">
       <parameter dia-name="objective" name="site de decontamination" optional="false" type="ObjectKnowledgeBM"/>
       <parameter dia-name="destination" name="point de destination" optional="false" type="PointBM"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Interdire" dia-type="net.masagroup.sword.france.military.company.tasks.Interdire" id="1016" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Interdire" name="MELEE Interdire un Bloc Urbain">
+    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Interdire" dia-type="net.masagroup.sword.france.military.company.tasks.Interdire" id="1017" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Interdire" name="MELEE Interdire un Bloc Urbain">
       <parameter dia-name="objectives" name="objectif" optional="false" type="UrbanBlockBM"/>
       <parameter dia-name="positions" name="positions d'interdiction" optional="false" type="PointListBM"/>
       <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
@@ -1623,7 +1623,7 @@
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.tasks.commun.automat.StationnerBM" dia-type="T_Mission_Automate_StationnerBM" id="1005" mrt-dia-behavior="net.masagroup.sword.france.military.tasks.commun.automat.StationnerBM" name="StationnerBM">
       <parameter dia-name="position" name="point de stationnement" optional="false" type="PointBM"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeFaireTransporter" dia-type="net.masagroup.sword.france.military.company.tasks.SeFaireTransporter" id="1014" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeFaireTransporter" name="COMMUNES Se Faire Transporter">
+    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeFaireTransporter" dia-type="net.masagroup.sword.france.military.company.tasks.SeFaireTransporter" id="1018" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeFaireTransporter" name="COMMUNES Se Faire Transporter">
       <parameter dia-name="objectives" name="Point d'embarquement" optional="false" type="PointBM"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.military.company.combat.support.artillery.tasks.Deploy" dia-type="T_Mission_Automate_Deploy" id="1008" mrt-dia-behavior="net.masagroup.sword.military.company.combat.support.artillery.tasks.Deploy" name="Deploy">
@@ -1631,9 +1631,6 @@
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.tasks.commun.automat.SoutenirSurPositionEnMesureDeBM" dia-type="T_Mission_Automate_SoutenirSurPositionEnMesureDeBM" id="1007" mrt-dia-behavior="net.masagroup.sword.france.military.tasks.commun.automat.SoutenirSurPositionEnMesureDeBM" name="SoutenirSurPositionEnMesureDeBM">
       <parameter dia-name="position" name="position " optional="false" type="PointBM"/>
-    </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.tasks.SGTIA.ReconnaitreItineraire" dia-type="T_Mission_Automate_ReconnaitreItineraire" id="1009" mrt-dia-behavior="net.masagroup.sword.france.military.tasks.SGTIA.ReconnaitreItineraire" name="ReconnaitreItineraire">
-      <parameter dia-name="objectives" name="destination" optional="false" type="PathBM"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Franchir" dia-type="net.masagroup.sword.france.military.company.tasks.Franchir" id="1010" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Franchir" name="COMMUNES Franchir">
       <parameter dia-name="crossingSite" name="site de franchissement" optional="false" type="ObjectKnowledgeBM"/>
