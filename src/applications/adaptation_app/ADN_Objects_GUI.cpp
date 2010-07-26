@@ -335,6 +335,12 @@ void ADN_Objects_GUI::Build()
         vInfosConnectors[ eDelayCapacityPresent ] = & delay->GetConnector();
     }
 
+    ADN_GroupBox* structural = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Structural state" ), hBox );
+    {
+        vInfosConnectors[ eStructuralStateCapacityPresent ] = & structural->GetConnector();
+        builder.AddField< ADN_EditLine_Int >( structural, tr( "Initial value"), vInfosConnectors[ eStructuralStateCapacity_Value ], tr( "%" ), ePercentage );
+    }
+
     // Connect the list to the interface.
     pList->SetItemConnectors( vInfosConnectors );
 

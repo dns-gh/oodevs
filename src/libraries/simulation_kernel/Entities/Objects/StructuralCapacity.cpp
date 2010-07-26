@@ -14,8 +14,9 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
+#include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "geometry/Types.h"
 #include "tools/MIL_Geometry.h"
 #include "protocol/ClientSenders.h"
@@ -25,6 +26,7 @@
 #include <urban/TerrainObject_ABC.h>
 #include <UrbanType.h>
 #include <xeumeuleu/xml.h>
+
 BOOST_CLASS_EXPORT_IMPLEMENT( StructuralCapacity )
 
 // -----------------------------------------------------------------------------
@@ -139,32 +141,37 @@ namespace
 // Name: StructuralCapacity::ApplyIndirectFire
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-void StructuralCapacity::ApplyIndirectFire( const MIL_Object_ABC& object, const MT_Ellipse& attritionSurface, const PHY_DotationCategory& dotation )
+void StructuralCapacity::ApplyIndirectFire( MIL_Object_ABC& object, const MT_Ellipse& attritionSurface, const PHY_DotationCategory& dotation )
 {
-    const float urbanObjectArea = static_cast< float >( object.GetLocalisation().GetArea() );
-    if( !urbanObjectArea )
+    const float objectArea = static_cast< float >( object.GetLocalisation().GetArea() );
+    if( !objectArea )
         return;
     geometry::Polygon2f attritionPolygon = EllipseToPolygon( attritionSurface );
     CT_PointVector points = object.GetLocalisation().GetPoints();
     geometry::Polygon2f p;
     for( T_PointVector::const_iterator it = points.begin(); it != points.end(); ++it )
         p.Add( geometry::Point2f( static_cast< float >( it->rX_ ), static_cast< float >( it->rY_ ) ) );
-    float ratio = MIL_Geometry::IntersectionArea( attritionPolygon, p ) / urbanObjectArea;
+    float ratio = MIL_Geometry::IntersectionArea( attritionPolygon, p ) / objectArea;
 
     float oldStructuralState = structuralState_;
     const MaterialAttribute* materialAttribute = object.RetrieveAttribute< MaterialAttribute >();
-    // $$$$  SLG 2010-07-22: TODO Dans le cas où ce n'est pas un bloc urbain (objet, ou quartier/ville), voir comment appliquer des dégats.
-    if( !materialAttribute )
-        return;
-    structuralState_ -= ratio * float( dotation.GetAttrition(  materialAttribute->GetMaterial().GetId()) );
-    if( structuralState_ < 0 )
-        structuralState_ = 0;
-
-    float delta = oldStructuralState - structuralState_;
-    if ( MIL_Random::rand_io( MIL_Random::eFire ) <= delta )
+    if( materialAttribute )
     {
-        for ( IT_Agents it = agents_.begin(); it != agents_.end(); ++it )
-            ( *it )->GetRole< PHY_RoleInterface_Composantes >().ApplyUrbanObjectCrumbling( object );
+        structuralState_ -= ratio * float( dotation.GetAttrition(  materialAttribute->GetMaterial().GetId()) );
+        if( structuralState_ < 0 )
+            structuralState_ = 0;
+
+        float delta = oldStructuralState - structuralState_;
+        if ( MIL_Random::rand_io( MIL_Random::eFire ) <= delta )
+        {
+            for ( IT_Agents it = agents_.begin(); it != agents_.end(); ++it )
+                ( *it )->GetRole< PHY_RoleInterface_Composantes >().ApplyUrbanObjectCrumbling( object );
+        }
+    }
+    else
+    {
+        // $$$$ JSR 2010-07-23: if material attribute is not present, just destroy object?
+        object().Destroy();
     }
 }
 // -----------------------------------------------------------------------------

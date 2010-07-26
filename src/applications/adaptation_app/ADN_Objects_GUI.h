@@ -128,6 +128,9 @@ public:
 
         eDelayCapacityPresent,
 
+        eStructuralStateCapacityPresent,
+        eStructuralStateCapacity_Value,
+
         eNbrGuiElements
     };
 

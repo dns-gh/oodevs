@@ -311,6 +311,7 @@
       <buildable/>
     </constructor>
     <spawn action-range="1000" object="sensorsDetectionZone"/>
+    <structural value="1"/>
   </object>
   <object geometry="polygon" name="Urban Block" symbol="" type="urban block">
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseBlocUrbain"/>

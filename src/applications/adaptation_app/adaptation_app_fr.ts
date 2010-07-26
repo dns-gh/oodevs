@@ -2979,6 +2979,14 @@ du tireur</translation>
         <source>Delay time</source>
         <translation>Temps de retard</translation>
     </message>
+    <message>
+        <source>Structural state</source>
+        <translation>Etat structurel</translation>
+    </message>
+    <message>
+        <source>Initial value</source>
+        <translation>Valeur initiale</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>

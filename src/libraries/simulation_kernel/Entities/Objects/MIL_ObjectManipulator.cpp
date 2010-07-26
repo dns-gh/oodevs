@@ -24,6 +24,7 @@
 #include "StructuralCapacity.h"
 
 #include "AnimatorAttribute.h"
+#include "ChildObjectAttribute.h"
 #include "ConstructionAttribute.h"
 #include "BypassAttribute.h"
 #include "MineAttribute.h"
@@ -109,6 +110,14 @@ void MIL_ObjectManipulator::Destroy()
     BuildableCapacity* buildableCapacity = object_.Retrieve< BuildableCapacity >();
     if( buildableCapacity )
         buildableCapacity->Destroy( object_ );
+
+    ChildObjectAttribute* child = object_.RetrieveAttribute< ChildObjectAttribute >();
+    if( child )
+    {
+        MIL_Object_ABC* childObject = child->GetChildObject();
+        if( childObject )
+            ( *childObject )().Destroy();
+    }
 
     object_.MarkForDestruction();
 

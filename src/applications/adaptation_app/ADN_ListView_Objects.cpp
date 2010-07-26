@@ -203,6 +203,10 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
 
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Delay >( ADN_Objects_GUI::eDelayCapacityPresent );
 
+    ADN_Objects_Data::ADN_CapacityInfos_Structural& structural = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Structural >( ADN_Objects_GUI::eStructuralStateCapacityPresent );
+    vItemConnectors_[ADN_Objects_GUI::eStructuralStateCapacityPresent]->Connect( &structural.bPresent_, bConnect );
+    vItemConnectors_[ADN_Objects_GUI::eStructuralStateCapacity_Value]->Connect( &structural.rStructuralState_, bConnect );
+
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Objects_GUI::eNbrGuiElements );
 }
 

@@ -51,7 +51,7 @@ public:
         pItemDouble->GetValidator().setRange( 0, 1, 2 );
 
         // connect items & datas
-        pItemString->GetConnector().Connect(static_cast<ModificatorUrbanBlockInfos*>(obj)->ptrMaterial_.GetData());
+        pItemString->GetConnector().Connect(&static_cast<ModificatorUrbanBlockInfos*>(obj)->ptrMaterial_.GetData()->strName_);
         pItemDouble->GetConnector().Connect(&static_cast<ModificatorUrbanBlockInfos*>(obj)->rCoeff_);
     }
 
