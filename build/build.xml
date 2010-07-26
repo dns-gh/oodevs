@@ -673,7 +673,7 @@
     </target>
 
     <target name="dispatcher_test" depends="library.dispatcher">
-        <build-test name="dispatcher" depends="boost,qt,xerces"
+        <build-test name="dispatcher" depends="boost,qt,xerces,terrain"
             libs="MT_Thread,MT_Logger,MT_Tools,libprotobuf,
             lib${ant.project.name}_clients_kernel-${platform}-mt,
             lib${ant.project.name}_ENT-${platform}-mt@{suffix},
