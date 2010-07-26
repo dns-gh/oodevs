@@ -10,6 +10,7 @@
 #ifndef __Positions_h_
 #define __Positions_h_
 
+#include "Displayable_ABC.h"
 #include "Extension_ABC.h"
 
 namespace kernel
@@ -23,6 +24,7 @@ namespace kernel
 // Created: AGE 2006-03-22
 // =============================================================================
 class Positions : public Extension_ABC
+                , public kernel::Displayable_ABC
 {
 public:
     //! @name Constructors/Destructor

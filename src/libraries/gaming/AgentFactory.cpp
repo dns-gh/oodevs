@@ -161,7 +161,7 @@ kernel::Agent_ABC* AgentFactory::Create( const MsgsSimToClient::MsgUnitCreation&
     result->Attach< kernel::Attributes_ABC >( *new Attributes( controllers_.controller_, static_.coordinateConverter_, dico, model_.teams_ ) );
     result->Attach( *new kernel::CommandPostAttributes( *result ) );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
-    result->Attach< kernel::Positions >( *new AgentPositions( *result, static_.coordinateConverter_ ) );
+    result->Attach< kernel::Positions >( *new AgentPositions( controllers_.controller_, *result, static_.coordinateConverter_ ) );
     result->Attach( *new VisionCones( *result, model_.surfaceFactory_, workers_ ) );
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, *result ) );
     result->Attach( *new MagicOrders( *result ) );

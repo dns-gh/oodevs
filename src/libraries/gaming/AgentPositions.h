@@ -11,11 +11,9 @@
 #define __AgentPositions_h_
 
 #include "clients_kernel/Aggregatable_ABC.h"
-#include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/Displayable_ABC.h"
 
 namespace MsgsSimToClient
 {
@@ -38,12 +36,11 @@ class AgentPositions : public kernel::Positions
                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
                      , public kernel::Drawable_ABC
                      , public kernel::Aggregatable_ABC
-                     , public kernel::Displayable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentPositions( const kernel::Agent_ABC& agent, const kernel::CoordinateConverter_ABC& converter );
+             AgentPositions( kernel::Controller& controller, const kernel::Agent_ABC& agent, const kernel::CoordinateConverter_ABC& converter );
     virtual ~AgentPositions();
     //@}
 
@@ -76,6 +73,7 @@ private:
     friend class AutomatPositions; // $$$$ AGE 2006-10-06:
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
     const kernel::Agent_ABC& agent_;
     const kernel::CoordinateConverter_ABC& converter_;
     geometry::Point2f position_;

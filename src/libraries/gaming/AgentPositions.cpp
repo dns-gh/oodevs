@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "AgentPositions.h"
+#include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
@@ -26,8 +27,9 @@ using namespace kernel;
 // Name: AgentPositions constructor
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-AgentPositions::AgentPositions( const Agent_ABC& agent, const CoordinateConverter_ABC& converter )
-    : agent_( agent )
+AgentPositions::AgentPositions( kernel::Controller& controller, const Agent_ABC& agent, const CoordinateConverter_ABC& converter )
+    : controller_( controller )
+    , agent_( agent )
     , converter_( converter )
     , aggregated_( false )
     , height_( 0 )
@@ -79,6 +81,8 @@ void AgentPositions::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message
         height_ = float( message.hauteur() );
     if( message.has_mort()  )
         dead_ = message.mort() != 0;
+
+    controller_.Update( *static_cast< kernel::Positions* >( this ) );
 }
 
 // -----------------------------------------------------------------------------

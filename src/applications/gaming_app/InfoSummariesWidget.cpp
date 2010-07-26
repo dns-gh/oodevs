@@ -9,10 +9,11 @@
 
 #include "gaming_app_pch.h"
 #include "InfoSummariesWidget.h"
+#include "SummariesDisplayer.h"
+#include "clients_kernel/AgentExtensions.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/AgentExtensions.h"
-#include "SummariesDisplayer.h"
+#include "clients_kernel/Positions.h"
 
 using namespace kernel;
 
@@ -86,6 +87,17 @@ void InfoSummariesWidget::NotifyUpdated( const Entity_ABC& entity )
 void InfoSummariesWidget::NotifyUpdated( const Attributes_ABC& extension )
 {
     if( !selected_ || ( selected_->Retrieve< Attributes_ABC >() != &extension ) )
+        return;
+    extension.DisplayInSummary( *display_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoSummariesWidget::NotifyUpdated
+// Created: JSR 2010-07-26
+// -----------------------------------------------------------------------------
+void InfoSummariesWidget::NotifyUpdated( const kernel::Positions& extension )
+{
+    if( !selected_ || ( selected_->Retrieve< Positions >() != &extension ) )
         return;
     extension.DisplayInSummary( *display_ );
 }

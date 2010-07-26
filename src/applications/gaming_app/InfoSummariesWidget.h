@@ -20,6 +20,7 @@ namespace kernel
     class Entity_ABC;
     class Attributes_ABC;
     class Displayer_ABC;
+    class Positions;
 }
 
 // =============================================================================
@@ -33,6 +34,7 @@ class InfoSummariesWidget : public QVBox
                           , public tools::SelectionObserver< kernel::Entity_ABC >
                           , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                           , public tools::ElementObserver_ABC< kernel::Attributes_ABC >
+                          , public tools::ElementObserver_ABC< kernel::Positions >
 {
 public:
     //! @name Constructors/Destructor
@@ -54,6 +56,7 @@ private:
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
     virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
     virtual void NotifyUpdated( const kernel::Attributes_ABC& extension );
+    virtual void NotifyUpdated( const kernel::Positions& extension );
     //@}
 
 private:
