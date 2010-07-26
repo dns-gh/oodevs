@@ -89,7 +89,7 @@ void NBCPrototype_ABC::showEvent( QShowEvent* e )
 bool NBCPrototype_ABC::CheckValidity() const
 {
     const int count = (int)GetAgentCount();
-    if( maxToxic_ != count || ( maxToxic_ == -1 && count == 0 ) )
+    if( ( maxToxic_ != -1 && maxToxic_ != count ) || ( maxToxic_ == -1 && count == 0 ) )
     {
         nbcAgentsLabel_->Warn( 3000 );
         return false;
