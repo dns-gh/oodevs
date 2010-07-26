@@ -727,6 +727,8 @@
     </unit>
     <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Son Vab\Model.bms" name="Section INF">
       <missions>
+        <mission name="MELEE Interdire un Bloc Urbain"/>
+        <mission name="MELEE Appuyer"/>
         <mission name="INF Appuyer"/>
         <mission name="INF Contre Attaquer"/>
         <mission name="INF Controler Secteur"/>
@@ -855,6 +857,8 @@
     </unit>
     <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\PC\Model.bms" name="PC INF">
       <missions>
+        <mission name="MELEE Interdire un Bloc Urbain"/>
+        <mission name="MELEE Appuyer"/>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
         <mission name="Soutenir sur position en mesure de"/>
@@ -876,6 +880,8 @@
     </unit>
     <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.bms" name="Peloton XL">
       <missions>
+        <mission name="MELEE Interdire un Bloc Urbain"/>
+        <mission name="MELEE Appuyer"/>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -2979,6 +2985,7 @@
   <automats>
     <automat dia-type="net.masagroup.sword.military.company.roles.Company" file="BMAutomat.bms" name="net.masagroup.sword.military.company.roles.Company">
       <missions>
+        <mission name="ReconnaitreItineraire"/>
         <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Franchir"/>
         <mission name="SoutenirSurPositionEnMesureDeBM"/>
@@ -2987,6 +2994,10 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
+        <mission name="COMMUNES Orienter Refugies"/>
+        <mission name="COMMUNES Prendre en compte Prisonniers"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="MELEE Interdire un Bloc Urbain"/>
       </missions>
     </automat>
     <automat dia-type="net.masagroup.sword.military.company.combat.support.artillery.roles.Company" file="BMAutomat.bms" name="net.masagroup.sword.military.company.combat.support.artillery.roles.Company">
@@ -2998,6 +3009,9 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
+        <mission name="COMMUNES Orienter Refugies"/>
+        <mission name="COMMUNES Prendre en compte Prisonniers"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
       </missions>
     </automat>
     <automat dia-type="net.masagroup.sword.military.company.terrorism.roles.SniperCompany" file="BMAutomat.bms" name="net.masagroup.sword.military.company.terrorism.roles.SniperCompany">
@@ -3007,6 +3021,9 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
+        <mission name="COMMUNES Orienter Refugies"/>
+        <mission name="COMMUNES Prendre en compte Prisonniers"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
       </missions>
     </automat>
     <automat dia-type="StrategicBomberSquadron" file="Air\Automates\Escadrille Assaut\Model.bms" name="Groupe Assaut AIR">
