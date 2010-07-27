@@ -162,7 +162,7 @@ void StructuralCapacity::ApplyIndirectFire( MIL_Object_ABC& object, const MT_Ell
             structuralState_ = 0;
 
         float delta = oldStructuralState - structuralState_;
-        if ( MIL_Random::rand_io( MIL_Random::eFire ) <= delta )
+        if ( ( 1 - MIL_Random::rand_io( MIL_Random::eFire ) ) <= delta )
         {
             for ( IT_Agents it = agents_.begin(); it != agents_.end(); ++it )
                 ( *it )->GetRole< PHY_RoleInterface_Composantes >().ApplyUrbanObjectCrumbling( object );
@@ -190,7 +190,7 @@ const PHY_ComposanteState& StructuralCapacity::ComputeComposanteState( const MIL
     if( !attrition ) 
         throw std::exception( "Error in searching protection" );
     // Tirage de l'état opérationnel
-    MT_Float rRand = MIL_Random::rand_io( MIL_Random::eFire );
+    MT_Float rRand = ( 1 - MIL_Random::rand_io( MIL_Random::eFire ) );
 
     double destruction = attrition->destruction_;
     double repairableWithEvac = attrition->repairableWithEvac_ + destruction;
