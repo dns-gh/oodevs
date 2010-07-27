@@ -102,7 +102,7 @@ namespace
     {
         xml::xifstream xis( file );
         xis >> xml::start( "exercise" )
-                >> xml::list( boost::bind( &::CopyNode, _1, _2, boost::ref( xos ) ) )
+                >> xml::list( boost::bind( &CopyNode, _2, _3, boost::ref( xos ) ) )
             >> xml::end;
     }
 }
