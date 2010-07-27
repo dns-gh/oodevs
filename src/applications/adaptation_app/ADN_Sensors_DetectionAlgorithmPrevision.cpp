@@ -235,8 +235,8 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnSelectSensor( void* data )
         illuminationFactor_= 1;
         environmentFactor_= 1;
         urbanFactor_= 1;
-        populationModifier_ = 1.;
-        populationDensityFactor_ = 1;
+        populationModifier_ = infos->populationInfos_.rModifier_.GetData();
+        populationDensityFactor_ = infos->populationInfos_.rDensity_.GetData();
         Update();
         volume_->clear();
         stance_->clear();
