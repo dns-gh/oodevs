@@ -808,6 +808,7 @@ ADN_Sensors_Data::SensorInfos* ADN_Sensors_Data::SensorInfos::CreateCopy()
     pCopy->bCanDetectAgents_    = bCanDetectAgents_.GetData();
     pCopy->bLimitedToSensors_   = bLimitedToSensors_.GetData(); // LTO
     pCopy->bCanDetectObjects_   = bCanDetectObjects_.GetData();
+    pCopy->detectionDelay_ = detectionDelay_.GetData();
     pCopy->populationInfos_.CopyFrom( populationInfos_ );
 
     for( T_TargetsInfos_Vector::iterator itTarget = vTargets_.begin(); itTarget != vTargets_.end(); ++itTarget )
