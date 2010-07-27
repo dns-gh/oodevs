@@ -244,17 +244,20 @@ void TimelineView::contentsContextMenuEvent( QContextMenuEvent* event )
 // -----------------------------------------------------------------------------
 void TimelineView::keyPressEvent( QKeyEvent* event )
 {
-    if( selectedItem_ && event->key() == Qt::Key_Delete )
-        selectedItem_->Delete();
-    else if( event->key() == Qt::Key_Plus )
+    if( event->key() == Qt::Key_Plus )
         ruler_.ZoomIn();
     else if( event->key() == Qt::Key_Minus )
         ruler_.ZoomOut();
-    else if( selectedItem_ && ( event->key() == Qt::Key_Left || event->key() == Qt::Key_Right ) )
+    if( selectedItem_ && selectedItem_->isActive() )
     {
-        const short sign = event->key() == Qt::Key_Left ? -1 : 1;
-        const long seconds = ( event->state() & Qt::ShiftButton ) ? 3600 * 24 : 3600;
-        selectedItem_->Move( ruler_.ConvertToPixels( sign * seconds ) );
+        if( event->key() == Qt::Key_Delete )
+            selectedItem_->Delete();
+        else if( event->key() == Qt::Key_Left || event->key() == Qt::Key_Right )
+        {
+            const short sign = event->key() == Qt::Key_Left ? -1 : 1;
+            const long seconds = ( event->state() & Qt::ShiftButton ) ? 3600 * 24 : 3600;
+            selectedItem_->Move( ruler_.ConvertToPixels( sign * seconds ) );
+        }
     }
     Update();
 }
