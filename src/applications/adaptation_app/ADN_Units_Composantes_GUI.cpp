@@ -139,7 +139,7 @@ void ADN_Units_Composantes_GUI::OnContextMenu(int /*row*/,int /*col*/,const QPoi
     listView.header()->hide();
     listView.setAllColumnsShowFocus( true );
     listView.setResizeMode( QListView::AllColumns );
-    listView.setMinimumSize( 200, std::min( 800, (int)vAllComposantes.size() * 17 ) );
+    listView.setMinimumSize( 200, std::min( 500, (int)vAllComposantes.size() * 17 ) );
 
     for( ADN_Composantes_Data::T_ComposanteInfos_Vector::iterator it = vAllComposantes.begin(); it != vAllComposantes.end(); ++it )
     {

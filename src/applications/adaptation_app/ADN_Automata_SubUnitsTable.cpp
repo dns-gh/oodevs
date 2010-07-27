@@ -124,7 +124,7 @@ void ADN_Automata_SubUnitsTable::OnContextMenu( int /*nRow*/, int /*nCol*/, cons
     listView.header()->hide();
     listView.setAllColumnsShowFocus( true );
     listView.setResizeMode( QListView::AllColumns );
-    listView.setMinimumSize( 200, std::min( 800, (int)units.size() * 17 ) );
+    listView.setMinimumSize( 200, std::min( 500, (int)units.size() * 17 ) );
 
     for( ADN_Units_Data::IT_UnitInfos_Vector it = units.begin(); it != units.end(); ++it )
     {
