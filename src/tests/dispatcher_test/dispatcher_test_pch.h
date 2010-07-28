@@ -12,15 +12,10 @@
 
 #include <boost/test/auto_unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
-
 #define BOOST_LIB_NAME boost_unit_test_framework
 #include <boost/config/auto_link.hpp>
 
 #define BOOST_TODO BOOST_WARN_MESSAGE( 0, "TODO !" )
-
-#define MOCKPP_ENABLE_DEFAULT_FORMATTER
-#include <mockpp/chaining/CountedChainableMethod.h>
-#include <mockpp/chaining/ChainingMockObjectSupport.h>
 
 #pragma warning( disable : 4505 )
 #include <turtle/mock.hpp>
