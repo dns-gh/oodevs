@@ -23,12 +23,12 @@ Entity::Entity( xml::xistream& xis, Mapping& mapping, unsigned int knowledgeGrou
     xis >> xml::attribute( "id", id );
     map_[ id ] = this;
     id_ = mapping.AddId( id );
-    xis >> xml::content( "ns2:name", name_ )
-        >> xml::start( "ns2:meta-entity-ref" )
-            >> xml::content( "ns2:id", type_ )
+    xis >> xml::content( "name", name_ )
+        >> xml::start( "meta-entity-ref" )
+            >> xml::content( "id", type_ )
         >> xml::end
-        >> xml::optional >> xml::start( "ns5:members" )
-            >> xml::list( "ns5:content", *this, &Entity::ReadChild, knowledgeGroup );
+        >> xml::optional >> xml::start( "members" )
+            >> xml::list( "content", *this, &Entity::ReadChild, knowledgeGroup );
 }
 
 // -----------------------------------------------------------------------------

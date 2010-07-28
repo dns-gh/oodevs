@@ -27,25 +27,25 @@ Object::Object( xml::xistream& xis, const std::string& id, Mapping& mapping )
 {
     objectId_ = mapping.AddId( id );
     std::string metaId;
-    xis >> xml::content( "ns2:name", name_ )
-        >> xml::start( "ns2:meta-entity-ref" )
-            >> xml::content( "ns2:id", metaId )
+    xis >> xml::content( "name", name_ )
+        >> xml::start( "meta-entity-ref" )
+            >> xml::content( "id", metaId )
         >> xml::end
-        >> xml::start( "ns5:shape" )
-            >> xml::start( "ns4:relative-geometry" )
+        >> xml::start( "shape" )
+            >> xml::start( "relative-geometry" )
                 >> xml::optional
                 >> xml::start( "content" )
                     >> xml::start( "points" )
                         >> xml::start( "content" )
-                            >> xml::list( "ns4:gdc", *this, &Object::ReadPositions )
+                            >> xml::list( "gdc", *this, &Object::ReadPositions )
                         >> xml::end
                     >> xml::end
                 >> xml::end
             >> xml::end;
     if( positions_.empty() )
     {
-        xis >> xml::start( "ns4:center" )
-                >> xml::start( "ns4:gdc" );
+        xis >> xml::start( "center" )
+                >> xml::start( "gdc" );
         positions_.push_back( Position( xis ) );
     }
     type_ = mapping[ metaId ];

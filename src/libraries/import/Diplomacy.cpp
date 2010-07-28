@@ -17,12 +17,12 @@
 Diplomacy::Diplomacy( xml::xisubstream xis, const Mapping& mapping )
     : mapping_( &mapping )
 {
-    xis >> xml::start( "ns5:target-side-ref" )
-            >> xml::content( "ns2:id", target_ )
+    xis >> xml::start( "target-side-ref" )
+            >> xml::content( "id", target_ )
         >> xml::end
-        >> xml::start( "ns5:relationship" )
-            >> xml::start( "ns2:value" )
-                >> xml::content( "ns2:enumeration-value", type_ );
+        >> xml::start( "relationship" )
+            >> xml::start( "value" )
+                >> xml::content( "enumeration-value", type_ );
 }
 
 // -----------------------------------------------------------------------------

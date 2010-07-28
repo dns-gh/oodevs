@@ -17,16 +17,16 @@
 Side::Side( xml::xisubstream xis, Mapping& mapping )
     : mapping_         ( &mapping )
     , id_              ( mapping.AddId( xis.attribute< std::string >( "id" ) ) )
-    , name_            ( xis.content< std::string >( "ns2:name" ) )
+    , name_            ( xis.content< std::string >( "name" ) )
     , knowledgeGroupId_( mapping.AddId( "Groupe de connaissance de " + name_ ) )
 {
-    xis >> xml::start( "ns5:data" )
-            >> xml::list( "ns5:installations", *this, &Side::ReadObjects )
-            >> xml::list( "ns5:obstacles", *this, &Side::ReadObjects )
-            >> xml::list( "ns5:zones", *this, &Side::ReadObjects )
+    xis >> xml::start( "data" )
+            >> xml::list( "installations", *this, &Side::ReadObjects )
+            >> xml::list( "obstacles", *this, &Side::ReadObjects )
+            >> xml::list( "zones", *this, &Side::ReadObjects )
         >> xml::end
-        >> xml::start( "ns5:order-of-battle" )
-            >> xml::start( "ns5:content" ); // Formation of highest level
+        >> xml::start( "order-of-battle" )
+            >> xml::start( "content" ); // Formation of highest level
     root_.reset( new Entity( xis, mapping, knowledgeGroupId_ ) );
 }
 
@@ -86,7 +86,7 @@ xml::xostream& operator<<( xml::xostream& xos, const Side& side )
 // -----------------------------------------------------------------------------
 void Side::ReadObjects( xml::xistream& xis )
 {
-    xis >> xml::list( "ns5:content", *this, &Side::ReadObject );
+    xis >> xml::list( "content", *this, &Side::ReadObject );
 }
 
 // -----------------------------------------------------------------------------
