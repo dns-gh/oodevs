@@ -9,7 +9,6 @@
 // *****************************************************************************
 
 #include "clients_test_pch.h"
-#undef max
 #include "preparation/IdManager.h"
 #include "preparation/KnowledgeGroup.h"
 #include "preparation/KnowledgeGroupCommunications.h"
@@ -24,6 +23,8 @@
 #include "XmlChecks.h"
 #include "MockResolver.h"
 #include <xeumeuleu/xml.hpp>
+#include <qapplication.h>
+#undef max
 
 namespace
 {

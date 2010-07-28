@@ -10,6 +10,8 @@
 #ifndef __EntityImplementation_h_
 #define __EntityImplementation_h_
 
+#include <qstring.h>
+
 namespace kernel
 {
     class Controller;
