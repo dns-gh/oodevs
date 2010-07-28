@@ -171,6 +171,7 @@ void ADN_Tools::SortMenu( QPopupMenu& menu )
 // -----------------------------------------------------------------------------
 void ADN_Tools::AddSchema( xml::xostream& xos, const std::string& name )
 {
-    xos << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
-        << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/physical/" + name + ".xsd" );
+    xos << xml::prefix( "http://www.w3.org/2001/XMLSchema-instance", "xsi" )
+            << xml::ns( "http://www.w3.org/2001/XMLSchema-instance" )
+                << xml::attribute( "noNamespaceSchemaLocation", "schemas/physical/" + name + ".xsd" );
 }
