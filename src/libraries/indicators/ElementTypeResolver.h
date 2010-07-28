@@ -11,6 +11,7 @@
 #define __ElementTypeResolver_h_
 
 #include <boost/shared_ptr.hpp>
+#include <map>
 
 namespace indicators
 {

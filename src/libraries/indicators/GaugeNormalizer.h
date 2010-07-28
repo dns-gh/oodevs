@@ -10,6 +10,8 @@
 #ifndef __GaugeNormalizer_h_
 #define __GaugeNormalizer_h_
 
+#include <map>
+
 namespace xml
 {
     class xistream;

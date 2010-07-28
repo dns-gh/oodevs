@@ -18,52 +18,12 @@
 */
 // Created: SBO 2009-03-16
 // =============================================================================
-class MockIndicatorGrammarHandler : public indicators::GrammarHandler_ABC
-                                  , public mockpp::ChainableMockObject
+MOCK_BASE_CLASS( MockIndicatorGrammarHandler, indicators::GrammarHandler_ABC )
 {
-public:
-    //! @name Constructors/Destructor
-    //@{
-             MockIndicatorGrammarHandler()
-                : mockpp::ChainableMockObject( "MockIndicatorGrammarHandler", 0 )
-                , HandleNumber_mocker( "HandleNumber", this )
-                , HandleString_mocker( "HandleString", this )
-                , HandleVariable_mocker( "HandleVariable", this )
-                , HandleFunctionCall_mocker( "HandleFunctionCall", this )
-             {}
-    virtual ~MockIndicatorGrammarHandler() {}
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void HandleNumber( double value )
-    {
-        HandleNumber_mocker.forward( value );
-    }
-
-    virtual void HandleString( const std::string& value )
-    {
-        HandleString_mocker.forward( value );
-    }
-
-    virtual void HandleVariable( const std::string& name )
-    {
-        HandleVariable_mocker.forward( name );
-    }
-
-    virtual void HandleFunctionCall( const std::string& name, unsigned int parameters )
-    {
-        HandleFunctionCall_mocker.forward( name, parameters );
-    }
-    //@}
-
-    //! @name Member data
-    //@{
-    mockpp::ChainableMockMethod< void, double > HandleNumber_mocker;
-    mockpp::ChainableMockMethod< void, std::string > HandleString_mocker;
-    mockpp::ChainableMockMethod< void, std::string > HandleVariable_mocker;
-    mockpp::ChainableMockMethod< void, std::string, unsigned int > HandleFunctionCall_mocker;
-    //@}
+    MOCK_METHOD( HandleNumber, 1 )
+    MOCK_METHOD( HandleString, 1 )
+    MOCK_METHOD( HandleVariable, 1 )
+    MOCK_METHOD( HandleFunctionCall, 2 )
 };
 
 #endif // __MockIndicatorGrammarHandler_h_

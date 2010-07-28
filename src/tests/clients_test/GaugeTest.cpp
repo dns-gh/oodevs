@@ -11,38 +11,6 @@
 #include "indicators/GaugeNormalizer.h"
 #include <xeumeuleu/xml.hpp>
 
-namespace
-{
-    class TestReader
-    {
-    public:
-        explicit TestReader( xml::xistream& xis )
-        {
-            xis >> xml::optional >> xml::start( "tests" )
-                    >> xml::list( "test", *this, &TestReader::ReadTest )
-                >> xml::end;
-        }
-        void ReadTest( xml::xistream& xis )
-        {
-            throw std::runtime_error( __FUNCTION__ );
-        }
-    };
-}
-
-BOOST_AUTO_TEST_CASE( XmlTest_ThrowInList ) // $$$$ _RC_ LGY 2010-07-06: useless
-{
-    xml::xistringstream xis( "<root>"
-                             "    <tests>"
-                             "        <test>"
-                             "            <blabla/>"
-                             "        </test>"
-                             "        <test/>"
-                             "    </tests>"
-                             "</root>" );
-    std::auto_ptr< TestReader > reader;
-    BOOST_CHECK_THROW( reader.reset( new TestReader( xis >> xml::start( "root" ) ) ), std::runtime_error );
-}
-
 // -----------------------------------------------------------------------------
 // Name: Gauge_TestNormalizationIntervalBoundariesAreImplicit
 // Created: SBO 2009-05-06

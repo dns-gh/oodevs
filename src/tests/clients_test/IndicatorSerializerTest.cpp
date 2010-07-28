@@ -20,8 +20,6 @@
 #include "tools/GeneralConfig.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace mockpp;
-
 namespace
 {
     class SerializerFixture

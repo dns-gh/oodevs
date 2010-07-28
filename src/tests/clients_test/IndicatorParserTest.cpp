@@ -11,8 +11,6 @@
 #include "MockIndicatorGrammarHandler.h"
 #include "indicators/FormulaParser.h"
 
-using namespace mockpp;
-
 // -----------------------------------------------------------------------------
 // Name: IndicatorParser_TestEmpty
 // Created: SBO 2009-03-16
@@ -43,9 +41,8 @@ BOOST_AUTO_TEST_CASE( IndicatorParser_TestNumberConstant )
 {
     MockIndicatorGrammarHandler handler;
     indicators::FormulaParser parser( handler );
-    handler.HandleNumber_mocker.expects( once() ).with( eq( double( 12 ) ) );
+    MOCK_EXPECT( handler, HandleNumber ).once().with( 12 );
     parser.Parse( "12" );
-    handler.verify();
 }
 
 // -----------------------------------------------------------------------------
@@ -56,9 +53,8 @@ BOOST_AUTO_TEST_CASE( IndicatorParser_TestStringLiteral )
 {
     MockIndicatorGrammarHandler handler;
     indicators::FormulaParser parser( handler );
-    handler.HandleString_mocker.expects( once() ).with( eq< std::string >( "test" ) );
+    MOCK_EXPECT( handler, HandleString ).once().with( "test" );
     parser.Parse( "'test'" );
-    handler.verify();
 }
 
 // -----------------------------------------------------------------------------
@@ -69,9 +65,8 @@ BOOST_AUTO_TEST_CASE( IndicatorParser_TestVariable )
 {
     MockIndicatorGrammarHandler handler;
     indicators::FormulaParser parser( handler );
-    handler.HandleVariable_mocker.expects( once() ).with( eq< std::string >( "MyVariable" ) );
+    MOCK_EXPECT( handler, HandleVariable ).once().with( "MyVariable" );
     parser.Parse( "$MyVariable" );
-    handler.verify();
 }
 
 // -----------------------------------------------------------------------------
@@ -82,9 +77,8 @@ BOOST_AUTO_TEST_CASE( IndicatorParser_TestFunctionCallNoParameter )
 {
     MockIndicatorGrammarHandler handler;
     indicators::FormulaParser parser( handler );
-    handler.HandleFunctionCall_mocker.expects( once() ).with( eq< std::string >( "MyFunction" ), eq( 0u ) );
+    MOCK_EXPECT( handler, HandleFunctionCall ).once().with( "MyFunction", 0u );
     parser.Parse( "MyFunction()" );
-    handler.verify();
 }
 
 // -----------------------------------------------------------------------------
@@ -95,10 +89,9 @@ BOOST_AUTO_TEST_CASE( IndicatorParser_TestFunctionCallOneParameter )
 {
     MockIndicatorGrammarHandler handler;
     indicators::FormulaParser parser( handler );
-    handler.HandleNumber_mocker.expects( once() ).with( eq( double( 12 ) ) );
-    handler.HandleFunctionCall_mocker.expects( once() ).with( eq< std::string >( "MyFunction" ), eq( 1u ) );
+    MOCK_EXPECT( handler, HandleNumber ).once().with( 12 );
+    MOCK_EXPECT( handler, HandleFunctionCall ).once().with( "MyFunction", 1u );
     parser.Parse( "MyFunction( 12 )" );
-    handler.verify();
 }
 
 // -----------------------------------------------------------------------------
@@ -109,12 +102,11 @@ BOOST_AUTO_TEST_CASE( IndicatorParser_TestFunctionCallManyParameters )
 {
     MockIndicatorGrammarHandler handler;
     indicators::FormulaParser parser( handler );
-    handler.HandleNumber_mocker.expects( once() ).with( eq( double( 12 ) ) );
-    handler.HandleString_mocker.expects( once() ).with( eq< std::string >( "test" ) );
-    handler.HandleNumber_mocker.expects( once() ).with( eq( double( 51 ) ) );
-    handler.HandleFunctionCall_mocker.expects( once() ).with( eq< std::string >( "MyFunction" ), eq( 3u ) );
+    MOCK_EXPECT( handler, HandleNumber ).once().with( 12 );
+    MOCK_EXPECT( handler, HandleString ).once().with( "test" );
+    MOCK_EXPECT( handler, HandleNumber ).once().with( 51 );
+    MOCK_EXPECT( handler, HandleFunctionCall ).once().with( "MyFunction", 3u );
     parser.Parse( "MyFunction( 12, 'test', 51 )" );
-    handler.verify();
 }
 
 // -----------------------------------------------------------------------------
@@ -125,10 +117,9 @@ BOOST_AUTO_TEST_CASE( IndicatorParser_TestNestedFunctionCall )
 {
     MockIndicatorGrammarHandler handler;
     indicators::FormulaParser parser( handler );
-    handler.HandleFunctionCall_mocker.expects( once() ).with( eq< std::string >( "MyNestedFunction" ), eq( 0u ) );
-    handler.HandleFunctionCall_mocker.expects( once() ).with( eq< std::string >( "MyFunction" ), eq( 1u ) );
+    MOCK_EXPECT( handler, HandleFunctionCall ).once().with( "MyNestedFunction", 0u );
+    MOCK_EXPECT( handler, HandleFunctionCall ).once().with( "MyFunction", 1u );
     parser.Parse( "MyFunction( MyNestedFunction() )" );
-    handler.verify();
 }
 
 // -----------------------------------------------------------------------------
@@ -139,12 +130,11 @@ BOOST_AUTO_TEST_CASE( IndicatorParser_TestNestedFunctionsCallOrder )
 {
     MockIndicatorGrammarHandler handler;
     indicators::FormulaParser parser( handler );
-    handler.HandleFunctionCall_mocker.expects( once() ).with( eq< std::string >( "MyNestedFunction3" ), eq( 0u ) );
-    handler.HandleFunctionCall_mocker.expects( once() ).with( eq< std::string >( "MyNestedFunction2" ), eq( 1u ) );
-    handler.HandleFunctionCall_mocker.expects( once() ).with( eq< std::string >( "MyNestedFunction1" ), eq( 0u ) );
-    handler.HandleFunctionCall_mocker.expects( once() ).with( eq< std::string >( "MyFunction" ), eq( 2u ) );
+    MOCK_EXPECT( handler, HandleFunctionCall ).once().with( "MyNestedFunction3", 0u );
+    MOCK_EXPECT( handler, HandleFunctionCall ).once().with( "MyNestedFunction2", 1u );
+    MOCK_EXPECT( handler, HandleFunctionCall ).once().with( "MyNestedFunction1", 0u );
+    MOCK_EXPECT( handler, HandleFunctionCall ).once().with( "MyFunction", 2u );
     parser.Parse( "MyFunction( MyNestedFunction1(), MyNestedFunction2( MyNestedFunction3() ) )" );
-    handler.verify();
 }
 
 // -----------------------------------------------------------------------------
@@ -155,15 +145,12 @@ BOOST_AUTO_TEST_CASE( IndicatorParser_TestNestedFunctionsWithMixedParameters )
 {
     MockIndicatorGrammarHandler handler;
     indicators::FormulaParser parser( handler );
-
-    handler.HandleNumber_mocker.expects( once() ).with( eq( double( 12.f ) ) );
-    handler.HandleFunctionCall_mocker.expects( once() ).with( eq< std::string >( "MyFunction3" ), eq( 0u ) );
-    handler.HandleVariable_mocker.expects( once() ).with( eq< std::string >( "MyVariable" ) );
-    handler.HandleFunctionCall_mocker.expects( once() ).with( eq< std::string >( "MyFunction2" ), eq( 2u ) );
-    handler.HandleNumber_mocker.expects( once() ).with( eq( double( 42.f ) ) );
-    handler.HandleFunctionCall_mocker.expects( once() ).with( eq< std::string >( "MyFunction1" ), eq( 1u ) );
-    handler.HandleFunctionCall_mocker.expects( once() ).with( eq< std::string >( "MyFunction" ), eq( 3u ) );
-
+    MOCK_EXPECT( handler, HandleNumber ).once().with( 12 );
+    MOCK_EXPECT( handler, HandleFunctionCall ).once().with( "MyFunction3", 0u );
+    MOCK_EXPECT( handler, HandleVariable ).once().with( "MyVariable" );
+    MOCK_EXPECT( handler, HandleFunctionCall ).once().with( "MyFunction2", 2u );
+    MOCK_EXPECT( handler, HandleNumber ).once().with( 42 );
+    MOCK_EXPECT( handler, HandleFunctionCall ).once().with( "MyFunction1", 1u );
+    MOCK_EXPECT( handler, HandleFunctionCall ).once().with( "MyFunction", 3u );
     parser.Parse( "MyFunction( MyFunction1( 42 ), MyFunction2( $MyVariable, MyFunction3() ), 12 )" );
-    handler.verify();
 }
