@@ -164,10 +164,12 @@ namespace
 
 namespace
 {
-    QColor SelectForegroundColor( QCanvasItem& item )
+    QColor SelectForegroundColor( QCanvasItem& item, bool valid )
     {
         if( item.isSelected() )
             return QColor( 50, 105, 200 );
+        if( !valid )
+            return QColor( 0, 0, 0 );
         if( !item.isActive() )
             return QColor( 100, 100, 100 );
         if( !item.isEnabled() )
@@ -175,8 +177,14 @@ namespace
         return QColor( 40, 40, 40 );
     }
 
-    QColor SelectBackgroundColor( QCanvasItem& item )
+    QColor SelectBackgroundColor( QCanvasItem& item, bool valid )
     {
+        if( !valid )
+        {
+            if( item.isSelected() )
+                return QColor( 200, 40, 40 );
+            return QColor( 255, 0, 0 );
+        }
         if( item.isSelected() )
             return QColor( 200, 215, 240 );
         if( !item.isActive() )
@@ -197,14 +205,14 @@ void TimelineActionItem::draw( QPainter& painter )
         ComputeTextWidth( painter );
     Update();
     setZ( isSelected() ? std::numeric_limits< double >::max() : x() );
-    const QColor backgroundColor( SelectBackgroundColor( *this ) );
+    const QColor backgroundColor( SelectBackgroundColor( *this, action_.IsValid() ) );
     const QPen oldPen = painter.pen();
     painter.fillRect( rect().left(), rect().top() + 1, rect().width(), rect().height() - 2, Qt::white ); // $$$$ SBO 2008-04-22: clear color
     const QRect gradientRect( rect().left(), rect().top() + 20, rect().width() + 40, rect().height() - 21 );
     DrawHorizontalGradientBox( painter, gradientRect, backgroundColor, Qt::white );
     painter.setPen( backgroundColor );
     DrawArrow( painter, rect() );
-    painter.setPen( SelectForegroundColor( *this ) );
+    painter.setPen( SelectForegroundColor( *this , action_.IsValid() ) );
     painter.drawText( rect(), Qt::AlignLeft | Qt::AlignVCenter, "  " + action_.GetName() );
     painter.setPen( oldPen );
 }

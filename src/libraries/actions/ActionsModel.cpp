@@ -126,6 +126,16 @@ void ActionsModel::ReadAction( xml::xistream& xis, bool readonly, std::string& e
     catch( std::exception& e )
     {
         errors += std::string( e.what() ) + "\n";
+        try
+        {
+            std::auto_ptr< Action_ABC > action( factory_.CreateStubAction( xis ) );
+            if( action.get() )
+            {
+                Register( action->GetId(), *action );
+                action.release();
+            }
+        }
+        catch( std::exception& ) {}
     }
 }
 

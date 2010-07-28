@@ -35,6 +35,7 @@ Action_ABC::Action_ABC( kernel::Controller& controller, const kernel::OrderType&
     , type_      ( type )
     , id_        ( ++idManager_ )
     , name_      ( type_.GetName().c_str() )
+    , valid_     ( true )
 {
     // NOTHING
 }
@@ -48,6 +49,7 @@ Action_ABC::Action_ABC( xml::xistream& xis, kernel::Controller& controller, cons
     , type_      ( type )
     , id_        ( ++idManager_ )
     , name_      ( xis.attribute< std::string >( "name", type_.GetName() ).c_str() )
+    , valid_     ( true )
 {
     // NOTHING
 }
@@ -198,9 +200,12 @@ void Action_ABC::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void Action_ABC::CommitTo( Common::MsgMissionParameters& message ) const
 {
-    // $$$$ FHD 2009-10-28: potential bug, parameters serialized in "map" order
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        it->second->CommitTo( *message.add_elem() );
+    if( valid_ )
+    {
+        // $$$$ FHD 2009-10-28: potential bug, parameters serialized in "map" order
+        for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+            it->second->CommitTo( *message.add_elem() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -248,4 +253,22 @@ void Action_ABC::RegisterAndPublish( ActionsModel& actionsModel )
     Polish();
     actionsModel.Register( GetId(), *this );
     actionsModel.Publish( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Action_ABC::Invalidate
+// Created: LDC 2010-07-28
+// -----------------------------------------------------------------------------
+void Action_ABC::Invalidate()
+{
+    valid_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Action_ABC::IsValid
+// Created: LDC 2010-07-28
+// -----------------------------------------------------------------------------
+bool Action_ABC::IsValid() const
+{
+    return valid_;
 }

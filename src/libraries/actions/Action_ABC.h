@@ -68,6 +68,7 @@ public:
     virtual QString GetTypeName() const;
     virtual unsigned long GetId() const;
     virtual QString GetName() const;
+    virtual bool IsValid() const;
 
     virtual const kernel::OrderType& GetType() const;
     virtual void AddParameter( Parameter_ABC& parameter );
@@ -85,6 +86,7 @@ public:
     virtual void Activate( kernel::ActionController& controller ) const;
 
     void RegisterAndPublish( ActionsModel& actionsModel );
+    virtual void Invalidate();
     //@}
 
 protected:
@@ -101,6 +103,7 @@ private:
     const kernel::OrderType& type_;
     unsigned long id_;
     QString name_;
+    bool valid_;
 
     static unsigned long idManager_;
     //@}

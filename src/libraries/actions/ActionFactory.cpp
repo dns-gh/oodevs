@@ -141,6 +141,20 @@ actions::Action_ABC* ActionFactory::CreateAction( xml::xistream& xis, bool reado
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateStubAction
+// Created: LDC 2010-07-28
+// -----------------------------------------------------------------------------
+actions::Action_ABC* ActionFactory::CreateStubAction( xml::xistream& xis ) const
+{
+    const std::string type = xis.attribute< std::string >( "type" );
+    if( type == "mission" )
+        return CreateStubMission( xis );
+    if( type == "fragorder" )
+        return CreateStubFragOrder( xis );
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionFactory::CreateAction
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
@@ -221,9 +235,9 @@ actions::Action_ABC* ActionFactory::CreateAction( const MsgsClientToSim::MsgFrag
 
 // -----------------------------------------------------------------------------
 // Name: ActionFactory::CreateMission
-// Created: SBO 2010-05-07
+// Created: LDC 2010-07-28
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateMission( xml::xistream& xis, bool readonly ) const
+actions::Action_ABC* ActionFactory::CreateMission( xml::xistream& xis, bool readonly, bool stub ) const
 {
     const unsigned long id = xis.attribute< unsigned long >( "target" );
     std::auto_ptr< actions::Mission > action;
@@ -241,17 +255,43 @@ actions::Action_ABC* ActionFactory::CreateMission( xml::xistream& xis, bool read
     action->Polish();
 
     tools::Iterator< const kernel::OrderParameter& > it = action->GetType().CreateIterator();
-    xis >> xml::list( "parameter", *this, &ActionFactory::ReadParameter, *action, it, *target );
-    if( it.HasMoreElements() )
-        throw MissingParameter( *action, it.NextElement() );
+    if( stub )
+    {
+        xis >> xml::list( "parameter", *this, &ActionFactory::ReadStubParameter, *action, it, *target );
+        action->Invalidate();
+    }
+    else
+    {
+        xis >> xml::list( "parameter", *this, &ActionFactory::ReadParameter, *action, it, *target );
+        if( it.HasMoreElements() )
+            throw MissingParameter( *action, it.NextElement() );
+    }
     return action.release();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionFactory::CreateFragOrder
+// Name: ActionFactory::CreateMission
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateFragOrder( xml::xistream& xis, bool readonly ) const
+actions::Action_ABC* ActionFactory::CreateMission( xml::xistream& xis, bool readonly ) const
+{
+    return CreateMission( xis, readonly, false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateStubMission
+// Created: LDC 2010-07-28
+// -----------------------------------------------------------------------------
+actions::Action_ABC* ActionFactory::CreateStubMission( xml::xistream& xis ) const
+{
+    return CreateMission( xis, false, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateFragOrder
+// Created: LDC 2010-07-28
+// -----------------------------------------------------------------------------
+actions::Action_ABC* ActionFactory::CreateFragOrder( xml::xistream& xis, bool readonly, bool stub ) const
 {
     const unsigned long id = xis.attribute< unsigned long >( "target" );
 
@@ -269,10 +309,36 @@ actions::Action_ABC* ActionFactory::CreateFragOrder( xml::xistream& xis, bool re
     action->Polish();
 
     tools::Iterator< const kernel::OrderParameter& > it = action->GetType().CreateIterator();
-    xis >> xml::list( "parameter", *this, &ActionFactory::ReadParameter, *action, it, *target );
-    if( it.HasMoreElements() )
-        throw MissingParameter( *action, it.NextElement() );
+    if( stub )
+    {
+        xis >> xml::list( "parameter", *this, &ActionFactory::ReadStubParameter, *action, it, *target );
+        action->Invalidate();
+    }
+    else
+    {
+        xis >> xml::list( "parameter", *this, &ActionFactory::ReadParameter, *action, it, *target );
+        if( it.HasMoreElements() )
+            throw MissingParameter( *action, it.NextElement() );
+    }
     return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateFragOrder
+// Created: SBO 2010-05-07
+// -----------------------------------------------------------------------------
+actions::Action_ABC* ActionFactory::CreateFragOrder( xml::xistream& xis, bool readonly ) const
+{
+    return CreateFragOrder( xis, readonly, false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateStubFragOrder
+// Created: LDC 2010-07-28
+// -----------------------------------------------------------------------------
+actions::Action_ABC* ActionFactory::CreateStubFragOrder( xml::xistream& xis ) const
+{
+    return CreateFragOrder( xis, false, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -414,9 +480,9 @@ void ActionFactory::ReadParameter( xml::xistream& xis, actions::Action_ABC& acti
     {
         if( !it.HasMoreElements() )
             throw std::exception( tools::translate( "ActionFactory", "too many parameters provided" ) );
-        std::auto_ptr< actions::Parameter_ABC > param( factory_.CreateParameter( it.NextElement(), xis, entity ) );
+        // $$$$ LDC AddParameter can throw after having taken ownership of the parameter thus do not use auto_ptr here
+        actions::Parameter_ABC* param = factory_.CreateParameter( it.NextElement(), xis, entity );
         action.AddParameter( *param );
-        param.release();
     }
     catch( std::exception& e )
     {
@@ -424,6 +490,20 @@ void ActionFactory::ReadParameter( xml::xistream& xis, actions::Action_ABC& acti
                                 .arg( action.GetName() ).arg( action.GetId() ).arg( e.what() ) );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::ReadStubParameter
+// Created: LDC 2010-07-28
+// -----------------------------------------------------------------------------
+void ActionFactory::ReadStubParameter( xml::xistream& xis, actions::Action_ABC& action, tools::Iterator< const kernel::OrderParameter& >& it, const kernel::Entity_ABC& entity ) const
+{
+    try
+    {
+        ReadParameter( xis, action, it, entity );
+    }
+    catch( std::exception& e ) {}
+}
+    
 
 // -----------------------------------------------------------------------------
 // Name: ActionFactory::ReadParameter

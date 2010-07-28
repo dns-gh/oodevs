@@ -38,7 +38,6 @@ namespace
             {
                 if( const kernel::Entity_ABC* entity = tasker->GetTasker() )
                     return profile_.IsVisible( *entity );
-                return false;
             }
             return true;
         }
