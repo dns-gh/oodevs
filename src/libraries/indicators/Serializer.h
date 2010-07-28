@@ -11,6 +11,7 @@
 #define __Serializer_h_
 
 #include "GrammarHandler_ABC.h"
+#include <vector>
 #include <boost/shared_ptr.hpp>
 
 namespace xml
