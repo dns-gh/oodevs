@@ -21,10 +21,9 @@ class QComboBox;
 class ADN_ListView_Units;
 class ADN_Units_LogThreshold_GUI;
 
-
 // =============================================================================
 /** @class  ADN_Units_GUI
-@brief  ADN_Units_GUI
+    @brief  ADN_Units_GUI
 */
 // Created: APE 2004-12-06
 // =============================================================================
@@ -35,6 +34,8 @@ class ADN_Units_GUI
         friend class ADN_Units;
 
 public:
+    //! @name Types
+    //@{
     enum E_GuiElements
     {
         eName,
@@ -65,11 +66,12 @@ public:
         eUninstallationDelay,
         eNbrGuiElements
     };
+    //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_Units_GUI( ADN_Units_Data& data );
+    explicit ADN_Units_GUI( ADN_Units_Data& data );
     virtual ~ADN_Units_GUI();
     //@}
 
@@ -79,19 +81,27 @@ public:
     //@}
 
 private slots:
+    //! @name slots
+    //@{
     void OnTypeChanged();
     void OnNbrOfOfficersChanged();
     void OnNbrOfNCOfficersChanged();
+    void OnComponentChanged();
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void UpdateValidators();
+    //@}
 
 private:
     //! @name Member data
     //@{
     ADN_Units_Data& data_;
-
     ADN_ListView_Units* pListUnits_;
     ADN_EditLine_Int* pOfficersEditLine_;
     ADN_EditLine_Int* pNCOfficersEditLine_;
-
     QComboBox* pTypeCombo_;
     ADN_GroupBox* pStockGroup_;
     ADN_Units_LogThreshold_GUI* pStockLogThreshold_;
