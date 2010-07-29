@@ -98,8 +98,8 @@ void Dotations::Update( const std::vector< Dotation >& differences )
         if( it->type_->IsGas() )
             bEmptyGasTank_ = ( dotation->quantity_ == 0 );
     }
-    if( const kernel::Entity_ABC* superior = GetSuperior() )
-        if( Dotations* dotations = const_cast< Dotations* >( superior->Retrieve< Dotations >() ) )
+    if( kernel::Entity_ABC* superior = const_cast< kernel::Entity_ABC* >( GetSuperior() ) )
+        if( Dotations* dotations = dynamic_cast< Dotations* >( superior->Retrieve< Dotations_ABC >() ) )
             dotations->Update( differences );
     controller_.Update( *(Dotations_ABC*)this );
 }
@@ -110,7 +110,7 @@ void Dotations::Update( const std::vector< Dotation >& differences )
 // -----------------------------------------------------------------------------
 void Dotations::SetSuperior( const kernel::Entity_ABC& superior )
 {
-    const kernel::Entity_ABC* currentSuperior = GetSuperior();
+    kernel::Entity_ABC* currentSuperior = const_cast< kernel::Entity_ABC* >( GetSuperior() );
     if( !currentSuperior || &superior != currentSuperior )
     {
         // create dotation differences
@@ -119,12 +119,12 @@ void Dotations::SetSuperior( const kernel::Entity_ABC& superior )
         for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
             differences.push_back( *it->second );
         // add dotations to new superior
-        if( Dotations* dotations = const_cast< Dotations* >( superior.Retrieve< Dotations >() ) )
+        if( Dotations* dotations = dynamic_cast< Dotations* >( const_cast< kernel::Entity_ABC& >( superior ).Retrieve< Dotations_ABC >() ) )
             dotations->Update( differences );
 
         // remove dotations from previous superior
         if( currentSuperior )
-            if( Dotations* dotations = const_cast< Dotations* >( currentSuperior->Retrieve< Dotations >() ) )
+            if( Dotations* dotations = dynamic_cast< Dotations* >( currentSuperior->Retrieve< Dotations_ABC >() ) )
             {
                 std::transform( differences.begin(), differences.end(), differences.begin(), std::negate< Dotation >() );
                 dotations->Update( differences );
