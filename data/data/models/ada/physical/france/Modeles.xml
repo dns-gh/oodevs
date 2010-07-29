@@ -728,6 +728,7 @@
     <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Son Vab\Model.bms" name="Section INF">
       <missions>
         <mission name="MELEE Interdire un Bloc Urbain"/>
+        <mission name="MELEE Reconnaitre Itineraire"/>
         <mission name="MELEE Appuyer"/>
         <mission name="INF Appuyer"/>
         <mission name="INF Contre Attaquer"/>
@@ -858,6 +859,7 @@
     <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\PC\Model.bms" name="PC INF">
       <missions>
         <mission name="MELEE Interdire un Bloc Urbain"/>
+        <mission name="MELEE Reconnaitre Itineraire"/>
         <mission name="MELEE Appuyer"/>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -881,6 +883,7 @@
     <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.bms" name="Peloton XL">
       <missions>
         <mission name="MELEE Interdire un Bloc Urbain"/>
+        <mission name="MELEE Reconnaitre Itineraire"/>
         <mission name="MELEE Appuyer"/>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2987,7 +2990,6 @@
       <missions>
         <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Franchir"/>
-        <mission name="SoutenirSurPositionEnMesureDeBM"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
@@ -2996,12 +2998,12 @@
         <mission name="COMMUNES Prendre en compte Prisonniers"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="MELEE Interdire un Bloc Urbain"/>
+        <mission name="MELEE Reconnaitre un itinéraire"/>
       </missions>
     </automat>
     <automat dia-type="net.masagroup.sword.military.company.combat.support.artillery.roles.Company" file="BMAutomat.bms" name="net.masagroup.sword.military.company.combat.support.artillery.roles.Company">
       <missions>
         <mission name="COMMUNES FaireMouvement"/>
-        <mission name="SoutenirSurPositionEnMesureDeBM"/>
         <mission name="Deploy"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Se Faire Transporter"/>

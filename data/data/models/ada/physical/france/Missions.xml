@@ -873,7 +873,7 @@
     <mission dia-behavior="net.masagroup.testSword.military.platoon.tasks.MoveObserveReconnoiter" dia-type="net.masagroup.testSword.military.platoon.tasks.MoveObserveReconnoiter" id="2039" name="MoveObserveReconnoiter">
       <parameter dia-name="objectives" name="destination" optional="false" type="PointListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.testSword.military.platoon.tasks.ReconnoiterRoute" dia-type="T_Mission_Pion_ReconnoiterRoute" id="2040" name="MELEE Reconnaitre Itineraire">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Reconnaitre" dia-type="net.masagroup.sword.france.military.platoon.tasks.Reconnaitre" id="2040" name="MELEE Reconnaitre Itineraire">
       <parameter dia-name="objectives" name="destination" optional="false" type="PointListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.platoon.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveOnRoute" id="2041" name="MoveOnRoute">
@@ -891,7 +891,7 @@
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.FaireMouvement" dia-type="net.masagroup.sword.france.military.platoon.tasks.FaireMouvement" id="2046" name="COMMUNES Faire Mouvement">
       <parameter dia-name="objectives" name="itineraire" optional="false" type="PointListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.testSword.military.platoon.tasks.OpenRoute" dia-type="net.masagroup.testSword.military.platoon.tasks.OpenRoute" id="2047" name="GEN OuvrirItineraire">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.OuvrirItineraire" dia-type="net.masagroup.sword.france.military.platoon.tasks.OuvrirItineraire" id="2047" name="GEN OuvrirItineraire">
       <parameter dia-name="objectives" name="destination" optional="false" type="PointListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.platoon.tasks.Animate" dia-type="T_Mission_Pion_Animate" id="2048" name="Animate">
@@ -1620,6 +1620,9 @@
       <parameter dia-name="positions" name="positions d'interdiction" optional="false" type="PointListBM"/>
       <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
+    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Reconnaitre" dia-type="net.masagroup.sword.france.military.company.tasks.Reconnaitre" id="1019" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Reconnaitre" name="MELEE Reconnaitre un itinéraire">
+      <parameter dia-name="objectives" name="destination" optional="false" type="PointListBM"/>
+    </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.tasks.commun.automat.StationnerBM" dia-type="T_Mission_Automate_StationnerBM" id="1005" mrt-dia-behavior="net.masagroup.sword.france.military.tasks.commun.automat.StationnerBM" name="StationnerBM">
       <parameter dia-name="position" name="point de stationnement" optional="false" type="PointBM"/>
     </mission>
@@ -1628,9 +1631,6 @@
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.military.company.combat.support.artillery.tasks.Deploy" dia-type="T_Mission_Automate_Deploy" id="1008" mrt-dia-behavior="net.masagroup.sword.military.company.combat.support.artillery.tasks.Deploy" name="Deploy">
       <parameter dia-name="deploymentArea" name="zone de deploiement" optional="false" type="AreaBM"/>
-    </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.tasks.commun.automat.SoutenirSurPositionEnMesureDeBM" dia-type="T_Mission_Automate_SoutenirSurPositionEnMesureDeBM" id="1007" mrt-dia-behavior="net.masagroup.sword.france.military.tasks.commun.automat.SoutenirSurPositionEnMesureDeBM" name="SoutenirSurPositionEnMesureDeBM">
-      <parameter dia-name="position" name="position " optional="false" type="PointBM"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Franchir" dia-type="net.masagroup.sword.france.military.company.tasks.Franchir" id="1010" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Franchir" name="COMMUNES Franchir">
       <parameter dia-name="crossingSite" name="site de franchissement" optional="false" type="ObjectKnowledgeBM"/>
