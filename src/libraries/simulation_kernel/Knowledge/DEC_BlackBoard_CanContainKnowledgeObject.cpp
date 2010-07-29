@@ -135,10 +135,13 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObje
     else
         knowledge = objectKnown.CreateKnowledge( teamKnowing );
 
-    if( ! objectMap_.insert( std::make_pair( &objectKnown, knowledge ) ).second )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
-    if( ! knowledgeObjectFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) ).second )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+    if( knowledge )
+    {
+        if( ! objectMap_.insert( std::make_pair( &objectKnown, knowledge ) ).second )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+        if( ! knowledgeObjectFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) ).second )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+    }
     return knowledge;
 }
 

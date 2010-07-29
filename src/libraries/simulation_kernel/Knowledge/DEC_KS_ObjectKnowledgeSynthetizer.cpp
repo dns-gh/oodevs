@@ -92,7 +92,9 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KS_ObjectKnowledgeSynthetizer::Get
 inline
 void DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception )
 {
-    GetKnowledgeToUpdate( perception.GetObjectPerceived() )->Update( perception );
+    boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = GetKnowledgeToUpdate( perception.GetObjectPerceived() );
+    if( pKnowledge )
+        pKnowledge ->Update( perception );
 }
 
 // -----------------------------------------------------------------------------
