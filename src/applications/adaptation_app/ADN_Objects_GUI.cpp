@@ -12,7 +12,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Objects_GUI.h"
 #include "moc_ADN_Objects_GUI.cpp"
-
 #include "ADN_App.h"
 #include "ADN_Workspace.h"
 #include "ADN_ComboBox_Vector.h"
@@ -30,7 +29,6 @@
 #include "ADN_GuiBuilder.h"
 #include "ADN_Composantes_Dotations_GUI.h"
 #include "ENT/ENT_Tr.h"
-
 #include <qframe.h>
 #include <qlabel.h>
 #include <qlayout.h>
@@ -48,10 +46,10 @@
 //-----------------------------------------------------------------------------
 ADN_Objects_GUI::ADN_Objects_GUI( ADN_Objects_Data& data )
     : ADN_GUI_ABC( "ADN_Objects_GUI" )
-    , data_      ( data )
+    , data_( data )
 {
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Objects_GUI destructor
@@ -59,39 +57,45 @@ ADN_Objects_GUI::ADN_Objects_GUI( ADN_Objects_Data& data )
 //-----------------------------------------------------------------------------
 ADN_Objects_GUI::~ADN_Objects_GUI()
 {
+    // NOTHING
 }
 
 namespace
 {
-    class ADN_ComboBox_List
-        : public ADN_ComboBox
+    class ADN_ComboBox_List : public ADN_ComboBox
     {
     private:
-
-        class ADN_CCB
-            : public ADN_Connector_EnumComboBox
+        class ADN_CCB : public ADN_Connector_EnumComboBox
         {
         public:
-            explicit ADN_CCB( ADN_ComboBox_List& parent ) : ADN_Connector_EnumComboBox( &parent ) {}
-            virtual ~ADN_CCB() {}
-
+            explicit ADN_CCB( ADN_ComboBox_List& parent )
+                : ADN_Connector_EnumComboBox( &parent )
+            {
+                // NOTHING
+            }
+            virtual ~ADN_CCB()
+            {
+                // NOTHING
+            }
             std::string GetItem(void * obj)
             {
                 return *static_cast< std::string* >( obj );
             }
         };
-
     public:
         explicit ADN_ComboBox_List( QWidget* parent = 0, const char * name = 0 )
             : ADN_ComboBox( parent, name )
         {
             pConnector_ = new ADN_CCB( *this );
         }
-        virtual ~ADN_ComboBox_List() {}
-
+        virtual ~ADN_ComboBox_List()
+        {
+            // NOTHING
+        }
     protected:
         void UpdateEnableState()
         {
+            // NOTHING
         }
     };
 }
@@ -174,7 +178,6 @@ void ADN_Objects_GUI::Build()
     }
 
     // Activable
-
     ADN_GroupBox* activable = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Activable" ), hBox );
     {
         vInfosConnectors[ eActivableCapacityPresent ] = & activable->GetConnector();
@@ -197,11 +200,11 @@ void ADN_Objects_GUI::Build()
     {
         vInfosConnectors[ eMobilityCapacityPresent ] = & mobility->GetConnector();
 
-         // Default speed
+        // Default speed
         builder.AddField< ADN_EditLine_Double >( mobility, tr( "Default speed"), vInfosConnectors[ eMobilityCapacity_DefaultSpeed ], tr( "km/h" ) );
-        builder.AddEnumField< E_SpeedImpact >( mobility, tr( "Speed impact"), vInfosConnectors[ eMobilityCapacity_SpeedModifier ], ADN_Tr::ConvertFromSpeedImpact );
-        builder.AddField< ADN_EditLine_Double >( mobility, tr( "Max agent speed"), vInfosConnectors[ eMobilityCapacity_MaxAgentSpeed ], tr( "%" ), ePercentage );
-        // connect( pSpeedImpactCombo_, SIGNAL( activated( int ) ), this, SLOT( OnSpeedImpactComboChanged() ) );
+        pSpeedImpactCombo_ = builder.AddEnumField< E_SpeedImpact >( mobility, tr( "Speed impact"), vInfosConnectors[ eMobilityCapacity_SpeedModifier ], ADN_Tr::ConvertFromSpeedImpact );
+        pMaxAgentSpeed_ = builder.AddField< ADN_EditLine_Double >( mobility, tr( "Max agent speed"), vInfosConnectors[ eMobilityCapacity_MaxAgentSpeed ], tr( "%" ), ePercentage );
+        connect( pSpeedImpactCombo_, SIGNAL( activated( int ) ), this, SLOT( OnSpeedImpactComboChanged() ) );
     }
 
     ADN_GroupBox* workable = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Workable" ), hBox );
@@ -216,7 +219,7 @@ void ADN_Objects_GUI::Build()
         ADN_GroupBox* dotation = new ADN_GroupBox( 2, Qt::Horizontal, tr( "Use ammunition" ), attrition );
         vInfosConnectors[ eAttritionCapacityUseDotation ] = & dotation->GetConnector();
         builder.AddField< ADN_ComboBox_Vector<ADN_Equipement_Data::AmmoCategoryInfo> >( dotation, tr( "Dotation" ), vInfosConnectors[ eAttritionDotation ] );
-     }
+    }
 
     // NBC
     QGroupBox* gNBC = new QGroupBox( 2, Qt::Horizontal, tr( "NBC" ), hBox );
@@ -351,10 +354,8 @@ void ADN_Objects_GUI::Build()
     QBoxLayout* pListAndDataLayout = new QHBoxLayout( 0, 10, 10 );
     pListAndDataLayout->addWidget( pList, 1 );
     pListAndDataLayout->addWidget( pGroup_, 2 );
-
     pMainLayout->addLayout( pListAndDataLayout, 2 );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_GUI::OnSpeedImpactComboChanged
@@ -362,10 +363,7 @@ void ADN_Objects_GUI::Build()
 // -----------------------------------------------------------------------------
 void ADN_Objects_GUI::OnSpeedImpactComboChanged()
 {
-    if( pSpeedImpactCombo_->currentText() == ADN_Tr::ConvertFromSpeedImpact( eSpeedImpact_VitesseMaxAgent ).c_str() )
-        pMaxAgentSpeed_->setEnabled( true );
-    else
-        pMaxAgentSpeed_->setEnabled( false );
+    pMaxAgentSpeed_->setEnabled( pSpeedImpactCombo_->currentText() == ADN_Tr::ConvertFromSpeedImpact( eSpeedImpact_VitesseMaxAgent, ENT_Tr_ABC::eToTr ).c_str() );
 }
 
 // -----------------------------------------------------------------------------

@@ -18,7 +18,6 @@ class QWidget;
 class ADN_Objects;
 class ADN_Objects_Data;
 
-
 // =============================================================================
 /** @class  ADN_Objects_GUI
     @brief  ADN_Objects_GUI
@@ -26,7 +25,7 @@ class ADN_Objects_Data;
 // Created: APE 2004-12-06
 // =============================================================================
 class ADN_Objects_GUI
-: public ADN_GUI_ABC
+    : public ADN_GUI_ABC
 {
     Q_OBJECT
 
@@ -36,75 +35,49 @@ public:
         eName = 0,
         eGeometry,
         eSymbol,
-
         eActivableCapacityPresent,
-
         eAttritionCapacityPresent,
         eAttritionDotation,
         eAttritionCapacityUseDotation,
-
         eAvoidableCapacityPresent,
         eAvoidableCapacity_Distance,
-
         eBridgingCapacityPresent,
-
         eBuildableCapacityPresent,
         eBuildableCapacity_Dotation,
-
         eBypassableCapacityPresent,
         eBypassableCapacity_Speed,
-
         eConstructorCapacityPresent,
         eConstructorCapacity_DefaultConsumption,
         eConstructorCapacity_UnitType,
-
         eContaminationCapacityPresent,
         eContaminationCapacity_MaxToxic,
-
         eDecontaminationCapacityPresent,
-
         eExtinguishableCapacityPresent,
-
         eHealableCapacityPresent,
-
         eImprovableCapacityPresent,
         eImprovableCapacity_Dotation,
-
         eInterferenceCapacityPresent,
-
         eInteractWithEnemyCapacityPresent,
-
         eIntoxicationCapacityPresent,
         eIntoxicationCapacity_MaxToxic,
-
         eLogisticCapacityPresent,
-
         eMobilityCapacityPresent,
         eMobilityCapacity_DefaultSpeed,
         eMobilityCapacity_SpeedModifier,
         eMobilityCapacity_MaxAgentSpeed,
-
         eOccupableCapacityPresent,
-
         ePropagationCapacityPresent,
         ePropagationCapacity_ModelType,
-
         eProtectionCapacityPresent,
         eProtectionCapacity_MaxSize,
         eProtectionCapacity_GeniePrepared,
-
         eSupplyCapacityPresent,
-
         eSupplyRouteCapacityPresent,
-
         eTerrainHeuristicCapacityPresent,
         eTerrainHeuristicCapacity_LocationScore,
-
         eTimeLimitedCapacityPresent,
-
         eWorkableCapacityPresent,
         eWorkableCapacity_Size,
-
         eDetectionCapacityPresent,
         eHasDetectionTime,
         eDetectionTime,
@@ -112,32 +85,25 @@ public:
         eRecoTime,
         eHasIdentificationTime,
         eIdentificationTime,
-
         eSpawnCapacityPresent,
         eActionRange,
         eObjectType,
-
         eAttitudeModifierCapacityPresent,
         eAttitude,
-
         ePerceptionCapacityPresent,
         eBlinded,
-
         eScatteringCapacityPresent,
         eHumanByTimeStep,
-
         eDelayCapacityPresent,
-
         eStructuralStateCapacityPresent,
         eStructuralStateCapacity_Value,
-
         eNbrGuiElements
     };
 
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_Objects_GUI( ADN_Objects_Data& data );
+    explicit ADN_Objects_GUI( ADN_Objects_Data& data );
     virtual ~ADN_Objects_GUI();
     //@}
 
@@ -147,14 +113,16 @@ public:
     void Enable( bool enable );
     //@}
 
-private slots:
-    void OnSpeedImpactComboChanged();
+    private slots:
+        //! @name slots
+        //@{
+        void OnSpeedImpactComboChanged();
+        //@}
 
 private:
     //! @name Member data
     //@{
     ADN_Objects_Data& data_;
-
     QComboBox* pSpeedImpactCombo_;
     QWidget* pMaxAgentSpeed_;
     QGroupBox* pGroup_;
