@@ -113,6 +113,8 @@ public:
         eReport_DisembarkmentInterrupted,
         eReport_DisembarkmentResumed,
         eReport_DisembarkmentFinished,
+        eReport_ActiveProtectionCounter,
+        eReport_ActiveProtectionHardKill,
         eNbrReport
     };
 
@@ -386,6 +388,8 @@ public:
         eRC_DisembarkmentInterrupted = 3005,
         eRC_DisembarkmentResumed = 3006,
         eRC_DisembarkmentFinished = 3007,
+        eRC_ActiveProtectionCounter = 3008,
+        eRC_ActiveProtectionHardKill = 3009,
         eLast
     };
     //@}

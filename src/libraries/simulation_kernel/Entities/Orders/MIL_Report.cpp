@@ -110,6 +110,8 @@ void MIL_Report::Initialize( xml::xistream& xis )
     diaEvents_[ eReport_DisembarkmentInterrupted ] = eRC_DisembarkmentInterrupted;
     diaEvents_[ eReport_DisembarkmentResumed ]     = eRC_DisembarkmentResumed;
     diaEvents_[ eReport_DisembarkmentFinished ]    = eRC_DisembarkmentFinished;
+    diaEvents_[ eReport_ActiveProtectionCounter ]  = eRC_ActiveProtectionCounter;
+    diaEvents_[ eReport_ActiveProtectionHardKill ] = eRC_ActiveProtectionHardKill;
 }
 
 // -----------------------------------------------------------------------------

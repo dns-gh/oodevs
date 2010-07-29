@@ -14,6 +14,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+#include "Entities/Orders/MIL_Report.h"
 
 PHY_ActiveProtection::T_ProtectionList PHY_ActiveProtection::protections_;
 
@@ -131,7 +132,10 @@ double PHY_ActiveProtection::GetPHModifier( const PHY_DotationCategory& category
 // -----------------------------------------------------------------------------
 bool PHY_ActiveProtection::CounterIndirectFire( const PHY_DotationCategory& category, MIL_Agent_ABC& pion ) const
 {
-    return HasAmmo( pion ) ? ( !hardKill_ && MIL_Random::rand_oi( MIL_Random::eFire ) > GetCoefficient( category ) ) : false;
+    bool result = HasAmmo( pion ) ? ( !hardKill_ && MIL_Random::rand_oi( MIL_Random::eFire ) > GetCoefficient( category ) ) : false;
+    if( result )
+        MIL_Report::PostEvent( pion, MIL_Report::eReport_ActiveProtectionCounter );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -140,7 +144,10 @@ bool PHY_ActiveProtection::CounterIndirectFire( const PHY_DotationCategory& cate
 // -----------------------------------------------------------------------------
 bool PHY_ActiveProtection::DestroyIndirectFire( const PHY_DotationCategory& category, MIL_Agent_ABC& pion ) const
 {
-    return HasAmmo( pion ) ? ( hardKill_ && MIL_Random::rand_oi( MIL_Random::eFire ) > GetCoefficient( category ) ) : false;
+    bool result = HasAmmo( pion ) ? ( hardKill_ && MIL_Random::rand_oi( MIL_Random::eFire ) > GetCoefficient( category ) ) : false;
+    if( result )
+        MIL_Report::PostEvent( pion, MIL_Report::eReport_ActiveProtectionHardKill );
+    return result;
 }
 
 // -----------------------------------------------------------------------------

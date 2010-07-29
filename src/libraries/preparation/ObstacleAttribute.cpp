@@ -35,8 +35,22 @@ ObstacleAttribute::ObstacleAttribute( kernel::PropertiesDictionary& dico )
 ObstacleAttribute::ObstacleAttribute( kernel::PropertiesDictionary& dico, Enum_DemolitionTargetType type )
     : type_ ( type )
     , bActivated_ ( type_.GetValue() == eDemolitionTargetType_Preliminary )
+    , activationTime_ ( 0 )
 {
     CreateDictionary( dico );
+}
+
+namespace
+{
+    int GetActivationTime( xml::xistream& xis )
+    {
+        int result = 0;
+        xis >> xml::optional()
+            >> xml::start( "activation-time" )
+                >> xml::attribute( "value", result )
+            >> xml::end;
+        return result;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +59,8 @@ ObstacleAttribute::ObstacleAttribute( kernel::PropertiesDictionary& dico, Enum_D
 // -----------------------------------------------------------------------------
 ObstacleAttribute::ObstacleAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico )
     : type_ ( attribute( xis, "type", std::string() ) )
-    , bActivated_ ( type_.GetValue() == eDemolitionTargetType_Preliminary )
+    , bActivated_ ( xis.attribute<bool>( "activated" ) )
+    , activationTime_ ( GetActivationTime( xis ) )
 {
     CreateDictionary( dico );
 }
@@ -68,8 +83,7 @@ void ObstacleAttribute::Display( kernel::Displayer_ABC& displayer ) const
     displayer.Group( tools::translate( "Object", "Mine parameters" ) )
              .Display( tools::translate( "Object", "Obstacle type:" ), type_.GetValue() )
              .Display( tools::translate( "Object", "Reserved obstacle activated:" ), bActivated_ );
-    if( !bActivated_ )
-        displayer.Display( tools::translate( "Object", "Activation time:" ), activationTime_ / 3600. * Units::hours );
+    displayer.Display( tools::translate( "Object", "Activation time:" ), activationTime_ / 3600. * Units::hours );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,8 +95,7 @@ void ObstacleAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
     displayer.Display( tools::translate( "Object", "Obstacle type:" ), type_.GetValue() );
     if( type_.GetValue() == eDemolitionTargetType_Reserved )
         displayer.Display( tools::translate( "Object", "Reserved obstacle activated:" ), bActivated_ );
-    if( !bActivated_ )
-        displayer.Display( tools::translate( "Object", "Activation time:" ), activationTime_ / 3600. * Units::hours );
+    displayer.Display( tools::translate( "Object", "Activation time:" ), activationTime_ / 3600. * Units::hours );
 }
 
 // -----------------------------------------------------------------------------

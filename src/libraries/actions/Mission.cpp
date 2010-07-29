@@ -23,14 +23,29 @@ using namespace actions;
 
 namespace
 {
-    const OrderType& ResolveType( xml::xistream& xis, const tools::Resolver_ABC< MissionType >& missions, const Entity_ABC& entity )
+    const OrderType& ResolveType( xml::xistream& xis, const tools::Resolver_ABC< MissionType >& missions, const Entity_ABC& entity, bool stub )
     {
-        const unsigned int id = xis.attribute< unsigned int >( "id", 0 );
-        const std::string name = xis.attribute< std::string >( "name", "" );
-        const OrderType* type = missions.Find( id );
-        if( !type )
-            throw std::exception( tools::translate( "Mission", "Entity '%1' (id: %2) cannot execute mission '%3' (id: %4)" )
+        const OrderType* type = 0;
+        try
+        {
+            const unsigned int id = xis.attribute< unsigned int >( "id", 0 );
+            const std::string name = xis.attribute< std::string >( "name", "" );
+            type = missions.Find( id );
+            if( !type )
+            {
+                throw std::exception( tools::translate( "Mission", "Entity '%1' (id: %2) cannot execute mission '%3' (id: %4)" )
                                     .arg( entity.GetName() ).arg( entity.GetId() ).arg( name.c_str() ).arg( id ) );
+            }
+        }
+        catch( std::exception& e )
+        {
+            if( stub )
+            {
+                static const OrderType stubType;
+                return stubType;
+            }
+            throw e;
+        }
         return *type;
     }
 }
@@ -51,8 +66,8 @@ Mission::Mission( const Entity_ABC& entity, const MissionType& mission, Controll
 // Name: Mission constructor
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-Mission::Mission( xml::xistream& xis, Controller& controller, const tools::Resolver_ABC< MissionType >& missions, const Entity_ABC& entity )
-    : ActionWithTarget_ABC( xis, controller, ResolveType( xis, missions, entity ), entity )
+Mission::Mission( xml::xistream& xis, Controller& controller, const tools::Resolver_ABC< MissionType >& missions, const Entity_ABC& entity, bool stub )
+    : ActionWithTarget_ABC( xis, controller, ResolveType( xis, missions, entity, stub ), entity )
     , controller_         ( controller )
     , registered_         ( true )
 {

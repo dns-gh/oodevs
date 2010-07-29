@@ -372,4 +372,6 @@
   <report id="3005" message="Disembarkment - interrupted"/>
   <report id="3006" message="Disembarkment - resumed"/>
   <report id="3007" message="Disembarkment - finished"/>
+  <report id="3008" message="Active protection successful"/>
+  <report id="3009" message="Hard-kill active protection successful"/>
 </reports>

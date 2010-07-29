@@ -66,6 +66,8 @@ void TimelineView::NotifyCreated( const Action_ABC& action )
     const kernel::Entity_ABC* entity = 0;
     if( const ActionTasker* tasker = action.Retrieve< ActionTasker >() )
         entity = tasker->GetTasker();
+    if( actions_.find( entity ) == actions_.end() )
+        orderedActions_.push_back( entity );
     T_Actions& actions = actions_[ entity ];
     actions[ &action ] = new TimelineActionItem( canvas(), ruler_, controllers_, model_, action );
     Update();
@@ -113,6 +115,14 @@ void TimelineView::NotifyDeleted( const kernel::Entity_ABC& entity )
             delete itAction->second;
         }
         actions_.erase( it );
+        for( T_OrderedEntities::iterator orderedIt = orderedActions_.begin(); orderedIt != orderedActions_.end(); ++orderedIt )
+        {
+            if( *orderedIt == &entity )
+            {
+                orderedActions_.erase( orderedIt );
+                break;
+            }
+        }
         Update();
     }
 }
@@ -124,9 +134,9 @@ void TimelineView::NotifyDeleted( const kernel::Entity_ABC& entity )
 void TimelineView::Update()
 {
     int row = 0;
-    for( T_EntityActions::iterator it = actions_.begin(); it != actions_.end(); ++it )
+    for( T_OrderedEntities::const_iterator it = orderedActions_.begin(); it != orderedActions_.end(); ++it )
     {
-        T_Actions& actions = it->second;
+        T_Actions& actions = actions_[ *it ];
         bool actionVisible = false;
         for( T_Actions::iterator itAction = actions.begin(); itAction != actions.end(); ++itAction )
         {

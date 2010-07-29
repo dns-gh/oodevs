@@ -433,4 +433,6 @@
   <report id="3005" message="Débarquement - interruption"/>
   <report id="3006" message="Débarquement - reprise"/>
   <report id="3007" message="Débarquement - fin"/>
+  <report id="3008" message="Protection active réussie"/>
+  <report id="3009" message="Protection active hard kill réussie"/>
 </reports>
