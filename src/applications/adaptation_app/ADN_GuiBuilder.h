@@ -110,14 +110,6 @@ public:
     QTableItem* AddTableCell( ADN_Table* pTable, int nRow, int nCol, int nRowSpan, int nColSpan, const char* strText = 0, QTableItem::EditType nEditType = QTableItem::Never );
     //@}
 
-    //! @name Modifiers
-    //@{
-    //@}
-
-    //! @name Operators
-    //@{
-    //@}
-
 private:
     //! @name Helpers
     //@{
