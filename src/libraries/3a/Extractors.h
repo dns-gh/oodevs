@@ -13,9 +13,6 @@
 #include "Position.h"
 #include "Types.h"
 
-using namespace Common;
-using namespace MsgsSimToClient;
-
 // =============================================================================
 /** @namespace Extractors
     @brief     Extractors
@@ -34,11 +31,11 @@ namespace extractors
     // Attributes
     struct OperationalState : public Extractor< NumericValue >
     {
-        bool HasFlag( const MsgUnitAttributes& attributes ) const
+        bool HasFlag( const MsgsSimToClient::MsgUnitAttributes& attributes ) const
         {
             return attributes.has_etat_operationnel_brut();
         }
-        NumericValue Extract( const MsgUnitAttributes& attributes ) const
+        NumericValue Extract( const MsgsSimToClient::MsgUnitAttributes& attributes ) const
         {
             return NumericValue( attributes.etat_operationnel_brut() * 0.01f );
         }
@@ -46,11 +43,11 @@ namespace extractors
 
     struct Position : public Extractor< ::Position >
     {
-        bool HasFlag( const MsgUnitAttributes& attributes ) const
+        bool HasFlag( const MsgsSimToClient::MsgUnitAttributes& attributes ) const
         {
             return attributes.has_position();
         }
-        ::Position Extract( const MsgUnitAttributes& attributes ) const
+        ::Position Extract( const MsgsSimToClient::MsgUnitAttributes& attributes ) const
         {
             return ::Position( attributes.position() );
         }
@@ -58,11 +55,11 @@ namespace extractors
 
     struct Mounted : public Extractor< NumericValue >
     {
-        bool HasFlag( const MsgUnitAttributes& attributes ) const
+        bool HasFlag( const MsgsSimToClient::MsgUnitAttributes& attributes ) const
         {
             return attributes.has_embarque();
         }
-        NumericValue Extract( const MsgUnitAttributes& attributes ) const
+        NumericValue Extract( const MsgsSimToClient::MsgUnitAttributes& attributes ) const
         {
             return NumericValue( attributes.embarque() ? 0.f : 1.f );
         }
@@ -71,15 +68,15 @@ namespace extractors
     // Existences
     struct MaintenanceHandlingUnitId : public Extractor< NumericValue >
     {
-        bool IsCreation( const MsgSimToClient& wrapper ) const
+        bool IsCreation( const MsgsSimToClient::MsgSimToClient& wrapper ) const
         {
             return wrapper.message().has_log_maintenance_handling_creation();
         }
-        NumericValue Extract( const MsgSimToClient& wrapper ) const
+        NumericValue Extract( const MsgsSimToClient::MsgSimToClient& wrapper ) const
         {
             return NumericValue( wrapper.message().log_maintenance_handling_creation().oid_pion() );
         }
-        bool IsDestruction( const MsgSimToClient& wrapper ) const
+        bool IsDestruction( const MsgsSimToClient::MsgSimToClient& wrapper ) const
         {
             return wrapper.message().has_log_maintenance_handling_destruction();
         }
@@ -87,16 +84,16 @@ namespace extractors
 
     struct DirectFireUnitId : public Extractor< NumericValue >
     {
-        bool IsCreation( const MsgSimToClient& wrapper ) const
+        bool IsCreation( const MsgsSimToClient::MsgSimToClient& wrapper ) const
         {
             return wrapper.message().has_start_unit_fire() &&
                    wrapper.message().start_unit_fire().type() == Common::direct;
         }
-        NumericValue Extract( const MsgSimToClient& wrapper ) const
+        NumericValue Extract( const MsgsSimToClient::MsgSimToClient& wrapper ) const
         {
             return NumericValue( wrapper.message().start_unit_fire().firer_oid() );
         }
-        bool IsDestruction( const MsgSimToClient& wrapper ) const
+        bool IsDestruction( const MsgsSimToClient::MsgSimToClient& wrapper ) const
         {
             return wrapper.message().has_stop_unit_fire();
         }
@@ -104,16 +101,16 @@ namespace extractors
 
     struct IndirectFireUnitId : public Extractor< NumericValue >
     {
-        bool IsCreation( const MsgSimToClient& wrapper ) const
+        bool IsCreation( const MsgsSimToClient::MsgSimToClient& wrapper ) const
         {
             return wrapper.message().has_start_unit_fire() &&
                    wrapper.message().start_unit_fire().type() == Common::indirect;
         }
-        NumericValue Extract( const MsgSimToClient& wrapper ) const
+        NumericValue Extract( const MsgsSimToClient::MsgSimToClient& wrapper ) const
         {
             return NumericValue( wrapper.message().start_unit_fire().firer_oid() );
         }
-        bool IsDestruction( const MsgSimToClient& wrapper ) const
+        bool IsDestruction( const MsgsSimToClient::MsgSimToClient& wrapper ) const
         {
             return wrapper.message().has_stop_unit_fire();
         }

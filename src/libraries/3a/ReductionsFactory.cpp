@@ -17,6 +17,7 @@
 #include "Maximum.h"
 #include "Adder.h"
 #include "Meaner.h"
+#include "Product.h"
 #include "Threshold.h"
 
 // -----------------------------------------------------------------------------
@@ -61,6 +62,8 @@ void ReductionsFactory::Reduce( const std::string& name, xml::xistream& xis, Tas
         ReduceFunction< Meaner< K, T > >( name, xis, result );
     else if( functionName == "threshold" )
         ReduceFunction< Threshold< K, T > >( name, xis, result );
+    else if( functionName == "product" )
+        ReduceFunction2< Product< K, NumericValue > >( name, xis, result ); // Numeric( Numeric, Numeric )
     else
         throw std::runtime_error( "Unknown reduction '" + functionName + "'" );
 }
@@ -79,6 +82,27 @@ void ReductionsFactory::ReduceFunction( const std::string& name, xml::xistream& 
     boost::shared_ptr< Function_ABC > function( new F( xis, *connector ) );
     result.AddFunction( name, function );
     result.AddConnector( name, connector );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ReductionsFactory::ReduceFunction2
+// Created: AGE 2008-08-04
+// -----------------------------------------------------------------------------
+template< typename F >
+void ReductionsFactory::ReduceFunction2( const std::string& name, xml::xistream& xis, Task& result ) const
+{
+    typedef FunctionConnector< typename F::Key_Type, typename F::Result_Type > Connector;
+    typedef KeyMarshaller< typename F::Key_Type,
+                           typename F::First_Argument_Type,
+                           typename F::Second_Argument_Type > Marshaller;
+    boost::shared_ptr< Connector > connector( new Connector() );
+    boost::shared_ptr< F > function( new F( xis, *connector ) );
+    boost::shared_ptr< Marshaller > marshaller( new Marshaller( *function ) );
+
+    result.AddConnector( name, connector );
+    result.AddFunction ( function );
+    result.AddFunction ( name, marshaller );
 }
 
 TYPE_DISPATCH_HELPER( Reduce, ReductionsFactory )

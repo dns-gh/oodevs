@@ -81,7 +81,7 @@ void ExtractorsFactory::CreateElement( const std::string& type, xml::xistream& x
     else if( value == "fire-component-damage" )
         Extract< events::FireComponentDamages >( name, xis, result );
     else if( value == "detecting-unit" )
-        Extract< events::UnitDetection >( name, xis, result );
+        Extract< attributes::Detections >( name, xis, result );
     else if( value == "mounted" )
         Extract< attributes::Mounted >( name, xis, result );
     else

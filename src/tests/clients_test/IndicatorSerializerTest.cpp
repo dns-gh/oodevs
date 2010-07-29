@@ -479,4 +479,27 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestUnitMounting )
     ParseAndCheck( "Select( mounted(), $unit )", expected );
 }
 
+// -----------------------------------------------------------------------------
+// Name: IndicatorSerializer_TestTimeBetweenDetectionAndDestruction
+// Created: SBO 2010-07-12
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestTimeBetweenDetectionAndDestruction )
+{
+    const std::string expected =
+         "<indicator>"
+         "    <extract detected='69' function='detecting-unit' id='1' visibility='detected,recognized,identified'/>"
+         "    <reduce function='select' id='2' input='1' key='42' type='unsigned long'/>"
+         "    <extract function='operational-state' id='3'/>"
+         "    <reduce function='select' id='4' input='3' key='69' type='float'/>"
+         "    <reduce function='threshold' id='5' input='4' thresholds='0' type='float' values='0,1'/>"
+         "    <reduce function='product' id='6' input='2,5' type='unsigned long'/>"
+         "    <transform function='integrate' id='7' input='6' type='unsigned long'/>"
+         "</indicator>";
+
+    RegisterVariable( "unitDetecting", "unit", "42" );
+    RegisterVariable( "unitDetected", "unit", "69" );
+    RegisterVariable( "visibility", "perception levels", "detected,recognized,identified" );
+    ParseAndCheck( "Integrate( Product( Select( detecting-unit( $unitDetected, $visibility ), $unitDetecting ), Threshold( '0', '0,1', Select( operational-state(), $unitDetected ) ) ) )", expected );
+}
+
 BOOST_AUTO_TEST_SUITE_END()

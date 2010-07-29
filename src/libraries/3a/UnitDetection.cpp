@@ -56,6 +56,20 @@ UnitDetection::UnitDetection( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: UnitDetection::HasValue
+// Created: SBO 2010-07-28
+// -----------------------------------------------------------------------------
+bool UnitDetection::HasValue( const MsgSimToClient& wrapper ) const
+{
+    if( wrapper.message().has_unit_detection() )
+    {
+        const MsgsSimToClient::MsgUnitDetection& message = wrapper.message().unit_detection();
+        return detectedUnitId_ == unsigned long( message.detected_unit_oid() );
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: UnitDetection::Extract
 // Created: SBO 2010-06-01
 // -----------------------------------------------------------------------------

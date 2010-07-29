@@ -45,11 +45,11 @@ public:
 
     //! @name Operations
     //@{
-    bool HasFlag( const MsgUnitAttributes& attributes ) const
+    bool HasFlag( const MsgsSimToClient::MsgUnitAttributes& attributes ) const
     {
         return attributes.has_dotation_eff_ressource();
     }
-    int Extract( const MsgUnitAttributes& attributes );
+    int Extract( const MsgsSimToClient::MsgUnitAttributes& attributes );
     //@}
 
 private:

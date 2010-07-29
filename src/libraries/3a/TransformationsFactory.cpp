@@ -8,18 +8,18 @@
 // *****************************************************************************
 
 #include "TransformationsFactory.h"
-#include "TypeDispatcher.h"
-#include "Distance.h"
 #include "Contains.h"
-#include "Filter.h"
-#include "IsOneOf.h"
-#include "Derivate.h"
-#include "Integrate.h"
-#include "Domain.h"
 #include "Compare.h"
-#include "Connectors.h"
-#include "Task.h"
 #include "Composer.h"
+#include "Connectors.h"
+#include "Derivate.h"
+#include "Distance.h"
+#include "Domain.h"
+#include "Filter.h"
+#include "Integrate.h"
+#include "IsOneOf.h"
+#include "Task.h"
+#include "TypeDispatcher.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------

@@ -12,7 +12,6 @@
 
 #include "Values.h"
 #include "FireComponentDamages.h"
-#include "UnitDetection.h"
 
 // =============================================================================
 /** @namespace  Existences
@@ -38,7 +37,6 @@ namespace events
     };
 
 typedef Event< extractors::FireComponentDamages > FireComponentDamages;
-typedef Event< extractors::UnitDetection > UnitDetection;
 
 }
 

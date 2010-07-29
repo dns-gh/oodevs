@@ -25,14 +25,14 @@ Equipments::Equipments()
 namespace
 {
     const unsigned nEquipmentStates = 5;
-    typedef int (EquipmentDotations_EquipmentDotation::* EquipmentDotationsMemberFn)() const;
+    typedef int (MsgsSimToClient::EquipmentDotations_EquipmentDotation::* EquipmentDotationsMemberFn)() const;
     EquipmentDotationsMemberFn equipmentData[5] =
     {
-        &EquipmentDotations_EquipmentDotation::nb_disponibles,
-        &EquipmentDotations_EquipmentDotation::nb_indisponibles,
-        &EquipmentDotations_EquipmentDotation::nb_reparables,
-        &EquipmentDotations_EquipmentDotation::nb_dans_chaine_maintenance,
-        &EquipmentDotations_EquipmentDotation::nb_prisonniers
+        &MsgsSimToClient::EquipmentDotations_EquipmentDotation::nb_disponibles,
+        &MsgsSimToClient::EquipmentDotations_EquipmentDotation::nb_indisponibles,
+        &MsgsSimToClient::EquipmentDotations_EquipmentDotation::nb_reparables,
+        &MsgsSimToClient::EquipmentDotations_EquipmentDotation::nb_dans_chaine_maintenance,
+        &MsgsSimToClient::EquipmentDotations_EquipmentDotation::nb_prisonniers
     };
     const char* equipmentStates[5] =
     {
@@ -70,13 +70,13 @@ Equipments::Equipments( xml::xistream& xis )
 // Name: Equipments::Extract
 // Created: AGE 2007-10-29
 // -----------------------------------------------------------------------------
-int Equipments::Extract( const MsgUnitAttributes& attributes )
+int Equipments::Extract( const MsgsSimToClient::MsgUnitAttributes& attributes )
 {
     unsigned size = attributes.dotation_eff_materiel().elem_size();
     while( size > 0 )
     {
         --size;
-        const EquipmentDotations_EquipmentDotation& equipment = attributes.dotation_eff_materiel().elem( size );
+        const MsgsSimToClient::EquipmentDotations_EquipmentDotation& equipment = attributes.dotation_eff_materiel().elem( size );
         if( filter_.IsAllowed( equipment.type_equipement() ) )
         {
             int quantity = 0;

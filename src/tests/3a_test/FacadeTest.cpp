@@ -950,14 +950,53 @@ namespace
 // -----------------------------------------------------------------------------
 // Name: Facade_TestUnitDetection
 // Created: SBO 2010-06-01
+// $$$$ SBO 2010-07-28: 1 when detection level (for specified detecting unit) matches specified visibility, otherwise 0
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Facade_TestUnitDetection )
 {
     xml::xistringstream xis( "<indicator>"
                              "    <extract function='detecting-unit' id='1' detected='69' visibility='detected,recognized,identified'/>"
+                             "    <reduce type='int' function='select' input='1' key='42' id='2'/>"
+                             "    <result function='plot' input='2' type='int'/>"
+                             "</indicator>" );
+
+    MockPublisher publisher;
+    AarFacade facade( publisher, 42 );
+    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
+
+    task->Receive( BeginTick() );
+    task->Receive( CreateUnitDetection( 42, 69, Common::identified ) ); // ok
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( CreateUnitDetection( 42, 51, Common::recognized ) ); // irrelevant detected unit
+    task->Receive( CreateUnitDetection( 51, 69, Common::detected ) ); // irrelevant detecting unit
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( CreateUnitDetection( 42, 69, Common::invisible ) ); // irrelevant detection level
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( CreateUnitDetection( 42, 69, Common::recognized ) ); // ok
+    task->Receive( EndTick() );
+
+    double expectedResult[] = { 1, 1, 0, 1 };//, 1, 1, 1, 1 };
+    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    task->Commit();
+    publisher.verify();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestUnitDetectionWithThreshold
+// Created: SBO 2010-06-01
+// $$$$ SBO 2010-07-28: 1 when detection level (for any specified detecting units) matches specified visibility, otherwise 0
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( Facade_TestUnitDetectionWithThreshold )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='detecting-unit' id='1' detected='69' visibility='detected,recognized,identified'/>"
                              "    <transform function='domain' id='2' input='1' select='42,51' type='unsigned long'/>"
-                             "    <reduce type='int' function='sum' input='2' id='sum'/>"
-                             "    <result function='plot' input='sum' type='int'/>"
+                             "    <reduce type='int' function='sum' input='2' id='3'/>"
+                             "    <reduce type='float' function='threshold' input='3' thresholds='0,1' values='0,1' id='4'/>"
+                             "    <result function='plot' input='4' type='int'/>"
                              "</indicator>" );
 
     MockPublisher publisher;
@@ -983,7 +1022,82 @@ BOOST_AUTO_TEST_CASE( Facade_TestUnitDetection )
     task->Receive( CreateUnitDetection( 51, 69, Common::recognized ) );
     task->Receive( EndTick() );
 
-    double expectedResult[] = { 0, 1, 1, 0, 2 };
+    double expectedResult[] = { 0, 1, 1, 0, 1 };
+    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    task->Commit();
+    publisher.verify();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestProduct
+// Created: SBO 2010-07-28
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( Facade_TestProduct )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='operational-state' id='opstate'/>"
+                             "    <reduce type='float' function='select' input='opstate' key='42' id='myopstate'/>"
+                             "    <constant type='float' value='10' id='ten'/>"
+                             "    <reduce type='float' function='product' input='myopstate,ten' id='prod'/>"
+                             "    <result function='plot' input='prod' type='int'/>"
+                             "</indicator>" );
+
+    MockPublisher publisher;
+    AarFacade facade( publisher, 42 );
+    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
+
+    task->Receive( BeginTick() );
+    task->Receive( OperationalState( 100, 42 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( OperationalState( 50, 42 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( OperationalState( 0, 42 ) );
+    task->Receive( EndTick() );
+
+    double expectedResult[] = { 10, 5, 0 };
+    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    task->Commit();
+    publisher.verify();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestTimeElapsedBetweenDetectionAndDestruction
+// Created: SBO 2010-07-28
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( Facade_TestTimeElapsedBetweenDetectionAndDestruction )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='detecting-unit' id='detection' detected='69' visibility='detected,recognized,identified'/>"
+                             "    <reduce type='int' function='select' input='detection' key='42' id='mydetection'/>"
+                             "    <extract function='operational-state' id='opstate'/>"
+                             "    <reduce type='float' function='select' input='opstate' key='69' id='myopstate'/>"
+                             "    <reduce type='float' function='threshold' input='myopstate' thresholds='0' values='0,1' id='threshopstate'/>"
+                             "    <reduce type='float' function='product' input='mydetection,threshopstate' id='prod'/>"
+                             "    <transform function='integrate' id='sum' input='prod' type='int'/>"
+                             "    <result function='plot' input='sum' type='int'/>"
+                             "</indicator>" );
+
+    MockPublisher publisher;
+    AarFacade facade( publisher, 42 );
+    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
+
+    task->Receive( BeginTick() );
+    task->Receive( OperationalState( 100, 69 ) );
+    task->Receive( CreateUnitDetection( 42, 69, Common::detected ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( OperationalState( 0, 69 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( EndTick() );
+    
+    double expectedResult[] = { 1, 2, 3, 3, 3 };
     MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
     task->Commit();
     publisher.verify();
