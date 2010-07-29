@@ -64,7 +64,7 @@ private slots:
     //@{
     void OnAccept();
     void OnReject();
-    void OnChangeLang( int );
+    void OnChangeLang();
     void OnToggleDisplayMode( bool toggled );
     void OnAddResource();
     void OnDeleteResource();

@@ -51,8 +51,7 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
         lang_ = new gui::ValuedComboBox< QString >( hbox );
         lang_->AddItem( tr( "English" ), "en" );
         lang_->AddItem( tr( "French" ), "fr" );
-        selectedLang_ = lang_->GetValue();
-        connect( lang_, SIGNAL( activated( int ) ), this, SLOT( OnChangeLang( int ) ) );
+        connect( lang_, SIGNAL( activated( int ) ), this, SLOT( OnChangeLang() ) );
         QPushButton* textFormat = new QPushButton( tr( "source" ), hbox );
         textFormat->setToggleButton( true );
         connect( textFormat, SIGNAL( toggled( bool ) ), this, SLOT( OnToggleDisplayMode( bool ) ) );
@@ -121,6 +120,7 @@ void ExerciseDialog::Update( const Exercise& exercise )
     briefings_.clear();
     resources_->clear();
     exercise.Accept( *this );
+    OnChangeLang();
 }
 
 // -----------------------------------------------------------------------------
@@ -189,7 +189,7 @@ void ExerciseDialog::AddResource( const QString& name, const QString& file )
 // Name: ExerciseDialog::OnChangeLang
 // Created: SBO 2010-03-11
 // -----------------------------------------------------------------------------
-void ExerciseDialog::OnChangeLang( int )
+void ExerciseDialog::OnChangeLang()
 {
     briefings_[ selectedLang_ ] = briefing_->text();
     selectedLang_ = lang_->GetValue();
@@ -202,6 +202,7 @@ void ExerciseDialog::OnChangeLang( int )
 // -----------------------------------------------------------------------------
 void ExerciseDialog::OnAccept()
 {
+    OnChangeLang();
     exercise_.SetName( name_->text() );
     for( T_Briefings::const_iterator it = briefings_.begin(); it != briefings_.end(); ++it )
         exercise_.SetBriefing( it->first, it->second );
