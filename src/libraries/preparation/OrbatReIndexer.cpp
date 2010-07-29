@@ -73,7 +73,7 @@ namespace
 void OrbatReIndexer::ReadAttribute( const std::string& name, xml::xistream& xis )
 {
     if( IsIndex( name ) )
-        output_ << xml::attribute( name, xis.attribute< unsigned long >( name ) + shift_ );
+        output_ << xml::attribute( name, xis.value< unsigned long >() + shift_ );
     else
-        output_ << xml::attribute( name, xis.attribute< std::string >( name ) );
+        output_ << xml::attribute( name, xis.value< std::string >() );
 }

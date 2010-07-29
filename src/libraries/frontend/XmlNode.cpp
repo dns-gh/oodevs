@@ -71,7 +71,7 @@ XmlNode::~XmlNode()
 // -----------------------------------------------------------------------------
 void XmlNode::ReadAttribute( const std::string& name, xml::xistream& xis )
 {
-    attributes_[ name ] = xis.attribute< std::string >( name );
+    attributes_[ name ] = xis.value< std::string >();
 }
 
 // -----------------------------------------------------------------------------
