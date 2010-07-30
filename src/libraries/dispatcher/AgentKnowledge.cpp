@@ -42,6 +42,20 @@ AgentKnowledge::AgentKnowledge( Model& model, const MsgsSimToClient::MsgUnitKnow
     , bPrisoner_                    ( false )
     , bRefugeeManaged_              ( false )
 {
+    optionals_.pertinencePresent = 0;
+    optionals_.identification_levelPresent = 0;
+    optionals_.max_identification_levelPresent = 0;
+    optionals_.etat_opPresent = 0;
+    optionals_.mortPresent = 0;
+    optionals_.speedPresent = 0;
+    optionals_.nature_pcPresent = 0;
+    optionals_.renduPresent = 0;
+    optionals_.prisonnierPresent = 0;
+    optionals_.refugie_pris_en_comptePresent = 0;
+    optionals_.positionPresent = 0;
+    optionals_.directionPresent = 0;
+    optionals_.campPresent = 0;
+    optionals_.perception_par_compagniePresent = 0;
     RegisterSelf( *this );
 }
 
@@ -58,10 +72,11 @@ AgentKnowledge::~AgentKnowledge()
     if( ##MESSAGE##.has_##ASN##() )               \
     {                                             \
         CPP = ##MESSAGE##.##ASN();                \
+        optionals_.##ASN##Present = 1;             \
     }
 
 #define SEND_ASN_ATTRIBUTE( MESSAGE, ASN, CPP )  \
-    if( ##MESSAGE##.has_##ASN##() )    \
+    if( optionals_.##ASN##Present )    \
     {                                   \
         ##MESSAGE##.set_##ASN( CPP );  \
     }
@@ -84,16 +99,26 @@ void AgentKnowledge::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& me
     UPDATE_ASN_ATTRIBUTE( message, refugie_pris_en_compte  , bRefugeeManaged_     );
 
     if( message.has_position() )
+    {
         position_.Set( message.position().latitude(), message.position().longitude() );
+        optionals_.positionPresent = 1;
+    }
     if( message.has_direction() )
+    {
         nDirection_ = message.direction().heading();
+        optionals_.directionPresent = 1;
+    }
     if( message.has_camp() )
+    {
         team_ = &model_.Sides().Get( message.camp() );
+        optionals_.campPresent = 1;
+    }
     if( message.has_perception_par_compagnie() )
     {
         automatePerceptions_.clear();
         for( int i = 0; i < message.perception_par_compagnie().elem_size(); ++i )
             automatePerceptions_.push_back( message.perception_par_compagnie().elem().Get(i) );
+        optionals_.perception_par_compagniePresent = 1;
     }
 }
 
@@ -130,13 +155,18 @@ void AgentKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     SEND_ASN_ATTRIBUTE( message(), rendu                   , surrendered_         );
     SEND_ASN_ATTRIBUTE( message(), prisonnier              , bPrisoner_           );
     SEND_ASN_ATTRIBUTE( message(), refugie_pris_en_compte  , bRefugeeManaged_     );
-    message().mutable_position()->set_latitude( position_.X() );
-    message().mutable_position()->set_longitude( position_.Y() );
-    message().mutable_direction()->set_heading( nDirection_ );
-    if( team_ )
+    if( optionals_.positionPresent )
+    {
+        message().mutable_position()->set_latitude( position_.X() );
+        message().mutable_position()->set_longitude( position_.Y() );
+    }
+    if( optionals_.directionPresent )
+        message().mutable_direction()->set_heading( nDirection_ );
+    if( team_ && optionals_.campPresent )
         message().set_camp( team_->GetId() );
-    for( unsigned int i = 0; i < automatePerceptions_.size(); ++i )
-        *message().mutable_perception_par_compagnie()->add_elem() = automatePerceptions_[ i ];
+    if( optionals_.perception_par_compagniePresent )
+        for( unsigned int i = 0; i < automatePerceptions_.size(); ++i )
+            *message().mutable_perception_par_compagnie()->add_elem() = automatePerceptions_[ i ];
     message.Send( publisher );
 }
 

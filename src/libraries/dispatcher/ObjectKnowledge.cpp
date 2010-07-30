@@ -49,6 +49,11 @@ ObjectKnowledge::ObjectKnowledge( const Model_ABC& model, const MsgsSimToClient:
     , typename_                      ( "objectKnowledge" )
 {
     optionals_.realObjectPresent = pObject_ != 0;
+    optionals_.relevancePresent = 0;
+    optionals_.locationPresent = 0;
+    optionals_.perceivedPresent = 0;
+    optionals_.specific_attributesPresent = 0;
+    optionals_.automat_perceptionPresent = 0;
     Initialize( model, message.attributes() );
     RegisterSelf( *this );
 }

@@ -63,12 +63,16 @@ AgentKnowledge::~AgentKnowledge()
 // -----------------------------------------------------------------------------
 void AgentKnowledge::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message )
 {
-    if( message.has_identification_level()  )
-        // $$$$ AGE 2005-03-23: !! Les enums message et sim ne correspondent pas...
-        nCurrentPerceptionLevel_ = (E_PerceptionResult)( 3 - message.identification_level() );
-
     if( message.has_max_identification_level()  )
         nMaxPerceptionLevel_ = (E_PerceptionResult)( 3 - message.max_identification_level() );
+
+    if( message.has_identification_level()  )
+    {
+        // $$$$ AGE 2005-03-23: !! Les enums message et sim ne correspondent pas...
+        nCurrentPerceptionLevel_ = (E_PerceptionResult)( 3 - message.identification_level() );
+        if( nCurrentPerceptionLevel_ > nMaxPerceptionLevel_ )
+            nMaxPerceptionLevel_ = nCurrentPerceptionLevel_;
+    }
 
     if( message.has_etat_op()  )
         nEtatOps_ = message.etat_op();
