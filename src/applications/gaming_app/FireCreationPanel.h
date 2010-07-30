@@ -70,6 +70,7 @@ private slots:
     void Commit();
     void MenuItemTargetValidated();
     void MenuItemReporterValidated();
+    void UpdateCommitButton();
     //@}
 
 private:
@@ -101,6 +102,7 @@ private:
     QLabel* reporterLabel_;
     gui::ValuedComboBox< int >* ammunitionsBox_;
     QLineEdit* interventionType_;
+    QPushButton* ok_;
     //@}
 };
 

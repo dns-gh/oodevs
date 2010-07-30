@@ -73,10 +73,12 @@ FireCreationPanel::FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& pane
 
         new QLabel( tools::translate( "FireCreationPanel", "IT:" ), group );
         interventionType_ = new QLineEdit( "0", group );
+        connect( interventionType_, SIGNAL( textChanged( const QString & ) ), this, SLOT( UpdateCommitButton() ) );
     }
 
-    QPushButton* ok = new QPushButton( tools::translate( "FireCreationPanel", "ApplyFire" ), this );
-    connect( ok, SIGNAL( clicked() ), this, SLOT( Commit() ) );
+    ok_ = new QPushButton( tools::translate( "FireCreationPanel", "ApplyFire" ), this );
+    connect( ok_, SIGNAL( clicked() ), this, SLOT( Commit() ) );
+    ok_->setEnabled( false );
     controllers_.Register( *this );
 }
 
@@ -90,20 +92,32 @@ FireCreationPanel::~FireCreationPanel()
 }
 
 // -----------------------------------------------------------------------------
+// Name: FireCreationPanel::UpdateCommitButton
+// Created: LDC 2010-07-30
+// -----------------------------------------------------------------------------
+void FireCreationPanel::UpdateCommitButton()
+{
+    ok_->setEnabled( selectedTarget_ && interventionType_->text().toFloat() > 0 && selectedReporter_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: FireCreationPanel::Commit
 // Created: MGD 2010-02-23
 // -----------------------------------------------------------------------------
 void FireCreationPanel::Commit()
 {
-    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "fire_order" );
-    UnitMagicAction* action = new UnitMagicAction( *selectedReporter_, actionType, controllers_.controller_, true );
-    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-    action->AddParameter( *new parameters::Identifier( it.NextElement(), selectedTarget_->GetId() ) );
-    action->AddParameter( *new parameters::DotationType( it.NextElement(), ammunitionsBox_->GetValue(), staticModel_.objectTypes_ ) );
-    action->AddParameter( *new parameters::Numeric( it.NextElement(), interventionType_->text().toFloat() ) );
-    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_, *action ) );
-    action->Attach( *new ActionTasker( selectedReporter_, false ) );
-    action->RegisterAndPublish( actionsModel_ );
+    if( selectedTarget_ && interventionType_->text().toFloat() > 0 && selectedReporter_ )
+    {
+        kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "fire_order" );
+        UnitMagicAction* action = new UnitMagicAction( *selectedReporter_, actionType, controllers_.controller_, true );
+        tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+        action->AddParameter( *new parameters::Identifier( it.NextElement(), selectedTarget_->GetId() ) );
+        action->AddParameter( *new parameters::DotationType( it.NextElement(), ammunitionsBox_->GetValue(), staticModel_.objectTypes_ ) );
+        action->AddParameter( *new parameters::Numeric( it.NextElement(), interventionType_->text().toFloat() ) );
+        action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_, *action ) );
+        action->Attach( *new ActionTasker( selectedReporter_, false ) );
+        action->RegisterAndPublish( actionsModel_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -161,6 +175,7 @@ void FireCreationPanel::MenuItemTargetValidated()
 {
     selectedTarget_ = potentialTarget_;
     targetLabel_->setText( selectedTarget_->GetName() );
+    UpdateCommitButton();
 }
 
 // -----------------------------------------------------------------------------
@@ -171,4 +186,5 @@ void FireCreationPanel::MenuItemReporterValidated()
 {
     selectedReporter_ = potentialReporter_;
     reporterLabel_->setText( selectedReporter_->GetName() );
+    UpdateCommitButton();
 }
