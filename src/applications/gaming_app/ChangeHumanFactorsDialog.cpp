@@ -44,45 +44,40 @@ namespace
             combo.AddItem( tools::ToString( (Enum)i ), (Enum)i );
     }
 }
+
 // -----------------------------------------------------------------------------
 // Name: ChangeHumanFactorsDialog constructor
 // Created: AGE 2005-09-22
 // -----------------------------------------------------------------------------
 ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controllers& controllers, const ::StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const Profile_ABC& profile )
-    : QDialog( pParent, tr( "Human factors" ) )
-    , controllers_( controllers )
-    , static_( staticModel )
+: QDialog( pParent, tr( "Human factors" ) )
+    , controllers_ ( controllers )
+    , static_      ( staticModel )
     , actionsModel_( actionsModel )
-    , simulation_( simulation )
-    , profile_( profile )
-    , selected_( controllers )
+    , simulation_  ( simulation )
+    , profile_     ( profile )
+    , selected_    ( controllers )
 {
     setCaption( tr( "Human factors" ) );
     QGridLayout* pLayout = new QGridLayout( this, 5, 2, 4 );
     pLayout->setRowStretch( 6, 1 );
     pLayout->setRowStretch( 2, 0 );
-
     pLayout->addWidget( new QLabel( tr( "Tiredness:" ), this ), 1, 0 );
     pTirednessCombo_ = new ValuedComboBox< E_UnitTiredness >( this );
     pLayout->addWidget( pTirednessCombo_, 1, 1 );
-
     pLayout->addWidget( new QLabel( tr( "Moral:" ), this ), 2, 0 );
     pMoralCombo_ = new ValuedComboBox< E_UnitMorale >( this );
     pLayout->addWidget( pMoralCombo_, 2, 1 );
-
     pLayout->addWidget( new QLabel( tr( "Experience:" ), this ), 3, 0 );
     pExperienceCombo_ = new ValuedComboBox< E_UnitExperience >( this );
     pLayout->addWidget( pExperienceCombo_, 3, 1 );
-
     QHBox* box = new QHBox( this );
     QPushButton* okBtn = new QPushButton( tr( "Ok" ), box );
     QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ), box );
     okBtn->setDefault( true );
     pLayout->addMultiCellWidget( box, 4, 4, 0, 1, Qt::AlignCenter );
-
     connect( okBtn, SIGNAL( clicked() ), SLOT( Validate() ) );
     connect( cancelBtn, SIGNAL( clicked() ), SLOT( hide() ) );
-
     controllers_.Register( *this );
     hide();
 }
@@ -102,10 +97,9 @@ ChangeHumanFactorsDialog::~ChangeHumanFactorsDialog()
 // -----------------------------------------------------------------------------
 void ChangeHumanFactorsDialog::Show()
 {
-    Populate( eNbrUnitTiredness,  *pTirednessCombo_ );
-    Populate( eNbrUnitMorale,     *pMoralCombo_ );
+    Populate( eNbrUnitTiredness, *pTirednessCombo_ );
+    Populate( eNbrUnitMorale, *pMoralCombo_ );
     Populate( eNbrUnitExperience, *pExperienceCombo_ );
-
     if( const HumanFactors_ABC* factors = selected_->Retrieve< HumanFactors_ABC >() )
         factors->Display( *this );
     show();
@@ -146,10 +140,10 @@ void ChangeHumanFactorsDialog::Validate()
 {
     if( ! selected_ )
         return;
-    const EnumUnitTiredness tiredness = (EnumUnitTiredness)pTirednessCombo_->GetValue();
-    const EnumUnitMorale moral = (EnumUnitMorale)pMoralCombo_->GetValue();
-    const EnumUnitExperience experience = (EnumUnitExperience)pExperienceCombo_->GetValue();
-    tools::Iterator< const Entity_ABC& > it = selected_->Get< CommunicationHierarchies >().CreateSubordinateIterator();
+    const Common::EnumUnitTiredness tiredness = (Common::EnumUnitTiredness)pTirednessCombo_->GetValue();
+    const Common::EnumUnitMorale moral = (Common::EnumUnitMorale)pMoralCombo_->GetValue();
+    const Common::EnumUnitExperience experience = (Common::EnumUnitExperience)pExperienceCombo_->GetValue();
+    tools::Iterator< const Entity_ABC& > it = selected_->Get< TacticalHierarchies >().CreateSubordinateIterator();
     SendMessage( *selected_, tiredness, moral, experience );
     hide();
 }
@@ -158,7 +152,7 @@ void ChangeHumanFactorsDialog::Validate()
 // Name: ChangeHumanFactorsDialog::SendMessage
 // Created: AGE 2006-12-01
 // -----------------------------------------------------------------------------
-void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, EnumUnitTiredness tiredness, EnumUnitMorale moral, EnumUnitExperience experience )
+void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, Common::EnumUnitTiredness tiredness, Common::EnumUnitMorale moral, Common::EnumUnitExperience experience )
 {
     if( entity.Retrieve< HumanFactors_ABC >() )
         SendAction( entity, tiredness, moral, experience );
@@ -177,7 +171,7 @@ void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, En
 // Name: ChangeHumanFactorsDialog::SendMessage
 // Created: AGE 2005-09-22
 // -----------------------------------------------------------------------------
-void ChangeHumanFactorsDialog::SendAction( const kernel::Entity_ABC& entity, EnumUnitTiredness tiredness, EnumUnitMorale moral, EnumUnitExperience experience )
+void ChangeHumanFactorsDialog::SendAction( const kernel::Entity_ABC& entity, Common::EnumUnitTiredness tiredness, Common::EnumUnitMorale moral, Common::EnumUnitExperience experience )
 {
     // $$$$ _RC_ SBO 2010-05-17: user ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_human_factors" );

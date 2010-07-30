@@ -16,8 +16,6 @@
 #include "clients_kernel/NullDisplayer.h"
 #include "protocol/Protocol.h"
 
-using namespace Common;
-
 namespace kernel
 {
     class Agent_ABC;
@@ -89,8 +87,8 @@ private:
     //! @name Helpers
     //@{
     void DoContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
-    void SendAction( const kernel::Entity_ABC& entity, EnumUnitTiredness, EnumUnitMorale, EnumUnitExperience );
-    void SendMessage( const kernel::Entity_ABC& entity, EnumUnitTiredness, EnumUnitMorale, EnumUnitExperience );
+    void SendAction( const kernel::Entity_ABC& entity, Common::EnumUnitTiredness, Common::EnumUnitMorale, Common::EnumUnitExperience );
+    void SendMessage( const kernel::Entity_ABC& entity, Common::EnumUnitTiredness, Common::EnumUnitMorale, Common::EnumUnitExperience );
     virtual void Call( const E_UnitTiredness& fatigue );
     virtual void Call( const E_UnitMorale& morale );
     virtual void Call( const E_UnitExperience& experience );
@@ -104,11 +102,10 @@ private:
     actions::ActionsModel& actionsModel_;
     const kernel::Time_ABC& simulation_;
     const kernel::Profile_ABC& profile_;
-
     kernel::SafePointer< kernel::Entity_ABC > selected_;
-    gui::ValuedComboBox< E_UnitTiredness >*     pTirednessCombo_;
-    gui::ValuedComboBox< E_UnitMorale >*       pMoralCombo_;
-    gui::ValuedComboBox< E_UnitExperience >*  pExperienceCombo_;
+    gui::ValuedComboBox< E_UnitTiredness >* pTirednessCombo_;
+    gui::ValuedComboBox< E_UnitMorale >* pMoralCombo_;
+    gui::ValuedComboBox< E_UnitExperience >* pExperienceCombo_;
     //@}
 };
 
