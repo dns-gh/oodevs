@@ -142,6 +142,18 @@ void TerrainLayer::Reset()
     noVBOlayer_.reset();
 }
 
+namespace
+{
+    float PixelsPerMeter()
+    {
+        HDC screen = GetDC( NULL );
+        const int hSize = GetDeviceCaps( screen, HORZSIZE );
+        const int hRes = GetDeviceCaps( screen, HORZRES );
+        ReleaseDC( NULL, screen );
+        return 1000.f * hRes / hSize;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: TerrainLayer::MyLayer
 // Created: AGE 2007-05-10
@@ -159,7 +171,7 @@ public:
         if( data.Border() )
             return true;
 
-        float pixels = parent_.tools_.Pixels();
+        const float scale = parent_.tools_.Pixels() * PixelsPerMeter();
 
         switch( data.Linear() )
         {
@@ -168,37 +180,37 @@ public:
             return false;
         // see in VisualisationScalesPanel.cpp for indexes
         case TerrainData::cliff_:
-            return parent_.minVisuScale_[ 3 ] <= pixels && parent_.maxVisuScale_[ 3 ] > pixels;
+            return parent_.minVisuScale_[ 3 ] <= scale && parent_.maxVisuScale_[ 3 ] > scale;
         case TerrainData::motorway_:
-            return parent_.minVisuScale_[ 4 ] <= pixels && parent_.maxVisuScale_[ 4 ] > pixels;
+            return parent_.minVisuScale_[ 4 ] <= scale && parent_.maxVisuScale_[ 4 ] > scale;
         case TerrainData::largeroad_:
-            return parent_.minVisuScale_[ 5 ] <= pixels && parent_.maxVisuScale_[ 5 ] > pixels;
+            return parent_.minVisuScale_[ 5 ] <= scale && parent_.maxVisuScale_[ 5 ] > scale;
         case TerrainData::mediumroad_:
-            return parent_.minVisuScale_[ 6 ] <= pixels && parent_.maxVisuScale_[ 6 ] > pixels;
+            return parent_.minVisuScale_[ 6 ] <= scale && parent_.maxVisuScale_[ 6 ] > scale;
         case TerrainData::smallroad_:
-            return parent_.minVisuScale_[ 7 ] <= pixels && parent_.maxVisuScale_[ 7 ] > pixels;
+            return parent_.minVisuScale_[ 7 ] <= scale && parent_.maxVisuScale_[ 7 ] > scale;
         case TerrainData::bridge_:
-            return parent_.minVisuScale_[ 8 ] <= pixels && parent_.maxVisuScale_[ 8 ] > pixels;
+            return parent_.minVisuScale_[ 8 ] <= scale && parent_.maxVisuScale_[ 8 ] > scale;
         case TerrainData::railroad_:
-            return parent_.minVisuScale_[ 9 ] <= pixels && parent_.maxVisuScale_[ 9 ] > pixels;
+            return parent_.minVisuScale_[ 9 ] <= scale && parent_.maxVisuScale_[ 9 ] > scale;
         case TerrainData::largeriver_:
-            return parent_.minVisuScale_[ 10 ] <= pixels && parent_.maxVisuScale_[ 10 ] > pixels;
+            return parent_.minVisuScale_[ 10 ] <= scale && parent_.maxVisuScale_[ 10 ] > scale;
         case TerrainData::mediumriver_:
-            return parent_.minVisuScale_[ 11 ] <= pixels && parent_.maxVisuScale_[ 11 ] > pixels;
+            return parent_.minVisuScale_[ 11 ] <= scale && parent_.maxVisuScale_[ 11 ] > scale;
         case TerrainData::smallriver_:
-            return parent_.minVisuScale_[ 12 ] <= pixels && parent_.maxVisuScale_[ 12 ] > pixels;
+            return parent_.minVisuScale_[ 12 ] <= scale && parent_.maxVisuScale_[ 12 ] > scale;
         }
     }
     virtual bool ShouldDisplayBorder( const TerrainData& data, const geometry::Rectangle2f& /*viewport*/ )
     {
-        float pixels = parent_.tools_.Pixels();
-        return data.Border() && parent_.minVisuScale_[ 2 ] <= pixels && parent_.maxVisuScale_[ 2 ] > pixels;
+        const float scale = parent_.tools_.Pixels() * PixelsPerMeter();
+        return data.Border() && parent_.minVisuScale_[ 2 ] <= scale && parent_.maxVisuScale_[ 2 ] > scale;
     }
     virtual bool ShouldDisplayNames( const TerrainData& data, const geometry::Rectangle2f& /*viewport*/ )
     {
-        float pixels = parent_.tools_.Pixels();
-        return (  data.Linear() && parent_.smallNames_.IsSet( parent_.minVisuScale_[ 1 ] <= pixels && parent_.maxVisuScale_[ 1 ] > pixels ) )
-            || ( !data.Linear() && parent_.bigNames_.IsSet( parent_.minVisuScale_[ 0 ] <= pixels && parent_.maxVisuScale_[ 0 ] > pixels ) );
+        const float scale = parent_.tools_.Pixels() * PixelsPerMeter();
+        return (  data.Linear() && parent_.smallNames_.IsSet( parent_.minVisuScale_[ 1 ] <= scale && parent_.maxVisuScale_[ 1 ] > scale ) )
+            || ( !data.Linear() && parent_.bigNames_.IsSet( parent_.minVisuScale_[ 0 ] <= scale && parent_.maxVisuScale_[ 0 ] > scale ) );
     }
     virtual void DrawName( const geometry::Point2f& at, const std::string& name )
     {
@@ -234,7 +246,7 @@ void TerrainLayer::LoadGraphics()
         {
             if( gl::HasVBO() )
             {
-                layer_     .reset( new MyLayer< RawShapeLayer >  ( *this, aggregated.native_file_string() ) );
+                layer_.reset( new MyLayer< RawShapeLayer >  ( *this, aggregated.native_file_string() ) );
                 layer_->Initialize( world_ );
             }
             else

@@ -1899,11 +1899,11 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Small texts</source>
-        <translation>Petits noms</translation>
+        <translation>Petits textes</translation>
     </message>
     <message>
         <source>Large texts</source>
-        <translation>Gros noms</translation>
+        <translation>Gros textes</translation>
     </message>
     <message>
         <source>Tactical lines</source>

@@ -256,7 +256,13 @@ void GlWidget::UpdateStipple() const
 // -----------------------------------------------------------------------------
 void GlWidget::DrawTextLabel( const std::string& content, const geometry::Point2f& where, int /*baseSize = 12*/)
 {
-    if( Pixels() < minVisuScale_ || Pixels() >= maxVisuScale_ )
+    HDC screen = GetDC( NULL );
+    const int hSize = GetDeviceCaps( screen, HORZSIZE );
+    const int hRes = GetDeviceCaps( screen, HORZRES );
+    ReleaseDC( NULL, screen );
+    const float scale = Pixels() * 1000.f * hRes / hSize;
+
+    if( scale < minVisuScale_ || scale >= maxVisuScale_ )
         return;
 
     QFontMetrics fm( currentFont_ );

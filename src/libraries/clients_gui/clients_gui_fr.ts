@@ -1089,7 +1089,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished">Général</translation>
+        <translation type="obsolete">Général</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -1188,11 +1188,11 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Large texts</source>
-        <translation>Gros noms</translation>
+        <translation>Gros textes</translation>
     </message>
     <message>
         <source>Small texts</source>
-        <translation>Petits noms</translation>
+        <translation>Petits textes</translation>
     </message>
     <message>
         <source>Edges</source>

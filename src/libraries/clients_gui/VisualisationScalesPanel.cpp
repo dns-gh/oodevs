@@ -12,6 +12,10 @@
 #include "moc_VisualisationScalesPanel.cpp"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
+#pragma warning( push )
+#pragma warning( disable : 4702 )
+#include <boost/lexical_cast.hpp>
+#pragma warning( pop )
 
 /* TRANSLATOR gui::VisualisationScalesPanel */
 
@@ -21,9 +25,9 @@ const std::string VisualisationScalesPanel::strMinScale( "VisuScaleMin" );
 const std::string VisualisationScalesPanel::strMaxScale( "VisuScaleMax" );
 
 const VisualisationScalesPanel::Scale VisualisationScalesPanel::DefaultScales[ 14 ] =
-    { { 10, 50 },     { 0, 10 },  { 0, 50 }, { 0, 10 },  { 5, 1000000 }
-    , { 5, 250 },     { 5, 25 },  { 0, 5 },  { 5, 250 }, { 0, 25 }
-    , { 5, 1000000 }, { 5, 250 }, { 0, 25 }, { 0, 10 } };
+    { { 10000, 100000 },   { 0, 25000 },    { 0, 100000 }, { 0, 25000 },     { 5000, 10000000 }
+    , { 5000, 500000 },   { 5000, 50000 },  { 0, 10000 },  { 5000, 500000 }, { 0, 50000 }
+    , { 5000, 10000000 }, { 5000, 500000 }, { 0, 50000 },  { 0, 25000 } };
 
 // -----------------------------------------------------------------------------
 // Name: VisualisationScalesPanel constructor
@@ -42,19 +46,19 @@ VisualisationScalesPanel::VisualisationScalesPanel( QWidget* parent, kernel::Con
       tr( "Streams" ),     tr( "Urban blocks" ) };
 
     QStringList scales;
-    scales.push_back( "1:1" );
-    scales.push_back( "1:2.5" );
-    scales.push_back( "1:5" );
-    scales.push_back( "1:10" );
-    scales.push_back( "1:25" );
-    scales.push_back( "1:50" );
     scales.push_back( "1:100" );
-    scales.push_back( "1:250" );
-    scales.push_back( "1:500" );
-    scales.push_back( "1:1000" );
     scales.push_back( "1:2500" );
     scales.push_back( "1:5000" );
     scales.push_back( "1:10000" );
+    scales.push_back( "1:25000" );
+    scales.push_back( "1:50000" );
+    scales.push_back( "1:100000" );
+    scales.push_back( "1:250000" );
+    scales.push_back( "1:500000" );
+    scales.push_back( "1:1000000" );
+    scales.push_back( "1:2500000" );
+    scales.push_back( "1:5000000" );
+    scales.push_back( "1:10000000" );
 
     new QWidget( box );
     new QLabel( tr( "Min Scale" ), box );
@@ -62,10 +66,8 @@ VisualisationScalesPanel::VisualisationScalesPanel( QWidget* parent, kernel::Con
     for( int i = 0; i < 14; ++i )
     {
         new QLabel( elements[ i ], box );
-        std::stringstream stream;
-        stream << i;
-        currentScales_[ i ].min_ = controllers_.options_.GetOption( strMinScale + stream.str(), DefaultScales[ i ].min_ ).To< int >();
-        currentScales_[ i ].max_ = controllers_.options_.GetOption( strMaxScale + stream.str(), DefaultScales[ i ].max_ ).To< int >();
+        currentScales_[ i ].min_ = controllers_.options_.GetOption( strMinScale + boost::lexical_cast< std::string >( i ), DefaultScales[ i ].min_ ).To< int >();
+        currentScales_[ i ].max_ = controllers_.options_.GetOption( strMaxScale + boost::lexical_cast< std::string >( i ), DefaultScales[ i ].max_ ).To< int >();
         minCombos_[ i ] = new QComboBox( box );
         minCombos_[ i ]->insertStringList( scales );
         minCombos_[ i ]->setCurrentItem( ConvertFromScale( currentScales_[ i ].min_ ) );
@@ -98,10 +100,8 @@ void VisualisationScalesPanel::Commit()
 {
     for( int i = 0; i < 14; ++i )
     {
-        std::stringstream stream;
-        stream << i;
-        currentScales_[ i ].min_ = controllers_.options_.GetOption( strMinScale + stream.str(), currentScales_[ i ].min_ ).To< int >();
-        currentScales_[ i ].max_ = controllers_.options_.GetOption( strMaxScale + stream.str(), currentScales_[ i ].max_ ).To< int >();
+        currentScales_[ i ].min_ = controllers_.options_.GetOption( strMinScale + boost::lexical_cast< std::string >( i ), currentScales_[ i ].min_ ).To< int >();
+        currentScales_[ i ].max_ = controllers_.options_.GetOption( strMaxScale + boost::lexical_cast< std::string >( i ), currentScales_[ i ].max_ ).To< int >();
     }
 }
 
@@ -113,10 +113,8 @@ void VisualisationScalesPanel::Reset()
 {
     for( int i = 0; i < 14; ++i )
     {
-        std::stringstream stream;
-        stream << i;
-        controllers_.options_.Change( strMinScale + stream.str(), currentScales_[ i ].min_ );
-        controllers_.options_.Change( strMaxScale + stream.str(), currentScales_[ i ].max_ );
+        controllers_.options_.Change( strMinScale + boost::lexical_cast< std::string >( i ), currentScales_[ i ].min_ );
+        controllers_.options_.Change( strMaxScale + boost::lexical_cast< std::string >( i ), currentScales_[ i ].max_ );
     }
 }
 
@@ -130,11 +128,8 @@ void VisualisationScalesPanel::OnValueChanged( int )
     {
         if( minCombos_[ i ]->currentItem() > maxCombos_[ i ]->currentItem() )
             maxCombos_[ i ]->setCurrentItem( minCombos_[ i ]->currentItem() );
-
-        std::stringstream stream;
-        stream << i;
-        controllers_.options_.Change( strMinScale + stream.str(), ConvertToScale( minCombos_[ i ]->currentItem() ) );
-        controllers_.options_.Change( strMaxScale + stream.str(), ConvertToScale( maxCombos_[ i ]->currentItem() ) );
+        controllers_.options_.Change( strMinScale + boost::lexical_cast< std::string >( i ), ConvertToScale( minCombos_[ i ]->currentItem() ) );
+        controllers_.options_.Change( strMaxScale + boost::lexical_cast< std::string >( i ), ConvertToScale( maxCombos_[ i ]->currentItem() ) );
     }
 }
 
@@ -146,10 +141,8 @@ void VisualisationScalesPanel::OnReset()
 {
     for( int i = 0; i < 14; ++i )
     {
-        std::stringstream stream;
-        stream << i;
-        controllers_.options_.Change( strMinScale + stream.str(), DefaultScales[ i ].min_ );
-        controllers_.options_.Change( strMaxScale + stream.str(), DefaultScales[ i ].max_ );
+        controllers_.options_.Change( strMinScale + boost::lexical_cast< std::string >( i ), DefaultScales[ i ].min_ );
+        controllers_.options_.Change( strMaxScale + boost::lexical_cast< std::string >( i ), DefaultScales[ i ].max_ );
     }
 }
 
@@ -188,27 +181,27 @@ int VisualisationScalesPanel::ConvertFromScale( int scale )
     {
     case 0:
         return 0;
-    case 2:
-        return 1;
-    case 5:
-        return 2;
-    case 10:
-        return 3;
-    case 25:
-        return 4;
-    case 50:
-        return 5;
-    case 100:
-        return 6;
-    case 250:
-        return 7;
-    case 500:
-        return 8;
-    case 1000:
-        return 9;
     case 2500:
-        return 10;
+        return 1;
     case 5000:
+        return 2;
+    case 10000:
+        return 3;
+    case 25000:
+        return 4;
+    case 50000:
+        return 5;
+    case 100000:
+        return 6;
+    case 250000:
+        return 7;
+    case 500000:
+        return 8;
+    case 1000000:
+        return 9;
+    case 2500000:
+        return 10;
+    case 5000000:
         return 11;
     default:
         return 12;
@@ -226,28 +219,28 @@ int VisualisationScalesPanel::ConvertToScale( int index )
     case 0:
         return 0;
     case 1:
-        return 2;
-    case 2:
-        return 5;
-    case 3:
-        return 10;
-    case 4:
-        return 25;
-    case 5:
-        return 50;
-    case 6:
-        return 100;
-    case 7:
-        return 250;
-    case 8:
-        return 500;
-    case 9:
-        return 1000;
-    case 10:
         return 2500;
-    case 11:
+    case 2:
         return 5000;
-    default:
+    case 3:
+        return 10000;
+    case 4:
+        return 25000;
+    case 5:
+        return 50000;
+    case 6:
+        return 100000;
+    case 7:
+        return 250000;
+    case 8:
+        return 500000;
+    case 9:
         return 1000000;
+    case 10:
+        return 2500000;
+    case 11:
+        return 5000000;
+    default:
+        return 10000000;
     }
 }
