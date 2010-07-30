@@ -34,6 +34,7 @@ public:
         {
             // NOTHING
         }
+        Parameters& operator=( const Parameters& ); //!< Assignment operator
         const PHY_UnitType& unitType_;
         const PHY_Posture& posture_;
         bool bIsDead_;
