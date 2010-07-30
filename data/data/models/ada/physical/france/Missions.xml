@@ -842,11 +842,11 @@
     <mission dia-behavior="net.masagroup.testSword.military.platoon.tasks.EngageAgents" dia-type="net.masagroup.testSword.military.platoon.tasks.EngageAgents" id="2029" name="EngageAgents">
       <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.military.platoon.combat.support.artillery.tasks.Deploy" dia-type="net.masagroup.sword.military.platoon.combat.support.artillery.tasks.Deploy" id="2030" name="ASS DeployOnPosition">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" dia-type="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" id="2030" name="ASS AssurerMiseEnOeuvre">
       <parameter dia-name="firePositions" name="firePositions" optional="false" type="PointListBM"/>
       <parameter dia-name="safeguardPositions" name="safeguardPositions" optional="true" type="PointListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.military.platoon.combat.support.artillery.tasks.Deploy" dia-type="T_Mission_Pion_MiseEnOeuvre" id="2061" name="ASS Deploy">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" dia-type="T_Mission_Pion_MiseEnOeuvre" id="2061" name="ASS Deploy">
       <parameter dia-name="firePositions" name="fireArea" optional="false" type="ObjectKnowledgeListBM"/>
       <parameter dia-name="safeguardPositions" name="safeguardPositions" optional="true" type="PointListBM"/>
     </mission>
@@ -934,9 +934,6 @@
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Decrocher" dia-type="net.masagroup.sword.france.military.platoon.tasks.Decrocher" id="2059" name="COMMUNES Decrocher">
       <parameter dia-name="positions" name="point de regroupement" optional="false" type="PointBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.tasks.commun.SoutenirSurPositionEnMesureDeBM" dia-type="net.masagroup.sword.france.military.tasks.commun.SoutenirSurPositionEnMesureDeBM" id="2060" name="COMMUNES SoutenirSurPositionEnMesureDe">
-      <parameter dia-name="position" name="position" optional="false" type="PointBM"/>
-    </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Appuyer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Appuyer" id="2062" name="MELEE Appuyer">
       <parameter dia-name="objectives" name="unite a appuyer" optional="false" type="AgentListBM"/>
     </mission>
@@ -948,7 +945,7 @@
       <parameter dia-name="objectives" name="objectifs" optional="false" type="AreaBM"/>
       <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.military.platoon.tasks.Illuminate" dia-type="net.masagroup.sword.military.platoon.tasks.Illuminate" id="2065" name="MELEE Illuminer">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Illuminer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Illuminer" id="2065" name="MELEE Illuminer">
       <parameter dia-name="entities" name="cible" optional="false" type="AgentKnowledgeListBM"/>
       <parameter dia-name="allies" name="tireur allie" optional="false" type="AgentListBM"/>
     </mission>
@@ -1629,8 +1626,8 @@
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeFaireTransporter" dia-type="net.masagroup.sword.france.military.company.tasks.SeFaireTransporter" id="1018" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeFaireTransporter" name="COMMUNES Se Faire Transporter">
       <parameter dia-name="objectives" name="Point d'embarquement" optional="false" type="PointBM"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.military.company.combat.support.artillery.tasks.Deploy" dia-type="T_Mission_Automate_Deploy" id="1008" mrt-dia-behavior="net.masagroup.sword.military.company.combat.support.artillery.tasks.Deploy" name="Deploy">
-      <parameter dia-name="deploymentArea" name="zone de deploiement" optional="false" type="AreaBM"/>
+    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.SeDeployer" dia-type="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.SeDeployer" id="1008" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.SeDeployer" name="ASS SeDeployer">
+      <parameter dia-name="area" name="zone de deploiement" optional="false" type="AreaBM"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Franchir" dia-type="net.masagroup.sword.france.military.company.tasks.Franchir" id="1010" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Franchir" name="COMMUNES Franchir">
       <parameter dia-name="crossingSite" name="site de franchissement" optional="false" type="ObjectKnowledgeBM"/>

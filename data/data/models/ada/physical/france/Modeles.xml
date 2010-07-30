@@ -76,7 +76,6 @@
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="COMMUNES Stationner"/>
-        <mission name="COMMUNES SoutenirSurPositionEnMesureDe"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
@@ -87,7 +86,7 @@
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery" file="BMPion.bms" name="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery">
       <missions>
-        <mission name="ASS DeployOnPosition">
+        <mission name="ASS AssurerMiseEnOeuvre">
           <fragorder name="ApplyFire"/>
           <fragorder name="ApplyGuidedFire"/>
         </mission>
@@ -3003,8 +3002,8 @@
     </automat>
     <automat dia-type="net.masagroup.sword.military.company.combat.support.artillery.roles.Company" file="BMAutomat.bms" name="net.masagroup.sword.military.company.combat.support.artillery.roles.Company">
       <missions>
+        <mission name="ASS SeDeployer"/>
         <mission name="COMMUNES FaireMouvement"/>
-        <mission name="Deploy"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
