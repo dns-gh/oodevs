@@ -139,7 +139,7 @@ void Score::Serialize( xml::xostream& xos ) const
 {
     xos << xml::start( "score")
             << xml::attribute( "name", name_.ascii() )
-            << xml::start( "formula" ) << xml::cdata( formula_.ascii() ) << xml::end;
+            << xml::start( "formula" ) << xml::cdata( !formula_.isEmpty() ? formula_.ascii() : "" ) << xml::end;
     xos << xml::start( "gauge" );
     GetGauge().Serialize( xos );
     xos << xml::end;
