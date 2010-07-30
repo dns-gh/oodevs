@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <models xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Models.xsd">
   <units>
-    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.Platoon">
+    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.Platoon">  
       <missions>
         <mission name="MELEE Appuyer"/>
         <mission name="MELEE Reconnaitre Itineraire"/>
@@ -21,13 +21,15 @@
         <mission name="MELEE Illuminer"/>
         <mission name="MELEE S'emparer d'un Bloc Urbain"/>
         <mission name="MELEE Interdire un Bloc Urbain"/>
-        <mission name="MELEE Boucler un Bloc Urbain"/>
+        <mission name="MELEE Boucler un Bloc Urbain"/>  
+        <mission name="MELEE Controler"/>                    
       </missions>
     </unit>
-    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="test pion">
+    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="test pion"> 
       <missions>
         <mission name="Advance"/>
         <mission name="Animate"/>
+        <mission name="Build"/>
         <mission name="MELEE Appuyer"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="MELEE Interdire Position"/>
@@ -82,6 +84,8 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="MELEE Surveiller un Bloc Urbain"/>
         <mission name="TakeCover"/>
+        <mission name="Control"/>
+        <mission name="Controler Secteur"/>     
       </missions>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery" file="BMPion.bms" name="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery">
@@ -119,6 +123,8 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
+        <mission name="GEN Construire"/>
+        <mission name="Animer"/>
       </missions>
     </unit>
     <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.platoon.terrorism.roles.Sniper">
@@ -2991,6 +2997,7 @@
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Se Recompleter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="COMMUNES Orienter Refugies"/>
@@ -2998,6 +3005,7 @@
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="MELEE Interdire un Bloc Urbain"/>
         <mission name="MELEE Reconnaitre un itinéraire"/>
+        <mission name="MELEE Controler Secteur"/>    
       </missions>
     </automat>
     <automat dia-type="net.masagroup.sword.military.company.combat.support.artillery.roles.Company" file="BMAutomat.bms" name="net.masagroup.sword.military.company.combat.support.artillery.roles.Company">
@@ -3006,6 +3014,7 @@
         <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Se Recompleter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="COMMUNES Orienter Refugies"/>
@@ -3018,6 +3027,7 @@
         <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Se Recompleter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="COMMUNES Orienter Refugies"/>
