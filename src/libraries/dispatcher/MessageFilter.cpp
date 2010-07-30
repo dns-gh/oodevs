@@ -66,7 +66,6 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgSimToClient& wrapper )
         return true;
     if( wrapper.message().has_debug_points() ||
         wrapper.message().has_unit_vision_cones() ||
-        wrapper.message().has_unit_detection() ||
         wrapper.message().has_object_detection() ||
         wrapper.message().has_population_concentration_detection() ||
         wrapper.message().has_population_flow_detection() )
@@ -100,6 +99,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgSimToClient& wrapper )
         wrapper.message().has_automat_change_superior() ||
         wrapper.message().has_unit_knowledge_creation() ||
         wrapper.message().has_unit_knowledge_destruction() ||
+        wrapper.message().has_unit_detection() ||
         wrapper.message().has_start_unit_fire() ||
         wrapper.message().has_stop_unit_fire() ||
         wrapper.message().has_start_population_fire() ||
