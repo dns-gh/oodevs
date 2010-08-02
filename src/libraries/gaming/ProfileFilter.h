@@ -61,6 +61,7 @@ private:
     //! @name Helpers
     //@{
     bool IsInHierarchy( const kernel::Entity_ABC& entity ) const;
+    bool IsSubordinate( const kernel::Entity_ABC& entity ) const;
     bool IsInKnowledgeGroup( const kernel::Entity_ABC& entity ) const;
     bool IsObjectOfSameTeam( const kernel::Entity_ABC& entity ) const;
     template< typename D, typename U >

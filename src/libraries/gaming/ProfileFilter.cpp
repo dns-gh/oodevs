@@ -55,7 +55,7 @@ QString ProfileFilter::GetLogin() const
 // -----------------------------------------------------------------------------
 bool ProfileFilter::IsVisible( const kernel::Entity_ABC& entity ) const
 {
-    return ( IsInKnowledgeGroup( entity ) || IsObjectOfSameTeam( entity ) || IsInHierarchy( entity ) ) && forward_.IsVisible( entity );
+    return ( IsInKnowledgeGroup( entity ) || IsObjectOfSameTeam( entity ) || IsSubordinate( entity ) ) && forward_.IsVisible( entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,6 +128,24 @@ const kernel::Entity_ABC* ProfileFilter::GetFilter() const
 // -----------------------------------------------------------------------------
 bool ProfileFilter::IsInHierarchy( const kernel::Entity_ABC& entity ) const
 {
+    if( IsSubordinate( entity ) )
+        return true;
+
+    if( cHierarchies_ && cHierarchies_->IsSubordinateOf( entity ) )
+         return true;
+
+    const kernel::TacticalHierarchies*      t = entity.Retrieve< kernel::TacticalHierarchies >();
+    const kernel::CommunicationHierarchies* c = entity.Retrieve< kernel::CommunicationHierarchies >();
+    const kernel::IntelligenceHierarchies*  i = entity.Retrieve< kernel::IntelligenceHierarchies >();
+    return IsKnown( t, c, i, entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileFilter::IsSubordinate
+// Created: LDC 2010-08-02
+// -----------------------------------------------------------------------------
+bool ProfileFilter::IsSubordinate( const kernel::Entity_ABC& entity ) const
+{
     if( ! entity_ || entity_ == &entity )
         return true;
 
@@ -140,10 +158,7 @@ bool ProfileFilter::IsInHierarchy( const kernel::Entity_ABC& entity ) const
      || ( i && i->IsSubordinateOf( *entity_ ) ) )
         return true;
 
-    if( cHierarchies_ && cHierarchies_->IsSubordinateOf( entity ) )
-         return true;
-
-    return IsKnown( t, c, i, entity );
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -197,12 +212,12 @@ bool ProfileFilter::IsInKnowledgeGroup( const kernel::Entity_ABC& other ) const
     if( !selfHierarchy )
         return false;
     const AgentKnowledges* entityKnowledges = 0;
-    for( const kernel::Entity_ABC* superior = pHierarchy->GetSuperior(); superior; superior = superior->Get< kernel::CommunicationHierarchies >().GetSuperior() )
+    for( const kernel::Entity_ABC* superior = &other; superior; superior = superior->Get< kernel::CommunicationHierarchies >().GetSuperior() )
     {
         entityKnowledges = superior->Retrieve< AgentKnowledges >();
         if( entityKnowledges )
         {
-            for( const kernel::Entity_ABC* selfSuperior = selfHierarchy->GetSuperior(); selfSuperior; selfSuperior = selfSuperior->Get< kernel::CommunicationHierarchies >().GetSuperior() )
+            for( const kernel::Entity_ABC* selfSuperior = entity_; selfSuperior; selfSuperior = selfSuperior->Get< kernel::CommunicationHierarchies >().GetSuperior() )
             {
                 const AgentKnowledges* selfKnowledges = selfSuperior->Retrieve< AgentKnowledges >();
                 if( selfKnowledges )
