@@ -17,5 +17,21 @@
         <source>Comments</source>
         <translation type="unfinished">Commentaires</translation>
     </message>
+    <message>
+        <source>Exercise</source>
+        <translation type="unfinished">Exercice</translation>
+    </message>
+    <message>
+        <source>Physical base</source>
+        <translation type="unfinished">Base physique</translation>
+    </message>
+    <message>
+        <source>Decisional base</source>
+        <translation type="unfinished">Base décisionnelle</translation>
+    </message>
+    <message>
+        <source>Terrain</source>
+        <translation type="unfinished">Terrain</translation>
+    </message>
 </context>
 </TS>

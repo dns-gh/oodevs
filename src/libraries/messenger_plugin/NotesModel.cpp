@@ -9,10 +9,8 @@
 //
 // *****************************************************************************
 
-
 #include "messenger_plugin_pch.h"
 #include "NotesModel.h"
-
 #include "IdManager.h"
 #include "Note.h"
 #include "dispatcher/Config.h"
@@ -24,8 +22,11 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/tokenizer.hpp>
+#include <boost/filesystem/path.hpp>
 #include <fstream>
 #include <iostream>
+#include <xeumeuleu/xml.hpp>
+
 using namespace plugins::messenger;
 
 // -----------------------------------------------------------------------------
@@ -33,10 +34,10 @@ using namespace plugins::messenger;
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
 NotesModel::NotesModel( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC& clients, IdManager& idManager, std::string file )
-    : config_( config )
-    , clients_( clients )
-    , idManager_ ( idManager )
-    , file_ ( file )
+    : config_   ( config )
+    , clients_  ( clients )
+    , idManager_( idManager )
+    , file_     ( file )
 {
     LoadNotes( file_ );
 }
@@ -53,51 +54,41 @@ NotesModel::~NotesModel()
 
 // -----------------------------------------------------------------------------
 // Name: NotesModel::HandleRequest
-/** @param  publisher
-    @param  message
-*/
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
 void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgNoteCreationRequest& message )
 {
-   std::auto_ptr< Note > note( new Note( idManager_.NextId(), message, currentTime_ ) );
-   Register( note->GetId(), *note );
-   if (note->GetParent() != 0)
-   {
-     Note *parent = Find( note->GetParent() );
-     parent->AddChild( note->GetId() );
-   }
-   note->SendCreation( clients_ );
-   note.release();
-   SaveNotes( file_ );
+    std::auto_ptr< Note > note( new Note( idManager_.NextId(), message, currentTime_ ) );
+    Register( note->GetId(), *note );
+    if( note->GetParent() != 0 )
+    {
+        Note *parent = Find( note->GetParent() );
+        parent->AddChild( note->GetId() );
+    }
+    note->SendCreation( clients_ );
+    note.release();
+    SaveNotes( file_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: NotesModel::HandleRequest
-/** @param  publisher
-    @param  message
-*/
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
 void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgNoteDestructionRequest& message )
 {
-   Note* note = Find( message.id() );
-   if( note )
+    Note* note = Find( message.id() );
+    if( note )
     {
         if( message.delete_all() )
             HandleRequestDestructCascade( note );
         else
-
             HandleRequestDestructSingle( note );
-   }
-   SaveNotes( file_ );
+    }
+    SaveNotes( file_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: NotesModel::HandleRequest
-/** @param  publisher
-    @param  message
-*/
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
 void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgNoteUpdateRequest& message )
@@ -109,7 +100,7 @@ void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgNoteUpdateReques
         {
             Note* oldParent = Find( note->GetParent() );
             Note* newParent = Find( message.parent() );
-            if (newParent != oldParent)
+            if( newParent != oldParent )
             {
                 if( oldParent )
                     oldParent->RemoveChild( note->GetId() );
@@ -125,14 +116,12 @@ void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgNoteUpdateReques
 
 // -----------------------------------------------------------------------------
 // Name: NotesModel::SendStateToNewClient
-/** @param  publisher
-*/
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
 void NotesModel::SendStateToNewClient( dispatcher::ClientPublisher_ABC& publisher ) const
 {
-    std::for_each( elements_.begin(), elements_.end(), boost::bind( &Note::SendFullState
-        , boost::bind( &T_Elements::value_type::second, _1 ), boost::ref( publisher ) ) );
+    std::for_each( elements_.begin(), elements_.end(), boost::bind( &Note::SendFullState,
+        boost::bind( &T_Elements::value_type::second, _1 ), boost::ref( publisher ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -142,16 +131,15 @@ void NotesModel::SendStateToNewClient( dispatcher::ClientPublisher_ABC& publishe
 void NotesModel::HandleRequestDestructSingle(Note* note)
 {
     Note *parent = Find( note->GetParent() );
-    std::list<unsigned long>& noteChildren = note->GetChildren();
-
+    T_List& noteChildren = note->GetChildren();
     if( parent )
-        parent->RemoveChild(note->GetId());
-    for ( std::list<unsigned long>::iterator it = noteChildren.begin(); it != noteChildren.end(); ++it )
+        parent->RemoveChild( note->GetId() );
+    for( IT_List it = noteChildren.begin(); it != noteChildren.end(); ++it )
     {
         Note* child = Find( *it );
         if( parent )
             parent->AddChild( child->GetId() );
-        child->SetParent(parent ? parent->GetId() : 0 );
+        child->SetParent( parent ? parent->GetId() : 0 );
         child->SendUpdate( clients_, true );
     }
     note->SendDestruction( clients_ );
@@ -162,36 +150,37 @@ void NotesModel::HandleRequestDestructSingle(Note* note)
 // Name: NotesModel::HandleRequestDestructCascade
 // Created: HBD 2010-02-12
 // -----------------------------------------------------------------------------
-void NotesModel::HandleRequestDestructCascade(Note* note)
+void NotesModel::HandleRequestDestructCascade( Note* note )
 {
     Note *parent = Find( note->GetParent() );
-    std::list<unsigned long>& noteChildren = note->GetChildren();
-    std::list<unsigned long>::iterator it = noteChildren.begin();
-
+    T_List& noteChildren = note->GetChildren();
+    IT_List it = noteChildren.begin();
     if( parent )
-        parent->RemoveChild(note->GetId());
-    while ( it != noteChildren.end())
+        parent->RemoveChild( note->GetId() );
+    while( it != noteChildren.end() )
     {
         Note* child = Find( *it );
         ++it;
-        HandleRequestDestructCascade(child);
+        HandleRequestDestructCascade( child );
     }
     note->SendDestruction( clients_ );
     Remove( note->GetId() );
     delete note;
 }
+
 // -----------------------------------------------------------------------------
 // Name: NotesModel::SaveNotes
 // Created: HBD 2010-02-12
 // -----------------------------------------------------------------------------
-void NotesModel::SaveNotes(const std::string filename)
+void NotesModel::SaveNotes( const std::string filename )
 {
     std::ofstream file( filename.c_str() );
-    int linenum = 1;
-    std::string str = tools::translate("NoteModel", "Note name") + ";";
-    str += tools::translate("NoteModel", "Parent") + ";";
-    str += tools::translate("NoteModel", "Value") + ";";
-    str += tools::translate("NoteModel", "Comments");
+    CreateHeader( file );
+    int linenum = 4;
+    std::string str = tools::translate( "NoteModel", "Note name" ) + ";";
+    str += tools::translate( "NoteModel", "Parent" ) + ";";
+    str += tools::translate( "NoteModel", "Value" ) + ";";
+    str += tools::translate( "NoteModel", "Comments" );
     file << str << std::endl;
     tools::Iterator< const Note& > it = CreateIterator();
     while( it.HasMoreElements() )
@@ -200,6 +189,28 @@ void NotesModel::SaveNotes(const std::string filename)
         if( note.GetParent() == 0 )
             WriteNote( note, file, linenum, 0 );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: NotesModel::CreateHeader
+// Created: LGY 2010-08-02
+// -----------------------------------------------------------------------------
+void NotesModel::CreateHeader( std::ofstream& file )
+{
+    std::string terrain, physicalBase, decisionalBase;
+    boost::filesystem::path path( config_.GetExerciseFile() );
+    xml::xifstream xis( path.string() );
+    xis >> xml::start( "exercise" )
+            >> xml::start( "terrain" )
+                >> xml::attribute( "name", terrain )
+            >> xml::end
+            >> xml::start( "model" )
+                >> xml::attribute( "dataset", decisionalBase )
+                >> xml::attribute( "physical", physicalBase );
+    file << boost::lexical_cast< std::string >( tools::translate( "NoteModel", "Exercise" ) ) + ":;" + path.parent_path().leaf() << std::endl;
+    file << boost::lexical_cast< std::string >( tools::translate( "NoteModel", "Physical base" ) ) + ":;" + physicalBase << std::endl;
+    file << boost::lexical_cast< std::string >( tools::translate( "NoteModel", "Decisional base" ) ) + ":;" + decisionalBase << std::endl;
+    file << boost::lexical_cast< std::string >( tools::translate( "NoteModel", "Terrain" ) ) + ":;" + terrain << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -215,12 +226,10 @@ void NotesModel::WriteNote( const Note& note, std::ofstream& file, int& lineNumb
     boost::algorithm::replace_all( tmp, "\n", "<br>" );
     file << ";\""+ note.GetNumber() + "\";\"" + tmp + "\"" ;
     file << ";\""+ note.GetCreationTime()+ "\";\"" + note.GetLastUpdateTime() + "\"" << std::endl;
-
-    std::list<unsigned long>& noteChildren = note.GetChildren();
+    T_List& noteChildren = note.GetChildren();
     int currentLine = lineNumber;
-
-    for ( std::list<unsigned long>::iterator it = noteChildren.begin(); it != noteChildren.end(); ++it )
-       if( Note* child = Find( *it ))
+    for( IT_List it = noteChildren.begin(); it != noteChildren.end(); ++it )
+        if( Note* child = Find( *it ))
             WriteNote( *child, file, lineNumber, currentLine);
 }
 
@@ -228,7 +237,7 @@ void NotesModel::WriteNote( const Note& note, std::ofstream& file, int& lineNumb
 // Name: NotesModel::LoadNotes
 // Created: HBD 2010-02-15
 // -----------------------------------------------------------------------------
-void NotesModel::LoadNotes(const std::string filename)
+void NotesModel::LoadNotes( const std::string filename )
 {
     std::ifstream file( filename.c_str() );
     if( !file || file.fail() )
@@ -250,8 +259,8 @@ void NotesModel::LoadNotes(const std::string filename)
 // -----------------------------------------------------------------------------
 void NotesModel::ReadNote( const std::string& input, std::vector< unsigned int >& notes )
 {
-    typedef  boost::tokenizer<boost::escaped_list_separator<char> > tokenizer;
-    boost::escaped_list_separator<char> sep('\\', ';', '\"');
+    typedef boost::tokenizer< boost::escaped_list_separator< char > > tokenizer;
+    boost::escaped_list_separator< char > sep('\\', ';', '\"');
     std::vector< std::string > fields;
     tokenizer esc_tokens( input, sep );
     std::copy( esc_tokens.begin(), esc_tokens.end(), std::back_inserter( fields ) );
@@ -293,6 +302,6 @@ unsigned int NotesModel::CreateNote( std::vector< std::string >& fields, const u
 // -----------------------------------------------------------------------------
 void NotesModel::UpdateTime( std::string message )
 {
-    boost::posix_time::ptime time = boost::posix_time::from_iso_string(message);
-    currentTime_ = boost::posix_time::to_simple_string(time);
+    boost::posix_time::ptime time = boost::posix_time::from_iso_string( message );
+    currentTime_ = boost::posix_time::to_simple_string( time );
 }

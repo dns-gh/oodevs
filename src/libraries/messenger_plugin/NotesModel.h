@@ -12,7 +12,6 @@
 
 #include "protocol/MessengerSenders.h"
 #include "tools/Resolver.h"
-
 #include <list>
 
 namespace dispatcher
@@ -50,18 +49,16 @@ public:
 
     //! @name Requests
     //@{
-    void HandleRequest( const MsgsClientToMessenger::MsgNoteCreationRequest&    message );
+    void HandleRequest( const MsgsClientToMessenger::MsgNoteCreationRequest& message );
     void HandleRequest( const MsgsClientToMessenger::MsgNoteDestructionRequest& message );
-    void HandleRequest( const MsgsClientToMessenger::MsgNoteUpdateRequest&      message );
+    void HandleRequest( const MsgsClientToMessenger::MsgNoteUpdateRequest& message );
     void SendStateToNewClient( dispatcher::ClientPublisher_ABC& publisher ) const;
-
     void Publish( const Note& note );
-
-    void LoadNotes(const std::string filename);
-    void SaveNotes(const std::string filename);
-
+    void LoadNotes( const std::string filename );
+    void SaveNotes( const std::string filename );
     void UpdateTime( std::string time );
     //@}
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -71,26 +68,30 @@ private:
 
     //! @name Helpers
     //@{
-    void         HandleRequestDestructSingle( Note* note );
-    void         HandleRequestDestructCascade( Note* note );
-    void         WriteNote( const Note& note, std::ofstream& file, int& lineNumber, int parentLine ) const;
-    void         ReadNote( const std::string& input, std::vector< unsigned int >& notes );
-    unsigned int CreateNote( std::vector<std::string>& note, const unsigned int parent );
+    void HandleRequestDestructSingle( Note* note );
+    void HandleRequestDestructCascade( Note* note );
+    void WriteNote( const Note& note, std::ofstream& file, int& lineNumber, int parentLine ) const;
+    void ReadNote( const std::string& input, std::vector< unsigned int >& notes );
+    void CreateHeader( std::ofstream& file );
+    unsigned int CreateNote( std::vector< std::string >& note, const unsigned int parent );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::list< unsigned long > T_List;
+    typedef T_List::iterator          IT_List;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const dispatcher::Config&        config_;
+    const dispatcher::Config& config_;
     dispatcher::ClientPublisher_ABC& clients_;
-    IdManager&                       idManager_;
-    std::list<unsigned int>          headNotes_;
-    const std::string                file_;
-    std::string                      currentTime_;
+    IdManager& idManager_;
+    const std::string file_;
+    std::string currentTime_;
     //@}
 };
-
 }
-
 }
 #endif // __NotesModel_h_
