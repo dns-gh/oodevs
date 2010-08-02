@@ -32943,4 +32943,50 @@
       <breakdown origin="attrition" percentage="7" type="Panne TCT NTI3"/>
     </breakdowns>
   </element>
+  <element codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="339" name="Observateur virtuel" protection="Combattant" size="Personnel" weight="1">
+    <speeds max="1">
+      <speed terrain="inconnu" value="0"/>
+      <speed terrain="foret" value="0"/>
+      <speed terrain="plantation" value="0"/>
+      <speed terrain="marais" value="0"/>
+      <speed terrain="dune" value="0"/>
+      <speed terrain="urbain" value="0"/>
+      <speed terrain="etendue eau" value="0"/>
+      <speed terrain="glace" value="0"/>
+      <speed terrain="lisiere" value="0"/>
+      <speed terrain="banlieue" value="0"/>
+      <speed terrain="cote" value="0"/>
+      <speed terrain="bord de plantation" value="0"/>
+      <speed terrain="bord de marais" value="0"/>
+      <speed terrain="bord de dune" value="0"/>
+      <speed terrain="bord de glace" value="0"/>
+      <speed terrain="chemin" value="0"/>
+      <speed terrain="autoroute" value="0"/>
+      <speed terrain="nationale" value="0"/>
+      <speed terrain="departementale" value="0"/>
+      <speed terrain="ruisseau" value="0"/>
+      <speed terrain="riviere" value="0"/>
+      <speed terrain="riviere importante" value="0"/>
+      <speed terrain="pont" value="0"/>
+      <speed terrain="falaise" value="0"/>
+      <speed terrain="voie ferree" value="0"/>
+      <speed terrain="carrefour" value="0"/>
+      <speed terrain="montagne" value="0"/>
+      <speed terrain="bord de montagne" value="0"/>
+    </speeds>
+    <composition/>
+    <sensors>
+      <sensor height="1.5" type="Capteur virtuel"/>
+    </sensors>
+    <radars/>
+    <transports/>
+    <consumptions/>
+    <weapon-systems/>
+    <human-protections/>
+    <objects/>
+    <breakdowns>
+      <breakdown origin="random" percentage="100" type="Panne MOB 1"/>
+      <breakdown origin="attrition" percentage="100" type="Panne MOB 1"/>
+    </breakdowns>
+  </element>
 </elements>

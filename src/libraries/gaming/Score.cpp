@@ -41,7 +41,6 @@ Score::Score( const MsgsAarToClient::MsgIndicator& message, const ScoreDefinitio
     , tendency_( new indicators::Tendency() )
     , gauge_( definition_.CreateGauge() )
     , value_( 0 )
-    , tendencyValue_( 0 )
     , request_( 0 )
 {
     controller_.Create( *this );
@@ -71,13 +70,9 @@ QString Score::GetName() const
 // -----------------------------------------------------------------------------
 void Score::Update( const MsgsAarToClient::MsgIndicator& message )
 {
-    if( boost::ends_with( message.name(), "/Tendency" ) )
-        tendencyValue_ = message.value();
-    else
-    {
-        value_ = message.value();
-        UpdatePlots( message );
-    }
+    tendency_->AddValue( message.value() );
+    value_ = message.value();
+    UpdatePlots( message );
     controller_.Update( *this );
 }
 
@@ -99,7 +94,7 @@ void Score::Display( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Display( tools::translate( "Score", "Name" ), name_ )
              .Display( tools::translate( "Score", "Value" ), value_ );
-    tendency_->Display( displayer.Item( tools::translate( "Score", "Tendency" ) ), tendencyValue_ );
+    tendency_->Display( displayer.Item( tools::translate( "Score", "Tendency" ) ) );
     gauge_->Display( displayer.Item( tools::translate( "Score", "Gauge" ) ), value_ );
 }
 

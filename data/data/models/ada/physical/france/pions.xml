@@ -10728,4 +10728,21 @@
     </distance-before-points>
     <drill-blow length="300" width="300"/>
   </unit>
+  <unit decisional-model="Terroriste" id="440" name="Observateur virtuel" type="Pion INF">
+    <nature atlas-nature="PC" level="none" nature="combat support/military intelligence/surveillance/sensor/scm"/>
+    <equipments>
+      <equipment count="1" crew="1" major="true" type="Observateur virtuel"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="1s"/>
+  </unit>
 </units>

@@ -11,7 +11,10 @@
 #define __ScorePlugin_h_
 
 #include "dispatcher/Plugin_ABC.h"
-#include "protocol/protocol.h"
+
+namespace MsgsSimToClient { class MsgSimToClient; }
+namespace MsgsAarToClient { class MsgAarToClient; }
+namespace MsgsClientToAar { class MsgClientToAar; }
 
 namespace xml
 {

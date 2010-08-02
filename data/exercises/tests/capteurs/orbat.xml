@@ -23,6 +23,11 @@
             <unit command-post="false" id="178" name="LTO Terroriste robot" position="30TYT0506455928" type="LTO Terroriste robot"/>
           </automat>
         </formation>
+        <formation id="191" level="i" name="Formation [191]">
+          <automat engaged="true" id="192" knowledge-group="158" name="Observateurs [192]" type="Automate Reco COBRA">
+            <unit command-post="true" id="198" name="Observateur virtuel" position="30UYU0521626478" type="Observateur virtuel"/>
+          </automat>
+        </formation>
       </tactical>
       <communication>
         <knowledge-group id="158" name="Knowledge group [158]" type="Standard"/>

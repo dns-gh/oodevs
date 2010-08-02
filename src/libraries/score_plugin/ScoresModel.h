@@ -11,15 +11,13 @@
 #define __ScoresModel_h_
 
 #include "dispatcher/Registrable_ABC.h"
-#include <vector>
-#include <map>
 #include <boost/shared_ptr.hpp>
-#include "protocol/protocol.h"
+#include <map>
+#include <vector>
 
-using namespace Common;
-using namespace MsgsSimToClient;
-using namespace MsgsAarToClient;
-using namespace MsgsClientToAar;
+namespace MsgsSimToClient { class MsgSimToClient; }
+namespace MsgsAarToClient { class MsgIndicator; }
+namespace MsgsClientToAar { class MsgPlotRequest; }
 
 namespace dispatcher
 {
@@ -72,9 +70,9 @@ public:
     //! @name Operations
     //@{
     void Load( const std::string& file );
-    void Update( const MsgIndicator& message );
-    void Update( const MsgSimToClient& message );
-    void RequestPlot( dispatcher::ClientPublisher_ABC& publisher, const MsgPlotRequest& request );
+    void Update( const MsgsAarToClient::MsgIndicator& message );
+    void Update( const MsgsSimToClient::MsgSimToClient& message );
+    void RequestPlot( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToAar::MsgPlotRequest& request );
     //@}
 
 private:

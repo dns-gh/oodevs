@@ -10,6 +10,8 @@
 #ifndef __Tendency_h_
 #define __Tendency_h_
 
+#include <deque>
+
 namespace kernel
 {
     class Displayer_ABC;
@@ -29,13 +31,14 @@ class Tendency
 public:
     //! @name Constructors/Destructor
     //@{
-             Tendency();
+    explicit Tendency( unsigned int interval = 10 );
     virtual ~Tendency();
     //@}
 
     //! @name Operations
     //@{
-    void Display( kernel::Displayer_ABC& displayer, double value ) const;
+    void AddValue( double value );
+    void Display( kernel::Displayer_ABC& displayer ) const;
     //@}
 
 private:
@@ -43,6 +46,13 @@ private:
     //@{
     Tendency( const Tendency& );            //!< Copy constructor
     Tendency& operator=( const Tendency& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    unsigned int interval_;
+    std::deque< double > values_;
     //@}
 };
 

@@ -11,9 +11,8 @@
 #define __Score_h_
 
 #include <vector>
-#include "protocol/protocol.h"
 
-using namespace MsgsAarToClient;
+namespace MsgsAarToClient { class MsgIndicator; }
 
 namespace xml
 {
@@ -47,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const MsgIndicator& message );
+    void Update( const MsgsAarToClient::MsgIndicator& message );
     void Send( dispatcher::ClientPublisher_ABC& publisher, int context ) const;
     //@}
 

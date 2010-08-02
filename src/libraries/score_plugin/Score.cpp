@@ -9,12 +9,8 @@
 
 #include "score_plugin_pch.h"
 #include "Score.h"
+#include "protocol/AarSenders.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include "protocol/aarsenders.h"       //from_game_asn
-
-using namespace MsgsClientToSim;
-using namespace MsgsSimToClient;
-using namespace MsgsAarToClient;
 
 using namespace plugins::score;
 
@@ -40,7 +36,7 @@ Score::~Score()
 // Name: Score::Update
 // Created: SBO 2009-04-29
 // -----------------------------------------------------------------------------
-void Score::Update( const MsgIndicator& message )
+void Score::Update( const MsgsAarToClient::MsgIndicator& message )
 {
     values_.push_back( message.value() );
 }

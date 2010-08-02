@@ -19,9 +19,10 @@ using namespace indicators;
 // Name: Tendency constructor
 // Created: SBO 2009-05-05
 // -----------------------------------------------------------------------------
-Tendency::Tendency()
+Tendency::Tendency( unsigned int interval /*= 10*/ )
+    : interval_( interval )
 {
-    // NOTHING
+    values_.push_back( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -31,6 +32,17 @@ Tendency::Tendency()
 Tendency::~Tendency()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Tendency::AddValue
+// Created: SBO 2010-07-30
+// -----------------------------------------------------------------------------
+void Tendency::AddValue( double value )
+{
+    values_.push_back( value );
+    if( values_.size() > interval_ )
+        values_.pop_front();
 }
 
 namespace
@@ -46,7 +58,7 @@ namespace
 // Name: Tendency::Display
 // Created: SBO 2009-05-05
 // -----------------------------------------------------------------------------
-void Tendency::Display( kernel::Displayer_ABC& displayer, double value ) const
+void Tendency::Display( kernel::Displayer_ABC& displayer ) const
 {
-    displayer.Display( ComputePixmap( value ) );
+    displayer.Display( ComputePixmap( ( values_.back() - values_.front() ) / 2. ) );
 }

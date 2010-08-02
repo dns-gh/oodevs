@@ -10,12 +10,12 @@
 #include "score_plugin_pch.h"
 #include "ScorePlugin.h"
 #include "ScoresModel.h"
-#include "protocol/ClientPublisher_ABC.h"
 #include "dispatcher/CompositeRegistrable.h"
 #include "dispatcher/LinkResolver_ABC.h"
 #include "dispatcher/Services.h"
+#include "protocol/AarSenders.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/protocol.h"
-#include "protocol/aarsenders.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/MessageDispatcher_ABC.h"
@@ -64,7 +64,7 @@ void ScorePlugin::Register( dispatcher::Services& services )
 // Name: ScorePlugin::Receive
 // Created: AGE 2008-08-04
 // -----------------------------------------------------------------------------
-void ScorePlugin::Receive( const MsgSimToClient& wrapper )
+void ScorePlugin::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
 {
     scores_->Update( wrapper );
 }
@@ -73,7 +73,7 @@ void ScorePlugin::Receive( const MsgSimToClient& wrapper )
 // Name: ScorePlugin::Receive
 // Created: SBO 2009-04-29
 // -----------------------------------------------------------------------------
-void ScorePlugin::Receive( const MsgAarToClient& wrapper )
+void ScorePlugin::Receive( const MsgsAarToClient::MsgAarToClient& wrapper )
 {
     if( wrapper.message().has_indicator() )
         scores_->Update( wrapper.message().indicator() );
@@ -83,11 +83,11 @@ void ScorePlugin::Receive( const MsgAarToClient& wrapper )
 // Name: ScorePlugin::OnReceive
 // Created: SBO 2009-04-29
 // -----------------------------------------------------------------------------
-void ScorePlugin::OnReceive( const std::string& client, const MsgClientToAar& wrapper )
+void ScorePlugin::OnReceive( const std::string& client, const MsgsClientToAar::MsgClientToAar& wrapper )
 {
     if( wrapper.message().has_plot_request() )
     {
-        const MsgPlotRequest& request = wrapper.message().plot_request();
+        const MsgsClientToAar::MsgPlotRequest& request = wrapper.message().plot_request();
         if( boost::starts_with( request.request(), "indicator://" ) )
             scores_->RequestPlot( resolver_.GetPublisher( client ), request );
     }

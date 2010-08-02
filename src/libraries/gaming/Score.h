@@ -45,7 +45,7 @@ class Score : public IndicatorDefinition_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    Score( const MsgsAarToClient::MsgIndicator& message, const ScoreDefinitions& definitions, kernel::Controller& controller, Publisher_ABC& publisher );
+             Score( const MsgsAarToClient::MsgIndicator& message, const ScoreDefinitions& definitions, kernel::Controller& controller, Publisher_ABC& publisher );
     virtual ~Score();
     //@}
 
@@ -84,7 +84,6 @@ private:
     std::auto_ptr< indicators::Tendency > tendency_;
     std::auto_ptr< indicators::Gauge > gauge_;
     double value_;
-    double tendencyValue_;
     IndicatorRequest* request_;
     //@}
 };
