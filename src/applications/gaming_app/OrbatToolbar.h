@@ -76,6 +76,8 @@ private:
     virtual void NotifyDeleted( const kernel::Automat_ABC& );
     virtual void NotifyUpdated( const Simulation& simu );
     virtual void NotifyUpdated( const ProfileFilter& filter );
+
+    void Filter( const kernel::Entity_ABC& entity );
     //@}
 
     //! @name Types

@@ -12,6 +12,8 @@
 #include "moc_OrbatToolbar.cpp"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
+#include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_gui/BooleanOptionButton.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/AutomatsLayer.h"
@@ -24,7 +26,7 @@
 // Created: SBO 2007-03-05
 // -----------------------------------------------------------------------------
 OrbatToolbar::OrbatToolbar( QWidget* parent, kernel::Controllers& controllers, ProfileFilter& filter, gui::AutomatsLayer& automats )
-    : QHBox         ( parent )
+    : QHBox( parent )
     , controllers_  ( controllers )
     , filter_       ( filter )
     , entity_       ( controllers_ )
@@ -72,7 +74,6 @@ OrbatToolbar::~OrbatToolbar()
     controllers_.Unregister( *this );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: OrbatToolbar::OnSetFilter
 // Created: AGE 2006-12-13
@@ -81,9 +82,26 @@ void OrbatToolbar::OnSetFilter()
 {
     if( entity_ )
     {
-        filter_.SetFilter( *entity_ );
-        entity_->Select( controllers_.actions_ );
+        const kernel::CommunicationHierarchies* pCommunicationHierarchies = entity_->Retrieve< kernel::CommunicationHierarchies >();
+        if( !pCommunicationHierarchies )
+        {
+            const kernel::TacticalHierarchies* pTacticalHierarchies = entity_->Retrieve< kernel::TacticalHierarchies >();
+            if( pTacticalHierarchies )
+                Filter( pTacticalHierarchies->GetTop() );
+        }
+        else
+            Filter( *entity_ );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrbatToolbar::Filter
+// Created: LGY 2010-07-30
+// -----------------------------------------------------------------------------
+void OrbatToolbar::Filter( const kernel::Entity_ABC& entity )
+{
+    filter_.SetFilter( entity );
+    entity.Select( controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
