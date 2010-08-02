@@ -21,8 +21,8 @@
         <mission name="MELEE Illuminer"/>
         <mission name="MELEE S'emparer d'un Bloc Urbain"/>
         <mission name="MELEE Interdire un Bloc Urbain"/>
-        <mission name="MELEE Boucler un Bloc Urbain"/>  
-        <mission name="MELEE Controler"/>                    
+        <mission name="MELEE Boucler un Bloc Urbain"/>
+        <mission name="MELEE Controler"/>
       </missions>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="test pion"> 
@@ -85,7 +85,7 @@
         <mission name="MELEE Surveiller un Bloc Urbain"/>
         <mission name="TakeCover"/>
         <mission name="Control"/>
-        <mission name="Controler Secteur"/>     
+        <mission name="Controler Secteur"/>
       </missions>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery" file="BMPion.bms" name="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery">
@@ -3005,7 +3005,7 @@
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="MELEE Interdire un Bloc Urbain"/>
         <mission name="MELEE Reconnaitre un itinéraire"/>
-        <mission name="MELEE Controler Secteur"/>    
+        <mission name="MELEE Controler Secteur"/>
       </missions>
     </automat>
     <automat dia-type="net.masagroup.sword.military.company.combat.support.artillery.roles.Company" file="BMAutomat.bms" name="net.masagroup.sword.military.company.combat.support.artillery.roles.Company">
