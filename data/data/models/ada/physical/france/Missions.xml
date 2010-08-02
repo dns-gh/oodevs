@@ -959,11 +959,11 @@
       <parameter dia-name="endPosition" name="position de regroupement" optional="false" type="PointBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.military.platoon.combat.support.artillery.tasks.CoordinateIllumination" dia-type="net.masagroup.sword.military.platoon.combat.support.artillery.tasks.CoordinateIllumination" id="2068" name="ASS Coordinate Illumination">
-      <parameter dia-name="entities" name="cible" optional="false" type="AgentKnowledgeBM"/>
+      <parameter dia-name="objective" name="cible" optional="false" type="AgentKnowledgeBM"/>
       <parameter dia-name="position" name="deploiement tireur" optional="false" type="PointBM"/>
       <parameter dia-name="munition" name="munitions" optional="false" type="DotationType"/>
       <parameter dia-name="interventionType" name="type intervention" optional="false" type="Numeric"/>
-      <parameter dia-name="allies" name="illuminateur allie" optional="true" type="AgentBM"/>
+      <parameter dia-name="allie" name="illuminateur allie" optional="true" type="AgentListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Surveiller" dia-type="T_Mission_Pion_SurveillerBU" id="2070" name="MELEE Surveiller un Bloc Urbain">
       <parameter dia-name="objectives" name="objectif" optional="false" type="UrbanBlockBM"/>
