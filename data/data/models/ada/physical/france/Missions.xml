@@ -1645,8 +1645,7 @@
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.SeDeployer" dia-type="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.SeDeployer" id="1008" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.SeDeployer" name="ASS SeDeployer">
       <parameter dia-name="area" name="zone de deploiement" optional="false" type="AreaBM"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeRecompleter" dia-type="net.masagroup.sword.france.military.company.tasks.SeRecompleter" id="1021" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeRecompleter" name="COMMUNES Se Recompleter">
-    </mission>
+    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeRecompleter" dia-type="net.masagroup.sword.france.military.company.tasks.SeRecompleter" id="1021" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeRecompleter" name="COMMUNES Se Recompleter"/>
     <mission cdt-dia-behavior="net.masagroup.sword.military.company.combat.support.artillery.tasks.Deploy" dia-type="T_Mission_Automate_Deploy" id="1022" mrt-dia-behavior="net.masagroup.sword.military.company.combat.support.artillery.tasks.Deploy" name="Deploy">
       <parameter dia-name="deploymentArea" name="zone de deploiement" optional="false" type="AreaBM"/>
     </mission>
