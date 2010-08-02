@@ -2997,7 +2997,6 @@
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Se Faire Transporter"/>
-        <mission name="COMMUNES Se Recompleter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="COMMUNES Orienter Refugies"/>
@@ -3014,7 +3013,6 @@
         <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Se Faire Transporter"/>
-        <mission name="COMMUNES Se Recompleter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="COMMUNES Orienter Refugies"/>
@@ -3027,7 +3025,6 @@
         <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Se Faire Transporter"/>
-        <mission name="COMMUNES Se Recompleter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="COMMUNES Orienter Refugies"/>
