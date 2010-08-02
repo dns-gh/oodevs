@@ -49,3 +49,6 @@ The following components have been directly or indirectly used :
 16/ LuaBit
  . http://luaforge.net/projects/bit/
  . luabit.txt
+17/ Spatialite
+ . http://www.gaia-gis.it/spatialite/
+ . spatialite.txt
