@@ -362,7 +362,8 @@ void PHY_RolePion_Communications::UpdateKnowledgesFromObjectPerception( const DE
     if( !pKnowledge || !pKnowledge->IsValid() )
         pKnowledge = pJammingKnowledgeGroup_->CreateKnowledgeObject( entity_.GetArmy(), perception.GetObjectPerceived() );
 
-    pKnowledge->Update( perception );
+    if( pKnowledge ) // $$$$ LDC: idem fix SLG rev 10556 : objects for urban knowledges don't have knowledges...
+        pKnowledge->Update( perception );
 }
 
 // -----------------------------------------------------------------------------
