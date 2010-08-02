@@ -2347,10 +2347,13 @@
       <urbanModifier material-type="Vegetation" value="0.9"/>
     </urbanModifiers>
   </dotation>
-  <dotation category="F63 Gasoil" codeEMAT6="F63" codeEMAT8="F63" codeLFRIL="" codeNNO="" id="120" name="carburant" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
-  <dotation category="F57 Essence" codeEMAT6="F57" codeEMAT8="F57" codeLFRIL="" codeNNO="" id="121" name="carburant" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
-  <dotation category="F35 Kerosene" codeEMAT6="F35" codeEMAT8="F35" codeLFRIL="" codeNNO="" id="122" name="carburant" nature="Kerosene" package-mass="1" package-size="1000" package-volume="1"/>
-  <dotation category="explosif classique" codeEMAT6="explosif classique" codeEMAT8="explosif classique" codeLFRIL="explosif classique" codeNNO="explosif classique" id="123" name="explosif" nature="Solide" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
+  <dotation category="LTO brouillage total" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="120" name="munition" nature="Kerosene" package-mass="0.01" package-size="1" package-volume="0.1" type="Obus">
+    <indirect-fire intervention-type="1" life-time="300s" object-type="full jamming area" type="effect" x-dispersion="600" y-dispersion="400"/>
+  </dotation>
+  <dotation category="F63 Gasoil" codeEMAT6="F63" codeEMAT8="F63" codeLFRIL="" codeNNO="" id="121" name="carburant" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
+  <dotation category="F57 Essence" codeEMAT6="F57" codeEMAT8="F57" codeLFRIL="" codeNNO="" id="122" name="carburant" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
+  <dotation category="F35 Kerosene" codeEMAT6="F35" codeEMAT8="F35" codeLFRIL="" codeNNO="" id="123" name="carburant" nature="Kerosene" package-mass="1" package-size="1000" package-volume="1"/>
+  <dotation category="explosif classique" codeEMAT6="explosif classique" codeEMAT8="explosif classique" codeLFRIL="explosif classique" codeNNO="explosif classique" id="124" name="explosif" nature="Solide" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
     <attritions>
       <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
       <attrition destruction="0.1" protection="CharMoyen" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
@@ -2361,7 +2364,7 @@
       <attrition destruction="1" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
   </dotation>
-  <dotation category="mine classique" codeEMAT6="mine classique" codeEMAT8="mine classique" codeLFRIL="mine classique" codeNNO="mine classique" id="124" name="mine" nature="Solide" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
+  <dotation category="mine classique" codeEMAT6="mine classique" codeEMAT8="mine classique" codeLFRIL="mine classique" codeNNO="mine classique" id="125" name="mine" nature="Solide" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
     <attritions>
       <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
       <attrition destruction="0.1" protection="CharMoyen" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
@@ -2372,20 +2375,20 @@
       <attrition destruction="1" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
   </dotation>
-  <dotation category="barbele classique" codeEMAT6="barbele classique" codeEMAT8="barbele classique" codeLFRIL="barbele classique" codeNNO="barbele classique" id="125" name="barbele" nature="Solide" package-mass="0.005" package-size="1" package-volume="0.005"/>
-  <dotation category="Rechange  NTI1 MOB" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="126" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <dotation category="Rechange  NTI2 MOB" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="127" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <dotation category="Rechange  NTI3" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="128" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <dotation category="Rechange  NTI1 TCT" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="129" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <dotation category="Rechange  NTI2 TCT" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="130" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <dotation category="Rechange  NTI2 TRS" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="131" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <dotation category="Rechange  NTI2 COTAC" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="132" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <dotation category="Rechange  NTI2 DEM" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="133" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <dotation category="Rechange  ALAT" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="134" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <dotation category="Rechange  NTI1 EA" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="135" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <dotation category="Rechange NTI 1 glaise" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="136" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <dotation category="Rechange NTI 2 glaise" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="137" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <dotation category="Rechange NTI 3 glaise" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="138" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <dotation category="Vivre" codeEMAT6="Vivre" codeEMAT8="Vivre" codeLFRIL="Vivre" codeNNO="Vivre" id="139" name="ration" nature="Solide" package-mass="0.015" package-size="10" package-volume="0.01"/>
-  <dotation category="Eau" codeEMAT6="Eau" codeEMAT8="Eau" codeLFRIL="Eau" codeNNO="Eau" id="140" name="ration" nature="Solide" package-mass="1" package-size="1000" package-volume="1"/>
+  <dotation category="barbele classique" codeEMAT6="barbele classique" codeEMAT8="barbele classique" codeLFRIL="barbele classique" codeNNO="barbele classique" id="126" name="barbele" nature="Solide" package-mass="0.005" package-size="1" package-volume="0.005"/>
+  <dotation category="Rechange  NTI1 MOB" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="127" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="Rechange  NTI2 MOB" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="128" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="Rechange  NTI3" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="129" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="Rechange  NTI1 TCT" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="130" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="Rechange  NTI2 TCT" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="131" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="Rechange  NTI2 TRS" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="132" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="Rechange  NTI2 COTAC" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="133" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="Rechange  NTI2 DEM" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="134" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="Rechange  ALAT" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="135" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="Rechange  NTI1 EA" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="136" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="Rechange NTI 1 glaise" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="137" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="Rechange NTI 2 glaise" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="138" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="Rechange NTI 3 glaise" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="139" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="Vivre" codeEMAT6="Vivre" codeEMAT8="Vivre" codeLFRIL="Vivre" codeNNO="Vivre" id="140" name="ration" nature="Solide" package-mass="0.015" package-size="10" package-volume="0.01"/>
+  <dotation category="Eau" codeEMAT6="Eau" codeEMAT8="Eau" codeLFRIL="Eau" codeNNO="Eau" id="141" name="ration" nature="Solide" package-mass="1" package-size="1000" package-volume="1"/>
 </dotations>

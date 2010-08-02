@@ -32426,6 +32426,7 @@
         <dotation capacity="800" logistic-threshold="10" name="Bd 12,7 PANA 4 ORD+1T" normalized-consumption="110"/>
         <dotation capacity="1440" logistic-threshold="10" name="Charg 5,56 2 O-1T-4 O" normalized-consumption="180"/>
         <dotation capacity="53" logistic-threshold="30" name="LTO Obus brouillage" normalized-consumption="44"/>
+        <dotation capacity="53" logistic-threshold="30" name="LTO brouillage total" normalized-consumption="0"/>
       </category>
       <category name="carburant">
         <dotation capacity="240" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="40"/>
@@ -32457,6 +32458,7 @@
       <weapon-system launcher="Mitrailleuse Tourelleau" munition="Bd 12,7 PANA 4 ORD+1T"/>
       <weapon-system launcher="Fusil Assaut FAMAS" munition="Charg 5,56 2 O-1T-4 O"/>
       <weapon-system launcher="LTO ALR Launcher" munition="LTO Obus brouillage"/>
+      <weapon-system launcher="LTO ALR Launcher" munition="LTO brouillage total"/>
     </weapon-systems>
     <active-protections>
       <protection name="counter-measure"/>

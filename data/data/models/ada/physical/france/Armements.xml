@@ -3284,4 +3284,9 @@
     <reloading duration="1s" munition="1"/>
     <indirect-fire average-speed="1200" max-range="50000" min-range="0"/>
   </weapon-system>
+  <weapon-system launcher="LTO ALR Launcher" munition="LTO brouillage total">
+    <burst duration="1s" munition="1"/>
+    <reloading duration="1s" munition="1"/>
+    <indirect-fire average-speed="1200" max-range="50000" min-range="0"/>
+  </weapon-system>
 </weapons>
