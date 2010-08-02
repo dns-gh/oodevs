@@ -1251,7 +1251,7 @@ void MIL_EntityManager::ProcessMsgKnowledgeGroupUpdate( const MsgsClientToSim::M
     try
     {
         MIL_KnowledgeGroup* pReceiver = FindKnowledgeGroup( message.oid() );
-        if( !pReceiver )
+        if( !pReceiver || pReceiver->IsJammed() )
             throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_error_invalid_type );
 
         pReceiver->OnReceiveMsgKnowledgeGroupUpdate( message, *armyFactory_  );

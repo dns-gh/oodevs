@@ -666,7 +666,7 @@ bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior( const Common:
     if( hasParent )
     {
         pNewParent = pTargetArmy->FindKnowledgeGroup( message.elem( 1 ).value().knowledgegroup().oid() );
-        if( !pNewParent )
+        if( !pNewParent || pNewParent->IsJammed() )
             throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_error_invalid_superior );
     }
     if( pNewParent )

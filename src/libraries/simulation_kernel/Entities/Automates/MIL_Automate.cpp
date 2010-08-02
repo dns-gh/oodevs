@@ -1104,7 +1104,7 @@ void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( const MsgsClientToSim::MsgU
         throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_team_hierarchy );
 
     MIL_KnowledgeGroup* pNewKnowledgeGroup = pNewArmy->FindKnowledgeGroup( msg.parametres().elem( 0 ).value().knowledgegroup().oid() );
-    if( !pNewKnowledgeGroup )
+    if( !pNewKnowledgeGroup || pNewKnowledgeGroup->IsJammed() )
         throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_knowledge_group );
 
     if( *pKnowledgeGroup_ != *pNewKnowledgeGroup )
