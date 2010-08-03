@@ -11,6 +11,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_ComposanteTypePion.h"
+
+#include <boost/algorithm/string.hpp>
 #include "PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Units/Composantes/PHY_ActiveProtection.h"
@@ -37,6 +39,7 @@
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.hpp>
+
 
 PHY_ComposanteTypePion::T_ComposanteTypeMap PHY_ComposanteTypePion::composantesTypes_;
 
@@ -655,11 +658,14 @@ bool PHY_ComposanteTypePion::ReadWoundCapabilities( xml::xistream& xis, T_WoundC
     std::stringstream stream( strWounds );
     std::string wound;
     while( std::getline( stream, wound, ',' ) )
+    {
+        boost::trim( wound );
         if( const PHY_HumanWound* pWound = PHY_HumanWound::Find( wound ) )
         {
             bHasCapability = true;
             container[ pWound->GetID() ] = true;
         }
+    }
     return bHasCapability;
 }
 
