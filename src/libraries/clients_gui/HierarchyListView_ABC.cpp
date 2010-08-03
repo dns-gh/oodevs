@@ -325,16 +325,26 @@ void HierarchyListView_ABC::NotifyUpdated( const kernel::Symbol_ABC& symbol )
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::Update()
 {
-    ValuedListItem* item = (ValuedListItem*)( firstChild() );
-    while( item )
+    UpdateItem( static_cast< gui::ValuedListItem* >( firstChild() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::UpdateItem
+// Created: SBO 2010-08-03
+// -----------------------------------------------------------------------------
+void HierarchyListView_ABC::UpdateItem( gui::ValuedListItem* root )
+{
+    while( root )
     {
-        QListViewItem* next = item->nextSibling();
-        if( item->IsA< const Entity_ABC >() )
+        UpdateItem( static_cast< gui::ValuedListItem* >( root->firstChild() ) );
+        if( root->IsA< const Entity_ABC >() )
         {
-            const Entity_ABC& entity = *item->GetValue< const Entity_ABC >();
-            Display( entity, item );
+            const Entity_ABC& entity = *root->GetValue< const Entity_ABC >();
+            const bool isVisible = profile_.IsVisible( entity );
+            DisplayIcon( entity, root );
+            SetVisible( root, isVisible );
         }
-        item = (ValuedListItem*)( next );
+        root = static_cast< gui::ValuedListItem* >( root->nextSibling() );
     }
 }
 

@@ -103,6 +103,7 @@ private:
     ValuedListItem* FindOrCreate( const kernel::Entity_ABC* entity );
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     virtual void NotifyActivated( const kernel::Entity_ABC& element );
+    void UpdateItem( gui::ValuedListItem* item );
 
     virtual QDragObject* dragObject();
     virtual void dropEvent( QDropEvent* pEvent );
