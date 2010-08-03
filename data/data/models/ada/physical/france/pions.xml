@@ -2336,6 +2336,7 @@
     <equipments>
       <equipment count="2" crew="1" loadable="true" type="Fantassin MINIMI"/>
       <equipment count="2" crew="2" loadable="true" type="Equipe ERYX"/>
+      <equipment count="4" crew="2" loadable="true" type="VAB 12,7"/>
       <equipment count="2" crew="1" loadable="true" type="Tireur Precision"/>
       <equipment count="2" crew="1" loadable="true" type="Fantassin Appui AC"/>
       <equipment count="4" crew="3" major="true" type="AMX10P"/>
