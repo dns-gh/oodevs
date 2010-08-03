@@ -605,6 +605,7 @@ void PHY_ComposanteTypePion::ReadRepairing( xml::xistream& xis )
     std::string type;
     while( std::getline( stream, type, ',' ) )
     {
+        boost::trim( type );
         if( type == "EA" )
             ntiCapability.bElectronic_ = true;
         if( type == "M" )
