@@ -501,9 +501,8 @@ void ActionFactory::ReadStubParameter( xml::xistream& xis, actions::Action_ABC& 
     {
         ReadParameter( xis, action, it, entity );
     }
-    catch( std::exception& e ) {}
+    catch( std::exception& /*e*/ ) {}
 }
-    
 
 // -----------------------------------------------------------------------------
 // Name: ActionFactory::ReadParameter
