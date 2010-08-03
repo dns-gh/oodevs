@@ -435,4 +435,6 @@
   <report id="3007" message="Débarquement - fin"/>
   <report id="3008" message="Protection active réussie"/>
   <report id="3009" message="Protection active hard kill réussie"/>
+  <report id="3010" message="Empoisonné"/>
+  <report id="3011" message="Contaminé"/>
 </reports>

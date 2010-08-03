@@ -115,6 +115,8 @@ public:
         eReport_DisembarkmentFinished,
         eReport_ActiveProtectionCounter,
         eReport_ActiveProtectionHardKill,
+        eReport_Poisoned,
+        eReport_Contaminated,
         eNbrReport
     };
 
@@ -390,20 +392,22 @@ public:
         eRC_DisembarkmentFinished = 3007,
         eRC_ActiveProtectionCounter = 3008,
         eRC_ActiveProtectionHardKill = 3009,
+        eRC_Poisoned = 3010,
+        eRC_Contaminated = 3011,
         eLast
     };
     //@}
 public:
     //! @name Factory
     //@{
-    static       void        Initialize( xml::xistream& xis );
-    static const MIL_Report* Find      ( unsigned int nID );
+    static void Initialize( xml::xistream& xis );
+    static const MIL_Report* Find( unsigned int nID );
     //@}
 
     //! @name Operations
     //@{
-    template< typename T > void SendReportWithTypeAsArgument( const T& sender, E_Type nType, int reportId, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& params ) const;
-    template< typename T > void Send( const T& sender, E_Type nType, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& diaParameters ) const;
+    template< typename T > void SendReportWithTypeAsArgument( const T& sender, E_Type nType, int reportId, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& params ) const;
+    template< typename T > void Send( const T& sender, E_Type nType, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& diaParameters ) const;
     //@}
 
     //! @name $$ BOF
@@ -419,45 +423,47 @@ public:
 private:
     //! @name Constructors/Destructor
     //@{
-    MIL_Report( unsigned int nID, xml::xistream& xis );
+     MIL_Report( unsigned int nID, xml::xistream& xis );
     ~MIL_Report();
     //@}
 
     //! @name Tools
     //@{
     template< typename T >
-    static void PostEvent( const T& receiver, E_EngineReport nReport, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& parameters );
+    static void PostEvent( const T& receiver, E_EngineReport nReport, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters );
 
-    bool DoSend( unsigned int nSenderID, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, int reportId, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& params ) const;
+    bool DoSend( unsigned int nSenderID, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, int reportId, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& params ) const;
     //@}
 
     //! @name Types
     //@{
     typedef std::map< unsigned int, const MIL_Report* > T_ReportMap;
-    typedef T_ReportMap::const_iterator         CIT_ReportMap;
+    typedef T_ReportMap::const_iterator               CIT_ReportMap;
 
     typedef std::vector< const MIL_ParameterType_ABC* > T_ParameterVector;
-    typedef T_ParameterVector::const_iterator           CIT_ParameterVector;
+    typedef T_ParameterVector::const_iterator         CIT_ParameterVector;
 
     typedef std::vector< E_DecisionalReport > T_DiaEventVector;
     //@}
 
 private:
-    unsigned int              nID_;
-    std::string       strMessage_;
+    //! @name Data Members
+    //@{
+    unsigned int nID_;
+    std::string strMessage_;
     T_ParameterVector parameters_;
 
-private:
-    static T_ReportMap      reports_;
+    static T_ReportMap reports_;
     static T_DiaEventVector diaEvents_;
     static MT_IdentifierManager ids_;
+    //@}
 
 private:
     //! @name Helpers
     //@{
     struct LoadingWrapper;
     static void ReadReport( xml::xistream& xis );
-    void ReadParameter ( xml::xistream& xis );
+    void ReadParameter( xml::xistream& xis );
     //@}
 };
 

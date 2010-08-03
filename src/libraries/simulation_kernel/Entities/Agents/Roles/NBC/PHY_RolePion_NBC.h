@@ -22,13 +22,14 @@ namespace firing
 {
     class WeaponReloadingComputer_ABC;
 }
+
 namespace moving
 {
-class SpeedComputer_ABC;
+    class SpeedComputer_ABC;
 }
+
 namespace nbc
 {
-
 // =============================================================================
 // @class  PHY_RolePion_NBC
 // Created: JVT 2004-08-03
@@ -62,11 +63,11 @@ public:
     virtual void Contaminate( const MIL_ToxicEffectManipulator& nbcAgent );
     virtual void Decontaminate();
     virtual void Decontaminate( MT_Float rRatioAgentsWorking );
-    void WearNbcProtectionSuit  ();
+    void WearNbcProtectionSuit();
     void RemoveNbcProtectionSuit();
     virtual MT_Float GetContaminationQuantity() const;
     virtual void Execute( firing::WeaponReloadingComputer_ABC& algorithm ) const;
-    void Execute(moving::SpeedComputer_ABC& algorithm) const;
+    void Execute( moving::SpeedComputer_ABC& algorithm ) const;
     //@}
 
     //! @name Accessors
@@ -92,7 +93,7 @@ private:
     //@{
     bool HasChanged() const;
     void ContaminateOtherUnits();
-    std::vector<const MIL_NbcAgentType*> GetContaminating() const;
+    std::vector< const MIL_NbcAgentType* > GetContaminating() const;
     //@}
 
     //! @name Data Members
@@ -103,6 +104,8 @@ private:
     MT_Float rContaminationState_;
     MT_Float rContaminationQuantity_;
     bool bHasChanged_;
+    bool poisoned_;
+    bool lastStatePoisoning_;
     //@}
 
     //! @name Serialization

@@ -28,24 +28,24 @@ const MIL_Report* MIL_Report::Find( unsigned int nID )
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > void MIL_Report::Send
+// Name: MIL_Report::Send
 // Created: NLD 2006-12-06
 // -----------------------------------------------------------------------------
 template< typename T > inline
-void MIL_Report::Send( const T& sender, E_Type nType, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& diaParameters ) const
+void MIL_Report::Send( const T& sender, E_Type nType, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& diaParameters ) const
 {
     DoSend( sender.GetID(), nType, sender.GetKnowledge(), 0, diaParameters );
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > void MIL_Report::SendReportWithTypeAsArgument
+// Name: MIL_Report::SendReportWithTypeAsArgument
 // Created: LDC 2009-06-08
 // -----------------------------------------------------------------------------
 template< typename T > inline
-void MIL_Report::SendReportWithTypeAsArgument( const T& sender, E_Type nType, int reportId, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& params ) const
+void MIL_Report::SendReportWithTypeAsArgument( const T& sender, E_Type nType, int reportId, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& params ) const
 {
     DoSend( sender.GetID(), nType, sender.GetKnowledge(), reportId, params );
-}    
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Report::PostEvent
@@ -54,9 +54,8 @@ void MIL_Report::SendReportWithTypeAsArgument( const T& sender, E_Type nType, in
 template< typename T > inline
 void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& parameters )
 {
-    if( diaEvents_.size() <= (unsigned int)nReport )
+    if( diaEvents_.size() <= static_cast< unsigned int >( nReport ) )
         return;
-    
     const MIL_Report* pReport = MIL_Report::Find( diaEvents_[ nReport ] );
     if( pReport )
         pReport->Send< T >( receiver, MIL_Report::eRcTypeOperational, parameters );
@@ -69,7 +68,7 @@ void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, std::vect
 template< typename T > inline
 void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport )
 {
-    std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > parameters;
+    std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
     PostEvent( receiver, nReport, parameters );
 }
 
@@ -80,10 +79,9 @@ void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport )
 template< typename T > inline
 void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, const PHY_ComposanteTypePion& parameter )
 {
-    std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > parameters;
-    boost::shared_ptr<MIL_MissionParameter_ABC> pParameter( MIL_MissionParameterFactory::Create( &parameter ) );
+    std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
+    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter( MIL_MissionParameterFactory::Create( &parameter ) );
     parameters.push_back( pParameter );
-
     PostEvent( receiver, nReport, parameters );
 }
 
@@ -94,10 +92,9 @@ void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, const PHY
 template< typename T > inline
 void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, const PHY_DotationCategory& parameter )
 {
-    std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > parameters;
-    boost::shared_ptr<MIL_MissionParameter_ABC> pParameter( MIL_MissionParameterFactory::Create( &parameter ) );
+    std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
+    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter( MIL_MissionParameterFactory::Create( &parameter ) );
     parameters.push_back( pParameter );
-
     PostEvent( receiver, nReport, parameters );
 }
 
@@ -108,12 +105,11 @@ void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, const PHY
 template< typename T > inline
 void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, MT_Float nParam1, MT_Float nParam2 )
 {
-    std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > parameters;
-    boost::shared_ptr<MIL_MissionParameter_ABC> pParameter1( MIL_MissionParameterFactory::Create( (float)nParam1 ) );
-    boost::shared_ptr<MIL_MissionParameter_ABC> pParameter2( MIL_MissionParameterFactory::Create( (float)nParam2 ) );
+    std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
+    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter1( MIL_MissionParameterFactory::Create( static_cast< float >( nParam1 ) ) );
+    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter2( MIL_MissionParameterFactory::Create( static_cast< float >( nParam2 ) ) );
     parameters.push_back( pParameter1 );
     parameters.push_back( pParameter2 );
-
     PostEvent( receiver, nReport, parameters );
 }
 
@@ -124,10 +120,9 @@ void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, MT_Float 
 template< typename T > inline
 void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, int nParam )
 {
-    std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > parameters;
-    boost::shared_ptr<MIL_MissionParameter_ABC> pParameter( MIL_MissionParameterFactory::Create( nParam ) );
+    std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
+    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter( MIL_MissionParameterFactory::Create( nParam ) );
     parameters.push_back( pParameter );
-
     PostEvent( receiver, nReport, parameters );
 }
 
@@ -138,9 +133,8 @@ void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, int nPara
 template< typename T > inline
 void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, const MIL_Effect_IndirectFire& flyingShell )
 {
-    std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > parameters;
-    boost::shared_ptr<MIL_MissionParameter_ABC> pParameter( MIL_MissionParameterFactory::Create( (int)flyingShell.GetFireID() ) );
+    std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
+    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter( MIL_MissionParameterFactory::Create( static_cast< int >( flyingShell.GetFireID() ) ) );
     parameters.push_back( pParameter );
-
     PostEvent( receiver, nReport, parameters );
 }

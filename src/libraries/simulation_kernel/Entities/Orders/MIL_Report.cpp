@@ -36,7 +36,6 @@ struct MIL_Report::LoadingWrapper
 void MIL_Report::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing reports types" );
-
     LoadingWrapper loader;
     xis >> xml::start( "reports" )
             >> xml::list( "report", loader, &LoadingWrapper::ReadReport )
@@ -112,6 +111,8 @@ void MIL_Report::Initialize( xml::xistream& xis )
     diaEvents_[ eReport_DisembarkmentFinished ]    = eRC_DisembarkmentFinished;
     diaEvents_[ eReport_ActiveProtectionCounter ]  = eRC_ActiveProtectionCounter;
     diaEvents_[ eReport_ActiveProtectionHardKill ] = eRC_ActiveProtectionHardKill;
+    diaEvents_[ eReport_Poisoned ] = eRC_Poisoned;
+    diaEvents_[ eReport_Contaminated ] = eRC_Contaminated;
 }
 
 // -----------------------------------------------------------------------------
@@ -122,7 +123,6 @@ void MIL_Report::ReadReport( xml::xistream& xis )
 {
     unsigned int id;
     xis >> xml::attribute( "id", id );
-
     const MIL_Report*& pReport = reports_[ id ];
     if( pReport )
         xis.error( "Report id already defined" );
@@ -134,8 +134,7 @@ void MIL_Report::ReadReport( xml::xistream& xis )
 // Created: NLD 2006-12-06
 // -----------------------------------------------------------------------------
 MIL_Report::MIL_Report( unsigned int id, xml::xistream& xis )
-    : nID_       ( id )
-    , strMessage_()
+    : nID_( id )
 {
     xis >> xml::attribute( "message", strMessage_ );
     xis >> xml::list( "parameter", *this, &MIL_Report::ReadParameter );
@@ -161,7 +160,6 @@ void MIL_Report::ReadParameter( xml::xistream& xis )
     const MIL_ParameterType_ABC* pParameter = MIL_ParameterType_ABC::Find( strType );
     if( !pParameter )
         xis.error( "Unknown parameter type" );
-
     parameters_.push_back( pParameter );
 }
 
