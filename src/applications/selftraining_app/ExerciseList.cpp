@@ -387,7 +387,7 @@ void ExerciseList::AddExerciseEntry( const QString& exercise )
 // -----------------------------------------------------------------------------
 bool ExerciseList::Exists( const QString& exercise ) const
 {
-    return exercises_->findItem( exercise, Qt::ExactMatch ) != 0;
+    return exercises_->findItem( exercise, 0, Qt::ExactMatch ) != 0;
 }
 
 // -----------------------------------------------------------------------------
