@@ -1611,7 +1611,7 @@
       <parameter dia-name="objectives" name="point de regroupement" optional="false" type="PointBM"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Suivre" dia-type="net.masagroup.sword.france.military.company.tasks.Suivre" id="1012" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Suivre" name="COMMUNES Suivre">
-      <parameter dia-name="objectives" name="Unite a suivre" optional="false" type="AgentBM"/>
+      <parameter dia-name="objective" name="Unite a suivre" optional="false" type="AgentBM"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Stationner" dia-type="net.masagroup.sword.france.military.company.tasks.Stationner" id="1013" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Stationner" name="COMMUNES Stationner">
       <parameter dia-name="objectives" name="Point de stationnement" optional="false" type="PointBM"/>
