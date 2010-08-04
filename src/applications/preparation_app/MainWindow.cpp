@@ -419,8 +419,9 @@ void MainWindow::LoadExercise()
         std::string loadingErrors;
         model_.Load( config_, loadingErrors );
         loading_ = false;
-        SetWindowTitle( false );
-        if( !loadingErrors.empty() )
+        bool errors = !loadingErrors.empty();
+        SetWindowTitle( errors );
+        if( errors )
             QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
                 , ( tr( "The following entities cannot be loaded: " ) + "\n" + loadingErrors.c_str() ).ascii() );
     }
