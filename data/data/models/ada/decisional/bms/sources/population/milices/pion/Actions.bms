@@ -149,6 +149,7 @@ elseif switch_1 == eActionObjetTerminee then
                 end
 
                 DEC_Trace( "realisation objet : debut" )
+                DEC_RC( eRC_DebutTravaux )
                 self.actionID = DEC_StartCreerObjet( self.repObj, S_TypeObject_ToString( self._namedParams.eTypeObjet ), self._namedParams.locObjet )
                 actionCallbacks[ self.actionID ] = function( arg ) self.eEtatObjet = arg end
                 actionKnowledgeCallbacks[ self.actionID ] = function( arg ) self.repObj = arg end
@@ -254,6 +255,7 @@ elseif switch_1 == eActionObjetTerminee then
         if( ModuleBegins() ) then
             do
                 DEC_Trace( "preparation abatti : debut" )
+                DEC_RC( eRC_DebutTravaux )
                 if( not DEC_Agent_PeutConstruireObjet( S_TypeObject_ToString( eTypeObjectAbatti ) ) ) then
                     self:SendFeedback( eActionImpossible )
                     Halt( self )
