@@ -37,14 +37,15 @@ namespace
                                     .arg( entity.GetName() ).arg( entity.GetId() ).arg( name.c_str() ).arg( id ) );
             }
         }
-        catch( std::exception& e )
+        catch( std::exception& )
         {
             if( stub )
             {
                 static const OrderType stubType;
                 return stubType;
             }
-            throw e;
+            throw std::exception( tools::translate( "Mission", "Entity '%1' (id: %2) received unknown mission" )
+                                    .arg( entity.GetName() ).arg( entity.GetId() ).arg( "?" ).arg( "?" ) );
         }
         return *type;
     }

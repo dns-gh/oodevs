@@ -92,6 +92,10 @@
         <source>Entity &apos;%1&apos; (id: %2) cannot execute mission &apos;%3&apos; (id: %4)</source>
         <translation>L&apos;entité &apos;%1&apos; (id: %2) ne peut pas exécuter la mission &apos;%3&apos; (id: %4)</translation>
     </message>
+    <message>
+        <source>Entity &apos;%1&apos; (id: %2) received unknown mission</source>
+        <translation type="unfinished">L&apos;entité &apos;%1&apos; (id: %2) a une mission inconnue</translation>
+    </message>
 </context>
 <context>
     <name>Parameter</name>
