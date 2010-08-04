@@ -73,16 +73,15 @@ namespace
 // -----------------------------------------------------------------------------
 ADN_Sensors_DetectionAlgorithmPrevision::ADN_Sensors_DetectionAlgorithmPrevision( QWidget* parent )
     : QGroupBox( 2, Qt::Vertical, tr( "Simulation" ), parent )
-    , perceiverPostureFactor_( 1. )
-    , targetPostureFactor_( 1. )
-    , sizeFactor_( 1. )
-    , weatherFactor_( 1. )
-    , illuminationFactor_( 1. )
-    , environmentFactor_( 1. )
-    , urbanFactor_( 1. )
-    , populationDensityFactor_ ( 1. )
-    , populationModifier_( 1. )
-    , population_ ( 0. )
+    , perceiverPostureFactor_ ( 1. )
+    , targetPostureFactor_    ( 1. )
+    , sizeFactor_             ( 1. )
+    , weatherFactor_          ( 1. )
+    , illuminationFactor_     ( 1. )
+    , environmentFactor_      ( 1. )
+    , populationDensityFactor_( 1. )
+    , populationModifier_     ( 1. )
+    , population_             ( 0. )
 {
     {
         QGrid* group = new QGrid ( 2,this );
@@ -120,7 +119,6 @@ ADN_Sensors_DetectionAlgorithmPrevision::ADN_Sensors_DetectionAlgorithmPrevision
         populationValue_->setText( "0" );
         populationValue_->setValidator( new QDoubleValidator( populationValue_ ) );
         connect (populationValue_, SIGNAL(textChanged( const QString& )), this, SLOT( OnPopulationChanged( const QString& ) ) );
-
     }
 
     GQ_Plot* pGraph = new GQ_Plot( this );
@@ -144,7 +142,7 @@ ADN_Sensors_DetectionAlgorithmPrevision::ADN_Sensors_DetectionAlgorithmPrevision
     pGraphData_ = CreateGraphData( 0, 255, pGraph );
     pBaseGraphData_ = CreateGraphData( 166, 0, pGraph );
 
-    for (int i = 0; i < 7; ++i )
+    for( unsigned int i = 0; i < 7; ++i )
     {
         pGraphData_->AddPoint( 0., 0. );
         pBaseGraphData_->AddPoint( 0., 0. );
@@ -190,7 +188,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::Update()
 {
     double population = population_ ? std::min( 1., populationModifier_ * populationDensityFactor_ / population_ ) : 1;
     double value = perceiverPostureFactor_ * targetPostureFactor_ * sizeFactor_ * weatherFactor_ *
-       illuminationFactor_* environmentFactor_ * urbanFactor_ * population;
+                   illuminationFactor_* environmentFactor_ * population;
 
     pBaseGraphData_->ChangePoint( 0, std::make_pair( 0., 3. ) );
     pBaseGraphData_->ChangePoint( 1, std::make_pair( identification_, 3. ) );
@@ -199,7 +197,6 @@ void ADN_Sensors_DetectionAlgorithmPrevision::Update()
     pBaseGraphData_->ChangePoint( 4, std::make_pair( recognition_, 1. ) );
     pBaseGraphData_->ChangePoint( 5, std::make_pair( detection_, 1. ) );
     pBaseGraphData_->ChangePoint( 6, std::make_pair( detection_, 0. ) );
-
     pBaseGraphData_->TouchRange();
     pBaseGraphData_->TouchData();
 
@@ -234,7 +231,6 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnSelectSensor( void* data )
         weatherFactor_= 1;
         illuminationFactor_= 1;
         environmentFactor_= 1;
-        urbanFactor_= 1;
         populationModifier_ = infos->populationInfos_.rModifier_.GetData();
         populationDensityFactor_ = infos->populationInfos_.rDensity_.GetData();
         Update();
@@ -248,7 +244,6 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnSelectSensor( void* data )
         populationValue_->setText( "0" );
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_DetectionAlgorithmPrevision::OnSizeChanged
@@ -289,17 +284,9 @@ void ADN_Sensors_DetectionAlgorithmPrevision::IlluminationChanged( std::string i
 // -----------------------------------------------------------------------------
 void ADN_Sensors_DetectionAlgorithmPrevision::EnvironmentChanged( ADN_Sensors_Data::ModificatorEnvironmentInfos* env, double factor )
 {
-    environmentFactor_ = factor;
     environment_->setText( env->GetItemName().c_str() );
-    eEnvironmentType_ = env->eType_;
-    if (env->eType_ != eVisionUrban )
-    {
-        urbanFactor_ = 1.;
-        urbanMaterial_->setText( "Can not be selected." );
-    }
-    else if( urbanMaterial_->text() == "Can not be selected." )
-        urbanMaterial_->setText("");
-
+    urbanMaterial_->setText( "Can not be selected." );
+    environmentFactor_ = factor;
     Update();
 }
 
@@ -309,12 +296,10 @@ void ADN_Sensors_DetectionAlgorithmPrevision::EnvironmentChanged( ADN_Sensors_Da
 // -----------------------------------------------------------------------------
 void ADN_Sensors_DetectionAlgorithmPrevision::UrbanBlockChanged( std::string material, double factor )
 {
-    if( eEnvironmentType_ == eVisionUrban )
-    {
-        urbanFactor_ = factor;
-        urbanMaterial_->setText( material.c_str() );
-        Update();
-    }
+    urbanMaterial_->setText( material.c_str() );
+    environment_->setText( "Can not be selected." );
+    environmentFactor_ = factor;
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -358,13 +343,13 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationDensityChanged( const 
 {
     if( !value.isEmpty() )
         try
-    {
-         populationDensityFactor_ = boost::lexical_cast< double >( value.ascii() );
-    }
-    catch ( boost::bad_lexical_cast* /*e*/)
-    {
-        populationDensityFactor_ = 1;
-    }
+        {
+             populationDensityFactor_ = boost::lexical_cast< double >( value.ascii() );
+        }
+        catch ( boost::bad_lexical_cast* /*e*/)
+        {
+            populationDensityFactor_ = 1;
+        }
     else
         populationDensityFactor_ = 1;
     Update();
@@ -401,7 +386,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationChanged( const QString
        {
            population_ = boost::lexical_cast< double >( value.ascii() );
        }
-    catch ( boost::bad_lexical_cast* /*e*/)
+       catch ( boost::bad_lexical_cast* /*e*/)
        {
            populationValue_->setText( "0" );
            population_ = 0;

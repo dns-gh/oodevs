@@ -35,15 +35,6 @@ public:
     explicit ADN_Sensors_DetectionAlgorithmPrevision( QWidget* parent );
     virtual ~ADN_Sensors_DetectionAlgorithmPrevision();
     //@}
-public:
-
-//    enum E_DetectionAlgorithmElemements
-//    {
-//        eDistPreviewDetection,
-////        eDistPreviewReco,
-////        eDistPreviewIdent,
-//        eNbrAlgoGuiElements
-//    };
 
 public slots:
     //! @name Operations
@@ -79,29 +70,24 @@ private:
 private:
     //! @name Member data
     //@{
-//    ADN_EditLine_Double* detection_;
-
-    QLineEdit*  volume_;
-    QLineEdit*  stance_;
-    QLineEdit*  stanceTarget_;
-    QLineEdit*  weather_;
-    QLineEdit*  illumnination;
-    QLineEdit*  environment_;
-    QLineEdit*  urbanMaterial_;
-    QLineEdit*  populationValue_;
+    QLineEdit* volume_;
+    QLineEdit* stance_;
+    QLineEdit* stanceTarget_;
+    QLineEdit* weather_;
+    QLineEdit* illumnination;
+    QLineEdit* environment_;
+    QLineEdit* urbanMaterial_;
+    QLineEdit* populationValue_;
     GQ_PlotData* pGraphData_;
     GQ_PlotData* pBaseGraphData_;
-
     double perceiverPostureFactor_;
     double targetPostureFactor_;
     double sizeFactor_;
     double weatherFactor_;
     double illuminationFactor_;
     double environmentFactor_;
-    double urbanFactor_;
     double populationDensityFactor_;
     double population_;
-    E_VisionObject eEnvironmentType_;
     double detection_;
     double recognition_;
     double identification_;
