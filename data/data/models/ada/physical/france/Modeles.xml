@@ -732,9 +732,6 @@
     </unit>
     <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Son Vab\Model.bms" name="Section INF">
       <missions>
-        <mission name="MELEE Interdire un Bloc Urbain"/>
-        <mission name="MELEE Reconnaitre Itineraire"/>
-        <mission name="MELEE Appuyer"/>
         <mission name="INF Appuyer"/>
         <mission name="INF Contre Attaquer"/>
         <mission name="INF Controler Secteur"/>
@@ -863,9 +860,6 @@
     </unit>
     <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\PC\Model.bms" name="PC INF">
       <missions>
-        <mission name="MELEE Interdire un Bloc Urbain"/>
-        <mission name="MELEE Reconnaitre Itineraire"/>
-        <mission name="MELEE Appuyer"/>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
         <mission name="Soutenir sur position en mesure de"/>
@@ -887,9 +881,6 @@
     </unit>
     <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.bms" name="Peloton XL">
       <missions>
-        <mission name="MELEE Interdire un Bloc Urbain"/>
-        <mission name="MELEE Reconnaitre Itineraire"/>
-        <mission name="MELEE Appuyer"/>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
