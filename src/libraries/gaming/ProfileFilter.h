@@ -21,6 +21,7 @@ namespace kernel {
     class TacticalHierarchies;
     class CommunicationHierarchies;
     class IntelligenceHierarchies;
+    class Knowledge_ABC;
 }
 
 // =============================================================================
@@ -42,6 +43,7 @@ public:
     //@{
     virtual QString GetLogin    () const;
     virtual bool IsVisible      ( const kernel::Entity_ABC& entity ) const;
+    virtual bool IsKnowledgeVisible( const kernel::Knowledge_ABC& knowledge ) const;
     virtual bool CanBeOrdered   ( const kernel::Entity_ABC& entity ) const;
     virtual bool CanDoMagic     ( const kernel::Entity_ABC& entity ) const;
     virtual bool IsSupervision  () const;

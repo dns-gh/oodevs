@@ -34,13 +34,14 @@ public:
     //! @name Constructors/Destructor
     //@{
              KnowledgeGroupHierarchies( kernel::Controller& controller, kernel::Entity_ABC* superior, kernel::KnowledgeGroup_ABC& holder
-                                      , tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& resolver );
+                                      , tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& resolver, bool jam );
     virtual ~KnowledgeGroupHierarchies();
     //@}
 
     //! @name Operations
     //@{
     virtual bool CanCommunicate() const;
+    virtual bool IsJammed() const;
     virtual void DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& updateMessage );
     //@}
 
@@ -56,6 +57,7 @@ private:
     //@{
     tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& resolver_;
     kernel::Controller& controller_;
+    bool jam_;
     //@}
 };
 

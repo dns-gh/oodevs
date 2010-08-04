@@ -38,6 +38,7 @@ public:
     virtual const Entity_ABC* GetRecognizedEntity() const = 0;
     virtual const Entity_ABC& GetOwner() const = 0;
 
+    virtual bool IsVisible( bool /*inSameHierarchy*/ ) const { return false; }
     void AddListener( KnowledgeListener_ABC& listener ) { listeners_.insert( &listener ); }
     void RemoveListener( KnowledgeListener_ABC& listener ) { listeners_.erase( &listener ); }
 

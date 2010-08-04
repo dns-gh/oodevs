@@ -93,3 +93,12 @@ bool AgentHierarchiesCommunication::CanCommunicate() const
 {
     return !jammed_ && !radioReceiverDisabled_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentHierarchiesCommunication::IsJammed
+// Created: HBD 2010-07-30
+// -----------------------------------------------------------------------------
+bool AgentHierarchiesCommunication::IsJammed() const
+{
+    return false;
+}

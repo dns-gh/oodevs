@@ -17,10 +17,11 @@
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
 KnowledgeGroupHierarchies::KnowledgeGroupHierarchies( kernel::Controller& controller, kernel::Entity_ABC* superior, kernel::KnowledgeGroup_ABC& holder
-                                                    , tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& resolver )
+                                                    , tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& resolver, bool jam )
     : kernel::EntityHierarchies< kernel::CommunicationHierarchies >( controller, holder, superior )
     , resolver_( resolver )
     , controller_( controller )
+    , jam_ ( jam )
 {
     // NOTHING
 }
@@ -63,6 +64,15 @@ void KnowledgeGroupHierarchies::DoUpdate( const MsgsSimToClient::MsgKnowledgeGro
 // Created: LDC 2010-04-07
 // -----------------------------------------------------------------------------
 bool KnowledgeGroupHierarchies::CanCommunicate() const
-{
+{   
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroupHierarchies::IsJammed
+// Created: HBD 2010-07-30
+// -----------------------------------------------------------------------------
+bool KnowledgeGroupHierarchies::IsJammed() const
+{
+    return jam_;
 }

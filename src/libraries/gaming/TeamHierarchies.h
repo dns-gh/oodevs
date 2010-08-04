@@ -42,6 +42,7 @@ public:
     //@}
 
     virtual bool CanCommunicate() const;
+    virtual bool IsJammed() const;
 
 private:
     //! @name Operations

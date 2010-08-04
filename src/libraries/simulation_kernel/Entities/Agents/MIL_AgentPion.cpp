@@ -984,7 +984,7 @@ void MIL_AgentPion::Serialize( HLA_UpdateFunctor& functor ) const
         statuses.push_back( "pc" );
     if( GetRole< PHY_RolePion_Composantes >().IsNeutralized() )
         statuses.push_back( "neutralise" );
-    if( !GetRole< PHY_RolePion_Communications >().CanEmit() &&  ! GetRole< PHY_RolePion_Communications >().CanReceive() )
+    if( !GetRole< PHY_RolePion_Communications >().CanEmit() &&  !GetRole< PHY_RolePion_Communications >().CanReceive() )
         statuses.push_back( "brouille" );
     if( GetRole< PHY_RolePion_Communications >().CanReceive() && !GetRole< PHY_RolePion_Communications >().CanEmit() )
         statuses.push_back( "silenceradiopartiel" );

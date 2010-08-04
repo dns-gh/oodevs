@@ -50,6 +50,7 @@ public:
     //@}
 
     virtual bool CanCommunicate() const;
+    virtual bool IsJammed() const;
     void DoUpdate( const MsgsSimToClient::MsgUnitCreation& message );
     virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
     void DoUpdate( const Common::MsgUnitChangeSuperior& message );

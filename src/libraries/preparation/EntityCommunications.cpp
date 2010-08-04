@@ -48,3 +48,12 @@ bool EntityCommunications::CanCommunicate() const
 {
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: EntityCommunications::IsJammed
+// Created: HBD 2010-07-30
+// -----------------------------------------------------------------------------
+bool EntityCommunications::IsJammed() const
+{
+    return false;
+}

@@ -54,6 +54,7 @@ public:
     //! @name Operations
     //@{
     virtual QString GetTypeName() const;
+    virtual bool IsVisible( bool inSameHierarchy ) const { return inSameHierarchy; }
 
     virtual void Select( kernel::ActionController& controller ) const;
     virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;

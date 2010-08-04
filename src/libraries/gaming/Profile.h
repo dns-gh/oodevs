@@ -24,6 +24,7 @@ namespace kernel
     class Population_ABC;
     class Hierarchies;
     class Formation_ABC;
+    class Knowledge_ABC;
 }
 
 namespace MsgsAuthenticationToClient
@@ -78,6 +79,7 @@ public:
     //! @name Operations
     //@{
     virtual bool IsVisible   ( const kernel::Entity_ABC& entity ) const;
+    virtual bool IsKnowledgeVisible   ( const kernel::Knowledge_ABC& entity ) const;
     virtual bool CanBeOrdered( const kernel::Entity_ABC& entity ) const;
     virtual bool CanDoMagic  ( const kernel::Entity_ABC& entity ) const;
     //@}

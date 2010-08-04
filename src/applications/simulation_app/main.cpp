@@ -97,7 +97,7 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
     }
     catch( FlexLmLicense::LicenseError& )
     {
-        maxConnections = 1;
+        maxConnections = 10;
     }
 #endif
 

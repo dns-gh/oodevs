@@ -71,3 +71,12 @@ bool AutomatHierarchies::CanCommunicate() const
 {
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: AutomatHierarchies::IsJammed
+// Created: HBD 2010-07-30
+// -----------------------------------------------------------------------------
+bool AutomatHierarchies::IsJammed() const
+{
+    return false;
+}

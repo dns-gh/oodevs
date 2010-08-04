@@ -47,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    std::string GetName() const;
+    const std::string& GetName() const;
     std::string GetNumber() const;
     std::string GetDesc() const;
     unsigned long GetId() const;

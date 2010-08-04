@@ -58,10 +58,11 @@ kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::CreateKnowledgeGroup( const M
 
     KnowledgeGroup* result = new KnowledgeGroup( message.oid(), controllers_.controller_, message.type(), model_.static_.types_ );
     result->Attach( *new AgentKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );
-    if( message.has_jam() && message.jam() )
+    bool jam = message.has_jam() && message.jam();
+    if( jam )
         result->Attach( *new ObjectKnowledges( *result, controllers_.controller_, model_.objectKnowledgeFactory_ ) );
     result->Attach( *new PopulationKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );
-    result->Attach< CommunicationHierarchies >( *new KnowledgeGroupHierarchies( controllers_.controller_, superior, *result, model_.knowledgeGroups_ ) ); // LTO
+    result->Attach< CommunicationHierarchies >( *new KnowledgeGroupHierarchies( controllers_.controller_, superior, *result, model_.knowledgeGroups_, jam ) ); // LTO
     result->Polish();
     return result;
 }

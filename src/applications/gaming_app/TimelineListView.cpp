@@ -100,7 +100,7 @@ void TimelineListView::NotifyCreated( const Action_ABC& action )
 // -----------------------------------------------------------------------------
 void TimelineListView::NotifyDeleted( const Action_ABC& action )
 {
-    const kernel::Entity_ABC* entity = 0;
+        const kernel::Entity_ABC* entity = 0;
     if( const ActionTasker* tasker = action.Retrieve< ActionTasker >() )
         entity = tasker->GetTasker();
 

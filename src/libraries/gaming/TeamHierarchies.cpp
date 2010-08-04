@@ -49,7 +49,18 @@ void TeamHierarchies::DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& 
 // Name: TeamHierarchies::CanCommunicate
 // Created: LDC 2010-04-07
 // -----------------------------------------------------------------------------
-bool TeamHierarchies::CanCommunicate() const
+bool TeamHierarchies::CanCommunicate() const    
 {
     return true;
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: TeamHierarchies::IsJammed
+// Created: HBD 2010-07-30
+// -----------------------------------------------------------------------------
+bool TeamHierarchies::IsJammed() const
+{
+    return false;
+}
+

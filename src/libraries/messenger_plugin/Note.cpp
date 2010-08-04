@@ -206,7 +206,7 @@ void Note::SetParent(unsigned long note)
 // Name: Note::GetName
 // Created: HBD 2010-02-15
 // -----------------------------------------------------------------------------
-std::string Note::GetName() const
+const std::string& Note::GetName() const
 {
     return name_;
 }

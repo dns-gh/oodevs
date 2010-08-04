@@ -13,6 +13,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Knowledge_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/IntelligenceHierarchies.h"
@@ -230,6 +231,15 @@ bool Profile::IsSupervision() const
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
 bool Profile::IsVisible( const Entity_ABC& entity ) const
+{
+    return IsInHierarchy( entity, readEntities_, false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::IsKnowledgeVisible
+// Created: HBD 2010-08-03
+// -----------------------------------------------------------------------------
+bool Profile::IsKnowledgeVisible( const kernel::Knowledge_ABC& entity ) const
 {
     return IsInHierarchy( entity, readEntities_, false );
 }

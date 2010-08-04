@@ -94,5 +94,9 @@ void MissionParameters::DoUpdate( const Common::MsgPopulationOrder& message )
 void MissionParameters::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     if( !elements_.empty() && tools.ShouldDisplay( "MissionParameters" ) )
-        ( --elements_.end() )->second->Draw( where, viewport, tools );
+    {
+        Action_ABC* action = ( --elements_.end() )->second;
+        if ( action )
+            action->Draw( where, viewport, tools );
+    }
 }

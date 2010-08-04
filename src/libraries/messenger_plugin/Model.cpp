@@ -114,7 +114,7 @@ void Model::Save( const std::string& name ) const
     xos << xml::end;
 
     drawings_.Save( directory );
-    notes_.SaveNotes( config_.BuildSessionChildFile("notes.csv" ) );
+    notes_.SaveNotes();
 }
 
 // -----------------------------------------------------------------------------
