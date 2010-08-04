@@ -108,13 +108,16 @@ void PopulationFlowKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationFlow
 // -----------------------------------------------------------------------------
 void PopulationFlowKnowledge::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Population", "Flow" ) )
-                .Display( tools::translate( "Population", "Heading:" ), rDirection_ * Units::degrees )
-                .Display( tools::translate( "Population", "Speed:" ), rSpeed_ * Units::kilometersPerHour )
-                .Display( tools::translate( "Population", "Alive people:" ), nNbrAliveHumans_ )
-                .Display( tools::translate( "Population", "Dead people:" ), nNbrDeadHumans_ )
-                .Display( tools::translate( "Population", "Mood:" ), tools::ToString( eAttitude_ ) )
-                .Display( tools::translate( "Population", "Perceived:" ), bIsPerceived_ );
+    Displayer_ABC& group = displayer.Group( tools::translate( "Population", "Flow" ) );
+    group.Display( tools::translate( "Population", "Heading:" ), rDirection_ * Units::degrees )
+         .Display( tools::translate( "Population", "Speed:" ), rSpeed_ * Units::kilometersPerHour )
+         .Display( tools::translate( "Population", "Alive people:" ), nNbrAliveHumans_ )
+         .Display( tools::translate( "Population", "Dead people:" ), nNbrDeadHumans_ )
+         .Display( tools::translate( "Population", "Perceived:" ), bIsPerceived_ );
+    if( eAttitude_.IsSet() )
+        group.Display( tools::translate( "Population", "Mood:" ), tools::ToString( eAttitude_ ) );
+    else
+        group.Display( tools::translate( "Population", "Mood:" ), ValueNotSet() );
 }
 
 // -----------------------------------------------------------------------------

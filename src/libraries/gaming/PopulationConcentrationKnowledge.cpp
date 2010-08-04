@@ -85,12 +85,15 @@ void PopulationConcentrationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopul
 // -----------------------------------------------------------------------------
 void PopulationConcentrationKnowledge::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Population", "Concentration" ) )
-                .Display( tools::translate( "Population", "Alive people:" ), nNbrAliveHumans_ )
-                .Display( tools::translate( "Population", "Dead people:" ), nNbrDeadHumans_ )
-                .Display( tools::translate( "Population", "Mood:" ), tools::ToString( eAttitude_ ) )
-                .Display( tools::translate( "Population", "Perceived:" ), bIsPerceived_ )
-                .Display( tools::translate( "Population", "Relevance:" ), rRelevance_ );
+    Displayer_ABC& group = displayer.Group( tools::translate( "Population", "Concentration" ) );
+    group.Display( tools::translate( "Population", "Alive people:" ), nNbrAliveHumans_ )
+         .Display( tools::translate( "Population", "Dead people:" ), nNbrDeadHumans_ )
+         .Display( tools::translate( "Population", "Perceived:" ), bIsPerceived_ )
+         .Display( tools::translate( "Population", "Relevance:" ), rRelevance_ );
+    if( eAttitude_.IsSet() )
+        group.Display( tools::translate( "Population", "Mood:" ), tools::ToString( eAttitude_ ) );
+    else
+        group.Display( tools::translate( "Population", "Mood:" ), ValueNotSet() );
 }
 
 // -----------------------------------------------------------------------------

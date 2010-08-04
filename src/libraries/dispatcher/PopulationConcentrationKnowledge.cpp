@@ -62,7 +62,10 @@ void PopulationConcentrationKnowledge::Update( const MsgsSimToClient::MsgPopulat
         concentrationId_ = msg.oid_concentration_reelle();
 
     if( msg.has_attitude() )
+    {
         nAttitude_ = msg.attitude();
+        optionals_.attitudePresent = 1;
+    }
     if( msg.has_nb_humains_morts() )
     {
         nNbrDeadHumans_ = msg.nb_humains_morts();
@@ -130,7 +133,7 @@ void PopulationConcentrationKnowledge::SendFullUpdate( ClientPublisher_ABC& publ
         asn().set_attitude( nAttitude_ );
     if( optionals_.pertinencePresent )
         asn().set_pertinence( nRelevance_ );
-    if( asn().has_est_percu() )
+    if( optionals_.est_percuPresent )
         asn().set_est_percu( bPerceived_ );
 
     asn.Send( publisher );
