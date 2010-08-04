@@ -53,8 +53,8 @@ DateTime::DateTime( const OrderParameter& parameter, const Common::MsgDateTime& 
 DateTime::DateTime( const kernel::OrderParameter& parameter, const QDateTime& date )
     : Parameter< QString >( parameter )
 {
-    std::string dateStr  = date.date().toString( Qt::ISODate  ).ascii();
-    std::string timeStr  = date.time().toString( Qt::LocalDate  ).ascii();
+    std::string dateStr  = date.date().toString( Qt::ISODate ).ascii();
+    std::string timeStr  = date.time().toString( Qt::ISODate ).ascii();
     bpt::ptime time( bpt::time_from_string( dateStr + " " + timeStr )  );
 
     time_ = bpt::to_iso_string( time );
