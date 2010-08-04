@@ -113,6 +113,9 @@ void MIL_Report::Initialize( xml::xistream& xis )
     diaEvents_[ eReport_ActiveProtectionHardKill ] = eRC_ActiveProtectionHardKill;
     diaEvents_[ eReport_Poisoned ] = eRC_Poisoned;
     diaEvents_[ eReport_Contaminated ] = eRC_Contaminated;
+    diaEvents_[ eReport_FireOnEnemySide] = eRC_TirSurCampEnnemi;
+    diaEvents_[ eReport_FiredByEnemySide] = eRC_TireParCampEnnemi;
+
 }
 
 // -----------------------------------------------------------------------------

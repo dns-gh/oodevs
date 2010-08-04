@@ -196,11 +196,23 @@ void LoggerPlugin::Receive( const MsgsSimToClient::MsgSimToClient& message )
             *file_ << std::endl;
         }
     }
+    else if( message.message().has_stop_unit_fire() )
+    {
+        if( message.message().stop_unit_fire().has_units_damages() )
+            LogUnitsFireDamages( message.message().stop_unit_fire().units_damages() );
+        if( message.message().stop_unit_fire().has_populations_damages() )
+            LogPopulationsFireDamages( message.message().stop_unit_fire().populations_damages() );
+    }
     else if( message.message().has_start_population_fire() )
     {
         kernel::Entity_ABC* agent = model_.Populations().Find( message.message().start_population_fire().firer_oid() );
         if( agent )
             *file_ << date_ << " Fire - " << agent->GetName() << "[" << message.message().start_population_fire().firer_oid() << "] " << std::endl;
+    }
+    else if( message.message().has_stop_population_fire() )
+    {
+        if( message.message().stop_population_fire().has_units_damages() )
+            LogUnitsFireDamages( message.message().stop_population_fire().units_damages() );
     }
 }
 
@@ -215,4 +227,107 @@ void LoggerPlugin::FormatMission( const char* name, int id, int mission )
                << staticModel_.types_.tools::Resolver< kernel::MissionType >::Get( mission ).GetName() << std::endl;
     else
         *file_ << date_ << " Mission - " << name << "[" << id << "] : Mission cancelled." << std::endl;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LoggerPlugin::LogUnitsFireDamages
+// Created: JSR 2010-08-04
+// -----------------------------------------------------------------------------
+void LoggerPlugin::LogUnitsFireDamages( const MsgsSimToClient::MsgUnitsFireDamages& unitsDamages )
+{
+    for( int i = 0; i < unitsDamages.elem_size(); ++i )
+    {
+        const MsgsSimToClient::MsgUnitFireDamages& damages = unitsDamages.elem( i );
+        if( damages.has_target() )
+        {
+            kernel::Entity_ABC* target = model_.Agents().Find( damages.target() );
+            if( target )
+                LogDamagesOnTarget( damages, *target );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LoggerPlugin::LogPopulationsFireDamages
+// Created: JSR 2010-08-04
+// -----------------------------------------------------------------------------
+void LoggerPlugin::LogPopulationsFireDamages( const MsgsSimToClient::MsgPopulationsFireDamages& populationsDamages )
+{
+    for( int i = 0; i < populationsDamages.elem_size(); ++i )
+    {
+        const MsgsSimToClient::MsgPopulationFireDamages& damages = populationsDamages.elem( i );
+        if( damages.has_target() && damages.has_dead_nbr() && damages.dead_nbr() > 0 )
+        {
+            kernel::Entity_ABC* target = model_.Populations().Find( damages.target() );
+            if( target )
+                *file_ << date_ << " Fire - " << target->GetName() << "[" << target->GetId() << "] damaged : " << damages.dead_nbr() << " killed" << std::endl;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LoggerPlugin::LogDamagesOnTarget
+// Created: JSR 2010-08-04
+// -----------------------------------------------------------------------------
+void LoggerPlugin::LogDamagesOnTarget( const MsgsSimToClient::MsgUnitFireDamages& unitDamages, const kernel::Entity_ABC& target )
+{
+    if( unitDamages.has_humans() )
+    {
+        int dead = 0;
+        int wounded = 0;
+        for( int i = 0; i < unitDamages.humans().elem_size(); ++i )
+        {
+            const MsgsSimToClient::UnitHumanFireDamage& humanDamage = unitDamages.humans().elem( i );
+            if( humanDamage.has_dead_nbr() )
+                dead += humanDamage.dead_nbr();
+            if( humanDamage.has_wounded_u1_nbr() )
+                wounded += humanDamage.wounded_u1_nbr();
+            if( humanDamage.has_wounded_u2_nbr() )
+                wounded += humanDamage.wounded_u2_nbr();
+            if( humanDamage.has_wounded_u3_nbr() )
+                wounded += humanDamage.wounded_u3_nbr();
+            if( humanDamage.has_wounded_ue_nbr() )
+                wounded += humanDamage.wounded_ue_nbr();
+        }
+        if( dead > 0 || wounded > 0 )
+        {
+            *file_ << date_ << " Fire - " << target.GetName() << "[" << target.GetId() << "] damaged : ";
+            if( dead > 0 )
+                *file_ << dead << " killed";
+            if( wounded > 0 )
+            {
+                if( dead > 0 )
+                    *file_ << ", ";
+                *file_ << wounded << " wounded";
+            }
+            *file_ << std::endl;
+        }
+    }
+
+    if( unitDamages.has_equipments() )
+    {
+        int repairable = 0;
+        int unavailable = 0;
+        for( int i = 0; i < unitDamages.equipments().elem_size(); ++i )
+        {
+            const MsgsSimToClient::MsgUnitEquipmentFireDamage& equipmentDamage = unitDamages.equipments().elem( i );
+            if( equipmentDamage.has_unavailable_nbr() )
+                unavailable += equipmentDamage.unavailable_nbr();
+            if( equipmentDamage.has_repairable_nbr() )
+                repairable += equipmentDamage.repairable_nbr();
+        }
+        if( repairable > 0 || unavailable > 0)
+        {
+            *file_ << date_ << " Fire - " << target.GetName() << "[" << target.GetId() << "] damaged : ";
+            if( unavailable > 0 )
+                *file_ << unavailable << " unavailable";
+            if( repairable > 0 )
+            {
+                if( unavailable > 0 )
+                    *file_ << ", ";
+                *file_ << repairable << " repairable";
+            }
+            *file_ << std::endl;
+        }
+    }
 }

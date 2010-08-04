@@ -117,6 +117,8 @@ public:
         eReport_ActiveProtectionHardKill,
         eReport_Poisoned,
         eReport_Contaminated,
+        eReport_FireOnEnemySide,
+        eReport_FiredByEnemySide,
         eNbrReport
     };
 
@@ -394,6 +396,8 @@ public:
         eRC_ActiveProtectionHardKill = 3009,
         eRC_Poisoned = 3010,
         eRC_Contaminated = 3011,
+        eRC_TirSurCampEnnemi = 3012,
+        eRC_TireParCampEnnemi = 3013,
         eLast
     };
     //@}

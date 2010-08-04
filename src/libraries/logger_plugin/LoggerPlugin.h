@@ -72,6 +72,9 @@ private:
     //@{
     void FormatMission( const char* name, int id, int mission );
     bool Initialize();
+    void LogUnitsFireDamages( const MsgsSimToClient::MsgUnitsFireDamages& unitsDamages );
+    void LogPopulationsFireDamages( const MsgsSimToClient::MsgPopulationsFireDamages& populationsDamages );
+    void LogDamagesOnTarget( const MsgsSimToClient::MsgUnitFireDamages& unitDamages, const kernel::Entity_ABC& target );
     //@}
 
 private:

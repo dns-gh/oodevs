@@ -437,4 +437,6 @@
   <report id="3009" message="Protection active hard kill réussie"/>
   <report id="3010" message="Empoisonné"/>
   <report id="3011" message="Contaminé"/>
+  <report id="3012" message="tir sur camp ennemi"/>
+  <report id="3013" message="tire par camp ennemi"/>
 </reports>

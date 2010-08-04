@@ -1035,6 +1035,8 @@ void MIL_AgentPion::NotifyAttackedBy( MIL_AgentPion& attacker )
         MIL_Report::PostEvent( *this, MIL_Report::eReport_FiredByNeutralSide );
     else if( GetArmy().IsAFriend( attacker.GetArmy() ) == eTristate_True )
         MIL_Report::PostEvent( *this, MIL_Report::eReport_FiredByFriendSide );
+    else if( GetArmy().IsAnEnemy( attacker.GetArmy() ) == eTristate_True )
+        MIL_Report::PostEvent( *this, MIL_Report::eReport_FiredByEnemySide );
 
     GetKnowledge().GetKsFire().NotifyAttackedBy( attacker );
 }
@@ -1061,6 +1063,8 @@ void MIL_AgentPion::NotifyAttacking( MIL_Agent_ABC& target ) const
         MIL_Report::PostEvent( *this, MIL_Report::eReport_FireOnNeutralSide );
     else if( GetArmy().IsAFriend( target.GetArmy() ) == eTristate_True )
         MIL_Report::PostEvent( *this, MIL_Report::eReport_FireOnFriendSide );
+    else if( GetArmy().IsAnEnemy( target.GetArmy() ) == eTristate_True )
+        MIL_Report::PostEvent( *this, MIL_Report::eReport_FireOnEnemySide );
 }
 
 // -----------------------------------------------------------------------------

@@ -376,4 +376,6 @@
   <report id="3009" message="Hard-kill active protection successful"/>
   <report id="3010" message="Poisoned"/>
   <report id="3011" message="Contaminated"/>
+  <report id="3012" message="enemy fire"/>
+  <report id="3013" message="sustaining enemy fire"/>
 </reports>
