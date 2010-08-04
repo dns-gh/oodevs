@@ -327,8 +327,8 @@ FunctionEnd
     Section "${ComponentName}"
         SetOutPath "$INSTDIR\installation files"
         File "${OUTDIR}\SWORD ${ComponentName}_${PLATFORM}.exe"
-        WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common\Components\${ComponentName}" "RootDirectory" "$INSTDIR\${PRODUCT_NAME} ${ComponentName}\applications"
-        ExecWait '"$INSTDIR\installation files\SWORD ${ComponentName}_${PLATFORM}.exe" /S /LANG=$LANGUAGE /$MultiUser.InstallMode /D=$INSTDIR\${ComponentName}'
+        WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common\Components\${ComponentName}" "RootDirectory" "$INSTDIR\${ComponentName}\applications"
+        ExecWait '"$INSTDIR\installation files\SWORD ${ComponentName}_${PLATFORM}.exe" /S /LANG=$LANGUAGE /$MultiUser.InstallMode /INSTALLREP="$INSTDIR\${ComponentName}"'
     SectionEnd
 
 !macroend
