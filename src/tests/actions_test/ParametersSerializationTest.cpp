@@ -173,6 +173,7 @@ namespace
         MOCK_METHOD( UnregisterParent, 0 );
         MOCK_METHOD( CanCommunicate, 0 );
         MOCK_METHOD( RetrieveHierarchies, 1 );
+        MOCK_METHOD( IsJammed, 0 );
     };
 }
 

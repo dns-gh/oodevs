@@ -74,6 +74,7 @@ ObstaclePrototype_ABC::~ObstaclePrototype_ABC()
 void ObstaclePrototype_ABC::showEvent( QShowEvent* e )
 {
     Populate( eNbrDemolitionTargetType, *types_ );
+    OnObstacleTypeChanged();
     QGroupBox::showEvent( e );
 }
 
