@@ -10,6 +10,8 @@
 #ifndef __MIL_EntityVisitor_ABC_h_
 #define __MIL_EntityVisitor_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 // =============================================================================
 /** @class  MIL_EntityVisitor_ABC
     @brief  Population visitor base class
@@ -17,7 +19,7 @@
 // Created: SBO 2006-02-24
 // =============================================================================
 template< typename T >
-class MIL_EntityVisitor_ABC
+class MIL_EntityVisitor_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

@@ -45,12 +45,13 @@
 #include <urban/MaterialCompositionType.h>
 #include <urban/TerrainObjectVisitor_ABC.h>
 
+#include <boost/noncopyable.hpp>
 #include <xeumeuleu/xml.hpp>
 
 namespace
 {
    template< typename C >
-   class Loader
+   class Loader : private boost::noncopyable
    {
    public:
         explicit Loader( const C& container )
@@ -80,7 +81,7 @@ namespace
     };
 
    template<>
-   class Loader< PHY_Posture::T_PostureMap >
+   class Loader< PHY_Posture::T_PostureMap > : private boost::noncopyable
    {
    public:
         explicit Loader( const PHY_Posture::T_PostureMap& container )
