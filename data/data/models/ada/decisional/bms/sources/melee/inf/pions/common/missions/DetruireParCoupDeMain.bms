@@ -124,6 +124,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
                         do
                             self.eAction = eActionEnCours
                                                         do
+                                DEC_RC( eRC_FinInstallation )
                                 self.ePhase = eSurveiller
                                                                 self:SendFeedback( self.ePhase )
                                 do return end
