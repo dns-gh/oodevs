@@ -958,7 +958,7 @@
       <parameter dia-name="positions" name="positions de tir" optional="false" type="PointListBM"/>
       <parameter dia-name="endPosition" name="position de regroupement" optional="false" type="PointBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.military.platoon.combat.support.artillery.tasks.CoordinateIllumination" dia-type="net.masagroup.sword.military.platoon.combat.support.artillery.tasks.CoordinateIllumination" id="2068" name="ASS Coordinate Illumination">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.CoordinationIlluminationEtTirIndirect" dia-type="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.CoordinationIlluminationEtTirIndirect" id="2068" name="ASS Coordinate Illumination">
       <parameter dia-name="objective" name="cible" optional="false" type="AgentKnowledgeBM"/>
       <parameter dia-name="position" name="deploiement tireur" optional="false" type="PointBM"/>
       <parameter dia-name="munition" name="munitions" optional="false" type="DotationType"/>
@@ -1656,6 +1656,14 @@
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Controler" dia-type="net.masagroup.sword.france.military.company.tasks.Controler" id="1020" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Controler" name="MELEE Controler Secteur">
       <parameter dia-name="objectives" name="zone" optional="false" type="AreaBM"/>
       <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
+    </mission>
+    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" dia-type="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" id="1023" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" name="ASS Illumination et Tir Synchronisé">
+      <parameter dia-name="tireur" name="unite tireur" optional="false" type="AgentBM"/>
+      <parameter dia-name="allie" name="illuminateur allie" optional="false" type="AgentListBM"/>
+      <parameter dia-name="objective" name="cible" optional="false" type="AgentKnowledgeBM"/>
+      <parameter dia-name="position" name="deploiement tireur" optional="false" type="PointBM"/>
+      <parameter dia-name="munition" name="munitions" optional="false" type="DotationType"/>
+      <parameter dia-name="interventionType" name="type intervention" optional="false" type="Numeric"/>
     </mission>
   </automats>
   <populations>
