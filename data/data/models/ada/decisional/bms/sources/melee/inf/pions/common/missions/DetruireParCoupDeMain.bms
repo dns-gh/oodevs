@@ -188,11 +188,11 @@ node "BEH_Pion_INF_Detruire_DetruireParCoupDeMain"
     SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_INF_Detruire_DetruireParCoupDeMain, {value} ) end,
     activations =
     {
-        { "ACT_RC", { "done_ACT_RC" } },
         { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
         { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
         { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
         { "BEH_Pion_INF_Detruire_CoupDeMain", { "done_BEH_Pion_INF_Detruire_CoupDeMain" } },
+        { "ACT_RC", { "done_ACT_RC" } },
     },
 
     create = function( self )
@@ -217,7 +217,6 @@ node "BEH_Pion_INF_Detruire_DetruireParCoupDeMain"
                     self.eAction = eActionEffectuee
                 end
 
-                Activate( self.activations.ACT_RC, 1, { eRC_DebutMission, } )
                 --[[// On attend 1h apres le couche du soleil si la date n'est pas depassee
 ]]Activate( self.activations.ACT_Misc_Delai, 1, { 1, 60, } )
 self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
@@ -586,8 +585,8 @@ connections[ #connections + 1 ] = { nodes.BEH_Pion_INF_Detruire_CoupDeMain, "BEH
 connections[ #connections + 1 ] = { nodes.BEH_Pion_INF_Detruire_CoupDeMain, "BEH_Obj_Pion_INF_Detruire_Objets", nodes.BEH_Obj_Pion_INF_Detruire_Objets }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_INF_Detruire_CoupDeMain, "BEH_Misc_Pion_DefinirTypeMission", nodes.BEH_Misc_Pion_DefinirTypeMission }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_INF_Detruire_CoupDeMain, "BEH_Eni_Pion_VAB_Offensif_Manoeuvre", nodes.BEH_Eni_Pion_VAB_Offensif_Manoeuvre }
-connections[ #connections + 1 ] = { nodes.BEH_Pion_INF_Detruire_DetruireParCoupDeMain, "ACT_RC", nodes.ACT_RC }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_INF_Detruire_DetruireParCoupDeMain, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_INF_Detruire_DetruireParCoupDeMain, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_INF_Detruire_DetruireParCoupDeMain, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_INF_Detruire_DetruireParCoupDeMain, "BEH_Pion_INF_Detruire_CoupDeMain", nodes.BEH_Pion_INF_Detruire_CoupDeMain }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_INF_Detruire_DetruireParCoupDeMain, "ACT_RC", nodes.ACT_RC }
