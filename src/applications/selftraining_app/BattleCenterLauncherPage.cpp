@@ -17,8 +17,8 @@
 // Name: BattleCenterLauncherPage constructor
 // Created: SBO 2008-10-15
 // -----------------------------------------------------------------------------
-BattleCenterLauncherPage::BattleCenterLauncherPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config )
-    : ScenarioLauncherPage( pages, previous, controllers, config, tools::translate( "BattleCenterLauncherPage", "Multiplayer session" ) )
+BattleCenterLauncherPage::BattleCenterLauncherPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config, gui::LinkInterpreter_ABC& interpreter )
+    : ScenarioLauncherPage( pages, previous, controllers, config, interpreter, tools::translate( "BattleCenterLauncherPage", "Multiplayer session" ) )
 {
     // NOTHING
 }

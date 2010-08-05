@@ -30,6 +30,11 @@ namespace kernel
     class Controllers;
 }
 
+namespace gui
+{
+    class LinkInterpreter_ABC;
+}
+
 class ExerciseList;
 class ProgressPage;
 class QTabWidget;
@@ -48,7 +53,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers
-                                 , const tools::GeneralConfig& config, const QString& title = "" );
+                                 , const tools::GeneralConfig& config, gui::LinkInterpreter_ABC& interpreter, const QString& title = "" );
     virtual ~ScenarioLauncherPage();
     //@}
 
@@ -74,6 +79,7 @@ private:
     void CreateSession( const QString& exercise, const QString& session );
     template< typename T >
     T* AddPlugin( QTabWidget* tabs, const QString& name );
+    bool CanBeStarted() const;
     //@}
 
     //! @name Types
@@ -86,6 +92,7 @@ private:
     //@{
     const tools::GeneralConfig& config_;
     kernel::Controllers&        controllers_;
+    gui::LinkInterpreter_ABC&   interpreter_;
     ProgressPage*               progressPage_;
     ExerciseList*               exercises_;
     QString                     exercise_;
@@ -94,7 +101,6 @@ private:
     QString                     checkpoint_;
     DirectoryExerciseLister     lister_;
     T_Plugins                   plugins_;
-
     //@}
 };
 

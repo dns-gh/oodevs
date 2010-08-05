@@ -10,30 +10,40 @@
 #include "selftraining_app_pch.h"
 #include "ScenarioLauncherPage.h"
 #include "moc_ScenarioLauncherPage.cpp"
+#include "CompositeProcessWrapper.h"
 #include "ExerciseList.h"
 #include "ProcessDialogs.h"
 #include "ProgressPage.h"
-#include "CompositeProcessWrapper.h"
+#include "ProcessWrapper.h"
 #include "frontend/AdvancedConfigPanel.h"
 #include "frontend/CheckpointConfigPanel.h"
 #include "frontend/CreateSession.h"
 #include "frontend/CrossbowPluginConfigPanel.h"
 #include "frontend/DisPluginConfigPanel.h"
+#include "frontend/EditExercise.h"
 #include "frontend/HlaPluginConfigPanel.h"
+#include "frontend/JoinAnalysis.h"
 #include "frontend/JoinExercise.h"
 #include "frontend/RandomPluginConfigPanel.h"
 #include "frontend/StartExercise.h"
+#include "frontend/StartReplay.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_gui/LinkInterpreter_ABC.h"
 #include "clients_gui/Tools.h"
+#include "tools/GeneralConfig.h"
 #include <boost/foreach.hpp>
 #include <qtabbar.h>
 #include <qtabwidget.h>
+#include <xeumeuleu/xml.hpp>
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4511 4512 )
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem.hpp> 
 #pragma warning( pop )
 
+namespace bfs = boost::filesystem;
 namespace bpt = boost::posix_time;
 
 namespace
@@ -41,24 +51,88 @@ namespace
     class TabWidget : public QTabWidget
     {
     public:
-        TabWidget( QWidget* parent )
-            : QTabWidget( parent )
+        explicit TabWidget( QWidget* parent ) : QTabWidget( parent )
         {
             setBackgroundOrigin( QWidget::WindowOrigin );
             tabBar()->setBackgroundOrigin( QWidget::WindowOrigin );
             setMargin( 0 );
         }
     };
+
+    std::string MakeLink( const std::string& file )
+    {
+        const QFileInfo info( file.c_str() );
+        const QString protocol = info.extension( false ) == "exe" ? "cmd" : "file";
+        return QString( "%1://%2" ).arg( protocol ).arg( info.absFilePath() ).ascii();
+    }
+
+    std::string ReadTargetApplication( const tools::GeneralConfig& config, const QString& exercise )
+    {
+        const std::string file = config.GetExerciseFile( exercise.ascii() );
+        std::string target = "gaming";
+        try
+        {
+            xml::xifstream xis( file );
+            xis >> xml::start( "exercise" )
+                    >> xml::optional() >> xml::start( "meta" )
+                        >> xml::optional() >> xml::start( "tutorial" )
+                            >> xml::attribute( "target", target )
+                    >> xml::end
+                >> xml::end;
+        }
+        catch( ... )
+        {
+            // NOTHING
+        }
+        return target;
+    }
+
+    struct ResourcesLoadingWrapper
+    {
+        ResourcesLoadingWrapper( QStringList& list ) : stringList_ ( list ) { }
+        void ReadResource( xml::xistream& xis )
+        {
+            std::string item ; 
+            xis >> xml::attribute( "file", item ) ; 
+            stringList_.append( item.c_str() ) ; 
+        }
+    private:
+        ResourcesLoadingWrapper& operator=( const ResourcesLoadingWrapper& );
+        QStringList& stringList_;
+    };
+
+    QStringList GetResources( const tools::GeneralConfig& config, const QString& exercise ) 
+    {
+        QStringList result;
+        try
+        {
+            xml::xifstream xis( config.GetExerciseFile( exercise.ascii() ) );
+            ResourcesLoadingWrapper loadingWrapper( result );
+            xis >> xml::start( "exercise" )
+                    >> xml::optional() >> xml::start( "meta" )
+                        >> xml::optional() >> xml::start( "resources" )
+                            >> xml::list( "resource", loadingWrapper, &ResourcesLoadingWrapper::ReadResource )
+                        >> xml::end()
+                    >> xml::end()
+                >> xml::end(); 
+        }
+        catch( ... )
+        {
+            // NOTHING
+        }
+        return result;
+     }
 }
 
 // -----------------------------------------------------------------------------
 // Name: ScenarioLauncherPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config, const QString& title /*= ""*/ )
+ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config, gui::LinkInterpreter_ABC& interpreter, const QString& title /*= ""*/ )
     : ContentPage( pages, title.isEmpty() ? tools::translate( "ScenarioLauncherPage", "Scenario" ) : title, previous, eButtonBack | eButtonStart )
     , config_( config )
     , controllers_( controllers )
+    , interpreter_( interpreter )
     , progressPage_( new ProgressPage( pages, *this, tools::translate( "ScenarioLauncherPage", "Starting %1" ).arg( title.isEmpty() ? tools::translate( "ScenarioLauncherPage", "Scenario" ) : title ), controllers ) )
     , lister_( config, "" )
 {
@@ -139,15 +213,47 @@ std::string ScenarioLauncherPage::BuildSessionName() const
 // -----------------------------------------------------------------------------
 void ScenarioLauncherPage::OnStart()
 {
-    if( exercise_.isEmpty() || !profile_.IsValid() || ! dialogs::KillRunningProcesses( this ) )
+    if( !CanBeStarted() || ! dialogs::KillRunningProcesses( this ) )
         return;
-    const QString session = session_.isEmpty() ? BuildSessionName().c_str() : session_;
-    CreateSession( exercise_, session );
-    boost::shared_ptr< frontend::SpawnCommand > simulation( new frontend::StartExercise( config_, exercise_, session, checkpoint_, true ) );
-    boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinExercise( config_, exercise_, session, profile_.GetLogin(), true ) );
-    boost::shared_ptr< frontend::Process_ABC > process( new CompositeProcessWrapper( controllers_.controller_, simulation, client ) );
-    progressPage_->Attach( process );
-    progressPage_->show();
+    const std::string target = ReadTargetApplication( config_, exercise_ );
+    if( target == "gaming" )
+    {
+        const QString session = session_.isEmpty() ? BuildSessionName().c_str() : session_;
+        CreateSession( exercise_, session );
+        boost::shared_ptr< frontend::SpawnCommand > simulation( new frontend::StartExercise( config_, exercise_, session, checkpoint_, true ) );
+        boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinExercise( config_, exercise_, session, profile_.GetLogin(), true ) );
+        boost::shared_ptr< frontend::Process_ABC > process( new CompositeProcessWrapper( controllers_.controller_, simulation, client ) );
+        progressPage_->Attach( process );
+        progressPage_->show();
+    }
+    else if( target == "preparation" )
+    {
+        boost::shared_ptr< frontend::SpawnCommand > command( new frontend::EditExercise( config_, exercise_, true ) );
+        boost::shared_ptr< frontend::Process_ABC >  process( new ProcessWrapper( controllers_.controller_, command ) );
+        progressPage_->Attach( process );
+        progressPage_->show();
+    }
+    else if( target == "replayer" )
+    {
+        const unsigned int port = lister_.GetPort( exercise_ );
+        CreateSession( exercise_, "default" );
+        boost::shared_ptr< frontend::SpawnCommand > replay( new frontend::StartReplay( config_, exercise_, "default", port, true ) );
+        boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinAnalysis( config_, exercise_, "default", profile_.GetLogin(), port, true ) );
+        boost::shared_ptr< frontend::Process_ABC >  process( new CompositeProcessWrapper( controllers_.controller_, replay, client ) );
+        progressPage_->Attach( process );
+        progressPage_->show();
+    }
+
+    if( target != "gaming" )
+    {
+        const QStringList resources = GetResources( config_, exercise_ );
+        if( ! resources.empty() )
+        {
+            std::string file = *resources.begin();
+            file = ( bfs::path( config_.GetExerciseDir( exercise_.ascii() ), bfs::native ) / file ).native_file_string();
+            interpreter_.Interprete( MakeLink( file ).c_str() );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -177,7 +283,21 @@ void ScenarioLauncherPage::OnSelect( const QString& exercise, const Profile& pro
 {
     exercise_ = exercise;
     profile_ = profile;
-    EnableButton( eButtonStart, !exercise_.isEmpty() && profile_.IsValid() );
+    EnableButton( eButtonStart, CanBeStarted() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScenarioLauncherPage::CanBeStarted
+// Created: SBO 2010-08-04
+// -----------------------------------------------------------------------------
+bool ScenarioLauncherPage::CanBeStarted() const
+{
+    const std::string target = ReadTargetApplication( config_, exercise_ );
+    if( target == "gaming" || target == "replayer" )
+        return !exercise_.isEmpty() && profile_.IsValid();
+    if( target == "preparation" )
+        return !exercise_.isEmpty();
+    return false;
 }
 
 // -----------------------------------------------------------------------------

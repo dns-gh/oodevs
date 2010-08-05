@@ -25,7 +25,7 @@ class BattleCenterLauncherPage : public ScenarioLauncherPage
 public:
     //! @name Constructors/Destructor
     //@{
-             BattleCenterLauncherPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config );
+             BattleCenterLauncherPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config, gui::LinkInterpreter_ABC& interpreter );
     virtual ~BattleCenterLauncherPage();
     //@}
 

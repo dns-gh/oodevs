@@ -15,8 +15,8 @@
 #include "HomePage.h"
 #include "LinkInterpreter.h"
 #include "NetworkExerciseLister.h"
-#include "clients_gui/Tools.h"
 #include "clients_gui/resources.h"
+#include "clients_gui/Tools.h"
 #include "tools/Version.h"
 
 #include <qapplication.h>
@@ -41,6 +41,7 @@ namespace
 MainWindow::MainWindow( kernel::Controllers& controllers )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , config_( GetConfig() )
+    , interpreter_( new LinkInterpreter( this, controllers ) )
     , exercises_( new ExerciseService( controllers, *config_ ) )
     , exerciseLister_( new NetworkExerciseLister( *config_ ) )
 {
@@ -50,7 +51,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers )
     setMinimumHeight( 600 );
     SetStyle();
     pages_ = new QWidgetStack( this );
-    new HomePage( pages_, *config_, controllers, *exerciseLister_ );
+    new HomePage( pages_, *config_, controllers, *exerciseLister_, *interpreter_ );
     setCentralWidget( pages_ );
     CenterWindow();
 }

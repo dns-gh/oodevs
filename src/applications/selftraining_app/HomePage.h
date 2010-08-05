@@ -17,6 +17,11 @@ namespace kernel
     class Controllers;
 }
 
+namespace gui
+{
+    class LinkInterpreter_ABC;
+}
+
 class Config;
 class MenuButton;
 class NetworkExerciseLister;
@@ -34,7 +39,7 @@ class HomePage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-             HomePage( QWidgetStack* pages, Config& config, kernel::Controllers& controllers, NetworkExerciseLister& lister );
+             HomePage( QWidgetStack* pages, Config& config, kernel::Controllers& controllers, NetworkExerciseLister& lister, gui::LinkInterpreter_ABC& interpreter );
     virtual ~HomePage();
     //@}
 

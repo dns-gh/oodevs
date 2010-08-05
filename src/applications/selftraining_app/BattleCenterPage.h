@@ -17,6 +17,11 @@ namespace kernel
     class Controllers;
 }
 
+namespace gui
+{
+    class LinkInterpreter_ABC;
+}
+
 class Config;
 class NetworkExerciseLister;
 
@@ -31,7 +36,7 @@ class BattleCenterPage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-             BattleCenterPage( QWidgetStack* pages, Page_ABC& previous, const Config& config, kernel::Controllers& controllers, NetworkExerciseLister& lister );
+             BattleCenterPage( QWidgetStack* pages, Page_ABC& previous, const Config& config, kernel::Controllers& controllers, NetworkExerciseLister& lister, gui::LinkInterpreter_ABC& interpreter );
     virtual ~BattleCenterPage();
     //@}
 

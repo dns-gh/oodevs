@@ -22,14 +22,14 @@
 // Name: HomePage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-HomePage::HomePage( QWidgetStack* pages, Config& config, kernel::Controllers& controllers, NetworkExerciseLister& lister )
+HomePage::HomePage( QWidgetStack* pages, Config& config, kernel::Controllers& controllers, NetworkExerciseLister& lister, gui::LinkInterpreter_ABC& interpreter )
     : MenuPage( pages, *this, eButtonOptions | eButtonQuit )
     , config_( config )
     , optionsPage_( new OptionsPage( pages, *this, config ) )
 {
     adapt_ = AddLink( tools::translate( "HomePage", "Adapt" ), *new AuthoringPage( pages, *this, config, controllers ), tools::translate( "HomePage", "Start authoring, terrain generation or terrain workshop" ) );
     prepare_ = AddLink( tools::translate( "HomePage", "Prepare" ), *new ScenarioEditPage( pages, *this, config, controllers ), tools::translate( "HomePage", "Edit scenario" ) );
-    play_ = AddLink( tools::translate( "HomePage", "Play" ), *new SelfTrainingPage( pages, *this, config, controllers, lister ), tools::translate( "HomePage", "Start single player or multiplayer training session" ) );
+    play_ = AddLink( tools::translate( "HomePage", "Play" ), *new SelfTrainingPage( pages, *this, config, controllers, lister, interpreter ), tools::translate( "HomePage", "Start single player or multiplayer training session" ) );
     replay_ = AddLink( tools::translate( "HomePage", "Replay" ), *new ReplayPage( pages, *this , controllers, config ), tools::translate( "HomePage", "Replay scenario" ) );
 }
 
