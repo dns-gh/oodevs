@@ -824,7 +824,8 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
         }
         // LTO end
     }
-    if( !IsJammed() || jammedPion_->GetRole< PHY_RolePion_Communications >().CanReceive() )
+    const PHY_RolePion_Communications* communications = jammedPion_ ? jammedPion_->RetrieveRole< PHY_RolePion_Communications >() : 0;
+    if( !IsJammed() || ( communications && communications->CanReceive() ) )
     {
         // LTO begin
         //mis à jour des groupes de connaissances depuis leur parent avec un délai
