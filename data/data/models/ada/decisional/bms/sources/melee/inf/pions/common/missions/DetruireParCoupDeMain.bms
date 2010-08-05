@@ -148,9 +148,13 @@ self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eAction 
                     if( self.eActionDeplacement == eActionEffectuee ) then
                         do
                             self.eActionDeplacement = eActionEnCours
-                                                        self:SendFeedback( eFinMission )
-                            Halt( self )
-                            do return end
+                                                        do
+                                DEC_RC( eRC_FinSurveillance )
+                                                                self:SendFeedback( eFinMission )
+                                Halt( self )
+                                do return end
+
+                            end
 
                         end
 --[[// Se replier a chaque fois sur une position differente
