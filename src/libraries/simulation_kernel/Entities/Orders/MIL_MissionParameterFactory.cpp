@@ -391,6 +391,24 @@ void MIL_MissionParameterFactory::SetAutomatParameter( boost::shared_ptr< MIL_Mi
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::SetDotationTypeParameter
+// Created: LDC 2010-08-04
+// -----------------------------------------------------------------------------
+void  MIL_MissionParameterFactory::SetDotationTypeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const PHY_DotationCategory* type )
+{
+    pMission->SetParameter( parameter, Create( type ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::SetNumericTypeParameter
+// Created: LDC 2010-08-04
+// -----------------------------------------------------------------------------
+void  MIL_MissionParameterFactory::SetNumericTypeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, float value )
+{
+    pMission->SetParameter( parameter, Create( value ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_MissionParameterFactory::SetBoolParameter
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------

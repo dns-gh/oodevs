@@ -242,6 +242,8 @@ void RegisterMissionParametersFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_AssignMissionPointListParameter",           &MIL_MissionParameterFactory::SetPointListParameter );
     brain.RegisterFunction( "DEC_AssignMissionUrbanBlockParameter",          &MIL_MissionParameterFactory::SetUrbanBlockParameter );
     brain.RegisterFunction( "DEC_AssignMissionDirectionParameter",           &MIL_MissionParameterFactory::SetDirectionParameter );
+    brain.RegisterFunction( "DEC_AssignMissionDotationTypeParameter",        &MIL_MissionParameterFactory::SetDotationTypeParameter );
+    brain.RegisterFunction( "DEC_AssignMissionNumericTypeParameter",         &MIL_MissionParameterFactory::SetNumericTypeParameter );
 
     directia::ScriptRef initParameterFunction = brain.GetScriptFunction( "InitTaskParameter" );
     brain.RegisterFunction( "DEC_FillMissionParameters",
