@@ -465,7 +465,6 @@ include "bit.lua"
                     end
 
                 end
-
                 DEC_Trace( "Begin to remove" )
                 self.bInit = true
             end
@@ -520,6 +519,13 @@ include "bit.lua"
 
     destroy = function( self )
                 self.act = DEC_StopAction( self.act )
+                if self.eActionObjet == eActionObjetTerminee then
+                        if( not DEC_Agent_AutomateEstEmbraye() ) then
+                            DEC_RC( eRC_FinTravaux )
+                        else
+                            DEC_Message( eRC_FinTravaux )
+                        end
+                end
     end,
 
 }
@@ -581,7 +587,6 @@ include "bit.lua"
                     end
 
                 end
-
                 self.bInit = true
             end
 --[[//-----------------------------------------------------------------
