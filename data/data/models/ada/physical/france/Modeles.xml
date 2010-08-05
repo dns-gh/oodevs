@@ -94,10 +94,6 @@
           <fragorder name="ApplyFire"/>
           <fragorder name="ApplyGuidedFire"/>
         </mission>
-        <mission name="ASS Deploy">
-          <fragorder name="ApplyFire"/>
-          <fragorder name="ApplyGuidedFire"/>
-        </mission>
         <mission name="ASS Coordinate Illumination"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
@@ -3000,7 +2996,8 @@
     </automat>
     <automat dia-type="net.masagroup.sword.military.company.combat.support.artillery.roles.Company" file="BMAutomat.bms" name="net.masagroup.sword.military.company.combat.support.artillery.roles.Company">
       <missions>
-        <mission name="ASS SeDeployer"/>
+        <mission name="ASS SeDeployer"/>        
+        <mission name="ASS Illumination et Tir Synchronisé"/>
         <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Se Faire Transporter"/>
