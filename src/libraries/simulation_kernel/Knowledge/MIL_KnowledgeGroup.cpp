@@ -814,15 +814,20 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
                 }
             }
         }
-        // mis à jour des groupes de connaissances parents
+        // LTO begin
+        // acquisition des connaissances des groupes fils
         for( MIL_KnowledgeGroup::CIT_KnowledgeGroupVector itKG( GetKnowledgeGroups().begin() ); itKG != GetKnowledgeGroups().end(); ++itKG )
         {
             const MIL_KnowledgeGroup& innerKg = **itKG;
-            if( innerKg.IsEnabled() && IsEnabled() )
+            if( innerKg.IsEnabled() && IsEnabled() && !innerKg.IsJammed() )
                 innerKg.GetKnowledge().GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( boost::bind( &MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) ) );
         }
+        // LTO end
+    }
+    if( !IsJammed() || jammedPion_->GetRole< PHY_RolePion_Communications >().CanReceive() )
+    {
         // LTO begin
-        //mis à jour des groupes de connaissances fils avec un délai
+        //mis à jour des groupes de connaissances depuis leur parent avec un délai
         MIL_KnowledgeGroup* parent = GetParent();
         if( GetTimeToDiffuseToKnowledgeGroup() < currentTimeStep )
         {
@@ -835,11 +840,8 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
         }
         // LTO end
     }
-    else
-    {
-        if( jammedPion_ )
-            jammedPion_->GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( boost::bind( & MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception, this, _1, boost::ref(currentTimeStep) ) );
-    }
+    if( IsJammed() && jammedPion_ )
+        jammedPion_->GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( boost::bind( & MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception, this, _1, boost::ref(currentTimeStep) ) );
 }
 
 // -----------------------------------------------------------------------------
