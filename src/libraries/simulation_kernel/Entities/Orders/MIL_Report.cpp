@@ -101,6 +101,8 @@ void MIL_Report::Initialize( xml::xistream& xis )
     diaEvents_[ eReport_HaulerResourcesLevelReached                 ] = eRC_AlerteDisponibiliteReparateurs;
     diaEvents_[ eReport_ConvoyTransporterResourcesLevelReached      ] = eRC_AlerteDisponibiliteVecteurs;
 
+    diaEvents_[ eReport_IndirectFireOnTarget] = eRC_TirIndirectSurCible;
+
     diaEvents_[ eReport_EmbarkmentStarted ]        = eRC_EmbarkmentStarted;
     diaEvents_[ eReport_EmbarkmentInterrupted ]    = eRC_EmbarkmentInterrupted;
     diaEvents_[ eReport_EmbarkmentResumed ]        = eRC_EmbarkmentResumed;

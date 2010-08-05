@@ -1310,6 +1310,8 @@ void MIL_EntityManager::ProcessMsgMagicActionCreateFireOrder( const MsgsClientTo
         PHY_FireResults_Pion fireResult( *reporter , targetKn->GetPosition(), *pDotationCategory );
         unsigned int ammos = (unsigned int) pDotationCategory->GetIndirectFireData()->ConvertToNbrAmmo( iterations.value().areal() );
 
+        MIL_Report::PostEvent( *reporter, MIL_Report::eReport_IndirectFireOnTarget, targetKn );
+
         pDotationCategory->ApplyIndirectFireEffect( *reporter, targetKn->GetAgentKnown(), ammos , fireResult );
     }
     catch( NET_AsnException< MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode >& e )

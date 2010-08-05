@@ -138,3 +138,16 @@ void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, const MIL
     parameters.push_back( pParameter );
     PostEvent( receiver, nReport, parameters );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Report::PostEvent
+// Created: JSR 2010-08-05
+// -----------------------------------------------------------------------------
+template< typename T > inline
+void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge )
+{
+    std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > parameters;
+    boost::shared_ptr<MIL_MissionParameter_ABC> pParameter( MIL_MissionParameterFactory::Create( agentKnowledge ) );
+    parameters.push_back( pParameter );
+    PostEvent( receiver, nReport, parameters );
+}
