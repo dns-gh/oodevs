@@ -261,7 +261,7 @@ void NotesModel::LoadNotes( const std::string filename )
 
 // -----------------------------------------------------------------------------
 // Name: NotesModel::ReadNote
-// Created: HBD 2010-02-18
+// Created: HBD 2010-02-18  
 // -----------------------------------------------------------------------------
 void NotesModel::ReadNote( const std::string& input, std::vector< unsigned int >& notes )
 {

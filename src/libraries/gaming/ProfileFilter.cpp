@@ -59,6 +59,17 @@ bool ProfileFilter::IsVisible( const kernel::Entity_ABC& entity ) const
     return ( IsInKnowledgeGroup( entity ) || IsObjectOfSameTeam( entity ) || IsInHierarchy( entity ) ) && forward_.IsVisible( entity );
 }
 
+
+namespace 
+{
+    bool IsVisibleFromTeam( const kernel::Knowledge_ABC& knowledge, const kernel::Entity_ABC* entity )
+    {
+        const kernel::CommunicationHierarchies& communications = knowledge.GetOwner().Get< kernel::CommunicationHierarchies >();
+        return ( communications.GetSuperior() == entity && !communications.IsJammed() );
+    }
+}
+
+
 // -----------------------------------------------------------------------------
 // Name: ProfileFilter::IsKnowledgeVisible
 // Created: HBD 2010-08-03
@@ -67,18 +78,21 @@ bool ProfileFilter::IsKnowledgeVisible( const kernel::Knowledge_ABC& knowledge )
 {
     const AgentKnowledges* filteredGroup = 0;
     const AgentKnowledges* knowldegeToCheckGroup = 0;
+    if ( !cHierarchies_ )
+        return false;
     for( const kernel::Entity_ABC* superior = &cHierarchies_->GetEntity(); superior && !filteredGroup; superior = superior->Get< kernel::CommunicationHierarchies >().GetSuperior() )
         filteredGroup = superior->Retrieve< AgentKnowledges >();
     for( const kernel::Entity_ABC* superior = &knowledge.GetOwner(); superior && !knowldegeToCheckGroup; superior = superior->Get< kernel::CommunicationHierarchies >().GetSuperior() )
         knowldegeToCheckGroup = superior->Retrieve< AgentKnowledges >();
     if ( filteredGroup == knowldegeToCheckGroup )
         return true;
+    if ( &cHierarchies_->GetTop() == entity_ )
+        return IsVisibleFromTeam( knowledge, entity_ );
     if( cHierarchies_ && !cHierarchies_->IsJammed() )
         if ( const kernel::CommunicationHierarchies* c = knowledge.Retrieve< kernel::CommunicationHierarchies >() )
             return ( knowledge.IsVisible( &cHierarchies_->GetTop() == &c->GetTop() ) );
     return false;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ProfileFilter::CanBeOrdered
@@ -213,10 +227,8 @@ bool ProfileFilter::IsInKnowledgeGroup( const kernel::Entity_ABC& other ) const
     if( ! entity_ || entity_ == &other )    
         return true;
     const kernel::CommunicationHierarchies* pHierarchy = other.Retrieve< kernel::CommunicationHierarchies >();
-    if( !pHierarchy || pHierarchy->IsJammed() )
-        return false;
     const kernel::CommunicationHierarchies* selfHierarchy = entity_->Retrieve< kernel::CommunicationHierarchies >();
-    if( !selfHierarchy || selfHierarchy->IsJammed() )
+    if( !pHierarchy || pHierarchy->IsJammed() || !selfHierarchy || selfHierarchy->IsJammed() )
         return false;
     const AgentKnowledges* entityKnowledges = 0;
     for( const kernel::Entity_ABC* superior = pHierarchy->GetSuperior(); superior; superior = superior->Get< kernel::CommunicationHierarchies >().GetSuperior() )
