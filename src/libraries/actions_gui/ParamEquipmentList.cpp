@@ -26,8 +26,8 @@ ParamEquipmentList::ParamEquipmentList( QObject* parent, const kernel::OrderPara
     : QObject( parent )
     , Param_ABC( parameter.GetName().c_str() )
     , parameter_( parameter )
-    , resolver_( resolver )
-    , list_( 0 )
+    , resolver_ ( resolver )
+    , list_     ( 0 )
 {
     // NOTHING
 }
@@ -71,7 +71,6 @@ void ParamEquipmentList::BuildInterface( QWidget* parent )
             ::gui::ValuedListItem* item = new ::gui::ValuedListItem( baseList_ );
             item->SetNamed( type );
         }
-
         QVBox* buttonBox = new QVBox( hBox );
         buttonBox->layout()->setAlignment( Qt::AlignVCenter );
         QPushButton* addBtn = new QPushButton( MAKE_ICON( right_arrow ), QString::null, buttonBox );
@@ -83,18 +82,15 @@ void ParamEquipmentList::BuildInterface( QWidget* parent )
         connect( baseList_, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), SLOT( OnAdd() ) );
         connect( removeBtn, SIGNAL( clicked() ), SLOT( OnRemove() ) );
     }
-
     {
         list_ = CreateList( hBox );
         list_->setSorting( -1, true );
-
         QVBox* buttonBox = new QVBox( hBox );
         buttonBox->layout()->setAlignment( Qt::AlignVCenter );
         QPushButton* upBtn = new QPushButton( MAKE_ICON( arrow_up ), QString::null, buttonBox );
         upBtn->setFixedSize( 32, 32 );
         QPushButton* downBtn = new QPushButton( MAKE_ICON( arrow_down ), QString::null, buttonBox );
         downBtn->setFixedSize( 32, 32 );
-
         connect( list_, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), SLOT( OnRemove() ) );
         connect( upBtn, SIGNAL( clicked() ), SLOT( OnUp() ) );
         connect( downBtn, SIGNAL( clicked() ), SLOT( OnDown() ) );
@@ -175,4 +171,13 @@ void ParamEquipmentList::Move( QListView* from, QListView* to )
 bool ParamEquipmentList::IsOptional() const
 {
     return parameter_.IsOptional();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamEquipmentList::CheckValidity
+// Created: LGY 2010-08-06
+// -----------------------------------------------------------------------------
+bool ParamEquipmentList::CheckValidity()
+{
+    return IsOptional() || list_->childCount() != 0;
 }

@@ -44,6 +44,7 @@ public:
     //! @name Operations
     //@{
     virtual void BuildInterface( QWidget* parent );
+    virtual bool CheckValidity();
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     //@}
 
@@ -72,8 +73,7 @@ private:
     QListView* list_;
     //@}
 };
-
-    }
+}
 }
 
 #endif // __ParamEquipmentList_h_
