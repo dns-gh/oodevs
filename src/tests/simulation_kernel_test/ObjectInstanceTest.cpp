@@ -20,8 +20,6 @@
 #include "simulation_terrain/TER_World.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace mockpp;
-
 // -----------------------------------------------------------------------------
 // Name: BOOST_AUTO_TEST_CASE
 // Created: JCR 2008-06-09

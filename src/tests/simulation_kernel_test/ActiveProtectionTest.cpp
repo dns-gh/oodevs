@@ -43,8 +43,6 @@
 #include "UrbanModel.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace mockpp;
-
 // -----------------------------------------------------------------------------
 // Name: ActiveProtectionTest
 // Created: LDC 2010-01-07

@@ -19,8 +19,6 @@
 #include <boost/serialization/split_member.hpp>
 #include <fstream>
 
-using namespace mockpp;
-
 typedef boost::archive::text_oarchive OutputArchive;
 typedef boost::archive::text_iarchive InputArchive;
 

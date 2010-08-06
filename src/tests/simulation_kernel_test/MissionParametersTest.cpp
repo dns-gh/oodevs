@@ -60,7 +60,6 @@
 #include "simulation_terrain/TER_World.h"
 
 using namespace Common;
-using namespace mockpp;
 
 // -----------------------------------------------------------------------------
 // Name: TestMIL_AgentKnowledgeListParameter_ToASN

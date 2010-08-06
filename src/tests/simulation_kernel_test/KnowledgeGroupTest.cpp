@@ -20,8 +20,6 @@
 #include "tools/resolver.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace mockpp;
-
 // -----------------------------------------------------------------------------
 // Name: BOOST_AUTO_TEST_CASE
 // Created: FHD 2010-01-19:

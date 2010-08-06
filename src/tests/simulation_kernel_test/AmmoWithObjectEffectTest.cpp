@@ -33,8 +33,6 @@
 #include "UrbanType.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace mockpp;
-
 // -----------------------------------------------------------------------------
 // Name: TestScramblingAmmo
 // Created: LDC 2009-12-30

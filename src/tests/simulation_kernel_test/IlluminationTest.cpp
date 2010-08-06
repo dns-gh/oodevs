@@ -1,13 +1,10 @@
 #include "simulation_kernel_test_pch.h"
-#include <set>
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/serialization/serialization.hpp>
 #include "simulation_kernel/Entities/Agents/Roles/Illumination/PHY_RolePion_Illumination.h"
 #include "MockRoleLocation.h"
 #include "MockAgent.h"
-
-using namespace mockpp;
 
 namespace
 {
