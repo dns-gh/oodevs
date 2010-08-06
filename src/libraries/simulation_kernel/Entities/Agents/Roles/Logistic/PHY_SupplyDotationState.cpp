@@ -218,7 +218,6 @@ void PHY_SupplyDotationState::SendMsgCreation() const
 void PHY_SupplyDotationState::SendFullState() const
 {
     assert( pSuppliedAutomate_ );
-
     SendMsgCreation();
     client::LogSupplyHandlingUpdate asn;
     asn().set_oid_consigne( nID_ );
@@ -238,13 +237,10 @@ void PHY_SupplyDotationState::SendChangedState() const
 {
     if( !( bConsignChanged_ || ( pConsign_ && pConsign_->HasChanged() ) || bRequestsChanged_ ) )
         return;
-
     assert( pSuppliedAutomate_ );
-
     client::LogSupplyHandlingUpdate asn;
     asn().set_oid_consigne( nID_ );
     asn().set_oid_automate( pSuppliedAutomate_->GetID() );
-
     if( bConsignChanged_ || ( pConsign_ && pConsign_->HasChanged() ) )
     {
         if( pConsign_ )
@@ -252,21 +248,10 @@ void PHY_SupplyDotationState::SendChangedState() const
         else
             PHY_SupplyConsign_ABC::SendDefaultState( asn );
     }
-
     if( bRequestsChanged_ )
-    {
-        assert( !requests_.empty() );
-        unsigned int i = 0;
-        for( CIT_RequestMap it = requests_.begin(); it != requests_.end(); ++it, ++i )
-        {
-            MsgsSimToClient::MsgDotationQuery& asnDemande = *asn().mutable_dotations()->mutable_elem( i );
-            it->second.Serialize( asnDemande );
-        }
-    }
-
+        for( CIT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
+            it->second.Serialize( *asn().mutable_dotations()->add_elem() );
     asn.Send( NET_Publisher_ABC::Publisher() );
-    if( asn().has_dotations() && asn().dotations().elem_size() > 0 )
-        asn().mutable_dotations()->Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -276,7 +261,6 @@ void PHY_SupplyDotationState::SendChangedState() const
 void PHY_SupplyDotationState::SendMsgDestruction() const
 {
     assert( pSuppliedAutomate_ );
-
     client::LogSupplyHandlingDestruction asn;
     asn().set_oid_consigne( nID_ );
     asn().set_oid_automate( pSuppliedAutomate_->GetID() );

@@ -17,6 +17,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_gui/Tools.h"
 
 using namespace actions::gui;
 
@@ -48,7 +49,7 @@ ParamAgentList::~ParamAgentList()
 // -----------------------------------------------------------------------------
 void ParamAgentList::AddToMenu( kernel::ContextMenu& menu )
 {
-    MakeMenu( tr( "Add agent" ), menu );
+    MakeMenu( tools::translate( "ParamAgentList", "Add agent" ), menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +58,7 @@ void ParamAgentList::AddToMenu( kernel::ContextMenu& menu )
 // -----------------------------------------------------------------------------
 EntityParameter< kernel::Agent_ABC >* ParamAgentList::CreateElement( const kernel::Agent_ABC& potential )
 {
-    return new ParamAgent( this, kernel::OrderParameter( tr( "Agent %1:%2" ).arg( ++count_ ).arg( potential.GetName() ).ascii(), "agent", false ), potential, controller_ );
+    return new ParamAgent( this, kernel::OrderParameter( tools::translate( "ParamAgentList", "Agent %1:%2" ).arg( ++count_ ).arg( potential.GetName() ).ascii(), "agent", false ), potential, controller_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +79,7 @@ void ParamAgentList::CommitTo( actions::ParameterContainer_ABC& action ) const
 void ParamAgentList::NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu )
 {
     superior_ = &entity;
-    menu.InsertItem( "Parameter", tr( "Add hierarchy" ), this, SLOT( AddHierarchy() ) );
+    menu.InsertItem( "Parameter", tools::translate( "ParamAgentList", "Add hierarchy" ), this, SLOT( AddHierarchy() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,7 +89,7 @@ void ParamAgentList::NotifyContextMenu( const kernel::Automat_ABC& entity, kerne
 void ParamAgentList::NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu )
 {
     superior_ = &entity;
-    menu.InsertItem( "Parameter", tr( "Add hierarchy" ), this, SLOT( AddHierarchy() ) );
+    menu.InsertItem( "Parameter", tools::translate( "ParamAgentList", "Add hierarchy" ), this, SLOT( AddHierarchy() ) );
 }
 
 // -----------------------------------------------------------------------------

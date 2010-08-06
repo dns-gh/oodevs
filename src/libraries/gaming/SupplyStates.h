@@ -37,7 +37,7 @@ namespace MsgsSimToClient
 // Created: AGE 2006-02-14
 // =============================================================================
 class SupplyStates : public kernel::Extension_ABC
-    , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogSupplyState >
+                   , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogSupplyState >
                    , public tools::Resolver< Dotation >
 {
 public:

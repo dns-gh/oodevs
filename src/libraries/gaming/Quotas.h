@@ -10,14 +10,10 @@
 #ifndef __Quotas_h_
 #define __Quotas_h_
 
-
 #include "Dotation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "tools/Resolver_ABC.h"
-#include "protocol/Protocol.h"
-
-using namespace Common;
 
 namespace kernel
 {
@@ -26,6 +22,10 @@ namespace kernel
     class Displayer_ABC;
 }
 
+namespace MsgsSimToClient
+{
+    class MsgLogSupplyQuotas;
+}
 
 // =============================================================================
 /** @class  Quotas
@@ -33,8 +33,8 @@ namespace kernel
 */
 // Created: AGE 2006-10-11
 // =============================================================================
-class Quotas  : public kernel::Extension_ABC
-              , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogSupplyQuotas >
+class Quotas : public kernel::Extension_ABC
+             , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogSupplyQuotas >
 {
 public:
     //! @name Constructors/Destructor
@@ -58,7 +58,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< Dotation >             T_Dotations;
+    typedef std::vector< Dotation > T_Dotations;
     //@}
 
 public: // $$$$ AGE 2006-10-11:
@@ -66,7 +66,7 @@ public: // $$$$ AGE 2006-10-11:
     //@{
     kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
-    T_Dotations      quotas_;
+    T_Dotations quotas_;
     //@}
 };
 

@@ -10,14 +10,13 @@
 #include "gaming_pch.h"
 #include "Quotas.h"
 #include "clients_kernel/Controller.h"
-
-using namespace kernel;
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: Quotas constructor
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-Quotas::Quotas( Controller& controller, const tools::Resolver_ABC< DotationType >& dotationResolver )
+Quotas::Quotas( kernel::Controller& controller, const tools::Resolver_ABC< kernel::DotationType >& dotationResolver )
     : controller_( controller )
     , dotationResolver_( dotationResolver )
 {

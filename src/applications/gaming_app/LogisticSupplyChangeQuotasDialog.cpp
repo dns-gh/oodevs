@@ -66,7 +66,6 @@ LogisticSupplyChangeQuotasDialog::LogisticSupplyChangeQuotasDialog( QWidget* par
     table_->setMargin( 5 );
     table_->horizontalHeader()->setLabel( 0, tr( "Dotation" ) );
     table_->horizontalHeader()->setLabel( 1, tr( "Quota" ) );
-//    table_->horizontalHeader()->setLabel( 2, tr( "Quota" ) );
     table_->setLeftMargin( 0 );
     table_->setMinimumSize( 220, 200 );
     layout->addWidget( table_ );
@@ -138,9 +137,9 @@ void LogisticSupplyChangeQuotasDialog::Show()
 
 namespace
 {
-    std::string CreateName( const std::string& str, int& index )
+    std::string CreateName( const std::string& str, unsigned int index )
     {
-        return QString( (str + " %1" ).c_str() ).arg( index++ ).ascii();
+        return str + " " + boost::lexical_cast< std::string >( index );
     }
 }
 
@@ -165,31 +164,19 @@ void LogisticSupplyChangeQuotasDialog::Validate()
     parameters::ParameterList* dotations = new parameters::ParameterList( it.NextElement() );
 
     action->AddParameter( *dotations );
-
-    unsigned int rows = 0;
+    unsigned int index = 0;
     for( int i = 0; i < table_->numRows(); ++i )
-        if( !table_->item( i, 0 )->text().isEmpty() )
-            ++rows;
-
-    if( rows > 0 )
     {
-        int index = 1;
-        for( int i = 0; i < table_->numRows(); ++i )
-        {
-            const QString text = table_->text( i, 0 );
-            if( text.isEmpty() )
-                continue;
-
-            ParameterList& dotationList = dotations->AddList( CreateName( "Dotation", index ) );
-            dotationList.AddIdentifier( "Type", supplies_[ text ].type_->GetId() );
-            dotationList.AddQuantity( "Number", table_->text( i, 1 ).toInt() );
-        }
+        const QString text = table_->text( i, 0 );
+        if( text.isEmpty() || text.isNull() )
+            continue;
+        ParameterList& dotationList = dotations->AddList( CreateName( "Dotation", ++index ) );
+        dotationList.AddIdentifier( "Type", supplies_[ text ].type_->GetId() );
+        dotationList.AddQuantity( "Number", table_->text( i, 1 ).toInt() );
     }
-
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->Attach( *new ActionTasker( target, false ) );
     action->RegisterAndPublish( actionsModel_ );
-
     hide();
 }
 
@@ -202,8 +189,6 @@ void LogisticSupplyChangeQuotasDialog::Reject()
     selected_ = 0;
     hide();
 }
-
-// $$$$ AGE 2006-10-06: Factorisation avec le poussage de flux;
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyChangeQuotasDialog::OnSelectionChanged
@@ -220,10 +205,12 @@ void LogisticSupplyChangeQuotasDialog::OnSelectionChanged()
         // $$$$ AGE 2006-10-06: use LogisticHierarchies ?
         const CommunicationHierarchies& hierarchies = agent->Get< CommunicationHierarchies >();
         tools::Iterator< const Entity_ABC& > children = hierarchies.CreateSubordinateIterator();
-
         while( children.HasMoreElements() )
             AddDotation( children.NextElement() );
     }
+    table_->setNumRows( 0 );
+    if( ! dotationTypes_.empty() )
+        AddItem();
 }
 
 // -----------------------------------------------------------------------------
@@ -232,8 +219,7 @@ void LogisticSupplyChangeQuotasDialog::OnSelectionChanged()
 // -----------------------------------------------------------------------------
 void LogisticSupplyChangeQuotasDialog::AddDotation( const kernel::Entity_ABC& entity )
 {
-    const SupplyStates* states = entity.Retrieve< SupplyStates >();
-    if( states )
+    if( const SupplyStates* states = entity.Retrieve< SupplyStates >() )
     {
         tools::Iterator< const Dotation& > it = states->CreateIterator();
         while( it.HasMoreElements() )
@@ -244,13 +230,11 @@ void LogisticSupplyChangeQuotasDialog::AddDotation( const kernel::Entity_ABC& en
             if( ! supply.type_ )
             {
                 dotationTypes_.append( type );
-                supply.type_      = dotation.type_;
+                supply.type_ = dotation.type_;
             }
             supply.quantity_ += dotation.quantity_;
         }
-        table_->setNumRows( 0 );
-        AddItem();
-    };
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -267,12 +251,8 @@ void LogisticSupplyChangeQuotasDialog::OnValueChanged( int row, int col )
     if( col == 0 )
     {
         if( item.currentItem() == 0 && row != table_->numRows() - 1 )
-        {
             table_->removeRow( row );
-            table_->setCurrentCell( table_->numRows() - 1, 1 );
-            return;
-        }
-        if( item.currentItem() && row == table_->numRows() - 1 )
+        else if( item.currentItem() && row == table_->numRows() - 1 )
         {
             const int current = item.currentItem();
             if( table_->numRows() < int( dotationTypes_.size() ) - 1 )
@@ -280,19 +260,6 @@ void LogisticSupplyChangeQuotasDialog::OnValueChanged( int row, int col )
             item.setCurrentItem( current );
         }
         table_->setCurrentCell( row, 1 );
-//        if( ! table_->text( row, 0 ).isEmpty() )
-//        {
-//            const Dotation& dotation = supplies_[ table_->text( row, 0 ) ];
-//            table_->setText( row, 2, QString::number( dotation.quantity_ ) );
-//            table_->adjustColumn( 0 );
-//            table_->adjustColumn( 1 );
-//            table_->adjustColumn( 2 );
-//        }
-//        else
-//        {
-//            table_->setText( row, 1, "" );
-//            table_->setText( row, 2, "" );
-//        }
     }
     else if( col == 1 )
     {
