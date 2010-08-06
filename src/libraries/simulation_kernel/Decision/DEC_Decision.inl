@@ -12,6 +12,7 @@
 #include "Decision/DEC_PathFunctions.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
+#include "Entities/Orders/MIL_MissionType_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MIL_Singletons.h"
@@ -130,7 +131,9 @@ void DEC_Decision< T >::Reset( std::string groupName )
     StopDefaultBehavior();
     if( !groupName.empty() )
         pBrain_->GetScriptFunction( "CleanBrainBeforeDeletion" )( groupName );
-    InitBrain( brainFile_, modelName_, includePath_, groupName );
+    //InitBrain( brainFile_, modelName_, includePath_, groupName );
+    if( pMission_.get() )
+        StopMissionBehavior( pMission_ );
     StartDefaultBehavior();
 }
 
@@ -239,6 +242,7 @@ void DEC_Decision< T >::StopDefaultBehavior()
 template < class T >
 void DEC_Decision< T >::ActivateOrder( const std::string& strBehavior, const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
+    StopMissionBehavior( pMission_ );
     pMission_ = mission;
     // Register mission parameters in the brain...
     directia::ScriptRef refMission = pBrain_->RegisterObject( pMission_ );
@@ -330,9 +334,10 @@ MIL_Automate& DEC_Decision< T >::GetAutomate() const
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
 template < class T >
-void DEC_Decision< T >::StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > /*mission*/ )
+void DEC_Decision< T >::StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
-    throw std::runtime_error( "StartMissionBehavior cannot be called for this Decision class" );
+    const std::string& strBehavior = mission->GetType().GetDIABehavior();
+    ActivateOrder( strBehavior, mission );
 }
 
 // -----------------------------------------------------------------------------
@@ -340,9 +345,13 @@ void DEC_Decision< T >::StartMissionBehavior( const boost::shared_ptr< MIL_Missi
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
 template < class T >
-void DEC_Decision< T >::StopMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > /*mission*/ )
+void DEC_Decision< T >::StopMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
-    throw std::runtime_error( "StopMissionBehavior cannot be called for this Decision class" );
+    if( mission.get() )
+    {
+        const std::string& strBehavior = mission->GetType().GetDIABehavior();
+        StopMission( strBehavior );
+    }
 }
 
 // -----------------------------------------------------------------------------

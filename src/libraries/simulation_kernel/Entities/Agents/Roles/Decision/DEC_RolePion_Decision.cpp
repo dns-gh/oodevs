@@ -960,27 +960,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_RolePion_Decision::StartMissionBehavior
-// Created: NLD 2004-09-03
-// -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission )
-{
-    const std::string& strBehavior = mission->GetType().GetDIABehavior();
-    ActivateOrder( strBehavior, mission );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_RolePion_Decision::StopMissionBehavior
-// Created: NLD 2004-09-03
-// -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::StopMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission )
-{
-    const std::string& strBehavior = mission->GetType().GetDIABehavior();
-    StopMission( strBehavior );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_RolePion_Decision::StopMissionBehavior
+// Name: DEC_RolePion_Decision::NotifyHasChanged
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
 void DEC_RolePion_Decision::NotifyHasChanged()

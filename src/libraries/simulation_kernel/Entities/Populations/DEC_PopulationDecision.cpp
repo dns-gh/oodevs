@@ -226,27 +226,6 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::Brain& brain )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PopulationDecision::StartMissionBehavior
-// Created: NLD 2004-09-03
-// -----------------------------------------------------------------------------
-void DEC_PopulationDecision::StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission )
-{
-    const std::string& strBehavior = mission->GetType().GetDIABehavior();
-
-    ActivateOrder( strBehavior, mission );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PopulationDecision::StopMissionBehavior
-// Created: NLD 2004-09-03
-// -----------------------------------------------------------------------------
-void DEC_PopulationDecision::StopMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission )
-{
-    const std::string& strBehavior = mission->GetType().GetDIABehavior();
-    StopMission( strBehavior );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_PopulationDecision::SendFullState
 // Created: NLD 2006-02-22
 // -----------------------------------------------------------------------------
