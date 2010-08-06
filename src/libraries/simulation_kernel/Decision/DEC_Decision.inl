@@ -129,8 +129,8 @@ template < class T >
 void DEC_Decision< T >::Reset( std::string groupName )
 {
     StopDefaultBehavior();
-    if( !groupName.empty() )
-        pBrain_->GetScriptFunction( "CleanBrainBeforeDeletion" )( groupName );
+    //if( !groupName.empty() )
+        //pBrain_->GetScriptFunction( "CleanBrainBeforeDeletion" )( groupName );
     //InitBrain( brainFile_, modelName_, includePath_, groupName );
     if( pMission_.get() )
         StopMissionBehavior( pMission_ );
