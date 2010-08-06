@@ -8,12 +8,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
-
-// ASN
-//struct MsgMagicActionCreateObject;
-//struct MsgObjectAttributes;
-//struct MsgLocation;
-
 #include "simulation_kernel/Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "simulation_kernel/Decision/DEC_Model.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
@@ -25,7 +19,6 @@
 #include "simulation_kernel/Entities/Objects/ConstructionAttribute.h"
 #include "simulation_kernel/Entities/Objects/DetectorAttribute.h"
 #include "simulation_kernel/Entities/Objects/NBCAttribute.h"
-#include "simulation_kernel/Entities/Objects/ToxicAttribute_ABC.h"
 #include "simulation_kernel/Entities/Objects/MIL_ToxicEffectManipulator.h"
 #include "simulation_kernel/Entities/Objects/ContaminationCapacity.h"
 #include "simulation_kernel/Entities/Objects/DetectionCapacity.h"
@@ -40,16 +33,14 @@
 #include "simulation_kernel/Entities/Orders/MIL_Mission_ABC.h"
 #include "simulation_kernel/Entities/Populations/MIL_PopulationConcentration.h"
 #include "simulation_kernel/Entities/Populations/MIL_PopulationAttitude.h"
-
 #include "simulation_terrain/TER_World.h"
-
 #include "StubMIL_Population.h"
 #include "StubMIL_PopulationType.h"
-
 #include "MockNET_Publisher_ABC.h"
 #include "MockBuilder.h"
 #include "MockArmy.h"
 #include "MockAgent.h"
+#include "MockToxicAttribute.h"
 #include "MockMIL_Time_ABC.h"
 #include "MockRoleLocation.h"
 #include "MockRoleNBC.h"
@@ -57,11 +48,9 @@
 #include "MockRolePerceiver.h"
 #include "MockRoleUrbanLocation.h"
 #include <xeumeuleu/xml.hpp>
-
 #include "protocol/protocol.h"
 
 using namespace Common;
-using namespace mockpp;
 
 namespace
 {
@@ -71,11 +60,8 @@ namespace
         MockBuilder builder;
         MOCK_EXPECT( builder, GetType ).once().returns( boost::cref( type ) );
         MOCK_EXPECT( builder, Build ).once();
-        BOOST_CHECK_NO_THROW(
-            pObject = loader.CreateObject( builder, army );
-        );
+        BOOST_CHECK_NO_THROW( pObject = loader.CreateObject( builder, army ); );
         builder.verify();
-
         BOOST_REQUIRE( pObject != 0 );
         return pObject;
     }
@@ -113,12 +99,11 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NoNBC )
 {
     MIL_ObjectLoader loader;
     {
-        xml::xistringstream xis(
-            "<objects>"
-            "   <object type='object'>"
-            "       <contamination type='nbc' max-toxic='1'/>"
-            "   </object>"
-            "</objects>" );
+        xml::xistringstream xis( "<objects>"
+                                 "   <object type='object'>"
+                                 "       <contamination type='nbc' max-toxic='1'/>"
+                                 "   </object>"
+                                 "</objects>" );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
     const MIL_ObjectType_ABC& type = loader.GetType( "object" );
@@ -141,29 +126,6 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NoNBC )
     MOCK_EXPECT( army, UnregisterObject ).once();
 }
 
-namespace
-{
-    class MockToxicAttribute : public ChainableMockObject, public ToxicAttribute_ABC
-    {
-    public:
-        MockToxicAttribute()
-            : ChainableMockObject( MOCKPP_PCHAR( "MockToxicAttribute" ) )
-            , mocker ( MOCKPP_PCHAR( "GetContaminationEffect" ), this )
-        {}
-
-        MIL_ToxicEffectManipulator GetContaminationEffect( const NBCAttribute& nbc, const MT_Vector2D& position ) const
-        {
-            mocker.forward( &nbc, &position );
-            return MIL_ToxicEffectManipulator( stub_, 0 );
-        }
-
-    public:
-        ChainableMockMethod< void, const NBCAttribute*, const MT_Vector2D* > mocker;
-    private:
-        MIL_ToxicEffectManipulator::T_NBCAgents stub_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 /* Name: Test VerifyObjectCapacity_Interaction_Contamination_NBC
    Create an object prototype able to contaminate.
@@ -175,14 +137,12 @@ namespace
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NBC )
 {
     MIL_ObjectLoader loader;
-
     {
         xml::xistringstream xis( "<objects>"
-                "<object type='object'>"
-                    "<contamination type='nbc' max-toxic='1'/>"
-                "</object>"
-            "</objects>"
-            );
+                                 "    <object type='object'>"
+                                 "        <contamination type='nbc' max-toxic='1'/>"
+                                 "    </object>"
+                                 "</objects>" );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
     const MIL_ObjectType_ABC& type = loader.GetType( "object" );
@@ -220,14 +180,12 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Protection )
 {
     //@TODO test à renforcer après le merge
     MIL_ObjectLoader loader;
-
     {
         xml::xistringstream xis( "<objects>"
-                "<object type='implantationArea'>"
-                    "<protection max-size='1' geniePrepared='false'/>"
-                "</object>"
-            "</objects>"
-            );
+                                 "    <object type='implantationArea'>"
+                                 "        <protection max-size='1' geniePrepared='false'/>"
+                                 "    </object>"
+                                 "</objects>" );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
     const MIL_ObjectType_ABC& type = loader.GetType( "implantationArea" );
@@ -270,11 +228,10 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_InteractIfEquipped )
     MIL_ObjectLoader loader;
     {
         xml::xistringstream xis( "<objects>"
-                "<object geometry='line' type='itineraire logistique'>"
-                    "<supply-route/>"
-                "</object>"
-            "</objects>"
-            );
+                                 "    <object geometry='line' type='itineraire logistique'>"
+                                 "        <supply-route/>"
+                                 "    </object>"
+                                 "</objects>" );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
     const MIL_ObjectType_ABC& type = loader.GetType( "itineraire logistique" );
@@ -305,11 +262,10 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Supply )
     MIL_ObjectLoader loader;
     {
         xml::xistringstream xis( "<objects>"
-                "<object type='plot ravitaillement'>"
-                    "<supply/>"
-                "</object>"
-            "</objects>"
-            );
+                                 "    <object type='plot ravitaillement'>"
+                                 "        <supply/>"
+                                 "    </object>"
+                                 "</objects>" );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
     const MIL_ObjectType_ABC& type = loader.GetType( "plot ravitaillement" );
@@ -345,11 +301,10 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_InteractWithEnemy )
     MIL_ObjectLoader loader;
     {
         xml::xistringstream xis( "<objects>"
-                "<object geometry='line' type='barricade'>"
-                    "<interact-with-enemy/>"
-                "</object>"
-            "</objects>"
-            );
+                                 "    <object geometry='line' type='barricade'>"
+                                 "        <interact-with-enemy/>"
+                                 "    </object>"
+                                 "</objects>" );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
     const MIL_ObjectType_ABC& type = loader.GetType( "barricade" );
@@ -377,11 +332,10 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Detection )
     MIL_ObjectLoader loader;
     {
         xml::xistringstream xis( "<objects>"
-                "<object geometry='point' type='checkpoint'>"
-                    "<detection/>"
-                "</object>"
-            "</objects>"
-        );
+                                 "    <object geometry='point' type='checkpoint'>"
+                                 "        <detection/>"
+                                 "    </object>"
+                                 "</objects>" );
         loader.Initialize( xis );
     }
     const MIL_ObjectType_ABC& type = loader.GetType( "checkpoint" );
@@ -510,12 +464,10 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionAttitudeModifier )
     MIL_ObjectLoader loader;
     {
         xml::xistringstream xis( "<objects>"
-                "<object id='1' name='zone paralysante' type='paralyzing area'>"
-                    "<attitude-modifier attitude='agressive'/>"
-                "</object>"
-            "</objects>"
-            );
-
+                                 "    <object id='1' name='zone paralysante' type='paralyzing area'>"
+                                 "        <attitude-modifier attitude='agressive'/>"
+                                 "    </object>"
+                                "</objects>" );
         loader.Initialize( xis );
     }
 
@@ -553,12 +505,10 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionPerception )
     MIL_ObjectLoader loader;
     {
         xml::xistringstream xis( "<objects>"
-            "<object id='1' name='zone aveuglante' type='blinding area'>"
-                "<perception blinded='true'/>"
-            "</object>"
-            "</objects>"
-            );
-
+                                 "    <object id='1' name='zone aveuglante' type='blinding area'>"
+                                 "        <perception blinded='true'/>"
+                                 "    </object>"
+                                 "</objects>" );
         loader.Initialize( xis );
     }
 
@@ -596,12 +546,10 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionScattering )
     MIL_ObjectLoader loader;
     {
         xml::xistringstream xis( "<objects>"
-            "<object id='1' name='zone dispercante' type='scattering area'>"
-                "<scattering human-by-time-step='30'/>"
-            "</object>"
-            "</objects>"
-            );
-
+                                 "    <object id='1' name='zone dispercante' type='scattering area'>"
+                                 "        <scattering human-by-time-step='30'/>"
+                                 "    </object>"
+                                 "</objects>" );
         loader.Initialize( xis );
     }
 

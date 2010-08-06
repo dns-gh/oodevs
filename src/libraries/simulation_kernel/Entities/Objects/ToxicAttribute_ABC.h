@@ -26,7 +26,7 @@ class ToxicAttribute_ABC : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-            ToxicAttribute_ABC() {}
+             ToxicAttribute_ABC() {}
     virtual ~ToxicAttribute_ABC() {}
     //@}
 
