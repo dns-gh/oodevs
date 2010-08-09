@@ -219,12 +219,12 @@ void InputToxicCloudAttribute::SendFullState( Common::MsgObjectAttributes& asn )
 {
     if( bExport_ )
     {
-        unsigned int i = 0;
-        for (CIT_QuantityContainer it(export_.begin()); it != export_.end(); ++it, i++)
+        for (CIT_QuantityContainer it(export_.begin()); it != export_.end(); ++it )
         {
-            asn.mutable_toxic_cloud()->mutable_quantities()->mutable_elem( i )->mutable_coordinate()->set_latitude( (*it).first.rX_ );
-            asn.mutable_toxic_cloud()->mutable_quantities()->mutable_elem( i )->mutable_coordinate()->set_longitude( (*it).first.rY_ );
-            asn.mutable_toxic_cloud()->mutable_quantities()->mutable_elem( i )->set_quantity( float( (*it).second ) );
+            Common::MsgLocatedQuantity* quantity = asn.mutable_toxic_cloud()->mutable_quantities()->add_elem();
+            quantity->mutable_coordinate()->set_latitude( (*it).first.rX_ );
+            quantity->mutable_coordinate()->set_longitude( (*it).first.rY_ );
+            quantity->set_quantity( float( (*it).second ) );
         }
     }
 }
