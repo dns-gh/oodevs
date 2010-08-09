@@ -15,9 +15,6 @@
 #include "3a/Types.h"
 #include "MockValueHandler.h"
 
-using namespace MsgsSimToClient;
-using namespace mockpp;
-
 namespace
 {
     template< typename T >
@@ -55,12 +52,20 @@ namespace
         *result.mutable_message()->mutable_unit_attributes() = attributes;
         return result;
     }
-
     void Evaluate( ModelFunction_ABC& function, const MsgSimToClient& message )
     {
         function.BeginTick();
         function.Receive( message );
         function.EndTick();
+    }
+    bool CheckClose( const NumericValue& expected, const NumericValue& actual, const NumericValue& epsilon )
+    {
+        if( expected == actual )
+            return true;
+        const NumericValue relativeError = std::abs( ( expected - actual ) / actual );
+        if( relativeError <= epsilon )
+            return true;
+        return false;
     }
 }
 
@@ -70,28 +75,22 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Model_TestValueExtraction )
 {
-    static const NumericValue epsilon( 0.001f );
+    const NumericValue epsilon( 0.001f );
     MockValueHandler< NumericValue > handler;
-
     std::auto_ptr< ModelFunction_ABC > function( new ModelFunction< attributes::OperationalState >( handler ) );
-    handler.BeginTick_mocker.expects( exactly( 4 ) );
-    handler.Handle_mocker.expects( exactly( 2 ) ).with( eq( NumericValue( 0.25f ), epsilon ) );
-    handler.Handle_mocker.expects( exactly( 2 ) ).with( eq( NumericValue( 0.3f ), epsilon ) );
-    handler.EndTick_mocker.expects( exactly( 4 ) );
-
-
+    MOCK_EXPECT( handler, BeginTick ).exactly( 4 );
+    MOCK_EXPECT( handler, Handle ).exactly( 2 ).with( boost::bind( &CheckClose, NumericValue( 0.25f ), _1, epsilon ) );
+    MOCK_EXPECT( handler, Handle ).exactly( 2 ).with( boost::bind( &CheckClose, NumericValue( 0.3f ), _1, epsilon ) );
+    MOCK_EXPECT( handler, EndTick ).exactly( 4 );
     MsgUnitAttributes attributes;
     attributes.set_etat_operationnel_brut( 25 );
     {
         Evaluate( *function, MakeMessage( attributes ) );
         Evaluate( *function, MakeMessage( attributes ) );
-
         attributes.set_etat_operationnel_brut( 30 );
         Evaluate( *function, MakeMessage( attributes ) );
         Evaluate( *function, MakeMessage( attributes ) );
     }
-
-    handler.verify();
 }
 
 // -----------------------------------------------------------------------------
@@ -100,25 +99,21 @@ BOOST_AUTO_TEST_CASE( Model_TestValueExtraction )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Model_TestDispatchedValueExtraction )
 {
-    static const NumericValue epsilon( 0.001f );
+    const NumericValue epsilon( 0.001f );
     MockValueHandler< NumericValue > handler;
     MockValueHandler< NumericValue > keyHandler;
-
     DispatcherFactory< IdentifierValue, attributes::OperationalState > factory;
     boost::shared_ptr< ModelFunction_ABC > function( factory( keyHandler, handler ) );
-
-    handler.BeginTick_mocker.expects( exactly( 4 ) );
-    keyHandler.BeginTick_mocker.expects( exactly( 4 ) );
-    handler.Handle_mocker.expects( exactly( 2 ) ).with( eq( NumericValue( 0.25f ), epsilon ) );
-    keyHandler.Handle_mocker.expects( once() ).with( eq( NumericValue( 1 ) ) );
-    keyHandler.Handle_mocker.expects( once() ).with( eq( NumericValue( 2 ) ) );
-    handler.Handle_mocker.expects( exactly( 2 ) ).with( eq( NumericValue( 0.3f ), epsilon ) );
-    keyHandler.Handle_mocker.expects( once() ).with( eq( NumericValue( 1 ) ) );
-    keyHandler.Handle_mocker.expects( once() ).with( eq( NumericValue( 2 ) ) );
-    handler.EndTick_mocker.expects( exactly( 4 ) );
-    keyHandler.EndTick_mocker.expects( exactly( 4 ) );
-
-
+    MOCK_EXPECT( handler, BeginTick ).exactly( 4 );
+    MOCK_EXPECT( keyHandler, BeginTick ).exactly( 4 );
+    MOCK_EXPECT( handler, Handle ).exactly( 2 ).with( boost::bind( &CheckClose, NumericValue( 0.25f ), _1, epsilon ) );
+    MOCK_EXPECT( keyHandler, Handle ).once().with( NumericValue( 1 ) );
+    MOCK_EXPECT( keyHandler, Handle ).once().with( NumericValue( 2 ) );
+    MOCK_EXPECT( handler, Handle ).exactly( 2 ).with( boost::bind( &CheckClose, NumericValue( 0.3f ), _1, epsilon ) );
+    MOCK_EXPECT( keyHandler, Handle ).once().with( NumericValue( 1 ) );
+    MOCK_EXPECT( keyHandler, Handle ).once().with( NumericValue( 2 ) );
+    MOCK_EXPECT( handler, EndTick ).exactly( 4 );
+    MOCK_EXPECT( keyHandler, EndTick ).exactly( 4 );
     MsgUnitAttributes attributes;
     attributes.set_etat_operationnel_brut( 25 );
     {
@@ -126,15 +121,12 @@ BOOST_AUTO_TEST_CASE( Model_TestDispatchedValueExtraction )
         function->Receive( MakeMessage( attributes, 1 ) );
         function->Receive( MakeMessage( attributes, 2 ) );
         function->EndTick();
-
         attributes.set_etat_operationnel_brut( 30 );
         function->BeginTick();
         function->Receive( MakeMessage( attributes, 1 ) );
         function->Receive( MakeMessage( attributes, 2 ) );
         function->EndTick();
     }
-    handler.verify();
-    keyHandler.verify();
 }
 
 // -----------------------------------------------------------------------------
@@ -148,7 +140,7 @@ BOOST_AUTO_TEST_CASE( Model_TestZone )
         std::stringstream is( circle );
         Zone zone;
         is >> zone;
-        BOOST_CHECK(   zone.Contains( Position( "31TBN7728449222" ) ) );
+        BOOST_CHECK( zone.Contains( Position( "31TBN7728449222" ) ) );
         BOOST_CHECK( ! zone.Contains( Position( "31TBN7728449225" ) ) );
     }
     {
@@ -156,7 +148,7 @@ BOOST_AUTO_TEST_CASE( Model_TestZone )
         std::stringstream is( polygon );
         Zone zone;
         is >> zone;
-        BOOST_CHECK(   zone.Contains( Position( "31TBN7728249218" ) ) );
+        BOOST_CHECK( zone.Contains( Position( "31TBN7728249218" ) ) );
         BOOST_CHECK( ! zone.Contains( Position( "31TBN7728249212" ) ) );
     }
 }

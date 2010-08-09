@@ -3,7 +3,7 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
@@ -14,47 +14,16 @@
 
 // =============================================================================
 /** @class  MockValueHandler
-    @brief  MockValueHandler
+    @brief  Mock Value Handler
 */
-// Created: AGE 2007-08-31
+// Created: LGY 2010-08-09
 // =============================================================================
 template< typename T >
-class MockValueHandler : public ValueHandler_ABC< T >, public mockpp::ChainableMockObject
+MOCK_BASE_CLASS( MockValueHandler, ValueHandler_ABC< T > )
 {
-public:
-    //! @name Constructors/Destructor
-    //@{
-    MockValueHandler()
-    : mockpp::ChainableMockObject( "MockValueHandler", 0 )
-    , BeginTick_mocker( "BeginTick", this )
-    , Handle_mocker   ( "Handle", this )
-    , EndTick_mocker  ( "EndTick", this )
-    {}
-    virtual ~MockValueHandler() {}
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void BeginTick()
-    {
-        BeginTick_mocker.forward();
-    }
-    virtual void Handle( const T& value )
-    {
-        Handle_mocker.forward( value );
-    }
-    virtual void EndTick()
-    {
-        EndTick_mocker.forward();
-    }
-    //@}
-
-    //! @name Member data
-    //@{
-    mockpp::ChainableMockMethod< void    > BeginTick_mocker;
-    mockpp::ChainableMockMethod< void, T > Handle_mocker;
-    mockpp::ChainableMockMethod< void    > EndTick_mocker;
-    //@}
+    MOCK_METHOD_EXT_TPL( BeginTick, 0, void(), BeginTick );
+    MOCK_METHOD_EXT_TPL( Handle, 1, void( const T& ), Handle );
+    MOCK_METHOD_EXT_TPL( EndTick, 0, void(), EndTick );
 };
 
 #endif // __MockValueHandler_h_

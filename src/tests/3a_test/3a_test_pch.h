@@ -22,6 +22,9 @@
 #include <mockpp/chaining/CountedChainableMethod.h>
 #include <mockpp/chaining/ChainingMockObjectSupport.h>
 
+#pragma warning( disable: 4505 )
+#include <turtle/mock.hpp>
+
 std::string BOOST_RESOLVE( const std::string& filename );
 
 #endif // __3a_test_pch_h_
