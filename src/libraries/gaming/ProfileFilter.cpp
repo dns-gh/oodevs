@@ -79,7 +79,7 @@ bool ProfileFilter::IsKnowledgeVisible( const kernel::Knowledge_ABC& knowledge )
     const AgentKnowledges* filteredGroup = 0;
     const AgentKnowledges* knowldegeToCheckGroup = 0;
     if ( !cHierarchies_ )
-        return false;
+        return true;
     for( const kernel::Entity_ABC* superior = &cHierarchies_->GetEntity(); superior && !filteredGroup; superior = superior->Get< kernel::CommunicationHierarchies >().GetSuperior() )
         filteredGroup = superior->Retrieve< AgentKnowledges >();
     for( const kernel::Entity_ABC* superior = &knowledge.GetOwner(); superior && !knowldegeToCheckGroup; superior = superior->Get< kernel::CommunicationHierarchies >().GetSuperior() )
