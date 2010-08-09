@@ -93,8 +93,15 @@
 #include "Tools/MIL_Tools.h"
 #include <urban/ObjectVisitor_ABC.h>
 #include <xeumeuleu/xml.hpp>
+#pragma warning( push )
+#pragma warning( disable: 4127 4512 4511 )
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/operations.hpp>
+#pragma warning( pop )
 
 #include "protocol/ClientSenders.h"
+
+namespace bfs = boost::filesystem;
 
 using namespace Common;
 using namespace MsgsSimToClient;
@@ -293,7 +300,7 @@ void MIL_EntityManager::CreateUrbanObject( const urban::TerrainObject_ABC& objec
 void MIL_EntityManager::LoadUrbanStates( const MIL_Config& config )
 {
     const std::string strUrbanState = config.GetUrbanStateFile();
-    if( strUrbanState.empty() )
+    if( strUrbanState.empty() || !bfs::exists( bfs::path( strUrbanState, bfs::native ) ) )
         return;
 
     MT_LOG_INFO_MSG( MT_FormatString( "UrbanState file name : '%s'", strUrbanState.c_str() ) );
