@@ -646,7 +646,7 @@
     </target>
 
     <target name="plugins_test" depends="library.hla_plugin,library.tic_plugin,library.bml_plugin,library.crossbow_plugin">
-        <build-test name="plugins" depends="xerces,terrain,boost,mockpp"
+        <build-test name="plugins" depends="xerces,terrain,boost"
             libs="directia-${platform}-mt-4_5,libprotobuf,
             lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
             lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix},
