@@ -3333,6 +3333,49 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>UrbanKnowledgePanel</name>
+    <message>
+        <source>Urban knowledges</source>
+        <translation>Connaissances urbaines</translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation>Détails</translation>
+    </message>
+    <message>
+        <source>Identifier:</source>
+        <translation>Identifiant:</translation>
+    </message>
+    <message>
+        <source>Perceived:</source>
+        <translation>Perçu:</translation>
+    </message>
+    <message>
+        <source>Relevance:</source>
+        <translation>Pertinence:</translation>
+    </message>
+    <message>
+        <source>Level:</source>
+        <translation>Niveau:</translation>
+    </message>
+    <message>
+        <source>Progress:</source>
+        <translation>Progrès:</translation>
+    </message>
+    <message>
+        <source>Agent</source>
+        <translation>Agent</translation>
+    </message>
+    <message>
+        <source>Known blocks</source>
+        <translation>Blocs connus</translation>
+    </message>
+    <message>
+        <source>Associated block:</source>
+        <translation>Bloc associé:</translation>
+    </message>
+</context>
+<context>
     <name>UserProfileDialog</name>
     <message>
         <source>User profiles</source>

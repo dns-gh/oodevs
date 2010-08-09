@@ -35,7 +35,6 @@ namespace kernel
 class PopulationPart_ABC;
 class PopulationConcentration;
 class PopulationFlow;
-class Simulation;
 
 // =============================================================================
 // Created: HME 2005-09-29

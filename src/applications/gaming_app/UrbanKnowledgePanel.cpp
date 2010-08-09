@@ -35,12 +35,12 @@ UrbanKnowledgePanel::UrbanKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
     , subSelected_ ( controllers )
 {
     pKnowledgeListView_ = new ListDisplayer< UrbanKnowledgePanel >( this, *this, factory );
-    pKnowledgeListView_->AddColumn( tr( "Known objects" ) );
+    pKnowledgeListView_->AddColumn( tr( "Known blocks" ) );
 
     display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( tr( "Details" ) )
                 .AddLabel( tr( "Identifier:" ) )
-                .AddLabel( tr( "Associated object:" ) )
+                .AddLabel( tr( "Associated block:" ) )
                 .AddLabel( tr( "Perceived:" ) )
                 .AddLabel( tr( "Relevance:" ) )
                 .AddLabel( tr( "Level:" ) )
@@ -81,6 +81,9 @@ void UrbanKnowledgePanel::showEvent( QShowEvent* )
 // -----------------------------------------------------------------------------
 void UrbanKnowledgePanel::NotifyUpdated( const UrbanKnowledges& element )
 {
+    if( ! IsVisible() || selected_ != &element )
+        return;
+
     pKnowledgeListView_->DeleteTail(
       pKnowledgeListView_->DisplayList( element.CreateIterator() )
     );

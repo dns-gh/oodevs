@@ -1499,6 +1499,45 @@
     </message>
 </context>
 <context>
+    <name>Urban</name>
+    <message>
+        <source>Details</source>
+        <translation>Détails</translation>
+    </message>
+    <message>
+        <source>Identifier:</source>
+        <translation>Identifiant:</translation>
+    </message>
+    <message>
+        <source>Associated block:</source>
+        <translation>Bloc associé:</translation>
+    </message>
+    <message>
+        <source>Perceived:</source>
+        <translation>Perçu:</translation>
+    </message>
+    <message>
+        <source>Relevance:</source>
+        <translation>Pertinence:</translation>
+    </message>
+    <message>
+        <source>Level:</source>
+        <translation>Niveau:</translation>
+    </message>
+    <message>
+        <source>Progress:</source>
+        <translation>Progrès:</translation>
+    </message>
+    <message>
+        <source>Unknown urban object</source>
+        <translation>Objet urbain inconnu</translation>
+    </message>
+    <message>
+        <source>Known blocks</source>
+        <translation>Blocs connus</translation>
+    </message>
+</context>
+<context>
     <name>UserProfileFactory</name>
     <message>
         <source>New profile</source>

@@ -58,7 +58,7 @@ void PHY_PerceptionRecoUrbanBlockReco::GetAgentsInside( const PHY_RoleInterface_
 // -----------------------------------------------------------------------------
 bool PHY_PerceptionRecoUrbanBlockReco::CanSeeIt() const
 {
-    return urbanBlock_->GetProgress() >= MIL_Random::rand_ii( MIL_Random::ePerception );
+    return urbanBlock_->GetProgress() >= ( 1. - MIL_Random::rand_ii( MIL_Random::ePerception ) );
 }
 
 // -----------------------------------------------------------------------------

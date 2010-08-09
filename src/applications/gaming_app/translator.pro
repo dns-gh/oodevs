@@ -91,6 +91,7 @@ TimelineListView.cpp \
 TimelinePanel.cpp \
 TimelineView.cpp \
 UnitMagicOrdersInterface.cpp \
+UrbanKnowledgePanel.cpp \
 UserProfileDialog.cpp \
 UserProfileList.cpp \
 UserProfileRights_ABC.cpp \

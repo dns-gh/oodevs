@@ -50,6 +50,7 @@ SupplyRouteAttribute.cpp \
 SupplyStates.cpp \
 Team.cpp \
 Transports.cpp \
+UrbanKnowledge.cpp \
 UserProfileFactory.cpp \
 UserProfilesModel.cpp \
 
