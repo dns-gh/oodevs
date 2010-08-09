@@ -13,31 +13,23 @@
 #include "3a/KeyMarshaller.h"
 #include "3a/Composer.h"
 
-using namespace mockpp;
-
 // -----------------------------------------------------------------------------
 // Name: Function_TestMarshallingWithNoKeyJustForwards
 // Created: AGE 2004-12-15
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Function_TestMarshallingWithNoKeyJustForwards )
 {
-    MockFunction2< unsigned long, float, unsigned > function;
-    KeyMarshaller< unsigned long, float, unsigned > marshaller( function );
-
+    MockFunction2< unsigned long, float, unsigned int > function;
+    KeyMarshaller< unsigned long, float, unsigned int > marshaller( function );
     marshaller.FirstParameter().BeginTick();
     marshaller.FirstParameter().Apply( 42.f );
     marshaller.FirstParameter().EndTick();
-
     marshaller.SecondParameter().BeginTick();
     marshaller.SecondParameter().Apply( 12u );
-
-    function.BeginTick_mocker.expects( once() );
-    function.Apply_mocker.expects( once() ).with( eq( 42.f ), eq( 12u ) ); ;
-    function.EndTick_mocker.expects( once() );
-
+    MOCK_EXPECT( function, BeginTick ).once();
+    MOCK_EXPECT( function, Apply ).once().with( 42.f, 12u );
+    MOCK_EXPECT( function, EndTick ).once();
     marshaller.SecondParameter().EndTick();
-
-    function.verify();
 }
 
 // -----------------------------------------------------------------------------
@@ -46,8 +38,8 @@ BOOST_AUTO_TEST_CASE( Function_TestMarshallingWithNoKeyJustForwards )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Function_TestMarshallingWithOneKeyForwardsKey )
 {
-    MockFunction2< unsigned long, float, unsigned > function;
-    KeyMarshaller< unsigned long, float, unsigned > marshaller( function );
+    MockFunction2< unsigned long, float, unsigned int > function;
+    KeyMarshaller< unsigned long, float, unsigned int > marshaller( function );
     {
         marshaller.FirstParameter().BeginTick();
         marshaller.FirstParameter().SetKey( 1 );
@@ -57,28 +49,23 @@ BOOST_AUTO_TEST_CASE( Function_TestMarshallingWithOneKeyForwardsKey )
         marshaller.FirstParameter().SetKey( 3 );
         marshaller.FirstParameter().Apply( 44.f );
         marshaller.FirstParameter().EndTick();
-
         marshaller.SecondParameter().BeginTick();
         marshaller.SecondParameter().Apply( 12u );
-
-        function.BeginTick_mocker.expects( once() );
-        function.SetKey_mocker.expects( once() ).with( eq( 1ul ) );
-        function.Apply_mocker.expects( once() ).with( eq( 42.f ), eq( 12u ) );
-        function.SetKey_mocker.expects( once() ).with( eq( 2ul ) );
-        function.Apply_mocker.expects( once() ).with( eq( 43.f ), eq( 12u ) );
-        function.SetKey_mocker.expects( once() ).with( eq( 3ul ) );
-        function.Apply_mocker.expects( once() ).with( eq( 44.f ), eq( 12u ) );
-        function.EndTick_mocker.expects( once() );
-
+        MOCK_EXPECT( function, BeginTick ).once();
+        MOCK_EXPECT( function, SetKey ).once().with( 1ul );
+        MOCK_EXPECT( function, Apply ).once().with( 42.f, 12u );
+        MOCK_EXPECT( function, SetKey ).once().with( 2ul );
+        MOCK_EXPECT( function, Apply ).once().with( 43.f, 12u );
+        MOCK_EXPECT( function, SetKey ).once().with( 3ul );
+        MOCK_EXPECT( function, Apply ).once().with( 44.f, 12u );
+        MOCK_EXPECT( function, EndTick ).once();
         marshaller.SecondParameter().EndTick();
         function.verify();
     }
-
     {
         marshaller.FirstParameter().BeginTick();
         marshaller.FirstParameter().Apply( 42.f );
         marshaller.FirstParameter().EndTick();
-
         marshaller.SecondParameter().BeginTick();
         marshaller.SecondParameter().SetKey( 1 );
         marshaller.SecondParameter().Apply( 12u );
@@ -86,16 +73,14 @@ BOOST_AUTO_TEST_CASE( Function_TestMarshallingWithOneKeyForwardsKey )
         marshaller.SecondParameter().Apply( 13u );
         marshaller.SecondParameter().SetKey( 3 );
         marshaller.SecondParameter().Apply( 14u );
-
-        function.BeginTick_mocker.expects( once() );
-        function.SetKey_mocker.expects( once() ).with( eq( 1ul ) );
-        function.Apply_mocker.expects( once() ).with( eq( 42.f ), eq( 12u ) );
-        function.SetKey_mocker.expects( once() ).with( eq( 2ul ) );
-        function.Apply_mocker.expects( once() ).with( eq( 42.f ), eq( 13u ) );
-        function.SetKey_mocker.expects( once() ).with( eq( 3ul ) );
-        function.Apply_mocker.expects( once() ).with( eq( 42.f ), eq( 14u ) );
-        function.EndTick_mocker.expects( once() );
-
+        MOCK_EXPECT( function, BeginTick ).once();
+        MOCK_EXPECT( function, SetKey ).once().with( 1ul );
+        MOCK_EXPECT( function, Apply ).once().with( 42.f, 12u );
+        MOCK_EXPECT( function, SetKey ).once().with( 2ul );
+        MOCK_EXPECT( function, Apply ).once().with( 42.f, 13u );
+        MOCK_EXPECT( function, SetKey ).once().with( 3ul );
+        MOCK_EXPECT( function, Apply ).once().with( 42.f, 14u );
+        MOCK_EXPECT( function, EndTick ).once();
         marshaller.SecondParameter().EndTick();
         function.verify();
     }
@@ -107,8 +92,8 @@ BOOST_AUTO_TEST_CASE( Function_TestMarshallingWithOneKeyForwardsKey )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Function_TestMarshallingWithTwoKeysSortsKeysBack )
 {
-    MockFunction2< unsigned long, float, unsigned > function;
-    KeyMarshaller< unsigned long, float, unsigned > marshaller( function );
+    MockFunction2< unsigned long, float, unsigned int > function;
+    KeyMarshaller< unsigned long, float, unsigned int > marshaller( function );
     {
         marshaller.FirstParameter().BeginTick();
         marshaller.FirstParameter().SetKey( 1 );
@@ -118,7 +103,6 @@ BOOST_AUTO_TEST_CASE( Function_TestMarshallingWithTwoKeysSortsKeysBack )
         marshaller.FirstParameter().SetKey( 3 );
         marshaller.FirstParameter().Apply( 44.f );
         marshaller.FirstParameter().EndTick();
-
         marshaller.SecondParameter().SetKey( 3 );
         marshaller.SecondParameter().Apply( 14u );
         marshaller.SecondParameter().BeginTick();
@@ -126,16 +110,14 @@ BOOST_AUTO_TEST_CASE( Function_TestMarshallingWithTwoKeysSortsKeysBack )
         marshaller.SecondParameter().Apply( 12u );
         marshaller.SecondParameter().SetKey( 2 );
         marshaller.SecondParameter().Apply( 13u );
-
-        function.BeginTick_mocker.expects( once() );
-        function.SetKey_mocker.expects( once() ).with( eq( 1ul ) );
-        function.Apply_mocker.expects( once() ).with( eq( 42.f ), eq( 12u ) );
-        function.SetKey_mocker.expects( once() ).with( eq( 2ul ) );
-        function.Apply_mocker.expects( once() ).with( eq( 43.f ), eq( 13u ) );
-        function.SetKey_mocker.expects( once() ).with( eq( 3ul ) );
-        function.Apply_mocker.expects( once() ).with( eq( 44.f ), eq( 14u ) );
-        function.EndTick_mocker.expects( once() );
-
+        MOCK_EXPECT( function, BeginTick ).once();
+        MOCK_EXPECT( function, SetKey ).once().with( 1ul );
+        MOCK_EXPECT( function, Apply ).once().with( 42.f, 12u );
+        MOCK_EXPECT( function, SetKey ).once().with( 2ul );
+        MOCK_EXPECT( function, Apply ).once().with( 43.f, 13u );
+        MOCK_EXPECT( function, SetKey ).once().with( 3ul );
+        MOCK_EXPECT( function, Apply ).once().with( 44.f, 14u );
+        MOCK_EXPECT( function, EndTick ).once();
         marshaller.SecondParameter().EndTick();
         function.verify();
     }
@@ -147,8 +129,8 @@ BOOST_AUTO_TEST_CASE( Function_TestMarshallingWithTwoKeysSortsKeysBack )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Function_TestMarshallingWithTwoKeysOnlyForwardsWhenBothKeysArePresent )
 {
-    MockFunction2< unsigned long, float, unsigned > function;
-    KeyMarshaller< unsigned long, float, unsigned > marshaller( function );
+    MockFunction2< unsigned long, float, unsigned int > function;
+    KeyMarshaller< unsigned long, float, unsigned int > marshaller( function );
     {
         marshaller.FirstParameter().BeginTick();
         marshaller.FirstParameter().SetKey( 1 );
@@ -156,18 +138,15 @@ BOOST_AUTO_TEST_CASE( Function_TestMarshallingWithTwoKeysOnlyForwardsWhenBothKey
         marshaller.FirstParameter().SetKey( 3 );
         marshaller.FirstParameter().Apply( 44.f );
         marshaller.FirstParameter().EndTick();
-
         marshaller.SecondParameter().SetKey( 3 );
         marshaller.SecondParameter().Apply( 14u );
         marshaller.SecondParameter().BeginTick();
         marshaller.SecondParameter().SetKey( 2 );
         marshaller.SecondParameter().Apply( 13u );
-
-        function.BeginTick_mocker.expects( once() );
-        function.SetKey_mocker.expects( once() ).with( eq( 3ul ) );
-        function.Apply_mocker.expects( once() ).with( eq( 44.f ), eq( 14u ) );
-        function.EndTick_mocker.expects( once() );
-
+        MOCK_EXPECT( function, BeginTick ).once();
+        MOCK_EXPECT( function, SetKey ).once().with( 3ul );
+        MOCK_EXPECT( function, Apply ).once().with( 44.f, 14u );
+        MOCK_EXPECT( function, EndTick ).once();
         marshaller.SecondParameter().EndTick();
         function.verify();
     }
@@ -210,7 +189,7 @@ BOOST_AUTO_TEST_CASE( Model_TestComposerWithKeysComposes )
 BOOST_AUTO_TEST_CASE( Model_TestComposerWithConstantFIsConstant )
 {
     MockFunction1< unsigned long, float > function;
-    Composer< unsigned long, unsigned, float > composer( function );
+    Composer< unsigned long, unsigned int, float > composer( function );
     {
         composer.G().BeginTick();
         composer.G().SetKey( 1 );
@@ -237,7 +216,7 @@ BOOST_AUTO_TEST_CASE( Model_TestComposerWithConstantFIsConstant )
 BOOST_AUTO_TEST_CASE( Model_TestComposerWithConstantGIsConstant )
 {
     MockFunction1< unsigned long, float > function;
-    Composer< unsigned long, unsigned, float > composer( function );
+    Composer< unsigned long, unsigned int, float > composer( function );
     {
         composer.G().BeginTick();
         composer.G().Apply( 14 );

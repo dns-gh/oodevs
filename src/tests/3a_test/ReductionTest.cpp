@@ -19,8 +19,6 @@
 #include "3a/Threshold.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace mockpp;
-
 namespace
 {
     template< typename K, typename T >
