@@ -29,6 +29,7 @@ public:
     static void SetVisionModePointPtr               ( MIL_Agent_ABC& callerAgent, boost::shared_ptr< MT_Vector2D > point );
     static void SetVisionModeNormal                 ( MIL_Agent_ABC& callerAgent );
     static void SetStealthFactor                    ( MIL_Agent_ABC& callerAgent, float factor );
+    static bool IsStealth                           ( MIL_Agent_ABC& callerAgent );
     static bool IsPointVisible                      ( const MIL_Agent_ABC& callerAgent, MT_Vector2D* pPt );
     static void EnableRecoAlat                      ( MIL_Agent_ABC& callerAgent, const TER_Localisation* location );
     static void DisableRecoAlat                     ( MIL_Agent_ABC& callerAgent );

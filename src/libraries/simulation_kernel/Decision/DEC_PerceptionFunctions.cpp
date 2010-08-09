@@ -28,6 +28,15 @@ void DEC_PerceptionFunctions::SetStealthFactor( MIL_Agent_ABC& callerAgent, floa
     callerAgent.GetRole< PHY_RoleInterface_Posture >().SetStealthFactor( factor );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_PerceptionFunctions::IsStealth
+// Created: DDA 2010-06-08
+// -----------------------------------------------------------------------------
+bool DEC_PerceptionFunctions::IsStealth( MIL_Agent_ABC& callerAgent )
+{
+    return callerAgent.GetRole< PHY_RoleInterface_Posture >().IsStealth();
+}
+
 //-----------------------------------------------------------------------------
 // Name: DEC_PerceptionFunctions::EnableCoupDeSonde
 // Created: JVT 03-04-29

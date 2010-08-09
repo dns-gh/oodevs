@@ -395,6 +395,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< int( const TER_Localisation* ) >( boost::bind( &DEC_PerceptionFunctions::EnableFlyingShellDetection, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Perception_DesactiverPerceptionTirsIndirect",
         boost::function< void( int ) >( boost::bind( &DEC_PerceptionFunctions::DisableFlyingShellDetection, boost::ref( GetPion() ), _1 ) ) );
+    brain.RegisterFunction( "DEC_Perception_EstFurtif",
+        boost::function< bool( void ) >( boost::bind( &DEC_PerceptionFunctions::IsStealth, boost::ref( GetPion() ) ) ) );
     brain.RegisterFunction( "DEC_Perception_Furtivite",
         boost::function< void( float ) >( boost::bind( &DEC_PerceptionFunctions::SetStealthFactor, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Perception_DesactiverSenseurs",
