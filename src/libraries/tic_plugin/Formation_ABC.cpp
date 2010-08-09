@@ -25,10 +25,8 @@ bool Formation_ABC::Compare( const geometry::Point2f& lhs, const geometry::Point
     const float rdot = towards.DotProduct( right );
     if( ldot > rdot ) return true;
     if( ldot < rdot ) return false;
-
     const float lcross = towards.CrossProduct( left );
     const float rcross = towards.CrossProduct( right );
-
     return lcross < rcross;
 }
 

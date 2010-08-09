@@ -12,9 +12,6 @@
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 
-using namespace Common;
-using namespace MsgsSimToClient;
-
 using namespace plugins::tic;
 
 // -----------------------------------------------------------------------------
@@ -46,7 +43,7 @@ Platform::~Platform()
 // Name: Platform::Update
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-void Platform::Update( const MsgUnitAttributes& asnMsg )
+void Platform::Update( const MsgsSimToClient::MsgUnitAttributes& asnMsg )
 {
     if( asnMsg.has_altitude() )
         altitude_ = float( asnMsg.altitude() );
@@ -56,7 +53,7 @@ void Platform::Update( const MsgUnitAttributes& asnMsg )
 // Name: Platform::Spread
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-void Platform::Spread( EquipmentDotations_EquipmentDotation& updateMessage )
+void Platform::Spread( MsgsSimToClient::EquipmentDotations_EquipmentDotation& updateMessage )
 {
     if( type_.GetId() == (unsigned)updateMessage.type_equipement() )
         Apply( updateMessage );
@@ -66,39 +63,38 @@ void Platform::Spread( EquipmentDotations_EquipmentDotation& updateMessage )
 // Name: Platform::Apply
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-void Platform::Apply( EquipmentDotations_EquipmentDotation& updateMessage )
+void Platform::Apply( MsgsSimToClient::EquipmentDotations_EquipmentDotation& updateMessage )
 {
     int nVal = updateMessage.nb_dans_chaine_maintenance();
-    if (nVal)
+    if( nVal )
     {
         updateMessage.set_nb_dans_chaine_maintenance(--nVal);
         state_ = destroyed;
     }
     nVal = updateMessage.nb_indisponibles();
-    if (nVal)
+    if( nVal )
     {
         updateMessage.set_nb_indisponibles(--nVal);
         state_ = destroyed;
     }
     nVal = updateMessage.nb_prisonniers();
-    if (nVal)
+    if( nVal )
     {
         updateMessage.set_nb_prisonniers(--nVal);
         state_ = destroyed;
     }
     nVal = updateMessage.nb_reparables();
-    if (nVal)
+    if( nVal )
     {
         updateMessage.set_nb_reparables(--nVal);
         state_ = broken;
     }
     nVal = updateMessage.nb_disponibles();
-    if (nVal)
+    if( nVal )
     {
         updateMessage.set_nb_disponibles(--nVal);
         state_ = okay;
     }
-
 //       SetStatus( updateMessage.nb_dans_chaine_maintenance(), destroyed )
 //    || SetStatus( updateMessage.nb_indisponibles(),           destroyed )
 //    || SetStatus( updateMessage.nb_prisonniers(),             destroyed )
@@ -134,13 +130,10 @@ void Platform::Move( const geometry::Point2f& to )
         return;
     }
     previous_ = position_;
-
     const float teleportThreshold = 3000.f;
     const float maxAcceleration = 1.f;
-
-    const float distance      = position_.Distance( to );
+    const float distance = position_.Distance( to );
     const float requiredSpeed = distance / timeStep_;
-
     if( distance > teleportThreshold )
     {
         heading_ = 0;

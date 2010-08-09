@@ -17,7 +17,6 @@ namespace plugins
 {
 namespace tic
 {
-
 // =============================================================================
 /** @class  DiamondFormation
     @brief  Diamond formation
@@ -35,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Start( const geometry::Point2f& at, const geometry::Vector2f& towards, unsigned count );
+    virtual void Start( const geometry::Point2f& at, const geometry::Vector2f& towards, unsigned int count );
     virtual void Apply( Movable_ABC* movable );
     //@}
 
@@ -48,16 +47,20 @@ private:
 
     //! @name Helpers
     //@{
-    void AddPlatform( const geometry::Point2f& center, float baseAngle, unsigned& level, unsigned& platformCount );
+    void AddPlatform( const geometry::Point2f& center, float baseAngle, unsigned int& level, unsigned int& platformCount );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< geometry::Point2f > T_Points;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::vector< geometry::Point2f > points_;
+    T_Points points_;
     //@}
 };
-
 }
 }
 

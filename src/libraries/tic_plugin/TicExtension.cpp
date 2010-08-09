@@ -25,7 +25,6 @@
 #pragma warning( pop )
 
 using namespace plugins::tic;
-using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: TicExtension constructor
@@ -52,25 +51,23 @@ TicExtension::~TicExtension()
 // Name: TicExtension::DoUpdate
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-void TicExtension::DoUpdate( const MsgUnitAttributes& message )
+void TicExtension::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 {
-    if( message.has_dotation_eff_materiel()  )
+    if( message.has_dotation_eff_materiel() )
         UpdatePlatforms( message );
 
-    if( message.has_altitude()  )
+    if( message.has_altitude() )
         std::for_each( platforms_.begin(), platforms_.end(), boost::bind( &Platform::Update, _1, message ) );
 
-    if( message.has_direction()  )
+    if( message.has_direction() )
     {
         const float angle = float( message.direction().heading() ) * std::acos( -1.f ) / 180.f;
         direction_ = geometry::Vector2f( std::sin( angle ), std::cos( angle ) );
         if( !onRoad_ )
             SortPlatforms();
     }
-
-    if( message.has_position()  )
+    if( message.has_position() )
         position_ = converter_.ConvertToXY( message.position() );
-
     UpdateFormation();
 }
 
@@ -78,7 +75,7 @@ void TicExtension::DoUpdate( const MsgUnitAttributes& message )
 // Name: TicExtension::DoUpdate
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void TicExtension::DoUpdate( const MsgUnitPathFind& message )
+void TicExtension::DoUpdate( const MsgsSimToClient::MsgUnitPathFind& message )
 {
     path_.resize( 0 );
     for( int i = 0; i < message.itineraire().location().coordinates().elem_size(); ++i )
@@ -89,7 +86,7 @@ void TicExtension::DoUpdate( const MsgUnitPathFind& message )
 // Name: TicExtension::DoUpdate
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-void TicExtension::DoUpdate( const MsgUnitEnvironmentType& message )
+void TicExtension::DoUpdate( const MsgsSimToClient::MsgUnitEnvironmentType& message )
 {
     const unsigned int mask = TerrainData::motorway_  | TerrainData::largeroad_  | TerrainData::mediumroad_
                             | TerrainData::smallroad_ | TerrainData::bridge_;
@@ -107,11 +104,11 @@ void TicExtension::DoUpdate( const MsgUnitEnvironmentType& message )
 // -----------------------------------------------------------------------------
 void TicExtension::CreatePlatforms( float timeStep )
 {
-    const AgentType& type = holder_.GetType();
-    tools::Iterator< const AgentComposition& > it = type.CreateIterator();
+    const kernel::AgentType& type = holder_.GetType();
+    tools::Iterator< const kernel::AgentComposition& > it = type.CreateIterator();
     while( it.HasMoreElements() )
     {
-        const AgentComposition& component = it.NextElement();
+        const kernel::AgentComposition& component = it.NextElement();
         unsigned count = component.GetCount();
         while( count-- )
         {
@@ -125,7 +122,7 @@ void TicExtension::CreatePlatforms( float timeStep )
 // Name: TicExtension::UpdatePlatforms
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-void TicExtension::UpdatePlatforms( const MsgUnitAttributes& message )
+void TicExtension::UpdatePlatforms( const MsgsSimToClient::MsgUnitAttributes& message )
 {
     for( int i = 0; i < message.dotation_eff_materiel().elem_size(); ++i )
         UpdatePlatforms( message.dotation_eff_materiel().elem(i) );
@@ -135,9 +132,9 @@ void TicExtension::UpdatePlatforms( const MsgUnitAttributes& message )
 // Name: TicExtension::UpdatePlatforms
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-void TicExtension::UpdatePlatforms( const EquipmentDotations_EquipmentDotation& message )
+void TicExtension::UpdatePlatforms( const MsgsSimToClient::EquipmentDotations_EquipmentDotation& message )
 {
-    EquipmentDotations_EquipmentDotation copy( message );
+    MsgsSimToClient::EquipmentDotations_EquipmentDotation copy( message );
     std::for_each( platforms_.begin(), platforms_.end(), boost::bind( &Platform::Spread, _1, boost::ref( copy ) ) );
 }
 
@@ -149,7 +146,6 @@ void TicExtension::UpdateFormation()
 {
     RoadFormation road( path_ );
     DiamondFormation diamond;
-
     Formation_ABC* current = onRoad_ ? &road : (Formation_ABC*) &diamond;
     current->Start( position_, direction_, sorted_.size() );
     std::for_each( sorted_.begin(), sorted_.end(), boost::bind( &Formation_ABC::Apply, current, _1 ) );

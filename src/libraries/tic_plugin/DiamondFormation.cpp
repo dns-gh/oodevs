@@ -35,7 +35,7 @@ DiamondFormation::~DiamondFormation()
 // Name: DiamondFormation::Start
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void DiamondFormation::Start( const geometry::Point2f& at, const geometry::Vector2f& towards, unsigned count )
+void DiamondFormation::Start( const geometry::Point2f& at, const geometry::Vector2f& towards, unsigned int count )
 {
     points_.resize( 0 );
     const float baseAngle = std::atan2( towards.Y(), towards.X() );
@@ -48,7 +48,7 @@ void DiamondFormation::Start( const geometry::Point2f& at, const geometry::Vecto
 
 namespace
 {
-    void NextPlatform( unsigned int& level, unsigned& platformCount )
+    void NextPlatform( unsigned int& level, unsigned int& platformCount )
     {
         ++platformCount;
         if( platformCount >= 4 * level )
@@ -63,7 +63,7 @@ namespace
 // Name: DiamondFormation::AddPlatform
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void DiamondFormation::AddPlatform( const geometry::Point2f& center, float baseAngle, unsigned& level, unsigned& platformCount )
+void DiamondFormation::AddPlatform( const geometry::Point2f& center, float baseAngle, unsigned int& level, unsigned int& platformCount )
 {
     const float radius = level ? std::pow( 1.414f, static_cast< int >( level ) ) : 0;
     const float angle = level ? baseAngle + 2 * std::acos( -1.f ) * static_cast< float >( platformCount ) / static_cast< float >( 4 * level ) : 0;

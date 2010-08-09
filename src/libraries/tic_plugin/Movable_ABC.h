@@ -16,7 +16,6 @@ namespace plugins
 {
 namespace tic
 {
-
 // =============================================================================
 /** @class  Movable_ABC
     @brief  Movable definition

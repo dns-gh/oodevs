@@ -20,13 +20,15 @@ using namespace plugins::tic;
 
 namespace
 {
-    unsigned ReadTimeStep( const std::string& session )
+    unsigned int ReadTimeStep( const std::string& session )
     {
         xml::xifstream xis( session );
-        unsigned step;
-        xis >> xml::start( "session" ) >> xml::start( "config" )
-                >> xml::start( "simulation" ) >> xml::start( "time" )
-                    >> xml::attribute( "step", step );
+        unsigned int step;
+        xis >> xml::start( "session" )
+                >> xml::start( "config" )
+                    >> xml::start( "simulation" )
+                        >> xml::start( "time" )
+                        >> xml::attribute( "step", step );
         return step;
     }
 }
@@ -38,7 +40,7 @@ namespace
 TicPlugin::TicPlugin( dispatcher::Model& model, const dispatcher::Config& config )
     : model_    ( model )
     , converter_( new kernel::CoordinateConverter( config ) )
-    , factory_  ( new ExtensionFactory( *converter_, (float)ReadTimeStep( config.GetSessionFile() ) ) )
+    , factory_  ( new ExtensionFactory( *converter_, static_cast< float >( ReadTimeStep( config.GetSessionFile() ) ) ) )
 {
     model_.RegisterFactory( *factory_ );
 }
@@ -56,7 +58,7 @@ TicPlugin::~TicPlugin()
 // Name: TicPlugin::Receive
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void TicPlugin::Receive( const MsgSimToClient& )
+void TicPlugin::Receive( const MsgsSimToClient::MsgSimToClient& )
 {
     // NOTHING
 }
@@ -65,7 +67,7 @@ void TicPlugin::Receive( const MsgSimToClient& )
 // Name: TicPlugin::NotifyClientAuthenticated
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void TicPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& , dispatcher::Profile_ABC&  )
+void TicPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& , dispatcher::Profile_ABC& )
 {
     // NOTHING
 }
@@ -74,7 +76,7 @@ void TicPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& , di
 // Name: TicPlugin::NotifyClientLeft
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void TicPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC&  )
+void TicPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& )
 {
     // NOTHING
 }

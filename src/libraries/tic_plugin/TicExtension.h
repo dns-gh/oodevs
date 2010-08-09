@@ -13,10 +13,6 @@
 #include "TicExtension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "protocol/protocol.h"
-
-using namespace Common;
-using namespace MsgsSimToClient;
-
 #include <geometry/types.h>
 #pragma warning (disable : 4511 4512 4127 )
 #include <boost/ptr_container/ptr_vector.hpp>
@@ -44,9 +40,9 @@ namespace tic
 // Created: AGE 2008-03-31
 // =============================================================================
 class TicExtension : public TicExtension_ABC
-                   , public kernel::Updatable_ABC< MsgUnitAttributes >
-                   , public kernel::Updatable_ABC< MsgUnitEnvironmentType >
-                   , public kernel::Updatable_ABC< MsgUnitPathFind >
+                   , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
+                   , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitEnvironmentType >
+                   , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitPathFind >
 {
 public:
     //! @name Constructors/Destructor
@@ -57,9 +53,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgUnitPathFind& updateMessage );
-    virtual void DoUpdate( const MsgUnitAttributes& updateMessage );
-    virtual void DoUpdate( const MsgUnitEnvironmentType& updateMessage );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitPathFind& updateMessage );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& updateMessage );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitEnvironmentType& updateMessage );
 
     virtual void Accept( PlatformVisitor_ABC& visitor ) const;
     //@}
@@ -74,8 +70,8 @@ private:
     //! @name Helpers
     //@{
     void CreatePlatforms( float timeStep );
-    void UpdatePlatforms( const MsgUnitAttributes& updateMessage );
-    void UpdatePlatforms( const EquipmentDotations_EquipmentDotation& updateMessage );
+    void UpdatePlatforms( const MsgsSimToClient::MsgUnitAttributes& updateMessage );
+    void UpdatePlatforms( const MsgsSimToClient::EquipmentDotations_EquipmentDotation& updateMessage );
     void SortPlatforms();
     void UpdateFormation();
     //@}
@@ -85,7 +81,6 @@ private:
     //@{
     dispatcher::Agent& holder_;
     const kernel::CoordinateConverter_ABC& converter_;
-
     boost::ptr_vector< Platform > platforms_;
     std::vector< Platform* > sorted_;
     std::vector< geometry::Point2f > path_;

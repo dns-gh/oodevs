@@ -26,7 +26,6 @@ namespace plugins
 {
 namespace tic
 {
-
 // =============================================================================
 /** @class  ExtensionFactory
     @brief  Extension Factory
@@ -60,7 +59,6 @@ private:
     float timeStep_;
     //@}
 };
-
 }
 }
 

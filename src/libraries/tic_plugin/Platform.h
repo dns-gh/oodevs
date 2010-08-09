@@ -15,9 +15,6 @@
 #include "Platform_ABC.h"
 #include "protocol/protocol.h"
 
-using namespace Common;
-using namespace MsgsSimToClient;
-
 namespace kernel
 {
     class ComponentType;
@@ -48,8 +45,8 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const MsgUnitAttributes& updateMessage );
-    void Spread( EquipmentDotations_EquipmentDotation& updateMessage );
+    void Update( const MsgsSimToClient::MsgUnitAttributes& updateMessage );
+    void Spread( MsgsSimToClient::EquipmentDotations_EquipmentDotation& updateMessage );
     virtual void Move( const geometry::Point2f& to );
     virtual void Stop();
     //@}
@@ -74,7 +71,7 @@ private:
 
     //! @name Helpers
     //@{
-    void Apply( EquipmentDotations_EquipmentDotation& updateMessage );
+    void Apply( MsgsSimToClient::EquipmentDotations_EquipmentDotation& updateMessage );
     bool SetStatus( int& number, E_State state );
     void ComputeHeading( const geometry::Point2f& to );
     //@}
@@ -85,16 +82,13 @@ private:
     const kernel::ComponentType& type_;
     const float timeStep_;
     E_State state_;
-
     float speed_;
     float heading_;
     float altitude_;
-
     geometry::Point2f previous_;
     geometry::Point2f position_;
     //@}
 };
-
 }
 }
 

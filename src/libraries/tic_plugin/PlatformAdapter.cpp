@@ -16,7 +16,6 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 
 using namespace plugins::tic;
-using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: PlatformAdapter constructor
@@ -42,9 +41,9 @@ PlatformAdapter::~PlatformAdapter()
 // Name: PlatformAdapter::GetType
 // Created: AGE 2008-04-24
 // -----------------------------------------------------------------------------
-const ComponentType& PlatformAdapter::GetType() const
+const kernel::ComponentType& PlatformAdapter::GetType() const
 {
-    tools::Iterator< const AgentComposition& > it = agent_.GetType().CreateIterator();
+    tools::Iterator< const kernel::AgentComposition& > it = agent_.GetType().CreateIterator();
     if( it.HasMoreElements() )
         return it.NextElement().GetType();
     throw std::runtime_error( __FUNCTION__ );
