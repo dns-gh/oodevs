@@ -188,20 +188,17 @@ BOOST_AUTO_TEST_CASE( Model_TestComposerWithKeysComposes )
         composer.G().SetKey( 3 );
         composer.G().Apply( 14 );
         composer.G().EndTick();
-
         composer.F().BeginTick();
         composer.F().SetKey( 12 );
         composer.F().Apply( 42.f );
         composer.F().SetKey( 14  );
         composer.F().Apply( 44.f );
-
-        function.BeginTick_mocker.expects( once() );
-        function.SetKey_mocker.expects( once() ).with( eq( 1ul ) );
-        function.Apply_mocker.expects( once() ).with( eq( 42.f ) );
-        function.SetKey_mocker.expects( once() ).with( eq( 3ul ) );
-        function.Apply_mocker.expects( once() ).with( eq( 44.f ) );
-        function.EndTick_mocker.expects( once() );
-
+        MOCK_EXPECT( function, BeginTick ).once();
+        MOCK_EXPECT( function, SetKey ).once().with( 1ul );
+        MOCK_EXPECT( function, Apply ).once().with( 42.f );
+        MOCK_EXPECT( function, SetKey ).once().with( 3ul );
+        MOCK_EXPECT( function, Apply ).once().with( 44.f );
+        MOCK_EXPECT( function, EndTick ).once();
         composer.F().EndTick();
     }
 }
@@ -221,17 +218,14 @@ BOOST_AUTO_TEST_CASE( Model_TestComposerWithConstantFIsConstant )
         composer.G().SetKey( 3 );
         composer.G().Apply( 14 );
         composer.G().EndTick();
-
         composer.F().BeginTick();
         composer.F().Apply( 42.f );
-
-        function.BeginTick_mocker.expects( once() );
-        function.SetKey_mocker.expects( once() ).with( eq( 1ul ) );
-        function.Apply_mocker.expects( once() ).with( eq( 42.f ) );
-        function.SetKey_mocker.expects( once() ).with( eq( 3ul ) );
-        function.Apply_mocker.expects( once() ).with( eq( 42.f ) );
-        function.EndTick_mocker.expects( once() );
-
+        MOCK_EXPECT( function, BeginTick ).once();
+        MOCK_EXPECT( function, SetKey ).once().with( 1ul );
+        MOCK_EXPECT( function, Apply ).once().with( 42.f );
+        MOCK_EXPECT( function, SetKey ).once().with( 3ul );
+        MOCK_EXPECT( function, Apply ).once().with( 42.f );
+        MOCK_EXPECT( function, EndTick ).once();
         composer.F().EndTick();
     }
 }
@@ -248,17 +242,14 @@ BOOST_AUTO_TEST_CASE( Model_TestComposerWithConstantGIsConstant )
         composer.G().BeginTick();
         composer.G().Apply( 14 );
         composer.G().EndTick();
-
         composer.F().BeginTick();
         composer.F().SetKey( 12 );
         composer.F().Apply( 42.f );
         composer.F().SetKey( 14  );
         composer.F().Apply( 44.f );
-
-        function.BeginTick_mocker.expects( once() );
-        function.Apply_mocker.expects( once() ).with( eq( 44.f ) );
-        function.EndTick_mocker.expects( once() );
-
+        MOCK_EXPECT( function, BeginTick ).once();
+        MOCK_EXPECT( function, Apply ).once().with( 44.f );
+        MOCK_EXPECT( function, EndTick ).once();
         composer.F().EndTick();
     }
 }

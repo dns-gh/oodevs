@@ -14,55 +14,21 @@
 
 // =============================================================================
 /** @class  MockFunction1
-    @brief  MockFunction1
+    @brief  Mock Function 1
 */
-// Created: AGE 2007-09-10
+// Created: LGY 2010-08-09
 // =============================================================================
+#ifndef TYPE
+#define TYPE Function1_ABC< K, A >
 template< typename K, typename A >
-class MockFunction1 : public Function1_ABC< K, A >, public mockpp::ChainableMockObject
+MOCK_BASE_CLASS( MockFunction1, TYPE )
 {
-public:
-    //! @name Constructors/Destructor
-    //@{
-    MockFunction1()
-        : mockpp::ChainableMockObject( "MockFunction1", 0 )
-        , BeginTick_mocker( "BeginTick", this )
-        , SetKey_mocker   ( "SetKey", this )
-        , Apply_mocker    ( "Apply", this )
-        , EndTick_mocker  ( "EndTick", this )
-        {}
-    virtual ~MockFunction1() {}
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void BeginTick()
-    {
-        BeginTick_mocker.forward();
-    }
-    virtual void SetKey( const K& key )
-    {
-        SetKey_mocker.forward( key );
-    }
-    virtual void Apply( const A& arg )
-    {
-        Apply_mocker.forward( arg );
-    }
-    virtual void EndTick()
-    {
-        EndTick_mocker.forward();
-    }
-    //@}
-
-    //! @name Member data
-    //@{
-    mockpp::ChainableMockMethod< void    > BeginTick_mocker;
-    mockpp::ChainableMockMethod< void, K > SetKey_mocker;
-    mockpp::ChainableMockMethod< void, A > Apply_mocker;
-    mockpp::ChainableMockMethod< void    > EndTick_mocker;
-    //@}
+    MOCK_METHOD_EXT_TPL( BeginTick, 0, void(), BeginTick );
+    MOCK_METHOD_EXT_TPL( SetKey, 1, void( const K& ), SetKey );
+    MOCK_METHOD_EXT_TPL( Apply, 1, void( const A& ), Apply );
+    MOCK_METHOD_EXT_TPL( EndTick, 0, void(), EndTick );
 };
-
+#endif
 
 // =============================================================================
 /** @class  MockFunction1
