@@ -2683,7 +2683,7 @@
     </message>
     <message>
         <source>moving</source>
-        <translation>movement</translation>
+        <translation>mouvement</translation>
     </message>
     <message>
         <source>infiltrating</source>

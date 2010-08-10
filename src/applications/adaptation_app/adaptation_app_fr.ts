@@ -132,7 +132,7 @@
     </message>
     <message>
         <source>Op. Indicators - Op. state computation - Invalid equipment weight sum (must be &gt;=0 and &lt;= 1)</source>
-        <translation>Facteurs Op. - Calcul du statut opérationnel - La somme des poids des composantes doit être &gt;=0 et &lt;=1</translation>
+        <translation>Facteurs Op. - Calcul du statut opérationnel - La somme des poids des equipements doit être &gt;=0 et &lt;=1</translation>
     </message>
     <message>
         <source>Op. Indicators - Op. state computation - Invalid crew state weight (must be &gt;=0 and &lt;= 1)</source>
@@ -167,11 +167,11 @@
     </message>
     <message>
         <source>Non major equipments state weight</source>
-        <translation>Poids des composantes non-majeures</translation>
+        <translation>Poids des equipements non-majeures</translation>
     </message>
     <message>
         <source>Major equipments state weight</source>
-        <translation>Poids des composantes majeures</translation>
+        <translation>Poids des equipements majeures</translation>
     </message>
     <message>
         <source>Crew state weight</source>
@@ -190,7 +190,7 @@
     </message>
     <message>
         <source>Equipments</source>
-        <translation>Composantes</translation>
+        <translation>Equipements</translation>
     </message>
     <message>
         <source>Resources</source>
@@ -253,7 +253,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Equipments</source>
-        <translation>Composantes</translation>
+        <translation>Equipements</translation>
     </message>
     <message>
         <source>Resources</source>
@@ -382,7 +382,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Equipment [ officers/warrant officers/soldiers ]</source>
-        <translation>Composante [ officiers/sous-officiers/soldats ]</translation>
+        <translation>Equipement [ officiers/sous-officiers/soldats ]</translation>
     </message>
     <message>
         <source>(%1..%2) x %3 x %4 [ %5 ]</source>
@@ -726,11 +726,11 @@ Arrêt moteur allumé</translation>
     <name>ADN_Composante_Wizard</name>
     <message>
         <source>New equipment creation</source>
-        <translation>Création d&apos;une nouvelle composante</translation>
+        <translation>Création d&apos;un nouvel equipement</translation>
     </message>
     <message>
         <source>Equipments</source>
-        <translation>Composantes</translation>
+        <translation>Equipements</translation>
     </message>
     <message>
         <source>Creation completed</source>
@@ -738,7 +738,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Click &quot;Done&quot; to create the new equipment.</source>
-        <translation>Cliquez sur &quot;Terminer&quot; pour créer la nouvelle composante.</translation>
+        <translation>Cliquez sur &quot;Terminer&quot; pour créer le nouvel equipement.</translation>
     </message>
 </context>
 <context>
@@ -813,7 +813,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Equipment - Invalid breakdown data : sum != 100</source>
-        <translation>Composante - La somme des probabilités de panne doit être égale à 100%</translation>
+        <translation>Equipement - La somme des probabilités de panne doit être égale à 100%</translation>
     </message>
 </context>
 <context>
@@ -824,7 +824,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Equipment - Invalid breakdown type &apos;%1&apos;</source>
-        <translation>Composante - Type de panne invalide &apos;%1&apos; </translation>
+        <translation>Equipement - Type de panne invalide &apos;%1&apos; </translation>
     </message>
 </context>
 <context>
@@ -835,7 +835,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Equipment - Invalid resource type &apos;%1&apos;</source>
-        <translation>Composante - Type de ressource invalide &apos;%1&apos;</translation>
+        <translation>Equipement - Type de ressource invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -846,7 +846,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Equipment - Invalid armor and/or volume</source>
-        <translation>Composante - Blindage et/ou volume invalide</translation>
+        <translation>Equipement - Blindage et/ou volume invalide</translation>
     </message>
 </context>
 <context>
@@ -857,11 +857,11 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Equipment - Invalid activty &apos;%1&apos;</source>
-        <translation>Composante - Activité invalide &apos;%1&apos;</translation>
+        <translation>Equipement - Activité invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Equipment - Invalid resource type &apos;%1&apos;</source>
-        <translation>Composante - Type de ressource invalide &apos;%1&apos;</translation>
+        <translation>Equipement - Type de ressource invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -872,7 +872,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
-        <translation>Composante - Nature de ressource invalide &apos;%1&apos;</translation>
+        <translation>Equipement - Nature de ressource invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -883,7 +883,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Equipment - Invalid object type &apos;%1&apos;</source>
-        <translation>Composante - Type d&apos;objet invalide &apos;%1&apos;</translation>
+        <translation>Equipement - Type d&apos;objet invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -894,7 +894,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Equipment - Invalid radar type &apos;%1&apos;</source>
-        <translation>Composante - Type de radar invalide &apos;%1&apos;</translation>
+        <translation>Equipement - Type de radar invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -1271,15 +1271,15 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Equipment speeds</source>
-        <translation>Vitesse composante</translation>
+        <translation>Vitesse equipement</translation>
     </message>
     <message>
         <source>Equipments/</source>
-        <translation>Composantes/</translation>
+        <translation>Equipements/</translation>
     </message>
     <message>
         <source>Equipments</source>
-        <translation>Composantes</translation>
+        <translation>Equipements</translation>
     </message>
     <message>
         <source>Max steepness</source>
@@ -1331,7 +1331,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Equipment_%1.htm</source>
-        <translation>Composante_%1.htm</translation>
+        <translation>Equipement_%1.htm</translation>
     </message>
     <message>
         <source>Active Protections</source>
@@ -1511,7 +1511,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Equipment - Invalid resource type &apos;%1&apos;</source>
-        <translation>Composante - Type de ressource invalide &apos;%1&apos;</translation>
+        <translation>Equipement - Type de ressource invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -1522,15 +1522,15 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Equipment - Invalid armor type &apos;%1&apos;</source>
-        <translation>Composante - Type de blindage invalide &apos;%1&apos;</translation>
+        <translation>Equipement - Type de blindage invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Equipment - Invalid resource type &apos;%1&apos;</source>
-        <translation>Composante - Ressource invalide &apos;%1&apos;</translation>
+        <translation>Equipement - Ressource invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Equipment - Invalid urban Material type &apos;%1&apos;</source>
-        <translation>Composante - Matériel urbain invalid &apos;%1&apos;</translation>
+        <translation>Equipement - Matériel urbain invalid &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -1541,7 +1541,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
-        <translation>Composante - Nature de ressource invalide &apos;%1&apos;</translation>
+        <translation>Equipement - Nature de ressource invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -1552,11 +1552,11 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Equipment - Invalid stance &apos;%1&apos;</source>
-        <translation>Composante - Posture invalide &apos;%1&apos;</translation>
+        <translation>Equipement - Posture invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Equipment - Invalid indirect fire ammo type &apos;%1&apos;</source>
-        <translation>Composante - Munition de tir indirect invalide &apos;%1&apos;</translation>
+        <translation>Equipement - Munition de tir indirect invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -1846,7 +1846,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Equipments availability warnings</source>
-        <translation>Alertes de disponibilité des composantes</translation>
+        <translation>Alertes de disponibilité des equipements</translation>
     </message>
     <message>
         <source>Ambulances - evacuation</source>
@@ -2093,7 +2093,7 @@ du tireur</translation>
     </message>
     <message>
         <source>Equipments</source>
-        <translation>Composantes</translation>
+        <translation>Equipements</translation>
     </message>
 </context>
 <context>
@@ -2148,7 +2148,7 @@ du tireur</translation>
     </message>
     <message>
         <source>Unit</source>
-        <translation>Unité</translation>
+        <translation>Pion</translation>
     </message>
     <message>
         <source>Automate</source>
@@ -2207,7 +2207,7 @@ du tireur</translation>
     <name>ADN_ListView_Units</name>
     <message>
         <source>Units</source>
-        <translation>Unités</translation>
+        <translation>Pions</translation>
     </message>
     <message>
         <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
@@ -2348,7 +2348,7 @@ du tireur</translation>
     </message>
     <message>
         <source>Equipments availability warnings</source>
-        <translation>Alertes de disponibilité des composantes</translation>
+        <translation>Alertes de disponibilité des equipements</translation>
     </message>
     <message>
         <source>Tow trucks</source>
@@ -3749,7 +3749,7 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     </message>
     <message>
         <source>Logistic supply system - Invalid unit &apos;%1&apos;</source>
-        <translation>Chaîne ravitaillement - Unité invalide &apos;%1&apos;</translation>
+        <translation>Chaîne ravitaillement - Pion invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Logistic supply system - Invalid mission &apos;%1&apos;</source>
@@ -4709,11 +4709,11 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <name>ADN_Unit_Wizard</name>
     <message>
         <source>New unit creation</source>
-        <translation>Création d&apos;une nouvelle unité</translation>
+        <translation>Création d&apos;un nouveau pion</translation>
     </message>
     <message>
         <source>Units</source>
-        <translation>Unités</translation>
+        <translation>Pions</translation>
     </message>
     <message>
         <source>Creation completed</source>
@@ -4721,7 +4721,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Click &quot;Done&quot; to create the new unit.</source>
-        <translation>Cliquer sur &quot;Terminer&quot; pour créer la nouvelle unité.</translation>
+        <translation>Cliquer sur &quot;Terminer&quot; pour créer le nouveau pion.</translation>
     </message>
 </context>
 <context>
@@ -4767,11 +4767,11 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Unit types - Invalid equipment &apos;%1&apos;</source>
-        <translation>Type d&apos;unité - équipement &quot;%1&quot; invalide</translation>
+        <translation>Type de pion - équipement &quot;%1&quot; invalide</translation>
     </message>
     <message>
         <source>Unit has no crew in equipment &apos;%1&apos;</source>
-        <translation>L&apos;unité n&apos;a pas d&apos;équipage dans l&apos;équipement &quot;%1&quot;</translation>
+        <translation>Le pion n&apos;a pas d&apos;équipage dans l&apos;équipement &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -4782,7 +4782,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Unit types - Invalid resource &apos;%1&apos;</source>
-        <translation>Type d&apos;unité - ressource &quot;%1&quot; invalide</translation>
+        <translation>Type de pion - ressource &quot;%1&quot; invalide</translation>
     </message>
 </context>
 <context>
@@ -4816,7 +4816,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <name>ADN_Units_GUI</name>
     <message>
         <source>Unit</source>
-        <translation>Unité</translation>
+        <translation>Pion</translation>
     </message>
     <message>
         <source>Name</source>
@@ -4939,6 +4939,21 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Time to activate</source>
         <translation>Temps avant activation</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Urban_AttritionTable</name>
+    <message>
+        <source>% destroyed</source>
+        <translation>% détruit</translation>
+    </message>
+    <message>
+        <source>% maintenance support needed</source>
+        <translation>% réparable avec évacuation</translation>
+    </message>
+    <message>
+        <source>% on site fixable</source>
+        <translation>% réparable sur place</translation>
     </message>
 </context>
 <context>
@@ -5317,7 +5332,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Units</source>
-        <translation>Unités</translation>
+        <translation>Pions</translation>
     </message>
     <message>
         <source>Automata</source>

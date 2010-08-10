@@ -31,6 +31,7 @@ ADN_Categories_Data.cpp \
 ADN_Categories_GUI.cpp \
 ADN_Urban_Data.cpp \
 ADN_Urban_GUI.cpp \
+ADN_Urban_AttritionTable.cpp \
 ADN_ChangeValueCommand_Bool.cpp \
 ADN_ChangeValueCommand_Double.cpp \
 ADN_ChangeValueCommand_Enum.inl \
