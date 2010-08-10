@@ -71,11 +71,11 @@
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery" file="BMPion.bms" name="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery">
       <missions>
-        <mission name="ASS AssurerMiseEnOeuvre">
-          <fragorder name="ApplyFire"/>
-          <fragorder name="ApplyGuidedFire"/>
+        <mission name="ASS Assurer la Mise En Oeuvre">
+          <fragorder name="Appliquer les feux"/>
+          <fragorder name="Appliquer les feux guidés"/>
         </mission>
-        <mission name="ASS Coordinate Illumination"/>
+        <mission name="ASS Coordonner le Tir et l'Ilumination"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES Franchir"/>
