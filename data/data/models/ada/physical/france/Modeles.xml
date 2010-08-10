@@ -25,29 +25,22 @@
         <mission name="MELEE Controler"/>
       </missions>
     </unit>
-    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="test pion">
+    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PlatoonTest">
       <missions>
         <mission name="Advance"/>
         <mission name="Animate"/>
         <mission name="Build"/>
-        <mission name="MELEE Appuyer"/>
-        <mission name="COMMUNES Decrocher"/>
-        <mission name="MELEE Interdire Position"/>
-        <mission name="MELEE Interdire un Bloc Urbain"/>
+        <mission name="Control"/>
+        <mission name="Controler Secteur"/>
         <mission name="DestroyAgents"/>
         <mission name="EngageAgents"/>
         <mission name="Flee"/>
         <mission name="IdentifyAgent"/>
-        <mission name="MELEE Illuminer"/>
         <mission name="Load"/>
         <mission name="Mount"/>
         <mission name="MoveAndObserve"/>
         <mission name="MoveObserveReconnoiter"/>
         <mission name="MoveOnRoute"/>
-        <mission name="MoveToPoint">
-          <fragorder name="Illuminer"/>
-          <fragorder name="Utiliser ALR"/>
-        </mission>
         <mission name="MoveToPolygon"/>
         <mission name="MoveToAutomate"/>
         <mission name="MoveToAgent"/>
@@ -66,26 +59,14 @@
         <mission name="ObservePoint"/>
         <mission name="ObserveDirection"/>
         <mission name="ObserveAgent"/>
-        <mission name="MELEE Reconnaitre Itineraire"/>
         <mission name="ReconnoiterPoint"/>
         <mission name="ReconnoiterUrbanBlock"/>
         <mission name="Seal Off"/>
-        <mission name="MELEE S'emparer d'un Bloc Urbain"/>
         <mission name="SeekAndDestroy"/>
         <mission name="SelfProtect"/>
         <mission name="StayClose"/>
         <mission name="Support"/>
-        <mission name="COMMUNES Faire Mouvement"/>
-        <mission name="COMMUNES Suivre"/>
-        <mission name="COMMUNES Stationner"/>
-        <mission name="COMMUNES Se Faire Decontaminer"/>
-        <mission name="COMMUNES Orienter Refugies"/>
-        <mission name="COMMUNES Prendre En Compte Prisonniers"/>
-        <mission name="COMMUNES Se Faire Transporter"/>
-        <mission name="MELEE Surveiller un Bloc Urbain"/>
         <mission name="TakeCover"/>
-        <mission name="Control"/>
-        <mission name="Controler Secteur"/>
       </missions>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery" file="BMPion.bms" name="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery">
@@ -123,7 +104,7 @@
         <mission name="Animer"/>
       </missions>
     </unit>
-    <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.platoon.terrorism.roles.Sniper">
+    <unit dia-type="net.masagroup.sword.military.platoon.terrorism.roles.Sniper" file="BMPion.bms" name="net.masagroup.sword.military.platoon.terrorism.roles.Sniper">
       <missions>
         <mission name="Embuscade"/>
         <mission name="COMMUNES Decrocher"/>

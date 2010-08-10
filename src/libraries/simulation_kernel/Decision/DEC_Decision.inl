@@ -68,7 +68,7 @@ void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::stri
     DEC_DecisionImpl::RegisterCommonUserFunctions( *pBrain_, pEntity_->GetID() );
     database_.InitKnowledges( *pBrain_ );//@TODO MGD Find a better way to merge dia4/dia5
     RegisterSelf( *pBrain_ );
-    pBrain_->GetScriptFunction( "include" )( brainFile ,includePath, type, groupName );
+    pBrain_->GetScriptFunction( "include" )( brainFile ,includePath, diaType_, groupName );
     pRefs_.reset( new ScriptRefs( *pBrain_) );
 }
 
