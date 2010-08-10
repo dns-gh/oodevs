@@ -12,6 +12,7 @@
 #include "MoveComputerFactory.h"
 #include "SpeedComputer_ABC.h"
 #include "MockAgent.h"
+#include <boost/noncopyable.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: DefaultSpeedComputerTest
@@ -19,7 +20,7 @@
 // -----------------------------------------------------------------------------
 namespace
 {
-    class ReentrantRole
+    class ReentrantRole : private boost::noncopyable
     {
         public:
             explicit ReentrantRole( moving::MoveComputerFactory& moveComputerFactory )

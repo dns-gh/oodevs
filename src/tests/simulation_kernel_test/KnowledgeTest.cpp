@@ -32,7 +32,6 @@
 
 namespace
 {
-
     class MockAgentWithPerceiver : public MockAgent
     {
     public:
@@ -42,11 +41,8 @@ namespace
         }
         virtual ~MockAgentWithPerceiver() {}
     };
-
     const double timeFactor = 0.5f;
 }
-
-
 
 // -----------------------------------------------------------------------------
 // Name: TestKnowledgeGroupType
@@ -61,11 +57,8 @@ BOOST_AUTO_TEST_CASE( TestKnowledgeGroupType )
                 "<population-knowledge max-lifetime='2m'/>"
             "</knowledge-group>"
         "</knowledge-groups>";
-
     xml::xistringstream xis( initialisation );
-
     MIL_KnowledgeGroupType::Initialize( xis, timeFactor );
-
     const MIL_KnowledgeGroupType &kgType = *MIL_KnowledgeGroupType::FindType("GTIA");
     BOOST_CHECK_EQUAL( 60 * timeFactor, kgType.GetKnowledgeCommunicationDelay() );
     BOOST_CHECK_EQUAL( 3 * 60 * 60 * timeFactor, kgType.GetKnowledgeAgentMaxLifeTime() );
@@ -77,7 +70,7 @@ BOOST_AUTO_TEST_CASE( TestKnowledgeGroupType )
 
 namespace
 {
-    std::auto_ptr< MIL_KnowledgeGroup > CreateKnowledgeGroup( MockArmy& army, unsigned int id, const std::string& type )
+    std::auto_ptr< MIL_KnowledgeGroup > CreateKnowledgeGroup( MockArmy& army, unsigned int id )
     {
         const MIL_KnowledgeGroupType& kgType = *MIL_KnowledgeGroupType::FindType( "GTIA" );
         MOCK_EXPECT( army, RegisterKnowledgeGroup ).once();
@@ -106,22 +99,17 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
     MOCK_EXPECT( army, GetID ).returns( 42u );
     MockMIL_Time_ABC time;
     MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
-
-    std::auto_ptr< MIL_KnowledgeGroup > armyGroup( CreateKnowledgeGroup( army, 1, "GTIA" ) );
-    std::auto_ptr< MIL_KnowledgeGroup > group1   ( CreateKnowledgeGroup( army, *armyGroup, 2, "GTIA" ) );
-    std::auto_ptr< MIL_KnowledgeGroup > group2   ( CreateKnowledgeGroup( army, *armyGroup, 3, "GTIA" ) );
-
+    std::auto_ptr< MIL_KnowledgeGroup > armyGroup( CreateKnowledgeGroup( army, 1 ) );
+    std::auto_ptr< MIL_KnowledgeGroup > group1( CreateKnowledgeGroup( army, *armyGroup, 2, "GTIA" ) );
+    std::auto_ptr< MIL_KnowledgeGroup > group2( CreateKnowledgeGroup( army, *armyGroup, 3, "GTIA" ) );
     MockNET_Publisher_ABC mockPublisher;
     MOCK_EXPECT( mockPublisher, Send ).once();
-
     UrbanModel urbanModel; // (needed for the blackboard through singleton...)
     DEC_KnowledgeBlackBoard_Army blackboard( army );
     MOCK_EXPECT( army, GetKnowledge ).returns( boost::ref( blackboard ) );
-
     MockAgentWithPerceiver jammedAgent;
     MOCK_EXPECT( army, RegisterKnowledgeGroup ).once();
     MIL_KnowledgeGroup groupJammed1( *group1, jammedAgent, 0 );
-
     MockAgentWithPerceiver mockAgent;
     MOCK_EXPECT( mockAgent, BelongsTo ).with( boost::cref( *group1 ) ).returns( true );
     MOCK_EXPECT( mockAgent, GetType );
@@ -229,7 +217,7 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
 BOOST_AUTO_TEST_CASE( TestExtrapolationTimeInKnowledgeGroup )
 {
     MockArmy army;
-    std::auto_ptr< MIL_KnowledgeGroup > armyGroup( CreateKnowledgeGroup( army, 1, "GTIA" ) );
+    std::auto_ptr< MIL_KnowledgeGroup > armyGroup( CreateKnowledgeGroup( army, 1 ) );
     BOOST_CHECK_EQUAL( 10 * 60 * timeFactor, armyGroup->GetType().GetKnowledgeAgentExtrapolationTime() );
     MOCK_EXPECT( army, UnregisterKnowledgeGroup ).with( mock::same( *armyGroup ) ).once();
 }
@@ -243,13 +231,11 @@ BOOST_AUTO_TEST_CASE( TestLatentRelevance )
     MockArmy army;
     MockMIL_Time_ABC time;
     MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
-    std::auto_ptr< MIL_KnowledgeGroup > armyGroup( CreateKnowledgeGroup( army, 1, "GTIA" ) );
+    std::auto_ptr< MIL_KnowledgeGroup > armyGroup( CreateKnowledgeGroup( army, 1 ) );
     std::auto_ptr< MIL_KnowledgeGroup > knowledgeGroup   ( CreateKnowledgeGroup( army, *armyGroup, 2, "GTIA" ) );
-
     UrbanModel urbanModel; // (needed for the blackboard through singleton...)
     DEC_KnowledgeBlackBoard_Army blackboard( army );
     MOCK_EXPECT( army, GetKnowledge ).returns( boost::ref( blackboard ) );
-
     MockAgentWithPerceiver mockAgent;
     MOCK_EXPECT( mockAgent, BelongsTo ).with( mock::same( *knowledgeGroup ) ).returns( true );
     MOCK_EXPECT( mockAgent, GetType );
@@ -272,27 +258,21 @@ BOOST_AUTO_TEST_CASE( TestLatentRelevance )
         MOCK_EXPECT( mockRoleLocation, GetPosition ).at_least( 1 ).returns( position );
         mockAgent.RegisterRole( *mockRoleLocation );
         MOCK_EXPECT( mockAgent.GetRole< MockPHY_RoleInterface_Perceiver >(), ExecutePerceptions );
-
-        float relevance = obj.GetRelevance();
+        float relevance = static_cast< float>( obj.GetRelevance() );
         knowledgeGroup->UpdateKnowledges( 1 );
         BOOST_CHECK_LT( obj.GetRelevance(), relevance );
-
-        relevance = obj.GetRelevance();
+        relevance = static_cast< float>( obj.GetRelevance() );
         knowledgeGroup->UpdateKnowledges( 10 );
         BOOST_CHECK_LT( obj.GetRelevance(), relevance );
-
-        relevance = obj.GetRelevance();
+        relevance = static_cast< float>( obj.GetRelevance() );
         knowledgeGroup->UpdateKnowledges( 100 );
         BOOST_CHECK_LT( obj.GetRelevance(), relevance );
-
-        relevance = obj.GetRelevance();
+        relevance = static_cast< float>( obj.GetRelevance() );
         knowledgeGroup->UpdateKnowledges( 1000 );
         BOOST_CHECK_LT( obj.GetRelevance(), relevance );
-
-        relevance = obj.GetRelevance();
+        relevance = static_cast< float>( obj.GetRelevance() );
         knowledgeGroup->UpdateKnowledges( 10000 );
         BOOST_CHECK_LT( obj.GetRelevance(), relevance );
-
         knowledgeGroup->UpdateKnowledges( 100000 );
         BOOST_CHECK_LT( obj.GetRelevance(), 0.001 );
     //}

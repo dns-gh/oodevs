@@ -27,9 +27,9 @@ public:
     virtual DEC_AutomateDecision* GetDecAutomate() const { return 0; }
     virtual std::string GetName() const { throw; }
     virtual void EndCleanStateAfterCrash() {}
-    virtual void RegisterUserFunctions( directia::Brain& brain ) {}
-    virtual void RegisterSelf( directia::Brain& brain ) {}
-    virtual void UpdateMeKnowledge( directia::Brain& brain ) {}
+    virtual void RegisterUserFunctions( directia::Brain& /*brain*/ ) {}
+    virtual void RegisterSelf( directia::Brain& /*brain*/ ) {}
+    virtual void UpdateMeKnowledge( directia::Brain& /*brain*/ ) {}
     template< typename FunctionType >
     void RegisterFunction( const std::string& strFunctionName, FunctionType function )
     {

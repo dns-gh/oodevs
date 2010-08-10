@@ -27,26 +27,26 @@ public:
     virtual ~StubMIL_Object_ABC() {}
     //@}
 
-    virtual void WriteODB( xml::xostream& xos ) const {}
-    virtual void ProcessAgentEntering    ( MIL_Agent_ABC& agent ) {}
-    virtual void ProcessAgentExiting     ( MIL_Agent_ABC& agent ) {}
-    virtual void ProcessAgentMovingInside( MIL_Agent_ABC& agent ) {}
-    virtual void ProcessAgentInside      ( MIL_Agent_ABC& agent ) {}
-    virtual void ProcessPopulationInside ( MIL_PopulationElement_ABC& population ) {}
-    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_Army_ABC& team ) { throw; }
-    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_KnowledgeGroup& group ) { throw; }
+    virtual void WriteODB( xml::xostream& /*xos*/ ) const {}
+    virtual void ProcessAgentEntering( MIL_Agent_ABC& /*agent*/ ) {}
+    virtual void ProcessAgentExiting( MIL_Agent_ABC& /*agent*/ ) {}
+    virtual void ProcessAgentMovingInside( MIL_Agent_ABC& /*agent*/ ) {}
+    virtual void ProcessAgentInside( MIL_Agent_ABC& /*agent*/ ) {}
+    virtual void ProcessPopulationInside( MIL_PopulationElement_ABC& /*population*/ ) {}
+    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_Army_ABC& /*team*/ ) { throw; }
+    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_KnowledgeGroup& /*group*/ ) { throw; }
     virtual const MIL_ObjectManipulator_ABC& operator()() const { throw; }
-    virtual       MIL_ObjectManipulator_ABC& operator()() { throw; }
+    virtual MIL_ObjectManipulator_ABC& operator()() { throw; }
     virtual HLA_Object_ABC* GetHLAView() const { throw; }
-    virtual void            SetHLAView( HLA_Object_ABC& view ) {}
-    virtual void    Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer ) {}
-    virtual void    Serialize  ( HLA_UpdateFunctor& functor ) const {}
-    virtual MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode OnUpdate( const Common::MsgMissionParameter_Value& asn ) { throw; }
-    virtual void    SendCreation() const {}
-    virtual void    SendDestruction() const {}
-    virtual void    SendFullState() const {}
-    virtual uint              GetID() const { throw; }
-    virtual void Update( uint time ) {}
+    virtual void SetHLAView( HLA_Object_ABC& /*view*/ ) {}
+    virtual void Deserialize( const hla::AttributeIdentifier& /*attributeID*/, hla::Deserializer /*deserializer*/ ) {}
+    virtual void Serialize( HLA_UpdateFunctor& /*functor*/ ) const {}
+    virtual MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode OnUpdate( const Common::MsgMissionParameter_Value& /*asn*/ ) { throw; }
+    virtual void SendCreation() const {}
+    virtual void SendDestruction() const {}
+    virtual void SendFullState() const {}
+    virtual unsigned int GetID() const { throw; }
+    virtual void Update( unsigned int /*time*/ ) {}
     virtual void Register(ObjectCapacity_ABC *) { throw; }
     virtual void Register(ObjectAttribute_ABC *) { throw; }
 };

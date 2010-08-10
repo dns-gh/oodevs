@@ -54,9 +54,9 @@ public:
     { throw; }
     virtual bool ToAgentKnowledge( Common::MsgUnitKnowledge& ) const
     { throw; }
-    virtual bool ToAgentKnowledgeList( Common::MsgUnitKnowledgeList& asn ) const
+    virtual bool ToAgentKnowledgeList( Common::MsgUnitKnowledgeList& ) const
     { throw; }
-    virtual bool ToAgentList( Common::MsgUnitList& asn ) const
+    virtual bool ToAgentList( Common::MsgUnitList& ) const
     { throw; }
     virtual bool ToAutomat( Common::MsgAutomat& ) const
     { throw; }
@@ -84,21 +84,21 @@ public:
     { throw; }
     virtual bool ToMedicalPriorities( Common::MsgLogMedicalPriorities& ) const
     { throw; }
-    virtual bool ToNatureAtlas( Common::MsgAtlasNature& diaTo ) const
+    virtual bool ToNatureAtlas( Common::MsgAtlasNature& ) const
     { throw; }
     virtual bool ToNumeric( float& ) const
     { throw; }
-    virtual bool ToObjectiveList( Common::MsgMissionObjectiveList& asn ) const
+    virtual bool ToObjectiveList( Common::MsgMissionObjectiveList& ) const
     { throw; }
-    virtual bool ToObjectKnowledge( Common::MsgObjectKnowledge& asn ) const
+    virtual bool ToObjectKnowledge( Common::MsgObjectKnowledge& ) const
     { throw; }
-    virtual bool ToObjectKnowledgeList( Common::MsgObjectKnowledgeList& asn ) const
+    virtual bool ToObjectKnowledgeList( Common::MsgObjectKnowledgeList& ) const
     { throw; }
-    virtual bool ToPath( Common::MsgPath& asn ) const
+    virtual bool ToPath( Common::MsgPath& ) const
     { throw; }
-    virtual bool ToPathList( Common::MsgPathList& asn ) const
+    virtual bool ToPathList( Common::MsgPathList& ) const
     { throw; }
-    virtual bool ToPopulationKnowledge( Common::MsgPopulationKnowledge& asn ) const
+    virtual bool ToPopulationKnowledge( Common::MsgPopulationKnowledge& ) const
     { throw; }
     virtual bool ToString( std::string& result ) const
     {
@@ -123,7 +123,7 @@ public:
     { throw; }
     virtual bool ToPathList( std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > >& ) const
     { throw; }
-    virtual bool ToNatureAtlas( int& atlas ) const
+    virtual bool ToNatureAtlas( int& ) const
     { throw; }
     virtual bool ToAutomat( DEC_Decision_ABC*& ) const
     { throw; }
@@ -147,7 +147,7 @@ public:
     { throw; }
     virtual bool ToEquipmentType( const PHY_ComposanteTypePion*& ) const
     { throw; }
-    virtual bool ToGDH( float& value ) const
+    virtual bool ToGDH( float& ) const
     { throw; }
     virtual bool ToGenObject( boost::shared_ptr<DEC_Gen_Object >& ) const
     { throw; }

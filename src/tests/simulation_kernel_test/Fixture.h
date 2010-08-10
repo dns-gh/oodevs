@@ -20,8 +20,9 @@
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "AlgorithmsFactories.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/noncopyable.hpp>
 
-struct FixturePion
+struct FixturePion : private boost::noncopyable
 {
     FixturePion( MIL_EffectManager& effectManager )
         : algorithmsFactories_( new AlgorithmsFactories() )
@@ -49,7 +50,7 @@ struct FixturePion
     MIL_EffectManager&                     effectManager_;
 };
 
-struct FixtureAutomate
+struct FixtureAutomate : private boost::noncopyable
 {
     FixtureAutomate()
     {

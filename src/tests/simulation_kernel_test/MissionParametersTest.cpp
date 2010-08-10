@@ -803,7 +803,7 @@ namespace
         order.mutable_parametres()->add_elem()->set_null_value( true );
     }
 
-    void AddPoint( Common::MsgLocation& location, const std::string& utm )
+    void AddPoint( Common::MsgLocation& location, const std::string& /*utm*/ ) // $$$$ _RC_ LGY 2010-08-10: ???
     {
         location.mutable_coordinates()->add_elem()->set_latitude( 0 );
         location.mutable_coordinates()->add_elem()->set_longitude( 0 );

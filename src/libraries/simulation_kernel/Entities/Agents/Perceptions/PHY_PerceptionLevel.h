@@ -11,6 +11,7 @@
 
 #ifndef __PHY_PerceptionLevel_h_
 #define __PHY_PerceptionLevel_h_
+#include <map>
 
 namespace MsgsSimToClient
 {
@@ -77,7 +78,7 @@ private:
     //! @name types
     //@{
     typedef std::map< unsigned int, const PHY_PerceptionLevel* > T_LevelMap;
-    typedef T_LevelMap::const_iterator                   CIT_LevelMap;
+    typedef T_LevelMap::const_iterator                         CIT_LevelMap;
     //@}
 
 private:

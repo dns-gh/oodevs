@@ -1,6 +1,5 @@
 
 #include "simulation_kernel_test_pch.h"
-
 #include "Tools/MIL_Config.h"
 #include "Decision/DEC_Workspace.h"
 #include "Decision/DEC_Model.h"
@@ -22,8 +21,6 @@
 #include "StubMIL_PopulationType.h"
 #include "StubMIL_Population.h"
 #include <xeumeuleu/xml.hpp>
-
-using namespace mockpp;
 
 // -----------------------------------------------------------------------------
 // Name: InstantiateBrainForMIL_AgentPion
@@ -64,58 +61,45 @@ BOOST_AUTO_TEST_CASE( InstantiateDEC_PopulationDecision )
     DEC_PopulationDecision decision( population, database );
 }
 
-class ScriptMocker : public mockpp::ChainableMockObject
+namespace mock
 {
-public:
-    ScriptMocker()
-        : mockpp::ChainableMockObject( "ScriptMocker", 0 )
-        , Call_mocker( "Call", this )
-        , Mission_mocker( "Mission", this )
-    {}
-    mockpp::ChainableMockMethod< void, std::string > Call_mocker;
-    mockpp::ChainableMockMethod< void, boost::shared_ptr< MIL_Mission_ABC > > Mission_mocker;
-};
+    template< typename S >
+    boost::function< S > make_function( mock::function< S >& e )
+    {
+        return boost::function< S >( e );
+    }
+}
 
 class DEC_TestPopulationDecision;
 
 namespace
 {
-    ScriptMocker scriptMocker_;
-    void NotifyCallFromScript( const std::string& text )
-    {
-        scriptMocker_.Call_mocker.forward( text );
-    }
-    void NotifyMissionCallFromScript( boost::shared_ptr< MIL_Mission_ABC > pMission )
-    {
-        scriptMocker_.Mission_mocker.forward( pMission );
-    }
+    MOCK_FUNCTOR( void( const std::string& ) ) NotifyCallFromScript;
+    MOCK_FUNCTOR( void( boost::shared_ptr< MIL_Mission_ABC > ) ) NotifyMissionCallFromScript;
     boost::shared_ptr< MIL_Mission_ABC > GetRawMission( DEC_TestPopulationDecision* pAgent );
 }
 
-class DEC_TestPopulationDecision : public DEC_Decision<MIL_Population>
+class DEC_TestPopulationDecision : public DEC_Decision< MIL_Population >
 {
 public:
     DEC_TestPopulationDecision( MIL_Population& population, DEC_TestPopulationDecision* pOther, DEC_DataBase& database )
         : DEC_Decision( population, database )
-        , pOther_     ( pOther )
+        , pOther_( pOther )
     {
         const DEC_Model_ABC& model = population.GetType().GetModel();
         SetModel( model );
         StartDefaultBehavior();
     }
-
     void SetModel( const DEC_Model_ABC& model )
     {
         InitBrain( model.GetScriptFile(), model.GetName(), model.GetIncludePath(), "stubPopulation" );
         diaType_ = model.GetDIAType();
     }
-
     void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission )
     {
         const std::string& strBehavior = mission->GetType().GetDIABehavior();
         ActivateOrder( strBehavior, mission );
     }
-
     virtual DEC_AutomateDecision* GetDecAutomate() const { return 0; }
     virtual std::string GetName() const { return "Test Decision"; }
     virtual void EndCleanStateAfterCrash() {}
@@ -123,24 +107,22 @@ public:
     {
         brain.RegisterObject( "myself", this );
     }
-    void UpdateMeKnowledge( directia::Brain& brain ) {}
-
+    void UpdateMeKnowledge( directia::Brain& /*brain*/ ) {}
     void UsedByDIA() {}
     void ReleasedByDIA () {}
 
 protected:
     virtual void RegisterUserFunctions( directia::Brain& brain )
     {
-        brain.RegisterFunction( "DEC_TestBehaviorCalled",    &NotifyCallFromScript );
-        brain.RegisterFunction( "DEC_TestMissionCalled",     &NotifyMissionCallFromScript );
-        brain.RegisterFunction( "DEC_GetRawMission",         &GetRawMission );
+        brain.RegisterFunction( "DEC_TestBehaviorCalled", mock::make_function( NotifyCallFromScript ) );
+        brain.RegisterFunction( "DEC_TestMissionCalled", mock::make_function( NotifyMissionCallFromScript ) );
+        brain.RegisterFunction( "DEC_GetRawMission", &GetRawMission );
         directia::ScriptRef initFunction = brain.GetScriptFunction( "InitTaskParameter" );
         brain.RegisterFunction( "DEC_FillMissionParameters",
             boost::function< void( const directia::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref( brain ), boost::ref( initFunction ), _1 , _2 ) ) );
         if( pOther_ )
             brain.RegisterObject< DEC_TestPopulationDecision* >( "other", pOther_ );
     }
-
 private:
     DEC_TestPopulationDecision* pOther_;
 };
@@ -151,57 +133,57 @@ namespace
     {
         return pAgent->GetMission();
     }
+    class Pion
+    {
+    public:
+        Pion()
+            : xis       ( "<main dia-type='PionTest' file='PionTest.bms'/>" )
+            , model     ( "test", xis >> xml::start( "main" ), BOOST_RESOLVE( "." ), "prefix", missionTypes )
+            , type      ( model )
+            , population( type )
+            , decision  ( population, 0, database )
+        {
+            // NOTHING
+        }
+        xml::xistringstream xis;
+        std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
+        DEC_Model model;
+        StubMIL_PopulationType type;
+        StubMIL_Population population;
+        StubDEC_Database database;
+        DEC_TestPopulationDecision decision;
+        MockMIL_MissionType_ABC missionType;
+    };
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActivateOrderExecutesBehaviour
 // Created: LDC 2009-04-27
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( ActivateOrderExecutesBehaviour )
+BOOST_FIXTURE_TEST_CASE( ActivateOrderExecutesBehaviour, Pion )
 {
-    xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
-    xis >> xml::start( "main" );
-    std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
-    DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
-    StubMIL_PopulationType type( model );
-    StubMIL_Population population( type );
-    StubDEC_Database database;
-    DEC_TestPopulationDecision decision( population, 0, database );
-    MockMIL_MissionType_ABC missionType;
-    std::string typeString( "missionBehavior" );
-    MOCK_EXPECT( missionType, GetDIABehavior ).once().returns( typeString );
+    MOCK_EXPECT( missionType, GetDIABehavior ).once().returns( "missionBehavior" );
     StubDEC_KnowledgeResolver_ABC resolver;
     boost::shared_ptr< MIL_Mission_ABC > mission ( new StubMIL_Mission_ABC( missionType, resolver ) );
     decision.StartMissionBehavior( mission );
     missionType.verify();
-    scriptMocker_.Call_mocker.expects( once() ).with(  eq< std::string >( "missionBehavior called" ) );
+    MOCK_EXPECT( NotifyCallFromScript, _ ).once().with( "missionBehavior called" );
     decision.UpdateDecision( 1.f );
-    scriptMocker_.verify();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActivateOrderPassesMissionToDecisional
 // Created: LDC 2009-04-29
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( ActivateOrderPassesMissionToDecisional )
+BOOST_FIXTURE_TEST_CASE( ActivateOrderPassesMissionToDecisional, Pion )
 {
-    xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
-    xis >> xml::start( "main" );
-    std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
-    DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
-    StubMIL_PopulationType type( model );
-    StubMIL_Population population( type );
-    StubDEC_Database database;
-    DEC_TestPopulationDecision decision( population, 0, database );
-    MockMIL_MissionType_ABC missionType;
     MOCK_EXPECT( missionType, GetDIABehavior ).once().returns( "missionBehaviorWithArg" );
     StubDEC_KnowledgeResolver_ABC resolver;
     boost::shared_ptr< MIL_Mission_ABC > mission ( new StubMIL_Mission_ABC( missionType, resolver ) );
     decision.StartMissionBehavior( mission );
     missionType.verify();
-    scriptMocker_.Mission_mocker.expects( once() ).with( eq< boost::shared_ptr< MIL_Mission_ABC > >( mission ) );
+    MOCK_EXPECT( NotifyMissionCallFromScript, _ ).once().with( mission );
     decision.UpdateDecision( 1.f );
-    scriptMocker_.verify();
 }
 
 // -----------------------------------------------------------------------------
@@ -210,26 +192,41 @@ BOOST_AUTO_TEST_CASE( ActivateOrderPassesMissionToDecisional )
 // Tests that if a MIL_Mission_ABC is passed to lua through a function,
 // its parameters can be accessed from lua
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( DecisionalCanUseMissionParameters )
+BOOST_FIXTURE_TEST_CASE( DecisionalCanUseMissionParameters, Pion )
 {
-    xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
-    xis >> xml::start( "main" );
-    std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
-    DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
-    StubMIL_PopulationType type( model );
-    StubMIL_Population population( type );
-    StubDEC_Database database;
-    DEC_TestPopulationDecision decision( population, 0, database );
-    MockMIL_MissionType_ABC missionType;
     MOCK_EXPECT( missionType, GetDIABehavior ).once().returns( "missionBehavior" );
     StubDEC_KnowledgeResolver_ABC resolver;
     std::string missionParameter( "param" );
     boost::shared_ptr< MIL_Mission_ABC > mission ( new StubMIL_Mission_ABC( missionType, resolver, missionParameter ) );
     decision.StartMissionBehavior( mission );
     missionType.verify();
-    scriptMocker_.Call_mocker.expects( once() ).with( eq( std::string( "missionBehavior called" ) ) );
+    MOCK_EXPECT( NotifyCallFromScript, _ ).once().with( "missionBehavior called" );
     decision.UpdateDecision( 1.f );
-    scriptMocker_.verify();
+}
+
+namespace
+{
+    class Mission
+    {
+    public:
+        Mission()
+            : xis       ( "<main dia-type='PionTest' file='MissionParamTestBrain.bms'/>" )
+            , model     ( "test", xis >> xml::start( "main" ), BOOST_RESOLVE( "." ), "prefix", missionTypes )
+            , type      ( model )
+            , population( type )
+            , decision  ( population, 0, database )
+        {
+            // NOTHING
+        }
+        xml::xistringstream xis;
+        std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
+        DEC_Model model;
+        StubMIL_PopulationType type;
+        StubMIL_Population population;
+        StubDEC_Database database;
+        DEC_TestPopulationDecision decision;
+        MockMIL_MissionType_ABC missionType;
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -238,26 +235,16 @@ BOOST_AUTO_TEST_CASE( DecisionalCanUseMissionParameters )
 // Tests that after a call to DEC_GetMission( pion/popu/automat ), the retrieved
 // lua object parameters can be accessed from lua
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( DEC_GetMissionPassesParametersToLua )
+BOOST_FIXTURE_TEST_CASE( DEC_GetMissionPassesParametersToLua, Mission )
 {
-    xml::xistringstream xis( "<main dia-type='PionTest' file='MissionParamTestBrain.bms'/>" );
-    xis >> xml::start( "main" );
-    std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
-    DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
-    StubMIL_PopulationType type( model );
-    StubMIL_Population population( type );
-    StubDEC_Database database;
-    DEC_TestPopulationDecision decision( population, 0, database );
-    MockMIL_MissionType_ABC missionType;
     MOCK_EXPECT( missionType, GetDIABehavior ).once().returns( "testDEC_GetMission" );
     StubDEC_KnowledgeResolver_ABC resolver;
     std::string missionParameter( "parameterValue" );
     boost::shared_ptr< MIL_Mission_ABC > mission ( new StubMIL_Mission_ABC( missionType, resolver, missionParameter ) );
     decision.StartMissionBehavior( mission );
     missionType.verify();
-    scriptMocker_.Call_mocker.expects( once() ).with( eq( missionParameter ) );
+    MOCK_EXPECT( NotifyCallFromScript, _ ).once().with( missionParameter );
     decision.UpdateDecision( 1.f );
-    scriptMocker_.verify();
 }
 
 // -----------------------------------------------------------------------------
@@ -266,26 +253,16 @@ BOOST_AUTO_TEST_CASE( DEC_GetMissionPassesParametersToLua )
 // Tests that after a call to DEC_GetMission( pion/popu/automat ), the retrieved
 // lua object parameters can be accessed from lua
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( DEC_GetMissionPassesParametersToLuaMission )
+BOOST_FIXTURE_TEST_CASE( DEC_GetMissionPassesParametersToLuaMission, Mission )
 {
-    xml::xistringstream xis( "<main dia-type='PionTest' file='MissionParamTestBrain.bms'/>" );
-    xis >> xml::start( "main" );
-    std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
-    DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
-    StubMIL_PopulationType type( model );
-    StubMIL_Population population( type );
-    StubDEC_Database database;
-    DEC_TestPopulationDecision decision( population, 0, database );
-    MockMIL_MissionType_ABC missionType;
     MOCK_EXPECT( missionType, GetDIABehavior ).once().returns( "mission" );
     StubDEC_KnowledgeResolver_ABC resolver;
     std::string missionParameter( "parameterValue" );
     boost::shared_ptr< MIL_Mission_ABC > mission ( new StubMIL_Mission_ABC( missionType, resolver, missionParameter ) );
     decision.StartMissionBehavior( mission );
     missionType.verify();
-    scriptMocker_.Call_mocker.expects( once() ).with( eq( missionParameter ) );
+    MOCK_EXPECT( NotifyCallFromScript, _ ).once().with( missionParameter );
     decision.UpdateDecision( 1.f );
-    scriptMocker_.verify();
 }
 
 // -----------------------------------------------------------------------------
@@ -295,33 +272,20 @@ BOOST_AUTO_TEST_CASE( DEC_GetMissionPassesParametersToLuaMission )
 // lua object parameters can be accessed from lua even if the DEC_GetMission is not
 // the current object's mission.
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( DEC_GetMissionPassesOtherMissionsParametersToLua )
+BOOST_FIXTURE_TEST_CASE( DEC_GetMissionPassesOtherMissionsParametersToLua, Mission )
 {
-    xml::xistringstream xis( "<main dia-type='PionTest' file='MissionParamTestBrain.bms'/>" );
-    xis >> xml::start( "main" );
-    std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
-    DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
-    StubMIL_PopulationType type( model );
-    StubMIL_Population population( type );
-    StubDEC_Database database;
     DEC_TestPopulationDecision otherDecision( population, 0, database );
-    DEC_TestPopulationDecision decision( population, &otherDecision, database );
-
-    MockMIL_MissionType_ABC missionType;
+    DEC_TestPopulationDecision populationDecision( population, &otherDecision, database );
     MOCK_EXPECT( missionType, GetDIABehavior ).exactly( 2 ).returns( "testDEC_GetOtherMission" );
-
     StubDEC_KnowledgeResolver_ABC resolver;
     boost::shared_ptr< MIL_Mission_ABC > mission ( new StubMIL_Mission_ABC( missionType, resolver ) );
-
     std::string otherMissionParameter( "otherParameterValue" );
     boost::shared_ptr< MIL_Mission_ABC > otherMission ( new StubMIL_Mission_ABC( missionType, resolver, otherMissionParameter ) );
-
     otherDecision.StartMissionBehavior( otherMission );
-    decision.StartMissionBehavior( mission );
+    populationDecision.StartMissionBehavior( mission );
     missionType.verify();
-    scriptMocker_.Call_mocker.expects( once() ).with( eq( otherMissionParameter ) );
-    decision.UpdateDecision( 1.f );
-    scriptMocker_.verify();
+    MOCK_EXPECT( NotifyCallFromScript, _ ).once().with( otherMissionParameter );
+    populationDecision.UpdateDecision( 1.f );
 }
 
 // -----------------------------------------------------------------------------
@@ -330,17 +294,8 @@ BOOST_AUTO_TEST_CASE( DEC_GetMissionPassesOtherMissionsParametersToLua )
 // Tests that a brain member variables can be set and retrieved from the C++
 // (For compatibility when migrating from dia3 to dia4)
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( DEC_Decision_GetterTest )
+BOOST_FIXTURE_TEST_CASE( DEC_Decision_GetterTest, Mission )
 {
-    xml::xistringstream xis( "<main dia-type='PionTest' file='MissionParamTestBrain.bms'/>" );
-    xis >> xml::start( "main" );
-    std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
-    DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
-    StubMIL_PopulationType type( model );
-    StubMIL_Population population( type );
-    StubDEC_Database database;
-    DEC_TestPopulationDecision decision( population, 0, database );
-
     decision.SetVariable( "myself.AValue", 42 );
-    BOOST_CHECK_EQUAL( 42, decision.GetScalarVariable<int>( "myself.AValue" ) );
+    BOOST_CHECK_EQUAL( 42, decision.GetScalarVariable< int >( "myself.AValue" ) );
 }
