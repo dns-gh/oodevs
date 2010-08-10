@@ -262,11 +262,12 @@ float PHY_RolePion_UrbanLocation::ComputeDistanceInsideSameUrbanBlock( MIL_Agent
 // -----------------------------------------------------------------------------
 void PHY_RolePion_UrbanLocation::Execute( posture::PostureComputer_ABC& algorithm ) const
 {
-    if( urbanObject_ )
-    {
-        double timeModifier = urbanObject_->GetObject().ComputeComplexity();
-        algorithm.AddUrbanCoefficientModifier( timeModifier );
-    }
+    // $$$$ LDC FIXME The value of ComputeXomplexity is just stupid (1 million...). It also doesn't make any sense for an isolated individual.
+//    if( urbanObject_ )
+//    {
+//        double timeModifier = urbanObject_->GetObject().ComputeComplexity();
+//        algorithm.AddUrbanCoefficientModifier( timeModifier );
+//    }
 }
 
 // -----------------------------------------------------------------------------

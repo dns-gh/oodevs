@@ -90,7 +90,7 @@ DEC_PathFind_Manager::~DEC_PathFind_Manager()
 void DEC_PathFind_Manager::StartCompute( boost::shared_ptr< DEC_Path_ABC > path )
 {
 #ifdef _DEBUG
-    MT_LOG_MESSAGE_MSG( MT_FormatString( "DEC_PathFind_Manager: New job pending : path 0x%p", &path ).c_str() );
+    MT_LOG_MESSAGE_MSG( MT_FormatString( "DEC_PathFind_Manager: New job pending : path 0x%p", path.get() ).c_str() );
 #endif
     AddPendingJob( path );
 }
