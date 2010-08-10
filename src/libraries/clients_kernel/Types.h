@@ -53,7 +53,6 @@ enum E_DayLightingType
     eDayLightingJourMoyennementNuageux,
     eDayLightingJourAssezNuageux,
     eDayLightingJourTresNuageux,
-    eDayLightingEclairant,
 
     eNbrDayLightingType
 };
@@ -65,7 +64,6 @@ enum E_NightLightingType
     eNightLightingNuitDemiLune,
     eNightLightingNuitQuartDeLune,
     eNightLightingNuitNouvelleLune,
-    eNightLightingEclairant,
 
     eNbrNightLightingType
 };

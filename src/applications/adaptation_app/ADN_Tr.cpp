@@ -208,13 +208,13 @@ ADN_Tr::T_ConverterSpeedImpact ADN_Tr::speedImpactConverter_[] =
 
 ADN_Tr::T_ConverterSensorWeatherModifiers ADN_Tr::sensorWeatherModifiersConverter_[] =
 {
-    T_ConverterSensorWeatherModifiers( "PasDePrecipitation", QT_TRANSLATE_NOOP( "ADN_Tr", "no rainfall" ),eSensorWeatherModifiers_PasDePrecipitation ),
-    T_ConverterSensorWeatherModifiers( "TempeteDeSable",     QT_TRANSLATE_NOOP( "ADN_Tr", "sand storm" ),    eSensorWeatherModifiers_TempeteSable ),
-    T_ConverterSensorWeatherModifiers( "Brouillard",         QT_TRANSLATE_NOOP( "ADN_Tr", "fog" ),        eSensorWeatherModifiers_Brouillard ),
-    T_ConverterSensorWeatherModifiers( "Crachin",            QT_TRANSLATE_NOOP( "ADN_Tr", "drizzle" ),           eSensorWeatherModifiers_Crachin ),
-    T_ConverterSensorWeatherModifiers( "Pluie",              QT_TRANSLATE_NOOP( "ADN_Tr", "rain" ),             eSensorWeatherModifiers_Pluie ),
-    T_ConverterSensorWeatherModifiers( "Neige",              QT_TRANSLATE_NOOP( "ADN_Tr", "snow" ),             eSensorWeatherModifiers_Neige ),
-    T_ConverterSensorWeatherModifiers( "Fumigene",           QT_TRANSLATE_NOOP( "ADN_Tr", "smoke" ),          eSensorWeatherModifiers_Fumigene ),
+    T_ConverterSensorWeatherModifiers( "PasDePrecipitation", QT_TRANSLATE_NOOP( "ADN_Tr", "No rainfall" ),eSensorWeatherModifiers_PasDePrecipitation ),
+    T_ConverterSensorWeatherModifiers( "TempeteDeSable",     QT_TRANSLATE_NOOP( "ADN_Tr", "Sand storm" ),    eSensorWeatherModifiers_TempeteSable ),
+    T_ConverterSensorWeatherModifiers( "Brouillard",         QT_TRANSLATE_NOOP( "ADN_Tr", "Fog" ),        eSensorWeatherModifiers_Brouillard ),
+    T_ConverterSensorWeatherModifiers( "Crachin",            QT_TRANSLATE_NOOP( "ADN_Tr", "Drizzle" ),           eSensorWeatherModifiers_Crachin ),
+    T_ConverterSensorWeatherModifiers( "Pluie",              QT_TRANSLATE_NOOP( "ADN_Tr", "Rain" ),             eSensorWeatherModifiers_Pluie ),
+    T_ConverterSensorWeatherModifiers( "Neige",              QT_TRANSLATE_NOOP( "ADN_Tr", "Snow" ),             eSensorWeatherModifiers_Neige ),
+    T_ConverterSensorWeatherModifiers( "Fumigene",           QT_TRANSLATE_NOOP( "ADN_Tr", "Smoke" ),          eSensorWeatherModifiers_Fumigene ),
     T_ConverterSensorWeatherModifiers( "", "", (E_SensorWeatherModifiers)-1 )
 };
 

@@ -3198,19 +3198,19 @@
         <translation>Fumigène</translation>
     </message>
     <message>
-        <source>Day without cloud</source>
+        <source>Very sunny day</source>
         <translation>Jour sans nuage</translation>
     </message>
     <message>
-        <source>Slightly cloudy day</source>
+        <source>Sunny day</source>
         <translation>Jour peu nuageux</translation>
     </message>
     <message>
-        <source>Moderately cloudy day</source>
+        <source>Partly cloudy day</source>
         <translation>Jour moyennement nuageux</translation>
     </message>
     <message>
-        <source>Quite cloudy day</source>
+        <source>Cloudy day</source>
         <translation>Jour assez nuageux</translation>
     </message>
     <message>
@@ -3222,15 +3222,15 @@
         <translation>Nuit de pleine lune</translation>
     </message>
     <message>
-        <source>Three quarter moon night</source>
+        <source>Waning moon night</source>
         <translation>Nuit de trois quarts de lune</translation>
     </message>
     <message>
-        <source>Half moon night</source>
+        <source>Quarter moon night</source>
         <translation>Nuit de demi-lune</translation>
     </message>
     <message>
-        <source>Quarter moon night</source>
+        <source>Crescent moon night</source>
         <translation>Nuit de quart de lune</translation>
     </message>
     <message>
@@ -3238,7 +3238,7 @@
         <translation>Nuit de nouvelle lune</translation>
     </message>
     <message>
-        <source>Illuminating</source>
+        <source>Illumination shell</source>
         <translation>Eclairant</translation>
     </message>
 </context>

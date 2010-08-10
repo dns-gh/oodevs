@@ -255,17 +255,17 @@ ENT_Tr::T_ConverterSimulationState ENT_Tr::SimulationStateConverter_[] =
 
 ENT_Tr::T_ConverterLightingType ENT_Tr::LightingTypeConverter_[] =
 {
-    T_ConverterLightingType( "jour sans nuage", QT_TRANSLATE_NOOP( "ENT_Tr", "Day without cloud" ), eLightingType_JourSansNuage ),
-    T_ConverterLightingType( "jour peu nuageux", QT_TRANSLATE_NOOP( "ENT_Tr", "Slightly cloudy day" ), eLightingType_JourPeuNuageux ),
-    T_ConverterLightingType( "jour moyennement nuageux", QT_TRANSLATE_NOOP( "ENT_Tr", "Moderately cloudy day" ), eLightingType_JourMoyennementNuageux ),
-    T_ConverterLightingType( "jour assez nuageux", QT_TRANSLATE_NOOP( "ENT_Tr", "Quite cloudy day" ), eLightingType_JourAssezNuageux ),
+    T_ConverterLightingType( "jour sans nuage", QT_TRANSLATE_NOOP( "ENT_Tr", "Very sunny day" ), eLightingType_JourSansNuage ),
+    T_ConverterLightingType( "jour peu nuageux", QT_TRANSLATE_NOOP( "ENT_Tr", "Sunny day" ), eLightingType_JourPeuNuageux ),
+    T_ConverterLightingType( "jour moyennement nuageux", QT_TRANSLATE_NOOP( "ENT_Tr", "Partly cloudy day" ), eLightingType_JourMoyennementNuageux ),
+    T_ConverterLightingType( "jour assez nuageux", QT_TRANSLATE_NOOP( "ENT_Tr", "Cloudy day" ), eLightingType_JourAssezNuageux ),
     T_ConverterLightingType( "jour tres nuageux", QT_TRANSLATE_NOOP( "ENT_Tr", "Very cloudy day" ), eLightingType_JourTresNuageux ),
     T_ConverterLightingType( "nuit pleine lune", QT_TRANSLATE_NOOP( "ENT_Tr", "Full moon night" ), eLightingType_NuitPleineLune ),
-    T_ConverterLightingType( "nuit trois quart de lune", QT_TRANSLATE_NOOP( "ENT_Tr", "Three quarter moon night" ), eLightingType_NuitTroisQuartDeLune ),
-    T_ConverterLightingType( "nuit demi lune", QT_TRANSLATE_NOOP( "ENT_Tr", "Half moon night" ), eLightingType_NuitDemiLune ),
-    T_ConverterLightingType( "nuit quart de lune", QT_TRANSLATE_NOOP( "ENT_Tr", "Quarter moon night" ), eLightingType_NuitQuartDeLune ),
+    T_ConverterLightingType( "nuit trois quart de lune", QT_TRANSLATE_NOOP( "ENT_Tr", "Waning moon night" ), eLightingType_NuitTroisQuartDeLune ),
+    T_ConverterLightingType( "nuit demi lune", QT_TRANSLATE_NOOP( "ENT_Tr", "Quarter moon night" ), eLightingType_NuitDemiLune ),
+    T_ConverterLightingType( "nuit quart de lune", QT_TRANSLATE_NOOP( "ENT_Tr", "Crescent moon night" ), eLightingType_NuitQuartDeLune ),
     T_ConverterLightingType( "nuit nouvelle lune", QT_TRANSLATE_NOOP( "ENT_Tr", "New moon night" ), eLightingType_NuitNouvelleLune ),
-    T_ConverterLightingType( "eclairant", QT_TRANSLATE_NOOP( "ENT_Tr", "Illuminating" ), eLightingType_Eclairant ),
+    T_ConverterLightingType( "eclairant", QT_TRANSLATE_NOOP( "ENT_Tr", "Illumination shell" ), eLightingType_Eclairant ),
     T_ConverterLightingType( "", "", (E_LightingType)-1 )
 };
 

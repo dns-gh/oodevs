@@ -4054,63 +4054,63 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Very sunny day</source>
-        <translation type="unfinished"></translation>
+        <translation>Jour sans nuage</translation>
     </message>
     <message>
         <source>Sunny day</source>
-        <translation type="unfinished"></translation>
+        <translation>Jour peu nuageux</translation>
     </message>
     <message>
         <source>Partly cloudy day</source>
-        <translation type="unfinished"></translation>
+        <translation>Jour moyennement nuageux</translation>
     </message>
     <message>
         <source>Cloudy day</source>
-        <translation type="unfinished"></translation>
+        <translation>Jour assez nuageux</translation>
     </message>
     <message>
         <source>Very cloudy day</source>
-        <translation type="unfinished"></translation>
+        <translation>Jour très nuageux</translation>
     </message>
     <message>
         <source>Full moon night</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuit de pleine lune</translation>
     </message>
     <message>
         <source>Waning moon night</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuit de trois quarts de lune</translation>
     </message>
     <message>
         <source>Quarter moon night</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuit de demi-lune</translation>
     </message>
     <message>
         <source>Crescent moon night</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuit de quart de lune</translation>
     </message>
     <message>
         <source>New moon night</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuit de nouvelle lune</translation>
     </message>
     <message>
         <source>Illumination shell</source>
-        <translation type="unfinished"></translation>
+        <translation>Eclairant</translation>
     </message>
     <message>
         <source>Ground</source>
-        <translation type="unfinished"></translation>
+        <translation>Sol</translation>
     </message>
     <message>
         <source>Empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Vide</translation>
     </message>
     <message>
         <source>Forest</source>
-        <translation type="unfinished"></translation>
+        <translation>Forêt</translation>
     </message>
     <message>
         <source>Urban area</source>
-        <translation type="unfinished"></translation>
+        <translation>Zone urbaine</translation>
     </message>
     <message>
         <source>phase line</source>
@@ -4351,30 +4351,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Unit, Max speed</source>
         <translation>Vitesse max agent</translation>
-    </message>
-    <message>
-        <source>no rainfall</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sand storm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>fog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>drizzle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>snow</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Wounded seriousness level 1</source>
@@ -4699,6 +4675,34 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Urban block speed</source>
         <translation>Vitesse bloc urbain</translation>
+    </message>
+    <message>
+        <source>No rainfall</source>
+        <translation>Pas de precipitation</translation>
+    </message>
+    <message>
+        <source>Sand storm</source>
+        <translation>Tempete de sable</translation>
+    </message>
+    <message>
+        <source>Fog</source>
+        <translation>Brouillard</translation>
+    </message>
+    <message>
+        <source>Drizzle</source>
+        <translation>Crachin</translation>
+    </message>
+    <message>
+        <source>Rain</source>
+        <translation>Pluie</translation>
+    </message>
+    <message>
+        <source>Snow</source>
+        <translation>Neige</translation>
+    </message>
+    <message>
+        <source>Smoke</source>
+        <translation>Fumigène</translation>
     </message>
 </context>
 <context>

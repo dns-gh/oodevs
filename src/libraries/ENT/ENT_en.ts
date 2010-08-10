@@ -2293,35 +2293,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Day without cloud</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Slightly cloudy day</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Moderately cloudy day</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Quite cloudy day</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Very cloudy day</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Full moon night</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Three quarter moon night</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Half moon night</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2333,7 +2309,31 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Illuminating</source>
+        <source>Very sunny day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sunny day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Partly cloudy day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cloudy day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Waning moon night</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crescent moon night</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Illumination shell</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

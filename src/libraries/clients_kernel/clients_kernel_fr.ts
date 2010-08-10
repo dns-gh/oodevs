@@ -510,10 +510,6 @@
         <translation>Très nuageux</translation>
     </message>
     <message>
-        <source>Illuminating</source>
-        <translation>Eclairant</translation>
-    </message>
-    <message>
         <source>Full moon</source>
         <translation>Pleine lune</translation>
     </message>

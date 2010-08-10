@@ -174,8 +174,6 @@ QString tools::ToDisplayedString( E_DayLightingType lighting )
         return tools::translate( "tools", "Quite cloudy" );
     case eDayLightingJourTresNuageux:
         return tools::translate( "tools", "Very cloudy" );
-    case eDayLightingEclairant:
-        return tools::translate( "tools", "Illuminating" );
     }
 }
 
@@ -198,8 +196,6 @@ QString tools::ToDisplayedString( E_NightLightingType lighting )
         return tools::translate( "tools", "Quarter moon" );
     case eNightLightingNuitNouvelleLune:
         return tools::translate( "tools", "New moon" );
-    case eNightLightingEclairant:
-        return tools::translate( "tools", "Illuminating" );
     }
 }
 
@@ -256,7 +252,6 @@ const char* tools::GetXmlSection( E_DayLightingType nLightingType )
         case eDayLightingJourMoyennementNuageux:   return "JourMoyennementNuageux";
         case eDayLightingJourAssezNuageux:         return "JourAssezNuageux";
         case eDayLightingJourTresNuageux:          return "JourTresNuageux";
-        case eDayLightingEclairant:                return "Eclairant";
         default:
             return "Unknown";
     }
@@ -275,7 +270,6 @@ const char* tools::GetXmlSection( E_NightLightingType nLightingType )
         case eNightLightingNuitDemiLune:             return "NuitDemiLune";
         case eNightLightingNuitQuartDeLune:          return "NuitQuartDeLune";
         case eNightLightingNuitNouvelleLune:         return "NuitNouvelleLune";
-        case eNightLightingEclairant:                return "Eclairant";
         default:
             return "Unknown";
     }
