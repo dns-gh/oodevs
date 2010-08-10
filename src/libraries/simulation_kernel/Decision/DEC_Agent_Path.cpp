@@ -24,12 +24,16 @@
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+
+#include <urban/Architecture.h>
+#include <urban/TerrainObject_ABC.h>
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::Initialize
@@ -208,13 +212,6 @@ DEC_Agent_Path::~DEC_Agent_Path()
 void DEC_Agent_Path::Initialize( const T_PointVector& points )
 {
     InitializePathKnowledges( points );
-
-//    if( ! fuseau_.IsNull() && !fuseau_.IsInside( vStartPoint ) )
-//    {
-//        MT_Vector2D vEntryPoint;
-//        fuseau_.ComputeEntryPoint( vStartPoint, vEntryPoint );
-//        points.insert( points.begin(), vEntryPoint );
-//    }
 
     assert( !points.empty() );
     const MT_Vector2D* pLastPoint = 0;
@@ -609,6 +606,8 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
 
     assert( resultList_.empty() );
 
+    if( !IsDestinationTrafficable() )
+        Cancel();
     DEC_Path_ABC::Execute( pathfind );
 
 #ifndef NDEBUG
@@ -637,4 +636,42 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
                             ", State : " << GetStateAsString() <<
                             ", Result : " << stream.str() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_Path::IsDestinationTrafficable
+// $$$$ LDC Should be done in the Terrain heuristics.
+// Created: LDC 2010-08-10
+// -----------------------------------------------------------------------------
+bool DEC_Agent_Path::IsDestinationTrafficable() const
+{
+    float weight = GetUnitMajorWeight();
+    for( CIT_PointVector it = pathPoints_.begin(); it != pathPoints_.end(); ++it )
+    {
+        if( !IsUrbanBlockTrafficable( *it, weight ) )
+            return false;
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_Path::IsUrbanBlockTrafficable
+// Created: LDC 2010-08-10
+// -----------------------------------------------------------------------------
+bool DEC_Agent_Path::IsUrbanBlockTrafficable( const MT_Vector2D& point, double weight ) const
+{
+    std::vector< const TER_Object_ABC* > objects;
+    TER_World::GetWorld().GetObjectManager().GetListWithinCircle2( point, 1, objects );
+    for (std::vector< const TER_Object_ABC* >::const_iterator it = objects.begin(); it != objects.end(); ++it )
+    {
+        const UrbanObjectWrapper* urbanObject = dynamic_cast< const UrbanObjectWrapper* >( *it );
+        if( urbanObject && urbanObject->GetLocalisation().GetArea() && urbanObject->IsInside( point ) )
+        { 
+            const urban::TerrainObject_ABC& terrainObject = urbanObject->GetObject();
+            const urban::Architecture* architecture = terrainObject.RetrievePhysicalFeature< urban::Architecture >();
+            if( architecture )
+                return( architecture->GetTrafficability() > weight );
+        }
+    }
+    return true;
 }

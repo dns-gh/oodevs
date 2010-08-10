@@ -91,6 +91,12 @@ private:
     void InitializePathKnowledges( const T_PointVector& pathPoints );
     //@}
 
+    //! @name Helper to bypass lack of check of terrain in heuristics.
+    //@{
+    bool IsDestinationTrafficable() const;
+    bool IsUrbanBlockTrafficable( const MT_Vector2D& point, double weight ) const;
+    //@}
+
     //! @name Points insertion Tools
     //@{
     int  IsPointAvant     ( DEC_PathPoint* pBefore, DEC_PathPoint& current, DEC_PathPoint* pAfter, const TerrainData& nTypeTerrain ) const;

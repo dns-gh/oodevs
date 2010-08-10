@@ -96,7 +96,6 @@ unsigned int DEC_ActionFunctions::StopAction( T& caller, unsigned int actionId )
 {
     if( actionId != 0 )
     {
-        assert( caller.HasAction( actionId ) );
         caller.UnregisterAction( actionId );
     }
     return 0;
