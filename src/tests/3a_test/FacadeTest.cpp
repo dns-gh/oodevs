@@ -17,8 +17,8 @@
 #include <xeumeuleu/xml.hpp>
 #include <geocoord/geodetic.h>
 #include <geocoord/mgrs.h>
-#include <boost/lexical_cast.hpp>
 #include "protocol/protocol.h"
+#include "MockClientPublisher.h"
 
 using namespace Common;
 using namespace MsgsSimToClient;
@@ -27,8 +27,6 @@ using namespace MsgsDispatcherToClient;
 using namespace MsgsAuthenticationToClient;
 using namespace MsgsReplayToClient;
 using namespace MsgsAarToClient;
-
-using namespace mockpp;
 
 namespace
 {
@@ -55,7 +53,6 @@ namespace
         return result;
 
     }
-
     MsgSimToClient MakeUnitCreation( unsigned long id )
     {
         MsgSimToClient result;
@@ -67,91 +64,74 @@ namespace
         message.set_pc( false );
         return result;
     }
-
-    class MockPublisher : public dispatcher::ClientPublisher_ABC, public mockpp::ChainableMockObject
+    bool CheckValue( const MsgAarToClient& expected, const MsgAarToClient& actual )
+    {
+        BOOST_CHECK_EQUAL( expected.DebugString(), actual.DebugString() );
+        return true;
+    }
+    template< std::size_t N >
+    void MakeExpectation( MockClientPublisher& mocker, double (&data)[N] )
+    {
+        MsgAarToClient result;
+        result.set_context( 0 );
+        MsgPlotResult& plot = *result.mutable_message()->mutable_plot_result();
+        plot.set_identifier( 42 );
+        plot.set_error( "" );
+        for( unsigned i = 0; i < N; ++i )
+            plot.add_values( static_cast< float>( data[i] ) );
+        MOCK_EXPECT( mocker, Send4 ).with( boost::bind( &CheckValue, result, _1 ) );
+    }
+    class Fixture
     {
     public:
-        MockPublisher()
-            : mockpp::ChainableMockObject( "MockPublisher", 0 )
-            , Send_mocker( "Send", this ) {}
-
-        virtual void Send( const MsgSimToClient& ) { }
-        virtual void Send( const MsgAuthenticationToClient& ) { }
-        virtual void Send( const MsgReplayToClient& ) { }
-        virtual void Send( const MsgAarToClient& wrapper )
+        Fixture()
+            : facade( publisher, 42 )
         {
-            const MsgPlotResult& result = wrapper.message().plot_result();
-            for( unsigned i = 0; i < result.values_size(); ++i )
-                Send_mocker.forward( result.values(i) );
-        };
-        virtual void Send( const MsgMessengerToClient& msg ) { }
-        virtual void Send( const MsgDispatcherToClient& msg ) { }
-        virtual std::string GetEndpoint() const { return "";}
-
-        mockpp::ChainableMockMethod< void, double > Send_mocker;
+            // NOTHING
+        }
+        MockClientPublisher publisher;
+        AarFacade facade;
     };
-
-    template< typename Mocker, std::size_t N >
-    void MakeExpectation( Mocker& mocker, double (&data)[N], double margin = 0 )
-    {
-        for( unsigned i = 0; i < N; ++i )
-            mocker.expects( once() ).with( eq( data[i], margin ) );
-    }
-
-    xml::xistream& UnWrap( xml::xistream& xis )
-    {
-        xis >> xml::start( "indicator" );
-        return xis;
-    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: Facade_TestOperationalState
 // Created: AGE 2004-12-15
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Facade_TestOperationalState )
+BOOST_FIXTURE_TEST_CASE( Facade_TestOperationalState, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
                              "    <extract function='operational-state' id='opstate'/>"
                              "    <reduce type='float' function='select' input='opstate' key='2' id='myopstate'/>"
                              "    <result function='plot' input='myopstate' type='float'/>"
                              " </indicator>" );
-    MockPublisher publisher;
-    AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
-
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( BeginTick() );
     task->Receive( OperationalState( 50, 1 ) );
     task->Receive( OperationalState( 25, 2 ) );
     task->Receive( OperationalState( 75, 3 ) );
     task->Receive( EndTick() );
-
     task->Receive( BeginTick() );
     task->Receive( MakeUnitCreation( 51 ) ); //testing unit creation in a tick
     task->Receive( OperationalState( 75, 1 ) );
     task->Receive( OperationalState( 85, 3 ) );
     task->Receive( EndTick() );
-
     task->Receive( MakeUnitCreation( 52 ) ); //testing unit creation between two ticks
-
     task->Receive( BeginTick() );
     task->Receive( OperationalState( 75, 2 ) );
     task->Receive( EndTick() );
-
     task->Receive( BeginTick() );
     task->Receive( EndTick() );
-
     double expectedResult[] = { 0.25, 0.25, 0.75, 0.75 };
-    MakeExpectation( publisher.Send_mocker, expectedResult );
+    MakeExpectation( publisher, expectedResult );
     task->Commit();
-    publisher.verify();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Facade_TestOperationalStateNormalized
 // Created: SBO 2009-03-12
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Facade_TestOperationalStateNormalized )
+BOOST_FIXTURE_TEST_CASE( Facade_TestOperationalStateNormalized, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
                              "    <extract function='operational-state' id='opstate'/>"
@@ -159,32 +139,24 @@ BOOST_AUTO_TEST_CASE( Facade_TestOperationalStateNormalized )
                              "    <reduce type='float' function='threshold' input='myopstate' thresholds='0.5' values='0,1' id='mynormalizedopstate'/>"
                              "    <result function='plot' input='mynormalizedopstate' type='float'/>"
                              "</indicator>" );
-    MockPublisher publisher;
-    AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
-
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( BeginTick() );
     task->Receive( OperationalState( 50, 1 ) );
     task->Receive( OperationalState( 25, 2 ) );
     task->Receive( OperationalState( 75, 3 ) );
     task->Receive( EndTick() );
-
     task->Receive( BeginTick() );
     task->Receive( OperationalState( 75, 1 ) );
     task->Receive( OperationalState( 85, 3 ) );
     task->Receive( EndTick() );
-
     task->Receive( BeginTick() );
     task->Receive( OperationalState( 75, 2 ) );
     task->Receive( EndTick() );
-
     task->Receive( BeginTick() );
     task->Receive( EndTick() );
-
     double expectedResult[] = { 0, 0, 1, 1 };
-    MakeExpectation( publisher.Send_mocker, expectedResult );
+    MakeExpectation( publisher, expectedResult );
     task->Commit();
-    publisher.verify();
 }
 
 namespace
@@ -209,11 +181,12 @@ namespace
 //  @Unite2  unit_id,       -- Seconde d'unites
 //  @Resultat tablename OUTPUT  -- Distance entre les deux unites
 //)
+
 // -----------------------------------------------------------------------------
 // Name: Facade_TestDistanceBetweenTwoUnits
 // Created: AGE 2004-12-15
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Facade_TestDistanceBetweenTwoUnits )
+BOOST_FIXTURE_TEST_CASE( Facade_TestDistanceBetweenTwoUnits, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
                              "    <extract function='position' id='position'/>"
@@ -222,10 +195,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestDistanceBetweenTwoUnits )
                              "    <transform function='distance' input='position1,position2' id='distance'/>"
                              "    <result function='plot' input='distance' type='float'/>"
                              "</indicator>" ) ;
-    MockPublisher publisher;
-    AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
-
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( BeginTick() );
     task->Receive( MakePosition( "31TBN7728449218", 1 ) );
     task->Receive( MakePosition( "31TBN7728449218", 2 ) );
@@ -238,11 +208,9 @@ BOOST_AUTO_TEST_CASE( Facade_TestDistanceBetweenTwoUnits )
     task->Receive( MakePosition( "31TBN7728449216", 1 ) );
     task->Receive( MakePosition( "31TBN7728449220", 2 ) );
     task->Receive( EndTick() );
-
-    double expectedResult[] = { 0., 2., 4. };
-    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    double expectedResult[] = { 0., 2.00212, 4.00424 }; // $$$$ _RC_ LGY 2010-08-10: margin?
+    MakeExpectation( publisher, expectedResult );
     task->Commit();
-    publisher.verify();
 }
 
 namespace
@@ -261,17 +229,14 @@ namespace
 // Name: Facade_TestMountedUnit
 // Created: SBO 2010-07-12
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Facade_TestMountedUnit )
+BOOST_FIXTURE_TEST_CASE( Facade_TestMountedUnit, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
                              "    <extract function='mounted' id='m'/>"
                              "    <reduce type='int' function='select' input='m' key='1' id='m1'/>"
                              "    <result function='plot' input='m1' type='float'/>"
                              "</indicator>" ) ;
-    MockPublisher publisher;
-    AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
-
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( BeginTick() );
     task->Receive( MakeMounted( true, 1 ) );
     task->Receive( EndTick() );
@@ -283,26 +248,22 @@ BOOST_AUTO_TEST_CASE( Facade_TestMountedUnit )
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
     task->Receive( EndTick() );
-
     double expectedResult[] = { 0., 1., 0., 0. };
-    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    MakeExpectation( publisher, expectedResult );
     task->Commit();
-    publisher.verify();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Facade_TestTypeInstanciationIsVerifiedAtRuntime
 // Created: AGE 2004-12-15
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Facade_TestTypeInstanciationIsVerifiedAtRuntime )
+BOOST_FIXTURE_TEST_CASE( Facade_TestTypeInstanciationIsVerifiedAtRuntime, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
                              "    <extract function='position' id='position'/>"
                              "    <reduce type='position' function='sum' input='position' id='position2'/>" // summing positions
                              "</indicator>" );
-    MockPublisher publisher;
-    AarFacade facade( publisher, 42 );
-    BOOST_CHECK_THROW( facade.CreateTask( UnWrap( xis ) ), std::invalid_argument );
+    BOOST_CHECK_THROW( facade.CreateTask( xis >> xml::start( "indicator" ) ), std::invalid_argument );
 }
 
 namespace
@@ -334,22 +295,19 @@ namespace
 //  @Materiels equipment_id_tablename,      -- Materiels a prendre en compte
 //  @Resultat tablename OUT             -- Tableau de resultat
 //)
+
 // -----------------------------------------------------------------------------
 // Name: Facade_TestNumberOfBreakdowns
 // Created: AGE 2004-12-15
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Facade_TestNumberOfBreakdowns )
+BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfBreakdowns, Fixture )
 {
      xml::xistringstream xis( "<indicator>"
                               "    <extract function='maintenance-handling-unit' id='consigns'/>"
                               "    <reduce type='unsigned long' function='count' input='consigns' id='count'/>"
                               "    <result function='plot' input='count' type='unsigned'/>"
                               "</indicator>" );
-
-    MockPublisher publisher;
-    AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
-
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( BeginTick() );
     task->Receive( CreateConsign( 12 ) );
     task->Receive( EndTick() );
@@ -363,18 +321,16 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfBreakdowns )
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
     task->Receive( EndTick() );
-
     double expectedResult[] = { 1., 2., 2., 2., 1. };
-    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    MakeExpectation( publisher, expectedResult );
     task->Commit();
-    publisher.verify();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Facade_TestNumberOfBreakdownsWithUnitFilter
 // Created: AGE 2004-12-15
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Facade_TestNumberOfBreakdownsWithUnitFilter )
+BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfBreakdownsWithUnitFilter, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
                              "    <extract function='maintenance-handling-unit' id='consigns'/>"
@@ -383,11 +339,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfBreakdownsWithUnitFilter )
                              "    <reduce type='unsigned long' function='count' input='the-consigns' id='count'/>"
                              "    <result function='plot' input='count' type='unsigned'/>"
                              "</indicator>" );
-
-    MockPublisher publisher;
-    AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
-
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( BeginTick() );
     task->Receive( CreateConsign( 12, 12 ) );
     task->Receive( CreateConsign( 13, 13 ) );
@@ -405,11 +357,9 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfBreakdownsWithUnitFilter )
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
     task->Receive( EndTick() );
-
     double expectedResult[] = { 2., 3., 3., 3., 2. };
-    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    MakeExpectation( publisher, expectedResult );
     task->Commit();
-    publisher.verify();
 }
 
 namespace
@@ -422,7 +372,6 @@ namespace
         fire.set_firer_oid( firer );
         return result;
     }
-
     MsgSimToClient StopFire( unsigned fire_id, unsigned long damage_count = 0 )
     {
         MsgSimToClient result;
@@ -446,7 +395,7 @@ namespace
 // Name: Facade_TestNumberOfDirectFiresWithUnitFilter
 // Created: AGE 2004-12-15
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Facade_TestNumberOfDirectFiresWithUnitFilter )
+BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfDirectFiresWithUnitFilter, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
                              "    <extract function='direct-fire-unit' id='fires'/>"
@@ -455,11 +404,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfDirectFiresWithUnitFilter )
                              "    <reduce type='unsigned long' function='count' input='the-fires' id='count'/>"
                              "    <result function='plot' input='count' type='unsigned'/>"
                              "</indicator>" );
-
-    MockPublisher publisher;
-    AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
-
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( BeginTick() );
     task->Receive( CreateDirectFire( 12, 12 ) );
     task->Receive( CreateDirectFire( 13, 13 ) );
@@ -484,11 +429,9 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfDirectFiresWithUnitFilter )
     task->Receive( CreateDirectFire( 18, 13 ) );
     task->Receive( CreateDirectFire( 19, 14 ) );
     task->Receive( EndTick() );
-
     double expectedResult[] = { 1., 1., 0., 1., 1. };
-    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    MakeExpectation( publisher, expectedResult );
     task->Commit();
-    publisher.verify();
 }
 
 //CREATE PROCEDURE DBO.[AAAT_MELEE-APPUI_PERTES_EN_MATERIEL_INFLIGEES_PAR_UNE_UNITE_PAR_TIR_DIRECT_ENTRE_T1_ET_T2]
@@ -503,7 +446,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfDirectFiresWithUnitFilter )
 // Name: Facade_TestInflictedComponentDamagesFromDirectFire
 // Created: AGE 2004-12-15
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFire )
+BOOST_FIXTURE_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFire, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
                              "    <extract function='fire-component-damage' id='damages'/>"
@@ -513,11 +456,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFire )
                              "    <reduce type='float' function='sum' input='the-damages' id='sum'/>"
                              "    <result function='plot' input='sum' type='float'/>"
                              "</indicator>" );
-
-    MockPublisher publisher;
-    AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
-
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( BeginTick() );
     task->Receive( CreateDirectFire( 12, 12 ) );
     task->Receive( CreateDirectFire( 13, 13 ) );
@@ -541,20 +480,18 @@ BOOST_AUTO_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFire )
     task->Receive( StopFire( 16 ) );
     task->Receive( CreateDirectFire( 18, 13 ) );
     task->Receive( CreateDirectFire( 19, 14 ) );
-    task->Receive( StopFire( 17, 3. ) );
+    task->Receive( StopFire( 17, 3 ) );
     task->Receive( EndTick() );
-
     double expectedResult[] = { 0., 5., 0., 0., 3. };
-    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    MakeExpectation( publisher, expectedResult );
     task->Commit();
-    publisher.verify();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Facade_TestInflictedComponentDamagesFromDirectFireWithComposedFilterOfHell
 // Created: AGE 2004-12-15
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFireWithComposedFilterOfHell )
+BOOST_FIXTURE_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFireWithComposedFilterOfHell, Fixture )
 {
 
     xml::xistringstream xis( "<indicator>"
@@ -568,11 +505,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFireWithComp
                              "    <reduce type='float' function='sum' input='the-damages' id='sum'/>"
                              "    <result function='plot' input='sum' type='float'/>"
                              "</indicator>" );
-
-    MockPublisher publisher;
-    AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
-
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( BeginTick() );
     task->Receive( MakePosition( "31TBN7728449218", 12 ) );
     task->Receive( MakePosition( "31TBN7728449242", 13 ) );
@@ -601,13 +534,11 @@ BOOST_AUTO_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFireWithComp
     task->Receive( StopFire( 16 ) );
     task->Receive( CreateDirectFire( 18, 13 ) );
     task->Receive( CreateDirectFire( 19, 14 ) );
-    task->Receive( StopFire( 17, 3. ) );
+    task->Receive( StopFire( 17, 3 ) );
     task->Receive( EndTick() );
-
     double expectedResult[] = { 0., 5., 0., 0., 3. };
-    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    MakeExpectation( publisher, expectedResult );
     task->Commit();
-    publisher.verify();
 }
 
 namespace
@@ -628,7 +559,7 @@ namespace
 // Name: Facade_TestAllResources
 // Created: AGE 2004-12-15
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Facade_TestAllResources )
+BOOST_FIXTURE_TEST_CASE( Facade_TestAllResources, Fixture )
 {
 
     xml::xistringstream xis( "<indicator>"
@@ -636,11 +567,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestAllResources )
                              "    <reduce type='int' function='sum' input='resources' id='sum'/>"
                              "    <result function='plot' input='sum' type='int'/>"
                              "</indicator>" );
-
-    MockPublisher publisher;
-    AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
-
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( BeginTick() );
     task->Receive( MakeResourceVariation( 4212, 12 ) );
     task->Receive( MakeResourceVariation( 1242, 13 ) );
@@ -657,12 +584,9 @@ BOOST_AUTO_TEST_CASE( Facade_TestAllResources )
     task->Receive( BeginTick() );
     task->Receive( MakeResourceVariation( 4100, 12 ) );
     task->Receive( EndTick() );
-
-
     double expectedResult[] = { 5454, 5400, 5400, 6400, 6300 };
-    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    MakeExpectation( publisher, expectedResult );
     task->Commit();
-    publisher.verify();
 }
 
 // -----------------------------------------------------------------------------
@@ -671,7 +595,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestAllResources )
 //                      (see TranformationFactory), for now, compare can only be used to compare numeric values (not positions for instance)
 // Created: AGE 2004-12-15
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Facade_TestInstantaneousResourceConsumptionsWithResourceFilter )
+BOOST_FIXTURE_TEST_CASE( Facade_TestInstantaneousResourceConsumptionsWithResourceFilter, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
                              "    <extract function='resources' id='resources' dotations='42'/>"
@@ -682,11 +606,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestInstantaneousResourceConsumptionsWithResourceFi
                              "    <reduce type='int' function='sum' input='consumptions' id='sum'/>"
                              "    <result function='plot' input='sum' type='int'/>"
                              "</indicator>" );
-
-    MockPublisher publisher;
-    AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
-
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( BeginTick() );
     task->Receive( MakeResourceVariation( 4212, 12, 42 ) );
     task->Receive( MakeResourceVariation( 1242, 13, 42 ) );
@@ -707,18 +627,16 @@ BOOST_AUTO_TEST_CASE( Facade_TestInstantaneousResourceConsumptionsWithResourceFi
     task->Receive( BeginTick() );
     task->Receive( MakeResourceVariation( 5100, 12, 42 ) );
     task->Receive( EndTick() );
-
     double expectedResult[] = { 0, -54, 0, 0, -100 };
-    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    MakeExpectation( publisher, expectedResult );
     task->Commit();
-    publisher.verify();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Facade_TestResourceConsumptionsWithResourceFilter
 // Created: AGE 2004-12-15
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Facade_TestResourceConsumptionsWithResourceFilter )
+BOOST_FIXTURE_TEST_CASE( Facade_TestResourceConsumptionsWithResourceFilter, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
                              "    <extract function='resources' id='resources' dotations='42'/>"
@@ -730,11 +648,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestResourceConsumptionsWithResourceFilter )
                              "    <transform function='integrate' id='total' input='sum' type='int'/>"
                              "    <result function='plot' input='total' type='int'/>"
                              "</indicator>" );
-
-    MockPublisher publisher;
-    AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
-
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( BeginTick() );
     task->Receive( MakeResourceVariation( 4212, 12, 42 ) );
     task->Receive( MakeResourceVariation( 1242, 13, 42 ) );
@@ -755,11 +669,9 @@ BOOST_AUTO_TEST_CASE( Facade_TestResourceConsumptionsWithResourceFilter )
     task->Receive( BeginTick() );
     task->Receive( MakeResourceVariation( 5100, 12, 42 ) );
     task->Receive( EndTick() );
-
     double expectedResult[] = { 0, -54, -54, -54, -154 };
-    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    MakeExpectation( publisher, expectedResult );
     task->Commit();
-    publisher.verify();
 }
 
 namespace
@@ -771,11 +683,11 @@ namespace
         attributes.set_oid( id );
         EquipmentDotations_EquipmentDotation& equipment = *attributes.mutable_dotation_eff_materiel()->add_elem();
         equipment.set_type_equipement( equipmentId );
-        equipment.set_nb_disponibles            ( variation[0] );
-        equipment.set_nb_indisponibles          ( variation[1] );
-        equipment.set_nb_reparables             ( variation[2] );
+        equipment.set_nb_disponibles( variation[0] );
+        equipment.set_nb_indisponibles( variation[1] );
+        equipment.set_nb_reparables( variation[2] );
         equipment.set_nb_dans_chaine_maintenance( variation[3] );
-        equipment.set_nb_prisonniers            ( variation[4] );
+        equipment.set_nb_prisonniers( variation[4] );
         return result;
     }
 }
@@ -784,22 +696,17 @@ namespace
 // Name: Facade_TestEquipments
 // Created: AGE 2004-12-15
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Facade_TestEquipments )
+BOOST_FIXTURE_TEST_CASE( Facade_TestEquipments, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
                              "    <extract function='equipments' states='available,prisoner' equipments='12,42' id='equipments'/>"
                              "    <reduce type='int' function='sum' input='equipments' id='sum'/>"
                              "    <result function='plot' input='sum' type='int'/>"
                              "</indicator>" );
-
-    MockPublisher publisher;
-    AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
-
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     int base  [5] = { 5, 0, 0, 0, 0 }; //  0
     int prison[5] = { 2, 1, 0, 1, 1 }; // -2
     int casse [5] = { 2, 1, 1, 1, 0 }; // -3
-
     task->Receive( BeginTick() );
     task->Receive( MakeEquipementVariation( base, 12, 42 ) );
     task->Receive( MakeEquipementVariation( base, 13, 42 ) );
@@ -820,31 +727,24 @@ BOOST_AUTO_TEST_CASE( Facade_TestEquipments )
     task->Receive( BeginTick() );
     task->Receive( MakeEquipementVariation( prison, 12, 42 ) );
     task->Receive( EndTick() );
-
     double expectedResult[] = { 15, 10, 10, 15, 16 };
-    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    MakeExpectation( publisher, expectedResult );
     task->Commit();
-    publisher.verify();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Facade_TestHumans
 // Created: AGE 2004-12-15
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Facade_TestHumans )
+BOOST_FIXTURE_TEST_CASE( Facade_TestHumans, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
                              "    <extract function='humans' states='operational,nbc' ranks='troopers' id='humans'/>"
                              "    <reduce type='int' function='sum' input='humans' id='sum'/>"
                              "    <result function='plot' input='sum' type='int'/>"
                              "</indicator>" );
-
-    MockPublisher publisher;
-    AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
-
-// $$$$ _RC_ LGY 2010-07-07: TODO
- 
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    BOOST_TODO;
 //    MockPublisher publisher;
 //    double expectedResult[] = { 0, -54, 0, 0, -100 };
 //    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
@@ -856,17 +756,14 @@ BOOST_AUTO_TEST_CASE( Facade_TestHumans )
 // Name: Facade_TestTypeAdaptation
 // Created: AGE 2004-12-15
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Facade_TestTypeAdaptation )
+BOOST_FIXTURE_TEST_CASE( Facade_TestTypeAdaptation, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
                              "    <extract function='operational-state' id='opstate'/>"
                              "    <reduce type='int' function='select' input='opstate' key='2' id='myopstate'/>"
                              "    <result function='plot' input='myopstate' type='int'/>"
                              "</indicator>" );
-
-    MockPublisher publisher;
-    AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -875,7 +772,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestTypeAdaptation )
 //                      (see TranformationFactory), for now, IsOneOf can only be used with numeric values (not positions for instance)
 // Created: SBO 2010-06-01
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Facade_TestBadLexicalCast )
+BOOST_FIXTURE_TEST_CASE( Facade_TestBadLexicalCast, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
                              "    <extract function='maintenance-handling-unit' id='1'/>"
@@ -884,17 +781,14 @@ BOOST_AUTO_TEST_CASE( Facade_TestBadLexicalCast )
                              "    <transform function='filter' id='4' input='2,3' type='unsigned long'/>"
                              "    <reduce function='count' id='5' input='4' type='unsigned'/>"
                              "</indicator>" );
-
-    MockPublisher publisher;
-    AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Facade_TestConflicts
 // Created: SBO 2010-06-01
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Facade_TestConflicts )
+BOOST_FIXTURE_TEST_CASE( Facade_TestConflicts, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
                              "    <extract function='direct-fire-unit' id='1'/>"
@@ -905,11 +799,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestConflicts )
                              "    <transform function='integrate' id='6' input='5' type='unsigned long'/>"
                              "    <result function='plot' input='6' type='int'/>"
                              "</indicator>" );
-
-    MockPublisher publisher;
-    AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
-
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( BeginTick() );
     task->Receive( CreateDirectFire( 12, 55 ) );
     task->Receive( CreateDirectFire( 13, 56 ) );
@@ -926,11 +816,9 @@ BOOST_AUTO_TEST_CASE( Facade_TestConflicts )
     task->Receive( StopFire( 14 ) );
     task->Receive( StopFire( 15 ) );
     task->Receive( EndTick() );
-
     double expectedResult[] = { 2, 4, 8, 10 };
-    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    MakeExpectation( publisher, expectedResult );
     task->Commit();
-    publisher.verify();
 }
 
 namespace
@@ -952,18 +840,14 @@ namespace
 // Created: SBO 2010-06-01
 // $$$$ SBO 2010-07-28: 1 when detection level (for specified detecting unit) matches specified visibility, otherwise 0
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Facade_TestUnitDetection )
+BOOST_FIXTURE_TEST_CASE( Facade_TestUnitDetection, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
                              "    <extract function='detecting-unit' id='1' detected='69' visibility='detected,recognized,identified'/>"
                              "    <reduce type='int' function='select' input='1' key='42' id='2'/>"
                              "    <result function='plot' input='2' type='int'/>"
                              "</indicator>" );
-
-    MockPublisher publisher;
-    AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
-
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( BeginTick() );
     task->Receive( CreateUnitDetection( 42, 69, Common::identified ) ); // ok
     task->Receive( EndTick() );
@@ -977,19 +861,17 @@ BOOST_AUTO_TEST_CASE( Facade_TestUnitDetection )
     task->Receive( BeginTick() );
     task->Receive( CreateUnitDetection( 42, 69, Common::recognized ) ); // ok
     task->Receive( EndTick() );
-
     double expectedResult[] = { 1, 1, 0, 1 };//, 1, 1, 1, 1 };
-    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    MakeExpectation( publisher, expectedResult );
     task->Commit();
-    publisher.verify();
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Name: Facade_TestUnitDetectionWithThreshold
 // Created: SBO 2010-06-01
 // $$$$ SBO 2010-07-28: 1 when detection level (for any specified detecting units) matches specified visibility, otherwise 0
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Facade_TestUnitDetectionWithThreshold )
+BOOST_FIXTURE_TEST_CASE( Facade_TestUnitDetectionWithThreshold, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
                              "    <extract function='detecting-unit' id='1' detected='69' visibility='detected,recognized,identified'/>"
@@ -998,11 +880,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestUnitDetectionWithThreshold )
                              "    <reduce type='float' function='threshold' input='3' thresholds='0,1' values='0,1' id='4'/>"
                              "    <result function='plot' input='4' type='int'/>"
                              "</indicator>" );
-
-    MockPublisher publisher;
-    AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
-
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( BeginTick() );
     task->Receive( CreateUnitDetection( 12, 69, Common::detected ) );
     task->Receive( EndTick() );
@@ -1021,18 +899,16 @@ BOOST_AUTO_TEST_CASE( Facade_TestUnitDetectionWithThreshold )
     task->Receive( CreateUnitDetection( 42, 69, Common::recognized ) );
     task->Receive( CreateUnitDetection( 51, 69, Common::recognized ) );
     task->Receive( EndTick() );
-
     double expectedResult[] = { 0, 1, 1, 0, 1 };
-    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    MakeExpectation( publisher, expectedResult );
     task->Commit();
-    publisher.verify();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Facade_TestProduct
 // Created: SBO 2010-07-28
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Facade_TestProduct )
+BOOST_FIXTURE_TEST_CASE( Facade_TestProduct, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
                              "    <extract function='operational-state' id='opstate'/>"
@@ -1041,11 +917,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestProduct )
                              "    <reduce type='float' function='product' input='myopstate,ten' id='prod'/>"
                              "    <result function='plot' input='prod' type='int'/>"
                              "</indicator>" );
-
-    MockPublisher publisher;
-    AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
-
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( BeginTick() );
     task->Receive( OperationalState( 100, 42 ) );
     task->Receive( EndTick() );
@@ -1055,18 +927,16 @@ BOOST_AUTO_TEST_CASE( Facade_TestProduct )
     task->Receive( BeginTick() );
     task->Receive( OperationalState( 0, 42 ) );
     task->Receive( EndTick() );
-
     double expectedResult[] = { 10, 5, 0 };
-    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    MakeExpectation( publisher, expectedResult );
     task->Commit();
-    publisher.verify();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Facade_TestTimeElapsedBetweenDetectionAndDestruction
 // Created: SBO 2010-07-28
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Facade_TestTimeElapsedBetweenDetectionAndDestruction )
+BOOST_FIXTURE_TEST_CASE( Facade_TestTimeElapsedBetweenDetectionAndDestruction, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
                              "    <extract function='detecting-unit' id='detection' detected='69' visibility='detected,recognized,identified'/>"
@@ -1078,11 +948,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestTimeElapsedBetweenDetectionAndDestruction )
                              "    <transform function='integrate' id='sum' input='prod' type='int'/>"
                              "    <result function='plot' input='sum' type='int'/>"
                              "</indicator>" );
-
-    MockPublisher publisher;
-    AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
-
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( BeginTick() );
     task->Receive( OperationalState( 100, 69 ) );
     task->Receive( CreateUnitDetection( 42, 69, Common::detected ) );
@@ -1096,11 +962,9 @@ BOOST_AUTO_TEST_CASE( Facade_TestTimeElapsedBetweenDetectionAndDestruction )
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
     task->Receive( EndTick() );
-    
     double expectedResult[] = { 1, 2, 3, 3, 3 };
-    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    MakeExpectation( publisher, expectedResult );
     task->Commit();
-    publisher.verify();
 }
 
 // $$$$ AGE 2007-09-10: ressources consommées => variation <0

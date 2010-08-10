@@ -639,7 +639,7 @@
                                  protocol_test,checkpoint_test,import_test,actions_test" description="run all tests"/>
 
     <target name="3a_test" depends="library.3a">
-        <build-test name="3a" depends="xerces,terrain,boost,mockpp"
+        <build-test name="3a" depends="xerces,terrain,boost"
             libs="lib${ant.project.name}_3a-${platform}-mt@{suffix},libprotobuf,
             lib${ant.project.name}_protocol-${platform}-mt">
         </build-test>
