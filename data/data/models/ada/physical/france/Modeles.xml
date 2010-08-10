@@ -59,8 +59,8 @@
         <mission name="ObservePoint"/>
         <mission name="ObserveDirection"/>
         <mission name="ObserveAgent"/>
-        <mission name="ReconnoiterPoint"/>
-        <mission name="ReconnoiterUrbanBlock"/>
+        <mission name="TEST ReconnoiterPoint"/>
+        <mission name="TEST ReconnoiterUrbanBlock"/>
         <mission name="Seal Off"/>
         <mission name="SeekAndDestroy"/>
         <mission name="SelfProtect"/>

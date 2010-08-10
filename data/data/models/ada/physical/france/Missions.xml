@@ -879,11 +879,11 @@
     <mission dia-behavior="net.masagroup.testSword.military.platoon.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveOnRoute" id="2041" name="MoveOnRoute">
       <parameter dia-name="objectives" name="destination" optional="false" type="PathBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.testSword.military.platoon.tasks.Reconnoiter" dia-type="net.masagroup.testSword.military.platoon.tasks.Reconnoiter" id="2043" name="ReconnoiterPoint">
-      <parameter dia-name="objectives" name="objectif" optional="false" type="PointBM"/>
+    <mission dia-behavior="net.masagroup.testSword.military.platoon.tasks.Reconnoiter" dia-type="net.masagroup.testSword.military.platoon.tasks.Reconnoiter" id="2043" name="TEST ReconnoiterPoint">
+      <parameter dia-name="objective" name="objectif" optional="false" type="PointBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.testSword.military.platoon.tasks.ReconnoiterRoute" dia-type="T_Mission_Pion_ReconnoiterBU" id="2044" name="ReconnoiterUrbanBlock">
-      <parameter dia-name="objectives" name="destination" optional="false" type="UrbanBlockBM"/>
+    <mission dia-behavior="net.masagroup.testSword.military.platoon.tasks.Reconnoiter" dia-type="T_Mission_Pion_ReconnoiterBU" id="2044" name="TEST ReconnoiterUrbanBlock">
+      <parameter dia-name="objective" name="objectif" optional="false" type="UrbanBlockBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.platoon.tasks.RemoveObstacle" dia-type="net.masagroup.testSword.military.platoon.tasks.RemoveObstacle" id="2045" name="RemoveObstacle">
       <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
