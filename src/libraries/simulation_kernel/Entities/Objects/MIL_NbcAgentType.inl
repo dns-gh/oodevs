@@ -169,16 +169,6 @@ MT_Float MIL_NbcAgentType::GetCoefReloadingTimeModificator()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_NbcAgentType::GetMinPropagationSpeed
-// Created: JVT 2004-10-29
-// -----------------------------------------------------------------------------
-inline
-MT_Float MIL_NbcAgentType::GetMinPropagationSpeed()
-{
-    return rMinPropagationSpeed_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_NbcAgentType::GetContaminationDistance
 // Created: HBD 2010-06-08
 // -----------------------------------------------------------------------------

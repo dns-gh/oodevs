@@ -20,7 +20,6 @@
 MIL_NbcAgentType::T_NbcAgentTypeMap MIL_NbcAgentType::nbcAgentTypes_;
 MT_Float                            MIL_NbcAgentType::rCoefMaxSpeedModificator_      = 1.;
 MT_Float                            MIL_NbcAgentType::rCoefReloadingTimeModificator_ = 1.;
-MT_Float                            MIL_NbcAgentType::rMinPropagationSpeed_          = 0.;
 MT_Float                            MIL_NbcAgentType::rContaminationDistance_        = 100.;
 MT_Float                            MIL_NbcAgentType::rContaminationQuantityGiven_    = 0.5;
 
@@ -46,7 +45,6 @@ void MIL_NbcAgentType::Initialize( xml::xistream& xis )
                 >> xml::attribute( "reloading-time-modifier", rCoefReloadingTimeModificator_ )
             >> xml::end
             >> xml::start( "propagation" )
-                >> xml::attribute( "wind-speed-limit", rMinPropagationSpeed_ )
                 >> xml::attribute( "contamination-distance", rContaminationDistance_ )
                 >> xml::attribute( "contamination-quantity-given", rContaminationQuantityGiven_ )
             >> xml::end;
@@ -56,13 +54,8 @@ void MIL_NbcAgentType::Initialize( xml::xistream& xis )
     if( rCoefReloadingTimeModificator_ <= 0 )
         xis.error( "nbc-suit: reloading-time-modifier <= 0" );
 
-    if( rMinPropagationSpeed_ < 0 )
-        xis.error( "propagation: wind-speed-limit < 0" );
-
     if( rContaminationDistance_ < 0 )
         xis.error( "propagation: contamination-distance < 0" );
-
-    rMinPropagationSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rMinPropagationSpeed_ );
 
     LoadingWrapper loader;
 
