@@ -19,131 +19,113 @@
 #include "StubMIL_Time_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
+namespace
+{
+    class Configuration
+    {
+    public :
+        Configuration()
+        {
+            MOCK_EXPECT( composante, NotifyHumanAdded ).once();
+            MOCK_EXPECT( composante, NotifyHumanRemoved ).once();
+        }
+        StubMIL_Time_ABC time;
+        MockHumansComposante composante;
+    };
+    class Fixture : public Configuration
+    {
+    public:
+        Fixture()
+            : human( time, composante )
+        {
+            // NOTHING
+        }
+        PHY_Human human;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: HumanTest
 // Created: MGD 2010-03-15
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( HumanMagicWound )
+BOOST_FIXTURE_TEST_CASE( HumanMagicWound, Fixture )
 {
-    StubMIL_Time_ABC time;
-    MockHumansComposante composante;
-    MOCK_EXPECT( composante, NotifyHumanAdded );
-    MOCK_EXPECT( composante, NotifyHumanRemoved );
-    PHY_Human human = PHY_Human( time, composante);
-
     BOOST_CHECK_EQUAL( &human.GetWound(), &PHY_HumanWound::notWounded_ );
-
     //Return false if same level
     BOOST_CHECK( !human.SetWound( PHY_HumanWound::notWounded_ ) );
-
-    MOCK_EXPECT( composante, NotifyHumanChanged );
+    MOCK_EXPECT( composante, NotifyHumanChanged ).once();
     BOOST_CHECK( human.SetWound( PHY_HumanWound::woundedU1_ ) );
-    MOCK_VERIFY( composante, NotifyHumanChanged );
     BOOST_CHECK_EQUAL( &human.GetWound(), &PHY_HumanWound::woundedU1_ );
 }
 
-BOOST_AUTO_TEST_CASE( HumanMagicHeal )
+BOOST_FIXTURE_TEST_CASE( HumanMagicHeal, Fixture )
 {
-    StubMIL_Time_ABC time;
-    MockHumansComposante composante;
-    MOCK_EXPECT( composante, NotifyHumanAdded );
-    MOCK_EXPECT( composante, NotifyHumanRemoved );
-    PHY_Human human = PHY_Human( time, composante);
-
     //normal heal
-    MOCK_EXPECT( composante, NotifyHumanChanged );
+    MOCK_EXPECT( composante, NotifyHumanChanged ).once();
     human.SetWound( PHY_HumanWound::woundedU1_ );
-    MOCK_EXPECT( composante, NotifyHumanChanged );
+    MOCK_EXPECT( composante, NotifyHumanChanged ).once();
     human.Heal();
     BOOST_CHECK_EQUAL( &human.GetWound(), &PHY_HumanWound::notWounded_ );
-
     //can resurrect
-    MOCK_EXPECT( composante, NotifyHumanChanged );
+    MOCK_EXPECT( composante, NotifyHumanChanged ).once();
     human.SetWound( PHY_HumanWound::killed_ );
-    MOCK_EXPECT( composante, NotifyHumanChanged );
+    MOCK_EXPECT( composante, NotifyHumanChanged ).once();
     human.Heal();
     BOOST_CHECK_EQUAL( &human.GetWound(), &PHY_HumanWound::notWounded_ );
-
-    MOCK_VERIFY( composante, NotifyHumanChanged );
 }
 
-BOOST_AUTO_TEST_CASE( HumanNormalWound )
+BOOST_FIXTURE_TEST_CASE( HumanNormalWound, Fixture )
 {
-    StubMIL_Time_ABC time;
-    MockHumansComposante composante;
-    MOCK_EXPECT( composante, NotifyHumanAdded );
-    MOCK_EXPECT( composante, NotifyHumanRemoved );
-    PHY_Human human = PHY_Human( time, composante);
-
     //normal wound
-    MOCK_EXPECT( composante, NotifyHumanChanged );
+    MOCK_EXPECT( composante, NotifyHumanChanged ).once();
     BOOST_CHECK( human.ApplyWound( PHY_HumanWound::woundedU2_ ) );
     BOOST_CHECK_EQUAL( &human.GetWound(), &PHY_HumanWound::woundedU2_ );
-
     //try to set a lesser wound
     BOOST_CHECK( !human.ApplyWound( PHY_HumanWound::woundedU3_ ) );
     BOOST_CHECK_EQUAL( &human.GetWound(), &PHY_HumanWound::woundedU2_ );
-
     //try to wound a man in logistic @TODO MGD
     //MIL_AutomateLOG tc2;
     //human.Evacuate( tc2 );
     //BOOST_CHECK( !human.ApplyWound( PHY_HumanWound::woundedU2_ ) );
-
     //try to wound a dead man
+    MOCK_EXPECT( composante, NotifyHumanChanged ).once();
     BOOST_CHECK( human.ApplyWound( PHY_HumanWound::killed_ ) );
     BOOST_CHECK( !human.ApplyWound( PHY_HumanWound::woundedU2_ ) );
-
-    MOCK_VERIFY( composante, NotifyHumanChanged );
 }
 
-
-BOOST_AUTO_TEST_CASE( HumanNormalHeal )
+BOOST_FIXTURE_TEST_CASE( HumanNormalHeal, Fixture )
 {
-    StubMIL_Time_ABC time;
-    MockHumansComposante composante;
-    MOCK_EXPECT( composante, NotifyHumanAdded );
-    MOCK_EXPECT( composante, NotifyHumanRemoved );
-    PHY_Human human = PHY_Human( time, composante);
-
     //normal heal
-    MOCK_EXPECT( composante, NotifyHumanChanged );
+    MOCK_EXPECT( composante, NotifyHumanChanged ).once();
     human.SetWound( PHY_HumanWound::woundedU1_ );
+    MOCK_EXPECT( composante, NotifyHumanChanged ).once();
     human.HealWound();
     BOOST_CHECK_EQUAL( &human.GetWound(), &PHY_HumanWound::notWounded_ );
-
     //can't resurrect
+    MOCK_EXPECT( composante, NotifyHumanChanged ).once();
     human.SetWound( PHY_HumanWound::killed_ );
     human.HealWound();
     BOOST_CHECK_EQUAL( &human.GetWound(), &PHY_HumanWound::killed_ );
-
-    MOCK_VERIFY( composante, NotifyHumanChanged );
 }
 
-BOOST_AUTO_TEST_CASE( HumanApplyPoisonous )
+BOOST_FIXTURE_TEST_CASE( HumanApplyPoisonous, Fixture )
 {
-    StubMIL_Time_ABC time;
-    MockHumansComposante composante;
-    MOCK_EXPECT( composante, NotifyHumanAdded );
-    MOCK_EXPECT( composante, NotifyHumanRemoved );
-    PHY_Human human = PHY_Human( time, composante);
-
-    xml::xistringstream xis( 
-        "<nbc>"
-        "   <propagation wind-speed-limit='5' contamination-distance='300' contamination-quantity-given='0.5' />"
-        "   <nbc-suit max-speed-modifier='0.4' reloading-time-modifier='1.5'/>"
-        "   <agents>"
-        "       <agent id='1' name='Biologique'>"
-        "           <effects intoxication='true' type='liquid'>"
-        "               <effect percentage='0' wound='nonblesse'/>"
-        "               <effect percentage='0.2' wound='u1'/>"
-        "               <effect percentage='0.15' wound='u2'/>"
-        "               <effect percentage='0.25' wound='u3'/>"
-        "               <effect percentage='0.2' wound='ue'/>"
-        "               <effect percentage='0.2' wound='mort'/>"
-        "           </effects>"
-        "       </agent>"
-        "   </agents>"
-        "</nbc>" );
+    xml::xistringstream xis( "<nbc>"
+                             "   <propagation wind-speed-limit='5' contamination-distance='300' contamination-quantity-given='0.5' />"
+                             "   <nbc-suit max-speed-modifier='0.4' reloading-time-modifier='1.5'/>"
+                             "   <agents>"
+                             "       <agent id='1' name='Biologique'>"
+                             "           <effects intoxication='true' type='liquid'>"
+                             "               <effect percentage='0' wound='nonblesse'/>"
+                             "               <effect percentage='0.2' wound='u1'/>"
+                             "               <effect percentage='0.15' wound='u2'/>"
+                             "               <effect percentage='0.25' wound='u3'/>"
+                             "               <effect percentage='0.2' wound='ue'/>"
+                             "               <effect percentage='0.2' wound='mort'/>"
+                             "           </effects>"
+                             "       </agent>"
+                             "   </agents>"
+                             "</nbc>" );
     std::vector< const MIL_NbcAgentType* > nbcTypes;
     //MIL_NbcAgentType::Initialize( xis );
     //nbcTypes.push_back( MIL_NbcAgentType::Find( 1 ) );
@@ -152,33 +134,21 @@ BOOST_AUTO_TEST_CASE( HumanApplyPoisonous )
     //BOOST_CHECK( human.IsWounded() );
 }
 
-BOOST_AUTO_TEST_CASE( HumanContaminationManagement )
+BOOST_FIXTURE_TEST_CASE( HumanContaminationManagement, Fixture )
 {
-    StubMIL_Time_ABC time;
-    MockHumansComposante composante;
-    MOCK_EXPECT( composante, NotifyHumanAdded );
-    MOCK_EXPECT( composante, NotifyHumanRemoved );
-    PHY_Human human = PHY_Human( time, composante);
-
     BOOST_CHECK( !human.IsContaminated() );
     std::vector< const MIL_NbcAgentType* > nbcTypes;
     MIL_ToxicEffectManipulator nbcAgent( nbcTypes, 1 );
-    MOCK_EXPECT( composante, NotifyHumanChanged );
+    MOCK_EXPECT( composante, NotifyHumanChanged ).once();
     human.ApplyContamination( nbcAgent );
     BOOST_CHECK( human.IsContaminated() );
-    MOCK_EXPECT( composante, NotifyHumanChanged );
+    MOCK_EXPECT( composante, NotifyHumanChanged ).once();
     human.HealContamination();
     BOOST_CHECK( !human.IsContaminated() );
 }
 
-BOOST_AUTO_TEST_CASE( HumanMentalDiseaseManagement )
+BOOST_FIXTURE_TEST_CASE( HumanMentalDiseaseManagement, Fixture )
 {
-    StubMIL_Time_ABC time;
-    MockHumansComposante composante;
-    MOCK_EXPECT( composante, NotifyHumanAdded );
-    MOCK_EXPECT( composante, NotifyHumanRemoved );
-    PHY_Human human = PHY_Human( time, composante);
-
     BOOST_CHECK( !human.IsMentalDiseased() );
     human.ApplyMentalDisease();
     //BOOST_CHECK( human.IsMentalDiseased() ); //@TODO MGd see why random, update interface corresponding to
@@ -186,19 +156,12 @@ BOOST_AUTO_TEST_CASE( HumanMentalDiseaseManagement )
     BOOST_CHECK( !human.IsMentalDiseased() );
 }
 
-BOOST_AUTO_TEST_CASE( HumanSetRank )
+BOOST_FIXTURE_TEST_CASE( HumanSetRank, Fixture )
 {
-    StubMIL_Time_ABC time;
-    MockHumansComposante composante;
-    MOCK_EXPECT( composante, NotifyHumanAdded );
-    MOCK_EXPECT( composante, NotifyHumanRemoved );
-    PHY_Human human = PHY_Human( time, composante);
-
-    MOCK_EXPECT( composante, NotifyHumanChanged );
+    MOCK_EXPECT( composante, NotifyHumanChanged ).once();
     BOOST_CHECK( human.SetRank( PHY_HumanRank::sousOfficier_ ) );
     BOOST_CHECK_EQUAL( &human.GetRank(), &PHY_HumanRank::sousOfficier_ );
     BOOST_CHECK( !human.SetRank( PHY_HumanRank::sousOfficier_ ) );
-
     //Add logistic notifycation test
 }
 
@@ -217,67 +180,47 @@ BOOST_AUTO_TEST_CASE( HumanCancelLogisticRequest )
   human.CancelLogisticRequest();
   BOOST_CHECK_EQUAL( E_Location::eMaintenance, human.GetLocation() );
 */
-
   //Add component notifycation test
   //Add pion back from medical log notifycation test
   //cancel medical state
 }
 
-BOOST_AUTO_TEST_CASE( HumanIsUsable )
+BOOST_FIXTURE_TEST_CASE( HumanIsUsable, Fixture )
 {
-    StubMIL_Time_ABC time;
-    MockHumansComposante composante;
-    MOCK_EXPECT( composante, NotifyHumanAdded );
-    MOCK_EXPECT( composante, NotifyHumanRemoved );
-    PHY_Human human = PHY_Human( time, composante);
-
     //PHY_MedicalHumanState medicalState;
-
     BOOST_CHECK( human.IsUsable() );
     BOOST_CHECK( !human.IsDead() );
     BOOST_CHECK( !human.IsWounded() );
-
-    MOCK_EXPECT( composante, NotifyHumanChanged );
+    MOCK_EXPECT( composante, NotifyHumanChanged ).once();
     human.ApplyWound( PHY_HumanWound::woundedU1_ );
     BOOST_CHECK( human.IsUsable() );// @TODO MGD Why? we can use a wounded man
     BOOST_CHECK( !human.IsDead() );
     BOOST_CHECK( human.IsWounded() );
-
+    MOCK_EXPECT( composante, NotifyHumanChanged ).once();
     human.ApplyWound( PHY_HumanWound::killed_ );
     BOOST_CHECK( !human.IsUsable() );
     BOOST_CHECK( human.IsDead() );
     BOOST_CHECK( !human.IsWounded() );
+    MOCK_EXPECT( composante, NotifyHumanChanged ).once();
     human.Heal();
     BOOST_CHECK( human.IsUsable() );
     //SetMedicalState( &medicalState );
     //BOOST_CHECK( !human.IsUsable() );
 }
 
-BOOST_AUTO_TEST_CASE( HumanIsAnEmergency )
+BOOST_FIXTURE_TEST_CASE( HumanIsAnEmergency, Fixture )
 {
-    StubMIL_Time_ABC time;
-    MockHumansComposante composante;
-    MOCK_EXPECT( composante, NotifyHumanAdded );
-    MOCK_EXPECT( composante, NotifyHumanRemoved );
-    PHY_Human human = PHY_Human( time, composante);
-
     BOOST_CHECK( !human.IsAnEmergency() );
-    MOCK_EXPECT( composante, NotifyHumanChanged );
+    MOCK_EXPECT( composante, NotifyHumanChanged ).once();
     human.SetWound( PHY_HumanWound::woundedU1_ );
     BOOST_CHECK( human.IsAnEmergency() );
-    MOCK_EXPECT( composante, NotifyHumanChanged );
+    MOCK_EXPECT( composante, NotifyHumanChanged ).once();
     human.SetWound( PHY_HumanWound::killed_ );
     BOOST_CHECK( !human.IsAnEmergency() );
 }
 
-BOOST_AUTO_TEST_CASE( HumanUpdate )
+BOOST_FIXTURE_TEST_CASE( HumanUpdate, Fixture )
 {
-    StubMIL_Time_ABC time;
-    MockHumansComposante composante;
-    MOCK_EXPECT( composante, NotifyHumanAdded );
-    MOCK_EXPECT( composante, NotifyHumanRemoved );
-    PHY_Human human = PHY_Human( time, composante);
-
     human.Update();
     //Add Notification need medical test
     //time.Add( time + delta mort );
@@ -285,18 +228,12 @@ BOOST_AUTO_TEST_CASE( HumanUpdate )
     //Add MIL_Report report send test
 }
 
-BOOST_AUTO_TEST_CASE( HumanNeedEvacuation )
+BOOST_FIXTURE_TEST_CASE( HumanNeedEvacuation, Fixture )
 {
-    StubMIL_Time_ABC time;
-    MockHumansComposante composante;
-    MOCK_EXPECT( composante, NotifyHumanAdded );
-    MOCK_EXPECT( composante, NotifyHumanRemoved );
-    PHY_Human human = PHY_Human( time, composante);
     //PHY_MedicalHumanState medicalState;
-
     BOOST_CHECK( !human.NeedEvacuation() );
     BOOST_CHECK( !human.NeedMedical() );
-    MOCK_EXPECT( composante, NotifyHumanChanged );
+    MOCK_EXPECT( composante, NotifyHumanChanged ).once();
     human.SetWound( PHY_HumanWound::woundedU1_ );
     BOOST_CHECK( human.NeedEvacuation() );
     BOOST_CHECK( human.NeedMedical() );
@@ -305,60 +242,35 @@ BOOST_AUTO_TEST_CASE( HumanNeedEvacuation )
     //BOOST_CHECK( human.NeedMedical() );
 }
 
-BOOST_AUTO_TEST_CASE( HumanNeedEvacuate )
+BOOST_FIXTURE_TEST_CASE( HumanNeedEvacuate, Fixture )
 {
-    StubMIL_Time_ABC time;
-    MockHumansComposante composante;
-    MOCK_EXPECT( composante, NotifyHumanAdded );
-    MOCK_EXPECT( composante, NotifyHumanRemoved );
-    PHY_Human human = PHY_Human( time, composante);
     //MIL_AutomateLOG tc2;
-
     //human.Evacuate( tc2 );
     //Add notification test
     //See why in this interface
 }
 
-BOOST_AUTO_TEST_CASE( HumanNotifyHandledByMedical )
+BOOST_FIXTURE_TEST_CASE( HumanNotifyHandledByMedical, Fixture )
 {
-    StubMIL_Time_ABC time;
-    MockHumansComposante composante;
-    MOCK_EXPECT( composante, NotifyHumanAdded );
-    MOCK_EXPECT( composante, NotifyHumanRemoved );
-    PHY_Human human = PHY_Human( time, composante);
-
-    MOCK_EXPECT( composante, NotifyHumanChanged );
+    MOCK_EXPECT( composante, NotifyHumanChanged ).once();
     human.NotifyHandledByMedical();
     BOOST_CHECK_EQUAL( human.GetLocation(), PHY_Human::eMedical );
-    MOCK_VERIFY( composante, NotifyHumanChanged );
 }
 
-BOOST_AUTO_TEST_CASE( HumanNotifyBackToWar )
+BOOST_FIXTURE_TEST_CASE( HumanNotifyBackToWar, Fixture )
 {
-    StubMIL_Time_ABC time;
-    MockHumansComposante composante;
-    MOCK_EXPECT( composante, NotifyHumanAdded );
-    MOCK_EXPECT( composante, NotifyHumanRemoved );
-    PHY_Human human = PHY_Human( time, composante);
-
     //human.NotifyBackToWar(); //@TODO MGD need PHY_MedicalHumanState to be set
     //Check notification to component and event
 }
 
-BOOST_AUTO_TEST_CASE( HumanMaintenanceManagement )
+BOOST_FIXTURE_TEST_CASE( HumanMaintenanceManagement, Fixture )
 {
-    StubMIL_Time_ABC time;
-    MockHumansComposante composante;
-    MOCK_EXPECT( composante, NotifyHumanAdded );
-    MOCK_EXPECT( composante, NotifyHumanRemoved );
-    PHY_Human human = PHY_Human( time, composante);
-
-    MOCK_EXPECT( composante, NotifyHumanChanged );
+    MOCK_EXPECT( composante, NotifyHumanChanged ).once();
     human.NotifyComposanteHandledByMaintenance();
     BOOST_CHECK_EQUAL( human.GetLocation(), PHY_Human::eMaintenance );
+    MOCK_EXPECT( composante, NotifyHumanChanged ).once();
     human.NotifyComposanteBackFromMaintenance();
     BOOST_CHECK_EQUAL( human.GetLocation(), PHY_Human::eBattleField );
-    MOCK_VERIFY( composante, NotifyHumanChanged );
 }
 
 /*@TODO MGD find a  way to serialize MockHumansComposante
