@@ -36,9 +36,9 @@ namespace
     {
         MessageSendingFixture()
             : endpoint_( "127.0.0.1:33333" )
-            , port_( 33333 )
-            , client_( endpoint_ )
-            , server_( port_ )
+            , port_    ( 33333 )
+            , client_  ( endpoint_ )
+            , server_  ( port_ )
         {
             server_.ConnectionSucceeded_mocker.expects( once() ).with( mockpp::any() );
             client_.ConnectionSucceeded_mocker.expects( once() ).with( eq< const std::string >( endpoint_ ) );
@@ -114,19 +114,19 @@ namespace
     };
 }
 
-BOOST_FIXTURE_TEST_SUITE( MessageTestSuite, MessageSendingFixture )
+//BOOST_FIXTURE_TEST_SUITE( MessageTestSuite, MessageSendingFixture )
 
-/*
 // -----------------------------------------------------------------------------
 // Name: SerializationTest_SendOneMessageFromClientToServer
 // Created: FHD 2009-08-24
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( SerializationTest_SendOneMessageFromClientToServer )
 {
-    MsgPion message;
-    message.set_id( 101 );
-    message.set_name( "My name" );
-    VerifyServerReception( message );
+    BOOST_FAIL_ON_DATE( 2011, 02, 01 );
+    //MsgPion message;
+    //message.set_id( 101 );
+    //message.set_name( "My name" );
+    //VerifyServerReception( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,12 +137,13 @@ BOOST_AUTO_TEST_CASE( SerializationTest_SendOneMessageFromClientToServer )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( SerializationTest_SendMultipleMessageToServer )
 {
-    MsgPion message;
-    message.set_id( 101 );
-    message.set_name( "test" );
-    VerifyServerReception( message, 10 );
-//    VerifyServerReception( message, 100 );
-//    VerifyServerReception( message, 1000 );
+    BOOST_FAIL_ON_DATE( 2011, 02, 01 );
+    //MsgPion message;
+    //message.set_id( 101 );
+    //message.set_name( "test" );
+    //VerifyServerReception( message, 10 );
+    //VerifyServerReception( message, 100 );
+    //VerifyServerReception( message, 1000 );
 }
 
 // -----------------------------------------------------------------------------
@@ -151,11 +152,12 @@ BOOST_AUTO_TEST_CASE( SerializationTest_SendMultipleMessageToServer )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( SerializationTest_SendMessageBothWays )
 {
-    MsgPion message;
-    message.set_id( 1 );
-    message.set_name( "My name" );
-    VerifyClientReception( message );
-    VerifyServerReception( message );
+    BOOST_FAIL_ON_DATE( 2011, 02, 01 );
+    //MsgPion message;
+    //message.set_id( 1 );
+    //message.set_name( "My name" );
+    //VerifyClientReception( message );
+    //VerifyServerReception( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -164,9 +166,9 @@ BOOST_AUTO_TEST_CASE( SerializationTest_SendMessageBothWays )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( SerializationTest_SendEmptyMessage )
 {
-    EmptyMessage message;
-    VerifyClientReception( message );
+    BOOST_FAIL_ON_DATE( 2011, 02, 01 );
+    //EmptyMessage message;
+    //VerifyClientReception( message );
 }
-*/
 
-BOOST_AUTO_TEST_SUITE_END()
+//BOOST_AUTO_TEST_SUITE_END()
