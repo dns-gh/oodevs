@@ -8,11 +8,9 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
-
 #include "MT_Tools/MT_Vector2D.h"
 #include "MT_Tools/MT_Vector3D.h"
 #include "MT_Tools/MT_Tools_Types.h"
-#include <xeumeuleu/xml.hpp>
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteTypePion.h"
 #include "Entities/Agents/Units/Weapons/PHY_WeaponType.h"
@@ -24,9 +22,6 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Fixture.h"
 #include "UrbanModel.h"
-#include <Urban/Model.h>
-#include <Urban/UrbanObject.h>
-
 #include "MockMIL_Time_ABC.h"
 #include "MockAgent.h"
 #include "MockRoleInterface_Posture.h"
@@ -36,106 +31,102 @@
 #include "MockPHY_RoleInterface_HumanFactors.h"
 #include "MockRoleLocation.h"
 #include "TestPhDirectFire.h"
-
 #include "simulation_terrain/TER_World.h"
+#include <boost/assign/list_of.hpp>
+#include <xeumeuleu/xml.hpp>
+#include <Urban/Model.h>
+#include <Urban/UrbanObject.h>
+
+namespace
+{
+    class Configuration
+    {
+    public:
+        Configuration()
+            : firerFixture ( effectManager )
+            , targetFixture( effectManager )
+        {
+            vertices = boost::assign::list_of( geometry::Point2f( -1, -1 ) )( geometry::Point2f( -1, 1 ) )
+                                             ( geometry::Point2f( 1, 1 ) )( geometry::Point2f( 1, -1 ) );
+        }
+        MIL_EffectManager effectManager;
+        FixturePion firerFixture;
+        FixturePion targetFixture;
+        std::vector< geometry::Point2f > vertices;
+    };
+    class Fixture : public Configuration
+    {
+    public:
+        Fixture()
+            : poly( vertices )
+            , urbanBlock( new urban::UrbanObject ( 0, "test", &poly, 0 ) )
+        {
+            TER_World::Initialize( "../../data/data/terrains/Drosoville/Terrain.xml" );
+        }
+        ~Fixture()
+        {
+            TER_World::DestroyWorld();
+        }
+        geometry::Polygon2f poly;
+        std::auto_ptr< urban::UrbanObject > urbanBlock;
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: PhComputerTest
 // Created: SLG 2010-01-19
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( PhComputerFirerPositionTest )
+BOOST_FIXTURE_TEST_CASE( PhComputerFirerPositionTest, Fixture )
 {
-    TER_World::Initialize( "../../data/data/terrains/Drosoville/Terrain.xml" );
-
-    MIL_EffectManager effectManager;
-    FixturePion firerFixture( effectManager );
-    FixturePion targetFixture( effectManager );
-    std::vector< geometry::Point2f > vertices;
-    vertices.push_back( geometry::Point2f( -1, -1 ) );
-    vertices.push_back( geometry::Point2f( -1, 1 ) );
-    vertices.push_back( geometry::Point2f( 1, 1 ) );
-    vertices.push_back( geometry::Point2f( 1, -1 ) );
-
-    std::auto_ptr< urban::UrbanObject > urbanBlock;
-    geometry::Polygon2f poly( vertices );
-    urbanBlock.reset( new urban::UrbanObject ( 0, "test", &poly, 0 ) );
-
     MIL_ObjectLoader loader;
     {
         xml::xistringstream xis( "<objects>"
-            "<object type='urban block'/>"
-            "</objects>"
-            );
+                                 "    <object type='urban block'/>"
+                                "</objects>" );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
     std::auto_ptr< MIL_Object_ABC > pObject;
     {
         BOOST_CHECK_NO_THROW( pObject.reset( loader.CreateUrbanObject( *urbanBlock ) ) );
     }
-
     PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( *firerFixture.pPion_ );
     urbanRole->NotifyMovingInsideObject( *pObject);
     firerFixture.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
-
     PHY_RolePion_Location* firerlocationRole = new PHY_RolePion_Location( *firerFixture.pPion_ );
     firerlocationRole->MagicMove( MT_Vector2D( -0.1, -0.1 ) );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *firerlocationRole );
-
     PHY_RolePion_Location* targetLocationRole = new PHY_RolePion_Location( *targetFixture.pPion_ );
     targetLocationRole->MagicMove( MT_Vector2D( 2, 1 ) );
     targetFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *targetLocationRole );
-
     geometry::Point2f result( 1, 0.5 );
     BOOST_CHECK_EQUAL( result, urbanRole->GetFirerPosition( *targetFixture.pPion_ ) );
     pObject.reset();
-    TER_World::DestroyWorld();
 }
 
-BOOST_AUTO_TEST_CASE( PhComputerTargetPositionTest )
+BOOST_FIXTURE_TEST_CASE( PhComputerTargetPositionTest, Fixture )
 {
-    TER_World::Initialize( "../../data/data/terrains/Drosoville/Terrain.xml" );
-    MIL_EffectManager effectManager;
-    FixturePion firerFixture( effectManager );
-    FixturePion targetFixture( effectManager );
-
-    std::vector< geometry::Point2f > vertices;
-    vertices.push_back( geometry::Point2f( -1, -1 ) );
-    vertices.push_back( geometry::Point2f( -1, 1 ) );
-    vertices.push_back( geometry::Point2f( 1, 1 ) );
-    vertices.push_back( geometry::Point2f( 1, -1 ) );
-
-    std::auto_ptr< urban::UrbanObject > urbanBlock;
-    geometry::Polygon2f poly( vertices );
-    urbanBlock.reset( new urban::UrbanObject ( 0, "test", &poly, 0 ) );
-
     MIL_ObjectLoader loader;
     {
-        xml::xistringstream xis(
-            "<objects>"
-            "    <object type='urban block'/>"
-            "</objects>" );
+        xml::xistringstream xis( "<objects>"
+                                 "    <object type='urban block'/>"
+                                 "</objects>" );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
     MIL_Object_ABC* pObject = loader.CreateUrbanObject( *urbanBlock );
-
     PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( *firerFixture.pPion_ );
     urbanRole->NotifyMovingInsideObject( *pObject );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
-
     PHY_RolePion_Location* targetLocationRole = new PHY_RolePion_Location( *targetFixture.pPion_ );
     targetLocationRole->MagicMove( MT_Vector2D( 0, 0 ) );
     targetFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *targetLocationRole );
-
     PHY_RolePion_Location* firerLocationRole = new PHY_RolePion_Location( *firerFixture.pPion_ );
     firerLocationRole->MagicMove( MT_Vector2D( 2, 1 ) );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *firerLocationRole );
-
     const geometry::Point2f firerPosition( 2, 1 );
     const geometry::Point2f targetPosition( 0, 0 );
     geometry::Point2f result = urbanRole->GetTargetPosition( *targetFixture.pPion_ );
     BOOST_CHECK_CLOSE( std::sqrt( 5.0 ), firerPosition.Distance( result ), 50 );
     BOOST_CHECK_EQUAL( true, geometry::Vector2f( firerPosition, targetPosition ).IsParallel( geometry::Vector2f( firerPosition, result ) ) );
-    TER_World::DestroyWorld();
 }
 
 BOOST_AUTO_TEST_CASE( PhComputerDistanceInSameBUTest )
@@ -143,41 +134,22 @@ BOOST_AUTO_TEST_CASE( PhComputerDistanceInSameBUTest )
     //TODO
 }
 
-BOOST_AUTO_TEST_CASE( PhComputerIndirectPhModifier )
+BOOST_FIXTURE_TEST_CASE( PhComputerIndirectPhModifier, Fixture )
 {
-    TER_World::Initialize( "../../data/data/terrains/Drosoville/Terrain.xml" );
-    MIL_EffectManager effectManager;
-    FixturePion fixture( effectManager );
-    std::vector< geometry::Point2f > vertices;
-    vertices.push_back( geometry::Point2f( -1, -1 ) );
-    vertices.push_back( geometry::Point2f( -1, 1 ) );
-    vertices.push_back( geometry::Point2f( 1, 1 ) );
-    vertices.push_back( geometry::Point2f( 1, -1 ) );
-
-    std::auto_ptr< urban::UrbanObject > urbanBlock;
-    geometry::Polygon2f poly( vertices );
-    urbanBlock.reset( new urban::UrbanObject ( 0, "test", &poly, 0 ) );
-
     MIL_ObjectLoader loader;
     {
-        xml::xistringstream xis(
-            "<objects>"
-            "    <object type='urban block'/>"
-            "</objects>" );
+        xml::xistringstream xis( "<objects>"
+                                 "    <object type='urban block'/>"
+                                 "</objects>" );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
     MIL_Object_ABC* pObject = loader.CreateUrbanObject( *urbanBlock );
-
-    PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( *fixture.pPion_ );
+    PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( *firerFixture.pPion_ );
     urbanRole->NotifyMovingInsideObject( *pObject );
-    fixture.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
-
-    PHY_RolePion_Location* locationRole = new PHY_RolePion_Location( *fixture.pPion_ );
+    firerFixture.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
+    PHY_RolePion_Location* locationRole = new PHY_RolePion_Location( *firerFixture.pPion_ );
     locationRole->MagicMove( MT_Vector2D( 0, 0 ) );
-    fixture.pPion_->RegisterRole< PHY_RolePion_Location >( *locationRole );
-
-    const MT_Ellipse attritionSurface     ( MT_Vector2D( 2, 1 ), MT_Vector2D( 4, 1 ),  MT_Vector2D( 2, 2 ) );
+    firerFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *locationRole );
+    const MT_Ellipse attritionSurface( MT_Vector2D( 2, 1 ), MT_Vector2D( 4, 1 ),  MT_Vector2D( 2, 2 ) );
     BOOST_CHECK_CLOSE( 0.0, urbanRole->ComputeRatioPionInside( attritionSurface ), 1. ); // $$$$ _RC_ SLG 2010-04-26: trouver un moyen de changer la posture du pion pour tester le résultat
-
-    TER_World::DestroyWorld();
 }
