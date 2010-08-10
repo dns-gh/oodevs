@@ -12,10 +12,7 @@
 
 #include "clients_kernel/Types.h"
 #include "clients_kernel/Drawable_ABC.h"
-#include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
-
-using namespace Common;
 
 namespace kernel
 {
@@ -29,17 +26,21 @@ namespace kernel
 namespace MsgsSimToClient
 {
     class MsgLogMaintenanceHandlingCreation;
+    class MsgLogMaintenanceHandlingUpdate;
 }
 
 // =============================================================================
-// Created: NLD 2004-03-18
+/** @class  LogMaintenanceConsign
+    @brief  LogMaintenanceConsign
+*/
+// Created: AGE 2006-02-28
 // =============================================================================
 class LogMaintenanceConsign : public kernel::Drawable_ABC
 {
 public:
     //! @name Constructor / Destructor
     //@{
-    LogMaintenanceConsign( kernel::Controller& controller, const MsgsSimToClient::MsgLogMaintenanceHandlingCreation& message,
+             LogMaintenanceConsign( kernel::Controller& controller, const MsgsSimToClient::MsgLogMaintenanceHandlingCreation& message,
                                     const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const tools::Resolver_ABC< kernel::ComponentType >& componentResolver,
                                     const tools::Resolver_ABC< kernel::BreakdownType >& breakdownResolver );
     virtual ~LogMaintenanceConsign();
@@ -47,13 +48,9 @@ public:
 
     //! @name Operations
     //@{
+    void Update( const MsgsSimToClient::MsgLogMaintenanceHandlingUpdate& message );
     void Display( kernel::Displayer_ABC& displayer, kernel::Displayer_ABC& itemDisplayer ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    //@}
-
-    //! @name Network events
-    //@{
-    void Update( const MsgsSimToClient::MsgLogMaintenanceHandlingUpdate& message );
     //@}
 
 private:
@@ -64,15 +61,18 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::Agent_ABC >& resolver_;
-    uint    nID_;
-    kernel::Agent_ABC&  pion_;
-    kernel::Agent_ABC*  pPionLogHandling_;
+    unsigned int nID_;
+    kernel::Agent_ABC& consumer_;
+    kernel::Agent_ABC* pPionLogHandling_;
     const kernel::ComponentType* equipmentType_;
     const kernel::BreakdownType* breakdownType_;
-    bool    diagnosed_;
+    bool diagnosed_;
     E_LogMaintenanceHandlingStatus nState_;
+    //@}
 };
 
 #endif // __LogMaintenanceConsign_h_

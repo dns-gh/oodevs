@@ -8,18 +8,20 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
-
 #include "LogSupplyConsign.h"
-#include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/Controller.h"
-#include "LogisticConsigns.h"
-#include "clients_kernel/Displayer_ABC.h"
 #include "DotationRequest.h"
+#include "LogisticConsigns.h"
+#include "Tools.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Viewport_ABC.h"
-#include "Tools.h"
+#include "protocol/protocol.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "PcAttributes.h"
 
 using namespace geometry;
 using namespace kernel;
@@ -28,13 +30,16 @@ using namespace kernel;
 // Name: LogSupplyConsign constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogSupplyConsign::LogSupplyConsign( Controller& controller, const tools::Resolver_ABC< Automat_ABC >& resolver, const tools::Resolver_ABC< Agent_ABC >& agentResolver, const tools::Resolver_ABC< DotationType >& dotationResolver, const MsgsSimToClient::MsgLogSupplyHandlingCreation& message )
+LogSupplyConsign::LogSupplyConsign( Controller& controller, const tools::Resolver_ABC< Automat_ABC >& resolver
+                                  , const tools::Resolver_ABC< Agent_ABC >& agentResolver
+                                  , const tools::Resolver_ABC< DotationType >& dotationResolver
+                                  , const MsgsSimToClient::MsgLogSupplyHandlingCreation& message )
     : controller_           ( controller )
     , resolver_             ( resolver )
     , agentResolver_        ( agentResolver )
     , dotationResolver_     ( dotationResolver )
     , nID_                  ( message.oid_consigne() )
-    , pion_                 ( resolver.Get( message.oid_automate() ) )
+    , consumer_             ( resolver.Get( message.oid_automate() ) )
     , pAutomateLogHandling_ ( 0 )
     , pPionLogConvoying_    ( 0 )
     , pAutomateLogProvidingConvoyResources_( 0 )
@@ -46,7 +51,7 @@ LogSupplyConsign::LogSupplyConsign( Controller& controller, const tools::Resolve
                                          message.dotations().elem( i ).quantite_demandee(),
                                          message.dotations().elem( i ).quantite_accordee(),
                                          message.dotations().elem( i ).quantite_en_transit() ) );
-    pion_.Get< LogSupplyConsigns >().AddConsign( *this );
+    consumer_.Get< LogSupplyConsigns >().AddConsign( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +60,7 @@ LogSupplyConsign::LogSupplyConsign( Controller& controller, const tools::Resolve
 // -----------------------------------------------------------------------------
 LogSupplyConsign::~LogSupplyConsign()
 {
-    pion_.Get< LogSupplyConsigns >().RemoveConsign( *this );
+    consumer_.Get< LogSupplyConsigns >().RemoveConsign( *this );
     if( pAutomateLogHandling_ )
         pAutomateLogHandling_->Get< LogSupplyConsigns >().TerminateConsign( *this );
     if( pPionLogConvoying_ )
@@ -69,7 +74,7 @@ LogSupplyConsign::~LogSupplyConsign()
 // -----------------------------------------------------------------------------
 void LogSupplyConsign::Update( const MsgsSimToClient::MsgLogSupplyHandlingUpdate& message )
 {
-    if( message.has_oid_automate_log_traitant()  )
+    if( message.has_oid_automate_log_traitant() && ( !pAutomateLogHandling_ || message.oid_automate_log_traitant() != int( pAutomateLogHandling_ ->GetId() ) ) )
     {
         if( pAutomateLogHandling_ )
             pAutomateLogHandling_->Get< LogSupplyConsigns >().TerminateConsign( *this );
@@ -77,8 +82,7 @@ void LogSupplyConsign::Update( const MsgsSimToClient::MsgLogSupplyHandlingUpdate
         if( pAutomateLogHandling_ )
             pAutomateLogHandling_->Get< LogSupplyConsigns >().HandleConsign( *this );
     }
-
-    if( message.has_oid_pion_convoyant()  )
+    if( message.has_oid_pion_convoyant() && ( !pPionLogConvoying_ || message.oid_pion_convoyant() != int( pPionLogConvoying_->GetId() ) ) )
     {
         if( pPionLogConvoying_ )
             pPionLogConvoying_->Get< LogSupplyConsigns >().TerminateConsign( *this );
@@ -86,19 +90,14 @@ void LogSupplyConsign::Update( const MsgsSimToClient::MsgLogSupplyHandlingUpdate
         if( message.oid_pion_convoyant() )
             pPionLogConvoying_->Get< LogSupplyConsigns >().HandleConsign( *this );
     }
-
     if( message.has_oid_automate_log_fournissant_moyens_convoi()  )
         pAutomateLogProvidingConvoyResources_ = resolver_.Find( message.oid_automate_log_fournissant_moyens_convoi() );
-
     if( message.has_etat()  )
         nState_ = E_LogSupplyHandlingStatus( message.etat() );
-
     if( message.has_dotations()  )
-    {
         for( int i = 0; i < message.dotations().elem_size(); ++i )
         {
-            DotationRequest* request = Find( message.dotations().elem( i ).ressource_id() );
-            if( request )
+            if( DotationRequest* request = Find( message.dotations().elem( i ).ressource_id() ) )
             {
                 request->requested_ = message.dotations().elem( i ).quantite_demandee();
                 request->granted_   = message.dotations().elem( i ).quantite_accordee();
@@ -111,7 +110,6 @@ void LogSupplyConsign::Update( const MsgsSimToClient::MsgLogSupplyHandlingUpdate
                                          message.dotations().elem( i ).quantite_accordee(),
                                          message.dotations().elem( i ).quantite_en_transit() ) );
         }
-    }
     controller_.Update( *this );
 }
 
@@ -121,10 +119,9 @@ void LogSupplyConsign::Update( const MsgsSimToClient::MsgLogSupplyHandlingUpdate
 // -----------------------------------------------------------------------------
 void LogSupplyConsign::Display( kernel::Displayer_ABC& displayer, kernel::Displayer_ABC& itemDisplayer ) const
 {
-    displayer.Display( pion_ ).Display( nState_ );
-
+    displayer.Display( consumer_ ).Display( nState_ );
     itemDisplayer.Display( tools::translate( "Logistic", "Instruction:" ), nID_ )
-                 .Display( tools::translate( "Logistic", "Consumer:" ), pion_ )
+                 .Display( tools::translate( "Logistic", "Consumer:" ), consumer_ )
                  .Display( tools::translate( "Logistic", "Handler:" ), pAutomateLogHandling_ )
                  .Display( tools::translate( "Logistic", "Supplier:" ), pAutomateLogProvidingConvoyResources_ )
                  .Display( tools::translate( "Logistic", "Convoyer:" ), pPionLogConvoying_ )
@@ -139,12 +136,10 @@ void LogSupplyConsign::Draw( const Point2f& , const kernel::Viewport_ABC& viewpo
 {
     if( ! pAutomateLogHandling_ || ! tools.ShouldDisplay( "RealTimeLogistic" ) )
         return;
-
     const Point2f from = pAutomateLogHandling_->Get< Positions >().GetPosition();
-    const Point2f to   = pion_.Get< Positions >().GetPosition();
+    const Point2f to   = consumer_.Get< Positions >().GetPosition();
     if( ! viewport.IsVisible( Rectangle2f( from, to ) ) )
         return;
-
     glColor4f( COLOR_ORANGE );
     switch( nState_ )
     {

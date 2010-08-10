@@ -82,11 +82,6 @@ void PHY_SupplyConsign_ABC::SendChangedState( client::LogSupplyHandlingUpdate& a
 // -----------------------------------------------------------------------------
 void PHY_SupplyConsign_ABC::SendDefaultState( client::LogSupplyHandlingUpdate& asn )
 {
-//    asn().set_oid_automate_log_traitantPresent( 1 );
-//    asn().set_oid_automate_log_fournissant_moyens_convoiPresent( 1 );
-//    asn().set_oid_pion_convoyantPresent( 1 );
-//    asn().set_etatPresent( 1 );
-
     asn().set_oid_pion_convoyant( 0 );
     asn().set_oid_automate_log_fournissant_moyens_convoi( 0 );
     asn().set_oid_automate_log_traitant( 0 );

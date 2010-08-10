@@ -12,10 +12,7 @@
 
 #include "clients_kernel/Types.h"
 #include "clients_kernel/Drawable_ABC.h"
-#include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
-
-using namespace Common;
 
 namespace kernel
 {
@@ -27,29 +24,29 @@ namespace kernel
 namespace MsgsSimToClient
 {
     class MsgLogMedicalHandlingCreation;
+    class MsgLogMedicalHandlingUpdate;
 }
 
 // =============================================================================
-// Created: NLD 2004-03-18
+/** @class  LogMedicalConsign
+    @brief  LogMedicalConsign
+*/
+// Created: AGE 2006-02-28
 // =============================================================================
 class LogMedicalConsign : public kernel::Drawable_ABC
 {
 public:
     //! @name Operations
     //@{
-    LogMedicalConsign( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const MsgsSimToClient::MsgLogMedicalHandlingCreation& message );
+             LogMedicalConsign( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const MsgsSimToClient::MsgLogMedicalHandlingCreation& message );
     virtual ~LogMedicalConsign();
     //@}
 
     //! @name Operations
     //@{
+    void Update( const MsgsSimToClient::MsgLogMedicalHandlingUpdate& message );
     void Display( kernel::Displayer_ABC& displayer, kernel::Displayer_ABC& itemDisplayer ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    //@}
-
-    //! @name Network events
-    //@{
-    void Update( const MsgsSimToClient::MsgLogMedicalHandlingUpdate& message );
     //@}
 
 private:
@@ -64,10 +61,9 @@ private:
     //@{
     kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::Agent_ABC >& resolver_;
-
-    uint    nID_;
-    kernel::Agent_ABC&  pion_;
-    kernel::Agent_ABC*  pPionLogHandling_;
+    unsigned int nID_;
+    kernel::Agent_ABC& consumer_;
+    kernel::Agent_ABC* pPionLogHandling_;
     bool    bMentalDeceased_;
     bool    bContaminated_;
     bool    diagnosed_;

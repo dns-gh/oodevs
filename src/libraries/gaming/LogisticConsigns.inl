@@ -99,7 +99,7 @@ void LogisticConsigns_ABC< ConcreteExtension, Consign >::TerminateConsign( Consi
 template< typename ConcreteExtension, typename Consign >
 void LogisticConsigns_ABC< ConcreteExtension, Consign >::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    if( ( handled_.empty() && requested_.empty() ) || ! tools.ShouldDisplay( "RealTimeLogistic" ) )
+    if( ! tools.ShouldDisplay( "RealTimeLogistic" ) || ( handled_.empty() && requested_.empty() ) )
         return;
 
     const bool handledOnly = tools.ShouldDisplay( "RealTimeLogistic", false );

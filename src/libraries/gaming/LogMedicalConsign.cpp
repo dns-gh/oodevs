@@ -8,17 +8,15 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
-
 #include "LogMedicalConsign.h"
-#include "clients_kernel/Agent_ABC.h"
 #include "LogisticConsigns.h"
+#include "Tools.h"
+#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "Tools.h"
+#include "clients_kernel/Viewport_ABC.h"
 
 using namespace geometry;
 using namespace kernel;
@@ -31,15 +29,15 @@ LogMedicalConsign::LogMedicalConsign( Controller& controller, const tools::Resol
     : controller_      ( controller )
     , resolver_        ( resolver )
     , nID_             ( message.oid_consigne() )
-    , pion_            ( resolver_.Get( message.oid_pion() ) )
+    , consumer_        ( resolver_.Get( message.oid_pion() ) )
     , pPionLogHandling_( 0 )
     , wound_           ( E_HumanWound( message.blessure() ) )
-    , bMentalDeceased_ ( message.blesse_mental() != 0 )
-    , bContaminated_   ( message.contamine_nbc() != 0 )
+    , bMentalDeceased_ ( message.blesse_mental() )
+    , bContaminated_   ( message.contamine_nbc() )
     , diagnosed_       ( false )
     , nState_          ( eLogMedicalHandlingStatus_Termine )
 {
-    pion_.Get< LogMedicalConsigns >().AddConsign( *this );
+    consumer_.Get< LogMedicalConsigns >().AddConsign( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,14 +46,10 @@ LogMedicalConsign::LogMedicalConsign( Controller& controller, const tools::Resol
 // -----------------------------------------------------------------------------
 LogMedicalConsign::~LogMedicalConsign()
 {
-    pion_.Get< LogMedicalConsigns >().RemoveConsign( *this );
+    consumer_.Get< LogMedicalConsigns >().RemoveConsign( *this );
     if( pPionLogHandling_ )
         pPionLogHandling_->Get< LogMedicalConsigns >().TerminateConsign( *this );
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: LogMedicalConsign::Update
@@ -63,7 +57,7 @@ LogMedicalConsign::~LogMedicalConsign()
 // -----------------------------------------------------------------------------
 void LogMedicalConsign::Update( const MsgsSimToClient::MsgLogMedicalHandlingUpdate& message )
 {
-    if( message.has_oid_pion_log_traitant()  )
+    if( message.has_oid_pion_log_traitant() && ( !pPionLogHandling_ || message.oid_pion_log_traitant() != int( pPionLogHandling_->GetId() ) ) )
     {
         if( pPionLogHandling_ )
             pPionLogHandling_->Get< LogMedicalConsigns >().TerminateConsign( *this );
@@ -71,18 +65,16 @@ void LogMedicalConsign::Update( const MsgsSimToClient::MsgLogMedicalHandlingUpda
         if( pPionLogHandling_ )
             pPionLogHandling_->Get< LogMedicalConsigns >().HandleConsign( *this );
     }
-
     if( message.has_blesse_mental()  )
-        bMentalDeceased_ = message.blesse_mental() != 0;
+        bMentalDeceased_ = message.blesse_mental();
     if( message.has_contamine_nbc()  )
-        bContaminated_   = message.contamine_nbc() != 0;
+        bContaminated_   = message.contamine_nbc();
     if( message.has_blessure()  )
         wound_ = E_HumanWound( message.blessure() );
     if( message.has_etat()  )
         nState_ = E_LogMedicalHandlingStatus( message.etat() );
     if( message.has_diagnostique_effectue()  )
-        diagnosed_ = message.diagnostique_effectue() != 0;
-
+        diagnosed_ = message.diagnostique_effectue();
     controller_.Update( *this );
 }
 
@@ -92,10 +84,9 @@ void LogMedicalConsign::Update( const MsgsSimToClient::MsgLogMedicalHandlingUpda
 // -----------------------------------------------------------------------------
 void LogMedicalConsign::Display( Displayer_ABC& displayer, Displayer_ABC& itemDisplayer ) const
 {
-    displayer.Display( pion_ ).Display( nState_ );
-
+    displayer.Display( consumer_ ).Display( nState_ );
     itemDisplayer.Display( tools::translate( "Logistic", "Instruction:" ), nID_ )
-                 .Display( tools::translate( "Logistic", "Consumer:" ), pion_ )
+                 .Display( tools::translate( "Logistic", "Consumer:" ), consumer_ )
                  .Display( tools::translate( "Logistic", "Handler:" ), pPionLogHandling_ )
                  .Display( tools::translate( "Logistic", "Mentally injured:" ), bMentalDeceased_ )
                  .Display( tools::translate( "Logistic", "NBC contaminated:" ), bContaminated_ )
@@ -114,12 +105,10 @@ void LogMedicalConsign::Draw( const Point2f& , const kernel::Viewport_ABC& viewp
 {
     if( ! pPionLogHandling_ || ! tools.ShouldDisplay( "RealTimeLogistic" ) )
         return;
-
     const Point2f from = pPionLogHandling_->Get< Positions >().GetPosition();
-    const Point2f to   = pion_.Get< Positions >().GetPosition();
+    const Point2f to   = consumer_.Get< Positions >().GetPosition();
     if( ! viewport.IsVisible( Rectangle2f( from, to ) ) )
         return;
-
     glColor4f( COLOR_PINK );
     switch( nState_ )
     {

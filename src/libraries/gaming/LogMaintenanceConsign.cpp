@@ -9,22 +9,19 @@
 
 #include "gaming_pch.h"
 #include "LogMaintenanceConsign.h"
-#include "clients_kernel/Agent_ABC.h"
 #include "LogisticConsigns.h"
+#include "Tools.h"
+#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "Tools.h"
+#include "clients_kernel/Viewport_ABC.h"
+#include "protocol/protocol.h"
 
 using namespace geometry;
 using namespace kernel;
 
-namespace MsgsSimToClient
-{
-    class MsgLogMaintenanceHandlingCreation;
-}
 // -----------------------------------------------------------------------------
 // Name: LogMaintenanceConsign constructor
 // Created: AGE 2006-02-28
@@ -33,15 +30,14 @@ LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const Msgs
     : controller_      ( controller )
     , resolver_        ( resolver )
     , nID_             ( message.oid_consigne() )
-    , pion_            ( resolver_.Get( message.oid_pion() ) )
+    , consumer_        ( resolver_.Get( message.oid_pion() ) )
     , pPionLogHandling_( 0 )
     , equipmentType_   ( & componentResolver.Get( message.type_equipement() ) )
     , breakdownType_   ( & breakdownResolver.Get( message.type_panne() ) )
     , diagnosed_       ( false )
     , nState_          ( eLogMaintenanceHandlingStatus_Termine )
 {
-    if( LogMaintenanceConsigns* consign = pion_.Retrieve< LogMaintenanceConsigns >() )
-        consign->AddConsign( *this );
+    consumer_.Get< LogMaintenanceConsigns >().AddConsign( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,17 +46,11 @@ LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const Msgs
 // -----------------------------------------------------------------------------
 LogMaintenanceConsign::~LogMaintenanceConsign()
 {
-    if( LogMaintenanceConsigns* consign = pion_.Retrieve< LogMaintenanceConsigns >() )
-        consign->RemoveConsign( *this );
+    consumer_.Get< LogMaintenanceConsigns >().RemoveConsign( *this );
     if( pPionLogHandling_ )
         if( LogMaintenanceConsigns* consign = pPionLogHandling_->Retrieve< LogMaintenanceConsigns >() )
             consign->TerminateConsign( *this );
 }
-
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: LogMaintenanceConsign::Update
@@ -71,14 +61,15 @@ void LogMaintenanceConsign::Update( const MsgsSimToClient::MsgLogMaintenanceHand
     if( message.has_etat()  )
         nState_ = E_LogMaintenanceHandlingStatus( message.etat() );
     if( message.has_diagnostique_effectue()  )
-        diagnosed_ = message.diagnostique_effectue() != 0;
-
-    if( pPionLogHandling_ )
-        pPionLogHandling_->Get< LogMaintenanceConsigns >().TerminateConsign( *this );
-    pPionLogHandling_ = resolver_.Find( message.oid_pion_log_traitant() );
-    if( pPionLogHandling_ )
-        pPionLogHandling_->Get< LogMaintenanceConsigns >().HandleConsign( *this );
-
+        diagnosed_ = message.diagnostique_effectue();
+    if( message.has_oid_pion_log_traitant() && ( !pPionLogHandling_ || message.oid_pion_log_traitant() != int( pPionLogHandling_->GetId() ) ) )
+    {
+        if( pPionLogHandling_ )
+            pPionLogHandling_->Get< LogMaintenanceConsigns >().TerminateConsign( *this );
+        pPionLogHandling_ = resolver_.Find( message.oid_pion_log_traitant() );
+        if( pPionLogHandling_ )
+            pPionLogHandling_->Get< LogMaintenanceConsigns >().HandleConsign( *this );
+    }
     controller_.Update( *this );
 }
 
@@ -88,10 +79,9 @@ void LogMaintenanceConsign::Update( const MsgsSimToClient::MsgLogMaintenanceHand
 // -----------------------------------------------------------------------------
 void LogMaintenanceConsign::Display( Displayer_ABC& displayer, Displayer_ABC& itemDisplayer ) const
 {
-    displayer.Display( pion_ ).Display( nState_ );
-
+    displayer.Display( consumer_ ).Display( nState_ );
     itemDisplayer.Display( tools::translate( "Logistic", "Instruction:" ), nID_ )
-                 .Display( tools::translate( "Logistic", "Consumer:" ), pion_ )
+                 .Display( tools::translate( "Logistic", "Consumer:" ), consumer_ )
                  .Display( tools::translate( "Logistic", "Handler:" ), pPionLogHandling_ )
                  .Display( tools::translate( "Logistic", "Equipment:" ), diagnosed_ ? equipmentType_ : 0 )
                  .Display( tools::translate( "Logistic", "Breakdown:" ), diagnosed_ ? breakdownType_ : 0 )
@@ -106,12 +96,10 @@ void LogMaintenanceConsign::Draw( const Point2f& , const kernel::Viewport_ABC& v
 {
     if( ! pPionLogHandling_ || ! tools.ShouldDisplay( "RealTimeLogistic" ) )
         return;
-
     const Point2f from = pPionLogHandling_->Get< Positions >().GetPosition();
-    const Point2f to   = pion_.Get< Positions >().GetPosition();
+    const Point2f to   = consumer_.Get< Positions >().GetPosition();
     if( ! viewport.IsVisible( Rectangle2f( from, to ) ) )
         return;
-
     glColor4f( COLOR_MAROON );
     switch( nState_ )
     {
