@@ -21,7 +21,7 @@
 #include "TER_PathFinderThread.h"
 #include "TER_World.h"
 #include "TER_DynamicData.h"
-#include "MT/MT_IO/MT_Dir.h"
+#include <MT/MT_IO/MT_Dir.h>
 
 // -----------------------------------------------------------------------------
 // Name: TER_PathFindManager::GetPathFindManager

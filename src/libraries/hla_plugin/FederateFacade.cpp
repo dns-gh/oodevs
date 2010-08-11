@@ -17,7 +17,7 @@
 #include <hla/SimpleTimeIntervalFactory.h>
 #include <hla/SimpleTime.h>
 #include <hla/SimpleTimeInterval.h>
-#include "MT/MT_Logger/MT_Logger_Lib.h"
+#include <MT/MT_Logger/MT_Logger_lib.h>
 
 using namespace plugins::hla;
 using namespace hla;

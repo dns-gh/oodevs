@@ -30,7 +30,7 @@
 
 #pragma warning( pop )
 
-#include "MT/MT_Logger/MT_Logger_lib.h"
+#include <MT/MT_Logger/MT_Logger_lib.h>
 
 #include "MT_Tools/MT_Assert.h"
 #include "MT_Tools/MT_Scipio_enum.h"

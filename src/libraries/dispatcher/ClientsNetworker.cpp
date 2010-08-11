@@ -14,7 +14,7 @@
 #include "Config.h"
 #include "Plugin_ABC.h"
 #include "Services.h"
-#include "MT/MT_Logger/MT_Logger_lib.h"
+#include <MT/MT_Logger/MT_Logger_lib.h>
 #include "protocol/protocol.h"
 
 using namespace dispatcher;

@@ -15,7 +15,7 @@
 #include "Model.h"
 #include "Population.h"
 #include "Side.h"
-#include "MT/MT_Logger/MT_Logger_lib.h"
+#include <MT/MT_Logger/MT_Logger_lib.h>
 #include "protocol/authenticationsenders.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/clientsenders.h"

@@ -10,7 +10,7 @@
 #include "simulation_app_pch.h"
 
 #include "SIM_Dispatcher.h"
-#include "MT/MT_Logger/MT_Logger_lib.h"
+#include <MT/MT_Logger/MT_Logger_lib.h>
 #pragma warning( push )
 #pragma warning( disable : 4512 4244 )
 #include <boost/thread.hpp>

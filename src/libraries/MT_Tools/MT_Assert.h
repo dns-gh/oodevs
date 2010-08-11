@@ -14,7 +14,7 @@
 
 #include <cassert>
 
-#include "MT/MT_Tools/MT_Tools_lib.h"
+#include <MT/MT_Tools/MT_Tools_lib.h>
 
 //-----------------------------------------------------------------------------
 // Name: MT_Assert

@@ -12,7 +12,7 @@
 
 #include "MIL.h"
 #include "Decision/DEC_Decision_ABC.h"
-#include "MT/MT_Logger/MT_Logger_lib.h"
+#include <MT/MT_Logger/MT_Logger_lib.h>
 
 class DEC_DataBase;
 class DEC_Knowledge_Object;

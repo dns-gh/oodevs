@@ -15,7 +15,7 @@
 #include "ReportFactory.h"
 #include "Simulation.h"
 #include "dispatcher/Model.h"
-#include "MT/MT_Logger/MT_Logger_lib.h"
+#include <MT/MT_Logger/MT_Logger_lib.h>
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>

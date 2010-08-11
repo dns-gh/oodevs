@@ -9,7 +9,7 @@
 
 #include "App.h"
 #include "dispatcher/Replayer.h"
-#include "MT/MT_Logger/MT_Logger_Lib.h"
+#include <MT/MT_Logger/MT_Logger_lib.h>
 #include "tools/WinArguments.h"
 #include "resource.h"
 #include "dispatcher/Config.h"

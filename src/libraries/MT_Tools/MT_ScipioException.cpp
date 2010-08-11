@@ -11,7 +11,7 @@
 
 #include "MT_Tools_pch.h"
 #include "MT_ScipioException.h"
-#include "MT/MT_Logger/MT_Logger_lib.h"
+#include <MT/MT_Logger/MT_Logger_lib.h>
 
 //-----------------------------------------------------------------------------
 // Name: MT_ScipioException constructor

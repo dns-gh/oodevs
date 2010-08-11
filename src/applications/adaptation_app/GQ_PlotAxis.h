@@ -23,9 +23,9 @@
 #   pragma interface
 #endif
 
-#include "MT/MT_Tools/MT_STL_Vector.h"
-
 #include "GQ_ValueConvertor.h"
+
+#include <MT/MT_Tools/MT_STL_Vector.h>
 
 #include <qfont.h>
 #include <qwidget.h>

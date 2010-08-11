@@ -19,7 +19,7 @@
 #include "dispatcher/ModelAdapter.h"
 #include "dispatcher/ObjectKnowledgeConverter.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
-#include "MT/MT_Logger/MT_Logger_lib.h"
+#include <MT/MT_Logger/MT_Logger_lib.h>
 #include "protocol/protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "tools/ExerciseConfig.h"

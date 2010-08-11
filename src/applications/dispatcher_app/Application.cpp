@@ -9,7 +9,7 @@
 
 #include "Application.h"
 #include "dispatcher_dll/DispatcherFacade.h"
-#include "MT/MT_Logger/MT_Logger_Lib.h"
+#include <MT/MT_Logger/MT_Logger_lib.h>
 #include <windows.h>
 
 // -----------------------------------------------------------------------------

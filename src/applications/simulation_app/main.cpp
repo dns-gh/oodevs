@@ -9,8 +9,8 @@
 #include "MT_Tools/MT_Version.h"
 #include "MT_Tools/MT_CrashHandler.h"
 
-#include "MT/MT_Logger/MT_FileLogger.h"
 #include "tools/win32/FlexLm.h"
+#include <MT/MT_Logger/MT_FileLogger.h>
 #include <google/protobuf/message.h>
 #include <xeumeuleu/xml.hpp>
 

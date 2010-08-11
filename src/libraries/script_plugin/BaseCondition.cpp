@@ -9,7 +9,7 @@
 
 #include "script_plugin_pch.h"
 #include "BaseCondition.h"
-#include "MT/MT_Logger/MT_Logger_lib.h"
+#include <MT/MT_Logger/MT_Logger_lib.h>
 
 using namespace plugins::script;
 

@@ -13,7 +13,7 @@
 #define __SIM_NetworkLogger_h_
 
 #include "SIM.h"
-#include "MT/MT_Logger/MT_Logger_ABC.h"
+#include <MT/MT_Logger/MT_Logger_ABC.h>
 
 #include <boost/asio.hpp>
 
