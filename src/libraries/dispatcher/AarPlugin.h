@@ -12,8 +12,6 @@
 
 #include "Plugin_ABC.h"
 
-
-////using namespace Common;
 namespace MsgsClientToAar
 {
     class MsgClientToAar;

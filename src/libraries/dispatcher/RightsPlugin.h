@@ -13,9 +13,6 @@
 #include "Plugin_ABC.h"
 #include "LinkResolver_ABC.h"
 
-
-
-//using namespace Common;
 namespace MsgsClientToAuthentication
 {
     class MsgClientToAuthentication;

@@ -10,11 +10,6 @@
 #ifndef __EquipmentAvailability_h_
 #define __EquipmentAvailability_h_
 
-
-
-////using namespace Common;
-
-
 namespace dispatcher
 {
 class Model;

@@ -13,7 +13,6 @@
 #include "SimulationPublisher_ABC.h"
 
 
-//using namespace Common;
 namespace MsgsSimToClient
 {
     class MsgSimToClient;

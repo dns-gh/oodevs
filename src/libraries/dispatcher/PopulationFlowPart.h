@@ -12,8 +12,6 @@
 
 #include "Localisation.h"
 
-
-//using namespace Common;
 namespace MsgsSimToClient
 {
     class MsgFlowPart;

@@ -13,13 +13,10 @@
 #include "SimulationPublisher_ABC.h"
 #include "tools/ClientNetworker.h"
 
-//using namespace Common;
 namespace MsgsSimToClient
 {
     class MsgSimToClient;
 }
-//using namespace MsgsClientToSim;
-//using namespace MsgsDispatcherToSim;
 
 struct MsgsInSim;
 

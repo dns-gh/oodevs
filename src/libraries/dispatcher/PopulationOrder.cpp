@@ -15,7 +15,6 @@
 #include "protocol/clientsenders.h"
 
 using namespace dispatcher;
-//using namespace Common;
 
 // -----------------------------------------------------------------------------
 // Name: PopulationOrder constructor

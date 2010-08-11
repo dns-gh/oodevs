@@ -11,11 +11,8 @@
 #include "FireEffect.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-
 #include "protocol/clientsenders.h"
 
-////using namespace Common;
-//using namespace MsgsClientToSim;
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------

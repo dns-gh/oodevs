@@ -12,9 +12,6 @@
 
 #include "protocol/ClientPublisher_ABC.h"
 
-
-////using namespace Common;
-
 namespace tools
 {
     class MessageSender_ABC;

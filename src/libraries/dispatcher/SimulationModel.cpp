@@ -13,8 +13,6 @@
 #include "protocol/clientsenders.h"
 #include "protocol/replaysenders.h"
 
-//using namespace Common;
-//using namespace MsgsSimToClient;
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------

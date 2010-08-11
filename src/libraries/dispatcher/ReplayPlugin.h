@@ -14,13 +14,10 @@
 #include "MT/MT_Time/MT_Timer_ABC.h"
 #include "MT/MT_Time/MT_TimerManager.h"
 
-
-//using namespace Common;
 namespace MsgsClientToReplay
 {
     class MsgClientToReplay;
 }
-//using namespace MsgsReplayToClient;
 
 namespace tools
 {
