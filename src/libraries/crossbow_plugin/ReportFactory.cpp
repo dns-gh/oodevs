@@ -61,7 +61,7 @@ void ReportFactory::ReadReport( xml::xistream& xis )
 // Name: ReportFactory::CreateMessage
 // Created: SBO 2007-08-27
 // -----------------------------------------------------------------------------
-std::string ReportFactory::CreateMessage( const MsgReport& message ) const
+std::string ReportFactory::CreateMessage( const MsgsSimToClient::MsgReport& message ) const
 {
     CIT_Templates it = templates_.find( message.cr() );
     if( it == templates_.end() )
@@ -73,7 +73,7 @@ std::string ReportFactory::CreateMessage( const MsgReport& message ) const
 // Name: ReportFactory::RenderParameter
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-std::string ReportFactory::RenderParameter( const MsgMissionParameter& value ) const
+std::string ReportFactory::RenderParameter( const Common::MsgMissionParameter& value ) const
 {
     std::stringstream ss;
 

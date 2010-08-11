@@ -65,7 +65,7 @@ DisPlugin::~DisPlugin()
 // Name: DisPlugin::Receive
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-void DisPlugin::Receive( const MsgSimToClient& wrapper )
+void DisPlugin::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
 {
     if( wrapper.message().has_control_begin_tick() )
         time_ += timeStep_;

@@ -13,9 +13,6 @@
 #include "hla_plugin/EntityIdentifier.h"
 #include "protocol/protocol.h"
 
-using namespace Common;
-using namespace MsgsSimToClient;
-
 namespace plugins
 {
 namespace dis
@@ -40,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update       ( const MsgSimToClient& message );
+    void Update( const MsgsSimToClient::MsgSimToClient& message );
     //@}
 
 private:
@@ -52,17 +49,17 @@ private:
 
     //! @name Helpers
     //@{
-    void ReceiveFire( const MsgStartUnitFire& fire );
-    void ReceiveFire( const MsgStopUnitFire& fire );
-    void UpdateFireEffect( const MsgStartFireEffect& fire );
+    void ReceiveFire( const MsgsSimToClient::MsgStartUnitFire& fire );
+    void ReceiveFire( const MsgsSimToClient::MsgStopUnitFire& fire );
+    void UpdateFireEffect( const MsgsSimToClient::MsgStartFireEffect& fire );
     void UpdateDetonations();
-    void CreateFire( const MsgCoordLatLong& position );
+    void CreateFire( const Common::MsgCoordLatLong& position );
     //@}
 
     //! @name Types
     //@{
-    typedef std::map< unsigned int, MsgCoordLatLong >  T_Fires;
-    typedef T_Fires::const_iterator                     CIT_Fires;
+    typedef std::map< unsigned int, Common::MsgCoordLatLong > T_Fires;
+    typedef T_Fires::const_iterator                         CIT_Fires;
     //@}
 
 private:

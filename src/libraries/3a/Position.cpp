@@ -16,7 +16,6 @@
 
 using namespace Common;
 
-
 namespace
 {
     bool Initialize( geocoord::PlanarCartesian::Parameters& parameters, const MsgCoordLatLong& coord  )

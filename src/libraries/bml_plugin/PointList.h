@@ -12,9 +12,6 @@
 
 #include "protocol/protocol.h"
 
-using namespace Common;
-
-
 namespace xml
 {
     class xistream;
@@ -45,7 +42,7 @@ public:
     //! @name Operations
     //@{
     void Serialize( xml::xostream& xos ) const;
-    void Serialize( MsgCoordLatLongList& asn ) const;
+    void Serialize( Common::MsgCoordLatLongList& asn ) const;
     //@}
 
 private:

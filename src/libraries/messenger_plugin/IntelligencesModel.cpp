@@ -19,7 +19,6 @@
 using namespace Common;
 using namespace MsgsClientToMessenger;
 using namespace MsgsMessengerToClient;
-
 using namespace plugins::messenger;
 
 // -----------------------------------------------------------------------------

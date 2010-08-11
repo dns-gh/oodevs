@@ -10,12 +10,8 @@
 #ifndef __Drawing_h_
 #define __Drawing_h_
 
-
 #include <geometry/Types.h>
 #include "protocol/protocol.h"
-
-using namespace Common;
-using namespace MsgsClientToMessenger;
 
 namespace xml
 {
@@ -49,7 +45,7 @@ class Drawing
 public:
     //! @name Constructors/Destructor
     //@{
-             Drawing( unsigned int id, const MsgShapeCreationRequest& asn, const kernel::CoordinateConverter_ABC& converter );
+    Drawing( unsigned int id, const MsgsClientToMessenger::MsgShapeCreationRequest& asn, const kernel::CoordinateConverter_ABC& converter );
              Drawing( unsigned int id, xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
              Drawing( unsigned int id, const Drawing& rhs );
     virtual ~Drawing();
@@ -58,7 +54,7 @@ public:
     //! @name Operations
     //@{
     unsigned long GetId() const;
-    void Update( const MsgShapeUpdateRequest& asn );
+    void Update( const MsgsClientToMessenger::MsgShapeUpdateRequest& asn );
     virtual void SendCreation   ( dispatcher::ClientPublisher_ABC& publisher ) const;
     virtual void SendUpdate     ( dispatcher::ClientPublisher_ABC& publisher ) const;
     virtual void SendFullState  ( dispatcher::ClientPublisher_ABC& publisher ) const;
@@ -77,12 +73,12 @@ private:
     //! @name Helpers
     //@{
     void ReadPoint( xml::xistream& xis );
-    void SerializePoint( const MsgCoordLatLong& point, xml::xostream& xos ) const;
+    void SerializePoint( const Common::MsgCoordLatLong& point, xml::xostream& xos ) const;
     //@}
 
     //! @name Helpers
     //@{
-    typedef std::vector< MsgCoordLatLong > T_Points;
+    typedef std::vector< Common::MsgCoordLatLong > T_Points;
     //@}
 
 public:

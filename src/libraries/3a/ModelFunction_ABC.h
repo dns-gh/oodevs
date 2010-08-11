@@ -12,9 +12,6 @@
 
 #include "protocol/protocol.h"
 
-using namespace Common;
-using namespace MsgsSimToClient;
-
 // =============================================================================
 /** @class  ModelFunction_ABC
     @brief  Model function definition
@@ -33,7 +30,7 @@ public:
     //! @name Operations
     //@{
     virtual void BeginTick() = 0;
-    virtual void Receive( const MsgSimToClient& message ) = 0;
+    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message ) = 0;
     virtual void EndTick() = 0;
     //@}
 };

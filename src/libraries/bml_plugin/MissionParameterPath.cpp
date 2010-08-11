@@ -41,9 +41,9 @@ MissionParameterPath::~MissionParameterPath()
 // Name: MissionParameterPath::Serialize
 // Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------
-void MissionParameterPath::Serialize( MsgMissionParameter& parameter ) const
+void MissionParameterPath::Serialize( Common::MsgMissionParameter& parameter ) const
 {
     parameter.set_null_value( 0 );
-    parameter.mutable_value()->mutable_path()->mutable_location()->set_type( MsgLocation_Geometry_line );
+    parameter.mutable_value()->mutable_path()->mutable_location()->set_type( Common::MsgLocation_Geometry_line );
     points_->Serialize( *parameter.mutable_value()->mutable_path()->mutable_location()->mutable_coordinates() );
 }

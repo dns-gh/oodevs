@@ -12,9 +12,6 @@
 
 #include "protocol/protocol.h"
 
-using namespace Common;
-using namespace MsgsSimToClient;
-
 namespace xml
 {
     class xistream;
@@ -49,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    std::string CreateMessage( const MsgReport& message ) const;
+    std::string CreateMessage( const MsgsSimToClient::MsgReport& message ) const;
     //@}
 
 private:
@@ -63,7 +60,7 @@ private:
     //@{
     void ReadReport( xml::xistream& xis );
     friend class ReportTemplate;
-    std::string RenderParameter( const MsgMissionParameter& value ) const;
+    std::string RenderParameter( const Common::MsgMissionParameter& value ) const;
     //@}
 
     //! @name Types

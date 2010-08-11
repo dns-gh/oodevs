@@ -39,10 +39,10 @@ MissionParameterPoint::~MissionParameterPoint()
 // Name: MissionParameterPoint::Serialize
 // Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------
-void MissionParameterPoint::Serialize( MsgMissionParameter& parameter ) const
+void MissionParameterPoint::Serialize( Common::MsgMissionParameter& parameter ) const
 {
     parameter.set_null_value( 0 );
-    parameter.mutable_value()->mutable_point()->mutable_location()->set_type( MsgLocation_Geometry_point );
+    parameter.mutable_value()->mutable_point()->mutable_location()->set_type( Common::MsgLocation_Geometry_point );
     parameter.mutable_value()->mutable_point()->mutable_location()->mutable_coordinates()->add_elem();
     point_->Serialize( *parameter.mutable_value()->mutable_point()->mutable_location()->mutable_coordinates()->mutable_elem(0) );
 }

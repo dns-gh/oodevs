@@ -46,7 +46,7 @@ public:
     //! @name Constructors/Destructor
     //@{
               Limit( unsigned int id, const MsgsClientToMessenger::MsgLimitCreationRequest& message );
-              Limit( unsigned int id, xml::xistream&, const MsgTacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter);
+              Limit( unsigned int id, xml::xistream&, const Common::MsgTacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter);
      virtual ~Limit();
     //@}
 

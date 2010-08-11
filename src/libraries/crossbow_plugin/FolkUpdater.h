@@ -12,9 +12,6 @@
 
 #include "protocol/protocol.h"
 
-using namespace Common;
-using namespace MsgsSimToClient;
-
 namespace plugins
 {
 namespace crossbow
@@ -48,8 +45,8 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const MsgFolkCreation& msg );
-    void Update( const MsgFolkGraphUpdate& msg );
+    void Update( const MsgsSimToClient::MsgFolkCreation& msg );
+    void Update( const MsgsSimToClient::MsgFolkGraphUpdate& msg );
     void Drop();
     //@}
 
@@ -77,8 +74,8 @@ private:
     //@{
     void Commit( Table_ABC& table );
     void CommitEdge( Row_ABC& row, const Edge& edge );
-    void Update( const MsgFolkGraphEdgeUpdate& msg );
-    void Update( Edge& edge, const MsgFolkGraphEdgeUpdate& msg ) const;
+    void Update( const MsgsSimToClient::MsgFolkGraphEdgeUpdate& msg );
+    void Update( Edge& edge, const MsgsSimToClient::MsgFolkGraphEdgeUpdate& msg ) const;
     //@}
 
 private:

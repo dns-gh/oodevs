@@ -11,8 +11,6 @@
 #include "Simulation.h"
 
 using namespace plugins::bml;
-
-
 using namespace MsgsSimToClient;
 
 // -----------------------------------------------------------------------------

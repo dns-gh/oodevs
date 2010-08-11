@@ -13,8 +13,6 @@
 #include "MissionParameter_ABC.h"
 #include "protocol/protocol.h"
 
-using namespace Common;
-
 namespace xml
 {
     class xistream;
@@ -43,8 +41,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Serialize( MsgMissionParameter& parameter ) const;
-    void Serialize( MsgLimaOrder& asn ) const;
+    virtual void Serialize( Common::MsgMissionParameter& parameter ) const;
+    void Serialize( Common::MsgLimaOrder& asn ) const;
     //@}
 
 private:

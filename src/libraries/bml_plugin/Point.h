@@ -12,9 +12,6 @@
 
 #include "protocol/protocol.h"
 
-using namespace Common;
-
-
 namespace xml
 {
     class xistream;
@@ -46,7 +43,7 @@ public:
     //! @name Operations
     //@{
     void Serialize( xml::xostream& xos, const std::string& fieldname ) const;
-    void Serialize( MsgCoordLatLong& asn ) const;
+    void Serialize( Common::MsgCoordLatLong& asn ) const;
     unsigned short ComputeBearing( const Point& rhs ) const;
     //@}
 

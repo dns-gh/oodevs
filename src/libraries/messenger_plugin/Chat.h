@@ -12,9 +12,6 @@
 
 #include "protocol/protocol.h"
 
-using namespace Common;
-
-
 namespace dispatcher
 {
     class Profile_ABC;
@@ -51,7 +48,7 @@ public:
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
 
-    void OnReceive( const MsgTextMessage& );
+    void OnReceive( const Common::MsgTextMessage& );
     //@}
 
 private:

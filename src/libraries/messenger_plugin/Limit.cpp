@@ -29,7 +29,7 @@ Limit::Limit( unsigned int id, const MsgsClientToMessenger::MsgLimitCreationRequ
 // Name: Limit constructor
 // Created: RDS 2008-04-03
 // -----------------------------------------------------------------------------
-Limit::Limit( unsigned int id, xml::xistream& xis, const MsgTacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter )
+Limit::Limit( unsigned int id, xml::xistream& xis, const Common::MsgTacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter )
     : TacticalLine_ABC( id, xis, diffusion, converter )
 {
     // NOTHING

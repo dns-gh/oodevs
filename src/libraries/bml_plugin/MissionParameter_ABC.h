@@ -12,9 +12,6 @@
 
 #include "protocol/protocol.h"
 
-using namespace Common;
-
-
 namespace kernel
 {
     class OrderParameter;
@@ -47,7 +44,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Serialize( MsgMissionParameter& parameter ) const = 0;
+    virtual void Serialize( Common::MsgMissionParameter& parameter ) const = 0;
     //@}
 
 private:

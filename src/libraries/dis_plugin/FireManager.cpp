@@ -12,11 +12,9 @@
 #include "DetonationPDU.h"
 #include "UdpNetwork.h"
 #include "Time_ABC.h"
-
 #include "protocol/protocol.h"
 
 using namespace Common;
-
 using namespace plugins::dis;
 using namespace plugins::hla;
 
@@ -45,7 +43,7 @@ FireManager::~FireManager()
 // Name: FireManager::Update
 // Created: AGE 2008-04-08
 // -----------------------------------------------------------------------------
-void FireManager::Update( const MsgSimToClient& wrapper )
+void FireManager::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
 {
     if( wrapper.message().has_start_unit_fire() )
         ReceiveFire( wrapper.message().start_unit_fire() );
@@ -61,7 +59,7 @@ void FireManager::Update( const MsgSimToClient& wrapper )
 // Name: FireManager::ReceiveFire
 // Created: AGE 2008-04-08
 // -----------------------------------------------------------------------------
-void FireManager::ReceiveFire( const MsgStartUnitFire& fire )
+void FireManager::ReceiveFire( const MsgsSimToClient::MsgStartUnitFire& fire )
 {
     if( fire.target().has_position() )
     {
@@ -74,7 +72,7 @@ void FireManager::ReceiveFire( const MsgStartUnitFire& fire )
 // Name: FireManager::UpdateFireEffect
 // Created: AGE 2008-05-05
 // -----------------------------------------------------------------------------
-void FireManager::UpdateFireEffect( const MsgStartFireEffect& fire )
+void FireManager::UpdateFireEffect( const MsgsSimToClient::MsgStartFireEffect& fire )
 {
     DetonationPDU pdu( EntityIdentifier( 1, 1, 1 ), time_.GetTime(), exercise_ );
     pdu.SetBurst( 1, 1, fire.type() == fumigene ? BurstDescriptor::smoke : BurstDescriptor::illumination );
@@ -86,7 +84,7 @@ void FireManager::UpdateFireEffect( const MsgStartFireEffect& fire )
 // Name: FireManager::ReceiveFire
 // Created: AGE 2008-04-08
 // -----------------------------------------------------------------------------
-void FireManager::ReceiveFire( const MsgStopUnitFire& fire )
+void FireManager::ReceiveFire( const MsgsSimToClient::MsgStopUnitFire& fire )
 {
     DetonationPDU pdu( EntityIdentifier( 1, 1, 1 ), time_.GetTime(), exercise_ );
     pdu.SetPosition( activeFires_[ fire.fire_oid() ].latitude(), activeFires_[ fire.fire_oid() ].longitude(), 0 );  // $$$$ AGE 2008-05-05: altitude

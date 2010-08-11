@@ -70,7 +70,7 @@ void PointList::Serialize( xml::xostream& xos ) const
 // Name: PointList::Serialize
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void PointList::Serialize( MsgCoordLatLongList& asn ) const
+void PointList::Serialize( Common::MsgCoordLatLongList& asn ) const
 {
     if( asn.elem_size() > 0 )
         for( int i = 0; i < asn.elem_size(); ++i )

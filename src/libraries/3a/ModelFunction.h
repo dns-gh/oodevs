@@ -52,7 +52,7 @@ public:
         handler_.BeginTick();
         value_.Prepare();
     }
-    virtual void Receive( const MsgSimToClient& message )
+    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message )
     {
         value_.Receive( message );
     }

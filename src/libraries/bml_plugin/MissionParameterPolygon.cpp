@@ -43,9 +43,9 @@ MissionParameterPolygon::~MissionParameterPolygon()
 // Name: MissionParameterPolygon::Serialize
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void MissionParameterPolygon::Serialize( MsgMissionParameter& parameter ) const
+void MissionParameterPolygon::Serialize( Common::MsgMissionParameter& parameter ) const
 {
     parameter.set_null_value( 0 );
-    parameter.mutable_value()->mutable_polygon()->mutable_location()->set_type ( MsgLocation_Geometry_polygon );
+    parameter.mutable_value()->mutable_polygon()->mutable_location()->set_type ( Common::MsgLocation_Geometry_polygon );
     points_->Serialize( *parameter.mutable_value()->mutable_polygon()->mutable_location()->mutable_coordinates() );
 }

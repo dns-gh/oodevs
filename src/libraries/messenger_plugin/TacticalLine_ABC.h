@@ -13,8 +13,6 @@
 #include "Entity_ABC.h"
 #include "protocol/protocol.h"
 
-using namespace Common;
-
 namespace kernel
 {
     class CoordinateConverter_ABC;
@@ -41,42 +39,42 @@ class TacticalLine_ABC : public Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalLine_ABC( unsigned int id, const MsgTacticalLine& asn );
-             TacticalLine_ABC( unsigned int id, xml::xistream&, const MsgTacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter );
+             TacticalLine_ABC( unsigned int id, const Common::MsgTacticalLine& asn );
+             TacticalLine_ABC( unsigned int id, xml::xistream&, const Common::MsgTacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter );
     virtual ~TacticalLine_ABC();
     //@}
 
     //! @name Network
     //@{
-    void Send( MsgTacticalLine& asn ) const;
-    void Send( MsgLocation& asn ) const;
+    void Send( Common::MsgTacticalLine& asn ) const;
+    void Send( Common::MsgLocation& asn ) const;
     //@}
 
     //! @name Accessors
     //@{
-    unsigned int                         GetID() const;
-    const MsgTacticalLine_Diffusion&  GetDiffusion() const { return diffusion_; }
+    unsigned int GetID() const;
+    const Common::MsgTacticalLine_Diffusion&  GetDiffusion() const { return diffusion_; }
     //@}
 
 protected:
 
     //! @name types
     //@{
-    typedef std::vector< MsgCoordLatLong > T_PositionVector;
-    typedef T_PositionVector::const_iterator  CIT_PositionVector;
+    typedef std::vector< Common::MsgCoordLatLong > T_PositionVector;
+    typedef T_PositionVector::const_iterator     CIT_PositionVector;
     //@}
 
     //! @name Network
     //@{
-    void Update        ( const MsgTacticalLine& asn );
-    void UpdateGeometry( const MsgLocation& asn );
+    void Update        ( const Common::MsgTacticalLine& asn );
+    void UpdateGeometry( const Common::MsgLocation& asn );
     //@}
 
     //! @name xml read / write
     //@{
             void ReadPoint ( xml::xistream& xis, T_PositionVector& points, const kernel::CoordinateConverter_ABC& converter ) const;
     virtual void Write     ( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) const;
-            void WritePoint( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter, const MsgCoordLatLong& point ) const;
+            void WritePoint( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter, const Common::MsgCoordLatLong& point ) const;
     //@}
 
 private:
@@ -89,10 +87,10 @@ private:
 
     //! @name Member data
     //@{
-    const unsigned int                   id_;
-          std::string                    strName_;
-          T_PositionVector               geometry_;
-          MsgTacticalLine_Diffusion   diffusion_ ;
+    const unsigned int id_;
+    std::string strName_;
+    T_PositionVector geometry_;
+    Common::MsgTacticalLine_Diffusion diffusion_;
     //@}
 
 

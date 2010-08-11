@@ -10,11 +10,8 @@
 #ifndef __OrderReport_h_
 #define __OrderReport_h_
 
-
 #include "tools/Resolver_ABC.h"
 #include "protocol/protocol.h"
-
-using namespace Common;
 
 namespace kernel
 {
@@ -46,8 +43,8 @@ class OrderReport
 public:
     //! @name Constructors/Destructor
     //@{
-             OrderReport( const dispatcher::Agent_ABC& agent, const tools::Resolver_ABC< kernel::MissionType >& missions, const MsgUnitOrder& asn );
-             OrderReport( const dispatcher::Automat_ABC& automat, const tools::Resolver_ABC< kernel::MissionType >& missions, const MsgAutomatOrder& asn );
+             OrderReport( const dispatcher::Agent_ABC& agent, const tools::Resolver_ABC< kernel::MissionType >& missions, const Common::MsgUnitOrder& asn );
+             OrderReport( const dispatcher::Automat_ABC& automat, const tools::Resolver_ABC< kernel::MissionType >& missions, const Common::MsgAutomatOrder& asn );
     virtual ~OrderReport();
     //@}
 

@@ -13,9 +13,6 @@
 #include "tools/Resolver_ABC.h"
 #include "protocol/protocol.h"
 
-using namespace Common;
-
-
 namespace kernel
 {
     class MissionType;
@@ -50,8 +47,8 @@ public:
 
     //! @name Operations
     //@{
-    OrderReport* CreateOrderReport( const dispatcher::Agent_ABC& entity, const MsgUnitOrder& asn ) const;
-    OrderReport* CreateOrderReport( const dispatcher::Automat_ABC& entity, const MsgAutomatOrder& asn ) const;
+    OrderReport* CreateOrderReport( const dispatcher::Agent_ABC& entity, const Common::MsgUnitOrder& asn ) const;
+    OrderReport* CreateOrderReport( const dispatcher::Automat_ABC& entity, const Common::MsgAutomatOrder& asn ) const;
     //@}
 
 private:

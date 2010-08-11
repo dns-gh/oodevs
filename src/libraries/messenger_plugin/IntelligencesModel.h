@@ -10,13 +10,8 @@
 #ifndef __IntelligencesModel_h_
 #define __IntelligencesModel_h_
 
-
 #include "tools/Resolver.h"
 #include "protocol/protocol.h"
-
-using namespace Common;
-using namespace MsgsClientToMessenger;
-using namespace MsgsMessengerToClient;
 
 namespace dispatcher
 {
@@ -59,15 +54,15 @@ public:
 
     //! @name Network
     //@{
-    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgIntelligenceCreationRequest&     asn );
-    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgIntelligenceUpdateRequest&       asn );
-    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgIntelligenceDestructionRequest&  asn );
+    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgIntelligenceCreationRequest&     asn );
+    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgIntelligenceUpdateRequest&       asn );
+    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgIntelligenceDestructionRequest&  asn );
     void SendStateToNewClient( dispatcher::ClientPublisher_ABC& publisher ) const;
     //@}
 
     //! @name xml read / write
     //@{
-    void ReadIntelligence( xml::xistream& xis, const MsgFormation& formation );
+    void ReadIntelligence( xml::xistream& xis, const Common::MsgFormation& formation );
     void Write           ( xml::xostream& xos );
     //@}
 

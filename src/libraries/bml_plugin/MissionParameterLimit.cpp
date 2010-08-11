@@ -41,9 +41,9 @@ MissionParameterLimit::~MissionParameterLimit()
 // Name: MissionParameterLimit::Serialize
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void MissionParameterLimit::Serialize( MsgMissionParameter& parameter ) const
+void MissionParameterLimit::Serialize( Common::MsgMissionParameter& parameter ) const
 {
     parameter.set_null_value( 0 );
-    parameter.mutable_value()->mutable_line()->mutable_location()->set_type( MsgLocation::line );
+    parameter.mutable_value()->mutable_line()->mutable_location()->set_type( Common::MsgLocation::line );
     points_->Serialize( *parameter.mutable_value()->mutable_line()->mutable_location()->mutable_coordinates() );
 }

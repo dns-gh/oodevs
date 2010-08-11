@@ -12,9 +12,6 @@
 
 #include "protocol/protocol.h"
 
-using namespace Common;
-using namespace MsgsSimToClient;
-
 namespace plugins
 {
 namespace bml
@@ -37,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const MsgControlEndTick& message );
+    void Update( const MsgsSimToClient::MsgControlEndTick& message );
     //@}
 
     //! @name Accessors

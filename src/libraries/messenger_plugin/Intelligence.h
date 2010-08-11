@@ -13,9 +13,6 @@
 #include "Entity_ABC.h"
 #include "protocol/protocol.h"
 
-using namespace Common;
-using namespace MsgsClientToMessenger;
-
 namespace dispatcher
 {
     class ClientPublisher_ABC;
@@ -49,20 +46,20 @@ class Intelligence : public Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Intelligence( unsigned int id, const MsgIntelligenceCreationRequest& message );
-             Intelligence( unsigned int id, xml::xistream&, const MsgFormation& formation, const kernel::CoordinateConverter_ABC& converter );
+             Intelligence( unsigned int id, const MsgsClientToMessenger::MsgIntelligenceCreationRequest& message );
+             Intelligence( unsigned int id, xml::xistream&, const Common::MsgFormation& formation, const kernel::CoordinateConverter_ABC& converter );
     virtual ~Intelligence();
     //@}
 
     //! @name Accessors
     //@{
     unsigned int GetID() const  { return id_ ; }
-    const MsgFormation& GetFormation() const { return formation_ ; }
+    const Common::MsgFormation& GetFormation() const { return formation_ ; }
     //@}
 
     //! @name Network
     //@{
-    void Update( const MsgIntelligenceUpdateRequest& message );
+    void Update( const MsgsClientToMessenger::MsgIntelligenceUpdateRequest& message );
     virtual void SendCreation   ( dispatcher::ClientPublisher_ABC& publisher ) const;
     virtual void SendUpdate     ( dispatcher::ClientPublisher_ABC& publisher ) const;
     virtual void SendFullState  ( dispatcher::ClientPublisher_ABC& publisher ) const;
@@ -91,14 +88,14 @@ private:
 private:
     //! @name Member data
     //@{
-    MsgFormation formation_;
+    Common::MsgFormation formation_;
     unsigned int id_;
     std::string name_;
     std::string nature_;
     bool embarked_;
-    EnumNatureLevel level_;
-    EnumDiplomacy diplomacy_;
-    MsgCoordLatLong position_;
+    Common::EnumNatureLevel level_;
+    Common::EnumDiplomacy diplomacy_;
+    Common::MsgCoordLatLong position_;
     //@}
 };
 

@@ -12,9 +12,6 @@
 
 #include "protocol/protocol.h"
 
-using namespace Common;
-
-
 namespace xml
 {
     class xistream;
@@ -80,9 +77,9 @@ private:
     void SendAutomatMission( dispatcher::SimulationPublisher_ABC& publisher ) const;
     void SendAgentMission( dispatcher::SimulationPublisher_ABC& publisher ) const;
 
-    void Serialize( MsgMissionParameters& asn ) const;
-    void SerializeDummyParameters( MsgMissionParameters& asn ) const;
-    void FillEmptyParameters( MsgMissionParameters& asn ) const;
+    void Serialize( Common::MsgMissionParameters& asn ) const;
+    void SerializeDummyParameters( Common::MsgMissionParameters& asn ) const;
+    void FillEmptyParameters( Common::MsgMissionParameters& asn ) const;
 
     const kernel::MissionType& ResolveMission( xml::xistream& xis );
     void AddParameter( MissionParameter_ABC& parameter );

@@ -13,9 +13,6 @@
 #include "ValueHandler_ABC.h"
 #include "protocol/protocol.h"
 
-using namespace Common;
-using namespace MsgsSimToClient;
-
 // =============================================================================
 /** @class  Value
     @brief  Value base
@@ -70,7 +67,7 @@ struct ConstantValue : public ContinuousValue< T >
     {
         Set( value );
     }
-    void Receive( const MsgSimToClient& )
+    void Receive( const MsgsSimToClient::MsgSimToClient& )
     {
         // NOTHING
     }
@@ -136,7 +133,7 @@ struct PulsedValue : public Value< T >
 // =============================================================================
 template< typename Value >
 inline
-void EvaluateValue( Value& value, const MsgSimToClient& message, ValueHandler_ABC< typename Value::Type >& handler )
+void EvaluateValue( Value& value, const MsgsSimToClient::MsgSimToClient& message, ValueHandler_ABC< typename Value::Type >& handler )
 {
     value.Prepare();
     value.Receive( message );

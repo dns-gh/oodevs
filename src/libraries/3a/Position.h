@@ -10,16 +10,12 @@
 #ifndef __Position_h_
 #define __Position_h_
 
-//#include "game_asn/Simulation.h"
 #include <string>
 #pragma warning (push)
 #pragma warning (disable : 4702 )
 #include <geometry/Types.h>
 #pragma warning (pop)
-
 #include "protocol/protocol.h"
-
-using namespace Common;
 
 // =============================================================================
 /** @class  Position
@@ -34,7 +30,7 @@ public:
     //@{
              Position();
     explicit Position( const std::string& coord );
-    explicit Position( const MsgCoordLatLong& coord );
+    explicit Position( const Common::MsgCoordLatLong& coord );
     virtual ~Position();
     //@}
 
@@ -81,7 +77,7 @@ private:
 private:
     //! @name Member data
     //@{
-    MsgCoordLatLong coord_;
+    Common::MsgCoordLatLong coord_;
     mutable bool init_;
     mutable geometry::Point2f point_;
     //@}
