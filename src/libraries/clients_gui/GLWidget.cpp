@@ -12,8 +12,8 @@
 #include "GlRenderPass_ABC.h"
 #include "IconLayout.h"
 #include "clients_kernel/OptionVariant.h"
-#include "urban/UrbanDecoration.h"
-#include "urban/ColorRGBA.h"
+#include <urban/UrbanDecoration.h>
+#include <urban/ColorRGBA.h>
 #include <graphics/MapLayer_ABC.h>
 #include <graphics/Scale.h>
 #include <graphics/extensions.h>

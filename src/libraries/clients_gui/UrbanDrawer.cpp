@@ -9,9 +9,9 @@
 
 #include "clients_gui_pch.h"
 #include "UrbanDrawer.h"
-#include "urban/TerrainObject_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "urban/Location_ABC.h"
+#include <urban/TerrainObject_ABC.h>
+#include <urban/Location_ABC.h>
 
 using namespace gui;
 

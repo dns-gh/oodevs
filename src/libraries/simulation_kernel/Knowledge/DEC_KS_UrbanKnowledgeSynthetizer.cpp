@@ -19,7 +19,7 @@
 #include "Entities/MIL_Army.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "urban/TerrainObject_ABC.h"
+#include <urban/TerrainObject_ABC.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_UrbanKnowledgeSynthetizer )
 

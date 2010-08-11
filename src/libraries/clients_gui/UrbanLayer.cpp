@@ -15,8 +15,6 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
-#include "Urban/TerrainObject_ABC.h"
-#include "urban/Drawer_ABC.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/Point.h"
 #include "clients_kernel/Lines.h"
@@ -24,6 +22,8 @@
 #include "clients_kernel/Circle.h"
 #include "clients_gui/UrbanDrawer.h"
 #include "clients_gui/TerrainObjectProxy.h"
+#include <urban/TerrainObject_ABC.h>
+#include <urban/Drawer_ABC.h>
 
 using namespace gui;
 // -----------------------------------------------------------------------------

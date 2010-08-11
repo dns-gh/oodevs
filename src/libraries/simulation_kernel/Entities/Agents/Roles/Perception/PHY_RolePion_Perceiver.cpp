@@ -53,8 +53,8 @@
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
 #include "UrbanModel.h"
-#include "urban/model.h"
-#include "urban/TerrainObject_ABC.h"
+#include <urban/model.h>
+#include <urban/TerrainObject_ABC.h>
 
 using namespace detection;
 

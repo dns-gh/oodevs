@@ -12,7 +12,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_Knowledge_Urban.h"
-#include "urban/TerrainObject_ABC.h"
+#include <urban/TerrainObject_ABC.h>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetDetectedAgentsInFuseau

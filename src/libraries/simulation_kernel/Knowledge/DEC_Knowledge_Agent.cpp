@@ -19,6 +19,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Effects/MIL_Effect_KillOfficers.h"
 #include "Entities/Effects/MIL_EffectManager.h"
@@ -30,11 +31,10 @@
 #include "protocol/ClientSenders.h"
 #include "Tools/MIL_IDManager.h"
 #include "UrbanType.h"
-#include "urban/StaticModel.h"
-#include "urban/Architecture.h"
-#include "urban/TerrainObject_ABC.h"
-#include "urban/MaterialCompositionType.h"
-#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include <urban/StaticModel.h>
+#include <urban/Architecture.h>
+#include <urban/TerrainObject_ABC.h>
+#include <urban/MaterialCompositionType.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Agent )
 

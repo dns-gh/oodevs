@@ -9,8 +9,8 @@
 
 #include "dispatcher_pch.h"
 #include "ColorAttribute.h"
-#include "urban/ColorRGBA.h"
 #include "protocol/SimulationSenders.h"
+#include <urban/ColorRGBA.h>
 
 using namespace dispatcher;
 

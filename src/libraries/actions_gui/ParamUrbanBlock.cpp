@@ -19,7 +19,7 @@
 #include "clients_gui/RichLabel.h"
 #include "clients_gui/TerrainObjectProxy.h"
 
-#include "urban/TerrainObject_ABC.h"
+#include <urban/TerrainObject_ABC.h>
 
 using namespace actions::gui;
 

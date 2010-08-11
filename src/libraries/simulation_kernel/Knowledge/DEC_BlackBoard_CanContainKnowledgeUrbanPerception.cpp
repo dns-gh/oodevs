@@ -11,7 +11,7 @@
 #include "DEC_BlackBoard_CanContainKnowledgeUrbanPerception.h"
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_UrbanPerception.h"
-#include "urban/TerrainObject_ABC.h"
+#include <urban/TerrainObject_ABC.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgeUrbanPerception )
 

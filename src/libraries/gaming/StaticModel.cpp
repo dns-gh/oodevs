@@ -18,8 +18,8 @@
 #include "indicators/Primitives.h"
 #include "indicators/GaugeTypes.h"
 #include "tools/ExerciseConfig.h"
-#include "urban/StaticModel.h"
-#include "urban/Model.h"
+#include <urban/StaticModel.h>
+#include <urban/Model.h>
 #include "UrbanModel.h"
 
 // -----------------------------------------------------------------------------
