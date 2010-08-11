@@ -10,6 +10,7 @@
 #ifndef __PHY_ActionTriggerActivity_h_
 #define __PHY_ActionTriggerActivity_h_
 
+#include "MIL.h"
 #include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 
 class MIL_AgentPion;
@@ -43,7 +44,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Execute();
+    virtual void Execute         ();
     virtual void ExecuteSuspended();
     virtual void StopAction();
     //@}
@@ -51,11 +52,11 @@ public:
 private:
     //! @name Member data
     //@{
-    const MIL_AgentPion& pion_;
-    PHY_RoleAction_FolkInfluence& role_;
-    std::string activity_;
-    double influence_;
-    population::Object_ABC* pObject_;
+    const MIL_AgentPion&            pion_;
+    PHY_RoleAction_FolkInfluence&   role_;
+    std::string                     activity_;
+    double                          influence_;
+    population::Object_ABC*         pObject_;
     //@}
 };
 

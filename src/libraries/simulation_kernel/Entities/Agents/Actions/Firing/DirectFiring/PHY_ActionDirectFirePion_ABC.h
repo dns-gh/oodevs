@@ -12,6 +12,7 @@
 #ifndef __PHY_ActionDirectFirePion_ABC_h_
 #define __PHY_ActionDirectFirePion_ABC_h_
 
+#include "MIL.h"
 #include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 #include "PHY_RoleAction_DirectFiring.h"
 
@@ -26,17 +27,11 @@ class MIL_AgentPion;
 class PHY_ActionDirectFirePion_ABC : public PHY_DecisionCallbackAction_ABC
 {
 public:
-    //! @name Types
-    //@{
     typedef MIL_AgentPion ActorType;
-    //@}
 
 public:
-    //! @name Constructors/Destructor
-    //@{
              PHY_ActionDirectFirePion_ABC( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, MT_Float percentage, int firingMode, int ammoDotationClass, firing::PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, firing::PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType );
     virtual ~PHY_ActionDirectFirePion_ABC();
-    //@}
 
     //! @name Operations
     //@{
@@ -46,8 +41,6 @@ public:
     //@}
 
 private:
-    //! @name Member data
-    //@{
     firing::PHY_RoleAction_DirectFiring& role_;
     boost::shared_ptr< DEC_Knowledge_Agent > pEnemy_;
     const MT_Float rPercentageComposantesToUse_;
@@ -56,7 +49,6 @@ private:
     const firing::PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType_;
     const PHY_AmmoDotationClass* pAmmoDotationClass_;
     PHY_FireResults_Pion* pFireResult_;
-    //@}
 };
 
 #endif // __PHY_ActionDirectFirePion_ABC_h_

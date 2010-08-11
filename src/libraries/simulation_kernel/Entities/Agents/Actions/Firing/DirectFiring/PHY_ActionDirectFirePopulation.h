@@ -12,6 +12,8 @@
 #ifndef __PHY_ActionDirectFirePopulation_h_
 #define __PHY_ActionDirectFirePopulation_h_
 
+#include "MIL.h"
+
 #include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 
 namespace firing
@@ -29,32 +31,23 @@ class MIL_AgentPion;
 class PHY_ActionDirectFirePopulation : public PHY_DecisionCallbackAction_ABC
 {
 public:
-    //! @name Types
-    //@{
     typedef MIL_AgentPion ActorType;
-    //@}
 
 public:
-    //! @name Constructors/Destructor
-    //@{
-             PHY_ActionDirectFirePopulation( MIL_AgentPion& pion, unsigned int nID );
+    PHY_ActionDirectFirePopulation( MIL_AgentPion& pion, unsigned int nID );
     virtual ~PHY_ActionDirectFirePopulation();
-    //@}
 
     //! @name Operations
     //@{
-    virtual void Execute();
+    virtual void Execute         ();
     virtual void ExecuteSuspended();
     virtual void StopAction();
     //@}
 
 private:
-    //! @name Constructors/Destructor
-    //@{
-    firing::PHY_RoleAction_DirectFiring& role_;
-    const unsigned int nTargetKnowledgeID_;
-    PHY_FireResults_Pion* pFireResult_;
-    //@}
+          firing::PHY_RoleAction_DirectFiring& role_;
+    const unsigned int                         nTargetKnowledgeID_;
+          PHY_FireResults_Pion*        pFireResult_;
 };
 
 #endif // __PHY_ActionDirectFirePopulation_h_

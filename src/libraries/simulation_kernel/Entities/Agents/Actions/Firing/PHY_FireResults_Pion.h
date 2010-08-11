@@ -12,6 +12,7 @@
 #ifndef __PHY_FireResults_Pion_h_
 #define __PHY_FireResults_Pion_h_
 
+#include "MIL.h"
 #include "Entities/Actions/PHY_FireResults_ABC.h"
 
 class MIL_Agent_ABC;
@@ -25,13 +26,10 @@ class PHY_DotationCategory;
 class PHY_FireResults_Pion : public PHY_FireResults_ABC
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
              PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target );
              PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MIL_Population& target );
              PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPosition, const PHY_DotationCategory& dotationCategory );
     virtual ~PHY_FireResults_Pion();
-    //@}
 
     //! @name Accessors
     //@{
@@ -42,7 +40,7 @@ private:
     //! @name Member data
     //@{
     const MIL_Agent_ABC& firer_;
-    const unsigned int nID_;
+    const unsigned int           nID_;
     //@}
 };
 

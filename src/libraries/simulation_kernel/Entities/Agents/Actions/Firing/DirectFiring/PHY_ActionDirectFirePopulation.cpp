@@ -10,7 +10,9 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+
 #include "PHY_ActionDirectFirePopulation.h"
+
 #include "PHY_RoleAction_DirectFiring.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
@@ -23,7 +25,7 @@ using namespace firing;
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 PHY_ActionDirectFirePopulation::PHY_ActionDirectFirePopulation( MIL_AgentPion& pion, unsigned int nID )
-    : PHY_DecisionCallbackAction_ABC( pion )
+    : PHY_DecisionCallbackAction_ABC     ( pion )
     , role_              ( pion.GetRole< PHY_RoleAction_DirectFiring >() )
     , nTargetKnowledgeID_( nID )
     , pFireResult_       ( 0 )
@@ -50,6 +52,10 @@ void PHY_ActionDirectFirePopulation::StopAction()
         pFireResult_->DecRef();
 }
 
+// =============================================================================
+// OPERATIONS
+// =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionDirectFirePopulation::Execute
 // Created: NLD 2004-08-18
@@ -59,6 +65,7 @@ void PHY_ActionDirectFirePopulation::Execute()
     bool bMustRefResult = ( pFireResult_ == 0 );
     int nResult = role_.FirePopulation( nTargetKnowledgeID_, pFireResult_ );
     Callback( nResult );
+
     if( pFireResult_ && bMustRefResult )
         pFireResult_->IncRef();
 }

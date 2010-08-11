@@ -12,7 +12,10 @@
 #ifndef __PHY_ActionDirectFirePion_h_
 #define __PHY_ActionDirectFirePion_h_
 
+#include "MIL.h"
+
 #include "PHY_ActionDirectFirePion_ABC.h"
+
 
 // =============================================================================
 // @class  PHY_ActionDirectFirePion
@@ -21,11 +24,8 @@
 class PHY_ActionDirectFirePion : public PHY_ActionDirectFirePion_ABC
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
              PHY_ActionDirectFirePion( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, MT_Float percentage, int firingMode, int ammoDotationClass );
     virtual ~PHY_ActionDirectFirePion();
-    //@}
 };
 
 #endif // __PHY_ActionDirectFirePion_h_

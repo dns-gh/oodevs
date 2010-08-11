@@ -8,7 +8,9 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+
 #include "PHY_ActionIllumination.h"
+
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
@@ -19,16 +21,15 @@
 #include "Knowledge/MIL_KnowledgeGroup.h"
 
 using namespace firing;
-
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionIllumination constructor
 // Created: MGD 2010-02-12
 // -----------------------------------------------------------------------------
 PHY_ActionIllumination::PHY_ActionIllumination( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, DEC_Decision_ABC* allie )
     : PHY_DecisionCallbackAction_ABC( pion )
-    , role_          ( pion.GetRole< PHY_RoleAction_DirectFiring >() )
-    , pEnemy_        ( pEnemy )
-    , knowledgeGroup_( allie->GetPion().GetKnowledgeGroup() )
+    , role_                       ( pion.GetRole< PHY_RoleAction_DirectFiring >() )
+    , pEnemy_                     ( pEnemy )
+    , knowledgeGroup_             ( allie->GetPion().GetKnowledgeGroup() )
 {
     Callback( role_.GetInitialReturnCode() );
 }
@@ -50,6 +51,10 @@ void PHY_ActionIllumination::StopAction()
 {
     Callback( role_.GetFinalReturnCode() );
 }
+
+// =============================================================================
+// OPERATIONS
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionIllumination::Execute
