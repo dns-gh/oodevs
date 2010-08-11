@@ -12,7 +12,6 @@
 #include "PHY_RoleAction_FolkInfluence.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-
 #include "folk/Object_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -20,11 +19,11 @@
 // Created: JCR 2007-09-12
 // -----------------------------------------------------------------------------
 PHY_ActionTriggerActivityInArea::PHY_ActionTriggerActivityInArea( MIL_AgentPion& pion, const std::string& activity, double influence, const TER_Localisation* pLocalisation )
-    : PHY_DecisionCallbackAction_ABC      ( pion )
-    , pion_               ( pion )
-    , role_               ( pion.GetRole< PHY_RoleAction_FolkInfluence >() )
-    , activity_           ( activity )
-    , influence_          ( influence )
+    : PHY_DecisionCallbackAction_ABC( pion )
+    , pion_     ( pion )
+    , role_     ( pion.GetRole< PHY_RoleAction_FolkInfluence >() )
+    , activity_ ( activity )
+    , influence_( influence )
 {
     const MT_Vector2D&  vPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
     if( pLocalisation )
