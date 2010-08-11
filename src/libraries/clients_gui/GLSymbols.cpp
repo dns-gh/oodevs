@@ -10,12 +10,12 @@
 #include "clients_gui_pch.h"
 #include "GLSymbols.h"
 #include "SvglRenderer.h"
-#include "svgl/Node_ABC.h"
 #include "tools/GeneralConfig.h"
 #pragma warning( push )
 #pragma warning( disable : 4996 )
 #include <zipstream/zipstream.h>
 #pragma warning( pop )
+#include <svgl/Node_ABC.h>
 #include <xeumeuleu/xml.hpp>
 
 using namespace geometry;

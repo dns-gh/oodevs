@@ -9,13 +9,13 @@
 
 #include "clients_gui_pch.h"
 #include "SvglRenderer.h"
-#include "svgl/svgl.h"
-#include "svgl/Opacity.h"
-#include "svgl/ListPaint.h"
-#include "svgl/ListLength.h"
-#include "svgl/ListLengthFactory.h"
-#include "svgl/PropertyFactory.h"
-#include "svgl/Style.h"
+#include <svgl/svgl.h>
+#include <svgl/Opacity.h>
+#include <svgl/ListPaint.h>
+#include <svgl/ListLength.h>
+#include <svgl/ListLengthFactory.h>
+#include <svgl/PropertyFactory.h>
+#include <svgl/Style.h>
 #include <xeumeuleu/xml.hpp>
 
 using namespace geometry;

@@ -10,9 +10,9 @@
 #include "clients_gui_pch.h"
 #include "SvglProxy.h"
 #include "SvglRenderer.h"
-#include "svgl/Node_ABC.h"
-#include <xeumeuleu/xml.hpp>
 #include "tools/GeneralConfig.h"
+#include <svgl/Node_ABC.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace gui;
 
