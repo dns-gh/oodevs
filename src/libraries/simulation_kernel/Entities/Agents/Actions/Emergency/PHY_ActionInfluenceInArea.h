@@ -10,7 +10,6 @@
 #ifndef __PHY_ActionInfluenceInArea_h_
 #define __PHY_ActionInfluenceInArea_h_
 
-#include "MIL.h"
 #include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 
 class MIL_AgentPion;

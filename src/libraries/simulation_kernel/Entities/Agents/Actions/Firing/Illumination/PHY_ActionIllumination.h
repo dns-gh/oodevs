@@ -10,8 +10,6 @@
 #ifndef __PHY_ActionIllumination_h_
 #define __PHY_ActionIllumination_h_
 
-#include "MIL.h"
-
 #include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 #include "Entities/Agents/Actions/Firing/DirectFiring/PHY_RoleAction_DirectFiring.h"
 
@@ -27,23 +25,32 @@ class MIL_KnowledgeGroup;
 class PHY_ActionIllumination : public PHY_DecisionCallbackAction_ABC
 {
 public:
+    //! @name Types
+    //@{
     typedef MIL_AgentPion ActorType;
+    //@}
 
 public:
+    //! @name Constructors/Destructor
+    //@{
              PHY_ActionIllumination( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, DEC_Decision_ABC* allie );
     virtual ~PHY_ActionIllumination();
+    //@}
 
     //! @name Operations
     //@{
-    virtual void Execute         ();
+    virtual void Execute();
     virtual void ExecuteSuspended();
     virtual void StopAction();
     //@}
 
 private:
-          firing::PHY_RoleAction_DirectFiring&       role_;
-          boost::shared_ptr< DEC_Knowledge_Agent >   pEnemy_;
-          MIL_KnowledgeGroup& knowledgeGroup_;
+    //! @name Member data
+    //@{
+    firing::PHY_RoleAction_DirectFiring& role_;
+    boost::shared_ptr< DEC_Knowledge_Agent > pEnemy_;
+    MIL_KnowledgeGroup& knowledgeGroup_;
+    //@}
 };
 
 #endif // __PHY_ActionIllumination_h_

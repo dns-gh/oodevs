@@ -12,8 +12,6 @@
 #ifndef __PHY_ActionDirectFirePionOnMajorComposantes_h_
 #define __PHY_ActionDirectFirePionOnMajorComposantes_h_
 
-#include "MIL.h"
-
 #include "PHY_ActionDirectFirePion_ABC.h"
 
 // =============================================================================
@@ -25,8 +23,11 @@ class PHY_ActionDirectFirePionOnMajorComposantes : public PHY_ActionDirectFirePi
     MT_COPYNOTALLOWED( PHY_ActionDirectFirePionOnMajorComposantes )
 
 public:
+    //! @name Constructors/Destructor
+    //@{
              PHY_ActionDirectFirePionOnMajorComposantes( MIL_AgentPion& pion, int ammoDotationClass, boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, MT_Float percentage, int firingMode );
     virtual ~PHY_ActionDirectFirePionOnMajorComposantes();
+    //@}
 };
 
 #endif // __PHY_ActionDirectFirePionOnMajorComposantes_h_

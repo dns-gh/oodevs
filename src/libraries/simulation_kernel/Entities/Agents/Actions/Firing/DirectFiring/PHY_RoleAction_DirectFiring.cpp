@@ -100,9 +100,9 @@ void PHY_RoleAction_DirectFiring::FirePion( PHY_DirectFireData& firerWeapons, MI
     unsigned int nNbrWeaponsUsed = 0;
     for( PHY_Composante_ABC::CIT_ComposanteVector itCompTarget = compTargets.begin(); itCompTarget != compTargets.end(); ++itCompTarget )
     {
-        PHY_Composante_ABC& compTarget       = **itCompTarget;
-        const PHY_ComposantePion* pBestFirer       = 0;
-        PHY_Weapon*         pBestFirerWeapon = 0;
+        PHY_Composante_ABC& compTarget = **itCompTarget;
+        const PHY_ComposantePion* pBestFirer = 0;
+        PHY_Weapon* pBestFirerWeapon = 0;
 
         firerWeapons.ChooseBestWeapon( target, compTarget, pBestFirer, pBestFirerWeapon );
         if( !pBestFirer )
@@ -113,8 +113,8 @@ void PHY_RoleAction_DirectFiring::FirePion( PHY_DirectFireData& firerWeapons, MI
         firerWeapons.ReleaseWeapon( *pBestFirer, *pBestFirerWeapon );
     }
     // Pour toutes les armes non utilisées, choix de la meilleure cible
-    const PHY_ComposantePion* pUnusedFirer       = 0;
-    PHY_Weapon*               pUnusedFirerWeapon = 0;
+    const PHY_ComposantePion* pUnusedFirer = 0;
+    PHY_Weapon* pUnusedFirerWeapon = 0;
     while( firerWeapons.GetUnusedFirerWeapon( pUnusedFirer, pUnusedFirerWeapon ) && nNbrWeaponsUsed < compTargets.size() )
     {
         PHY_Composante_ABC* pBestCompTarget = 0;

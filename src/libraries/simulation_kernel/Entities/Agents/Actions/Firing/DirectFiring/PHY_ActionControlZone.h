@@ -12,7 +12,6 @@
 #ifndef __PHY_ActionControlZone_h_
 #define __PHY_ActionControlZone_h_
 
-#include "MIL.h"
 #include "Entities/Actions/PHY_Action_ABC.h"
 
 namespace firing
@@ -33,11 +32,17 @@ class TER_Localisation;
 class PHY_ActionControlZone : public PHY_Action_ABC
 {
 public:
+    //! @name Types
+    //@{
     typedef MIL_AgentPion ActorType;
+    //@}
 
 public:
+    //! @name Constructors/Destructor
+    //@{
              PHY_ActionControlZone( MIL_AgentPion& pion, const TER_Localisation* pLocalisation, MT_Float rRadius, bool bFire );
     virtual ~PHY_ActionControlZone();
+    //@}
 
     //! @name Operations
     //@{

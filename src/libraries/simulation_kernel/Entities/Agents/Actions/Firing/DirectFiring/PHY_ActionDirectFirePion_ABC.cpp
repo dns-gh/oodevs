@@ -10,15 +10,14 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_ActionDirectFirePion_ABC.h"
-
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
 #include "Decision/DEC_Tools.h"
 
 using namespace firing;
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionDirectFirePion_ABC constructor
 // Created: NLD 2004-08-18
@@ -60,10 +59,6 @@ void PHY_ActionDirectFirePion_ABC::StopAction()
         pFireResult_->DecRef();
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionDirectFirePion_ABC::Execute
 // Created: NLD 2004-08-18
@@ -73,7 +68,6 @@ void PHY_ActionDirectFirePion_ABC::Execute()
     bool bMustRefResult = ( pFireResult_ == 0 );
     int nResult = role_.FirePion( pEnemy_, nFiringMode_, rPercentageComposantesToUse_, nComposanteFiringType_, nComposanteFiredType_, pFireResult_, pAmmoDotationClass_ );
     Callback( nResult );
-
     if( pFireResult_ && bMustRefResult )
         pFireResult_->IncRef();
 }
