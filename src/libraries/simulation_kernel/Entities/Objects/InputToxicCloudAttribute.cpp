@@ -23,7 +23,6 @@
 #include <geodata/Primitive_ABC.h>
 #include <gdal_ogr/gdal_ogr_lib.h>
 #include <xeumeuleu/xml.hpp>
-
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
@@ -45,10 +44,10 @@ namespace
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 InputToxicCloudAttribute::InputToxicCloudAttribute()
-    : extent_( ConvertTo( TER_World::GetWorld().GetExtent() ) )
+    : extent_    ( ConvertTo( TER_World::GetWorld().GetExtent() ) )
     , quantities_( new T_Quantities( extent_ ) )
-    , schedule_( new T_Schedule() )
-    , bExport_( true )
+    , schedule_  ( new T_Schedule() )
+    , bExport_   ( true )
 {
      quantities_->SetRefinementPolicy( 20 );  // $$$$ JCR 2007-09-13: profiling?
 }
@@ -58,12 +57,12 @@ InputToxicCloudAttribute::InputToxicCloudAttribute()
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
 InputToxicCloudAttribute::InputToxicCloudAttribute( xml::xistream& xis )
-    : extent_( ConvertTo( TER_World::GetWorld().GetExtent() ) )
+    : extent_    ( ConvertTo( TER_World::GetWorld().GetExtent() ) )
     , quantities_( new T_Quantities( extent_ ) )
-    , filename_( xis.attribute< std::string >( "source" ) )
-    , dataField_( xis.attribute< std::string >( "data-field" ) )
-    , schedule_( new T_Schedule() )
-    , bExport_( xis.attribute< bool >( "export", true ) )
+    , filename_  ( xis.attribute< std::string >( "source" ) )
+    , dataField_ ( xis.attribute< std::string >( "data-field" ) )
+    , schedule_  ( new T_Schedule() )
+    , bExport_   ( xis.attribute< bool >( "export", true ) )
 {
     quantities_->SetRefinementPolicy( 20 );  // $$$$ JCR 2007-09-13: profiling?
     LoadConfig();
@@ -135,10 +134,7 @@ void InputToxicCloudAttribute::LoadConfig()
                 >> xml::start( "résultats" )
                     >> xml::content( dataField_, field_ )
                     >> xml::start( "échéances" )
-                        >> xml::list( "heure", *this, &InputToxicCloudAttribute::ReadFiles )
-                    >> xml::end
-                >> xml::end
-            >> xml::end;
+                        >> xml::list( "heure", *this, &InputToxicCloudAttribute::ReadFiles );
     }
 }
 
@@ -184,11 +180,10 @@ void InputToxicCloudAttribute::ReadFiles( xml::xistream& xis )
     std::string schedule;
     std::string eventGDH;
     xis >> schedule;
-
     if( CanConvertWeirdFormat( schedule, eventGDH ) )
     {
-        unsigned int eventTime = ReadGDH( eventGDH );
-        unsigned int simTime = MIL_AgentServer::GetWorkspace().RealTimeToTick( eventTime );
+        const unsigned int eventTime = ReadGDH( eventGDH );
+        const unsigned int simTime = MIL_AgentServer::GetWorkspace().RealTimeToTick( eventTime );
         (*schedule_)[ simTime ] = schedule;
     }
 }
@@ -219,12 +214,12 @@ void InputToxicCloudAttribute::SendFullState( Common::MsgObjectAttributes& asn )
 {
     if( bExport_ )
     {
-        for (CIT_QuantityContainer it(export_.begin()); it != export_.end(); ++it )
+        for( CIT_QuantityContainer it = export_.begin() ; it != export_.end(); ++it )
         {
             Common::MsgLocatedQuantity* quantity = asn.mutable_toxic_cloud()->mutable_quantities()->add_elem();
             quantity->mutable_coordinate()->set_latitude( (*it).first.rX_ );
             quantity->mutable_coordinate()->set_longitude( (*it).first.rY_ );
-            quantity->set_quantity( float( (*it).second ) );
+            quantity->set_quantity( static_cast< float >( (*it).second ) );
         }
     }
 }
@@ -259,8 +254,8 @@ namespace
 {
     struct Handler : public geodata::FeatureHandler_ABC
     {
-        typedef InputToxicCloudAttribute::T_Quantity    T_Quantity;
-        typedef InputToxicCloudAttribute::T_Quantities  T_Quantities;
+        typedef InputToxicCloudAttribute::T_Quantity   T_Quantity;
+        typedef InputToxicCloudAttribute::T_Quantities T_Quantities;
         Handler( const std::string& field, T_Quantities& quantities, std::vector< T_Quantity >& e )
             : field_ ( field ), quantities_ ( quantities ), export_ ( e ) {}
 
@@ -376,7 +371,7 @@ namespace
         }
     private:
         MT_Float& quantity_;
-        unsigned int      n_;
+        unsigned int n_;
     };
 }
 
@@ -386,10 +381,9 @@ namespace
 // -----------------------------------------------------------------------------
 MIL_ToxicEffectManipulator InputToxicCloudAttribute::GetContaminationEffect( const NBCAttribute& nbc, const MT_Vector2D& position ) const
 {
-    MT_Float        quantity = 0.;
-    Intersecter     intersecter( position );
-    AssessQuantity  functor( quantity );
+    MT_Float quantity = 0.;
+    Intersecter intersecter( position );
+    AssessQuantity functor( quantity );
     quantities_->Apply( intersecter, functor );
-
     return MIL_ToxicEffectManipulator( nbc.GetNBCAgents(), quantity );
 }
