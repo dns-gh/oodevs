@@ -10,7 +10,7 @@
 #ifndef __ElevationExtrema_h_
 #define __ElevationExtrema_h_
 
-#include "pathfind/SpatialContainer.h"
+#include <pathfind/SpatialContainer.h>
 
 class ElevationMap;
 
