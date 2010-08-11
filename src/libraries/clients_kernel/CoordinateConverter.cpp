@@ -9,10 +9,10 @@
 
 #include "clients_kernel_pch.h"
 #include "CoordinateConverter.h"
+#include "CoordinateSystems.h"
 #include <geocoord/Geoid.h>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
-#include "CoordinateSystems.h"
 
 using namespace kernel;
 
