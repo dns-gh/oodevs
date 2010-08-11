@@ -9,8 +9,8 @@
 
 #include "simulation_terrain_pch.h"
 #include "TER_ObjectManager.h"
-#include "pathfind/SpatialContainerTraits.h"
 #include "TER_Object_ABC.h"
+#include <pathfind/SpatialContainerTraits.h>
 
 // -----------------------------------------------------------------------------
 // Name: TER_ObjectManager constructor
