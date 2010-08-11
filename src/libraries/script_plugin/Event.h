@@ -11,7 +11,7 @@
 #define __Event_h_
 
 #include <boost/shared_ptr.hpp>
-#include "directia/ScriptRef.h"
+#include <directia/ScriptRef.h>
 
 namespace plugins
 {

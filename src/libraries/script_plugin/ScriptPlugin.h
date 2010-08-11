@@ -13,7 +13,7 @@
 #include "dispatcher/Plugin_ABC.h"
 #include "dispatcher/Registrable_ABC.h"
 #include "dispatcher/Position.h"
-#include "directia/ScriptRef.h"
+#include <directia/ScriptRef.h>
 #include "protocol/protocol.h"
 #include <boost/ptr_container/ptr_vector.hpp>
 

@@ -15,7 +15,7 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Position.h"
-#include "directia/Brain.h"
+#include <directia/Brain.h>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/bind.hpp>

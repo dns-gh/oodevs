@@ -17,7 +17,7 @@
 #include <xeumeuleu/xml.hpp>
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #include "MT_Tools/MT_Scipio_enum.h"
-#include "directia/Brain.h"
+#include <directia/Brain.h>
 #include "protocol/protocol.h"
 #include "protocol/authenticationsenders.h"
 

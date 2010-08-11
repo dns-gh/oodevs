@@ -11,9 +11,8 @@
 #define __BaseCondition_h_
 
 #include "Condition_ABC.h"
-#include "directia/ScriptRef.h"
-#include "directia/LuaBinder.h"
-#include "directia/ScriptRef.inl"
+#include <directia/ScriptRef.h>
+#include <directia/LuaBinder.h>
 
 namespace plugins
 {
