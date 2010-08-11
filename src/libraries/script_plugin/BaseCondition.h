@@ -12,6 +12,7 @@
 
 #include "Condition_ABC.h"
 #include <directia/ScriptRef.h>
+#include <directia/ScriptRef.inl>
 #include <directia/LuaBinder.h>
 
 namespace plugins
