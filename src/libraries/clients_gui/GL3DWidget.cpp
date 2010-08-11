@@ -12,10 +12,10 @@
 #include "EntityLayer.h"
 #include "clients_kernel/DetectionMap.h"
 
-#include "graphics/Compass.h"
-#include "graphics/Visitor3d.h"
-#include "graphics/ViewFrustum.h"
-#include "graphics/EventStrategy_ABC.h"
+#include <graphics/Compass.h>
+#include <graphics/Visitor3d.h>
+#include <graphics/ViewFrustum.h>
+#include <graphics/EventStrategy_ABC.h>
 
 using namespace geometry;
 using namespace kernel;

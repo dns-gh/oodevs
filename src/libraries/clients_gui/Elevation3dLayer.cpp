@@ -9,20 +9,20 @@
 
 #include "clients_gui_pch.h"
 #include "Elevation3dLayer.h"
-#include "graphics/TextureTree.h"
-#include "graphics/Visitor3d.h"
-#include "graphics/ElevationFactory.h"
+#include <graphics/TextureTree.h>
+#include <graphics/Visitor3d.h>
+#include <graphics/ElevationFactory.h>
 #include "clients_kernel/GLTools_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/ModelLoaded.h"
-#include "graphics/ShaderProgram.h"
-#include "graphics/FragmentShader.h"
-#include "graphics/extensions.h"
-#include "graphics/MultiTextureLayer.h"
-#include "graphics/Lighting_ABC.h"
-#include "graphics/TextureSet.h"
-#include "graphics/CompiledVisitor3d.h"
+#include <graphics/ShaderProgram.h>
+#include <graphics/FragmentShader.h>
+#include <graphics/extensions.h>
+#include <graphics/MultiTextureLayer.h>
+#include <graphics/Lighting_ABC.h>
+#include <graphics/TextureSet.h>
+#include <graphics/CompiledVisitor3d.h>
 
 using namespace kernel;
 using namespace gui;

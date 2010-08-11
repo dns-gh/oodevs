@@ -10,12 +10,12 @@
 #ifndef __Gl3dWidget_h_
 #define __Gl3dWidget_h_
 
-#include "graphics/Widget3D.h"
-#include "graphics/ViewFrustum.h"
 #include "clients_kernel/WorldParameters.h"
 #include "GlToolsBase.h"
 #include "View_ABC.h"
 #include "SetGlOptions.h"
+#include <graphics/Widget3D.h>
+#include <graphics/ViewFrustum.h>
 
 class EventStrategy_ABC;
 

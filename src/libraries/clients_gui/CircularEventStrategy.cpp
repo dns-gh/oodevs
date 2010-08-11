@@ -9,7 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "CircularEventStrategy.h"
-#include "graphics/MapLayer_ABC.h"
+#include <graphics/MapLayer_ABC.h>
 
 using namespace gui;
 

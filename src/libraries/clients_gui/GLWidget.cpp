@@ -12,11 +12,11 @@
 #include "GlRenderPass_ABC.h"
 #include "IconLayout.h"
 #include "clients_kernel/OptionVariant.h"
-#include "graphics/MapLayer_ABC.h"
-#include "graphics/Scale.h"
-#include "graphics/extensions.h"
 #include "urban/UrbanDecoration.h"
 #include "urban/ColorRGBA.h"
+#include <graphics/MapLayer_ABC.h>
+#include <graphics/Scale.h>
+#include <graphics/extensions.h>
 #include <qbitmap.h>
 #include <time.h>
 #include <xeumeuleu/xml.hpp>

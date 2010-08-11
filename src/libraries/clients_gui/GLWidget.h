@@ -10,12 +10,12 @@
 #ifndef __GlWidget_h_
 #define __GlWidget_h_
 
-#include "graphics/MapWidget.h"
 #include "clients_kernel/WorldParameters.h"
 #include "SetGlOptions.h"
 #include "View_ABC.h"
 #include "GlToolsBase.h"
 #include "MapWidget_ABC.h"
+#include <graphics/MapWidget.h>
 
 namespace tools
 {

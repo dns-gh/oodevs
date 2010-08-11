@@ -9,7 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "Viewport3d.h"
-#include "graphics/ViewFrustum.h"
+#include <graphics/ViewFrustum.h>
 
 using namespace gui;
 

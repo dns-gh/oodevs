@@ -16,11 +16,11 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/OptionVariant.h"
-#include "graphics/RawShapeLayer.h"
-#include "graphics/NoVBOShapeLayer.h"
-#include "graphics/ShapeCollector.h"
-#include "graphics/extensions.h"
-#include "graphics/DataFactory.h"
+#include <graphics/RawShapeLayer.h>
+#include <graphics/NoVBOShapeLayer.h>
+#include <graphics/ShapeCollector.h>
+#include <graphics/extensions.h>
+#include <graphics/DataFactory.h>
 
 #include <boost/filesystem/operations.hpp>
 namespace bfs = boost::filesystem;

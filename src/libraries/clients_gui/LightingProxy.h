@@ -10,7 +10,7 @@
 #ifndef __LightingProxy_h_
 #define __LightingProxy_h_
 
-#include "graphics/Lighting_ABC.h"
+#include <graphics/Lighting_ABC.h>
 
 class FixedLighting;
 class TimeLighting;

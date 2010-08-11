@@ -14,8 +14,8 @@
 #include "clients_kernel/WorldParameters.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ApproximativeMap.h"
-#include "graphics/NoVBOShapeLayer.h"
-#include "graphics/GraphicSetup_ABC.h"
+#include <graphics/NoVBOShapeLayer.h>
+#include <graphics/GraphicSetup_ABC.h>
 #pragma warning( disable : 4355 4512 )
 #include <boost/filesystem/operations.hpp>
 #include <boost/algorithm/string.hpp>

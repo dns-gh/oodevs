@@ -11,8 +11,8 @@
 #include "RasterLayer.h"
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/Controller.h"
-#include "graphics/TextureSet.h"
-#include "graphics/Visitor2d.h"
+#include <graphics/TextureSet.h>
+#include <graphics/Visitor2d.h>
 
 using namespace gui;
 

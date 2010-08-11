@@ -11,10 +11,10 @@
 #define __Elevation3dLayer_h_
 
 #include "Layer_ABC.h"
-#include "graphics/ViewFrustum.h"
 #include "tools/Observer_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/WorldParameters.h"
+#include <graphics/ViewFrustum.h>
 
 class MultiTextureLayer;
 class Lighting_ABC;

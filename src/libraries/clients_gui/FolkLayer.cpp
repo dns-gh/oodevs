@@ -13,7 +13,7 @@
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/WorldParameters.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "graphics/extensions.h"
+#include <graphics/extensions.h>
 #include <shapelib/shapefil.h>
 #include <boost/shared_ptr.hpp>
 

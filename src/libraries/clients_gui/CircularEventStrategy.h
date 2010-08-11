@@ -10,7 +10,7 @@
 #ifndef __CircularEventStrategy_h_
 #define __CircularEventStrategy_h_
 
-#include "graphics/EventStrategy_ABC.h"
+#include <graphics/EventStrategy_ABC.h>
 
 namespace gui
 {

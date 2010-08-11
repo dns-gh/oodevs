@@ -10,7 +10,7 @@
 #ifndef __ExclusiveEventStrategy_h_
 #define __ExclusiveEventStrategy_h_
 
-#include "graphics/EventStrategy_ABC.h"
+#include <graphics/EventStrategy_ABC.h>
 
 namespace gui
 {

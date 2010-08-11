@@ -20,7 +20,7 @@
 #include "CompositionPass.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
-#include "graphics/DragMovementLayer.h"
+#include <graphics/DragMovementLayer.h>
 
 using namespace gui;
 using namespace kernel;

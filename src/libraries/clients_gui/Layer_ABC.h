@@ -10,7 +10,7 @@
 #ifndef __Layer_ABC_h_
 #define __Layer_ABC_h_
 
-#include "graphics/MapLayer_ABC.h"
+#include <graphics/MapLayer_ABC.h>
 #include <string>
 
 class ViewFrustum;

@@ -7,13 +7,13 @@
 //
 // *****************************************************************************
 
+#include "ColorStrategy_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "ColorStrategy_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "graphics/MapWidget.h"
+#include <graphics/MapWidget.h>
 
 namespace gui
 {

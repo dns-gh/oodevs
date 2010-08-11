@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "Gradient.h"
 #include "clients_kernel/Options.h"
-#include "graphics/extensions.h"
+#include <graphics/extensions.h>
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push )
 #pragma warning( disable : 4702 )

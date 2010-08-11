@@ -10,7 +10,7 @@
 #ifndef __DetectionMap_h_
 #define __DetectionMap_h_
 
-#include "graphics/ElevationMap.h"
+#include <graphics/ElevationMap.h>
 
 namespace tools
 {

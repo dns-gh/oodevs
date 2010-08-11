@@ -9,7 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "ElevationExtrema.h"
-#include "graphics/ElevationMap.h"
+#include <graphics/ElevationMap.h>
 
 using namespace gui;
 

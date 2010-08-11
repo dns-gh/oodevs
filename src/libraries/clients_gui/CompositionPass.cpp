@@ -10,12 +10,12 @@
 #include "clients_gui_pch.h"
 #include "CompositionPass.h"
 #include "TextureRenderPass.h"
-#include "graphics/extensions.h"
-#include "graphics/ShaderProgram.h"
-#include "graphics/FragmentShader.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionVariant.h"
 #include "tools/GeneralConfig.h"
+#include <graphics/extensions.h>
+#include <graphics/ShaderProgram.h>
+#include <graphics/FragmentShader.h>
 #include <fstream>
 
 using namespace gui;

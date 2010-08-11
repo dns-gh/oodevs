@@ -14,7 +14,7 @@
 #include "moc_FixedLightWidget.cpp"
 #include "DirectionWidget.h"
 #include "ColorButton.h"
-#include "graphics/FixedLighting.h"
+#include <graphics/FixedLighting.h>
 
 using namespace gui;
 

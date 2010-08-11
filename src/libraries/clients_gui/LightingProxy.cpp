@@ -9,9 +9,9 @@
 
 #include "clients_gui_pch.h"
 #include "LightingProxy.h"
-#include "graphics/FixedLighting.h"
-#include "graphics/TimeLighting.h"
 
+#include <graphics/FixedLighting.h>
+#include <graphics/TimeLighting.h>
 #pragma warning( push )
 #pragma warning( disable : 4127 4244 4511 4512 )
 #include <boost/date_time/posix_time/posix_time.hpp>

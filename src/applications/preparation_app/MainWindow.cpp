@@ -92,8 +92,6 @@
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Options.h"
 
-#include "graphics/DragMovementLayer.h"
-
 #include "preparation/AgentsModel.h"
 #include "preparation/FormationModel.h"
 #include "preparation/IntelligencesModel.h"
@@ -105,6 +103,7 @@
 
 #include "tools/ExerciseConfig.h"
 
+#include <graphics/DragMovementLayer.h>
 #include <xeumeuleu/xml.hpp>
 
 #pragma warning( push )

@@ -10,8 +10,8 @@
 #include "clients_gui_pch.h"
 #include "GraphicPreferences.h"
 #include "TerrainPreference.h"
-#include "graphics/GraphicData.h"
 #include "clients_kernel/Tools.h"
+#include <graphics/GraphicData.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 
