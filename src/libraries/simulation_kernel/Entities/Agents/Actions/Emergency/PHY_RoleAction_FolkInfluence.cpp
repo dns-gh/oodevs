@@ -12,8 +12,8 @@
 
 #include "MIL_AgentServer.h"
 #include "MIL_Folk.h"
-#include "folk/ObjectManager_ABC.h"
-#include "folk/Object_ABC.h"
+#include <folk/ObjectManager_ABC.h>
+#include <folk/Object_ABC.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleAction_FolkInfluence )
 

@@ -11,15 +11,14 @@
 #include "MIL_Folk.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_Config.h"
-
-#include "folk/Config.h"
-#include "folk/FlowManagerFactory.h"
-#include "folk/FlowManager_ABC.h"
-#include "folk/ObjectManager_ABC.h"
-#include "folk/Serializer_ABC.h"
-#include "folk/Time.h"
 #include "protocol/SimulationSenders.h"
 #include "protocol/ClientSenders.h"
+#include <folk/Config.h>
+#include <folk/FlowManagerFactory.h>
+#include <folk/FlowManager_ABC.h>
+#include <folk/ObjectManager_ABC.h>
+#include <folk/Serializer_ABC.h>
+#include <folk/Time.h>
 
 using namespace population;
 

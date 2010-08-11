@@ -10,7 +10,7 @@
 #ifndef __MIL_Folk_h_
 #define __MIL_Folk_h_
 
-#include "folk/population.h"
+#include <folk/population.h>
 #include <boost/scoped_ptr.hpp>
 
 namespace population
