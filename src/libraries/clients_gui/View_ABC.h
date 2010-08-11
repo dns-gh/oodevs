@@ -10,7 +10,7 @@
 #ifndef __View_ABC_h_
 #define __View_ABC_h_
 
-#include "geometry/Types.h"
+#include <geometry/Types.h>
 
 namespace gui
 {

@@ -94,7 +94,7 @@
 #include <set>
 #include <cassert>
 
-#include "geometry/Types.h"
+#include <geometry/Types.h>
 
 typedef std::vector< geometry::Point2f > T_PointVector;
 typedef T_PointVector::iterator         IT_PointVector;

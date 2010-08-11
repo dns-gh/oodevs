@@ -17,15 +17,15 @@
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
-#include "geometry/Types.h"
+#include "UrbanType.h"
 #include "tools/MIL_Geometry.h"
 #include "protocol/ClientSenders.h"
+#include <geometry/Types.h>
 #include <urban/Architecture.h>
 #include <urban/StaticModel.h>
 #include <urban/MaterialCompositionType.h>
 #include <urban/TerrainObject_ABC.h>
-#include <UrbanType.h>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( StructuralCapacity )
 
@@ -35,7 +35,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( StructuralCapacity )
 // -----------------------------------------------------------------------------
 StructuralCapacity::StructuralCapacity()
     : structuralState_( 1 )
-    , materialType_( 0 )
+    , materialType_   ( 0 )
 {
     // NOTHING
 }
@@ -125,14 +125,14 @@ namespace
     geometry::Polygon2f EllipseToPolygon( const MT_Ellipse& ellipse )
     {
         geometry::Polygon2f polygon;
-        polygon.Add( geometry::Point2f( float( ellipse.GetMajorAxisHighPoint().rX_ + ellipse.GetMinorAxisHighPoint().rX_ - ellipse.GetCenter().rX_ ), 
-            float( ellipse.GetMajorAxisHighPoint().rY_ + ellipse.GetMinorAxisHighPoint().rY_ - ellipse.GetCenter().rY_ ) ) );
-        polygon.Add( geometry::Point2f( float( ellipse.GetMajorAxisHighPoint().rX_ - ellipse.GetMinorAxisHighPoint().rX_ + ellipse.GetCenter().rX_ ),
-            float( ellipse.GetMajorAxisHighPoint().rY_ - ellipse.GetMinorAxisHighPoint().rY_ + ellipse.GetCenter().rY_ ) ) );
-        polygon.Add( geometry::Point2f( float( 3 * ellipse.GetCenter().rX_ - ellipse.GetMajorAxisHighPoint().rX_ - ellipse.GetMinorAxisHighPoint().rX_ ),
-            float( 3 * ellipse.GetCenter().rY_ - ellipse.GetMajorAxisHighPoint().rY_ - ellipse.GetMinorAxisHighPoint().rY_ ) ) );
-        polygon.Add( geometry::Point2f( float( ellipse.GetCenter().rX_ - ellipse.GetMajorAxisHighPoint().rX_ + ellipse.GetMinorAxisHighPoint().rX_ ),
-            float( ellipse.GetCenter().rY_ - ellipse.GetMajorAxisHighPoint().rY_ + ellipse.GetMinorAxisHighPoint().rY_ ) ) );
+        polygon.Add( geometry::Point2f( static_cast< float >( ellipse.GetMajorAxisHighPoint().rX_ + ellipse.GetMinorAxisHighPoint().rX_ - ellipse.GetCenter().rX_ ), 
+            static_cast< float >( ellipse.GetMajorAxisHighPoint().rY_ + ellipse.GetMinorAxisHighPoint().rY_ - ellipse.GetCenter().rY_ ) ) );
+        polygon.Add( geometry::Point2f( static_cast< float >( ellipse.GetMajorAxisHighPoint().rX_ - ellipse.GetMinorAxisHighPoint().rX_ + ellipse.GetCenter().rX_ ),
+            static_cast< float >( ellipse.GetMajorAxisHighPoint().rY_ - ellipse.GetMinorAxisHighPoint().rY_ + ellipse.GetCenter().rY_ ) ) );
+        polygon.Add( geometry::Point2f( static_cast< float >( 3 * ellipse.GetCenter().rX_ - ellipse.GetMajorAxisHighPoint().rX_ - ellipse.GetMinorAxisHighPoint().rX_ ),
+            static_cast< float >( 3 * ellipse.GetCenter().rY_ - ellipse.GetMajorAxisHighPoint().rY_ - ellipse.GetMinorAxisHighPoint().rY_ ) ) );
+        polygon.Add( geometry::Point2f( static_cast< float >( ellipse.GetCenter().rX_ - ellipse.GetMajorAxisHighPoint().rX_ + ellipse.GetMinorAxisHighPoint().rX_ ),
+            static_cast< float >( ellipse.GetCenter().rY_ - ellipse.GetMajorAxisHighPoint().rY_ + ellipse.GetMinorAxisHighPoint().rY_ ) ) );
         return polygon;
     }
 }
@@ -146,33 +146,27 @@ void StructuralCapacity::ApplyIndirectFire( MIL_Object_ABC& object, const MT_Ell
     const float objectArea = static_cast< float >( object.GetLocalisation().GetArea() );
     if( !objectArea )
         return;
-    geometry::Polygon2f attritionPolygon = EllipseToPolygon( attritionSurface );
+    const geometry::Polygon2f attritionPolygon = EllipseToPolygon( attritionSurface );
     CT_PointVector points = object.GetLocalisation().GetPoints();
     geometry::Polygon2f p;
     for( T_PointVector::const_iterator it = points.begin(); it != points.end(); ++it )
         p.Add( geometry::Point2f( static_cast< float >( it->rX_ ), static_cast< float >( it->rY_ ) ) );
-    float ratio = MIL_Geometry::IntersectionArea( attritionPolygon, p ) / objectArea;
-
-    float oldStructuralState = structuralState_;
+    const float ratio = MIL_Geometry::IntersectionArea( attritionPolygon, p ) / objectArea;
+    const float oldStructuralState = structuralState_;
     const MaterialAttribute* materialAttribute = object.RetrieveAttribute< MaterialAttribute >();
     if( materialAttribute )
     {
         structuralState_ -= ratio * float( dotation.GetAttrition(  materialAttribute->GetMaterial().GetId()) );
         if( structuralState_ < 0 )
             structuralState_ = 0;
-
-        float delta = oldStructuralState - structuralState_;
+        const float delta = oldStructuralState - structuralState_;
         if ( ( 1 - MIL_Random::rand_io( MIL_Random::eFire ) ) <= delta )
-        {
             for ( IT_Agents it = agents_.begin(); it != agents_.end(); ++it )
                 ( *it )->GetRole< PHY_RoleInterface_Composantes >().ApplyUrbanObjectCrumbling( object );
-        }
     }
     else
-    {
         // $$$$ JSR 2010-07-23: if material attribute is not present, just destroy object?
         object().Destroy();
-    }
 }
 // -----------------------------------------------------------------------------
 // Name: StructuralCapacity::ComputeComposanteState
@@ -184,20 +178,17 @@ const PHY_ComposanteState& StructuralCapacity::ComputeComposanteState( const MIL
     // $$$$  SLG 2010-07-22: TODO Dans le cas où ce n'est pas un bloc urbain (objet, ou quartier/ville), voir comment appliquer des dégats.
     if( !materialAttribute )
         return PHY_ComposanteState::undamaged_;
-
-    urban::MaterialCompositionType& material = materialAttribute->GetMaterial();
-    urban::MaterialCompositionType::AttritionData* attrition = material.FindAttrition( targetProtection.GetName() );
+    const urban::MaterialCompositionType& material = materialAttribute->GetMaterial();
+    const urban::MaterialCompositionType::AttritionData* attrition = material.FindAttrition( targetProtection.GetName() );
     if( !attrition ) 
         throw std::exception( "Error in searching protection" );
     // Tirage de l'état opérationnel
-    MT_Float rRand = ( 1 - MIL_Random::rand_io( MIL_Random::eFire ) );
-
-    double destruction = attrition->destruction_;
-    double repairableWithEvac = attrition->repairableWithEvac_ + destruction;
-    double repairableNoEvac = attrition->repairableNoEvac_ + repairableWithEvac;
-
+    const MT_Float rRand = ( 1 - MIL_Random::rand_io( MIL_Random::eFire ) );
+    const double destruction = attrition->destruction_;
+    const double repairableWithEvac = attrition->repairableWithEvac_ + destruction;
+    const double repairableNoEvac = attrition->repairableNoEvac_ + repairableWithEvac;
     return rRand <= destruction         ? PHY_ComposanteState::dead_:
-           rRand <= repairableWithEvac  ? PHY_ComposanteState::repairableWithEvacuation_   :
+           rRand <= repairableWithEvac  ? PHY_ComposanteState::repairableWithEvacuation_:
            rRand <= repairableNoEvac    ? PHY_ComposanteState::repairableWithoutEvacuation_:
                                           PHY_ComposanteState::undamaged_;
 }

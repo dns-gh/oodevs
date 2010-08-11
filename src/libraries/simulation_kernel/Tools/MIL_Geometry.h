@@ -10,7 +10,7 @@
 #ifndef __MIL_Geometry_h_
 #define __MIL_Geometry_h_
 
-#include "geometry/Types.h"
+#include <geometry/Types.h>
 #pragma warning( push )
 #pragma warning( disable : 4127 4100 4244 )
 #include <boost/geometry/geometry.hpp>
@@ -20,7 +20,7 @@ namespace bg = boost::geometry;
 
 // =============================================================================
 /** @class  MIL_Geometry
-    @brief  MIL_Geometry
+    @brief  MIL Geometry
 */
 // Created: SLG 2010-04-30
 // =============================================================================
@@ -38,7 +38,6 @@ public:
     template< typename T > static geometry::Polygon2< T > Scale( geometry::Polygon2< T > polygon, T distance );
     template< typename T > static geometry::Polygon2< T > ComputeHull( geometry::Polygon2< T > polygon );
     template< typename T > static T IntersectionArea( const geometry::Polygon2< T > polygon1, const geometry::Polygon2< T > polygon2 );
-
     //@}
 
 private:
@@ -52,15 +51,10 @@ private:
     //@{
     template< typename T > static bool FindOuterPoint( const std::vector< geometry::Point2< T > > vertices, const geometry::Point2< T >& from, const geometry::Vector2< T >& direction, geometry::Point2< T >& worst );
     //@}
-
-private:
-    //! @name Member data
-    //@{
-    //@}
 };
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > geometry::Polygon2< T >  MIL_Geometry::Scale
+// Name: MIL_Geometry::Scale
 // Created: SLG 2010-04-30
 // -----------------------------------------------------------------------------
 template< typename T >
@@ -80,7 +74,7 @@ geometry::Polygon2< T > MIL_Geometry::Scale( geometry::Polygon2< T > polygon, T 
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > geometry::Polygon2< T > MIL_Geometry::ComputeHull
+// Name: MIL_Geometry::ComputeHull
 // Created: SLG 2010-04-30
 // -----------------------------------------------------------------------------
 template< typename T >
@@ -89,7 +83,6 @@ geometry::Polygon2< T > MIL_Geometry::ComputeHull( geometry::Polygon2< T > polyg
     const std::vector< geometry::Point2< T > > vertices = polygon.Vertices();
     geometry::Point2< T > maxLeft = *( vertices.begin() );
     geometry::Point2< T > maxRight = *( vertices.begin() );
-
     for( std::vector< geometry::Point2< T > >::const_iterator it = vertices.begin(); it != vertices.end() ; ++it )
     {
         if( it->X() < maxLeft.X() )
@@ -120,7 +113,7 @@ geometry::Polygon2< T > MIL_Geometry::ComputeHull( geometry::Polygon2< T > polyg
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > geometry::Polygon2< T > MIL_Geometry::ComputeHull
+// Name: MIL_Geometry::ComputeHull
 // Created: SLG 2010-04-30
 // -----------------------------------------------------------------------------
 template< typename T >
@@ -146,7 +139,7 @@ bool MIL_Geometry::FindOuterPoint( const std::vector< geometry::Point2< T > > ve
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > static T MIL_Geometry::IntersectionArea
+// Name: MIL_Geometry::IntersectionArea
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
 template< typename T >
@@ -157,11 +150,10 @@ T MIL_Geometry::IntersectionArea( const geometry::Polygon2< T > polygon1, const 
     {
         geometry::Polygon2< T >::T_Vertices vertices1 = polygon1.Vertices();
         std::vector< bg::point_xy< T > > vectorTemp;
-        for ( geometry::Polygon2< T >::CIT_Vertices it = vertices1.begin(); it != vertices1.end(); ++it )
+        for( geometry::Polygon2< T >::CIT_Vertices it = vertices1.begin(); it != vertices1.end(); ++it )
         {
             bg::point_xy< T > p( it->X(), it->Y() );
             vectorTemp.push_back( p );
-
         }
         bg::assign( poly1, vectorTemp );
         bg::correct( poly1 );
@@ -169,11 +161,10 @@ T MIL_Geometry::IntersectionArea( const geometry::Polygon2< T > polygon1, const 
     {
         geometry::Polygon2< T >::T_Vertices vertices2 = polygon2.Vertices();
         std::vector< bg::point_xy< T > > vectorTemp;
-        for ( geometry::Polygon2< T >::CIT_Vertices it = vertices2.begin(); it != vertices2.end(); ++it )
+        for( geometry::Polygon2< T >::CIT_Vertices it = vertices2.begin(); it != vertices2.end(); ++it )
         {
             bg::point_xy< T > p( it->X(), it->Y() );
             vectorTemp.push_back( p );
-
         }
         bg::assign( poly2, vectorTemp );
         bg::correct( poly2 );
@@ -182,9 +173,7 @@ T MIL_Geometry::IntersectionArea( const geometry::Polygon2< T > polygon1, const 
     bg::intersection_inserter< bg::polygon< bg::point_xy< T > > >( poly2, poly1, std::back_inserter( polygonResult ) );
     T intersectArea = 0;
     for( std::vector< bg::polygon< bg::point_xy< T > > >::const_iterator it = polygonResult.begin(); it != polygonResult.end(); ++it  )
-    {
         intersectArea += float( area( *it ) );
-    }
     return intersectArea;
 }
 

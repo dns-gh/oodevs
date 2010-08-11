@@ -10,7 +10,7 @@
 #ifndef __Report_h_
 #define __Report_h_
 
-#include "geometry/Types.h"
+#include <geometry/Types.h>
 #pragma warning( push, 0 )
 #include <qstring.h>
 #include <qdatetime.h>

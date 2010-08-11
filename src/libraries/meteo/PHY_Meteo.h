@@ -14,7 +14,7 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "MT_Tools/MT_Tools_Types.h"
 #include "MT_Tools/MT_Vector2D.h"
-#include "geometry/Types.h"
+#include <geometry/Types.h>
 
 namespace Common
 {

@@ -11,7 +11,7 @@
 #define __MeteoData_h_
 
 #include "meteo/PHY_Meteo.h"
-#include "geometry/Types.h"
+#include <geometry/Types.h>
 
 namespace Common
 {

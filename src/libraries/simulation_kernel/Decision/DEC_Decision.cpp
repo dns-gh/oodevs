@@ -30,7 +30,7 @@
 #include "Knowledge/DEC_Knowledge_Urban.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "protocol/protocol.h"
-#include "geometry/Point2.h"
+#include <geometry/Point2.h>
 #include <boost/bind.hpp>
 #include <directia/Brain.h>
 

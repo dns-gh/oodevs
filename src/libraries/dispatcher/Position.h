@@ -11,7 +11,7 @@
 #define __Position_h_
 
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "geometry/Types.h"
+#include <geometry/Types.h>
 #include <vector>
 
 namespace Common

@@ -13,7 +13,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "geometry/Types.h"
+#include <geometry/Types.h>
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC constructor

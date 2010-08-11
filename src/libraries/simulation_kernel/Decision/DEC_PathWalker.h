@@ -13,7 +13,7 @@
 #include "pathfind/TerrainData.h"
 #include "DEC_PathResult.h"
 #include "Entities/Effects/MIL_Effect_Move.h"
-#include "geometry/Types.h"
+#include <geometry/Types.h>
 #include <boost/shared_ptr.hpp>
 
 namespace Common
