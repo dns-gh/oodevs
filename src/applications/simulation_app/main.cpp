@@ -42,33 +42,23 @@ int __cdecl NoMoreMemoryHandler( unsigned int nSize )
 LONG WriteMiniDump( EXCEPTION_POINTERS* pExp )
 {
     assert( pExp );
-
     if( !IsDebuggerPresent() && SIM_App::CrashWithCoreDump() )
     {
         _mkdir( "./Debug" );
         std::stringstream strFileName;
         strFileName << "./Debug/SIM " << VERSION << ".dmp";
-
         MT_LOG_INFO_MSG( MT_FormatString( "The SIM has crashed - Writing core dump to file %s", strFileName.str().c_str() ) );
-
         HANDLE hDumpFile = CreateFile( strFileName.str().c_str(), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
-
         MINIDUMP_EXCEPTION_INFORMATION eInfo;
-        eInfo.ThreadId          = GetCurrentThreadId();
+        eInfo.ThreadId = GetCurrentThreadId();
         eInfo.ExceptionPointers = pExp;
-        eInfo.ClientPointers    = FALSE;
-
+        eInfo.ClientPointers = FALSE;
         MiniDumpWriteDump( GetCurrentProcess(), GetCurrentProcessId(), hDumpFile, MiniDumpWithFullMemory, &eInfo, NULL, 0 );
-
         CloseHandle( hDumpFile );
-
         MT_LOG_INFO_MSG( "Core dump written" );
     }
     else
-    {
         MT_LOG_INFO_MSG( "The SIM has crashed - no core dump generated" );
-    }
-
     return EXCEPTION_CONTINUE_SEARCH;
 }
 
@@ -186,14 +176,3 @@ int WINAPI WinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine
     }
     return 0;
 }
- /*
-
-#ifdef _MSC_VER
-INT WINAPI WinMain( HINSTANCE /current/, HINSTANCE /previous/, LPSTR cmdline, int /showcmd/ )
-{
-bpo::command_line_parser parser( bpo::split_winmain( cmdline ) );
-return Main( parser );
-}
-#endif
-
-*/
