@@ -16,9 +16,9 @@
 #define MT_USE_CRITIC
 
 #ifdef MT_USE_MUTEX
-#   include "MT/MT_Thread/MT_Mutex.h"
+#   include <MT/MT_Thread/MT_Mutex.h>
 #else
-#   include "MT/MT_Thread/MT_CriticalSection.h"
+#   include <MT/MT_Thread/MT_CriticalSection.h>
 #endif
 
 /**
