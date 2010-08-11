@@ -22,14 +22,13 @@ namespace urban
 
 // =============================================================================
 /** @class  UrbanType
-    @brief  UrbanType
+    @brief  Urban type
 */
 // Created: SLG 2010-03-05
 // =============================================================================
 class UrbanType : private boost::noncopyable
 {
 public:
-
     //! @name Manager
     //@{
     static void Initialize( xml::xistream& xis );

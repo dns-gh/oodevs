@@ -27,7 +27,6 @@ MIL_ProfilerMgr::MIL_ProfilerMgr( bool bEnabled )
         MT_LOG_INFO_MSG( "Profiling mode enabled at startup time : dec functions profiled" )
     else
         MT_LOG_INFO_MSG( "Profiling mode not enabled at startup time : dec functions won't be profiled" )
-
     _mkdir( "./Profiling/");
     decFunctionsFile_  .open( "./Profiling/DecFunctions.txt"  , std::ios_base::out | std::ios_base::trunc );
     decisionUpdateFile_.open( "./Profiling/DecisionUpdate.txt", std::ios_base::out | std::ios_base::trunc );
@@ -83,7 +82,6 @@ void MIL_ProfilerMgr::NotifyDecisionUpdated( const MIL_Automate& automate, MT_Fl
     decisionUpdateFile_ << MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() << " A " << automate.GetID() << " \"" << automate.GetOrderManager().GetMissionName() << "\" " << rTime << std::endl;
     decisionUpdateFile_.flush();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ProfilerMgr::NotifyDecisionUpdated

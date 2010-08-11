@@ -27,7 +27,7 @@ namespace bml
 
 // =============================================================================
 /** @class  MissionParameter_ABC
-    @brief  MissionParameter_ABC
+    @brief  Mission parameter declaration
 */
 // Created: SBO 2008-05-22
 // =============================================================================

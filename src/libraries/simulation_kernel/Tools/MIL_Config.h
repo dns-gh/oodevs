@@ -156,6 +156,6 @@ private:
     //@}
 };
 
-#   include "MIL_Config.inl"
+#include "MIL_Config.inl"
 
 #endif // __MIL_Config_h_

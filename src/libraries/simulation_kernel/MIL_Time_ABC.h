@@ -21,8 +21,8 @@ class MIL_Time_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_Time_ABC() {};
-    virtual ~MIL_Time_ABC() {};
+             MIL_Time_ABC() {}
+    virtual ~MIL_Time_ABC() {}
     //@}
 
     //! @name Operations

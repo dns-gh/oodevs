@@ -9,7 +9,6 @@
 
 #include "tools_pch.h"
 #include "GeneralConfig.h"
-
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
 #include <boost/program_options.hpp>
@@ -28,17 +27,16 @@ using namespace tools;
 // -----------------------------------------------------------------------------
 GeneralConfig::GeneralConfig( const std::string& defaultRoot /*= "../"*/ )
     : CommandLineConfig_ABC()
-    , terrainConfigFile_   ( "terrain.xml"  )
-    , exerciseConfigFile_  ( "exercise.xml" )
+    , terrainConfigFile_ ( "terrain.xml"  )
+    , exerciseConfigFile_( "exercise.xml" )
 {
     po::options_description desc( "General options" );
     desc.add_options()
-        ( "root-dir"      , po::value< std::string >( &rootDir_      )->default_value( defaultRoot         ), "specify global root directory"    )
-        ( "terrains-dir"  , po::value< std::string >( &terrainsDir_  )->default_value( "data/terrains/"    ), "specify terrains root directory"  )
-        ( "models-dir"    , po::value< std::string >( &modelsDir_    )->default_value( "data/models/"      ), "specify models root directory"    )
-        ( "population-dir", po::value< std::string >( &populationDir_)->default_value( "data/population/"  ), "specify population root directory")
-        ( "exercises-dir" , po::value< std::string >( &exercisesDir_ )->default_value( "exercises/"        ), "specify exercises root directory" )
-    ;
+        ( "root-dir"      , po::value< std::string >( &rootDir_       )->default_value( defaultRoot        ), "specify global root directory"     )
+        ( "terrains-dir"  , po::value< std::string >( &terrainsDir_   )->default_value( "data/terrains/"   ), "specify terrains root directory"   )
+        ( "models-dir"    , po::value< std::string >( &modelsDir_     )->default_value( "data/models/"     ), "specify models root directory"     )
+        ( "population-dir", po::value< std::string >( &populationDir_ )->default_value( "data/population/" ), "specify population root directory" )
+        ( "exercises-dir" , po::value< std::string >( &exercisesDir_  )->default_value( "exercises/"       ), "specify exercises root directory"  );
     AddOptions( desc );
 }
 
@@ -70,7 +68,6 @@ void GeneralConfig::ResolveRelativePath( const std::string& root, std::string& p
 void GeneralConfig::Parse( int argc, char** argv )
 {
     CommandLineConfig_ABC::Parse( argc, argv );
-
     // $$$$ NLD 2007-01-10: gerer exerciseName_ = poseidon/exercise.xml
     ResolveRelativePath( rootDir_, terrainsDir_ );
     ResolveRelativePath( rootDir_, modelsDir_ );

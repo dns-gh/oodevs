@@ -31,7 +31,6 @@ double MIL_ProfilerMgr::GetLastTickDuration()
     return tickDurationProfiler_.GetLastTime();
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: MIL_ProfilerMgr::GetAverageTickDuration
 // Created: AML 03-05-21
@@ -51,12 +50,10 @@ void MIL_ProfilerMgr::NotifyDecFunctionCalled( const T& agent, const std::string
 {
     if( !bEnabled_ )
         return;
-
     sDecFunctionProfiling data;
     data.nAgentID_      = agent.GetID();
     data.strFunction_   = strFunction;
     data.rTime_         = rTime;
-
     decFunctionProfilingVector_.push_back( data );
 }
 

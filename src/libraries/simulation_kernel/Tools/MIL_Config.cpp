@@ -55,8 +55,7 @@ MIL_Config::MIL_Config()
         ( "test"                                                                    , "test mode: loading + first tick"          )
         ( "testdata"                                                                , "test mode: load models only (no terrain)" )
         ( "savecheckpoint" , po::value< std::string >( &strCheckPointNameTestMode_ ), "specify checkpoint to save"               )
-        ( "deletecheckpoint"                                                        , "delete checkpoint folder"                 )
-    ;
+        ( "deletecheckpoint"                                                        , "delete checkpoint folder"                 );
     AddOptions( desc );
 }
 

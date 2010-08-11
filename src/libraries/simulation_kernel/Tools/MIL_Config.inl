@@ -309,7 +309,6 @@ const bool* MIL_Config::GetRandomGaussian() const
     return randomGaussian_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Config::GetRandomDeviation
 // Created: JSR 2010-07-02

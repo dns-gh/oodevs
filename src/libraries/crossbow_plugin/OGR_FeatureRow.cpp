@@ -12,7 +12,6 @@
 #include "Point.h"
 #include "Area.h"
 #include "Line.h"
-
 #include <gdal/ogr_core.h>
 #include <gdal/ogr_feature.h>
 #include <gdal/ogrsf_frmts.h>
@@ -57,8 +56,10 @@ namespace
     {
     public:
         FieldConverter( OGRFeature& feature, int index ) 
-            : feature_ ( feature ), index_ ( index ) 
+            : feature_( feature )
+            , index_  ( index ) 
         {
+            // NOTHING
         }
         
         void operator()( int value ) const
