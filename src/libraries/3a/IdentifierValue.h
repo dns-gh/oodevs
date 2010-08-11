@@ -36,7 +36,7 @@ struct IdentifierValue : public InstantValue< NumericValue >
 
     //! @name Operations
     //@{
-    void Receive( const MsgSimToClient& wrapper )
+    void Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
     {
             SET_OID         ( unit_order_ack );
             SET_OID         ( unit_creation );

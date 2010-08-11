@@ -16,11 +16,7 @@
 #include <vector>
 #include <boost/shared_ptr.hpp>
 #pragma warning( pop )
-
-
 #include "protocol/protocol.h"
-
-using namespace MsgsSimToClient;
 
 // =============================================================================
 /** @class  ModelFunctionComposite
@@ -42,7 +38,7 @@ public:
     void Add( boost::shared_ptr< ModelFunction_ABC > function );
 
     virtual void BeginTick();
-    virtual void Receive( const MsgSimToClient& message );
+    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
     virtual void EndTick();
     //@}
 

@@ -12,10 +12,7 @@
 
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-
 #include "protocol/protocol.h"
-
-using namespace MsgsSimToClient;
 
 namespace kernel
 {
@@ -38,7 +35,7 @@ namespace script
 // Created: SBO 2008-11-18
 // =============================================================================
 class PopulationNotifier : public kernel::Extension_ABC
-                         , public kernel::Updatable_ABC< MsgPopulationFlowUpdate >
+                         , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowUpdate >
 {
 public:
     //! @name Constructors/Destructor
@@ -56,7 +53,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgPopulationFlowUpdate& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate& message );
     //@}
 
 private:

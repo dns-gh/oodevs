@@ -14,8 +14,6 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "protocol/protocol.h"
 
-using namespace MsgsSimToClient;
-
 namespace kernel
 {
     class Controller;
@@ -37,7 +35,7 @@ namespace script
 // Created: AGE 2008-07-16
 // =============================================================================
 class KnowledgeNotifier : public kernel::Extension_ABC
-                        , public kernel::Updatable_ABC< MsgUnitKnowledgeUpdate >
+                        , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitKnowledgeUpdate >
 {
 public:
     //! @name Constructors/Destructor
@@ -48,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgUnitKnowledgeUpdate& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message );
     //@}
 
 private:

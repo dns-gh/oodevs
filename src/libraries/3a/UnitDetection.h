@@ -13,8 +13,6 @@
 #include "Extractors.h"
 #include "FilterHelper.h"
 
-using namespace MsgsSimToClient;
-
 namespace extractors
 {
 
@@ -44,8 +42,8 @@ public:
 
     //! @name Operations
     //@{
-    bool HasValue( const MsgSimToClient& wrapper ) const;
-    float Extract( const MsgSimToClient& wrapper ) const;
+    bool HasValue( const MsgsSimToClient::MsgSimToClient& wrapper ) const;
+    float Extract( const MsgsSimToClient::MsgSimToClient& wrapper ) const;
     //@}
 
 private:

@@ -10,9 +10,6 @@
 #ifndef __Profile_ABC_h_
 #define __Profile_ABC_h_
 
-
-
-//using namespace MsgsSimToClient;
 namespace MsgsClientToSim
 {
     class MsgClientToSim;

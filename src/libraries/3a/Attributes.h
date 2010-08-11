@@ -41,11 +41,11 @@ struct UnitAttribute : public ContinuousValue< typename Extractor::Type >
     explicit UnitAttribute( const Extractor& extractor = Extractor() )
         : extractor_( extractor ) {}
 
-    void Receive( const MsgSimToClient& wrapper )
+    void Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
     {
         if( wrapper.message().has_unit_attributes() )
         {
-            const MsgUnitAttributes& attributes = wrapper.message().unit_attributes();
+            const MsgsSimToClient::MsgUnitAttributes& attributes = wrapper.message().unit_attributes();
             if( extractor_.HasFlag( attributes ) )
                 Set( extractor_.Extract( attributes ) );
         }
@@ -66,7 +66,7 @@ struct Detections : public ContinuousValue< extractors::UnitDetection::Type >
     enum { has_parameter = extractors::UnitDetection::has_parameter };
     explicit Detections( const extractors::UnitDetection& extractor = extractors::UnitDetection() )
         : extractor_( extractor ) {}
-    void Receive( const MsgSimToClient& wrapper )
+    void Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
     {
         if( extractor_.HasValue( wrapper ) )
             Set( extractor_.Extract( wrapper ) );

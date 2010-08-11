@@ -13,8 +13,6 @@
 #include "Plugin_ABC.h"
 #include <protocol/protocol.h>
 
-//using namespace MsgsClientToSim;
-
 namespace tools
 {
     class MessageDispatcher_ABC;

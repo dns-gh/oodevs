@@ -18,7 +18,6 @@
 #include "tools/MessageDispatcher_ABC.h"
 #include "protocol/simulationsenders.h"
 
-//using namespace MsgsClientToSim;
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------

@@ -13,9 +13,6 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "SimulationPublisher_ABC.h"
 
-//using namespace MsgsClientToSim;
-//using namespace MsgsDispatcherToSim;
-
 namespace dispatcher
 {
 

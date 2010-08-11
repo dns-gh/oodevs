@@ -59,7 +59,7 @@ HlaPlugin::~HlaPlugin()
 // Name: HlaPlugin::Receive
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-void HlaPlugin::Receive( const MsgSimToClient& wrapper )
+void HlaPlugin::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
 {
     if( wrapper.message().has_control_end_tick() )
         federate_->Step();

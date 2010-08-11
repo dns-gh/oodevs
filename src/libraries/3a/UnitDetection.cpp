@@ -59,7 +59,7 @@ UnitDetection::UnitDetection( xml::xistream& xis )
 // Name: UnitDetection::HasValue
 // Created: SBO 2010-07-28
 // -----------------------------------------------------------------------------
-bool UnitDetection::HasValue( const MsgSimToClient& wrapper ) const
+bool UnitDetection::HasValue( const MsgsSimToClient::MsgSimToClient& wrapper ) const
 {
     if( wrapper.message().has_unit_detection() )
     {
@@ -73,7 +73,7 @@ bool UnitDetection::HasValue( const MsgSimToClient& wrapper ) const
 // Name: UnitDetection::Extract
 // Created: SBO 2010-06-01
 // -----------------------------------------------------------------------------
-float UnitDetection::Extract( const MsgSimToClient& wrapper ) const
+float UnitDetection::Extract( const MsgsSimToClient::MsgSimToClient& wrapper ) const
 {
     const MsgsSimToClient::MsgUnitDetection& message = wrapper.message().unit_detection();
     if( detectedUnitId_ == unsigned long( message.detected_unit_oid() ) && ( visibilityMask_ & ( 1 << message.current_visibility() ) ) != 0 )

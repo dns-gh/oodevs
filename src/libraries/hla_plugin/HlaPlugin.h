@@ -13,8 +13,6 @@
 #include "dispatcher/Plugin_ABC.h"
 #include "protocol/protocol.h"
 
-using namespace MsgsSimToClient;
-
 namespace xml
 {
     class xistream;
@@ -51,7 +49,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive( const MsgSimToClient& message );
+    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client );
     //@}

@@ -10,13 +10,8 @@
 #ifndef __TacticalLinesModel_h_
 #define __TacticalLinesModel_h_
 
-
 #include "tools/Resolver.h"
 #include "protocol/protocol.h"
-
-using namespace Common;
-using namespace MsgsClientToMessenger;
-using namespace MsgsMessengerToClient;
 
 namespace dispatcher
 {
@@ -71,9 +66,9 @@ public:
 
     //! @name xml read / write
     //@{
-    void ReadLima ( xml::xistream& xis, const MsgTacticalLine_Diffusion& diffusion );
-    void ReadLimit( xml::xistream& xis, const MsgTacticalLine_Diffusion& diffusion );
-    void Write    ( xml::xostream& xos ) const;
+    void ReadLima ( xml::xistream& xis, const Common::MsgTacticalLine_Diffusion& diffusion );
+    void ReadLimit( xml::xistream& xis, const Common::MsgTacticalLine_Diffusion& diffusion );
+    void Write( xml::xostream& xos ) const;
     //@}
 
     //! @name Types

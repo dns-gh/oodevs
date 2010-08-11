@@ -17,11 +17,6 @@
 #include "protocol/protocol.h"
 #include <boost/ptr_container/ptr_vector.hpp>
 
-using namespace Common;
-using namespace MsgsClientToMessenger;
-using namespace MsgsSimToClient;
-using namespace MsgsAarToClient;
-
 namespace dispatcher
 {
     class Config;
@@ -73,8 +68,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive                  ( const MsgSimToClient& message );
-    virtual void Receive                  ( const MsgAarToClient& message );
+    virtual void Receive                  ( const MsgsSimToClient::MsgSimToClient& message );
+    virtual void Receive                  ( const MsgsAarToClient::MsgAarToClient& message );
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
     virtual void Update();
@@ -91,7 +86,7 @@ private:
     //@{
     void LoadScripts();
     void LoadScript( const std::string& file );
-    void OnReceiveClientToMessenger( const std::string&, const MsgClientToMessenger& );
+    void OnReceiveClientToMessenger( const std::string&, const MsgsClientToMessenger::MsgClientToMessenger& );
     virtual void RegisterIn( directia::Brain& brain );
 
     void Reset();

@@ -15,7 +15,6 @@
 
 using namespace plugins::script;
 using namespace events;
-
 using namespace MsgsSimToClient;
 
 // -----------------------------------------------------------------------------

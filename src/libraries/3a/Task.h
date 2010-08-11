@@ -36,8 +36,6 @@ namespace xml
 {
     class xistream;
 }
-
-using namespace MsgsSimToClient;
 // =============================================================================
 /** @class  Task
     @brief  Task
@@ -63,7 +61,7 @@ public:
     void AddConnector( const std::string& name, boost::shared_ptr< Connector_ABC > connector );
     void Connect( xml::xistream& xis );
 
-    virtual void Receive( const MsgSimToClient& message );
+    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
 
     void Commit();
     void Process( dispatcher::MessageLoader_ABC& loader );

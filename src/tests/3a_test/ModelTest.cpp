@@ -45,14 +45,14 @@ BOOST_AUTO_TEST_CASE( Model_TestInstanciation )
 
 namespace
 {
-    MsgSimToClient MakeMessage( MsgUnitAttributes& attributes, unsigned long id = 0 )
+    MsgsSimToClient::MsgSimToClient MakeMessage( MsgsSimToClient::MsgUnitAttributes& attributes, unsigned long id = 0 )
     {
-        MsgSimToClient result;
+        MsgsSimToClient::MsgSimToClient result;
         attributes.set_oid( id );
         *result.mutable_message()->mutable_unit_attributes() = attributes;
         return result;
     }
-    void Evaluate( ModelFunction_ABC& function, const MsgSimToClient& message )
+    void Evaluate( ModelFunction_ABC& function, const MsgsSimToClient::MsgSimToClient& message )
     {
         function.BeginTick();
         function.Receive( message );
@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_CASE( Model_TestValueExtraction )
     MOCK_EXPECT( handler, Handle ).exactly( 2 ).with( boost::bind( &CheckClose, NumericValue( 0.25f ), _1, epsilon ) );
     MOCK_EXPECT( handler, Handle ).exactly( 2 ).with( boost::bind( &CheckClose, NumericValue( 0.3f ), _1, epsilon ) );
     MOCK_EXPECT( handler, EndTick ).exactly( 4 );
-    MsgUnitAttributes attributes;
+    MsgsSimToClient::MsgUnitAttributes attributes;
     attributes.set_etat_operationnel_brut( 25 );
     {
         Evaluate( *function, MakeMessage( attributes ) );
@@ -114,7 +114,7 @@ BOOST_AUTO_TEST_CASE( Model_TestDispatchedValueExtraction )
     MOCK_EXPECT( keyHandler, Handle ).once().with( NumericValue( 2 ) );
     MOCK_EXPECT( handler, EndTick ).exactly( 4 );
     MOCK_EXPECT( keyHandler, EndTick ).exactly( 4 );
-    MsgUnitAttributes attributes;
+    MsgsSimToClient::MsgUnitAttributes attributes;
     attributes.set_etat_operationnel_brut( 25 );
     {
         function->BeginTick();

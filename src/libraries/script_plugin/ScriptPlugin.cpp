@@ -85,7 +85,7 @@ ScriptPlugin::~ScriptPlugin()
 // Name: ScriptPlugin::Receive
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
-void ScriptPlugin::Receive( const MsgSimToClient& wrapper )
+void ScriptPlugin::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
 {
     if( wrapper.message().has_control_information() )
         if( wrapper.message().control_information().has_tick_duration() )
@@ -98,7 +98,7 @@ void ScriptPlugin::Receive( const MsgSimToClient& wrapper )
 // Name: ScriptPlugin::Receive
 // Created: SBO 2009-06-03
 // -----------------------------------------------------------------------------
-void ScriptPlugin::Receive( const MsgAarToClient& wrapper )
+void ScriptPlugin::Receive( const MsgsAarToClient::MsgAarToClient& wrapper )
 {
     if( wrapper.message().has_indicator() )
         controller_->Update( events::IndicatorChanged( wrapper.message().indicator().name(), wrapper.message().indicator().value() ) );
