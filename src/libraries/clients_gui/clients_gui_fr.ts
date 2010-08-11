@@ -49,6 +49,45 @@
     </message>
 </context>
 <context>
+    <name>Block</name>
+    <message>
+        <source>Info/Identifier</source>
+        <translation>Info/Identifiant</translation>
+    </message>
+    <message>
+        <source>Info/Name</source>
+        <translation>Info/Nom</translation>
+    </message>
+    <message>
+        <source>Info/StructuralState</source>
+        <translation>Info/Etat structurel</translation>
+    </message>
+    <message>
+        <source>PhysicalFeatures/Architecture/Height</source>
+        <translation>Eléments physiques/Architecture/Hauteur</translation>
+    </message>
+    <message>
+        <source>PhysicalFeatures/Architecture/floorNumber</source>
+        <translation>Eléments physiques/Architecture/Nombre d&apos;étages</translation>
+    </message>
+    <message>
+        <source>PhysicalFeatures/Architecture/roofShape</source>
+        <translation>Eléments physiques/Architecture/Toit</translation>
+    </message>
+    <message>
+        <source>PhysicalFeatures/Architecture/material</source>
+        <translation>Eléments physiques/Architecture/Matériau</translation>
+    </message>
+    <message>
+        <source>PhysicalFeatures/Architecture/occupation</source>
+        <translation>Eléments physiques/Architecture/Occupation</translation>
+    </message>
+    <message>
+        <source>PhysicalFeatures/Architecture/trafficability</source>
+        <translation>Eléments physiques/Architecture/traficabilité</translation>
+    </message>
+</context>
+<context>
     <name>BypassPrototype_ABC</name>
     <message>
         <source>Bypass parameters</source>

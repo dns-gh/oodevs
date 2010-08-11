@@ -53,6 +53,7 @@ PreferencesList.cpp \
 PropertiesPanel.cpp \
 StatusBar.cpp \
 SupplyRoutePrototype_ABC.cpp \
+TerrainObjectProxy.cpp \
 TacticalLinesLayer.cpp \
 TerrainPreference.cpp \
 TerrainProfile.cpp \
