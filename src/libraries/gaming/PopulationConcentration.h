@@ -16,8 +16,6 @@
 #include "clients_kernel/Positions.h"
 #include "protocol/Protocol.h"
 
-using namespace Common;
-
 namespace kernel
 {
     class CoordinateConverter_ABC;

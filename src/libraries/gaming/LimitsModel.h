@@ -13,8 +13,6 @@
 #include "protocol/Protocol.h"
 #include "tools/Resolver.h"
 
-using namespace Common;
-
 class TacticalLine_ABC;
 class TacticalLineFactory;
 

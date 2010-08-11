@@ -19,8 +19,6 @@
 #include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
 
-using namespace Common;
-
 namespace kernel
 {
     class Controller;
@@ -93,7 +91,7 @@ private:
 
     //! @name Member data
     //@{
-    MsgLocation::Geometry nTypeLocalisation_;
+    Common::MsgLocation::Geometry nTypeLocalisation_;
     kernel::DotationType* construction_;
     kernel::DotationType* valorization_;
     kernel::OptionalValue< unsigned int > nDotationConstruction_;

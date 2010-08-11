@@ -11,7 +11,6 @@
 #include "AgentKnowledge.h"
 #include "Diplomacies.h"
 #include "Tools.h"
-
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Displayer_ABC.h"

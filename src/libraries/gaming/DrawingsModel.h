@@ -13,8 +13,6 @@
 #include "clients_gui/DrawerModel.h"
 #include "protocol/messengersenders.h"
 
-using namespace Common;
-
 class DrawingFactory;
 
 // =============================================================================

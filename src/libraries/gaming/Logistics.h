@@ -14,8 +14,6 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "protocol/Protocol.h"
 
-using namespace Common;
-
 namespace kernel
 {
     class Entity_ABC;

@@ -12,9 +12,6 @@
 
 #include "protocol/Protocol.h"
 
-using namespace Common;
-
-
 class AgentFireResult;
 class PopulationFireResult;
 class Model;

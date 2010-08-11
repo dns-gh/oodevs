@@ -16,8 +16,6 @@
 #include "protocol/Protocol.h"
 #include "tools/Resolver.h"
 
-using namespace Common;
-
 namespace kernel
 {
     class Controller;
@@ -67,9 +65,9 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< Report* >          T_Reports;
-    typedef T_Reports::iterator            IT_Reports;
-    typedef T_Reports::const_iterator     CIT_Reports;
+    typedef std::vector< Report* >      T_Reports;
+    typedef T_Reports::iterator        IT_Reports;
+    typedef T_Reports::const_iterator CIT_Reports;
     //@}
 
     //! @name Helpers

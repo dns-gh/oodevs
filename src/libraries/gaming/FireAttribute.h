@@ -17,8 +17,6 @@
 #include "tools/Resolver_ABC.h"
 #include "protocol/Protocol.h"
 
-using namespace Common;
-
 namespace kernel
 {
     class Controller;

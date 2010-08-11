@@ -15,8 +15,6 @@
 #include "protocol/Protocol.h"
 #include "protocol/AarSenders.h"
 
-using namespace Common;
-
 namespace kernel
 {
     class Controllers;

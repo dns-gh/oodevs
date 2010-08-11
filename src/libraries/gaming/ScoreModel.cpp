@@ -21,6 +21,7 @@
 #include "protocol/AarSenders.h"
 
 using namespace Common;
+
 // -----------------------------------------------------------------------------
 // Name: ScoreModel constructor
 // Created: SBO 2009-03-12

@@ -11,9 +11,6 @@
 #define __FolkModel_h_
 
 #include "protocol/Protocol.h"
-
-using namespace Common;
-
 #pragma warning( push )
 #pragma warning( disable : 4100 4996 )
 #include <boost/multi_array.hpp>

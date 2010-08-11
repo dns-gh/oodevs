@@ -14,8 +14,6 @@
 #include "clients_gui/DrawingFactory_ABC.h"
 #include "protocol/messengersenders.h"
 
-using namespace Common;
-
 namespace kernel
 {
     class Controller;

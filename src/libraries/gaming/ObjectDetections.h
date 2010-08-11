@@ -16,8 +16,6 @@
 #include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
 
-using namespace Common;
-
 namespace kernel
 {
     class Controller;
@@ -60,8 +58,8 @@ private:
 
     //! @name Types
     //@{
-    typedef std::set< const kernel::Object_ABC* >   T_Objects;
-    typedef T_Objects::const_iterator CIT_Objects;
+    typedef std::set< const kernel::Object_ABC* > T_Objects;
+    typedef T_Objects::const_iterator           CIT_Objects;
     //@}
 
 private:
@@ -69,7 +67,6 @@ private:
     //@{
     kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::Object_ABC >& resolver_;
-
     T_Objects perceivedObjects_;
     //@}
 };

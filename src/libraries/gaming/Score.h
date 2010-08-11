@@ -14,8 +14,6 @@
 #include "clients_kernel/Displayable_ABC.h"
 #include "protocol/AarSenders.h"
 
-using namespace Common;
-
 namespace kernel
 {
     class Controller;

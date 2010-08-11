@@ -63,7 +63,7 @@ Intelligence_ABC* IntelligenceFactory::Create( const MsgsMessengerToClient::MsgI
 
 namespace
 {
-    EnumDiplomacy ConvertToDiplomacy( const Karma& karma )
+    Common::EnumDiplomacy ConvertToDiplomacy( const Karma& karma )
     {
         if( karma == Karma::friend_ )
             return Common::friend_diplo;
@@ -86,7 +86,7 @@ Intelligence_ABC* IntelligenceFactory::Create( Entity_ABC& superior, const std::
     const QString name = tools::translate( "Intelligence", "Intelligence [%1]" ).arg( ++counter );
     message().mutable_intelligence()->set_name( name.ascii() );
     *message().mutable_intelligence()->mutable_nature() = symbol.c_str();
-    message().mutable_intelligence()->set_level( (EnumNatureLevel)level.GetId() );
+    message().mutable_intelligence()->set_level( (Common::EnumNatureLevel)level.GetId() );
     message().mutable_intelligence()->set_diplomacy( ConvertToDiplomacy( karma ) );
     message().mutable_intelligence()->set_embarked( mounted );
     converter_.ConvertToGeo< Common::MsgCoordLatLong >( position, *message().mutable_intelligence()->mutable_location() );

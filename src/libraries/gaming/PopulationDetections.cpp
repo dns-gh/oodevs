@@ -49,7 +49,7 @@ PopulationDetections::~PopulationDetections()
 void PopulationDetections::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationDetection& message )
 {
     const PopulationPart_ABC* pConcentration = & resolver_.Get( message.population_oid() ).GetConcentration( message.concentration_oid() );
-    if( message.visibility() == invisible )
+    if( message.visibility() == Common::invisible )
         perceived_.erase( pConcentration );
     else
         perceived_.insert( pConcentration );

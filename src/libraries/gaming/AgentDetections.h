@@ -16,8 +16,6 @@
 #include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
 
-using namespace Common;
-
 namespace MsgsSimToClient
 {
     class MsgUnitDetection;
@@ -61,8 +59,8 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const kernel::Agent_ABC*, EnumUnitVisibility > T_AgentDetections;
-    typedef T_AgentDetections::const_iterator                            CIT_AgentDetections;
+    typedef std::map< const kernel::Agent_ABC*, Common::EnumUnitVisibility > T_AgentDetections;
+    typedef T_AgentDetections::const_iterator                              CIT_AgentDetections;
     //@}
 
     //! @name Helpers
@@ -77,7 +75,6 @@ private:
     kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::Agent_ABC >& resolver_;
     const kernel::Entity_ABC& holder_;
-
     T_AgentDetections detections_;
     //@}
 };

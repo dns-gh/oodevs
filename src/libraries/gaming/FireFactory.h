@@ -12,8 +12,6 @@
 
 #include "protocol/Protocol.h"
 
-using namespace Common;
-
 class Fire_ABC;
 class Model;
 

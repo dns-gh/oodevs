@@ -77,14 +77,14 @@ namespace
 {
     struct GeometrySerializer : public kernel::LocationVisitor_ABC
     {
-        GeometrySerializer( MsgLocation& loc, const kernel::CoordinateConverter_ABC& converter )
+        GeometrySerializer( Common::MsgLocation& loc, const kernel::CoordinateConverter_ABC& converter )
             : loc_( loc )
             , converter_( converter )
         {}
 
         virtual void VisitLines( const T_PointVector& points )
         {
-            loc_.set_type( MsgLocation_Geometry_line );
+            loc_.set_type( Common::MsgLocation_Geometry_line );
             for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
                 converter_.ConvertToGeo( *it, *loc_.mutable_coordinates()->add_elem() );
         }
@@ -107,7 +107,7 @@ namespace
 // Name: TacticalLine_ABC::WriteGeometry
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::WriteGeometry( MsgLocation& location ) const
+void TacticalLine_ABC::WriteGeometry( Common::MsgLocation& location ) const
 {
     GeometrySerializer serializer( location, converter_ );
     Get< kernel::Positions >().Accept( serializer );

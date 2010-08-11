@@ -23,7 +23,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 ObjectDetections::ObjectDetections( Controller& controller, const tools::Resolver_ABC< Object_ABC >& resolver )
     : controller_( controller )
-    , resolver_( resolver )
+    , resolver_  ( resolver )
 {
     // NOTHING
 }

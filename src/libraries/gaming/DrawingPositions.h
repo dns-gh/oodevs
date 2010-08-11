@@ -13,9 +13,6 @@
 #include "clients_gui/DrawingPositions.h"
 #include "protocol/messengersenders.h"
 
-using namespace Common;
-
-
 namespace kernel
 {
     class CoordinateConverter_ABC;

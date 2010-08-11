@@ -18,8 +18,6 @@
 #include "clients_kernel/PopulationKnowledge_ABC.h"
 #include "protocol/Protocol.h"
 
-using namespace Common;
-
 namespace kernel
 {
     class CoordinateConverter_ABC;

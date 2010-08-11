@@ -12,9 +12,6 @@
 
 #include "protocol/Protocol.h"
 
-using namespace Common;
-
-
 namespace kernel
 {
     class KnowledgeGroup_ABC;

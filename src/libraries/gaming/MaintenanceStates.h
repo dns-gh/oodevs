@@ -16,8 +16,6 @@
 #include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
 
-using namespace Common;
-
 namespace kernel
 {
     class Controller;
@@ -75,14 +73,13 @@ private:
 public:
     //! @name Member data
     //@{
-    kernel::Controller&      controller_;
+    kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::EquipmentType >& resolver_;
-    const tools::Resolver_ABC< kernel::Automat_ABC >&   automatResolver_;
-
-    bool             bChainEnabled_;
-    unsigned         nWorkRate_;
-    T_Priorities     priorities_;
-    T_Automats       tacticalPriorities_;
+    const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver_;
+    bool bChainEnabled_;
+    unsigned nWorkRate_;
+    T_Priorities priorities_;
+    T_Automats tacticalPriorities_;
     T_Availabilities dispoHaulers_;
     T_Availabilities dispoRepairers_;
     //@}

@@ -17,8 +17,6 @@
 #include "protocol/Protocol.h"
 #include <list>
 
-using namespace Common;
-
 namespace kernel
 {
     class Controller;

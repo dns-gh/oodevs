@@ -39,7 +39,7 @@ Object::Object( const MsgsSimToClient::MsgObjectCreation& message, Controller& c
     RegisterSelf( *this );
     if( message.attributes().has_obstacle()  )
     {
-        if( message.attributes().obstacle().type() == ObstacleType_DemolitionTargetType_reserved )
+        if( message.attributes().obstacle().type() == Common::ObstacleType_DemolitionTargetType_reserved )
         {
             obstacleType_ = eDemolitionTargetType_Reserved;
             reservedObstacleActivated_ = message.attributes().obstacle().activated() ? true : false;

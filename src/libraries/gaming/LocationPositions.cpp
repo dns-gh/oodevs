@@ -154,11 +154,11 @@ namespace
         std::auto_ptr< kernel::Location_ABC > location;
         switch( message.type() )
         {
-        case MsgLocation_Geometry_point:   location.reset( new kernel::Point() ); break;
-        case MsgLocation_Geometry_line:    location.reset( new kernel::Lines() ); break;
-        case MsgLocation_Geometry_rectangle: location.reset( new kernel::Rectangle() ); break;
-        case MsgLocation_Geometry_polygon: location.reset( new kernel::Polygon() ); break;
-        case MsgLocation_Geometry_circle:  location.reset( new kernel::Circle() ); break;
+        case Common::MsgLocation_Geometry_point:   location.reset( new kernel::Point() ); break;
+        case Common::MsgLocation_Geometry_line:    location.reset( new kernel::Lines() ); break;
+        case Common::MsgLocation_Geometry_rectangle: location.reset( new kernel::Rectangle() ); break;
+        case Common::MsgLocation_Geometry_polygon: location.reset( new kernel::Polygon() ); break;
+        case Common::MsgLocation_Geometry_circle:  location.reset( new kernel::Circle() ); break;
         default: throw std::runtime_error( __FUNCTION__ " unsupported location type." ); break;
         }
         for( int i = 0; i < message.coordinates().elem_size(); ++i )

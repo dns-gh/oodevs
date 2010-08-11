@@ -15,8 +15,6 @@
 #include "clients_kernel/Drawable_ABC.h"
 #include "protocol/Protocol.h"
 
-using namespace Common;
-
 namespace kernel
 {
     class SensorType;
@@ -87,7 +85,6 @@ private:
     const kernel::Agent_ABC& agent_;
     SurfaceFactory& factory_;
     kernel::Workers& workers_;
-
     bool needUpdating_;
     Updater* current_;
     VisionMap* map_;

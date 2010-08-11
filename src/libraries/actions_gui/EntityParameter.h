@@ -19,8 +19,6 @@
 #include "actions/Action_ABC.h"
 #include "protocol/Protocol.h"
 
-using namespace Common;
-
 namespace gui
 {
     class RichLabel;

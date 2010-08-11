@@ -27,7 +27,7 @@ AmmoEffect::AmmoEffect( const MsgsSimToClient::MsgStartFireEffect& message, Cont
     , ellipse_( message.location(), converter )
     , meteo_( weather::PHY_Lighting::jourSansNuage_, weather::PHY_Precipitation::none_ )
 {
-    if( type_ == eclairant )
+    if( type_ == Common::eclairant )
         meteo_.Update( weather::PHY_Lighting::eclairant_ );
     else
         meteo_.Update( weather::PHY_Precipitation::smoke_  );

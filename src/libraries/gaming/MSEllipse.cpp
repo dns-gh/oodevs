@@ -21,7 +21,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 MSEllipse::MSEllipse( const Common::MsgLocation& localisation, const CoordinateConverter_ABC& converter )
 {
-    if( localisation.type() != MsgLocation_Geometry_ellipse || localisation.coordinates().elem_size() != 3 )
+    if( localisation.type() != Common::MsgLocation_Geometry_ellipse || localisation.coordinates().elem_size() != 3 )
         throw std::runtime_error( "MSEllipse is not an ellipse" );
     origin_ = converter.ConvertToXY( localisation.coordinates().elem(0) );
     const Point2f majorHigh = converter.ConvertToXY( localisation.coordinates().elem(1) );

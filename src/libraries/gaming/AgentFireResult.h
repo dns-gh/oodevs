@@ -15,8 +15,6 @@
 #include "protocol/Protocol.h"
 #include "tools/Resolver.h"
 
-using namespace Common;
-
 namespace kernel
 {
     class Agent_ABC;
