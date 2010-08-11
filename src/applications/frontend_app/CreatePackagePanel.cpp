@@ -16,9 +16,9 @@
 #include "resources.h"
 #include "frontend/commands.h"
 #include "frontend/Config.h"
-#include "zipstream/zipstream.h"
 #include "clients_gui/Tools.h"
 #include <xeumeuleu/xml.hpp>
+#include <zipstream/zipstream.h>
 
 #include <qaction.h>
 #include <qcursor.h>

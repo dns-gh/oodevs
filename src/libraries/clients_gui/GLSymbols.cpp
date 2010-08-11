@@ -14,7 +14,7 @@
 #include "tools/GeneralConfig.h"
 #pragma warning( push )
 #pragma warning( disable : 4996 )
-#include "zipstream/zipstream.h"
+#include <zipstream/zipstream.h>
 #pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 
