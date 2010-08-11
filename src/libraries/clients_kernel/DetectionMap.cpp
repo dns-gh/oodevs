@@ -11,10 +11,9 @@
 #include "DetectionMap.h"
 #include "tools/InputBinaryStream.h"
 #include "WorldParameters.h"
+#include <boost/static_assert.hpp>
 
 using namespace kernel;
-
-#include "boost/static_assert.hpp"
 
 BOOST_STATIC_ASSERT( sizeof( DetectionMap::Environment ) == 1 );
 

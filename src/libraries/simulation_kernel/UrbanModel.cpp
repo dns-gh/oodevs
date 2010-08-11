@@ -9,13 +9,13 @@
 
 #include "simulation_kernel_pch.h"
 #include "UrbanModel.h"
-#include <boost/filesystem/path.hpp>
+#include "Tools/MIL_Config.h"
 #include <Urban/Model.h>
+#include <Urban/ObjectVisitor_ABC.h>
 #include <Urban/TerrainObject_ABC.h>
 #include <Urban/WorldParameters.h>
-#include <Urban/ObjectVisitor_ABC.h>
-#include "Tools/MIL_Config.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/filesystem/path.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( UrbanModel )
 
@@ -23,6 +23,7 @@ namespace
 {
     UrbanModel* singleton = 0;
 }
+
 // -----------------------------------------------------------------------------
 // Name: UrbanModel constructor
 // Created: SLG 2009-08-10
@@ -134,8 +135,9 @@ const urban::TerrainObject_ABC* UrbanModel::FindUrbanObject( unsigned id ) const
 // -----------------------------------------------------------------------------
 MT_Float UrbanModel::GetUrbanBlockCost( MT_Float weight, const MT_Vector2D& start, const MT_Vector2D& end ) const
 {
-    geometry::Point2f from ( ( float ) start.rX_, ( float ) start.rY_ ), to ( ( float ) end.rX_, ( float ) end.rY_ );
-    return model_->GetUrbanBlockCost( ( float ) weight, from, to );
+    const geometry::Point2f from( static_cast< float >( start.rX_ ), static_cast< float >( start.rY_ ) );
+    const geometry::Point2f to( static_cast< float >( end.rX_ ), static_cast< float >( end.rY_ ) );
+    return model_->GetUrbanBlockCost( static_cast< float >( weight ), from, to );
 }
 
 // -----------------------------------------------------------------------------

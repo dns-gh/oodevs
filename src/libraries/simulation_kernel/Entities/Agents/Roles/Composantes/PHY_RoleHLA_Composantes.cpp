@@ -29,7 +29,7 @@
 #include "Hla/HLA_IndirectFire.h"
 #include "Hla/HLA_InteractionManager_ABC.h"
 #include "Hla/HLA_Neutralization.h"
-#include "hla/AttributeIdentifier.h"
+#include <hla/AttributeIdentifier.h>
 
 using namespace hla;
 
