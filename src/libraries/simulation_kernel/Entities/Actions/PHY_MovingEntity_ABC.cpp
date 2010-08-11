@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_MovingEntity_ABC.h"
+#pragma warning( disable : 4355 )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MovingEntity_ABC constructor

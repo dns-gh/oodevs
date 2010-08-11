@@ -46,6 +46,7 @@
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #include "protocol/clientsenders.h"
 #include <boost/bind.hpp>
+#pragma warning( disable : 4503 )
 
 using namespace dispatcher;
 
