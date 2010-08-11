@@ -12,7 +12,7 @@
 #include "TER_PopulationConcentration_ABC.h"
 #include "TER_Localisation.h"
 #include "MT_Tools/MT_Rect.h"
-#include "pathfind/SpatialContainerTraits.h"
+#include <pathfind/SpatialContainerTraits.h>
 
 namespace
 {

@@ -19,10 +19,10 @@
 #ifndef __TER_CoordinateManager_h_
 #define __TER_CoordinateManager_h_
 
-#include "geocoord/PlanarCartesian.h"
-#include "geocoord/MGRS.h"
-#include "geocoord/Geodetic.h"
 #include "MT_Tools/MT_Rect.h"
+#include <geocoord/PlanarCartesian.h>
+#include <geocoord/MGRS.h>
+#include <geocoord/Geodetic.h>
 
 // =============================================================================
 /** @class  TER_CoordinateManager

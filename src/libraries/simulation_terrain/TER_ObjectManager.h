@@ -12,7 +12,7 @@
 
 #include "TER_ObjectTraits.h"
 #include "TER_Object_ABC.h"
-#include "pathfind/SpatialContainer.h"
+#include <pathfind/SpatialContainer.h>
 
 class MT_Ellipse;
 class TER_Localisation;

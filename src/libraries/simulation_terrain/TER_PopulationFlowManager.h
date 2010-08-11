@@ -13,7 +13,7 @@
 #include "TER_PopulationFlow_ABC.h"
 #include "TER_PopulationFlowTraits.h"
 
-#include "pathfind/SpatialContainer.h"
+#include <pathfind/SpatialContainer.h>
 
 class MT_Rect;
 

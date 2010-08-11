@@ -13,7 +13,7 @@
 #include "MIL.h"
 #include "ToxicAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
-#include "pathfind/SpatialContainer.h"
+#include <pathfind/SpatialContainer.h>
 #include <boost/shared_ptr.hpp>
 
 class QuantityTraits;

@@ -11,7 +11,7 @@
 #include "TER_DynamicData.h"
 #include "TER_PathFinderThread.h"
 #include "MT_Tools/MT_ScipioException.h"
-#include "pathfind/TerrainRetractationHandle.h"
+#include <pathfind/TerrainRetractationHandle.h>
 
 // -----------------------------------------------------------------------------
 // Name: TER_DynamicData constructor

@@ -19,7 +19,7 @@
 #ifndef __DEC_Agent_PathfinderRule_h_
 #define __DEC_Agent_PathfinderRule_h_
 
-#include "pathfind/TerrainRule_ABC.h"
+#include <pathfind/TerrainRule_ABC.h>
 
 class MIL_Fuseau;
 class DEC_Agent_Path;

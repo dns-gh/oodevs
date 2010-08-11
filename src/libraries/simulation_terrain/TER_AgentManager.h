@@ -21,7 +21,7 @@
 
 #include "TER_AgentTraits.h"
 #include "TER_Agent_ABC.h"
-#include "pathfind/SpatialContainer.h"
+#include <pathfind/SpatialContainer.h>
 
 class TER_Localisation;
 class TER_Polygon;

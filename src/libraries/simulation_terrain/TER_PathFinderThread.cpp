@@ -12,10 +12,6 @@
 #include "TER_NodeFunctor_ABC.h"
 #include "TER_PathFindRequest_ABC.h"
 #include "TER_DynamicData.h"
-#include "pathfind/TerrainPathfinder.h"
-#include "pathfind/TerrainRule_ABC.h"
-#include "pathfind/Node.h"
-#include "pathfind/SpatialContainerTraits.h"
 #include "simulation_kernel/MIL_AgentServer.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_Profiler.h"
@@ -24,6 +20,10 @@
 #include "MT/MT_IO/MT_Dir.h"
 #include "MT/MT_IO/MT_FormatString.h"
 #include "simulation_kernel/Decision/DEC_PathFind_Manager.h"
+#include <pathfind/TerrainPathfinder.h>
+#include <pathfind/TerrainRule_ABC.h>
+#include <pathfind/Node.h>
+#include <pathfind/SpatialContainerTraits.h>
 
 using namespace pathfind;
 

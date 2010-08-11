@@ -24,8 +24,8 @@
 #include "TER_CoordinateManager.h"
 #include "TER_PathFindManager.h"
 #include "pathfind/TerrainData.h"
-#include "geocoord/Geoid.h"
 #include "MT_Tools/MT_Rect.h"
+#include <geocoord/Geoid.h>
 #include <xeumeuleu/xml.hpp>
 
 #pragma warning( push )

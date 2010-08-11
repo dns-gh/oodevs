@@ -12,9 +12,9 @@
 #ifndef __DEC_PathSection_ABC_h_
 #define __DEC_PathSection_ABC_h_
 
-#include "pathfind/TerrainPathPoint.h"
-#include "pathfind/AStarManagementCallback_ABC.h"
 #include "tools/thread/Handler_ABC.h"
+#include <pathfind/TerrainPathPoint.h>
+#include <pathfind/AStarManagementCallback_ABC.h>
 
 class DEC_Path_ABC;
 class TerrainRule_ABC;

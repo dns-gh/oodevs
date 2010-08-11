@@ -13,10 +13,10 @@
 #include "Types.h"
 #include "CoordinateConverter_ABC.h"
 #include "WorldParameters.h"
-#include "geocoord/PlanarCartesian.h"
-#include "geocoord/MGRS.h"
-#include "geocoord/Geodetic.h"
-#include "geocoord/UTM.h"
+#include <geocoord/PlanarCartesian.h>
+#include <geocoord/MGRS.h>
+#include <geocoord/Geodetic.h>
+#include <geocoord/UTM.h>
 
 namespace tools
 {
