@@ -31,8 +31,6 @@ class MT_Rect;
 //=============================================================================
 class TER_Localisation
 {
-//    MT_BOOSTPOOLING_MEMBERS( TER_Localisation )
-
 public:
     //-------------------------------------------------------------------------
     /** @name Types */
@@ -52,12 +50,15 @@ public:
     //@}
 
 public:
+    //! @name Constructors/Destructor
+    //@{
              TER_Localisation();
              TER_Localisation( const TER_Localisation& );
              TER_Localisation( E_LocationType, const T_PointVector& );
              TER_Localisation( const TER_Polygon&  );
              TER_Localisation( const MT_Vector2D& vPos, MT_Float rRadius );
     virtual ~TER_Localisation();
+    //@}
 
     //! @name CheckPoints
     //@{

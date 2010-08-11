@@ -7,9 +7,6 @@
 //
 // *****************************************************************************
 
-// $$$$ RDS 2008-04-02: beurk 
-#include "../../src/libraries/simulation_kernel/CheckPoints/MIL_CheckPointSerializationHelpers.h"
-
 //-----------------------------------------------------------------------------
 // Name: TER_Localisation::GetPoints
 // Created: NLD 2003-07-24
@@ -50,7 +47,6 @@ MT_Vector2D TER_Localisation::ComputeBarycenter() const
     return MT_ComputeBarycenter( pointVector_ );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: TER_Localisation::GetBoundingBox
 // Created: JVT 03-09-02
@@ -60,10 +56,6 @@ const MT_Rect& TER_Localisation::GetBoundingBox() const
 {
     return boundingBox_;
 }
-
-//=============================================================================
-// GEOMETRY
-//=============================================================================
 
 //-----------------------------------------------------------------------------
 // Name: TER_Localisation::Intersect2DWithCircle
@@ -184,7 +176,6 @@ bool TER_Localisation::Intersect2D( const MT_Line& line ) const
             return false;
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: TER_Localisation::GetArea
