@@ -178,7 +178,7 @@ void ADN_Workspace::Build( ADN_MainWindow& mainWindow )
     mainWindow.AddPage( elements_[eLaunchers]->GetName(), * elements_[eLaunchers]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eEquipement]->GetName(), * elements_[eEquipement]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eWeapons]->GetName(), * elements_[eWeapons]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eActiveProtections]->GetName(), * elements_[eActiveProtections]->GetGuiABC().GetMainWidget() ); // LTO
+    mainWindow.AddPage( elements_[eActiveProtections]->GetName(), * elements_[eActiveProtections]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eSensors]->GetName(), * elements_[eSensors]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eBreakdowns]->GetName(), * elements_[eBreakdowns]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eComposantes]->GetName(), * elements_[eComposantes]->GetGuiABC().GetMainWidget() );

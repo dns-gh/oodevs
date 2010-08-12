@@ -42,8 +42,8 @@
 #include "DrawingFactory.h"
 #include "DrawingsModel.h"
 #include "ScoreDefinitions.h"
-#include "NotesModel.h" // LTO
-#include "MeteoModel.h" // LTO
+#include "NotesModel.h"
+#include "MeteoModel.h"
 #include "ScoreModel.h"
 #include "Simulation.h"
 #include "UrbanModel.h"
@@ -100,7 +100,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , scores_( *new ScoreModel( controllers, publisher, scoreDefinitions_ ) )
     , urbanObjects_( *new UrbanModel( controllers.controller_, static_.detection_ ) )
     , surfaceFactory_( *new SurfaceFactory( static_.coordinateConverter_, static_.detection_, static_.types_, urbanObjects_.GetUrbanBlockMap() ) )
-    , notes_( *new NotesModel( controllers.controller_ ))  // LTO
+    , notes_( *new NotesModel( controllers.controller_ ))
     , meteo_( *new MeteoModel( static_.coordinateConverter_ ) )
 {
     // NOTHING

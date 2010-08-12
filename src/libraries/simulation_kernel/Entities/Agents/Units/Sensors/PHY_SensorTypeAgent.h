@@ -149,9 +149,10 @@ private:
     MT_Float rPopulationFactor_;
 
     // Limitation aux autres capteurs
-    // LTO
+    // LTO begin
     bool                       isLimitedToSensors_;
     std::vector< std::string > limitedToSensorsList_;
+    // LTO end
 };
 
 #endif // __PHY_SensorTypeAgent_h_

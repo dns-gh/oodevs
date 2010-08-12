@@ -62,7 +62,7 @@ class WeatherModel;
 class UrbanKnowledgeFactory;;
 class UrbanModel;
 class SurfaceFactory;
-class NotesModel; // LTO
+class NotesModel;
 class MeteoModel;
 
 // =============================================================================
@@ -129,7 +129,7 @@ public:
     ScoreModel&           scores_;
     UrbanModel&           urbanObjects_;
     SurfaceFactory&       surfaceFactory_;
-    NotesModel&           notes_;   // LTO
+    NotesModel&           notes_;
     //@}
     MeteoModel&           meteo_;
 

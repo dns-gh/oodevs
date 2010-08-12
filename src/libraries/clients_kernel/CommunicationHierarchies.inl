@@ -4,7 +4,6 @@
 // Refer to the included end-user license agreement for restrictions.
 //
 // Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
-// LTO
 // *****************************************************************************
 
 #include "Entity_ABC.h"

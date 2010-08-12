@@ -537,9 +537,9 @@ public:
         static const std::string DISPLAY_NAME;
         ADN_CapacityInfos_Detection();
 
-        void ReadArchive( xml::xistream& input );
-        void ReadAcquisitionTime( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void ReadArchive( xml::xistream& input ); // LTO
+        void ReadAcquisitionTime( xml::xistream& input ); // LTO
+        void WriteArchive( xml::xostream& output ); // LTO
 
         const std::string& displayName() const
         {
@@ -552,11 +552,11 @@ public:
 
     public:
         ADN_Type_Bool   bDetectTime_;
-        ADN_Type_Time   detectTime_;
-        ADN_Type_Bool   bIdentTime_;
-        ADN_Type_Time   recoTime_;
-        ADN_Type_Bool   bRecoTime_;
-        ADN_Type_Time   identTime_;
+        ADN_Type_Time   detectTime_; // LTO
+        ADN_Type_Bool   bIdentTime_; // LTO
+        ADN_Type_Time   recoTime_; // LTO
+        ADN_Type_Bool   bRecoTime_; // LTO
+        ADN_Type_Time   identTime_; // LTO
     };
 
     class ObjectInfos;

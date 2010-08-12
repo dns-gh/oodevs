@@ -32,7 +32,6 @@
 // -----------------------------------------------------------------------------
 // Name: ADN_PH_EditLine_Double
 // Created: JSR 2010-04-28
-// LTO
 // -----------------------------------------------------------------------------
 class ADN_PH_EditLine_Double : public ADN_EditLine_Double
 {
@@ -111,7 +110,7 @@ QWidget* ADN_HumanFactors_GUI::BuildModifiers( QWidget* pParent, ADN_HumanFactor
     builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Effect on movement speed" ), modifiers.rSpeedModifier_, 0, eGreaterZero );
     builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Effect on reloading duration" ), modifiers.rReloadModifier_, 0, eGreaterZero );
     builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Effect on stance changes duration" ), modifiers.rStanceModifier_, 0, eGreaterZero );
-    builder.AddField<ADN_PH_EditLine_Double>( pGroupBox, tr( "Effect on PH" ), modifiers.rPHModifier_, 0, eGreaterZero ); // LTO
+    builder.AddField<ADN_PH_EditLine_Double>( pGroupBox, tr( "Effect on PH" ), modifiers.rPHModifier_, 0, eGreaterZero );
     builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Effect on detection ranges" ), modifiers.rSensorsModifier_, 0, eGreaterZero );
 
     return pGroupBox;

@@ -247,9 +247,11 @@ void ADN_Objects_GUI::Build()
     ADN_GroupBox* detection = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_Detection::DISPLAY_NAME.c_str() ), hBox );
     {
         vInfosConnectors[ eDetectionCapacityPresent ] = & detection->GetConnector();
+    // LTO begin
         builder.AddOptionnalField<ADN_TimeField>( detection, tr( "Detection duration" ), vInfosConnectors[eHasDetectionTime], vInfosConnectors[eDetectionTime] );
         builder.AddOptionnalField<ADN_TimeField>( detection, tr( "Recognition duration" ), vInfosConnectors[eHasRecoTime], vInfosConnectors[eRecoTime] );
         builder.AddOptionnalField<ADN_TimeField>( detection, tr( "Identification duration" ), vInfosConnectors[eHasIdentificationTime], vInfosConnectors[eIdentificationTime] );
+    // LTO end
     }
 
     // Spawn

@@ -35,7 +35,7 @@ namespace messenger
     class TacticalLinesModel;
     class IntelligencesModel;
     class DrawingsModel;
-    class NotesModel; // LTO
+    class NotesModel;
 
 // =============================================================================
 /** @class  Model
@@ -88,7 +88,7 @@ public:
     TacticalLinesModel& tacticalLines_;
     IntelligencesModel& intelligences_;
     DrawingsModel&      drawings_;
-    NotesModel&         notes_; // LTO
+    NotesModel&         notes_;
     //@}
 };
 

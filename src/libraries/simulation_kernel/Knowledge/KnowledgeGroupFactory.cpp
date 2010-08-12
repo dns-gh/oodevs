@@ -13,7 +13,6 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( KnowledgeGroupFactory )
 
-// LTO begin
 template< typename Archive >
 void save_construct_data( Archive& /*archive*/, const KnowledgeGroupFactory* /*factory*/, const unsigned int /*version*/ )
 {
@@ -25,7 +24,6 @@ void load_construct_data( Archive& /*archive*/, KnowledgeGroupFactory* factory, 
 {
     ::new( factory )KnowledgeGroupFactory();
 }
-// LTO end
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupFactory constructor

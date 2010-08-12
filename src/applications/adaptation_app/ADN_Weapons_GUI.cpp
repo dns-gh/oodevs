@@ -630,7 +630,6 @@ void ADN_Weapons_GUI::UpdateModifiers()
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_GUI::ModifiersChanged
 // Created: JSR 2010-04-28
-// LTO
 // -----------------------------------------------------------------------------
 void ADN_Weapons_GUI::ModifiersChanged( bool )
 {
@@ -641,7 +640,6 @@ void ADN_Weapons_GUI::ModifiersChanged( bool )
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_GUI::ModifiersChanged
 // Created: JSR 2010-04-27
-// LTO
 // -----------------------------------------------------------------------------
 void ADN_Weapons_GUI::ModifiersChanged( int )
 {

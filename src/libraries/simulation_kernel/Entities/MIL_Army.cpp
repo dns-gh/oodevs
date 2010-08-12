@@ -383,7 +383,6 @@ void MIL_Army::ReadDiplomacy( xml::xistream& xis )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Army::ReadLogistic
-// Created: ABL 2007-07-09
 // LTO
 // -----------------------------------------------------------------------------
 void MIL_Army::ReadLogistic( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )

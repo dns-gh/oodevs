@@ -790,39 +790,41 @@ void ADN_Objects_Data::ADN_CapacityInfos_Toxic::WriteArchive( xml::xostream& xos
 //@{
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::DetectTimes
-// Created: APE 2005-01-17
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_Detection::ADN_CapacityInfos_Detection()
     : bDetectTime_  ( false )
-    , detectTime_   ( "0s" )
-    , bIdentTime_   ( false )
-    , recoTime_     ( "0s" )
-    , bRecoTime_    ( false )
-    , identTime_    ( "0s" )
+    , detectTime_   ( "0s" ) // LTO
+    , bIdentTime_   ( false ) // LTO
+    , recoTime_     ( "0s" ) // LTO
+    , bRecoTime_    ( false ) // LTO
+    , identTime_    ( "0s" ) // LTO
 {
     bDetectTime_.SetParentNode( *this );
-    detectTime_.SetParentNode( *this );
-    bIdentTime_.SetParentNode( *this );
-    recoTime_.SetParentNode( *this );
-    identTime_.SetParentNode( *this );
+    detectTime_.SetParentNode( *this ); // LTO
+    bIdentTime_.SetParentNode( *this ); // LTO
+    recoTime_.SetParentNode( *this ); // LTO
+    identTime_.SetParentNode( *this ); // LTO
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Objects_Data::ReadArchive
+// Name: ADN_Objects_Data::ADN_CapacityInfos_Detection::ReadArchive
 // Created: SLG 2010-02-18
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_Detection::ReadArchive( xml::xistream& input )
 {
     bPresent_ = true;
+    // LTO begin
     input >> xml::optional
         >> xml::start( "acquisition-times" )
         >> xml::list( "acquisition-time", *this, &ADN_Objects_Data::ADN_CapacityInfos_Detection::ReadAcquisitionTime )
         >> xml::end;
+    // LTO end
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Objects_Data::DetectTimes::ReadAcquisitionTime
+// Name: ADN_Objects_Data::ADN_CapacityInfos_Detection::ReadAcquisitionTime
 // Created: SLG 2010-02-18
+// LTO
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_Detection::ReadAcquisitionTime( xml::xistream& input )
 {
@@ -850,8 +852,9 @@ void ADN_Objects_Data::ADN_CapacityInfos_Detection::ReadAcquisitionTime( xml::xi
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Objects_Data::WriteArchive
+// Name: ADN_Objects_Data::ADN_CapacityInfos_Detection::WriteArchive
 // Created: SLG 2010-02-18
+// LTO
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_Detection::WriteArchive( xml::xostream& output )
 {
@@ -1063,7 +1066,7 @@ INIT_DATA( ADN_CapacityInfos_Constructor,      "Constructor",       "constructor
 INIT_DATA( ADN_CapacityInfos_Contamination,    "Contamination",     "contamination" );
 INIT_DATA( ADN_CapacityInfos_Decontamination,  "Decontamination",   "decontamination" );
 INIT_DATA( ADN_CapacityInfos_Delay,            "Delay",             "delay" );
-INIT_DATA( ADN_CapacityInfos_Detection,        "Detection",         "detection" );
+INIT_DATA( ADN_CapacityInfos_Detection,        "Detection",         "detection" ); // LTO
 INIT_DATA( ADN_CapacityInfos_Extinguishable,   "Extinguishable",    "extinguishable" );
 INIT_DATA( ADN_CapacityInfos_Healable,         "Healable",          "healable" );
 INIT_DATA( ADN_CapacityInfos_InteractionHeight,"InteractionHeight", "interaction-height" );
@@ -1140,7 +1143,7 @@ void ADN_Objects_Data::ObjectInfos::InitializeCapacities()
     capacities_[ ADN_CapacityInfos_Contamination::TAG ].reset( new ADN_CapacityInfos_Contamination() );
     capacities_[ ADN_CapacityInfos_Decontamination::TAG ].reset( new ADN_CapacityInfos_Decontamination() );
     capacities_[ ADN_CapacityInfos_Delay::TAG ].reset( new ADN_CapacityInfos_Delay() );
-    capacities_[ ADN_CapacityInfos_Detection::TAG ].reset( new ADN_CapacityInfos_Detection() );
+    capacities_[ ADN_CapacityInfos_Detection::TAG ].reset( new ADN_CapacityInfos_Detection() ); // LTO
     capacities_[ ADN_CapacityInfos_Extinguishable::TAG ].reset( new ADN_CapacityInfos_Extinguishable() );
     capacities_[ ADN_CapacityInfos_Healable::TAG ].reset( new ADN_CapacityInfos_Healable() );
     capacities_[ ADN_CapacityInfos_InteractionHeight::TAG ].reset( new ADN_CapacityInfos_InteractionHeight() );

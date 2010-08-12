@@ -452,7 +452,7 @@ private:
     void OnReceiveMsgShapeUpdateRequestAck     ( const MsgsMessengerToClient::MsgShapeUpdateRequestAck&      message );
     void OnReceiveMsgShapeDestructionRequestAck( const MsgsMessengerToClient::MsgShapeDestructionRequestAck& message );
 
-    // LTO Notes
+    // Notes
     void OnReceiveMsgNoteCreation             ( const MsgsMessengerToClient::MsgNoteCreation&              message );
     void OnReceiveMsgNoteUpdate               ( const MsgsMessengerToClient::MsgNoteUpdate&                message );
     void OnReceiveMsgNoteDestruction          ( const MsgsMessengerToClient::MsgNoteDestruction&           message );

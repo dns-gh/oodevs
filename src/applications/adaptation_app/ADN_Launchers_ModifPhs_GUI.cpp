@@ -99,7 +99,6 @@ ADN_Launchers_ModifPhs_GUI::~ADN_Launchers_ModifPhs_GUI()
 // -----------------------------------------------------------------------------
 // Name: ADN_Launchers_ModifPhs_GUI::doValueChanged
 // Created: JSR 2010-04-28
-// LTO
 // -----------------------------------------------------------------------------
 void ADN_Launchers_ModifPhs_GUI::doValueChanged( int row, int col )
 {

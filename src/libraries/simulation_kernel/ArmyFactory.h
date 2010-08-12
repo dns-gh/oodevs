@@ -71,7 +71,7 @@ private:
     PopulationFactory_ABC&      populationFactory_;
 
     KnowledgeGroupFactory_ABC&  knowledgeGroupFactory_; // LTO
-    std::auto_ptr< MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy > > diplomacyConverter_; // LTO
+    std::auto_ptr< MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy > > diplomacyConverter_;
     //@}
 
 

@@ -159,7 +159,7 @@ bool MIL_Effect_IndirectFire::Execute()
     {
         UpdateTargetPositionFromKnowledge();
         assert( pFireResult_ );
-        //[--LTO
+        //LTO begin
         if( indirectDotationCategory_.GetDotationCategory().IsGuided() )
         {
             boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge = firer_.GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( nTargetKnowledgeID_ );
@@ -168,7 +168,7 @@ bool MIL_Effect_IndirectFire::Execute()
                 indirectDotationCategory_.GetDotationCategory().ApplyIndirectFireEffect( firer_, pTargetKnowledge->GetAgentKnown(), nNbrAmmoFired_, *pFireResult_ );
             }
         }
-        //LTO--]
+        //LTO end
         else
         {
             indirectDotationCategory_.GetDotationCategory().ApplyIndirectFireEffect( firer_, vSourcePosition_, vTargetPosition_, nNbrAmmoFired_, *pFireResult_ );

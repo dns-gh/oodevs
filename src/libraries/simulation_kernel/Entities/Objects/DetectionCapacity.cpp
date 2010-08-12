@@ -56,19 +56,22 @@ namespace
 // Created: MGD 2009-03-05
 // -----------------------------------------------------------------------------
 DetectionCapacity::DetectionCapacity( xml::xistream& xis )
-    : rDetectionTime_( 0 )
-    , rRecognitionTime_( 0 )
-    , rIdentificationTime_( 0 )
+    : rDetectionTime_( 0 ) // LTO
+    , rRecognitionTime_( 0 ) // LTO
+    , rIdentificationTime_( 0 ) // LTO
 {
+    // LTO begin
     xis >> xml::optional
         >> xml::start( "acquisition-times" )
             >> xml::list( "acquisition-time", *this, &DetectionCapacity::ReadAcquisitionTime )
         >> xml::end;
+    // LTO end
 }
 
 // -----------------------------------------------------------------------------
 // Name: DetectionCapacity::ReadAcquisitionTime
 // Created: SLG 2010-02-11
+// LTO
 // -----------------------------------------------------------------------------
 void DetectionCapacity::ReadAcquisitionTime( xml::xistream& xis )
 {
@@ -123,9 +126,9 @@ DetectionCapacity::DetectionCapacity()
 // Created: MGD 2009-03-05
 // -----------------------------------------------------------------------------
 DetectionCapacity::DetectionCapacity( const DetectionCapacity& from )
-    : rDetectionTime_( from.rDetectionTime_ )
-    , rRecognitionTime_( from.rRecognitionTime_ )
-    , rIdentificationTime_( from.rIdentificationTime_ )
+    : rDetectionTime_( from.rDetectionTime_ ) // LTO
+    , rRecognitionTime_( from.rRecognitionTime_ ) // LTO
+    , rIdentificationTime_( from.rIdentificationTime_ ) // LTO
 {
     // NOTHING
 }
@@ -148,9 +151,9 @@ void DetectionCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
          & boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this )
-         & rDetectionTime_
-         & rRecognitionTime_
-         & rIdentificationTime_;
+         & rDetectionTime_ // LTO
+         & rRecognitionTime_ // LTO
+         & rIdentificationTime_; // LTO
 }
 
 // -----------------------------------------------------------------------------
@@ -221,13 +224,17 @@ void DetectionCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_AB
         if( detector && !detector->IsDead() )
         {
             PHY_RoleInterface_Perceiver& role = const_cast< MIL_Agent_ABC& >( *detector ).GetRole< PHY_RoleInterface_Perceiver >();
+
+	    // LTO begin
             if( it->second + rIdentificationTime_ < currentTime )
                 role.NotifyExternalPerception( agent, PHY_PerceptionLevel::identified_ );
             else if( it->second + rRecognitionTime_ < currentTime )
                 role.NotifyExternalPerception( agent, PHY_PerceptionLevel::recognized_ );
             else if( it->second + rDetectionTime_ < currentTime )
                 role.NotifyExternalPerception( agent, PHY_PerceptionLevel::detected_ );
+	    // LTO end
         }
+	    // LTO begin
         else if( !detector )
         {
             if( it->second + rIdentificationTime_ < currentTime )
@@ -246,6 +253,7 @@ void DetectionCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_AB
                 object.GetArmy()->ApplyOnKnowledgeGroup( knowledgeCreation );
             }
         }
+	// LTO end
 
     }
 }

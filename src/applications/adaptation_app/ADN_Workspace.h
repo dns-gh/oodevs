@@ -139,7 +139,7 @@ private:
         eEquipement,
         eObjects,
         eWeapons,
-        eActiveProtections, // LTO
+        eActiveProtections,
         eSensors,
         eBreakdowns,
         eComposantes,

@@ -13,7 +13,7 @@
 #include "IntelligencesModel.h"
 #include "TacticalLinesModel.h"
 #include "DrawingsModel.h"
-#include "NotesModel.h" // LTO
+#include "NotesModel.h"
 #include "Entity_ABC.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "dispatcher/Config.h"

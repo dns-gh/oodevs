@@ -55,8 +55,8 @@ public:
 
         PhInfos* CreateCopy();
 
-        void SetPhModifiers( double phModifier, double distModifier ); // LTO
-        void ApplyPhModifiers(); // LTO
+        void SetPhModifiers( double phModifier, double distModifier );
+        void ApplyPhModifiers();
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
@@ -64,10 +64,10 @@ public:
     public:
         ADN_Type_Int       nDistance_;
         ADN_Type_Double    rPerc_;
-        ADN_Type_Int       nModifiedDistance_; // LTO
-        ADN_Type_Double    rModifiedPerc_; // LTO
-        double             phModifier_; // LTO
-        double             distModifier_; // LTO
+        ADN_Type_Int       nModifiedDistance_;
+        ADN_Type_Double    rModifiedPerc_;
+        double             phModifier_;
+        double             distModifier_;
     };
 
     typedef ADN_Type_Vector_ABC<PhInfos>    T_PhInfosVector;
@@ -165,13 +165,11 @@ public:
         ADN_Type_Bool       bDirect_;
         T_PhSizeInfosVector phs_;
 
-        // LTO begin
         ADN_Type_Bool bSimulation_;
         ADN_Type_Enum< E_UnitPosture, eNbrUnitPosture > nFirePosture_;
         ADN_Type_Enum< E_UnitPosture, eNbrUnitPosture > nTargetPosture_;
         ADN_Type_Enum< E_UnitExperience, eNbrUnitExperience > nExperience_;
         ADN_Type_Enum< E_UnitTiredness, eNbrUnitTiredness > nTiredness_;
-        // LTO end
 
         ADN_Type_Bool      bIndirect_;
         ADN_Type_Double    rAverageSpeed_;

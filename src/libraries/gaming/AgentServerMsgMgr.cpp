@@ -1452,7 +1452,6 @@ void AgentServerMsgMgr::OnReceiveMsgShapeDestructionRequestAck( const MsgsMessen
     CheckAcknowledge( logger_, message, "ShapeDestructionRequestAck" );
 }
 
-// LTO begin
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgNoteCreation
 // Created: HBD 2010-02-04
@@ -1488,7 +1487,6 @@ void AgentServerMsgMgr::OnReceiveMsgActionCreateFireOrderAck( const MsgsSimToCli
 {
     CheckAcknowledge( logger_, message.error_code(), "CreateFireOrderAck" );
 }
-// LTO end
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgAarInformation

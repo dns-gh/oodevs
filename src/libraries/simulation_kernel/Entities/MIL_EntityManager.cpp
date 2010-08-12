@@ -1215,31 +1215,6 @@ void MIL_EntityManager::OnReceiveMsgKnowledgeGroupCreation( const MsgsClientToSi
     client::KnowledgeGroupCreationAck ack;
     ack().set_oid( 0 );
     ack().set_error_code( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_no_error );
-    // $$$$ _RC_ SBO 2010-03-04: not implemented
-//
-//    try
-//    {
-//        //if( message.has_parent() )
-//        if( message.parametres().elem( 1 ).value().identifier() != ( unsigned int ) -1 )
-//        {
-//            if( MIL_KnowledgeGroup* pReceiver = FindKnowledgeGroup( message.parametres().elem( 1 ).value().identifier() ) )
-//                pReceiver->OnReceiveMsgKnowledgeGroupCreation( message.parametres() );
-//            else
-//                throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_error_invalid_superior );
-//        }
-//        else
-//        {
-//            //if( MIL_Army* parent = FindArmy( message.oid_camp() ) )
-//            if( MIL_Army* parent = FindArmy( message.parametres().elem( 0 ).value().identifier() ) )
-//                parent->OnReceiveMsgKnowledgeGroupCreation( message.parametres() );
-//            else
-//                throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_error_invalid_camp );
-//        }
-//    }
-//    catch( NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >& e )
-//    {
-//        ack().set_error_code( e.GetErrorID() );
-//    }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 

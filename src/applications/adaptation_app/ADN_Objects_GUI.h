@@ -79,12 +79,12 @@ public:
         eWorkableCapacityPresent,
         eWorkableCapacity_Size,
         eDetectionCapacityPresent,
-        eHasDetectionTime,
-        eDetectionTime,
-        eHasRecoTime,
-        eRecoTime,
-        eHasIdentificationTime,
-        eIdentificationTime,
+        eHasDetectionTime, // LTO
+        eDetectionTime, // LTO
+        eHasRecoTime, // LTO
+        eRecoTime, // LTO
+        eHasIdentificationTime, // LTO
+        eIdentificationTime, // LTO
         eSpawnCapacityPresent,
         eActionRange,
         eObjectType,

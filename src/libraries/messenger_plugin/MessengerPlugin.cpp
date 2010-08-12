@@ -13,7 +13,7 @@
 #include "TacticalLinesModel.h"
 #include "IntelligencesModel.h"
 #include "DrawingsModel.h"
-#include "NotesModel.h" // LTO
+#include "NotesModel.h"
 #include "Chat.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "dispatcher/LinkResolver_ABC.h"
@@ -124,7 +124,6 @@ void MessengerPlugin::OnReceiveClientToMessenger( const std::string& client, con
     // Chat
     if( wrapper.message().has_text_message() )
         chat_->OnReceive( wrapper.message().text_message() );
-    // LTO Begin
     // Notes
     if( wrapper.message().has_note_creation_request() )
         model_->notes_.HandleRequest( wrapper.message().note_creation_request() );
@@ -132,5 +131,4 @@ void MessengerPlugin::OnReceiveClientToMessenger( const std::string& client, con
         model_->notes_.HandleRequest( wrapper.message().note_update_request() );
     if( wrapper.message().has_note_destruction_request() )
         model_->notes_.HandleRequest( wrapper.message().note_destruction_request() );
-    // LTO end
 }

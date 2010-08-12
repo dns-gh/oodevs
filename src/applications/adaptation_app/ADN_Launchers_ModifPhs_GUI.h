@@ -25,7 +25,7 @@ public:
     explicit ADN_Launchers_ModifPhs_GUI( QWidget* pParent = 0 );
     virtual ~ADN_Launchers_ModifPhs_GUI();
 
-    virtual void doValueChanged( int row, int col ); // LTO
+    virtual void doValueChanged( int row, int col );
 };
 
 

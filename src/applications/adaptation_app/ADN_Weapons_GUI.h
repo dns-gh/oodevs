@@ -55,11 +55,11 @@ public:
         eMaxRange,
         eDirect,
         eIndirect,
-        eSimulation,    // LTO
-        eFirePosture,   // LTO
-        eTargetPosture, // LTO
-        eExperience,    // LTO
-        eTiredness,     // LTO
+        eSimulation,
+        eFirePosture,
+        eTargetPosture,
+        eExperience,
+        eTiredness,
         eNbrGuiElements
     };
 

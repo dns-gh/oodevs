@@ -70,9 +70,9 @@ private:
 private:
     //! @name Members
     //@{
-        float rDetectionTime_;
-        float rRecognitionTime_;
-        float rIdentificationTime_;
+        float rDetectionTime_; // LTO
+        float rRecognitionTime_; // LTO
+        float rIdentificationTime_; // LTO
         T_AgentMap agentInsideMap_;
     //@}
 

@@ -278,12 +278,3 @@ BOOST_AUTO_TEST_CASE( TestLatentRelevance )
     //}
     MOCK_EXPECT( army, UnregisterKnowledgeGroup ).with( mock::same( *armyGroup ) ).once();
 }
-
-// -----------------------------------------------------------------------------
-// Name: TestImpactOfExtrapolationTimeOnRelevance
-// Created: FDS 2010-04-28
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( TestImpactOfExtrapolationTimeOnRelevance )
-{
-    BOOST_TODO;
-}

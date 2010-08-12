@@ -143,15 +143,15 @@ private:
     void ReadFormation( xml::xistream& xis, FormationFactory_ABC& formationFactory );
     void ReadObject( xml::xistream& xis, MIL_ObjectManager& objectFactory );
     void ReadPopulation( xml::xistream& xis, PopulationFactory_ABC& populationFactory );
-    void ReadLogistic( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgegroupFactory );
-    void ReadAutomat( xml::xistream& xis, AutomateFactory_ABC& automateFactory ); // LTO
+    void ReadLogistic( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgegroupFactory ); // LTO
+    void ReadAutomat( xml::xistream& xis, AutomateFactory_ABC& automateFactory );
     void ReadSubordinate( xml::xistream& xis, AutomateFactory_ABC& automateFactory, MIL_Automate* pSuperior );
     void ReadDiplomacy( xml::xistream& xis );
     //@}
 
     //! @name CheckPoint
     //@{
-    MIL_Army( ArmyFactory_ABC& armyFactory, const MT_Converter< std::string, E_Diplomacy >& diplomacyConverter ); // LTO
+    MIL_Army( ArmyFactory_ABC& armyFactory, const MT_Converter< std::string, E_Diplomacy >& diplomacyConverter );
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Army* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_Army* role, const unsigned int /*version*/ );
     //@}

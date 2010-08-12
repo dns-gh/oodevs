@@ -27,12 +27,12 @@
 //*****************************************************************************
 // Created: JDY 03-06-25
 //*****************************************************************************
-// LTO begin
 class ADN_Sensors_Data : public ADN_Data_ABC
 {
     MT_COPYNOTALLOWED( ADN_Sensors_Data )
 
 public:
+// LTO begin
 //*****************************************************************************
     class LimitedToSensorsInfos : public ADN_Ref_ABC
                                 , public ADN_DataTreeNode_ABC
