@@ -303,7 +303,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
             boost::function< unsigned int() >( boost::bind( &DEC_ActionFunctions::StartAction  < transport::PHY_ActionUnload >, boost::ref( GetPion() ) ) ) );
     brain.RegisterFunction( "DEC_StartIlluminer",
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent >, DEC_Decision_ABC* ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionIllumination, boost::shared_ptr< DEC_Knowledge_Agent >, DEC_Decision_ABC* >, boost::ref( GetPion() ), _1, _2 ) ) );
-    brain.RegisterFunction( "DEC_Orientate", 
+    brain.RegisterFunction( "DEC_Orientate",
         boost::function< void( boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_ActionFunctions::Orientate, boost::ref( GetPion() ), _1 ) ) );
 
     // Embarquement / debarquement
@@ -639,7 +639,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_NiveauDeProtectionMaterielComposantes" , &DEC_KnowledgeAgentFunctions::GetMaterialComposantesProtectionLevel );
     brain.RegisterFunction( "DEC_ConnaissanceBlocUrbain_RapForLocal"    ,
         boost::function< float( boost::shared_ptr< DEC_Knowledge_Urban > ) >( boost::bind( &DEC_KnowledgeUrbanFunctions::GetRapForLocal, boost::cref( GetPion() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_GetPerception", 
+    brain.RegisterFunction( "DEC_GetPerception",
         boost::function< double( boost::shared_ptr< MT_Vector2D >, boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_KnowledgeUrbanFunctions::GetPerception, boost::cref( GetPion() ), _1, _2 ) ) );
 
     // Global knowledge

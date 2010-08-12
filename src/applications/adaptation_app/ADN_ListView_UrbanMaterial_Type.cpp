@@ -28,7 +28,7 @@ class ADN_CLV_UrbanMaterial_Type
 {
 public:
 
-    ADN_CLV_UrbanMaterial_Type(ADN_ListView_UrbanMaterial_Type& list) 
+    ADN_CLV_UrbanMaterial_Type(ADN_ListView_UrbanMaterial_Type& list)
         : ADN_Connector_ListView_ABC(list)
     {}
 

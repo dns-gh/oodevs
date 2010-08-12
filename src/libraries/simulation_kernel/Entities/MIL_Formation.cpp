@@ -28,7 +28,7 @@ MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Format
     : pArmy_  ( &army )
     , pParent_( pParent )
     , pLevel_ ( 0 )
-   
+
 {
     xis >> xml::attribute( "id", nID_ );
     std::string strLevel;

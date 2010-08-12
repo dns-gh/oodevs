@@ -151,7 +151,7 @@ namespace
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::Validate()
 {
-    
+
     const Automat_ABC* target = targetCombo_->count() ? targetCombo_->GetValue() : 0;
     if( !selected_ || !target )
         return;

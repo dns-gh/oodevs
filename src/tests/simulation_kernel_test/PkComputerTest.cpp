@@ -55,7 +55,7 @@ BOOST_AUTO_TEST_CASE( PkComputerUrbanProtectionTest )
     urbanBlock.reset( new urban::UrbanObject ( xisModel, 0, *coord ) );
     MIL_ObjectLoader loader;
     {
-        xml::xistringstream xis( 
+        xml::xistringstream xis(
             "<objects>"
             "    <object type='urban block'/>"
             "</objects>" );

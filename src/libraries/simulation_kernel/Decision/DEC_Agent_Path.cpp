@@ -666,7 +666,7 @@ bool DEC_Agent_Path::IsUrbanBlockTrafficable( const MT_Vector2D& point, double w
     {
         const UrbanObjectWrapper* urbanObject = dynamic_cast< const UrbanObjectWrapper* >( *it );
         if( urbanObject && urbanObject->GetLocalisation().GetArea() && urbanObject->IsInside( point ) )
-        { 
+        {
             const urban::TerrainObject_ABC& terrainObject = urbanObject->GetObject();
             const urban::Architecture* architecture = terrainObject.RetrievePhysicalFeature< urban::Architecture >();
             if( architecture )

@@ -327,7 +327,7 @@ void PHY_ComposantePion::ApplyFire( const PHY_AttritionData& attritionData, MT_F
     const PHY_ComposanteState* pNewState = &attritionData.ComputeComposanteState( urbanProtection );
 
     pRole_->WoundLoadedHumans( *this, *pNewState, fireDamages );
-    ApplyHumansWounds( *pNewState, fireDamages );  
+    ApplyHumansWounds( *pNewState, fireDamages );
 
     if( pType_->GetProtection().IsHuman() && ( *pNewState == PHY_ComposanteState::repairableWithEvacuation_ || *pNewState == PHY_ComposanteState::repairableWithoutEvacuation_ ) )
         pNewState = &PHY_ComposanteState::undamaged_;
@@ -381,14 +381,14 @@ void PHY_ComposantePion::ApplyUrbanObjectCrumbling( const MIL_Object_ABC& object
     assert( pState_ );
 
     const PHY_ComposanteState& oldState  = *pState_;
-    const PHY_ComposanteState* pNewState = pState_; 
+    const PHY_ComposanteState* pNewState = pState_;
     StructuralCapacity* capacity = const_cast< MIL_Object_ABC& >( object ).Retrieve< StructuralCapacity >();
     if ( capacity )
         pNewState = &capacity->ComputeComposanteState( object, pType_->GetProtection() );
 
     PHY_FireDamages_Agent fireDamages;
     pRole_->WoundLoadedHumans( *this, *pNewState, fireDamages );
-    ApplyHumansWounds( *pNewState, fireDamages ); 
+    ApplyHumansWounds( *pNewState, fireDamages );
 
     if( pType_->GetProtection().IsHuman() && ( *pNewState == PHY_ComposanteState::repairableWithEvacuation_ || *pNewState == PHY_ComposanteState::repairableWithoutEvacuation_ ) )
         pNewState = &PHY_ComposanteState::undamaged_;
@@ -401,7 +401,7 @@ void PHY_ComposantePion::ApplyUrbanObjectCrumbling( const MIL_Object_ABC& object
 // Created: SLG 2010-07-02
 // -----------------------------------------------------------------------------
 void PHY_ComposantePion::ApplyNewComposanteState( const PHY_ComposanteState& pNewState, const PHY_ComposanteState& oldState )
-{ 
+{
     if( pNewState < *pState_ )
     {
         pState_ = &pNewState;

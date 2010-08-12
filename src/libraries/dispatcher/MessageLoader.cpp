@@ -200,7 +200,7 @@ void MessageLoader::LoadSimToClientMessage( unsigned char*& input, MessageHandle
                 message.mutable_message()->mutable_population_order()->clear_mission();
         }
     }
-    
+
     handler.Receive( message );
 
     input += messageSize;

@@ -22,7 +22,7 @@ DEC_Rep_PathPoint_Front::DEC_Rep_PathPoint_Front( const MT_Vector2D& vPos, boost
     , destPoint_        ( dest )
     , pSentToDiaAgent_  ( 0 )
 {
-    
+
     // NOTHING
 }
 

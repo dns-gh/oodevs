@@ -64,7 +64,7 @@ void KnowledgeGroupHierarchies::DoUpdate( const MsgsSimToClient::MsgKnowledgeGro
 // Created: LDC 2010-04-07
 // -----------------------------------------------------------------------------
 bool KnowledgeGroupHierarchies::CanCommunicate() const
-{   
+{
     return true;
 }
 

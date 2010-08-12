@@ -220,7 +220,7 @@ void ADN_Urban_Data::UrbanMaterialInfos::AttritionData::WriteAttrition( xml::xos
     std::string strData = sProtection_.GetData();
     output << xml::start( "attrition" )
         << xml::attribute( "protection", trim( strData ) )
-        << xml::attribute( "destruction", rDestruction_.GetData() / 100 ) 
+        << xml::attribute( "destruction", rDestruction_.GetData() / 100 )
         << xml::attribute( "repairable-with-evacuation", rRepairableWithEvac_.GetData() / 100 )
         << xml::attribute( "repairable-without-evacuation", rRepairableNoEvac_.GetData() / 100 )
         << xml::end();

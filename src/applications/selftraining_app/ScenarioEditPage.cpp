@@ -227,9 +227,9 @@ void ScenarioEditPage::LaunchScenarioImport( const QString& inputScenario, const
     boost::shared_ptr< frontend::SpawnCommand > command( new frontend::ImportExercise( config_, inputScenario, outputScenario, true ) );
     boost::shared_ptr< frontend::Process_ABC >  process( new ProcessWrapper( controllers_.controller_, command ) );
     progressPage_->Attach( process );
-    progressPage_->show();        
+    progressPage_->show();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ScenarioEditPage::LaunchPreparation
 // Created: LDC 2010-07-06

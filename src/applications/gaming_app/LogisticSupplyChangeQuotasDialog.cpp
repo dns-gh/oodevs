@@ -152,7 +152,7 @@ void LogisticSupplyChangeQuotasDialog::Validate()
     const Automat_ABC* target = targetCombo_->count() ? targetCombo_->GetValue() : 0;
     if( !selected_ || !target )
         return;
-    
+
     targetCombo_->setFocus();
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "log_supply_change_quotas" );

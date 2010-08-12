@@ -60,7 +60,7 @@ bool ProfileFilter::IsVisible( const kernel::Entity_ABC& entity ) const
 }
 
 
-namespace 
+namespace
 {
     bool IsVisibleFromTeam( const kernel::Knowledge_ABC& knowledge, const kernel::Entity_ABC* entity )
     {
@@ -224,7 +224,7 @@ bool ProfileFilter::IsKnown( const kernel::TacticalHierarchies* t, const kernel:
 // -----------------------------------------------------------------------------
 bool ProfileFilter::IsInKnowledgeGroup( const kernel::Entity_ABC& other ) const
 {
-    if( ! entity_ || entity_ == &other )    
+    if( ! entity_ || entity_ == &other )
         return true;
     const kernel::CommunicationHierarchies* pHierarchy = other.Retrieve< kernel::CommunicationHierarchies >();
     const kernel::CommunicationHierarchies* selfHierarchy = entity_->Retrieve< kernel::CommunicationHierarchies >();

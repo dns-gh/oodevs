@@ -290,7 +290,7 @@ void PHY_SensorTypeAgent::ReadTerrainModifier( xml::xistream& xis )
     xis >> xml::attribute( "value", rFactor );
     if( rFactor < 0 || rFactor > 1 )
         xis.error( "terrain-modifier: value not in [0..1]" );
-    environmentFactors_.insert( std::pair< unsigned, MT_Float >( environmentAssociation[ terrainType ], rFactor ) ); 
+    environmentFactors_.insert( std::pair< unsigned, MT_Float >( environmentAssociation[ terrainType ], rFactor ) );
 }
 
 // -----------------------------------------------------------------------------

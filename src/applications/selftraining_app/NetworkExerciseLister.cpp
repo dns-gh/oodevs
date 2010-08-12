@@ -43,9 +43,9 @@ NetworkExerciseLister::NetworkExerciseLister( const Config& config, const std::s
                                               placeholders::bytes_transferred ) );
     }
     catch( ... )
-    { 
+    {
         // $$$$ SBO 2008-10-31: throw exception to warn user
-    } 
+    }
 }
 
 // -----------------------------------------------------------------------------

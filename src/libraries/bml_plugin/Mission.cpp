@@ -280,7 +280,7 @@ void Mission::FillEmptyParameters( Common::MsgMissionParameters& asn ) const
             if( type == "phaselinelist" )
             {
                 static Common::MsgLimasOrder limas;
-                asnParam.set_null_value( 0 ); 
+                asnParam.set_null_value( 0 );
                 *asnParam.mutable_value()->mutable_limasorder() = limas ;
             }
             else

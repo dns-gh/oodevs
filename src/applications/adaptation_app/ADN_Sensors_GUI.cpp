@@ -387,7 +387,7 @@ namespace
        for ( ADN_Urban_Data::CIT_UrbanMaterialInfos_Vector it = vector.begin(); it != vector.end(); ++it )
            result.AddItem( &( *it )->strName_ );
     }
-}     
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_GUI::CreateAgentDetectionTable

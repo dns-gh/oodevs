@@ -34,7 +34,7 @@ void ArmorInfos::CreateDefaultAttrition()
     pNewEffect = new AttritionEffectOnHuman();
     pNewEffect->nEquipmentState_ = eEquipmentState_FixableInPlace ;
     pNewEffect->strName_ = ADN_Tr::ConvertFromEquipmentState(eEquipmentState_FixableInPlace );
-    vAttritionEffects_.AddItem( pNewEffect );  
+    vAttritionEffects_.AddItem( pNewEffect );
     pNewEffect = new AttritionEffectOnHuman();
     pNewEffect->nEquipmentState_ =  eEquipmentState_Destroyed ;
     pNewEffect->strName_ = ADN_Tr::ConvertFromEquipmentState(eEquipmentState_Destroyed );

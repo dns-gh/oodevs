@@ -33,7 +33,7 @@ class ADN_Urban_AttritionTable_Connector
     MT_COPYNOTALLOWED( ADN_Urban_AttritionTable_Connector )
 
 public:
-    ADN_Urban_AttritionTable_Connector( ADN_Urban_AttritionTable& tab ) 
+    ADN_Urban_AttritionTable_Connector( ADN_Urban_AttritionTable& tab )
         : ADN_Connector_Table_ABC( tab, false )
     {}
 

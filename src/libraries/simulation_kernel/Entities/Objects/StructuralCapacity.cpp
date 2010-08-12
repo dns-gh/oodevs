@@ -125,7 +125,7 @@ namespace
     geometry::Polygon2f EllipseToPolygon( const MT_Ellipse& ellipse )
     {
         geometry::Polygon2f polygon;
-        polygon.Add( geometry::Point2f( static_cast< float >( ellipse.GetMajorAxisHighPoint().rX_ + ellipse.GetMinorAxisHighPoint().rX_ - ellipse.GetCenter().rX_ ), 
+        polygon.Add( geometry::Point2f( static_cast< float >( ellipse.GetMajorAxisHighPoint().rX_ + ellipse.GetMinorAxisHighPoint().rX_ - ellipse.GetCenter().rX_ ),
             static_cast< float >( ellipse.GetMajorAxisHighPoint().rY_ + ellipse.GetMinorAxisHighPoint().rY_ - ellipse.GetCenter().rY_ ) ) );
         polygon.Add( geometry::Point2f( static_cast< float >( ellipse.GetMajorAxisHighPoint().rX_ - ellipse.GetMinorAxisHighPoint().rX_ + ellipse.GetCenter().rX_ ),
             static_cast< float >( ellipse.GetMajorAxisHighPoint().rY_ - ellipse.GetMinorAxisHighPoint().rY_ + ellipse.GetCenter().rY_ ) ) );
@@ -180,7 +180,7 @@ const PHY_ComposanteState& StructuralCapacity::ComputeComposanteState( const MIL
         return PHY_ComposanteState::undamaged_;
     const urban::MaterialCompositionType& material = materialAttribute->GetMaterial();
     const urban::MaterialCompositionType::AttritionData* attrition = material.FindAttrition( targetProtection.GetName() );
-    if( !attrition ) 
+    if( !attrition )
         throw std::exception( "Error in searching protection" );
     // Tirage de l'état opérationnel
     const MT_Float rRand = ( 1 - MIL_Random::rand_io( MIL_Random::eFire ) );

@@ -40,7 +40,7 @@
 #pragma warning( disable: 4127 4511 4512 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/filesystem/path.hpp>
-#include <boost/filesystem.hpp> 
+#include <boost/filesystem.hpp>
 #pragma warning( pop )
 
 namespace bfs = boost::filesystem;
@@ -92,16 +92,16 @@ namespace
         ResourcesLoadingWrapper( QStringList& list ) : stringList_ ( list ) { }
         void ReadResource( xml::xistream& xis )
         {
-            std::string item ; 
-            xis >> xml::attribute( "file", item ) ; 
-            stringList_.append( item.c_str() ) ; 
+            std::string item ;
+            xis >> xml::attribute( "file", item ) ;
+            stringList_.append( item.c_str() ) ;
         }
     private:
         ResourcesLoadingWrapper& operator=( const ResourcesLoadingWrapper& );
         QStringList& stringList_;
     };
 
-    QStringList GetResources( const tools::GeneralConfig& config, const QString& exercise ) 
+    QStringList GetResources( const tools::GeneralConfig& config, const QString& exercise )
     {
         QStringList result;
         try
@@ -114,7 +114,7 @@ namespace
                             >> xml::list( "resource", loadingWrapper, &ResourcesLoadingWrapper::ReadResource )
                         >> xml::end()
                     >> xml::end()
-                >> xml::end(); 
+                >> xml::end();
         }
         catch( ... )
         {

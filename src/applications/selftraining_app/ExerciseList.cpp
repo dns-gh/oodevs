@@ -118,7 +118,7 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
         parametersRightBox->setMinimumWidth( 200 );
         parametersRightBox->setBackgroundOrigin( QWidget::WindowOrigin );
         parametersRightBox->setSpacing( 5 );
-            
+
         if( showBrief )
         {
             QVBox* rightBox = new QVBox( parametersRightBox );
