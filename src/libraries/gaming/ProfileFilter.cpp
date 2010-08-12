@@ -76,19 +76,21 @@ namespace
 // -----------------------------------------------------------------------------
 bool ProfileFilter::IsKnowledgeVisible( const kernel::Knowledge_ABC& knowledge ) const
 {
-    const AgentKnowledges* filteredGroup = 0;
+    const AgentKnowledges* filteredGroup = 0;   
     const AgentKnowledges* knowldegeToCheckGroup = 0;
-    if ( !cHierarchies_ )
+    if ( !entity_ )
         return true;
     for( const kernel::Entity_ABC* superior = &cHierarchies_->GetEntity(); superior && !filteredGroup; superior = superior->Get< kernel::CommunicationHierarchies >().GetSuperior() )
         filteredGroup = superior->Retrieve< AgentKnowledges >();
     for( const kernel::Entity_ABC* superior = &knowledge.GetOwner(); superior && !knowldegeToCheckGroup; superior = superior->Get< kernel::CommunicationHierarchies >().GetSuperior() )
         knowldegeToCheckGroup = superior->Retrieve< AgentKnowledges >();
-    if ( filteredGroup == knowldegeToCheckGroup )
+    if ( filteredGroup == knowldegeToCheckGroup && filteredGroup )
+        return true;
+    if ( !knowldegeToCheckGroup && &knowledge.GetOwner() == &cHierarchies_->GetTop() && !cHierarchies_->IsJammed() )
         return true;
     if ( &cHierarchies_->GetTop() == entity_ )
         return IsVisibleFromTeam( knowledge, entity_ );
-    if( cHierarchies_ && !cHierarchies_->IsJammed() )
+    if( !cHierarchies_->IsJammed() )
         if ( const kernel::CommunicationHierarchies* c = knowledge.Retrieve< kernel::CommunicationHierarchies >() )
             return ( knowledge.IsVisible( &cHierarchies_->GetTop() == &c->GetTop() ) );
     return false;
