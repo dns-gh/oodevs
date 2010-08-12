@@ -2694,6 +2694,10 @@
         <translation>arrêt</translation>
     </message>
     <message>
+        <source>short stopping</source>
+        <translation>poste reflexe</translation>
+    </message>
+    <message>
         <source>parked</source>
         <translation>posté</translation>
     </message>
