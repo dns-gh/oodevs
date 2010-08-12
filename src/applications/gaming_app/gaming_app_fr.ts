@@ -1227,7 +1227,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <name>InfoWidget</name>
     <message>
         <source>Reports</source>
-        <translation>Compte-rendus</translation>
+        <translation>Comptes-rendus</translation>
     </message>
     <message>
         <source>Conflicts</source>
@@ -2949,7 +2949,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <name>ReportFilterOptions</name>
     <message>
         <source>Display reports</source>
-        <translation>Afficher les compte-rendus</translation>
+        <translation>Afficher les comptes-rendus</translation>
     </message>
     <message>
         <source>Display traces</source>
@@ -2969,7 +2969,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Show reports</source>
-        <translation>Montrer les compte-rendus</translation>
+        <translation>Montrer les comptes-rendus</translation>
     </message>
     <message>
         <source>Show traces</source>
@@ -2996,7 +2996,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Report</source>
-        <translation>Compte-rendu</translation>
+        <translation>Comptes-rendu</translation>
     </message>
     <message>
         <source>Clear</source>
