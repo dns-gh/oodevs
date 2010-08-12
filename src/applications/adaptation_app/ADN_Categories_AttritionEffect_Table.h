@@ -24,12 +24,21 @@ class ADN_Categories_AttritionEffect_Table
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_Categories_AttritionEffect_Table( QWidget* pParent = 0 );
+             ADN_Categories_AttritionEffect_Table( QWidget* pParent = 0 );
     virtual ~ADN_Categories_AttritionEffect_Table();
     //@}
 
 protected slots:
+    //! @name slots
+    //@{
     virtual void doValueChanged( int row, int col );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void UpdateValidators( int row );
+    //@}
 };
 
 #endif // __ADN_Categories_AttritionEffect_Table_h_
