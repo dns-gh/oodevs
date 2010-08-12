@@ -25,7 +25,7 @@ namespace
             brain.RegisterFunction( "DEC_ConnaissanceObject_EstUnAllie", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsAllie, boost::cref( this ), _1  ) ) );
             brain.RegisterFunction( "DEC_ConnaissanceObjet_NiveauDePerceptionCourant", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_GetPerceptionLevel, boost::cref( this ), _1  ) ) );
             brain.RegisterFunction( "DEC_ConnaissanceAgent_NiveauDePerceptionCourant", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_GetPerceptionLevel, boost::cref( this ), _1  ) ) );
-            brain.RegisterFunction( "DEC_ConnaissanceUrbanBlock_NiveauDeReconnaissanceCourant", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_GetPerceptionLevel, boost::cref( this ), _1  ) ) );
+            brain.RegisterFunction( "DEC_ConnaissanceUrbanBlock_NiveauDeReconnaissanceCourant", boost::function< float ( const std::string& ) >( boost::bind( &BrainFixture::Mock_GetRecceLevel, boost::cref( this ), _1  ) ) );
         }
         int Mock_IsEnemy( const std::string& name )
         {
@@ -51,6 +51,16 @@ namespace
                 return 2;
             if( name == "enemyIdentified" )
                 return 3;
+            return 0;
+        }
+        float Mock_GetRecceLevel( const std::string& name )
+        {
+            if( name == "enemyDetected" )
+                return 0.3f;
+            if( name == "enemyRecognized" )
+                return 0.6f;
+            if( name == "enemyIdentified" )
+                return 1.f;
             return 0;
         }
         void ComputeRelationAgentTest( directia::ScriptRef unit, double expected )
@@ -81,7 +91,7 @@ namespace
         {
             directia::ScriptRef getUrbanBlockPerceptionLevel = *brain.GetScriptFunction( "integration.getUrbanBlockPerception" );
             BOOST_CHECK( getUrbanBlockPerceptionLevel( unit ) );
-            brain.GetScriptFunction( "check" )( getUrbanBlockPerceptionLevel, expected );
+            brain.GetScriptFunction( "checkClose" )( getUrbanBlockPerceptionLevel, expected );
         }
         directia::ScriptRef CreateAgent( const std::string& name )
         {

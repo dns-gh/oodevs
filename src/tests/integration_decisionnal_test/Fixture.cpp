@@ -16,7 +16,7 @@ namespace
 {
     void CheckClose( double result, double expected )
     {
-        BOOST_CHECK_CLOSE( result, expected, std::numeric_limits<float>::epsilon() );
+        BOOST_CHECK_CLOSE( result, expected, std::numeric_limits<float>::epsilon() * 100 );
     }
     void Check( double result, double expected )
     {
