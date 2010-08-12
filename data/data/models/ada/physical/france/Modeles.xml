@@ -23,6 +23,9 @@
         <mission name="MELEE Interdire un Bloc Urbain"/>
         <mission name="MELEE Boucler un Bloc Urbain"/>
         <mission name="MELEE Controler"/>
+        <mission name="MELEE Tenir un Bloc Urbain"/>
+        <mission name="MELEE Tenir un Point"/>
+        <mission name="MELEE Tenir une Zone"/>
       </missions>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PlatoonTest">

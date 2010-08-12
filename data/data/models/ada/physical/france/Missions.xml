@@ -994,6 +994,21 @@
       <parameter dia-name="objectives" name="zone" optional="false" type="AreaBM"/>
       <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Tenir" dia-type="net.masagroup.sword.france.military.platoon.tasks.Tenir" id="2079" name="MELEE Tenir un Bloc Urbain">
+      <parameter dia-name="objective" name="objectif" optional="false" type="UrbanBlockBM"/>
+      <parameter dia-name="position" name="position pour tenir" optional="false" type="PointBM"/>
+      <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Tenir" dia-type="T_Mission_Pion_Tenir_Point" id="2080" name="MELEE Tenir un Point">
+      <parameter dia-name="objective" name="objectif" optional="false" type="PointBM"/>
+      <parameter dia-name="position" name="position pour tenir" optional="false" type="PointBM"/>
+      <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Tenir" dia-type="T_Mission_Pion_Tenir_Zone" id="2081" name="MELEE Tenir une Zone">
+      <parameter dia-name="objective" name="zone" optional="false" type="AreaBM"/>
+      <parameter dia-name="position" name="position pour tenir" optional="false" type="PointBM"/>
+      <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
+    </mission>
   </units>
   <automats>
     <context>
