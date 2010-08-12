@@ -52,6 +52,8 @@ HierarchyListView_ABC::HierarchyListView_ABC( QWidget* pParent, Controllers& con
     addColumn( tr( "Units" ) );
     setRootIsDecorated( true );
     setAcceptDrops( true );
+    setDragAutoScroll( true );
+    viewport()->setAcceptDrops( true ); // $$$$ SBO 2010-08-12: needed to enable autoscroll
     header()->hide();
 
     connect( this,   SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint&, int ) ) );
@@ -245,6 +247,10 @@ void HierarchyListView_ABC::dragEnterEvent( QDragEnterEvent* pEvent )
     pEvent->accept( ValuedDragObject::Provides< const Entity_ABC >( pEvent ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::dragMoveEvent
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
 void HierarchyListView_ABC::dragMoveEvent( QDragMoveEvent *pEvent )
 {
     pEvent->accept( ValuedDragObject::Provides< const Entity_ABC >( pEvent ) );
