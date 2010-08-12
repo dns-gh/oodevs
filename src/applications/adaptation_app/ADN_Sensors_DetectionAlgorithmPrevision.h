@@ -53,6 +53,7 @@ public slots:
     void OnPopulationDensityChanged( const QString& );
     void OnPopulationModifierChanged( const QString& );
     void OnPopulationChanged( const QString& );
+    void UpdateValue();
     //@}
 
 private:

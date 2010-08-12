@@ -118,7 +118,9 @@ ADN_Sensors_DetectionAlgorithmPrevision::ADN_Sensors_DetectionAlgorithmPrevision
         populationValue_ = new QLineEdit( group, tr( "Population Value" ) );
         populationValue_->setText( "0" );
         populationValue_->setValidator( new QDoubleValidator( populationValue_ ) );
-        connect (populationValue_, SIGNAL(textChanged( const QString& )), this, SLOT( OnPopulationChanged( const QString& ) ) );
+        connect( populationValue_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnPopulationChanged( const QString& ) ) );
+        connect( populationValue_, SIGNAL( returnPressed() ), this, SLOT( UpdateValue() ) );
+        connect( populationValue_, SIGNAL( lostFocus() ), this, SLOT( UpdateValue() ) );
     }
 
     GQ_Plot* pGraph = new GQ_Plot( this );
@@ -346,7 +348,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationDensityChanged( const 
         {
              populationDensityFactor_ = boost::lexical_cast< double >( value.ascii() );
         }
-        catch ( boost::bad_lexical_cast* /*e*/)
+        catch( boost::bad_lexical_cast* /*e*/ )
         {
             populationDensityFactor_ = 1;
         }
@@ -366,7 +368,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationModifierChanged( const
         {
             populationModifier_ = boost::lexical_cast< double >( value.ascii() );
         }
-        catch ( boost::bad_lexical_cast* /*e*/)
+        catch( boost::bad_lexical_cast* /*e*/ )
         {
             populationModifier_ = 1;
         }
@@ -386,15 +388,21 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationChanged( const QString
        {
            population_ = boost::lexical_cast< double >( value.ascii() );
        }
-       catch ( boost::bad_lexical_cast* /*e*/)
+       catch( boost::bad_lexical_cast* /*e*/ )
        {
            populationValue_->setText( "0" );
            population_ = 0;
        }
     else
-    {
-        populationValue_->setText( "0" );
         population_ = 0;
-    }
     Update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_DetectionAlgorithmPrevision::UpdateValue
+// Created: LGY 2010-08-12
+// -----------------------------------------------------------------------------
+void ADN_Sensors_DetectionAlgorithmPrevision::UpdateValue()
+{
+    populationValue_->setText( boost::lexical_cast< std::string >( population_ ).c_str() );
 }
