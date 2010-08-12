@@ -11147,38 +11147,31 @@ class MsgUrbanKnowledgeUpdate : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 real_urban() const;
   inline void set_real_urban(::google::protobuf::int32 value);
   
-  // optional int32 relevance = 4;
-  inline bool has_relevance() const;
-  inline void clear_relevance();
-  static const int kRelevanceFieldNumber = 4;
-  inline ::google::protobuf::int32 relevance() const;
-  inline void set_relevance(::google::protobuf::int32 value);
-  
-  // optional .MsgsSimToClient.EnumUnitIdentificationLevel identification_level = 5;
-  inline bool has_identification_level() const;
-  inline void clear_identification_level();
-  static const int kIdentificationLevelFieldNumber = 5;
-  inline MsgsSimToClient::EnumUnitIdentificationLevel identification_level() const;
-  inline void set_identification_level(MsgsSimToClient::EnumUnitIdentificationLevel value);
-  
-  // optional int32 progress = 6;
+  // optional int32 progress = 4;
   inline bool has_progress() const;
   inline void clear_progress();
-  static const int kProgressFieldNumber = 6;
+  static const int kProgressFieldNumber = 4;
   inline ::google::protobuf::int32 progress() const;
   inline void set_progress(::google::protobuf::int32 value);
   
-  // optional bool perceived = 7;
+  // optional int32 maxProgress = 5;
+  inline bool has_maxprogress() const;
+  inline void clear_maxprogress();
+  static const int kMaxProgressFieldNumber = 5;
+  inline ::google::protobuf::int32 maxprogress() const;
+  inline void set_maxprogress(::google::protobuf::int32 value);
+  
+  // optional bool perceived = 6;
   inline bool has_perceived() const;
   inline void clear_perceived();
-  static const int kPerceivedFieldNumber = 7;
+  static const int kPerceivedFieldNumber = 6;
   inline bool perceived() const;
   inline void set_perceived(bool value);
   
-  // optional .Common.MsgListOID automat_perception = 8;
+  // optional .Common.MsgListOID automat_perception = 7;
   inline bool has_automat_perception() const;
   inline void clear_automat_perception();
-  static const int kAutomatPerceptionFieldNumber = 8;
+  static const int kAutomatPerceptionFieldNumber = 7;
   inline const ::Common::MsgListOID& automat_perception() const;
   inline ::Common::MsgListOID* mutable_automat_perception();
   
@@ -11189,16 +11182,15 @@ class MsgUrbanKnowledgeUpdate : public ::google::protobuf::Message {
   ::google::protobuf::int32 oid_;
   ::google::protobuf::int32 team_;
   ::google::protobuf::int32 real_urban_;
-  ::google::protobuf::int32 relevance_;
-  int identification_level_;
   ::google::protobuf::int32 progress_;
+  ::google::protobuf::int32 maxprogress_;
   bool perceived_;
   ::Common::MsgListOID* automat_perception_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -26138,84 +26130,67 @@ inline void MsgUrbanKnowledgeUpdate::set_real_urban(::google::protobuf::int32 va
   real_urban_ = value;
 }
 
-// optional int32 relevance = 4;
-inline bool MsgUrbanKnowledgeUpdate::has_relevance() const {
-  return _has_bit(3);
-}
-inline void MsgUrbanKnowledgeUpdate::clear_relevance() {
-  relevance_ = 0;
-  _clear_bit(3);
-}
-inline ::google::protobuf::int32 MsgUrbanKnowledgeUpdate::relevance() const {
-  return relevance_;
-}
-inline void MsgUrbanKnowledgeUpdate::set_relevance(::google::protobuf::int32 value) {
-  _set_bit(3);
-  relevance_ = value;
-}
-
-// optional .MsgsSimToClient.EnumUnitIdentificationLevel identification_level = 5;
-inline bool MsgUrbanKnowledgeUpdate::has_identification_level() const {
-  return _has_bit(4);
-}
-inline void MsgUrbanKnowledgeUpdate::clear_identification_level() {
-  identification_level_ = 0;
-  _clear_bit(4);
-}
-inline MsgsSimToClient::EnumUnitIdentificationLevel MsgUrbanKnowledgeUpdate::identification_level() const {
-  return static_cast< MsgsSimToClient::EnumUnitIdentificationLevel >(identification_level_);
-}
-inline void MsgUrbanKnowledgeUpdate::set_identification_level(MsgsSimToClient::EnumUnitIdentificationLevel value) {
-  GOOGLE_DCHECK(MsgsSimToClient::EnumUnitIdentificationLevel_IsValid(value));
-  _set_bit(4);
-  identification_level_ = value;
-}
-
-// optional int32 progress = 6;
+// optional int32 progress = 4;
 inline bool MsgUrbanKnowledgeUpdate::has_progress() const {
-  return _has_bit(5);
+  return _has_bit(3);
 }
 inline void MsgUrbanKnowledgeUpdate::clear_progress() {
   progress_ = 0;
-  _clear_bit(5);
+  _clear_bit(3);
 }
 inline ::google::protobuf::int32 MsgUrbanKnowledgeUpdate::progress() const {
   return progress_;
 }
 inline void MsgUrbanKnowledgeUpdate::set_progress(::google::protobuf::int32 value) {
-  _set_bit(5);
+  _set_bit(3);
   progress_ = value;
 }
 
-// optional bool perceived = 7;
+// optional int32 maxProgress = 5;
+inline bool MsgUrbanKnowledgeUpdate::has_maxprogress() const {
+  return _has_bit(4);
+}
+inline void MsgUrbanKnowledgeUpdate::clear_maxprogress() {
+  maxprogress_ = 0;
+  _clear_bit(4);
+}
+inline ::google::protobuf::int32 MsgUrbanKnowledgeUpdate::maxprogress() const {
+  return maxprogress_;
+}
+inline void MsgUrbanKnowledgeUpdate::set_maxprogress(::google::protobuf::int32 value) {
+  _set_bit(4);
+  maxprogress_ = value;
+}
+
+// optional bool perceived = 6;
 inline bool MsgUrbanKnowledgeUpdate::has_perceived() const {
-  return _has_bit(6);
+  return _has_bit(5);
 }
 inline void MsgUrbanKnowledgeUpdate::clear_perceived() {
   perceived_ = false;
-  _clear_bit(6);
+  _clear_bit(5);
 }
 inline bool MsgUrbanKnowledgeUpdate::perceived() const {
   return perceived_;
 }
 inline void MsgUrbanKnowledgeUpdate::set_perceived(bool value) {
-  _set_bit(6);
+  _set_bit(5);
   perceived_ = value;
 }
 
-// optional .Common.MsgListOID automat_perception = 8;
+// optional .Common.MsgListOID automat_perception = 7;
 inline bool MsgUrbanKnowledgeUpdate::has_automat_perception() const {
-  return _has_bit(7);
+  return _has_bit(6);
 }
 inline void MsgUrbanKnowledgeUpdate::clear_automat_perception() {
   if (automat_perception_ != NULL) automat_perception_->::Common::MsgListOID::Clear();
-  _clear_bit(7);
+  _clear_bit(6);
 }
 inline const ::Common::MsgListOID& MsgUrbanKnowledgeUpdate::automat_perception() const {
   return automat_perception_ != NULL ? *automat_perception_ : *default_instance_->automat_perception_;
 }
 inline ::Common::MsgListOID* MsgUrbanKnowledgeUpdate::mutable_automat_perception() {
-  _set_bit(7);
+  _set_bit(6);
   if (automat_perception_ == NULL) automat_perception_ = new ::Common::MsgListOID;
   return automat_perception_;
 }

@@ -91,9 +91,8 @@ private:
     urban::TerrainObject_ABC* pRealUrban_;
 
     kernel::OptionalValue< bool > bIsPerceived_;
-    kernel::OptionalValue< unsigned int > nRelevance_;
-    kernel::OptionalValue< kernel::E_PerceptionResult > nCurrrentPerceptionLevel_;
-    kernel::OptionalValue< unsigned int > nProgress_;
+    kernel::OptionalValue< float > rProgress_;
+    kernel::OptionalValue< float > rMaxProgress_;
     //@}
 };
 

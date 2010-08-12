@@ -53,12 +53,10 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanTest_Update )
         MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
         DEC_Knowledge_Urban kn( army, *object );
         DEC_Knowledge_UrbanPerception perception( *pion.pPion_, *object );
+        perception.SetPerceptionLevel( PHY_PerceptionLevel::detected_ );
 
         kn.Update( perception );
-        BOOST_CHECK_EQUAL( &kn.GetCurrentPerceptionLevel(), &PHY_PerceptionLevel::detected_ );
-        //IN WORK
-        //BOOST_CHECK( kn.GetProgress() > 0. );
-
+        BOOST_CHECK( kn.GetCurrentRecceProgress() > 0. );
     }
     delete object;
     delete converter;

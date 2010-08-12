@@ -30,15 +30,12 @@ UrbanKnowledge::UrbanKnowledge( const Model_ABC& model, const MsgsSimToClient::M
     , team_                         ( model.Sides().Get( message.team() ) )
     , pUrban_                       ( model.UrbanBlocks().Find( message.real_urban() ) )
     , bPerceived_                   ( false )
-    , nRelevance_                   ( 0 )
-    , nProgress_                    ( 0 )
-    , nIdentificationLevel_         ( MsgsSimToClient::signale )
+    , rProgress_                    ( 0. )
 {
-    optionals_.relevancePresent = 0;
     optionals_.perceivedPresent = 0;
     optionals_.automat_perceptionPresent = 0;
-    optionals_.identification_levelPresent = 0;
     optionals_.progressPresent = 0;
+    optionals_.maxProgressPresent = 0;
     RegisterSelf( *this );
 }
 
@@ -74,20 +71,15 @@ void UrbanKnowledge::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& m
         optionals_.perceivedPresent = 1;
         bPerceived_ = message.perceived();
     }
-    if( message.has_identification_level() )
-    {
-        optionals_.identification_levelPresent = 1;
-        nIdentificationLevel_ = message.identification_level();
-    }
-    if( message.has_relevance() )
-    {
-        optionals_.relevancePresent = 1;
-        nRelevance_ = message.relevance();
-    }
     if( message.has_progress() )
     {
         optionals_.progressPresent = 1;
-        nProgress_ = message.progress();
+        rProgress_ = message.progress();
+    }
+    if( message.has_maxprogress() )
+    {
+        optionals_.maxProgressPresent = 1;
+        rMaxProgress_ = message.maxprogress();
     }
     if( message.has_automat_perception() )
     {
@@ -124,11 +116,9 @@ void UrbanKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     if( optionals_.perceivedPresent )
         message().set_perceived( bPerceived_ );
     if( optionals_.progressPresent )
-        message().set_progress( nProgress_ );
-    if( optionals_.relevancePresent )
-        message().set_relevance( nRelevance_ );
-    if( optionals_.identification_levelPresent )
-        message().set_identification_level( nIdentificationLevel_ );
+        message().set_progress( rProgress_ );
+    if( optionals_.maxProgressPresent )
+        message().set_maxprogress( rMaxProgress_ );
     if( optionals_.automat_perceptionPresent )
         for( std::vector< const kernel::Automat_ABC* >::const_iterator it = automatPerceptions_.begin(); it != automatPerceptions_.end(); ++it )
             message().mutable_automat_perception()->add_elem( (*it)->GetId() );

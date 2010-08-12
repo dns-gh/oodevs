@@ -60,13 +60,12 @@ public:
     bool IsValid() const;
     void Prepare();
     void Update( const DEC_Knowledge_UrbanPerception& perception );
-    void SetPerceptionLevel( const PHY_PerceptionLevel& level );
+    void SetProgress( float progress );
     bool Clean() const;
     unsigned GetId() const;
-    const PHY_PerceptionLevel& GetCurrentPerceptionLevel() const;
-    const PHY_PerceptionLevel& GetCurrentPerceptionLevel( const MIL_Agent_ABC& pion ) const;
+    float GetCurrentRecceProgress() const;
+    bool IsPerceivedBy( const MIL_Agent_ABC& pion ) const;
     const float GetPathfindCost( float weight ) const;
-    double GetProgress() const;
     const geometry::Point2f GetBarycenter() const;
     const urban::TerrainObject_ABC& GetTerrainObjectKnown() const;
     //@}
@@ -86,19 +85,19 @@ public:
 public:
     //! @name Types
     //@{
-    typedef std::map< const MIL_Automate*, const PHY_PerceptionLevel* > T_PerceptionSourceMap;
-    typedef T_PerceptionSourceMap::iterator                            IT_PerceptionSourceMap;
-    typedef T_PerceptionSourceMap::const_iterator                     CIT_PerceptionSourceMap;
+    typedef std::vector< const MIL_Automate* >  T_PerceptionSource;
+    typedef T_PerceptionSource::iterator        IT_PerceptionSource;
+    typedef T_PerceptionSource::const_iterator  CIT_PerceptionSource;
 
-    typedef std::map< const MIL_Agent_ABC*, const PHY_PerceptionLevel* > T_PerceptionAgentSourceMap;
-    typedef T_PerceptionAgentSourceMap::iterator                        IT_PerceptionAgentSourceMap;
-    typedef T_PerceptionAgentSourceMap::const_iterator                 CIT_PerceptionAgentSourceMap;
+    typedef std::vector< const MIL_Agent_ABC* >     T_PerceptionAgentSource;
+    typedef T_PerceptionAgentSource::iterator       IT_PerceptionAgentSource;
+    typedef T_PerceptionAgentSource::const_iterator CIT_PerceptionAgentSource;
     //@}
 
 private:
     //! @name Tools
     //@{
-    void ChangeRelevance( MT_Float rNewRelevance );
+    void ChangeRelevance( float rNewRelevance );
     void UpdatePerceptionSources( const DEC_Knowledge_UrbanPerception& perception );
     //@}
 
@@ -117,23 +116,18 @@ private:
     const unsigned nID_;
     const MIL_Army_ABC* army_;
     const urban::TerrainObject_ABC* object_;
-    // Internal attributes
-    const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
-    const PHY_PerceptionLevel* pPreviousPerceptionLevel_;
-    const PHY_PerceptionLevel* pMaxPerceptionLevel_;
-    double rProgressPercent_;
-    double rRelevance_;
-    T_PerceptionSourceMap perceptionLevelPerAutomateMap_;
-    T_PerceptionAgentSourceMap perceptionLevelPerAgentMap_;
+    // Internal attribute
+    float rProgressPercent_;
+    float rMaxProgressPercent_;
+    T_PerceptionSource perceivedByAutomate_;
+    T_PerceptionAgentSource perceivedByAgent_;
     // Network
     bool bCreatedOnNetwork_;
     unsigned int nTimeLastUpdate_;
     bool bLastPerceived_;
-    bool bRelevanceUpdated_;
-    bool bCurrentPerceptionLevelUpdated_;
-    bool bMaxPerceptionLevelUpdated_;
-    double rLastRelevanceSent_;
-    double rLastProgressSent_;
+    bool bCurrentProgressUpdated_;
+    bool bMaxProgressUpdated_;
+    float rLastProgressSent_;
     static MIL_IDManager idManager_;
     //@}
 };

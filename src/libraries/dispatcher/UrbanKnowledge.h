@@ -74,11 +74,10 @@ private:
     //$$$ bullshit
     struct T_Optionals
     {
-        unsigned relevancePresent : 1;
         unsigned perceivedPresent : 1;
         unsigned automat_perceptionPresent : 1;
-        unsigned identification_levelPresent : 1;
         unsigned progressPresent : 1;
+        unsigned maxProgressPresent : 1;
     };
 
 private:
@@ -87,10 +86,9 @@ private:
     const Model_ABC& model_;
     const kernel::Team_ABC& team_;
     const UrbanObject_ABC* pUrban_;
-    unsigned int nRelevance_;
-    unsigned int nProgress_;
+    unsigned int rProgress_;
+    unsigned int rMaxProgress_;
     bool bPerceived_;
-    MsgsSimToClient::EnumUnitIdentificationLevel nIdentificationLevel_;
     std::vector< const kernel::Automat_ABC* > automatPerceptions_;
     T_Optionals optionals_;
     //@}

@@ -29,18 +29,13 @@ DEC_Knowledge_Urban::DEC_Knowledge_Urban( const MIL_Army_ABC& army, const urban:
     , army_                          ( &army )
     , object_                        ( &object )
     , nID_                           ( idManager_.GetFreeId() )
-    , pCurrentPerceptionLevel_       ( &PHY_PerceptionLevel::notSeen_ )
-    , pPreviousPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
-    , pMaxPerceptionLevel_           ( &PHY_PerceptionLevel::notSeen_ )
-    , nTimeLastUpdate_               ( 0 )
-    , rRelevance_                    ( 1. )
     , rProgressPercent_              ( 0. )
+    , rMaxProgressPercent_           ( 0. )
+    , nTimeLastUpdate_               ( 0 )
     , bCreatedOnNetwork_             ( false )
-    , bRelevanceUpdated_             ( false )
-    , bCurrentPerceptionLevelUpdated_( false )
-    , bMaxPerceptionLevelUpdated_    ( false )
+    , bCurrentProgressUpdated_       ( false )
+    , bMaxProgressUpdated_           ( false )
     , bLastPerceived_                ( false )
-    , rLastRelevanceSent_            ( 0. )
     , rLastProgressSent_             ( 0. )
 {
     if( bCreatedOnNetwork_ )
@@ -56,18 +51,13 @@ DEC_Knowledge_Urban::DEC_Knowledge_Urban()
     , army_                          ( 0 )
     , object_                        ( 0 )
     , nID_                           ( 0 )
-    , pCurrentPerceptionLevel_       ( 0 )
-    , pPreviousPerceptionLevel_      ( 0 )
-    , pMaxPerceptionLevel_           ( 0 )
-    , nTimeLastUpdate_               ( 0 )
-    , rRelevance_                    ( 0 )
     , rProgressPercent_              ( 0. )
+    , rMaxProgressPercent_           ( 0. )
+    , nTimeLastUpdate_               ( 0 )
     , bCreatedOnNetwork_             ( false )
-    , bRelevanceUpdated_             ( false )
-    , bCurrentPerceptionLevelUpdated_( false )
-    , bMaxPerceptionLevelUpdated_    ( false )
+    , bCurrentProgressUpdated_       ( false )
+    , bMaxProgressUpdated_           ( false )
     , bLastPerceived_                ( false )
-    , rLastRelevanceSent_            ( 0. )
     , rLastProgressSent_             ( 0. )
 {
     // NOTHING
@@ -99,21 +89,11 @@ void DEC_Knowledge_Urban::load( MIL_CheckPointInArchive& file, const uint )
 
     file >> const_cast< MIL_Army_ABC*& >( army_ );
 
-    uint nID;
-    file >> nID;
-    pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
-
-    file >> nID;
-    pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
-
-    file >> nID;
-    pMaxPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
-
-    file >> rRelevance_
+    file >> rProgressPercent_
+         >> rMaxProgressPercent_
          >> bCreatedOnNetwork_
-         >> bRelevanceUpdated_
-         >> bCurrentPerceptionLevelUpdated_
-         >> bMaxPerceptionLevelUpdated_;
+         >> bCurrentProgressUpdated_
+         >> bMaxProgressUpdated_;
 }
 
 // -----------------------------------------------------------------------------
@@ -122,23 +102,17 @@ void DEC_Knowledge_Urban::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Urban::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    unsigned int current  = pCurrentPerceptionLevel_->GetID(),
-             previous = pPreviousPerceptionLevel_->GetID(),
-             max      = pMaxPerceptionLevel_->GetID();
     unsigned long urbanId = object_->GetId();
     file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          << nID_
          << nTimeLastUpdate_
          << urbanId
          << army_
-         << current
-         << previous
-         << max
-         << rRelevance_
+         << rProgressPercent_
+         << rMaxProgressPercent_
          << bCreatedOnNetwork_
-         << bRelevanceUpdated_
-         << bCurrentPerceptionLevelUpdated_
-         << bMaxPerceptionLevelUpdated_;
+         << bCurrentProgressUpdated_
+         << bMaxProgressUpdated_;
 }
 
 // -----------------------------------------------------------------------------
@@ -156,55 +130,25 @@ void DEC_Knowledge_Urban::Prepare()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Urban::Update( const DEC_Knowledge_UrbanPerception& perception )
 {
-    const PHY_PerceptionLevel& level = perception.GetCurrentPerceptionLevel();
+    if( perception.GetCurrentPerceptionLevel() == PHY_PerceptionLevel::notSeen_ )
+        return;
     float complexity = object_->ComputeComplexity(); // ALGO TEMPORAIRE
-    float progress = level.GetID() * 100 / complexity;//@TODO MGD Add true physical in ADN
-    rProgressPercent_ = rProgressPercent_ + progress;
-    if( rProgressPercent_ > 1.0 )
-    {
-        pPreviousPerceptionLevel_ = pCurrentPerceptionLevel_;
-        if( pCurrentPerceptionLevel_ != &PHY_PerceptionLevel::identified_ )
-        {
-            pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( pCurrentPerceptionLevel_->GetID() + 1 );
-            rProgressPercent_ -= 1.0;
-        }
-        else
-            rProgressPercent_ = 1.0;
-    }
-    else if( pCurrentPerceptionLevel_ == &PHY_PerceptionLevel::notSeen_ )
-    {
-        pPreviousPerceptionLevel_ = pCurrentPerceptionLevel_;
-        pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::detected_;
-    }
+    float progress = 10 / complexity;//@TODO MGD Add true physical configuration in ADN
+    SetProgress( std::min( rProgressPercent_ + progress, 0.25f ) );//external detection is limited  to 25%
 
     UpdatePerceptionSources( perception );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Urban::SetPerceptionLevel
+// Name: DEC_Knowledge_Urban::SetProgress
 // Created: MGD 2009-11-26
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Urban::SetPerceptionLevel( const PHY_PerceptionLevel& level )
+void DEC_Knowledge_Urban::SetProgress( float progress )
 {
-    pPreviousPerceptionLevel_ = pCurrentPerceptionLevel_;
-    pCurrentPerceptionLevel_ = &level;
-    rProgressPercent_ = 0.0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Urban::ChangeRelevance
-// Created: MGD 2009-11-26
-// -----------------------------------------------------------------------------
-void DEC_Knowledge_Urban::ChangeRelevance( MT_Float rNewRelevance )
-{
-    if( rRelevance_ == rNewRelevance )
-        return;
-
-    static const MT_Float rDeltaForNetwork = 0.05;
-    if( fabs( rLastRelevanceSent_ - rNewRelevance ) > rDeltaForNetwork || rNewRelevance == 0. || rNewRelevance == 1. )
-        bRelevanceUpdated_ = true;
-
-    rRelevance_ = rNewRelevance;
+    progress = std::max( std::min( progress, 1.f ), 0.f );
+    rProgressPercent_ = progress;
+    if( rProgressPercent_ > rMaxProgressPercent_ )
+        rMaxProgressPercent_ = rProgressPercent_;
 }
 
 // -----------------------------------------------------------------------------
@@ -219,14 +163,11 @@ void DEC_Knowledge_Urban::UpdatePerceptionSources( const DEC_Knowledge_UrbanPerc
     const MIL_Automate* pAutomateSource = &perception.GetPerceiver().GetAutomate();
     const MIL_Agent_ABC& pionSource = perception.GetPerceiver();
 
+    if( std::find( perceivedByAutomate_.begin(), perceivedByAutomate_.end(), pAutomateSource ) == perceivedByAutomate_.end() )
+        perceivedByAutomate_.push_back( pAutomateSource );
 
-    IT_PerceptionSourceMap it = perceptionLevelPerAutomateMap_.find( pAutomateSource );
-    if( it == perceptionLevelPerAutomateMap_.end() )
-        perceptionLevelPerAutomateMap_.insert( std::pair< const MIL_Automate*, const PHY_PerceptionLevel* >( pAutomateSource, &perception.GetCurrentPerceptionLevel() ) );
-
-    IT_PerceptionAgentSourceMap it2 = perceptionLevelPerAgentMap_.find( &pionSource );
-    if( it2 == perceptionLevelPerAgentMap_.end() )
-        perceptionLevelPerAgentMap_.insert( std::pair< const MIL_Agent_ABC*, const PHY_PerceptionLevel* >( &pionSource, &perception.GetCurrentPerceptionLevel() ) );
+    if( std::find( perceivedByAgent_.begin(), perceivedByAgent_.end(), &pionSource ) == perceivedByAgent_.end() )
+        perceivedByAgent_.push_back( &pionSource );
 
 }
 
@@ -236,21 +177,12 @@ void DEC_Knowledge_Urban::UpdatePerceptionSources( const DEC_Knowledge_UrbanPerc
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Urban::UpdateRelevance()
 {
-    // L'agent est percu
-    if( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ )
-    {
-        assert( rRelevance_ == 1. );
+    if( perceivedByAgent_.size() > 0  )
         return;
-    }
 
-    assert( rRelevance_ >= 0. && rRelevance_ <= 1. );
+    float rTimeRelevanceDegradation = (float)(( GetCurrentTimeStep() - nTimeLastUpdate_ ) / 100.); //config factor
 
-    //@TODO MGD
-    // Degradation : effacement au bout de X minutes
-    //const MT_Float rTimeRelevanceDegradation = ( GetCurrentTimeStep() - nTimeLastUpdate_ ) / pKnowledgeGroup_->GetType().GetKnowledgeAgentMaxLifeTime();
-
-    //ChangeRelevance( std::max( 0., rRelevance_ - rTimeRelevanceDegradation ) );
-
+    SetProgress( rProgressPercent_ - rTimeRelevanceDegradation );
     nTimeLastUpdate_ = GetCurrentTimeStep();
 }
 
@@ -260,27 +192,9 @@ void DEC_Knowledge_Urban::UpdateRelevance()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Urban::WriteMsgPerceptionSources( MsgsSimToClient::MsgUrbanKnowledgeUpdate& message ) const
 {
-// $$$$ FDS 2010-01-13: Modif à faire valider avant suppression du commentaire
-/*
-    asnMsg.m.automat_perceptionPresent = 1;
-
-    asnMsg.automat_perception.n    = perceptionLevelPerAutomateMap_.size();
-    asnMsg.automat_perception.elem = 0;
-
-    if( !perceptionLevelPerAutomateMap_.empty() )
-    {
-        ASN1T_OID* pPerceptions = new ASN1T_OID[ perceptionLevelPerAutomateMap_.size() ]; //$$ RAM
-        uint i = 0;
-        for( CIT_PerceptionSourceMap it = perceptionLevelPerAutomateMap_.begin(); it != perceptionLevelPerAutomateMap_.end(); ++it )
-        {
-            pPerceptions[i] = it->first->GetID();
-        }
-        asnMsg.automat_perception.elem = pPerceptions;
-    }
-*/
-    if( !perceptionLevelPerAutomateMap_.empty() )
-        for( CIT_PerceptionSourceMap it = perceptionLevelPerAutomateMap_.begin(); it != perceptionLevelPerAutomateMap_.end(); ++it )
-            message.mutable_automat_perception()->add_elem( it->first->GetID() );
+    if( !perceivedByAutomate_.empty() )
+        for( CIT_PerceptionSource it = perceivedByAutomate_.begin(); it != perceivedByAutomate_.end(); ++it )
+            message.mutable_automat_perception()->add_elem( (*it)->GetID() );
 }
 
 
@@ -293,36 +207,21 @@ void DEC_Knowledge_Urban::SendChangedState()
     client::UrbanKnowledgeUpdate message;
     bool bMustSend = false;
 
-    if( std::abs( rLastRelevanceSent_ - rRelevance_ ) > 0.05 )
-    {
-        message().set_relevance( (int)( rRelevance_ * 100. ) );
-        rLastRelevanceSent_ = rRelevance_;
-        bMustSend = true;
-    }
-
-    if( pCurrentPerceptionLevel_ != pPreviousPerceptionLevel_ )
-    {
-        MsgsSimToClient::EnumUnitIdentificationLevel level( message().identification_level() );
-        pCurrentPerceptionLevel_->Serialize( level );
-        message().set_identification_level( level );
-        bMustSend = true;
-        pPreviousPerceptionLevel_ = pCurrentPerceptionLevel_;
-    }
-
     if( std::abs( rLastProgressSent_ - rProgressPercent_ ) >= 0.05 )
     {
-        message().set_progress( (int)( rProgressPercent_ * 100. ) );
+        message().set_progress( static_cast< int >( rProgressPercent_ * 100 ) );
+        message().set_maxprogress( static_cast< int >( rMaxProgressPercent_ * 100 ) );
         rLastProgressSent_ = rProgressPercent_;
         bMustSend = true;
     }
 
-    if( perceptionLevelPerAutomateMap_.size() == 0 && bLastPerceived_ )
+    if( perceivedByAutomate_.size() == 0 && bLastPerceived_ )
     {
         message().set_perceived( false );
         bLastPerceived_ = false;
         bMustSend = true;
     }
-    else if( perceptionLevelPerAutomateMap_.size() > 0 && !bLastPerceived_ )
+    else if( perceivedByAgent_.size() > 0 && !bLastPerceived_ )
     {
         message().set_perceived( true ) ;
         bLastPerceived_ = true;
@@ -350,15 +249,9 @@ void DEC_Knowledge_Urban::SendFullState()
     message().set_team( army_->GetID() );
     message().set_real_urban( object_->GetId() );
 
-    message().set_relevance( static_cast< int >( rRelevance_ * 100. ) );
-    rLastRelevanceSent_ = rRelevance_;
-
-    MsgsSimToClient::EnumUnitIdentificationLevel level( message().identification_level() );
-    pCurrentPerceptionLevel_->Serialize( level );
-    message().set_identification_level( level );
-
-    message().set_progress( static_cast< int >( rProgressPercent_ * 100. ) );
+    message().set_progress( static_cast< int >( rProgressPercent_ * 100 ) );
     rLastProgressSent_ = rProgressPercent_;
+    message().set_maxprogress( static_cast< int >( rMaxProgressPercent_ * 100 ) );
 
     message().set_perceived( bLastPerceived_ );
 
@@ -423,21 +316,12 @@ void DEC_Knowledge_Urban::SendMsgDestruction() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Urban::GetRelevance
-// Created: MGD 2009-11-26
-// -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_Urban::GetRelevance() const
-{
-    return rRelevance_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Urban::Clean
 // Created: MGD 2009-11-26
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_Urban::Clean() const
 {
-    return GetRelevance() <= 0.;
+    return false;//always maintain knowledge
 }
 
 // -----------------------------------------------------------------------------
@@ -453,31 +337,20 @@ unsigned DEC_Knowledge_Urban::GetId  () const
 // Name: DEC_Knowledge_Urban::GetLevel
 // Created: MGD 2009-12-01
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& DEC_Knowledge_Urban::GetCurrentPerceptionLevel() const
+float DEC_Knowledge_Urban::GetCurrentRecceProgress() const
 {
-    return *pCurrentPerceptionLevel_;
+    return rProgressPercent_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Urban::GetLevel
 // Created: MGD 2009-12-01
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& DEC_Knowledge_Urban::GetCurrentPerceptionLevel( const MIL_Agent_ABC& pion ) const
+bool DEC_Knowledge_Urban::IsPerceivedBy( const MIL_Agent_ABC& pion ) const
 {
-    CIT_PerceptionAgentSourceMap  itPerceptionLevel = perceptionLevelPerAgentMap_.find( &pion );
-    if( itPerceptionLevel != perceptionLevelPerAgentMap_.end() )
-        return *( itPerceptionLevel->second );
-    else
-        return PHY_PerceptionLevel::notSeen_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Urban::GetProgress
-// Created: MGD 2009-12-01
-// -----------------------------------------------------------------------------
-double DEC_Knowledge_Urban::GetProgress() const
-{
-    return rProgressPercent_;
+    if( std::find( perceivedByAgent_.begin(), perceivedByAgent_.end(), &pion ) != perceivedByAgent_.end() )
+        return true;
+    return false;
 }
 
 // -----------------------------------------------------------------------------

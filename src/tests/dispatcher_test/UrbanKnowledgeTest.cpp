@@ -98,10 +98,9 @@ BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeUpdatedWithoutAttributes, Fixture )
         message.set_oid( 1 );
         message.set_real_urban( 0 );
         message.set_team( side.GetId() );
-        message.set_relevance( 4 );
         message.set_progress( 5 );
+        message.set_maxprogress( 7 );
         message.set_perceived( true );
-        message.set_identification_level( MsgsSimToClient::reconnue );
         message.mutable_automat_perception()->add_elem( automat.GetId() );
         result->Update( message );
         MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );

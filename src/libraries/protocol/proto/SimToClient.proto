@@ -721,11 +721,10 @@ message MsgUrbanKnowledgeUpdate {
  required int32                        oid                     = 1;
  required int32                        team                    = 2;
  required int32                        real_urban              = 3; 
- optional int32                        relevance               = 4;
- optional EnumUnitIdentificationLevel  identification_level    = 5;
- optional int32                        progress                = 6;
- optional bool                         perceived               = 7;
- optional Common.MsgListOID            automat_perception      = 8;
+ optional int32                        progress                = 4;
+ optional int32                        maxProgress             = 5;
+ optional bool                         perceived               = 6;
+ optional Common.MsgListOID            automat_perception      = 7;
 }
 
 message MsgUrbanKnowledgeDestruction {

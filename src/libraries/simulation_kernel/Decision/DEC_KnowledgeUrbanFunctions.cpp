@@ -36,11 +36,11 @@
 // Name: DEC_KnowledgeUrbanFunctions::GetCurrentPerceptionLevel
 // Created: SLG 2010-02-01
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeUrbanFunctions::GetCurrentPerceptionLevel( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge )
+float DEC_KnowledgeUrbanFunctions::GetCurrentRecceProgress( boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge )
 {
     if( pKnowledge.get() && pKnowledge->IsValid() )
-        return static_cast< int >( pKnowledge->GetCurrentPerceptionLevel( callerAgent ).GetID() );
-    return 0;
+        return pKnowledge->GetCurrentRecceProgress();
+    return 0.;
 }
 
 // -----------------------------------------------------------------------------

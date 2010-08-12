@@ -712,7 +712,7 @@ DEC_KS_PopulationInteraction& DEC_KnowledgeBlackBoard_AgentPion::GetKsPopulation
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_AgentPion::IsIdentified
+// Name: DEC_KnowledgeBlackBoard_AgentPion::GetKnowledgeUrbanPerceptionContainer
 // Created: MGD 2009-11-26
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeUrbanPerception& DEC_KnowledgeBlackBoard_AgentPion::GetKnowledgeUrbanPerceptionContainer() const
@@ -731,6 +731,6 @@ bool DEC_KnowledgeBlackBoard_AgentPion::IsIdentified( const urban::TerrainObject
 
     boost::shared_ptr< DEC_Knowledge_UrbanPerception > pKnowledge = pKnowledgeUrbanPerceptionContainer_->GetKnowledgeUrbanPerception( object );
     if( pKnowledge )
-        return pKnowledge->GetCurrentPerceptionLevel() == PHY_PerceptionLevel::identified_;
+        return pKnowledge->IsPerceived();
     return false;
 }

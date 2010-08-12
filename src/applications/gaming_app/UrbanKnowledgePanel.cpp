@@ -42,9 +42,8 @@ UrbanKnowledgePanel::UrbanKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
                 .AddLabel( tr( "Identifier:" ) )
                 .AddLabel( tr( "Associated block:" ) )
                 .AddLabel( tr( "Perceived:" ) )
-                .AddLabel( tr( "Relevance:" ) )
-                .AddLabel( tr( "Level:" ) )
-                .AddLabel( tr( "Progress:" ) );
+                .AddLabel( tr( "Progress:" ) )
+                .AddLabel( tr( "Maximum Progress:" ) );
 
     pPerceptionListView_ = new ListDisplayer< UrbanKnowledgePanel >( this, *this, factory );
     pPerceptionListView_->AddColumn( tr( "Agent" ) );

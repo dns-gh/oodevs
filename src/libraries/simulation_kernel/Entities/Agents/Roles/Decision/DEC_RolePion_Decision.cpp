@@ -630,8 +630,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< void( const directia::ScriptRef& ) >( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlockKnowledge, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 ) ) );
     brain.RegisterFunction( "DEC_Connaissances_BlocUrbainDansCercle",
         boost::function< void( const directia::ScriptRef&, boost::shared_ptr< MT_Vector2D>, float )>( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInCercle, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1, _2, _3 ) ) );
-    brain.RegisterFunction( "DEC_ConnaissanceUrbanBlock_NiveauDePerceptionCourant"    ,
-            boost::function< int( boost::shared_ptr< DEC_Knowledge_Urban > ) >( boost::bind( &DEC_KnowledgeUrbanFunctions::GetCurrentPerceptionLevel, boost::cref( GetPion() ), _1 ) ) );
+    brain.RegisterFunction( "DEC_ConnaissanceUrbanBlock_NiveauDeReconnaissanceCourant", &DEC_KnowledgeUrbanFunctions::GetCurrentRecceProgress );
     brain.RegisterFunction( "DEC_ConnaissanceUrbanBlock_Barycentre"    ,
         boost::function< boost::shared_ptr< MT_Vector2D >( boost::shared_ptr< DEC_Knowledge_Urban > ) >( boost::bind( &DEC_KnowledgeUrbanFunctions::GetCurrentBarycenter, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceBlocUrbain_Traficabilite"    ,

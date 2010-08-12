@@ -57,14 +57,12 @@ void UrbanKnowledge::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& m
 {
     if( message.has_real_urban() )
         pRealUrban_ = terrainObjectResolver_.Find( message.real_urban() );
-    if( message.has_relevance() )
-        nRelevance_ = message.relevance();
     if( message.has_perceived() )
         bIsPerceived_ = message.perceived();
-    if( message.has_identification_level() )
-        nCurrrentPerceptionLevel_ = (E_PerceptionResult)( 3 - message.identification_level() );//@TODO MGD Fix enum
     if( message.has_progress() )
-        nProgress_ = message.progress();
+        rProgress_ = message.progress();
+    if( message.has_maxprogress() )
+        rMaxProgress_ = message.maxprogress();
     Touch();
 }
 
@@ -78,9 +76,9 @@ void UrbanKnowledge::Display( Displayer_ABC& displayer ) const
                 .Display( tools::translate( "Urban", "Identifier:" ), id_ )
                 .Display( tools::translate( "Urban", "Associated block:" ), pRealUrban_ )
                 .Display( tools::translate( "Urban", "Perceived:" ), bIsPerceived_ )
-                .Display( tools::translate( "Urban", "Relevance:" ), nRelevance_ )
-                .Display( tools::translate( "Urban", "Level:" ), nCurrrentPerceptionLevel_ )
-                .Display( tools::translate( "Urban", "Progress:" ), nProgress_ ) ;
+                .Display( tools::translate( "Urban", "Progress:" ), rProgress_ )
+                .Display( tools::translate( "Urban", "Maximum Progress:" ), rMaxProgress_ ) ;
+
 }
 
 // -----------------------------------------------------------------------------
@@ -101,7 +99,7 @@ void UrbanKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void UrbanKnowledge::DisplayInSummary( Displayer_ABC& displayer ) const
 {
-    displayer.Display( tools::translate( "Urban", "Relevance:" ), nRelevance_ );
+    displayer.Display( tools::translate( "Urban", "Progress:" ), rProgress_ );
 }
 
 // -----------------------------------------------------------------------------

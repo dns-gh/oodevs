@@ -3352,11 +3352,11 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Relevance:</source>
-        <translation>Pertinence:</translation>
+        <translation type="obsolete">Pertinence:</translation>
     </message>
     <message>
         <source>Level:</source>
-        <translation>Niveau:</translation>
+        <translation type="obsolete">Niveau:</translation>
     </message>
     <message>
         <source>Progress:</source>
@@ -3373,6 +3373,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Associated block:</source>
         <translation>Bloc associé:</translation>
+    </message>
+    <message>
+        <source>Maximum Progress:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
