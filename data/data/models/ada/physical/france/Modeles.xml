@@ -23,6 +23,7 @@
         <mission name="MELEE Interdire un Bloc Urbain"/>
         <mission name="MELEE Boucler un Bloc Urbain"/>
         <mission name="MELEE Controler"/>
+        <mission name="MELEE Neutralizer"/>
         <mission name="MELEE Tenir un Bloc Urbain"/>
         <mission name="MELEE Tenir un Point"/>
         <mission name="MELEE Tenir une Zone"/>

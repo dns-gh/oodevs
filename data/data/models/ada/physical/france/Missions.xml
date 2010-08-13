@@ -1009,6 +1009,9 @@
       <parameter dia-name="position" name="position pour tenir" optional="false" type="PointBM"/>
       <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Neutralizer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Neutralizer" id="2082" name="MELEE Neutralizer">
+      <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
+    </mission>
   </units>
   <automats>
     <context>
