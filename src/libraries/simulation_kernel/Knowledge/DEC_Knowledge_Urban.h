@@ -60,6 +60,7 @@ public:
     bool IsValid() const;
     void Prepare();
     void Update( const DEC_Knowledge_UrbanPerception& perception );
+    void ComputeProgress( const MIL_Agent_ABC& agent );
     void SetProgress( float progress );
     bool Clean() const;
     unsigned GetId() const;
@@ -120,6 +121,7 @@ private:
     float rProgressPercent_;
     float rMaxProgressPercent_;
     T_PerceptionSource perceivedByAutomate_;
+    T_PerceptionSource previousPerceivedByAutomate_;
     T_PerceptionAgentSource perceivedByAgent_;
     // Network
     bool bCreatedOnNetwork_;

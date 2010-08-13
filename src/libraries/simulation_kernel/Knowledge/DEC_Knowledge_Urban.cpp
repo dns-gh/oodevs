@@ -10,9 +10,11 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_Urban.h"
 #include "Network/NET_Publisher_ABC.h"
+#include "simulation_kernel/Entities/Automates/MIL_Automate.h"
+#include "simulation_kernel/Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
+#include "simulation_kernel/Entities/Objects/UrbanObjectWrapper.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_UrbanPerception.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
-#include "simulation_kernel/Entities/Automates/MIL_Automate.h"
 #include <urban/Architecture.h>
 #include "protocol/ClientSenders.h"
 
@@ -121,7 +123,8 @@ void DEC_Knowledge_Urban::save( MIL_CheckPointOutArchive& file, const uint ) con
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Urban::Prepare()
 {
-//@TODO MGD
+    previousPerceivedByAutomate_.clear();
+    perceivedByAutomate_.swap( previousPerceivedByAutomate_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -132,12 +135,25 @@ void DEC_Knowledge_Urban::Update( const DEC_Knowledge_UrbanPerception& perceptio
 {
     if( perception.GetCurrentPerceptionLevel() == PHY_PerceptionLevel::notSeen_ )
         return;
-    float complexity = object_->ComputeComplexity(); // ALGO TEMPORAIRE
-    float progress = 10 / complexity;//@TODO MGD Add true physical configuration in ADN
-    SetProgress( std::min( rProgressPercent_ + progress, 0.25f ) );//external detection is limited  to 25%
+    ComputeProgress( perception.GetPerceiver() );
 
     UpdatePerceptionSources( perception );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Urban::ComputeProgress
+// Created: MGD 2010-08-12
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Urban::ComputeProgress( const MIL_Agent_ABC& agent )
+{
+    float complexity = object_->ComputeComplexity(); // ALGO TEMPORAIRE
+    float progress = 10 / complexity;//@TODO MGD Add true physical configuration in ADN
+    const UrbanObjectWrapper* urbanBlock = agent.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
+    float maxRecce = ( urbanBlock && object_ == &urbanBlock->GetObject() ) ? 1.0f : 0.25f;
+    maxRecce = std::max( maxRecce, rProgressPercent_ );
+    SetProgress( std::min( std::max( rProgressPercent_ + progress, rProgressPercent_ + 0.001f ), maxRecce ) );
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Urban::SetProgress
@@ -209,9 +225,10 @@ void DEC_Knowledge_Urban::SendChangedState()
 
     if( std::abs( rLastProgressSent_ - rProgressPercent_ ) >= 0.05 )
     {
-        message().set_progress( static_cast< int >( rProgressPercent_ * 100 ) );
-        message().set_maxprogress( static_cast< int >( rMaxProgressPercent_ * 100 ) );
-        rLastProgressSent_ = rProgressPercent_;
+        float rProgress  = static_cast< int >( rProgressPercent_ * 100 ) / 5 * 0.05f;
+        message().set_progress( static_cast< int >( rProgress * 100 ) );
+        message().set_maxprogress( static_cast< int >( rMaxProgressPercent_ * 100 ) / 5 * 5 );
+        rLastProgressSent_ = rProgress;
         bMustSend = true;
     }
 
@@ -221,10 +238,15 @@ void DEC_Knowledge_Urban::SendChangedState()
         bLastPerceived_ = false;
         bMustSend = true;
     }
-    else if( perceivedByAgent_.size() > 0 && !bLastPerceived_ )
+    else if( perceivedByAutomate_.size() > 0 && !bLastPerceived_ )
     {
         message().set_perceived( true ) ;
         bLastPerceived_ = true;
+        bMustSend = true;
+    }
+    if( perceivedByAutomate_ != previousPerceivedByAutomate_ )
+    {
+        WriteMsgPerceptionSources( message() );
         bMustSend = true;
     }
 
@@ -249,9 +271,10 @@ void DEC_Knowledge_Urban::SendFullState()
     message().set_team( army_->GetID() );
     message().set_real_urban( object_->GetId() );
 
-    message().set_progress( static_cast< int >( rProgressPercent_ * 100 ) );
-    rLastProgressSent_ = rProgressPercent_;
-    message().set_maxprogress( static_cast< int >( rMaxProgressPercent_ * 100 ) );
+    float rProgress = static_cast< int >( rProgressPercent_ * 100 ) / 5 * 0.05f;
+    message().set_progress( static_cast< int >( rProgress * 100 ) );
+    rLastProgressSent_ = rProgress;
+    message().set_maxprogress( static_cast< int >( rMaxProgressPercent_ * 100 ) / 5 * 5 );
 
     message().set_perceived( bLastPerceived_ );
 
