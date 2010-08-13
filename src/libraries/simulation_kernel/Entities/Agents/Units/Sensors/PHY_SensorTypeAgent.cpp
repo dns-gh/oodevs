@@ -144,7 +144,7 @@ PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistr
     , lightingFactors_     ( weather::PHY_Lighting     ::GetLightings     ().size(), 0. )
     , postureSourceFactors_( PHY_Posture      ::GetPostures      ().size(), 0. )
     , postureTargetFactors_( PHY_Posture      ::GetPostures      ().size(), 0. )
-    , urbanBlockFactors_   ( UrbanType::GetUrbanType().GetStaticModel().Resolver< urban::MaterialCompositionType, std::string >::Count(), 1. )
+    , urbanBlockFactors_   ( UrbanType::GetUrbanType().GetStaticModel().CountMaterialCompositionType(), 1. )
     , rPopulationDensity_  ( 1. )
     , rPopulationFactor_   ( 1. )
     , isLimitedToSensors_  ( false ) // LTO

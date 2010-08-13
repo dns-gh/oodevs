@@ -39,7 +39,7 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
     , nMosID_               ( 0 )
     , pIndirectFireData_    ( 0 )
     , attritions_           ()
-    , urbanAttritionFactors_( UrbanType::GetUrbanType().GetStaticModel().Resolver< urban::MaterialCompositionType, std::string >::Count(), 0.9 )
+    , urbanAttritionFactors_( UrbanType::GetUrbanType().GetStaticModel().CountMaterialCompositionType(), 0.9 )
     , rWeight_              ( 0. )
     , rVolume_              ( 0. )
     , bIlluminating_        ( false )
