@@ -32,7 +32,7 @@ namespace MsgsSimToClient
 // Created: AGE 2006-09-20
 // =============================================================================
 class TeamHierarchies : public kernel::EntityHierarchies< kernel::CommunicationHierarchies >
-                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgKnowledgeGroupUpdate > // LTO
+                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgKnowledgeGroupUpdate >
 {
 public:
     //! @name Constructors/Destructor
@@ -47,7 +47,7 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message ); // LTO
+    virtual void DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message );
     //@}
 
 private:

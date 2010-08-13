@@ -62,7 +62,6 @@ GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, ShapeUp
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, ShapeCreation                      , shape_creation                        )
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, ShapeUpdate                        , shape_update                          )
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, ShapeDestruction                   , shape_destruction                     )
-// LTO begin
 GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, NoteCreationRequest                , note_creation_request                 )
 GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, NoteUpdateRequest                  , note_update_request                   )
 GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, NoteDestructionRequest             , note_destruction_request              )
@@ -70,7 +69,6 @@ GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, NoteDes
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, NoteCreation                       , note_creation                         )
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, NoteUpdate                         , note_update                           )
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, NoteDestruction                    , note_destruction                      )
-// LTO end
 }
 }
 

@@ -132,7 +132,6 @@ GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient , UrbanDetection          
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient , UrbanKnowledgeCreation                       , urban_knowledge_creation                          )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient , UrbanKnowledgeUpdate                         , urban_knowledge_update                            )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient , UrbanKnowledgeDestruction                    , urban_knowledge_destruction                       )
-// LTO begin
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient , KnowledgeGroupMagicActionAck                 , knowledge_group_magic_action_ack                  )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient , KnowledgeGroupCreation                       , knowledge_group_creation                          )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient , KnowledgeGroupCreationAck                    , knowledge_group_creation_ack                      )
@@ -140,7 +139,6 @@ GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient , KnowledgeGroupUpdate    
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient , KnowledgeGroupUpdateAck                      , knowledge_group_update_ack                        )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient , KnowledgeGroupDestruction                    , knowledge_group_destruction                       )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient , ActionCreateFireOrderAck                     , action_create_fire_order_ack                      )
-// LTO end
 
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, ControlGlobalMeteo                            , control_global_meteo                              )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, ControlLocalMeteoCreation                     , control_local_meteo_creation                      )

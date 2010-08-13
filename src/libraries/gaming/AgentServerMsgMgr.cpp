@@ -1554,6 +1554,7 @@ void AgentServerMsgMgr::OnReceiveMsgUrbanDetection( const MsgsSimToClient::MsgUr
     GetModel().agents_.GetAgent( message.oid() ).Update( message );
 }
 
+// LTO begin
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupMagicActionAck
 // Created: JSR 2010-04-21
@@ -1589,6 +1590,7 @@ void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupCreationAck( const MsgsSimToCl
 {
     CheckAcknowledge( logger_, message, "KnowledgeGroupCreationAck" );
 }
+// LTO end
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgUrbanKnowledgeCreation
