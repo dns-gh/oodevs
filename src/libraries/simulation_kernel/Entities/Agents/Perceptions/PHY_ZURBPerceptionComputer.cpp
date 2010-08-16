@@ -195,8 +195,6 @@ namespace
                                 float objectHeight = 2; //2 = SensorHeight
                                 double urbanFactor = sensorTypeAgent->GetUrbanBlockFactor( object );
                                 const urban::Architecture* architecture = object.RetrievePhysicalFeature< urban::Architecture >();
-                                if( architecture )
-                                    urbanFactor *=  1. - architecture->GetOccupation();
                                 if( perceiverUrbanBlock )
                                 {
                                     const urban::Architecture* perceiverUrbanBlockArchitecture = perceiverUrbanBlock->GetObject().RetrievePhysicalFeature< urban::Architecture >();
@@ -207,6 +205,8 @@ namespace
                                 if( objectArchitecture )
                                     objectHeight += objectArchitecture->GetHeight();
                                 urbanFactor *= static_cast< double >( perceiverUrbanBlockHeight / objectHeight );
+                                if( architecture )
+                                    urbanFactor = 1. + architecture->GetOccupation() * ( urbanFactor -1. ) ;
 
                                 worstFactor = std::min( worstFactor, urbanFactor );
                             }

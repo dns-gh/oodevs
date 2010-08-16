@@ -53,6 +53,8 @@ public slots:
     void OnPopulationDensityChanged( const QString& );
     void OnPopulationModifierChanged( const QString& );
     void OnPopulationChanged( const QString& );
+    void OnUrbanHeightRatioChanged( const QString& );
+    void OnUrbanOccupationChanged( const QString& );
     void UpdateValue();
     //@}
 
@@ -67,6 +69,10 @@ private:
     //@{
     void Update();
     //@}
+    //! @name Helpers
+    //@{
+    void UpdatePreview( double& parameter, QLineEdit* widget, double defaultValue, const QString& defaultString, const QString& value );
+    //@}
 
 private:
     //! @name Member data
@@ -79,6 +85,8 @@ private:
     QLineEdit* environment_;
     QLineEdit* urbanMaterial_;
     QLineEdit* populationValue_;
+    QLineEdit* urbanHeightRatioValue_;
+    QLineEdit* urbanOccupationValue_;
     GQ_PlotData* pGraphData_;
     GQ_PlotData* pBaseGraphData_;
     double perceiverPostureFactor_;
@@ -89,10 +97,13 @@ private:
     double environmentFactor_;
     double populationDensityFactor_;
     double population_;
+    double urbanHeightRatio_;
+    double urbanOccupation_;
     double detection_;
     double recognition_;
     double identification_;
     double populationModifier_;
+    bool urbanSelected_;
     //@}
 };
 

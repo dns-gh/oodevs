@@ -3477,6 +3477,18 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
         <source>Population Value</source>
         <translation>Densité de population</translation>
     </message>
+    <message>
+        <source>Urban Height Ratio</source>
+        <translation>Rapport de hauteurs de blocs urbains</translation>
+    </message>
+    <message>
+        <source>Urban Occupation Value</source>
+        <translation>Occupation du bloc urbain</translation>
+    </message>
+    <message>
+        <source>Cannot be selected.</source>
+        <translation>Non applicable</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Sensors_Environments_GUI</name>

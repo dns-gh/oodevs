@@ -82,6 +82,9 @@ ADN_Sensors_DetectionAlgorithmPrevision::ADN_Sensors_DetectionAlgorithmPrevision
     , populationDensityFactor_( 1. )
     , populationModifier_     ( 1. )
     , population_             ( 0. )
+    , urbanHeightRatio_       ( 1. )
+    , urbanOccupation_        ( 1. )
+    , urbanSelected_          ( false )
 {
     {
         QGrid* group = new QGrid ( 2,this );
@@ -121,6 +124,20 @@ ADN_Sensors_DetectionAlgorithmPrevision::ADN_Sensors_DetectionAlgorithmPrevision
         connect( populationValue_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnPopulationChanged( const QString& ) ) );
         connect( populationValue_, SIGNAL( returnPressed() ), this, SLOT( UpdateValue() ) );
         connect( populationValue_, SIGNAL( lostFocus() ), this, SLOT( UpdateValue() ) );
+        new QLabel( tr( "Urban Height Ratio" ), group );
+        urbanHeightRatioValue_ = new QLineEdit( group, tr( "Urban Height Ratio" ) );
+        urbanHeightRatioValue_->setText( "1" );
+        urbanHeightRatioValue_->setValidator( new QDoubleValidator( 0., 1., 0, urbanHeightRatioValue_ ) );
+        connect( urbanHeightRatioValue_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnUrbanHeightRatioChanged( const QString& ) ) );
+        connect( urbanHeightRatioValue_, SIGNAL( returnPressed() ), this, SLOT( UpdateValue() ) );
+        connect( urbanHeightRatioValue_, SIGNAL( lostFocus() ), this, SLOT( UpdateValue() ) );
+        new QLabel( tr( "Urban Occupation Value" ), group );
+        urbanOccupationValue_ = new QLineEdit( group, tr( "Urban Occupation Value" ) );
+        urbanOccupationValue_->setText( "1" );
+        urbanOccupationValue_->setValidator( new QDoubleValidator( 0., 1., 0, urbanOccupationValue_ ) );
+        connect( urbanOccupationValue_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnUrbanOccupationChanged( const QString& ) ) );
+        connect( urbanOccupationValue_, SIGNAL( returnPressed() ), this, SLOT( UpdateValue() ) );
+        connect( urbanOccupationValue_, SIGNAL( lostFocus() ), this, SLOT( UpdateValue() ) );
     }
 
     GQ_Plot* pGraph = new GQ_Plot( this );
@@ -189,8 +206,11 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnTargetStanceChanged( std::string
 void ADN_Sensors_DetectionAlgorithmPrevision::Update()
 {
     double population = population_ ? std::min( 1., populationModifier_ * populationDensityFactor_ / population_ ) : 1;
+    double environmentFactor = urbanSelected_ ? 1 + urbanOccupation_ * ( environmentFactor_ * urbanHeightRatio_ - 1 ) : environmentFactor_;
+    if( environmentFactor > 1 )
+        environmentFactor = 1;
     double value = perceiverPostureFactor_ * targetPostureFactor_ * sizeFactor_ * weatherFactor_ *
-                   illuminationFactor_* environmentFactor_ * population;
+                   illuminationFactor_* environmentFactor * population;
 
     pBaseGraphData_->ChangePoint( 0, std::make_pair( 0., 3. ) );
     pBaseGraphData_->ChangePoint( 1, std::make_pair( identification_, 3. ) );
@@ -244,6 +264,8 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnSelectSensor( void* data )
         environment_->clear();
         urbanMaterial_->clear();
         populationValue_->setText( "0" );
+        urbanHeightRatioValue_->setText( "1" );
+        urbanOccupationValue_->setText( "1" );
     }
 }
 
@@ -287,7 +309,8 @@ void ADN_Sensors_DetectionAlgorithmPrevision::IlluminationChanged( std::string i
 void ADN_Sensors_DetectionAlgorithmPrevision::EnvironmentChanged( ADN_Sensors_Data::ModificatorEnvironmentInfos* env, double factor )
 {
     environment_->setText( env->GetItemName().c_str() );
-    urbanMaterial_->setText( "Can not be selected." );
+    urbanMaterial_->setText( tr( "Cannot be selected." ) );
+    urbanSelected_ = false;
     environmentFactor_ = factor;
     Update();
 }
@@ -299,7 +322,8 @@ void ADN_Sensors_DetectionAlgorithmPrevision::EnvironmentChanged( ADN_Sensors_Da
 void ADN_Sensors_DetectionAlgorithmPrevision::UrbanBlockChanged( std::string material, double factor )
 {
     urbanMaterial_->setText( material.c_str() );
-    environment_->setText( "Can not be selected." );
+    environment_->setText( tr( "Cannot be selected." ) );
+    urbanSelected_ = true;
     environmentFactor_ = factor;
     Update();
 }
@@ -383,18 +407,45 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationModifierChanged( const
 // -----------------------------------------------------------------------------
 void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationChanged( const QString& value )
 {
+    UpdatePreview( population_, populationValue_, 0., "0", value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_DetectionAlgorithmPrevision::OnUrbanHeightRatioChanged
+// Created: LDC 2010-08-16
+// -----------------------------------------------------------------------------
+void ADN_Sensors_DetectionAlgorithmPrevision::OnUrbanHeightRatioChanged( const QString& value )
+{
+    UpdatePreview( urbanHeightRatio_, urbanHeightRatioValue_, 1., "1", value );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_DetectionAlgorithmPrevision::OnUrbanOccupationChanged
+// Created: LDC 2010-08-16
+// -----------------------------------------------------------------------------
+void ADN_Sensors_DetectionAlgorithmPrevision::OnUrbanOccupationChanged( const QString& value )
+{
+    UpdatePreview( urbanOccupation_, urbanOccupationValue_, 1., "1", value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_DetectionAlgorithmPrevision::UpdatePreview
+// Created: LDC 2010-08-16
+// -----------------------------------------------------------------------------
+void ADN_Sensors_DetectionAlgorithmPrevision::UpdatePreview( double& parameter, QLineEdit* widget, double defaultValue, const QString& defaultString, const QString& value )
+{
     if( !value.isEmpty() )
        try
        {
-           population_ = boost::lexical_cast< double >( value.ascii() );
+           parameter = boost::lexical_cast< double >( value.ascii() );
        }
        catch( boost::bad_lexical_cast* /*e*/ )
        {
-           populationValue_->setText( "0" );
-           population_ = 0;
+           widget->setText( defaultString );
+           parameter = defaultValue;
        }
     else
-        population_ = 0;
+        parameter = defaultValue;
     Update();
 }
 
@@ -405,4 +456,6 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationChanged( const QString
 void ADN_Sensors_DetectionAlgorithmPrevision::UpdateValue()
 {
     populationValue_->setText( boost::lexical_cast< std::string >( population_ ).c_str() );
+    urbanHeightRatioValue_->setText( boost::lexical_cast< std::string >( urbanHeightRatio_ ).c_str() );
+    urbanOccupationValue_->setText( boost::lexical_cast< std::string >( urbanOccupation_ ).c_str() );
 }
