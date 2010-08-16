@@ -12,7 +12,7 @@
         <Repertoire>directia5/models/libs/base</Repertoire>
         <Repertoire>directia5/models/libs/core</Repertoire>
         <Repertoire>directia5/models/net.masagroup.sword</Repertoire>
-        <Repertoire>directia5/models/net.masagroup.testSword</Repertoire>
+        <Repertoire>directia5/models/net.masagroup.sword.test</Repertoire>
         <Repertoire>directia5/models/net.masagroup.sword.france</Repertoire>
         <Repertoire>directia5/models/net.masagroup.sword.worldwide</Repertoire>
       </RepertoiresBM>
