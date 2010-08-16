@@ -17,21 +17,23 @@
 //  @brief  ADN_ActiveProtections_WeaponsTable
 // Created: FDS 2010-02-24
 // =============================================================================
-class ADN_ActiveProtections_WeaponsTable
-: public ADN_Table2
+class ADN_ActiveProtections_WeaponsTable : public ADN_Table2
 {
     Q_OBJECT
 
 public:
+    //! @name Constructors/Destructor
+    //@{
     explicit ADN_ActiveProtections_WeaponsTable( const std::string& strName, QWidget* pParent = 0 );
     virtual ~ADN_ActiveProtections_WeaponsTable();
-
-public slots:
-    void OnModified();
+    //@}
 
 private:
+    //! @name Operations
+    //@{
     virtual void OnContextMenu( int nRow, int nCol, const QPoint& pt );
     virtual bool Contains( ADN_Equipement_Data::CategoryInfo& category );
+    //@}
 };
 
 #endif // __ADN_ActiveProtections_WeaponsTable_h_

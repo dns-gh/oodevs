@@ -18,7 +18,6 @@
 #include "ADN_Equipement_Data.h"
 #include "ADN_Weapons_Data.h"
 
-
 // =============================================================================
 // @class  ADN_ActiveProtections_Data
 //  @brief  ADN_ActiveProtections_Data
@@ -38,7 +37,7 @@ public:
         MT_COPYNOTALLOWED( ActiveProtectionsInfosWeapons );
 
     public:
-        ActiveProtectionsInfosWeapons();
+                 ActiveProtectionsInfosWeapons();
         virtual ~ActiveProtectionsInfosWeapons() {}
         std::string GetItemName();
 
@@ -51,7 +50,7 @@ public:
         ADN_Type_Double coefficient_;
     };
 
-    typedef ADN_Type_Vector_ABC<ActiveProtectionsInfosWeapons>  T_ActiveProtectionsInfosWeaponsVector;
+    typedef ADN_Type_Vector_ABC< ActiveProtectionsInfosWeapons > T_ActiveProtectionsInfosWeaponsVector;
     typedef T_ActiveProtectionsInfosWeaponsVector::iterator     IT_ActiveProtectionsInfosWeaponsVector;
 
 
@@ -64,7 +63,7 @@ public:
         MT_COPYNOTALLOWED( ActiveProtectionsInfos );
 
     public:
-        ActiveProtectionsInfos();
+                 ActiveProtectionsInfos();
         virtual ~ActiveProtectionsInfos() {}
         std::string GetItemName();
 
@@ -75,16 +74,16 @@ public:
         T_ActiveProtectionsInfosWeaponsVector& GetActiveProtectionsInfosWeapons();
 
     public:
-        ADN_Type_String                       strName_; // To use with ADN_Tools::NameCmp
-        ADN_Type_Double                       coefficient_;
-        ADN_Type_Bool                         hardKill_;
-        ADN_Type_Double                       usage_;
+        ADN_Type_String strName_; // To use with ADN_Tools::NameCmp
+        ADN_Type_Double coefficient_;
+        ADN_Type_Bool hardKill_;
+        ADN_Type_Double usage_;
         T_ActiveProtectionsInfosWeaponsVector weapons_;
         ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::AmmoCategoryInfo> ptrAmmunition_;
     };
 
-    typedef ADN_Type_Vector_ABC<ActiveProtectionsInfos>  T_ActiveProtectionsInfosVector;
-    typedef T_ActiveProtectionsInfosVector::iterator     IT_ActiveProtectionsInfosVector;
+    typedef ADN_Type_Vector_ABC< ActiveProtectionsInfos > T_ActiveProtectionsInfosVector;
+    typedef T_ActiveProtectionsInfosVector::iterator   IT_ActiveProtectionsInfosVector;
 
 
     //! @name Constructors/Destructor

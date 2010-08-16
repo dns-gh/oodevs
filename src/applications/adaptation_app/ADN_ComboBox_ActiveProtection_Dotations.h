@@ -16,14 +16,14 @@
 // Active Protection amunition combobox
 // Created: FDS 2010-02-24
 //*****************************************************************************
-class ADN_ComboBox_ActiveProtection_Dotations
-:   public ADN_ComboBox
+class ADN_ComboBox_ActiveProtection_Dotations : public ADN_ComboBox
 {
 public:
-    explicit ADN_ComboBox_ActiveProtection_Dotations(QWidget * parent = 0, const char * name = 0);
+    //! @name Constructors/Destructor
+    //@{
+    explicit ADN_ComboBox_ActiveProtection_Dotations( QWidget * parent = 0, const char * name = 0);
     virtual ~ADN_ComboBox_ActiveProtection_Dotations();
-
-private:
+    //@}
 };
 
 

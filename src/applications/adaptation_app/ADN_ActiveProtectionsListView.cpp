@@ -23,7 +23,7 @@ typedef ADN_ActiveProtections_Data::ActiveProtectionsInfos ActiveProtectionsInfo
 // Created: FDS 2010-02-25
 // -----------------------------------------------------------------------------
 ADN_ActiveProtectionsListView::ADN_ActiveProtectionsListView( QWidget* pParent, const char* szName, WFlags f )
-: ADN_ListView( pParent, szName, f )
+    : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
     addColumn( tr( "active Protection" ) );
@@ -31,7 +31,6 @@ ADN_ActiveProtectionsListView::ADN_ActiveProtectionsListView( QWidget* pParent, 
 
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<ActiveProtectionsInfos>( *this );
-
     this->SetDeletionEnabled( true );
 }
 
@@ -55,7 +54,6 @@ void ADN_ActiveProtectionsListView::ConnectItem( bool bConnect )
 
     ActiveProtectionsInfos* pInfos = (ActiveProtectionsInfos*)pCurData_;
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_ActiveProtections_GUI::eNbrActiveProtectionsGuiElements );
-
     vItemConnectors_[ADN_ActiveProtections_GUI::eActiveProtectionName]->Connect( &pInfos->strName_, bConnect );
     vItemConnectors_[ADN_ActiveProtections_GUI::eActiveProtectionCoeffiscient]->Connect( &pInfos->coefficient_, bConnect );
     vItemConnectors_[ADN_ActiveProtections_GUI::eActiveProtectionHardKill]->Connect( &pInfos->hardKill_, bConnect );
