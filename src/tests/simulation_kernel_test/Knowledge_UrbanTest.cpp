@@ -10,6 +10,9 @@
 #include "simulation_kernel_test_pch.h"
 #include "MockArmy.h"
 #include "simulation_kernel/Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
+#include "simulation_kernel/Entities/Agents/Roles/Urban/PHY_RolePion_UrbanLocation.h"
+#include "simulation_kernel/Entities/Objects/MIL_ObjectLoader.h"
+#include "simulation_kernel/Entities/Objects/MIL_Object_ABC.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_Urban.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_UrbanPerception.h"
 #include "Fixture.h"
@@ -41,23 +44,35 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Knowledge_UrbanTest_Update )
 {
+    MIL_ObjectLoader loader;
+    {
+        xml::xistringstream xis( "<objects>"
+            "    <object type='urban block'/>"
+            "</objects>" );
+        BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
+    }
     MockArmy army;
     MIL_EffectManager effectManager;
     FixturePion pion( effectManager );
     urban::CoordinateConverter_ABC* converter = new urban::CoordinateConverter();
     flux >> xml::start( "urbanObject" );
-    const urban::TerrainObject_ABC* object = new urban::UrbanObject( flux, 0, *converter );
+    const urban::TerrainObject_ABC* pBlock = new urban::UrbanObject( flux, 0, *converter );
     flux >> xml::end;
+    MIL_Object_ABC* pObject = loader.CreateUrbanObject( *pBlock );
+    PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( *pion.pPion_ );
+    urbanRole->NotifyMovingInsideObject( *pObject);
+    pion.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
     {
         MockMIL_Time_ABC time;
         MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
-        DEC_Knowledge_Urban kn( army, *object );
-        DEC_Knowledge_UrbanPerception perception( *pion.pPion_, *object );
+        DEC_Knowledge_Urban kn( army, *pBlock );
+        DEC_Knowledge_UrbanPerception perception( *pion.pPion_, *pBlock );
         perception.SetPerceptionLevel( PHY_PerceptionLevel::detected_ );
 
         kn.Update( perception );
         BOOST_CHECK( kn.GetCurrentRecceProgress() > 0. );
     }
-    delete object;
+    delete pBlock;
+    delete pObject;
     delete converter;
 }
