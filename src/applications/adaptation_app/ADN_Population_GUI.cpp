@@ -6,26 +6,9 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-06 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Population_GUI.cpp $
-// $Author: Ape $
-// $Modtime: 7/06/05 10:08 $
-// $Revision: 18 $
-// $Workfile: ADN_Population_GUI.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_Population_GUI.h"
-
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qgroupbox.h>
-#include <qdialog.h>
-#include <qvbox.h>
-#include <qgrid.h>
-
 #include "ADN_MainWindow.h"
 #include "ADN_App.h"
 #include "ADN_GuiBuilder.h"
@@ -42,15 +25,22 @@
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_GroupBox.h"
 #include "ADN_Tr.h"
+#include <qlabel.h>
+#include <qlayout.h>
+#include <qgroupbox.h>
+#include <qdialog.h>
+#include <qvbox.h>
+#include <qgrid.h>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_GUI constructor
 // Created: APE 2004-12-10
 // -----------------------------------------------------------------------------
 ADN_Population_GUI::ADN_Population_GUI( ADN_Population_Data& data )
-: ADN_GUI_ABC( "ADN_Population_GUI" )
-, data_      ( data )
+    : ADN_GUI_ABC( "ADN_Population_GUI" )
+    , data_( data )
 {
+    // NOTHING
 }
 
 
@@ -60,8 +50,8 @@ ADN_Population_GUI::ADN_Population_GUI( ADN_Population_Data& data )
 // -----------------------------------------------------------------------------
 ADN_Population_GUI::~ADN_Population_GUI()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_GUI::Build
@@ -84,7 +74,7 @@ void ADN_Population_GUI::Build()
     QVBox* pMainBox = new QVBox( pMainWidget_ );
 
     // Global parameters
-    QGroupBox* pGlobalGroup          = new QGroupBox( 1, Qt::Horizontal, tr( "Global parameters" ), pMainBox );
+    QGroupBox* pGlobalGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Global parameters" ), pMainBox );
     QGroupBox* pReloadingEffectGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Population effects on units firing capability" ), pGlobalGroup );
 
     // Density
@@ -167,11 +157,11 @@ void ADN_Population_GUI::Build()
 
     builder.AddStretcher( pGroup, Qt::Vertical );
 
-    pPopulationList         ->SetItemConnectors( vInfosConnectors );
+    pPopulationList->SetItemConnectors( vInfosConnectors );
     pSpeedEffectAttitudeList->SetItemConnectors( vInfosConnectors );
-    pVolumeList             ->SetItemConnectors( vInfosConnectors );
-    pFireEffectAttitudeList ->SetItemConnectors( vInfosConnectors );
-    pProtectionList         ->SetItemConnectors( vInfosConnectors );
+    pVolumeList->SetItemConnectors( vInfosConnectors );
+    pFireEffectAttitudeList->SetItemConnectors( vInfosConnectors );
+    pProtectionList->SetItemConnectors( vInfosConnectors );
 
     // Layout
     QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_, 10, 10 );

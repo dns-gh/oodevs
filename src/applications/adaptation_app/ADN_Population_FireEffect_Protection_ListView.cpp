@@ -9,29 +9,48 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Population_FireEffect_Protection_ListView.h"
-
 #include "ADN_Population_Data.h"
 #include "ADN_Population_GUI.h"
 #include "ADN_Connector_ListView.h"
 
 typedef ADN_Population_Data::FireEffectProtectionInfos FireEffectProtectionInfos;
 
+class ADN_Protections : public ADN_Connector_ListView_ABC
+{
+    MT_COPYNOTALLOWED( ADN_Protections )
+
+public:
+    ADN_Protections( ADN_Population_FireEffect_Protection_ListView& list )
+        : ADN_Connector_ListView_ABC( list, "ADN_Protections" )
+    {
+        // NOTHING
+    }
+    virtual ~ADN_Protections()
+    {
+        // NOTHING
+    }
+
+    ADN_ListViewItem* CreateItem( void* pObj )
+    {
+        ADN_ListViewItem* pItem = new ADN_ListViewItem( &list_, pObj, 1 );
+        pItem->Connect( 0, &static_cast< FireEffectProtectionInfos* >(pObj)->ptrProtection_.GetData()->strName_ );
+        return pItem;
+    }
+};
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_FireEffect_Protection_ListView constructor
 // Created: APE 2005-01-06
 // -----------------------------------------------------------------------------
 ADN_Population_FireEffect_Protection_ListView::ADN_Population_FireEffect_Protection_ListView( QWidget* pParent, const char* szName, WFlags f )
-: ADN_ListView( pParent, szName, f )
+    : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
     addColumn( tr( "Protections" ) );
     setSortColumn( -1 );
     setResizeMode( QListView::AllColumns );
-
     // Connector creation
-    pConnector_ = new ADN_Connector_ListView< FireEffectProtectionInfos >( *this );
-
+    pConnector_ = new ADN_Protections( *this );
     this->SetDeletionEnabled( false );
 }
 
@@ -45,7 +64,6 @@ ADN_Population_FireEffect_Protection_ListView::~ADN_Population_FireEffect_Protec
     delete pConnector_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_FireEffect_Protection_ListView::ConnectItem
 // Created: APE 2005-01-06
@@ -56,8 +74,7 @@ void ADN_Population_FireEffect_Protection_ListView::ConnectItem( bool bConnect )
         return;
     FireEffectProtectionInfos* pInfos = (FireEffectProtectionInfos*)pCurData_;
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Population_GUI::eNbrGuiElements );
-    vItemConnectors_[ADN_Population_GUI::eFireEffectDestruction]             ->Connect( &pInfos->rDestruction_             , bConnect );
-    vItemConnectors_[ADN_Population_GUI::eFireEffectFixableWithEvacuation]   ->Connect( &pInfos->rFixableWithEvacuation_   , bConnect );
+    vItemConnectors_[ADN_Population_GUI::eFireEffectDestruction]->Connect( &pInfos->rDestruction_, bConnect );
+    vItemConnectors_[ADN_Population_GUI::eFireEffectFixableWithEvacuation]->Connect( &pInfos->rFixableWithEvacuation_, bConnect );
     vItemConnectors_[ADN_Population_GUI::eFireEffectFixableWithoutEvacuation]->Connect( &pInfos->rFixableWithoutEvacuation_, bConnect );
 }
-

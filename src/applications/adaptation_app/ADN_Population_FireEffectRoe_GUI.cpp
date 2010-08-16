@@ -8,41 +8,42 @@
 // $Workfile: ADN_Population_FireEffectRoe_GUI.cpp $
 //
 //*****************************************************************************
+
 #include "adaptation_app_pch.h"
 #include "ADN_Population_FireEffectRoe_GUI.h"
-
 #include "ADN_App.h"
 #include "ADN_Tools.h"
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_Population_Data.h"
 #include "ENT/ENT_Tr.h"
 
-typedef ADN_Population_Data::FireEffectRoeInfos         FireEffectRoeInfos;
+typedef ADN_Population_Data::FireEffectRoeInfos FireEffectRoeInfos;
 
 //-----------------------------------------------------------------------------
 // Internal Table connector to be connected with T_FireEffectRoeInfos_Vector
 //-----------------------------------------------------------------------------
-class ADN_CT_Population_FireEffectRoe
-:public ADN_Connector_Table_ABC
+class ADN_CT_Population_FireEffectRoe : public ADN_Connector_Table_ABC
 {
 public:
 
     ADN_CT_Population_FireEffectRoe(ADN_Population_FireEffectRoe_GUI& tab)
-    : ADN_Connector_Table_ABC(tab,false)
-    {}
+        : ADN_Connector_Table_ABC(tab,false)
+    {
+        // NOTHING
+    }
 
     void AddSubItems( int i, void* obj )
     {
         assert( obj );
 
         E_PopulationRoe nRoe = static_cast<FireEffectRoeInfos*>(obj)->nRoe_;
-        uint nNbrHiddenRoe = (uint)ePopulationRoe_EmploiForceInterdit + 1;
+        unsigned int nNbrHiddenRoe = static_cast< unsigned int >( ePopulationRoe_EmploiForceInterdit ) + 1;
 
-        if( (uint)nRoe < nNbrHiddenRoe )
+        if( static_cast< unsigned int >( nRoe ) < nNbrHiddenRoe )
             return;
-        ADN_TableItem_String* pItemString  = new ADN_TableItem_String( &tab_, obj );
+        ADN_TableItem_String* pItemString = new ADN_TableItem_String( &tab_, obj );
         ADN_TableItem_Double* pItemSurface = new ADN_TableItem_Double( &tab_, obj );
-        ADN_TableItem_Double* pItemPH      = new ADN_TableItem_Double( &tab_, obj );
+        ADN_TableItem_Double* pItemPH = new ADN_TableItem_Double( &tab_, obj );
 
         // add a new row & set new values
         tab_.setItem( i - nNbrHiddenRoe, 0, pItemString );
@@ -65,13 +66,12 @@ private:
     ADN_CT_Population_FireEffectRoe& operator=( const ADN_CT_Population_FireEffectRoe& );
 };
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Population_FireEffectRoe_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
 ADN_Population_FireEffectRoe_GUI::ADN_Population_FireEffectRoe_GUI(QWidget * parent)
-:   ADN_Table2(parent, "ADN_Population_FireEffectRoe_GUI" )
+    : ADN_Table2(parent, "ADN_Population_FireEffectRoe_GUI" )
 {
     // peut etre selectionne & trie
     setSorting(true);

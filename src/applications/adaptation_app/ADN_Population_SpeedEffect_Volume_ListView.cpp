@@ -9,28 +9,47 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Population_SpeedEffect_Volume_ListView.h"
-
 #include "ADN_Population_Data.h"
 #include "ADN_Population_GUI.h"
 #include "ADN_Connector_ListView.h"
 
 typedef ADN_Population_Data::SpeedEffectVolumeInfos SpeedEffectVolumeInfos;
 
+class ADN_Sizes : public ADN_Connector_ListView_ABC
+{
+    MT_COPYNOTALLOWED( ADN_Sizes )
+
+public:
+    ADN_Sizes( ADN_Population_SpeedEffect_Volume_ListView& list )
+        : ADN_Connector_ListView_ABC( list, "ADN_Sizes" )
+    {
+        // NOTHING
+    }
+    virtual ~ADN_Sizes()
+    {
+        // NOTHING
+    }
+
+    ADN_ListViewItem* CreateItem( void* pObj )
+    {
+        ADN_ListViewItem* pItem = new ADN_ListViewItem( &list_, pObj, 1 );
+        pItem->Connect( 0, static_cast< SpeedEffectVolumeInfos* >(pObj)->ptrVolume_.GetData() );
+        return pItem;
+    }
+};
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_SpeedEffect_Volume_ListView constructor
 // Created: APE 2005-01-06
 // -----------------------------------------------------------------------------
 ADN_Population_SpeedEffect_Volume_ListView::ADN_Population_SpeedEffect_Volume_ListView( QWidget* pParent, const char* szName, WFlags f )
-: ADN_ListView( pParent, szName, f )
+    : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
     addColumn( tr( "Volumes" ) );
     setResizeMode( QListView::AllColumns );
-
     // Connector creation
-    pConnector_ = new ADN_Connector_ListView< SpeedEffectVolumeInfos >( *this );
-
+    pConnector_ = new ADN_Sizes( *this );
     this->SetDeletionEnabled( false );
 }
 
@@ -43,7 +62,6 @@ ADN_Population_SpeedEffect_Volume_ListView::~ADN_Population_SpeedEffect_Volume_L
 {
     delete pConnector_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_SpeedEffect_Volume_ListView::ConnectItem
@@ -58,4 +76,3 @@ void ADN_Population_SpeedEffect_Volume_ListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Population_GUI::eSpeedEffectDensity] ->Connect( &pInfos->rDensity_ , bConnect );
     vItemConnectors_[ADN_Population_GUI::eSpeedEffectMaxSpeed]->Connect( &pInfos->rMaxSpeed_, bConnect );
 }
-

@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-06 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Population_GUI.h $
-// $Author: Ape $
-// $Modtime: 4/04/05 11:32 $
-// $Revision: 7 $
-// $Workfile: ADN_Population_GUI.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Population_GUI_h_
 #define __ADN_Population_GUI_h_
@@ -23,7 +14,6 @@
 
 class ADN_Population_Data;
 class ADN_Table;
-
 
 // =============================================================================
 /** @class  ADN_Population_GUI
@@ -63,7 +53,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_Population_GUI( ADN_Population_Data& data );
+             ADN_Population_GUI( ADN_Population_Data& data );
     virtual ~ADN_Population_GUI();
     //@}
 

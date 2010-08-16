@@ -9,32 +9,27 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Population_SpeedEffect_Attitude_ListView.h"
-
 #include "ADN_Population_Data.h"
 #include "ADN_Population_GUI.h"
 #include "ADN_Connector_ListView.h"
 
 typedef ADN_Population_Data::SpeedEffectInfos SpeedEffectInfos;
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_SpeedEffect_Attitude_ListView constructor
 // Created: APE 2005-01-06
 // -----------------------------------------------------------------------------
 ADN_Population_SpeedEffect_Attitude_ListView::ADN_Population_SpeedEffect_Attitude_ListView( QWidget* pParent, const char* szName, WFlags f )
-: ADN_ListView( pParent, szName, f )
+    : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
     addColumn( tr( "Attitudes" ) );
     setSortColumn( -1 );
     setResizeMode( QListView::AllColumns );
-
     // Connector creation
     pConnector_ = new ADN_Connector_ListView< SpeedEffectInfos >( *this );
-
     this->SetDeletionEnabled( false );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_SpeedEffect_Attitude_ListView destructor
@@ -44,7 +39,6 @@ ADN_Population_SpeedEffect_Attitude_ListView::~ADN_Population_SpeedEffect_Attitu
 {
     delete pConnector_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_SpeedEffect_Attitude_ListView::ConnectItem
@@ -58,4 +52,3 @@ void ADN_Population_SpeedEffect_Attitude_ListView::ConnectItem( bool bConnect )
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Population_GUI::eNbrGuiElements );
     vItemConnectors_[ADN_Population_GUI::eSpeedEffectVolume]->Connect( &pInfos->vVolumeInfos_, bConnect );
 }
-
