@@ -885,6 +885,9 @@
     <mission dia-behavior="net.masagroup.testSword.military.platoon.tasks.Reconnoiter" dia-type="T_Mission_Pion_ReconnoiterBU" id="2044" name="TEST ReconnoiterUrbanBlock">
       <parameter dia-name="objective" name="objectif" optional="false" type="UrbanBlockBM"/>
     </mission>
+    <mission dia-behavior="net.masagroup.testSword.military.platoon.tasks.Reconnoiter" dia-type="T_Mission_Pion_ReconnoiterArea" id="2083" name="TEST ReconnoiterArea">
+      <parameter dia-name="objective" name="objectif" optional="false" type="AreaBM"/>
+    </mission>
     <mission dia-behavior="net.masagroup.testSword.military.platoon.tasks.RemoveObstacle" dia-type="net.masagroup.testSword.military.platoon.tasks.RemoveObstacle" id="2045" name="RemoveObstacle">
       <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>

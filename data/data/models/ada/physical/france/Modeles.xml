@@ -65,6 +65,7 @@
         <mission name="ObserveAgent"/>
         <mission name="TEST ReconnoiterPoint"/>
         <mission name="TEST ReconnoiterUrbanBlock"/>
+        <mission name="TEST ReconnoiterArea"/>
         <mission name="Seal Off"/>
         <mission name="SeekAndDestroy"/>
         <mission name="SelfProtect"/>
