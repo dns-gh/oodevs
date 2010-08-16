@@ -58,6 +58,7 @@ ADN_EquipementSelector.cpp \
 ADN_Equipement_AmmoListView.cpp \
 ADN_Equipement_AttritionGraph.cpp \
 ADN_Equipement_AttritionTable.cpp \
+ADN_Equipement_UrbanAttritionTable.cpp \
 ADN_Equipement_Data.cpp \
 ADN_Equipement_GUI.cpp \
 ADN_Equipement_Postures_GUI.cpp \

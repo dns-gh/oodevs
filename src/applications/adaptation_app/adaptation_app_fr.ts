@@ -1175,7 +1175,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Equipment</source>
-        <translation>Composante</translation>
+        <translation>Equipement</translation>
     </message>
     <message>
         <source>Weapon systems</source>
@@ -1751,6 +1751,17 @@ Arrêt moteur allumé</translation>
     <message>
         <source>PH factor</source>
         <translation>Facteur de PH</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Equipement_UrbanAttritionTable</name>
+    <message>
+        <source>Material</source>
+        <translation>Matériau</translation>
+    </message>
+    <message>
+        <source>Modifiers</source>
+        <translation>Modificateurs</translation>
     </message>
 </context>
 <context>
