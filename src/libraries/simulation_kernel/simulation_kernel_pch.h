@@ -51,7 +51,6 @@
 #include "simulation_terrain/TER_Object_ABC.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_terrain/TER_ObjectManager.h"
-#include "simulation_terrain/TER_Polygon.h"
 
 #pragma warning( push )
 #pragma warning( disable : 4005 ) // $$$$ SBO 2008-05-13: "macro redefinition"
