@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_PathSection_ABC.h"
 #include "DEC_Path_ABC.h"
-#include <pathfind/TerrainPathfinder.h>
 #include <ctime>
 
 // -----------------------------------------------------------------------------

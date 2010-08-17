@@ -14,6 +14,7 @@
 
 #include "tools/thread/Handler_ABC.h"
 #include <pathfind/TerrainPathPoint.h>
+#include <pathfind/TerrainPathfinder.h>
 #include <pathfind/AStarManagementCallback_ABC.h>
 
 class DEC_Path_ABC;

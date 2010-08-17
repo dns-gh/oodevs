@@ -46,7 +46,6 @@
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h" // $$$$ _RC_ SLI 2010-08-11: waiting for a better solution
 #include "simulation_terrain/TER_Localisation.h"
 #include "simulation_terrain/TER_World.h"
-#include "simulation_terrain/TER_PathFindRequest_ABC.h"
 #include "simulation_terrain/TER_Agent_ABC.h"
 #include "simulation_terrain/TER_Object_ABC.h"
 #include "simulation_terrain/TER_AgentManager.h"
