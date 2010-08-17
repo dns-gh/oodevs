@@ -30,10 +30,10 @@ using namespace dispatcher;
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
 RightsPlugin::RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Config& config, tools::MessageDispatcher_ABC& clientCommands, Plugin_ABC& container, LinkResolver_ABC& base, dispatcher::CompositeRegistrable& registrables, int maxConnections )
-    : profiles_( new ProfileManager( model, clients, config ) )
-    , container_( container )
-    , base_( base )
-    , maxConnections_( maxConnections )
+    : profiles_          ( new ProfileManager( model, clients, config ) )
+    , container_         ( container )
+    , base_              ( base )
+    , maxConnections_    ( maxConnections )
     , currentConnections_( 0 )
 {
     clientCommands.RegisterMessage( *this, &RightsPlugin::OnReceive );

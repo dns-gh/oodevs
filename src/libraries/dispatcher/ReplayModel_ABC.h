@@ -12,7 +12,6 @@
 
 namespace dispatcher
 {
-
 // =============================================================================
 /** @class  ReplayModel_ABC
     @brief  Replay model definition

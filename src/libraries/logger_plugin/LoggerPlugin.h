@@ -50,15 +50,17 @@ class LoggerPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LoggerPlugin( const dispatcher::Model& model, const kernel::StaticModel& staticModel, const tools::SessionConfig& config, const dispatcher::Services& services );
+             LoggerPlugin( const dispatcher::Model& model, const kernel::StaticModel& staticModel,
+                           const tools::SessionConfig& config, const dispatcher::Services& services );
     virtual ~LoggerPlugin();
     //@}
 
     //! @name Operations
     //@{
+    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
+
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client );
-    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
     //@}
 
 private:

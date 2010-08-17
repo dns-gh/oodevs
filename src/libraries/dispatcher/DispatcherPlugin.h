@@ -20,9 +20,9 @@ namespace tools
 
 namespace dispatcher
 {
-    class LinkResolver_ABC;
     class Model;
     class SimulationPublisher_ABC;
+    class LinkResolver_ABC;
 
 // =============================================================================
 /** @class  DispatcherPlugin
@@ -42,9 +42,11 @@ public:
     //! @name Operations
     //@{
     virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
+
     virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& profile );
-    virtual void NotifyClientLeft         ( ClientPublisher_ABC& client );
-    virtual void Register                 ( dispatcher::Services& );
+    virtual void NotifyClientLeft( ClientPublisher_ABC& client );
+
+    virtual void Register( dispatcher::Services& services );
     //@}
 
 private:

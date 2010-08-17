@@ -15,7 +15,6 @@
 
 namespace dispatcher
 {
-
 // =============================================================================
 /** @class  CompositeRegistrable
     @brief  CompositeRegistrable
@@ -63,8 +62,11 @@ class RegistrableProxy : public Registrable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit RegistrableProxy( Registrable_ABC& forward ) : forward_( forward ) {}
-    virtual ~RegistrableProxy() {};
+    explicit RegistrableProxy( Registrable_ABC& forward )
+        : forward_( forward )
+    {}
+    virtual ~RegistrableProxy()
+    {}
     //@}
 
     //! @name Operations

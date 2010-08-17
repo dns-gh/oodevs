@@ -14,11 +14,11 @@
 
 namespace boost
 {
-    namespace program_options
-    {
-        class options_description;
-        class variables_map;
-    }
+namespace program_options
+{
+    class options_description;
+    class variables_map;
+}
 }
 
 namespace tools

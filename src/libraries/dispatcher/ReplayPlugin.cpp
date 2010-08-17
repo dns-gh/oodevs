@@ -10,28 +10,24 @@
 #include "dispatcher_pch.h"
 #include "ReplayPlugin.h"
 #include "Loader.h"
-#include "protocol/ClientPublisher_ABC.h"
 #include "Model.h"
-#include "ReplayExtensionFactory.h"
-
-#include <MT/MT_Logger/MT_Logger_lib.h>
-#include "tools/MessageDispatcher_ABC.h"
 #include "Services.h"
-
-//#include "protocol/protocol.h"
+#include "ReplayExtensionFactory.h"
+#include "tools/MessageDispatcher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ReplaySenders.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/Simulation.h"
-
+#include <MT/MT_Logger/MT_Logger_lib.h>
 
 using namespace dispatcher;
-
 
 // -----------------------------------------------------------------------------
 // Name: ReplayPlugin constructor
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-ReplayPlugin::ReplayPlugin( Model& model, ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& clientCommands, Loader& loader, const ReplayModel_ABC& replayModel )
+ReplayPlugin::ReplayPlugin( Model& model, ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& clientCommands,
+                            Loader& loader, const ReplayModel_ABC& replayModel )
     : model_      ( model )
     , clients_    ( clients )
     , loader_     ( loader )

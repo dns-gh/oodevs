@@ -79,8 +79,8 @@ class ClientPublisher_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ClientPublisher_ABC() {};
-    virtual ~ClientPublisher_ABC() {};
+             ClientPublisher_ABC() {}
+    virtual ~ClientPublisher_ABC() {}
     //@}
 
     //! @name Operations

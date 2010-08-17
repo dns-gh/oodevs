@@ -19,7 +19,6 @@ namespace tools
 
 namespace dispatcher
 {
-
 // =============================================================================
 /** @class  StaticModel
     @brief  StaticModel

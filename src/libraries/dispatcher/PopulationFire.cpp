@@ -19,7 +19,7 @@ using namespace dispatcher;
 // Created: AGE 2007-04-18
 // -----------------------------------------------------------------------------
 PopulationFire::PopulationFire( Model& , const MsgsSimToClient::MsgStartPopulationFire& msg )
-    : SimpleEntity < >( msg.fire_oid() )
+    : SimpleEntity <>( msg.fire_oid() )
     , msg_( msg )
 {
     // NOTHING
@@ -74,4 +74,3 @@ void PopulationFire::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }
-

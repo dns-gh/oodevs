@@ -84,7 +84,6 @@ public:
     void AddExtensions( T& entity )
     {
         AddExtensions( entity, &entity );
-
     }
     template< typename T >
     void AddExtensions( T& entity, kernel::Entity_ABC* )
@@ -127,11 +126,11 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::StaticModel&          staticModel_;
-    std::auto_ptr< SimulationModel >    simulation_;
-    std::auto_ptr< CompositeFactory >   compositeFactory_;
-    std::auto_ptr< FolkModel >          folk_;
-    std::auto_ptr< MeteoModel >         meteoModel_;
+    const kernel::StaticModel&        staticModel_;
+    std::auto_ptr< SimulationModel >  simulation_;
+    std::auto_ptr< CompositeFactory > compositeFactory_;
+    std::auto_ptr< FolkModel >        folk_;
+    std::auto_ptr< MeteoModel >       meteoModel_;
     //@}
 
 public:

@@ -15,15 +15,11 @@
 #include "ClientsNetworker.h"
 #include "Config.h"
 #include "protocol/ClientPublisher_ABC.h"
-//#include "tools/AsnMessageDecoder.h"
-//#include "tools/AsnMessageEncoder.h"
 #include "protocol/Protocol.h"
 #include <MT/MT_Logger/MT_Logger_lib.h>
 
 using namespace tools;
 using namespace dispatcher;
-
-static const unsigned int magicCookie_ = 1;
 
 // -----------------------------------------------------------------------------
 // Name: SimulationNetworker constructor
@@ -31,9 +27,9 @@ static const unsigned int magicCookie_ = 1;
 // -----------------------------------------------------------------------------
 SimulationNetworker::SimulationNetworker( Model& model, ClientsNetworker& clients, MessageHandler_ABC& handler, const Config& config )
     : ClientNetworker( config.GetNetworkSimulationParameters(), true )
-    , model_         ( model )
-    , clients_       ( clients )
-    , handler_       ( handler )
+    , model_  ( model )
+    , clients_( clients )
+    , handler_( handler )
 {
     RegisterMessage( *this, &SimulationNetworker::OnReceiveMsgSimToClient );
 }

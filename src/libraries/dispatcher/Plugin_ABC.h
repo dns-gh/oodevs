@@ -37,6 +37,7 @@ public:
     //@{
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile ) = 0;
     virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client ) = 0;
+
     virtual void Register( dispatcher::Services& ) {}
     virtual void Update() {}
     //@}

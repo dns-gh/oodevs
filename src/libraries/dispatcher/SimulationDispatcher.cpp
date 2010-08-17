@@ -9,7 +9,6 @@
 
 #include "dispatcher_pch.h"
 #include "SimulationDispatcher.h"
-
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "Model.h"

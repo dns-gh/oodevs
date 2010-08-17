@@ -14,7 +14,6 @@ namespace plugins
 {
 namespace dis
 {
-
 // =============================================================================
 /** @class  Time_ABC
     @brief  Time_ABC

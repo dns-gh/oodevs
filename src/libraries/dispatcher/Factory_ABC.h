@@ -12,7 +12,6 @@
 
 namespace dispatcher
 {
-
 // =============================================================================
 /** @class  Factory_ABC
     @brief  Factory definition
@@ -24,8 +23,8 @@ class Factory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Factory_ABC() {};
-    virtual ~Factory_ABC() {};
+             Factory_ABC() {}
+    virtual ~Factory_ABC() {}
     //@}
 };
 

@@ -27,8 +27,8 @@ class CompositePlugin : public Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             CompositePlugin() {};
-    virtual ~CompositePlugin() {};
+             CompositePlugin() {}
+    virtual ~CompositePlugin() {}
     //@}
 
     //! @name Operations
@@ -98,10 +98,12 @@ private:
     CompositePlugin& operator=( const CompositePlugin& ); //!< Assignment operator
     //@}
 
+private:
     //! @name Types
     //@{
     typedef std::vector< boost::shared_ptr< Plugin_ABC > > T_Plugins;
     typedef T_Plugins::const_iterator                    CIT_Plugins;
+
     typedef std::vector< boost::shared_ptr< MessageHandler_ABC > > T_Handlers;
     typedef T_Handlers::const_iterator                           CIT_Handlers;
     //@}

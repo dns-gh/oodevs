@@ -17,7 +17,6 @@ namespace directia
 
 namespace dispatcher
 {
-
 // =============================================================================
 /** @class  Registrable_ABC
     @brief  Registrable interface

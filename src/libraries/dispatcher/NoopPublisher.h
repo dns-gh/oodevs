@@ -15,7 +15,6 @@
 
 namespace dispatcher
 {
-
 // =============================================================================
 /** @class  NoopClientPublisher
     @brief  NoopClientPublisher
@@ -27,18 +26,18 @@ class NoopClientPublisher : public ClientPublisher_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NoopClientPublisher() {};
-    virtual ~NoopClientPublisher() {};
+             NoopClientPublisher() {}
+    virtual ~NoopClientPublisher() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send( const MsgsSimToClient::MsgSimToClient&               ) {};
-    virtual void Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient&    ) {};
-    virtual void Send( const MsgsReplayToClient::MsgReplayToClient&            ) {};
-    virtual void Send( const MsgsAarToClient::MsgAarToClient& ) {};
-    virtual void Send( const MsgsMessengerToClient::MsgMessengerToClient& ) {};
-    virtual void Send( const MsgsDispatcherToClient::MsgDispatcherToClient& ) {};
+    virtual void Send( const MsgsSimToClient::MsgSimToClient& ) {}
+    virtual void Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& ) {}
+    virtual void Send( const MsgsReplayToClient::MsgReplayToClient& ) {}
+    virtual void Send( const MsgsAarToClient::MsgAarToClient& ) {}
+    virtual void Send( const MsgsMessengerToClient::MsgMessengerToClient& ) {}
+    virtual void Send( const MsgsDispatcherToClient::MsgDispatcherToClient& ) {}
     //@}
 
     //! @name Accesors
@@ -58,14 +57,14 @@ class NoopSimulationPublisher : public SimulationPublisher_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NoopSimulationPublisher() {};
-    virtual ~NoopSimulationPublisher() {};
+             NoopSimulationPublisher() {}
+    virtual ~NoopSimulationPublisher() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send( const MsgsClientToSim::MsgClientToSim& ) {};
-    virtual void Send( const MsgsDispatcherToSim::MsgDispatcherToSim& ) {};
+    virtual void Send( const MsgsClientToSim::MsgClientToSim& ) {}
+    virtual void Send( const MsgsDispatcherToSim::MsgDispatcherToSim& ) {}
     //@}
 };
 

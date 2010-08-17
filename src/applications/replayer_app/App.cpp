@@ -13,7 +13,6 @@
 #include "tools/WinArguments.h"
 #include "resource.h"
 #include "dispatcher/Config.h"
-#include "dispatcher/Loader.h"
 #include <boost/bind.hpp>
 
 using namespace dispatcher;
@@ -21,7 +20,7 @@ using namespace dispatcher;
 #define MY_WM_NOTIFYICON WM_USER + 1
 
 static const int NUM_ICON_FOR_ANIMATION = 2;
-static int    IconResourceArray[NUM_ICON_FOR_ANIMATION] = { IDI_ICON2, IDI_ICON1};
+static int IconResourceArray[NUM_ICON_FOR_ANIMATION] = { IDI_ICON2, IDI_ICON1};
 
 // -----------------------------------------------------------------------------
 // Name: App constructor

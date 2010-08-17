@@ -22,7 +22,6 @@ namespace MsgsClientToSim
 
 namespace dispatcher
 {
-
 // =============================================================================
 /** @class  SimulationPublisher_ABC
     @brief  SimulationPublisher_ABC
@@ -34,8 +33,8 @@ class SimulationPublisher_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SimulationPublisher_ABC() {};
-    virtual ~SimulationPublisher_ABC() {};
+             SimulationPublisher_ABC() {}
+    virtual ~SimulationPublisher_ABC() {}
     //@}
 
     //! @name Operations

@@ -17,11 +17,6 @@
 #include <fstream>
 #include <boost/shared_ptr.hpp>
 
-namespace tools
-{
-    class InputBinaryWrapper;
-}
-
 namespace dispatcher
 {
     class Config;

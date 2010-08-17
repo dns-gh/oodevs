@@ -11,14 +11,14 @@
 #include "AarPlugin.h"
 #include "MessageLoader.h"
 #include "LinkResolver_ABC.h"
+#include "Services.h"
 #include "3a/AarFacade.h"
 #include "3a/Task.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include "Services.h"
+#include "protocol/aarsenders.h"
 #include <boost/algorithm/string.hpp>
 #include <xeumeuleu/xml.hpp>
-#include "protocol/aarsenders.h"
 
 using namespace dispatcher;
 
@@ -27,7 +27,6 @@ namespace MsgsClientToAar
     class MsgClientToAar;
     class MsgPlotRequest;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AarPlugin constructor

@@ -55,16 +55,19 @@ class MessengerPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MessengerPlugin( dispatcher::ClientPublisher_ABC& client, tools::MessageDispatcher_ABC&, dispatcher::LinkResolver_ABC& links, const dispatcher::Config& config, dispatcher::CompositeRegistrable& registrables );
+             MessengerPlugin( dispatcher::ClientPublisher_ABC& client, tools::MessageDispatcher_ABC&, dispatcher::LinkResolver_ABC& links,
+                              const dispatcher::Config& config, dispatcher::CompositeRegistrable& registrables );
     virtual ~MessengerPlugin();
     //@}
 
     //! @name Network
     //@{
-    virtual void Receive                  ( const MsgsSimToClient::MsgSimToClient& message );
+    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
+
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
-    virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
-    virtual void Register                 ( dispatcher::Services& );
+    virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client );
+
+    virtual void Register( dispatcher::Services& services );
     //@}
 
 private:

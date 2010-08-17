@@ -10,11 +10,6 @@
 #ifndef __Loader_h_
 #define __Loader_h_
 
-namespace tools
-{
-    class InputBinaryWrapper;
-}
-
 namespace dispatcher
 {
     class Config;

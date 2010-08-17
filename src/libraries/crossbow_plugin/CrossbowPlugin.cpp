@@ -10,11 +10,10 @@
 #include "crossbow_plugin_pch.h"
 #include "CrossbowPlugin.h"
 #include "CrossbowPublisher.h"
-#include "messenger_plugin/MessengerPlugin.h"
-#include "tools/MessageDispatcher_ABC.h"
 #include "dispatcher/DefaultProfile.h"
+#include "tools/MessageDispatcher_ABC.h"
 #include "tools/ClientNetworker.h"
-
+#include "protocol/protocol.h"
 #include "protocol/Publisher_ABC.h"
 #include "protocol/authenticationsenders.h"
 
@@ -89,8 +88,9 @@ namespace
 // Name: CrossbowPlugin constructor
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-CrossbowPlugin::CrossbowPlugin( const dispatcher::Config& config, xml::xistream& xis, dispatcher::Model& model,
-                                dispatcher::SimulationPublisher_ABC& publisher, dispatcher::ClientPublisher_ABC& /*clients*/, tools::MessageDispatcher_ABC& dispatcher,
+CrossbowPlugin::CrossbowPlugin( const dispatcher::Config& config, xml::xistream& xis,
+                                dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& publisher,
+                                dispatcher::ClientPublisher_ABC& /*clients*/, tools::MessageDispatcher_ABC& dispatcher,
                                 dispatcher::LinkResolver_ABC& /*links*/, dispatcher::CompositeRegistrable& /*registrables*/ )
     : crossbowPublisher_( new CrossbowPublisher( config, model, publisher, xis ) )
     , clientNetworker_  ( new DummyClientNetworker() )

@@ -46,7 +46,8 @@ class RightsPlugin : public Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Config& config, tools::MessageDispatcher_ABC& clientCommands, Plugin_ABC& container, LinkResolver_ABC& base, dispatcher::CompositeRegistrable& registrables, int maxConnections );
+             RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Config& config, tools::MessageDispatcher_ABC& clientCommands,
+                           Plugin_ABC& container, LinkResolver_ABC& base, dispatcher::CompositeRegistrable& registrables, int maxConnections );
     virtual ~RightsPlugin();
     //@}
 
@@ -78,6 +79,7 @@ private:
     bool IsAuthenticated( const std::string& login ) const;
     //@}
 
+private:
     //! @name Types
     //@{
     typedef std::map< std::string, Profile_ABC* > T_Profiles;
@@ -88,12 +90,12 @@ private:
 private:
     //! @name Member data
     //@{
-    Plugin_ABC& container_;
-    LinkResolver_ABC& base_;
-    std::auto_ptr< ProfileManager >  profiles_;
-    T_Profiles                       authenticated_;
-    int                              maxConnections_;
-    int                              currentConnections_;
+    Plugin_ABC&                     container_;
+    LinkResolver_ABC&               base_;
+    std::auto_ptr< ProfileManager > profiles_;
+    T_Profiles                      authenticated_;
+    int                             maxConnections_;
+    int                             currentConnections_;
     //@}
 };
 

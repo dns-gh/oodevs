@@ -49,9 +49,11 @@ public:
     //! @name Operations
     //@{
     virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
+
     virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& profile );
-    virtual void NotifyClientLeft         ( ClientPublisher_ABC& client );
-    virtual void Register                 ( dispatcher::Services& services );
+    virtual void NotifyClientLeft( ClientPublisher_ABC& client );
+
+    virtual void Register( dispatcher::Services& services );
     //@}
 
 private:

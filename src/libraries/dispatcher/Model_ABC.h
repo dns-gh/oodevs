@@ -51,7 +51,7 @@ public:
     virtual ~Model_ABC() {}
     //@}
 
-    //! @name data accessor
+    //! @name Accessors
     //@{
     virtual const tools::Resolver_ABC< dispatcher::Team_ABC >&            Sides() const = 0;
     virtual const tools::Resolver_ABC< dispatcher::KnowledgeGroup_ABC >&  KnowledgeGroups() const = 0;

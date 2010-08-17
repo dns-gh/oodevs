@@ -43,18 +43,20 @@ class ReplayPlugin : public Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ReplayPlugin( Model& model, ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& clientCommands, Loader& loader, const ReplayModel_ABC& replayModel );
+             ReplayPlugin( Model& model, ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& clientCommands,
+                           Loader& loader, const ReplayModel_ABC& replayModel );
     virtual ~ReplayPlugin();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update();
-
     virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
+
     virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& profile );
-    virtual void NotifyClientLeft         ( ClientPublisher_ABC& client );
-    virtual void Register                 ( dispatcher::Services& );
+    virtual void NotifyClientLeft( ClientPublisher_ABC& client );
+
+    virtual void Register( dispatcher::Services& services );
+    virtual void Update();
     //@}
 
 private:
@@ -66,7 +68,11 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void OnTimer();
+    virtual void Operations();
+    //@}
+
+    //! @name Helpers
+    //@{
     void OnReceive( const std::string& link, const MsgsClientToReplay::MsgClientToReplay& asnMsg );
     void ChangeTimeFactor( unsigned factor );
     void Pause();

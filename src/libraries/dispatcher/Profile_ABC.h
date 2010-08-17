@@ -44,8 +44,8 @@ class Profile_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Profile_ABC() {};
-    virtual ~Profile_ABC() {};
+             Profile_ABC() {}
+    virtual ~Profile_ABC() {}
     //@}
 
     //! @name Operations

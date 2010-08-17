@@ -8,18 +8,15 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "ClientsNetworker.h"
 #include "Client.h"
 #include "Config.h"
 #include "Plugin_ABC.h"
 #include "Services.h"
-#include <MT/MT_Logger/MT_Logger_lib.h>
 #include "protocol/protocol.h"
+#include <MT/MT_Logger/MT_Logger_lib.h>
 
 using namespace dispatcher;
-
-static const unsigned int magicCookie_ = 10;
 
 // -----------------------------------------------------------------------------
 // Name: ClientsNetworkerc constructor
@@ -27,7 +24,7 @@ static const unsigned int magicCookie_ = 10;
 // -----------------------------------------------------------------------------
 ClientsNetworker::ClientsNetworker( const Config& config, Plugin_ABC& plugin, const Services& services )
     : ServerNetworker( config.GetNetworkClientsParameters() )
-    , plugin_( plugin )
+    , plugin_  ( plugin )
     , services_( services )
 {
     // NOTHING

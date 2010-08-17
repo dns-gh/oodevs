@@ -26,12 +26,12 @@ using namespace plugins::bml;
 // Created: SBO 2008-02-29
 // -----------------------------------------------------------------------------
 BmlPlugin::BmlPlugin( dispatcher::Model& model, const kernel::StaticModel& staticModel, xml::xistream& xis, dispatcher::SimulationPublisher_ABC& simulation )
-    : model_( model )
-    , publisher_( new PublisherActor( std::auto_ptr< Publisher_ABC >( new Publisher( xis ) ) ) )
-    , simulation_( new Simulation() )
-    , reportFactory_( new ReportFactory( staticModel.types_ ) )
+    : model_           ( model )
+    , publisher_       ( new PublisherActor( std::auto_ptr< Publisher_ABC >( new Publisher( xis ) ) ) )
+    , simulation_      ( new Simulation() )
+    , reportFactory_   ( new ReportFactory( staticModel.types_ ) )
     , extensionFactory_( new ExtensionFactory( *publisher_, *reportFactory_, *simulation_, model_ ) )
-    , listener_( new UpdateListener( *publisher_, model_, staticModel, simulation ) )
+    , listener_        ( new UpdateListener( *publisher_, model_, staticModel, simulation ) )
 {
     model_.RegisterFactory( *extensionFactory_ );
 }

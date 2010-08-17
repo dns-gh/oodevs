@@ -13,9 +13,9 @@
 #include "LinkResolver_ABC.h"
 #include "Profile_ABC.h"
 #include "Model.h"
-#include "protocol/ClientPublisher_ABC.h"
 #include "Services.h"
 #include "tools/MessageDispatcher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/simulationsenders.h"
 
 using namespace dispatcher;

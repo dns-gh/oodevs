@@ -22,7 +22,6 @@ namespace MsgsAarToClient
 
 namespace dispatcher
 {
-
 // =============================================================================
 /** @class  MessageHandler_ABC
     @brief  Simulation message handler definition
@@ -35,8 +34,8 @@ class MessageHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MessageHandler_ABC() {};
-    virtual ~MessageHandler_ABC() {};
+             MessageHandler_ABC() {}
+    virtual ~MessageHandler_ABC() {}
     //@}
 
     //! @name Operations

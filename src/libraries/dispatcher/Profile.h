@@ -37,7 +37,10 @@ namespace MsgsClientToReplay
     class MsgClientToReplay;
 }
 
-namespace xml{ class xistream; }
+namespace xml
+{
+    class xistream;
+}
 
 namespace kernel
 {
@@ -97,18 +100,19 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Profile( const Profile& );            //!< Copy constructor
-    Profile& operator=( const Profile& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::set< const kernel::Automat_ABC* >    T_AutomatSet;
     typedef std::set< const kernel::Team_ABC* >       T_SideSet;
     typedef std::set< const kernel::Formation_ABC* >  T_FormationSet;
     typedef std::set< const kernel::Population_ABC* > T_PopulationSet;
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    Profile( const Profile& );            //!< Copy constructor
+    Profile& operator=( const Profile& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -121,6 +125,8 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const Model& model_;
     ClientPublisher_ABC& clients_;
 
@@ -142,6 +148,7 @@ private:
 
     // Supervision
     bool            bSupervision_;
+    //@}
 };
 
 }

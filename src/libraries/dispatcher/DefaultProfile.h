@@ -14,7 +14,6 @@
 
 namespace dispatcher
 {
-
 // =============================================================================
 /** @class  DefaultProfile
     @brief  DefaultProfile

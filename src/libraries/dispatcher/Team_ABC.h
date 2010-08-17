@@ -37,8 +37,10 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit Team_ABC( unsigned long id, const QString& name = "" )
-        : Sendable< kernel::Team_ABC >( id, name ) {}
-    virtual ~Team_ABC() {}
+        : Sendable< kernel::Team_ABC >( id, name )
+    {}
+    virtual ~Team_ABC()
+    {}
     //@}
 
     //! @name Accessors

@@ -57,8 +57,7 @@ bool Loader::RequiresKeyFrame( unsigned frame )
 void Loader::Start()
 {
     loader_->LoadKeyFrame( 0, handler_ );
-
-    // simulation the end of the initialization
+    // simulates the end of the initialization
     MsgsSimToClient::MsgSimToClient wrapper;
     wrapper.mutable_message()->mutable_control_send_current_state_end();
     handler_.Receive( wrapper );
@@ -80,7 +79,6 @@ void Loader::SkipToFrame( unsigned frame )
         ;
     if( requiresKeyFrame )
         model_.EndSynchronisation();
-
     if( currentFrame_ < frame )
         Tick();
 }

@@ -28,11 +28,11 @@ using namespace plugins::messenger;
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
 MessengerPlugin::MessengerPlugin( dispatcher::ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& dispatcher, dispatcher::LinkResolver_ABC& links, const dispatcher::Config& config, dispatcher::CompositeRegistrable& registrables )
-    : config_( config )
+    : config_ ( config )
     , clients_( clients )
-    , links_( links )
-    , model_( new Model( config, clients, registrables ) )
-    , chat_( new Chat() )
+    , links_  ( links )
+    , model_  ( new Model( config, clients, registrables ) )
+    , chat_   ( new Chat() )
 {
     dispatcher.RegisterMessage( *this, &MessengerPlugin::OnReceiveClientToMessenger );
 }

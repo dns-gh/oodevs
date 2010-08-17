@@ -35,15 +35,18 @@ namespace MsgsClientToAuthentication
     class MsgProfileUpdateRequest;
 }
 
-namespace xml{ class xistream; };
+namespace xml
+{
+    class xistream;
+}
 
 namespace dispatcher
 {
-class Config;
-class Profile;
-class ClientPublisher_ABC;
-class Model;
-class ClientsNetworker;
+    class Config;
+    class Profile;
+    class ClientPublisher_ABC;
+    class Model;
+    class ClientsNetworker;
 
 // =============================================================================
 /** @class  ProfileManager
