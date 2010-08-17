@@ -7,7 +7,6 @@
 #include "CheckPoints/MIL_CheckPointOutArchive.h"
 #include "MT_Tools/MT_Vector3D.h"
 #include "MT_Tools/MT_Vector2D.h"
-#include <boost/serialization/split_member.hpp>
 
 enum E_Tristate
 {
