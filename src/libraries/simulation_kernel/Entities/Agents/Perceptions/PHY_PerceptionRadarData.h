@@ -12,6 +12,8 @@
 #ifndef __PHY_PerceptionRadarData_h_
 #define __PHY_PerceptionRadarData_h_
 
+#include "simulation_terrain/TER_Agent_ABC.h"
+
 class PHY_RadarType;
 class PHY_RoleInterface_Perceiver;
 class TER_Localisation;
