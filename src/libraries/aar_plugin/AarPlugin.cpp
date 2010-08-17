@@ -7,20 +7,19 @@
 //
 // *****************************************************************************
 
-#include "dispatcher_pch.h"
 #include "AarPlugin.h"
-#include "MessageLoader.h"
-#include "LinkResolver_ABC.h"
-#include "Services.h"
 #include "3a/AarFacade.h"
 #include "3a/Task.h"
+#include "dispatcher/MessageLoader.h"
+#include "dispatcher/LinkResolver_ABC.h"
+#include "dispatcher/Services.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/aarsenders.h"
 #include <boost/algorithm/string.hpp>
 #include <xeumeuleu/xml.hpp>
 
-using namespace dispatcher;
+using namespace plugins::aar;
 
 namespace MsgsClientToAar
 {
@@ -32,9 +31,9 @@ namespace MsgsClientToAar
 // Name: AarPlugin constructor
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-AarPlugin::AarPlugin( tools::MessageDispatcher_ABC& dispatcher, LinkResolver_ABC& resolver, const Config& config )
+AarPlugin::AarPlugin( tools::MessageDispatcher_ABC& dispatcher, dispatcher::LinkResolver_ABC& resolver, const dispatcher::Config& config )
     : resolver_( resolver )
-    , messages_( new MessageLoader( config, true ) )
+    , messages_( new dispatcher::MessageLoader( config, true ) )
 {
     dispatcher.RegisterMessage( *this, &AarPlugin::OnReceive );
 }
@@ -63,16 +62,16 @@ void AarPlugin::Receive( const MsgsSimToClient::MsgSimToClient& )
 // -----------------------------------------------------------------------------
 void AarPlugin::Register( dispatcher::Services& services )
 {
-    services.Declare< aar::Service >();
+    services.Declare< ::aar::Service >();
 }
 
 // -----------------------------------------------------------------------------
 // Name: AarPlugin::NotifyClientAuthenticated
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-void AarPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& )
+void AarPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& )
 {
-    aar::AarInformation info;
+    ::aar::AarInformation info;
     const std::string description = "<functions/>"; // $$$$ AGE 2008-08-04:
     info().set_information( description.c_str() );
     info.Send( client );
@@ -82,7 +81,7 @@ void AarPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_
 // Name: AarPlugin::NotifyClientLeft
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-void AarPlugin::NotifyClientLeft( ClientPublisher_ABC& )
+void AarPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& )
 {
     // NOTHING
 }
@@ -117,7 +116,7 @@ void AarPlugin::OnReceiveIndicatorRequest( const std::string& client, const Msgs
     }
     catch( std::exception& e )
     {
-        aar::PlotResult message;
+        ::aar::PlotResult message;
         message().mutable_values();
         message().set_identifier ( request.identifier() );
         message().set_error( e.what() );

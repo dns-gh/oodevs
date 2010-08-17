@@ -10,7 +10,9 @@
 #ifndef __AarPlugin_h_
 #define __AarPlugin_h_
 
-#include "Plugin_ABC.h"
+#include "dispatcher/Plugin_ABC.h"
+#include <memory>
+#include <string>
 
 namespace MsgsClientToAar
 {
@@ -30,19 +32,24 @@ namespace dispatcher
     class Config;
     class MessageLoader;
     class LinkResolver_ABC;
+}
 
+namespace plugins
+{
+namespace aar
+{
 // =============================================================================
 /** @class  AarPlugin
     @brief  AAR plugin
 */
 // Created: AGE 2007-09-17
 // =============================================================================
-class AarPlugin : public Plugin_ABC
+class AarPlugin : public dispatcher::Plugin_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AarPlugin( tools::MessageDispatcher_ABC& dispatcher, LinkResolver_ABC& resolver, const Config& config );
+             AarPlugin( tools::MessageDispatcher_ABC& dispatcher, dispatcher::LinkResolver_ABC& resolver, const dispatcher::Config& config );
     virtual ~AarPlugin();
     //@}
 
@@ -50,8 +57,8 @@ public:
     //@{
     virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
 
-    virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& profile );
-    virtual void NotifyClientLeft( ClientPublisher_ABC& client );
+    virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
+    virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client );
 
     virtual void Register( dispatcher::Services& services );
     //@}
@@ -72,11 +79,12 @@ private:
 private:
     //! @name Member data
     //@{
-    LinkResolver_ABC& resolver_;
-    std::auto_ptr< MessageLoader >   messages_;
+    dispatcher::LinkResolver_ABC& resolver_;
+    std::auto_ptr< dispatcher::MessageLoader > messages_;
     //@}
 };
 
+}
 }
 
 #endif // __AarPlugin_h_

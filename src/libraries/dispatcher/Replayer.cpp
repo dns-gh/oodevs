@@ -19,9 +19,9 @@
 #include "RightsPlugin.h"
 #include "DispatcherPlugin.h"
 #include "NoopPublisher.h"
-#include "AarPlugin.h"
 #include "Services.h"
 #include "StaticModel.h"
+#include "aar_plugin/AarPlugin.h"
 #include "score_plugin/ScorePlugin.h"
 #include "messenger_plugin/MessengerPlugin.h"
 #include <xeumeuleu/xml.hpp>
@@ -64,7 +64,7 @@ Replayer::Replayer( const Config& config )
     RightsPlugin* rights = new RightsPlugin( *model_, *clientsNetworker_, config, *clientsNetworker_, handler_, *clientsNetworker_, registrables_, 0 );
     handler_.Add( rights  );
     handler_.Add( plugin_ );
-    handler_.Add( new AarPlugin( *clientsNetworker_, *rights, config ) );
+    handler_.Add( new plugins::aar::AarPlugin( *clientsNetworker_, *rights, config ) );
     handler_.Add( new plugins::score::ScorePlugin( *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, config, registrables_ ) );
     handler_.Add( new plugins::messenger::MessengerPlugin( *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, config, registrables_ ) );
     handler_.Register( *services_ );
