@@ -20,10 +20,11 @@
 #include "Decision/DEC_Decision_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "DetectionComputer_ABC.h"
+#include "DetectionComputerFactory_ABC.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_ObjectManager.h"
-#include "simulation_kernel/DetectionComputer_ABC.h"
-#include "simulation_kernel/DetectionComputerFactory_ABC.h"
+#include "simulation_terrain/TER_AgentManager.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoPoint::PHY_PerceptionRecoPoint

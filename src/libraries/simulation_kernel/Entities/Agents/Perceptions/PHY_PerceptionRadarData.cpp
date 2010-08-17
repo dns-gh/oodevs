@@ -16,9 +16,9 @@
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "MIL_AgentServer.h"
-
-#include "simulation_kernel/DetectionComputer_ABC.h"
-#include "simulation_kernel/DetectionComputerFactory_ABC.h"
+#include "DetectionComputer_ABC.h"
+#include "DetectionComputerFactory_ABC.h"
+#include "simulation_terrain/TER_AgentManager.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRadarData::sAcquisitionData::sAcquisitionData

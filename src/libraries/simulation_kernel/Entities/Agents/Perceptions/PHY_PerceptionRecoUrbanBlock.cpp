@@ -14,10 +14,11 @@
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Urban.h"
+#include "DetectionComputer_ABC.h"
+#include "DetectionComputerFactory_ABC.h"
 #include "simulation_terrain/TER_World.h"
+#include "simulation_terrain/TER_AgentManager.h"
 #include <urban/TerrainObject_ABC.h>
-#include "simulation_kernel/DetectionComputer_ABC.h"
-#include "simulation_kernel/DetectionComputerFactory_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoUrbanBlockReco constructor

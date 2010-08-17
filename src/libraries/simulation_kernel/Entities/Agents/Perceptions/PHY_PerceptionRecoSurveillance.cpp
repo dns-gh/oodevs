@@ -15,17 +15,16 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
+#include "DetectionComputer_ABC.h"
+#include "DetectionComputerFactory_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "simulation_terrain/TER_World.h"
+#include "simulation_terrain/TER_AgentManager.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.hpp>
-
-#include "simulation_kernel/DetectionComputer_ABC.h"
-#include "simulation_kernel/DetectionComputerFactory_ABC.h"
-
 
 namespace
 {

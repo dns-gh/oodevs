@@ -15,6 +15,7 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "simulation_terrain/TER_World.h"
+#include "simulation_terrain/TER_AgentManager.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectInteraction constructor

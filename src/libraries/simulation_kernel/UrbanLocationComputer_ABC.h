@@ -10,6 +10,8 @@
 #ifndef __UrbanLocationComputer_ABC_h_
 #define __UrbanLocationComputer_ABC_h_
 
+#include <geometry/Types.h>
+
 namespace urban
 {
     class TerrainObject_ABC;

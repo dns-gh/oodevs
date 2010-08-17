@@ -12,10 +12,10 @@
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "MIL_AgentServer.h"
+#include "DetectionComputer_ABC.h"
+#include "DetectionComputerFactory_ABC.h"
 #include "simulation_terrain/TER_World.h"
-
-#include "simulation_kernel/DetectionComputer_ABC.h"
-#include "simulation_kernel/DetectionComputerFactory_ABC.h"
+#include "simulation_terrain/TER_AgentManager.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionAlat constructor

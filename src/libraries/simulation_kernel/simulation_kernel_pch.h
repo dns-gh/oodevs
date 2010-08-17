@@ -48,7 +48,6 @@
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_Agent_ABC.h"
 #include "simulation_terrain/TER_Object_ABC.h"
-#include "simulation_terrain/TER_AgentManager.h"
 
 #pragma warning( push )
 #pragma warning( disable : 4005 ) // $$$$ SBO 2008-05-13: "macro redefinition"
@@ -61,5 +60,3 @@
 #pragma warning( pop )
 
 #endif // __MIL_pch_h_
-
-

@@ -22,6 +22,7 @@
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
+#include "simulation_terrain/TER_AgentManager.h"
 #include "protocol/protocol.h"
 
 using namespace hla;

@@ -6,15 +6,6 @@
 // Copyright (c) 2003 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created:  $
-// $Archive: /MVW_v10/Build/SDK/TER/src/ter_pch.h $
-// $Author: Jvt $
-// $Modtime: 12/04/05 14:16 $
-// $Revision: 3 $
-// $Workfile: ter_pch.h $
-//
-// *****************************************************************************
 
 #ifndef __TER_pch_h_
 #define __TER_pch_h_
