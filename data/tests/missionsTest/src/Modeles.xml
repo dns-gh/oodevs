@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<models xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Models.xsd">
+  <units>
+    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Son Vab\Model.bms" name="Section INF">
+      <missions>
+        <mission name="Faire Mouvement"/>
+        <mission name="INF Eclairer"/>
+      </missions>
+    </unit>
+  
+    <!--unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\PC\Model.bms" name="PC INF">
+      <missions>
+        <mission name="Faire Mouvement"/>
+      </missions>
+    </unit-->
+  </units>
+</models>
