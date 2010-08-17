@@ -393,8 +393,8 @@
     <parameter type="AgentKnowledge"/>
   </report>
   <report id="277" message="Vision verrouillee et radar active"/>
-  <report id="278" message="Debut de reconnaissance du bloc urabin"/>
-  <report id="279" message="Fin de reconnaissance du bloc urabin"/>
+  <report id="278" message="Debut de reconnaissance du bloc urbain"/>
+  <report id="279" message="Fin de reconnaissance du bloc urbain"/>
   <report id="280" message="Debut de reconnaissance de la position"/>
   <report id="281" message="Fin de reconnaissance de la position"/>
   <report id="282" message="Fin du tir direct sur la cible : %1">
