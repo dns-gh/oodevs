@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "protocol/protocol.h"
 #include "DEC_PathWalker.h"
 #include "Decision/DEC_PathPoint.h"
@@ -18,6 +17,7 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "UrbanModel.h"
 #include "protocol/protocol.h"
+#include "simulation_terrain/TER_ObjectManager.h"
 #include <urban/Architecture.h>
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>

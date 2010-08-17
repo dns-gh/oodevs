@@ -21,7 +21,7 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "simulation_terrain/TER_World.h"
-
+#include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_kernel/DetectionComputer_ABC.h"
 #include "simulation_kernel/DetectionComputerFactory_ABC.h"
 

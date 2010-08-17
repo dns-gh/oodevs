@@ -30,6 +30,7 @@
 #include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
 #include "simulation_kernel/UrbanLocationComputer_ABC.h"
 #include "simulation_terrain/TER_World.h"
+#include "simulation_terrain/TER_ObjectManager.h"
 #include "Tools/MIL_Tools.h"
 
 using namespace location;

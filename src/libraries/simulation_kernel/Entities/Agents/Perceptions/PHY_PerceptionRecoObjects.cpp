@@ -18,6 +18,7 @@
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "simulation_terrain/TER_World.h"
+#include "simulation_terrain/TER_ObjectManager.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoObjectsReco constructor

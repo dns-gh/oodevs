@@ -31,7 +31,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
-
+#include "simulation_terrain/TER_ObjectManager.h"
 #include <urban/Architecture.h>
 #include <urban/TerrainObject_ABC.h>
 

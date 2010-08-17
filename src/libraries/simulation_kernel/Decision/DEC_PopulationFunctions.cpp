@@ -21,6 +21,7 @@
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "simulation_terrain/TER_ObjectManager.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::DecisionalState

@@ -24,6 +24,7 @@
 #include "UrbanLocationComputerFactory_ABC.h"
 #include "UrbanType.h"
 #include "UrbanModel.h"
+#include "simulation_terrain/TER_ObjectManager.h"
 #include <urban/Architecture.h>
 #include <urban/Model.h>
 #include <urban/TerrainObjectVisitor_ABC.h>
