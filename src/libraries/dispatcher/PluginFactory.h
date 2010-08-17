@@ -22,6 +22,14 @@ namespace kernel
     class StaticModel;
 }
 
+namespace plugins
+{
+namespace rights
+{
+    class RightsPlugin;
+}
+}
+
 namespace dispatcher
 {
     class Config;
@@ -31,7 +39,6 @@ namespace dispatcher
     class CompositePlugin;
     class CompositeRegistrable;
     class PluginFactory_ABC;
-    class RightsPlugin;
     class Services;
 
 // =============================================================================
@@ -84,7 +91,7 @@ private:
     CompositePlugin& handler_;
     CompositeRegistrable& registrables_;
     T_Factories factories_;
-    boost::shared_ptr< RightsPlugin > rights_;
+    boost::shared_ptr< plugins::rights::RightsPlugin > rights_;
     const Services& services_;
     //@}
 };

@@ -11,7 +11,6 @@
 #include "ProfileManager.h"
 #include "Profile.h"
 #include "Config.h"
-#include "Client.h"
 #include "Model.h"
 #include "Automat.h"
 #include <xeumeuleu/xml.hpp>
@@ -30,10 +29,9 @@ std::map< const std::string, unsigned > ProfileManager::roles_;
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
 ProfileManager::ProfileManager( Model& model, ClientPublisher_ABC& clients, const Config& config )
-    : model_   ( model )
-    , clients_ ( clients )
-    , config_  ( config )
-    , profiles_()
+    : model_  ( model )
+    , clients_( clients )
+    , config_ ( config )
 {
     // NOTHING
 }

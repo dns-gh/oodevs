@@ -46,7 +46,6 @@ namespace dispatcher
     class Profile;
     class ClientPublisher_ABC;
     class Model;
-    class ClientsNetworker;
 
 // =============================================================================
 /** @class  ProfileManager

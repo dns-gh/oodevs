@@ -7,22 +7,18 @@
 //
 // *****************************************************************************
 
-#include "dispatcher_pch.h"
 #include "RightsPlugin.h"
-#include "Client.h"
-#include "CompositeRegistrable.h"
-#include "DefaultProfile.h"
-#include "LinkResolver_ABC.h"
-#include "NoopPublisher.h"
-#include "Profile.h"
-#include "Profile_ABC.h"
-#include "ProfileManager.h"
-#include "Services.h"
+#include "dispatcher/CompositeRegistrable.h"
+#include "dispatcher/NoopPublisher.h"
+#include "dispatcher/Profile.h"
+#include "dispatcher/ProfileManager.h"
+#include "dispatcher/DefaultProfile.h"
+#include "dispatcher/Services.h"
 #include "protocol/authenticationsenders.h"
-#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ProtocolVersionChecker.h"
 #include "tools/MessageDispatcher_ABC.h"
 
+using namespace plugins::rights;
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------

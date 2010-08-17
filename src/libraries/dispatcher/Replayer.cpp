@@ -13,15 +13,14 @@
 #include "Model.h"
 #include "ClientsNetworker.h"
 #include "SimulationDispatcher.h"
-#include "ProfileManager.h"
 #include "Loader.h"
 #include "ReplayPlugin.h"
-#include "RightsPlugin.h"
 #include "DispatcherPlugin.h"
 #include "NoopPublisher.h"
 #include "Services.h"
 #include "StaticModel.h"
 #include "aar_plugin/AarPlugin.h"
+#include "rights_plugin/RightsPlugin.h"
 #include "score_plugin/ScorePlugin.h"
 #include "messenger_plugin/MessengerPlugin.h"
 #include <xeumeuleu/xml.hpp>
@@ -61,8 +60,8 @@ Replayer::Replayer( const Config& config )
     handler_.AddHandler( clientsNetworker_ );
 
     // $$$$ AGE 2007-08-27: utiliser la PluginFactory => replay ESRI
-    RightsPlugin* rights = new RightsPlugin( *model_, *clientsNetworker_, config, *clientsNetworker_, handler_, *clientsNetworker_, registrables_, 0 );
-    handler_.Add( rights  );
+    plugins::rights::RightsPlugin* rights = new plugins::rights::RightsPlugin( *model_, *clientsNetworker_, config, *clientsNetworker_, handler_, *clientsNetworker_, registrables_, 0 );
+    handler_.Add( rights );
     handler_.Add( plugin_ );
     handler_.Add( new plugins::aar::AarPlugin( *clientsNetworker_, *rights, config ) );
     handler_.Add( new plugins::score::ScorePlugin( *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, config, registrables_ ) );

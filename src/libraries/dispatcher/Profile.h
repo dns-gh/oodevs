@@ -11,6 +11,7 @@
 #define __Profile_h_
 
 #include "Profile_ABC.h"
+#include <set>
 
 namespace MsgsAuthenticationToClient
 {
@@ -54,7 +55,6 @@ namespace dispatcher
 {
     class Model;
     class ClientPublisher_ABC;
-    class ClientsNetworker;
 
 // =============================================================================
 /** @class  Profile

@@ -10,6 +10,8 @@
 #ifndef __LinkResolver_ABC_h_
 #define __LinkResolver_ABC_h_
 
+#include <string>
+
 namespace dispatcher
 {
     class Profile_ABC;

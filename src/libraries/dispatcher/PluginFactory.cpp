@@ -15,8 +15,8 @@
 #include "SimulationPublisher_ABC.h"
 #include "ClientsNetworker.h"
 #include "DispatcherPlugin.h"
-#include "RightsPlugin.h"
 #include "PluginFactory_ABC.h"
+#include "rights_plugin/RightsPlugin.h"
 #include "logger_plugin/LoggerPlugin.h"
 #include "messenger_plugin/MessengerPlugin.h"
 #include "script_plugin/ScriptPlugin.h"
@@ -38,7 +38,7 @@ PluginFactory::PluginFactory( const Config& config, Model& model, const kernel::
     , clients_     ( clients )
     , handler_     ( handler )
     , registrables_( registrables )
-    , rights_      ( new RightsPlugin( model_, clients_, config_, clients_, handler_, clients_, registrables, maxConnections ) )
+    , rights_      ( new plugins::rights::RightsPlugin( model_, clients_, config_, clients_, handler_, clients_, registrables, maxConnections ) )
     , services_    ( services )
 {
     handler_.Add( rights_ );
