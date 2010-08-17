@@ -384,6 +384,8 @@ public:
         eRC_AttentatTerroristeDansPopulation,
         eRC_PopulationVictimeExplosionMines, // Parametres : victimes (float), dont_blesses (float),
         eRC_ExecutionAttentat,
+        eRC_Embarquement,
+        eRC_Debarquement,
 
         eRC_TirIndirectSurCible = 271,
 
