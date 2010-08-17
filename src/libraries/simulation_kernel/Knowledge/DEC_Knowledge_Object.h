@@ -13,6 +13,7 @@
 #define __DEC_Knowledge_Object_h_
 
 #include "MIL.h"
+#include "Tristate.h"
 #include "DEC_Knowledge_ABC.h"
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"

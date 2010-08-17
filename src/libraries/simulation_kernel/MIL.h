@@ -8,13 +8,6 @@
 #include "MT_Tools/MT_Vector3D.h"
 #include "MT_Tools/MT_Vector2D.h"
 
-enum E_Tristate
-{
-    eTristate_True = 0,
-    eTristate_False,
-    eTristate_DontKnow,
-};
-
 namespace boost
 {
     namespace archive

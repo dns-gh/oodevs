@@ -18,6 +18,7 @@
 #include "DEC_Knowledge_AgentDataIdentification.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Tools/MIL_IDManager.h"
+#include "Tristate.h"
 
 namespace MsgsSimToClient
 {
