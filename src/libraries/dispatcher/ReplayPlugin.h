@@ -66,9 +66,9 @@ private:
     ReplayPlugin& operator=( const ReplayPlugin& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
+    //! @name Operations
     //@{
-    virtual void Operations();
+    virtual void OnTimer();
     //@}
 
     //! @name Helpers
