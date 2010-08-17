@@ -10,34 +10,42 @@
 #ifndef __SaverPlugin_h_
 #define __SaverPlugin_h_
 
-#include "Plugin_ABC.h"
+#include "dispatcher/Plugin_ABC.h"
+#include <memory>
 
 namespace dispatcher
 {
     class Model;
     class Config;
+}
+
+namespace plugins
+{
+namespace saver
+{
     class SaverFacade;
 
 // =============================================================================
 /** @class  SaverPlugin
-    @brief  SaverPlugin
+    @brief  Saver plugin
 */
 // Created: AGE 2007-08-24
 // =============================================================================
-class SaverPlugin : public Plugin_ABC
+class SaverPlugin : public dispatcher::Plugin_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             SaverPlugin( Model& model, const Config& config );
+             SaverPlugin( dispatcher::Model& model, const dispatcher::Config& config );
     virtual ~SaverPlugin();
     //@}
 
     //! @name Operations
     //@{
     virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
-    virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& profile );
-    virtual void NotifyClientLeft         ( ClientPublisher_ABC& client );
+
+    virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
+    virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client );
     //@}
 
 private:
@@ -58,6 +66,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __SaverPlugin_h_

@@ -9,7 +9,6 @@
 
 #include "dispatcher_pch.h"
 #include "PluginFactory.h"
-#include "SaverPlugin.h"
 #include "Config.h"
 #include "CompositePlugin.h"
 #include "SimulationPublisher_ABC.h"
@@ -19,6 +18,7 @@
 #include "rights_plugin/RightsPlugin.h"
 #include "logger_plugin/LoggerPlugin.h"
 #include "messenger_plugin/MessengerPlugin.h"
+#include "saver_plugin/SaverPlugin.h"
 #include "script_plugin/ScriptPlugin.h"
 #include "score_plugin/ScorePlugin.h"
 #include <xeumeuleu/xml.hpp>
@@ -75,7 +75,6 @@ void PluginFactory::Instanciate()
     handler_.Add( new script::ScriptPlugin( model_, staticModel_, config_, simulation_, clients_, clients_, *rights_, registrables_ ) );
     handler_.Add( new score::ScorePlugin( clients_, clients_, clients_, config_, registrables_ ) );
     handler_.Add( new logger::LoggerPlugin( model_, staticModel_, config_, services_ ) );
-
     xml::xifstream xis( config_.GetSessionFile() );
     xis >> xml::start( "session" ) >> xml::start( "config" ) >> xml::start( "dispatcher" ) >> xml::start( "plugins" )
         >> xml::list( *this, &PluginFactory::ReadPlugin );
@@ -89,7 +88,7 @@ void PluginFactory::ReadPlugin( const std::string& name, xml::xistream& xis ) co
 {
     if( name == "recorder" )
     {
-        handler_.Add( new SaverPlugin( model_, config_ ) );
+        handler_.Add( new plugins::saver::SaverPlugin( model_, config_ ) );
         return;
     }
     for( T_Factories::const_iterator it = factories_.begin(); it != factories_.end(); ++it )

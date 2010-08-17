@@ -7,17 +7,16 @@
 //
 // *****************************************************************************
 
-#include "dispatcher_pch.h"
 #include "SaverPlugin.h"
 #include "SaverFacade.h"
 
-using namespace dispatcher;
+using namespace plugins::saver;
 
 // -----------------------------------------------------------------------------
 // Name: SaverPlugin constructor
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-SaverPlugin::SaverPlugin( Model& model, const Config& config )
+SaverPlugin::SaverPlugin( dispatcher::Model& model, const dispatcher::Config& config )
     : saver_( new SaverFacade( model, config ) )
 {
     // NOTHING
@@ -45,7 +44,7 @@ void SaverPlugin::Receive( const MsgsSimToClient::MsgSimToClient& message )
 // Name: SaverPlugin::NotifyClientAuthenticated
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void SaverPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& , Profile_ABC& )
+void SaverPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& , dispatcher::Profile_ABC& )
 {
     // NOTHING
 }
@@ -54,7 +53,7 @@ void SaverPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& , Profile_ABC&
 // Name: SaverPlugin::NotifyClientLeft
 // Created: AGE 2007-08-27
 // -----------------------------------------------------------------------------
-void SaverPlugin::NotifyClientLeft( ClientPublisher_ABC& )
+void SaverPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& )
 {
     // NOTHING
 }

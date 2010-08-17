@@ -84,13 +84,13 @@
             depends="library.tools,library.MT_Tools,library.ENT,library.protocol,library.simulation_terrain,library.simulation_kernel,
                      library.clients_kernel,library.clients_gui,library.actions,library.actions_static,library.actions_gui,library.reports,library.gaming,library.preparation,
                      library.bml_plugin,library.crossbow_plugin,library.hla_plugin,library.dis_plugin,library.tic_plugin,
-                     library.messenger_plugin,library.logger_plugin,library.aar_plugin,library.rights_plugin,library.3a"/>
+                     library.messenger_plugin,library.logger_plugin,library.aar_plugin,library.rights_plugin,library.saver_plugin,library.3a"/>
 
     <target name="libraries.nocrossbow" description="build all libraries"
             depends="library.tools,library.MT_Tools,library.ENT,library.protocol,library.simulation_terrain,library.simulation_kernel,
                      library.clients_kernel,library.clients_gui,library.actions,library.actions_static,library.actions_gui,library.reports,library.gaming,library.preparation,
                      library.bml_plugin,library.hla_plugin,library.dis_plugin,library.tic_plugin,
-                     library.messenger_plugin,library.logger_plugin,library.aar_plugin,library.rights_plugin,library.3a"/>
+                     library.messenger_plugin,library.logger_plugin,library.aar_plugin,library.rights_plugin,library.saver_plugin,library.3a"/>
 
     <target name="library.tools" description="build tools static library">
         <build-lib name="tools" depends="qt" pattern="lib${ant.project.name}_tools-${platform}-mt@{suffix}" suffix="-gd">
@@ -237,6 +237,10 @@
         <build-lib name="rights_plugin" pattern="lib${ant.project.name}_rights_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
     </target>
 
+    <target name="library.saver_plugin" description="build saver_plugin static library" depends="library.dispatcher">
+        <build-lib name="saver_plugin" pattern="lib${ant.project.name}_saver_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
+    </target>
+
     <target name="library.meteo" description="build meteo static library" depends="library.protocol,library.clients_kernel">
         <build-lib name="meteo" pattern="lib${ant.project.name}_meteo-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
     </target>
@@ -263,12 +267,12 @@
 
     <target name="library.plugins.crossbow" description="build all dispatcher plugins"
             depends="library.messenger_plugin,library.tic_plugin,library.dis_plugin,library.hla_plugin,library.aar_plugin,
-                     library.rights_plugin,library.3a,
+                     library.rights_plugin,library.saver_plugin,library.3a,
                      library.bml_plugin,library.crossbow_plugin,library.script_plugin,library.score_plugin,library.logger_plugin"/>
 
     <target name="library.plugins.nocrossbow" description="build all dispatcher plugins"
             depends="library.messenger_plugin,library.tic_plugin,library.dis_plugin,library.hla_plugin,library.aar_plugin,
-                     library.rights_plugin,library.3a,
+                     library.rights_plugin,library.saver_plugin,library.3a,
                      library.bml_plugin,library.script_plugin,library.score_plugin,library.logger_plugin"/>
 
     <!--
@@ -312,6 +316,7 @@
                          lib${ant.project.name}_bml_plugin-${platform}-mt@{suffix},
                          lib${ant.project.name}_rights_plugin-${platform}-mt@{suffix},
                          lib${ant.project.name}_reports-${platform}-mt@{suffix},
+                         lib${ant.project.name}_saver_plugin-${platform}-mt@{suffix},
                          lib${ant.project.name}_logger_plugin-${platform}-mt@{suffix},
                          lib${ant.project.name}_messenger_plugin-${platform}-mt@{suffix},
                          lib${ant.project.name}_script_plugin-${platform}-mt@{suffix},
@@ -378,6 +383,7 @@
                   lib${ant.project.name}_meteo-${platform}-mt@{suffix},
                   lib${ant.project.name}_aar_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_rights_plugin-${platform}-mt@{suffix},
+                  lib${ant.project.name}_saver_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_messenger_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_score_plugin-${platform}-mt,
                   lib${ant.project.name}_indicators-${platform}-mt">
@@ -406,6 +412,7 @@
                   lib${ant.project.name}_bml_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_rights_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_reports-${platform}-mt@{suffix},
+                  lib${ant.project.name}_saver_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_logger_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_messenger_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_script_plugin-${platform}-mt@{suffix},
@@ -479,6 +486,7 @@
                   lib${ant.project.name}_meteo-${platform}-mt@{suffix},
                   lib${ant.project.name}_aar_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_rights_plugin-${platform}-mt@{suffix},
+                  lib${ant.project.name}_saver_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_messenger_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_score_plugin-${platform}-mt,
                   lib${ant.project.name}_indicators-${platform}-mt">

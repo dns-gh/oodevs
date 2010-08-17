@@ -7,11 +7,10 @@
 //
 // *****************************************************************************
 
-#include "dispatcher_pch.h"
 #include "MessageFilter.h"
 #include "protocol/Protocol.h"
 
-using namespace dispatcher;
+using namespace plugins::saver;
 
 // -----------------------------------------------------------------------------
 // Name: MessageFilter constructor

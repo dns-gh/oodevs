@@ -7,10 +7,9 @@
 //
 // *****************************************************************************
 
-#include "dispatcher_pch.h"
 #include "Saver.h"
 #include "Savable_ABC.h"
-#include "Config.h"
+#include "dispatcher/Config.h"
 #include "tools/OutputBinaryWrapper.h"
 #include <MT/MT_Logger/MT_Logger_lib.h>
 #pragma warning( push )
@@ -20,13 +19,13 @@
 
 namespace bfs = boost::filesystem;
 
-using namespace dispatcher;
+using namespace plugins::saver;
 
 // -----------------------------------------------------------------------------
 // Name: Saver constructor
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-Saver::Saver( const Config& config )
+Saver::Saver( const dispatcher::Config& config )
     : frameCount_( 0 )
 {
     const bfs::path recorderDirectory( config.GetRecordDirectory(), bfs::native );
@@ -79,7 +78,7 @@ void Saver::EndFrame( const Savable_ABC& message )
 // -----------------------------------------------------------------------------
 void Saver::SaveKeyFrame( const Savable_ABC& message )
 {
-    KeyFrame frame;
+    dispatcher::KeyFrame frame;
     frame.offset_ = key_.tellp();
     frame.frameNumber_ = frameCount_;
     {

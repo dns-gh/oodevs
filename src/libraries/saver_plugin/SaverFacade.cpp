@@ -7,26 +7,24 @@
 //
 // *****************************************************************************
 
-#include "dispatcher_pch.h"
 #include "SaverFacade.h"
 #include "Saver.h"
 #include "Savable_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include "Model.h"
-#include "Side.h"
-#include "Visitors.h"
+#include "dispatcher/Model.h"
+#include "dispatcher/Visitors.h"
 #include "tools/OutputBinaryWrapper.h"
 #include <google/protobuf/Message.h>
 #include <google/protobuf/Descriptor.h>
 #include "protocol/protocol.h"
 
-using namespace dispatcher;
+using namespace plugins::saver;
 
 // -----------------------------------------------------------------------------
 // Name: SaverFacade constructor
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-SaverFacade::SaverFacade( Model& model, const Config& config )
+SaverFacade::SaverFacade( dispatcher::Model& model, const dispatcher::Config& config )
     : model_     ( model )
     , saver_     ( new Saver( config ) )
     , frameCount_( 0 )
@@ -97,24 +95,26 @@ void SaverFacade::SaveUpdate( const MsgsSimToClient::MsgSimToClient& wrapper )
 
 namespace
 {
-    struct ModelMessage : public Savable_ABC, public ClientPublisher_ABC
+    struct ModelMessage : public Savable_ABC, public dispatcher::ClientPublisher_ABC
     {
-        ModelMessage( Model& model, std::string& buffer, bool firstFrame )
+        ModelMessage( dispatcher::Model& model, std::string& buffer, bool firstFrame )
             : model_( &model )
             , output_( 0 )
             , buffer_( buffer )
-            , firstFrame_( firstFrame ) {}
-        virtual ~ModelMessage() {}
+            , firstFrame_( firstFrame )
+        {}
+        virtual ~ModelMessage()
+        {}
         virtual void Serialize( tools::OutputBinaryWrapper& output ) const
         {
             ModelMessage* that = const_cast< ModelMessage* >( this );
             that->output_ = &output;
             {
-                CreationVisitor visitor( *that );
+                dispatcher::CreationVisitor visitor( *that );
                 model_->Accept( visitor );
             }
             {
-                FullUpdateVisitor visitor( *that );
+                dispatcher::FullUpdateVisitor visitor( *that );
                 model_->Accept( visitor );
             }
             // $$$$ AGE 2007-10-15: revoir tous ces trucs !
@@ -131,7 +131,7 @@ namespace
         virtual void Send( const MsgsMessengerToClient::MsgMessengerToClient& ) {}
         virtual void Send( const MsgsDispatcherToClient::MsgDispatcherToClient& ) {}
         virtual std::string GetEndpoint() const { return ""; }
-        Model* model_;
+        dispatcher::Model* model_;
         tools::OutputBinaryWrapper* output_;
         std::string& buffer_;
         bool firstFrame_;

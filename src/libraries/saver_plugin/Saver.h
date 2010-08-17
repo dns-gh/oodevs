@@ -10,12 +10,19 @@
 #ifndef __Saver_h_
 #define __Saver_h_
 
-#include "Frames.h"
+#include "dispatcher/Frames.h"
+#include <fstream>
 
 namespace dispatcher
 {
-    class Savable_ABC;
     class Config;
+}
+
+namespace plugins
+{
+namespace saver
+{
+    class Savable_ABC;
 
 // =============================================================================
 /** @class  Saver
@@ -28,16 +35,16 @@ class Saver
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Saver( const Config& config );
+    explicit Saver( const dispatcher::Config& config );
     virtual ~Saver();
     //@}
 
     //! @name Operations
     //@{
-    void StartFrame         ( const Savable_ABC& message );
-    void SaveUpdateMessage  ( const Savable_ABC& message );
-    void EndFrame           ( const Savable_ABC& message );
-    void SaveKeyFrame       ( const Savable_ABC& message );
+    void StartFrame       ( const Savable_ABC& message );
+    void SaveUpdateMessage( const Savable_ABC& message );
+    void EndFrame         ( const Savable_ABC& message );
+    void SaveKeyFrame     ( const Savable_ABC& message );
     //@}
 
 private:
@@ -55,7 +62,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Frame current_;
+    dispatcher::Frame current_;
     std::ofstream index_;
     std::ofstream keyIndex_;
     std::ofstream key_;
@@ -64,6 +71,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __Saver_h_

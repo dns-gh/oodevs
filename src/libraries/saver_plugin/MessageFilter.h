@@ -10,7 +10,6 @@
 #ifndef __MessageFilter_h_
 #define __MessageFilter_h_
 
-
 namespace MsgsSimToClient
 {
     class MsgSimToClient;
@@ -26,12 +25,13 @@ namespace MsgsSimToClient
     class MsgPopulationFlowKnowledgeUpdate;
 }
 
-namespace dispatcher
+namespace plugins
 {
-
+namespace saver
+{
 // =============================================================================
 /** @class  MessageFilter
-    @brief  MessageFilter
+    @brief  Message filter
 */
 // Created: AGE 2007-04-12
 // =============================================================================
@@ -72,6 +72,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __MessageFilter_h_

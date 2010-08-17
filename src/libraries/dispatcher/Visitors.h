@@ -11,6 +11,7 @@
 #define __Visitors_h_
 
 #include "clients_kernel/ModelVisitor_ABC.h"
+#include <set>
 
 namespace dispatcher
 {

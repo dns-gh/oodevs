@@ -15,9 +15,10 @@ namespace tools
     class OutputBinaryWrapper;
 }
 
-namespace dispatcher
+namespace plugins
 {
-
+namespace saver
+{
 // =============================================================================
 /** @class  Savable_ABC
     @brief  Savable_ABC
@@ -29,16 +30,24 @@ class Savable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Savable_ABC() {};
-    virtual ~Savable_ABC() {};
+             Savable_ABC() {}
+    virtual ~Savable_ABC() {}
     //@}
 
     //! @name Operations
     //@{
     virtual void Serialize( tools::OutputBinaryWrapper& output ) const = 0;
     //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    Savable_ABC( const Savable_ABC& );            //!< Copy constructor
+    Savable_ABC& operator=( const Savable_ABC& ); //!< Assignment operator
+    //@}
 };
 
+}
 }
 
 #endif // __Savable_ABC_h_

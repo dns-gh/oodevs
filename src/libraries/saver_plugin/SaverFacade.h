@@ -10,8 +10,10 @@
 #ifndef __SaverFacade_h_
 #define __SaverFacade_h_
 
+#include "dispatcher/MessageHandler_ABC.h"
 #include "MessageFilter.h"
-#include "MessageHandler_ABC.h"
+#include <memory>
+#include <string>
 
 namespace MsgsSimToClient
 {
@@ -22,20 +24,26 @@ namespace dispatcher
 {
     class Config;
     class Model;
+}
+
+namespace plugins
+{
+namespace saver
+{
     class Saver;
 
 // =============================================================================
 /** @class  SaverFacade
-    @brief  SaverFacade
+    @brief  Saver facade
 */
 // Created: AGE 2007-04-10
 // =============================================================================
-class SaverFacade : public MessageHandler_ABC
+class SaverFacade : public dispatcher::MessageHandler_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             SaverFacade( Model& model, const Config& config );
+             SaverFacade( dispatcher::Model& model, const dispatcher::Config& config );
     virtual ~SaverFacade();
     //@}
 
@@ -55,13 +63,13 @@ private:
     //@{
     void SaveUpdate( const MsgsSimToClient::MsgSimToClient& message );
     void StartFrame( const MsgsSimToClient::MsgSimToClient& message );
-    void EndFrame  ( const MsgsSimToClient::MsgSimToClient& message );
+    void EndFrame( const MsgsSimToClient::MsgSimToClient& message );
     //@}
 
 private:
     //! @name Member data
     //@{
-    Model& model_;
+    dispatcher::Model& model_;
     std::auto_ptr< Saver > saver_;
     std::string encodingBuffer_;
     unsigned frameCount_;
@@ -69,6 +77,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __SaverFacade_h_
