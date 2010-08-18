@@ -54,15 +54,6 @@ private:
     AgentFactory_ABC( const AgentFactory_ABC& );            //!< Copy constructor
     AgentFactory_ABC& operator=( const AgentFactory_ABC& ); //!< Assignment operator
     //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    //@}
 };
 
 // -----------------------------------------------------------------------------
