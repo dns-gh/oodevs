@@ -269,6 +269,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInCircle( T_ConstKn
     }
 }
 
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::EnemyPresenceInCircle
 // Created: NLD 2006-04-14

@@ -10,6 +10,8 @@
 #ifndef __DEC_KnowledgeUrbanFunctions_h_
 #define __DEC_KnowledgeUrbanFunctions_h_
 
+#include "Knowledge/DEC_Knowledge_Def.h"
+
 class DEC_Decision_ABC;
 class DEC_Knowledge_Urban;
 class MIL_AgentPion;
@@ -30,6 +32,7 @@ public:
     static float GetPathfindCost ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge );
     static float GetRapForLocal( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge );
     static double GetPerception( const MIL_AgentPion& callerAgent, boost::shared_ptr< MT_Vector2D > pPoint, boost::shared_ptr< MT_Vector2D > pTarget );
+	static T_ConstKnowledgeAgentVector GetLivingEnemiesInBU( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge );
     //@}
 };
 

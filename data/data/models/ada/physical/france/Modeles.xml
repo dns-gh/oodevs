@@ -21,6 +21,8 @@
         <mission name="MELEE Illuminer"/>
         <mission name="MELEE S'emparer d'un Bloc Urbain"/>
         <mission name="MELEE Interdire un Bloc Urbain"/>
+        <mission name="MELEE Interdire un Point"/>
+        <mission name="MELEE Interdire une Zone"/>
         <mission name="MELEE Boucler un Bloc Urbain"/>
         <mission name="MELEE Controler"/>
         <mission name="MELEE Neutralizer"/>
@@ -30,6 +32,12 @@
         <mission name="MELEE Tenir un Point"/>
         <mission name="MELEE Tenir une Zone"/>
         <mission name="MELEE Detruire"/>
+        <mission name="MELEE Defendre un Bloc Urbain"/>
+        <mission name="MELEE Defendre un Point"/>
+        <mission name="MELEE Defendre une Zone"/>
+        <mission name="MELEE Contre Attaquer sur un Point"/>
+        <mission name="MELEE Contre Attaquer dans une Zone"/>
+        <mission name="MELEE Contre Attaquer dans un BU"/>
       </missions>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PlatoonABC">
@@ -105,6 +113,7 @@
         <mission name="Build"/>
         <mission name="Control"/>
         <mission name="Controler Secteur"/>
+        <mission name="TEST Deny"/>
         <mission name="EngageAgents"/>
         <mission name="Flee"/>
         <mission name="Load"/>
