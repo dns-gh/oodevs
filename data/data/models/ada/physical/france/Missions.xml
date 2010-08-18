@@ -827,9 +827,6 @@
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.tmp.Mount" dia-type="T_Mission_Pion_Mount" id="2023" name="Mount">
       <parameter dia-name="objectives" name="objectives" optional="false" type="AgentBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Identify" dia-type="net.masagroup.sword.test.military.platoon.tasks.Identify" id="2024" name="IdentifyAgent">
-      <parameter dia-name="objectives" name="objectives" optional="false" type="AgentKnowledgeBM"/>
-    </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.NeutralizeAgents" dia-type="net.masagroup.sword.test.military.platoon.tasks.NeutralizeAgents" id="2025" name="NeutralizeAgents">
       <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
     </mission>
@@ -887,6 +884,9 @@
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Reconnoiter" dia-type="T_Mission_Pion_ReconnoiterArea" id="2083" name="TEST ReconnoiterArea">
       <parameter dia-name="objective" name="objectif" optional="false" type="AreaBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Identify" dia-type="net.masagroup.sword.test.military.platoon.tasks.Identify" id="2024" name="TEST IdentifyAgent">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="AgentKnowledgeListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.RemoveObstacle" dia-type="net.masagroup.sword.test.military.platoon.tasks.RemoveObstacle" id="2045" name="RemoveObstacle">
       <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>

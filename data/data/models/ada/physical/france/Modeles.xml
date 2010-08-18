@@ -41,7 +41,6 @@
         <mission name="DestroyAgents"/>
         <mission name="EngageAgents"/>
         <mission name="Flee"/>
-        <mission name="IdentifyAgent"/>
         <mission name="Load"/>
         <mission name="Mount"/>
         <mission name="MoveAndObserve"/>
@@ -65,6 +64,7 @@
         <mission name="ObservePoint"/>
         <mission name="ObserveDirection"/>
         <mission name="ObserveAgent"/>
+        <mission name="TEST IdentifyAgent"/>
         <mission name="TEST ReconnoiterPoint"/>
         <mission name="TEST ReconnoiterUrbanBlock"/>
         <mission name="TEST ReconnoiterArea"/>
