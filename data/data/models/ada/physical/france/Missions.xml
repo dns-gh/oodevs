@@ -803,7 +803,7 @@
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToUrbanBlock" id="2012" name="MoveToUrbanBlock">
       <parameter dia-name="objectives" name="objectives" optional="false" type="UrbanBlockBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.DestroyAgents" dia-type="net.masagroup.sword.test.military.platoon.tasks.DestroyAgents" id="2013" name="DestroyAgents">
+    <mission dia-behavior="net.masagroup.sword.military.platoon.combat.tasks.DestroyAgents" dia-type="net.masagroup.sword.military.platoon.combat.tasks.DestroyAgents" id="2013" name="MELEE Detruire">
       <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.ObserveAndReconnoiter" dia-type="net.masagroup.sword.test.military.platoon.tasks.ObserveAndReconnoiter" id="2014" name="ObserveAndReconnoiterPoint">
@@ -912,7 +912,7 @@
       <parameter dia-name="objectives" name="objectives" optional="false" type="AgentListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Advance" dia-type="net.masagroup.sword.test.military.platoon.tasks.Advance" id="2052" name="Advance">
-      <parameter dia-name="objectives" name="objectives" optional="false" type="PointBM"/>
+      <parameter dia-name="objectives" name="objectives" optional="false" type="PointListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Suivre" dia-type="net.masagroup.sword.france.military.platoon.tasks.Suivre" id="2053" name="COMMUNES Suivre">
       <parameter dia-name="objective" name="unite a suivre" optional="false" type="AgentBM"/>

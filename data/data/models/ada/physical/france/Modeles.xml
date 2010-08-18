@@ -29,6 +29,7 @@
         <mission name="MELEE Tenir un Bloc Urbain"/>
         <mission name="MELEE Tenir un Point"/>
         <mission name="MELEE Tenir une Zone"/>
+        <mission name="MELEE Detruire"/>
       </missions>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PlatoonTest">
@@ -38,7 +39,6 @@
         <mission name="Build"/>
         <mission name="Control"/>
         <mission name="Controler Secteur"/>
-        <mission name="DestroyAgents"/>
         <mission name="EngageAgents"/>
         <mission name="Flee"/>
         <mission name="Load"/>
