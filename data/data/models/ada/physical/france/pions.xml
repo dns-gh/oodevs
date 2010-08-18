@@ -10346,7 +10346,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="net.masagroup.sword.military.platoon.roles.Platoon" id="425" name="Section . CBT INF VAB CDS OFF" type="Pion INF">
+  <unit decisional-model="net.masagroup.sword.military.platoon.roles.PlatoonINF" id="425" name="Section . CBT INF VAB CDS OFF" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature="combat/infantry/motorized"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="VAB 12,7"/>
@@ -10376,7 +10376,7 @@
     </distance-before-points>
     <drill-blow length="300" width="300"/>
   </unit>
-  <unit decisional-model="net.masagroup.sword.military.platoon.roles.Platoon" id="426" name="Section . CDT CIE INF VAB" type="Pion INF">
+  <unit decisional-model="net.masagroup.sword.military.platoon.roles.PlatoonINF" id="426" name="Section . CDT CIE INF VAB" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature="combat/infantry/motorized"/>
     <equipments>
       <equipment count="2" crew="3" type="VBL 7,62"/>
@@ -10404,7 +10404,7 @@
     </distance-before-points>
     <drill-blow length="300" width="300"/>
   </unit>
-  <unit decisional-model="net.masagroup.sword.military.platoon.roles.Platoon" id="427" name="Peloton . LECLERC CDP OFF" type="Pion ABC">
+  <unit decisional-model="net.masagroup.sword.military.platoon.roles.PlatoonABC" id="427" name="Peloton . LECLERC CDP OFF" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature="combat/armor/track/heavy"/>
     <equipments>
       <equipment count="4" crew="3" major="true" type="Char LECLERC"/>
@@ -10859,6 +10859,144 @@
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
     <nbc decontamination-delay="1350s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+  </unit>
+  <unit decisional-model="net.masagroup.sword.military.platoon.roles.PlatoonINF" id="445" name="Section . CBT INF VAB CDS SOFF" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="4" crew="2" major="true" type="VAB 12,7"/>
+      <equipment count="9" crew="1" loadable="true" type="Fantassin"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin MINIMI"/>
+      <equipment count="2" crew="2" loadable="true" type="Equipe ERYX"/>
+      <equipment count="2" crew="1" loadable="true" type="Tireur Precision"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin Appui AC"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin LGI"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="7" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1350s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+  </unit>
+  <unit decisional-model="net.masagroup.sword.military.platoon.roles.PlatoonINF" id="446" name="Groupe . MO81 VAB" type="Pion INF">
+    <nature atlas-nature="ASS" level="oo" nature="combat/field artillery"/>
+    <equipments>
+      <equipment count="2" crew="2" loadable="true" major="true" type="Equipe Mortier 81"/>
+      <equipment count="1" crew="3" type="GBC 180"/>
+      <equipment count="2" crew="1" loadable="true" type="Fantassin MINIMI"/>
+      <equipment count="2" crew="1" loadable="true" type="Fantassin LGI"/>
+      <equipment count="2" crew="1" loadable="true" type="Fantassin Appui AC"/>
+      <equipment count="1" crew="3" major="true" type="VBL APILAS"/>
+      <equipment count="2" crew="4" type="VAB 7,62"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1500s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+  </unit>
+  <unit decisional-model="net.masagroup.sword.military.platoon.roles.PlatoonABC" id="447" name="Peloton . LECLERC CDP SOFF" type="Pion ABC">
+    <nature atlas-nature="Blinde" level="ooo" nature="combat/armor/track/heavy"/>
+    <equipments>
+      <equipment count="4" crew="3" major="true" type="Char LECLERC"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="5" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="3000s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="200"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+      <distance-before-point type="lima" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="350"/>
+  </unit>
+  <unit decisional-model="net.masagroup.sword.military.platoon.roles.PlatoonABC" id="448" name="Peloton . d appui direct" type="Pion ABC">
+    <nature atlas-nature="Blinde" level="ooo" nature="combat/armor/wheeled/light"/>
+    <equipments>
+      <equipment count="1" crew="2" type="VBL CDT"/>
+      <equipment count="3" crew="7" major="true" type="VAB T20 APP DIR"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="4" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="1500s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="300"/>
+      <distance-before-point type="urbain" value="400"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="500"/>
+  </unit>
+  <unit decisional-model="net.masagroup.sword.military.platoon.roles.PC" id="449" name="Peloton . LECLERC CDT ESC" type="Pion ABC">
+    <nature atlas-nature="Vehicule" level="ooo" nature="combat/armor/track/heavy"/>
+    <equipments>
+      <equipment count="2" crew="2" major="true" type="VBL CDT"/>
+      <equipment count="1" crew="3" major="true" type="Char LECLERC"/>
+      <equipment count="1" crew="2" type="TRM 2000 2Pers"/>
+      <equipment count="2" crew="1" type="Moto CAGIVA 350"/>
+      <equipment count="1" crew="2" type="VTC P4"/>
+      <equipment count="1" crew="3" major="true" type="VAB 7,62"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="3" type="Officier"/>
+      <crew-rank count="4" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="1650s"/>
     <distance-before-points>
       <distance-before-point type="foret" value="500"/>
       <distance-before-point type="urbain" value="500"/>
