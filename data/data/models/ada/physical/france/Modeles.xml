@@ -32,6 +32,41 @@
         <mission name="MELEE Detruire"/>
       </missions>
     </unit>
+    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PIA">
+      <missions>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES Faire Mouvement"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Orienter Refugies"/>
+        <mission name="COMMUNES Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="MELEE Appuyer"/>
+        <mission name="MELEE Detruire"/>
+        <mission name="MELEE S'emparer d'un Bloc Urbain"/>
+        <mission name="MELEE Interdire un Bloc Urbain"/>
+        <mission name="MELEE Boucler un Bloc Urbain"/>
+        <mission name="MELEE Controler"/>
+        <mission name="MELEE Ratisser un Bloc Urbain"/>
+        <mission name="MELEE Ratisser une Zone"/>
+        <mission name="MELEE Reconnaitre Itineraire"/>
+      </missions>
+    </unit>
+    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PC">
+      <missions>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES Faire Mouvement"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Orienter Refugies"/>
+        <mission name="COMMUNES Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+      </missions>
+    </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PlatoonTest">
       <missions>
         <mission name="Advance"/>

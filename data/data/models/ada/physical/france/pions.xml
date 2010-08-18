@@ -10746,4 +10746,125 @@
     </postures>
     <nbc decontamination-delay="1s"/>
   </unit>
+  <unit decisional-model="net.masagroup.sword.military.platoon.roles.PIA" id="441" name="PIA Dominante INF" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="4" crew="2" major="true" type="VAB 12,7"/>
+      <equipment count="9" crew="1" loadable="true" type="Fantassin"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin MINIMI"/>
+      <equipment count="2" crew="2" loadable="true" type="Equipe ERYX"/>
+      <equipment count="2" crew="1" loadable="true" type="Tireur Precision"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin Appui AC"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin LGI"/>
+      <equipment count="2" crew="3" type="Char LECLERC"/>
+      <equipment count="1" crew="3" type="EBG"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="9" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1350s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+  </unit>
+  <unit decisional-model="net.masagroup.sword.military.platoon.roles.PIA" id="442" name="PIA Dominante ABC" type="Pion ABC">
+    <nature atlas-nature="Vehicule" level="ooo" nature="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="4" crew="3" major="true" type="Char LECLERC"/>
+      <equipment count="2" crew="2" type="VAB 12,7"/>
+      <equipment count="4" crew="1" loadable="true" type="Fantassin"/>
+      <equipment count="2" crew="1" loadable="true" type="Fantassin MINIMI"/>
+      <equipment count="1" crew="2" loadable="true" type="Equipe ERYX"/>
+      <equipment count="1" crew="1" loadable="true" type="Tireur Precision"/>
+      <equipment count="2" crew="1" loadable="true" type="Fantassin Appui AC"/>
+      <equipment count="2" crew="1" loadable="true" type="Fantassin LGI"/>
+      <equipment count="1" crew="3" type="EBG"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="9" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1350s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+  </unit>
+  <unit decisional-model="net.masagroup.sword.military.platoon.roles.PIA" id="443" name="PIA Dominante RENS" type="Pion RENS">
+    <nature atlas-nature="Vehicule" level="ooo" nature="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="2" crew="3" major="true" type="VBL MILAN"/>
+      <equipment count="2" crew="3" major="true" type="VBL 7,62"/>
+      <equipment count="2" crew="3" type="Char LECLERC"/>
+      <equipment count="1" crew="3" type="EBG"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="9" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1350s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+  </unit>
+  <unit decisional-model="net.masagroup.sword.military.platoon.roles.PC" id="444" name="PC SGTIA" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="4" crew="2" major="true" type="VAB 12,7"/>
+      <equipment count="9" crew="1" loadable="true" type="Fantassin"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin MINIMI"/>
+      <equipment count="2" crew="2" loadable="true" type="Equipe ERYX"/>
+      <equipment count="2" crew="1" loadable="true" type="Tireur Precision"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin Appui AC"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin LGI"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="6" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1350s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+  </unit>
 </units>
