@@ -25,6 +25,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects_DataComputer.h"
+#include "Entities/Agents/Actions/Objects/Operation.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeObjectFunctions::Recon
@@ -384,7 +385,7 @@ float DEC_KnowledgeObjectFunctions::EstimatedWorkTime( MIL_Agent_ABC& pion, boos
     if( pKnowledge && pKnowledge->IsValid() )
         if( MIL_Object_ABC* object = pKnowledge->GetObjectKnown() )
         {
-            PHY_RoleAction_Objects_DataComputer dataComputer( pion, PHY_RoleAction_Objects_DataComputerPionData::eDestroy, *object );
+            PHY_RoleAction_Objects_DataComputer dataComputer( pion, eDestroy, *object );
             return float( dataComputer.ComputeWorkTime() );
         }
     return -1.0f;

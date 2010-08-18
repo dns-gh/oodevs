@@ -10,14 +10,11 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RoleAction_Objects_DataComputer.h"
-
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
 #include "MIL_AgentServer.h"
-
 #include "simulation_kernel/OnComponentFunctor_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
@@ -27,13 +24,13 @@
 // Name: PHY_RoleAction_Objects_DataComputer constructor
 // Created: NLD 2004-10-01
 // -----------------------------------------------------------------------------
-PHY_RoleAction_Objects_DataComputer::PHY_RoleAction_Objects_DataComputer( MIL_Agent_ABC& pion, PHY_RoleAction_Objects_DataComputerPionData::E_Operation operation, const MIL_Object_ABC& object )
+PHY_RoleAction_Objects_DataComputer::PHY_RoleAction_Objects_DataComputer( MIL_Agent_ABC& pion, E_Operation operation, const MIL_Object_ABC& object )
     : operation_( operation )
     , object_   ( object )
 {
-    CollectData        ( pion );
+    CollectData( pion );
     ReserveConsumptions();
-    FilterData         ();
+    FilterData();
 }
 
 // -----------------------------------------------------------------------------
@@ -45,10 +42,6 @@ PHY_RoleAction_Objects_DataComputer::~PHY_RoleAction_Objects_DataComputer()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects_DataComputer::CollectData
 // Created: NLD 2007-02-12
@@ -56,7 +49,6 @@ PHY_RoleAction_Objects_DataComputer::~PHY_RoleAction_Objects_DataComputer()
 void PHY_RoleAction_Objects_DataComputer::CollectData( MIL_Agent_ABC& pion )
 {
     pionsData_.push_back( PHY_RoleAction_Objects_DataComputerPionData( pion, operation_, object_ ) );
-
     std::auto_ptr< OnComponentComputer_ABC > componentComputer( pion.GetAlgorithms().onComponentFunctorComputerFactory_->Create( *this ) );
     pion.Execute( *componentComputer );
     const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
@@ -82,7 +74,6 @@ void PHY_RoleAction_Objects_DataComputer::FilterData()
     MT_Float rMinOperationTime = std::numeric_limits< MT_Float >::max();
     for( CIT_PionDataVector it = pionsData_.begin(); it != pionsData_.end(); ++it )
         rMinOperationTime = std::min( rMinOperationTime, it->GetMinOperationTime() );
-
     for( IT_PionDataVector it = pionsData_.begin(); it != pionsData_.end(); ++it )
         it->RemoveSlowComposantes( rMinOperationTime );
 }
@@ -156,14 +147,13 @@ void PHY_RoleAction_Objects_DataComputer::RecoverDotations( const PHY_DotationCa
 MT_Float PHY_RoleAction_Objects_DataComputer::ComputeDeltaPercentage()
 {
     MT_Float rTotalOperationTime  = 0.;
-    unsigned int     nTotalNbrComposantes = 0;
+    unsigned int nTotalNbrComposantes = 0;
 
     for( CIT_PionDataVector it = pionsData_.begin(); it != pionsData_.end(); ++it )
     {
         MT_Float rOperationTime;
-        unsigned int     nNbrComposantes;
+        unsigned int nNbrComposantes;
         it->GetTotalOperationTime( rOperationTime, nNbrComposantes );
-
         rTotalOperationTime  += rOperationTime;
         nTotalNbrComposantes += nNbrComposantes;
     }
@@ -189,18 +179,16 @@ MT_Float PHY_RoleAction_Objects_DataComputer::ComputeDeltaPercentage()
 MT_Float PHY_RoleAction_Objects_DataComputer::ComputeWorkTime()
 {
     MT_Float rTotalOperationTime  = 0.;
-    unsigned int     nTotalNbrComposantes = 0;
-
+    unsigned int nTotalNbrComposantes = 0;
     for( CIT_PionDataVector it = pionsData_.begin(); it != pionsData_.end(); ++it )
     {
         MT_Float rOperationTime;
-        unsigned int     nNbrComposantes;
+        unsigned int nNbrComposantes;
         it->GetTotalOperationTime( rOperationTime, nNbrComposantes );
 
         rTotalOperationTime  += rOperationTime;
         nTotalNbrComposantes += nNbrComposantes;
     }
-
     if( nTotalNbrComposantes == 0 )
     {
         RollbackConsumptionsReservations();
@@ -209,6 +197,5 @@ MT_Float PHY_RoleAction_Objects_DataComputer::ComputeWorkTime()
 
     MT_Float rTimeTmp  = rTotalOperationTime / nTotalNbrComposantes; // <= Moyenne du temps de construction pour chaque composante
              rTimeTmp /= nTotalNbrComposantes;                       // <= Temps de construction de l'objet pour le pion
-
     return rTimeTmp;
 }

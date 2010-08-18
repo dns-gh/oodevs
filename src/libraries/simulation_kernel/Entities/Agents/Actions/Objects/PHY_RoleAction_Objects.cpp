@@ -41,6 +41,7 @@
 #include "simulation_kernel/DotationComputerFactory_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
+#include "Operation.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleAction_Objects )
 
@@ -113,7 +114,7 @@ int PHY_RoleAction_Objects::Construct( MIL_Object_ABC& object )
         return eImpossible;
     if( object().IsBuilt() )
         return eFinished;
-    PHY_RoleAction_Objects_DataComputer dataComputer( pion_, PHY_RoleAction_Objects_DataComputerPionData::eConstruct, object );
+    PHY_RoleAction_Objects_DataComputer dataComputer( pion_, eConstruct, object );
     const MT_Float rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
     if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
         return eNoCapacity;
@@ -169,7 +170,7 @@ int PHY_RoleAction_Objects::Destroy( boost::shared_ptr< DEC_Knowledge_Object >& 
         return eImpossible;
     if( object().IsMined() )
     {
-        PHY_RoleAction_Objects_DataComputer dataComputer( pion_, PHY_RoleAction_Objects_DataComputerPionData::eDemine, object );
+        PHY_RoleAction_Objects_DataComputer dataComputer( pion_, eDemine, object );
 
         const MT_Float rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
         if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
@@ -181,7 +182,7 @@ int PHY_RoleAction_Objects::Destroy( boost::shared_ptr< DEC_Knowledge_Object >& 
     }
     else
     {
-        PHY_RoleAction_Objects_DataComputer dataComputer( pion_, PHY_RoleAction_Objects_DataComputerPionData::eDestroy, object );
+        PHY_RoleAction_Objects_DataComputer dataComputer( pion_, eDestroy, object );
 
         const MT_Float rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
         if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
@@ -214,7 +215,7 @@ int PHY_RoleAction_Objects::Mine( MIL_Object_ABC& object )
 {
     if( !object().CanBeMined() )
         return eImpossible;
-    PHY_RoleAction_Objects_DataComputer dataComputer( pion_, PHY_RoleAction_Objects_DataComputerPionData::eMine, object );
+    PHY_RoleAction_Objects_DataComputer dataComputer( pion_, eMine, object );
     const MT_Float rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
     if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
         return eNoCapacity;
@@ -259,7 +260,7 @@ int PHY_RoleAction_Objects::Demine( MIL_Object_ABC& object )
     if( !object().CanBeMined() )
         return eImpossible;
 
-    PHY_RoleAction_Objects_DataComputer dataComputer( pion_, PHY_RoleAction_Objects_DataComputerPionData::eDemine, object );
+    PHY_RoleAction_Objects_DataComputer dataComputer( pion_, eDemine, object );
     const MT_Float rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
     if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
         return eNoCapacity;
@@ -285,7 +286,7 @@ int PHY_RoleAction_Objects::Bypass( boost::shared_ptr< DEC_Knowledge_Object >& p
     if( object().IsBypassed() )
         return eFinished;
 
-    PHY_RoleAction_Objects_DataComputer dataComputer( pion_, PHY_RoleAction_Objects_DataComputerPionData::eBypass, object );
+    PHY_RoleAction_Objects_DataComputer dataComputer( pion_, eBypass, object );
     const MT_Float rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
     if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
         return eNoCapacity;
@@ -362,7 +363,7 @@ int PHY_RoleAction_Objects::Supply( boost::shared_ptr< DEC_Knowledge_Object >& o
     pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
     if( attribute->IsFull() )
         return eFinished;
-    PHY_RoleAction_Objects_DataComputer dataComputer( pion_, PHY_RoleAction_Objects_DataComputerPionData::eConstruct, object );
+    PHY_RoleAction_Objects_DataComputer dataComputer( pion_, eConstruct, object );
     const MT_Float rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
     if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
         return eNoCapacity;
@@ -397,7 +398,7 @@ int PHY_RoleAction_Objects::Distribute( boost::shared_ptr< DEC_Knowledge_Object 
     typedef std::vector< std::pair< const PHY_DotationCategory*, unsigned int > > T_SelectionVector;
     typedef T_SelectionVector::iterator IT_SelectionVector;
     T_SelectionVector selection;
-    PHY_RoleAction_Objects_DataComputer dataComputer( pion_, PHY_RoleAction_Objects_DataComputerPionData::eConstruct, object );
+    PHY_RoleAction_Objects_DataComputer dataComputer( pion_, eConstruct, object );
     attribute->SelectDotations( selection, true );
     for ( IT_SelectionVector it = selection.begin(); it != selection.end(); ++it )
         if( dataComputer.HasDotations( *it->first, 0 ) )
@@ -515,7 +516,7 @@ void PHY_RoleAction_Objects::StopOccupyingObject( boost::shared_ptr< DEC_Knowled
 bool PHY_RoleAction_Objects::CanConstructWithReinforcement( const std::string& strType ) const
 {
     const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( strType );
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, PHY_RoleAction_Objects_CapabilityComputer::eConstruct, type );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eConstruct, type );
     return capabilityComputer.HasCapability();
 }
 
@@ -525,7 +526,7 @@ bool PHY_RoleAction_Objects::CanConstructWithReinforcement( const std::string& s
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Objects::CanBypassWithReinforcement( const MIL_ObjectType_ABC& object ) const
 {
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, PHY_RoleAction_Objects_CapabilityComputer::eBypass, object );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eBypass, object );
     return capabilityComputer.HasCapability();
 }
 
@@ -535,7 +536,7 @@ bool PHY_RoleAction_Objects::CanBypassWithReinforcement( const MIL_ObjectType_AB
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Objects::CanDestroyWithReinforcement( const MIL_ObjectType_ABC& object ) const
 {
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, PHY_RoleAction_Objects_CapabilityComputer::eDestroy, object );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eDestroy, object );
     return capabilityComputer.HasCapability();
 }
 
@@ -545,7 +546,7 @@ bool PHY_RoleAction_Objects::CanDestroyWithReinforcement( const MIL_ObjectType_A
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Objects::CanMineWithReinforcement( const MIL_ObjectType_ABC& object ) const
 {
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, PHY_RoleAction_Objects_CapabilityComputer::eMine, object );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eMine, object );
     return capabilityComputer.HasCapability();
 }
 

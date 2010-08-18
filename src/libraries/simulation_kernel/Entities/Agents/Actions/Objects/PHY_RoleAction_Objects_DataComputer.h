@@ -14,6 +14,7 @@
 
 #include "simulation_kernel/OnComponentFunctor_ABC.h"
 #include "PHY_RoleAction_Objects_DataComputerPionData.h"
+#include "Operation.h"
 
 class MIL_Object_ABC;
 class MIL_Agent_ABC;
@@ -26,47 +27,51 @@ class PHY_ComposantePion;
 class PHY_RoleAction_Objects_DataComputer : public OnComponentFunctor_ABC
 {
 public:
-             PHY_RoleAction_Objects_DataComputer( MIL_Agent_ABC& pion, PHY_RoleAction_Objects_DataComputerPionData::E_Operation nOperation, const MIL_Object_ABC& object );
+    //! @name Constructors/Destructor
+    //@{
+             PHY_RoleAction_Objects_DataComputer( MIL_Agent_ABC& pion, E_Operation nOperation, const MIL_Object_ABC& object );
     virtual ~PHY_RoleAction_Objects_DataComputer();
-
+    //@}
 
     //! @name Operations
     //@{
-    bool     HasDotations                    ( const PHY_DotationCategory& category, unsigned int nNbr ) const;
-    void     ConsumeDotations                ( const PHY_DotationCategory& category, unsigned int nNbr );
-    void     RecoverDotations                ( const PHY_DotationCategory& category, unsigned int nNbr );
+    bool HasDotations( const PHY_DotationCategory& category, unsigned int nNbr ) const;
+    void ConsumeDotations( const PHY_DotationCategory& category, unsigned int nNbr );
+    void RecoverDotations( const PHY_DotationCategory& category, unsigned int nNbr );
 
-    MT_Float ComputeDeltaPercentage          ();
-    MT_Float ComputeWorkTime                 ();
+    MT_Float ComputeDeltaPercentage();
+    MT_Float ComputeWorkTime();
 
-    void     operator()                      ( PHY_ComposantePion& composante );
+    void operator()( PHY_ComposantePion& composante );
     //@}
 
 private:
     //! @name Tools
     //@{
-    void CollectData                     ( MIL_Agent_ABC& pion );
-    void FilterData                      ();
+    void CollectData( MIL_Agent_ABC& pion );
+    void FilterData();
 
-    void ReserveConsumptions             ();
+    void ReserveConsumptions();
     void RollbackConsumptionsReservations();
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::vector< PHY_RoleAction_Objects_DataComputerPionData >  T_PionDataVector;
-    typedef T_PionDataVector::iterator                                  IT_PionDataVector;
-    typedef T_PionDataVector::reverse_iterator                          RIT_PionDataVector;
-    typedef T_PionDataVector::const_reverse_iterator                    CRIT_PionDataVector;
-    typedef T_PionDataVector::const_iterator                            CIT_PionDataVector;
+    typedef std::vector< PHY_RoleAction_Objects_DataComputerPionData > T_PionDataVector;
+    typedef T_PionDataVector::iterator                                IT_PionDataVector;
+    typedef T_PionDataVector::reverse_iterator                       RIT_PionDataVector;
+    typedef T_PionDataVector::const_reverse_iterator                CRIT_PionDataVector;
+    typedef T_PionDataVector::const_iterator                         CIT_PionDataVector;
     //@}
 
 private:
-    const PHY_RoleAction_Objects_DataComputerPionData::E_Operation  operation_;
-    const MIL_Object_ABC&                                       object_;
-          T_PionDataVector                                          pionsData_;
-
+    //! @name Member data
+    //@{
+    const E_Operation operation_;
+    const MIL_Object_ABC& object_;
+    T_PionDataVector pionsData_;
+    //@}
 };
 
 #endif // __PHY_RoleAction_Objects_DataComputer_h_

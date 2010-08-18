@@ -10,17 +10,13 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RoleAction_Objects_CapabilityComputer.h"
-
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-
-#include "simulation_kernel/OnComponentFunctor_ABC.h"
-#include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
-#include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
-#include "simulation_kernel/AlgorithmsFactories.h"
+#include "OnComponentFunctorComputer_ABC.h"
+#include "OnComponentFunctorComputerFactory_ABC.h"
+#include "AlgorithmsFactories.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects_CapabilityComputer constructor
@@ -55,7 +51,6 @@ void PHY_RoleAction_Objects_CapabilityComputer::CollectData( const MIL_AgentPion
 
     if( bHasCapability_ )
         return;
-
     const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
     for( PHY_RoleInterface_Reinforcement::CIT_PionSet itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )
         CollectData( **itReinforcement );
@@ -69,14 +64,13 @@ void PHY_RoleAction_Objects_CapabilityComputer::operator() ( PHY_ComposantePion&
 {
     if( bHasCapability_ )
         return;
-
     switch( nOperation_ )
     {
         case eConstruct: bHasCapability_ = composante.CanConstruct( objectType_ ); break;
-        case eDestroy  : bHasCapability_ = composante.CanDestroy  ( objectType_ ); break;
-        case eMine     : bHasCapability_ = composante.CanMine     ( objectType_ ); break;
-        case eDemine   : bHasCapability_ = composante.CanDemine   ( objectType_ ); break;
-        case eBypass   : bHasCapability_ = composante.CanBypass   ( objectType_, false ); break;
+        case eDestroy  : bHasCapability_ = composante.CanDestroy( objectType_ ); break;
+        case eMine     : bHasCapability_ = composante.CanMine( objectType_ ); break;
+        case eDemine   : bHasCapability_ = composante.CanDemine( objectType_ ); break;
+        case eBypass   : bHasCapability_ = composante.CanBypass( objectType_, false ); break;
         default: assert( false );
     }
 }

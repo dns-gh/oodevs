@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RoleAction_Objects_DataComputerPionData.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
@@ -18,22 +17,19 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
-
-#include "simulation_kernel/AlgorithmsFactories.h"
-#include "simulation_kernel/DotationComputer_ABC.h"
-#include "simulation_kernel/DotationComputerFactory_ABC.h"
-#include "simulation_kernel/ConsumeDotationNotificationHandler_ABC.h"
+#include "AlgorithmsFactories.h"
+#include "DotationComputer_ABC.h"
+#include "DotationComputerFactory_ABC.h"
+#include "ConsumeDotationNotificationHandler_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects_DataComputerPionData
 // Created: NLD 2004-10-01
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Objects_DataComputerPionData::PHY_RoleAction_Objects_DataComputerPionData()
-    : operation_           ()
-    , pObject_             ( 0 )
+    : pObject_             ( 0 )
     , pPion_               ( 0 )
     , bConsumptionReserved_( false )
-    , workingComposantes_  ()
 {
     // NOTHING
 }
@@ -47,7 +43,6 @@ PHY_RoleAction_Objects_DataComputerPionData::PHY_RoleAction_Objects_DataComputer
     , pObject_             ( &object )
     , pPion_               ( &pion )
     , bConsumptionReserved_( false )
-    , workingComposantes_  ()
 {
     // NOTHING
 }
@@ -62,9 +57,9 @@ void PHY_RoleAction_Objects_DataComputerPionData::operator() ( const PHY_Composa
     switch( operation_ )
     {
         case eConstruct: rDeltaTime = composante.GetConstructionTime( pObject_->GetType(), (*pObject_)().GetSizeCoef() ); break;
-        case eDestroy  : rDeltaTime = composante.GetDestructionTime ( pObject_->GetType(), (*pObject_)().GetSizeCoef() ); break;
-        case eMine     : rDeltaTime = composante.GetMiningTime      ( pObject_->GetType() ); break;
-        case eDemine   : rDeltaTime = composante.GetDeminingTime    ( pObject_->GetType() ); break;
+        case eDestroy  : rDeltaTime = composante.GetDestructionTime( pObject_->GetType(), (*pObject_)().GetSizeCoef() ); break;
+        case eMine     : rDeltaTime = composante.GetMiningTime( pObject_->GetType() ); break;
+        case eDemine   : rDeltaTime = composante.GetDeminingTime ( pObject_->GetType() ); break;
         case eBypass   : rDeltaTime = composante.GetBypassTime      ( pObject_->GetType(), (*pObject_)().GetSizeCoef(), (*pObject_)().IsMined() ); break;
         default: assert( false );
     }
@@ -97,7 +92,6 @@ void PHY_RoleAction_Objects_DataComputerPionData::ReserveConsumptions()
 {
     if( workingComposantes_.empty() )
         return;
-
     assert( pPion_ );
     const PHY_ConsumptionType* pConsumptionMode = 0;
     for( CIT_ComposanteDataVector it = workingComposantes_.begin(); it != workingComposantes_.end(); ++it )
@@ -132,7 +126,6 @@ unsigned int PHY_RoleAction_Objects_DataComputerPionData::GetDotationValue( cons
 {
     assert( pPion_ );
  //   return ( unsigned int ) pPion_->GetRole< PHY_RoleInterface_Dotations >().GetDotationValue( category );
-
     std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pPion_->GetAlgorithms().dotationComputerFactory_->Create() );
     pPion_->Execute( *dotationComputer );
     return ( unsigned int ) dotationComputer->GetDotationValue( category );
