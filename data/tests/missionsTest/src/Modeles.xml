@@ -8,10 +8,10 @@
       </missions>
     </unit>
   
-    <!--unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\PC\Model.bms" name="PC INF">
+    <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.bms" name="Peloton XL">
       <missions>
         <mission name="Faire Mouvement"/>
       </missions>
-    </unit-->
+    </unit>
   </units>
 </models>

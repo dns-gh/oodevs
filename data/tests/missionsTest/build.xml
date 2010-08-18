@@ -25,7 +25,9 @@
     <copy file="${input}/${testName}/orbat.xml"  tofile="${output}/${testName}/orbat.xml"/>
     <copy file="${input}/${testName}/scripts/resources/config.lua" tofile="${output}/${testName}/scripts/resources/config.lua"/>
     
-    <xslt in="${input}/Modeles.xml" style="xsl/transformation.xsl" out="${output}/${testName}/scripts/supervisor.lua"/>
+    <xslt in="${input}/Modeles.xml" style="xsl/transformation.xsl" out="${output}/${testName}/reports/report.log">
+      <param name="output" expression="${output}/${testName}/scripts"/>
+    </xslt>
     <xslt in="${input}/Modeles.xml" style="xsl/model.xsl" out="${output}/${testName}/scripts/resources/model.lua"/>
   </target>  
 </project>
