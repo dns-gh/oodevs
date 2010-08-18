@@ -342,46 +342,46 @@ void AgentTypes::RegisterActionType( MagicActionType& actionType )
 void AgentTypes::CreateMagicActionTypes()
 {
     // Unit Magic Actions
-    RegisterActionType( *new MagicActionType( "teleport", MsgsClientToSim::MsgUnitMagicAction_Type_move_to ) );
-    RegisterActionType( *new MagicActionType( "surrender", MsgsClientToSim::MsgUnitMagicAction_Type_surrender_to ) );
-    RegisterActionType( *new MagicActionType( "cancel_surrender", MsgsClientToSim::MsgUnitMagicAction_Type_cancel_surrender ) );
-    RegisterActionType( *new MagicActionType( "recover_transporters", MsgsClientToSim::MsgUnitMagicAction_Type_recover_transporters) );
-    RegisterActionType( *new MagicActionType( "destroy_component", MsgsClientToSim::MsgUnitMagicAction_Type_destroy_component ) );
-    RegisterActionType( *new MagicActionType( "recover_all", MsgsClientToSim::MsgUnitMagicAction_Type_recover_all ) );
-    RegisterActionType( *new MagicActionType( "recover_troops", MsgsClientToSim::MsgUnitMagicAction_Type_recover_troops ) );
-    RegisterActionType( *new MagicActionType( "recover_equipments", MsgsClientToSim::MsgUnitMagicAction_Type_recover_equipments ) );
-    RegisterActionType( *new MagicActionType( "recover_resources", MsgsClientToSim::MsgUnitMagicAction_Type_recover_resources ) );
-    RegisterActionType( *new MagicActionType( "destroy_all", MsgsClientToSim::MsgUnitMagicAction_Type_destroy_all ) );
-    RegisterActionType( *new MagicActionType( "change_human_factors", MsgsClientToSim::MsgUnitMagicAction_Type_change_human_factors ) );
-    RegisterActionType( *new MagicActionType( "partial_recovery", MsgsClientToSim::MsgUnitMagicAction_Type_partial_recovery ) );
-    RegisterActionType( *new MagicActionType( "unit_creation", MsgsClientToSim::MsgUnitMagicAction_Type_unit_creation ) );
-    RegisterActionType( *new MagicActionType( "fire_order", MsgsClientToSim::MsgUnitMagicAction_Type_create_fire_order ) );
-    RegisterActionType( *new MagicActionType( "population_total_destruction", MsgsClientToSim::MsgUnitMagicAction_Type_population_total_destruction ) );
-    RegisterActionType( *new MagicActionType( "population_kill", MsgsClientToSim::MsgUnitMagicAction_Type_population_kill ) );
-    RegisterActionType( *new MagicActionType( "population_resurrect", MsgsClientToSim::MsgUnitMagicAction_Type_population_resurrect ) );
-    RegisterActionType( *new MagicActionType( "population_change_attitude", MsgsClientToSim::MsgUnitMagicAction_Type_population_change_attitude ) );
-    RegisterActionType( *new MagicActionType( "change_knowledge_group", MsgsClientToSim::MsgUnitMagicAction_Type_change_knowledge_group ) );
-    RegisterActionType( *new MagicActionType( "unit_change_superior", MsgsClientToSim::MsgUnitMagicAction_Type_unit_change_superior ) );
-    RegisterActionType( *new MagicActionType( "change_automat_superior", MsgsClientToSim::MsgUnitMagicAction_Type_change_automat_superior ) );
-    RegisterActionType( *new MagicActionType( "change_formation_superior", MsgsClientToSim::MsgUnitMagicAction_Type_change_formation_superior ) );
-    RegisterActionType( *new MagicActionType( "change_logistic_links", MsgsClientToSim::MsgUnitMagicAction_Type_change_logistic_links ) );
-    RegisterActionType( *new MagicActionType( "log_supply_push_flow", MsgsClientToSim::MsgUnitMagicAction_Type_log_supply_push_flow ) );
-    RegisterActionType( *new MagicActionType( "log_supply_change_quotas", MsgsClientToSim::MsgUnitMagicAction_Type_log_supply_change_quotas ) );
+    RegisterActionType( *new MagicActionType( "teleport", MsgsClientToSim::MsgUnitMagicAction::move_to ) );
+    RegisterActionType( *new MagicActionType( "surrender", MsgsClientToSim::MsgUnitMagicAction::surrender_to ) );
+    RegisterActionType( *new MagicActionType( "cancel_surrender", MsgsClientToSim::MsgUnitMagicAction::cancel_surrender ) );
+    RegisterActionType( *new MagicActionType( "recover_transporters", MsgsClientToSim::MsgUnitMagicAction::recover_transporters) );
+    RegisterActionType( *new MagicActionType( "destroy_component", MsgsClientToSim::MsgUnitMagicAction::destroy_component ) );
+    RegisterActionType( *new MagicActionType( "recover_all", MsgsClientToSim::MsgUnitMagicAction::recover_all ) );
+    RegisterActionType( *new MagicActionType( "recover_troops", MsgsClientToSim::MsgUnitMagicAction::recover_troops ) );
+    RegisterActionType( *new MagicActionType( "recover_equipments", MsgsClientToSim::MsgUnitMagicAction::recover_equipments ) );
+    RegisterActionType( *new MagicActionType( "recover_resources", MsgsClientToSim::MsgUnitMagicAction::recover_resources ) );
+    RegisterActionType( *new MagicActionType( "destroy_all", MsgsClientToSim::MsgUnitMagicAction::destroy_all ) );
+    RegisterActionType( *new MagicActionType( "change_human_factors", MsgsClientToSim::MsgUnitMagicAction::change_human_factors ) );
+    RegisterActionType( *new MagicActionType( "partial_recovery", MsgsClientToSim::MsgUnitMagicAction::partial_recovery ) );
+    RegisterActionType( *new MagicActionType( "unit_creation", MsgsClientToSim::MsgUnitMagicAction::unit_creation ) );
+    RegisterActionType( *new MagicActionType( "fire_order", MsgsClientToSim::MsgUnitMagicAction::create_fire_order ) );
+    RegisterActionType( *new MagicActionType( "population_total_destruction", MsgsClientToSim::MsgUnitMagicAction::population_total_destruction ) );
+    RegisterActionType( *new MagicActionType( "population_kill", MsgsClientToSim::MsgUnitMagicAction::population_kill ) );
+    RegisterActionType( *new MagicActionType( "population_resurrect", MsgsClientToSim::MsgUnitMagicAction::population_resurrect ) );
+    RegisterActionType( *new MagicActionType( "population_change_attitude", MsgsClientToSim::MsgUnitMagicAction::population_change_attitude ) );
+    RegisterActionType( *new MagicActionType( "change_knowledge_group", MsgsClientToSim::MsgUnitMagicAction::change_knowledge_group ) );
+    RegisterActionType( *new MagicActionType( "unit_change_superior", MsgsClientToSim::MsgUnitMagicAction::unit_change_superior ) );
+    RegisterActionType( *new MagicActionType( "change_automat_superior", MsgsClientToSim::MsgUnitMagicAction::change_automat_superior ) );
+    RegisterActionType( *new MagicActionType( "change_formation_superior", MsgsClientToSim::MsgUnitMagicAction::change_formation_superior ) );
+    RegisterActionType( *new MagicActionType( "change_logistic_links", MsgsClientToSim::MsgUnitMagicAction::change_logistic_links ) );
+    RegisterActionType( *new MagicActionType( "log_supply_push_flow", MsgsClientToSim::MsgUnitMagicAction::log_supply_push_flow ) );
+    RegisterActionType( *new MagicActionType( "log_supply_change_quotas", MsgsClientToSim::MsgUnitMagicAction::log_supply_change_quotas ) );
 
     // Knowledge Magic Actions
-    RegisterActionType( *new MagicActionType( "knowledge_group_enable", MsgsClientToSim::MsgKnowledgeMagicAction_Type_enable ) );
-    RegisterActionType( *new MagicActionType( "knowledge_group_update_side", MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_side ) );
-    RegisterActionType( *new MagicActionType( "knowledge_group_update_side_parent", MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_side_parent ) );
-    RegisterActionType( *new MagicActionType( "knowledge_group_update_type", MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_type ) );
+    RegisterActionType( *new MagicActionType( "knowledge_group_enable", MsgsClientToSim::MsgKnowledgeMagicAction::enable ) );
+    RegisterActionType( *new MagicActionType( "knowledge_group_update_side", MsgsClientToSim::MsgKnowledgeMagicAction::update_side ) );
+    RegisterActionType( *new MagicActionType( "knowledge_group_update_side_parent", MsgsClientToSim::MsgKnowledgeMagicAction::update_side_parent ) );
+    RegisterActionType( *new MagicActionType( "knowledge_group_update_type", MsgsClientToSim::MsgKnowledgeMagicAction::update_type ) );
 
     // Object Magic Actions
-    RegisterActionType( *new MagicActionType( "create_object", MsgsClientToSim::MsgObjectMagicAction_Type_create ) );
-    RegisterActionType( *new MagicActionType( "update_object", MsgsClientToSim::MsgObjectMagicAction_Type_update ) );
-    RegisterActionType( *new MagicActionType( "destroy_object", MsgsClientToSim::MsgObjectMagicAction_Type_destroy ) );
+    RegisterActionType( *new MagicActionType( "create_object", MsgsClientToSim::MsgObjectMagicAction::create ) );
+    RegisterActionType( *new MagicActionType( "update_object", MsgsClientToSim::MsgObjectMagicAction::update ) );
+    RegisterActionType( *new MagicActionType( "destroy_object", MsgsClientToSim::MsgObjectMagicAction::destroy ) );
 
     // Other Magic Actions
-    RegisterActionType( *new MagicActionType( "global_meteo", MsgsClientToSim::MsgMagicAction_Type_global_meteo ) );
-    RegisterActionType( *new MagicActionType( "local_meteo", MsgsClientToSim::MsgMagicAction_Type_local_meteo ) );
-    RegisterActionType( *new MagicActionType( "change_diplomacy", MsgsClientToSim::MsgMagicAction_Type_change_diplomacy ) );
-    RegisterActionType( *new MagicActionType( "create_knowledge_group", MsgsClientToSim::MsgMagicAction_Type_create_knowledge_group ) );
+    RegisterActionType( *new MagicActionType( "global_meteo", MsgsClientToSim::MsgMagicAction::global_meteo ) );
+    RegisterActionType( *new MagicActionType( "local_meteo", MsgsClientToSim::MsgMagicAction::local_meteo ) );
+    RegisterActionType( *new MagicActionType( "change_diplomacy", MsgsClientToSim::MsgMagicAction::change_diplomacy ) );
+    RegisterActionType( *new MagicActionType( "create_knowledge_group", MsgsClientToSim::MsgMagicAction::create_knowledge_group ) );
 }
