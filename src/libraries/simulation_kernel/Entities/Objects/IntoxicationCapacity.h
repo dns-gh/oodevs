@@ -12,6 +12,7 @@
 
 #include "ObjectCapacity_ABC.h"
 #include "MIL_InteractiveContainer_ABC.h"
+#include <boost/ptr_container/ptr_vector.hpp>
 
 class MIL_Agent_ABC;
 
@@ -35,9 +36,14 @@ public:
      //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
+    //@{
+
+     //! @name Operations
+    //@{
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void Register( MIL_Object_ABC& object );
     virtual void ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
+    void DesintoxicateZone( const TER_Localisation& zone );
     //@}
 
 private:
@@ -46,10 +52,22 @@ private:
     IntoxicationCapacity( const IntoxicationCapacity& );  //!< Copy constructor
     //@}
 
+    //! @name Helpers
+    //@{
+    bool IsInsideDesintoxicatedZone( const MT_Vector2D& position ) const;
+    //@}
+
+    //! @name Types
+    //@{
+    typedef boost::ptr_vector< TER_Localisation >   T_LocalisationVector;
+    typedef T_LocalisationVector::const_iterator    CIT_LocalisationVector;
+    //@}
+
 private:
     //! @name Member data
     //@{
     int         maxToxic_;
+    T_LocalisationVector desintoxicatedZones_;
     //@}
 };
 

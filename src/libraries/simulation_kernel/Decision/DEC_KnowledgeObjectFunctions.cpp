@@ -16,6 +16,7 @@
 #include "Entities/Objects/ConstructionAttribute.h"
 #include "Entities/Objects/ContaminationCapacity.h"
 #include "Entities/Objects/DecontaminationCapacity.h"
+#include "Entities/Objects/IntoxicationCapacity.h"
 #include "Entities/Objects/MineAttribute.h"
 #include "Entities/Objects/PopulationAttribute.h"
 #include "Entities/Objects/SupplyRouteAttribute.h"
@@ -110,8 +111,12 @@ void DEC_KnowledgeObjectFunctions::DecontaminateZone( const MIL_Agent_ABC& calle
     callerAgent.GetArmy().GetKnowledge().GetObjects( knownObjects, filter );
     for( CIT_KnowledgeObjectVector it = knownObjects.begin(); it != knownObjects.end(); ++it )
         if( location->IsIntersecting( (*it)->GetLocalisation() ) )
-            if( ContaminationCapacity* pCapacity = IsValidObjectCapacity< ContaminationCapacity >( *it ) )
-                pCapacity->DecontaminateZone( *location );
+        {
+            if( ContaminationCapacity* pContaminationCapacity = IsValidObjectCapacity< ContaminationCapacity >( *it ) )
+                pContaminationCapacity->DecontaminateZone( *location );
+            if( IntoxicationCapacity* pIntoxicationCapacity = IsValidObjectCapacity< IntoxicationCapacity >( *it ) )
+                pIntoxicationCapacity->DesintoxicateZone( *location );
+        }
 }
 
 // -----------------------------------------------------------------------------
