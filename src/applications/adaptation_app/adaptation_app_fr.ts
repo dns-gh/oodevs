@@ -1989,6 +1989,25 @@ Arrêt moteur allumé</translation>
     </message>
 </context>
 <context>
+    <name>ADN_KnowledgeGroups_Wizard</name>
+    <message>
+        <source>New knowledge group creation</source>
+        <translation>Création d&apos;un nouveau groupe de connaissance</translation>
+    </message>
+    <message>
+        <source>Knowledge group</source>
+        <translation>Groupe de connaissance</translation>
+    </message>
+    <message>
+        <source>Creation finished</source>
+        <translation>Création terminée</translation>
+    </message>
+    <message>
+        <source>Click &quot;Done&quot; to create the new knowledge group.</source>
+        <translation>Cliquez sur &quot;Terminer&quot; pour créer le nouveau groupe de connaissance.</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Launcher_Wizard</name>
     <message>
         <source>New launcher creation</source>

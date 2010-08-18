@@ -6,40 +6,29 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-18 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_KnowledgeGroups_GUI.cpp $
-// $Author: Ape $
-// $Modtime: 13/04/05 17:56 $
-// $Revision: 4 $
-// $Workfile: ADN_KnowledgeGroups_GUI.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_KnowledgeGroups_GUI.h"
-
 #include "ADN_KnowledgeGroups_Data.h"
 #include "ADN_KnowledgeGroups_ListView.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_EditLine.h"
 #include "ADN_TimeField.h"
-
 #include <qgroupbox.h>
 #include <qhbox.h>
 #include <qgrid.h>
 #include <qlabel.h>
 #include <qlayout.h>
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_KnowledgeGroups_GUI constructor
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
 ADN_KnowledgeGroups_GUI::ADN_KnowledgeGroups_GUI( ADN_KnowledgeGroups_Data& data )
-: ADN_GUI_ABC( "ADN_KnowledgeGroups_GUI" )
-, data_      ( data )
+    : ADN_GUI_ABC( "ADN_KnowledgeGroups_GUI" )
+    , data_( data )
 {
+    // NOTHING
 }
 
 
@@ -49,8 +38,8 @@ ADN_KnowledgeGroups_GUI::ADN_KnowledgeGroups_GUI( ADN_KnowledgeGroups_Data& data
 // -----------------------------------------------------------------------------
 ADN_KnowledgeGroups_GUI::~ADN_KnowledgeGroups_GUI()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_KnowledgeGroups_GUI::Build

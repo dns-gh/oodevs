@@ -9,7 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_KnowledgeGroups_Data.h"
-
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
@@ -19,11 +18,11 @@
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
 ADN_KnowledgeGroups_Data::AgentGroupInfo::AgentGroupInfo()
-: ADN_Ref_ABC   ()
-, maxLifetime_        ( "0s" )
-, rMaxDistance_       ( -1 )
-, bInterpolationTime_ ( false )
-, interpolationTime_  ( "0s" )
+    : ADN_Ref_ABC()
+    , maxLifetime_       ( "0s" )
+    , rMaxDistance_      ( -1 )
+    , bInterpolationTime_( false )
+    , interpolationTime_ ( "0s" )
 {
     // NOTHING
 }
@@ -62,8 +61,8 @@ void ADN_KnowledgeGroups_Data::AgentGroupInfo::WriteArchive( xml::xostream& outp
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
 ADN_KnowledgeGroups_Data::PopulationGroupInfo::PopulationGroupInfo()
-: ADN_Ref_ABC   ()
-, maxLifetime_        ( "0s" )
+    : ADN_Ref_ABC()
+    , maxLifetime_( "0s" )
 {
     // NOTHING
 }
@@ -95,11 +94,11 @@ void ADN_KnowledgeGroups_Data::PopulationGroupInfo::WriteArchive( xml::xostream&
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
 ADN_KnowledgeGroups_Data::GroupInfo::GroupInfo()
-: ADN_Ref_ABC         ()
-, ADN_DataTreeNode_ABC()
-, agentInfos_         ()
-, populationInfos_    ()
-, communicationDelay_( "0s" ) // LTO
+    : ADN_Ref_ABC()
+    , ADN_DataTreeNode_ABC()
+    , agentInfos_        ()
+    , populationInfos_   ()
+    , communicationDelay_( "0s" ) // LTO
 {
     // NOTHING
 }
@@ -123,6 +122,22 @@ std::string ADN_KnowledgeGroups_Data::GroupInfo::GetItemName()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_KnowledgeGroups_Data::CreateCopy
+// Created: LGY 2010-08-18
+// -----------------------------------------------------------------------------
+ADN_KnowledgeGroups_Data::GroupInfo* ADN_KnowledgeGroups_Data::GroupInfo::CreateCopy()
+{
+    GroupInfo* pCopy = new GroupInfo();
+    pCopy->communicationDelay_ = communicationDelay_.GetData();
+    pCopy->agentInfos_.maxLifetime_ = agentInfos_.maxLifetime_.GetData();
+    pCopy->agentInfos_.rMaxDistance_ = agentInfos_.rMaxDistance_.GetData();
+    pCopy->agentInfos_.bInterpolationTime_ = agentInfos_.bInterpolationTime_.GetData();
+    pCopy->agentInfos_.interpolationTime_ = agentInfos_.interpolationTime_.GetData();
+    pCopy->populationInfos_.maxLifetime_ = populationInfos_.maxLifetime_.GetData();
+    return pCopy;
+}
+
+// -----------------------------------------------------------------------------
 // Name: GroupInfo::ReadArchive
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
@@ -130,8 +145,7 @@ void ADN_KnowledgeGroups_Data::GroupInfo::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "name", strName_ )
           >> xml::optional >> xml::attribute( "communication-delay", communicationDelay_ ); // LTO
-
-    agentInfos_     .ReadArchive( input );
+    agentInfos_.ReadArchive( input );
     populationInfos_.ReadArchive( input );
 }
 
@@ -145,7 +159,7 @@ void ADN_KnowledgeGroups_Data::GroupInfo::WriteArchive( xml::xostream& output )
            << xml::attribute( "name", strName_ );
     if( communicationDelay_ != "0s" ) // LTO
         output << xml::attribute( "communication-delay", communicationDelay_ ); // LTO
-    agentInfos_     .WriteArchive( output );
+    agentInfos_.WriteArchive( output );
     populationInfos_.WriteArchive( output );
     output << xml::end;
 }
@@ -155,8 +169,9 @@ void ADN_KnowledgeGroups_Data::GroupInfo::WriteArchive( xml::xostream& output )
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
 ADN_KnowledgeGroups_Data::ADN_KnowledgeGroups_Data()
-: ADN_Data_ABC()
+    : ADN_Data_ABC()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -165,6 +180,7 @@ ADN_KnowledgeGroups_Data::ADN_KnowledgeGroups_Data()
 // -----------------------------------------------------------------------------
 ADN_KnowledgeGroups_Data::~ADN_KnowledgeGroups_Data()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -218,4 +234,13 @@ void ADN_KnowledgeGroups_Data::WriteArchive( xml::xostream& output )
     for( IT_GroupInfoVector it = vGroups_.begin(); it != vGroups_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_KnowledgeGroups_Data::GetGroupInfos
+// Created: LGY 2010-08-18
+// -----------------------------------------------------------------------------
+ADN_KnowledgeGroups_Data::T_GroupInfoVector& ADN_KnowledgeGroups_Data::GetGroupInfos()
+{
+    return vGroups_;
 }

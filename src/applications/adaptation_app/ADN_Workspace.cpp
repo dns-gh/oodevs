@@ -11,7 +11,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Workspace.h"
 #include "moc_ADN_Workspace.cpp"
-
 #include "ADN_WorkspaceElement.h"
 #include "ADN_NBC_GUI.h"
 #include "ADN_NBC_Datas.h"
@@ -68,14 +67,11 @@
 #include "ADN_MainWindow.h"
 #include "ADN_ActiveProtections_Data.h"
 #include "ADN_ActiveProtections_GUI.h"
-
 #include "qtundo.h"
-
 #include <io.h>
 #include <qtimer.h>
 #include <qmessagebox.h>
 #include <qlayout.h>
-
 #include <windows.h>
 #include <errno.h>
 

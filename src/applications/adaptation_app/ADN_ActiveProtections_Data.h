@@ -106,7 +106,6 @@ public:
     T_ActiveProtectionsInfosVector& GetActiveProtectionsInfos();
     //@}
 
-    //@}
     //! @name Member data
     //@{
     T_ActiveProtectionsInfosVector activeProtections_;

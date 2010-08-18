@@ -50,7 +50,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_KnowledgeGroups_GUI( ADN_KnowledgeGroups_Data& data );
+             ADN_KnowledgeGroups_GUI( ADN_KnowledgeGroups_Data& data );
     virtual ~ADN_KnowledgeGroups_GUI();
     //@}
 

@@ -6,25 +6,14 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-21 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_KnowledgeGroups_Data.h $
-// $Author: Ape $
-// $Modtime: 7/04/05 11:21 $
-// $Revision: 2 $
-// $Workfile: ADN_KnowledgeGroups_Data.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_KnowledgeGroups_Data_h_
 #define __ADN_KnowledgeGroups_Data_h_
 
 #include "ADN_Data_ABC.h"
 #include "ADN_Types.h"
-//#include "ADN_Enums.h"
 
 class xml::xistream;
-
 
 // =============================================================================
 /** @class  ADN_KnowledgeGroups_Data
@@ -87,6 +76,8 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
 
+        GroupInfo* CreateCopy();
+
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
 
@@ -106,7 +97,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_KnowledgeGroups_Data();
+             ADN_KnowledgeGroups_Data();
     virtual ~ADN_KnowledgeGroups_Data();
     //@}
 
@@ -116,13 +107,25 @@ public:
     void Reset();
     //@}
 
+    //! @name Accessors
+    //@{
+    T_GroupInfoVector& GetGroupInfos();
+    //@}
+
 private:
+    //! @name Helpers
+    //@{
     void ReadArchive( xml::xistream& input );
     void ReadKnowledgeGroup( xml::xistream& input );
     void WriteArchive( xml::xostream& output );
+    //@}
 
 public:
+    //! @name Member data
+    //@{
     T_GroupInfoVector vGroups_;
+    //@}
+
 };
 
 

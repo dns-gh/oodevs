@@ -16,12 +16,8 @@
 
 class ADN_MainWindow;
 class ADN_ProgressIndicator_ABC;
-
 class QtUndoStack;
 class QtCommand;
-
-enum E_OpenMode;
-
 class ADN_NBC_GUI;
 class ADN_NBC_Datas;
 class ADN_Launchers_GUI;
@@ -65,6 +61,9 @@ class ADN_Health_Data;
 class ADN_Health_GUI;
 class ADN_Supply_Data;
 class ADN_Supply_GUI;
+class ADN_KnowledgeGroups_Data;
+class ADN_KnowledgeGroups_GUI;
+enum E_OpenMode;
 
 // =============================================================================
 /** @class  ADN_Workspace
@@ -78,8 +77,8 @@ class ADN_Workspace : public QObject
     MT_COPYNOTALLOWED( ADN_Workspace )
 
 public:
-    static ADN_Workspace&  GetWorkspace();
-    static void            CleanWorkspace();
+    static ADN_Workspace& GetWorkspace();
+    static void CleanWorkspace();
 
 public:
     void Build( ADN_MainWindow& mainWindow );
@@ -87,12 +86,9 @@ public:
     void Load( const std::string& filename );
     bool Save();
     bool SaveAs( const std::string& filename );
-
     void ExportHtml( const std::string& strPath );
 
-
-    ADN_Project_Data& GetProject(); // $$$$ NLD 2007-01-15:
-
+    ADN_Project_Data& GetProject();
     ADN_WorkspaceElement< ADN_NBC_Datas, ADN_GUI_ABC >& GetNbc();
     ADN_WorkspaceElement< ADN_Launchers_Data, ADN_Launchers_GUI >& GetLaunchers();
     ADN_WorkspaceElement< ADN_Categories_Data, ADN_Categories_GUI >& GetCategories();
@@ -114,11 +110,12 @@ public:
     ADN_WorkspaceElement< ADN_HumanFactors_Data, ADN_HumanFactors_GUI >& GetHumanFactors();
     ADN_WorkspaceElement< ADN_Health_Data, ADN_Health_GUI >& GetHealth();
     ADN_WorkspaceElement< ADN_Supply_Data, ADN_Supply_GUI>& GetSupply();
+    ADN_WorkspaceElement< ADN_KnowledgeGroups_Data, ADN_KnowledgeGroups_GUI >& GetKnowledgeGroups();
 
     void SetProgressIndicator( ADN_ProgressIndicator_ABC* pProgressIndicator );
     void ResetProgressIndicator();
 
-    QtUndoStack&                GetUndoStack();
+    QtUndoStack& GetUndoStack();
 
     void AddCommand( QtCommand* pNewCommand );
 
@@ -163,9 +160,9 @@ private:
     ADN_Project_Data* projectData_;
     ADN_WorkspaceElement_ABC* elements_[eNbrWorkspaceElements];
     ADN_ProgressIndicator_ABC* pProgressIndicator_;
-    QtUndoStack*            pUndoStack_;
-    E_OpenMode              nOpenMode_;
-    static ADN_Workspace*   pWorkspace_;
+    QtUndoStack* pUndoStack_;
+    E_OpenMode nOpenMode_;
+    static ADN_Workspace* pWorkspace_;
 };
 
 
@@ -405,6 +402,16 @@ ADN_WorkspaceElement< ADN_Supply_Data, ADN_Supply_GUI>& ADN_Workspace::GetSupply
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_WorkspaceElement< ADN_KnowledgeGroups_Data, ADN_KnowledgeGroups_GUI >& ADN_Workspace::GetKnowledgeGroups
+// Created: LGY 2010-08-18
+// -----------------------------------------------------------------------------
+inline
+ADN_WorkspaceElement< ADN_KnowledgeGroups_Data, ADN_KnowledgeGroups_GUI >& ADN_Workspace::GetKnowledgeGroups()
+{
+    return ( ADN_WorkspaceElement< ADN_KnowledgeGroups_Data, ADN_KnowledgeGroups_GUI >& )( *elements_[ eKnowledgeGroups ] );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Workspace::SetProgressIndicator
 // Created: APE 2005-03-18
 // -----------------------------------------------------------------------------
@@ -413,7 +420,6 @@ void ADN_Workspace::SetProgressIndicator( ADN_ProgressIndicator_ABC* pProgressIn
 {
     pProgressIndicator_ = pProgressIndicator;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Workspace::GetOpenMode
@@ -424,7 +430,6 @@ E_OpenMode ADN_Workspace::GetOpenMode() const
 {
     return nOpenMode_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Workspace::SetOpenMode
