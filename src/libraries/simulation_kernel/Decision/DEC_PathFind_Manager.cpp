@@ -189,11 +189,7 @@ namespace
     template< typename T >
     AreNotEmpty_< T > AreNotEmpty( const T& cont, const T& cont2 ) { return AreNotEmpty_< T >( cont, cont2 ); };
 
-    struct {
-        struct {
-            static const unsigned maximumShortRequest = 5;
-        } cpp;
-    } Config;
+    static const unsigned maximumShortRequest = 5;
 }
 
 // -----------------------------------------------------------------------------
@@ -204,7 +200,7 @@ DEC_PathFind_Manager::T_Requests& DEC_PathFind_Manager::GetRequests()
 {
     const bool shortHavePriority =
            ( ! shortRequests_.empty() )
-           && ( pathFindThreads_.size() == 1 || shortRequests_.size() > Config.cpp.maximumShortRequest );
+           && ( pathFindThreads_.size() == 1 || shortRequests_.size() > maximumShortRequest );
     if( shortHavePriority || longRequests_.empty() )
         return shortRequests_;
     return longRequests_;
