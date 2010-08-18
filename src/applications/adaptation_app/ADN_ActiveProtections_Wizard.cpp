@@ -24,8 +24,8 @@ ADN_ActiveProtections_Wizard::ADN_ActiveProtections_Wizard( QWidget* pParent, co
     : ADN_Wizard_ABC< ActiveProtectionsInfos >( pParent, szName )
 {
     setCaption( qApp->translate( "ADN_ActiveProtections_Wizard", "New active protection creation" ) );
-    ADN_ActiveProtections_Data::T_ActiveProtectionsInfosVector& automata = ADN_Workspace::GetWorkspace().GetActiveProtections().GetData().GetActiveProtectionsInfos();
-    ADN_Wizard_FirstPage_Default< ActiveProtectionsInfos >* pFirstPage = new ADN_Wizard_FirstPage_Default< ActiveProtectionsInfos >( automata, this );
+    ADN_ActiveProtections_Data::T_ActiveProtectionsInfosVector& protection = ADN_Workspace::GetWorkspace().GetActiveProtections().GetData().GetActiveProtectionsInfos();
+    ADN_Wizard_FirstPage_Default< ActiveProtectionsInfos >* pFirstPage = new ADN_Wizard_FirstPage_Default< ActiveProtectionsInfos >( protection, this );
     pFirstPage->SetCaptions( qApp->translate( "ADN_ActiveProtections_Wizard", "New active protection creation" ), qApp->translate( "ADN_ActiveProtections_Wizard", "Active protection" ) );
     pFirstPage_ = pFirstPage;
     new ADN_Wizard_LastPage( this, qApp->translate( "ADN_ActiveProtections_Wizard",  "Creation finished" ),
