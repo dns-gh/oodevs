@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-05-03 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Radars_ListView.h $
-// $Author: Nld $
-// $Modtime: 3/05/05 10:11 $
-// $Revision: 1 $
-// $Workfile: ADN_Radars_ListView.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Radars_ListView_h_
 #define __ADN_Radars_ListView_h_
@@ -27,15 +18,14 @@
 */
 // Created: APE 2005-05-03
 // =============================================================================
-class ADN_Radars_ListView
-    : public ADN_ListView
+class ADN_Radars_ListView : public ADN_ListView
 {
     MT_COPYNOTALLOWED( ADN_Radars_ListView )
 
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_Radars_ListView( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
+             ADN_Radars_ListView( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
     virtual ~ADN_Radars_ListView();
     //@}
 

@@ -18,7 +18,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Radars_Data.h"
-
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_OpenFile_Exception.h"
@@ -33,12 +32,12 @@
 // Created: APE 2005-01-17
 // -----------------------------------------------------------------------------
 ADN_Radars_Data::DetectTimes::DetectTimes()
-: bDetectTime_  ( false )
-, detectTime_   ( "0s" )
-, bIdentTime_   ( false )
-, recoTime_     ( "0s" )
-, bRecoTime_    ( false )
-, identTime_    ( "0s" )
+    : bDetectTime_( false )
+    , detectTime_ ( "0s" )
+    , bIdentTime_ ( false )
+    , recoTime_   ( "0s" )
+    , bRecoTime_  ( false )
+    , identTime_  ( "0s" )
 {
     // NOTHING
 }
@@ -122,17 +121,17 @@ void ADN_Radars_Data::DetectTimes::WriteArchive( xml::xostream& output, bool bHq
 // Created: APE 2005-05-03
 // -----------------------------------------------------------------------------
 ADN_Radars_Data::RadarInfos::RadarInfos()
-: ADN_Ref_ABC           ()
-, ADN_DataTreeNode_ABC  ()
-, strName_              ( tr( "New special sensor" ).ascii() )
-, rRange_               ( 0 )
-, bHasMaxHeight_        ( false )
-, rMaxHeight_           ( 0 )
-, bHasMinHeight_        ( false )
-, rMinHeight_           ( 0 )
-, bHasDetectableActivities_( false )
-, bHasDetectTimes_      ( false )
-, bHasHQDetectTimes_    ( false )
+    : ADN_Ref_ABC()
+    , ADN_DataTreeNode_ABC()
+    , strName_                  ( tr( "New special sensor" ).ascii() )
+    , rRange_                  ( 0 )
+    , bHasMaxHeight_           ( false )
+    , rMaxHeight_              ( 0 )
+    , bHasMinHeight_           ( false )
+    , rMinHeight_              ( 0 )
+    , bHasDetectableActivities_( false )
+    , bHasDetectTimes_         ( false )
+    , bHasHQDetectTimes_       ( false )
 {
     for( int n = 0; n < eNbrConsumptionType; ++n )
         detectableActivities_[n] = false;
@@ -163,6 +162,39 @@ std::string ADN_Radars_Data::RadarInfos::GetNodeName()
 std::string ADN_Radars_Data::RadarInfos::GetItemName()
 {
     return std::string( "" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Radars_Data::CreateCopy
+// Created: LGY 2010-08-18
+// -----------------------------------------------------------------------------
+ADN_Radars_Data::RadarInfos* ADN_Radars_Data::RadarInfos::CreateCopy()
+{
+    RadarInfos* pCopy = new RadarInfos();
+    pCopy->nType_ = nType_.GetData();
+    pCopy->rRange_ = rRange_.GetData();
+    pCopy->bHasMaxHeight_ = bHasMaxHeight_.GetData();
+    pCopy->rMaxHeight_ = rMaxHeight_.GetData();
+    pCopy->bHasMinHeight_ = bHasMinHeight_.GetData();
+    pCopy->rMinHeight_ = rMinHeight_.GetData();
+    pCopy->bHasDetectableActivities_ = bHasDetectableActivities_.GetData();
+    for( int n = 0; n < eNbrConsumptionType; ++n )
+        pCopy->detectableActivities_[ n ] = detectableActivities_[ n ].GetData();
+    pCopy->bHasDetectTimes_ = bHasDetectTimes_.GetData();
+    pCopy->detectTimes_.bDetectTime_ = detectTimes_.bDetectTime_.GetData();
+    pCopy->detectTimes_.detectTime_ = detectTimes_.detectTime_.GetData();
+    pCopy->detectTimes_.bIdentTime_ = detectTimes_.bIdentTime_.GetData();
+    pCopy->detectTimes_.recoTime_ = detectTimes_.recoTime_.GetData();
+    pCopy->detectTimes_.bRecoTime_ = detectTimes_.bRecoTime_.GetData();
+    pCopy->detectTimes_.identTime_ = detectTimes_.identTime_.GetData();
+    pCopy->bHasHQDetectTimes_ = bHasHQDetectTimes_.GetData();
+    pCopy->hqDetectTimes_.bDetectTime_ = hqDetectTimes_.bDetectTime_.GetData();
+    pCopy->hqDetectTimes_.detectTime_ = hqDetectTimes_.detectTime_.GetData();
+    pCopy->hqDetectTimes_.bIdentTime_ = hqDetectTimes_.bIdentTime_.GetData();
+    pCopy->hqDetectTimes_.recoTime_ = hqDetectTimes_.recoTime_.GetData();
+    pCopy->hqDetectTimes_.bRecoTime_ = hqDetectTimes_.bRecoTime_.GetData();
+    pCopy->hqDetectTimes_.identTime_ = hqDetectTimes_.identTime_.GetData();
+    return pCopy;
 }
 
 // -----------------------------------------------------------------------------
@@ -243,7 +275,6 @@ void ADN_Radars_Data::RadarInfos::WriteArchive( xml::xostream& output )
 
         output << xml::end;
     }
-
     if( bHasDetectTimes_.GetData() || bHasHQDetectTimes_.GetData() )
     {
         output << xml::start( "acquisition-times" );
@@ -271,7 +302,6 @@ ADN_Radars_Data::~ADN_Radars_Data()
 {
     Reset();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Radars_Data::FilesNeeded

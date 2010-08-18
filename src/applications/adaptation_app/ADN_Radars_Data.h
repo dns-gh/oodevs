@@ -11,7 +11,6 @@
 #define __ADN_Radars_Data_h_
 
 #include "ADN_Data_ABC.h"
-
 #include "ADN_Enums.h"
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
@@ -35,7 +34,7 @@ public:
         MT_COPYNOTALLOWED( DetectTimes )
 
     public:
-        DetectTimes();
+         DetectTimes();
         ~DetectTimes();
 
         void ReadArchive( xml::xistream& input, bool bHq );
@@ -43,12 +42,12 @@ public:
         void WriteArchive( xml::xostream& output, bool bHq );
 
     public:
-        ADN_Type_Bool  bDetectTime_;
-        ADN_Type_Time  detectTime_;
-        ADN_Type_Bool  bIdentTime_;
-        ADN_Type_Time  recoTime_;
-        ADN_Type_Bool  bRecoTime_;
-        ADN_Type_Time  identTime_;
+        ADN_Type_Bool bDetectTime_;
+        ADN_Type_Time detectTime_;
+        ADN_Type_Bool bIdentTime_;
+        ADN_Type_Time recoTime_;
+        ADN_Type_Bool bRecoTime_;
+        ADN_Type_Time identTime_;
     };
 
 
@@ -65,6 +64,8 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
 
+        RadarInfos* CreateCopy();
+
         void ReadArchive( xml::xistream& input );
         void ReadDetectableActivity( xml::xistream& input );
 
@@ -73,30 +74,26 @@ public:
     public:
         ADN_Type_String strName_;
         ADN_Type_Enum<E_RadarType, eNbrRadarType>  nType_;
-
         ADN_Type_Double rRange_;
-
-        ADN_Type_Bool   bHasMaxHeight_;
+        ADN_Type_Bool bHasMaxHeight_;
         ADN_Type_Double rMaxHeight_;
-        ADN_Type_Bool   bHasMinHeight_;
+        ADN_Type_Bool bHasMinHeight_;
         ADN_Type_Double rMinHeight_;
-
-        ADN_Type_Bool   bHasDetectableActivities_;
-        ADN_Type_Bool   detectableActivities_[eNbrConsumptionType];
-
-        ADN_Type_Bool   bHasDetectTimes_;
-        DetectTimes     detectTimes_;
-        ADN_Type_Bool   bHasHQDetectTimes_;
-        DetectTimes     hqDetectTimes_;
+        ADN_Type_Bool bHasDetectableActivities_;
+        ADN_Type_Bool detectableActivities_[eNbrConsumptionType];
+        ADN_Type_Bool bHasDetectTimes_;
+        DetectTimes detectTimes_;
+        ADN_Type_Bool bHasHQDetectTimes_;
+        DetectTimes hqDetectTimes_;
     };
 
     typedef ADN_Type_Vector_ABC<RadarInfos > T_RadarInfos_Vector;
-    typedef T_RadarInfos_Vector::iterator    IT_RadarInfos_Vector;
+    typedef T_RadarInfos_Vector::iterator   IT_RadarInfos_Vector;
 
 
 //*****************************************************************************
 public:
-    ADN_Radars_Data();
+             ADN_Radars_Data();
     virtual ~ADN_Radars_Data();
 
     void FilesNeeded( T_StringList& files ) const;

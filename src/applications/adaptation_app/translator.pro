@@ -10,6 +10,7 @@ ADN_ActiveProtections_GUI.cpp \
 ADN_ActiveProtections_WeaponsTable.cpp \
 ADN_ActiveProtections_Wizard.cpp \
 ADN_KnowledgeGroups_Wizard.cpp \
+ADN_Radars_Wizard.cpp \
 ADN_ActiveProtectionsListView.cpp \
 ADN_AddElementCommand.inl \
 ADN_AiEngine_Data.cpp \

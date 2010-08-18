@@ -3385,6 +3385,25 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     </message>
 </context>
 <context>
+    <name>ADN_Radars_Wizard</name>
+    <message>
+        <source>New special sensor creation</source>
+        <translation>Création d&apos;un nouveau capteur spécial</translation>
+    </message>
+    <message>
+        <source>Special sensor</source>
+        <translation>Capteur spécial</translation>
+    </message>
+    <message>
+        <source>Creation finished</source>
+        <translation>Création terminée</translation>
+    </message>
+    <message>
+        <source>Click &quot;Done&quot; to create the new special sensor.</source>
+        <translation>Cliquez sur &quot;Terminer&quot; pour créer le nouveau capteur spécial.</translation>
+    </message>
+</context>
+<context>
     <name>ADN_RemoveElementCommand</name>
     <message>
         <source>Remove </source>

@@ -6,41 +6,28 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-21 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Radars_ListView.cpp $
-// $Author: Nld $
-// $Modtime: 4/05/05 10:47 $
-// $Revision: 2 $
-// $Workfile: ADN_Radars_ListView.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_Radars_ListView.h"
-
-#include <qpopmenu.h>
-
 #include "ADN_Tools.h"
 #include "ADN_Radars_Data.h"
 #include "ADN_Radars_GUI.h"
 #include "ADN_Connector_ListView.h"
-#include "ADN_ObjectCreator_ABC.h"
+#include "ADN_Radars_Wizard.h"
+#include <qpopmenu.h>
 
 typedef ADN_Radars_Data::RadarInfos RadarInfos;
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Radars_ListView constructor
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
 ADN_Radars_ListView::ADN_Radars_ListView( QWidget* pParent, const char* szName, WFlags f )
-: ADN_ListView( pParent, szName, f )
+    : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
     addColumn( tr( "Special sensors" ) );
     setResizeMode( QListView::AllColumns );
-
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<RadarInfos>(*this);
     this->SetDeletionEnabled( true );
@@ -84,16 +71,13 @@ void ADN_Radars_ListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Radars_GUI::eHQDetectionTime]->Connect( &pInfos->hqDetectTimes_.detectTime_, bConnect );
     vItemConnectors_[ADN_Radars_GUI::eHQRecoTime]->Connect( &pInfos->hqDetectTimes_.recoTime_, bConnect );
     vItemConnectors_[ADN_Radars_GUI::eHQIdentificationTime]->Connect( &pInfos->hqDetectTimes_.identTime_, bConnect );
-
     vItemConnectors_[ADN_Radars_GUI::eHasMinHeight]->Connect( &pInfos->bHasMinHeight_, bConnect );
     vItemConnectors_[ADN_Radars_GUI::eHasMaxHeight]->Connect( &pInfos->bHasMaxHeight_, bConnect );
     vItemConnectors_[ADN_Radars_GUI::eHasDetectableActivities]->Connect( &pInfos->bHasDetectableActivities_, bConnect );
-
     vItemConnectors_[ADN_Radars_GUI::eHasHQDetectionTime]->Connect( &pInfos->hqDetectTimes_.bDetectTime_, bConnect );
     vItemConnectors_[ADN_Radars_GUI::eHasHQIdentificationTime]->Connect( &pInfos->hqDetectTimes_.bIdentTime_, bConnect );
     vItemConnectors_[ADN_Radars_GUI::eHasHQRecoTime]->Connect( &pInfos->hqDetectTimes_.bRecoTime_, bConnect );
     vItemConnectors_[ADN_Radars_GUI::eHasHQDetectionTimes]->Connect( &pInfos->bHasHQDetectTimes_, bConnect );
-
     vItemConnectors_[ADN_Radars_GUI::eHasDetectionTime]->Connect( &pInfos->detectTimes_.bDetectTime_, bConnect );
     vItemConnectors_[ADN_Radars_GUI::eHasIdentificationTime]->Connect( &pInfos->detectTimes_.bIdentTime_, bConnect );
     vItemConnectors_[ADN_Radars_GUI::eHasRecoTime]->Connect( &pInfos->detectTimes_.bRecoTime_, bConnect );
@@ -108,7 +92,7 @@ void ADN_Radars_ListView::ConnectItem( bool bConnect )
 void ADN_Radars_ListView::OnContextMenu( const QPoint& pt )
 {
     QPopupMenu popupMenu( this );
-    ADN_DefaultObjectCreator<RadarInfos> objectCreator;
-    FillContextMenuWithDefault( popupMenu, objectCreator );
+    ADN_Radars_Wizard wizard( this );
+    FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
 }
