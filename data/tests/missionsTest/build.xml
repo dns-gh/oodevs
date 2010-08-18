@@ -4,9 +4,9 @@
   <property name="output" value="out"/>
   <property name="input" value="src"/>
   <property name="testName" value="testings"/>
+  <property name="data" value="../../data/models/ada/physical/france"/>
+  <property name="reportFile" value="${output}/${testName}/reports/report.log"/>
 
-  <tstamp><format property="timenow" pattern="yyyy-MM-dd_hh'h'mm" /></tstamp>
-  
   <target name="generate">
     <mkdir dir="${output}"/>
     <mkdir dir="${output}/${testName}"/>
@@ -24,10 +24,14 @@
     <!-- to be generated -->
     <copy file="${input}/${testName}/orbat.xml"  tofile="${output}/${testName}/orbat.xml"/>
     <copy file="${input}/${testName}/scripts/resources/config.lua" tofile="${output}/${testName}/scripts/resources/config.lua"/>
-    
-    <xslt in="${input}/Modeles.xml" style="xsl/transformation.xsl" out="${output}/${testName}/reports/report.log">
+
+    <xslt in="${data}/pions.xml" style="xsl/transformation.xsl" out="${reportFile}">
       <param name="output" expression="${output}/${testName}/scripts"/>
+      <param name="missionsPath" expression="${data}/Missions.xml"/>
+      <param name="modelesPath"  expression="${data}/Modeles.xml"/>
+      <param name="reportFile"  expression="${reportFile}"/>
     </xslt>
-    <xslt in="${input}/Modeles.xml" style="xsl/model.xsl" out="${output}/${testName}/scripts/resources/model.lua"/>
-  </target>  
+    <xslt in="${data}/pions.xml" style="xsl/model.xsl" out="${output}/${testName}/scripts/resources/model.lua"/>
+  </target>
 </project>
+
