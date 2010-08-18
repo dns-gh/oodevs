@@ -764,23 +764,14 @@
       <parameter dia-name="refugies_" name="Refugies" optional="false" type="AgentKnowledgeList"/>
       <parameter dia-name="campRefugies_" name="Camp refugies" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" id="2000" name="MoveToPoint">
-      <parameter dia-name="objectives" name="objectives" optional="false" type="PointListBM"/>
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToAgentKnowledgeList" id="2010" name="MoveToAgentKnowledgeList">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="AgentKnowledgeListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToPolygon" id="2001" name="MoveToPolygon">
-      <parameter dia-name="objectives" name="objectives" optional="false" type="AreaBM"/>
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToAgentList" id="2009" name="MoveToAgentList">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="AgentListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToAutomate" id="2002" name="MoveToAutomate">
-      <parameter dia-name="objectives" name="objectives" optional="false" type="AutomateBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToAgent" id="2003" name="MoveToAgent">
-      <parameter dia-name="objectives" name="objectives" optional="false" type="AgentBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToAgentKnowledge" id="2004" name="MoveToAgentKnowledge">
-      <parameter dia-name="objectives" name="objectives" optional="false" type="AgentKnowledgeBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToObjectKnowledge" id="2005" name="MoveToObjectKnowledge">
-      <parameter dia-name="objectives" name="objectives" optional="false" type="ObjectKnowledgeBM"/>
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToAutomateList" id="2008" name="MoveToAutomateList">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="AutomateListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToPointList" id="2006" name="MoveToPointList">
       <parameter dia-name="objectives" name="objectives" optional="false" type="PointListBM"/>
@@ -788,20 +779,8 @@
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToPolygonList" id="2007" name="MoveToPolygonList">
       <parameter dia-name="objectives" name="objectives" optional="false" type="AreaListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToAutomateList" id="2008" name="MoveToAutomateList">
-      <parameter dia-name="objectives" name="objectives" optional="false" type="AutomateListBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToAgentList" id="2009" name="MoveToAgentList">
-      <parameter dia-name="objectives" name="objectives" optional="false" type="AgentListBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToAgentKnowledgeList" id="2010" name="MoveToAgentKnowledgeList">
-      <parameter dia-name="objectives" name="objectives" optional="false" type="AgentKnowledgeListBM"/>
-    </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToObjectKnowledgeList" id="2011" name="MoveToObjectKnowledgeList">
       <parameter dia-name="objectives" name="objectives" optional="false" type="ObjectKnowledgeListBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToUrbanBlock" id="2012" name="MoveToUrbanBlock">
-      <parameter dia-name="objectives" name="objectives" optional="false" type="UrbanBlockBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.military.platoon.combat.tasks.DestroyAgents" dia-type="net.masagroup.sword.military.platoon.combat.tasks.DestroyAgents" id="2013" name="MELEE Detruire">
       <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
