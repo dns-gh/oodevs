@@ -898,7 +898,7 @@
     package
     ============================================================================
     -->
-    <target name="package" description="package the installers" depends="package.defense,package.security,package.lto"/>
+    <target name="package" description="package the installers" depends="package.defense,package.security"/>
 
     <!-- standard packages -->
     <target name="package.defense" description="package the standard installer: worldwide, no license">
