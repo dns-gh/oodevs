@@ -33,62 +33,59 @@ function Start()
             { },
             function( client, profile )
                 if profile ~= "supervisor" then return end
-                ChangeState( "startup" )
+                ChangeState( "</xsl:text><xsl:value-of select="../@name"/><xsl:text>_startup" )
             end
         },
 
         {
             events.sim:TickEnded(),
-            { "startup" },
+            { "</xsl:text><xsl:value-of select="../@name"/><xsl:text>_startup" },
             function()
                 Trace( "startup" )
-                ChangeState( "test_begin" )
+                ChangeState( "</xsl:text><xsl:value-of select="../@name"/><xsl:text>_test_begin" )
             end
         },
         </xsl:text>
    <xsl:text>
         {
             events:Once(),
-            { "test_begin" },
+            { "</xsl:text><xsl:value-of select="../@name"/><xsl:text>_test_begin" },
             function()
                 sim:CreateUnit( coord:UtmPosition( config.positions.start[1] )
                                , model.types.units["</xsl:text><xsl:value-of select="../@name"/><xsl:text>"]
                                , model.entities.automats["ABC"] ) -- verifier comment ne pas passer d'automate ou comment trouver un automate correct
-                ChangeState( "test_wait_unit_creation" )
+                ChangeState( "</xsl:text><xsl:value-of select="../@name"/><xsl:text>_test_wait_unit_creation" )
                 Trace( "creating </xsl:text><xsl:value-of select="../@name"/><xsl:text>" )
-            end
-        },
-        {
-            events.agents:AgentCreated(),
-            { "test_wait_unit_creation" },
-            function( entity )
-                unitId = entity:GetIdentifier()
-                ChangeState( "test_missions" )
             end
         },
 
         {
-        -- start all missions
-        events.sim:TickEnded(),
-            { "test_missions" },
-            function( tick )
-                currentTick = currentTick + 1
-                Trace( "mission" )</xsl:text>
-     <xsl:for-each select="mission">
-        <xsl:call-template name="unitMission">
-        <xsl:with-param name="unit"><xsl:value-of select="../../@name"/></xsl:with-param>
-         <xsl:with-param name="mission"><xsl:value-of select="@name"/></xsl:with-param>
-         <xsl:with-param name="position"><xsl:value-of select="position()"/></xsl:with-param>
-       </xsl:call-template>
-     </xsl:for-each>
-        <xsl:text>elseif currentTick > </xsl:text><xsl:value-of select="count( mission ) * 10"/><xsl:text> then
-                    ChangeState( "test_end" )
+            events.agents:AgentCreated(),
+            { "</xsl:text><xsl:value-of select="../@name"/><xsl:text>_test_wait_unit_creation" },
+            function( entity )
+                if entity:GetName() == "LTO Drone Section INF Appui" then -- To be generated
+                    unitId = entity:GetIdentifier()
+                    Trace( "Agent created" .. tostring( unitId ) )
+                    StartTimeSequence( "</xsl:text><xsl:value-of select="../@name"/><xsl:text>_messages" )
                 end
             end
         },
         </xsl:text>
-         <xsl:text>
-        AtState( "test_end",
+     <xsl:for-each select="mission">
+        <xsl:call-template name="unitMission">
+          <xsl:with-param name="unit"    ><xsl:value-of select="../../@name"/></xsl:with-param>
+          <xsl:with-param name="mission" ><xsl:value-of select="@name"      /></xsl:with-param>
+          <xsl:with-param name="position"><xsl:value-of select="position()" /></xsl:with-param>
+       </xsl:call-template>
+     </xsl:for-each>
+     <xsl:text>
+        TimeSequence( "Section INF_messages", 10,
+            function()
+                ChangeState( "</xsl:text><xsl:value-of select="../@name"/><xsl:text>_test_end" )
+            end
+        ),
+     
+        AtState( "</xsl:text><xsl:value-of select="../@name"/><xsl:text>_test_end",
             function()
                 Trace( "end" )
                 Deactivate()
@@ -103,12 +100,12 @@ end
     </xsl:template>
 
     <xsl:template name="unitMission">
-      <xsl:param name="unit"/>
-      <xsl:param name="mission"/>
+      <xsl:param name="unit"    />
+      <xsl:param name="mission" />
       <xsl:param name="position"/>
       <xsl:call-template name="formatMission">
-        <xsl:with-param name="mission"><xsl:value-of select="$mission"/></xsl:with-param>
-        <xsl:with-param name="unit"><xsl:value-of select="$unit"/></xsl:with-param>
+        <xsl:with-param name="mission" ><xsl:value-of select="$mission" /></xsl:with-param>
+        <xsl:with-param name="unit"    ><xsl:value-of select="$unit"    /></xsl:with-param>
         <xsl:with-param name="position"><xsl:value-of select="$position"/></xsl:with-param>
       </xsl:call-template>
     </xsl:template>
@@ -118,40 +115,37 @@ end
         <xsl:param name="unit"/>
         <xsl:param name="position"/>
         <xsl:for-each select="$missionsDoc//missions/units/mission[@name=$mission]">
-            <xsl:choose>
-                <xsl:when test="$position = 1"><xsl:text>
-                if</xsl:text></xsl:when>
-                <xsl:otherwise><xsl:text>elseif</xsl:text></xsl:otherwise>
-            </xsl:choose>
-            <xsl:text> currentTick == </xsl:text>
-            <xsl:value-of select="$position * 10"/>
-            <xsl:text> then </xsl:text>
             <xsl:text>
-                    Mission.create( unitId, model.types.missions["</xsl:text><xsl:value-of select="@name"/><xsl:text>"] )
+        TimeSequence( "</xsl:text><xsl:value-of select="$unit"/><xsl:text>_messages", 10,
+            function()
+                Trace( "mission" )
+                Mission.create( unitId, model.types.missions["</xsl:text><xsl:value-of select="@name"/><xsl:text>"] )
             </xsl:text>
-                <xsl:call-template name="common-parameters"/><xsl:text>
-                </xsl:text>
+                <xsl:call-template name="common-parameters"/>
                 <xsl:for-each select="parameter[@optional='false']">
                     <xsl:call-template name="parameter"/>
                 </xsl:for-each>
                 <xsl:text>
-                        :Issue()
-                    Trace( "</xsl:text><xsl:value-of select="$unit"/><xsl:text> : running </xsl:text><xsl:value-of select="@name"/><xsl:text>" )
-                </xsl:text>
+                    :Issue()
+                Trace( "</xsl:text><xsl:value-of select="$unit"/><xsl:text> : running </xsl:text><xsl:value-of select="@name"/><xsl:text>" )
+            end
+        ),
+        </xsl:text>
         </xsl:for-each>
     </xsl:template>
 
     <xsl:template name="common-parameters">
-        <xsl:text>            :With( { name = "Danger direction", type = "Direction", value = 0 } )</xsl:text>
+        <xsl:text>        :With( { name = "Danger direction", type = "Direction", value = 0 } )
+                </xsl:text>
     </xsl:template>
 
     <xsl:template name="parameter">
         <xsl:choose>
             <xsl:when test="@type = 'Path'">
-                <xsl:text>        :With( Path.create( "Route" ):AddPoint( "Destination", config.positions.destination[1] ) )</xsl:text>
+                <xsl:text>    :With( Path.create( "Route" ):AddPoint( "Destination", config.positions.destination[1] ) )</xsl:text>
             </xsl:when>
             <xsl:when test="@type = 'Unit'">
-                <xsl:text>        :With( { name = "Unit", type="unit", value = stubs.EnemyUnit() )</xsl:text>
+                <xsl:text>    :With( { name = "Unit", type="unit", value = stubs.EnemyUnit() )</xsl:text>
             </xsl:when>
         </xsl:choose>
     </xsl:template>
