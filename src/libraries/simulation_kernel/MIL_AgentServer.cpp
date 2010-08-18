@@ -4,22 +4,23 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentServer.h"
-#include "Entities/MIL_EntityManager.h"
-#include "Entities/Effects/MIL_EffectManager.h"
-#include "Decision/DEC_Workspace.h"
-#include "Decision/DEC_PathFind_Manager.h"
-#include "Entities/Orders/MIL_TacticalLineManager.h"
 #include "MIL_Folk.h"
 #include "UrbanModel.h"
 #include "CheckPoints/MIL_CheckPointManager.h"
+#include "Decision/DEC_PathFind_Manager.h"
+#include "Decision/DEC_Workspace.h"
+#include "Entities/MIL_EntityManager.h"
+#include "Entities/Effects/MIL_EffectManager.h"
+#include "Entities/Orders/MIL_TacticalLineManager.h"
+#include "Hla/HLA_Federate.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
+#include "resource_network/ResourceNetworkModel.h"
 #include "Tools/MIL_ProfilerMgr.h"
-#include "Hla/HLA_Federate.h"
-#include "tools/thread/Thread.h"
-#include "tools/win32/ProcessMonitor.h"
+#include <tools/thread/Thread.h>
+#include <tools/win32/ProcessMonitor.h>
 #include <xeumeuleu/xml.hpp>
 
 MIL_AgentServer* MIL_AgentServer::pTheAgentServer_ = 0;
@@ -30,26 +31,27 @@ MIL_AgentServer* MIL_AgentServer::pTheAgentServer_ = 0;
 // Last modified: JVT 03-09-24
 //-----------------------------------------------------------------------------
 MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
-    : nSimState_           ( eSimLoading )
-    , config_              ( config )
-    , nTimeStepDuration_   ( 1 )
-    , nTimeFactor_         ( 1 )
-    , nCurrentTimeStep_    ( 1 )
-    , nSimTime_            ( 0 )
-    , nRealTime_           ( 0 )
-    , pEffectManager_      ( new MIL_EffectManager() )
-    , pEntityManager_      ( 0 )
-    , pWorkspaceDIA_       ( 0 )
-    , pMeteoDataManager_   ( 0 )
-    , pTacticalLineManager_( new MIL_TacticalLineManager() )
-    , pPathFindManager_    ( 0 )
-    , pProfilerMgr_        ( new MIL_ProfilerMgr( config.IsProfilingEnabled() ) )
-    , pCheckPointManager_  ( 0 )
-    , pAgentServer_        ( 0 )
-    , pFederate_           ( 0 )
-    , pFolk_               ( new MIL_Folk( config ) )
-    , pUrbanModel_         ( new UrbanModel( /*config*/ ) )
-    , pProcessMonitor_     ( new ProcessMonitor() )
+    : nSimState_            ( eSimLoading )
+    , config_               ( config )
+    , nTimeStepDuration_    ( 1 )
+    , nTimeFactor_          ( 1 )
+    , nCurrentTimeStep_     ( 1 )
+    , nSimTime_             ( 0 )
+    , nRealTime_            ( 0 )
+    , pEffectManager_       ( new MIL_EffectManager() )
+    , pEntityManager_       ( 0 )
+    , pWorkspaceDIA_        ( 0 )
+    , pMeteoDataManager_    ( 0 )
+    , pTacticalLineManager_ ( new MIL_TacticalLineManager() )
+    , pPathFindManager_     ( 0 )
+    , pProfilerMgr_         ( new MIL_ProfilerMgr( config.IsProfilingEnabled() ) )
+    , pCheckPointManager_   ( 0 )
+    , pAgentServer_         ( 0 )
+    , pFederate_            ( 0 )
+    , pFolk_                ( new MIL_Folk( config ) )
+    , pUrbanModel_          ( new UrbanModel() )
+    , pResourceNetworkModel_( new resource::ResourceNetworkModel() )
+    , pProcessMonitor_      ( new ProcessMonitor() )
 {
     assert( !pTheAgentServer_ );
     pTheAgentServer_ = this;

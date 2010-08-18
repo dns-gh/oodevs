@@ -1056,38 +1056,19 @@ message MsgControlSendCurrentStateBegin {}
 message MsgControlSendCurrentStateEnd   {}
 
 // Urban 
-message MsgUrbanAttributeArchitecture
-{
-    required float  height                = 1;
-    required int32  floor_number          = 2;
-    required string roof_shape            = 4;
-    required string material              = 5;
-    required float  occupation            = 6;
-    required float  trafficability        = 7;
-}
-
-message MsgUrbanAttributeCapacity
-{
-    required float  structuralState        = 1;
-}
-
-message MsgColorRGBA
-{
-	required int32 red   = 1;
-	required int32 green = 2;
-	required int32 blue  = 3;
-	required float alpha = 4;	
-}
 message MagicActionCreateUrban {
    required string             name     = 1;
    required Common.MsgLocation location = 2;
 }
+
 message MagicActionUpdateUrban {
    required uint32 oid = 1;
 }
+
 message MagicActionDestroyUrban {
    required uint32 oid = 1;
 }
+
 message MsgUrbanMagicAction {
    optional MagicActionCreateUrban  create_urban  = 1;
    optional MagicActionUpdateUrban  update_urban  = 2;
@@ -1109,10 +1090,61 @@ message MsgUrbanMagicActionAck {
 }
 
 message MsgUrbanAttributes {
-   optional MsgUrbanAttributeArchitecture architecture = 1;
-   optional MsgUrbanAttributeCapacity     capacity     = 2;
-   optional MsgColorRGBA                  color        = 3;
+    message Architecture
+    {
+        required float  height         = 1;
+        required int32  floor_number   = 2;
+        required string roof_shape     = 3;
+        required string material       = 4;
+        required float  occupation     = 5;
+        required float  trafficability = 6;
+    }
+    message Structure
+    {
+        required uint32 state = 1;
+    }
+    message Infrastructures
+    {
+        message ResourceNetwork
+        {
+            message Link
+            {
+                enum TargetKind
+                {
+                    urban  = 1;
+                    object = 2;
+                }
+                required TargetKind kind  = 1;
+                required uint32 target_id = 2;
+                required int32  capacity  = 3;
+            }
+            enum ResourceType
+            {
+                water       = 1;
+                gaz         = 2;
+                electricity = 3;
+            }
+            required bool         producer = 1;
+            required ResourceType type     = 2;
+            repeated Link         link     = 3;
+            required bool         enabled  = 4;
+            optional uint32       stock    = 5;
+        }
+        repeated ResourceNetwork resource_network = 1;
+    }
+    message RgbaColor
+    {
+	    required int32 red   = 1;
+	    required int32 green = 2;
+	    required int32 blue  = 3;
+	    required float alpha = 4;	
+    }
+    optional Architecture    architecture    = 1;
+    optional Structure       structure       = 2;    
+    optional RgbaColor       color           = 3;
+    optional Infrastructures infrastructures = 4;
 }
+
 message MsgUrbanCreation {
    required uint32             oid        = 1;
    required string             name       = 2;

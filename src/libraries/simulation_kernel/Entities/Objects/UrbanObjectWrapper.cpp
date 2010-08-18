@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_ObjectManipulator.h"
+#include "ResourceNetworkCapacity.h"
 #include "StructuralCapacity.h"
 #include "UrbanModel.h"
 #include "UrbanObjectWrapper.h"
@@ -46,6 +47,7 @@ UrbanObjectWrapper::UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, co
     , object_( &object )
     , id_( idManager_.GetFreeId() )
     , manipulator_( *new MIL_ObjectManipulator( *this ) )
+    , pView_( 0 )
 {
     std::string name = object.GetName();
     geometry::Polygon2f::T_Vertices vertices = object.GetFootprint()->Vertices();
@@ -65,6 +67,7 @@ UrbanObjectWrapper::UrbanObjectWrapper()
     , object_( 0 )
     , id_( 0 )
     , manipulator_( *new MIL_ObjectManipulator( *this ) )
+    , pView_( 0 )
 {
     // NOTHING
 }
@@ -123,20 +126,6 @@ void UrbanObjectWrapper::WriteODB( xml::xostream& /*xos*/ ) const
 void UrbanObjectWrapper::Register( MIL_InteractiveContainer_ABC* capacity )
 {
     interactives_.push_back( capacity );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::ReadBlockCapacity
-// Created: JSR 2010-06-28
-// -----------------------------------------------------------------------------
-void UrbanObjectWrapper::UpdateCapacities( const std::string& capacity, xml::xistream& xis )
-{
-    if( capacity == "structural" )
-    {
-        StructuralCapacity* structural = Retrieve< StructuralCapacity >();
-        if( structural )
-            structural->Load( xis );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -383,9 +372,16 @@ void UrbanObjectWrapper::UpdateState()
 {
     if( object_->HasChild() )
         return;
+    if( pView_ && pView_->HideObject() )
+        return;
     client::UrbanUpdate message;
     message().set_oid( object_->GetId() );
-    Retrieve< StructuralCapacity >()->SendState( *message().mutable_attributes() );
+    StructuralCapacity* structural = Retrieve< StructuralCapacity >();
+    if( structural )
+        structural->SendState( *message().mutable_attributes() );
+    ResourceNetworkCapacity* resource = Retrieve< ResourceNetworkCapacity >();
+    if( resource )
+        resource->SendState( *message().mutable_attributes() );
     message.Send( NET_Publisher_ABC::Publisher() );
 }
 

@@ -10,10 +10,12 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+#include "CapacityFactory.h"
 #include "MIL_ObjectManager.h"
 #include "MIL_AgentServer.h"
 #include "MIL_ObjectFactory.h"
 #include "MIL_Object_ABC.h"
+#include "MIL_ObjectLoader.h"
 #include "MIL_ObjectManipulator_ABC.h"
 #include "MIL_Singletons.h"
 #include "Hla/HLA_Federate.h"
@@ -202,18 +204,51 @@ MIL_Object_ABC* MIL_ObjectManager::CreateUrbanObject( const urban::TerrainObject
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::UpdateCapacity
+// Created: JSR 2010-08-12
+// -----------------------------------------------------------------------------
+void MIL_ObjectManager::UpdateCapacity( const std::string& capacity, xml::xistream& xis, MIL_Object_ABC& object )
+{
+    MIL_ObjectLoader::GetLoader().GetCapacityFactory().Update( object, capacity, xis );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::ReadInfrastructures
+// Created: JSR 2010-08-12
+// -----------------------------------------------------------------------------
+void MIL_ObjectManager::ReadInfrastructures( xml::xistream& xis )
+{
+    unsigned int id = xis.attribute< unsigned int >( "id" );
+    UrbanObjectWrapper* wrapper = FindUrbanWrapper( id );
+    if( wrapper )
+    {
+        if( xis.has_child( "resources" ) )
+        {
+            xis >> xml::start( "resources" );
+                UpdateCapacity( "resources", xis, *wrapper );
+            xis >> xml::end();
+        }
+        // $$$$ JSR 2010-08-12: TODO read infrastructures
+        xis >> xml::optional >> xml::start( "infrastructures" )
+            >> xml::end();
+    }
+    xis >> xml::start( "urbanObjects" )
+            >> xml::list( "urbanObject", *this, &MIL_ObjectManager::ReadInfrastructures )
+        >> xml::end();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager::ReadBlock
 // Created: JSR 2010-06-28
 // -----------------------------------------------------------------------------
 void MIL_ObjectManager::ReadUrbanState( xml::xistream& xis )
 {
-    unsigned int id;
-    xis >> xml::attribute( "id", id );
+    unsigned int id = xis.attribute< unsigned int >( "id" );
     UrbanObjectWrapper* wrapper = FindUrbanWrapper( id );
     if( wrapper )
     {
         xis >> xml::optional >> xml::start( "capacities" )
-            >> xml::list( *wrapper, &UrbanObjectWrapper::UpdateCapacities )
+            >> xml::list( *this, &MIL_ObjectManager::UpdateCapacity, *wrapper )
             >> xml::end;
     }
 }

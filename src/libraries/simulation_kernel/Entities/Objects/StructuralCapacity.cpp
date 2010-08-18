@@ -34,7 +34,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( StructuralCapacity )
 // Created: SLG 2010-06-17
 // -----------------------------------------------------------------------------
 StructuralCapacity::StructuralCapacity()
-    : structuralState_( 1 )
+    : structuralState_( 100 )
     , materialType_   ( 0 )
 {
     // NOTHING
@@ -46,7 +46,7 @@ StructuralCapacity::StructuralCapacity()
 // -----------------------------------------------------------------------------
 StructuralCapacity::StructuralCapacity( xml::xistream& xis )
 {
-    Load( xis );
+    Update( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,12 +69,12 @@ StructuralCapacity::~StructuralCapacity()
 }
 
 // -----------------------------------------------------------------------------
-// Name: StructuralCapacity::Load
+// Name: StructuralCapacity::Update
 // Created: JSR 2010-06-28
 // -----------------------------------------------------------------------------
-void StructuralCapacity::Load( xml::xistream& xis )
+void StructuralCapacity::Update( xml::xistream& xis )
 {
-    structuralState_ = 0.01f * xis.attribute< int >( "value" );
+    structuralState_ = xis.attribute< unsigned int >( "value" );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,14 +152,17 @@ void StructuralCapacity::ApplyIndirectFire( MIL_Object_ABC& object, const MT_Ell
     for( T_PointVector::const_iterator it = points.begin(); it != points.end(); ++it )
         p.Add( geometry::Point2f( static_cast< float >( it->rX_ ), static_cast< float >( it->rY_ ) ) );
     const float ratio = MIL_Geometry::IntersectionArea( attritionPolygon, p ) / objectArea;
-    const float oldStructuralState = structuralState_;
+    const unsigned int oldStructuralState = structuralState_;
     const MaterialAttribute* materialAttribute = object.RetrieveAttribute< MaterialAttribute >();
     if( materialAttribute )
     {
-        structuralState_ -= ratio * float( dotation.GetAttrition(  materialAttribute->GetMaterial().GetId()) );
-        if( structuralState_ < 0 )
+        float attrition = static_cast< float >( dotation.GetAttrition(  materialAttribute->GetMaterial().GetId()) );
+        unsigned int damage = static_cast< unsigned int >( 100.f * ratio * attrition );
+        if( damage <= structuralState_ )
+            structuralState_ -= damage;
+        else
             structuralState_ = 0;
-        const float delta = oldStructuralState - structuralState_;
+        const float delta = 0.01f * ( oldStructuralState - structuralState_ );
         if ( ( 1 - MIL_Random::rand_io( MIL_Random::eFire ) ) <= delta )
             for ( IT_Agents it = agents_.begin(); it != agents_.end(); ++it )
                 ( *it )->GetRole< PHY_RoleInterface_Composantes >().ApplyUrbanObjectCrumbling( object );
@@ -207,7 +210,11 @@ void StructuralCapacity::ApplyDirectFire( const MIL_Object_ABC& object, const PH
         if( !materialAttribute )
             return;
         const float modifier = static_cast< float >( dotation.GetAttrition( materialAttribute->GetMaterial().GetId() ) );
-        structuralState_-= modifier / area;
+        unsigned int damage = static_cast< unsigned int >( 100 * modifier / area );
+        if( damage <= structuralState_ )
+            structuralState_ -= damage;
+        else
+            structuralState_ = 0;
     }
 }
 
@@ -217,14 +224,14 @@ void StructuralCapacity::ApplyDirectFire( const MIL_Object_ABC& object, const PH
 // -----------------------------------------------------------------------------
 void StructuralCapacity::SendState( MsgsSimToClient::MsgUrbanAttributes& message ) const
 {
-    message.mutable_capacity()->set_structuralstate( structuralState_ );
+    message.mutable_structure()->set_state( structuralState_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: StructuralCapacity::GetStructuralState
 // Created: SLG 2010-06-25
 // -----------------------------------------------------------------------------
-float StructuralCapacity::GetStructuralState() const
+unsigned int StructuralCapacity::GetStructuralState() const
 {
     return structuralState_;
 }

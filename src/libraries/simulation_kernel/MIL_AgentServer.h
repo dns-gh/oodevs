@@ -17,6 +17,11 @@
 #include <MT/MT_Time/MT_TimerManager.h>
 #include "MIL_Time_ABC.h"
 
+namespace resource
+{
+    class ResourceNetworkModel;
+}
+
 namespace xml
 {
     class xostream;
@@ -108,6 +113,7 @@ public:
     MIL_CheckPointManager& GetCheckPointManager() const;
     MT_TimerManager& GetTimerManager();
     HLA_Federate* GetHLAFederate() const;
+    resource::ResourceNetworkModel& GetResourceNetworkModel() const;
     E_SimState GetSimState() const;
     MIL_Config& GetConfig();
     //@}
@@ -177,6 +183,7 @@ private:
     HLA_Federate* pFederate_;
     MIL_Folk* pFolk_;
     UrbanModel* pUrbanModel_;
+    resource::ResourceNetworkModel* pResourceNetworkModel_;
     ProcessMonitor*  pProcessMonitor_;
     long lastStep_;
     //@}

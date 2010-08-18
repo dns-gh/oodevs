@@ -51,7 +51,7 @@ void ColorAttribute::Update( const MsgsSimToClient::MsgUrbanAttributes& /*messag
 // -----------------------------------------------------------------------------
 void ColorAttribute::Send( MsgsSimToClient::MsgUrbanAttributes& message ) const
 {
-    MsgsSimToClient::MsgColorRGBA& color = *message.mutable_color();
+    MsgsSimToClient::MsgUrbanAttributes_RgbaColor& color = *message.mutable_color();
     color.set_red( color_->Red() );
     color.set_green( color_->Green() );
     color.set_blue( color_->Blue() );

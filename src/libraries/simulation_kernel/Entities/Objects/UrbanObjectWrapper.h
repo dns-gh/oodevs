@@ -46,7 +46,6 @@ public:
     //! @name ODB
     //@{
     virtual void WriteODB( xml::xostream& xos ) const;
-    void UpdateCapacities( const std::string& capacity, xml::xistream& xis );
     //@}
 
     //! @name Interaction

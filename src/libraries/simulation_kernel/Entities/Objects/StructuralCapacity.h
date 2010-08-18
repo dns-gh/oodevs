@@ -13,7 +13,9 @@
 #include "ObjectCapacity_ABC.h"
 #include "MIL_InteractiveContainer_ABC.h"
 
+class PHY_ComposanteState;
 class PHY_DotationCategory;
+class PHY_Protection;
 
 namespace MsgsSimToClient
 {
@@ -25,8 +27,6 @@ namespace urban
     class MaterialCompositionType;
 }
 
-class PHY_ComposanteState;
-class PHY_Protection;
 // =============================================================================
 /** @class  StructuralCapacity
     @brief  Structural capacity
@@ -46,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( xml::xistream& xis );
+    void Update( xml::xistream& xis );
     template< typename Archive > void serialize( Archive& file, const unsigned int );
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
@@ -58,7 +58,7 @@ public:
     void ApplyIndirectFire( MIL_Object_ABC& object, const MT_Ellipse& attritionSurface, const PHY_DotationCategory& dotation );
     void ApplyDirectFire( const MIL_Object_ABC& object, const PHY_DotationCategory& dotation );
     void SendState( MsgsSimToClient::MsgUrbanAttributes& message ) const;
-    float GetStructuralState() const;
+    unsigned int GetStructuralState() const;
     const PHY_ComposanteState& ComputeComposanteState( const MIL_Object_ABC& object, const PHY_Protection& targetProtection );
 
     //@}
@@ -84,7 +84,7 @@ private:
 private:
     //! @name Member data
     //@{
-    float structuralState_;
+    unsigned int structuralState_;
     T_Agents agents_;
     urban::MaterialCompositionType* materialType_;
     //@}

@@ -9,8 +9,9 @@
 
 #include "dispatcher_pch.h"
 #include "ArchitectureAttribute.h"
-#include "CapacityAttribute.h"
 #include "ColorAttribute.h"
+#include "InfrastructuresAttribute.h"
+#include "StructureAttribute.h"
 #include "UrbanObject.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
@@ -53,9 +54,10 @@ UrbanObject::~UrbanObject()
 // -----------------------------------------------------------------------------
 void UrbanObject::Initialize( const MsgsSimToClient::MsgUrbanAttributes& attributes )
 {
-    MSG_MSG_CREATION( color       , ColorAttribute );
-    MSG_MSG_CREATION( architecture, ArchitectureAttribute );
-    MSG_MSG_CREATION( capacity    , CapacityAttribute );
+    MSG_MSG_CREATION( color          , ColorAttribute );
+    MSG_MSG_CREATION( architecture   , ArchitectureAttribute );
+    MSG_MSG_CREATION( structure      , StructureAttribute );
+    MSG_MSG_CREATION( infrastructures, InfrastructuresAttribute );
 }
 
 // -----------------------------------------------------------------------------

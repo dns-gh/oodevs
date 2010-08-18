@@ -8,46 +8,45 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-#include "CapacityAttribute.h"
+#include "StructureAttribute.h"
 #include "protocol/Simulation.h"
 
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
-// Name: CapacityAttribute constructor
+// Name: StructureAttribute constructor
 // Created: SLG 2009-12-04
 // -----------------------------------------------------------------------------
-CapacityAttribute::CapacityAttribute( const MsgsSimToClient::MsgUrbanAttributes& message )
-    : structuralState_( 1. )
+StructureAttribute::StructureAttribute( const MsgsSimToClient::MsgUrbanAttributes& message )
+    : structuralState_( 100 )
 {
     Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: CapacityAttribute destructor
+// Name: StructureAttribute destructor
 // Created: SLG 2009-12-04
 // -----------------------------------------------------------------------------
-CapacityAttribute::~CapacityAttribute()
+StructureAttribute::~StructureAttribute()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: CapacityAttribute::Update
+// Name: StructureAttribute::Update
 // Created: SLG 2009-12-04
 // -----------------------------------------------------------------------------
-void CapacityAttribute::Update( const MsgsSimToClient::MsgUrbanAttributes& message )
+void StructureAttribute::Update( const MsgsSimToClient::MsgUrbanAttributes& message )
 {
-    if( message.has_capacity() )
-        if( message.capacity().has_structuralstate() )
-            structuralState_ = message.capacity().structuralstate();
+    if( message.has_structure() && message.structure().has_state() )
+        structuralState_ = message.structure().state();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ArchitectureAttribute::Send
+// Name: StructureAttribute::Send
 // Created: SLG 2009-12-04
 // -----------------------------------------------------------------------------
-void CapacityAttribute::Send( MsgsSimToClient::MsgUrbanAttributes& message ) const
+void StructureAttribute::Send( MsgsSimToClient::MsgUrbanAttributes& message ) const
 {
-    message.mutable_capacity()->set_structuralstate( structuralState_ );
+    message.mutable_structure()->set_state( structuralState_ );
 }

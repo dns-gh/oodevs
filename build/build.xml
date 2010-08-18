@@ -137,7 +137,7 @@
         <build-lib name="simulation_terrain" pattern="lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
 
-    <target name="library.simulation_kernel" description="build simulation_kernel static library" depends="library.tools,library.protocol,library.simulation_terrain,library.simulation_orders,library.meteo">
+    <target name="library.simulation_kernel" description="build simulation_kernel static library" depends="library.tools,library.protocol,library.simulation_terrain,library.simulation_orders,library.meteo,library.resource_network">
         <build-lib name="simulation_kernel" pattern="lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${libraries.dir}/simulation_kernel"/> <!-- pour MIL.h -->
             <defineset define="USE_DLL"/> <!-- folk use dll -->
@@ -239,6 +239,10 @@
 
     <target name="library.replay_plugin" description="build replay_plugin static library" depends="library.dispatcher">
         <build-lib name="replay_plugin" pattern="lib${ant.project.name}_replay_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
+    </target>
+
+    <target name="library.resource_network" description="build resource network static library" depends="">
+        <build-lib name="resource_network" pattern="lib${ant.project.name}_resource_network-${platform}-mt@{suffix}" suffix="-gd" depends=""/>
     </target>
 
     <target name="library.meteo" description="build meteo static library" depends="library.protocol,library.clients_kernel">
@@ -353,6 +357,7 @@
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix},
                   lib${ant.project.name}_simulation_orders-${platform}-mt@{suffix},
+                  lib${ant.project.name}_resource_network-${platform}-mt@{suffix},
                   lib${ant.project.name}_meteo-${platform}-mt@{suffix},
                   lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}">
             <syslibset libs="dbghelp,winmm,psapi,shell32,iphlpapi,advapi32"/>
@@ -453,6 +458,7 @@
                   lib${ant.project.name}_tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
+                  lib${ant.project.name}_resource_network-${platform}-mt@{suffix},
                   lib${ant.project.name}_meteo-${platform}-mt@{suffix},
                   lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix},
                   lib${ant.project.name}_simulation_orders-${platform}-mt@{suffix},
@@ -827,6 +833,7 @@
                    lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                    lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix},
                    lib${ant.project.name}_simulation_orders-${platform}-mt@{suffix},
+                   lib${ant.project.name}_resource_network-${platform}-mt@{suffix},
                    lib${ant.project.name}_meteo-${platform}-mt@{suffix},
                    lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}"
             depends="mt,xerces,terrain,boost,qt">

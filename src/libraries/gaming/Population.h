@@ -48,7 +48,6 @@ class Population : public kernel::EntityImplementation< kernel::Population_ABC >
                  , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationUpdate >
                  , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationDestruction >
                  , public kernel::Drawable_ABC
-                 , public kernel::Displayable_ABC
                  , public kernel::Positions
                  , public tools::Observer_ABC
                  , public tools::ElementObserver_ABC< Simulation::sEndTick >

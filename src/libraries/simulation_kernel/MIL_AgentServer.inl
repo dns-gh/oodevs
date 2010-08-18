@@ -227,6 +227,17 @@ UrbanModel& MIL_AgentServer::GetUrbanModel() const
     return *pUrbanModel_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetResourceNetworkModel
+// Created: JSR 2010-08-13
+// -----------------------------------------------------------------------------
+inline
+resource::ResourceNetworkModel& MIL_AgentServer::GetResourceNetworkModel() const
+{
+    assert( pResourceNetworkModel_ );
+    return *pResourceNetworkModel_;
+}
+
 //-----------------------------------------------------------------------------
 // Name: MIL_AgentServer::GetWorkspace
 // Created: DFT 02-03-13

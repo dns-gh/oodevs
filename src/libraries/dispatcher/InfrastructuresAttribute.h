@@ -3,12 +3,12 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2010 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __CapacityAttribute_h_
-#define __CapacityAttribute_h_
+#ifndef __InfrastructuresAttribute_h_
+#define __InfrastructuresAttribute_h_
 
 #include "UrbanObjectAttribute_ABC.h"
 
@@ -16,18 +16,18 @@ namespace dispatcher
 {
 
 // =============================================================================
-/** @class  CapacityAttribute
-    @brief  CapacityAttribute
+/** @class  InfrastructuresAttribute
+    @brief  InfrastructuresAttribute
 */
-// Created: SLG 2009-12-04
+// Created: JSR 2010-08-17
 // =============================================================================
-class CapacityAttribute : public UrbanObjectAttribute_ABC
+class InfrastructuresAttribute : public UrbanObjectAttribute_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit CapacityAttribute( const MsgsSimToClient::MsgUrbanAttributes& message );
-    virtual ~CapacityAttribute();
+    explicit InfrastructuresAttribute( const MsgsSimToClient::MsgUrbanAttributes& message );
+    virtual ~InfrastructuresAttribute();
     //@}
 
     //! @name Operations
@@ -37,12 +37,11 @@ public:
     //@}
 
 private:
-    //! @name Data members
+    //! @name Member data
     //@{
-    float structuralState_;
     //@}
 };
 
 }
 
-#endif // __CapacityAttribute_h_
+#endif // __InfrastructuresAttribute_h_

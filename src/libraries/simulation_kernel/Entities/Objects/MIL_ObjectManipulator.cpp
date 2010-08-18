@@ -367,7 +367,7 @@ MT_Float MIL_ObjectManipulator::ApplySpeedPolicy( MT_Float rAgentSpeedWithinObje
     const MobilityCapacity* capacity = object_.Retrieve< MobilityCapacity >();
     const StructuralCapacity* structuralcapacity = object_.Retrieve< StructuralCapacity >();
     if ( capacity )
-        return capacity->ApplySpeedPolicy( rAgentSpeedWithinObject, rAgentSpeedWithinEnvironment, rAgentMaxSpeed, structuralcapacity? structuralcapacity->GetStructuralState() : 1. );
+        return capacity->ApplySpeedPolicy( rAgentSpeedWithinObject, rAgentSpeedWithinEnvironment, rAgentMaxSpeed, structuralcapacity ? 0.01 * structuralcapacity->GetStructuralState() : 1. );
     return std::numeric_limits< MT_Float >::max();
 }
 
