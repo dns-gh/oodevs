@@ -782,7 +782,7 @@
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToObjectKnowledgeList" id="2011" name="MoveToObjectKnowledgeList">
       <parameter dia-name="objectives" name="objectives" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.military.platoon.combat.tasks.DestroyAgents" dia-type="net.masagroup.sword.military.platoon.combat.tasks.DestroyAgents" id="2013" name="MELEE Detruire">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Detruire" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Detruire" id="2013" name="MELEE Detruire">
       <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.ObserveAndReconnoiter" dia-type="net.masagroup.sword.test.military.platoon.tasks.ObserveAndReconnoiter" id="2014" name="ObserveAndReconnoiterPoint">
