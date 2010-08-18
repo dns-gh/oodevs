@@ -13,7 +13,6 @@
 #include "EntityPublisher_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "Model.h"
-//#include "protocol/protocol.h"
 
 using namespace dispatcher;
 

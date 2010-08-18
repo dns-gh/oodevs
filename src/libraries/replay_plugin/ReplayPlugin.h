@@ -10,7 +10,7 @@
 #ifndef __ReplayPlugin_h_
 #define __ReplayPlugin_h_
 
-#include "Plugin_ABC.h"
+#include "dispatcher/Plugin_ABC.h"
 #include <MT/MT_Time/MT_Timer_ABC.h>
 #include <MT/MT_Time/MT_TimerManager.h>
 
@@ -29,6 +29,12 @@ namespace dispatcher
     class Loader;
     class Model;
     class ReplayModel_ABC;
+}
+
+namespace plugins
+{
+namespace replay
+{
     class ReplayExtensionFactory;
 
 // =============================================================================
@@ -37,14 +43,13 @@ namespace dispatcher
 */
 // Created: AGE 2007-08-24
 // =============================================================================
-class ReplayPlugin : public Plugin_ABC
-                   , private MT_Timer_ABC
+class ReplayPlugin : public dispatcher::Plugin_ABC, private MT_Timer_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ReplayPlugin( Model& model, ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& clientCommands,
-                           Loader& loader, const ReplayModel_ABC& replayModel );
+             ReplayPlugin( dispatcher::Model& model, dispatcher::ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& clientCommands,
+                           dispatcher::Loader& loader, const dispatcher::ReplayModel_ABC& replayModel );
     virtual ~ReplayPlugin();
     //@}
 
@@ -52,8 +57,8 @@ public:
     //@{
     virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
 
-    virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& profile );
-    virtual void NotifyClientLeft( ClientPublisher_ABC& client );
+    virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
+    virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client );
 
     virtual void Register( dispatcher::Services& services );
     virtual void Update();
@@ -78,26 +83,24 @@ private:
     void Pause();
     void Resume();
     void SkipToFrame( unsigned frame );
-    void SendReplayInfo( ClientPublisher_ABC& client );
+    void SendReplayInfo( dispatcher::ClientPublisher_ABC& client );
     //@}
 
 private:
     //! @name Member data
     //@{
-    Model& model_;
-    ClientPublisher_ABC& clients_;
-    Loader& loader_;
-
+    dispatcher::Model& model_;
+    dispatcher::ClientPublisher_ABC& clients_;
+    dispatcher::Loader& loader_;
     unsigned factor_;
     bool running_;
     int skipToFrame_;
-
     MT_TimerManager manager_;
-
     std::auto_ptr< ReplayExtensionFactory > factory_;
     //@}
 };
 
+}
 }
 
 #endif // __ReplayPlugin_h_

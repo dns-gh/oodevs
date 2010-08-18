@@ -14,12 +14,11 @@
 #include "ClientsNetworker.h"
 #include "SimulationDispatcher.h"
 #include "Loader.h"
-#include "ReplayPlugin.h"
-#include "DispatcherPlugin.h"
 #include "NoopPublisher.h"
 #include "Services.h"
 #include "StaticModel.h"
 #include "aar_plugin/AarPlugin.h"
+#include "replay_plugin/ReplayPlugin.h"
 #include "rights_plugin/RightsPlugin.h"
 #include "score_plugin/ScorePlugin.h"
 #include "messenger_plugin/MessengerPlugin.h"
@@ -48,17 +47,15 @@ namespace
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
 Replayer::Replayer( const Config& config )
-    : registrables_    ()
-    , services_        ( new Services() )
+    : services_        ( new Services() )
     , staticModel_     ( new StaticModel( config ) )
     , model_           ( CreateModel( handler_, config, *staticModel_ ) )
     , clientsNetworker_( new ClientsNetworker( config, handler_, *services_ ) )
     , simulation_      ( CreateSimulation( *clientsNetworker_, *model_, handler_ ) )
     , loader_          ( new Loader( *simulation_, handler_, config ) )
-    , plugin_          ( new ReplayPlugin( *model_, *clientsNetworker_, *clientsNetworker_, *loader_, *simulation_ ) )
+    , plugin_          ( new plugins::replay::ReplayPlugin( *model_, *clientsNetworker_, *clientsNetworker_, *loader_, *simulation_ ) )
 {
     handler_.AddHandler( clientsNetworker_ );
-
     // $$$$ AGE 2007-08-27: utiliser la PluginFactory => replay ESRI
     plugins::rights::RightsPlugin* rights = new plugins::rights::RightsPlugin( *model_, *clientsNetworker_, config, *clientsNetworker_, handler_, *clientsNetworker_, registrables_, 0 );
     handler_.Add( rights );

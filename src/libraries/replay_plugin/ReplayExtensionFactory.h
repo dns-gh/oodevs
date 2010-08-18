@@ -10,7 +10,7 @@
 #ifndef __ReplayExtensionFactory_h_
 #define __ReplayExtensionFactory_h_
 
-#include "ExtensionFactory_ABC.h"
+#include "dispatcher/ExtensionFactory_ABC.h"
 
 namespace kernel
 {
@@ -19,21 +19,25 @@ namespace kernel
 
 namespace dispatcher
 {
-
     class ReplayModel_ABC;
+}
 
+namespace plugins
+{
+namespace replay
+{
 // =============================================================================
 /** @class  ReplayExtensionFactory
     @brief  ReplayExtensionFactory
 */
 // Created: SBO 2008-02-14
 // =============================================================================
-class ReplayExtensionFactory : public ExtensionFactory_ABC< kernel::Entity_ABC >
+class ReplayExtensionFactory : public dispatcher::ExtensionFactory_ABC< kernel::Entity_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ReplayExtensionFactory( const ReplayModel_ABC& model );
+    explicit ReplayExtensionFactory( const dispatcher::ReplayModel_ABC& model );
     virtual ~ReplayExtensionFactory();
     //@}
 
@@ -52,10 +56,11 @@ private:
 private:
     //! @name Member data
     //@{
-    const ReplayModel_ABC& model_;
+    const dispatcher::ReplayModel_ABC& model_;
     //@}
 };
 
+}
 }
 
 #endif // __ReplayExtensionFactory_h_

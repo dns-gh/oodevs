@@ -34,7 +34,6 @@
 #include "Report.h"
 #include "Side.h"
 #include "SimulationModel.h"
-#include "Synchroniser.h"
 #include "UrbanKnowledge.h"
 #include "UrbanObject.h"
 #include "Visitors.h"

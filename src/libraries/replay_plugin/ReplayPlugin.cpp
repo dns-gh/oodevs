@@ -7,12 +7,11 @@
 //
 // *****************************************************************************
 
-#include "dispatcher_pch.h"
 #include "ReplayPlugin.h"
-#include "Loader.h"
-#include "Model.h"
-#include "Services.h"
 #include "ReplayExtensionFactory.h"
+#include "dispatcher/Loader.h"
+#include "dispatcher/Model.h"
+#include "dispatcher/Services.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ReplaySenders.h"
@@ -20,6 +19,7 @@
 #include "protocol/Simulation.h"
 #include <MT/MT_Logger/MT_Logger_lib.h>
 
+using namespace plugins::replay;
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
@@ -57,7 +57,7 @@ ReplayPlugin::~ReplayPlugin()
 // -----------------------------------------------------------------------------
 void ReplayPlugin::Register( dispatcher::Services& services )
 {
-    services.Declare< replay::Service >();
+    services.Declare< ::replay::Service >();
 }
 
 // -----------------------------------------------------------------------------
@@ -146,7 +146,7 @@ void ReplayPlugin::OnReceive( const std::string& , const MsgsClientToReplay::Msg
 // -----------------------------------------------------------------------------
 void ReplayPlugin::ChangeTimeFactor( unsigned factor )
 {
-    replay::ControlChangeTimeFactorAck message;
+    ::replay::ControlChangeTimeFactorAck message;
     if( factor )
     {
         factor_ = factor;
@@ -166,7 +166,7 @@ void ReplayPlugin::ChangeTimeFactor( unsigned factor )
 // -----------------------------------------------------------------------------
 void ReplayPlugin::Pause()
 {
-    replay::ControlPauseAck asn;
+    ::replay::ControlPauseAck asn;
     asn().set_error_code( running_ ? MsgsSimToClient::ControlAck_ErrorCode_no_error: MsgsSimToClient::ControlAck_ErrorCode_error_already_paused );
     asn.Send( clients_ );
     running_ = false;
@@ -178,7 +178,7 @@ void ReplayPlugin::Pause()
 // -----------------------------------------------------------------------------
 void ReplayPlugin::Resume()
 {
-    replay::ControlResumeAck asn;
+    ::replay::ControlResumeAck asn;
     asn().set_error_code( running_ ? MsgsSimToClient::ControlAck_ErrorCode_error_not_paused :  MsgsSimToClient::ControlAck_ErrorCode_no_error );
     asn.Send( clients_ );
     running_ = true;
@@ -190,7 +190,7 @@ void ReplayPlugin::Resume()
 // -----------------------------------------------------------------------------
 void ReplayPlugin::SkipToFrame( unsigned frame )
 {
-    replay::ControlSkipToTickAck asn;
+    ::replay::ControlSkipToTickAck asn;
     asn().set_tick( loader_.GetCurrentTick() );
     if( frame < loader_.GetTickNumber() )
     {

@@ -7,18 +7,17 @@
 //
 // *****************************************************************************
 
-#include "dispatcher_pch.h"
 #include "ReplayExtensionFactory.h"
-#include "ReplaySynchronisations.h"
+#include "dispatcher/ReplaySynchronisations.h"
 #include "clients_kernel/Entity_ABC.h"
 
-using namespace dispatcher;
+using namespace plugins::replay;
 
 // -----------------------------------------------------------------------------
 // Name: ReplayExtensionFactory constructor
 // Created: SBO 2008-02-14
 // -----------------------------------------------------------------------------
-ReplayExtensionFactory::ReplayExtensionFactory( const ReplayModel_ABC& model )
+ReplayExtensionFactory::ReplayExtensionFactory( const dispatcher::ReplayModel_ABC& model )
     : model_( model )
 {
     // NOTHING
@@ -39,5 +38,5 @@ ReplayExtensionFactory::~ReplayExtensionFactory()
 // -----------------------------------------------------------------------------
 void ReplayExtensionFactory::Create( kernel::Entity_ABC& entity )
 {
-    entity.Attach( *new ReplaySynchronisations( model_, entity ) );
+    entity.Attach( *new dispatcher::ReplaySynchronisations( model_, entity ) );
 }

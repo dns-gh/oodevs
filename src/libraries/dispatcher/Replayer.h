@@ -20,6 +20,14 @@ namespace kernel
     class StaticModel;
 }
 
+namespace plugins
+{
+namespace replay
+{
+    class ReplayPlugin;
+}
+}
+
 namespace dispatcher
 {
     class Config;
@@ -27,7 +35,6 @@ namespace dispatcher
     class ClientsNetworker;
     class SimulationDispatcher;
     class Loader;
-    class ReplayPlugin;
     class Services;
 
 // =============================================================================
@@ -60,15 +67,15 @@ private:
 private:
     //! @name Member data
     //@{
-    CompositePlugin                            handler_;
-    dispatcher::CompositeRegistrable           registrables_;
-    std::auto_ptr< Services >                  services_;
-    std::auto_ptr< kernel::StaticModel >       staticModel_;
-    boost::shared_ptr< Model >                 model_;
-    boost::shared_ptr< ClientsNetworker >      clientsNetworker_;
-    boost::shared_ptr< SimulationDispatcher >  simulation_;
-    std::auto_ptr< Loader >                    loader_;
-    boost::shared_ptr< ReplayPlugin >          plugin_;
+    CompositePlugin                                    handler_;
+    dispatcher::CompositeRegistrable                   registrables_;
+    std::auto_ptr< Services >                          services_;
+    std::auto_ptr< kernel::StaticModel >               staticModel_;
+    boost::shared_ptr< Model >                         model_;
+    boost::shared_ptr< ClientsNetworker >              clientsNetworker_;
+    boost::shared_ptr< SimulationDispatcher >          simulation_;
+    std::auto_ptr< Loader >                            loader_;
+    boost::shared_ptr< plugins::replay::ReplayPlugin > plugin_;
     //@}
 };
 

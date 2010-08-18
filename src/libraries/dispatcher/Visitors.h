@@ -16,7 +16,6 @@
 namespace dispatcher
 {
     class ClientPublisher_ABC;
-    class Synchroniser;
 
     class FullUpdateVisitor : public kernel::ModelVisitor_ABC
     {

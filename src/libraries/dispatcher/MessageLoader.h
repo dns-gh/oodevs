@@ -12,10 +12,10 @@
 
 #include "Frames.h"
 #include "MessageLoader_ABC.h"
-#include "tools/thread/ThreadPool.h"
+#include <tools/thread/ThreadPool.h>
+#include <boost/shared_ptr.hpp>
 #include <vector>
 #include <fstream>
-#include <boost/shared_ptr.hpp>
 
 namespace dispatcher
 {
@@ -41,10 +41,18 @@ public:
     //! @name Operations
     //@{
     virtual bool         LoadFrame   ( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback = T_Callback() );
-    virtual unsigned int LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback = T_Callback()  );
+    virtual unsigned int LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback = T_Callback() );
+
     void Synchronize();
     void ReloadIndices();
     unsigned int GetTickNumber() const;
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::vector< Frame >    T_Frames;
+    typedef std::vector< KeyFrame > T_KeyFrames;
     //@}
 
 private:
@@ -52,12 +60,6 @@ private:
     //@{
     MessageLoader( const MessageLoader& );            //!< Copy constructor
     MessageLoader& operator=( const MessageLoader& ); //!< Assignment operator
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::vector< Frame >    T_Frames;
-    typedef std::vector< KeyFrame > T_KeyFrames;
     //@}
 
     //! @name Helpers
