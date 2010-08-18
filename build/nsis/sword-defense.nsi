@@ -14,12 +14,17 @@
 !insertmacro OT.Initialize
 ;..................................................................................................
 
-Name "${PRODUCT_NAME}"
 !ifdef EVALUATION
-    OutFile "${DISTDIR}\${PRODUCT_NAME}_${APP_VERSION_MAJOR}_eval.exe"
+    !define PRODUCT_EVALUATION "_eval"
 !else
-    OutFile "${DISTDIR}\${PRODUCT_NAME}_${APP_VERSION_MAJOR}.exe"
+    !define PRODUCT_EVALUATION ""
 !endif
+!ifndef PRODUCT_SUFFIX
+    !define PRODUCT_SUFFIX ${APP_MODEL}
+!endif
+
+Name "${PRODUCT_NAME}"
+OutFile "${DISTDIR}\${PRODUCT_NAME}_${PRODUCT_SUFFIX}_${APP_VERSION_MAJOR}${PRODUCT_EVALUATION}.exe"
 
 !insertmacro UNATTENDED_UNINSTALL
 
@@ -200,7 +205,6 @@ SectionGroup "Exercises" s_exo
         !insertmacro OT.AddExercise "puma" "larochelle" "s_exo3"
         !insertmacro OT.AddExercise "Cabourg" "Cabourg" "s_exo17"
         !insertmacro OT.AddExercise "Ares" "Blois" "s_exo18"
-        
         ; Tutorials
         !insertmacro OT.AddExercise "tutorials\01 - Generalites" "Paris_Est" "s_exo4"
         !insertmacro OT.AddExercise "tutorials\02 - Jeu" "Paris_Est" "s_exo5"
@@ -225,7 +229,6 @@ SectionGroup "Exercises" s_exo
         !insertmacro OT.AddExercise "Porto - 1.9.2" "Porto" "s_exo19"
         !insertmacro OT.AddExercise "BMDrosoville" "Drosoville" "s_exo20"
         !insertmacro OT.AddExercise "tests\test1_increment1_v1stab" "Mailly" "s_exo21"
-        
         ; Tutorials
         !insertmacro OT.AddExercise "tutorials\01 - Generalites" "Paris_Est" "s_exo4"
         !insertmacro OT.AddExercise "tutorials\02 - Jeu" "Paris_Est" "s_exo5"
@@ -245,7 +248,6 @@ SectionGroup "Exercises" s_exo
         !insertmacro OT.AddExercise "Cabourg" "Cabourg" "s_exo1"
         !insertmacro OT.AddExercise "BMDrosoville" "Drosoville" "s_exo2"
         !insertmacro OT.AddExercise "TerrainDifficile" "Malaisie" "s_exo3"
-
         ; Tutorials
         !insertmacro OT.AddExercise "tutorials\01 - Generalites" "Paris_Est" "s_exo4"
         !insertmacro OT.AddExercise "tutorials\02 - Jeu" "Paris_Est" "s_exo5"
@@ -260,7 +262,6 @@ SectionGroup "Exercises" s_exo
         !insertmacro OT.AddExercise "tutorials\08 - Fonctions Avancees" "Paris_Est" "s_exo14"
         !insertmacro OT.AddExercise "tutorials\09 - Rejeu et AAA" "Paris_Est" "s_exo15"
         !insertmacro OT.AddExercise "tutorials\10 - Preparation" "Paris_Est" "s_exo16"
-        
         ; Tests
         !insertmacro OT.AddExercise "tests\capteurs" "Angers_x9" "s_exo17"
         !insertmacro OT.AddExercise "tests\capteurs-delai" "Angers_x9" "s_exo18"
@@ -279,7 +280,6 @@ SectionGroup "Exercises" s_exo
         !insertmacro OT.AddExercise "tests\coi" "Angers_x9" "s_exo31"
         !insertmacro OT.AddExercise "tests\Meteo" "Angers_x9" "s_exo32"
         !insertmacro OT.AddExercise "tests\embrayerAuto" "Paris_Est" "s_exo33"
-
         ;Test import scenario
         Section "SCENARIO"
         SectionIn RO

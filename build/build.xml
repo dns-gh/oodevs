@@ -902,7 +902,7 @@
 
     <!-- standard packages -->
     <target name="package.defense" description="package the standard installer: worldwide, no license">
-        <nsis todir="${dist.dir}/current/${platform}" name="sword-defense" script="sword-defense.nsi" nsh="config.nsh">
+        <nsis name="sword-defense" script="sword-defense.nsi" nsh="config.nsh">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DAPP_MODEL=worldwide"/>
@@ -911,16 +911,17 @@
     </target>
 
     <target name="package.security" description="create the installer">
-        <nsis todir="${dist.dir}/current/${platform}/security" name="sword-security" script="sword-security.nsi" nsh="config.nsh">
+        <nsis name="sword-security" script="sword-security.nsi" nsh="config.nsh">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DAPP_MODEL=worldwide"/>
+            <arg value="/DPRODUCT_SUFFIX=security"/>
             <arg value="/X!include sword-security.nsh"/>
         </nsis>
     </target>
 
     <target name="package.eval" description="package the standard installer: worlwide, 3 months license">
-        <nsis todir="${dist.dir}/current/${platform}" name="sword-defense" script="sword-defense.nsi" nsh="config.nsh">
+        <nsis name="sword-defense" script="sword-defense.nsi" nsh="config.nsh">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DEVALUATION=1"/>
@@ -930,58 +931,19 @@
     </target>
 
     <target name="package.france" description="package the french version of installer: france, no license">
-        <nsis todir="${dist.dir}/current/${platform}/france" name="sword-defense" script="sword-defense.nsi" nsh="config.nsh">
+        <nsis name="sword-defense" script="sword-defense.nsi" nsh="config.nsh">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DAPP_MODEL=france"/>
-            <arg value="/X!include sword-defense.nsh"/>
-        </nsis>
-    </target>
-
-    <!-- project-specific packages -->
-    <target name="package.ncco" description="package the NCCO installer">
-        <nsis todir="${dist.dir}/current/${platform}/ncco" name="ncco" script="ncco.nsi">
-            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
-            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-            <arg value="/X!include sword-ot.nsh"/>
-        </nsis>
-    </target>
-
-    <target name="package.lto" description="package the LTO installer">
-        <nsis todir="${dist.dir}/current/${platform}/lto" name="lto" script="sword-defense.nsi" nsh="config.nsh">
-            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
-            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-            <arg value="/DAPP_MODEL=LTO"/>
-            <arg value="/X!include sword-defense.nsh"/>
-        </nsis>
-    </target>
-
-    <target name="package.scipio-v1-stab" description="package the Scipio V1.Stab installer">
-        <nsis todir="${dist.dir}/current/${platform}/scipio-v1-stab" name="sword-defense" script="sword-defense.nsi" nsh="config.nsh">
-            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
-            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-            <arg value="/DAPP_MODEL=Scipio-V1.Stab"/>
             <arg value="/X!include sword-defense.nsh"/>
         </nsis>
     </target>
 
     <!-- patch package -->
     <target name="package.patch" description="create a patch installer">
-        <nsis todir="${dist.dir}/current/${platform}" name="sword-patch" script="resources/sword-patch.nsi" license="true">
+        <nsis name="sword-patch" script="resources/sword-patch.nsi" license="true">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-            <arg value="/X!include sword-defense.nsh"/>
-        </nsis>
-    </target>
-
-    <!-- test packages -->
-    <target name="package.stress" description="package the french version of installer for stress test: france, 3 months license">
-        <nsis todir="${dist.dir}/current/${platform}/france" name="sword-defense" script="sword-defense.nsi" nsh="config.nsh">
-            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
-            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-            <arg value="/DEVALUATION=1"/>
-            <arg value="/DAPP_MODEL=france"/>
-            <arg value="/DSTRESS=1"/>
             <arg value="/X!include sword-defense.nsh"/>
         </nsis>
     </target>
