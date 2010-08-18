@@ -14,6 +14,7 @@
 #include "ADN_Connector_ListView.h"
 #include "ADN_Tools.h"
 #include "ADN_ObjectCreator_ABC.h"
+#include "ADN_ActiveProtections_Wizard.h"
 #include <qpopupmenu.h>
 
 typedef ADN_ActiveProtections_Data::ActiveProtectionsInfos ActiveProtectionsInfos;
@@ -69,7 +70,7 @@ void ADN_ActiveProtectionsListView::ConnectItem( bool bConnect )
 void ADN_ActiveProtectionsListView::OnContextMenu( const QPoint& pt )
 {
     QPopupMenu popupMenu( this );
-    ADN_DefaultObjectCreator<ActiveProtectionsInfos> objectCreator;
-    FillContextMenuWithDefault( popupMenu, objectCreator );
+    ADN_ActiveProtections_Wizard wizard( this );
+    FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
 }

@@ -67,6 +67,8 @@ public:
         virtual ~ActiveProtectionsInfos() {}
         std::string GetItemName();
 
+        ActiveProtectionsInfos* CreateCopy();
+
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& xos );
         void ReadWeapon( xml::xistream& xis );
@@ -83,7 +85,7 @@ public:
     };
 
     typedef ADN_Type_Vector_ABC< ActiveProtectionsInfos > T_ActiveProtectionsInfosVector;
-    typedef T_ActiveProtectionsInfosVector::iterator   IT_ActiveProtectionsInfosVector;
+    typedef T_ActiveProtectionsInfosVector::iterator     IT_ActiveProtectionsInfosVector;
 
 
     //! @name Constructors/Destructor

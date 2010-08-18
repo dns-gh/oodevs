@@ -167,11 +167,11 @@ std::string ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::GetItemNa
 ADN_ActiveProtections_Data::ActiveProtectionsInfos::ActiveProtectionsInfos()
     : ADN_Ref_ABC()
     , ADN_DataTreeNode_ABC()
-    , strName_              ( tr( "Active Protection" ).ascii() )
-    , coefficient_          ( 0 )
-    , hardKill_             ( false )
-    , usage_                ( 0 )
-    , ptrAmmunition_        ( ( ADN_Equipement_Data::T_AmmoCategoryInfo_Vector& )ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_, 0, "" )
+    , strName_      ( tr( "Active Protection" ).ascii() )
+    , coefficient_  ( 0 )
+    , hardKill_     ( false )
+    , usage_        ( 0 )
+    , ptrAmmunition_( ( ADN_Equipement_Data::T_AmmoCategoryInfo_Vector& )ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_, 0, "" )
 {
     BindExistenceTo( &ptrAmmunition_ );
 }
@@ -183,6 +183,22 @@ ADN_ActiveProtections_Data::ActiveProtectionsInfos::ActiveProtectionsInfos()
 std::string ADN_ActiveProtections_Data::ActiveProtectionsInfos::GetItemName()
 {
     return std::string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ActiveProtections_Data::ActiveProtectionsInfos::CreateCopy
+// Created: LGY 2010-08-18
+// -----------------------------------------------------------------------------
+ADN_ActiveProtections_Data::ActiveProtectionsInfos* ADN_ActiveProtections_Data::ActiveProtectionsInfos::CreateCopy()
+{
+    ActiveProtectionsInfos* pCopy = new ActiveProtectionsInfos();
+    pCopy->coefficient_ = coefficient_.GetData();
+    pCopy->hardKill_ = hardKill_.GetData();
+    pCopy->usage_ = usage_.GetData();
+    for( IT_ActiveProtectionsInfosWeaponsVector it = weapons_.begin(); it != weapons_.end(); ++it )
+        pCopy->weapons_.AddItem( *it );
+    pCopy->ptrAmmunition_ = ptrAmmunition_.GetData();
+    return pCopy;
 }
 
 // -----------------------------------------------------------------------------
@@ -209,7 +225,6 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadArchive( xml::xistr
             >> xml::attribute( "usage", usage_ )
         >> xml::end
         >> xml::list( "weapon", *this, &ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadWeapon );
-
     ADN_Equipement_Data::CategoryInfo* pAmmo = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( "munition", strAmmunition );
     if( !pAmmo )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Active protection '%1' - Invalid ammunition type '%2'" ).arg( strName_.GetData().c_str() ,strAmmunition.c_str() ).ascii() );

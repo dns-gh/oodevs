@@ -98,6 +98,25 @@
     </message>
 </context>
 <context>
+    <name>ADN_ActiveProtections_Wizard</name>
+    <message>
+        <source>New active protection creation</source>
+        <translation>Création d&apos;une nouvelle protection active</translation>
+    </message>
+    <message>
+        <source>Active protection</source>
+        <translation>Protection active</translation>
+    </message>
+    <message>
+        <source>Creation finished</source>
+        <translation>Création terminée</translation>
+    </message>
+    <message>
+        <source>Click &quot;Done&quot; to create the new active protection.</source>
+        <translation>Cliquez sur &quot;Terminer&quot; pour créer la nouvelle protection active.</translation>
+    </message>
+</context>
+<context>
     <name>ADN_AddElementCommand</name>
     <message>
         <source>Add </source>
