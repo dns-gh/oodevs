@@ -10709,6 +10709,8 @@
       <equipment count="2" crew="1" loadable="true" type="Tireur Precision"/>
       <equipment count="3" crew="1" loadable="true" type="Fantassin Appui AC"/>
       <equipment count="3" crew="1" loadable="true" type="Fantassin LGI"/>
+      <equipment count="1" crew="3" type="EBG"/>
+      <equipment count="1" crew="3" type="MPG"/>
     </equipments>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>

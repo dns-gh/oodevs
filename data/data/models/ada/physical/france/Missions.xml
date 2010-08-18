@@ -867,7 +867,7 @@
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Identify" dia-type="net.masagroup.sword.test.military.platoon.tasks.Identify" id="2024" name="TEST IdentifyAgent">
       <parameter dia-name="objectives" name="objectives" optional="false" type="AgentKnowledgeListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.RemoveObstacle" dia-type="net.masagroup.sword.test.military.platoon.tasks.RemoveObstacle" id="2045" name="RemoveObstacle">
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.RemoveObstacle" dia-type="net.masagroup.sword.test.military.platoon.tasks.RemoveObstacle" id="2045" name="TEST RemoveObstacle">
       <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.FaireMouvement" dia-type="net.masagroup.sword.france.military.platoon.tasks.FaireMouvement" id="2046" name="COMMUNES Faire Mouvement">

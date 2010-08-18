@@ -128,6 +128,7 @@
         <mission name="TEST ReconnoiterPoint"/>
         <mission name="TEST ReconnoiterUrbanBlock"/>
         <mission name="TEST ReconnoiterArea"/>
+        <mission name="TEST RemoveObstacle"/>
         <mission name="Seal Off"/>
         <mission name="SeekAndDestroy"/>
         <mission name="SelfProtect"/>
