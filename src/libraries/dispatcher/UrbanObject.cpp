@@ -28,6 +28,7 @@ UrbanObject::UrbanObject( Model_ABC& /*model*/, const MsgsSimToClient::MsgUrbanC
     : dispatcher::UrbanObject_ABC( msg.oid(), msg.name().c_str() )
     , strName_                   ( msg.name()  )
     , localisation_              ( msg.location() )
+    , hasInfrastructures_        ( false )
 {
     Initialize( msg.attributes() );
     RegisterSelf( *this );
@@ -57,7 +58,6 @@ void UrbanObject::Initialize( const MsgsSimToClient::MsgUrbanAttributes& attribu
     MSG_MSG_CREATION( color          , ColorAttribute );
     MSG_MSG_CREATION( architecture   , ArchitectureAttribute );
     MSG_MSG_CREATION( structure      , StructureAttribute );
-    MSG_MSG_CREATION( infrastructures, InfrastructuresAttribute );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,6 +122,11 @@ void UrbanObject::DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& msg )
     }
     if( msg.has_attributes() )
     {
+        if( msg.attributes().has_infrastructures() && !hasInfrastructures_ )
+        {
+            hasInfrastructures_ = true;
+            AddAttribute( new InfrastructuresAttribute( msg.attributes() ) );
+        }
         optionals_.attributesPresent = 1;
         std::for_each( attributes_.begin(), attributes_.end(),
             boost::bind( &UrbanObjectAttribute_ABC::Update, _1, boost::cref( msg.attributes() ) ) );

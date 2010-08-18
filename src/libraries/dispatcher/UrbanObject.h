@@ -91,6 +91,7 @@ private:
     //@{
     const std::string strName_;
     Localisation localisation_;
+    bool hasInfrastructures_;
     T_UrbanObjectAttributes attributes_;
     T_Optionals optionals_;
     //@}

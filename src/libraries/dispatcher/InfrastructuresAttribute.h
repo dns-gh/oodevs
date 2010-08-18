@@ -23,6 +23,22 @@ namespace dispatcher
 // =============================================================================
 class InfrastructuresAttribute : public UrbanObjectAttribute_ABC
 {
+    struct ResourceNetwork
+    {
+        struct Link
+        {
+            int kind_;
+            unsigned int target_;
+            int capacity_;
+        };
+        bool producer_;
+        unsigned int type_;
+        bool enabled_;
+        bool stockActive_;
+        unsigned int stock_;
+        std::vector< Link > links_;
+    };
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -39,6 +55,7 @@ public:
 private:
     //! @name Member data
     //@{
+    std::map< unsigned int, ResourceNetwork > resourceMap_;
     //@}
 };
 

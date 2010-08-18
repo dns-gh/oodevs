@@ -30,7 +30,7 @@ UrbanKnowledge::UrbanKnowledge( const Model_ABC& model, const MsgsSimToClient::M
     , team_                         ( model.Sides().Get( message.team() ) )
     , pUrban_                       ( model.UrbanBlocks().Find( message.real_urban() ) )
     , bPerceived_                   ( false )
-    , rProgress_                    ( 0. )
+    , rProgress_                    ( 0 )
 {
     optionals_.perceivedPresent = 0;
     optionals_.automat_perceptionPresent = 0;
