@@ -1027,9 +1027,6 @@
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.ContreAttaquer" dia-type="T_Mission_Pion_ContreAttaquer_Zone" id="2089" name="MELEE Contre Attaquer dans une Zone">
       <parameter dia-name="objectives" name="zone" optional="false" type="AreaListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.ContreAttaquer" dia-type="T_Mission_Pion_ContreAttaquer_BU" id="2093" name="MELEE Contre Attaquer dans un BU">
-      <parameter dia-name="objectives" name="zone" optional="false" type="UrbanBlockBM"/>
-    </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Neutralizer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Neutralizer" id="2090" name="MELEE Neutralizer">
       <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
     </mission>
