@@ -111,7 +111,7 @@ namespace
             return ComputeEnemiesRatio( *pCaller_, *lhs, loaded_ ) < ComputeEnemiesRatio( *pCaller_, *rhs, loaded_ );
         }
         const MIL_Automate* pCaller_;
-        const bool loaded_;
+        bool loaded_;
     };
 }
 
