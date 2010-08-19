@@ -5,9 +5,18 @@
   <property name="input" value="src"/>
   <property name="testName" value="testings"/>
   <property name="data" value="../../data/models/ada/physical/france"/>
-  <property name="reportFile" value="${output}/${testName}/reports/report.log"/>
 
-  <target name="generate">
+    <tstamp>
+        <format property="timenow" pattern="yyyy-MM-dd_hh'h'mm" />  
+    </tstamp>
+
+  <property name="reportFile" value="reports/${timenow}_report.log"/>
+
+  <target name="clean">
+    <delete dir="${output}"/>
+  </target>
+
+  <target name="generate" depends="clean">
     <mkdir dir="${output}"/>
     <mkdir dir="${output}/${testName}"/>
     <mkdir dir="${output}/${testName}/sessions"/>
@@ -33,5 +42,21 @@
     </xslt>
     <xslt in="${data}/pions.xml" style="xsl/model.xsl" out="${output}/${testName}/scripts/resources/model.lua"/>
   </target>
+
+  <target name="deploy" depends="generate">
+    <delete dir="../../exercises/testings"/>
+    <copy todir="../../exercises/testings">
+      <fileset dir="${output}/${testName}"/>
+    </copy>
+  </target>
+
+  <target name="launch">
+    <exec executable="../../../out/applications/simulation_app/vc80/Release/simulation_app.exe" dir="../../../run/vc80" failonerror="true" timeout="600000">
+        <arg value="--root-dir=../../data"/>
+        <arg value="--exercise=testings"/>
+        <arg value="--session=default"/>
+    </exec>
+  </target>
+
 </project>
 

@@ -41,10 +41,9 @@ function Start()
     local eventTable =
     {
         {
-            events.sim:ClientConnected(),
+            events:Once(),
             { },
             function( client, profile )
-                if profile ~= "supervisor" then return end
                 ChangeState( "</xsl:text><xsl:value-of select="$physical"/><xsl:text>_startup" )
             end
         },
@@ -150,7 +149,7 @@ end
                 <xsl:text>    :With( Path.create( "Route" ):AddPoint( "Destination", config.positions.destination[1] ) )</xsl:text>
             </xsl:when>
             <xsl:when test="@type = 'Point'">
-                <xsl:text>    :With( Point.create( config.positions.destination[1] ) )</xsl:text>
+                <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "Point", value = config.positions.destination[1] } )</xsl:text>
             </xsl:when>
 
             <xsl:otherwise>
