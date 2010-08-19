@@ -85,7 +85,7 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
 EngineerConstruction::EngineerConstruction( const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, const kernel::EntityResolver_ABC& entities, xml::xistream& xis, kernel::Controller& controller )
-    : Parameter< std::string >( OrderParameter( xis.attribute< std::string >( "name" ).c_str(), "obstacle", false ) )
+    : Parameter< std::string >( OrderParameter( xis.attribute< std::string >( "name" ).c_str(), "genobject", false ) )
     , type_ ( types.Get( xis.attribute< std::string >( "value" ) ) )
 {
     xis >> xml::list( "parameter", *this, &EngineerConstruction::ReadParameter, converter, entities, controller );
@@ -174,7 +174,7 @@ void EngineerConstruction::CommitTo( Common::MsgPlannedWork& message ) const
             static_cast< const ObstacleType* >( it->second )->CommitTo( boost::bind( &Common::MsgPlannedWork::set_type_obstacle, boost::ref(message), _1 ) );
         else if( type == "density" )
             static_cast< const Numeric* >( it->second )->CommitTo( boost::bind( &Common::MsgPlannedWork::set_densite, boost::ref(message), _1 ) );
-        else if( type == "tc2" || type == "automat" )
+        else if( type == "tc2" || type == "automate" )
             static_cast< const Automat* >( it->second )->CommitTo( boost::bind( &Common::MsgPlannedWork::set_tc2, boost::ref(message), _1 ) );
     }
 }

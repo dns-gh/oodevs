@@ -37,7 +37,7 @@ EngineerConstructionList::EngineerConstructionList( const OrderParameter& parame
     : Parameter< std::string >( parameter )
 {
     for( int i = 0; i < message.elem_size(); ++i )
-        AddParameter( *new EngineerConstruction( OrderParameter( tools::translate( "Parameter", "Obstacle %1" ).arg( i + 1 ).ascii(), "obstacle", false ), converter, resolver, entities, message.elem(i), controller ) );
+        AddParameter( *new EngineerConstruction( OrderParameter( tools::translate( "Parameter", "Obstacle %1" ).arg( i + 1 ).ascii(), "genobject", false ), converter, resolver, entities, message.elem(i), controller ) );
 }
 
 // -----------------------------------------------------------------------------
