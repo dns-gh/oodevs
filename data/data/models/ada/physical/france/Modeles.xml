@@ -37,7 +37,6 @@
         <mission name="MELEE Defendre une Zone"/>
         <mission name="MELEE Contre Attaquer sur un Point"/>
         <mission name="MELEE Contre Attaquer dans une Zone"/>
-        <mission name="MELEE Contre Attaquer dans un BU"/>
       </missions>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PlatoonABC">
@@ -96,7 +95,6 @@
         <mission name="MELEE Defendre une Zone"/>
         <mission name="MELEE Contre Attaquer sur un Point"/>
         <mission name="MELEE Contre Attaquer dans une Zone"/>
-        <mission name="MELEE Contre Attaquer dans un BU"/>
       </missions>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PC">
