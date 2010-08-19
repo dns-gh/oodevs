@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="314" name="adopt transportation posture" target="28" time="2010-05-27T15:07:48" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1734494620"/>
+        <point coordinates="30TXU1735014970"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2892292932"/>
+        <point coordinates="30TXU2988616784"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Embarking area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXU1940505966"/>
+        <point coordinates="30TXU2448005862"/>
+        <point coordinates="30TXU2524802710"/>
+        <point coordinates="30TXU2036402045"/>
+        <point coordinates="30TXU1940505966"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="312" name="cross" target="28" time="2010-05-27T15:11:58" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1734494620"/>
+        <point coordinates="30TXU1735014970"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2892292932"/>
+        <point coordinates="30TXU2988616784"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Bridge" type="ObjectKnowledge" value="144286400"/>
+    <parameter name="Meeting point" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXU2149302494"/>
+        <point coordinates="30TXU2545702595"/>
+        <point coordinates="30TXU2483600534"/>
+        <point coordinates="30TXU2001200483"/>
+        <point coordinates="30TXU2149302494"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="311" name="go through decontamination process" target="28" time="2010-05-27T15:20:18" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1734494620"/>
+        <point coordinates="30TXU1735014970"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2892292932"/>
+        <point coordinates="30TXU2988616784"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Meeting point" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXU2148610377"/>
+        <point coordinates="30TXU2695210157"/>
+        <point coordinates="30TXU2649406843"/>
+        <point coordinates="30TXU1996607121"/>
+        <point coordinates="30TXU2148610377"/>
+      </location>
+    </parameter>
+    <parameter name="Decontamination site" type="ObjectKnowledge" value="145172256"/>
+  </action>
+  <action id="338" name="manage prisoners" target="28" time="2010-05-27T15:25:48" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1734494620"/>
+        <point coordinates="30TXU1735014970"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2892292932"/>
+        <point coordinates="30TXU2988616784"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Surrendered units" type="AgentKnowledgeList">
+      <parameter name="Connaissance 1" type="agentknowledge" value="146336496"/>
+    </parameter>
+    <parameter name="Prisonners camp" type="ObjectKnowledge" value="0"/>
+  </action>
+  <action id="339" name="manage refugees" target="28" time="2010-05-27T15:29:18" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1734494620"/>
+        <point coordinates="30TXU1735014970"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2892292932"/>
+        <point coordinates="30TXU2988616784"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Refugees" type="AgentKnowledgeList">
+      <parameter name="Connaissance 1" type="agentknowledge" value="146380040"/>
+    </parameter>
+    <parameter name="Refugees camp" type="ObjectKnowledge" value="0"/>
+  </action>
+  <action id="310" name="move" target="28" time="2010-05-27T15:31:38" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1734494620"/>
+        <point coordinates="30TXU1735014970"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2892292932"/>
+        <point coordinates="30TXU2988616784"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Route" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXU1972801552"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="313" name="park" target="28" time="2010-05-27T15:33:28" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1734494620"/>
+        <point coordinates="30TXU1735014970"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2892292932"/>
+        <point coordinates="30TXU2988616784"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Waiting area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXU2047601736"/>
+        <point coordinates="30TXU2487801706"/>
+        <point coordinates="30TXT2435298866"/>
+        <point coordinates="30TXT1997399116"/>
+        <point coordinates="30TXU2047601736"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="187" name="prepare to" target="28" time="2010-05-27T15:36:08" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1734494620"/>
+        <point coordinates="30TXU1735014970"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2892292932"/>
+        <point coordinates="30TXU2988616784"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Route" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXU2248700899"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="188" name="prepare to (take up position)" target="28" time="2010-05-27T15:38:08" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1734494620"/>
+        <point coordinates="30TXU1735014970"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2892292932"/>
+        <point coordinates="30TXU2988616784"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Position" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXT1931899845"/>
+        <point coordinates="30TXU2409000016"/>
+        <point coordinates="30TXT2376798532"/>
+        <point coordinates="30TXT1993198519"/>
+        <point coordinates="30TXT1931899845"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="316" name="resupply" target="28" time="2010-05-27T15:39:48" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1734494620"/>
+        <point coordinates="30TXU1735014970"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2892292932"/>
+        <point coordinates="30TXU2988616784"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Replenishment area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXU2074400398"/>
+        <point coordinates="30TXU2524100371"/>
+        <point coordinates="30TXT2456698153"/>
+        <point coordinates="30TXT2006298399"/>
+        <point coordinates="30TXU2074400398"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="308" name="withdraw" target="28" time="2010-05-27T15:41:48" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1734494620"/>
+        <point coordinates="30TXU1735014970"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2892292932"/>
+        <point coordinates="30TXU2988616784"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Meeting point" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXU2104501631"/>
+        <point coordinates="30TXU2466101635"/>
+        <point coordinates="30TXT2510298987"/>
+        <point coordinates="30TXT2028899096"/>
+        <point coordinates="30TXU2104501631"/>
+      </location>
+    </parameter>
+  </action>
+</actions>

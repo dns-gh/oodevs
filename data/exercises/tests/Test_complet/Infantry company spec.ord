@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="267" name="Infantry - attack" target="28" time="2010-05-27T14:42:08" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2187693576"/>
+        <point coordinates="30TXU2138103043"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1747293540"/>
+        <point coordinates="30TXU1682003123"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Objectives" type="PointList">
+      <parameter name="Position 1" type="location">
+        <location type="point">
+          <point coordinates="30TXU1835600403"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="271" name="Infantry - block" target="28" time="2010-05-27T14:52:28" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1747293540"/>
+        <point coordinates="30TXU1682003123"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2187693576"/>
+        <point coordinates="30TXU2138103043"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Meeting point" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXU1771502057"/>
+        <point coordinates="30TXU2040502123"/>
+        <point coordinates="30TXU2076000764"/>
+        <point coordinates="30TXU1802000391"/>
+        <point coordinates="30TXU1771502057"/>
+      </location>
+    </parameter>
+    <parameter name="Obstacle erection" type="Bool" value="true"/>
+  </action>
+  <action id="269" name="Infantry - control" target="28" time="2010-05-27T15:02:38" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1747293540"/>
+        <point coordinates="30TXU1682003123"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2187693576"/>
+        <point coordinates="30TXU2138103043"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXU1790102003"/>
+        <point coordinates="30TXU2052902067"/>
+        <point coordinates="30TXU2102300255"/>
+        <point coordinates="30TXT1804999599"/>
+        <point coordinates="30TXU1790102003"/>
+      </location>
+    </parameter>
+    <parameter name="Obstacle erection" type="Bool" value="true"/>
+  </action>
+  <action id="270" name="Infantry - cover" target="28" time="2010-05-27T15:12:48" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1747293540"/>
+        <point coordinates="30TXU1682003123"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2187693576"/>
+        <point coordinates="30TXU2138103043"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Unit" type="Automate" value="34"/>
+    <parameter name="Objectives" type="PointList">
+      <parameter name="Position 1" type="location">
+        <location type="point">
+          <point coordinates="30TXU1820401221"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="274" name="Infantry - delay" target="28" time="2010-05-27T15:22:58" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1747293540"/>
+        <point coordinates="30TXU1682003123"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2187693576"/>
+        <point coordinates="30TXU2138103043"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+  </action>
+  <action id="273" name="Infantry - flank-guard" target="28" time="2010-05-27T15:33:08" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1747293540"/>
+        <point coordinates="30TXU1682003123"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2187693576"/>
+        <point coordinates="30TXU2138103043"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Unit" type="Automate" value="34"/>
+  </action>
+  <action id="275" name="Infantry - harass" target="28" time="2010-05-27T15:43:28" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1747293540"/>
+        <point coordinates="30TXU1682003123"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2187693576"/>
+        <point coordinates="30TXU2138103043"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Surveillance area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXU1769002758"/>
+        <point coordinates="30TXU2076803082"/>
+        <point coordinates="30TXU2054101732"/>
+        <point coordinates="30TXU1862901328"/>
+        <point coordinates="30TXU1769002758"/>
+      </location>
+    </parameter>
+    <parameter name="Meeting point" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXU1787701819"/>
+        <point coordinates="30TXU2073402318"/>
+        <point coordinates="30TXU2079300704"/>
+        <point coordinates="30TXU1778300169"/>
+        <point coordinates="30TXU1787701819"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="290" name="Infantry - hold" target="28" time="2010-05-27T15:53:48" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1747293540"/>
+        <point coordinates="30TXU1682003123"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2187693576"/>
+        <point coordinates="30TXU2138103043"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Position" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXU1741701833"/>
+        <point coordinates="30TXU2031502059"/>
+        <point coordinates="30TXU2064400577"/>
+        <point coordinates="30TXU1771800289"/>
+        <point coordinates="30TXU1741701833"/>
+      </location>
+    </parameter>
+    <parameter name="Obstacle erection" type="Bool" value="true"/>
+  </action>
+  <action id="276" name="Infantry - interdict" target="28" time="2010-05-27T16:03:58" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1747293540"/>
+        <point coordinates="30TXU1682003123"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2187693576"/>
+        <point coordinates="30TXU2138103043"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Positions to deny" type="PointList">
+      <parameter name="Position 1" type="location">
+        <location type="point">
+          <point coordinates="30TXU1824800857"/>
+        </location>
+      </parameter>
+    </parameter>
+    <parameter name="Obstacle erection" type="Bool" value="true"/>
+  </action>
+  <action id="289" name="Infantry - interdict (an area)" target="28" time="2010-05-27T16:14:08" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1747293540"/>
+        <point coordinates="30TXU1682003123"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2187693576"/>
+        <point coordinates="30TXU2138103043"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Position" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXU1733901465"/>
+        <point coordinates="30TXU2020501720"/>
+        <point coordinates="30TXT2067399785"/>
+        <point coordinates="30TXT1793299442"/>
+        <point coordinates="30TXU1733901465"/>
+      </location>
+    </parameter>
+    <parameter name="Obstacle erection" type="Bool" value="true"/>
+  </action>
+  <action id="284" name="Infantry - monitor" target="28" time="2010-05-27T16:24:28" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1747293540"/>
+        <point coordinates="30TXU1682003123"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2187693576"/>
+        <point coordinates="30TXU2138103043"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXU1802401977"/>
+        <point coordinates="30TXU2056002068"/>
+        <point coordinates="30TXU2121900750"/>
+        <point coordinates="30TXU1760000162"/>
+        <point coordinates="30TXU1802401977"/>
+      </location>
+    </parameter>
+    <parameter name="Meeting point" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXU1770001630"/>
+        <point coordinates="30TXU1999501621"/>
+        <point coordinates="30TXT2067299815"/>
+        <point coordinates="30TXT1833899213"/>
+        <point coordinates="30TXU1770001630"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="272" name="Infantry - recon" target="28" time="2010-05-27T16:34:38" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1747293540"/>
+        <point coordinates="30TXU1682003123"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2187693576"/>
+        <point coordinates="30TXU2138103043"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+  </action>
+  <action id="279" name="Infantry - recon in force" target="28" time="2010-05-27T16:44:48" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1747293540"/>
+        <point coordinates="30TXU1682003123"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2187693576"/>
+        <point coordinates="30TXU2138103043"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+  </action>
+  <action id="285" name="Infantry - seize" target="28" time="2010-05-27T16:54:58" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1747293540"/>
+        <point coordinates="30TXU1682003123"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2187693576"/>
+        <point coordinates="30TXU2138103043"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Objective" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXU1773702302"/>
+        <point coordinates="30TXU2048902340"/>
+        <point coordinates="30TXU2073800519"/>
+        <point coordinates="30TXU1820700306"/>
+        <point coordinates="30TXU1773702302"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="268" name="Infantry - support" target="28" time="2010-05-27T17:05:08" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1747293540"/>
+        <point coordinates="30TXU1682003123"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2187693576"/>
+        <point coordinates="30TXU2138103043"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Unit" type="Automate" value="34"/>
+  </action>
+  <action id="278" name="Infantry - take and maintain contact" target="28" time="2010-05-27T17:15:18" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT1747293540"/>
+        <point coordinates="30TXU1682003123"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT2187693576"/>
+        <point coordinates="30TXU2138103043"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+  </action>
+</actions>

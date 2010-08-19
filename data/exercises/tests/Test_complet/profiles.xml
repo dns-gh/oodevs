@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
+<profiles>
+  <profile name="Test" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="1"/>
+        <side id="3"/>
+        <side id="2"/>
+      </readwrite>
+    </rights>
+  </profile>
+</profiles>

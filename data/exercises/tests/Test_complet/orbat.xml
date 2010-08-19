@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
+<orbat>
+  <dotations infinite="false"/>
+  <sides>
+    <side id="1" name="Blue" type="friend">
+      <objects>
+        <object id="43" name="Abatis [43]" type="abattis">
+          <shape type="polygone">
+            <points>
+              <point>30UXU1682327765</point>
+              <point>30UXU1893328010</point>
+              <point>30UXU1898027294</point>
+              <point>30UXU1730527339</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+          </attributes>
+        </object>
+        <object id="44" name="Anti-tank Ditch [44]" type="anti tank obstacle">
+          <shape type="polygone">
+            <points>
+              <point>30UXU1989928256</point>
+              <point>30UXU2189028264</point>
+              <point>30UXU2231027202</point>
+              <point>30UXU2006227269</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="45" name="Barricade [45]" type="barricade">
+          <shape type="point">
+            <points>
+              <point>30UXU2375027803</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="46" name="Bridge destruction [46]" type="bridge destruction">
+          <shape type="point">
+            <points>
+              <point>30UXU2531427902</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+          </attributes>
+        </object>
+        <object id="47" name="Checkpoint [47]" type="checkpoint">
+          <shape type="point">
+            <points>
+              <point>30UXU2656427925</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="48" name="cobra deployment area [48]" type="cobra deployment area">
+          <shape type="point">
+            <points>
+              <point>30UXU2736927912</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="49" name="Bridge (continuous) [49]" type="continuous pontoon bridge">
+          <shape type="point">
+            <points>
+              <point>30UXU2807828196</point>
+            </points>
+          </shape>
+          <attributes>
+            <crossing-site>
+              <width>1</width>
+              <depth>1</depth>
+              <speed>0</speed>
+              <construction-needed>true</construction-needed>
+            </crossing-site>
+          </attributes>
+        </object>
+        <object id="50" name="Crossing Site [50]" type="crossing site">
+          <shape type="ligne">
+            <points>
+              <point>30UXU2878528344</point>
+              <point>30UXU2950228483</point>
+            </points>
+          </shape>
+          <attributes>
+            <crossing-site>
+              <width>1</width>
+              <depth>1</depth>
+              <speed>0</speed>
+              <construction-needed>true</construction-needed>
+            </crossing-site>
+          </attributes>
+        </object>
+        <object id="51" name="Decontamination Point [51]" type="decontamination site">
+          <shape type="polygone">
+            <points>
+              <point>30UXU3015528682</point>
+              <point>30UXU3079428725</point>
+              <point>30UXU3071728290</point>
+              <point>30UXU3013028249</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="52" name="Bridge (discontinuous) [52]" type="discontinuous pontoon bridge">
+          <shape type="point">
+            <points>
+              <point>30UXU3110828582</point>
+            </points>
+          </shape>
+          <attributes>
+            <crossing-site>
+              <width>1</width>
+              <depth>1</depth>
+              <speed>0</speed>
+              <construction-needed>false</construction-needed>
+            </crossing-site>
+          </attributes>
+        </object>
+        <object id="53" name="Distribution point [53]" type="distribution point">
+          <shape type="point">
+            <points>
+              <point>30UXU3170828830</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="54" name="Drop Zone (DZ) [54]" type="dropping area">
+          <shape type="polygone">
+            <points>
+              <point>30UXU3222229188</point>
+              <point>30UXU3272729207</point>
+              <point>30UXU3276828930</point>
+              <point>30UXU3230428914</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="55" name="Arson/Fire [55]" type="fire">
+          <shape type="point">
+            <points>
+              <point>30UXU3361429208</point>
+            </points>
+          </shape>
+          <attributes>
+            <fire class="Class A"/>
+          </attributes>
+        </object>
+        <object id="56" name="No-Fire Area (NFA) [56]" type="fire forbidden area">
+          <shape type="polygone">
+            <points>
+              <point>30UXU3424729416</point>
+              <point>30UXU3486529428</point>
+              <point>30UXU3485628830</point>
+              <point>30UXU3398128778</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="57" name="firing post [57]" type="firing post">
+          <shape type="point">
+            <points>
+              <point>30UXU3543429108</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="58" name="gun artillery deployment area [58]" type="gun artillery deployment area">
+          <shape type="point">
+            <points>
+              <point>30UXU3612129236</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="59" name="Installation [59]" type="installation">
+          <shape type="point">
+            <points>
+              <point>30UXU3666029173</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="60" name="Jamming Area [60]" type="jamming area">
+          <shape type="polygone">
+            <points>
+              <point>30UXU3755529545</point>
+              <point>30UXU3863829553</point>
+              <point>30UXU3823128828</point>
+              <point>30UXU3737528798</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="61" name="Landing Zone [61]" type="landing area">
+          <shape type="polygone">
+            <points>
+              <point>30UXU3890329357</point>
+              <point>30UXU3949929419</point>
+              <point>30UXU3949128792</point>
+              <point>30UXU3875028734</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="62" name="Landing Zone (helicopter) [62]" type="landing area (helicopter)">
+          <shape type="polygone">
+            <points>
+              <point>30UXU3997629365</point>
+              <point>30UXU4061729347</point>
+              <point>30UXU4065728792</point>
+              <point>30UXU3973428646</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="63" name="Landslide [63]" type="landslide">
+          <shape type="point">
+            <points>
+              <point>30UXU4138529320</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+          </attributes>
+        </object>
+        <object id="64" name="Forward Arming and Refueling Point (FARP) [64]" type="logistic area">
+          <shape type="polygone">
+            <points>
+              <point>30UXU4200529569</point>
+              <point>30UXU4277329618</point>
+              <point>30UXU4292329040</point>
+              <point>30UXU4205729041</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="65" name="Supply Route [65]" type="logistic route">
+          <shape type="ligne">
+            <points>
+              <point>30UXU4324229417</point>
+              <point>30UXU4434029509</point>
+            </points>
+          </shape>
+          <attributes>
+            <supply-route>
+              <flow>1</flow>
+              <width>1</width>
+              <length>1</length>
+              <max-weight>1</max-weight>
+              <equipped>false</equipped>
+            </supply-route>
+          </attributes>
+        </object>
+        <object id="66" name="Rearm, Refuel and Resupply Point (R3P) [66]" type="logistic support area">
+          <shape type="point">
+            <points>
+              <point>30UXU4453929729</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="69" name="Mine Cluster [69]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU4770129850</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="70" name="mobility enhanced area [70]" type="mobility enhanced area">
+          <shape type="polygone">
+            <points>
+              <point>30UXU4821930034</point>
+              <point>30UXU4884430056</point>
+              <point>30UXU4894429701</point>
+              <point>30UXU4827529684</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="71" name="mortar deployment area [71]" type="mortar deployment area">
+          <shape type="point">
+            <points>
+              <point>30UXU4921229840</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="72" name="General obstacle zone [72]" type="movement forbidden area">
+          <shape type="polygone">
+            <points>
+              <point>30UXU4973230188</point>
+              <point>30UXU5050630274</point>
+              <point>30UXU5056229903</point>
+              <point>30UXU4983129841</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="73" name="mrls deployment area [73]" type="mrls deployment area">
+          <shape type="point">
+            <points>
+              <point>30UXU5101130213</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="76" name="Platform [76]" type="platform">
+          <shape type="polygone">
+            <points>
+              <point>30UXU5386530886</point>
+              <point>30UXU5461330947</point>
+              <point>30UXU5460730489</point>
+              <point>30UXU5396030432</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="77" name="Detainee Holding Area [77]" type="prisoners camp">
+          <shape type="polygone">
+            <points>
+              <point>30UXU5485231168</point>
+              <point>30UXU5644131202</point>
+              <point>30UXU5643130543</point>
+              <point>30UXU5497630513</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="78" name="Refugee Holding Area [78]" type="refugees camp">
+          <shape type="polygone">
+            <points>
+              <point>30UXU5695631210</point>
+              <point>30UXU5816131343</point>
+              <point>30UXU5835630590</point>
+              <point>30UXU5698130518</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="79" name="Roadblock [79]" type="road destruction">
+          <shape type="point">
+            <points>
+              <point>30UXU5896331393</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+          </attributes>
+        </object>
+        <object id="80" name="ROTA Point [80]" type="rota area">
+          <shape type="point">
+            <points>
+              <point>30UXU6000631524</point>
+            </points>
+          </shape>
+          <attributes>
+            <nbc-agents state="liquid"/>
+          </attributes>
+        </object>
+        <object id="81" name="Safe Point [81]" type="safe zone">
+          <shape type="point">
+            <points>
+              <point>30UXU6063431699</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="82" name="Sensors zone [82]" type="sensors">
+          <shape type="polygone">
+            <points>
+              <point>30UXU6134931772</point>
+              <point>30UXU6194831805</point>
+              <point>30UXU6186831404</point>
+              <point>30UXU6130731313</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="84" name="Sensors detection zone [84]" type="sensorsDetectionZone">
+          <shape type="polygone">
+            <points>
+              <point>30UXU6294031701</point>
+              <point>30UXU6371831646</point>
+              <point>30UXU6348530934</point>
+              <point>30UXU6208031095</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="85" name="Airfield Zone [85]" type="trail">
+          <shape type="polygone">
+            <points>
+              <point>30UXU6454631734</point>
+              <point>30UXU6573131752</point>
+              <point>30UXU6576130928</point>
+              <point>30UXU6445330881</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="86" name="NBC Cloud [86]" type="nbc cloud">
+          <shape type="point">
+            <points>
+              <point>30UXU5185630543</point>
+            </points>
+          </shape>
+          <attributes>
+            <nbc-agents state="liquid"/>
+            <input-toxic-cloud data-field="nom_var_shp_mesure_C" export="false" source=""/>
+          </attributes>
+        </object>
+        <object id="87" name="NBC Area [87]" type="nbc zone">
+          <shape type="polygone">
+            <points>
+              <point>30UXU5290530965</point>
+              <point>30UXU5345331185</point>
+              <point>30UXU5356030774</point>
+              <point>30UXU5276330637</point>
+            </points>
+          </shape>
+          <attributes>
+            <nbc-agents state="liquid"/>
+            <input-toxic-cloud data-field="nom_var_shp_mesure_C" export="false" source=""/>
+          </attributes>
+        </object>
+        <object id="88" name="Mined Area (linear) [88]" type="mined area (linear)">
+          <shape type="polygone">
+            <points>
+              <point>30UXU4519929808</point>
+              <point>30UXU4563229867</point>
+              <point>30UXU4563329618</point>
+              <point>30UXU4523429581</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="89" name="Mined Area (scattered) [89]" type="mined area (scattered)">
+          <shape type="polygone">
+            <points>
+              <point>30UXU4590729921</point>
+              <point>30UXU4636930017</point>
+              <point>30UXU4647929653</point>
+              <point>30UXU4602429597</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="4" level="x" name="Test armor">
+          <automat engaged="false" id="5" knowledge-group="42" name="Armor platoon" type="MBT squadron">
+            <unit command-post="true" id="7" name="Armored squadron CP" position="30TXT3207895204" type="Armored squadron CP"/>
+            <unit command-post="false" id="8" name="MBT platoon" position="30TXT3259694723" type="MBT platoon"/>
+          </automat>
+          <automat engaged="true" id="12" knowledge-group="42" name="Armor company" type="MBT squadron">
+            <unit command-post="true" id="13" name="Armored squadron CP" position="30TXT3519794461" type="Armored squadron CP"/>
+            <unit command-post="false" id="16" name="MBT platoon" position="30TXT3471593944" type="MBT platoon"/>
+            <unit command-post="false" id="17" name="MBT platoon" position="30TXT3569894479" type="MBT platoon"/>
+          </automat>
+        </formation>
+        <formation id="18" level="x" name="Test scout">
+          <automat engaged="true" id="19" knowledge-group="6" name="Scout company" type="Scout platoon">
+            <unit command-post="false" id="20" name="Antitank patrol" position="30TXT2414593341" type="Antitank patrol"/>
+            <unit command-post="true" id="21" name="Scout patrol" position="30TXT2466392860" type="Scout patrol"/>
+            <unit command-post="false" id="22" name="Scout patrol" position="30TXT2418192343" type="Scout patrol"/>
+          </automat>
+          <automat engaged="false" id="23" knowledge-group="6" name="Scout platoon" type="Scout platoon">
+            <unit command-post="false" id="24" name="Antitank patrol" position="30TXT2253093576" type="Antitank patrol"/>
+            <unit command-post="true" id="25" name="Scout patrol" position="30TXT2304893095" type="Scout patrol"/>
+          </automat>
+        </formation>
+        <formation id="27" level="x" name="Test infantry">
+          <automat engaged="true" id="28" knowledge-group="6" name="Infatry company" type="Infantry company">
+            <unit command-post="true" id="29" name="Infantry company CP" position="30TXT1953294837" type="Infantry company CP"/>
+            <unit command-post="false" id="30" name="Infantry platoon" position="30TXT2005194356" type="Infantry platoon"/>
+            <unit command-post="false" id="31" name="MRA troop" position="30TXT1956893839" type="MRA troop"/>
+            <unit command-post="false" id="32" name="Mortar troop" position="30TXT1905094320" type="Mortar troop"/>
+            <unit command-post="false" id="33" name="Light armored platoon" position="30TXT2003394854" type="Light armored platoon"/>
+          </automat>
+          <automat engaged="false" id="34" knowledge-group="6" name="Infantry platoon" type="Infantry company">
+            <unit command-post="true" id="35" name="Infantry company CP" position="30TXT1886592552" type="Infantry company CP"/>
+            <unit command-post="false" id="36" name="Infantry platoon" position="30TXT1938392071" type="Infantry platoon"/>
+            <unit command-post="false" id="37" name="MRA troop" position="30TXT1890191554" type="MRA troop"/>
+            <unit command-post="false" id="38" name="Mortar troop" position="30TXT1838292035" type="Mortar troop"/>
+            <unit command-post="false" id="39" name="Light armored platoon" position="30TXT1936592570" type="Light armored platoon"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="6" name="Groupe de connaissance [6]" type="Standard"/>
+        <knowledge-group id="42" name="Groupe de connaissance [42]" type="Standard"/>
+      </communication>
+      <populations/>
+      <logistic/>
+    </side>
+    <side id="2" name="Red" type="friend">
+      <objects/>
+      <tactical/>
+      <communication>
+        <knowledge-group id="40" name="Groupe de connaissance [40]" type="Standard"/>
+      </communication>
+      <populations/>
+      <logistic/>
+    </side>
+    <side id="3" name="Green" type="friend">
+      <objects/>
+      <tactical/>
+      <communication>
+        <knowledge-group id="41" name="Groupe de connaissance [41]" type="Standard"/>
+      </communication>
+      <populations/>
+      <logistic/>
+    </side>
+  </sides>
+  <diplomacies>
+    <side id="1">
+      <relationship diplomacy="enemy" side="2"/>
+      <relationship diplomacy="friend" side="3"/>
+    </side>
+    <side id="2">
+      <relationship diplomacy="enemy" side="1"/>
+      <relationship diplomacy="neutral" side="3"/>
+    </side>
+    <side id="3">
+      <relationship diplomacy="friend" side="1"/>
+      <relationship diplomacy="neutral" side="2"/>
+    </side>
+  </diplomacies>
+</orbat>
