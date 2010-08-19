@@ -25,6 +25,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/PopulationCollisionNotificationHandler_ABC.h"
+#include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_IDManager.h"
 #include <xeumeuleu/xml.hpp>
@@ -53,14 +54,14 @@ void load_construct_data( Archive& archive, MIL_PopulationConcentration* concent
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
 MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, xml::xistream& xis )
-    : MIL_PopulationElement_ABC      ( population, idManager_.GetFreeId() )
+    : MIL_PopulationElement_ABC( population, idManager_.GetFreeId() )
     , TER_PopulationConcentration_ABC()
-    , position_                      ()
-    , location_                      ()
-    , pPullingFlow_                  ( 0 )
-    , pushingFlows_                  ()
-    , rPullingFlowsDensity_          ( population.GetDefaultFlowDensity() )
-    , pSplittingObject_              ( 0 )
+    , position_            ()
+    , location_            ()
+    , pPullingFlow_        ( 0 )
+    , pushingFlows_        ()
+    , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
+    , pSplittingObject_    ( 0 )
 {
     // Position
     std::string strPosition;
@@ -74,7 +75,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     PushHumans( T_Humans( nNbrHumans, 0 ) );
 
     UpdateLocation();
-    UpdateDensity ();
+    UpdateDensity();
     // SendCreation()
 }
 
@@ -85,16 +86,16 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
 MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position )
     : MIL_PopulationElement_ABC      ( population, idManager_.GetFreeId() )
     , TER_PopulationConcentration_ABC()
-    , position_                      ( position )
-    , location_                      ()
-    , pPullingFlow_                  ( 0 )
-    , pushingFlows_                  ()
-    , rPullingFlowsDensity_          ( population.GetDefaultFlowDensity() )
-    , pSplittingObject_              ( 0 )
+    , position_            ( position )
+    , location_            ()
+    , pPullingFlow_        ( 0 )
+    , pushingFlows_        ()
+    , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
+    , pSplittingObject_    ( 0 )
 {
     UpdateLocation();
-    UpdateDensity ();
-    SendCreation  ();
+    UpdateDensity();
+    SendCreation();
 }
 
 // -----------------------------------------------------------------------------

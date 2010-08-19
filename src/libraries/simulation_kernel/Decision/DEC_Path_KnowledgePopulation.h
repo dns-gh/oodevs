@@ -16,6 +16,7 @@ class DEC_Agent_PathClass;
 class DEC_Knowledge_Population;
 class MIL_PopulationAttitude;
 class TER_Localisation;
+class TerrainData;
 
 // =============================================================================
 /** @class  DEC_Path_KnowledgePopulation
@@ -35,7 +36,7 @@ public:
     //! @name Operations
     //@{
     MT_Float ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
-    void     AddElement ( const MIL_PopulationElement_ABC& element );
+    void AddElement( const MIL_PopulationElement_ABC& element );
     //@}
 
 private:
@@ -49,13 +50,13 @@ private:
             , rDensity_  ( element.GetDensity() )
             , pAttitude_ ( &element.GetAttitude() )
         {}
-              TER_Localisation        location_;
-              MT_Float                rDensity_;
+        TER_Localisation location_;
+        MT_Float rDensity_;
         const MIL_PopulationAttitude* pAttitude_;
     };
 
-    typedef std::vector< const sPopulationElement >   T_PopulationElements;
-    typedef T_PopulationElements::const_iterator    CIT_PopulationElements;
+    typedef std::vector< const sPopulationElement > T_PopulationElements;
+    typedef T_PopulationElements::const_iterator  CIT_PopulationElements;
     //@}
 
     //! @name Helpers

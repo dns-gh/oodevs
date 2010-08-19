@@ -19,6 +19,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "resource_network/ResourceNetworkModel.h"
 #include "Tools/MIL_ProfilerMgr.h"
+#include "simulation_terrain/TER_World.h"
 #include <MT/MT_IO/MT_FormatString.h>
 #include <tools/thread/Thread.h>
 #include <tools/win32/ProcessMonitor.h>

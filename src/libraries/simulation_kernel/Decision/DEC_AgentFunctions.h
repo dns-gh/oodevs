@@ -19,6 +19,7 @@ class MIL_Agent_ABC;
 class MIL_Mission_ABC;
 class MIL_Object_ABC;
 class PHY_DotationCategory;
+class TER_Localisation;
 
 // =============================================================================
 // Created: NLD 2004-03-31

@@ -22,8 +22,6 @@
 #include <MT/MT_IO/MT_FormatString.h>
 #include <xeumeuleu/xml.hpp>
 
-
-
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFind_Manager constructor
 // Created: NLD 2003-08-14
@@ -74,12 +72,8 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config )
 DEC_PathFind_Manager::~DEC_PathFind_Manager()
 {
     DEC_PathFactory::Terminate();
-    DEC_PathType   ::Terminate();
+    DEC_PathType::Terminate();
 }
-
-// =============================================================================
-// MAIN
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFind_Manager::StartCompute

@@ -15,6 +15,7 @@ class DEC_Knowledge_Object;
 class MIL_Automate;
 class MIL_AgentPion;
 class MIL_Mission_ABC;
+class TER_Localisation;
 
 // =============================================================================
 // Created: NLD 2004-03-31

@@ -18,6 +18,7 @@
 #include "UrbanModel.h"
 #include "protocol/protocol.h"
 #include "simulation_terrain/TER_ObjectManager.h"
+#include "simulation_terrain/TER_World.h"
 #include <urban/Architecture.h>
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>

@@ -44,7 +44,6 @@
 #include "MIL_Random.h"
 
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h" // $$$$ _RC_ SLI 2010-08-11: waiting for a better solution
-#include "simulation_terrain/TER_World.h"
 
 #pragma warning( push )
 #pragma warning( disable : 4005 ) // $$$$ SBO 2008-05-13: "macro redefinition"

@@ -24,6 +24,7 @@
 class MIL_Fuseau;
 class DEC_Agent_Path;
 class PHY_RawVisionData;
+class TER_World;
 
 // =============================================================================
 /** @class  DEC_Agent_PathfinderRule
@@ -43,7 +44,7 @@ public:
     //! @name Operations
     //@{
     virtual float EvaluateCost( const geometry::Point2f& from, const geometry::Point2f& to );
-    virtual float GetCost     ( const geometry::Point2f& from, const geometry::Point2f& to, const TerrainData& terrainTo, const TerrainData& terrainBetween );
+    virtual float GetCost( const geometry::Point2f& from, const geometry::Point2f& to, const TerrainData& terrainTo, const TerrainData& terrainBetween );
     //@}
 
 private:
@@ -55,67 +56,59 @@ private:
 
     //! @name Initialization
     //@{
-    void InitializeFuseauData        ( const MT_Vector2D& from, const MT_Vector2D& to );
+    void InitializeFuseauData( const MT_Vector2D& from, const MT_Vector2D& to );
     void InitializeAutomateFuseauData( const MT_Vector2D& from );
     //@}
 
     //! @name Helpers
     //@{
-    MT_Float GetCost               ( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType );
-    MT_Float GetTerrainCost        ( const TerrainData& data ) const;
+    MT_Float GetCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType );
+    MT_Float GetTerrainCost( const TerrainData& data ) const;
     MT_Float GetDangerDirectionCost( const MT_Vector2D& to ) const;
-    MT_Float GetAltitudeCost       ( MT_Float rAltitudeTo ) const;
-    MT_Float GetFuseauxCost        ( const MT_Vector2D& from, const MT_Vector2D& to ) const;
-    MT_Float GetUrbanBlockCost     ( const MT_Vector2D& from, const MT_Vector2D& to ) const;
-    MT_Float GetObjectsCost        ( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
-    MT_Float GetEnemiesCost        ( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
-    MT_Float GetPopulationsCost    ( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
+    MT_Float GetAltitudeCost( MT_Float rAltitudeTo ) const;
+    MT_Float GetFuseauxCost( const MT_Vector2D& from, const MT_Vector2D& to ) const;
+    MT_Float GetUrbanBlockCost( const MT_Vector2D& from, const MT_Vector2D& to ) const;
+    MT_Float GetObjectsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
+    MT_Float GetEnemiesCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
+    MT_Float GetPopulationsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
     //@}
 
 private:
-    const DEC_Agent_Path&    path_;
-    const TER_World&         world_;
+    const DEC_Agent_Path& path_;
+    const TER_World& world_;
     const PHY_RawVisionData& altitudeData_;
-
     // Misc
     const float rMaxSpeed_;
-    const bool  bShort_;
-
+    const bool bShort_;
     // Terrain
     const TerrainData& avoidedTerrain_;
-    const MT_Float     rAvoidedTerrainCost_;
+    const MT_Float rAvoidedTerrainCost_;
     const TerrainData& preferedTerrain_;
-    const MT_Float     rPreferedTerrainCost_;
-
+    const MT_Float rPreferedTerrainCost_;
     // Altitude
-    const MT_Float     rMinAltitude_;
-    const MT_Float     rMaxAltitude_;
-    const MT_Float     rAltitudeCostPerMeter_;
-    const MT_Float     rMaxSlope_;
-
+    const MT_Float rMinAltitude_;
+    const MT_Float rMaxAltitude_;
+    const MT_Float rAltitudeCostPerMeter_;
+    const MT_Float rMaxSlope_;
     // Fuseau
-    const MIL_Fuseau*  pFuseau_;
-          MT_Float     rMaximumFuseauDistance_;
-    const MT_Float     rComfortFuseauDistance_;
-    const MT_Float     rFuseauCostPerMeterOut_;
-    const MT_Float     rFuseauCostPerMeterIn_;
-
+    const MIL_Fuseau* pFuseau_;
+    MT_Float rMaximumFuseauDistance_;
+    const MT_Float rComfortFuseauDistance_;
+    const MT_Float rFuseauCostPerMeterOut_;
+    const MT_Float rFuseauCostPerMeterIn_;
     // Fuseau automate
     const MIL_Fuseau*  pAutomateFuseau_;
-          MT_Float     rMaximumAutomataFuseauDistance_;
-          MT_Float     rAutomataFuseauCostPerMeterOut_;
-
+    MT_Float rMaximumAutomataFuseauDistance_;
+    MT_Float rAutomataFuseauCostPerMeterOut_;
     // Danger direction
-    const MT_Vector2D  dangerDirection_;
-    const MT_Float     rDangerDirectionBaseCost_;
-    const MT_Float     rDangerDirectionLinearCost_;
-    const MT_Vector2D  dangerPoint_;
-
+    const MT_Vector2D dangerDirection_;
+    const MT_Float rDangerDirectionBaseCost_;
+    const MT_Float rDangerDirectionLinearCost_;
+    const MT_Vector2D dangerPoint_;
     // Enemies
-    const MT_Float     rEnemyMaximumCost_;
-
+    const MT_Float rEnemyMaximumCost_;
     // Populations
-    const MT_Float     rPopulationMaximumCost_;
+    const MT_Float rPopulationMaximumCost_;
 };
 
 #endif // __DEC_Agent_PathfinderRule_h_

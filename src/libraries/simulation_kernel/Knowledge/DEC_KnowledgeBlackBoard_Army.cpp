@@ -455,10 +455,6 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::GetKnowl
     return GetKnowledgeObject( collision.GetObject() );
 }
 
-// =============================================================================
-// RESOLVER
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeAgent
 // Created: NLD 2006-11-22

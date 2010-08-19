@@ -19,6 +19,7 @@
 #include "Entities/Objects/TerrainHeuristicCapacity.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "simulation_terrain/TER_PathFindManager.h"
+#include "simulation_terrain/TER_World.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::GetPosition

@@ -14,6 +14,7 @@
 
 class DEC_Knowledge_Object;
 class DEC_Agent_PathClass;
+class TerrainData;
 
 // =============================================================================
 // Created: NLD 2004-04-06
@@ -36,7 +37,7 @@ public:
     //! @name Operations
     //@{
     MT_Float ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
-    MT_Float GetCostOut () const;
+    MT_Float GetCostOut() const;
     //@}
 
 private:

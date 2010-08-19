@@ -13,6 +13,7 @@
 #include "protocol/protocol.h"
 
 class MIL_Fuseau;
+class TER_Localisation;
 
 // =============================================================================
 /** @class  MIL_IntelligenceOrder

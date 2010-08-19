@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2004-04-06 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_Path_KnowledgeAgent.h $
-// $Author: Age $
-// $Modtime: 8/03/05 18:53 $
-// $Revision: 6 $
-// $Workfile: DEC_Path_KnowledgeAgent.h $
-//
-// *****************************************************************************
 
 #ifndef __DEC_Path_KnowledgeAgent_h_
 #define __DEC_Path_KnowledgeAgent_h_
@@ -22,6 +13,7 @@
 class DEC_Knowledge_Agent;
 class DEC_Agent_PathClass;
 class MIL_Agent_ABC;
+class TerrainData;
 
 // =============================================================================
 // Created: NLD 2004-04-06
@@ -31,7 +23,7 @@ class DEC_Path_KnowledgeAgent
 public:
     //! @name Constructors/Destructor
     //@{
-     DEC_Path_KnowledgeAgent( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Agent& knowledge, const MIL_Agent_ABC& pion );
+             DEC_Path_KnowledgeAgent( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Agent& knowledge, const MIL_Agent_ABC& pion );
     virtual ~DEC_Path_KnowledgeAgent();
     //@}
 

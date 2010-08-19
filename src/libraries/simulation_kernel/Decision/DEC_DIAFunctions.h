@@ -16,6 +16,7 @@ class MIL_Mission_ABC;
 class DEC_Gen_Object;
 class DEC_Knowledge_Object;
 class DEC_Path_ABC;
+class TER_Localisation;
 
 //=============================================================================
 // Created: NLD 2002-12-24

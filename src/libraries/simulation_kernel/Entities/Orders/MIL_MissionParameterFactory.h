@@ -33,6 +33,7 @@ class MIL_OrderTypeParameter;
 class MT_Vector2D;
 class PHY_DotationCategory;
 class PHY_ComposanteTypePion;
+class TER_Localisation;
 
 namespace urban
 {
@@ -67,7 +68,6 @@ public:
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const MT_Vector2D& point );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( boost::shared_ptr< TER_Localisation > pLocation );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( boost::shared_ptr< DEC_Knowledge_Urban > urbanblock );
-
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePath( const std::vector< boost::shared_ptr< MT_Vector2D > >& pointList );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePath( boost::shared_ptr< MT_Vector2D > point );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreateDirection( boost::shared_ptr< MT_Vector2D > direction );

@@ -12,9 +12,7 @@
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
-
 #include "MIL_Mission_ABC.h"
-
 #include "MIL_AgentKnowledgeParameter.h"
 #include "MIL_AgentKnowledgeListParameter.h"
 #include "MIL_AgentListParameter.h"
@@ -49,7 +47,6 @@
 #include "MIL_StringParameter.h"
 #include "MIL_TirIndirectParameter.h"
 #include "MIL_UrbanBlockParameter.h"
-
 #include "Entities/Orders/MIL_OrderTypeParameter.h"
 #include "protocol/protocol.h"
 #include "simulation_orders/MIL_ParameterType_PolygonList.h"
@@ -69,7 +66,6 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
         return boost::shared_ptr< MIL_MissionParameter_ABC >( new MIL_ObjectKnowledgeListParameter() );
     if( dynamic_cast< const MIL_ParameterType_GenObjectList* >( &parameterType ) )
         return boost::shared_ptr< MIL_MissionParameter_ABC >( new MIL_PlannedWorkListParameter() );
-
     return boost::shared_ptr<MIL_MissionParameter_ABC>( new MIL_NullParameter() );
 }
 
@@ -559,8 +555,6 @@ void MIL_MissionParameterFactory::SetPointListParameter( boost::shared_ptr< MIL_
     pMission->SetParameter( parameter, listParam );
 }
 
-
-
 // -----------------------------------------------------------------------------
 // Name: MIL_MissionParameterFactory::SetPolygonListParameter
 // Created: LDC 2009-09-25
@@ -579,7 +573,6 @@ void MIL_MissionParameterFactory::SetUrbanBlockParameter( boost::shared_ptr< MIL
 {
     pMission->SetParameter( parameter, Create( urbanblock ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_MissionParameterFactory::SetDirectionParameter

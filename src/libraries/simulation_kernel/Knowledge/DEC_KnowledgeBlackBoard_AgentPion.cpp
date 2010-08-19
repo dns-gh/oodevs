@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeBlackBoard_AgentPion.h"
-
 #include "DEC_KnowledgeBlackBoard_Army.h"
 #include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "DEC_BlackBoard_CanContainKnowledgeAgentPerception.h"
@@ -50,18 +49,18 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KnowledgeBlackBoard_AgentPion )
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
 DEC_KnowledgeBlackBoard_AgentPion::DEC_KnowledgeBlackBoard_AgentPion( MIL_Agent_ABC& pion )
-    : pPion_                                    ( &pion )
-    , pKnowledgeAgentPerceptionContainer_       ( new DEC_BlackBoard_CanContainKnowledgeAgentPerception     () )
-    , pKnowledgeUrbanPerceptionContainer_       ( new DEC_BlackBoard_CanContainKnowledgeUrbanPerception     () )
-    , pKnowledgeObjectCollisionContainer_       ( new DEC_BlackBoard_CanContainKnowledgeObjectCollision     () )
-    , pKnowledgeObjectPerceptionContainer_      ( new DEC_BlackBoard_CanContainKnowledgeObjectPerception    () )
-    , pKnowledgePopulationPerceptionContainer_  ( new DEC_BlackBoard_CanContainKnowledgePopulationPerception() )
-    , pKnowledgePopulationCollisionContainer_   ( new DEC_BlackBoard_CanContainKnowledgePopulationCollision () )
-    , pKnowledgeRapForLocal_                    ( new DEC_Knowledge_RapForLocal( pion ) )
-    , pKsObjectInteraction_                     ( new DEC_KS_ObjectInteraction    ( *this ) )
-    , pKsPopulationInteraction_                 ( new DEC_KS_PopulationInteraction( *this ) )
-    , pKsFire_                                  ( new DEC_KS_Fire                 ( *this ) )
-    , pKsPerception_                            ( new DEC_KS_Perception           ( *this ) )
+    : pPion_                                  ( &pion )
+    , pKnowledgeAgentPerceptionContainer_     ( new DEC_BlackBoard_CanContainKnowledgeAgentPerception     () )
+    , pKnowledgeUrbanPerceptionContainer_     ( new DEC_BlackBoard_CanContainKnowledgeUrbanPerception     () )
+    , pKnowledgeObjectCollisionContainer_     ( new DEC_BlackBoard_CanContainKnowledgeObjectCollision     () )
+    , pKnowledgeObjectPerceptionContainer_    ( new DEC_BlackBoard_CanContainKnowledgeObjectPerception    () )
+    , pKnowledgePopulationPerceptionContainer_( new DEC_BlackBoard_CanContainKnowledgePopulationPerception() )
+    , pKnowledgePopulationCollisionContainer_ ( new DEC_BlackBoard_CanContainKnowledgePopulationCollision () )
+    , pKnowledgeRapForLocal_                  ( new DEC_Knowledge_RapForLocal( pion ) )
+    , pKsObjectInteraction_                   ( new DEC_KS_ObjectInteraction    ( *this ) )
+    , pKsPopulationInteraction_               ( new DEC_KS_PopulationInteraction( *this ) )
+    , pKsFire_                                ( new DEC_KS_Fire                 ( *this ) )
+    , pKsPerception_                          ( new DEC_KS_Perception           ( *this ) )
 {
 }
 
@@ -70,18 +69,18 @@ DEC_KnowledgeBlackBoard_AgentPion::DEC_KnowledgeBlackBoard_AgentPion( MIL_Agent_
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_KnowledgeBlackBoard_AgentPion::DEC_KnowledgeBlackBoard_AgentPion()
-    : pPion_                                    ( 0 )
-    , pKnowledgeAgentPerceptionContainer_       ( 0 )
-    , pKnowledgeUrbanPerceptionContainer_       ( 0 )
-    , pKnowledgeObjectCollisionContainer_       ( 0 )
-    , pKnowledgeObjectPerceptionContainer_      ( 0 )
-    , pKnowledgePopulationPerceptionContainer_  ( 0 )
-    , pKnowledgePopulationCollisionContainer_   ( 0 )
-    , pKnowledgeRapForLocal_                    ( 0 )
-    , pKsObjectInteraction_                     ( 0 )
-    , pKsPopulationInteraction_                 ( 0 )
-    , pKsFire_                                  ( 0 )
-    , pKsPerception_                            ( 0 )
+    : pPion_                                  ( 0 )
+    , pKnowledgeAgentPerceptionContainer_     ( 0 )
+    , pKnowledgeUrbanPerceptionContainer_     ( 0 )
+    , pKnowledgeObjectCollisionContainer_     ( 0 )
+    , pKnowledgeObjectPerceptionContainer_    ( 0 )
+    , pKnowledgePopulationPerceptionContainer_( 0 )
+    , pKnowledgePopulationCollisionContainer_ ( 0 )
+    , pKnowledgeRapForLocal_                  ( 0 )
+    , pKsObjectInteraction_                   ( 0 )
+    , pKsPopulationInteraction_               ( 0 )
+    , pKsFire_                                ( 0 )
+    , pKsPerception_                          ( 0 )
 {
 }
 
@@ -102,10 +101,6 @@ DEC_KnowledgeBlackBoard_AgentPion::~DEC_KnowledgeBlackBoard_AgentPion()
     delete pKsFire_;
     delete pKsPerception_;
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: template< typename Archive > void DEC_KnowledgeBlackBoard_AgentPion::serialize
@@ -128,10 +123,6 @@ void DEC_KnowledgeBlackBoard_AgentPion::serialize( Archive& archive, const unsig
             & pKsPerception_
             & pKnowledgeRapForLocal_;
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_AgentPion::SendFullState
@@ -161,15 +152,6 @@ void DEC_KnowledgeBlackBoard_AgentPion::SendChangedState() const
     pKnowledgeObjectPerceptionContainer_    ->ApplyOnKnowledgesObjectPerception    ( std::mem_fun_ref( & DEC_Knowledge_ObjectPerception    ::UpdateOnNetwork ) );
     pKnowledgePopulationPerceptionContainer_->ApplyOnKnowledgesPopulationPerception( std::mem_fun_ref( & DEC_Knowledge_PopulationPerception::UpdateOnNetwork ) );
 }
-
-
-// =============================================================================
-// QUERIES
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Agents
-// -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_AgentPion::IsIdentified
@@ -366,10 +348,6 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetDangerousEnemiesInZone( T_ConstKnowle
 }
 
 // -----------------------------------------------------------------------------
-// Objects
-// -----------------------------------------------------------------------------
-
-// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_AgentPion::IsIdentified
 // Created: NLD 2004-03-12
 // -----------------------------------------------------------------------------
@@ -427,10 +405,6 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetObjectsColliding( T_KnowledgeObjectDi
         container.push_back( pKnowledge );
     }
 }
-
-// -----------------------------------------------------------------------------
-// Populations
-// -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_AgentPion::IsIdentified
@@ -531,10 +505,6 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetPopulationsAttacking( T_KnowledgePopu
     sPopulationAttackingInsertor functor( *pPion_, container );
     pKnowledgePopulationPerceptionContainer_->ApplyOnKnowledgesPopulationPerception( functor );
 }
-
-// =============================================================================
-// RESOLVER
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent
@@ -706,10 +676,6 @@ DEC_KS_PopulationInteraction& DEC_KnowledgeBlackBoard_AgentPion::GetKsPopulation
     assert( pKsPopulationInteraction_ );
     return *pKsPopulationInteraction_;
 }
-
-// =============================================================================
-// URBAN
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_AgentPion::GetKnowledgeUrbanPerceptionContainer

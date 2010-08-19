@@ -29,6 +29,7 @@ class MIL_Army_ABC;
 class MIL_Object_ABC;
 class MIL_ObjectFilter;
 class TER_Polygon;
+class TER_Localisation;
 
 // =============================================================================
 /** @class  DEC_KnowledgeBlackBoard_Army
@@ -53,62 +54,55 @@ public:
 
     //! @name Accessors
     //@{
-    MIL_Army_ABC&                             GetArmy                        () const;
-    DEC_BlackBoard_CanContainKnowledgeObject& GetKnowledgeObjectContainer    () const;
-    DEC_BlackBoard_CanContainKnowledgeUrban&  GetKnowledgeUrbanContainer    () const;
-    DEC_KS_ObjectKnowledgeSynthetizer&        GetKsObjectKnowledgeSynthetizer() const;
-    DEC_KS_UrbanKnowledgeSynthetizer&         GetKsUrbanKnowledgeSynthetizer() const;
+    MIL_Army_ABC& GetArmy() const;
+    DEC_BlackBoard_CanContainKnowledgeObject& GetKnowledgeObjectContainer() const;
+    DEC_BlackBoard_CanContainKnowledgeUrban& GetKnowledgeUrbanContainer() const;
+    DEC_KS_ObjectKnowledgeSynthetizer& GetKsObjectKnowledgeSynthetizer() const;
+    DEC_KS_UrbanKnowledgeSynthetizer& GetKsUrbanKnowledgeSynthetizer() const;
     //@}
 
     //! @name Network
     //@{
-    virtual void SendFullState   () const;
+    virtual void SendFullState() const;
     virtual void SendChangedState() const;
     //@}
 
     //! @name tools::Resolver
     //@{
-    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent ( const Common::MsgUnitKnowledge&  asn ) const;
-    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent (       unsigned int               nID ) const;
-
+    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent ( const Common::MsgUnitKnowledge& asn ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent ( unsigned int nID ) const;
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const Common::MsgObjectKnowledge& asn ) const;
-    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject(       unsigned int                nID ) const;
-
+    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( unsigned int nID ) const;
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const Common::MsgPopulationKnowledge& asn ) const;
-    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation(       unsigned int                       nID ) const;
-
+    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( unsigned int nID ) const;
     virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( const Common::MsgUrbanKnowledge& asn ) const;
-    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban(       unsigned int               nID ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( unsigned int nID ) const;
     //@}
 
     //! @name Queries
     //@{
-    bool                  IsKnown                 ( const MIL_Object_ABC& oject ) const;
+    bool IsKnown( const MIL_Object_ABC& oject ) const;
     boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObjectFromID( unsigned int nID ) const;
     boost::shared_ptr< DEC_Knowledge_Urban >  GetKnowledgeUrbanFromID( unsigned int nID ) const;
-
-    void                  GetKnowledgesObject( T_KnowledgeObjectVector& container ) const;
+    void GetKnowledgesObject( T_KnowledgeObjectVector& container ) const;
     boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObject ( MIL_Object_ABC& object ) const;
     boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObject ( const DEC_Knowledge_ObjectCollision& collision ) const;
-
-    void                  GetObjects                   ( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter ) const;
-    void                  GetObjects                   ( T_KnowledgeObjectVector&      container ) const;
-    void                  GetObjectsInCircle           ( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const MT_Vector2D& center, MT_Float rRadius );
-    void                  GetObjectsInZone             ( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Localisation& zone );
-    void                  GetObjectsInZone             ( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Polygon& zone );
-    void                  GetObjectsAtInteractionHeight( T_KnowledgeObjectVector&      container, MT_Float rHeight, const MIL_ObjectFilter& filter ) const;
-    boost::shared_ptr< DEC_Knowledge_Object > GetClosestObject             ( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter  ) const;
-    boost::shared_ptr< DEC_Knowledge_Object > GetClosestFriendObject       ( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter  ) const;
-    void                  GetUrbanObjects              ( T_KnowledgeUrbanVector& container ) const;
+    void GetObjects( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter ) const;
+    void GetObjects( T_KnowledgeObjectVector& container ) const;
+    void GetObjectsInCircle( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const MT_Vector2D& center, MT_Float rRadius );
+    void GetObjectsInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Localisation& zone );
+    void GetObjectsInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Polygon& zone );
+    void GetObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, MT_Float rHeight, const MIL_ObjectFilter& filter ) const;
+    boost::shared_ptr< DEC_Knowledge_Object > GetClosestObject( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter ) const;
+    boost::shared_ptr< DEC_Knowledge_Object > GetClosestFriendObject( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter ) const;
+    void GetUrbanObjects( T_KnowledgeUrbanVector& container ) const;
     //@}
 
 private:
     MIL_Army_ABC* pArmy_;
-
     // Containers
     DEC_BlackBoard_CanContainKnowledgeObject* pKnowledgeObjectContainer_;
     DEC_BlackBoard_CanContainKnowledgeUrban* pKnowledgeUrbanContainer_;
-
     // Knowledge sources
     DEC_KS_ObjectKnowledgeSynthetizer* pKsObjectKnowledgeSynthetizer_;
     DEC_KS_UrbanKnowledgeSynthetizer* pKsUrbanKnowledgeSynthetizer_;

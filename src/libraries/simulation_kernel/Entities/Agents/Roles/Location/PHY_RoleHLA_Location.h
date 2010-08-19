@@ -19,6 +19,7 @@ namespace hla
 }
 
 class MIL_AgentHLA;
+class TerrainData;
 
 // =============================================================================
 /** @class  PHY_RoleHLA_Location

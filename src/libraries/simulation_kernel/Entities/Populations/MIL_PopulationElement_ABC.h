@@ -11,7 +11,6 @@
 #define __MIL_PopulationElement_ABC_h_
 
 #include "MIL.h"
-
 #include "simulation_terrain/TER_PopulationConcentration_ABC.h"
 #include "MIL_Random.h"
 
@@ -34,7 +33,7 @@ class MIL_PopulationElement_ABC
 public:
     //! @name Types
     //@{
-    typedef std::pair< unsigned int /*alive humans*/,unsigned int /*dead humans*/ > T_Humans;
+    typedef std::pair< unsigned int, unsigned int > T_Humans;
     //@}
 
 public:
@@ -56,45 +55,45 @@ public:
 
     //! @name Humans management
     //@{
-    void     PushHumans   ( const T_Humans& humans );
-    T_Humans PullHumans   ( unsigned int nNbr );
-    void     KillAllHumans();
-    MT_Float Exterminate  ( MT_Float rSurface );
-    unsigned int     Kill         ( unsigned int count );
-    unsigned int     Resurrect    ( unsigned int count );
+    void PushHumans( const T_Humans& humans );
+    T_Humans PullHumans( unsigned int nNbr );
+    void KillAllHumans();
+    MT_Float Exterminate( MT_Float rSurface );
+    unsigned int Kill( unsigned int count );
+    unsigned int Resurrect( unsigned int count );
     //@}
 
     //! @name Actions
     //@{
-    void     FireOnPions      ( MT_Float rIntensity, PHY_FireResults_Population& fireResult );
-    void     FireOnPion       ( MT_Float rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult );
-    MT_Float GetDangerosity   ( const MIL_AgentPion& target ) const;
-    void     ApplyFire        (       unsigned int                nNbrAmmoFired  , PHY_FireResults_ABC& fireResult );
-    void     ApplyIndirectFire( const MT_Circle&          attritionCircle, PHY_FireResults_ABC& fireResult );
-    void     ApplyExplosion   ( const AttritionCapacity& capacity, PHY_FireResults_ABC& fireResult );
-    void     ApplyInjury      ( MIL_Injury_ABC& injury );
+    void FireOnPions( MT_Float rIntensity, PHY_FireResults_Population& fireResult );
+    void FireOnPion( MT_Float rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult );
+    MT_Float GetDangerosity( const MIL_AgentPion& target ) const;
+    void ApplyFire( unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult );
+    void ApplyIndirectFire( const MT_Circle& attritionCircle, PHY_FireResults_ABC& fireResult );
+    void ApplyExplosion( const AttritionCapacity& capacity, PHY_FireResults_ABC& fireResult );
+    void ApplyInjury( MIL_Injury_ABC& injury );
     //@}
 
     //! @name Accessors
     //@{
-          MIL_Population&         GetPopulation    () const;
-    const MIL_PopulationAttitude& GetAttitude      () const;
-          unsigned int                    GetID            () const;
-          unsigned int            GetNbrAliveHumans() const;
-          unsigned int            GetNbrDeadHumans () const;
-          unsigned int            GetNbrHumans     () const;
-          MT_Float                GetDensity       () const;
-          bool                    IsDead           () const;
-          bool                    IsInZone         ( const TER_Localisation& loc ) const;
+    MIL_Population& GetPopulation() const;
+    const MIL_PopulationAttitude& GetAttitude() const;
+    unsigned int GetID() const;
+    unsigned int GetNbrAliveHumans() const;
+    unsigned int GetNbrDeadHumans() const;
+    unsigned int GetNbrHumans() const;
+    MT_Float GetDensity() const;
+    bool IsDead() const;
+    bool IsInZone( const TER_Localisation& loc ) const;
 
-    virtual const TER_Localisation& GetLocation      () const = 0;
-    virtual       MT_Vector2D       GetSecuringPoint ( const MIL_Agent_ABC& securingAgent ) const;
-    virtual       MT_Vector2D       GetSafetyPosition( const MIL_AgentPion& agent, MT_Float rMinDistance, MT_Float rSeed ) const = 0;
+    virtual const TER_Localisation& GetLocation() const = 0;
+    virtual MT_Vector2D GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const;
+    virtual MT_Vector2D GetSafetyPosition( const MIL_AgentPion& agent, MT_Float rMinDistance, MT_Float rSeed ) const = 0;
     //@}
 
     //! @name Pion effects
     //@{
-    MT_Float GetPionMaxSpeed           ( const PHY_Volume& pionVolume ) const;
+    MT_Float GetPionMaxSpeed( const PHY_Volume& pionVolume ) const;
     MT_Float GetPionReloadingTimeFactor() const;
     //@}
 
@@ -115,15 +114,15 @@ protected:
 
     //! @name Tools
     //@{
-    void UpdateDensity   ();
+    void UpdateDensity();
     void UpdateCollisions();
-    void ClearCollisions ();
+    void ClearCollisions();
     //@}
 
     //! @name Network
     //@{
     bool HasAttitudeChanged() const;
-    bool HasHumansChanged  () const;
+    bool HasHumansChanged() const;
     //@}
 
     //! @name Events
@@ -135,22 +134,20 @@ private:
     //! @name Types
     //@{
     typedef std::vector< MIL_Agent_ABC* >   T_AgentVector;
-    typedef T_AgentVector::const_iterator   CIT_AgentVector;
+    typedef T_AgentVector::const_iterator CIT_AgentVector;
     //@}
 
 private:
-    const unsigned int                    nID_;
-          MIL_Population*         pPopulation_;
-          unsigned int            nNbrAliveHumans_;
-          unsigned int            nNbrDeadHumans_;
-          MT_Float                rDensity_; // Alive humans density
+    const unsigned int nID_;
+    MIL_Population* pPopulation_;
+    unsigned int nNbrAliveHumans_;
+    unsigned int nNbrDeadHumans_;
+    MT_Float rDensity_; // Alive humans density
     const MIL_PopulationAttitude* pAttitude_;
-
-          T_AgentVector           collidingAgents_;
-
-          // Network
-          bool                    bAttitudeUpdated_;
-          bool                    bHumansUpdated_;
+    T_AgentVector collidingAgents_;
+    // Network
+    bool bAttitudeUpdated_;
+    bool bHumansUpdated_;
 };
 
 #endif // __MIL_PopulationElement_ABC_h_

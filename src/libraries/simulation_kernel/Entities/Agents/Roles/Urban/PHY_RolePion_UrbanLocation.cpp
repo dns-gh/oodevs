@@ -25,6 +25,7 @@
 #include "UrbanType.h"
 #include "UrbanModel.h"
 #include "simulation_terrain/TER_ObjectManager.h"
+#include "simulation_terrain/TER_World.h"
 #include <urban/Architecture.h>
 #include <urban/Model.h>
 #include <urban/TerrainObjectVisitor_ABC.h>
@@ -261,7 +262,7 @@ float PHY_RolePion_UrbanLocation::ComputeDistanceInsideSameUrbanBlock( MIL_Agent
 // Name: PHY_RolePion_Posture::Execute
 // Created: SLG 2010-04-12
 // -----------------------------------------------------------------------------
-void PHY_RolePion_UrbanLocation::Execute( posture::PostureComputer_ABC& algorithm ) const
+void PHY_RolePion_UrbanLocation::Execute( posture::PostureComputer_ABC& /*algorithm*/ ) const
 {
     // $$$$ LDC FIXME The value of ComputeXomplexity is just stupid (1 million...). It also doesn't make any sense for an isolated individual.
 //    if( urbanObject_ )

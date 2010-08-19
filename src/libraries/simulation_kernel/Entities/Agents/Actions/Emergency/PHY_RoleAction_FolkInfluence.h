@@ -18,6 +18,7 @@ namespace population
     class Object_ABC;
 }
 
+class TER_Localisation;
 
 // =============================================================================
 /** @class  PHY_RoleAction_FolkInfluence

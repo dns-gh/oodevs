@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-10 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Hla/HLA_Serialization.cpp $
-// $Author: Age $
-// $Modtime: 10/12/04 10:33 $
-// $Revision: 6 $
-// $Workfile: HLA_Serialization.cpp $
-//
-// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "HLA_Serialization.h"
@@ -22,6 +13,7 @@
 #include <hla/Deserializer.h>
 #include <hla/ObjectIdentifier.h>
 #include "simulation_terrain/TER_Localisation.h"
+#include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Tools.h"
 
 using namespace hla;

@@ -37,6 +37,7 @@ class DEC_Knowledge_PopulationPerception;
 class MIL_Army_ABC;
 class MIL_Object_ABC;
 class MIL_Population;
+class TER_Localisation;
 class TER_Polygon;
 
 // =============================================================================

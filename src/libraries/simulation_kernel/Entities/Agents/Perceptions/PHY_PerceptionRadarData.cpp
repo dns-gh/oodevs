@@ -19,6 +19,7 @@
 #include "DetectionComputer_ABC.h"
 #include "DetectionComputerFactory_ABC.h"
 #include "simulation_terrain/TER_AgentManager.h"
+#include "simulation_terrain/TER_World.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRadarData::sAcquisitionData::sAcquisitionData

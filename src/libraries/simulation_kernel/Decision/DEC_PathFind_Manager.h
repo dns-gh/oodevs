@@ -22,6 +22,7 @@
 
 class DEC_Path_ABC;
 class TER_PathFinderThread;
+class TER_PathFindRequest_ABC;
 class MIL_Config;
 
 // =============================================================================
@@ -36,19 +37,19 @@ public:
 
     //! @name Main
     //@{
-    void Update                   ();
-    void UpdateInSimulationThread ();
-    void StartCompute             ( boost::shared_ptr< DEC_Path_ABC > pPath );
+    void Update();
+    void UpdateInSimulationThread();
+    void StartCompute( boost::shared_ptr< DEC_Path_ABC > pPath );
     void CleanPathAfterComputation( const boost::shared_ptr< TER_PathFindRequest_ABC >& pPath );
     //@}
 
     //! @name Accessors
     //@{
-    int  GetCurrentThread         () const;
-    unsigned int GetNbrShortRequests      () const;
-    unsigned int GetNbrLongRequests       () const;
-    unsigned int GetNbrRequests           () const;
-    unsigned int GetNbrTreatedRequests    () const;
+    int GetCurrentThread() const;
+    unsigned int GetNbrShortRequests() const;
+    unsigned int GetNbrLongRequests() const;
+    unsigned int GetNbrRequests() const;
+    unsigned int GetNbrTreatedRequests() const;
     unsigned int GetMaxComputationDuration() const;
     //@}
 
@@ -59,32 +60,29 @@ private:
     typedef T_PathFindThreadPtrVector::iterator        IT_PathFindThreadPtrVector;
     typedef T_PathFindThreadPtrVector::const_iterator CIT_PathFindThreadPtrVector;
 
-    typedef std::deque< boost::shared_ptr< TER_PathFindRequest_ABC > >      T_Requests;
+    typedef std::deque< boost::shared_ptr< TER_PathFindRequest_ABC > > T_Requests;
     //@}
 
 private:
     //! @name Tools
     //@{
-    virtual boost::shared_ptr< TER_PathFindRequest_ABC > GetMessage   ();
-            boost::shared_ptr< TER_PathFindRequest_ABC > GetMessage   ( unsigned int nThread );
-    void        AddPendingJob( boost::shared_ptr< DEC_Path_ABC > pPath );
+    virtual boost::shared_ptr< TER_PathFindRequest_ABC > GetMessage();
+    boost::shared_ptr< TER_PathFindRequest_ABC > GetMessage( unsigned int nThread );
+    void AddPendingJob( boost::shared_ptr< DEC_Path_ABC > pPath );
     T_Requests& GetRequests();
     //@}
 
 private:
     mutable boost::mutex mutex_;
-    boost::condition     condition_;
-
+    boost::condition condition_;
     T_Requests shortRequests_;
     T_Requests longRequests_;
-    MT_Float   rDistanceThreshold_;
-    unsigned int       nMaxComputationDuration_;
-    unsigned int       treatedRequests_;
-
-    T_PathFindThreadPtrVector  pathFindThreads_;
-
+    MT_Float rDistanceThreshold_;
+    unsigned int nMaxComputationDuration_;
+    unsigned int treatedRequests_;
+    T_PathFindThreadPtrVector pathFindThreads_;
     boost::mutex cleanAndDestroyMutex_;
-    T_Requests   requestsToCleanAfterComputation_;
+    T_Requests requestsToCleanAfterComputation_;
     bool bUseInSameThread_;
 };
 

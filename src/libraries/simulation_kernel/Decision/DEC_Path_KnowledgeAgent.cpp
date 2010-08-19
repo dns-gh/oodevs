@@ -53,7 +53,7 @@ MT_Float DEC_Path_KnowledgeAgent::ComputeCost( const MT_Vector2D& from, const MT
 {
     const MT_Line lineLink( from, to );
     const MT_Vector2D vPositionProjection = lineLink.ClosestPointOnLine( vEnemyPosition_ );
-    const MT_Float rDistBtwUnitAndEnemy = vPositionProjection.Distance( vEnemyPosition_  );
+    const MT_Float rDistBtwUnitAndEnemy = vPositionProjection.Distance( vEnemyPosition_ );
     if( rDistBtwUnitAndEnemy > rSecurityDistance_ )
         return 0.;
     return rOffset_ - rFactor_ * rDistBtwUnitAndEnemy;

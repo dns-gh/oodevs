@@ -13,6 +13,7 @@
 #include "simulation_terrain/TER_Localisation.h"
 
 class DEC_Population_PathClass;
+class TerrainData;
 
 // =============================================================================
 // Created: SBO 2005-01-16

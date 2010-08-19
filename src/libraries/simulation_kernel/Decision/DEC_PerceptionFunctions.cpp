@@ -105,7 +105,6 @@ void DEC_PerceptionFunctions::SetVisionModeNormal( MIL_Agent_ABC& callerAgent )
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().SetVisionModeNormal();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_PerceptionFunctions::EnableRecognitionPoint
 // Created: JVT 2004-10-21
@@ -217,7 +216,6 @@ void DEC_PerceptionFunctions::DisableRadarOnLocalisation( MIL_Agent_ABC& callerA
     assert( pRadarClass );
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().DisableRadarOnLocalisation( *pRadarClass, id );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PerceptionFunctions::EnableRadar

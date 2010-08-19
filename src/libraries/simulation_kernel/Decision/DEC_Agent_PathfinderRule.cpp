@@ -8,9 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "DEC_Agent_PathfinderRule.h"
-
 #include "DEC_Agent_Path.h"
 #include "DEC_Agent_PathClass.h"
 #include "simulation_terrain/TER_World.h"
@@ -69,35 +67,28 @@ DEC_Agent_PathfinderRule::DEC_Agent_PathfinderRule( const DEC_Agent_Path& path, 
     : path_                          ( path )
     , world_                         ( TER_World::GetWorld() )
     , altitudeData_                  ( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() )
-
     , rMaxSpeed_                     ( float( path.GetUnitSpeeds().GetMaxSpeed() ) * 1.1f )
     , bShort_                        ( path.GetPathClass().IsShort() )
-
     , avoidedTerrain_                ( path.GetPathClass().GetAvoidedTerrain() )
     , rAvoidedTerrainCost_           ( avoidedTerrain_ == TerrainData() ? 0. : path.GetPathClass().GetAvoidedTerrainCost() )
     , preferedTerrain_               ( path.GetPathClass().GetPreferedTerrain() )
     , rPreferedTerrainCost_          ( preferedTerrain_ == TerrainData() ? 0. : path.GetPathClass().GetPreferedTerrainCost() )
-
     , rMinAltitude_                  ( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetMinAltitude() )
     , rMaxAltitude_                  ( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetMaxAltitude() )
     , rAltitudeCostPerMeter_         ( path.GetPathClass().GetAltitudePreference() )
     , rMaxSlope_                     ( path.GetUnitMaxSlope() )
-
     , pFuseau_                       ( 0 )
     , rComfortFuseauDistance_        ( path.GetPathClass().GetComfortFuseauDistance() )
     , rFuseauCostPerMeterOut_        ( path.GetPathClass().GetFuseauCostPerMeterOut() )
     , rFuseauCostPerMeterIn_         ( path.GetPathClass().GetFuseauCostPerMeterIn () )
     , rMaximumFuseauDistance_        ( 0. ) // Initialized below
-
     , pAutomateFuseau_               ( 0 )
     , rAutomataFuseauCostPerMeterOut_( path.GetPathClass().GetAutomateFuseauCostPerMeterOut() )
     , rMaximumAutomataFuseauDistance_( 0. ) // Initialized below
-
     , dangerDirection_               ( path.GetDirDanger() )
     , rDangerDirectionBaseCost_      ( path.GetPathClass().GetDangerDirectionBaseCost  () )
     , rDangerDirectionLinearCost_    ( path.GetPathClass().GetDangerDirectionLinearCost() )
     , dangerPoint_                   ( DotProduct( dangerDirection_, from ) > DotProduct( dangerDirection_, to ) ? from : to )
-
     , rEnemyMaximumCost_             ( path.GetPathClass().GetEnemyMaximumCost() )
     , rPopulationMaximumCost_        ( path.GetPathClass().GetPopulationMaximumCost() )
 {
@@ -113,10 +104,6 @@ DEC_Agent_PathfinderRule::~DEC_Agent_PathfinderRule()
 {
     // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathfinderRule::GetTerrainCost

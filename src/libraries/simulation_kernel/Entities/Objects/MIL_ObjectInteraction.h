@@ -16,6 +16,7 @@ class MIL_CheckPointOutArchive;
 class MIL_CheckPointInArchive;
 class MIL_Object_ABC;
 class MIL_PopulationElement_ABC;
+class TER_Localisation;
 
 // =============================================================================
 /** @class  MIL_ObjectInteraction
@@ -49,13 +50,13 @@ public:
 
     //! @name Operations
     //@{
-    void NotifyAgentMovingInside ( MIL_PopulationElement_ABC& population );
+    void NotifyAgentMovingInside( MIL_PopulationElement_ABC& population );
     void NotifyAgentMovingOutside( MIL_PopulationElement_ABC& population );
 
-    void NotifyAgentMovingInside ( MIL_Agent_ABC& agent );
+    void NotifyAgentMovingInside( MIL_Agent_ABC& agent );
     void NotifyAgentMovingOutside( MIL_Agent_ABC& agent );
-    void NotifyAgentPutInside    ( MIL_Agent_ABC& agent );
-    void NotifyAgentPutOutside   ( MIL_Agent_ABC& agent );
+    void NotifyAgentPutInside( MIL_Agent_ABC& agent );
+    void NotifyAgentPutOutside( MIL_Agent_ABC& agent );
     //@}
 
     //! @name Process Agent inside
@@ -69,8 +70,8 @@ private:
     typedef std::set< MIL_Agent_ABC* >  T_AgentSet;
     typedef T_AgentSet::const_iterator  CIT_AgentSet;
 
-    typedef std::set< MIL_PopulationElement_ABC* >  T_PopulationSet;
-    typedef T_PopulationSet::const_iterator         CIT_PopulationSet;
+    typedef std::set< MIL_PopulationElement_ABC* > T_PopulationSet;
+    typedef T_PopulationSet::const_iterator      CIT_PopulationSet;
     //@}
 
 private:
@@ -89,14 +90,12 @@ private:
     T_AgentSet agentExitingSet_;
     T_AgentSet agentMovingInsideSet_;
     T_AgentSet agentDelayedEnteringSet_;
-
     // link with population
     T_PopulationSet populationInsideSet_;
     //@}
-
     //! @name Member data
     //@{
-    MT_Float    height_;
+    MT_Float height_;
     //@}
 };
 

@@ -14,6 +14,7 @@
 #include <boost/serialization/export.hpp>
 
 class MIL_PropagationManager;
+class TER_Localisation;
 
 class NBCPropagationCapacity : public PropagationCapacity_ABC
 {
@@ -59,7 +60,7 @@ private:
     //! @name
     //@{
     MIL_PropagationManager* pManager_;
-    float                   timeOfLastUpdate_;
+    float timeOfLastUpdate_;
     //@}
 };
 

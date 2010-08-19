@@ -17,6 +17,7 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "Meteo/PHY_MeteoDataManager.h"
+#include "simulation_terrain/TER_World.h"
 
 #define PRECISION 0.0000001
 

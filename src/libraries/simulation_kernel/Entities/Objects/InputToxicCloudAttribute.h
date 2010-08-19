@@ -23,6 +23,7 @@ namespace xml
 
 class QuantityTraits;
 class MIL_NbcAgentType;
+class TER_Polygon;
 
 // =============================================================================
 /** @class  InputToxicCloudAttribute

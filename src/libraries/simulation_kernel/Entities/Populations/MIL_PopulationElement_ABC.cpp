@@ -23,6 +23,7 @@
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/MIL_Army.h"
 #include "simulation_terrain/TER_AgentManager.h"
+#include "simulation_terrain/TER_World.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC constructor

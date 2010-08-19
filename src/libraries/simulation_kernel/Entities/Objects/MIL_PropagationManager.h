@@ -7,17 +7,12 @@
 //
 // *****************************************************************************
 
-//------------------------------------------------------------------------------
-// Name: MIL_DynamicFire.cpp
-// Created: RFT 28/04/2008
-// Modified: none
-//------------------------------------------------------------------------------
-
 #ifndef __MIL_PropagationManager_h_
 #define __MIL_PropagationManager_h_
 
 #include <set>
-//#include <map>
+
+class TER_Localisation;
 
 // =============================================================================
 /** @class  MIL_PropagationManager
@@ -31,20 +26,23 @@ class MIL_PropagationManager : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-            MIL_PropagationManager();
+             MIL_PropagationManager();
     virtual ~MIL_PropagationManager();
     //@}
 
     //! @name Methods
     //@{
-    void    Flag( const MT_Vector2D& vOrigin , unsigned int length , unsigned int width );
-    void    RemoveFlag( const MT_Vector2D& vOrigin , unsigned int length , unsigned int width );
-    bool    IsFlagged( const TER_Localisation& localisation , unsigned int length , unsigned int width ) const;
+    void Flag( const MT_Vector2D& vOrigin , unsigned int length , unsigned int width );
+    void RemoveFlag( const MT_Vector2D& vOrigin , unsigned int length , unsigned int width );
+    bool IsFlagged( const TER_Localisation& localisation , unsigned int length , unsigned int width ) const;
     //@}
 
 private:
+    //! @name Types
+    //@{
     typedef std::pair< int, int > T_Coordinate;
     typedef std::set< T_Coordinate > T_CoordinatesSet;
+    //@}
 
 private:
     T_CoordinatesSet coordinatesSet_;

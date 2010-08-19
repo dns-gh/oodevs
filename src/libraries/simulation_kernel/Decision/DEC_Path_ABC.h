@@ -15,6 +15,7 @@
 #include "simulation_terrain/TER_PathFindRequest_ABC.h"
 
 class DEC_PathSection_ABC;
+class TerrainData;
 
 // =============================================================================
 // @class  DEC_Path_ABC

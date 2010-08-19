@@ -32,6 +32,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "simulation_terrain/TER_ObjectManager.h"
+#include "simulation_terrain/TER_World.h"
 #include <urban/Architecture.h>
 #include <urban/TerrainObject_ABC.h>
 
@@ -197,13 +198,9 @@ DEC_Agent_Path::~DEC_Agent_Path()
         if( (*it)->GetType() != DEC_PathPoint::eTypePointPath )
             (*it)->RemoveFromDIA( *it );
     }
-    fuseau_        .Reset();
+    fuseau_.Reset();
     automateFuseau_.Reset();
 }
-
-//=============================================================================
-// INIT
-//=============================================================================
 
  // -----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::Initialize
@@ -299,10 +296,6 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
             pathKnowledgePopulations_.push_back( DEC_Path_KnowledgePopulation( pathClass_, **it, !queryMaker_.GetType().IsTerrorist() ) );
     }
 }
-
-// =============================================================================
-// DEC POINTS
-// =============================================================================
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::IsPointAvantIn
@@ -572,10 +565,6 @@ void DEC_Agent_Path::InsertDecPoints()
     InsertLimas();
 }
 
-// =============================================================================
-// PATH CALCULATION
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::CleanAfterComputation
 // Created: NLD 2006-01-23
@@ -583,8 +572,8 @@ void DEC_Agent_Path::InsertDecPoints()
 void DEC_Agent_Path::CleanAfterComputation()
 {
     DEC_Path_ABC::CleanAfterComputation();
-    pathKnowledgeAgents_     .clear();
-    pathKnowledgeObjects_    .clear();
+    pathKnowledgeAgents_.clear();
+    pathKnowledgeObjects_.clear();
     pathKnowledgePopulations_.clear();
 }
 
@@ -645,7 +634,7 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
 // -----------------------------------------------------------------------------
 bool DEC_Agent_Path::IsDestinationTrafficable() const
 {
-    float weight = GetUnitMajorWeight();
+    float weight = static_cast< float >( GetUnitMajorWeight() );
     for( CIT_PointVector it = pathPoints_.begin(); it != pathPoints_.end(); ++it )
     {
         if( !IsUrbanBlockTrafficable( *it, weight ) )

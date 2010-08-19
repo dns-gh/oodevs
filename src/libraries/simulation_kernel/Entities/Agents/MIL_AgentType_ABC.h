@@ -21,6 +21,7 @@ class MIL_Agent_ABC;
 class PHY_NatureAtlas;
 class PHY_NatureLevel;
 class PHY_UnitType;
+class TerrainData;
 
 namespace directia
 {
@@ -42,15 +43,13 @@ public:
 
     //! @name Getters/Setters
     //@{
-          unsigned int     GetID         () const;
-    const std::string&     GetName       () const;
+    unsigned int GetID() const;
+    const std::string& GetName() const;
     const PHY_NatureLevel& GetNatureLevel() const;
     const PHY_NatureAtlas& GetNatureAtlas() const;
-
-    virtual bool           IsMilitia     () const;
-    virtual bool           IsRefugee     () const;
-    virtual bool           IsTerrorist   () const;
-
+    virtual bool IsMilitia() const;
+    virtual bool IsRefugee() const;
+    virtual bool IsTerrorist() const;
     virtual const PHY_UnitType& GetUnitType() const = 0;
     virtual MT_Float GetRapForIncreasePerTimeStepValue() const = 0;
     virtual void RegisterFunctions( directia::Brain& brain, MIL_Agent_ABC& agent ) const = 0;
@@ -71,8 +70,8 @@ private:
 private:
     //! @name Member data
     //@{
-          unsigned int             nID_;
-    const std::string      strName_;
+    unsigned int nID_;
+    const std::string strName_;
     const PHY_NatureLevel* pNatureLevel_;
     const PHY_NatureAtlas* pNatureAtlas_;
     //@}

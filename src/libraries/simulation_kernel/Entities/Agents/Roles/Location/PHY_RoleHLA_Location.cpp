@@ -14,6 +14,7 @@
 #include "Hla/AttributeIdentifier.h"
 #include "Entities/Agents/MIL_AgentHLA.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "simulation_terrain/TER_World.h"
 
 using namespace hla;
 

@@ -11,7 +11,6 @@
 #define __TER_Object_ABC_h_
 
 #include "TER_Localisation.h"
-
 #include "TER_ObjectTraits.h"
 
 namespace pathfind
