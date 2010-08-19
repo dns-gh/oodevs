@@ -14,6 +14,7 @@
 #include "meteo/PHY_Lighting.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_Tools.h"
+#include <MT/MT_IO/MT_FormatString.h>
 #include <xeumeuleu/xml.hpp>
 
 MIL_IDManager PHY_MeteoDataManager::idManager_;
