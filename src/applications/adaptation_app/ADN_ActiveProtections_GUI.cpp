@@ -61,7 +61,7 @@ void ADN_ActiveProtections_GUI::Build()
     QGroupBox* pDotationGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Dotation" ), pGroup );
     builder.AddField< ADN_ComboBox_Vector<ADN_Equipement_Data::AmmoCategoryInfo> >( pDotationGroup, tr( "Dotation" ), vConnectors[eActiveProtectionDotation] );
     builder.SetEnabled( true );
-    builder.AddField<ADN_EditLine_Double>( pDotationGroup, tr( "Usage" ), vConnectors[eActiveProtectionUsage], 0, eGreaterZero );
+    builder.AddField<ADN_EditLine_Double>( pDotationGroup, tr( "Usage" ), vConnectors[eActiveProtectionUsage], 0, eGreaterEqualZero );
     // Weapons
     QGroupBox* pWeaponsGroup_ = new QGroupBox( 1, Qt::Horizontal, tr( "Ammunitions" ), pGroup );
     ADN_ActiveProtections_WeaponsTable* pWeapons = new ADN_ActiveProtections_WeaponsTable( tr( "Ammunitions" ).ascii(), pWeaponsGroup_ );
