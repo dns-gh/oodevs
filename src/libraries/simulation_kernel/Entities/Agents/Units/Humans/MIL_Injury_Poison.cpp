@@ -17,6 +17,7 @@
 #include "Entities/Objects/NBCTypeAttribute.h"
 #include "Entities/Objects/MIL_MedicalTreatmentType.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanProtection.h"
+#include <boost/noncopyable.hpp>
 
 //BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Injury_Poison )
 
@@ -71,10 +72,6 @@ MIL_Injury_Poison::~MIL_Injury_Poison( )
 {
     // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Human::load
@@ -186,41 +183,34 @@ void MIL_Injury_Poison::UpdateInjuryCategory()
         SetInjuryCategory( MIL_MedicalTreatmentType::eDead );
 }
 
-// =============================================================================
-// FUNCTOR
-// =============================================================================
 namespace
 {
-    struct PHY_PoisonProtectionFunctor
+    struct PHY_PoisonProtectionFunctor : private boost::noncopyable
     {
         PHY_PoisonProtectionFunctor( int agentConcentration , const std::string NBCAgent , int injuryID )
-            : agentConcentration_   ( agentConcentration )
-            , injuryID_             ( injuryID )
-            , NBCAgent_             ( NBCAgent )
-            , protectionValue_      ( 0 )
+            : agentConcentration_( agentConcentration )
+            , injuryID_          ( injuryID )
+            , NBCAgent_          ( NBCAgent )
+            , protectionValue_   ( 0 )
         {
             // NOTHING
         }
-
         void operator() ( const PHY_ComposantePion& composantePion )
         {
             composantePion.ApplyOnHumanProtection( *this );
         }
-
         void operator()( const PHY_ComposantePion& /*composantePion*/, const PHY_HumanProtection& humanProtection )
         {
             protectionValue_ += humanProtection.ComputeProtectionValue( injuryID_ , agentConcentration_ , NBCAgent_ );
         }
-
         float GetProtectionValue()
         {
             return protectionValue_;
         }
-
-        int                 agentConcentration_;
-        int                 injuryID_;
-        const std::string   NBCAgent_;
-        float               protectionValue_;
+        int agentConcentration_;
+        int injuryID_;
+        const std::string NBCAgent_;
+        float protectionValue_;
     };
 }
 

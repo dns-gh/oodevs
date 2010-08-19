@@ -183,7 +183,7 @@ void PHY_DotationCategory::ReadUrbanAttritionModifier( xml::xistream& xis )
     urban::MaterialCompositionType* material = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( materialType );
     if( rFactor <= 0 || rFactor >= 1 )
         xis.error( "urbanBlock-modifier: value not in ]0..1[" );
-    if( urbanAttritionFactors_.size() <  material->GetId() )
+    if( static_cast< int >( urbanAttritionFactors_.size() ) <  material->GetId() )
         throw std::runtime_error( "error in loading material type" );
     urbanAttritionFactors_[ material->GetId() ] = rFactor;
 

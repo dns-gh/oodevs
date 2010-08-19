@@ -15,6 +15,7 @@
 #include "Entities/Objects/MIL_FireClass.h"
 #include "Entities/Objects/MIL_MedicalTreatmentType.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanProtection.h"
+#include <boost/noncopyable.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Injury_Fire )
 
@@ -184,7 +185,7 @@ void MIL_Injury_Fire::SetInjuryCategory( MIL_MedicalTreatmentType::E_InjuryCateg
 // =============================================================================
 namespace
 {
-    struct PHY_FireProtectionFunctor
+    struct PHY_FireProtectionFunctor : private boost::noncopyable
     {
         PHY_FireProtectionFunctor( int heat , const std::string fireClass , int injuryID )
             : heat_           ( heat )
@@ -217,10 +218,6 @@ namespace
         float protectionValue_;
     };
 }
-
-// =============================================================================
-// INJURE ComposantePion, Population and PHY_InjuredHuman
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Injury_Fire::IsInjured
