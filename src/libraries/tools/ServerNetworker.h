@@ -20,10 +20,12 @@
 #include <string>
 #include <memory>
 
-namespace boost {
-    namespace asio {
-        class io_service;
-    }
+namespace boost
+{
+namespace asio
+{
+    class io_service;
+}
 }
 
 namespace tools
@@ -35,7 +37,7 @@ namespace tools
     class SocketManager;
     class Acceptor;
 
-    // =============================================================================
+// =============================================================================
 /** @class  ServerNetworker
     @brief  ServerNetworker
 */

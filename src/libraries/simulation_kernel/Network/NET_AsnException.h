@@ -10,6 +10,8 @@
 #ifndef __NET_AsnException_h_
 #define __NET_AsnException_h_
 
+#include <exception>
+
 // =============================================================================
 /** @class  NET_AsnException
     @brief  NET_AsnException
@@ -33,9 +35,8 @@ public:
     //@}
 
 private:
-    const T nErrorID_;
+    T nErrorID_;
 };
-
 
 #include "NET_AsnException.inl"
 

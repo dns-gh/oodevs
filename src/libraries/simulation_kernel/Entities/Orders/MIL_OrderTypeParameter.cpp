@@ -12,7 +12,6 @@
 #include "MIL_OrderType_ABC.h"
 #include "simulation_orders/MIL_ParameterType_ABC.h"
 #include "Decision/DEC_Tools.h"
-#include "Network/NET_AsnException.h"
 #include "protocol/protocol.h"
 #include <xeumeuleu/xml.hpp>
 

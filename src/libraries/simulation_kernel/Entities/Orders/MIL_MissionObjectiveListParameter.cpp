@@ -11,7 +11,6 @@
 #include "MIL_MissionObjectiveListParameter.h"
 #include "simulation_orders/MIL_ParameterType_ObjectiveList.h"
 #include "Decision/DEC_Objective.h"
-#include "Network/NET_AsnException.h"
 #include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------

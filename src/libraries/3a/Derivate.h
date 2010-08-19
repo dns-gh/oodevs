@@ -12,14 +12,12 @@
 
 #include "Functions.h"
 #include "TypeChecks.h"
-#include <map>
-#include <deque>
 #include <xeumeuleu/xml.hpp>
+#include <deque>
+#include <map>
 
 #pragma warning( push )
 #pragma warning( disable : 4800 4804 )
-
-namespace xml { class xistream; }
 
 // =============================================================================
 /** @class  Derivate

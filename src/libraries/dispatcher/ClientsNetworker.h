@@ -14,7 +14,6 @@
 #include "MessageHandler_ABC.h"
 #include "LinkResolver_ABC.h"
 #include "tools/ServerNetworker.h"
-#include "tools/MessageDispatcher_ABC.h"
 
 namespace dispatcher
 {

@@ -13,7 +13,6 @@
 
 #include "MIL_TacticalLineManager.h"
 #include "TER_LimitData.h"
-#include "Network/NET_AsnException.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_TacticalLineManager constructor

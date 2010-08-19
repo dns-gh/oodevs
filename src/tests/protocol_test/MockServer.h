@@ -15,10 +15,10 @@
 
 namespace google
 {
-    namespace protobuf
-    {
-        class Message;
-    }
+namespace protobuf
+{
+    class Message;
+}
 }
 
 // =============================================================================

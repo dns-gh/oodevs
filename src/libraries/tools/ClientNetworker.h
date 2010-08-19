@@ -20,10 +20,12 @@
 #include <string>
 #include <memory>
 
-namespace boost {
-    namespace asio {
-        class io_service;
-    }
+namespace boost
+{
+namespace asio
+{
+    class io_service;
+}
 }
 
 namespace tools
@@ -55,7 +57,7 @@ public:
     //@{
     void Update();
 
-    void Connect   ( const std::string& host, bool retry );
+    void Connect( const std::string& host, bool retry );
     void Disconnect();
 
     using MessageSender_ABC::Send;
@@ -66,8 +68,8 @@ protected:
     //! @name Operations
     //@{
     virtual void ConnectionSucceeded( const std::string& endpoint );
-    virtual void ConnectionFailed   ( const std::string& address, const std::string& error );
-    virtual void ConnectionError    ( const std::string& address, const std::string& error );
+    virtual void ConnectionFailed( const std::string& address, const std::string& error );
+    virtual void ConnectionError( const std::string& address, const std::string& error );
     //@}
 
 private:

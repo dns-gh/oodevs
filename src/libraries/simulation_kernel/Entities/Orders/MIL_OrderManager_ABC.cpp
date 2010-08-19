@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_OrderManager_ABC.h"
 #include "MIL_Mission_ABC.h"
-#include "Network/NET_AsnException.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderManager_ABC constructor

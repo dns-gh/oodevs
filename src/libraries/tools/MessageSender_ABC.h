@@ -28,44 +28,29 @@ class MessageSender_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MessageSender_ABC() {};
-    virtual ~MessageSender_ABC() {};
+             MessageSender_ABC() {}
+    virtual ~MessageSender_ABC() {}
     //@}
 
     //! @name Operations
     //@{
     template< typename T >
-    void Send( const std::string& link, const T& message );
+    void Send( const std::string& link, const T& message )
+    {
+        static const unsigned long id = MessageIdentifierFactory::GetIdentifier< T >();
+        MessageEncoder< T > encoder( message );
+        Send( link, id, encoder );
+    }
     template< typename T >
-    void Send( const std::string& link, const T& , const Message& message );
+    void Send( const std::string& link, const T& , const Message& message )
+    {
+        static const unsigned long id = MessageIdentifierFactory::GetIdentifier< T >();
+        Send( link, id, message );
+    }
 
     virtual void Send( const std::string& endpoint, unsigned long tag, const Message& message ) = 0;
     //@}
 };
-
-
-// -----------------------------------------------------------------------------
-// Name: MessageSender_ABC::Send
-// Created: AGE 2007-08-23
-// -----------------------------------------------------------------------------
-template< typename T >
-void MessageSender_ABC::Send( const std::string& link, const T& message )
-{
-    static const unsigned long id = MessageIdentifierFactory::GetIdentifier< T >();
-    MessageEncoder< T > encoder( message );
-    Send( link, id, encoder );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MessageSender_ABC::Send
-// Created: AGE 2007-08-23
-// -----------------------------------------------------------------------------
-template< typename T >
-void MessageSender_ABC::Send( const std::string& link, const T& , const Message& message )
-{
-    static const unsigned long id = MessageIdentifierFactory::GetIdentifier< T >();
-    Send( link, id, message );
-}
 
 }
 

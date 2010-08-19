@@ -56,7 +56,6 @@
 #include "MIL_Army.h"
 #include "MIL_Formation.h"
 #include "MIL_Singletons.h"
-#include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Objects/MIL_FireClass.h"
 #include "Objects/MIL_MedicalTreatmentType.h"

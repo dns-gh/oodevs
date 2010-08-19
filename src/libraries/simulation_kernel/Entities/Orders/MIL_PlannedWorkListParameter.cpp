@@ -11,7 +11,6 @@
 #include "MIL_PlannedWorkListParameter.h"
 #include "simulation_orders/MIL_ParameterType_GenObjectList.h"
 #include "Decision/DEC_Gen_Object.h"
-#include "Network/NET_AsnException.h"
 #include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------

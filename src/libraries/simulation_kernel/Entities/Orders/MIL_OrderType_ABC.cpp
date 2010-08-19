@@ -12,7 +12,6 @@
 #include "MIL_OrderTypeParameter.h"
 #include "MIL_OrderContext.h"
 #include "Decision/DEC_Tools.h"
-#include "Network/NET_AsnException.h"
 #include "protocol/protocol.h"
 #include "simulation_orders/MIL_MissionParameter_ABC.h"
 #include "MIL_MissionParameterFactory.h"
