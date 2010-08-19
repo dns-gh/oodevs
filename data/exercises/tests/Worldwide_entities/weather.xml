@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
 <weather>
   <exercise-date value="20100527T143458"/>
-  <ephemerides moon="JourSansNuage" sunrise="7h30m0s" sunset="21h30m0s"/>
+  <ephemerides day-lighting="JourSansNuage" night-lighting="NuitPleineLune" sunrise="7h30m0s" sunset="21h30m0s"/>
   <theater>
     <wind direction="0" speed="0"/>
     <cloud-cover ceiling="10000" density="0" floor="1000"/>
