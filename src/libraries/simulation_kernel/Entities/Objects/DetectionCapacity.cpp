@@ -225,16 +225,16 @@ void DetectionCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_AB
         {
             PHY_RoleInterface_Perceiver& role = const_cast< MIL_Agent_ABC& >( *detector ).GetRole< PHY_RoleInterface_Perceiver >();
 
-	    // LTO begin
+        // LTO begin
             if( it->second + rIdentificationTime_ < currentTime )
                 role.NotifyExternalPerception( agent, PHY_PerceptionLevel::identified_ );
             else if( it->second + rRecognitionTime_ < currentTime )
                 role.NotifyExternalPerception( agent, PHY_PerceptionLevel::recognized_ );
             else if( it->second + rDetectionTime_ < currentTime )
                 role.NotifyExternalPerception( agent, PHY_PerceptionLevel::detected_ );
-	    // LTO end
+        // LTO end
         }
-	    // LTO begin
+        // LTO begin
         else if( !detector )
         {
             if( it->second + rIdentificationTime_ < currentTime )
@@ -253,7 +253,7 @@ void DetectionCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_AB
                 object.GetArmy()->ApplyOnKnowledgeGroup( knowledgeCreation );
             }
         }
-	// LTO end
+    // LTO end
 
     }
 }

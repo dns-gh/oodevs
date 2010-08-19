@@ -168,9 +168,9 @@ void ADN_Equipement_Data::CategoryInfo::WriteContent( xml::xostream& output )
 // Created: SLG 2010-04-13
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::UrbanAttritionInfos::UrbanAttritionInfos( ADN_Urban_Data::UrbanMaterialInfos* ptr )
-	: ptrMaterial_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), ptr )
+    : ptrMaterial_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), ptr )
     , rCoeff_     ( 0. )
-	, strName_    ( ptrMaterial_.GetData()->strName_ )
+    , strName_    ( ptrMaterial_.GetData()->strName_ )
 {
     BindExistenceTo( &ptrMaterial_ );
 }

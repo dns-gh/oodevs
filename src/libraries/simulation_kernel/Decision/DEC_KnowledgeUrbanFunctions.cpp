@@ -56,7 +56,7 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeUrbanFunctions::GetLivingEnemiesInBU(  
     {
       if( (*it)->IsInUrbanBlock( pKnowledge->GetTerrainObjectKnown() ) )
       {
-		knowledges.push_back( *it );
+        knowledges.push_back( *it );
       }
     }
 
