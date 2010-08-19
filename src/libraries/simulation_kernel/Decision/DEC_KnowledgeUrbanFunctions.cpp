@@ -47,18 +47,17 @@ float DEC_KnowledgeUrbanFunctions::GetCurrentRecceProgress( boost::shared_ptr< D
 // Name: DEC_KnowledgeUrbanFunctions::GetLivingEnemiesInBU
 // Created: GGE 2010-08-16
 // -----------------------------------------------------------------------------
-T_ConstKnowledgeAgentVector DEC_KnowledgeUrbanFunctions::GetLivingEnemiesInBU(  const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge  )
+T_ConstKnowledgeAgentVector DEC_KnowledgeUrbanFunctions::GetLivingEnemiesInBU(  const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge )
 {
     T_ConstKnowledgeAgentVector knowledges;
 
     const T_KnowledgeAgentVector& enemies = callerAgent.GetKnowledgeGroup().GetKnowledge().GetEnemies();
     for( CIT_KnowledgeAgentVector it = enemies.begin(); it != enemies.end(); it++ )
-    {
       if( (*it)->IsInUrbanBlock( pKnowledge->GetTerrainObjectKnown() ) )
-      {
         knowledges.push_back( *it );
-      }
-    }
+
+
+
 
     return knowledges;
 }
