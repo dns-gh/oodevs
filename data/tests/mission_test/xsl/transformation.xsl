@@ -35,7 +35,7 @@ include "resources/config.lua"
 
 function Start()
 
-    local currentTick = 0
+    local frequency = 1 -- second(s) between mission start
     local unitId = 0
 
     local eventTable =
@@ -90,7 +90,7 @@ function Start()
        </xsl:call-template>
      </xsl:for-each>
      <xsl:text>
-        TimeSequence( "</xsl:text><xsl:value-of select="$physical"/><xsl:text>\messages", 10,
+        TimeSequence( "</xsl:text><xsl:value-of select="$physical"/><xsl:text>\messages", frequency,
             function()
                 ChangeState( "</xsl:text><xsl:value-of select="$physical"/><xsl:text>_test_end" )
             end
@@ -116,7 +116,7 @@ end
         <xsl:param name="unit"/>
         <xsl:for-each select="$missionsDoc//missions/units/mission[@name=$mission]">
             <xsl:text>
-        TimeSequence( "</xsl:text><xsl:value-of select="$unit"/><xsl:text>_messages", 10,
+        TimeSequence( "</xsl:text><xsl:value-of select="$unit"/><xsl:text>_messages", frequency,
             function()
                 Trace( "mission" )
                 Mission.create( unitId, model.types.missions["</xsl:text><xsl:value-of select="@name"/><xsl:text>"] )
@@ -124,7 +124,7 @@ end
                 <xsl:call-template name="common-parameters"/>
                 <xsl:for-each select="parameter[@optional='false']">
                     <xsl:call-template name="parameter">
-                      <xsl:with-param name="unit"><xsl:value-of select="$unit"/></xsl:with-param>
+                        <xsl:with-param name="unit"><xsl:value-of select="$unit"/></xsl:with-param>
                     </xsl:call-template>
                 </xsl:for-each>
                 <xsl:text>
@@ -142,15 +142,19 @@ end
     </xsl:template>
 
     <xsl:template name="parameter">
-      <xsl:param name="unit"/>
+        <xsl:param name="unit"/>
+        <xsl:param name="count"/>
+        <xsl:param name="index"/>
         <xsl:choose>
             <xsl:when test="@type = 'Path'">
                 <xsl:text>    :With( Path.create( "Route" ):AddPoint( "Destination", config.positions.destination[1] ) )</xsl:text>
             </xsl:when>
-            <xsl:when test="@type = 'Unit'">
-                <xsl:text>    :With( { name = "Unit", type="unit", value = stubs.EnemyUnit() )</xsl:text>
+            <xsl:when test="@type = 'Point'">
+                <xsl:text>    :With( Point.create( config.positions.destination[1] ) )</xsl:text>
             </xsl:when>
+
             <xsl:otherwise>
+                <xsl:text>    -- Missing argument</xsl:text>
                 <redirect:write append="true" file="{$reportFile}">
 <xsl:value-of select="$unit"/><xsl:text> : Don't know how to build "</xsl:text><xsl:value-of select="@type"/><xsl:text>" parameter.
 </xsl:text>
