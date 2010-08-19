@@ -2996,7 +2996,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Report</source>
-        <translation>Comptes-rendu</translation>
+        <translation>Compte-rendu</translation>
     </message>
     <message>
         <source>Clear</source>
