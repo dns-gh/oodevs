@@ -10,8 +10,8 @@
 #ifndef __DEC_Population_Path_Channeler_h_
 #define __DEC_Population_Path_Channeler_h_
 
+#include "simulation_terrain/TER_Localisation.h"
 
-class TER_Localisation;
 class DEC_Population_PathClass;
 
 // =============================================================================

@@ -10,18 +10,16 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "DEC_PathFind_Manager.h"
 #include "DEC_Path_ABC.h"
-
 #include "DEC_PathType.h"
 #include "DEC_PathFactory.h"
 #include "Tools/MIL_Config.h"
-
 #include "simulation_terrain/TER_PathfinderThread.h"
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_World.h"
 #include "tools/xmlcodecs.h"
+#include <MT/MT_IO/MT_FormatString.h>
 #include <xeumeuleu/xml.hpp>
 
 

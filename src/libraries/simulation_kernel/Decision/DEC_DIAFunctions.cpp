@@ -15,6 +15,7 @@
 #include "Decision/DEC_Tools.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Orders/MIL_MissionParameterFactory.h"
+#include "simulation_terrain/TER_Localisation.h"
 #include <iostream>
 
 //-----------------------------------------------------------------------------

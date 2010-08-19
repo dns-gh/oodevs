@@ -21,6 +21,11 @@ namespace Common
     class MsgObjectAttributeStock;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_DotationCategory;
 
 // =============================================================================

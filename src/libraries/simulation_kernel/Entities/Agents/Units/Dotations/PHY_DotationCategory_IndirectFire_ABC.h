@@ -10,6 +10,11 @@
 #ifndef __PHY_DotationCategory_IndirectFire_ABC_h_
 #define __PHY_DotationCategory_IndirectFire_ABC_h_
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_AgentPion;
 class MIL_Agent_ABC;
 class MIL_EntityManager_ABC;
@@ -30,26 +35,26 @@ public:
     //! @name Accessors
     //@{
     const PHY_IndirectFireDotationClass& GetIndirectFireDotationCategory() const;
-    const PHY_DotationCategory&          GetDotationCategory            () const;
+    const PHY_DotationCategory& GetDotationCategory() const;
     //@}
 
     //! @name Operations
     //@{
-            MT_Float ConvertToInterventionType( unsigned int nNbr ) const;
-            MT_Float ConvertToNbrAmmo         ( MT_Float rNbrIT ) const;
-    virtual void     ApplyEffect              ( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const = 0;
-    virtual void     ApplyEffect              ( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const;
-    virtual bool     HasHit                   ( const MIL_Agent_ABC& target, MT_Float ) const;
+    MT_Float ConvertToInterventionType( unsigned int nNbr ) const;
+    MT_Float ConvertToNbrAmmo( MT_Float rNbrIT ) const;
+    virtual void ApplyEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const = 0;
+    virtual void ApplyEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const;
+    virtual bool HasHit( const MIL_Agent_ABC& target, MT_Float ) const;
     //@}
 
 protected:
     //! @name Member data
     //@{
     const PHY_IndirectFireDotationClass& category_;
-    const PHY_DotationCategory&          dotationCategory_;
-          unsigned int                   nInterventionType_;
-          MT_Float                       rDispersionX_;
-          MT_Float                       rDispersionY_;
+    const PHY_DotationCategory& dotationCategory_;
+    unsigned int nInterventionType_;
+    MT_Float rDispersionX_;
+    MT_Float rDispersionY_;
     //@}
 };
 

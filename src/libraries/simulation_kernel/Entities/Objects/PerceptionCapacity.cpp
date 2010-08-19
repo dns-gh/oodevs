@@ -15,7 +15,6 @@
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
-
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PerceptionCapacity )
@@ -27,6 +26,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PerceptionCapacity )
 PerceptionCapacity::PerceptionCapacity( xml::xistream& xis )
 :  modifier_( xis.attribute< bool >( "blinded" ) )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

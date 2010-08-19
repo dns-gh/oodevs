@@ -16,6 +16,11 @@
 #include <pathfind/SpatialContainer.h>
 #include <boost/shared_ptr.hpp>
 
+namespace xml
+{
+    class xistream;
+}
+
 class QuantityTraits;
 class MIL_NbcAgentType;
 
@@ -99,11 +104,11 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< unsigned int, std::string >           T_Schedule;
-    typedef T_Schedule::const_iterator              CIT_Schedule;
+    typedef std::map< unsigned int, std::string > T_Schedule;
+    typedef T_Schedule::const_iterator          CIT_Schedule;
 
-    typedef std::vector< T_Quantity >               T_QuantityContainer;
-    typedef T_QuantityContainer::const_iterator     CIT_QuantityContainer;
+    typedef std::vector< T_Quantity >             T_QuantityContainer;
+    typedef T_QuantityContainer::const_iterator CIT_QuantityContainer;
     //@}
 
 private:
@@ -123,14 +128,14 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string     filename_;
-    std::string     field_;
-    std::string     dataField_;
-    bool            bExport_;
-    boost::shared_ptr< T_Schedule >     schedule_;
-    geometry::Rectangle2d               extent_;
-    boost::shared_ptr< T_Quantities >   quantities_;
-    T_QuantityContainer                 export_;
+    std::string filename_;
+    std::string field_;
+    std::string dataField_;
+    bool bExport_;
+    boost::shared_ptr< T_Schedule > schedule_;
+    geometry::Rectangle2d extent_;
+    boost::shared_ptr< T_Quantities > quantities_;
+    T_QuantityContainer export_;
     //@}
 };
 

@@ -22,10 +22,10 @@ BOOST_CLASS_EXPORT_IMPLEMENT( CrossingSiteAttribute )
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
 CrossingSiteAttribute::CrossingSiteAttribute( xml::xistream& xis )
-    : rWidth_           ( 0. )
-    , rDepth_           ( 0. )
-    , rCurrentSpeed_    ( 0. )
-    , bBanksToFitOut_   ( true )
+    : rWidth_        ( 0. )
+    , rDepth_        ( 0. )
+    , rCurrentSpeed_ ( 0. )
+    , bBanksToFitOut_( true )
 {
     xis >> xml::content( "width", rWidth_ )
         >> xml::content( "depth", rDepth_ )
@@ -47,10 +47,10 @@ CrossingSiteAttribute::CrossingSiteAttribute( xml::xistream& xis )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 CrossingSiteAttribute::CrossingSiteAttribute()
-    : rWidth_           ( 0. )
-    , rDepth_           ( 0. )
-    , rCurrentSpeed_    ( 0. )
-    , bBanksToFitOut_   ( true )
+    : rWidth_        ( 0. )
+    , rDepth_        ( 0. )
+    , rCurrentSpeed_ ( 0. )
+    , bBanksToFitOut_( true )
 {
     // NOTHING
 }
@@ -75,10 +75,6 @@ CrossingSiteAttribute::~CrossingSiteAttribute()
 {
     // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: CrossingSiteAttribute::serialize

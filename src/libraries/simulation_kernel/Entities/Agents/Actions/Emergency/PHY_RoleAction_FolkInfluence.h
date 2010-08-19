@@ -59,7 +59,7 @@ public:
     //@{
     population::Object_ABC* InfluenceActivity( const MT_Vector2D& vPos, const std::string& activity, double influence, int connectivity );
     population::Object_ABC* InfluenceActivityInArea( const MT_Vector2D& vPos, const std::string& activity, double influence, const TER_Localisation& area );
-    void                    ReleaseInfluence( population::Object_ABC& object );
+    void ReleaseInfluence( population::Object_ABC& object );
     //@}
 
 public:

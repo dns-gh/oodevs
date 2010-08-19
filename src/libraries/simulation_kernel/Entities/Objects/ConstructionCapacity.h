@@ -13,6 +13,11 @@
 class PHY_ConsumptionType;
 class ObjectPrototype;
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 /** @class  ConstructionCapacity
     @brief  ConstructionCapacity

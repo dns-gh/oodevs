@@ -20,6 +20,11 @@ namespace hla
     class Deserializer;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 class PHY_DotationCategory;
 
 // =============================================================================
@@ -109,21 +114,20 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< const PHY_DotationCategory*, std::pair< unsigned int, unsigned int > >    T_DotationProgress;
+    typedef std::map< const PHY_DotationCategory*, std::pair< unsigned int, unsigned int > > T_DotationProgress;
     //@}
 
 
 private:
     //! @name Member data
     //@{
-    T_DotationProgress  base_;
-    T_DotationProgress  improvement_;
-
+    T_DotationProgress base_;
+    T_DotationProgress improvement_;
     const PHY_DotationCategory* dotation_;
-    unsigned int        nFullNbrDotation_;
-    unsigned int        nCurrentNbrDotation_;
-    MT_Float    rConstructionPercentage_;
-    bool                bBuildByGen_;
+    unsigned int nFullNbrDotation_;
+    unsigned int nCurrentNbrDotation_;
+    MT_Float rConstructionPercentage_;
+    bool bBuildByGen_;
     //@}
 };
 

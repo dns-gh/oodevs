@@ -12,6 +12,11 @@
 
 #include "PropagationCapacity_ABC.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_PropagationManager;
 class FireAttribute;
 
@@ -67,9 +72,9 @@ private:
     //@{
     MIL_PropagationManager* pManager_;
     //Time of creation, and time of death of the fire
-    bool           needUpdate_;
-    unsigned int   timeOfCreation_;
-    unsigned int   timeOfDeath_;
+    bool needUpdate_;
+    unsigned int timeOfCreation_;
+    unsigned int timeOfDeath_;
     //@}
 };
 

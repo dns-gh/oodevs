@@ -26,11 +26,11 @@ using namespace hla;
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
 SupplyRouteAttribute::SupplyRouteAttribute( xml::xistream& xis )
-    : bEquipped_        ( false )
-    , rWeightSupported_ ( 0. )
-    , rWidth_           ( 0. )
-    , rLength_          ( 0. )
-    , rFlow_            ( 0. )
+    : bEquipped_       ( false )
+    , rWeightSupported_( 0. )
+    , rWidth_          ( 0. )
+    , rLength_         ( 0. )
+    , rFlow_           ( 0. )
 {
     xis >> xml::content( "max-weight", rWeightSupported_ )
         >> xml::content( "width", rWidth_ )
@@ -53,11 +53,11 @@ SupplyRouteAttribute::SupplyRouteAttribute( xml::xistream& xis )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 SupplyRouteAttribute::SupplyRouteAttribute()
-    : bEquipped_        ( false )
-    , rWeightSupported_ ( 0. )
-    , rWidth_           ( 0. )
-    , rLength_          ( 0. )
-    , rFlow_            ( 0. )
+    : bEquipped_       ( false )
+    , rWeightSupported_( 0. )
+    , rWidth_          ( 0. )
+    , rLength_         ( 0. )
+    , rFlow_           ( 0. )
 {
     // NOTHING
 }
@@ -67,11 +67,11 @@ SupplyRouteAttribute::SupplyRouteAttribute()
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
 SupplyRouteAttribute::SupplyRouteAttribute( const Common::MsgMissionParameter_Value& attributes )
-    : bEquipped_        ( attributes.list( 1 ).abool() )
-    , rWeightSupported_ ( attributes.list( 2 ).quantity() )
-    , rWidth_           ( attributes.list( 3 ).quantity() )
-    , rLength_          ( attributes.list( 4 ).quantity() )
-    , rFlow_            ( attributes.list( 5 ).quantity() )
+    : bEquipped_       ( attributes.list( 1 ).abool() )
+    , rWeightSupported_( attributes.list( 2 ).quantity() )
+    , rWidth_          ( attributes.list( 3 ).quantity() )
+    , rLength_         ( attributes.list( 4 ).quantity() )
+    , rFlow_           ( attributes.list( 5 ).quantity() )
 {
     // NOTHING
 }

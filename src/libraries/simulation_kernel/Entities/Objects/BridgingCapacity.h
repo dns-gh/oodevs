@@ -13,6 +13,11 @@
 #include "ObjectCapacity_ABC.h"
 #include "MIL_DynamicPathDataHandler.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_Object_ABC;
 class TER_DynamicData;
 

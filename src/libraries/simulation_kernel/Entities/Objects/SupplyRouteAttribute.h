@@ -14,6 +14,11 @@
 #include "UpdatableAttribute_ABC.h"
 #include <boost/serialization/export.hpp>
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 /** @class  SupplyRouteAttribute
     @brief  SupplyRouteAttribute
@@ -58,12 +63,12 @@ public:
 
     //! @name Accessors
     //@{
-    void        Equip();
-    bool        IsEquipped() const;
-    MT_Float    GetMaxWeight() const;
-    MT_Float    GetWidth() const;
-    MT_Float    GetLength() const;
-    MT_Float    GetFlow() const;
+    void Equip();
+    bool IsEquipped() const;
+    MT_Float GetMaxWeight() const;
+    MT_Float GetWidth() const;
+    MT_Float GetLength() const;
+    MT_Float GetFlow() const;
     //@}
 
     //! @name Copy
@@ -80,11 +85,11 @@ private:
 private:
     //! @name
     //@{
-    bool       bEquipped_;
-    MT_Float   rWeightSupported_;
-    MT_Float   rWidth_;
-    MT_Float   rLength_;
-    MT_Float   rFlow_;
+    bool bEquipped_;
+    MT_Float rWeightSupported_;
+    MT_Float rWidth_;
+    MT_Float rLength_;
+    MT_Float rFlow_;
     //@}
 };
 

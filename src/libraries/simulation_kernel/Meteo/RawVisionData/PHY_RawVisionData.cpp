@@ -14,6 +14,7 @@
 #include "PHY_AmmoEffect.h"
 #include "MIL_AgentServer.h"
 #include <xeumeuleu/xml.hpp>
+#include <MT/MT_IO/MT_FormatString.h>
 #include "tools/InputBinaryStream.h"
 
 PHY_RawVisionData::sCell PHY_RawVisionData::emptyCell_;

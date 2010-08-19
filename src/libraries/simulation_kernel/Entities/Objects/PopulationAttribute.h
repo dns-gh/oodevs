@@ -12,6 +12,11 @@
 
 #include "ObjectAttribute_ABC.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_AutomateLOG;
 
 // =============================================================================

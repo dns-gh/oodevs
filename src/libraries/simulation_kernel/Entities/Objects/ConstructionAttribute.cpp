@@ -26,11 +26,11 @@ BOOST_CLASS_EXPORT_IMPLEMENT( ConstructionAttribute )
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 ConstructionAttribute::ConstructionAttribute()
-    : nFullNbrDotation_( 0 )
-    , nCurrentNbrDotation_( 0 )
+    : nFullNbrDotation_       ( 0 )
+    , nCurrentNbrDotation_    ( 0 )
     , rConstructionPercentage_( 1. )
-    , dotation_( 0 )
-    , bBuildByGen_( false )
+    , dotation_               ( 0 )
+    , bBuildByGen_           ( false )
 {
     // NOTHING
 }
@@ -40,11 +40,11 @@ ConstructionAttribute::ConstructionAttribute()
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
 ConstructionAttribute::ConstructionAttribute( const PHY_DotationCategory& dotation, unsigned int nFullNbrDotation )
-    : nFullNbrDotation_( nFullNbrDotation )
-    , nCurrentNbrDotation_( nFullNbrDotation )
+    : nFullNbrDotation_       ( nFullNbrDotation )
+    , nCurrentNbrDotation_    ( nFullNbrDotation )
     , rConstructionPercentage_( 1.0 )
-    , dotation_( &dotation )
-    , bBuildByGen_( false )
+    , dotation_               ( &dotation )
+    , bBuildByGen_            ( false )
 {
     // NOTHING
 }
@@ -54,11 +54,11 @@ ConstructionAttribute::ConstructionAttribute( const PHY_DotationCategory& dotati
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 ConstructionAttribute::ConstructionAttribute( const PHY_DotationCategory& dotation, const Common::MsgObjectAttributes& asn )
-    : nFullNbrDotation_ ( asn.construction().dotation_nbr() )
-    , nCurrentNbrDotation_ ( asn.construction().dotation_nbr() )
-    , rConstructionPercentage_ ( 1. )
-    , dotation_  ( &dotation )
-    , bBuildByGen_( false )
+    : nFullNbrDotation_       ( asn.construction().dotation_nbr() )
+    , nCurrentNbrDotation_    ( asn.construction().dotation_nbr() )
+    , rConstructionPercentage_( 1. )
+    , dotation_               ( &dotation )
+    , bBuildByGen_            ( false )
 {
     // NOTHING
 }

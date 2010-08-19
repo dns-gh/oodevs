@@ -80,22 +80,22 @@ public:
 
     //! @name Accessors
     //@{
-    virtual DEC_KnowledgeBlackBoard_AgentPion& GetKnowledge   () const;
-    const   MIL_PionOrderManager&              GetOrderManager() const;
-            MIL_PionOrderManager&              GetOrderManager();
-    virtual DEC_Decision_ABC&                  GetDecision    (); //$$$ Dérolifier DEC_Decision_ABC
-    virtual const DEC_Decision_ABC&            GetDecision    () const; //$$$ Dérolifier DEC_Decision_ABC
+    virtual DEC_KnowledgeBlackBoard_AgentPion& GetKnowledge() const;
+    const MIL_PionOrderManager& GetOrderManager() const;
+    MIL_PionOrderManager& GetOrderManager();
+    virtual DEC_Decision_ABC& GetDecision(); //$$$ Dérolifier DEC_Decision_ABC
+    virtual const DEC_Decision_ABC& GetDecision() const; //$$$ Dérolifier DEC_Decision_ABC
     virtual const AlgorithmsFactories& GetAlgorithms() const;
 
-    virtual       MIL_Army_ABC&       GetArmy            () const;
-    virtual       MIL_KnowledgeGroup& GetKnowledgeGroup  () const;
-                  int                 GetNumberOfFireHoses( int bestExtinguisherAgent );
-    virtual const MIL_Automate&       GetAutomate        () const;
-    virtual       MIL_Automate&       GetAutomate        ();
-    virtual const MIL_AgentType_ABC&  GetType            () const;
-    virtual bool                      IsDead             () const;
-    virtual bool                      IsNeutralized      () const;
-    virtual bool                      IsPC               () const;
+    virtual MIL_Army_ABC& GetArmy() const;
+    virtual MIL_KnowledgeGroup& GetKnowledgeGroup() const;
+    int GetNumberOfFireHoses( int bestExtinguisherAgent );
+    virtual const MIL_Automate& GetAutomate() const;
+    virtual MIL_Automate& GetAutomate();
+    virtual const MIL_AgentType_ABC&  GetType() const;
+    virtual bool IsDead() const;
+    virtual bool IsNeutralized() const;
+    virtual bool IsPC() const;
 
     virtual bool BelongsTo( const MIL_KnowledgeGroup& group ) const;
     virtual double Distance( const MIL_Agent_ABC& pion ) const;
@@ -106,18 +106,18 @@ public:
     //! @name Operations
     //@{
     void PreprocessRandomBreakdowns( unsigned int nEndDayTimeStep ) const;
-    void UpdateKnowledges          ( int currentTimeStep );
-    void CleanKnowledges           ();
-    void UpdateDecision            ( float duration );
-    void UpdateState               ();
-    void UpdateNetwork             ();
-    void Clean                     ();
+    void UpdateKnowledges( int currentTimeStep );
+    void CleanKnowledges();
+    void UpdateDecision( float duration );
+    void UpdateState();
+    void UpdateNetwork();
+    void Clean();
     //@}
 
     //! @name Knowledge
     //@{
     virtual boost::shared_ptr< DEC_Knowledge_Agent > CreateKnowledge( const MIL_KnowledgeGroup& knowledgeGroup );
-    virtual bool                                     IsPerceived    ( const MIL_Agent_ABC& agent ) const; //$$$$ DEGUEU - VOIR AVEC MODELISATEURS
+    virtual bool IsPerceived( const MIL_Agent_ABC& agent ) const; //$$$$ DEGUEU - VOIR AVEC MODELISATEURS
     //@}
 
     //! @name Operation on Knowledge
@@ -127,16 +127,16 @@ public:
 
     //! @name Network
     //@{
-    void SendCreation () const;
+    void SendCreation() const;
     void SendFullState() const;
     void SendKnowledge() const;
 
-    void OnReceiveMsgUnitMagicAction  ( const MsgsClientToSim::MsgUnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies );
+    void OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgUnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies );
     void OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgUnitMagicAction& asn );
-    void OnReceiveMsgOrder            ( const Common::MsgUnitOrder& msg );
-    void OnReceiveMsgFragOrder        ( const MsgsClientToSim::MsgFragOrder& msg );
-    void OnReceiveMsgChangeSuperior   ( const MIL_EntityManager& manager, const MsgsClientToSim::MsgUnitMagicAction& msg );
-    void OnReceiveMagicSurrender      ();
+    void OnReceiveMsgOrder( const Common::MsgUnitOrder& msg );
+    void OnReceiveMsgFragOrder( const MsgsClientToSim::MsgFragOrder& msg );
+    void OnReceiveMsgChangeSuperior( const MIL_EntityManager& manager, const MsgsClientToSim::MsgUnitMagicAction& msg );
+    void OnReceiveMagicSurrender();
     void OnReceiveMagicCancelSurrender();
     void OnReceiveMsgMagicActionMoveTo( const MT_Vector2D& vPosition ); // Magic move automate
     //@}
@@ -148,12 +148,12 @@ public:
 
     //! @name Misc operations
     //@{
-    virtual void MagicMove       ( const MT_Vector2D& vNewPos );
-            void NotifyAttacking ( MIL_Agent_ABC& target ) const;
-            void NotifyAttacking ( MIL_Population& target ) const;
+    virtual void MagicMove( const MT_Vector2D& vNewPos );
+    void NotifyAttacking( MIL_Agent_ABC& target ) const;
+    void NotifyAttacking( MIL_Population& target ) const;
     virtual void NotifyAttackedBy( MIL_AgentPion& pion );
     virtual void NotifyAttackedBy( MIL_Population& population );
-            void ChangeSuperior  ( MIL_Automate& newAutomate );
+    void ChangeSuperior( MIL_Automate& newAutomate );
     //@}
 
 private:
@@ -164,21 +164,21 @@ private:
 
     //! @name Magic actions
     //@{
-    void OnReceiveMsgChangeHumanFactors       ( const Common::MsgMissionParameters& msg );
-    void OnReceiveMsgResupplyHumans           ();
-    void OnReceiveMsgResupplyResources        ();
-    void OnReceiveMsgResupplyEquipement       ();
-    void OnReceiveMsgResupplyAll              ();
-    void OnReceiveMsgResupply                 ( const Common::MsgMissionParameters& msg );
-    void OnReceiveMsgDestroyAll               ();
-    void OnReceiveMsgDestroyComponent         ();
+    void OnReceiveMsgChangeHumanFactors( const Common::MsgMissionParameters& msg );
+    void OnReceiveMsgResupplyHumans();
+    void OnReceiveMsgResupplyResources();
+    void OnReceiveMsgResupplyEquipement();
+    void OnReceiveMsgResupplyAll();
+    void OnReceiveMsgResupply( const Common::MsgMissionParameters& msg );
+    void OnReceiveMsgDestroyAll();
+    void OnReceiveMsgDestroyComponent();
     void OnReceiveMsgRecoverHumansTransporters();
     //@}
 
     //! @name Serialization
     //@{
     template< typename Archive > friend void save_construct_data( Archive& archive, const MIL_AgentPion* pion, const unsigned int version );
-      template< typename Archive > friend void load_construct_data( Archive& archive, MIL_AgentPion* pion, const unsigned int version );
+    template< typename Archive > friend void load_construct_data( Archive& archive, MIL_AgentPion* pion, const unsigned int version );
     //@}
 
 private:
@@ -190,6 +190,7 @@ private:
     const AlgorithmsFactories& algorithmFactories_;
     DEC_KnowledgeBlackBoard_AgentPion* pKnowledgeBlackBoard_;
     MIL_PionOrderManager& orderManager_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( MIL_AgentPion )

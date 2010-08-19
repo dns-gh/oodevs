@@ -13,6 +13,11 @@
 #include "ObjectCapacity_ABC.h"
 #include "MIL_InteractiveContainer_ABC.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 /** @class  ProtectionCapacity
     @brief  ProtectionCapacity
@@ -48,9 +53,9 @@ private:
 
     //! @name Types
     //@{
-    typedef std::set< const MIL_Agent_ABC* >    T_AgentContainer;
-    typedef T_AgentContainer::iterator          IT_AgentContainer;
-    typedef T_AgentContainer::const_iterator    CIT_AgentContainer;
+    typedef std::set< const MIL_Agent_ABC* >   T_AgentContainer;
+    typedef T_AgentContainer::iterator        IT_AgentContainer;
+    typedef T_AgentContainer::const_iterator CIT_AgentContainer;
     //@}
 
 private:

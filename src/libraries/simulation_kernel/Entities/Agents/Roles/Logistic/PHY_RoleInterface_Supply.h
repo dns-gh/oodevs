@@ -14,6 +14,12 @@
 
 #include "MT_Tools/Role_ABC.h"
 
+namespace xml
+{
+    class xostream;
+    class xistream;
+}
+
 class PHY_DotationStock;
 class MIL_Automate;
 class PHY_DotationCategory;

@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AgentPion.h"
-
 #include "Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Roles/Humans/PHY_RolePion_Humans.h"
 #include "Roles/Dotations/PHY_RolePion_Dotations.h"
@@ -35,7 +33,6 @@
 #include "Roles/Illumination/PHY_RolePion_Illumination.h" // LTO
 #include "Roles/Terrain/PHY_RolePion_TerrainAnalysis.h"
 #include "Roles/Urban/PHY_RolePion_UrbanLocation.h"
-
 #include "Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Actions/Objects/PHY_RoleAction_Objects.h"
 #include "Actions/Moving/PHY_RoleAction_Moving.h"
@@ -44,7 +41,6 @@
 #include "Actions/Firing/IndirectFiring/PHY_RoleAction_IndirectFiring.h"
 #include "Actions/Transport/PHY_RoleAction_Transport.h"
 #include "Actions/Emergency/PHY_RoleAction_FolkInfluence.h"
-
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
@@ -72,6 +68,7 @@
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include <xeumeuleu/xml.hpp>
+#include <MT/MT_IO/MT_FormatString.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPion )
 
@@ -122,10 +119,6 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFac
 {
     // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 namespace
 {
@@ -287,6 +280,7 @@ void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
 
     xos << xml::end;// unit
 }
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::ReadOverloading
 // Created: NLD 2005-01-26
@@ -310,14 +304,9 @@ void MIL_AgentPion::ReadOverloading( xml::xistream& xis )
 MIL_AgentPion::~MIL_AgentPion()
 {
     pAutomate_->UnregisterPion( *this );
-
     delete &orderManager_;
     delete pKnowledgeBlackBoard_;
 }
-
-// =============================================================================
-// TOOLS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::IsDead
@@ -336,10 +325,6 @@ bool MIL_AgentPion::IsNeutralized() const
 {
     return GetRole< PHY_RolePion_Composantes >().IsNeutralized();
 }
-
-// =============================================================================
-// UPDATES
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::UpdateKnowledges
@@ -490,10 +475,6 @@ void MIL_AgentPion::Clean()
         role3->Clean();
 }
 
-// =============================================================================
-// ACCESSORS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::IsAutonomous
 // Created: NLD 2005-08-08
@@ -552,10 +533,6 @@ MIL_KnowledgeGroup& MIL_AgentPion::GetKnowledgeGroup() const
     }
 }
 
-// =============================================================================
-// KNOWLEDGE
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::BelongsTo
 // Created: AGE 2004-11-23
@@ -574,10 +551,6 @@ boost::shared_ptr< DEC_Knowledge_Agent > MIL_AgentPion::CreateKnowledge( const M
     boost::shared_ptr< DEC_Knowledge_Agent > result( new DEC_Knowledge_Agent( knowledgeGroup, *this ) );
     return result;
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::SendCreation
@@ -771,12 +744,12 @@ void MIL_AgentPion::OnReceiveMsgResupplyEquipement()
 void MIL_AgentPion::OnReceiveMsgResupplyAll()
 {
     GetRole< PHY_RolePion_Composantes >().RepairAllComposantes();
-    GetRole< dotation::PHY_RolePion_Dotations   >().ResupplyDotations   ();
+    GetRole< dotation::PHY_RolePion_Dotations >().ResupplyDotations();
     PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
         role->ResupplyStocks();
-    GetRole< human::PHY_RolePion_Humans      >().HealAllHumans       ();
-    GetRole< nbc::PHY_RolePion_NBC    >().Decontaminate       ();
+    GetRole< human::PHY_RolePion_Humans >().HealAllHumans();
+    GetRole< nbc::PHY_RolePion_NBC >().Decontaminate();
 }
 
 // -----------------------------------------------------------------------------
@@ -1187,7 +1160,7 @@ double MIL_AgentPion::GetDangerosity( boost::shared_ptr< DEC_Knowledge_Agent > p
     // Fight score
     const MT_Vector3D sourcePosition( position->rX_, position->rY_, 0.);
     const MT_Vector3D targetPosition  ( pTargetKnowledge->GetPosition().rX_, pTargetKnowledge->GetPosition().rY_, pTargetKnowledge->GetAltitude() );
-    const MT_Float    rDistBtwSourceAndTarget = sourcePosition.Distance( targetPosition );
+    const MT_Float rDistBtwSourceAndTarget = sourcePosition.Distance( targetPosition );
 
     rDangerosity = GetRole< PHY_RoleInterface_Composantes >().GetDangerosity( *pTargetMajorComposante, rDistBtwSourceAndTarget );
 

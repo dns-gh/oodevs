@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "UrbanModel.h"
 #include "Tools/MIL_Config.h"
+#include <MT/MT_IO/MT_FormatString.h>
 #include <Urban/Model.h>
 #include <Urban/ObjectVisitor_ABC.h>
 #include <Urban/TerrainObject_ABC.h>

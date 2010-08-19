@@ -24,6 +24,11 @@ namespace hla
     class Deserializer;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 class HLA_UpdateFunctor;
 
 // =============================================================================
@@ -92,10 +97,10 @@ public:
 
     //! @name Accessors
     //@{
-    const T_NBCAgents&  GetNBCAgents() const;
-    unsigned int        GetDangerLevel() const;
-    bool                IsContaminating() const;
-    bool                IsPoisonous() const;
+    const T_NBCAgents& GetNBCAgents() const;
+    unsigned int GetDangerLevel() const;
+    bool IsContaminating() const;
+    bool IsPoisonous() const;
     //@}
 
     //! @name Copy
@@ -115,9 +120,9 @@ private:
 private:
     //! @name Member data
     //@{
-    T_NBCAgents     agents_;
-    E_Form          nForm_;
-    unsigned int    danger_;
+    T_NBCAgents agents_;
+    E_Form nForm_;
+    unsigned int danger_;
     //@}
 };
 

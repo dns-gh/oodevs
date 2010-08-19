@@ -12,6 +12,11 @@
 
 #include "ObjectCapacity_ABC.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 namespace MsgsSimToClient
 {
     class MsgUrbanAttributes;

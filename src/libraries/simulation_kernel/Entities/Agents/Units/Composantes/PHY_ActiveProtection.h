@@ -12,6 +12,11 @@
 
 #include <boost/shared_ptr.hpp>
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_Agent_ABC;
 class PHY_DotationCategory;
 
@@ -61,20 +66,20 @@ private:
     //@{
     typedef std::map< std::string, boost::shared_ptr< PHY_ActiveProtection > > T_ProtectionList;
     typedef T_ProtectionList::const_iterator                                 CIT_ProtectionList;
+
     typedef std::map< const PHY_DotationCategory*, double > T_CoefficientMap;
-    typedef T_CoefficientMap::const_iterator        CIT_CoefficientMap;
+    typedef T_CoefficientMap::const_iterator              CIT_CoefficientMap;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::string           name_;
-    double                coefficient_;
-    double                usage_;
-    bool                  hardKill_;
+    std::string name_;
+    double coefficient_;
+    double usage_;
+    bool hardKill_;
     const PHY_DotationCategory* pDotation_;
     T_CoefficientMap weapons_;
-
     static T_ProtectionList protections_;
     //@}
 };

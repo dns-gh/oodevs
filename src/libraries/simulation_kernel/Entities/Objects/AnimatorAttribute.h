@@ -13,6 +13,11 @@
 #include "ObjectAttribute_ABC.h"
 #include <boost/serialization/export.hpp>
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_Agent_ABC;
 
 // =============================================================================

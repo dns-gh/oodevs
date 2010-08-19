@@ -14,6 +14,7 @@
 
 namespace xml
 {
+    class xistream;
 }
 
 // =============================================================================
@@ -45,12 +46,16 @@ public:
 private:
     //! @name Types
     typedef std::map< std::string, const PHY_DotationNature*, sCaseInsensitiveLess > T_DotationNatureMap;
-    typedef T_DotationNatureMap::const_iterator                                      CIT_DotationNatureMap;
+    typedef T_DotationNatureMap::const_iterator                                    CIT_DotationNatureMap;
     //@}
 
 private:
+    //! @name Constructors/Destructor
+    //@{
      PHY_DotationNature( const std::string& strName );
     ~PHY_DotationNature();
+    //@}
+
     //! @name Helpers
     //@{
     struct LoadingWrapper;
@@ -58,12 +63,13 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const std::string strName_;
-    const unsigned int        nID_;
-
-private:
+    const unsigned int nID_;
     static T_DotationNatureMap natures_;
-    static unsigned int                nNextID_;
+    static unsigned int nNextID_;
+    //@}
 };
 
 #endif // __PHY_DotationNature_h_

@@ -17,7 +17,7 @@
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 PopulationAttribute::PopulationAttribute()
-    : density_ ( 0 )
+    : density_( 0 )
 {
     // NOTHING
 }

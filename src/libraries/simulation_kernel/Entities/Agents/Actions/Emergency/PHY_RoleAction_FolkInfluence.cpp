@@ -9,9 +9,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_FolkInfluence.h"
-
 #include "MIL_AgentServer.h"
 #include "MIL_Folk.h"
+#include "simulation_terrain/TER_Localisation.h"
 #include <folk/ObjectManager_ABC.h>
 #include <folk/Object_ABC.h>
 

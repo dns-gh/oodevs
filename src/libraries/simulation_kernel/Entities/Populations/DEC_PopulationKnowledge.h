@@ -13,6 +13,7 @@
 #define __DEC_PopulationKnowledge_h_
 
 #include "MIL.h"
+#include "simulation_terrain/TER_Localisation.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
 #include "Knowledge/DEC_KnowledgeResolver_ABC.h"
 

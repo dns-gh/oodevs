@@ -19,6 +19,11 @@ namespace Common
     class MsgObjectAttributes;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 /** @class  CrossingSiteAttribute
     @brief  CrossingSiteAttribute
@@ -69,7 +74,7 @@ public:
     MT_Float GetWidth() const;
     MT_Float GetDepth() const;
     MT_Float GetSpeed() const;
-    bool     IsBanksToFitOut() const;
+    bool IsBanksToFitOut() const;
     //@}
 
     //! @name Copy
@@ -89,7 +94,7 @@ private:
     MT_Float rWidth_;
     MT_Float rDepth_;
     MT_Float rCurrentSpeed_;  // Vitesse du courant
-    bool     bBanksToFitOut_; // Berges a amenager
+    bool bBanksToFitOut_; // Berges a amenager
     //@}
 };
 

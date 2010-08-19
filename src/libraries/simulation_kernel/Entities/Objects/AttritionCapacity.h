@@ -15,6 +15,11 @@
 #include "MIL_InteractiveContainer_ABC.h"
 #include <boost/serialization/export.hpp>
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_Object_ABC;
 class PHY_DotationCategory;
 class PHY_Protection;

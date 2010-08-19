@@ -18,7 +18,6 @@
 #include "Tools/MIL_Tools.h"
 #include "MIL_ObjectBuilder_ABC.h"
 #include "BurnCapacity.h"
-
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( FirePropagationCapacity )
@@ -28,10 +27,10 @@ BOOST_CLASS_EXPORT_IMPLEMENT( FirePropagationCapacity )
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
 FirePropagationCapacity::FirePropagationCapacity( xml::xistream& /*xis*/, MIL_PropagationManager& manager )
-    : pManager_ ( &manager )
-    , timeOfCreation_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
-    , timeOfDeath_ ( 0 )
-    , needUpdate_ ( true )
+    : pManager_      ( &manager )
+    , timeOfCreation_( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+    , timeOfDeath_   ( 0 )
+    , needUpdate_    ( true )
 {
     // NOTHING
 }
@@ -41,10 +40,10 @@ FirePropagationCapacity::FirePropagationCapacity( xml::xistream& /*xis*/, MIL_Pr
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
 FirePropagationCapacity::FirePropagationCapacity()
-    : pManager_ ( MIL_ObjectLoader::GetLoader().GetCapacityFactory().GetPropagationManager() )
-    , timeOfCreation_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
-    , timeOfDeath_ ( 0 )
-    , needUpdate_ ( true )
+    : pManager_      ( MIL_ObjectLoader::GetLoader().GetCapacityFactory().GetPropagationManager() )
+    , timeOfCreation_( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+    , timeOfDeath_   ( 0 )
+    , needUpdate_    ( true )
 {
     // NOTHING
 }
@@ -54,10 +53,10 @@ FirePropagationCapacity::FirePropagationCapacity()
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
 FirePropagationCapacity::FirePropagationCapacity( const FirePropagationCapacity& from )
-    : pManager_ ( from.pManager_ )
-    , timeOfCreation_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
-    , timeOfDeath_ ( 0 )
-    , needUpdate_ ( true )
+    : pManager_      ( from.pManager_ )
+    , timeOfCreation_( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+    , timeOfDeath_   ( 0 )
+    , needUpdate_    ( true )
 {
     // NOTHING
 }
@@ -216,8 +215,8 @@ namespace
         }
 
     private:
-        const MIL_Object_ABC&           object_;
-        const TER_Localisation&    location_;
+        const MIL_Object_ABC& object_;
+        const TER_Localisation& location_;
     };
 }
 

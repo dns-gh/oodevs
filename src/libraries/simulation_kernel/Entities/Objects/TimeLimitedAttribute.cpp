@@ -24,7 +24,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( TimeLimitedAttribute )
 // -----------------------------------------------------------------------------
 TimeLimitedAttribute::TimeLimitedAttribute( xml::xistream& xis )
     : nActivityTime_ ( 0 )
-    , nDeathTimeStep_ ( 0 )
+    , nDeathTimeStep_( 0 )
 {
     xis >> xml::attribute( "value", nActivityTime_ ) // s
         >> xml::optional >> xml::attribute( "initial", nDeathTimeStep_ );
@@ -38,7 +38,7 @@ TimeLimitedAttribute::TimeLimitedAttribute( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 TimeLimitedAttribute::TimeLimitedAttribute( unsigned int nActivityTime )
     : nActivityTime_ ( nActivityTime )
-    , nDeathTimeStep_ ( 0 )
+    , nDeathTimeStep_( 0 )
 {
     // NOTHING
 }
@@ -49,7 +49,7 @@ TimeLimitedAttribute::TimeLimitedAttribute( unsigned int nActivityTime )
 // -----------------------------------------------------------------------------
 TimeLimitedAttribute::TimeLimitedAttribute()
     : nActivityTime_ ( 0 )
-    , nDeathTimeStep_ ( 0 )
+    , nDeathTimeStep_( 0 )
 {
     // NOTHING
 }
@@ -60,7 +60,7 @@ TimeLimitedAttribute::TimeLimitedAttribute()
 // -----------------------------------------------------------------------------
 TimeLimitedAttribute::TimeLimitedAttribute( const Common::MsgMissionParameter_Value& attributes )
     : nActivityTime_ ( attributes.list( 1 ).quantity() )
-    , nDeathTimeStep_ ( 0 )
+    , nDeathTimeStep_( 0 )
 {
     // NOTHING
 }

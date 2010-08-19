@@ -14,6 +14,11 @@
 #include "UpdatableAttribute_ABC.h"
 #include <boost/serialization/export.hpp>
 
+namespace xml
+{
+    class xistream;
+}
+
 namespace Common
 {
     enum ObstacleType_DemolitionTargetType;

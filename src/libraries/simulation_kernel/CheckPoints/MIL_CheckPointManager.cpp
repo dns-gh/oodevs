@@ -15,6 +15,7 @@
 #include "protocol/ClientSenders.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_IDManager.h"
+#include <MT/MT_IO/MT_FormatString.h>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/convenience.hpp>
 #include <direct.h>

@@ -12,16 +12,13 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Automates/MIL_Automate.h"
-
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
-
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_Tools.h"
-
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/Decision/DEC_DataBase.h"
-
+#include <MT/MT_IO/MT_FormatString.h>
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( AgentFactory )

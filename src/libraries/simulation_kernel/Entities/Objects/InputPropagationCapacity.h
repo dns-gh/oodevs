@@ -12,6 +12,11 @@
 
 #include "PropagationCapacity_ABC.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 /** @class  InputPropagationCapacity
     @brief  InputPropagationCapacity

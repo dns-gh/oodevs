@@ -26,6 +26,7 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "simulation_terrain/TER_Localisation.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Effect_IndirectFire constructor

@@ -13,8 +13,12 @@
 #include "ObjectCapacity_ABC.h"
 #include "MIL_InteractiveContainer_ABC.h"
 
-class MIL_PopulationAttitude;
+namespace xml
+{
+    class xistream;
+}
 
+class MIL_PopulationAttitude;
 
 // =============================================================================
 /** @class  AttitudeModifierCapacity

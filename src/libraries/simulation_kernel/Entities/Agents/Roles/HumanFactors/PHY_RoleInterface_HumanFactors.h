@@ -14,6 +14,11 @@
 
 #include "MT_Tools/Role_ABC.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 namespace client
 {
     class UnitAttributes;

@@ -15,6 +15,11 @@
 #include "UpdatableAttribute_ABC.h"
 #include <boost/serialization/export.hpp>
 
+namespace xml
+{
+    class xistream;
+}
+
 namespace hla
 {
     class Deserializer;
@@ -71,11 +76,11 @@ public:
 
     //! @name Accessors
     //@{
-    unsigned int        GetDotationNeededForConstruction( MT_Float rDeltaPercentage ) const;
-    unsigned int        GetDotationRecoveredWhenDestroying( MT_Float rDeltaPercentage ) const;
-    MT_Float            GetState() const;
-    unsigned int        GetCurrentDotations() const;
-    unsigned int        GetDotationType() const;
+    unsigned int GetDotationNeededForConstruction( MT_Float rDeltaPercentage ) const;
+    unsigned int GetDotationRecoveredWhenDestroying( MT_Float rDeltaPercentage ) const;
+    MT_Float GetState() const;
+    unsigned int GetCurrentDotations() const;
+    unsigned int GetDotationType() const;
     //@}
 
     //! @name Copy
@@ -93,11 +98,11 @@ private:
     //! @name Member data
     //@{
     const PHY_DotationCategory* dotation_;
-    unsigned int     nFullNbrDotation_;
-    unsigned int     nCurrentNbrDotation_;
+    unsigned int nFullNbrDotation_;
+    unsigned int nCurrentNbrDotation_;
     MT_Float rMiningPercentage_;
-    unsigned int     nMinesActivityTime_;
-    unsigned int     nDeathTimeStep_;
+    unsigned int nMinesActivityTime_;
+    unsigned int nDeathTimeStep_;
     //@}
 };
 

@@ -16,6 +16,11 @@
 class MIL_NBCType;
 class MIL_Agent_ABC;
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 /** @class  PoisoningCapacity
     @brief  Poisoning capacity

@@ -14,7 +14,7 @@
 #include <xeumeuleu/xml.hpp>
 
 PHY_DotationNature::T_DotationNatureMap PHY_DotationNature::natures_;
-unsigned int                                    PHY_DotationNature::nNextID_ = 0;
+unsigned int PHY_DotationNature::nNextID_ = 0;
 
 struct PHY_DotationNature::LoadingWrapper
 {

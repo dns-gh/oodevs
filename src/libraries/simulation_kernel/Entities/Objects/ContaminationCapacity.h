@@ -14,6 +14,11 @@
 #include "MIL_InteractiveContainer_ABC.h"
 #include <boost/ptr_container/ptr_vector.hpp>
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_NbcAgentType;
 class MIL_Agent_ABC;
 
@@ -60,8 +65,8 @@ private:
 
     //! @name Types
     //@{
-    typedef boost::ptr_vector< TER_Localisation >   T_LocalisationVector;
-    typedef T_LocalisationVector::const_iterator    CIT_LocalisationVector;
+    typedef boost::ptr_vector< TER_Localisation >  T_LocalisationVector;
+    typedef T_LocalisationVector::const_iterator CIT_LocalisationVector;
     //@}
 
 private:

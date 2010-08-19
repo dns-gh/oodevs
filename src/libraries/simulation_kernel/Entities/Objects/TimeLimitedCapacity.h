@@ -13,6 +13,11 @@
 #include "ObjectCapacity_ABC.h"
 #include "MIL_InteractiveContainer_ABC.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class Object;
 
 // =============================================================================

@@ -13,6 +13,11 @@
 #include "ObjectAttribute_ABC.h"
 #include <boost/serialization/export.hpp>
 
+namespace xml
+{
+    class xistream;
+}
+
 class MIL_Agent_ABC;
 
 // =============================================================================
@@ -60,8 +65,8 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::set< MIL_Agent_ABC* >  T_AgentSet;
-    typedef T_AgentSet::const_iterator  CIT_AgentSet;
+    typedef std::set< MIL_Agent_ABC* >   T_AgentSet;
+    typedef T_AgentSet::const_iterator CIT_AgentSet;
     //@}
 
 private:

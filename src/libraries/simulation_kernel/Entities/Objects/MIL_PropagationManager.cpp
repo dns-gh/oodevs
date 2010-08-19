@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_PropagationManager.h"
 #include "Tools/MIL_Tools.h"
+#include "simulation_terrain/TER_Localisation.h"
 #include <xeumeuleu/xml.hpp>
 
 // BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PropagationManager )
