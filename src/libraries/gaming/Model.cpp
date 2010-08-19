@@ -9,44 +9,46 @@
 
 #include "gaming_pch.h"
 #include "Model.h"
-#include "AgentsModel.h"
-#include "ObjectsModel.h"
-#include "TeamsModel.h"
-#include "LogisticsModel.h"
-#include "LimitsModel.h"
+#include "ActionPublisher.h"
+#include "AfterActionModel.h"
 #include "AgentFactory.h"
-#include "KnowledgeGroupFactory.h"
-#include "ObjectFactory.h"
-#include "AgentKnowledgeFactory.h"
-#include "ObjectKnowledgeFactory.h"
-#include "UrbanKnowledgeFactory.h"
 #include "AgentKnowledgeConverter.h"
-#include "ObjectKnowledgeConverter.h"
-#include "TeamFactory.h"
-#include "KnowledgeGroupsModel.h"
-#include "LogisticConsignFactory.h"
+#include "AgentKnowledgeFactory.h"
+#include "AgentsModel.h"
+#include "DrawingFactory.h"
+#include "DrawingsModel.h"
+#include "FireFactory.h"
 #include "FireResultFactory.h"
 #include "FiresModel.h"
-#include "FireFactory.h"
-#include "WeatherModel.h"
+#include "FolkModel.h"
+#include "IntelligenceFactory.h"
+#include "IntelligencesModel.h"
+#include "KnowledgeGroupFactory.h"
+#include "KnowledgeGroupsModel.h"
+#include "LimitsModel.h"
+#include "LogisticConsignFactory.h"
+#include "LogisticsModel.h"
+#include "MeteoModel.h"
+#include "NotesModel.h"
+#include "ObjectFactory.h"
+#include "ObjectKnowledgeConverter.h"
+#include "ObjectKnowledgeFactory.h"
+#include "ObjectsModel.h"
+#include "ResourceNetworkFactory.h"
+#include "ResourceNetworkModel.h"
+#include "ScoreDefinitions.h"
+#include "ScoreModel.h"
+#include "Simulation.h"
 #include "StaticModel.h"
 #include "SurfaceFactory.h"
 #include "TacticalLineFactory.h"
-#include "UserProfilesModel.h"
-#include "UserProfileFactory.h"
-#include "ActionPublisher.h"
-#include "FolkModel.h"
-#include "AfterActionModel.h"
-#include "IntelligenceFactory.h"
-#include "IntelligencesModel.h"
-#include "DrawingFactory.h"
-#include "DrawingsModel.h"
-#include "ScoreDefinitions.h"
-#include "NotesModel.h"
-#include "MeteoModel.h"
-#include "ScoreModel.h"
-#include "Simulation.h"
+#include "TeamFactory.h"
+#include "TeamsModel.h"
+#include "UrbanKnowledgeFactory.h"
 #include "UrbanModel.h"
+#include "UserProfileFactory.h"
+#include "UserProfilesModel.h"
+#include "WeatherModel.h"
 #include "actions/ActionFactory.h"
 #include "actions/ActionParameterFactory.h"
 #include "actions/ActionsModel.h"
@@ -82,6 +84,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , actionFactory_( *new actions::ActionFactory( controllers.controller_, actionParameterFactory_, *this, staticModel, simulation ) )
     , intelligenceFactory_( *new IntelligenceFactory( controllers, staticModel.coordinateConverter_, *this, staticModel.levels_, publisher ) )
     , drawingFactory_( *new DrawingFactory( controllers.controller_, staticModel.drawings_, publisher, staticModel.coordinateConverter_ ) )
+    , resourceNetworkFactory_( *new ResourceNetworkFactory( controllers.controller_, *this ) )
     , agents_( *new AgentsModel( agentFactory_ ) )
     , objects_( *new ObjectsModel( objectFactory_ ) )
     , teams_( *new TeamsModel( teamFactory_ ) )
@@ -98,7 +101,8 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , drawings_( *new DrawingsModel( controllers, drawingFactory_ ) )
     , scoreDefinitions_( *new ScoreDefinitions( staticModel.indicators_, staticModel.gaugeTypes_ ) )
     , scores_( *new ScoreModel( controllers, publisher, scoreDefinitions_ ) )
-    , urbanObjects_( *new UrbanModel( controllers.controller_, static_.detection_ ) )
+    , urbanObjects_( *new UrbanModel( controllers.controller_, *this, static_.detection_ ) )
+    , resourceNetwork_( *new ResourceNetworkModel( resourceNetworkFactory_ ) )
     , surfaceFactory_( *new SurfaceFactory( static_.coordinateConverter_, static_.detection_, static_.types_, urbanObjects_.GetUrbanBlockMap() ) )
     , notes_( *new NotesModel( controllers.controller_ ))
     , meteo_( *new MeteoModel( static_.coordinateConverter_ ) )
@@ -115,6 +119,7 @@ Model::~Model()
     delete &meteo_;
     delete &notes_;
     delete &surfaceFactory_;
+    delete &resourceNetwork_;
     delete &urbanObjects_;
     delete &scores_;
     delete &scoreDefinitions_;
@@ -132,6 +137,7 @@ Model::~Model()
     delete &teams_;
     delete &objects_;
     delete &agents_;
+    delete &resourceNetworkFactory_;
     delete &drawingFactory_;
     delete &intelligenceFactory_;
     delete &actionFactory_;
@@ -174,4 +180,5 @@ void Model::Purge()
     knowledgeGroups_.Purge();
     teams_.Purge();
     meteo_.Purge();
+    resourceNetwork_.Purge();
 }

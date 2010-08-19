@@ -9,15 +9,15 @@
 
 #include "gaming_pch.h"
 #include "LogisticConsignFactory.h"
-#include "Model.h"
 #include "AgentsModel.h"
 #include "LogMaintenanceConsign.h"
-#include "LogSupplyConsign.h"
 #include "LogMedicalConsign.h"
-#include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/AgentTypes.h"
+#include "LogSupplyConsign.h"
+#include "Model.h"
 #include "StaticModel.h"
+#include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/ObjectTypes.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticConsignFactory constructor

@@ -287,13 +287,13 @@ void NodeElement::Serialize( MsgsSimToClient::MsgUrbanAttributes_Infrastructures
     {
     default:
     case eResourceTypeWater:
-        msg.set_type( MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_water );
+        msg.set_type( MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork::water );
         break;
     case eResourceTypeGaz:
-        msg.set_type( MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_gaz );
+        msg.set_type( MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork::gaz );
         break;
     case eResourceTypeElectricity:
-        msg.set_type( MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_electricity );
+        msg.set_type( MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork::electricity );
         break;
     }
     msg.set_enabled( isActivated_ );

@@ -21,11 +21,6 @@ namespace kernel
 
 class Publisher_ABC;
 
-// $$$$ _RC_ FDS 2010-01-27: n doit pouvoir supprimer
-//struct ASN1T_MsgLimaUpdate;
-//struct ASN1T_MsgLimitUpdate;
-
-
 // =============================================================================
 /** @class  TacticalLine_ABC
     @brief  Base class of the limits and limas.

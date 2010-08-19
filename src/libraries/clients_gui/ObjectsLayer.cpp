@@ -9,8 +9,6 @@
 
 #include "clients_gui_pch.h"
 #include "ObjectsLayer.h"
-#include "clients_kernel/Profile_ABC.h"
-#include "clients_kernel/Team_ABC.h"
 
 using namespace kernel;
 using namespace gui;

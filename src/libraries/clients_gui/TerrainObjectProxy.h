@@ -17,7 +17,9 @@
 
 namespace kernel
 {
+    class GlTools_ABC;
     class PropertiesDictionary;
+    class Viewport_ABC;
 }
 
 namespace urban
@@ -52,32 +54,35 @@ public:
     virtual void DoUpdate( const InfrastructureParameters& infrastructure );
     virtual QString GetName() const;
     virtual unsigned long GetId() const;
-    virtual void Select     ( kernel::ActionController& /*controller*/ ) const {};
-    virtual void ContextMenu( kernel::ActionController& /*controller*/,  const QPoint& /*where*/) const {};
-    virtual void Activate   ( kernel::ActionController& /*controller*/ ) const {};
+    virtual void Select( kernel::ActionController& /*controller*/ ) const {}
+    virtual void ContextMenu( kernel::ActionController& /*controller*/,  const QPoint& /*where*/) const {}
+    virtual void Activate( kernel::ActionController& /*controller*/ ) const {}
 
-    virtual void SetSelected( bool selected )                            const;
-    virtual void Draw       ( urban::Drawer_ABC& drawer )                const;
-    virtual bool IsInside   ( const geometry::Point2f& point )           const;
+    virtual void SetSelected( bool selected ) const;
+    virtual void Draw( urban::Drawer_ABC& drawer, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual bool IsInside( const geometry::Point2f& point ) const;
+    geometry::Point2f Barycenter() const;
     //@}
 
     //! @name Helpers
     //@{
-    void CreateDictionary               ( kernel::Controller& controller );
-    void AddDictionaryForArchitecture   ( kernel::PropertiesDictionary& dictionary );
+    void CreateDictionary( kernel::Controller& controller );
+    void AddDictionaryForArchitecture( kernel::PropertiesDictionary& dictionary );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    urban::TerrainObject_ABC* object_;
     //@}
 
 public:
-    //! @name Member data
-    //@{
-    urban::TerrainObject_ABC* object_;  // $$$$ _RC_ FDS 2010-01-15: Must be encapsulated -> private
-    InfrastructureParameters infrastructure_;
-    //@}
+    InfrastructureParameters infrastructure_;   // $$$$ _RC_ FDS 2010-01-15: Must be encapsulated -> private
 
 public:
     //! @name Copy/Assignment
     //@{
-    TerrainObjectProxy ( const TerrainObjectProxy& );           //!< Copy constructor
+    TerrainObjectProxy( const TerrainObjectProxy& );           //!< Copy constructor
     TerrainObjectProxy& operator=( const TerrainObjectProxy& ); //!< Assignment operator
     bool operator==( const TerrainObjectProxy& ) const;
     //@}

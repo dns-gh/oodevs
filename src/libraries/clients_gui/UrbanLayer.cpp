@@ -58,13 +58,13 @@ UrbanLayer::~UrbanLayer()
 // Name: UrbanLayer::Paint
 // Created: SLG 2006-03-23
 // -----------------------------------------------------------------------------
-void UrbanLayer::Paint( kernel::Viewport_ABC& /*viewport*/ )
+void UrbanLayer::Paint( kernel::Viewport_ABC& viewport )
 {
     for( IT_TerrainObjects it = objects_.begin(); it != objects_.end(); ++it )
     {
         const TerrainObjectProxy* object = (*it);
-        object->object_->SetSelected( object == selectedObject_ );
-        object->object_->Draw( *urbanDrawer_ );
+        object->SetSelected( object == selectedObject_ );
+        object->Draw( *urbanDrawer_, viewport, tools_ );
     }
 }
 
@@ -135,7 +135,7 @@ bool UrbanLayer::HandleMousePress( QMouseEvent* input, const geometry::Point2f& 
         for( IT_TerrainObjects it = objects_.begin(); it != objects_.end(); ++it )
         {
             const TerrainObjectProxy* object = (*it);
-            if( object->object_->GetFootprint()->IsInside( point ) && input->state() )
+            if( object->IsInside( point ) && input->state() )
             {
                 found = true;
                 if( object == selectedObject_ )
@@ -154,7 +154,7 @@ bool UrbanLayer::HandleMousePress( QMouseEvent* input, const geometry::Point2f& 
         for( IT_TerrainObjects it = objects_.begin(); it != objects_.end(); ++it )
         {
             const TerrainObjectProxy* object = (*it);
-            if( object->object_->GetFootprint()->IsInside( point ) && input->state() )
+            if( object->IsInside( point ) && input->state() )
             {
                 if( object == selectedObject_ )
                 {

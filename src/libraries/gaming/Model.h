@@ -49,6 +49,8 @@ class ObjectKnowledgeFactory;
 class ObjectsModel;
 class Publisher_ABC;
 class RcEntityResolver_ABC;
+class ResourceNetworkFactory;
+class ResourceNetworkModel;
 class ScoreDefinitions;
 class ScoreModel;
 class Simulation;
@@ -110,6 +112,7 @@ public:
     actions::ActionFactory_ABC&     actionFactory_;
     IntelligenceFactory&            intelligenceFactory_;
     DrawingFactory&                 drawingFactory_;
+    ResourceNetworkFactory&         resourceNetworkFactory_;
 
     AgentsModel&          agents_;
     ObjectsModel&         objects_;
@@ -128,11 +131,11 @@ public:
     ScoreDefinitions&     scoreDefinitions_;
     ScoreModel&           scores_;
     UrbanModel&           urbanObjects_;
+    ResourceNetworkModel& resourceNetwork_;
     SurfaceFactory&       surfaceFactory_;
     NotesModel&           notes_;
-    //@}
     MeteoModel&           meteo_;
-
+    //@}
 
 private:
     //! @name Copy/Assignment

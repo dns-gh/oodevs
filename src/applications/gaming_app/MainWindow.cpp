@@ -499,8 +499,8 @@ void MainWindow::Load()
 void MainWindow::Close()
 {
     network_.Disconnect();
-    model_.Purge();
     selector_->Close();
+    model_.Purge();
     staticModel_.Purge();
 }
 

@@ -133,9 +133,10 @@ void TerrainObjectProxy::SetSelected( bool selected ) const
 // Name: TerrainObjectProxy::Draw
 // Created: FDS 2010-01-15
 // -----------------------------------------------------------------------------
-void TerrainObjectProxy::Draw( urban::Drawer_ABC& drawer ) const
+void TerrainObjectProxy::Draw( urban::Drawer_ABC& drawer, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     object_->Draw( drawer );
+    kernel::Entity_ABC::Draw( geometry::Point2f(), viewport, tools );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,4 +146,13 @@ void TerrainObjectProxy::Draw( urban::Drawer_ABC& drawer ) const
 bool TerrainObjectProxy::IsInside( const geometry::Point2f& point ) const
 {
     return object_->GetFootprint()->IsInside( point );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainObjectProxy::Barycenter
+// Created: JSR 2010-08-19
+// -----------------------------------------------------------------------------
+geometry::Point2f TerrainObjectProxy::Barycenter() const
+{
+    return object_->GetFootprint()->Barycenter();
 }

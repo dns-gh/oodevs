@@ -12,6 +12,11 @@
 
 #include "tools/Resolver.h"
 
+namespace gui
+{
+    class TerrainObjectProxy;
+}
+
 namespace MsgsSimToClient
 {
     class MsgUrbanCreation;
@@ -29,7 +34,7 @@ namespace kernel
     class DetectionMap;
 }
 
-class TerrainObjectProxy;
+class Model;
 class UrbanBlockDetectionMap;
 
 // =============================================================================
@@ -39,12 +44,12 @@ class UrbanBlockDetectionMap;
 */
 // Created: SLG 2009-02-10
 // =============================================================================
-class UrbanModel : public tools::Resolver< kernel::Entity_ABC >
+class UrbanModel : public tools::Resolver< gui::TerrainObjectProxy >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanModel( kernel::Controller& controller, const kernel::DetectionMap& map );
+             UrbanModel( kernel::Controller& controller, const Model& model, const kernel::DetectionMap& map );
     virtual ~UrbanModel();
     //@}
 
@@ -55,7 +60,7 @@ public:
     void Purge();
     const urban::Model& GetModel() const;
     const UrbanBlockDetectionMap& GetUrbanBlockMap() const;
-    kernel::Entity_ABC& GetObject( unsigned long id ) const;
+    gui::TerrainObjectProxy& GetObject( unsigned long id ) const;
     //@}
 
 private:
@@ -69,7 +74,8 @@ public:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    std::auto_ptr< urban::Model > model_;
+    const Model& model_;
+    std::auto_ptr< urban::Model > urbanModel_;
     const kernel::DetectionMap& map_;
     UrbanBlockDetectionMap& urbanBlockDetectionMap_;
     //@}

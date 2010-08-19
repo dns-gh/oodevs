@@ -9,27 +9,31 @@
 
 #include "gaming_pch.h"
 #include "UrbanModel.h"
+#include "Model.h"
+#include "ResourceNetwork.h"
+#include "ResourceNetworkModel.h"
+#include "UrbanBlockDetectionMap.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/Entity_ABC.h"
 #include "gaming/UrbanBlockDeserializer.h"
 #include "protocol/Simulation.h"
 #include "protocol/Protocol.h"
-#include "UrbanBlockDetectionMap.h"
 #include <urban/Model.h>
 #include <urban/UrbanFactory.h>
 #include <urban/UrbanObjectDeserializer_ABC.h>
 #include <urban/TerrainObject_ABC.h>
 
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: UrbanModel constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-UrbanModel::UrbanModel( kernel::Controller& controller, const kernel::DetectionMap& map )
+UrbanModel::UrbanModel( kernel::Controller& controller, const Model& model, const kernel::DetectionMap& map )
     : controller_( controller )
-    , model_( new urban::Model() )
+    , model_( model )
+    , urbanModel_( new urban::Model() )
     , map_( map )
     , urbanBlockDetectionMap_( *new UrbanBlockDetectionMap( map ) )
 {
@@ -60,7 +64,7 @@ void UrbanModel::Create( const MsgsSimToClient::MsgUrbanCreation& message )
         const geometry::Point2f point( float( location.latitude() ), float( location.longitude() ) );
         footPrint.Add( point );
     }
-    urban::TerrainObject_ABC* object = model_->GetFactory().CreateUrbanObject( id, name, &footPrint );
+    urban::TerrainObject_ABC* object = urbanModel_->GetFactory().CreateUrbanObject( id, name, &footPrint );
     UrbanBlockDeserializer urbanBlockDeserializer( message );
     object->Accept( urbanBlockDeserializer );
     gui::InfrastructureParameters infrastructure;
@@ -72,8 +76,8 @@ void UrbanModel::Create( const MsgsSimToClient::MsgUrbanCreation& message )
     gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controller_, *object, message.oid(), QString( message.name().c_str() ) , infrastructure );
     object->InstanciateDecoration();
     controller_.Create( *pTerrainObject );
-    if( !Resolver< kernel::Entity_ABC >::Find( id ) )
-        tools::Resolver< kernel::Entity_ABC >::Register( id, *pTerrainObject );
+    if( !Find( id ) )
+        Register( id, *pTerrainObject );
     urbanBlockDetectionMap_.AddUrbanBlock( *object );
 }
 
@@ -88,6 +92,19 @@ void UrbanModel::Update( const MsgsSimToClient::MsgUrbanUpdate& message )
     {
         if( message.attributes().has_structure() )
             infrastructure.structuralState_ = message.attributes().structure().state();
+        if( message.attributes().has_infrastructures() )
+        {
+            // update resource network model here
+            if( message.attributes().infrastructures().resource_network_size() > 0 )
+            {
+                TerrainObjectProxy& entity = GetObject( message.oid() );
+                if( entity.Retrieve< ResourceNetwork >() )
+                    model_.resourceNetwork_.UrbanUpdate( message.oid(), message.attributes().infrastructures() );
+                else
+                    model_.resourceNetwork_.UrbanCreate( GetObject( message.oid() ), message.attributes().infrastructures() );
+            }
+            // TODO update infrastructures other than resource network
+        }
     }
     GetObject( message.oid() ).Update( infrastructure );
 }
@@ -98,8 +115,8 @@ void UrbanModel::Update( const MsgsSimToClient::MsgUrbanUpdate& message )
 // -----------------------------------------------------------------------------
 void UrbanModel::Purge()
 {
-    tools::Resolver< kernel::Entity_ABC >::DeleteAll();
-    model_->Purge();
+    DeleteAll();
+    urbanModel_->Purge();
 }
 
 // -----------------------------------------------------------------------------
@@ -108,7 +125,7 @@ void UrbanModel::Purge()
 // -----------------------------------------------------------------------------
 const urban::Model& UrbanModel::GetModel() const
 {
-    return *model_;
+    return *urbanModel_;
 }
 
 // -----------------------------------------------------------------------------
@@ -124,7 +141,7 @@ const UrbanBlockDetectionMap& UrbanModel::GetUrbanBlockMap() const
 // Name: UrbanModel::GetUrbanBlockMap
 // Created: SLG 2010-03-12
 // -----------------------------------------------------------------------------
-kernel::Entity_ABC& UrbanModel::GetObject( unsigned long id ) const
+TerrainObjectProxy& UrbanModel::GetObject( unsigned long id ) const
 {
-    return tools::Resolver< kernel::Entity_ABC >::Get( id );
+    return Get( id );
 }
