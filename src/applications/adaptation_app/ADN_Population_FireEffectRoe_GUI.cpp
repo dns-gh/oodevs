@@ -25,9 +25,8 @@ typedef ADN_Population_Data::FireEffectRoeInfos FireEffectRoeInfos;
 class ADN_CT_Population_FireEffectRoe : public ADN_Connector_Table_ABC
 {
 public:
-
-    ADN_CT_Population_FireEffectRoe(ADN_Population_FireEffectRoe_GUI& tab)
-        : ADN_Connector_Table_ABC(tab,false)
+    ADN_CT_Population_FireEffectRoe( ADN_Population_FireEffectRoe_GUI& tab )
+    : ADN_Connector_Table_ABC( tab, false )
     {
         // NOTHING
     }
@@ -35,28 +34,22 @@ public:
     void AddSubItems( int i, void* obj )
     {
         assert( obj );
-
-        E_PopulationRoe nRoe = static_cast<FireEffectRoeInfos*>(obj)->nRoe_;
+        E_PopulationRoe nRoe = static_cast< FireEffectRoeInfos* >(obj)->nRoe_;
         unsigned int nNbrHiddenRoe = static_cast< unsigned int >( ePopulationRoe_EmploiForceInterdit ) + 1;
-
         if( static_cast< unsigned int >( nRoe ) < nNbrHiddenRoe )
             return;
         ADN_TableItem_String* pItemString = new ADN_TableItem_String( &tab_, obj );
         ADN_TableItem_Double* pItemSurface = new ADN_TableItem_Double( &tab_, obj );
         ADN_TableItem_Double* pItemPH = new ADN_TableItem_Double( &tab_, obj );
-
         // add a new row & set new values
         tab_.setItem( i - nNbrHiddenRoe, 0, pItemString );
         tab_.setItem( i - nNbrHiddenRoe, 1, pItemSurface );
         tab_.setItem( i - nNbrHiddenRoe, 2, pItemPH );
-
         // disable first column
         pItemString->setEnabled( false );
         pItemString->setText( ENT_Tr::ConvertFromPopulationRoe( nRoe, ENT_Tr_ABC::eToTr ).c_str() );
-
         // set table item properties
         pItemPH->GetValidator().setRange( 0, 1, 4 );
-
         // connect items & datas
         pItemSurface->GetConnector().Connect( &static_cast<FireEffectRoeInfos*>(obj)->rAttritionSurface_ );
         pItemPH->GetConnector().Connect( &static_cast<FireEffectRoeInfos*>(obj)->rPH_ );
@@ -70,33 +63,25 @@ private:
 // Name: ADN_Population_FireEffectRoe_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Population_FireEffectRoe_GUI::ADN_Population_FireEffectRoe_GUI(QWidget * parent)
-    : ADN_Table2(parent, "ADN_Population_FireEffectRoe_GUI" )
+ADN_Population_FireEffectRoe_GUI::ADN_Population_FireEffectRoe_GUI( QWidget * parent )
+    : ADN_Table2( parent, "ADN_Population_FireEffectRoe_GUI" )
 {
     // peut etre selectionne & trie
-    setSorting(true);
-    setSelectionMode(QTable::NoSelection);
-    setShowGrid(false);
-    setLeftMargin(0);
-
+    setSorting( true );
+    setSelectionMode( QTable::NoSelection );
+    setShowGrid( false );
+    setLeftMargin( 0 );
     // hide vertical header
     verticalHeader()->hide();
-
     // tab with 3 columns
-    setNumCols(3);
-    setNumRows(0);
-    setColumnStretchable(0,true);
-    setColumnStretchable(1,true);
-    setColumnStretchable(2,true);
-
-    horizontalHeader()->setLabel(0, tr( "ROE" ) );
-    horizontalHeader()->setLabel(1, tr( "Attrition Surface (m²)" ) );
-    horizontalHeader()->setLabel(2, tr( "PH" ) );
-
+    setNumCols( 3 );
+    setNumRows( 0 );
+    horizontalHeader()->setLabel( 0, tr( "ROE" ) );
+    horizontalHeader()->setLabel( 1, tr( "Attrition Surface (m²)" ) );
+    horizontalHeader()->setLabel( 2, tr( "PH" ) );
     // connector creation
-    pConnector_=new ADN_CT_Population_FireEffectRoe(*this);
+    pConnector_=new ADN_CT_Population_FireEffectRoe( *this );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Population_FireEffectRoe_GUI destructor
