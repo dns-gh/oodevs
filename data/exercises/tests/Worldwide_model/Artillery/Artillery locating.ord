@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="37" name="Field Artillery - (Short Range Radar) - collect intelligence on objectives" target="21" time="2010-08-19T18:04:21" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Area to observe" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU3247953672"/>
+        <point coordinates="30UXU3403654058"/>
+        <point coordinates="30UXU3535252731"/>
+        <point coordinates="30UXU3308852073"/>
+        <point coordinates="30UXU3247953672"/>
+      </location>
+    </parameter>
+    <parameter name="Categories" type="NatureAtlas" value="1"/>
+    <parameter name="Deployment position" type="Point">
+      <location type="point">
+        <point coordinates="30UXU3585251843"/>
+      </location>
+    </parameter>
+  </action>
+</actions>

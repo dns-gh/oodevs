@@ -5,6 +5,9 @@
       <readonly/>
       <readwrite>
         <side id="1"/>
+        <side id="129"/>
+        <side id="126"/>
+        <side id="128"/>
       </readwrite>
     </rights>
   </profile>

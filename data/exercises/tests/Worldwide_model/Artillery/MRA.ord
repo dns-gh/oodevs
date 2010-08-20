@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="91" name="Infantry - bar" target="60" time="2010-08-19T18:06:21" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Position to bar" type="Point">
+      <location type="point">
+        <point coordinates="30UXU3236841297"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="90" name="Infantry - monitor" target="60" time="2010-08-19T18:07:31" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Deployment area" type="Point">
+      <location type="point">
+        <point coordinates="30UXU3213742592"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="87" name="Infantry - support" target="60" time="2010-08-19T18:08:31" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Unit to support" type="Agent" value="106"/>
+  </action>
+</actions>
