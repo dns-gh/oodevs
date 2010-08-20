@@ -597,7 +597,10 @@ void PHY_RolePion_Dotations::SetForbiddenDotation( const PHY_DotationCategory& c
         if( (*it)->GetName() == category.GetName() )
             break;
     if( it == forbiddenDotations_.end() )
-       forbiddenDotations_.push_back( &category );
+    {
+        MIL_Report::PostEvent( pion_, MIL_Report::eReport_MunitionInterdite, category );
+        forbiddenDotations_.push_back( &category );
+    }
 }
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations::RemoveForbiddenDotation
@@ -610,7 +613,10 @@ void PHY_RolePion_Dotations::RemoveForbiddenDotation( const PHY_DotationCategory
         if( (*it)->GetName() == category.GetName() )
             break;
     if( it != forbiddenDotations_.end() )
+    {
+       MIL_Report::PostEvent( pion_, MIL_Report::eReport_MunitionAutorise, category );
        forbiddenDotations_.erase( it );
+    }
 }
 
 // -----------------------------------------------------------------------------

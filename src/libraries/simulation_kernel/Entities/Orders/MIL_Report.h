@@ -120,6 +120,8 @@ public:
         eReport_FireOnEnemySide,
         eReport_FiredByEnemySide,
         eReport_IndirectFireOnTarget,
+        eReport_MunitionInterdite,
+        eReport_MunitionAutorise,
         eNbrReport
     };
 
@@ -386,8 +388,12 @@ public:
         eRC_ExecutionAttentat,
         eRC_Embarquement,
         eRC_Debarquement,
+        eRC_EmbarquementFin,
+        eRC_DebarquementFin,
 
         eRC_TirIndirectSurCible = 271,
+        eRC_MunitionInterdite = 302,
+        eRC_MunitionAutorise = 303,
 
         eRC_EmbarkmentStarted = 3000,
         eRC_EmbarkmentInterrupted = 3001,

@@ -431,6 +431,12 @@
   <report id="299" message="Fin du ratissage du bloc urbain"/>
   <report id="300" message="Debut du ratissage de la zone"/>
   <report id="301" message="Fin du ratissage de la zone"/>
+  <report id="302" message="Munition interdite : %1">
+   <parameter type="DotationType"/>
+  </report>
+  <report id="303" message="Munition autorisée : %1">
+   <parameter type="DotationType"/>
+  </report>
   <report id="3000" message="Embarquement - début"/>
   <report id="3001" message="Embarquement - interruption"/>
   <report id="3002" message="Embarquement - reprise"/>
