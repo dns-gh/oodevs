@@ -1029,6 +1029,9 @@
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Ratisser" dia-type="net.masagroup.sword.france.military.platoon.tasks.Ratisser" id="2092" name="MELEE Ratisser une Zone">
       <parameter dia-name="objective" name="objectif" optional="false" type="AreaBM"/>
     </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Eclairer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Eclairer" id="2093" name="MELEE Eclairer un Itineraire">
+      <parameter dia-name="objectives" name="itinéraire" optional="false" type="PointListBM"/>
+    </mission>
   </units>
   <automats>
     <context>
