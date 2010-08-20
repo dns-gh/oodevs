@@ -12,6 +12,8 @@
 
 #include "ADN_CommonGfx.h"
 
+class ADN_MissionParameterType;
+
 // =============================================================================
 /** @class  ADN_MissionParameters_Table
     @brief  ADN_MissionParameters_Table
@@ -32,6 +34,7 @@ public:
     //! @name Operations
     //@{
     void SetItemConnectors( const T_ConnectorVector& itemConnectors );
+    void ResetCurrent();
     //@}
 
 private slots:
@@ -58,6 +61,7 @@ private:
     //! @name Member data
     //@{
     T_ConnectorVector itemConnectors_;
+    ADN_MissionParameterType* current_;
     //@}
 };
 

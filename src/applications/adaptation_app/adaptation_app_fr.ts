@@ -2554,6 +2554,18 @@ du tireur</translation>
         <source>Usage description</source>
         <translation>Description du fonctionnement</translation>
     </message>
+    <message>
+        <source>Allowed</source>
+        <translation type="obsolete">Autorisé</translation>
+    </message>
+    <message>
+        <source>Types</source>
+        <translation type="obsolete">Types</translation>
+    </message>
+    <message>
+        <source>Allowed types</source>
+        <translation>Types autorisés</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Model_Wizard</name>
@@ -3388,19 +3400,19 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     <name>ADN_Radars_Wizard</name>
     <message>
         <source>New special sensor creation</source>
-        <translation>Création d&apos;un nouveau capteur spécial</translation>
+        <translation type="unfinished">Création d&apos;un nouveau capteur spécial</translation>
     </message>
     <message>
         <source>Special sensor</source>
-        <translation>Capteur spécial</translation>
+        <translation type="unfinished">Capteur spécial</translation>
     </message>
     <message>
         <source>Creation finished</source>
-        <translation>Création terminée</translation>
+        <translation type="unfinished">Création terminée</translation>
     </message>
     <message>
         <source>Click &quot;Done&quot; to create the new special sensor.</source>
-        <translation>Cliquez sur &quot;Terminer&quot; pour créer le nouveau capteur spécial.</translation>
+        <translation type="unfinished">Cliquez sur &quot;Terminer&quot; pour créer le nouveau capteur spécial.</translation>
     </message>
 </context>
 <context>
@@ -4783,6 +4795,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Smoke</source>
         <translation>Fumigène</translation>
+    </message>
+    <message>
+        <source>LocationComposite</source>
+        <translation>Localisation composite</translation>
     </message>
 </context>
 <context>

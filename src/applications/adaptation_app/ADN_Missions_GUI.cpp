@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Missions_GUI.h"
 #include "ADN_Missions_Data.h"
+#include "ADN_MissionTypes_Table.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_ListView_MissionTypes.h"
 #include "ADN_ListView_FragOrderTypes.h"
@@ -87,12 +88,16 @@ QWidget* ADN_Missions_GUI::BuildMissions( QGroupBox*& pGroup, QWidget* parent, A
     builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Doctrine description" ), vInfosConnectors[eDoctrineDescription] );
     builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Usage description" ), vInfosConnectors[eUsageDescription] );
 
-    QGroupBox* pParameters = new QGroupBox( 2, Qt::Horizontal, tr( "Parameters" ), pGroup );
+    QGroupBox* pParameters = new QGroupBox( 3, Qt::Horizontal, tr( "Parameters" ), pGroup );
     ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table( pParameters );
     vInfosConnectors[eParameters] = &paramList->GetConnector();
     QGroupBox* pEnum = new QGroupBox( 1, Qt::Horizontal, tr( "Enumeration values" ), pParameters );
     ADN_MissionParameterValues_Table* valueList = new ADN_MissionParameterValues_Table( pEnum, "" );
     vInfosConnectors[eParameterValues] = &valueList->GetConnector();
+
+    QGroupBox* pChoice = new QGroupBox( 1, Qt::Horizontal, tr( "Allowed types" ), pParameters );
+    ADN_MissionTypes_Table* choiceList = new ADN_MissionTypes_Table( pChoice, "" );
+    vInfosConnectors[eChoiceValues] = &choiceList->GetConnector();
 
     // Connect the gui to the data.
     paramList->SetItemConnectors( vInfosConnectors );
@@ -164,6 +169,10 @@ QWidget* ADN_Missions_GUI::BuildFragOrders( QWidget* parent )
     QGroupBox* pEnum = new QGroupBox( 1, Qt::Horizontal, tr( "Enumeration values" ), pParameters );
     ADN_MissionParameterValues_Table* valueList = new ADN_MissionParameterValues_Table( pEnum, "" );
     vInfosConnectors[eParameterValues] = &valueList->GetConnector();
+
+    QGroupBox* pChoice = new QGroupBox( 1, Qt::Horizontal, tr( "Allowed types" ), pParameters );
+    ADN_MissionTypes_Table* choiceList = new ADN_MissionTypes_Table( pChoice, "" );
+    vInfosConnectors[eChoiceValues] = &choiceList->GetConnector();
 
     // Connect the gui to the data.
     paramList->SetItemConnectors( vInfosConnectors );

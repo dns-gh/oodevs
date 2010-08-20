@@ -66,7 +66,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::OrderParameter& parameter_;
+    kernel::OrderParameter parameter_;
     int value_;
     //@}
 };

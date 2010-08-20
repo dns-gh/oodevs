@@ -52,12 +52,13 @@ void PHY_RolePion_TerrainAnalysis::GetCrossroads( std::vector< boost::shared_ptr
 void PHY_RolePion_TerrainAnalysis::NotifyHasMove( const MT_Vector2D& newPos )
 {
     const double range = std::max( pion_.GetRole< PHY_RoleInterface_Perceiver >().GetMaxAgentPerceptionDistance(), 3000. );
-    if( lastPos_.SquareDistance( newPos ) > range * 0.5 * range * 0.5 )
+    const double squareRange = range * range;
+    if( lastPos_.SquareDistance( newPos ) > squareRange * 0.25 )
     {
         //Remove old points out of range
         for( std::map< MT_Vector2D, boost::shared_ptr< MT_Vector2D > >::iterator it = crossroadsBuffer_.begin(); it != crossroadsBuffer_.end(); )
         {
-            if( it->second->SquareDistance( newPos ) < range * range )
+            if( it->second->SquareDistance( newPos ) < squareRange )
                 it = crossroadsBuffer_.erase( it );
             else
                 ++it;

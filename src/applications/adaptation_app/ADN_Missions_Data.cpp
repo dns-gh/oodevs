@@ -91,6 +91,7 @@ ADN_Missions_Data::MissionParameter::MissionParameter()
     : isOptional_( false )
 {
     ADN_Type_Enum< E_MissionParameterType, eNbrMissionParameterType >::SetConverter( &ADN_Tr::ConvertFromMissionParameterType );
+    FillChoices();
 }
 
 // -----------------------------------------------------------------------------
@@ -128,6 +129,12 @@ ADN_Missions_Data::MissionParameter* ADN_Missions_Data::MissionParameter::Create
         MissionParameterValue* newParamValue = (*it)->CreateCopy();
         newParam->values_.AddItem( newParamValue );
     }
+    newParam->choices_.reserve( choices_.size() );
+    for( IT_Choice_Vector it = choices_.begin(); it != choices_.end(); ++it )
+    {
+        MissionType* newType = (*it)->CreateCopy();
+        newParam->choices_.AddItem( newType );
+    }
     return newParam;
 }
 
@@ -144,6 +151,26 @@ void ADN_Missions_Data::MissionParameter::ReadArchive( xml::xistream& input )
             >> xml::attribute( "dia-name", diaName_ );
     type_ = ADN_Tr::ConvertToMissionParameterType( type );
     input >> xml::list( "value", *this, &ADN_Missions_Data::MissionParameter::ReadValue );
+    input >> xml::optional() >> xml::start( "choice" )
+            >> xml::list( "parameter", *this, &ADN_Missions_Data::MissionParameter::ReadChoice )
+          >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::MissionParameter::FillChoices
+// Created: LDC 2010-08-19
+// -----------------------------------------------------------------------------
+void ADN_Missions_Data::MissionParameter::FillChoices()
+{
+    choices_.AddItem( new MissionType( "PointBM" ) );
+    choices_.AddItem( new MissionType( "PathBM" ) );
+    choices_.AddItem( new MissionType( "AreaBM" ) );
+    choices_.AddItem( new MissionType( "AutomatBM" ) );
+    choices_.AddItem( new MissionType( "AgentBM" ) );
+    choices_.AddItem( new MissionType( "AgentKnowledgeBM" ) );
+    choices_.AddItem( new MissionType( "ObjectKnowledgeBM" ) );
+    choices_.AddItem( new MissionType( "PopulationKnowledgeBM" ) );
+    choices_.AddItem( new MissionType( "UrbanBlockBM" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,6 +182,25 @@ void ADN_Missions_Data::MissionParameter::ReadValue( xml::xistream& input )
     std::auto_ptr< MissionParameterValue > spNew( new MissionParameterValue() );
     spNew->ReadArchive( input );
     values_.AddItem( spNew.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::MissionParameter::ReadChoice
+// Created: LDC 2010-08-19
+// -----------------------------------------------------------------------------
+void ADN_Missions_Data::MissionParameter::ReadChoice( xml::xistream& input )
+{
+    std::string name;
+    input >> xml::attribute( "type", name );
+    unsigned int nChoices = choices_.size();
+    for( unsigned int i = 0; i < nChoices; ++i )
+    {
+        if( choices_[i]->name_ == name )
+        {
+            choices_[i]->isAllowed_ = true;
+            return;
+        }
+    }
 }
 
 namespace
@@ -185,6 +231,17 @@ void ADN_Missions_Data::MissionParameter::WriteArchive( xml::xostream& output )
             << xml::attribute( "dia-name", diaName );
     for( unsigned int i = 0; i < values_.size(); ++i )
         values_[i]->WriteArchive( output, i );
+    unsigned int nChoices = choices_.size();
+    bool hasChoice = false;
+    for( unsigned int i = 0; i < nChoices && !hasChoice; ++i )
+        hasChoice = choices_[i]->isAllowed_.GetData();
+    if( hasChoice )
+    {
+        output << xml::start( "choice" );
+        for( unsigned int i = 0; i < nChoices; ++i )
+            choices_[i]->WriteArchive( output );
+        output << xml::end;
+    }
     output << xml::end;
 }
 
@@ -693,4 +750,70 @@ ADN_Missions_Data::Mission* ADN_Missions_Data::FindMission( ADN_Missions_Data::T
     if( it == missions.end() )
         return 0;
     return *it;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::MissionType::MissionType
+// Created: LDC 2010-08-19
+// -----------------------------------------------------------------------------
+ADN_Missions_Data::MissionType::MissionType()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::MissionType
+// Created: LDC 2010-08-19
+// -----------------------------------------------------------------------------
+ADN_Missions_Data::MissionType::MissionType( const std::string& name )
+{
+    name_ = name;
+    displayName_ = qApp->translate( "ADN_Tr", name.c_str() ).ascii();
+    isAllowed_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::MissionType::~MissionType
+// Created: LDC 2010-08-19
+// -----------------------------------------------------------------------------
+ADN_Missions_Data::MissionType::~MissionType()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::MissionType::GetItemName
+// Created: LDC 2010-08-19
+// -----------------------------------------------------------------------------
+std::string ADN_Missions_Data::MissionType::GetItemName()
+{
+    return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::MissionType::CreateCopy
+// Created: LDC 2010-08-19
+// -----------------------------------------------------------------------------
+ADN_Missions_Data::MissionType* ADN_Missions_Data::MissionType::CreateCopy()
+{
+    MissionType* newType = new MissionType();
+    newType->name_ = name_;
+    newType->displayName_ = displayName_;
+    newType->isAllowed_ = isAllowed_.GetData();
+    return newType;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::MissionType::WriteArchive
+// Created: LDC 2010-08-19
+// -----------------------------------------------------------------------------
+void ADN_Missions_Data::MissionType::WriteArchive( xml::xostream& output )
+{
+    if( isAllowed_.GetData() )
+    {
+        output << xml::start( "parameter" )
+                 << xml::attribute( "type", name_ )
+               << xml::end;
+    }
 }

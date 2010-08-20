@@ -35,6 +35,12 @@ public:
     static const T_MissionNameMap& MissionNames();
     //@}
 
+    //! @name Constructors/Destructor
+    //@{
+             MIL_PionMissionType( unsigned int nID, xml::xistream& xis );
+    virtual ~MIL_PionMissionType();
+    //@}
+
     //! @name Accessors
     //@{
     const std::string& GetDIABehavior( Phase ) const;
@@ -42,11 +48,6 @@ public:
 
 private:
     friend class MIL_MissionType_ABC;
-    //! @name Constructors/Destructor
-    //@{
-             MIL_PionMissionType( unsigned int nID, xml::xistream& xis );
-    virtual ~MIL_PionMissionType();
-    //@}
 
     //! @name Helpers
     //@{

@@ -21,6 +21,7 @@ using namespace actions::gui;
 Param_ABC::Param_ABC( const QString& name )
     : name_( name )
     , controller_( 0 )
+    , listener_( 0 )
 {
     // NOTHING
 }
@@ -88,4 +89,32 @@ QString Param_ABC::GetName() const
 bool Param_ABC::IsOptional() const
 {
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::RegisterListener
+// Created: LDC 2010-08-18
+// -----------------------------------------------------------------------------
+void Param_ABC::RegisterListener( Param_ABC& param )
+{
+    listener_ = &param;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::NotifyChange
+// Created: LDC 2010-08-18
+// -----------------------------------------------------------------------------
+void Param_ABC::NotifyChange()
+{
+    if( listener_ )
+        listener_->NotifyChanged( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::NotifyChanged
+// Created: LDC 2010-08-18
+// -----------------------------------------------------------------------------
+void Param_ABC::NotifyChanged( Param_ABC& param )
+{
+    // NOTHING
 }

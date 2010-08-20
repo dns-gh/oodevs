@@ -25,7 +25,10 @@ OrderParameter::OrderParameter( xml::xistream& xis )
     xis >> xml::attribute( "name", name_ )
         >> xml::attribute( "type", type_ )
         >> xml::optional >> xml::attribute( "optional", optional_ )
-        >> xml::list( "value", *this, &OrderParameter::ReadValue );
+        >> xml::list( "value", *this, &OrderParameter::ReadValue )
+        >> xml::optional >> xml::start( "choice" )
+            >> xml::list( "parameter", *this, &OrderParameter::ReadChoice )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -97,6 +100,17 @@ void OrderParameter::ReadValue( xml::xistream& xis )
     OrderParameterValue value( xis );
     values_.insert( std::make_pair( value.GetId(), value ) );
 }
+    
+// -----------------------------------------------------------------------------
+// Name: OrderParameter::ReadChoice
+// Created: LDC 2010-08-18
+// -----------------------------------------------------------------------------
+void OrderParameter::ReadChoice( xml::xistream& xis )
+{
+    std::string type;
+    xis >> xml::attribute( "type", type );
+    choices_.push_back( type );
+}
 
 // -----------------------------------------------------------------------------
 // Name: OrderParameter::AddValue
@@ -116,4 +130,14 @@ void OrderParameter::Accept( OrderParameterValueVisitor_ABC& visitor ) const
 {
     for( CIT_OrderParameterValues it = values_.begin(); it != values_.end(); ++it )
         visitor.Visit( it->second );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderParameter::Accept
+// Created: LDC 2010-08-18
+// -----------------------------------------------------------------------------
+void OrderParameter::Accept( ChoicesVisitor_ABC& visitor ) const
+{
+    for( std::vector<std::string>::const_iterator it = choices_.begin(); it != choices_.end(); ++it )
+        visitor.Visit( *it );
 }

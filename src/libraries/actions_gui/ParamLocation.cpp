@@ -119,7 +119,10 @@ void ParamLocation::Handle( kernel::Location_ABC& location )
 {
     location_.reset( &location );
     if( location.IsValid() )
+    {
         pShapeLabel_->setText( location.GetName() );
+        NotifyChange();
+    }
     else
         pShapeLabel_->setText( "---" );
 }

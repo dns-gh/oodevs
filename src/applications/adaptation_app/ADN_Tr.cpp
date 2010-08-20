@@ -345,6 +345,7 @@ ADN_Tr::T_ConverterMissionParameterType ADN_Tr::missionParameterTypeConverter_[]
     T_ConverterMissionParameterType( "PhaseLineList", QT_TRANSLATE_NOOP("ADN_Tr", "PhaseLineList" ), eMissionParameterTypePhaseLineList ),
     T_ConverterMissionParameterType( "IntelligenceList", QT_TRANSLATE_NOOP("ADN_Tr", "IntelligenceList" ), eMissionParameterTypeIntelligenceList ),
     T_ConverterMissionParameterType( "UrbanBlockBM", QT_TRANSLATE_NOOP("ADN_Tr", "UrbanBlockBM" ), eMissionParameterTypeUrbanBlock ),
+    T_ConverterMissionParameterType( "LocationComposite", QT_TRANSLATE_NOOP("ADN_Tr", "LocationComposite" ), eMissionParameterTypeLocationComposite ),
 
     T_ConverterMissionParameterType( "", "", (E_MissionParameterType)-1 )
 };

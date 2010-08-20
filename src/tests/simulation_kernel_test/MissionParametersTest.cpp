@@ -52,11 +52,13 @@
 #include "Entities/Orders/MIL_RealParameter.h"
 #include "Entities/Orders/MIL_StringParameter.h"
 #include "Entities/Orders/MIL_TirIndirectParameter.h"
+#include "Entities/Orders/MIL_PionMissionType.h"
 #include "UrbanType.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "Network/NET_ASN_Tools.h"
+#include "simulation_orders/MIL_ParameterType_ABC.h"
 #include "simulation_terrain/TER_World.h"
 
 using namespace Common;
@@ -844,4 +846,29 @@ BOOST_AUTO_TEST_CASE( TestMIL_MissionWithNullParameters )
      //    const MIL_MissionType_ABC& type;
     //FixturePion pion; //MIL_AgentPion pion;
     //MIL_MissionPion missionpion( MIL_PionMissionType::Find( id ), pion, order );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TestMIL_CompositeLocationParameter
+// Created: LDC 2010-08-18
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( TestMIL_CompositeLocationParameter )
+{
+    std::string missionDefinition(
+        "<mission dia-behavior='whatever' dia-type='T_whatever' id='42' name='a mission'>"
+            "<parameter dia-name='objectif' name='Objectif' type='LocationComposite'>"
+	            "<choice>"
+                    "<parameter type='Point'/>"
+                    "<parameter type='UrbanKnowledge'/>"
+                    "<parameter type='AgentKnowledge'/>"
+                "</choice>"
+            "</parameter>"
+        "</mission>"
+    );
+    xml::xistringstream xis( missionDefinition );
+    xis >> xml::start( "mission" );
+    MIL_ParameterType_ABC::Initialize();
+    MIL_PionMissionType type( 0, xis );
+    const MIL_ParameterType_ABC& paramType = type.GetParameterType( 0 );
+    BOOST_CHECK_EQUAL( paramType.GetName(), "LocationComposite" );
 }

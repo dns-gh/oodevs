@@ -46,8 +46,11 @@ ADN_MissionParameterType::~ADN_MissionParameterType()
 {
     ADN_Missions_Data::MissionParameter* param = static_cast< ADN_Missions_Data::MissionParameter* >( pData_ );
     if( param )
+    {
         itemConnectors_[ADN_Missions_GUI::eParameterValues]->Disconnect( &param->values_ );
-     delete pConnector_;
+        itemConnectors_[ADN_Missions_GUI::eChoiceValues]->Disconnect( &param->choices_ );
+    }
+    delete pConnector_;
 }
 
 // -----------------------------------------------------------------------------
@@ -71,4 +74,20 @@ void ADN_MissionParameterType::DoValueChanged()
     if( !isEnum )
         param->values_.Clear();
     itemConnectors_[ADN_Missions_GUI::eParameterValues]->Connect( &param->values_, isEnum );
+    bool isChoice = param->type_.GetData() == eMissionParameterTypeLocationComposite;
+    itemConnectors_[ADN_Missions_GUI::eChoiceValues]->Connect( &param->choices_, isChoice );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_MissionParameterType::Disconnect
+// Created: LDC 2010-08-19
+// -----------------------------------------------------------------------------
+void ADN_MissionParameterType::Disconnect()
+{
+    ADN_Missions_Data::MissionParameter* param = static_cast< ADN_Missions_Data::MissionParameter* >( pData_ );
+    if( param )
+    {
+        itemConnectors_[ADN_Missions_GUI::eParameterValues]->Disconnect( &param->values_ );
+        itemConnectors_[ADN_Missions_GUI::eChoiceValues]->Disconnect( &param->choices_ );
+    }
 }

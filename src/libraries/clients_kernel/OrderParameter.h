@@ -29,6 +29,14 @@ public:
     virtual void Visit( const OrderParameterValue& value ) = 0;
 };
 
+class ChoicesVisitor_ABC
+{
+public:
+             ChoicesVisitor_ABC() {}
+    virtual ~ChoicesVisitor_ABC() {}
+
+    virtual void Visit( const std::string& type ) = 0;
+};
 
 // =============================================================================
 /** @class  OrderParameter
@@ -54,12 +62,14 @@ public:
     const OrderParameterValue& GetValue( unsigned int id ) const;
     void AddValue( int id, const std::string& name );
     virtual void Accept( OrderParameterValueVisitor_ABC& visitor ) const;
+    virtual void Accept( ChoicesVisitor_ABC& visitor ) const;
     //@}
 
 private:
     //! @name Helpers
     //@{
     void ReadValue( xml::xistream& xis );
+    void ReadChoice( xml::xistream& xis );
     //@}
 
     //! @name Types
@@ -75,6 +85,7 @@ private:
     std::string type_;
     bool optional_;
     T_OrderParameterValues values_;
+    std::vector<std::string> choices_;
     //@}
 };
 

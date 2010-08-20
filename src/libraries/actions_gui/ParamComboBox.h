@@ -65,7 +65,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::OrderParameter& parameter_;
+    kernel::OrderParameter parameter_;
     T_Values values_;
     ::gui::ValuedComboBox<T>* comboBox_;
     //@}

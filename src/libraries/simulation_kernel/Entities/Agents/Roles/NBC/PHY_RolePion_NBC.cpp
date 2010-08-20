@@ -322,6 +322,7 @@ void PHY_RolePion_NBC::ContaminateOtherUnits()
         {
             MIL_ToxicEffectManipulator* manipulator = new MIL_ToxicEffectManipulator( typeNbcContaminating, minQuantity );
             rContaminationQuantity_ -= minQuantity;
+            bHasChanged_ = true;
             target.Get< PHY_RoleInterface_NBC >().Contaminate( *manipulator );
         }
     }

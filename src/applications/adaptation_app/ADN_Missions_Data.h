@@ -52,9 +52,29 @@ public:
     public:
         ADN_Type_String name_;
     };
+    class MissionType : public ADN_Ref_ABC
+                      , public ADN_DataTreeNode_ABC
+    {
+        MT_COPYNOTALLOWED( MissionType )
+    public:
+                 MissionType();
+        explicit MissionType( const std::string& name );
+        virtual ~MissionType();
+
+        std::string GetItemName();
+        MissionType* CreateCopy();
+
+        void WriteArchive( xml::xostream& output );
+    public:
+        std::string name_;
+        std::string displayName_;
+        ADN_Type_Bool isAllowed_;
+    };
 
     typedef ADN_Type_Vector_ABC<MissionParameterValue>  T_MissionParameterValue_Vector;
     typedef T_MissionParameterValue_Vector::iterator   IT_MissionParameterValue_Vector;
+    typedef ADN_Type_Vector_ABC<MissionType>            T_Choice_Vector;
+    typedef T_Choice_Vector::iterator                  IT_Choice_Vector;
 
 public:
     class MissionParameter : public ADN_Ref_ABC
@@ -70,13 +90,18 @@ public:
 
         void ReadArchive ( xml::xistream& input );
         void ReadValue   ( xml::xistream& input );
+        void ReadChoice  ( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
+
+    private:
+        void FillChoices();
 
     public:
         ADN_Type_String                                                   strName_;
         ADN_Type_Enum< E_MissionParameterType, eNbrMissionParameterType > type_;
         ADN_Type_Bool                                                     isOptional_;
         T_MissionParameterValue_Vector                                    values_;
+        T_Choice_Vector                                                   choices_;
 
         ADN_Type_String                                                   diaName_;
     };

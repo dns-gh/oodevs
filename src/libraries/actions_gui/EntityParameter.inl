@@ -106,6 +106,7 @@ void EntityParameter< ConcreteEntity >::MenuItemValidated()
 {
     selected_ = potential_;
     Display( selected_ ? selected_->GetName() : "---" ); // $$$$ AGE 2006-03-14: use a displayer
+    NotifyChange();
 }
 
 // -----------------------------------------------------------------------------

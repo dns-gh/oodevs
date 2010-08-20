@@ -117,6 +117,7 @@ void ParamPoint::AcceptPopupMenuPoint()
     paramPoint_ = popupPoint_;
     pPosLabel_->setText( converter_.ConvertToMgrs( paramPoint_ ).c_str() );
     isSet_ = true;
+    NotifyChange();
 }
 
 // -----------------------------------------------------------------------------

@@ -137,6 +137,7 @@ void ParamPath::Handle( kernel::Location_ABC& location )
     {
         location_.reset( &location );
         pPosLabel_->setText( location.GetName() );
+        NotifyChange();
     }
 }
 

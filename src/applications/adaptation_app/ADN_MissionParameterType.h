@@ -30,6 +30,7 @@ public:
     //! @name Operations
     //@{
     void Update();
+    void Disconnect();
     //@}
 
 private:

@@ -33,6 +33,7 @@ public:
         eParameterValues,
         eFragOrderAvailableForAllMissions,
         eFragOrderAvailableWithoutMission,
+        eChoiceValues,
         eNbrGuiElements
     };
 

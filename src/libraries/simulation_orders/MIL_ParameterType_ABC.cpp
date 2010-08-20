@@ -16,6 +16,7 @@
 #include "MIL_ParameterType_Polygon.h"
 #include "MIL_ParameterType_PolygonList.h"
 #include "MIL_ParameterType_Location.h"
+#include "MIL_ParameterType_LocationComposite.h"
 #include "MIL_ParameterType_LocationList.h"
 #include "MIL_ParameterType_Path.h"
 #include "MIL_ParameterType_PathList.h"
@@ -130,7 +131,8 @@ void MIL_ParameterType_ABC::Initialize()
     RegisterParameterType< MIL_ParameterType_IndirectFire          >();
     RegisterParameterType< MIL_ParameterType_String                >();
     RegisterParameterType< MIL_ParameterType_ObjectiveList         >();
-    RegisterParameterType< MIL_ParameterType_UrbanBlock            >(std::string("UrbanBlockBM") );
+    RegisterParameterType< MIL_ParameterType_UrbanBlock            >( std::string("UrbanBlockBM") );
+    RegisterParameterType< MIL_ParameterType_LocationComposite     >( std::string("LocationComposite") );
 }
 
 // =============================================================================

@@ -434,6 +434,7 @@ enum E_MissionParameterType
     eMissionParameterTypePhaseLineList,
     eMissionParameterTypeIntelligenceList,
     eMissionParameterTypeUrbanBlock,
+    eMissionParameterTypeLocationComposite,
 
     eNbrMissionParameterType
 };

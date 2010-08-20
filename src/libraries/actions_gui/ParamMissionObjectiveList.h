@@ -65,7 +65,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::OrderParameter& parameter_;
+    kernel::OrderParameter parameter_;
     const kernel::CoordinateConverter_ABC& converter_;
     const QDateTime currentDate_;
     ::gui::ParametersLayer& layer_;

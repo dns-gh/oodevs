@@ -67,7 +67,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::OrderParameter& parameter_;
+    kernel::OrderParameter parameter_;
     const tools::Resolver_ABC< kernel::DotationType >& resolver_;
     const kernel::Entity_ABC& agent_;
     //@}

@@ -12,6 +12,7 @@
 
 #include "tools/Observer_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/OrderParameter.h"
 
 namespace kernel
 {
@@ -60,6 +61,13 @@ public:
     virtual bool IsOptional() const;
     //@}
 
+    //! @name Helpers
+    //@{
+    void RegisterListener( Param_ABC& param );
+    void NotifyChange();
+    virtual void NotifyChanged( Param_ABC& param );
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -72,6 +80,7 @@ private:
     //@{
     QString name_;
     kernel::ActionController* controller_;
+    Param_ABC* listener_;
     //@}
 };
 

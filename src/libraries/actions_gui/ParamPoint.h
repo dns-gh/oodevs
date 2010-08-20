@@ -16,7 +16,6 @@
 namespace kernel
 {
     class CoordinateConverter_ABC;
-    class OrderParameter;
 }
 
 namespace gui
@@ -77,7 +76,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::OrderParameter& parameter_;
+    kernel::OrderParameter parameter_;
     const kernel::CoordinateConverter_ABC& converter_;
     ::gui::RichLabel* pLabel_;
     QLabel*           pPosLabel_;

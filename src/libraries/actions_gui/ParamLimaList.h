@@ -88,7 +88,7 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::CoordinateConverter_ABC& converter_;
-    const kernel::OrderParameter& parameter_;
+    kernel::OrderParameter parameter_;
     const QDateTime currentDate_;
     unsigned int count_;
     T_Limas limas_;

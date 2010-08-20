@@ -91,7 +91,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::OrderParameter& parameter_;
+    kernel::OrderParameter parameter_;
     const kernel::CoordinateConverter_ABC& converter_;
     ::gui::RichLabel* pLabel_;
     QLabel* entityLabel_; // $$$$ AGE 2006-03-14: LabelDisplayer ?

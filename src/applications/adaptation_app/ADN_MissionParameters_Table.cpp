@@ -29,6 +29,8 @@ namespace
         void AddSubItems( int i, void* obj )
         {
             assert( obj );
+            
+            static_cast< ADN_MissionParameters_Table& >( tab_ ).ResetCurrent();
 
             ADN_Missions_Data::MissionParameter* param = static_cast< ADN_Missions_Data::MissionParameter* >( obj );
 
@@ -43,6 +45,8 @@ namespace
             itemName    ->GetConnector().Connect( &param->strName_ );
             itemType    ->GetConnector().Connect( &param->type_ );
             itemOptional->GetConnector().Connect( &param->isOptional_ );
+            
+            static_cast< ADN_MissionParameters_Table& >( tab_ ).ResetCurrent();
         }
 
     private:
@@ -56,6 +60,7 @@ namespace
 // -----------------------------------------------------------------------------
 ADN_MissionParameters_Table::ADN_MissionParameters_Table( QWidget* parent /*= 0*/ )
     : ADN_Table2( parent, "ADN_MissionParameters_Table" )
+    , current_  ( 0 )
 {
     verticalHeader()->hide();
     setLeftMargin( 0 );
@@ -120,6 +125,7 @@ void ADN_MissionParameters_Table::RemoveCurrentElement()
     ADN_Missions_Data::MissionParameter* param = (ADN_Missions_Data::MissionParameter*)GetCurrentData();
     if( param )
         static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( param );
+    ResetCurrent();
 }
 
 // -----------------------------------------------------------------------------
@@ -129,6 +135,7 @@ void ADN_MissionParameters_Table::RemoveCurrentElement()
 void ADN_MissionParameters_Table::SetItemConnectors( const T_ConnectorVector& itemConnectors  )
 {
     itemConnectors_ = itemConnectors;
+    ResetCurrent();
 }
 
 // -----------------------------------------------------------------------------
@@ -138,7 +145,18 @@ void ADN_MissionParameters_Table::SetItemConnectors( const T_ConnectorVector& it
 void ADN_MissionParameters_Table::OnSelectionChanged()
 {
     ADN_MissionParameterType* current = static_cast< ADN_MissionParameterType* >( item( currentRow(), 1 ) );
+    if( current_ && current_ != current )
+        current_->Disconnect();
     if( current )
         current->Update();
+    current_ = current;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_MissionParameters_Table::ResetCurrent
+// Created: LDC 2010-08-19
+// -----------------------------------------------------------------------------
+void ADN_MissionParameters_Table::ResetCurrent()
+{
+    current_ = 0;
+}

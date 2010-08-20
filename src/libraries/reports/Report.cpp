@@ -104,6 +104,6 @@ void Report::Display( Displayer_ABC& displayer ) const
 {
     displayer.Display( 0, GetColor( type_ ) );
     displayer.Display( 0, isNew_ ? Styles::bold : Styles::weak );
-    displayer.Display( tools::translate( "Report", "Received" ), time_.toString() );
-    displayer.Display( tools::translate( "Report", "Report" ), message_ );
+    displayer.Display( tools::translate( "ReportListView", "Received" ), time_.toString() );
+    displayer.Display( tools::translate( "ReportListView", "Report" ), message_ );
 }

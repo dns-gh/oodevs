@@ -67,7 +67,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::OrderParameter& parameter_;
+    kernel::OrderParameter parameter_;
     const kernel::CoordinateConverter_ABC& converter_;
     kernel::Controller& controller_;
     const kernel::ObjectTypes& objectTypes_;

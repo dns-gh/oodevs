@@ -132,6 +132,7 @@ void ParamUrbanBlock::MenuItemValidated()
             pBlockLabel_->setText( tr( "Untitled block [" ) + QString::number( selected_->GetId() ) + tr( "]" ) );
         else
             pBlockLabel_->setText( selected_->GetName() );
+        NotifyChange();
     }
     else
         pBlockLabel_->setText(  "---" );

@@ -14,6 +14,7 @@
 
 #include "ADN_Table.h"
 #include "ADN_Connector_Vector_ABC.h"
+#include "ADN_Connector_Table_ABC.h"
 
 
 //*****************************************************************************

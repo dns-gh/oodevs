@@ -75,7 +75,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::OrderParameter& parameter_;
+    kernel::OrderParameter parameter_;
     const kernel::AtlasNatures& natures_;
     kernel::AtlasNature nature_;
     T_NatureFields fields_;

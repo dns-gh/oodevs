@@ -66,7 +66,7 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    const kernel::OrderParameter& parameter_;
+    kernel::OrderParameter parameter_;
     ::gui::ParametersLayer& layer_;
     const kernel::Entity_ABC& entity_;
     unsigned int count_;
