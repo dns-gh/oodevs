@@ -213,7 +213,7 @@ namespace
 // Created: SBO 2008-10-20
 // -----------------------------------------------------------------------------
 template< typename E, typename T >
-void MissionPanel::AddMissionGroup( QPopupMenu& menu, const QString& prefix, const T& list, const char* slot )
+void MissionPanel::AddMissionGroup( QPopupMenu& menu, const QString& prefix, const T& list, const char* slot, int current )
 {
     if( list.empty() )
         return;
@@ -229,6 +229,7 @@ void MissionPanel::AddMissionGroup( QPopupMenu& menu, const QString& prefix, con
         const E& order = **it;
         const int id = menu.insertItem( FormatName( order, prefix ), this, slot );
         menu.setItemParameter( id, order.GetId() );
+        menu.setItemChecked( id, current == int( order.GetId() ) );
     }
 }
 
@@ -236,7 +237,7 @@ void MissionPanel::AddMissionGroup( QPopupMenu& menu, const QString& prefix, con
 // Name: MissionPanel::AddMissions
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-int MissionPanel::AddMissions( tools::Iterator< const Mission& > it, ContextMenu& menu, const QString& name, const char* slot )
+int MissionPanel::AddMissions( tools::Iterator< const Mission& > it, ContextMenu& menu, const QString& name, const char* slot, int current )
 {
     QPopupMenu& missions = *new QPopupMenu( menu );
     QString lastPrefix;
@@ -249,7 +250,7 @@ int MissionPanel::AddMissions( tools::Iterator< const Mission& > it, ContextMenu
         list[ prefix ].insert( &mission );
     }
     for( T_Missions::const_iterator itM = list.begin(); itM != list.end(); ++itM )
-        AddMissionGroup< Mission >( missions, itM->first, itM->second, slot );
+        AddMissionGroup< Mission >( missions, itM->first, itM->second, slot, current );
     return menu.InsertItem( "Order", name, &missions );
 }
 
@@ -281,7 +282,7 @@ int MissionPanel::AddFragOrders( const Decisions_ABC& decisions, ContextMenu& me
         }
     }
     for( T_FragOrders::const_iterator itM = list.begin(); itM != list.end(); ++itM )
-        AddMissionGroup< FragOrder >( orders, itM->first, itM->second, slot );
+        AddMissionGroup< FragOrder >( orders, itM->first, itM->second, slot, -1 );
     return menu.InsertItem( "Order", name, &orders );
 }
 
@@ -294,9 +295,11 @@ void MissionPanel::AddMissions( const Decisions_ABC& decisions, kernel::ContextM
     if( !decisions.CanBeOrdered() )
         return;
 
-    int id = AddMissions( decisions.GetMissions(), menu, name, slot );
+    const kernel::Mission* current = decisions.GetCurrentMission();
+    int id = AddMissions( decisions.GetMissions(), menu, name, slot, current ? current->GetId() : -1 );
     if( !pixmap.isNull() )
         menu.SetPixmap( id, pixmap );
+
     id = AddFragOrders( decisions, menu, tr( "Fragmentary orders" ), SLOT( ActivateFragOrder( int ) ) );
 }
 

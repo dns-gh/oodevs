@@ -112,14 +112,14 @@ private:
     virtual void NotifyContextMenu( const kernel::Population_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
 
-    int AddMissions( tools::Iterator< const kernel::Mission& > it, kernel::ContextMenu& menu, const QString& name, const char* slot );
+    int AddMissions( tools::Iterator< const kernel::Mission& > it, kernel::ContextMenu& menu, const QString& name, const char* slot, int current );
     void AddMissions( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot, const QPixmap& pixmap = QPixmap() );
     int AddFragOrders( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot );
     void SetInterface( actions::gui::MissionInterface_ABC* missionInterface );
     void NotifyMission();
 
     template< typename E, typename T >
-    void AddMissionGroup( QPopupMenu& menu, const QString& prefix, const T& list, const char* slot );
+    void AddMissionGroup( QPopupMenu& menu, const QString& prefix, const T& list, const char* slot, int current );
     //@}
 
 private:
