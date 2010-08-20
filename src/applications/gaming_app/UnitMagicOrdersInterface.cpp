@@ -156,7 +156,7 @@ void UnitMagicOrdersInterface::Handle( kernel::Location_ABC& location )
             {
                 // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
                 MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "teleport" );
-                UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
+                UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Teleport" ).ascii(), true );
                 tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
                 action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
                 action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
@@ -187,25 +187,32 @@ namespace
         void operator()( const Agent_ABC& agent ) const
         {
             std::string strType;
+            std::string name;
             switch( id_ )
             {
             case MsgsClientToSim::MsgUnitMagicAction_Type_recover_all:
+                name = tools::translate( "MagicAction", "Recover - All" );
                 strType = "recover_all";
                 break;
             case MsgsClientToSim::MsgUnitMagicAction_Type_recover_troops:
                 strType = "recover_troops";
+                name = tools::translate( "MagicAction", "Recover - Troops" );
                 break;
             case MsgsClientToSim::MsgUnitMagicAction_Type_recover_equipments:
-                strType = "recover_equipments";
+                strType = tools::translate( "MagicAction", "Recover - Equipments" ); 
+                name = "recover_equipments";
                 break;
             case MsgsClientToSim::MsgUnitMagicAction_Type_recover_resources:
                 strType = "recover_resources";
+                name = tools::translate( "MagicAction", "Recover - Resources" ); 
                 break;
             case MsgsClientToSim::MsgUnitMagicAction_Type_destroy_all:
                 strType = "destroy_all";
+                name = tools::translate( "MagicAction", "Destroy - All" ); 
                 break;
             case MsgsClientToSim::MsgUnitMagicAction_Type_cancel_surrender:
                 strType = "cancel_surrender";
+                name = tools::translate( "MagicAction", "Cancel - Surrender" ); 
                 break;
             default:
                 return;
@@ -213,7 +220,7 @@ namespace
 
             // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
             MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( strType );
-            UnitMagicAction* action = new UnitMagicAction( agent, actionType, controllers_.controller_, true );
+            UnitMagicAction* action = new UnitMagicAction( agent, actionType, controllers_.controller_, name, true );
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
             action->Attach( *new ActionTasker( &agent, false ) );
             action->RegisterAndPublish( actionsModel_ );
@@ -271,7 +278,7 @@ void UnitMagicOrdersInterface::DestroyComponent()
 {
     if( selectedEntity_ )
     {
-        CreateAndPublish( "destroy_component" );
+        CreateAndPublish( "destroy_component", tr( "Destroy Component") );
     }
 }
 
@@ -295,7 +302,7 @@ void UnitMagicOrdersInterface::RecoverHumanTransporters()
 {
     if( selectedEntity_ )
     {
-        CreateAndPublish( "recover_transporters" );
+        CreateAndPublish( "recover_transporters", tr( "Recover Transporters" ) );
     }
 }
 
@@ -309,7 +316,7 @@ void UnitMagicOrdersInterface::SurrenderTo( int teamPtr )
     {
         // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "surrender" );
-        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
+        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Surrender" ).ascii(), true );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new parameters::Army( it.NextElement(), *( Team_ABC* ) teamPtr, controllers_.controller_ ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
@@ -364,11 +371,11 @@ void UnitMagicOrdersInterface::FillCommonOrders( QPopupMenu* magicMenu )
 // Name: UnitMagicOrdersInterface::CreateAndPublish
 // Created: JSR 2010-04-13
 // -----------------------------------------------------------------------------
-void UnitMagicOrdersInterface::CreateAndPublish( const std::string& actionStr )
+void UnitMagicOrdersInterface::CreateAndPublish( const std::string& actionStr, const QString& name )
 {
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( actionStr );
-    UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
+    UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, name.ascii(), true );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->Attach( *new ActionTasker( selectedEntity_, false ) );
     action->RegisterAndPublish( actionsModel_ );

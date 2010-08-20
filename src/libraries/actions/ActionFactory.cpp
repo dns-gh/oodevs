@@ -379,7 +379,7 @@ actions::Action_ABC* ActionFactory::CreateUnitMagicAction( xml::xistream& xis, b
     if( !target )
         throw TargetNotFound( targetid );
 
-    action.reset( new actions::UnitMagicAction( xis, controller_, magicActions_.Get( id ), *target ) );
+    action.reset( new actions::UnitMagicAction( xis, controller_, magicActions_.Get( id ), *target, "" ) );
     action->Attach( *new ActionTiming( xis, controller_, simulation_, *action ) );
     action->Attach( *new ActionTasker( target, readonly ) );
     action->Polish();

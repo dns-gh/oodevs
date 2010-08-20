@@ -64,6 +64,10 @@
         <source>Partial recompletion</source>
         <translation type="obsolete">Recomplétion partielle</translation>
     </message>
+    <message>
+        <source>Change logistic links</source>
+        <translation type="obsolete">Changer les liens logistiques</translation>
+    </message>
 </context>
 <context>
     <name>AboutDialog</name>
@@ -348,6 +352,17 @@
     </message>
 </context>
 <context>
+    <name>AgentListView</name>
+    <message>
+        <source>Unit Change Superior</source>
+        <translation type="unfinished">Changer de supérieur</translation>
+    </message>
+    <message>
+        <source>Change Knowledge Group</source>
+        <translation type="unfinished">Changer de groupe de connaissance</translation>
+    </message>
+</context>
+<context>
     <name>AlarmsWidget</name>
     <message>
         <source>Alarms</source>
@@ -399,6 +414,13 @@
     <message>
         <source>sword@masagroup.net</source>
         <translation>sword@masagroup.net</translation>
+    </message>
+</context>
+<context>
+    <name>AutomatsLayer</name>
+    <message>
+        <source>Unit Creation</source>
+        <translation type="unfinished">Création d&apos;unité</translation>
     </message>
 </context>
 <context>
@@ -500,6 +522,10 @@
         <source>Magic orders</source>
         <translation>Actions magiques</translation>
     </message>
+    <message>
+        <source>Change Human Factors</source>
+        <translation type="unfinished">Changer les facteurs humains</translation>
+    </message>
 </context>
 <context>
     <name>ChangeLogisticLinksDialog</name>
@@ -537,7 +563,11 @@
     </message>
     <message>
         <source>Change logistic links</source>
-        <translation>Changer les liens logistiques</translation>
+        <translation type="unfinished">Changer les liens logistiques</translation>
+    </message>
+    <message>
+        <source>Change Logistic Links</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -815,6 +845,10 @@ Reason: %3
     <message>
         <source>ApplyFire</source>
         <translation>AppliquerFeux</translation>
+    </message>
+    <message>
+        <source>Fire order</source>
+        <translation type="unfinished">Ordre de feu</translation>
     </message>
 </context>
 <context>
@@ -1444,6 +1478,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Allocate supply quotas</source>
         <translation>Allouer les quotas de ravitaillement</translation>
     </message>
+    <message>
+        <source>Log Supply Change Quotas</source>
+        <translation type="unfinished">Changer les quotas de ravitaillement</translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyPushFlowDialog</name>
@@ -1474,6 +1512,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Log Supply Push Flow</source>
+        <translation type="unfinished">Pousser un flux de ravitaillement</translation>
     </message>
 </context>
 <context>
@@ -1569,6 +1611,37 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Quantity %</source>
         <translation>Quantité %</translation>
+    </message>
+    <message>
+        <source>Partial Recovery</source>
+        <translation type="unfinished">Recomplétion partielle</translation>
+    </message>
+</context>
+<context>
+    <name>MagicAction</name>
+    <message>
+        <source>Recover - All</source>
+        <translation type="unfinished">Recompléter - Tout</translation>
+    </message>
+    <message>
+        <source>Recover - Troops</source>
+        <translation type="unfinished">Recompléter - Troupes</translation>
+    </message>
+    <message>
+        <source>Recover - Equipments</source>
+        <translation type="unfinished">Recompléter - Composantes</translation>
+    </message>
+    <message>
+        <source>Recover - Resources</source>
+        <translation type="unfinished">Recompléter - Ressources</translation>
+    </message>
+    <message>
+        <source>Destroy - All</source>
+        <translation type="unfinished">Détruire - Entièrement</translation>
+    </message>
+    <message>
+        <source>Cancel - Surrender</source>
+        <translation type="unfinished">Annuler la rédition</translation>
     </message>
 </context>
 <context>
@@ -2879,6 +2952,22 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Type-in value then press &apos;Enter&apos;</source>
         <translation>Saisir une valeur et appuyer sur &apos;Entrée&apos;</translation>
     </message>
+    <message>
+        <source>Population Total Destruction</source>
+        <translation type="unfinished">Destruction totale de la population</translation>
+    </message>
+    <message>
+        <source>Population Kill</source>
+        <translation type="unfinished">Tuer la population</translation>
+    </message>
+    <message>
+        <source>Population Resurrect</source>
+        <translation type="unfinished">Ressusciter la population</translation>
+    </message>
+    <message>
+        <source>Population Change Attitude</source>
+        <translation type="unfinished">Changer l&apos;attitude de la population</translation>
+    </message>
 </context>
 <context>
     <name>ProfilingPanel</name>
@@ -3214,6 +3303,21 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>TacticalListView</name>
+    <message>
+        <source>Unit Change Superior</source>
+        <translation type="unfinished">Changer le supérieur de l&apos;unité</translation>
+    </message>
+    <message>
+        <source>Change Automat Superior</source>
+        <translation type="unfinished">Changer le supérieur de l&apos;automate</translation>
+    </message>
+    <message>
+        <source>Change Formation Superior</source>
+        <translation type="unfinished">Changer le supérieur de la formation</translation>
+    </message>
+</context>
+<context>
     <name>TimelineActionItem</name>
     <message>
         <source>Delete</source>
@@ -3330,6 +3434,18 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Surrender to</source>
         <translation>Rédition</translation>
+    </message>
+    <message>
+        <source>Surrender</source>
+        <translation type="unfinished">Capituler</translation>
+    </message>
+    <message>
+        <source>Destroy Component</source>
+        <translation type="unfinished">Détruite Composante</translation>
+    </message>
+    <message>
+        <source>Recover Transporters</source>
+        <translation type="unfinished">Recompléter Transporteurs</translation>
     </message>
 </context>
 <context>

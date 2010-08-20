@@ -8,8 +8,10 @@ AfterAction.cpp \
 AfterActionFunctionList.cpp \
 AfterActionRequestList.cpp \
 AgentKnowledgePanel.cpp \
+AgentListView.cpp \
 AlarmsWidget.cpp \
 Application.cpp \
+AutomatsLayer.cpp \
 BorrowingsListView.cpp \
 BriefingDialog.cpp \
 ChangeHumanFactorsDialog.cpp \
@@ -86,6 +88,7 @@ SupplyConsignsWidget.cpp \
 SupplyQuotasListView.cpp \
 SupplyStocksListView.cpp \
 SupplyTransportersListView.cpp \
+TacticalListView.cpp \
 TimelineActionItem.cpp \
 TimelineListView.cpp \
 TimelinePanel.cpp \

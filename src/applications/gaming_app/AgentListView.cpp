@@ -179,7 +179,7 @@ bool AgentListView::Drop( const kernel::Agent_ABC& item, const kernel::Automat_A
         return false;
 
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "unit_change_superior" );
-    UnitMagicAction* action = new UnitMagicAction( item, actionType, controllers_.controller_, true );
+    UnitMagicAction* action = new UnitMagicAction( item, actionType, controllers_.controller_,  tr( "Unit Change Superior" ).ascii(), true );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Automat( it.NextElement(), target, controllers_.controller_ ) );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_, *action ) );
@@ -195,7 +195,7 @@ bool AgentListView::Drop( const kernel::Agent_ABC& item, const kernel::Automat_A
 bool AgentListView::Drop( const kernel::Automat_ABC& item, const kernel::KnowledgeGroup_ABC& target )
 {
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "change_knowledge_group" );
-    UnitMagicAction* action = new UnitMagicAction( item, actionType, controllers_.controller_, true );
+    UnitMagicAction* action = new UnitMagicAction( item, actionType, controllers_.controller_, tr( "Change Knowledge Group" ).ascii(), true );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::KnowledgeGroup( it.NextElement(), target, controllers_.controller_ ) );
     if( const kernel::Team_ABC *team = dynamic_cast< const kernel::Team_ABC* >( &target.Get< kernel::CommunicationHierarchies >().GetTop() ) )

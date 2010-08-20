@@ -118,7 +118,7 @@ void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kerne
 
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "unit_creation" );
-    UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, true );
+    UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, tr( "Unit Creation" ).ascii(), true );
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Identifier( it.NextElement(), type.GetId() ) );
     action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );

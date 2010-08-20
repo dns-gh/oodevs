@@ -85,7 +85,7 @@ void TimelineListView::NotifyCreated( const Action_ABC& action )
         entity = tasker->GetTasker();
         if( entity )
             name = entity->GetName();
-    }
+   }
     gui::ValuedListItem* item = gui::FindItem( entity, firstChild() );
     if( !item )
         item = new TimeLineEntityListItem( this, lastItem() );
@@ -150,7 +150,7 @@ void TimelineListView::OnSelectionChange( QListViewItem* item )
 {
     if( gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( item ) )
         valuedItem->Select( controllers_.actions_ );
-}
+}   
 
 // -----------------------------------------------------------------------------
 // Name: TimelineListView::SetFilter
