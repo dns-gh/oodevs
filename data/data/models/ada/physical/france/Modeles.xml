@@ -32,6 +32,7 @@
         <mission name="MELEE Ratisser un Bloc Urbain"/>
         <mission name="MELEE Ratisser une Zone"/>
         <mission name="MELEE Reconnaitre Itineraire"/>
+        <mission name="MELEE Reconnaitre un Bloc Urbain"/>
         <mission name="MELEE S'emparer d'un Bloc Urbain"/>
         <mission name="MELEE Soutenir"/>
         <mission name="MELEE Surveiller un Bloc Urbain"/>
@@ -137,6 +138,8 @@
         <mission name="TEST ReconnoiterArea"/>
         <mission name="TEST RemoveObstacle"/>
         <mission name="TEST Seal Off"/>
+        <mission name="TEST SearchUrbanBlock"/>
+        <mission name="TEST SearchArea"/>
         <mission name="TEST SelfProtect"/>
         <mission name="TEST StayClose"/>
         <mission name="TEST Support"/>

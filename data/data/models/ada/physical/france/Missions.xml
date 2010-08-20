@@ -858,6 +858,12 @@
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Reconnoiter" dia-type="T_Mission_Pion_ReconnoiterBU" id="2044" name="TEST ReconnoiterUrbanBlock">
       <parameter dia-name="objective" name="objectif" optional="false" type="UrbanBlockBM"/>
     </mission>
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Search" dia-type="net.masagroup.sword.test.military.platoon.tasks.Search" id="2098" name="TEST SearchUrbanBlock">
+      <parameter dia-name="objective" name="objectif" optional="false" type="UrbanBlockBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Search" dia-type="net.masagroup.sword.test.military.platoon.tasks.SearchArea" id="2100" name="TEST SearchArea">
+      <parameter dia-name="objective" name="objectif" optional="false" type="AreaBM"/>
+    </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Reconnoiter" dia-type="T_Mission_Pion_ReconnoiterArea" id="2042" name="TEST ReconnoiterArea">
       <parameter dia-name="objective" name="objectif" optional="false" type="AreaBM"/>
     </mission>
@@ -1028,6 +1034,9 @@
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Ratisser" dia-type="net.masagroup.sword.france.military.platoon.tasks.Ratisser" id="2092" name="MELEE Ratisser une Zone">
       <parameter dia-name="objective" name="objectif" optional="false" type="AreaBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Reconnaitre" dia-type="net.masagroup.sword.france.military.platoon.tasks.ReconnaitreBU" id="2099" name="MELEE Reconnaitre un Bloc Urbain">
+      <parameter dia-name="objective" name="objectif" optional="false" type="UrbanBlockBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Eclairer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Eclairer" id="2093" name="MELEE Eclairer un Itineraire">
       <parameter dia-name="objectives" name="itinéraire" optional="false" type="PointListBM"/>
