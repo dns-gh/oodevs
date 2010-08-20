@@ -34,6 +34,7 @@ class DEC_KS_Sharing;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_PopulationCollision;
 class DEC_Knowledge_PopulationPerception;
+class DEC_Knowledge_AgentPerception;
 class MIL_Army_ABC;
 class MIL_Object_ABC;
 class MIL_Population;

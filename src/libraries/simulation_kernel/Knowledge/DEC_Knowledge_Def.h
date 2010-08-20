@@ -11,7 +11,6 @@
 #define __DEC_Knowledge_Def_h_
 
 class DEC_Knowledge_Agent;
-class DEC_Knowledge_AgentPerception;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_ObjectPerception;
 class DEC_Knowledge_ObjectCollision;
