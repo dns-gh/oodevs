@@ -18,8 +18,8 @@
 // Name: ResourceNetworkFactory constructor
 // Created: JSR 2010-08-19
 // -----------------------------------------------------------------------------
-ResourceNetworkFactory::ResourceNetworkFactory( kernel::Controller& controller, Model& model )
-    : controller_( controller )
+ResourceNetworkFactory::ResourceNetworkFactory( kernel::Controllers& controllers, Model& model )
+    : controllers_( controllers )
     , model_( model )
 {
     // NOTHING
@@ -40,5 +40,5 @@ ResourceNetworkFactory::~ResourceNetworkFactory()
 // -----------------------------------------------------------------------------
 ResourceNetwork* ResourceNetworkFactory::Create( unsigned int id, const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg, bool isUrban )
 {
-    return new ResourceNetwork( controller_, id, isUrban, model_.urbanObjects_, model_.objects_, msg );
+    return new ResourceNetwork( controllers_, id, isUrban, model_.urbanObjects_, model_.objects_, msg );
 }

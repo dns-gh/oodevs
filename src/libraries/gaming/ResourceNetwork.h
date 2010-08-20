@@ -60,7 +60,7 @@ class ResourceNetwork : public kernel::Drawable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceNetwork( kernel::Controller& controller, unsigned int id, bool isUrban, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg );
+             ResourceNetwork( kernel::Controllers& controllers, unsigned int id, bool isUrban, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg );
     virtual ~ResourceNetwork();
     //@}
 
@@ -78,10 +78,15 @@ private:
     ResourceNetwork& operator=( const ResourceNetwork& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void SetColor( resource::EResourceType type ) const;
+    //@}
+
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
+    kernel::Controllers& controllers_;
     unsigned int id_;
     bool isUrban_;
     const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver_;

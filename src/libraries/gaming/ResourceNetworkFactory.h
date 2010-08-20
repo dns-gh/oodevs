@@ -34,7 +34,7 @@ class ResourceNetworkFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceNetworkFactory( kernel::Controller& controller, Model& model );
+             ResourceNetworkFactory( kernel::Controllers& controllers, Model& model );
     virtual ~ResourceNetworkFactory();
     //@}
 
@@ -57,7 +57,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
+    kernel::Controllers& controllers_;
     Model& model_;
     //@}
 };

@@ -22,6 +22,7 @@
 #include "clients_kernel/Circle.h"
 #include "clients_gui/UrbanDrawer.h"
 #include "clients_gui/TerrainObjectProxy.h"
+#include <boost/bind.hpp>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/Drawer_ABC.h>
 
@@ -60,12 +61,13 @@ UrbanLayer::~UrbanLayer()
 // -----------------------------------------------------------------------------
 void UrbanLayer::Paint( kernel::Viewport_ABC& viewport )
 {
-    for( IT_TerrainObjects it = objects_.begin(); it != objects_.end(); ++it )
-    {
-        const TerrainObjectProxy* object = (*it);
-        object->SetSelected( object == selectedObject_ );
-        object->Draw( *urbanDrawer_, viewport, tools_ );
-    }
+    // dessin des blocs urbains
+    std::for_each( objects_.begin(), objects_.end(),
+        boost::bind( &TerrainObjectProxy::Draw, _1, boost::ref( *urbanDrawer_ ), boost::cref( viewport ), boost::cref( tools_ ) ) );
+    // dessin des extensions( en deux temps pour les afficher par dessus les blocs)
+    geometry::Point2f p;
+    std::for_each( objects_.begin(), objects_.end(),
+        boost::bind( &kernel::Entity_ABC::Draw, _1, boost::cref( p ), boost::cref( viewport ), boost::cref( tools_ ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,23 +129,15 @@ void UrbanLayer::NotifySelected( const TerrainObjectProxy* /*object*/ )
 bool UrbanLayer::HandleMousePress( QMouseEvent* input, const geometry::Point2f& point )
 {
     const int button = input->button();
-    if( button != Qt::LeftButton && button != Qt::RightButton )
+    if( !input->state() || ( button != Qt::LeftButton && button != Qt::RightButton ) )
         return false;
     if( button == Qt::RightButton )
     {
-        bool found ( false );
         for( IT_TerrainObjects it = objects_.begin(); it != objects_.end(); ++it )
         {
             const TerrainObjectProxy* object = (*it);
-            if( object->IsInside( point ) && input->state() )
+            if( object->IsInside( point ) )
             {
-                found = true;
-                if( object == selectedObject_ )
-                {
-                    selectedObject_ = 0;
-                    return false;
-                }
-                selectedObject_ = object;
                 controllers_.actions_.ContextMenu( *object, input->globalPos() );
                 return true;
             }
@@ -151,23 +145,22 @@ bool UrbanLayer::HandleMousePress( QMouseEvent* input, const geometry::Point2f& 
     }
     else if( button == Qt::LeftButton )
     {
+        if( selectedObject_ )
+            selectedObject_->SetSelected( false );
         for( IT_TerrainObjects it = objects_.begin(); it != objects_.end(); ++it )
         {
             const TerrainObjectProxy* object = (*it);
-            if( object->IsInside( point ) && input->state() )
+            if( object->IsInside( point )  )
             {
-                if( object == selectedObject_ )
-                {
-                    selectedObject_ = 0;
-                    return false;
-                }
+               if( selectedObject_ == object )
+                    break;
                 selectedObject_ = object;
+                selectedObject_->SetSelected( true );
                 controllers_.actions_.Select( *static_cast< const kernel::Entity_ABC* >( object ) );
                 return true;
             }
         }
-        if( input->state() )
-            selectedObject_ = 0;
+        selectedObject_ = 0;
     }
     return false;
 }
@@ -183,7 +176,11 @@ bool UrbanLayer::HandleKeyPress( QKeyEvent* input )
     case Qt::Key_Delete:
     case Qt::Key_Backspace:
     {
-        selectedObject_ = 0;
+        if( selectedObject_ )
+        {
+            selectedObject_->SetSelected( false );
+            selectedObject_ = 0;
+        }
         break;
     }
 

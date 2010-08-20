@@ -11,6 +11,10 @@
 #include "ResourceNetwork.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Options.h"
+#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Positions.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "protocol/protocol.h"
 
@@ -22,8 +26,8 @@ using namespace resource;
 // Name: ResourceNetwork constructor
 // Created: JSR 2010-08-19
 // -----------------------------------------------------------------------------
-ResourceNetwork::ResourceNetwork( kernel::Controller& controller, unsigned int id, bool isUrban, const tools::Resolver_ABC< TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg )
-    : controller_( controller ) // useful?
+ResourceNetwork::ResourceNetwork( kernel::Controllers& controllers, unsigned int id, bool isUrban, const tools::Resolver_ABC< TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg )
+    : controllers_( controllers )
     , id_( id )
     , isUrban_( isUrban )
     , urbanResolver_( urbanResolver )
@@ -47,7 +51,6 @@ ResourceNetwork::~ResourceNetwork()
 // -----------------------------------------------------------------------------
 void ResourceNetwork::Update( const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& message )
 {
-    // TODO Ne faire les update que si ça a vraiment changé dans la sim
     for( int i = 0; i < message.resource_network_size(); ++i )
     {
         const MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork& network = message.resource_network( i );
@@ -100,34 +103,72 @@ void ResourceNetwork::Display( kernel::Displayer_ABC& displayer, kernel::Display
 // -----------------------------------------------------------------------------
 void ResourceNetwork::Draw( const Point2f&, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    /*if( !tools.ShouldDisplay( "ResourceNetwork" ) )
-        return;*/
+    // TODO utiliser un enum pour les options
+    char filter = controllers_.options_.GetOption( "ResourceNetworks", 0 ).To< char >();
+    if( filter == 1 )// off
+        return;
     Point2f from;
     Point2f to;
+    bool selected = true;
     if( isUrban_ )
-        from = urbanResolver_.Get( id_ ).Barycenter();
-    else
     {
-        // TODO
+        TerrainObjectProxy& proxy = urbanResolver_.Get( id_ );
+        selected = proxy.IsSelected();
+        if( filter == 3 && !selected ) // selected outgoing
+            return;
+        from = proxy.Barycenter();
     }
+    else
+        from = objectResolver_.Get( id_ ).Get< kernel::Positions >().GetPosition();
 
-    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
+    glPushAttrib( GL_LINE_BIT );
     glLineWidth( 3.f );
 
     for( std::map< resource::EResourceType, ResourceNode >::const_iterator node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
     {
-        glColor4f( COLOR_YELLOW ); // TODO à faire en fonction de la ressource
-        for( std::vector< ResourceLink >::const_iterator link = node->second.links_.begin(); link != node->second.links_.end(); ++link )
+        SetColor( node->second.type_ );
+        if( node->second.links_.size() > 0 )
         {
-            if( link->urban_ )
-                to = urbanResolver_.Get( link->id_ ).Barycenter();
-            else
+            for( std::vector< ResourceLink >::const_iterator link = node->second.links_.begin(); link != node->second.links_.end(); ++link )
             {
-                // TODO
+                if( link->urban_ )
+                {
+                    TerrainObjectProxy& proxy = urbanResolver_.Get( link->id_ );
+                    if( filter == 2 && !proxy.IsSelected() && !selected ) // Selected all
+                        continue;
+                    to = proxy.Barycenter();
+                }
+                else
+                    to = objectResolver_.Get( link->id_ ).Get< kernel::Positions >().GetPosition();
+                if( viewport.IsVisible( Rectangle2f( from, to ) ) )
+                    tools.DrawCurvedArrow( from, to, 0.5f );
             }
-            if( viewport.IsVisible( Rectangle2f( from, to ) ) )
-                tools.DrawCurvedArrow( from, to, 0.5f );
         }
+        else
+            if( filter == 0 || selected )
+                tools.DrawCircle( from, 200.0 );
     }
     glPopAttrib();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetwork::SetColor
+// Created: JSR 2010-08-20
+// -----------------------------------------------------------------------------
+void ResourceNetwork::SetColor( resource::EResourceType type ) const
+{
+    // TODO régler les couleurs
+    switch( type )
+    {
+    default:
+    case eResourceTypeWater:
+        glColor4f( 0.2f, 0.2f, 0.6f,  1.0f );
+        break;
+    case eResourceTypeGaz:
+        glColor4f( 0.4f, 0.4f, 0.4f,  1.0f );
+        break;
+    case eResourceTypeElectricity:
+        glColor4f( 0.4f, 0.4f, 0.7f,  1.0f );
+        break;
+    }
 }

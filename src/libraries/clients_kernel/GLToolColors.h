@@ -36,7 +36,7 @@
 #define COLOR_YELLOW        1.0f,  1.0f,  0.0f,  1.0f
 #define COLOR_MAROON        0.5f,  0.0f,  0.0f,  1.0f
 #define COLOR_PINK          1.0f,  0.64f, 0.78f, 1.0f
-#define COLOR_AQUA          0.15f, 0.39f, 0.5ff, 1.0f
+#define COLOR_AQUA          0.15f, 0.39f, 0.5f,  1.0f
 #define COLOR_ORANGE        1.0f,  0.6f,  0.04f, 1.0f
 #define COLOR_GREEN         0.0f,  1.0f,  0.0f,  1.0f
 

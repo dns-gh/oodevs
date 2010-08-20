@@ -62,6 +62,7 @@ public:
     virtual void Draw( urban::Drawer_ABC& drawer, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual bool IsInside( const geometry::Point2f& point ) const;
     geometry::Point2f Barycenter() const;
+    bool IsSelected() const;
     //@}
 
     //! @name Helpers
@@ -74,6 +75,7 @@ private:
     //! @name Member data
     //@{
     urban::TerrainObject_ABC* object_;
+    mutable bool isSelected_;
     //@}
 
 public:

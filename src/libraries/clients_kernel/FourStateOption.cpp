@@ -85,7 +85,7 @@ bool FourStateOption::IsSet( bool selected, bool superior ) const
 {
     return state_ == '1'
         || ( state_ == 's' && selected )
-        || ( state_ == '+' && ( superior || superior ) );
+        || ( state_ == '+' && ( selected || superior ) );
 }
 
 // -----------------------------------------------------------------------------

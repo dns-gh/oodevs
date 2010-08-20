@@ -84,7 +84,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , actionFactory_( *new actions::ActionFactory( controllers.controller_, actionParameterFactory_, *this, staticModel, simulation ) )
     , intelligenceFactory_( *new IntelligenceFactory( controllers, staticModel.coordinateConverter_, *this, staticModel.levels_, publisher ) )
     , drawingFactory_( *new DrawingFactory( controllers.controller_, staticModel.drawings_, publisher, staticModel.coordinateConverter_ ) )
-    , resourceNetworkFactory_( *new ResourceNetworkFactory( controllers.controller_, *this ) )
+    , resourceNetworkFactory_( *new ResourceNetworkFactory( controllers_, *this ) )
     , agents_( *new AgentsModel( agentFactory_ ) )
     , objects_( *new ObjectsModel( objectFactory_ ) )
     , teams_( *new TeamsModel( teamFactory_ ) )

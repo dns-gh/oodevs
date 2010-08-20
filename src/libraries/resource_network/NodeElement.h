@@ -55,7 +55,7 @@ public:
     void Push( int quantity );
     //@}
 
-    //! @name Operations
+    //! @name Network
     //@{
     void Serialize( MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork& msg ) const;
     //@}

@@ -2106,6 +2106,18 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Efficient Range</source>
         <translation>Portée utile de combat</translation>
     </message>
+    <message>
+        <source>Resource networks</source>
+        <translation>Réseaux de ressource</translation>
+    </message>
+    <message>
+        <source>Selected all</source>
+        <translation>Sélectionné tout</translation>
+    </message>
+    <message>
+        <source>Selected outgoing</source>
+        <translation>Sélectionné sortant</translation>
+    </message>
 </context>
 <context>
     <name>MissionInterfaceBuilder</name>

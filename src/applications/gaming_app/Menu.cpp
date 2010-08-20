@@ -159,7 +159,14 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, kernel::ObjectTypes&
     toolBar->setLabel( tools::translate( "Menu", "Logistics toolbar" ) );
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Links" )            , MakePixmap( "logistic_links" )        , controllers.options_, "LogisticLinks" );
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Missing links" )    , MakePixmap( "logistic_missing_links" ), controllers.options_, "MissingLogisticLinks" );
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Real time actions" ), MAKE_ICON( realtimelog ), controllers.options_, "RealTimeLogistic" );
+    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Real time actions" ), MAKE_ICON( realtimelog )              , controllers.options_, "RealTimeLogistic" );
+    {
+        CompositeMenu< char > composite( subMenu, toolBar, tools::translate( "Menu", "Resource networks" ), MakePixmap( "logistic_links" ), controllers.options_, "ResourceNetworks" );
+        composite.AddItem( tools::translate( "Menu", "On" ), 0 );
+        composite.AddItem( tools::translate( "Menu", "Off" ), 1 );
+        composite.AddItem( tools::translate( "Menu", "Selected all" ), 2 );
+        composite.AddItem( tools::translate( "Menu", "Selected outgoing" ), 3 );
+    }
     menu->insertItem( tools::translate( "Menu", "Logistic..." ), subMenu );
 
     subMenu = new QPopupMenu( menu );

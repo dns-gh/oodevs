@@ -25,6 +25,7 @@ TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::T
     : EntityImplementation< kernel::Entity_ABC >( controller, id, name )
     , object_        ( &object )
     , infrastructure_( infrastructure )
+    , isSelected_( false )
 {
     RegisterSelf( *this );
     CreateDictionary( controller );
@@ -37,6 +38,7 @@ TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::T
 TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object )
     : EntityImplementation< kernel::Entity_ABC >( controller, object.GetId(), QString( object.GetName().c_str() ) )
     , object_( &object )
+    , isSelected_( false )
 {
     RegisterSelf( *this );
     CreateDictionary( controller );
@@ -85,6 +87,8 @@ QString TerrainObjectProxy::GetName() const
 // -----------------------------------------------------------------------------
 unsigned long TerrainObjectProxy::GetId() const
 {
+    // $$$$ _RC_ JSR 2010-08-20: la méthode n'est "quasiment" pas appelée, mais ça peut causer des conflits d'id si on appelle
+    // la méthode en tant que Entity_ABC. L'id sera sûrement le même qu'un agent ou un objet. 
     return object_->GetId();
 }
 
@@ -126,6 +130,7 @@ void TerrainObjectProxy::AddDictionaryForArchitecture( kernel::PropertiesDiction
 // -----------------------------------------------------------------------------
 void TerrainObjectProxy::SetSelected( bool selected ) const
 {
+    isSelected_ = selected;
     object_->SetSelected( selected );
 }
 
@@ -133,10 +138,9 @@ void TerrainObjectProxy::SetSelected( bool selected ) const
 // Name: TerrainObjectProxy::Draw
 // Created: FDS 2010-01-15
 // -----------------------------------------------------------------------------
-void TerrainObjectProxy::Draw( urban::Drawer_ABC& drawer, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void TerrainObjectProxy::Draw( urban::Drawer_ABC& drawer, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& /*tools*/ ) const
 {
     object_->Draw( drawer );
-    kernel::Entity_ABC::Draw( geometry::Point2f(), viewport, tools );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,4 +159,13 @@ bool TerrainObjectProxy::IsInside( const geometry::Point2f& point ) const
 geometry::Point2f TerrainObjectProxy::Barycenter() const
 {
     return object_->GetFootprint()->Barycenter();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainObjectProxy::IsSelected
+// Created: JSR 2010-08-20
+// -----------------------------------------------------------------------------
+bool TerrainObjectProxy::IsSelected() const
+{
+    return isSelected_;
 }
