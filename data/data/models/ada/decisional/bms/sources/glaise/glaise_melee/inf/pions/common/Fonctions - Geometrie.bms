@@ -77,7 +77,7 @@ function S_Geometrie_INF_ChercherPositionObstacle( ptMission, natureObstacle, rD
     local rDistanceTranslation = 300
     _returnValue = nil
     ptMineMieux = DEC_Geometrie_CalculerPositionObstacle( ptMission, S_TypeObject_ToString( eTypeObjectBouchonMines ), rDistMoyenObstacle )
-    if( ptMineMieux ~= nil and not S_Geometrie_EstProchePosition( DEC_Agent_Position(), ptMineMieux, 300 ) ) then
+    if( ptMineMieux ~= nil and not S_Geometrie_EstProchePosition( DEC_Agent_Position(), ptMineMieux, rDistMoyenObstacle ) ) then
         do
             _returnValue = DEC_Geometrie_ConvertirPointEnLocalisation( ptMineMieux )
                         do return _returnValue end
@@ -87,7 +87,7 @@ function S_Geometrie_INF_ChercherPositionObstacle( ptMission, natureObstacle, rD
         ptMineMieux = nil
     end
 
-    if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), ptMission, 200 ) ) then
+    if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), ptMission, rDistMoyenObstacle ) ) then
         rDelta = 1.5
     end
 
@@ -96,7 +96,7 @@ function S_Geometrie_INF_ChercherPositionObstacle( ptMission, natureObstacle, rD
     ptMineMieux = DEC_Geometrie_CalculerPositionObstacle( ptMine, S_TypeObject_ToString( eTypeObjectBouchonMines ), rDistMoyenObstacle )
     if( ptMineMieux ~= nil ) then
         do
-            if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), ptMineMieux, 300 ) ) then
+            if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), ptMineMieux, rDistMoyenObstacle ) ) then
                 do
                     ptMineMieux = nil
                                         do return _returnValue end

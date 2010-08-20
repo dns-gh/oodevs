@@ -123,7 +123,7 @@ node "BEH_Obj_Pion_VAB_InstallerCheckPoint"
         if( ModuleBegins() ) then
             do
                 DEC_Trace( "  installation plan d'obstacle" )
-                self.locPtCheckPoint = S_Geometrie_INF_ChercherPositionObstacle( self._namedParams.ptCheckPoint, eTypeObjectPosteControle, 100 )
+                self.locPtCheckPoint = S_Geometrie_INF_ChercherPositionObstacle( self._namedParams.ptCheckPoint, eTypeObjectPosteControle, 0 )
                 if( ( self.locPtCheckPoint == 0 or self.locPtCheckPoint == nil ) ) then
                     self.locPtCheckPoint = DEC_Geometrie_ConvertirPointEnLocalisation( self._namedParams.ptCheckPoint )
                 end
