@@ -53,7 +53,7 @@ HierarchyListView_ABC::HierarchyListView_ABC( QWidget* pParent, Controllers& con
     setRootIsDecorated( true );
     setAcceptDrops( true );
     setDragAutoScroll( true );
-    viewport()->setAcceptDrops( true ); // $$$$ SBO 2010-08-12: needed to enable autoscroll
+//    viewport()->setAcceptDrops( true ); // $$$$ SBO 2010-08-12: needed to enable autoscroll
     header()->hide();
 
     connect( this,   SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint&, int ) ) );
@@ -234,7 +234,6 @@ QDragObject* HierarchyListView_ABC::dragObject()
     ValuedListItem* pItem = static_cast< ValuedListItem* >( selectedItem() );
     if( !pItem )
         return 0;
-
     return new ValuedDragObject( pItem->GetValue< const Entity_ABC >(), this );
 }
 
