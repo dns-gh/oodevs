@@ -37,11 +37,6 @@ private:
     Application_ABC( const Application_ABC& );            //!< Copy constructor
     Application_ABC& operator=( const Application_ABC& ); //!< Assignment operator
     //@}
-
-private:
-    //! @name Member data
-    //@{
-    //@}
 };
 
 #endif // __Application_ABC_h_
