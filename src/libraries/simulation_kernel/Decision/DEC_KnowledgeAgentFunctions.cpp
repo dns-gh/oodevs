@@ -19,6 +19,7 @@
 #include "Entities/Agents/Units/Categories/PHY_NatureAtlas.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Tools/MIL_Tools.h"
+#include "Knowledge/QueryValidity.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::GetNatureAtlas

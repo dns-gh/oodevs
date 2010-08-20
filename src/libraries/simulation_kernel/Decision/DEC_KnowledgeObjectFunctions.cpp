@@ -27,6 +27,7 @@
 #include "Decision/DEC_Tools.h"
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects_DataComputer.h"
 #include "Entities/Agents/Actions/Objects/Operation.h"
+#include "Knowledge/QueryValidity.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeObjectFunctions::Recon

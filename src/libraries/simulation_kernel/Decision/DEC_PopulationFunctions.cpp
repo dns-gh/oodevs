@@ -23,6 +23,7 @@
 #include "protocol/ClientSenders.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
+#include "Knowledge/QueryValidity.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::DecisionalState

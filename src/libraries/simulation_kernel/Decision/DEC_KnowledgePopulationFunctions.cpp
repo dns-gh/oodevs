@@ -17,6 +17,7 @@
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "Knowledge/QueryValidity.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgePopulationFunctions::Recon

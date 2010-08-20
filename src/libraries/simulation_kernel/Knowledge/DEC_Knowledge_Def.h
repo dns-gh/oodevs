@@ -67,13 +67,4 @@ typedef T_KnowledgePopulationVector::iterator        IT_KnowledgePopulationVecto
 typedef T_KnowledgePopulationVector::const_iterator CIT_KnowledgePopulationVector;
 //@}
 
-//! @name DIA Queries
-//@{
-enum E_QueryValidity
-{
-    eQueryValid,
-    eQueryInvalid
-};
-//@}
-
 #endif // __DEC_Knowledge_Def_h_
