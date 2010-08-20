@@ -45,30 +45,43 @@ void ADN_ActiveProtections_GUI::Build()
     // Create the top widget.
     if( pMainWidget_ != 0 )
         return;
+
     ADN_GuiBuilder builder;
+
     // Create the top widget.
     pMainWidget_ = new QWidget( 0, "Active Protection" );
+
     // Create the active protection listview.
     ADN_ActiveProtectionsListView* pActiveProtectionListView = new ADN_ActiveProtectionsListView( pMainWidget_ );
     pActiveProtectionListView->GetConnector().Connect( &data_.GetActiveProtectionsInfos() );
     T_ConnectorVector vConnectors( ADN_ActiveProtections_GUI::eNbrActiveProtectionsGuiElements, (ADN_Connector_ABC*)0 );
+
     QGroupBox* pGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Active Protection" ), pMainWidget_ );
+
     QGroupBox* pPropertiesGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Properties" ), pGroup );
+
     builder.AddField<ADN_EditLine_String>( pPropertiesGroup, tr( "Name" ), vConnectors[eActiveProtectionName] );
-    builder.AddField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Coefficient" ), vConnectors[eActiveProtectionCoeffiscient], 0, eGreaterEqualZero );
+    ADN_EditLine_Double* pEdit = builder.AddField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Coefficient" ), vConnectors[eActiveProtectionCoeffiscient], 0, eGreaterEqualZero );
+    pEdit->GetValidator().setTop( 1 );
     builder.AddField<ADN_CheckBox>( pPropertiesGroup, tr( "Hard kill" ), vConnectors[eActiveProtectionHardKill] );
+
     // dotations
     QGroupBox* pDotationGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Dotation" ), pGroup );
+
     builder.AddField< ADN_ComboBox_Vector<ADN_Equipement_Data::AmmoCategoryInfo> >( pDotationGroup, tr( "Dotation" ), vConnectors[eActiveProtectionDotation] );
     builder.SetEnabled( true );
     builder.AddField<ADN_EditLine_Double>( pDotationGroup, tr( "Usage" ), vConnectors[eActiveProtectionUsage], 0, eGreaterEqualZero );
+
     // Weapons
     QGroupBox* pWeaponsGroup_ = new QGroupBox( 1, Qt::Horizontal, tr( "Ammunitions" ), pGroup );
+
     ADN_ActiveProtections_WeaponsTable* pWeapons = new ADN_ActiveProtections_WeaponsTable( tr( "Ammunitions" ).ascii(), pWeaponsGroup_ );
     vConnectors[eActiveProtectionWeapons] = &pWeapons->GetConnector();
+
     //Connect
     pActiveProtectionListView->SetItemConnectors(vConnectors);
-    //Layout
+
+     // Layout
     QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_, 10, 10 );
     pMainLayout->addWidget( pActiveProtectionListView, 1 );
     pMainLayout->addWidget( pGroup, 3 );

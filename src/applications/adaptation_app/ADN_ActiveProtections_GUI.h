@@ -35,7 +35,6 @@ public:
         eNbrActiveProtectionsGuiElements
     };
 
-
     //! @name Constructors/Destructor
     //@{
     explicit ADN_ActiveProtections_GUI( ADN_ActiveProtections_Data& data);
