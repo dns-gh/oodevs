@@ -148,9 +148,9 @@ end
             <xsl:when test="@type = 'Path'">
                 <xsl:text>    :With( Path.create( "Route" ):AddPoint( "Destination", config.positions.destination[1] ) )</xsl:text>
             </xsl:when>
-            <xsl:when test="@type = 'Point'">
+            <!--xsl:when test="@type = 'Point'">
                 <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "Point", value = config.positions.destination[1] } )</xsl:text>
-            </xsl:when>
+            </xsl:when-->
 
             <xsl:otherwise>
                 <xsl:text>    -- Missing argument</xsl:text>

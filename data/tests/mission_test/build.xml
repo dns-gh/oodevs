@@ -66,8 +66,8 @@
     </target>
     
     <target name="reports">
-        <copy file="${exercises}/${testName}/sessions/default/Dispatcher.log" tofile="reports/Dispatcher.log"/>
-        <copy file="${exercises}/${testName}/sessions/default/Sim.log" tofile="reports/Sim.log"/>
+        <copy file="${exercises}/${testName}/sessions/default/Dispatcher.log" tofile="reports/${timenow}_Dispatcher.log"/>
+        <copy file="${exercises}/${testName}/sessions/default/Sim.log" tofile="reports/${timenow}_Sim.log"/>
     </target>
     
 </project>
