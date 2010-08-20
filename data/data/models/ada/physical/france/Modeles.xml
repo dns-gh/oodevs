@@ -3,9 +3,6 @@
   <units>
     <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PlatoonINF">
       <missions>
-        <mission name="MELEE Appuyer"/>
-        <mission name="MELEE Reconnaitre Itineraire"/>
-        <mission name="MELEE Surveiller un Bloc Urbain"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement">
           <fragorder name="Illuminer"/>
@@ -18,23 +15,27 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="MELEE Illuminer"/>
-        <mission name="MELEE S'emparer d'un Bloc Urbain"/>
-        <mission name="MELEE Interdire un Bloc Urbain"/>
-        <mission name="MELEE Interdire un Point"/>
-        <mission name="MELEE Interdire une Zone"/>
+        <mission name="MELEE Appuyer"/>
         <mission name="MELEE Boucler un Bloc Urbain"/>
+        <mission name="MELEE Contre Attaquer sur un Point"/>
+        <mission name="MELEE Contre Attaquer dans une Zone"/>
         <mission name="MELEE Controler"/>
-        <mission name="MELEE Neutralizer"/>
-        <mission name="MELEE Ratisser un Bloc Urbain"/>
-        <mission name="MELEE Ratisser une Zone"/>
-        <mission name="MELEE Tenir"/>
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Defendre un Bloc Urbain"/>
         <mission name="MELEE Defendre un Point"/>
         <mission name="MELEE Defendre une Zone"/>
-        <mission name="MELEE Contre Attaquer sur un Point"/>
-        <mission name="MELEE Contre Attaquer dans une Zone"/>
+        <mission name="MELEE Illuminer"/>
+        <mission name="MELEE Interdire un Bloc Urbain"/>
+        <mission name="MELEE Interdire un Point"/>
+        <mission name="MELEE Interdire une Zone"/>
+        <mission name="MELEE Neutralizer"/>
+        <mission name="MELEE Ratisser un Bloc Urbain"/>
+        <mission name="MELEE Ratisser une Zone"/>
+        <mission name="MELEE Reconnaitre Itineraire"/>
+        <mission name="MELEE S'emparer d'un Bloc Urbain"/>
+        <mission name="MELEE Soutenir"/>
+        <mission name="MELEE Surveiller un Bloc Urbain"/>
+        <mission name="MELEE Tenir"/>
       </missions>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PlatoonABC">
@@ -108,42 +109,37 @@
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PlatoonTest">
       <missions>
-        <mission name="Advance"/>
-        <mission name="Animate"/>
-        <mission name="Build"/>
-        <mission name="Control"/>
-        <mission name="Controler Secteur"/>
+        <mission name="TEST ActivateObjects"/>
+        <mission name="TEST Advance"/>
+        <mission name="TEST AnimateObjects"/>
+        <mission name="TEST BuildObjects"/>
+        <mission name="TEST BypassObjects"/>
+        <mission name="TEST Control"/>
         <mission name="TEST Deny"/>
-        <mission name="EngageAgents"/>
-        <mission name="Flee"/>
-        <mission name="Load"/>
-        <mission name="Mount"/>
-        <mission name="MoveAndObserve"/>
-        <mission name="MoveObserveReconnoiter"/>
-        <mission name="MoveOnRoute"/>
-        <mission name="MoveToPointList"/>
-        <mission name="MoveToPolygonList"/>
-        <mission name="MoveToAutomateList"/>
-        <mission name="MoveToAgentList"/>
-        <mission name="MoveToAgentKnowledgeList"/>
-        <mission name="MoveToObjectKnowledgeList"/>
-        <mission name="NeutralizeAgents"/>
-        <mission name="ObserveAndReconnoiterPoint"/>
-        <mission name="ObserveAndReconnoiterUrbanBlock"/>
-        <mission name="ObservePoint"/>
-        <mission name="ObserveDirection"/>
-        <mission name="ObserveAgent"/>
+        <mission name="TEST DestroyAgents"/>
+        <mission name="TEST EngageAgents"/>
+        <mission name="TEST Flee"/>
         <mission name="TEST IdentifyAgent"/>
+        <mission name="TEST MoveOnRoute"/>
+        <mission name="TEST MoveToPointList"/>
+        <mission name="TEST MoveToPolygonList"/>
+        <mission name="TEST MoveToAutomateList"/>
+        <mission name="TEST MoveToAgentList"/>
+        <mission name="TEST MoveToAgentKnowledgeList"/>
+        <mission name="TEST MoveToObjectKnowledgeList"/>
+        <mission name="TEST NeutralizeAgents"/>
+        <mission name="TEST ObservePoint"/>
+        <mission name="TEST ObserveAgent"/>
         <mission name="TEST ReconnoiterPoint"/>
         <mission name="TEST ReconnoiterUrbanBlock"/>
         <mission name="TEST ReconnoiterArea"/>
         <mission name="TEST RemoveObstacle"/>
-        <mission name="Seal Off"/>
-        <mission name="SeekAndDestroy"/>
-        <mission name="SelfProtect"/>
-        <mission name="StayClose"/>
-        <mission name="Support"/>
-        <mission name="TakeCover"/>
+        <mission name="TEST Seal Off"/>
+        <mission name="TEST SelfProtect"/>
+        <mission name="TEST StayClose"/>
+        <mission name="TEST Support"/>
+        <mission name="TEST TakeCover"/>
+        <mission name="TEST ValorizeObjects"/>
       </missions>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery" file="BMPion.bms" name="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery">
