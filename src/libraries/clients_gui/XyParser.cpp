@@ -88,4 +88,3 @@ int XyParser::GetNumberOfParameters() const
 {
     return numParameters_;
 }
-       

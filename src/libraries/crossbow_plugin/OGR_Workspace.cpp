@@ -18,7 +18,7 @@
 using namespace plugins;
 
 namespace
-{    
+{
     void InitializeOGR( int argc, char* argv[] )
     {
         if( argc > 0 && GDALGeneralCmdLineProcessor( argc, &argv, 0 ) < 1 )
@@ -61,13 +61,13 @@ crossbow::OGR_Workspace::~OGR_Workspace()
 // Created: JCR 2010-02-24
 // -----------------------------------------------------------------------------
 void crossbow::OGR_Workspace::Initialize( xml::xistream& xis, const dispatcher::Config& config )
-{   
+{
     std::string reference;
-    
-    xis >> xml::optional 
+
+    xis >> xml::optional
         >> xml::attribute( "default", reference );
 
-    if( reference.empty() ) 
+    if( reference.empty() )
     {
         xis >> xml::list( "property", *this, &crossbow::OGR_Workspace::InitializeProperty, config );
     }
@@ -106,7 +106,7 @@ crossbow::Database_ABC& crossbow::OGR_Workspace::GetDatabase( const std::string&
 void crossbow::OGR_Workspace::InitializeConnectionReference( const std::string& name, const dispatcher::Config& config, const std::string& reference )
 {
     T_Database& db = databases_[ name ];
-    
+
     if( !db )
     {
         CIT_DatabasesReferenceMap it = references_.find( reference );

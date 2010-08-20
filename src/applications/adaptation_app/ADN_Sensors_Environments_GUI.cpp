@@ -111,4 +111,3 @@ void ADN_Sensors_Environments_GUI::OnCurrentChanged()
     if( ModificatorEnvironmentInfos* data = static_cast< ModificatorEnvironmentInfos* >( GetCurrentData() ) )
        emit EnvironmentChanged( data, data->rCoeff_.GetData() );
 }
- 

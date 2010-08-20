@@ -83,13 +83,13 @@ Row_ABC* OGR_FeatureClass::Find( const std::string& query, bool /* forceUpdate =
 void OGR_FeatureClass::DeleteRows( const std::string& query )
 {
     Row_ABC* row = Find( query );
-    while ( row != NULL ) 
+    while ( row != NULL )
     {
         layer_.DeleteFeature( row->GetID() );
         row = GetNextRow();
     }
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: OGR_FeatureClass::UpdateRow
 // Created: JCR 2010-02-25
@@ -100,7 +100,7 @@ void OGR_FeatureClass::UpdateRow( const Row_ABC& /*row*/ )
     editor_->EndTransaction();
     layer_.SyncToDisk();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: OGR_FeatureClass::InsertRow
 // Created: JCR 2010-02-25
@@ -111,7 +111,7 @@ void OGR_FeatureClass::InsertRow( const Row_ABC& row )
         return;
     feature_->Insert( layer_ );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: OGR_FeatureClass::Clear
 // Created: JCR 2010-02-25
@@ -130,7 +130,7 @@ void OGR_FeatureClass::BeginTransaction()
 {
      editor_->BeginTransaction();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: OGR_FeatureClass::EndTransaction
 // Created: JCR 2010-02-27

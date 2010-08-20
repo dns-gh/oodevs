@@ -55,13 +55,13 @@ namespace
     class FieldConverter : public boost::static_visitor<>, public boost::noncopyable
     {
     public:
-        FieldConverter( OGRFeature& feature, int index ) 
+        FieldConverter( OGRFeature& feature, int index )
             : feature_( feature )
-            , index_  ( index ) 
+            , index_  ( index )
         {
             // NOTHING
         }
-        
+
         void operator()( int value ) const
         {
             feature_.SetField( index_, value );
@@ -106,7 +106,7 @@ void OGR_FeatureRow::SetField( const std::string& field, const FieldVariant& val
     const int index = feature_->GetFieldIndex( field.c_str() );
     boost::apply_visitor( FieldConverter( *feature_, index ), value );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: OGR_FeatureRow::SetShape
 // Created: JCR 2010-02-24
@@ -130,8 +130,8 @@ FieldVariant OGR_FeatureRow::GetField( const std::string& name ) const
     FieldConverter converter( *feature_, index );
     return converter.ConvertVariant( def );
 }
-    
-namespace 
+
+namespace
 {
     std::auto_ptr< Shape_ABC > CreateShape( const OGRGeometry* geometry )
     {

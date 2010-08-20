@@ -77,7 +77,7 @@ int QuerySessionData::CreateSession( const std::string& name, int exercise_id )
 // -----------------------------------------------------------------------------
 int QuerySessionData::FindExercise( const std::string& name ) const
 {
-    try 
+    try
     {
         std::auto_ptr< Table_ABC > table( database_.OpenTable( "Exercises" ) );
         Row_ABC* row = table->Find( "name='" + name + "'" );
@@ -97,7 +97,7 @@ int QuerySessionData::FindExercise( const std::string& name ) const
 // -----------------------------------------------------------------------------
 int QuerySessionData::FindSession( const std::string& name, int exercise_id ) const
 {
-    try 
+    try
     {
         std::stringstream ss;
         ss << "name='" << name << "' AND exercise_id=" << exercise_id;

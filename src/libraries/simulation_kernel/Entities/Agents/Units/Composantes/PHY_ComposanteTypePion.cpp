@@ -1385,4 +1385,3 @@ double PHY_ComposanteTypePion::GetAttritionIndexComposante(int idMaterial) const
 
     return rRange;
 }
-    

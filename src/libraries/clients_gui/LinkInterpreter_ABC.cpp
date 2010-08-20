@@ -123,4 +123,3 @@ void LinkInterpreter_ABC::RemoveEntity( const QString& category, const Entity_AB
 {
     entites_[ category ][ entity.GetId() ] = 0;
 }
- 

@@ -56,7 +56,6 @@ public:
     void Insert( OGRLayer& layer ) const;
     void BindFeature( OGRFeature& feature, long id );
     //@}
-    
 
 private:
     //! @name Copy/Assignment

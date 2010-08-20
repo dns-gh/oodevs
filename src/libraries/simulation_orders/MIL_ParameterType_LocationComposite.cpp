@@ -82,4 +82,3 @@ bool MIL_ParameterType_LocationComposite::Copy( const MIL_MissionParameter_ABC& 
         to.clear_value();
     return !to.null_value() || bIsOptional;
 }
-    

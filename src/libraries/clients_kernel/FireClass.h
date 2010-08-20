@@ -49,4 +49,3 @@ private:
 }
 
 #endif // __FireClass_h_
-    

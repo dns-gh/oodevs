@@ -58,7 +58,7 @@ public:
     virtual ~DatabaseUpdater_ABC() {}
     //@}
 
-    //! @name 
+    //! @name
     //@{
     virtual void Clean() = 0;
     //@}

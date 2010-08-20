@@ -40,7 +40,7 @@ OGR_Database::OGR_Database( OGRDataSource* datasource, const std::string& name, 
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: OGR_Database destructor
 // Created: JCR 2010-02-24
@@ -66,7 +66,7 @@ std::string OGR_Database::GetTableName( const std::string& name ) const
 // open feature dataset / layer
 // Created: JCR 2010-02-24
 // -----------------------------------------------------------------------------
-Table_ABC* OGR_Database::OpenTable( const std::string& name ) 
+Table_ABC* OGR_Database::OpenTable( const std::string& name )
 {
     OGRLayer* layer = datasource_->GetLayerByName( GetTableName( name ).c_str() );
     if( !layer )
@@ -101,7 +101,7 @@ void OGR_Database::ClearTable( const std::string& name, const std::string& filte
     std::auto_ptr< Table_ABC > table( OpenTable( name ) );
     table->DeleteRows( filter );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: OGR_Database::Execute
 // Created: JCR 2010-02-27
@@ -110,7 +110,7 @@ void OGR_Database::Execute( const QueryBuilder_ABC& /*builder*/ )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: OGR_Database::Flush
 // Created: JCR 2010-02-27

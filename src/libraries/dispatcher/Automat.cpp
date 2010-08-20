@@ -500,4 +500,4 @@ kernel::KnowledgeGroup_ABC& Automat::GetKnowledgeGroup() const
     if( !knowledgeGroup_ )
         throw std::runtime_error( __FUNCTION__ ": automat without a knowledge group." );
     return *knowledgeGroup_;
-}  
+}

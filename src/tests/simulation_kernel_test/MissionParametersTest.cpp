@@ -857,7 +857,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_CompositeLocationParameter )
     std::string missionDefinition(
         "<mission dia-behavior='whatever' dia-type='T_whatever' id='42' name='a mission'>"
             "<parameter dia-name='objectif' name='Objectif' type='LocationComposite'>"
-	            "<choice>"
+                "<choice>"
                     "<parameter type='Point'/>"
                     "<parameter type='UrbanKnowledge'/>"
                     "<parameter type='AgentKnowledge'/>"

@@ -38,24 +38,24 @@ public:
     virtual ~OGR_Database();
     //@}
 
-    //! @name 
+    //! @name
     //@{
     std::string GetTableName( const std::string& name ) const;
     //@}
 
     //! @name Operations
-    //@{    
+    //@{
     Table_ABC&  OpenBufferedTable( const std::string& name, bool clear = true );
     Table_ABC*  OpenTable( const std::string& name );
     void        ClearTable( const std::string& name, const std::string& filter );
     //@}
 
-    //! @name 
-    //@{    
+    //! @name
+    //@{
     void Execute( const QueryBuilder_ABC& builder );
     //@}
 
-    //! @name 
+    //! @name
     //@{
     void Flush();
     //@}

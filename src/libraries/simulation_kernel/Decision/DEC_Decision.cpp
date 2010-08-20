@@ -376,7 +376,7 @@ bool PointListFunctionBM( const directia::Brain& brain, directia::ScriptRef& kno
     if( element.ToPointList( value ) )
     {
         knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Point" ), name, value, true );
-	return true;
+    return true;
     }
     return false;
 }
@@ -398,7 +398,7 @@ bool AreaFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledg
     if( element.ToPolygon( value ) && value.get() )
     {
         knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Area" ), name, value, false );
-	return true;
+    return true;
     }
     return false;
 }
@@ -408,7 +408,7 @@ bool AreaListFunctionBM( const directia::Brain& brain, directia::ScriptRef& know
     if( element.ToPolygonList( value ) )
     {
         knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Area" ), name, value, true );
-	return true;
+    return true;
     }
     return false;
 }
@@ -442,7 +442,7 @@ bool PathFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledg
     if( element.ToPath( value ) && !value.empty() )
     {
         knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Point" ), name, value, true );
-	return true;
+    return true;
     }
     return false;
 }
@@ -456,7 +456,7 @@ bool DirectionFunctionBM( const directia::Brain& brain, directia::ScriptRef& kno
     if( element.ToDirection( value ) && value.get() )
     {
         knowledgeCreateFunction( refMission,  brain.GetScriptVariable( "net.masagroup.sword.military.world.Direction" ) , name, value, false );
-	return true;
+    return true;
     }
     return false;
 }
@@ -478,7 +478,7 @@ bool AutomatFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowl
     if( element.ToAutomat( value ) )
     {
         knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Company" ), name, value, false );
-	return true;
+    return true;
     }
     return false;
 }
@@ -494,7 +494,7 @@ bool AutomatListFunctionBM( const directia::Brain& brain, directia::ScriptRef& k
     if( element.ToAutomatList( value ) )
     {
         knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Company" ), name, value, true );
-	return true;
+    return true;
     }
     return false;
 }
@@ -510,7 +510,7 @@ bool AgentFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowled
     if( element.ToAgent( value ) )
     {
         knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.PlatoonAlly" ), name, value, false );
-	return true;
+    return true;
     }
     return false;
 }
@@ -526,7 +526,7 @@ bool AgentListFunctionBM( const directia::Brain& brain, directia::ScriptRef& kno
     if( element.ToAgentList( value ) )
     {
         knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.PlatoonAlly" ), name, value, true );
-	return true;
+    return true;
     }
     return false;
 }
@@ -542,7 +542,7 @@ bool AgentKnowledgeFunctionBM( const directia::Brain& brain, directia::ScriptRef
     if( element.ToAgentKnowledge( value ) && value.get() )
     {
         knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Platoon" ), name, value, false );
-	return true;
+    return true;
     }
     return false;
 }
@@ -558,7 +558,7 @@ bool AgentKnowledgeListFunctionBM( const directia::Brain& brain, directia::Scrip
     if( element.ToAgentKnowledgeList( value ) )
     {
         knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Platoon" ), name, value, true );
-	return true;
+    return true;
     }
     return false;
 }
@@ -574,7 +574,7 @@ bool ObjectKnowledgeFunctionBM( const directia::Brain& brain, directia::ScriptRe
     if( element.ToObjectKnowledge( value ) && value )
     {
         knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Object" ), name, value, false );
-	return true;
+    return true;
     }
     return false;
 }
@@ -590,7 +590,7 @@ bool ObjectKnowledgeListFunctionBM( const directia::Brain& brain, directia::Scri
     if( element.ToObjectKnowledgeList( value ) )
     {
         knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Object" ), name, value, true );
-	return true;
+    return true;
     }
     return false;
 }
@@ -606,7 +606,7 @@ bool PopulationKnowledgeFunctionBM( const directia::Brain& brain, directia::Scri
     if( element.ToPopulationKnowledge( value ) && value )
     {
         knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Population" ), name, value, false );//@TODO MGD Add CompositeReachable for Population?
-	return true;
+    return true;
     }
     return false;
 }
@@ -617,7 +617,7 @@ bool UrbanBlockFunctionBM( const directia::Brain& brain, directia::ScriptRef& kn
     if( element.ToUrbanBlock( value ) && value )
     {
         knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.UrbanBlock" ), name, value, false );
-	return true;
+    return true;
     }
     return false;
 }
@@ -658,7 +658,7 @@ bool GenObjectFunctionBM( const directia::Brain& brain, directia::ScriptRef& kno
     if( element.ToGenObject( value ) && value.get() )
     {
         knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.EngineerObject" ), name, value, true );
-	return true;
+    return true;
     }
     return false;
 }
@@ -674,7 +674,7 @@ bool GenObjectListFunctionBM( const directia::Brain& brain, directia::ScriptRef&
     if( element.ToGenObjectList( value ) )
     {
         knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.EngineerObject" ), name, value, true );
-	return true;
+    return true;
     }
     return false;
 }

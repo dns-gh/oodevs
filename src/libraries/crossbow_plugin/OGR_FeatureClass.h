@@ -29,7 +29,7 @@ namespace crossbow
 // Created: JCR 2010-02-24
 // =============================================================================
 class OGR_FeatureClass : public Table_ABC
-{ 
+{
 
 public:
     //! @name Constructors/Destructor
