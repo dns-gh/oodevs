@@ -882,11 +882,6 @@
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Animate" dia-type="T_Mission_Pion_Animate" id="2048" name="TEST AnimateObjects">
       <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Interdire" dia-type="T_Mission_Pion_Interdire" id="2049" name="MELEE Interdire Position">
-      <parameter dia-name="objectives" name="objectifs" optional="false" type="PointListBM"/>
-      <parameter dia-name="positions" name="positions d'interdiction" optional="false" type="PointListBM"/>
-      <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
-    </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Support" dia-type="net.masagroup.sword.test.military.platoon.tasks.Support" id="2051" name="TEST Support">
       <parameter dia-name="objectives" name="objectives" optional="false" type="AgentListBM"/>
     </mission>
@@ -930,11 +925,6 @@
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Illuminer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Illuminer" id="2065" name="MELEE Illuminer">
       <parameter dia-name="entities" name="cible" optional="false" type="AgentKnowledgeListBM"/>
       <parameter dia-name="allies" name="tireur allie" optional="false" type="AgentListBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Interdire" dia-type="net.masagroup.sword.france.military.platoon.tasks.Interdire" id="2066" name="MELEE Interdire un Bloc Urbain">
-      <parameter dia-name="objectives" name="objectif" optional="false" type="UrbanBlockBM"/>
-      <parameter dia-name="positions" name="positions d'interdiction" optional="false" type="PointListBM"/>
-      <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.military.platoon.terrorism.tasks.Ambush" dia-type="net.masagroup.sword.military.platoon.terrorism.tasks.Ambush" id="2067" name="Embuscade">
       <parameter dia-name="positions" name="positions de tir" optional="false" type="PointListBM"/>
@@ -995,36 +985,35 @@
       <parameter dia-name="positions" name="positions pour interdire" optional="false" type="PointListBM"/>
       <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Interdire" dia-type="T_Mission_Pion_Interdire_Point" id="2083" name="MELEE Interdire un Point">
-      <parameter dia-name="objectives" name="objectif" optional="false" type="PointBM"/>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Interdire" dia-type="net.masagroup.sword.france.military.platoon.tasks.Interdire" id="2083" name="MELEE Interdire">
+      <parameter dia-name="objective" name="objectif" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="PointBM"/>
+          <parameter type="AreaBM"/>
+          <parameter type="UrbanBlockBM"/>
+        </choice>
+      </parameter>
       <parameter dia-name="positions" name="positions d'interdiction" optional="false" type="PointListBM"/>
       <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Interdire" dia-type="T_Mission_Pion_Interdire_Zone" id="2084" name="MELEE Interdire une Zone">
-      <parameter dia-name="objectives" name="objectif" optional="false" type="AreaBM"/>
-      <parameter dia-name="positions" name="positions d'interdiction" optional="false" type="PointListBM"/>
-      <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Defendre" dia-type="net.masagroup.sword.france.military.platoon.tasks.Defendre" id="2085" name="MELEE Defendre un Bloc Urbain">
-      <parameter dia-name="objective" name="objectif" optional="false" type="UrbanBlockBM"/>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Defendre" dia-type="net.masagroup.sword.france.military.platoon.tasks.Defendre" id="2084" name="MELEE Defendre">
+      <parameter dia-name="objective" name="objectif" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="PointBM"/>
+          <parameter type="AreaBM"/>
+          <parameter type="UrbanBlockBM"/>
+        </choice>
+      </parameter>
       <parameter dia-name="position" name="position pour defendre" optional="false" type="PointBM"/>
       <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Defendre" dia-type="T_Mission_Pion_Defendre_Point" id="2086" name="MELEE Defendre un Point">
-      <parameter dia-name="objective" name="objectif" optional="false" type="PointBM"/>
-      <parameter dia-name="position" name="position pour defendre" optional="false" type="PointBM"/>
-      <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Defendre" dia-type="T_Mission_Pion_defendre_Zone" id="2087" name="MELEE Defendre une Zone">
-      <parameter dia-name="objective" name="zone" optional="false" type="AreaBM"/>
-      <parameter dia-name="position" name="position pour defendre" optional="false" type="PointBM"/>
-      <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.ContreAttaquer" dia-type="T_Mission_Pion_ContreAttaquer_Point" id="2088" name="MELEE Contre Attaquer sur un Point">
-      <parameter dia-name="objectives" name="objectifs" optional="false" type="PointListBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.ContreAttaquer" dia-type="T_Mission_Pion_ContreAttaquer_Zone" id="2089" name="MELEE Contre Attaquer dans une Zone">
-      <parameter dia-name="objectives" name="zones" optional="false" type="AreaListBM"/>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.ContreAttaquer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.ContreAttaquer" id="2085" name="MELEE Contre Attaquer">
+      <parameter dia-name="objectives" name="objectifs" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="PointListBM"/>
+          <parameter type="AreaListBM"/>
+        </choice>
+      </parameter>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Neutralizer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Neutralizer" id="2090" name="MELEE Neutralizer">
       <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>

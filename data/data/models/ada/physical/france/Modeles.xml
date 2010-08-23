@@ -17,17 +17,12 @@
         <mission name="COMMUNES Suivre"/>
         <mission name="MELEE Appuyer"/>
         <mission name="MELEE Boucler un Bloc Urbain"/>
-        <mission name="MELEE Contre Attaquer sur un Point"/>
-        <mission name="MELEE Contre Attaquer dans une Zone"/>
+        <mission name="MELEE Contre Attaquer"/>
         <mission name="MELEE Controler"/>
         <mission name="MELEE Detruire"/>
-        <mission name="MELEE Defendre un Bloc Urbain"/>
-        <mission name="MELEE Defendre un Point"/>
-        <mission name="MELEE Defendre une Zone"/>
+        <mission name="MELEE Defendre"/>
         <mission name="MELEE Illuminer"/>
-        <mission name="MELEE Interdire un Bloc Urbain"/>
-        <mission name="MELEE Interdire un Point"/>
-        <mission name="MELEE Interdire une Zone"/>
+        <mission name="MELEE Interdire"/>
         <mission name="MELEE Neutralizer"/>
         <mission name="MELEE Ratisser un Bloc Urbain"/>
         <mission name="MELEE Ratisser une Zone"/>
@@ -59,7 +54,7 @@
         <mission name="COMMUNES Suivre"/>
         <mission name="MELEE Illuminer"/>
         <mission name="MELEE S'emparer d'un Bloc Urbain"/>
-        <mission name="MELEE Interdire un Bloc Urbain"/>
+        <mission name="MELEE Interdire"/>
         <mission name="MELEE Boucler un Bloc Urbain"/>
         <mission name="MELEE Controler"/>
         <mission name="MELEE Neutralizer"/>
@@ -81,20 +76,17 @@
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="MELEE Appuyer"/>
-        <mission name="MELEE Detruire"/>
-        <mission name="MELEE S'emparer d'un Bloc Urbain"/>
-        <mission name="MELEE Interdire un Bloc Urbain"/>
         <mission name="MELEE Boucler un Bloc Urbain"/>
+        <mission name="MELEE Contre Attaquer"/>
         <mission name="MELEE Controler"/>
+        <mission name="MELEE Defendre"/>
+        <mission name="MELEE Detruire"/>
+        <mission name="MELEE Eclairer un Itineraire"/>
+        <mission name="MELEE Interdire"/>
         <mission name="MELEE Ratisser un Bloc Urbain"/>
         <mission name="MELEE Ratisser une Zone"/>
         <mission name="MELEE Reconnaitre Itineraire"/>
-        <mission name="MELEE Defendre un Bloc Urbain"/>
-        <mission name="MELEE Defendre un Point"/>
-        <mission name="MELEE Defendre une Zone"/>
-        <mission name="MELEE Contre Attaquer sur un Point"/>
-        <mission name="MELEE Contre Attaquer dans une Zone"/>
-        <mission name="MELEE Eclairer un Itineraire"/>
+        <mission name="MELEE S'emparer d'un Bloc Urbain"/>
       </missions>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PC">
