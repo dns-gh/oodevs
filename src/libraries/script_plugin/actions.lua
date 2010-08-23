@@ -115,6 +115,21 @@ function Path:AddPoint( name, coordinates )
 end
 
 --------------------------------------------------------------------------------
+-- PointLocation
+--------------------------------------------------------------------------------
+PointLocation = {}
+PointLocation.__index = PointLocation
+
+function PointLocation.create( name, coordinates )
+    local new = {}
+    setmetatable( new, PointLocation )
+    new.name = name
+    new.type = "Point"
+    new.children = { Point.create( coordinates ) }
+    return new
+end
+
+--------------------------------------------------------------------------------
 -- Order
 --------------------------------------------------------------------------------
 Order = {}
