@@ -27,7 +27,8 @@ namespace urban
 class PHY_ZURBPerceptionComputer : public PHY_PerceptionComputer_ABC
 {
 public:
-
+    //! @name Types
+    //@{
     struct Distances
     {
         Distances():identificationDist( 0 ), recognitionDist( 0 ), detectionDist( 0 ){}
@@ -36,7 +37,6 @@ public:
         double detectionDist;
 
     };
-
     struct Polygons
     {
         geometry::Polygon2f identificationPolygon;
@@ -48,12 +48,12 @@ public:
         Distances distances;
         unsigned int delay;
     };
-
+//@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PHY_ZURBPerceptionComputer( const MIL_Agent_ABC& perceiver, float roll, int tick );
+             PHY_ZURBPerceptionComputer( const MIL_Agent_ABC& perceiver, float roll, int tick );
     virtual ~PHY_ZURBPerceptionComputer();
     //@}
 
@@ -71,11 +71,11 @@ private:
 
     //! @name Helpers
     //@{
-    const Polygons              ComputePerceptionPolygon( const MIL_Agent_ABC& target, BestSensorsParameters& parameters ) const;
+    const Polygons ComputePerceptionPolygon( const MIL_Agent_ABC& target, BestSensorsParameters& parameters ) const;
     const BestSensorsParameters ComputeParametersPerception( const MIL_Agent_ABC& target ) const;
-    const PHY_PerceptionLevel&  GetLevelWithDelay( unsigned int delay, const PHY_PerceptionLevel& level ) const;
-    geometry::Polygon2f         MakePolygon( const urban::TerrainObject_ABC& block, double distance ) const;
-    geometry::Polygon2f         MakePolygon( const geometry::Point2f targetPosition, double distance ) const;
+    const PHY_PerceptionLevel& GetLevelWithDelay( unsigned int delay, const PHY_PerceptionLevel& level ) const;
+    geometry::Polygon2f MakePolygon( const urban::TerrainObject_ABC& block, double distance ) const;
+    geometry::Polygon2f MakePolygon( const geometry::Point2f targetPosition, double distance ) const;
     //@}
 
 private:

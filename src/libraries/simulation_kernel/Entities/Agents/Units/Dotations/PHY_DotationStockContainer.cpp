@@ -35,8 +35,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_DotationStockContainer )
 // -----------------------------------------------------------------------------
 PHY_DotationStockContainer::PHY_DotationStockContainer( PHY_RoleInterface_Supply& roleSupply, bool bInfiniteDotations )
     : pRoleSupply_          ( &roleSupply )
-    , stocks_               ()
-    , stocksChanged_        ()
     , bCheckStockCapacities_( false )
     , bInfiniteDotations_   ( bInfiniteDotations )
 {
@@ -49,8 +47,6 @@ PHY_DotationStockContainer::PHY_DotationStockContainer( PHY_RoleInterface_Supply
 // -----------------------------------------------------------------------------
 PHY_DotationStockContainer::PHY_DotationStockContainer()
     : pRoleSupply_          ( 0 )
-    , stocks_               ()
-    , stocksChanged_        ()
     , bCheckStockCapacities_( false )
     , bInfiniteDotations_   ( false )
 {

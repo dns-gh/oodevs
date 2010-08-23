@@ -37,9 +37,12 @@ class PHY_SupplyStockRequestContainer;
 class PHY_DotationStockContainer : private boost::noncopyable
 {
 public:
+    //! @name Constructors/Destructor
+    //@{
              PHY_DotationStockContainer();
-    explicit PHY_DotationStockContainer( PHY_RoleInterface_Supply& roleSupply, bool bInfiniteDotations );
+             PHY_DotationStockContainer( PHY_RoleInterface_Supply& roleSupply, bool bInfiniteDotations );
     virtual ~PHY_DotationStockContainer();
+    //@}
 
     //! @name CheckPoints
     //@{
@@ -60,15 +63,15 @@ public:
 
     //! @name Operations
     //@{
-    MT_Float AddReservation   ( const PHY_DotationCategory& category, MT_Float rNbr );
-    void     RemoveReservation( const PHY_DotationCategory& category, MT_Float rNbr );
-    void     Resupply         ();
-    void     Resupply         ( const PHY_DotationCategory& category, MT_Float rNbr );
+    MT_Float AddReservation( const PHY_DotationCategory& category, MT_Float rNbr );
+    void RemoveReservation( const PHY_DotationCategory& category, MT_Float rNbr );
+    void Resupply();
+    void Resupply( const PHY_DotationCategory& category, MT_Float rNbr );
     //@}
 
     //! @name Accessors
     //@{
-    MT_Float           GetValue( const PHY_DotationCategory& category ) const;
+    MT_Float GetValue( const PHY_DotationCategory& category ) const;
     PHY_DotationStock* GetStock( const PHY_DotationCategory& category ) const;
     PHY_DotationStock* AddStock( const PHY_DotationCategory& category );
     //@}
@@ -76,9 +79,9 @@ public:
     //! @name Network
     //@{
     void NotifyDotationChanged( const PHY_DotationStock& dotationStock, MT_Float rDelta );
-    bool HasChanged           () const;
-    void SendChangedState     ( client::LogSupplyState& asn ) const;
-    void SendFullState        ( client::LogSupplyState& asn ) const;
+    bool HasChanged() const;
+    void SendChangedState( client::LogSupplyState& asn ) const;
+    void SendFullState( client::LogSupplyState& asn ) const;
     //@}
 
     //! @name Supply
@@ -96,25 +99,28 @@ public:
     //! @name Types
     //@{
     typedef std::map< const PHY_DotationCategory*, PHY_DotationStock* > T_StockMap;
-    typedef T_StockMap::const_iterator                                  CIT_StockMap;
+    typedef T_StockMap::const_iterator                                CIT_StockMap;
 
     typedef std::set< const PHY_DotationStock* > T_StockSet;
-    typedef T_StockSet::const_iterator           CIT_StockSet;
+    typedef T_StockSet::const_iterator         CIT_StockSet;
     //@}
 
 private:
     //! @name Tools
     //@{
-    PHY_DotationStock* AddStock            ( const PHY_DotationCategory& category, xml::xistream& xis);
-    void               CheckStockCapacities();
+    PHY_DotationStock* AddStock( const PHY_DotationCategory& category, xml::xistream& xis);
+    void CheckStockCapacities();
     //@}
 
 private:
+    //! @name Member data
+    //@{
     PHY_RoleInterface_Supply* pRoleSupply_;
-    T_StockMap              stocks_;
-    T_StockSet              stocksChanged_;
-    bool                    bCheckStockCapacities_;
-    bool                    bInfiniteDotations_;
+    T_StockMap stocks_;
+    T_StockSet stocksChanged_;
+    bool bCheckStockCapacities_;
+    bool bInfiniteDotations_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_DotationStockContainer )

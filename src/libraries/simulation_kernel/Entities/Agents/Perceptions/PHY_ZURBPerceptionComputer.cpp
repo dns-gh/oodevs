@@ -65,11 +65,9 @@ const PHY_PerceptionLevel& PHY_ZURBPerceptionComputer::ComputePerception( const 
 {
     BestSensorsParameters bestSensorParameters;
     const Polygons perceptionPolygons = ComputePerceptionPolygon( target, bestSensorParameters );
-
     float identificationPercentage = target.GetRole< PHY_RoleInterface_UrbanLocation >().ComputeRatioPionInside( perceptionPolygons.identificationPolygon, roll_ );
     float recognitionPercentage = target.GetRole< PHY_RoleInterface_UrbanLocation >().ComputeRatioPionInside( perceptionPolygons.recognitionPolygon, roll_ );
     float detectionPercentage  = target.GetRole< PHY_RoleInterface_UrbanLocation >().ComputeRatioPionInside( perceptionPolygons.detectionPolygon, roll_ );
-
     unsigned int delay = bestSensorParameters.delay;
     if( roll_ < identificationPercentage )
         return GetLevelWithDelay( delay, PHY_PerceptionLevel::identified_ );
@@ -245,9 +243,9 @@ namespace
                 return;
             SensorFunctor dataFunctor( perceiver_, target_ );
             composante.ApplyOnSensors( dataFunctor );
-            distances_.identificationDist   = std::max( distances_.identificationDist, dataFunctor.GetIdentificationDistance() );
-            distances_.recognitionDist      = std::max( distances_.recognitionDist, dataFunctor.GetRecognitionDistance() );
-            distances_.detectionDist        = std::max( distances_.detectionDist, dataFunctor.GetDetectionDistance() );
+            distances_.identificationDist = std::max( distances_.identificationDist, dataFunctor.GetIdentificationDistance() );
+            distances_.recognitionDist = std::max( distances_.recognitionDist, dataFunctor.GetRecognitionDistance() );
+            distances_.detectionDist = std::max( distances_.detectionDist, dataFunctor.GetDetectionDistance() );
 
             delay_ = std::min( delay_, dataFunctor.GetDelay() );
         }
@@ -272,7 +270,7 @@ const PHY_ZURBPerceptionComputer::BestSensorsParameters PHY_ZURBPerceptionComput
     Functor dataFunctor( perceiver_, target );
     std::auto_ptr< OnComponentComputer_ABC > dataComputer( perceiver_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
     const_cast< MIL_Agent_ABC&>( perceiver_ ).Execute( *dataComputer );
-    sensorsParameters.distances =  dataFunctor.GetDistances();
-    sensorsParameters.delay =  dataFunctor.GetDelay();
+    sensorsParameters.distances = dataFunctor.GetDistances();
+    sensorsParameters.delay = dataFunctor.GetDelay();
     return sensorsParameters;
 }
