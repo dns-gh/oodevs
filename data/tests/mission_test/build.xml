@@ -4,6 +4,7 @@
     <tstamp>
         <format property="timenow" pattern="yyyy-MM-dd_hh'h'mm" />  
     </tstamp>
+
     <property name="output" value="out"/>
     <property name="input" value="src"/>
     <property name="testName" value="testings"/>
@@ -12,11 +13,17 @@
     <property name="exercises" value="../../exercises"/>
     <property name="simulation_app" value="../../../out/applications/simulation_app/vc80/Release/simulation_app.exe"/>
     <property name="run_dir" value="../../../run/vc80"/>
-    
+    <property name="unitperexercise" value="10"/>
+
     <target name="clean">
         <delete dir="${output}"/>
+        <delete dir="${exercises}/${testName}"/>
     </target>
 
+    <target name="realclean" depends="clean">
+        <delete dir="reports"/>
+    </target>
+    
     <target name="generate" depends="clean">
         <mkdir dir="${output}"/>
         <mkdir dir="${output}/${testName}"/>
@@ -30,49 +37,47 @@
         <copy file="${input}/${testName}/profiles.xml" tofile="${output}/${testName}/profiles.xml"/>
         <copy file="${input}/${testName}/scores.xml"   tofile="${output}/${testName}/scores.xml"/>
         <copy file="${input}/${testName}/weather.xml"  tofile="${output}/${testName}/weather.xml"/>
-        <!-- to be generated -->
         <copy file="${input}/${testName}/orbat.xml"  tofile="${output}/${testName}/orbat.xml"/>
         <copy file="${input}/${testName}/scripts/resources/config.lua" tofile="${output}/${testName}/scripts/resources/config.lua"/>
         <!--xslt in="${data}/pions.xml" style="xsl/transformation.xsl" out="${reportFile}"-->
         <xslt in="src/pions.xml" style="xsl/transformation.xsl" out="${reportFile}">
-            <param name="output" expression="${output}/${testName}/scripts"/>
+            <param name="output" expression="${output}/scripts"/>
             <param name="missionsPath" expression="${data}/Missions.xml"/>
             <param name="modelesPath"  expression="${data}/Modeles.xml"/>
             <param name="reportFile"  expression="${reportFile}"/>
         </xslt>
         <xslt in="${data}/pions.xml" style="xsl/model.xsl" out="${output}/${testName}/scripts/resources/model.lua"/>
-    </target>
-
-    <target name="remove-missing-parameters">
         <exec executable="bash.exe">
             <arg value="MissingParameter.sh"/>
-            <arg value="${output}/${testName}/scripts"/>
+            <arg value="${output}/scripts"/>
         </exec>
     </target>
 
-    <target name="deploy" depends="generate, remove-missing-parameters">
+    <target name="deploy" depends="generate">
+        <exec executable="bash.exe">
+            <arg value="deploy.sh"/>
+            <arg value="${unitperexercise}"/>
+        </exec>
         <delete dir="${exercises}/${testName}"/>
+        <mkdir dir="${exercises}/${testName}"/>
         <copy todir="${exercises}/${testName}">
-            <fileset dir="${output}/${testName}"/>
+            <fileset dir="${output}/exercises"/>
         </copy>
     </target>
 
     <target name="launch">
-        <exec executable="${simulation_app}" dir="${run_dir}" failonerror="false" timeout="600000">
-            <arg value="--root-dir=../../data"/>
-            <arg value="--exercise=${testName}"/>
-            <arg value="--session=default"/>
+        <exec executable="bash.exe" failonerror="false">
+            <arg value="launch.sh"/>
         </exec>
     </target>
-    
+
     <target name="reports">
-        <copy file="${exercises}/${testName}/sessions/default/Dispatcher.log" tofile="reports/${timenow}_Dispatcher.log"/>
-        <copy file="${exercises}/${testName}/sessions/default/Sim.log" tofile="reports/${timenow}_Sim.log"/>
         <exec executable="bash.exe">
             <arg value="reports.sh"/>
-            <arg value="reports/${timenow}_Dispatcher.log"/>
+            <arg value="${timenow}"/>
         </exec>
     </target>
-    
+
+    <target name="tests" depends="deploy, launch, reports, clean"/>
 </project>
 

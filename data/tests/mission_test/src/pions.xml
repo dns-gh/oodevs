@@ -1,89 +1,563 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <units xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Units.xsd">
-  <unit decisional-model="Section INF" id="37" name="Section CBT INF VAB CDS OFF" type="Pion INF">
-    <nature atlas-nature="Vehicule" level="ooo" nature="combat/infantry/motorized"/>
+   <unit can-fly="true" decisional-model="Patrouille AIR Assaut" id="1" name="Patrouille CAS" type="Pion ALAT">
+    <nature atlas-nature="Helicoptere" level="ooo" nature="combat/aviation/rotary wing/attack"/>
     <equipments>
-      <equipment count="4" crew="2" major="true" type="VAB 12,7"/>
-      <equipment count="9" crew="1" loadable="true" type="Fantassin"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin MINIMI"/>
-      <equipment count="2" crew="2" loadable="true" type="Equipe ERYX"/>
-      <equipment count="2" crew="1" loadable="true" type="Tireur Precision"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin Appui AC"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin LGI"/>
-    </equipments>
-    <crew-ranks>
-      <crew-rank count="1" type="Officier"/>
-      <crew-rank count="6" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="30s"/>
-      <posture name="Poste" setup-time="300s"/>
-      <posture name="PosteAmenage" setup-time="1800s"/>
-      <posture name="PostePrepareGenie" setup-time="1800s"/>
-    </postures>
-    <nbc decontamination-delay="1350s"/>
-    <distance-before-points>
-      <distance-before-point type="foret" value="500"/>
-      <distance-before-point type="urbain" value="500"/>
-      <distance-before-point type="carrefour" value="500"/>
-      <distance-before-point type="pont" value="500"/>
-    </distance-before-points>
-    <drill-blow length="300" width="300"/>
-  </unit>
-  <unit decisional-model="Section INF" id="97" name="Section CBT INF AMX10P CDS OFF" type="Pion INF">
-    <nature atlas-nature="Vehicule" level="ooo" nature="combat/infantry/motorized"/>
-    <equipments>
-      <equipment count="2" crew="1" loadable="true" type="Fantassin MINIMI"/>
-      <equipment count="2" crew="2" loadable="true" type="Equipe ERYX"/>
-      <equipment count="4" crew="2" loadable="true" type="VAB 12,7"/>
-      <equipment count="2" crew="1" loadable="true" type="Tireur Precision"/>
-      <equipment count="2" crew="1" loadable="true" type="Fantassin Appui AC"/>
-      <equipment count="4" crew="3" major="true" type="AMX10P"/>
-      <equipment count="2" crew="1" loadable="true" type="Fantassin LGI"/>
-      <equipment count="9" crew="1" loadable="true" type="Fantassin"/>
-    </equipments>
-    <crew-ranks>
-      <crew-rank count="1" type="Officier"/>
-      <crew-rank count="6" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="30s"/>
-      <posture name="Poste" setup-time="300s"/>
-      <posture name="PosteAmenage" setup-time="1800s"/>
-      <posture name="PostePrepareGenie" setup-time="1800s"/>
-    </postures>
-    <nbc decontamination-delay="1350s"/>
-    <distance-before-points>
-      <distance-before-point type="foret" value="500"/>
-      <distance-before-point type="urbain" value="500"/>
-      <distance-before-point type="carrefour" value="500"/>
-      <distance-before-point type="pont" value="500"/>
-    </distance-before-points>
-    <drill-blow length="300" width="300"/>
-  </unit>
-  <unit decisional-model="Peloton XL" id="129" name="Peloton LECLERC CDP SOFF" type="Pion ABC">
-    <nature atlas-nature="Blinde" level="ooo" nature="combat/armor/track/heavy"/>
-    <equipments>
-      <equipment count="4" crew="3" major="true" type="Char LECLERC"/>
+      <equipment count="2" crew="2" major="true" type="Bombardier"/>
     </equipments>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
+      <crew-rank count="4" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="900s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+  </unit>
+  <unit can-fly="true" decisional-model="PC AIR" id="2" name="PC Bombardiers" type="Pion ALAT">
+    <nature atlas-nature="None" level="ooo" nature="combat/aviation/rotary wing/attack"/>
+    <equipments>
+      <equipment count="2" crew="2" major="true" type="Bombardier"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="4" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="300s"/>
+    </postures>
+    <nbc decontamination-delay="120s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="100" width="100"/>
+  </unit>
+  <unit decisional-model="Chalands de Debarquement" id="3" name="CDIC + 2 CTM" type="Pion JOINT">
+    <nature atlas-nature="None" level="ooo" nature="combat support/transportation/spod spoe"/>
+    <equipments>
+      <equipment count="1" crew="30" major="true" type="CDIC"/>
+      <equipment count="2" crew="10" major="true" type="CTM"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="900s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+  </unit>
+  <unit decisional-model="PC Marine" id="4" name="PC Marine" type="Pion JOINT">
+    <nature atlas-nature="None" level="ooo" nature="combat support/soutien atterrissage"/>
+    <equipments>
+      <equipment count="1" crew="30" major="true" type="Vedette"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="120s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+  </unit>
+  <unit decisional-model="PC GEN" id="5" name="Section CDT APP GEN" type="Pion GEN">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat/mechanized"/>
+    <equipments>
+      <equipment count="3" crew="2" type="VTC P4"/>
+      <equipment count="1" crew="1" type="Moto CAGIVA 350"/>
+      <equipment count="1" crew="8" major="true" type="VAB GEN 12,7"/>
+      <equipment count="4" crew="3" type="GBC 180 12,7"/>
+      <equipment count="1" crew="3" type="GBC 180"/>
+      <equipment count="1" crew="2" type="TRM 2000 2Pers"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="4" type="Officier"/>
       <crew-rank count="5" type="SousOfficier"/>
     </crew-ranks>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
       <posture name="PosteAmenage" setup-time="1800s"/>
-      <posture name="PostePrepareGenie" setup-time="500s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <nbc decontamination-delay="3000s"/>
+    <nbc decontamination-delay="3600s"/>
     <distance-before-points>
-      <distance-before-point type="foret" value="200"/>
+      <distance-before-point type="foret" value="500"/>
       <distance-before-point type="urbain" value="500"/>
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
-      <distance-before-point type="lima" value="500"/>
     </distance-before-points>
-    <drill-blow length="500" width="350"/>
+    <drill-blow length="500" width="100"/>
   </unit>
+  <unit decisional-model="Section GEN" id="6" name="Section CBT GEN" type="Pion GEN">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat/mechanized"/>
+    <equipments>
+      <equipment count="4" crew="8" major="true" type="VAB GEN 12,7"/>
+      <equipment count="1" crew="2" type="VTC P4"/>
+      <equipment count="1" crew="3" type="GBC 180"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="4" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="2400s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+  </unit>
+  <unit decisional-model="Groupe MPG" id="7" name="Groupe MPG" type="Pion GEN">
+    <nature atlas-nature="None" level="oo" nature="combat/engineer/combat/mechanized"/>
+    <equipments>
+      <equipment count="2" crew="1" major="true" type="MPG"/>
+      <equipment count="1" crew="2" type="GBC Benne"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1350s"/>
+  </unit>
+  <unit decisional-model="Groupe EBG" id="8" name="Groupe EBG" type="Pion GEN">
+    <nature atlas-nature="None" level="oo" nature="combat/engineer/combat/mechanized"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="EBG"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="450s"/>
+  </unit>
+  <unit decisional-model="Groupe PAA" id="9" name="Groupe PAA" type="Pion GEN">
+    <nature atlas-nature="None" level="oo" nature="combat/engineer/combat/mechanized"/>
+    <equipments>
+      <equipment count="2" crew="2" major="true" type="PAA"/>
+      <equipment count="2" crew="3" type="TRM 10000 12,7"/>
+      <equipment count="1" crew="3" type="TRM 10000 3Pers"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="2250s"/>
+  </unit>
+  <unit decisional-model="Groupe DISP" id="10" name="Groupe Disperseur" type="Pion GEN">
+    <nature atlas-nature="None" level="oo" nature="combat/engineer/combat/mechanized"/>
+    <equipments>
+      <equipment count="2" crew="2" major="true" type="MINOTAURE"/>
+      <equipment count="2" crew="3" type="TRM 10000 12,7"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1800s"/>
+  </unit>
+  <unit decisional-model="Groupe EFA" id="11" name="Groupe EFA" type="Pion GEN">
+    <nature atlas-nature="None" level="oo" nature="combat/engineer/combat/mechanized"/>
+    <equipments>
+      <equipment count="2" crew="3" major="true" type="EFA"/>
+      <equipment count="1" crew="3" type="TRM 10000 3Pers"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1350s"/>
+  </unit>
+  <unit decisional-model="Groupe OT" id="12" name="Groupe OT" type="Pion GEN">
+    <nature atlas-nature="None" level="oo" nature="combat/engineer/combat/mechanized"/>
+    <equipments>
+      <equipment count="2" crew="1" major="true" type="NX 7"/>
+      <equipment count="2" crew="2" major="true" type="CBH + EMAD"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1800s"/>
+  </unit>
+  <unit decisional-model="Section Deminage Lourd" id="13" name="Section Deminage Lourd D9" type="Pion GEN">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat/mechanized"/>
+    <equipments>
+      <equipment count="3" crew="2" major="true" type="Char AMX 30 B2 DT"/>
+      <equipment count="2" crew="8" type="VAB GEN 12,7"/>
+      <equipment count="1" crew="2" type="VTC P4"/>
+      <equipment count="3" crew="3" type="TRM 10000 12,7"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="5" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="3150s"/>
+  </unit>
+  <unit decisional-model="Section PFM" id="14" name="Section PFM" type="Pion GEN">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat/mechanized"/>
+    <equipments>
+      <equipment count="2" crew="2" type="VTC P4"/>
+      <equipment count="10" crew="3" major="true" type="TRM 10000 PFM"/>
+      <equipment count="6" crew="3" type="TRM 10000 3Pers"/>
+      <equipment count="2" crew="1" type="TRM 10000 1Pers"/>
+      <equipment count="1" crew="3" type="GBC 8 KT 3 Pers"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="15" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="6900s"/>
+  </unit>
+  <unit decisional-model="Section SOUVIM" id="15" name="Section SOUVIM" type="Pion GEN">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat/mechanized"/>
+    <equipments>
+      <equipment count="1" crew="5" major="true" type="SOUVIM"/>
+      <equipment count="2" crew="2" type="VTC P4"/>
+      <equipment count="3" crew="1" type="TRM 10000 1Pers"/>
+      <equipment count="2" crew="2" type="VAB 12,7"/>
+      <equipment count="2" crew="3" type="GBC 8 KT 3 Pers"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="6" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="2550s"/>
+  </unit>
+  <unit decisional-model="DLRG" id="16" name="DLRG" type="Pion GEN">
+    <nature atlas-nature="None" level="oo" nature="combat/engineer/combat/mechanized"/>
+    <equipments>
+      <equipment count="1" crew="2" type="VTC P4"/>
+      <equipment count="1" crew="3" major="true" type="VAB PC 12.7"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="300s"/>
+      <posture name="Poste" setup-time="600s"/>
+      <posture name="PosteAmenage" setup-time="1500s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+  </unit>
+  <unit decisional-model="Groupe MADEZ" id="17" name="Groupe MADEZ" type="Pion GEN">
+    <nature atlas-nature="None" level="oo" nature="combat/engineer/combat/mechanized"/>
+    <equipments>
+      <equipment count="2" crew="2" major="true" type="MADEZ"/>
+      <equipment count="1" crew="8" type="VAB GEN 12,7"/>
+      <equipment count="2" crew="3" type="TRM 10000 12,7"/>
+      <equipment count="1" crew="2" type="VTC P4"/>
+      <equipment count="2" crew="1" type="TRM 4000 12.7"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="3300s"/>
+  </unit>
+  <unit decisional-model="Groupe PAT" id="18" name="Groupe Plongeur Intervention Offensive" type="Pion GEN">
+    <nature atlas-nature="None" level="oo" nature="combat/engineer/combat/mechanized"/>
+    <equipments>
+      <equipment count="2" crew="8" major="true" type="VAB GEN 12,7"/>
+      <equipment count="1" crew="2" type="VTC P4"/>
+      <equipment count="1" crew="3" type="GBC 180"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1500s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+  </unit>
+  <unit decisional-model="Groupe Enfouisseur" id="19" name="Groupe Enfouisseur" type="Pion GEN">
+    <nature atlas-nature="None" level="oo" nature="combat/engineer/combat/mechanized"/>
+    <equipments>
+      <equipment count="2" crew="2" major="true" type="Enfouisseur Mines"/>
+      <equipment count="2" crew="3" type="TRM 10000 12,7"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1800s"/>
+  </unit>
+  <unit decisional-model="Groupe Chantier" id="20" name="Groupe Chantier" type="Pion GEN">
+    <nature atlas-nature="None" level="oo" nature="combat/engineer/combat/mechanized"/>
+    <equipments>
+      <equipment count="2" crew="1" major="true" type="MPG"/>
+      <equipment count="2" crew="2" type="CBH + TN D6 D"/>
+      <equipment count="1" crew="3" type="SRQ + CA 152D"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="2250s"/>
+  </unit>
+  <unit decisional-model="Groupe MLF" id="21" name="Groupe MLF CDT" type="Pion GEN">
+    <nature atlas-nature="None" level="oo" nature="combat/engineer/combat/mechanized"/>
+    <equipments>
+      <equipment count="2" crew="3" major="true" type="MLF"/>
+      <equipment count="1" crew="2" type="VTC P4"/>
+      <equipment count="1" crew="3" type="TRM 10000 3Pers"/>
+      <equipment count="1" crew="3" type="GBC 180"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1950s"/>
+  </unit>
+  <unit decisional-model="PC MISTRAL" id="22" name="PC Batterie MISTRAL" type="Pion ASA">
+    <nature atlas-nature="ASA" level="ooo" nature="combat/air defense/missile/light/motorized"/>
+    <equipments>
+      <equipment count="2" crew="2" type="VTC P4"/>
+      <equipment count="1" crew="3" major="true" type="TRM 2000 PC"/>
+      <equipment count="1" crew="1" type="Moto CAGIVA 350"/>
+      <equipment count="1" crew="2" type="TRM 2000 7,62"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="3" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <setup installation-time="1800s" uninstallation-time="1800s"/>
+    <nbc decontamination-delay="1200s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <force-ratio feedback-time="60s"/>
+  </unit>
+  <unit decisional-model="SATCP MISTRAL" id="23" name="Section MISTRAL" type="Pion ASA">
+    <nature atlas-nature="ASA" level="ooo" nature="combat/air defense/missile/light/motorized"/>
+    <equipments>
+      <equipment count="6" crew="4" major="true" type="VLRA MISTRAL"/>
+      <equipment count="1" crew="2" type="VTC P4"/>
+      <equipment count="1" crew="3" type="VLRA Radar NC1 MISTRAL"/>
+      <equipment count="2" crew="2" type="TRM 2000 2Pers"/>
+      <equipment count="1" crew="1" type="VTC P4 1 Pers"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="2" type="Officier"/>
+      <crew-rank count="9" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="600s"/>
+      <posture name="PostePrepareGenie" setup-time="600s"/>
+    </postures>
+    <setup installation-time="600s" uninstallation-time="600s"/>
+    <nbc decontamination-delay="1800s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <force-ratio feedback-time="60s"/>
+  </unit>
+  <unit decisional-model="PC ROLAND CAROL" id="24" name="PC Batterie SACP ROL" type="Pion ASA">
+    <nature atlas-nature="ASA" level="ooo" nature="combat/air defense/motorized"/>
+    <equipments>
+      <equipment count="2" crew="2" major="true" type="VTC P4"/>
+      <equipment count="2" crew="3" type="TRM 2000 PC"/>
+      <equipment count="1" crew="1" type="GBC 180 1 Pers"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="3" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <setup installation-time="1800s" uninstallation-time="1800s"/>
+    <nbc decontamination-delay="1200s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <force-ratio feedback-time="60s"/>
+  </unit>
+  <unit decisional-model="SACP ROLAND" id="25" name="Section ROLAND" type="Pion ASA">
+    <nature atlas-nature="ASA" level="ooo" nature="combat/air defense/motorized"/>
+    <equipments>
+      <equipment count="2" crew="2" type="VTC P4"/>
+      <equipment count="4" crew="3" type="VAB CN 20mm"/>
+      <equipment count="4" crew="3" major="true" type="Char ROLAND"/>
+      <equipment count="1" crew="3" type="VAB 7,62"/>
+      <equipment count="1" crew="2" type="VLRA 2 pers"/>
+      <equipment count="2" crew="2" type="TRM 2000 2Pers"/>
+      <equipment count="1" crew="3" type="TRM 2000 3 pers"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="2" type="Officier"/>
+      <crew-rank count="19" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="6900s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <force-ratio feedback-time="60s"/>
+  </unit>
+  
 </units>

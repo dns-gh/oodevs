@@ -1,12 +1,30 @@
-unitsToCreate=`grep -o "sim:CreateUnit" out/testings/scripts/*.lua | wc -l`
-missionsToLaunch=`grep -o "Mission.create" out/testings/scripts/*.lua | wc -l`
-unitsCreated=`grep -o " : agent creation" $1 | wc -l`
-missionsLaunched=`grep -o " : running " $1 | wc -l`
-echo -n "Units created : "
-echo -n $unitsCreated
-echo -n "/"
-echo $unitsToCreate
-echo -n "Missions launched : "
-echo -n $missionsLaunched
-echo -n "/"
-echo $missionsToLaunch
+nbfile=`find ../../exercises/testings -name '*Dispatcher.log' | wc -l`
+
+function getfile
+{
+    find ../../exercises/testings -name '*Dispatcher.log' | echo `awk -v l=$i 'NR==l{ print }'`
+}
+
+rm -f ./reports/${1}_Dispatchers.log
+touch ./reports/${1}_Dispatchers.log
+
+for i in `seq 1 $nbfile`
+do
+    file=`getfile $i`
+    echo  >> ./reports/${1}_Dispatchers.log
+    echo "--------------------------------------------------------------------------------" >> ./reports/${1}_Dispatchers.log
+    echo $file >> ./reports/${1}_Dispatchers.log
+    echo "--------------------------------------------------------------------------------" >> ./reports/${1}_Dispatchers.log
+    cat $file >> ./reports/${1}_Dispatchers.log
+    echo  >> ./reports/${1}_Dispatchers.log
+    echo "Resume:" >> ./reports/${1}_Dispatchers.log
+    echo "------" >> ./reports/${1}_Dispatchers.log
+    echo -n `grep Error $file | wc -l` >> ./reports/${1}_Dispatchers.log
+    echo " errors" >> ./reports/${1}_Dispatchers.log
+    echo -n `grep "agent creation" $file | wc -l` >> ./reports/${1}_Dispatchers.log
+    echo " agent(s) created" >> ./reports/${1}_Dispatchers.log
+    echo -n `grep " : running" $file | wc -l` >> ./reports/${1}_Dispatchers.log
+    echo " mission(s) launched" >> ./reports/${1}_Dispatchers.log
+done
+
+
