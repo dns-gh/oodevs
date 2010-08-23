@@ -986,7 +986,7 @@
       <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Interdire" dia-type="net.masagroup.sword.france.military.platoon.tasks.Interdire" id="2083" name="MELEE Interdire">
-      <parameter dia-name="objective" name="objectif" optional="false" type="LocationComposite">
+      <parameter dia-name="objectives" name="objectif" optional="false" type="LocationComposite">
         <choice>
           <parameter type="PointBM"/>
           <parameter type="AreaBM"/>
