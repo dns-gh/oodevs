@@ -25,11 +25,11 @@ namespace xml
 
 namespace resource
 {
-class ResourceNetworkModel;
+    class ResourceNetworkModel;
 
 // =============================================================================
 /** @class  NodeProperties
-    @brief  NodeProperties
+    @brief  Node properties
 */
 // Created: JSR 2010-08-13
 // =============================================================================

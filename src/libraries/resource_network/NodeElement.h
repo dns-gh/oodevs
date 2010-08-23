@@ -29,7 +29,7 @@ class ResourceNetworkModel;
 
 // =============================================================================
 /** @class  NodeElement
-    @brief  NodeElement
+    @brief  Node element
 */
 // Created: JSR 2010-08-13
 // =============================================================================
@@ -39,7 +39,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              NodeElement();
-    explicit NodeElement( xml::xistream& xis, EResourceType resourceType );
+             NodeElement( xml::xistream& xis, EResourceType resourceType );
              NodeElement( const NodeElement& from );
     virtual ~NodeElement();
     //@}

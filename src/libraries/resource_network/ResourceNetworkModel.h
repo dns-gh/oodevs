@@ -19,7 +19,7 @@ namespace resource
 
 // =============================================================================
 /** @class  ResourceNetworkModel
-    @brief  ResourceNetworkModel
+    @brief  Resource network model
 */
 // Created: JSR 2010-08-13
 // =============================================================================
@@ -39,22 +39,6 @@ public:
     void Update();
     void RegisterNode( NodeProperties& nodeProperties, unsigned int id );
     void Push( unsigned int id, int quantity, EResourceType type ) const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ResourceNetworkModel( const ResourceNetworkModel& );            //!< Copy constructor
-    ResourceNetworkModel& operator=( const ResourceNetworkModel& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     //@}
 };
 

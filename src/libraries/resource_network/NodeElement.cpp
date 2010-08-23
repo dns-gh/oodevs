@@ -20,16 +20,16 @@ using namespace resource;
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
 NodeElement::NodeElement()
-    : model_( 0 )
-    , resourceType_( static_cast< EResourceType>( -1 ) )
-    , isActivated_( true )
-    , isProducer_( false )
-    , isStockActive_( false )
+    : model_             ( 0 )
+    , resourceType_      ( static_cast< EResourceType>( -1 ) )
+    , isActivated_       ( true )
+    , isProducer_        ( false )
+    , isStockActive_     ( false )
     , productionCapacity_( -1 ) // infinite
-    , stockCapacity_( 0 )
-    , stockMaxCapacity_( - 1 ) // infinite
-    , immediateStock_( 0 )
-    , receivedQuantity_( 0 )
+    , stockCapacity_     ( 0 )
+    , stockMaxCapacity_  ( - 1 ) // infinite
+    , immediateStock_    ( 0 )
+    , receivedQuantity_  ( 0 )
 {
     // NOTHING
 }
@@ -39,16 +39,16 @@ NodeElement::NodeElement()
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
 NodeElement::NodeElement( xml::xistream& xis, EResourceType resourceType )
-    : model_( 0 )
-    , resourceType_( resourceType )
-    , isActivated_( true )
-    , isProducer_( xis.attribute< bool >( "producer" ) )
-    , isStockActive_( false )
+    : model_             ( 0 )
+    , resourceType_      ( resourceType )
+    , isActivated_       ( true )
+    , isProducer_        ( xis.attribute< bool >( "producer" ) )
+    , isStockActive_     ( false )
     , productionCapacity_( -1 ) // infinite
-    , stockCapacity_( 0 )
-    , stockMaxCapacity_( -1 ) // infinite
-    , immediateStock_( 0 )
-    , receivedQuantity_( 0 )
+    , stockCapacity_     ( 0 )
+    , stockMaxCapacity_  ( -1 ) // infinite
+    , immediateStock_    ( 0 )
+    , receivedQuantity_  ( 0 )
 {
     xis >> xml::list( "link", *this, &NodeElement::ReadLink );
 }
@@ -58,16 +58,16 @@ NodeElement::NodeElement( xml::xistream& xis, EResourceType resourceType )
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
 NodeElement::NodeElement( const NodeElement& from )
-    : model_( 0 )
-    , resourceType_( from.resourceType_ )
-    , isActivated_( from.isActivated_ )
-    , isProducer_( from.isProducer_ )
-    , isStockActive_( from.isStockActive_ )
+    : model_             ( 0 )
+    , resourceType_      ( from.resourceType_ )
+    , isActivated_       ( from.isActivated_ )
+    , isProducer_        ( from.isProducer_ )
+    , isStockActive_     ( from.isStockActive_ )
     , productionCapacity_( from.productionCapacity_ )
-    , stockCapacity_( from.stockCapacity_ )
-    , stockMaxCapacity_( from.stockMaxCapacity_ )
-    , immediateStock_( from.immediateStock_ )
-    , receivedQuantity_( from.receivedQuantity_ )
+    , stockCapacity_     ( from.stockCapacity_ )
+    , stockMaxCapacity_  ( from.stockMaxCapacity_ )
+    , immediateStock_    ( from.immediateStock_ )
+    , receivedQuantity_  ( from.receivedQuantity_ )
 {
     for( CIT_ResourceLinks it = from.links_.begin(); it != from.links_.end(); ++it )
         links_.push_back( new ResourceLink( **it ) );
@@ -100,29 +100,32 @@ void NodeElement::SetModel( const ResourceNetworkModel& model )
 // -----------------------------------------------------------------------------
 void NodeElement::Update( xml::xistream& xis )
 {
-    xis >> xml::optional >> xml::start( "activation" )
-        >> xml::attribute( "enabled", isActivated_ )
+    xis >> xml::optional
+        >> xml::start( "activation" )
+            >> xml::attribute( "enabled", isActivated_ )
         >> xml::end();
     if( xis.has_child( "production" ) )
     {
         isProducer_ = true;
         xis >> xml::start( "production" )
-            >> xml::attribute( "capacity", productionCapacity_ )
+                >> xml::attribute( "capacity", productionCapacity_ )
             >> xml::end();
     }
     if( xis.has_child( "stock" ) )
     {
         isStockActive_ = true;
         xis >> xml::start( "stock" )
-            >> xml::attribute( "capacity", stockCapacity_ )
-            >> xml::attribute( "max-capacity", stockMaxCapacity_ )
+                >> xml::attribute( "capacity", stockCapacity_ )
+                >> xml::attribute( "max-capacity", stockMaxCapacity_ )
             >> xml::end();
     }
-    xis >> xml::optional >> xml::start( "consumption" )
-        >> xml::list( "resource", *this, &NodeElement::ReadConsumption )
-        >> xml::end();
-    xis >> xml::optional >> xml::start( "links" )
-        >> xml::list( "resource", *this, &NodeElement::ReadLink )
+    xis >> xml::optional 
+        >> xml::start( "consumption" )
+            >> xml::list( "resource", *this, &NodeElement::ReadConsumption )
+        >> xml::end()
+        >> xml::optional
+        >> xml::start( "links" )
+            >> xml::list( "resource", *this, &NodeElement::ReadLink )
         >> xml::end();
 }
 
@@ -142,7 +145,6 @@ void NodeElement::UpdateImmediateStock()
         else
             immediateStock_ += productionCapacity_;
     }
-
     receivedQuantity_ = 0;
 }
 

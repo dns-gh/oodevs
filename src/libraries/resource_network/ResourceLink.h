@@ -27,7 +27,7 @@ namespace resource
 
 // =============================================================================
 /** @class  ResourceLink
-    @brief  ResourceLink
+    @brief  Resource link
 */
 // Created: JSR 2010-08-13
 // =============================================================================
@@ -66,10 +66,6 @@ private:
     //! @name Copy/Assignment
     //@{
     ResourceLink& operator=( const ResourceLink& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

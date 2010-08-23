@@ -19,8 +19,8 @@ using namespace resource;
 // -----------------------------------------------------------------------------
 ResourceLink::ResourceLink( unsigned int destination, EDestinationKind kind, int capacity )
     : destination_( destination )
-    , kind_( kind )
-    , capacity_( capacity )
+    , kind_       ( kind )
+    , capacity_   ( capacity )
 {
     // NOTHING
 }
@@ -31,8 +31,8 @@ ResourceLink::ResourceLink( unsigned int destination, EDestinationKind kind, int
 // -----------------------------------------------------------------------------
 ResourceLink::ResourceLink( const ResourceLink& from )
     : destination_( from.destination_ )
-    , kind_( from.kind_ )
-    , capacity_( from.capacity_ )
+    , kind_       ( from.kind_ )
+    , capacity_   ( from.capacity_ )
 {
     // NOTHING
 }

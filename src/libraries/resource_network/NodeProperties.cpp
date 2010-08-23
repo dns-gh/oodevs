@@ -75,8 +75,8 @@ void NodeProperties::Update( xml::xistream& xis )
     std::string name; // See what to do with it
     std::string type;
     xis >> xml::start( "network" )
-        >> xml::attribute( "name", name )
-        >> xml::attribute( "type", type );
+            >> xml::attribute( "name", name )
+            >> xml::attribute( "type", type );
     NodeElement& element = Get( ResourceNetworkModel::FindResourceType( type ) ); // should exist
     element.Update( xis );
     xis  >> xml::end();
