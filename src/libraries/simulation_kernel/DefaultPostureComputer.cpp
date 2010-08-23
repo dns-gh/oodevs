@@ -8,10 +8,10 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "simulation_kernel/DefaultPostureComputer.h"
 #include "simulation_kernel/Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "simulation_kernel/Entities/Agents/Units/PHY_UnitType.h"
+#include "MIL_Random.h"
 
 using namespace posture;
 

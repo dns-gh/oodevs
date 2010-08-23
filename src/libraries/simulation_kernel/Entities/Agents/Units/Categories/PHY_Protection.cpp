@@ -13,6 +13,7 @@
 #include "PHY_Protection.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteState.h"
 #include "tools/xmlcodecs.h"
+#include "MIL_Random.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_Protection::T_ProtectionMap PHY_Protection::protections_;

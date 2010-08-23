@@ -16,6 +16,7 @@
 #include "Knowledge/DEC_Knowledge_Urban.h"
 #include "DetectionComputer_ABC.h"
 #include "DetectionComputerFactory_ABC.h"
+#include "MIL_Random.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include <urban/TerrainObject_ABC.h>

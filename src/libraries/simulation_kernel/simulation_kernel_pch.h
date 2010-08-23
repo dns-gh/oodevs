@@ -41,7 +41,6 @@
 #include "MT_Tools/MT_Circle.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "MT_Tools/MT_ScipioException.h"
-#include "MIL_Random.h"
 
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h" // $$$$ _RC_ SLI 2010-08-11: waiting for a better solution
 
