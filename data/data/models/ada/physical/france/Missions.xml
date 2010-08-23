@@ -990,7 +990,7 @@
       <parameter dia-name="position" name="position pour tenir" optional="false" type="PointBM"/>
       <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.testSword.military.platoon.tasks.Deny" dia-type="net.masagroup.testSword.military.platoon.tasks.Deny" id="2082" name="TEST Deny">
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Deny" dia-type="net.masagroup.sword.test.military.platoon.tasks.Deny" id="2082" name="TEST Deny">
       <parameter dia-name="objectives" name="objectif" optional="false" type="UrbanBlockBM"/>
       <parameter dia-name="positions" name="positions pour interdire" optional="false" type="PointListBM"/>
       <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
@@ -1021,10 +1021,10 @@
       <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.ContreAttaquer" dia-type="T_Mission_Pion_ContreAttaquer_Point" id="2088" name="MELEE Contre Attaquer sur un Point">
-      <parameter dia-name="objectives" name="objectif" optional="false" type="PointListBM"/>
+      <parameter dia-name="objectives" name="objectifs" optional="false" type="PointListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.ContreAttaquer" dia-type="T_Mission_Pion_ContreAttaquer_Zone" id="2089" name="MELEE Contre Attaquer dans une Zone">
-      <parameter dia-name="objectives" name="zone" optional="false" type="AreaListBM"/>
+      <parameter dia-name="objectives" name="zones" optional="false" type="AreaListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Neutralizer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Neutralizer" id="2090" name="MELEE Neutralizer">
       <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
