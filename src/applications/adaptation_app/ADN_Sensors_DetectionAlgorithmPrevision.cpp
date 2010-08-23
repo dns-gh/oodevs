@@ -335,7 +335,15 @@ void ADN_Sensors_DetectionAlgorithmPrevision::UrbanBlockChanged( std::string mat
 void ADN_Sensors_DetectionAlgorithmPrevision::OnDetectionChanged( const QString& value )
 {
     if( !value.isEmpty() )
+        try
+    {
         detection_ = boost::lexical_cast< double >( value.ascii() );
+    }
+    catch( boost::bad_lexical_cast& /*e*/ )
+    {
+        detection_ = 0;
+
+    }        
     Update();
 }
 
@@ -346,7 +354,14 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnDetectionChanged( const QString&
 void ADN_Sensors_DetectionAlgorithmPrevision::OnRecognitionChanged( const QString& value )
 {
     if( !value.isEmpty() )
+        try
+    {
         recognition_ = boost::lexical_cast< double >( value.ascii() );
+    }
+    catch( boost::bad_lexical_cast& /*e*/ )
+    {
+        recognition_ = 0; 
+    } 
     Update();
 }
 
@@ -357,7 +372,14 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnRecognitionChanged( const QStrin
 void ADN_Sensors_DetectionAlgorithmPrevision::OnIdentificationChanged( const QString& value )
 {
     if( !value.isEmpty() )
-         identification_ = boost::lexical_cast< double >( value.ascii() );
+            try
+        {
+            identification_ = boost::lexical_cast< double >( value.ascii() );
+        }
+        catch( boost::bad_lexical_cast& /*e*/ )
+        {
+            identification_ = 0; 
+        } 
     Update();
 }
 
@@ -372,7 +394,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationDensityChanged( const 
         {
              populationDensityFactor_ = boost::lexical_cast< double >( value.ascii() );
         }
-        catch( boost::bad_lexical_cast* /*e*/ )
+       catch( boost::bad_lexical_cast& /*e*/ )
         {
             populationDensityFactor_ = 1;
         }
@@ -392,10 +414,10 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationModifierChanged( const
         {
             populationModifier_ = boost::lexical_cast< double >( value.ascii() );
         }
-        catch( boost::bad_lexical_cast* /*e*/ )
-        {
+      catch( boost::bad_lexical_cast& /*e*/ )
+         {
             populationModifier_ = 1;
-        }
+         }
     else
         populationModifier_ = 1;
     Update();
@@ -439,7 +461,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::UpdatePreview( double& parameter, 
        {
            parameter = boost::lexical_cast< double >( value.ascii() );
        }
-       catch( boost::bad_lexical_cast* /*e*/ )
+       catch( boost::bad_lexical_cast& /*e*/ )
        {
            widget->setText( defaultString );
            parameter = defaultValue;

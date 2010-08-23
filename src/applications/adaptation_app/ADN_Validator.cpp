@@ -140,6 +140,8 @@ QValidator::State ADN_DoubleValidator::validate( QString& input, int& nPos ) con
     if( b >= 0 &&
      input.stripWhiteSpace().startsWith(QString::fromLatin1("-")) )
         return Invalid;
+    if ( input.stripWhiteSpace() == ".")
+        return Invalid;
     if( empty.exactMatch(input) )
         return Intermediate;
     bool ok = TRUE;
