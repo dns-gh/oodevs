@@ -349,6 +349,194 @@
         </object>
       </objects>
       <tactical>
+        <formation id="5" level="ii" name="Bataillon Case 2">
+          <automat engaged="false" id="19" knowledge-group="4" name="Compagnie INF AMX 10 P [19]" type="Compagnie INF AMX 10 P">
+            <unit command-post="true" id="20" name="Section CDT CIE INF AMX10P[20]" position="30TYU1822714081" type="Section CDT CIE INF AMX10P"/>
+            <unit command-post="false" id="21" name="Section CBT INF AMX10P CDS OFF[21]" position="30UYU1334321676" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="22" name="Section CBT INF AMX10P CDS OFF[22]" position="30TYU1574417481" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="23" name="Section CBT INF AMX10P CDS OFF[23]" position="30TYU1926213372" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="24" name="Section CBT INF AMX10P CDS SOFF[24]" position="30TYU1876814425" type="Section CBT INF AMX10P CDS SOFF"/>
+            <unit command-post="false" id="134" name="Section PROTERRE" position="30TYU1536918147" type="Section PROTERRE"/>
+          </automat>
+          <automat engaged="false" id="43" knowledge-group="4" name="Escadron de Chars LECLERC [43]" type="Escadron de Chars LECLERC">
+            <unit command-post="true" id="44" name="Peloton LECLERC CDT ESC[44]" position="30TYU0136602640" type="Peloton LECLERC CDT ESC"/>
+            <unit command-post="false" id="45" name="Peloton LECLERC CDP OFF[45]" position="30TXU9565208031" type="Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="46" name="Peloton LECLERC CDP OFF[46]" position="30TYU0140201641" type="Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="47" name="Peloton LECLERC CDP SOFF[47]" position="30TYU0088302123" type="Peloton LECLERC CDP SOFF"/>
+            <unit command-post="false" id="48" name="Peloton d appui direct[48]" position="30TYU0186702658" type="Peloton d appui direct"/>
+          </automat>
+          <automat engaged="false" id="67" knowledge-group="4" name="Escadron ERIAC [67]" type="Escadron ERIAC">
+            <unit command-post="true" id="68" name="PC CDT LOG ERIAC[68]" position="30TYU0068400718" type="PC CDT LOG ERIAC"/>
+            <unit command-post="false" id="69" name="Peloton ERIAC OFF[69]" position="30TYU0069300454" type="Peloton ERIAC OFF"/>
+            <unit command-post="false" id="70" name="Peloton ERIAC OFF[70]" position="30TYU0096300318" type="Peloton ERIAC OFF"/>
+            <unit command-post="false" id="71" name="Peloton ERIAC OFF[71]" position="30TYU0148200600" type="Peloton ERIAC OFF"/>
+            <unit command-post="false" id="72" name="Peloton ERIAC S/OFF[72]" position="30TYU0127300680" type="Peloton ERIAC S/OFF"/>
+          </automat>
+          <automat engaged="false" id="218" knowledge-group="4" name="Compagnie CBT GENIE type BLB BIM BP [218]" type="Compagnie CBT GENIE type BLB BIM BP">
+            <unit command-post="true" id="219" name="PC CIE CBT GENIE Type BLB/BIM/BP[219]" position="30TXU9385305827" type="PC CIE CBT GENIE Type BLB/BIM/BP"/>
+            <unit command-post="false" id="221" name="Section CBT GEN[221]" position="30TXU9388904829" type="Section CBT GEN"/>
+            <unit command-post="false" id="222" name="Section CBT GEN[222]" position="30TXU9337005310" type="Section CBT GEN"/>
+            <unit command-post="false" id="224" name="Groupe MPG[224]" position="30TXU9457805353" type="Groupe MPG"/>
+          </automat>
+          <automat engaged="false" id="265" knowledge-group="4" name="Batterie MISTRAL [265]" type="Batterie MISTRAL">
+            <unit command-post="true" id="266" name="PC Batterie MISTRAL[266]" position="30UXU9398931917" type="PC Batterie MISTRAL"/>
+            <unit command-post="false" id="267" name="Section MISTRAL[267]" position="30UXU9450831436" type="Section MISTRAL"/>
+            <unit command-post="false" id="268" name="Section MISTRAL[268]" position="30UXU9402530918" type="Section MISTRAL"/>
+            <unit command-post="false" id="269" name="Section MISTRAL[269]" position="30UXU9350731399" type="Section MISTRAL"/>
+            <unit command-post="false" id="270" name="Section MISTRAL[270]" position="30UXU9449031935" type="Section MISTRAL"/>
+          </automat>
+          <automat engaged="false" id="271" knowledge-group="4" name="Batterie ROLAND [271]" type="Batterie ROLAND">
+            <unit command-post="true" id="272" name="PC Batterie SACP ROL[272]" position="30UXU9863731504" type="PC Batterie SACP ROL"/>
+            <unit command-post="false" id="273" name="Section ROLAND[273]" position="30UXU9915631023" type="Section ROLAND"/>
+            <unit command-post="false" id="274" name="Section ROLAND[274]" position="30UXU9867430505" type="Section ROLAND"/>
+          </automat>
+          <automat engaged="false" id="518" knowledge-group="4" name="Batterie de Tir AUF1 [518]" type="Batterie de Tir AUF1">
+            <unit command-post="true" id="519" name="PC Batterie ASS[519]" position="31UBP7975623099" type="PC Batterie ASS"/>
+            <unit command-post="false" id="520" name="Section de Tir AUF1 CDS OFF[520]" position="31UBP8023622579" type="Section de Tir AUF1 CDS OFF"/>
+            <unit command-post="false" id="521" name="Section de Tir AUF1 CDS SOFF[521]" position="31UBP7971522100" type="Section de Tir AUF1 CDS SOFF"/>
+          </automat>
+        </formation>
+        <formation id="7" level="ii" name="Bataillon Case 3">
+          <automat engaged="false" id="25" knowledge-group="4" name="Compagnie INF AMX 10 P [25]" type="Compagnie INF AMX 10 P">
+            <unit command-post="true" id="26" name="Section CDT CIE INF AMX10P[26]" position="30TXT5984137163" type="Section CDT CIE INF AMX10P"/>
+            <unit command-post="false" id="27" name="Section CBT INF AMX10P CDS OFF[27]" position="30TXT5485545958" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="28" name="Section CBT INF AMX10P CDS OFF[28]" position="30TXT5437245441" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="29" name="Section CBT INF AMX10P CDS OFF[29]" position="30TXT5800340884" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="30" name="Section CBT INF AMX10P CDS SOFF[30]" position="30TXT6057337644" type="Section CBT INF AMX10P CDS SOFF"/>
+            <unit command-post="false" id="135" name="Section PROTERRE" position="30TXT5737641678" type="Section PROTERRE"/>
+          </automat>
+          <automat engaged="false" id="49" knowledge-group="4" name="Escadron de Chars LECLERC [49]" type="Escadron de Chars LECLERC">
+            <unit command-post="true" id="50" name="Peloton LECLERC CDT ESC[50]" position="30TXT4282326949" type="Peloton LECLERC CDT ESC"/>
+            <unit command-post="false" id="51" name="Peloton LECLERC CDP OFF[51]" position="30TXT3704732127" type="Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="52" name="Peloton LECLERC CDP OFF[52]" position="30TXT4285825951" type="Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="53" name="Peloton LECLERC CDP SOFF[53]" position="30TXT3739931815" type="Peloton LECLERC CDP SOFF"/>
+            <unit command-post="false" id="54" name="Peloton d appui direct[54]" position="30TXT4332326967" type="Peloton d appui direct"/>
+          </automat>
+          <automat engaged="false" id="73" knowledge-group="4" name="Escadron ERIAC [73]" type="Escadron ERIAC">
+            <unit command-post="true" id="74" name="PC CDT LOG ERIAC[74]" position="30TXT4268925735" type="PC CDT LOG ERIAC"/>
+            <unit command-post="false" id="75" name="Peloton ERIAC OFF[75]" position="30TXT4249725611" type="Peloton ERIAC OFF"/>
+            <unit command-post="false" id="76" name="Peloton ERIAC OFF[76]" position="30TXT4204225751" type="Peloton ERIAC OFF"/>
+            <unit command-post="false" id="77" name="Peloton ERIAC OFF[77]" position="30TXT4158925813" type="Peloton ERIAC OFF"/>
+            <unit command-post="false" id="78" name="Peloton ERIAC S/OFF[78]" position="30TXT4111325952" type="Peloton ERIAC S/OFF"/>
+          </automat>
+          <automat engaged="false" id="227" knowledge-group="4" name="Compagnie CBT GENIE type BLB BIM BP [227]" type="Compagnie CBT GENIE type BLB BIM BP">
+            <unit command-post="true" id="228" name="PC CIE CBT GENIE Type BLB/BIM/BP[228]" position="30TXT3538130133" type="PC CIE CBT GENIE Type BLB/BIM/BP"/>
+            <unit command-post="false" id="230" name="Section CBT GEN[230]" position="30TXT3541729135" type="Section CBT GEN"/>
+            <unit command-post="false" id="231" name="Section CBT GEN[231]" position="30TXT3489929616" type="Section CBT GEN"/>
+            <unit command-post="false" id="233" name="Groupe MPG[233]" position="30TXT3610729659" type="Groupe MPG"/>
+          </automat>
+          <automat engaged="false" id="275" knowledge-group="4" name="Batterie MISTRAL [275]" type="Batterie MISTRAL">
+            <unit command-post="true" id="276" name="PC Batterie MISTRAL[276]" position="30TXT3546556304" type="PC Batterie MISTRAL"/>
+            <unit command-post="false" id="277" name="Section MISTRAL[277]" position="30TXT3598455823" type="Section MISTRAL"/>
+            <unit command-post="false" id="278" name="Section MISTRAL[278]" position="30TXT3550155306" type="Section MISTRAL"/>
+            <unit command-post="false" id="279" name="Section MISTRAL[279]" position="30TXT3498355787" type="Section MISTRAL"/>
+            <unit command-post="false" id="280" name="Section MISTRAL[280]" position="30TXT3596656322" type="Section MISTRAL"/>
+          </automat>
+          <automat engaged="false" id="281" knowledge-group="4" name="Batterie ROLAND [281]" type="Batterie ROLAND">
+            <unit command-post="true" id="282" name="PC Batterie SACP ROL[282]" position="30TXT4010155848" type="PC Batterie SACP ROL"/>
+            <unit command-post="false" id="283" name="Section ROLAND[283]" position="30TXT4061955367" type="Section ROLAND"/>
+            <unit command-post="false" id="284" name="Section ROLAND[284 ]" position="30TXT4013754850" type="Section ROLAND"/>
+          </automat>
+          <automat engaged="false" id="522" knowledge-group="4" name="Batterie de Tir AUF1 [522]" type="Batterie de Tir AUF1">
+            <unit command-post="true" id="523" name="PC Batterie ASS[523]" position="30TXT6857447634" type="PC Batterie ASS"/>
+            <unit command-post="false" id="524" name="Section de Tir AUF1 CDS OFF[524]" position="30TXT6909347153" type="Section de Tir AUF1 CDS OFF"/>
+            <unit command-post="false" id="525" name="Section de Tir AUF1 CDS SOFF[525]" position="30TXT6861046636" type="Section de Tir AUF1 CDS SOFF"/>
+          </automat>
+        </formation>
+        <formation id="9" level="ii" name="Bataillon Case 4">
+          <automat engaged="false" id="31" knowledge-group="4" name="Compagnie INF AMX 10 P [31]" type="Compagnie INF AMX 10 P">
+            <unit command-post="true" id="32" name="Section CDT CIE INF AMX10P[32]" position="30TYT2136839799" type="Section CDT CIE INF AMX10P"/>
+            <unit command-post="false" id="33" name="Section CBT INF AMX10P CDS OFF[33]" position="30TYT1608248108" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="34" name="Section CBT INF AMX10P CDS OFF[34]" position="30TYT1559947591" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="35" name="Section CBT INF AMX10P CDS OFF[35]" position="30TYT1508048072" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="36" name="Section CBT INF AMX10P CDS SOFF[36]" position="30TYT2076740816" type="Section CBT INF AMX10P CDS SOFF"/>
+            <unit command-post="false" id="136" name="Section PROTERRE" position="30TYT1796444718" type="Section PROTERRE"/>
+          </automat>
+          <automat engaged="false" id="55" knowledge-group="4" name="Escadron de Chars LECLERC [55]" type="Escadron de Chars LECLERC">
+            <unit command-post="true" id="56" name="Peloton LECLERC CDT ESC[56]" position="30TYT0400829138" type="Peloton LECLERC CDT ESC"/>
+            <unit command-post="false" id="57" name="Peloton LECLERC CDP OFF[57]" position="30TXT9821934437" type="Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="58" name="Peloton LECLERC CDP OFF[58]" position="30TXT9819534553" type="Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="59" name="Peloton LECLERC CDP SOFF[59]" position="30TYT0352528621" type="Peloton LECLERC CDP SOFF"/>
+            <unit command-post="false" id="60" name="Peloton d appui direct[60]" position="30TYT0450929155" type="Peloton d appui direct"/>
+          </automat>
+          <automat engaged="false" id="79" knowledge-group="4" name="Escadron ERIAC [79]" type="Escadron ERIAC">
+            <unit command-post="true" id="80" name="PC CDT LOG ERIAC[80]" position="30TYT0268026994" type="PC CDT LOG ERIAC"/>
+            <unit command-post="false" id="81" name="Peloton ERIAC OFF[81]" position="30TYT0333627272" type="Peloton ERIAC OFF"/>
+            <unit command-post="false" id="82" name="Peloton ERIAC OFF[82]" position="30TYT0369227187" type="Peloton ERIAC OFF"/>
+            <unit command-post="false" id="83" name="Peloton ERIAC OFF[83]" position="30TYT0317026973" type="Peloton ERIAC OFF"/>
+            <unit command-post="false" id="84" name="Peloton ERIAC S/OFF[84]" position="30TYT0295827434" type="Peloton ERIAC S/OFF"/>
+          </automat>
+          <automat engaged="false" id="236" knowledge-group="4" name="Compagnie CBT GENIE type BLB BIM BP [236]" type="Compagnie CBT GENIE type BLB BIM BP">
+            <unit command-post="true" id="237" name="PC CIE CBT GENIE Type BLB/BIM/BP[237]" position="30TXT9649632404" type="PC CIE CBT GENIE Type BLB/BIM/BP"/>
+            <unit command-post="false" id="239" name="Section CBT GEN[239]" position="30TXT9653231405" type="Section CBT GEN"/>
+            <unit command-post="false" id="240" name="Section CBT GEN[240]" position="30TXT9601331887" type="Section CBT GEN"/>
+            <unit command-post="false" id="242" name="Groupe MPG[242]" position="30TXT9722231930" type="Groupe MPG"/>
+          </automat>
+          <automat engaged="false" id="285" knowledge-group="4" name="Batterie MISTRAL [285]" type="Batterie MISTRAL">
+            <unit command-post="true" id="286" name="PC Batterie MISTRAL[286]" position="30TXT9650758421" type="PC Batterie MISTRAL"/>
+            <unit command-post="false" id="287" name="Section MISTRAL[287]" position="30TXT9702557939" type="Section MISTRAL"/>
+            <unit command-post="false" id="288" name="Section MISTRAL[288]" position="30TXT9654357422" type="Section MISTRAL"/>
+            <unit command-post="false" id="289" name="Section MISTRAL[289]" position="30TXT9602457904" type="Section MISTRAL"/>
+            <unit command-post="false" id="290" name="Section MISTRAL[290]" position="30TXT9700758438" type="Section MISTRAL"/>
+          </automat>
+          <automat engaged="false" id="291" knowledge-group="4" name="Batterie ROLAND [291]" type="Batterie ROLAND">
+            <unit command-post="true" id="292" name="PC Batterie SACP ROL[292]" position="30TYT0131658029" type="PC Batterie SACP ROL"/>
+            <unit command-post="false" id="293" name="Section ROLAND[293]" position="30TYT0183557548" type="Section ROLAND"/>
+            <unit command-post="false" id="294" name="Section ROLAND[294]" position="30TYT0135257031" type="Section ROLAND"/>
+          </automat>
+          <automat engaged="false" id="526" knowledge-group="4" name="Batterie de Tir AUF1 [526]" type="Batterie de Tir AUF1">
+            <unit command-post="true" id="527" name="PC Batterie ASS[527]" position="31TBN7671449582" type="PC Batterie ASS"/>
+            <unit command-post="false" id="528" name="Section de Tir AUF1 CDS OFF[528]" position="31TBN7719449063" type="Section de Tir AUF1 CDS OFF"/>
+            <unit command-post="false" id="529" name="Section de Tir AUF1 CDS SOFF[529]" position="31TBN7667348584" type="Section de Tir AUF1 CDS SOFF"/>
+          </automat>
+        </formation>
+        <formation id="10" level="ii" name="Bataillon Case 1">
+          <automat engaged="false" id="13" knowledge-group="4" name="Compagnie INF AMX 10 P [13]" type="Compagnie INF AMX 10 P">
+            <unit command-post="true" id="14" name="Section CDT CIE INF AMX10P[14]" position="30TXU5776110907" type="Section CDT CIE INF AMX10P"/>
+            <unit command-post="false" id="15" name="Section CBT INF AMX10P CDS OFF[15]" position="30UXU5283419295" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="16" name="Section CBT INF AMX10P CDS OFF[16]" position="30TXU5520214460" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="17" name="Section CBT INF AMX10P CDS OFF[17]" position="30TXU5817411214" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="18" name="Section CBT INF AMX10P CDS SOFF[18]" position="30TXU5751811352" type="Section CBT INF AMX10P CDS SOFF"/>
+            <unit command-post="false" id="133" name="Section PROTERRE" position="30TXU5598914884" type="Section PROTERRE"/>
+          </automat>
+          <automat engaged="false" id="37" knowledge-group="4" name="Escadron de Chars LECLERC [37]" type="Escadron de Chars LECLERC">
+            <unit command-post="true" id="38" name="Peloton LECLERC CDT ESC[38]" position="30TXU4018000412" type="Peloton LECLERC CDT ESC"/>
+            <unit command-post="false" id="39" name="Peloton LECLERC CDP OFF[39]" position="30TXU3437505709" type="Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="40" name="Peloton LECLERC CDP OFF[40]" position="30TXT4021699413" type="Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="41" name="Peloton LECLERC CDP SOFF[41]" position="30TXT3969799895" type="Peloton LECLERC CDP SOFF"/>
+            <unit command-post="false" id="42" name="Peloton d appui direct[42]" position="30TXU4068000429" type="Peloton d appui direct"/>
+          </automat>
+          <automat engaged="false" id="61" knowledge-group="4" name="Escadron ERIAC [61]" type="Escadron ERIAC">
+            <unit command-post="true" id="62" name="PC CDT LOG ERIAC[62]" position="30TXT3846199744" type="PC CDT LOG ERIAC"/>
+            <unit command-post="false" id="63" name="Peloton ERIAC OFF[63]" position="30TXT3827899943" type="Peloton ERIAC OFF"/>
+            <unit command-post="false" id="64" name="Peloton ERIAC OFF[64]" position="30TXU3759000270" type="Peloton ERIAC OFF"/>
+            <unit command-post="false" id="65" name="Peloton ERIAC OFF[65]" position="30TXU3754700649" type="Peloton ERIAC OFF"/>
+            <unit command-post="false" id="66" name="Peloton ERIAC S/OFF[66]" position="30TXU3767000507" type="Peloton ERIAC S/OFF"/>
+          </automat>
+          <automat engaged="false" id="209" knowledge-group="4" name="Compagnie CBT GENIE type BLB BIM BP [209]" type="Compagnie CBT GENIE type BLB BIM BP">
+            <unit command-post="true" id="210" name="PC CIE CBT GENIE Type BLB/BIM/BP[210]" position="30TXU3275803657" type="PC CIE CBT GENIE Type BLB/BIM/BP"/>
+            <unit command-post="false" id="211" name="Section CBT GEN[211]" position="30TXU3327703176" type="Section CBT GEN"/>
+            <unit command-post="false" id="212" name="Section CBT GEN[212]" position="30TXU3279402659" type="Section CBT GEN"/>
+            <unit command-post="false" id="215" name="Groupe MPG[215]" position="30TXU3232103137" type="Groupe MPG"/>
+          </automat>
+          <automat engaged="false" id="255" knowledge-group="4" name="Batterie MISTRAL [255]" type="Batterie MISTRAL">
+            <unit command-post="true" id="256" name="PC Batterie MISTRAL[256]" position="30UXU3252629754" type="PC Batterie MISTRAL"/>
+            <unit command-post="false" id="257" name="Section MISTRAL[257]" position="30UXU3304529272" type="Section MISTRAL"/>
+            <unit command-post="false" id="258" name="Section MISTRAL[258]" position="30UXU3256228755" type="Section MISTRAL"/>
+            <unit command-post="false" id="259" name="Section MISTRAL[259]" position="30UXU3204429236" type="Section MISTRAL"/>
+            <unit command-post="false" id="260" name="Section MISTRAL[260]" position="30UXU3302629771" type="Section MISTRAL"/>
+          </automat>
+          <automat engaged="false" id="261" knowledge-group="4" name="Batterie ROLAND [261]" type="Batterie ROLAND">
+            <unit command-post="true" id="262" name="PC Batterie SACP ROL[262]" position="30UXU3729729342" type="PC Batterie SACP ROL"/>
+            <unit command-post="false" id="263" name="Section ROLAND[263]" position="30UXU3781528861" type="Section ROLAND"/>
+            <unit command-post="false" id="264" name="Section ROLAND[264]" position="30UXU3733328344" type="Section ROLAND"/>
+          </automat>
+          <automat engaged="false" id="514" knowledge-group="4" name="Batterie de Tir AUF1 [514]" type="Batterie de Tir AUF1">
+            <unit command-post="true" id="515" name="PC Batterie ASS[515]" position="30UXU6587921129" type="PC Batterie ASS"/>
+            <unit command-post="false" id="516" name="Section de Tir AUF1 CDS OFF[516]" position="30UXU6639720648" type="Section de Tir AUF1 CDS OFF"/>
+            <unit command-post="false" id="517" name="Section de Tir AUF1 CDS SOFF[517]" position="30UXU6591520131" type="Section de Tir AUF1 CDS SOFF"/>
+          </automat>
+        </formation>
         <formation id="443" level="ii" name="Bataillon Case 5">
           <automat engaged="false" id="445" knowledge-group="4" name="Escadron de Chars AMX30B2 BRENNUS [445]" type="Escadron de Chars AMX30B2 BRENNUS">
             <unit command-post="true" id="446" name="Peloton CDT ESC AMX30B2 BRENNUS[446]" position="31UCP1877927385" type="Peloton CDT ESC AMX30B2 BRENNUS"/>
@@ -405,6 +593,15 @@
             <unit command-post="false" id="548" name="Drone CL 289[548]" position="31UBP9804435207" type="Drone CL 289"/>
             <unit command-post="false" id="549" name="Drone CL 289[549]" position="31UBP9823134699" type="Drone CL 289"/>
             <unit command-post="false" id="550" name="Drone CL 289[550]" position="31UBP9800334209" type="Drone CL 289"/>
+          </automat>
+          <automat engaged="false" id="551" knowledge-group="778" name="Section Drone SDTI [551]" type="Section Drone SDTI">
+            <unit command-post="true" id="552" name="Section MO SDTI[552]" position="31UBP9969435060" type="Section MO SDTI"/>
+            <unit command-post="false" id="553" name="Drone SDTI[553]" position="31UCP0017334540" type="Drone SDTI"/>
+            <unit command-post="false" id="554" name="Drone SDTI[554]" position="31UBP9965234062" type="Drone SDTI"/>
+            <unit command-post="false" id="555" name="Drone SDTI[555]" position="31UBP9917234582" type="Drone SDTI"/>
+            <unit command-post="false" id="556" name="Drone SDTI[556]" position="31UCP0019435039" type="Drone SDTI"/>
+            <unit command-post="false" id="557" name="Drone SDTI[557]" position="31UCP0038134531" type="Drone SDTI"/>
+            <unit command-post="false" id="558" name="Drone SDTI[558]" position="31UCP0015234041" type="Drone SDTI"/>
           </automat>
           <automat engaged="false" id="559" knowledge-group="778" name="ELGE [559]" type="ELGE">
             <unit command-post="true" id="560" name="Groupe ELGE[560]" position="31UBP9753036312" type="Groupe ELGE"/>
