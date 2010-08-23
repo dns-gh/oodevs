@@ -68,6 +68,10 @@
     <target name="reports">
         <copy file="${exercises}/${testName}/sessions/default/Dispatcher.log" tofile="reports/${timenow}_Dispatcher.log"/>
         <copy file="${exercises}/${testName}/sessions/default/Sim.log" tofile="reports/${timenow}_Sim.log"/>
+        <exec executable="bash.exe">
+            <arg value="reports.sh"/>
+            <arg value="reports/${timenow}_Dispatcher.log"/>
+        </exec>
     </target>
     
 </project>

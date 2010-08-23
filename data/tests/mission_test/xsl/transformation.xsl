@@ -52,7 +52,6 @@ function Start()
             events.sim:TickEnded(),
             { "</xsl:text><xsl:value-of select="$physical"/><xsl:text>_startup" },
             function()
-                Trace( "startup" )
                 ChangeState( "</xsl:text><xsl:value-of select="$physical"/><xsl:text>_test_begin" )
             end
         },
@@ -66,7 +65,7 @@ function Start()
                                , model.types.units["</xsl:text><xsl:value-of select="$physical"/><xsl:text>"]
                                , model.entities.automats["ABC"] ) -- verifier comment ne pas passer d'automate ou comment trouver un automate correct
                 ChangeState( "</xsl:text><xsl:value-of select="$physical"/><xsl:text>_test_wait_unit_creation" )
-                Trace( "creating </xsl:text><xsl:value-of select="$physical"/><xsl:text>" )
+                Trace( "</xsl:text><xsl:value-of select="$physical"/><xsl:text> : agent creation" )
             end
         },
 
@@ -76,7 +75,7 @@ function Start()
             function( entity )
                 if entity:GetName() == "</xsl:text><xsl:value-of select="$physicalNotEncoded"/><xsl:text>" then
                     unitId = entity:GetIdentifier()
-                    Trace( "Agent created" .. tostring( unitId ) )
+                <!--    Trace( "Agent created" .. tostring( unitId ) ) -->
                     StartTimeSequence( "</xsl:text><xsl:value-of select="$physical"/><xsl:text>_messages" )
                 end
             end
@@ -97,7 +96,6 @@ function Start()
      
         AtState( "</xsl:text><xsl:value-of select="$physical"/><xsl:text>_test_end",
             function()
-                Trace( "end" )
                 Deactivate()
             end
         ),
@@ -117,7 +115,6 @@ end
             <xsl:text>
         TimeSequence( "</xsl:text><xsl:value-of select="$unit"/><xsl:text>_messages", frequency,
             function()
-                Trace( "mission" )
                 Mission.create( unitId, model.types.missions["</xsl:text><xsl:value-of select="@name"/><xsl:text>"] )
             </xsl:text>
                 <xsl:call-template name="common-parameters"/>
@@ -148,9 +145,9 @@ end
             <xsl:when test="@type = 'Path'">
                 <xsl:text>    :With( Path.create( "Route" ):AddPoint( "Destination", config.positions.destination[1] ) )</xsl:text>
             </xsl:when>
-            <!--xsl:when test="@type = 'Point'">
-                <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "Point", value = config.positions.destination[1] } )</xsl:text>
-            </xsl:when-->
+            <xsl:when test="@type = 'Point'">
+                <xsl:text>    :With( PointLocation.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", config.positions.destination[1] ) )</xsl:text>
+            </xsl:when>
 
             <xsl:otherwise>
                 <xsl:text>    -- Missing argument</xsl:text>
