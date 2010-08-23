@@ -118,9 +118,8 @@ void ObjectKnowledgePanel::showEvent( QShowEvent* )
 // -----------------------------------------------------------------------------
 void ObjectKnowledgePanel::NotifyUpdated( const ObjectKnowledges& element )
 {
-    pKnowledgeListView_->DeleteTail(
-        pKnowledgeListView_->DisplayList( element.CreateIterator() )
-        );
+    if ( selected_ && selected_ == &element )
+        pKnowledgeListView_->DeleteTail( pKnowledgeListView_->DisplayList( element.CreateIterator() ));
 }
 
 // -----------------------------------------------------------------------------
