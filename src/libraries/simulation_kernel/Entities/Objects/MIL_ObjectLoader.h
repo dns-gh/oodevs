@@ -71,7 +71,7 @@ public:
     //! @name Accessors
     //@{
     const MIL_ObjectType_ABC& GetType( const std::string& type ) const;
-    const CapacityFactory&    GetCapacityFactory()               const;
+    const CapacityFactory& GetCapacityFactory() const;
     //@}
 
     //! @name Singleton

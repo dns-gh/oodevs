@@ -134,15 +134,23 @@ void AttributeFactory::Create( Object& object, const std::string& attribute, xml
 }
 
 // -----------------------------------------------------------------------------
+// Name: AttributeFactory::Initialize
+// Created: LGY 2010-08-23
+// -----------------------------------------------------------------------------
+void AttributeFactory::Initialize( Object& object ) const
+{
+    // Initialize construction with 100%
+    object.GetAttribute< ConstructionAttribute >();
+    object.GetAttribute< OccupantAttribute >();     // $$$$ LDC: All physical objects have an occupant attribute.
+}
+
+// -----------------------------------------------------------------------------
 // Name: AttributeFactory::Create
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
 void AttributeFactory::Create( Object& object, const Common::MsgMissionParameter_Value& attributes ) const
 {
-    // Initialize construction with 100%
-    object.GetAttribute< ConstructionAttribute >();
-    object.GetAttribute< OccupantAttribute >();     // $$$$ LDC: All physical objects have an occupant attribute.
-
+    Initialize( object );
     for( int i = 0; i < attributes.list_size(); ++i )
     {
         const Common::MsgMissionParameter_Value& attribute = attributes.list( i );

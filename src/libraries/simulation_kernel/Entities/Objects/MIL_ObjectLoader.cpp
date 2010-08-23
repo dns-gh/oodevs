@@ -40,7 +40,7 @@ MIL_ObjectLoader& MIL_ObjectLoader::GetLoader()
 // Created: JCR 2008-04-21
 // -----------------------------------------------------------------------------
 MIL_ObjectLoader::MIL_ObjectLoader()
-    : factory_( new CapacityFactory() )
+    : factory_   ( new CapacityFactory() )
     , attributes_( new AttributeFactory() )
 {
     if( !pLoader_ )
@@ -123,6 +123,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const std::string& type, MIL_Arm
     if( it == prototypes_.end() )
         throw std::runtime_error( __FUNCTION__ " - Unknown object type: " + type );
     Object* object = new Object( *it->second, army, &location, "", reserved );
+    attributes_->Initialize( *object );
     object->Finalize();
     return object;
 }

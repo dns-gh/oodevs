@@ -301,6 +301,7 @@ bool PHY_RolePion_NBC::HasChanged() const
 {
     return bHasChanged_;
 }
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_NBC::ContaminateOtherUnits
 // Created: HBD 2010-06-04
