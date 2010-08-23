@@ -17,7 +17,8 @@
         <mission name="COMMUNES Suivre"/>
         <mission name="MELEE Appuyer"/>
         <mission name="MELEE Boucler un Bloc Urbain"/>
-        <mission name="MELEE Contre Attaquer"/>
+        <mission name="MELEE Contre Attaquer sur un Point"/>
+        <mission name="MELEE Contre Attaquer dans une Zone"/>
         <mission name="MELEE Controler"/>
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Defendre"/>
