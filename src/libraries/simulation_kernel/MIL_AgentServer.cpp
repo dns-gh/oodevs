@@ -166,7 +166,7 @@ void MIL_AgentServer::ReadHLA()
 //-----------------------------------------------------------------------------
 MIL_AgentServer::E_SimState MIL_AgentServer::Update()
 {
-    timerManager_ .Update();
+    timerManager_.Update();
     WaitForNextStep();
     return nSimState_;
 }
@@ -223,6 +223,7 @@ void MIL_AgentServer::MainSimLoop()
     pEntityManager_->Update();
     pFolk_->Update( nCurrentTimeStep_ * nTimeStepDuration_, nTimeStepDuration_ );
     pMeteoDataManager_->Update( nRealTime_ );
+    pResourceNetworkModel_->Update();
     pPathFindManager_->UpdateInSimulationThread();
     if( pProcessMonitor_->MonitorProcess() )
     {

@@ -11,6 +11,7 @@
 #include "ResourceNetworkModel.h"
 #include "ResourceNetwork.h"
 #include "ResourceNetworkFactory.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
@@ -38,7 +39,8 @@ ResourceNetworkModel::~ResourceNetworkModel()
 // -----------------------------------------------------------------------------
 void ResourceNetworkModel::UrbanCreate( kernel::Entity_ABC& entity, const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg )
 {
-    ResourceNetwork* element = factory_.Create( entity.GetId(), msg, true );
+    kernel::PropertiesDictionary& dico = entity.Get< kernel::PropertiesDictionary >();
+    ResourceNetwork* element = factory_.Create( entity.GetId(), msg, true, dico );
     entity.Attach< ResourceNetwork >( *element );
     UrbanResourceResolver::Register( entity.GetId(), *element );
 }

@@ -38,7 +38,7 @@ ResourceNetworkFactory::~ResourceNetworkFactory()
 // Name: ResourceNetworkFactory::Create
 // Created: JSR 2010-08-19
 // -----------------------------------------------------------------------------
-ResourceNetwork* ResourceNetworkFactory::Create( unsigned int id, const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg, bool isUrban )
+ResourceNetwork* ResourceNetworkFactory::Create( unsigned int id, const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg, bool isUrban, kernel::PropertiesDictionary& dico )
 {
-    return new ResourceNetwork( controllers_, id, isUrban, model_.urbanObjects_, model_.objects_, msg );
+    return new ResourceNetwork( controllers_, id, isUrban, model_.urbanObjects_, model_.objects_, msg, dico );
 }

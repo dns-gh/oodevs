@@ -16,6 +16,17 @@
 
 namespace resource
 {
+class UrbanResolver : public tools::Resolver< NodeProperties >
+{
+public:
+    UrbanResolver() : tools::Resolver< NodeProperties >() {}
+};
+
+class ObjectResolver : public tools::Resolver< NodeProperties >
+{
+public:
+    ObjectResolver() : tools::Resolver< NodeProperties >() {}
+};
 
 // =============================================================================
 /** @class  ResourceNetworkModel
@@ -23,7 +34,8 @@ namespace resource
 */
 // Created: JSR 2010-08-13
 // =============================================================================
-class ResourceNetworkModel : private tools::Resolver< NodeProperties >
+class ResourceNetworkModel : private UrbanResolver
+                           , private ObjectResolver
                            , private boost::noncopyable
 {
 public:
@@ -37,8 +49,8 @@ public:
     //@{
     static EResourceType FindResourceType( const std::string& type );
     void Update();
-    void RegisterNode( NodeProperties& nodeProperties, unsigned int id );
-    void Push( unsigned int id, int quantity, EResourceType type ) const;
+    void RegisterNode( NodeProperties& nodeProperties, unsigned int id, bool urban );
+    void Push( unsigned int id, bool urban, int quantity, EResourceType type ) const;
     //@}
 };
 

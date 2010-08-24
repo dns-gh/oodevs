@@ -23,6 +23,7 @@ namespace kernel
 {
     class Extension_ABC;
     class Object_ABC;
+    class PropertiesDictionary;
 }
 
 namespace MsgsSimToClient
@@ -60,14 +61,13 @@ class ResourceNetwork : public kernel::Drawable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceNetwork( kernel::Controllers& controllers, unsigned int id, bool isUrban, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg );
+             ResourceNetwork( kernel::Controllers& controllers, unsigned int id, bool isUrban, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg, kernel::PropertiesDictionary& dico );
     virtual ~ResourceNetwork();
     //@}
 
     //! @name Operations
     //@{
     void Update( const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& message );
-    void Display( kernel::Displayer_ABC& displayer, kernel::Displayer_ABC& itemDisplayer ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
@@ -81,6 +81,7 @@ private:
     //! @name Helpers
     //@{
     void SetColor( resource::EResourceType type ) const;
+    void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
     //@}
 
 private:

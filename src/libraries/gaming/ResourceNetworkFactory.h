@@ -13,6 +13,7 @@
 namespace kernel
 {
     class Controller;
+    class PropertiesDictionary;
 }
 
 namespace MsgsSimToClient
@@ -40,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    ResourceNetwork* Create( unsigned int id, const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg, bool isUrban );
+    ResourceNetwork* Create( unsigned int id, const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg, bool isUrban, kernel::PropertiesDictionary& dico );
     //@}
 
 private:

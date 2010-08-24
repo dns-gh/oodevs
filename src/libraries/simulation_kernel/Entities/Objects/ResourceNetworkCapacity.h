@@ -49,7 +49,7 @@ public:
     template< typename Archive > void serialize( Archive& file, const unsigned int );
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
-    void RegisterNode( unsigned int id );
+    void RegisterNode( unsigned int id, bool urban );
     void SendState( MsgsSimToClient::MsgUrbanAttributes& message ) const;
     //@}
 

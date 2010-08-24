@@ -89,10 +89,12 @@ void ResourceNetworkCapacity::serialize( Archive& file, const unsigned int )
 void ResourceNetworkCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
-    // $$$$ JSR 2010-08-13: TODO Améliorer quand on gérera les objets
+    // TODO Find a better way
     UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( &object );
     if( wrapper )
-        RegisterNode( wrapper->GetObject().GetId() );
+        RegisterNode( wrapper->GetObject().GetId(), true );
+    else
+        RegisterNode( object.GetID(), false );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,21 +105,23 @@ void ResourceNetworkCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     ResourceNetworkCapacity* capacity = new ResourceNetworkCapacity( *this );
     object.AddCapacity( capacity );
-    // $$$$ JSR 2010-08-13: TODO Améliorer quand on gérera les objets
+    // TODO Find a better way
     UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( &object );
     if( wrapper )
-        capacity->RegisterNode( wrapper->GetObject().GetId() );
+        capacity->RegisterNode( wrapper->GetObject().GetId(), true );
+    else
+        capacity->RegisterNode( object.GetID(), false );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ResourceNetworkCapacity::RegisterNode
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
-void ResourceNetworkCapacity::RegisterNode( unsigned int id )
+void ResourceNetworkCapacity::RegisterNode( unsigned int id, bool urban )
 {
     if( nodeProperties_ == 0 )
         throw std::exception( "RegisterResource : Node Properties not instanciated" );
-    MIL_AgentServer::GetWorkspace().GetResourceNetworkModel().RegisterNode( *nodeProperties_, id );
+    MIL_AgentServer::GetWorkspace().GetResourceNetworkModel().RegisterNode( *nodeProperties_, id, urban );
 }
 
 // -----------------------------------------------------------------------------

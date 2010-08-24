@@ -27,7 +27,8 @@ ResourceNetworkModel::ResourceNetworkModel()
 // -----------------------------------------------------------------------------
 ResourceNetworkModel::~ResourceNetworkModel()
 {
-    DeleteAll();
+    UrbanResolver::DeleteAll();
+    ObjectResolver::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -51,16 +52,20 @@ EResourceType ResourceNetworkModel::FindResourceType( const std::string& type )
 // -----------------------------------------------------------------------------
 void ResourceNetworkModel::Update()
 {
-    Apply( boost::bind( &NodeProperties::Update, _1 ) );
+    UrbanResolver::Apply( boost::bind( &NodeProperties::Update, _1 ) );
+    ObjectResolver::Apply( boost::bind( &NodeProperties::Update, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ResourceNetworkModel::RegisterNode
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
-void ResourceNetworkModel::RegisterNode( NodeProperties& nodeProperties, unsigned int id )
+void ResourceNetworkModel::RegisterNode( NodeProperties& nodeProperties, unsigned int id, bool urban )
 {
-    Register( id, nodeProperties );
+    if( urban )
+        UrbanResolver::Register( id, nodeProperties );
+    else
+        ObjectResolver::Register( id, nodeProperties );
     nodeProperties.SetModel( *this );
 }
 
@@ -68,9 +73,9 @@ void ResourceNetworkModel::RegisterNode( NodeProperties& nodeProperties, unsigne
 // Name: ResourceNetworkModel::Push
 // Created: JSR 2010-08-16
 // -----------------------------------------------------------------------------
-void ResourceNetworkModel::Push( unsigned int id, int quantity, EResourceType type ) const
+void ResourceNetworkModel::Push( unsigned int id, bool urban, int quantity, EResourceType type ) const
 {
-    NodeProperties* node = Find( id );
+    NodeProperties* node = urban ? UrbanResolver::Find( id ) : ObjectResolver::Find( id );
     if( !node )
         throw std::exception( "Node not found" );
     node->Push( quantity, type );

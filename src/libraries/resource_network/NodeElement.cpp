@@ -218,7 +218,7 @@ void NodeElement::DoDistributeResource( T_ResourceLinks& links )
     {
         // remaining stock is sufficient
         for( CIT_ResourceLinks it = links.begin(); it != links.end(); ++it )
-            model_->Push( ( *it )->GetDestination(), ( *it )->GetEfficientCapacity(), resourceType_ );
+            model_->Push( ( *it )->GetDestination(), ( *it )->GetDestinationKind()== ResourceLink::eDestinationKindUrban, ( *it )->GetEfficientCapacity(), resourceType_ );
         if( immediateStock_ != -1 )
             immediateStock_ -= totalFlow;
     }
@@ -232,7 +232,7 @@ void NodeElement::DoDistributeResource( T_ResourceLinks& links )
             int linkCapacity = ( *it )->GetEfficientCapacity();
             if( linkCapacity <= distributionMean )
             {
-                model_->Push( ( *it )->GetDestination(), linkCapacity, resourceType_ );
+                model_->Push( ( *it )->GetDestination(), ( *it )->GetDestinationKind()== ResourceLink::eDestinationKindUrban, linkCapacity, resourceType_ );
                 immediateStock_ -= linkCapacity;
                 updatedLinks.push_back( *it );
             }
@@ -252,7 +252,7 @@ void NodeElement::DoDistributeResource( T_ResourceLinks& links )
                     distributed += excedent;
                     residual -= excedent;
                 }
-                model_->Push( ( *it )->GetDestination(), distributed, resourceType_ );
+                model_->Push( ( *it )->GetDestination(), ( *it )->GetDestinationKind()== ResourceLink::eDestinationKindUrban, distributed, resourceType_ );
             }
         }
         else
