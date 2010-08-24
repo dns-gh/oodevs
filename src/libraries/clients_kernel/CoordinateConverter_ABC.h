@@ -57,12 +57,6 @@ public:
         latlong.set_latitude ( geo.Y() );
     }
     //@}
-
-private:
-    //! @name Helpers
-    //@{
-
-    //@}
 };
 
 }
