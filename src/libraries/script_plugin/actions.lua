@@ -74,6 +74,18 @@ function Polygon.create()
     return Location.create( "polygon" )
 end
 
+function Polygon.create( name, points )
+    local new = {}
+    setmetatable( new, Polygon )
+    new.type = "Polygon"
+    new.name = name
+    new.children = { Location.create( "polygon" ) }
+    for _,v in ipairs( points ) do
+        new.children[1]:AddPoint( v )
+    end
+    return new
+end
+
 --------------------------------------------------------------------------------
 -- Line
 --------------------------------------------------------------------------------
