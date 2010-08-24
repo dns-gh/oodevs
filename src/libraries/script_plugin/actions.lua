@@ -53,6 +53,24 @@ function Location:ToXml()
 end
 
 --------------------------------------------------------------------------------
+-- LocationParameter
+--------------------------------------------------------------------------------
+LocationParameter = {}
+LocationParameter.__index = LocationParameter
+
+function LocationParameter.create( name, points )
+    local new = {}
+    setmetatable( new, LocationParameter )
+    new.type = "Location"
+    new.name = name
+    new.children = { Location.create( "polygon" ) }
+    for _,v in ipairs( points ) do
+        new.children[1]:AddPoint( v )
+    end
+    return new
+end
+
+--------------------------------------------------------------------------------
 -- Point
 --------------------------------------------------------------------------------
 Point = {}
