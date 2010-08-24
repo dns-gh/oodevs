@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="missionTests" default="all">
+<project name="missionTests" default="help">
 
     <tstamp>
         <format property="timenow" pattern="yyyy-MM-dd_hh'h'mm" />  
@@ -9,11 +9,12 @@
     <property name="input" value="src"/>
     <property name="testName" value="testings"/>
     <property name="data" value="../../data/models/ada/physical/france"/>
-    <property name="reportFile" value="reports/${timenow}_generation_report.log"/>
+    <property name="reportDir" value="./reports"/>
+    <property name="reportFile" value="${reportDir}/${timenow}_generation_report.log"/>
     <property name="exercises" value="../../exercises"/>
     <property name="simulation_app" value="../../../out/applications/simulation_app/vc80/Release/simulation_app.exe"/>
-    <property name="run_dir" value="../../../run/vc80"/>
-    <property name="unitperexercise" value="10"/>
+    <property name="runDir" value="../../../run/vc80"/> <!-- not used -->
+    <property name="unitPerExercise" value="10"/>
 
     <target name="clean">
         <delete dir="${output}"/>
@@ -23,22 +24,11 @@
     <target name="realclean" depends="clean">
         <delete dir="reports"/>
     </target>
-    
+
     <target name="generate" depends="clean">
-        <mkdir dir="${output}"/>
-        <mkdir dir="${output}/${testName}"/>
-        <mkdir dir="${output}/${testName}/sessions"/>
-        <copy todir="${output}/${testName}/sessions">
-            <fileset dir="${input}/${testName}/sessions"/>
+        <copy todir="${output}/${testName}">
+            <fileset dir="${input}/${testName}" excludes=".svn"/>
         </copy>
-        <mkdir dir="${output}/${testName}/scripts"/>
-        <mkdir dir="${output}/${testName}/scripts/resources"/>
-        <copy file="${input}/${testName}/exercise.xml" tofile="${output}/${testName}/exercise.xml"/>
-        <copy file="${input}/${testName}/profiles.xml" tofile="${output}/${testName}/profiles.xml"/>
-        <copy file="${input}/${testName}/scores.xml"   tofile="${output}/${testName}/scores.xml"/>
-        <copy file="${input}/${testName}/weather.xml"  tofile="${output}/${testName}/weather.xml"/>
-        <copy file="${input}/${testName}/orbat.xml"  tofile="${output}/${testName}/orbat.xml"/>
-        <copy file="${input}/${testName}/scripts/resources/config.lua" tofile="${output}/${testName}/scripts/resources/config.lua"/>
         <!--xslt in="${data}/pions.xml" style="xsl/transformation.xsl" out="${reportFile}"-->
         <xslt in="src/pions.xml" style="xsl/transformation.xsl" out="${reportFile}">
             <param name="output" expression="${output}/scripts"/>
@@ -56,7 +46,7 @@
     <target name="deploy" depends="generate">
         <exec executable="bash.exe">
             <arg value="deploy.sh"/>
-            <arg value="${unitperexercise}"/>
+            <arg value="${unitPerExercise}"/>
         </exec>
         <delete dir="${exercises}/${testName}"/>
         <mkdir dir="${exercises}/${testName}"/>
@@ -79,5 +69,22 @@
     </target>
 
     <target name="tests" depends="deploy, launch, reports, clean"/>
+
+    <target name="help">
+        <echo>
+Main Targets :
+
+clean     Deletes "out" and "exercises/${testName}" directories.
+realclean Depends on "clean" and deletes "reports" directory.
+generate  Builds script files in "${output}/scripts".
+deploy    Builds exercises in "${exercises}/${testName}" from 
+          generated script files, according a max of ${unitPerExercise}
+          units per exercise.
+launch    Executes the set of exercices deployed in the simulation
+reports   Builds a set of report files in "./reports"
+tests     Executes deploy, launch, reports and clean.
+        </echo>
+    </target>
+
 </project>
 
