@@ -9,7 +9,7 @@
     <property name="input" value="src"/>
     <property name="testName" value="testings"/>
     <property name="data" value="../../data/models/ada/physical/france"/>
-    <property name="reportFile" value="reports/${timenow}_report.log"/>
+    <property name="reportFile" value="reports/${timenow}_generation_report.log"/>
     <property name="exercises" value="../../exercises"/>
     <property name="simulation_app" value="../../../out/applications/simulation_app/vc80/Release/simulation_app.exe"/>
     <property name="run_dir" value="../../../run/vc80"/>
@@ -67,7 +67,7 @@
 
     <target name="launch">
         <exec executable="bash.exe" failonerror="false">
-            <arg value="launch.sh"/>
+            <arg line='launch.sh "./reports/${timenow}_exec"'/>
         </exec>
     </target>
 

@@ -148,6 +148,9 @@ end
             <xsl:when test="@type = 'Point'">
                 <xsl:text>    :With( PointLocation.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", config.positions.destination[1] ) )</xsl:text>
             </xsl:when>
+            <xsl:when test="@type = 'Polygon'">
+                <xsl:text>    :With( Polygon.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", { config.positions.destination[1], config.positions.destination[2], config.positions.destination[3] } ) )</xsl:text>
+            </xsl:when>
 
             <xsl:otherwise>
                 <xsl:text>    -- Missing argument</xsl:text>
