@@ -142,6 +142,15 @@ end
         <xsl:param name="count"/>
         <xsl:param name="index"/>
         <xsl:choose>
+            <xsl:when test="@type = 'Location'">
+                <xsl:text>    :With( LocationParameter.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", { config.positions.destination[1], config.positions.destination[2], config.positions.destination[3] } ) )</xsl:text>
+            </xsl:when>
+            <xsl:when test="@type = 'Enumeration'">
+                <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "Enumeration", value = "1"} )</xsl:text>
+            </xsl:when>
+            <xsl:when test="@type = 'Bool'">
+                <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "Bool", value = "false"} )</xsl:text>
+            </xsl:when>
             <xsl:when test="@type = 'Path'">
                 <xsl:text>    :With( Path.create( "Route" ):AddPoint( "Destination", config.positions.destination[1] ) )</xsl:text>
             </xsl:when>
@@ -155,7 +164,7 @@ end
             <xsl:otherwise>
                 <xsl:text>    -- Missing argument</xsl:text>
                 <redirect:write append="true" file="{$reportFile}">
-<xsl:value-of select="$unit"/><xsl:text> : Don't know how to build "</xsl:text><xsl:value-of select="@type"/><xsl:text>" parameter.
+<xsl:value-of select="$unit"/><xsl:text>;</xsl:text><xsl:value-of select="../@name"/><xsl:text>;</xsl:text><xsl:value-of select="@type"/><xsl:text>
 </xsl:text>
                 </redirect:write>
             </xsl:otherwise>

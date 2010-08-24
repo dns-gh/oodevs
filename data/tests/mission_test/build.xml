@@ -10,7 +10,7 @@
     <property name="testName" value="testings"/>
     <property name="data" value="../../data/models/ada/physical/france"/>
     <property name="reportDir" value="./reports"/>
-    <property name="reportFile" value="${reportDir}/${timenow}_generation_report.log"/>
+    <property name="reportFile" value="${reportDir}/${timenow}_generation_report.csv"/>
     <property name="exercises" value="../../exercises"/>
     <property name="simulation_app" value="../../../out/applications/simulation_app/vc80/Release/simulation_app.exe"/>
     <property name="runDir" value="../../../run/vc80"/> <!-- not used -->
@@ -29,8 +29,8 @@
         <copy todir="${output}/${testName}">
             <fileset dir="${input}/${testName}" excludes=".svn"/>
         </copy>
-        <!--xslt in="${data}/pions.xml" style="xsl/transformation.xsl" out="${reportFile}"-->
-        <xslt in="src/pions.xml" style="xsl/transformation.xsl" out="${reportFile}">
+        <xslt in="${data}/pions.xml" style="xsl/transformation.xsl" out="${reportFile}">
+        <!--xslt in="src/pions.xml" style="xsl/transformation.xsl" out="${reportFile}"-->
             <param name="output" expression="${output}/scripts"/>
             <param name="missionsPath" expression="${data}/Missions.xml"/>
             <param name="modelesPath"  expression="${data}/Modeles.xml"/>
