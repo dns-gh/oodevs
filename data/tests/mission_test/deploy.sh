@@ -1,7 +1,7 @@
 nbfile=`find -path './out/scripts/*' -prune -name '*.lua' | wc -l`
 function getfile
 {
-find -path './out/scripts/*' -prune -name '*.lua' | echo `awk -v l=$i 'NR==l{ print }'`
+    find -path './out/scripts/*' -prune -name '*.lua' | echo `awk -v l=$i 'NR==l{ print }'`
 }
 
 
@@ -26,9 +26,9 @@ do
         mkdir "${exercicesdirectory}testings$currentdir"
         echo "creating exercise testings$currentdir..."
         cp -r out/testings/* "${exercicesdirectory}testings$currentdir"
-        cp `getfile $i` "${exercicesdirectory}testings$currentdir/scripts"
+        cp `getfile` "${exercicesdirectory}testings$currentdir/scripts"
     else
-        cp `getfile $i` "${exercicesdirectory}testings$currentdir/scripts"
+        cp `getfile` "${exercicesdirectory}testings$currentdir/scripts"
     fi
 done
 

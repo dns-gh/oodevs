@@ -1,10 +1,5 @@
 nbfile=`find ../../exercises/testings -name '*Dispatcher.log' | wc -l`
 
-function getfile
-{
-    find ../../exercises/testings -name '*Dispatcher.log' | echo `awk -v l=$i 'NR==l{ print }'`
-}
-
 rm -f ./reports/${1}_Dispatchers.log
 touch ./reports/${1}_Dispatchers.log
 
@@ -14,7 +9,7 @@ totalMissions=0
 
 for i in `seq 1 $nbfile`
 do
-    file=`getfile`
+    file=`find ../../exercises/testings/testings${i}/ -name '*Dispatcher.log'`
 
     currentErrors=`grep Error $file | wc -l`
     currentUnits=`grep -r "agent creation" $file | wc -l`
