@@ -55,10 +55,6 @@ private:
     SaverPlugin& operator=( const SaverPlugin& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

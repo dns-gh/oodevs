@@ -60,10 +60,6 @@ private:
     ResourceNetworkCapacity& operator=( const ResourceNetworkCapacity& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

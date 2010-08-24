@@ -63,10 +63,6 @@ private:
     PHY_ComposanteHLA& operator=( const PHY_ComposanteHLA& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

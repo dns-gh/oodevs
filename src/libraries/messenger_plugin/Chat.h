@@ -58,10 +58,6 @@ private:
     Chat& operator=( const Chat& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
     //! @name Types
     //@{
     typedef std::map< dispatcher::ClientPublisher_ABC*, dispatcher::Profile_ABC* > T_Clients;

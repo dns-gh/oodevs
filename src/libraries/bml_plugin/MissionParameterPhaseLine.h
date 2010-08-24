@@ -52,10 +52,6 @@ private:
     MissionParameterPhaseLine& operator=( const MissionParameterPhaseLine& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

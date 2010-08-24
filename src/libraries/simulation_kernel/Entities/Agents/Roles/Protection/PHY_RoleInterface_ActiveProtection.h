@@ -53,10 +53,6 @@ private:
     PHY_RoleInterface_ActiveProtection& operator=( const PHY_RoleInterface_ActiveProtection& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Serialization
     //@{

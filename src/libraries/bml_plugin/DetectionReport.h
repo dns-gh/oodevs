@@ -53,10 +53,6 @@ private:
     DetectionReport& operator=( const DetectionReport& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

@@ -74,9 +74,6 @@ private:
     Note& operator=( const Note& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
 private:
     //! @name Member data
     //@{

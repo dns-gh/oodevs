@@ -56,10 +56,6 @@ private:
     MissionParameterHeading& operator=( const MissionParameterHeading& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

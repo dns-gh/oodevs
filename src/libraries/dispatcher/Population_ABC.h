@@ -31,10 +31,6 @@ public:
         : Sendable< kernel::Population_ABC >( id, name ) {}
     virtual ~Population_ABC() {}
     //@}
-
-    //! @name Operations
-    //@{
-    //@}
 };
 
 }

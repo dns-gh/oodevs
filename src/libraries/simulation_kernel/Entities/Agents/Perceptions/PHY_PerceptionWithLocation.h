@@ -41,10 +41,6 @@ private:
     PHY_PerceptionWithLocation& operator=( const PHY_PerceptionWithLocation& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 protected:
     //! @name Types
     //@{

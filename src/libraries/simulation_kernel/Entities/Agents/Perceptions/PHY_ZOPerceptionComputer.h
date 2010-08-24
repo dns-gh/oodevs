@@ -37,15 +37,6 @@ private:
     PHY_ZOPerceptionComputer( const PHY_ZOPerceptionComputer& );            //!< Copy constructor
     PHY_ZOPerceptionComputer& operator=( const PHY_ZOPerceptionComputer& ); //!< Assignment operator
     //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    //@}
 };
 
 #endif // __PHY_ZOPerceptionComputer_h_

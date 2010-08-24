@@ -39,7 +39,6 @@ class PHY_RoleInterface_UrbanLocation : public tools::Role_ABC
 public:
     typedef PHY_RoleInterface_UrbanLocation RoleInterface;
 
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -56,9 +55,7 @@ public:
     virtual float               ComputeDistanceInsideSameUrbanBlock( MIL_Agent_ABC& target  ) const = 0;
     virtual float               ComputeRatioPionInside( const MT_Ellipse& attritionSurface ) const = 0;
     virtual float               ComputeRatioPionInside( const geometry::Polygon2f& polygon, float modificator ) const = 0;
-
     //@}
-
 
     //! @name Accessors
     //@{
@@ -71,15 +68,6 @@ private:
     //@{
     PHY_RoleInterface_UrbanLocation( const PHY_RoleInterface_UrbanLocation& );            //!< Copy constructor
     PHY_RoleInterface_UrbanLocation& operator=( const PHY_RoleInterface_UrbanLocation& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     //@}
 };
 

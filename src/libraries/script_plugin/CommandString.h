@@ -42,10 +42,6 @@ private:
     CommandString& operator=( const CommandString& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

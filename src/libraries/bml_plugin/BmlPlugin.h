@@ -74,10 +74,6 @@ private:
     BmlPlugin& operator=( const BmlPlugin& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

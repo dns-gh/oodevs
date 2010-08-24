@@ -39,10 +39,6 @@ private:
     PHY_PerceptionComputer_ABC& operator=( const PHY_PerceptionComputer_ABC& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 protected:
     //! @name Member data
     //@{

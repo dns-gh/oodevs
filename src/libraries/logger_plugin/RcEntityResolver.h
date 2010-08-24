@@ -36,10 +36,6 @@ public:
     virtual ~RcEntityResolver();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{

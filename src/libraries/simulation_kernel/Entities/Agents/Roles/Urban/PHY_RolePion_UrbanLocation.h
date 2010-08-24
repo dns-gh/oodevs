@@ -82,10 +82,6 @@ public:
     virtual bool IsInCity() const;
     //@}
 
-    //! @name Network
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{
