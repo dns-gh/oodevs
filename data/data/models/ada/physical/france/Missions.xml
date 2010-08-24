@@ -928,7 +928,7 @@
     </mission>
     <mission dia-behavior="net.masagroup.sword.military.platoon.terrorism.tasks.Ambush" dia-type="net.masagroup.sword.military.platoon.terrorism.tasks.Ambush" id="2067" name="Embuscade">
       <parameter dia-name="positions" name="positions de tir" optional="false" type="PointListBM"/>
-      <parameter dia-name="endPosition" name="position de regroupement" optional="false" type="PointBM"/>
+      <parameter dia-name="meetingPoint" name="position de regroupement" optional="false" type="PointBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.CoordinationIlluminationEtTirIndirect" dia-type="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.CoordinationIlluminationEtTirIndirect" id="2068" name="ASS Coordonner le Tir et l'Ilumination">
       <parameter dia-name="objective" name="cible" optional="false" type="AgentKnowledgeBM"/>
