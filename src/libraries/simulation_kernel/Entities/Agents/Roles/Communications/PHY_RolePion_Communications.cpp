@@ -18,8 +18,6 @@
 #include "MIL_Singletons.h"
 #include "MIL_Time_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "simulation_kernel/Knowledge/DEC_BlackBoard_CanContainKnowledgeObjectPerception.h"
-#include "simulation_kernel/Knowledge/DEC_BlackBoard_CanContainKnowledgeObjectCollision.h"
 #include "simulation_kernel/Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_Object.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_ObjectCollision.h"

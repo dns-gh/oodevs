@@ -27,10 +27,10 @@ using namespace population;
 // Created: JCR 2007-08-24
 // -----------------------------------------------------------------------------
 MIL_Folk::MIL_Folk( const MIL_Config& config )
-    : pFlow_ ( ( config.IsPopulationEnabled() ) ? population::FlowManagerFactory::Create() : 0 )
-    , first_update_ ( true )
-    , step_         ( 0 )
-    , start_        ( 0 )
+    : pFlow_       ( ( config.IsPopulationEnabled() ) ? population::FlowManagerFactory::Create() : 0 )
+    , first_update_( true )
+    , step_        ( 0 )
+    , start_       ( 0 )
 {
     if( pFlow_ )
     {

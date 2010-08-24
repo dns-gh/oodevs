@@ -65,7 +65,7 @@ private:
 private:
     //! @name Member data
     //@{
-    boost::scoped_ptr< population::FlowManager_ABC >    pFlow_;
+    boost::scoped_ptr< population::FlowManager_ABC > pFlow_;
     mutable bool first_update_;
     mutable unsigned step_;
     unsigned start_;
