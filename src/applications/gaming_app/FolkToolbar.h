@@ -38,10 +38,6 @@ public:
     virtual ~FolkToolbar();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private slots:
     //! @name Slots
     //@{

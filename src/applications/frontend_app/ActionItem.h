@@ -29,19 +29,11 @@ public:
     virtual ~ActionItem();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{
     ActionItem( const ActionItem& );            //!< Copy constructor
     ActionItem& operator=( const ActionItem& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

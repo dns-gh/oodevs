@@ -46,22 +46,10 @@ public:
     virtual ~ADN_OpenMode_Dialog();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
     //! @name Accessors
     //@{
     E_OpenMode GetOpenMode() const;
     QString GetPassword() const;
-    //@}
-
-    //! @name Modifiers
-    //@{
-    //@}
-
-    //! @name Operators
-    //@{
     //@}
 
 private:
@@ -69,10 +57,6 @@ private:
     //@{
     ADN_OpenMode_Dialog( const ADN_OpenMode_Dialog& );            //!< Copy constructor
     ADN_OpenMode_Dialog& operator=( const ADN_OpenMode_Dialog& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

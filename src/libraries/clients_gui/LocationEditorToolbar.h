@@ -53,10 +53,6 @@ public:
     virtual ~LocationEditorToolbar();
     //@}
 
-    //! @name Construction
-    //@{
-    //@}
-
     //! @name Operations
     //@{
     virtual void StartEdit( ParametersLayer& parameters );

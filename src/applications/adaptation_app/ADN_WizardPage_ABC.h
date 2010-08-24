@@ -47,27 +47,6 @@ public:
     virtual ~ADN_WizardPage_ABC();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
-    //! @name Accessors
-    //@{
-    //@}
-
-    //! @name Modifiers
-    //@{
-    //@}
-
-    //! @name Operators
-    //@{
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    //@}
-
 protected:
     //! @name Member data
     //@{

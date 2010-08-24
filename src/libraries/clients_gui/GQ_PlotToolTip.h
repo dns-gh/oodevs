@@ -51,10 +51,6 @@ private:
     GQ_PlotToolTip& operator=( const GQ_PlotToolTip& rhs ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

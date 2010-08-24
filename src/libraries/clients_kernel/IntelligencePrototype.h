@@ -45,10 +45,6 @@ private:
     IntelligencePrototype& operator=( const IntelligencePrototype& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

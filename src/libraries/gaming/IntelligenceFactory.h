@@ -61,10 +61,6 @@ private:
     IntelligenceFactory& operator=( const IntelligenceFactory& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

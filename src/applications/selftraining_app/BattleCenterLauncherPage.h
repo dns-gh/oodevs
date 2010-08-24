@@ -40,11 +40,6 @@ private:
     //@{
     virtual std::string BuildSessionName() const;
     //@}
-
-private:
-    //! @name Member data
-    //@{
-    //@}
 };
 
 #endif // __BattleCenterLauncherPage_h_

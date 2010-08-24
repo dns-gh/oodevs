@@ -42,22 +42,6 @@ public:
     virtual ~ADN_ImageViewer();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
-    //! @name Accessors
-    //@{
-    //@}
-
-    //! @name Modifiers
-    //@{
-    //@}
-
-    //! @name Operators
-    //@{
-    //@}
-
 protected:
     void    paintEvent( QPaintEvent * );
     void    resizeEvent( QResizeEvent * );

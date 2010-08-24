@@ -30,10 +30,6 @@ public:
     virtual ~Side();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
     //! @name Accessors
     //@{
     unsigned int        GetId() const;
@@ -45,10 +41,6 @@ private:
     //@{
     Side( const Side& );            //!< Copy constructor
     Side& operator=( const Side& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

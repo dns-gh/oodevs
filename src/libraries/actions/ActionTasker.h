@@ -56,10 +56,6 @@ private:
     ActionTasker& operator=( const ActionTasker& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

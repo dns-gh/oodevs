@@ -45,10 +45,6 @@ public:
     virtual ~ObjectKnowledges();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{

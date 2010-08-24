@@ -54,18 +54,6 @@ public:
     void SetConnector( ADN_Connector_Vector_ABC& connector );
     //@}
 
-    //! @name Accessors
-    //@{
-    //@}
-
-    //! @name Modifiers
-    //@{
-    //@}
-
-    //! @name Operators
-    //@{
-    //@}
-
 public slots:
     void SetSelectedItem( void* pObject );
 

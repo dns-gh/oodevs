@@ -43,10 +43,6 @@ private:
     SuccessFactorActionTypeParameter& operator=( const SuccessFactorActionTypeParameter& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

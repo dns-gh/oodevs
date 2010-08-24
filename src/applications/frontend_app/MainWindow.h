@@ -40,10 +40,6 @@ public:
     virtual ~MainWindow();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{

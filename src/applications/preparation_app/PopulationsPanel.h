@@ -46,10 +46,6 @@ public:
     virtual ~PopulationsPanel();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{

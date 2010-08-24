@@ -51,10 +51,6 @@ private:
     ResourceNetworkFactory& operator=( const ResourceNetworkFactory& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

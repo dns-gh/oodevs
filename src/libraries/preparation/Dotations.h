@@ -48,10 +48,6 @@ public:
     virtual ~Dotations();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{

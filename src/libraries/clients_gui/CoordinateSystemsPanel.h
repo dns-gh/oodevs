@@ -54,10 +54,6 @@ private:
     CoordinateSystemsPanel& operator=( const CoordinateSystemsPanel& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

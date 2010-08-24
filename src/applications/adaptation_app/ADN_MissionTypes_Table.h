@@ -28,24 +28,11 @@ public:
     virtual ~ADN_MissionTypes_Table();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{
     ADN_MissionTypes_Table( const ADN_MissionTypes_Table& );            //!< Copy constructor
     ADN_MissionTypes_Table& operator=( const ADN_MissionTypes_Table& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     //@}
 };
 

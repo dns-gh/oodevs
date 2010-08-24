@@ -39,10 +39,6 @@ public:
     virtual ~AlarmsWidget();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private slots:
     //! @name Slots
     //@{

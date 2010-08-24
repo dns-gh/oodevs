@@ -43,10 +43,6 @@ public:
     virtual ~Speeds();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{

@@ -50,17 +50,12 @@ private:
     PopulationType& operator=( const PopulationType& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
     std::string name_;
     unsigned long id_;
     const DecisionalModel* model_;
-
     float density_;
     //@}
 };

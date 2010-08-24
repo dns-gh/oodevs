@@ -51,10 +51,6 @@ public:
     virtual ~PopulationKnowledges();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{

@@ -52,10 +52,6 @@ public:
     virtual ~UrbanKnowledges();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{

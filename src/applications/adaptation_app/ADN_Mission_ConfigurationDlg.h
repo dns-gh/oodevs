@@ -43,31 +43,16 @@ public:
     virtual ~ADN_Mission_ConfigurationDlg();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
     //! @name Accessors
     //@{
     QListView* GetMissionList();
     //@}
 
-    //! @name Modifiers
-    //@{
-    //@}
-
-    //! @name Operators
-    //@{
-    //@}
 private:
     //! @name Copy/Assignment
     //@{
     ADN_Mission_ConfigurationDlg( const ADN_Mission_ConfigurationDlg& );            //!< Copy constructor
     ADN_Mission_ConfigurationDlg& operator=( const ADN_Mission_ConfigurationDlg& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

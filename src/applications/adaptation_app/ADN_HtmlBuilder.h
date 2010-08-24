@@ -68,23 +68,6 @@ public:
     void WriteToFile( const char* strFileName );
     //@}
 
-    //! @name Accessors
-    //@{
-    //@}
-
-    //! @name Modifiers
-    //@{
-    //@}
-
-    //! @name Operators
-    //@{
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

@@ -50,10 +50,6 @@ public:
     virtual ~ActionProperties();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{

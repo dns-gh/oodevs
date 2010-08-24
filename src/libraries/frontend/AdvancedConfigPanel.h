@@ -52,10 +52,6 @@ private:
     AdvancedConfigPanel& operator=( const AdvancedConfigPanel& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

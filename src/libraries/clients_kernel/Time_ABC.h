@@ -45,15 +45,6 @@ private:
     Time_ABC( const Time_ABC& );            //!< Copy constructor
     Time_ABC& operator=( const Time_ABC& ); //!< Assignment operator
     //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    //@}
 };
 
 } // end namespace Time

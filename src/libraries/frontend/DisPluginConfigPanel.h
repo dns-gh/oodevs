@@ -52,10 +52,6 @@ private:
     DisPluginConfigPanel& operator=( const DisPluginConfigPanel& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

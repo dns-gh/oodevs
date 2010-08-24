@@ -45,10 +45,6 @@ private:
     ProtocolVersionChecker& operator=( const ProtocolVersionChecker& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

@@ -77,10 +77,6 @@ public:
     bool UpdateWithBBox ( const GQ_PlotDataBBox& );
     //@}
 
-    //! @name Operators
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{

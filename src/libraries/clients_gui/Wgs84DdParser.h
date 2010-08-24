@@ -50,10 +50,6 @@ private:
     Wgs84DdParser& operator=( const Wgs84DdParser& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

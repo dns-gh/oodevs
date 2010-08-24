@@ -36,19 +36,11 @@ public:
     virtual ~CoordinateSystems();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{
     CoordinateSystems( const CoordinateSystems& );            //!< Copy constructor
     CoordinateSystems& operator=( const CoordinateSystems& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 public:
@@ -59,7 +51,7 @@ public:
         E_Mgrs,
         E_Wgs84Dd,
         E_Wgs84Dms,
-           E_Local
+        E_Local
     };
 
     int defaultCoordinateSystem_;

@@ -45,10 +45,6 @@ private:
     PcAttributes& operator=( const PcAttributes& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

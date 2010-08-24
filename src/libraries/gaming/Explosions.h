@@ -52,10 +52,6 @@ public:
     virtual ~Explosions();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{

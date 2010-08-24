@@ -40,10 +40,6 @@ public:
     virtual ~FormationLayer();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{

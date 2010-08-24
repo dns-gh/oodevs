@@ -43,10 +43,6 @@ public:
     virtual ~VisionConesToggler();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 protected:
     //! @name Operations
     //@{

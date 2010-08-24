@@ -48,18 +48,6 @@ public:
     virtual void undo();
     //@}
 
-    //! @name Accessors
-    //@{
-    //@}
-
-    //! @name Modifiers
-    //@{
-    //@}
-
-    //! @name Operators
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{

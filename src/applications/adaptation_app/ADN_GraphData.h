@@ -69,19 +69,6 @@ public:
     ADN_GraphValue& GetGraphValue( uint nIndex );
     //@}
 
-    //! @name Modifiers
-    //@{
-    //@}
-
-    //! @name Operators
-    //@{
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

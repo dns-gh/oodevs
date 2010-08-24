@@ -195,10 +195,6 @@ private:
     GQ_Plot& operator=( const GQ_Plot& rhs ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Settings parameters
     //@{

@@ -54,10 +54,6 @@ private:
     Config& operator=( const Config& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

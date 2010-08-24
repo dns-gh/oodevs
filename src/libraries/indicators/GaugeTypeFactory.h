@@ -45,11 +45,6 @@ private:
     GaugeTypeFactory( const GaugeTypeFactory& );            //!< Copy constructor
     GaugeTypeFactory& operator=( const GaugeTypeFactory& ); //!< Assignment operator
     //@}
-
-private:
-    //! @name Member data
-    //@{
-    //@}
 };
 
 }

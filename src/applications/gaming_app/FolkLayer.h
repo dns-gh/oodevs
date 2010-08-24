@@ -41,10 +41,6 @@ private:
     FolkLayer& operator=( const FolkLayer& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

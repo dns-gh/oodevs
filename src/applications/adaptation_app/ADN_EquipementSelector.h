@@ -49,22 +49,6 @@ public:
     virtual ~ADN_EquipementSelector();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
-    //! @name Accessors
-    //@{
-    //@}
-
-    //! @name Modifiers
-    //@{
-    //@}
-
-    //! @name Operators
-    //@{
-    //@}
-
 private slots:
     //! @name Helpers
     //@{

@@ -46,10 +46,6 @@ public:
     virtual ~NotesPanel();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
  private slots:
     //! @name Slots
     //@{

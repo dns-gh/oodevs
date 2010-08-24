@@ -68,10 +68,6 @@ private:
     CheckpointList& operator=( const CheckpointList& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

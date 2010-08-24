@@ -52,10 +52,6 @@ private:
     IntelligencesModel& operator=( const IntelligencesModel& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

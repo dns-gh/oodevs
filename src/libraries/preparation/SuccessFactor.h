@@ -66,10 +66,6 @@ private:
     SuccessFactor& operator=( const SuccessFactor& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

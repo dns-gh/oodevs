@@ -39,10 +39,6 @@ public:
     virtual ~ProfilingPanel();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{

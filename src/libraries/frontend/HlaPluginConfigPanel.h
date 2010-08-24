@@ -50,10 +50,6 @@ private:
     HlaPluginConfigPanel& operator=( const HlaPluginConfigPanel& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

@@ -41,10 +41,6 @@ private:
     DelayPrototype_ABC& operator=( const DelayPrototype_ABC& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 protected:
     //! @name Member data
     //@{

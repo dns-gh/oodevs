@@ -50,10 +50,6 @@ private:
     ParamIntelligence& operator=( const ParamIntelligence& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

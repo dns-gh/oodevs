@@ -42,21 +42,9 @@ public:
     virtual ~ADN_UserData_ListViewItem();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
     //! @name Accessors
     //@{
     PointerType* GetPointer();
-    //@}
-
-    //! @name Modifiers
-    //@{
-    //@}
-
-    //! @name Operators
-    //@{
     //@}
 
 private:
@@ -64,10 +52,6 @@ private:
     //@{
     ADN_UserData_ListViewItem( const ADN_UserData_ListViewItem& );            //!< Copy constructor
     ADN_UserData_ListViewItem& operator=( const ADN_UserData_ListViewItem& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

@@ -60,10 +60,6 @@ private:
     LocationProxy& operator=( const LocationProxy& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

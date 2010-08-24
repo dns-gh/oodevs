@@ -48,10 +48,6 @@ private:
     SuccessFactorFactory& operator=( const SuccessFactorFactory& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
