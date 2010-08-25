@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 #include "Loan.h"
 #include "Model_ABC.h"
-#include "dispatcher/Agent_ABC.h"
+#include "Agent_ABC.h"
 #include "protocol/SimulationSenders.h"
 
 using namespace dispatcher;

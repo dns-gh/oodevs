@@ -11,8 +11,8 @@
 #include "AutomatSymbols.h"
 #include "Automat.h"
 #include "Formation.h"
+#include "Agent.h"
 #include "tools/App6Symbol.h"
-#include "dispatcher/Agent.h"
 #include <boost/bind.hpp>
 
 using namespace dispatcher;

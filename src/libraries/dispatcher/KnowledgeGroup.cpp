@@ -11,7 +11,7 @@
 #include "KnowledgeGroup.h"
 #include "Side.h"
 #include "Model.h"
-#include "dispatcher/Automat_ABC.h"
+#include "Automat_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"

@@ -11,7 +11,7 @@
 #define __Replayer_h_
 
 #include "CompositePlugin.h"
-#include "dispatcher/CompositeRegistrable.h"
+#include "CompositeRegistrable.h"
 #include <boost/shared_ptr.hpp>
 #include <memory>
 

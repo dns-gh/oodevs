@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 #include "LogisticAttribute.h"
 #include "Model_ABC.h"
-#include "dispatcher/Automat_ABC.h"
+#include "Automat_ABC.h"
 #include "protocol/protocol.h"
 
 using namespace dispatcher;
