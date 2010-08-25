@@ -769,14 +769,14 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="positionDeploiement_" name="Deployment position" optional="true" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_LOG_TrierEtTraiterBlesses" dia-type="T_Mission_Pion_LOG_TrierEtTraiterBlesses" id="117" name="Logistics - sort and treat wounded">
-      <parameter dia-name="blessuresTraitees_" name="Wound types" optional="false" type="MedicalPriorities"/>
+      <parameter dia-name="blessuresTraitees_" name="Wound types" optional="true" type="MedicalPriorities"/>
       <parameter dia-name="positionDeploiement_" name="Deployment position" optional="true" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_LOG_TrierBlesses" dia-type="T_Mission_Pion_LOG_TrierBlesses" id="118" name="Logistics - sort wounded">
       <parameter dia-name="positionDeploiement_" name="Deployment position" optional="true" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_LOG_TraiterBlesses" dia-type="T_Mission_Pion_LOG_TraiterBlesses" id="119" name="Logistics - treat wounded">
-      <parameter dia-name="blessuresTraitees_" name="Wound types" optional="false" type="MedicalPriorities"/>
+      <parameter dia-name="blessuresTraitees_" name="Wound types" optional="true" type="MedicalPriorities"/>
       <parameter dia-name="positionDeploiement_" name="Deployment position" optional="true" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_LOG_PrendreEnCompteReactionsMentales" dia-type="T_Mission_Pion_LOG_PrendreEnCompteReactionsMentales" id="120" name="Logistics - manage PSY OPS">
