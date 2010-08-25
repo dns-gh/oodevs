@@ -8,6 +8,7 @@
         <formation id="6" level="x" name="Formation">
           <automat engaged="false" id="12" knowledge-group="2" name="Escadron de Chars LECLERC [12]" type="Escadron de Chars LECLERC">
             <unit command-post="true" id="13" name="Peloton LECLERC CDT ESC" position="31UEQ0928523861" type="Peloton LECLERC CDT ESC"/>
+            <unit command-post="false" id="8" name="Section CBT INF VAB CDS OFF" position="31UEQ0928523870" type="Section CBT INF VAB CDS OFF"/>
           </automat>
           <limit name="Limite 7">
             <point>31UEQ0687827739</point>

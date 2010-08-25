@@ -4,15 +4,12 @@ function getfile
     find -path './out/scripts/*' -prune -name '*.lua' | echo `awk -v l=$i 'NR==l{ print }'`
 }
 
-
 unitpersim=$1
 
 exercicesdirectory='out/exercises/'
 mkdir $exercicesdirectory
 
 currentdir="1"
-
-
 
 mkdir "${exercicesdirectory}testings$currentdir"
 cp -r out/testings/* "${exercicesdirectory}testings$currentdir"

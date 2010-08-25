@@ -5,3 +5,4 @@ for file in $inputDir/*.lua; do
   cat tmp.txt > $file
   rm tmp.txt
 done
+echo `grep -r "Mission.create(" $inputDir | wc -l` "missions to be tested."
