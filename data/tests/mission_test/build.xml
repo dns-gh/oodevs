@@ -56,8 +56,9 @@
     </target>
 
     <target name="launch">
+        <mkdir dir="${reportDir}/${timenow}"/>
         <exec executable="bash.exe" failonerror="false">
-            <arg line='launch.sh "./reports/${timenow}_exec"'/>
+            <arg line='launch.sh ${reportDir}/${timenow}'/>
         </exec>
     </target>
 
@@ -68,9 +69,10 @@
     </target>
 
     <target name="reports">
+        <mkdir dir="${reportDir}/${timenow}"/>
         <exec executable="bash.exe">
             <arg value="reports.sh"/>
-            <arg value="${timenow}"/>
+            <arg value="${reportDir}/${timenow}"/>
         </exec>
     </target>
 
