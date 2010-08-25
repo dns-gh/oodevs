@@ -61,6 +61,12 @@
         </exec>
     </target>
 
+    <target name="launch-only">
+        <exec executable="bash.exe" failonerror="false">
+            <arg line='launch.sh "./reports/${timenow}_exec" ${test}'/>
+        </exec>
+    </target>
+
     <target name="reports">
         <exec executable="bash.exe">
             <arg value="reports.sh"/>
@@ -74,15 +80,19 @@
         <echo>
 Main Targets :
 
-clean     Deletes "out" and "exercises/${testName}" directories.
-realclean Depends on "clean" and deletes "reports" directory.
-generate  Builds script files in "${output}/scripts".
-deploy    Builds exercises in "${exercises}/${testName}" from 
-          generated script files, according a max of ${unitPerExercise}
-          units per exercise.
-launch    Executes the set of exercices deployed in the simulation
-reports   Builds a set of report files in "./reports"
-tests     Executes deploy, launch, reports and clean.
+clean       Deletes "out" and "exercises/${testName}" directories.
+realclean   Depends on "clean" and deletes "reports" directory.
+generate    Builds script files in "${output}/scripts".
+deploy      Builds exercises in "${exercises}/${testName}" from 
+            generated script files, according a max of ${unitPerExercise}
+            units per exercise.
+launch      Executes the set of exercices deployed in 
+            the simulation
+launch-only Executes the exercice which num is specified 
+            with arg -Dtest=NUM
+            ex: "ant launch-only -Dtest=3"
+reports     Builds a set of report files in "./reports"
+tests       Executes deploy, launch, reports and clean.
         </echo>
     </target>
 
