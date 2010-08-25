@@ -14,7 +14,7 @@
 
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
     class SimulationPublisher_ABC;
 }
 
@@ -41,7 +41,7 @@ class OrderListener : public Listener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             OrderListener( Workspace_ABC& workspace, const dispatcher::Model& model, const OrderTypes& types, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession& session );
+             OrderListener( Workspace_ABC& workspace, const dispatcher::Model_ABC& model, const OrderTypes& types, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession& session );
     virtual ~OrderListener();
     //@}
 

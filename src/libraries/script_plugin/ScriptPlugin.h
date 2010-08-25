@@ -20,7 +20,7 @@
 namespace dispatcher
 {
     class Config;
-    class Model;
+    class Model_ABC;
     class SimulationPublisher_ABC;
     class LinkResolver_ABC;
     class Registrable_ABC;
@@ -60,7 +60,7 @@ class ScriptPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ScriptPlugin( dispatcher::Model& model, const kernel::StaticModel& staticModel, const dispatcher::Config& config, dispatcher::SimulationPublisher_ABC& publisher
+             ScriptPlugin( dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, const dispatcher::Config& config, dispatcher::SimulationPublisher_ABC& publisher
                          , tools::MessageDispatcher_ABC& dispatcher, dispatcher::ClientPublisher_ABC& clients, dispatcher::LinkResolver_ABC& resolver
                          , dispatcher::CompositeRegistrable& registrables );
     virtual ~ScriptPlugin();
@@ -100,7 +100,7 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::Model& model_;
+    dispatcher::Model_ABC& model_;
     const dispatcher::Config& config_;
     dispatcher::CompositeRegistrable& registrables_;
     std::auto_ptr< kernel::Controller > controller_;

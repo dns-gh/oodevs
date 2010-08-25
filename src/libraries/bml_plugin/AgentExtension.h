@@ -27,7 +27,7 @@ namespace MsgsSimToClient
 namespace dispatcher
 {
     class Agent_ABC;
-    class Model;
+    class Model_ABC;
 }
 
 namespace plugins
@@ -52,7 +52,7 @@ class AgentExtension : public BmlExtension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentExtension( dispatcher::Agent_ABC& holder, Publisher_ABC& publisher, const ReportFactory& factory, const Simulation& simulation, const dispatcher::Model& model );
+             AgentExtension( dispatcher::Agent_ABC& holder, Publisher_ABC& publisher, const ReportFactory& factory, const Simulation& simulation, const dispatcher::Model_ABC& model );
     virtual ~AgentExtension();
     //@}
 
@@ -77,7 +77,7 @@ private:
     Publisher_ABC& publisher_;
     const ReportFactory& factory_;
     const Simulation& simulation_;
-    const dispatcher::Model& model_;
+    const dispatcher::Model_ABC& model_;
     unsigned long lastUpdate_;
     //@}
 };

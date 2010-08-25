@@ -13,7 +13,7 @@
 #include "ExtensionFactory.h"
 #include "AggregateEntityClass.h"
 #include "dispatcher/Config.h"
-#include "dispatcher/Model.h"
+#include "dispatcher/Model_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::hla;
@@ -35,7 +35,7 @@ namespace
 // Name: HlaPlugin constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-HlaPlugin::HlaPlugin( dispatcher::Model& model, const dispatcher::Config& config, xml::xistream& xis )
+HlaPlugin::HlaPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, xml::xistream& xis )
     : model_     ( model )
     , agentClass_( new AggregateEntityClass() )
     , factory_   ( new ExtensionFactory( *agentClass_ ) )

@@ -26,7 +26,7 @@ using namespace plugins::script;
 // Name: ClientConditions constructor
 // Created: SBO 2008-06-27
 // -----------------------------------------------------------------------------
-ClientConditions::ClientConditions( kernel::Controller& controller, const dispatcher::Model& model )
+ClientConditions::ClientConditions( kernel::Controller& controller, const dispatcher::Model_ABC& model )
     : controller_( controller )
     , model_     ( model )
 {
@@ -85,7 +85,7 @@ boost::shared_ptr< Condition_ABC > ClientConditions::MissionChosen()
 {
     struct MissionChoice : public SimpleEventCondition< Common::MsgTextMessage >
     {
-        MissionChoice( kernel::Controller& controller, const dispatcher::Model& model )
+        MissionChoice( kernel::Controller& controller, const dispatcher::Model_ABC& model )
             : SimpleEventCondition( controller )
             , resolver_( new ModelResolver( model ) )
         {
@@ -120,7 +120,7 @@ boost::shared_ptr< Condition_ABC > ClientConditions::EntitySelected()
 {
     struct EntitySelected : public SimpleEventCondition< Common::MsgTextMessage >
     {
-        EntitySelected( kernel::Controller& controller, const dispatcher::Model& model )
+        EntitySelected( kernel::Controller& controller, const dispatcher::Model_ABC& model )
             : SimpleEventCondition( controller ), resolver_( new ModelResolver( model ) )
         {
             // NOTHING

@@ -17,6 +17,7 @@
 #include "clients_kernel/Time_ABC.h"
 #include "dispatcher/AgentKnowledgeConverter.h"
 #include "dispatcher/ModelAdapter.h"
+#include "dispatcher/Model_ABC.h"
 #include "dispatcher/ObjectKnowledgeConverter.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include <MT/MT_Logger/MT_Logger_lib.h>
@@ -64,7 +65,7 @@ struct Actions::Publisher : public Publisher_ABC
 // Name: Actions constructor
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
-Actions::Actions( kernel::Controller& controller, const tools::ExerciseConfig& config, const dispatcher::Model& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& sim )
+Actions::Actions( kernel::Controller& controller, const tools::ExerciseConfig& config, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& sim )
     : entities_         ( new dispatcher::ModelAdapter( model ) )
     , publisher_        ( new Publisher( sim ) )
     , converter_        ( new kernel::CoordinateConverter( config ) )

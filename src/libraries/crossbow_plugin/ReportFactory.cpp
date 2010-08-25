@@ -11,7 +11,7 @@
 #include "ReportFactory.h"
 #include "ReportTemplate.h"
 #include "dispatcher/Config.h"
-#include "dispatcher/Model.h"
+#include "dispatcher/Model_ABC.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/AgentKnowledge.h"
 #include <xeumeuleu/xml.hpp>
@@ -23,7 +23,7 @@ using namespace plugins::crossbow;
 // Name: ReportFactory constructor
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-ReportFactory::ReportFactory( const dispatcher::Config& config, const dispatcher::Model& model )
+ReportFactory::ReportFactory( const dispatcher::Config& config, const dispatcher::Model_ABC& model )
     : model_( model )
 {
     xml::xifstream main( config.GetPhysicalFile() );

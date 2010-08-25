@@ -27,12 +27,12 @@ using namespace plugins::crossbow;
 // Name: OrderListener constructor
 // Created: SBO 2007-05-30
 // -----------------------------------------------------------------------------
-OrderListener::OrderListener( Workspace_ABC& workspace, const dispatcher::Model& model, const OrderTypes& types, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession& session )
+OrderListener::OrderListener( Workspace_ABC& workspace, const dispatcher::Model_ABC& model, const OrderTypes& types, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession& session )
     : publisher_ ( publisher )
     , dispatcher_( new OrderDispatcher( workspace, types, model ) )
     , database_  ( workspace.GetDatabase( "flat" ) )
-    , ref_ ( 0 )
-    , session_ ( session )
+    , ref_       ( 0 )
+    , session_   ( session )
 {
     table_.reset( database_.OpenTable( "Orders" ) );
     Clean();

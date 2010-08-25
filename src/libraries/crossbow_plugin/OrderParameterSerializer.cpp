@@ -9,13 +9,6 @@
 
 #include "crossbow_plugin_pch.h"
 #include "OrderParameterSerializer.h"
-#include "clients_kernel/OrderParameter.h"
-#include "dispatcher/Model.h"
-#include "dispatcher/Agent.h"
-#include "dispatcher/Automat.h"
-#include "dispatcher/AgentKnowledge.h"
-#include "dispatcher/ObjectKnowledge.h"
-
 #include "Shape_ABC.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
@@ -24,7 +17,12 @@
 #include "PointCollection.h"
 #include "Point.h"
 #include "OrderParameterTypeResolver.h"
-
+#include "dispatcher/Model_ABC.h"
+#include "dispatcher/Agent.h"
+#include "dispatcher/Automat.h"
+#include "dispatcher/AgentKnowledge.h"
+#include "dispatcher/ObjectKnowledge.h"
+#include "clients_kernel/OrderParameter.h"
 #pragma warning( push, 0 )
 #include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>

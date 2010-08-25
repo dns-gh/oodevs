@@ -15,8 +15,6 @@
 #include "Database_ABC.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
-
-
 #include <boost/lexical_cast.hpp>
 
 using namespace plugins::crossbow;
@@ -25,10 +23,10 @@ using namespace plugins::crossbow;
 // Name: ReportUpdater constructor
 // Created: JCR 2010-03-23
 // -----------------------------------------------------------------------------
-ReportUpdater::ReportUpdater( Workspace_ABC& workspace, const dispatcher::Config& config, const dispatcher::Model& model, const WorkingSession& session )
-    : database_ ( workspace.GetDatabase( "flat" ) )
-    , reportFactory_ ( new ReportFactory( config, model ) )
-    , session_ ( session )
+ReportUpdater::ReportUpdater( Workspace_ABC& workspace, const dispatcher::Config& config, const dispatcher::Model_ABC& model, const WorkingSession& session )
+    : database_     ( workspace.GetDatabase( "flat" ) )
+    , reportFactory_( new ReportFactory( config, model ) )
+    , session_      ( session )
 {
     // NOTHING
 }

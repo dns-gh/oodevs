@@ -24,7 +24,7 @@ namespace dispatcher
 {
     class Agent_ABC;
     class Automat_ABC;
-    class Model;
+    class Model_ABC;
 }
 
 namespace plugins
@@ -52,7 +52,7 @@ public:
 
     //! @name Operations
     //@{
-    MissionParameter_ABC* CreateParameter( xml::xistream& xis, const dispatcher::Model& model ) const;
+    MissionParameter_ABC* CreateParameter( xml::xistream& xis, const dispatcher::Model_ABC& model ) const;
     //@}
 
 private:

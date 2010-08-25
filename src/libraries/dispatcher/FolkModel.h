@@ -32,7 +32,7 @@ namespace dispatcher
 */
 // Created: AGE 2007-09-04
 // =============================================================================
-class FolkModel : public SimpleEntity< >
+class FolkModel : public SimpleEntity<>
 {
 public:
     //! @name Constructors/Destructor

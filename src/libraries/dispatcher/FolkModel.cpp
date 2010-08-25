@@ -21,7 +21,7 @@ using namespace dispatcher;
 // Created: AGE 2007-09-04
 // -----------------------------------------------------------------------------
 FolkModel::FolkModel()
-    : SimpleEntity< >( 0 )
+    : SimpleEntity<>( 0 )
     , container_size( 0 )
     , edge_number   ( 0 )
 {

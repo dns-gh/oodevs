@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "ObjectKnowledgeConverter.h"
-#include "Model.h"
+#include "Model_ABC.h"
 #include "ObjectKnowledge.h"
 #include "tools/Resolver.h"
 
@@ -19,7 +19,7 @@ using namespace dispatcher;
 // Name: ObjectKnowledgeConverter constructor
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-ObjectKnowledgeConverter::ObjectKnowledgeConverter( const dispatcher::Model& model )
+ObjectKnowledgeConverter::ObjectKnowledgeConverter( const dispatcher::Model_ABC& model )
     : model_( model )
 {
     // NOTHING

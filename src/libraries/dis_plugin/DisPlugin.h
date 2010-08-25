@@ -15,7 +15,7 @@
 
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
     class Config;
 }
 
@@ -54,7 +54,7 @@ class DisPlugin : public dispatcher::Plugin_ABC, public Time_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DisPlugin( dispatcher::Model& model, const dispatcher::Config& config, xml::xistream& xis );
+             DisPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, xml::xistream& xis );
     virtual ~DisPlugin();
     //@}
 
@@ -76,7 +76,7 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::Model& model_;
+    dispatcher::Model_ABC& model_;
     std::auto_ptr< UdpNetwork > network_;
     std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
     std::auto_ptr< DisTypeResolver > resolver_;

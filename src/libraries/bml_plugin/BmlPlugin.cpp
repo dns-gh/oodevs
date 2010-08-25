@@ -17,7 +17,7 @@
 #include "Simulation.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/StaticModel.h"
-#include "dispatcher/Model.h"
+#include "dispatcher/Model_ABC.h"
 
 using namespace plugins::bml;
 
@@ -25,7 +25,7 @@ using namespace plugins::bml;
 // Name: BmlPlugin constructor
 // Created: SBO 2008-02-29
 // -----------------------------------------------------------------------------
-BmlPlugin::BmlPlugin( dispatcher::Model& model, const kernel::StaticModel& staticModel, xml::xistream& xis, dispatcher::SimulationPublisher_ABC& simulation )
+BmlPlugin::BmlPlugin( dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, xml::xistream& xis, dispatcher::SimulationPublisher_ABC& simulation )
     : model_           ( model )
     , publisher_       ( new PublisherActor( std::auto_ptr< Publisher_ABC >( new Publisher( xis ) ) ) )
     , simulation_      ( new Simulation() )

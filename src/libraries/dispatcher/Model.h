@@ -10,11 +10,8 @@
 #ifndef __Model_h_
 #define __Model_h_
 
-#include "CompositeFactory.h"
-#include "EntityPublisher.h"
 #include "MessageHandler_ABC.h"
 #include "Model_ABC.h"
-#include "tools/Resolver.h"
 
 namespace Common
 {
@@ -32,6 +29,7 @@ namespace kernel
     class ObjectType;
     class ObjectTypes;
     class StaticModel;
+    class Entity_ABC;
 }
 
 namespace tools
@@ -42,11 +40,11 @@ namespace tools
 namespace dispatcher
 {
     class CompositeFactory;
-    class Factory_ABC;
     class FolkModel;
     class MeteoModel;
     class SimulationModel;
     class UrbanKnowledge;
+    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  Model
@@ -63,7 +61,7 @@ public:
     virtual ~Model();
     //@}
 
-    //! @name Update
+    //! @name Operations
     //@{
     void Reset();
 
@@ -77,29 +75,42 @@ public:
 
     //! @name Operations
     //@{
-    void RegisterFactory( Factory_ABC& factory );
-    void UnregisterFactory( Factory_ABC& factory );
+    virtual void RegisterFactory( Factory_ABC& factory );
+    virtual void UnregisterFactory( Factory_ABC& factory );
 
     template< typename T >
     void AddExtensions( T& entity )
     {
         AddExtensions( entity, &entity );
     }
-    template< typename T >
-    void AddExtensions( T& entity, kernel::Entity_ABC* )
-    {
-        // $$$$ AGE 2008-06-20:
-        entity.Attach< EntityPublisher_ABC >( *new EntityPublisher< T >( entity ) );
-        compositeFactory_->Apply( &ExtensionFactory_ABC< T >::Create, entity );
-        compositeFactory_->Apply( &ExtensionFactory_ABC< kernel::Entity_ABC >::Create, entity );
-    }
-    template< typename T >
-    void AddExtensions( T& , void* ) {}
     //@}
 
     //! @name Accessors
     //@{
     void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    //@}
+
+    //! @name Accessors
+    //@{
+    virtual const tools::Resolver_ABC< Team_ABC >&              Sides() const { return sides_; }
+    virtual const tools::Resolver_ABC< KnowledgeGroup_ABC >&    KnowledgeGroups() const { return knowledgeGroups_; }
+    virtual const tools::Resolver_ABC< Formation_ABC >&         Formations() const { return formations_; }
+    virtual const tools::Resolver_ABC< Automat_ABC >&           Automats() const { return automats_; }
+    virtual const tools::Resolver_ABC< Agent_ABC >&             Agents() const { return agents_; }
+    virtual const tools::Resolver_ABC< Object_ABC >&            Objects() const { return objects_; }
+    virtual const tools::Resolver_ABC< UrbanObject_ABC >&       UrbanBlocks() const { return urbanBlocks_; };
+    virtual const tools::Resolver_ABC< Population_ABC >&        Populations() const { return populations_; }
+    virtual const tools::Resolver_ABC< AgentKnowledge_ABC >&    AgentKnowledges() const { return agentKnowledges_; }
+    virtual const tools::Resolver_ABC< ObjectKnowledge_ABC >&   ObjectKnowledges() const { return objectKnowledges_; }
+    virtual const tools::Resolver_ABC< UrbanKnowledge_ABC >&    UrbanKnowledges() const { return urbanKnowledges_; }
+    virtual const tools::Resolver_ABC< PopulationKnowledge >&   PopulationKnowledges() const { return populationKnowledges_; }
+    virtual const tools::Resolver_ABC< LogConsignMaintenance >& LogConsignsMaintenance() const { return logConsignsMaintenance_; }
+    virtual const tools::Resolver_ABC< LogConsignSupply >&      LogConsignsSupply() const { return logConsignsSupply_; }
+    virtual const tools::Resolver_ABC< LogConsignMedical >&     LogConsignsMedical() const { return logConsignsMedical_; }
+    virtual const tools::Resolver_ABC< Fire >&                  Fires() const { return fires_; }
+    virtual const tools::Resolver_ABC< PopulationFire >&        PopulationFires() const { return populationFires_; }
+    virtual const tools::Resolver_ABC< FireEffect >&            FireEffects() const { return fireEffects_; }
+    virtual const tools::Resolver_ABC< Report >&                Reports() const { return reports_; }
     //@}
 
 private:
@@ -121,58 +132,38 @@ private:
     void UpdateAnyAgent( unsigned id, const T& message );
     template< typename T, typename M >
     void Destroy( tools::Resolver< T >& resolver, unsigned id, const M& message );
+
+    template< typename T >
+    void AddExtensions( T& entity, kernel::Entity_ABC* )
+    {
+        // $$$$ AGE 2008-06-20:
+        entity.Attach< EntityPublisher_ABC >( *new EntityPublisher< T >( entity ) );
+        compositeFactory_->Apply( &ExtensionFactory_ABC< T >::Create, entity );
+        compositeFactory_->Apply( &ExtensionFactory_ABC< kernel::Entity_ABC >::Create, entity );
+    }
+    template< typename T >
+    void AddExtensions( T& , void* ) {}
     //@}
 
 private:
     //! @name Member data
     //@{
-    const kernel::StaticModel&        staticModel_;
-    std::auto_ptr< SimulationModel >  simulation_;
-    std::auto_ptr< CompositeFactory > compositeFactory_;
-    std::auto_ptr< FolkModel >        folk_;
-    std::auto_ptr< MeteoModel >       meteoModel_;
-    //@}
-
-public:
-    //! @name Dynamic model
-    //@{
-    virtual const tools::Resolver_ABC< dispatcher::Team_ABC >&            Sides() const { return sides_; }
-    virtual const tools::Resolver_ABC< dispatcher::KnowledgeGroup_ABC >&  KnowledgeGroups() const { return knowledgeGroups_; }
-    virtual const tools::Resolver_ABC< dispatcher::Formation_ABC >&       Formations() const { return formations_; }
-    virtual const tools::Resolver_ABC< dispatcher::Automat_ABC >&         Automats() const { return automats_; }
-    virtual const tools::Resolver_ABC< dispatcher::Agent_ABC >&           Agents() const { return agents_; }
-    virtual const tools::Resolver_ABC< dispatcher::Object_ABC >&          Objects() const { return objects_; }
-    virtual const tools::Resolver_ABC< dispatcher::UrbanObject_ABC >&     UrbanBlocks() const { return urbanBlocks_; };
-    virtual const tools::Resolver_ABC< dispatcher::Population_ABC >&      Populations() const { return populations_; }
-    virtual const tools::Resolver_ABC< dispatcher::AgentKnowledge_ABC >&  AgentKnowledges() const { return agentKnowledges_; }
-    virtual const tools::Resolver_ABC< dispatcher::ObjectKnowledge_ABC >& ObjectKnowledges() const { return objectKnowledges_; }
-    virtual const tools::Resolver_ABC< dispatcher::UrbanKnowledge_ABC >&  UrbanKnowledges() const { return urbanKnowledges_; }
-    virtual const tools::Resolver_ABC< PopulationKnowledge >&   PopulationKnowledges() const { return populationKnowledges_; }
-    virtual const tools::Resolver_ABC< LogConsignMaintenance >& LogConsignsMaintenance() const { return logConsignsMaintenance_; }
-    virtual const tools::Resolver_ABC< LogConsignSupply >&      LogConsignsSupply() const { return logConsignsSupply_; }
-    virtual const tools::Resolver_ABC< LogConsignMedical >&     LogConsignsMedical() const { return logConsignsMedical_; }
-    virtual const tools::Resolver_ABC< Fire >&                  Fires() const { return fires_; }
-    virtual const tools::Resolver_ABC< PopulationFire >&        PopulationFires() const { return populationFires_; }
-    virtual const tools::Resolver_ABC< FireEffect >&            FireEffects() const { return fireEffects_; }
-    virtual const tools::Resolver_ABC< Report >&                Reports() const { return reports_; }
-    //@}
-
-    //! @name Dynamic model
-    //@{
-private:
-    tools::Resolver< dispatcher::Team_ABC >            sides_;
-    tools::Resolver< dispatcher::KnowledgeGroup_ABC >  knowledgeGroups_;
-    tools::Resolver< dispatcher::Formation_ABC >       formations_;
-    tools::Resolver< dispatcher::Automat_ABC >         automats_;
-    tools::Resolver< dispatcher::Agent_ABC >           agents_;
-    tools::Resolver< dispatcher::Object_ABC >          objects_;
-    tools::Resolver< dispatcher::UrbanObject_ABC >     urbanBlocks_;
-    tools::Resolver< dispatcher::Population_ABC >      populations_;
-    tools::Resolver< dispatcher::AgentKnowledge_ABC >  agentKnowledges_;
-    tools::Resolver< dispatcher::ObjectKnowledge_ABC > objectKnowledges_;
-    tools::Resolver< dispatcher::UrbanKnowledge_ABC >  urbanKnowledges_;
-
-public:
+    const kernel::StaticModel&               staticModel_;
+    std::auto_ptr< SimulationModel >         simulation_;
+    std::auto_ptr< CompositeFactory >        compositeFactory_;
+    std::auto_ptr< FolkModel >               folk_;
+    std::auto_ptr< MeteoModel >              meteoModel_;
+    tools::Resolver< Team_ABC >              sides_;
+    tools::Resolver< KnowledgeGroup_ABC >    knowledgeGroups_;
+    tools::Resolver< Formation_ABC >         formations_;
+    tools::Resolver< Automat_ABC >           automats_;
+    tools::Resolver< Agent_ABC >             agents_;
+    tools::Resolver< Object_ABC >            objects_;
+    tools::Resolver< UrbanObject_ABC >       urbanBlocks_;
+    tools::Resolver< Population_ABC >        populations_;
+    tools::Resolver< AgentKnowledge_ABC >    agentKnowledges_;
+    tools::Resolver< ObjectKnowledge_ABC >   objectKnowledges_;
+    tools::Resolver< UrbanKnowledge_ABC >    urbanKnowledges_;
     tools::Resolver< PopulationKnowledge >   populationKnowledges_;
     tools::Resolver< LogConsignMaintenance > logConsignsMaintenance_;
     tools::Resolver< LogConsignSupply >      logConsignsSupply_;
@@ -181,7 +172,6 @@ public:
     tools::Resolver< PopulationFire >        populationFires_;
     tools::Resolver< FireEffect >            fireEffects_;
     tools::Resolver< Report >                reports_;
-    std::auto_ptr< kernel::FormationLevels > levels_;
     //@}
 };
 

@@ -14,7 +14,7 @@
 
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
 
 // =============================================================================
 /** @class  ModelAdapter
@@ -27,7 +27,7 @@ class ModelAdapter : public kernel::EntityResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ModelAdapter( const Model& model );
+    explicit ModelAdapter( const Model_ABC& model );
     virtual ~ModelAdapter();
     //@}
 
@@ -59,7 +59,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const Model& model_;
+    const Model_ABC& model_;
     //@}
 };
 

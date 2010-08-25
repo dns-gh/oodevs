@@ -30,7 +30,7 @@ namespace xml
 
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
     class Config;
     class SimulationPublisher_ABC;
     class LinkResolver_ABC;
@@ -61,7 +61,7 @@ class CrossbowPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             CrossbowPlugin( const dispatcher::Config& config, xml::xistream& xis, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& publisher, dispatcher::ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& client, dispatcher::LinkResolver_ABC& links, dispatcher::CompositeRegistrable& registrables );
+             CrossbowPlugin( const dispatcher::Config& config, xml::xistream& xis, dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& publisher, dispatcher::ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& client, dispatcher::LinkResolver_ABC& links, dispatcher::CompositeRegistrable& registrables );
     virtual ~CrossbowPlugin();
     //@}
 

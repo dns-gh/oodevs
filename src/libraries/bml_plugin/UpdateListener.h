@@ -14,7 +14,7 @@
 
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
     class SimulationPublisher_ABC;
 }
 
@@ -47,7 +47,7 @@ class UpdateListener : private ResponseHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UpdateListener( Publisher_ABC& publisher, const dispatcher::Model& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& simulation );
+             UpdateListener( Publisher_ABC& publisher, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& simulation );
     virtual ~UpdateListener();
     //@}
 

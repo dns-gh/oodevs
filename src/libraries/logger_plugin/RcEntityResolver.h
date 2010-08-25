@@ -14,7 +14,7 @@
 
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
 }
 
 namespace plugins
@@ -32,7 +32,7 @@ class RcEntityResolver : public RcEntityResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit RcEntityResolver( const dispatcher::Model& model );
+    explicit RcEntityResolver( const dispatcher::Model_ABC& model );
     virtual ~RcEntityResolver();
     //@}
 
@@ -51,7 +51,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const dispatcher::Model& model_;
+    const dispatcher::Model_ABC& model_;
     //@}
 };
 }

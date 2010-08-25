@@ -18,7 +18,7 @@
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/OrderParameter.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
-#include "dispatcher/Model.h"
+#include "dispatcher/Model_ABC.h"
 #include "dispatcher/Agent_ABC.h"
 #include "dispatcher/Automat_ABC.h"
 #include "protocol/simulationsenders.h"
@@ -33,7 +33,7 @@ using namespace plugins::crossbow;
 // Name: OrderDispatcher constructor
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-OrderDispatcher::OrderDispatcher( Workspace_ABC& workspace, const OrderTypes& types, const dispatcher::Model& model )
+OrderDispatcher::OrderDispatcher( Workspace_ABC& workspace, const OrderTypes& types, const dispatcher::Model_ABC& model )
     : types_     ( types )
     , model_     ( model )
     , database_  ( workspace.GetDatabase( "flat" ) )

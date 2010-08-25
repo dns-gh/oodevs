@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 #include "PluginFactory.h"
 #include "Config.h"
+#include "Model.h"
 #include "CompositePlugin.h"
 #include "SimulationPublisher_ABC.h"
 #include "ClientsNetworker.h"

@@ -24,7 +24,7 @@
 #include "clients_kernel/OrderParameter.h"
 #include "dispatcher/Automat_ABC.h"
 #include "dispatcher/Agent_ABC.h"
-#include "dispatcher/Model.h"
+#include "dispatcher/Model_ABC.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( disable : 4512 )
 #include <boost/algorithm/string.hpp>
@@ -84,7 +84,7 @@ namespace
 
 namespace
 {
-    const dispatcher::Automat_ABC* FindAutomat( const dispatcher::Model& model, const std::string& name )
+    const dispatcher::Automat_ABC* FindAutomat( const dispatcher::Model_ABC& model, const std::string& name )
     {
         tools::Iterator< const dispatcher::Automat_ABC& > it( model.Automats().CreateIterator() );
         while( it.HasMoreElements() )
@@ -96,7 +96,7 @@ namespace
         return 0;
     }
 
-    const dispatcher::Agent_ABC* FindAgent( const dispatcher::Model& model, const std::string& name )
+    const dispatcher::Agent_ABC* FindAgent( const dispatcher::Model_ABC& model, const std::string& name )
     {
         tools::Iterator< const dispatcher::Agent_ABC& > it( model.Agents().CreateIterator() );
         while( it.HasMoreElements() )
@@ -113,7 +113,7 @@ namespace
 // Name: MissionParameterFactory::CreateParameter
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-MissionParameter_ABC* MissionParameterFactory::CreateParameter( xml::xistream& xis, const dispatcher::Model& model ) const
+MissionParameter_ABC* MissionParameterFactory::CreateParameter( xml::xistream& xis, const dispatcher::Model_ABC& model ) const
 {
     std::string name, code, oid;
     xis >> xml::start( NS( "C_BML_Who", "cbml" ) )

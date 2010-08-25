@@ -16,7 +16,7 @@ namespace dispatcher
 {
     class Agent;
     class Automat;
-    class Model;
+    class Model_ABC;
 }
 
 namespace plugins
@@ -39,7 +39,7 @@ class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Ag
 public:
     //! @name Constructors/Destructor
     //@{
-             ExtensionFactory( Publisher_ABC& publisher, const ReportFactory& reportFactory, const Simulation& simulation, const dispatcher::Model& model );
+             ExtensionFactory( Publisher_ABC& publisher, const ReportFactory& reportFactory, const Simulation& simulation, const dispatcher::Model_ABC& model );
     virtual ~ExtensionFactory();
     //@}
 
@@ -62,7 +62,7 @@ private:
     Publisher_ABC& publisher_;
     const ReportFactory& reportFactory_;
     const Simulation& simulation_;
-    const dispatcher::Model& model_;
+    const dispatcher::Model_ABC& model_;
     //@}
 };
 

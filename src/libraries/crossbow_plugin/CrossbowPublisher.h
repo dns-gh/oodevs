@@ -16,7 +16,7 @@
 namespace dispatcher
 {
     class Config;
-    class Model;
+    class Model_ABC;
     class SimulationPublisher_ABC;
 }
 
@@ -55,7 +55,7 @@ class CrossbowPublisher : public dispatcher::MessageHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             CrossbowPublisher( const dispatcher::Config& config, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& publisher, xml::xistream& xis );
+             CrossbowPublisher( const dispatcher::Config& config, dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& publisher, xml::xistream& xis );
     virtual ~CrossbowPublisher();
     //@}
 
@@ -93,7 +93,7 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::Model&                  model_;
+    dispatcher::Model_ABC&                  model_;
     std::auto_ptr< OGR_Workspace >      workspace_;
     std::auto_ptr< OrderTypes >         orderTypes_;    // $$$$ SBO 2007-09-27: to put this stuff
     std::auto_ptr< DatabaseUpdater >    databaseUpdater_;

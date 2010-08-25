@@ -26,7 +26,7 @@
 #include "clients_kernel/CoordinateConverter.h"
 #include "dispatcher/CompositeRegistrable.h"
 #include "dispatcher/Config.h"
-#include "dispatcher/Model.h"
+#include "dispatcher/Model_ABC.h"
 #include "dispatcher/Profile_ABC.h"
 #include "dispatcher/Registrable_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
@@ -46,7 +46,7 @@ using namespace MsgsClientToMessenger;
 // Name: ScriptPlugin constructor
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
-ScriptPlugin::ScriptPlugin( Model& model, const kernel::StaticModel& staticModel, const Config& config, SimulationPublisher_ABC& publisher, tools::MessageDispatcher_ABC& dispatcher, ClientPublisher_ABC& clients, LinkResolver_ABC& resolver, CompositeRegistrable& registrables )
+ScriptPlugin::ScriptPlugin( Model_ABC& model, const kernel::StaticModel& staticModel, const Config& config, SimulationPublisher_ABC& publisher, tools::MessageDispatcher_ABC& dispatcher, ClientPublisher_ABC& clients, LinkResolver_ABC& resolver, CompositeRegistrable& registrables )
     : model_       ( model )
     , config_      ( config )
     , registrables_( registrables )

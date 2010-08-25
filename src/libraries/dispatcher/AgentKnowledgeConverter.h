@@ -14,7 +14,7 @@
 
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
 
 // =============================================================================
 /** @class  AgentKnowledgeConverter
@@ -27,7 +27,7 @@ class AgentKnowledgeConverter : public kernel::AgentKnowledgeConverter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AgentKnowledgeConverter( const dispatcher::Model& model );
+    explicit AgentKnowledgeConverter( const dispatcher::Model_ABC& model );
     virtual ~AgentKnowledgeConverter();
     //@}
 
@@ -56,7 +56,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const dispatcher::Model& model_;
+    const dispatcher::Model_ABC& model_;
     //@}
 };
 

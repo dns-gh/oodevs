@@ -20,7 +20,7 @@ using namespace plugins::bml;
 // Name: ExtensionFactory constructor
 // Created: SBO 2008-02-29
 // -----------------------------------------------------------------------------
-ExtensionFactory::ExtensionFactory( Publisher_ABC& publisher, const ReportFactory& reportFactory, const Simulation& simulation, const dispatcher::Model& model )
+ExtensionFactory::ExtensionFactory( Publisher_ABC& publisher, const ReportFactory& reportFactory, const Simulation& simulation, const dispatcher::Model_ABC& model )
     : publisher_( publisher )
     , reportFactory_( reportFactory )
     , simulation_( simulation )

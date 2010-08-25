@@ -24,7 +24,7 @@ namespace xml
 
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
     class SimulationPublisher_ABC;
 }
 
@@ -55,7 +55,7 @@ class BmlPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             BmlPlugin( dispatcher::Model& model, const kernel::StaticModel& staticModel, xml::xistream& xis, dispatcher::SimulationPublisher_ABC& simulation );
+             BmlPlugin( dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, xml::xistream& xis, dispatcher::SimulationPublisher_ABC& simulation );
     virtual ~BmlPlugin();
     //@}
 
@@ -77,7 +77,7 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::Model& model_;
+    dispatcher::Model_ABC& model_;
     std::auto_ptr< PublisherActor > publisher_;
     std::auto_ptr< Simulation > simulation_;
     std::auto_ptr< ReportFactory > reportFactory_;

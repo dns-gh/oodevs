@@ -17,7 +17,7 @@ namespace kernel
 
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
 }
 
 namespace plugins
@@ -28,7 +28,7 @@ namespace script
 
 // =============================================================================
 /** @class  ModelResolver
-    @brief  Model resolver
+    @brief  Model_ABC resolver
 */
 // Created: AGE 2008-07-15
 // =============================================================================
@@ -37,7 +37,7 @@ class ModelResolver
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ModelResolver( const dispatcher::Model& model );
+    explicit ModelResolver( const dispatcher::Model_ABC& model );
     virtual ~ModelResolver();
     //@}
 
@@ -57,7 +57,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const dispatcher::Model& model_;
+    const dispatcher::Model_ABC& model_;
     //@}
 };
 

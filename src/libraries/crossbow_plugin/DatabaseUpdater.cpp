@@ -19,7 +19,7 @@
 #include "Point.h"
 #include "Area.h"
 #include "dispatcher/EntitySymbols_ABC.h"
-#include "dispatcher/Model.h"
+#include "dispatcher/Model_ABC.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
 #include "dispatcher/Formation.h"
@@ -42,7 +42,7 @@ using namespace plugins::crossbow;
 // Name: DatabaseUpdater constructor
 // Created: JCR 2007-04-30
 // -----------------------------------------------------------------------------
-DatabaseUpdater::DatabaseUpdater( Workspace_ABC& workspace, const dispatcher::Model& model, const WorkingSession& session )
+DatabaseUpdater::DatabaseUpdater( Workspace_ABC& workspace, const dispatcher::Model_ABC& model, const WorkingSession& session )
     : geometryDb_ ( workspace.GetDatabase( "geometry" ) )
     , flatDb_   ( workspace.GetDatabase( "flat" ) )
     , model_    ( model )

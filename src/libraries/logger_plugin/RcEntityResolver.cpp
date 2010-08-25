@@ -12,7 +12,7 @@
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "clients_kernel/PopulationKnowledge_ABC.h"
-#include "dispatcher/Model.h"
+#include "dispatcher/Model_ABC.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/AgentKnowledge.h"
 #include "dispatcher/ObjectKnowledge.h"
@@ -25,7 +25,7 @@ using namespace kernel;
 // Name: RcEntityResolver constructor
 // Created: LDC 2010-03-18
 // -----------------------------------------------------------------------------
-RcEntityResolver::RcEntityResolver( const dispatcher::Model& model )
+RcEntityResolver::RcEntityResolver( const dispatcher::Model_ABC& model )
 : model_( model )
 {
     // NOTHING

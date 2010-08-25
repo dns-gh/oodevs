@@ -10,15 +10,17 @@
 #include "dispatcher_pch.h"
 #include "PopulationKnowledge.h"
 #include "Model.h"
-#include "protocol/ClientPublisher_ABC.h"
-#include "PopulationConcentrationKnowledge.h"
-#include "PopulationFlowKnowledge.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
+#include "CompositeFactory.h"
+#include "EntityPublisher.h"
 #include "KnowledgeGroup.h"
 #include "Population.h"
 #include "Side.h"
-#include <boost/bind.hpp>
+#include "PopulationConcentrationKnowledge.h"
+#include "PopulationFlowKnowledge.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/clientsenders.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
+#include <boost/bind.hpp>
 
 using namespace dispatcher;
 

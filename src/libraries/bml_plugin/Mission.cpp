@@ -14,7 +14,7 @@
 #include "MissionParameterPhaseLine.h"
 #include "MissionParameterPhaseLines.h"
 #include "SerializationTools.h"
-#include "dispatcher/Model.h"
+#include "dispatcher/Model_ABC.h"
 #include "dispatcher/Automat.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
@@ -34,7 +34,7 @@ using namespace plugins::bml;
 // Name: Mission constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-Mission::Mission( xml::xistream& xis, const dispatcher::Model& model, const kernel::StaticModel& staticModel )
+Mission::Mission( xml::xistream& xis, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel )
     : model_( model )
     , staticModel_( staticModel )
     , type_( ResolveMission( xis ) )
@@ -81,7 +81,7 @@ const kernel::MissionType& Mission::ResolveMission( xml::xistream& xis )
 
 namespace
 {
-    const dispatcher::Automat_ABC* FindAutomat( const dispatcher::Model& model, const std::string& name )
+    const dispatcher::Automat_ABC* FindAutomat( const dispatcher::Model_ABC& model, const std::string& name )
     {
         tools::Iterator< const dispatcher::Automat_ABC& > it( model.Automats().CreateIterator() );
         while( it.HasMoreElements() )
@@ -93,7 +93,7 @@ namespace
         return 0;
     }
 
-    const dispatcher::Agent_ABC* FindAgent( const dispatcher::Model& model, const std::string& name )
+    const dispatcher::Agent_ABC* FindAgent( const dispatcher::Model_ABC& model, const std::string& name )
     {
         tools::Iterator< const dispatcher::Agent_ABC& > it( model.Agents().CreateIterator() );
         while( it.HasMoreElements() )

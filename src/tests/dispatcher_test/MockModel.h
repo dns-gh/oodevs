@@ -20,6 +20,8 @@
 // =============================================================================
 MOCK_BASE_CLASS( MockModel, dispatcher::Model_ABC )
 {
+    MOCK_METHOD( RegisterFactory, 1 );
+    MOCK_METHOD( UnregisterFactory, 1 );
     MOCK_METHOD( Sides, 0 );
     MOCK_METHOD( KnowledgeGroups, 0 );
     MOCK_METHOD( Formations, 0 );

@@ -20,7 +20,7 @@
 #include "StatusListener.h"
 #include "ObjectListener.h"
 #include "ExtensionFactory.h"
-#include "dispatcher/Model.h"
+#include "dispatcher/Model_ABC.h"
 #include "dispatcher/Config.h"
 
 using namespace plugins;
@@ -31,7 +31,7 @@ using namespace plugins::crossbow;
 // Name: CrossbowPublisher constructor
 // Created: JCR 2007-04-30
 // -----------------------------------------------------------------------------
-CrossbowPublisher::CrossbowPublisher( const dispatcher::Config& config, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& publisher, xml::xistream& xis )
+CrossbowPublisher::CrossbowPublisher( const dispatcher::Config& config, dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& publisher, xml::xistream& xis )
     : model_           ( model )
     , workspace_       ( new OGR_Workspace() )
     , orderTypes_      ( new OrderTypes( config ) )

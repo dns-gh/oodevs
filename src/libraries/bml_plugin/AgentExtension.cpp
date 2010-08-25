@@ -14,7 +14,7 @@
 #include "DetectionReport.h"
 #include "ReportFactory.h"
 #include "Simulation.h"
-#include "dispatcher/Model.h"
+#include "dispatcher/Model_ABC.h"
 #include <MT/MT_Logger/MT_Logger_lib.h>
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 1 )
@@ -29,7 +29,7 @@ using namespace plugins::bml;
 // Name: AgentExtension constructor
 // Created: SBO 2008-02-29
 // -----------------------------------------------------------------------------
-AgentExtension::AgentExtension( dispatcher::Agent_ABC& holder, Publisher_ABC& publisher, const ReportFactory& factory, const Simulation& simulation, const dispatcher::Model& model )
+AgentExtension::AgentExtension( dispatcher::Agent_ABC& holder, Publisher_ABC& publisher, const ReportFactory& factory, const Simulation& simulation, const dispatcher::Model_ABC& model )
     : holder_( holder )
     , publisher_( publisher )
     , factory_( factory )

@@ -13,7 +13,7 @@
 #include "AgentKnowledge_ABC.h"
 #include "Automat_ABC.h"
 #include "KnowledgeGroup_ABC.h"
-#include "Model.h"
+#include "Model_ABC.h"
 #include "PopulationKnowledge.h"
 #include "tools/Resolver.h"
 
@@ -23,7 +23,7 @@ using namespace dispatcher;
 // Name: AgentKnowledgeConverter constructor
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-AgentKnowledgeConverter::AgentKnowledgeConverter( const dispatcher::Model& model )
+AgentKnowledgeConverter::AgentKnowledgeConverter( const dispatcher::Model_ABC& model )
     : model_( model )
 {
     // NOTHING
@@ -62,7 +62,7 @@ const kernel::AgentKnowledge_ABC* AgentKnowledgeConverter::Find( const kernel::A
 const kernel::PopulationKnowledge_ABC* AgentKnowledgeConverter::Find( const kernel::Population_ABC& base, const kernel::Entity_ABC& owner )
 {
     const kernel::Entity_ABC& group = FindGroup( owner );
-    tools::Iterator< const dispatcher::PopulationKnowledge& > it = model_.populationKnowledges_.CreateIterator();
+    tools::Iterator< const dispatcher::PopulationKnowledge& > it = model_.PopulationKnowledges().CreateIterator();
     while( it.HasMoreElements() )
     {
         const dispatcher::PopulationKnowledge& k = it.NextElement();

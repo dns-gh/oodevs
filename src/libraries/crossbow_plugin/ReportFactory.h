@@ -20,7 +20,7 @@ namespace xml
 namespace dispatcher
 {
     class Config;
-    class Model;
+    class Model_ABC;
 }
 
 namespace plugins
@@ -40,7 +40,7 @@ class ReportFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             ReportFactory( const dispatcher::Config& config, const dispatcher::Model& model );
+             ReportFactory( const dispatcher::Config& config, const dispatcher::Model_ABC& model );
     virtual ~ReportFactory();
     //@}
 
@@ -72,7 +72,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const dispatcher::Model& model_;
+    const dispatcher::Model_ABC& model_;
     T_Templates templates_;
     //@}
 };

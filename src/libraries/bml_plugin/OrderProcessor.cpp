@@ -20,7 +20,7 @@ using namespace plugins::bml;
 // Name: OrderProcessor constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-OrderProcessor::OrderProcessor( const dispatcher::Model& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& publisher )
+OrderProcessor::OrderProcessor( const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& publisher )
     : model_( model )
     , staticModel_( staticModel )
     , publisher_( publisher )

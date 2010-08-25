@@ -15,7 +15,7 @@
 
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
     class Config;
 }
 
@@ -40,7 +40,7 @@ class TicPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TicPlugin( dispatcher::Model& model, const dispatcher::Config& config );
+             TicPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& config );
     virtual ~TicPlugin();
     //@}
 
@@ -61,7 +61,7 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::Model& model_;
+    dispatcher::Model_ABC& model_;
     std::auto_ptr< kernel::CoordinateConverter > converter_;
     std::auto_ptr< ExtensionFactory > factory_;
     //@}

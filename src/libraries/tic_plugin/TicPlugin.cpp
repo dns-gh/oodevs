@@ -11,7 +11,7 @@
 #include "TicPlugin.h"
 #include "ExtensionFactory.h"
 #include "dispatcher/Config.h"
-#include "dispatcher/Model.h"
+#include "dispatcher/Model_ABC.h"
 #include "dispatcher/Agent.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include <xeumeuleu/xml.hpp>
@@ -37,7 +37,7 @@ namespace
 // Name: TicPlugin constructor
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-TicPlugin::TicPlugin( dispatcher::Model& model, const dispatcher::Config& config )
+TicPlugin::TicPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& config )
     : model_    ( model )
     , converter_( new kernel::CoordinateConverter( config ) )
     , factory_  ( new ExtensionFactory( *converter_, static_cast< float >( ReadTimeStep( config.GetSessionFile() ) ) ) )

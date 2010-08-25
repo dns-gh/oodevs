@@ -34,7 +34,7 @@ namespace MsgsClientToSim
 
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
 }
 
 namespace kernel
@@ -70,7 +70,7 @@ class ActionsLogger
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionsLogger( const tools::SessionConfig& config, const dispatcher::Model& model, const kernel::StaticModel& staticModel, const kernel::Time_ABC& simulation );
+             ActionsLogger( const tools::SessionConfig& config, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, const kernel::Time_ABC& simulation );
     virtual ~ActionsLogger();
     //@}
 

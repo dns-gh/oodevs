@@ -20,7 +20,7 @@ namespace xml
 
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
     class Config;
 }
 
@@ -43,7 +43,7 @@ class HlaPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             HlaPlugin( dispatcher::Model& model, const dispatcher::Config& config, xml::xistream& xis );
+             HlaPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, xml::xistream& xis );
     virtual ~HlaPlugin();
     //@}
 
@@ -65,7 +65,7 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::Model& model_;
+    dispatcher::Model_ABC& model_;
     std::auto_ptr< AggregateEntityClass > agentClass_;
     std::auto_ptr< ExtensionFactory > factory_;
     std::auto_ptr< FederateFacade > federate_;

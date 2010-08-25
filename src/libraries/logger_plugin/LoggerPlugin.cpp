@@ -15,7 +15,7 @@
 #include "clients_kernel/StaticModel.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
-#include "dispatcher/Model.h"
+#include "dispatcher/Model_ABC.h"
 #include "dispatcher/Population.h"
 #include "dispatcher/Services.h"
 #include "tools/SessionConfig.h"
@@ -32,7 +32,7 @@ using namespace plugins::logger;
 // Name: LoggerPlugin constructor
 // Created: LDC 2010-03-17
 // -----------------------------------------------------------------------------
-LoggerPlugin::LoggerPlugin( const dispatcher::Model& model, const kernel::StaticModel& staticModel, const tools::SessionConfig& config, const dispatcher::Services& services )
+LoggerPlugin::LoggerPlugin( const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, const tools::SessionConfig& config, const dispatcher::Services& services )
     : filename_   ( config.BuildSessionChildFile( "Messages.log" ).c_str() )
     , file_       ( 0 )
     , resolver_   ( model )
@@ -79,7 +79,7 @@ void LoggerPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/
 
 namespace
 {
-    kernel::Entity_ABC* Find( const dispatcher::Model& model, int id )
+    kernel::Entity_ABC* Find( const dispatcher::Model_ABC& model, int id )
     {
         kernel::Entity_ABC* entity = model.Agents().Find( id );
         if( !entity )

@@ -19,7 +19,7 @@ namespace xml
 
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
     class SimulationPublisher_ABC;
 }
 
@@ -44,7 +44,7 @@ class OrderProcessor : public ResponseHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             OrderProcessor( const dispatcher::Model& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& publisher );
+             OrderProcessor( const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& publisher );
     virtual ~OrderProcessor();
     //@}
 
@@ -70,7 +70,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const dispatcher::Model& model_;
+    const dispatcher::Model_ABC& model_;
     const kernel::StaticModel& staticModel_;
     dispatcher::SimulationPublisher_ABC& publisher_;
     //@}

@@ -18,7 +18,7 @@
 #include "Point.h"
 #include "Area.h"
 #include "dispatcher/EntitySymbols_ABC.h"
-#include "dispatcher/Model.h"
+#include "dispatcher/Model_ABC.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
 #include "dispatcher/Formation.h"
@@ -41,7 +41,7 @@ using namespace plugins::crossbow;
 // Name: QueryDatabaseUpdater constructor
 // Created: JCR 2007-04-30
 // -----------------------------------------------------------------------------
-QueryDatabaseUpdater::QueryDatabaseUpdater( Database_ABC& database, const dispatcher::Model& model, const ReportFactory& reportFactory, const WorkingSession& session )
+QueryDatabaseUpdater::QueryDatabaseUpdater( Database_ABC& database, const dispatcher::Model_ABC& model, const ReportFactory& reportFactory, const WorkingSession& session )
     : database_     ( database )
     , model_        ( model )
     , reportFactory_( reportFactory )

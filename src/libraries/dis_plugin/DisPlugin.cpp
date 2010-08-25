@@ -14,7 +14,7 @@
 #include "FireManager.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "dispatcher/Config.h"
-#include "dispatcher/Model.h"
+#include "dispatcher/Model_ABC.h"
 #include <xeumeuleu/xml.hpp>
 #include "UdpNetwork.h"
 #pragma warning( disable: 4355 ) // 'this' : used in base member initializer list
@@ -39,7 +39,7 @@ namespace
 // Name: DisPlugin constructor
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-DisPlugin::DisPlugin( dispatcher::Model& model, const dispatcher::Config& config, xml::xistream& xis )
+DisPlugin::DisPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, xml::xistream& xis )
     : model_    ( model )
     , network_  ( new UdpNetwork( xis.attribute< std::string >( "server" ), xis.attribute< unsigned short >( "port" ) ) )
     , converter_( new kernel::CoordinateConverter( config ) )

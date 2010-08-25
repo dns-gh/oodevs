@@ -13,7 +13,7 @@
 namespace dispatcher
 {
     class Config;
-    class Model;
+    class Model_ABC;
 }
 
 namespace MsgsSimToClient
@@ -41,7 +41,7 @@ class ReportUpdater
 public:
     //! @name Constructors/Destructor
     //@{
-            ReportUpdater( Workspace_ABC& workspace, const dispatcher::Config& config, const dispatcher::Model& model, const WorkingSession& session );
+            ReportUpdater( Workspace_ABC& workspace, const dispatcher::Config& config, const dispatcher::Model_ABC& model, const WorkingSession& session );
     virtual ~ReportUpdater();
     //@}
 

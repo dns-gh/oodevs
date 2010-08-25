@@ -23,7 +23,7 @@ namespace tools
 
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
     class Services;
 }
 
@@ -50,7 +50,7 @@ class LoggerPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LoggerPlugin( const dispatcher::Model& model, const kernel::StaticModel& staticModel,
+             LoggerPlugin( const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel,
                            const tools::SessionConfig& config, const dispatcher::Services& services );
     virtual ~LoggerPlugin();
     //@}
@@ -87,7 +87,7 @@ private:
     kernel::ObjectTypes         objectTypes_;
     RcEntityResolver            resolver_;
     ReportFactory               factory_;
-    const dispatcher::Model&    model_;
+    const dispatcher::Model_ABC&    model_;
     const kernel::StaticModel&  staticModel_;
     const dispatcher::Services& services_;
     std::string                 date_;

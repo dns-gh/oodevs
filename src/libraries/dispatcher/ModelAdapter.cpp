@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "ModelAdapter.h"
-#include "Model.h"
+#include "Model_ABC.h"
 #include "Agent.h"
 #include "Automat.h"
 #include "Formation.h"
@@ -24,7 +24,7 @@ using namespace dispatcher;
 // Name: ModelAdapter constructor
 // Created: SBO 2010-05-10
 // -----------------------------------------------------------------------------
-ModelAdapter::ModelAdapter( const Model& model )
+ModelAdapter::ModelAdapter( const Model_ABC& model )
     : model_( model )
 {
     // NOTHING

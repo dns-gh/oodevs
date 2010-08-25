@@ -11,6 +11,7 @@
 #define __crossbow_DatabaseUpdater_h_
 
 #include "DatabaseUpdater_ABC.h"
+
 namespace Common
 {
     class MsgFormationCreation;
@@ -40,7 +41,7 @@ namespace MsgsSimToClient
 
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
 }
 
 namespace plugins
@@ -62,7 +63,7 @@ class DatabaseUpdater : public DatabaseUpdater_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DatabaseUpdater( Workspace_ABC& workspace, const dispatcher::Model& model, const WorkingSession& session );
+             DatabaseUpdater( Workspace_ABC& workspace, const dispatcher::Model_ABC& model, const WorkingSession& session );
     virtual ~DatabaseUpdater();
     //@}
 
@@ -113,7 +114,7 @@ private:
     //@{
     Database_ABC&               geometryDb_;
     Database_ABC&               flatDb_;
-    const dispatcher::Model&    model_;
+    const dispatcher::Model_ABC&    model_;
     const WorkingSession&       session_;
     //@}
 };

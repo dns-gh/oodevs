@@ -12,7 +12,7 @@
 #include "CommandString.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
-#include "dispatcher/Model.h"
+#include "dispatcher/Model_ABC.h"
 #include <boost/lexical_cast.hpp>
 
 using namespace plugins::script;
@@ -21,7 +21,7 @@ using namespace plugins::script;
 // Name: ModelResolver constructor
 // Created: AGE 2008-07-15
 // -----------------------------------------------------------------------------
-ModelResolver::ModelResolver( const dispatcher::Model& model )
+ModelResolver::ModelResolver( const dispatcher::Model_ABC& model )
     : model_( model )
 {
     // NOTHING

@@ -21,7 +21,7 @@ namespace kernel
 
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
 }
 
 namespace plugins
@@ -41,7 +41,7 @@ class ConditionFacade : public dispatcher::CompositeRegistrable
 public:
     //! @name Constructors/Destructor
     //@{
-             ConditionFacade( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const dispatcher::Model& model );
+             ConditionFacade( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const dispatcher::Model_ABC& model );
     virtual ~ConditionFacade();
     //@}
 

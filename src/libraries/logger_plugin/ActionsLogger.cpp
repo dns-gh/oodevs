@@ -21,6 +21,7 @@
 #include "clients_kernel/Time_ABC.h"
 #include "dispatcher/AgentKnowledgeConverter.h"
 #include "dispatcher/ModelAdapter.h"
+#include "dispatcher/Model_ABC.h"
 #include "dispatcher/ObjectKnowledgeConverter.h"
 #include "protocol/protocol.h"
 #include "protocol/Publisher_ABC.h"
@@ -45,7 +46,7 @@ namespace
 // Name: ActionsLogger constructor
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-ActionsLogger::ActionsLogger( const tools::SessionConfig& config, const dispatcher::Model& model, const kernel::StaticModel& staticModel, const kernel::Time_ABC& simulation )
+ActionsLogger::ActionsLogger( const tools::SessionConfig& config, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, const kernel::Time_ABC& simulation )
     : config_           ( config )
     , entities_         ( new dispatcher::ModelAdapter( model ) )
     , controller_       ( new kernel::Controller() )

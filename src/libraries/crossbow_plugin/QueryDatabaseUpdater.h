@@ -41,7 +41,7 @@ namespace MsgsSimToClient
 
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
 }
 
 namespace plugins
@@ -64,7 +64,7 @@ class QueryDatabaseUpdater : public DatabaseUpdater_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             QueryDatabaseUpdater( Database_ABC& database, const dispatcher::Model& model, const ReportFactory& reportFactory, const WorkingSession& session );
+             QueryDatabaseUpdater( Database_ABC& database, const dispatcher::Model_ABC& model, const ReportFactory& reportFactory, const WorkingSession& session );
     virtual ~QueryDatabaseUpdater();
     //@}
 
@@ -114,7 +114,7 @@ private:
     //! @name Member data
     //@{
     Database_ABC&               database_;
-    const dispatcher::Model&    model_;
+    const dispatcher::Model_ABC&    model_;
     const ReportFactory&        reportFactory_;
     const WorkingSession&       session_;
     //@}

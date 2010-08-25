@@ -89,7 +89,7 @@ namespace
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
 CrossbowPlugin::CrossbowPlugin( const dispatcher::Config& config, xml::xistream& xis,
-                                dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& publisher,
+                                dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& publisher,
                                 dispatcher::ClientPublisher_ABC& /*clients*/, tools::MessageDispatcher_ABC& dispatcher,
                                 dispatcher::LinkResolver_ABC& /*links*/, dispatcher::CompositeRegistrable& /*registrables*/ )
     : crossbowPublisher_( new CrossbowPublisher( config, model, publisher, xis ) )

@@ -11,6 +11,8 @@
 #include "MeteoModel.h"
 #include "Model.h"
 #include "EntityPublisher.h"
+#include "CompositeFactory.h"
+#include "EntityPublisher.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "meteo/MeteoData.h"
@@ -25,13 +27,12 @@ using namespace dispatcher;
 // Created: HBD 2010-03-23
 // -----------------------------------------------------------------------------
 MeteoModel::MeteoModel( const tools::ExerciseConfig& config, Model& model )
-  : MeteoModel_ABC()
-  , model_( model )
-  , converter_( new kernel::CoordinateConverter( config ) )
+  : model_       ( model )
+  , converter_   ( new kernel::CoordinateConverter( config ) )
   , pGlobalMeteo_( 0 )
 {
     weather::PHY_Precipitation::Initialize();
-    weather::PHY_Lighting     ::Initialize();
+    weather::PHY_Lighting::Initialize();
 }
 
 // -----------------------------------------------------------------------------
@@ -40,11 +41,11 @@ MeteoModel::MeteoModel( const tools::ExerciseConfig& config, Model& model )
 // -----------------------------------------------------------------------------
 MeteoModel::~MeteoModel()
 {
-    weather::PHY_Lighting     ::Terminate();
+    weather::PHY_Lighting::Terminate();
     weather::PHY_Precipitation::Terminate();
 }
 
-// ----------------------------------------------------                                                                                                                                  -------------------------
+// -----------------------------------------------------------------------------
 // Name: MeteoModel::GetLighting
 // Created: HBD 2010-03-23
 // -----------------------------------------------------------------------------

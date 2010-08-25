@@ -27,7 +27,7 @@ using namespace plugins::script;
 // Name: ConditionFacade constructor
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
-ConditionFacade::ConditionFacade( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const dispatcher::Model& model )
+ConditionFacade::ConditionFacade( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const dispatcher::Model_ABC& model )
     : controller_( controller )
 {
     Add( new SimulationConditions( controller ) );

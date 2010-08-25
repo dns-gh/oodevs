@@ -24,7 +24,7 @@ namespace kernel
 namespace dispatcher
 {
     class SimulationPublisher_ABC;
-    class Model;
+    class Model_ABC;
     class Agent_ABC;
     class Automat_ABC;
 }
@@ -51,7 +51,7 @@ class OrderDispatcher
 public:
     //! @name Constructors/Destructor
     //@{
-             OrderDispatcher( Workspace_ABC& workspace, const OrderTypes& types, const dispatcher::Model& model );
+             OrderDispatcher( Workspace_ABC& workspace, const OrderTypes& types, const dispatcher::Model_ABC& model );
     virtual ~OrderDispatcher();
     //@}
 
@@ -92,7 +92,7 @@ private:
     //! @name Member data
     //@{
     const OrderTypes& types_;
-    const dispatcher::Model& model_;
+    const dispatcher::Model_ABC& model_;
     Database_ABC& database_;
     std::auto_ptr< OrderParameterSerializer > serializer_;
     //@}

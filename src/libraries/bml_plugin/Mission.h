@@ -28,7 +28,7 @@ namespace dispatcher
 {
     class Agent_ABC;
     class Automat_ABC;
-    class Model;
+    class Model_ABC;
     class SimulationPublisher_ABC;
 }
 
@@ -50,7 +50,7 @@ class Mission
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission( xml::xistream& xis, const dispatcher::Model& model, const kernel::StaticModel& staticModel );
+             Mission( xml::xistream& xis, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel );
     virtual ~Mission();
     //@}
 
@@ -92,7 +92,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const dispatcher::Model& model_;
+    const dispatcher::Model_ABC& model_;
     const kernel::StaticModel& staticModel_;
     const kernel::MissionType& type_;
     const dispatcher::Automat_ABC* automatTaskee_;

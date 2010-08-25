@@ -8,13 +8,10 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "Model.h"
-
 #include "Agent.h"
 #include "AgentKnowledge.h"
 #include "Automat.h"
-#include "protocol/ClientPublisher_ABC.h"
 #include "Fire.h"
 #include "FireEffect.h"
 #include "FolkModel.h"
@@ -37,13 +34,16 @@
 #include "UrbanKnowledge.h"
 #include "UrbanObject.h"
 #include "Visitors.h"
+#include "CompositeFactory.h"
+#include "EntityPublisher.h"
+#include "protocol/ClientPublisher_ABC.h"
+#include "protocol/clientsenders.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/StaticModel.h"
 #include <MT/MT_Logger/MT_Logger_lib.h>
-#include "protocol/clientsenders.h"
 #include <boost/bind.hpp>
 #pragma warning( disable : 4503 )
 

@@ -20,7 +20,7 @@ namespace kernel
 
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
 }
 
 namespace plugins
@@ -41,7 +41,7 @@ class ClientConditions : public dispatcher::Registrable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ClientConditions( kernel::Controller& controller, const dispatcher::Model& model );
+             ClientConditions( kernel::Controller& controller, const dispatcher::Model_ABC& model );
     virtual ~ClientConditions();
     //@}
 
@@ -69,7 +69,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const dispatcher::Model& model_;
+    const dispatcher::Model_ABC& model_;
     //@}
 };
 

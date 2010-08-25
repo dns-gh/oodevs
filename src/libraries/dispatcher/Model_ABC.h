@@ -10,7 +10,6 @@
 #ifndef __Model_ABC_h_
 #define __Model_ABC_h_
 
-#include "Sendable.h"
 #include "tools/Resolver.h"
 
 namespace dispatcher
@@ -35,6 +34,7 @@ namespace dispatcher
     class Report;
     class Team_ABC;
     class UrbanObject;
+    class Factory_ABC;
 
 // =============================================================================
 /** @class  Model
@@ -51,19 +51,25 @@ public:
     virtual ~Model_ABC() {}
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void RegisterFactory( Factory_ABC& factory ) = 0;
+    virtual void UnregisterFactory( Factory_ABC& factory ) = 0;
+    //@}
+
     //! @name Accessors
     //@{
-    virtual const tools::Resolver_ABC< dispatcher::Team_ABC >&            Sides() const = 0;
-    virtual const tools::Resolver_ABC< dispatcher::KnowledgeGroup_ABC >&  KnowledgeGroups() const = 0;
-    virtual const tools::Resolver_ABC< dispatcher::Formation_ABC >&       Formations() const = 0;
-    virtual const tools::Resolver_ABC< dispatcher::Automat_ABC >&         Automats() const = 0;
-    virtual const tools::Resolver_ABC< dispatcher::Agent_ABC >&           Agents() const = 0;
-    virtual const tools::Resolver_ABC< dispatcher::Object_ABC >&          Objects() const = 0;
-    virtual const tools::Resolver_ABC< dispatcher::UrbanObject_ABC >&     UrbanBlocks() const = 0;
-    virtual const tools::Resolver_ABC< dispatcher::Population_ABC >&      Populations() const = 0;
-    virtual const tools::Resolver_ABC< dispatcher::AgentKnowledge_ABC >&  AgentKnowledges() const = 0;
-    virtual const tools::Resolver_ABC< dispatcher::ObjectKnowledge_ABC >& ObjectKnowledges() const = 0;
-    virtual const tools::Resolver_ABC< dispatcher::UrbanKnowledge_ABC >&  UrbanKnowledges() const = 0;
+    virtual const tools::Resolver_ABC< Team_ABC >&              Sides() const = 0;
+    virtual const tools::Resolver_ABC< KnowledgeGroup_ABC >&    KnowledgeGroups() const = 0;
+    virtual const tools::Resolver_ABC< Formation_ABC >&         Formations() const = 0;
+    virtual const tools::Resolver_ABC< Automat_ABC >&           Automats() const = 0;
+    virtual const tools::Resolver_ABC< Agent_ABC >&             Agents() const = 0;
+    virtual const tools::Resolver_ABC< Object_ABC >&            Objects() const = 0;
+    virtual const tools::Resolver_ABC< UrbanObject_ABC >&       UrbanBlocks() const = 0;
+    virtual const tools::Resolver_ABC< Population_ABC >&        Populations() const = 0;
+    virtual const tools::Resolver_ABC< AgentKnowledge_ABC >&    AgentKnowledges() const = 0;
+    virtual const tools::Resolver_ABC< ObjectKnowledge_ABC >&   ObjectKnowledges() const = 0;
+    virtual const tools::Resolver_ABC< UrbanKnowledge_ABC >&    UrbanKnowledges() const = 0;
     virtual const tools::Resolver_ABC< PopulationKnowledge >&   PopulationKnowledges() const = 0;
     virtual const tools::Resolver_ABC< LogConsignMaintenance >& LogConsignsMaintenance() const = 0;
     virtual const tools::Resolver_ABC< LogConsignSupply >&      LogConsignsSupply() const = 0;
