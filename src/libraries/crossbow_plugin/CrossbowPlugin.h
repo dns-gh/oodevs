@@ -11,7 +11,7 @@
 #define __CrossbowPlugin_h_
 
 #include "dispatcher/Plugin_ABC.h"
-#include "dispatcher/NoopPublisher.h"
+#include "dispatcher/NullClientPublisher.h"
 
 namespace MsgsSimToClient
 {
@@ -56,7 +56,7 @@ namespace crossbow
 // Created: JCR 2007-08-29
 // =============================================================================
 class CrossbowPlugin : public dispatcher::Plugin_ABC
-                     , public dispatcher::NoopClientPublisher
+                     , public dispatcher::NullClientPublisher
 {
 public:
     //! @name Constructors/Destructor

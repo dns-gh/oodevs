@@ -14,7 +14,6 @@
 #include "ClientsNetworker.h"
 #include "SimulationDispatcher.h"
 #include "Loader.h"
-#include "NoopPublisher.h"
 #include "Services.h"
 #include "StaticModel.h"
 #include "aar_plugin/AarPlugin.h"

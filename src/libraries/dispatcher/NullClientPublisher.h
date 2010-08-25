@@ -7,27 +7,26 @@
 //
 // *****************************************************************************
 
-#ifndef __NoopPublisher_h_
-#define __NoopPublisher_h_
+#ifndef __NullClientPublisher_h_
+#define __NullClientPublisher_h_
 
 #include "protocol/ClientPublisher_ABC.h"
-#include "SimulationPublisher_ABC.h"
 
 namespace dispatcher
 {
 // =============================================================================
-/** @class  NoopClientPublisher
-    @brief  NoopClientPublisher
+/** @class  NullClientPublisher
+    @brief  NullClientPublisher
 */
 // Created: AGE 2007-08-24
 // =============================================================================
-class NoopClientPublisher : public ClientPublisher_ABC
+class NullClientPublisher : public ClientPublisher_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             NoopClientPublisher() {}
-    virtual ~NoopClientPublisher() {}
+             NullClientPublisher() {}
+    virtual ~NullClientPublisher() {}
     //@}
 
     //! @name Operations
@@ -46,28 +45,6 @@ public:
     //@}
 };
 
-// =============================================================================
-/** @class  NoopSimulationPublisher
-    @brief  NoopSimulationPublisher
-*/
-// Created: AGE 2007-08-24
-// =============================================================================
-class NoopSimulationPublisher : public SimulationPublisher_ABC
-{
-public:
-    //! @name Constructors/Destructor
-    //@{
-             NoopSimulationPublisher() {}
-    virtual ~NoopSimulationPublisher() {}
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void Send( const MsgsClientToSim::MsgClientToSim& ) {}
-    virtual void Send( const MsgsDispatcherToSim::MsgDispatcherToSim& ) {}
-    //@}
-};
-
 }
 
-#endif // __NoopPublisher_h_
+#endif // __NullClientPublisher_h_

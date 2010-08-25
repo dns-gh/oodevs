@@ -9,7 +9,7 @@
 
 #include "RightsPlugin.h"
 #include "dispatcher/CompositeRegistrable.h"
-#include "dispatcher/NoopPublisher.h"
+#include "dispatcher/NullClientPublisher.h"
 #include "dispatcher/Profile.h"
 #include "dispatcher/ProfileManager.h"
 #include "dispatcher/DefaultProfile.h"
@@ -220,9 +220,9 @@ Profile_ABC& RightsPlugin::GetProfile( const std::string& link )
 // -----------------------------------------------------------------------------
 ClientPublisher_ABC& RightsPlugin::GetPublisher( const std::string& link )
 {
-    static NoopClientPublisher def;
     CIT_Profiles it = authenticated_.find( link );
     if( it != authenticated_.end() )
         return base_.GetPublisher( link );
-    return def;
+    static NullClientPublisher publisher;
+    return publisher;
 }

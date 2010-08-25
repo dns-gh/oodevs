@@ -31,7 +31,7 @@ using namespace logger;
 
 namespace
 {
-    struct NoopPublisher : public Publisher_ABC
+    struct NullPublisher : public Publisher_ABC
     {
         virtual void Send( const MsgsClientToSim::MsgClientToSim& /*message*/ ) {}
         virtual void Send( const MsgsClientToAuthentication::MsgClientToAuthentication& /*message*/ ) {}
@@ -46,16 +46,16 @@ namespace
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
 ActionsLogger::ActionsLogger( const tools::SessionConfig& config, const dispatcher::Model& model, const kernel::StaticModel& staticModel, const kernel::Time_ABC& simulation )
-    : config_( config )
-    , entities_( new dispatcher::ModelAdapter( model ) )
-    , controller_( new kernel::Controller() )
-    , converter_( new kernel::CoordinateConverter( config ) )
-    , publisher_( new NoopPublisher() )
-    , agentsKnowledges_( new dispatcher::AgentKnowledgeConverter( model ) )
+    : config_           ( config )
+    , entities_         ( new dispatcher::ModelAdapter( model ) )
+    , controller_       ( new kernel::Controller() )
+    , converter_        ( new kernel::CoordinateConverter( config ) )
+    , publisher_        ( new NullPublisher() )
+    , agentsKnowledges_ ( new dispatcher::AgentKnowledgeConverter( model ) )
     , objectsKnowledges_( new dispatcher::ObjectKnowledgeConverter( model ) )
-    , parameters_( new actions::ActionParameterFactory( *converter_, *entities_, staticModel, *agentsKnowledges_, *objectsKnowledges_, *controller_ ) )
-    , factory_( new actions::ActionFactory( *controller_, *parameters_, *entities_, staticModel, simulation ) )
-    , actions_( new actions::ActionsModel( *factory_, *publisher_ ) )
+    , parameters_       ( new actions::ActionParameterFactory( *converter_, *entities_, staticModel, *agentsKnowledges_, *objectsKnowledges_, *controller_ ) )
+    , factory_          ( new actions::ActionFactory( *controller_, *parameters_, *entities_, staticModel, simulation ) )
+    , actions_          ( new actions::ActionsModel( *factory_, *publisher_ ) )
 {
     // NOTHING
 }
