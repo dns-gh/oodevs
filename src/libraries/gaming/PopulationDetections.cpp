@@ -74,14 +74,17 @@ void PopulationDetections::DoUpdate( const MsgsSimToClient::MsgPopulationFlowDet
 // -----------------------------------------------------------------------------
 void PopulationDetections::Draw( const geometry::Point2f&, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    const geometry::Point2f& center = entity_.Get< kernel::Positions >().GetPosition();
-    if( !viewport.IsVisible( center ) )
-        return;
-    glPushAttrib( GL_CURRENT_BIT );
-    glColor4f( COLOR_DETECTED );
-    for( CIT_Parts it = perceived_.begin(); it != perceived_.end(); ++it )
-        tools.DrawLine( center, (*it)->Get< kernel::Positions >().GetPosition() );
-    glPopAttrib();
+    if( tools.ShouldDisplay( "VisionLines" ) )
+    {
+        const geometry::Point2f& center = entity_.Get< kernel::Positions >().GetPosition();
+        if( !viewport.IsVisible( center ) )
+            return;
+        glPushAttrib( GL_CURRENT_BIT );
+        glColor4f( COLOR_DETECTED );
+        for( CIT_Parts it = perceived_.begin(); it != perceived_.end(); ++it )
+            tools.DrawLine( center, (*it)->Get< kernel::Positions >().GetPosition() );
+        glPopAttrib();
+    }
 }
 
 
