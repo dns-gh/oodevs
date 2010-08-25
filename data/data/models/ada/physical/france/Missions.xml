@@ -1013,7 +1013,7 @@
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.ContreAttaquer" dia-type="T_Mission_Pion_ContreAttaquer_Zone" id="2089" name="MELEE Contre Attaquer dans une Zone">
       <parameter dia-name="objectives" name="zones" optional="false" type="AreaListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Neutralizer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Neutralizer" id="2090" name="MELEE Neutralizer">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Neutralizer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Neutralizer" id="2090" name="MELEE Neutraliser">
       <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Ratisser" dia-type="net.masagroup.sword.france.military.platoon.tasks.RatisserBU" id="2091" name="MELEE Ratisser un Bloc Urbain">

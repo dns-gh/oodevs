@@ -24,7 +24,7 @@
         <mission name="MELEE Defendre"/>
         <mission name="MELEE Illuminer"/>
         <mission name="MELEE Interdire"/>
-        <mission name="MELEE Neutralizer"/>
+        <mission name="MELEE Neutraliser"/>
         <mission name="MELEE Ratisser un Bloc Urbain"/>
         <mission name="MELEE Ratisser une Zone"/>
         <mission name="MELEE Reconnaitre Itineraire"/>
@@ -58,7 +58,7 @@
         <mission name="MELEE Interdire"/>
         <mission name="MELEE Boucler un Bloc Urbain"/>
         <mission name="MELEE Controler"/>
-        <mission name="MELEE Neutralizer"/>
+        <mission name="MELEE Neutraliser"/>
         <mission name="MELEE Ratisser un Bloc Urbain"/>
         <mission name="MELEE Ratisser une Zone"/>
         <mission name="MELEE Tenir"/>
