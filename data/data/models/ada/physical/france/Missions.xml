@@ -503,25 +503,25 @@
       <parameter dia-name="resterSurPlace_" name="Rester sur place" optional="false" type="Bool"/>
     </mission>
     <mission dia-behavior="MIS_Pion_LOG_DecontaminerBlesses" dia-type="T_Mission_Pion_LOG_DecontaminerBlesses" id="114" name="LOG Decontaminer Blesses">
-      <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="true" type="Point"/>
+      <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_LOG_TrierEtTraiterBlesses" dia-type="T_Mission_Pion_LOG_TrierEtTraiterBlesses" id="115" name="LOG Trier Et Traiter Blesses">
-      <parameter dia-name="blessuresTraitees_" name="Blessures traitees" optional="true" type="MedicalPriorities"/>
+      <parameter dia-name="blessuresTraitees_" name="Blessures traitees" optional="false" type="MedicalPriorities"/>
       <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="true" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_LOG_TrierBlesses" dia-type="T_Mission_Pion_LOG_TrierBlesses" id="116" name="LOG Trier Blesses">
       <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_LOG_TraiterBlesses" dia-type="T_Mission_Pion_LOG_TraiterBlesses" id="117" name="LOG Traiter Blesses">
-      <parameter dia-name="blessuresTraitees_" name="Blessures traitees" optional="true" type="MedicalPriorities"/>
+      <parameter dia-name="blessuresTraitees_" name="Blessures traitees" optional="false" type="MedicalPriorities"/>
       <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="true" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_LOG_PrendreEnCompteReactionsMentales" dia-type="T_Mission_Pion_LOG_PrendreEnCompteReactionsMentales" id="118" name="LOG Prendre En Compte Reactions Mentales">
-      <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="true" type="Point"/>
+      <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_LOG_Convoyer" dia-type="T_Mission_Pion_LOG_Convoyer" id="119" name="LOG Convoyer"/>
     <mission dia-behavior="MIS_Pion_LOG_Reparer" dia-type="T_Mission_Pion_LOG_Reparer" id="120" name="LOG Reparer">
-      <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="true" type="Point"/>
+      <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_LOG_AppuyerMouvement" dia-type="T_Mission_Pion_LOG_AppuyerMouvement" id="121" name="LOG Appuyer Mouvement">
       <parameter dia-name="uniteAAppuyer_" name="Unite a appuyer" optional="false" type="Agent"/>
@@ -1454,7 +1454,7 @@
       <parameter dia-name="compagnie_" name="Compagnie" optional="false" type="Automate"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_SeDeployer" dia-type="T_Mission_Automate_LOG_SeDeployer" id="286" mrt-dia-behavior="MIS_Automate_MRT_LOG_SeDeployer" name="LOG Se Deployer">
-      <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="true" type="Point"/>
+      <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_AppuyerMouvement" dia-type="T_Mission_Automate_LOG_AppuyerMouvement" id="287" mrt-dia-behavior="MIS_Automate_MRT_LOG_AppuyerMouvement" name="LOG Appuyer Mouvement">
       <parameter dia-name="unitesAAppuyer_" name="Unites a appuyer" optional="false" type="AgentList"/>
