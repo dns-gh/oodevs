@@ -21,7 +21,7 @@ function Start()
     end
 
     function CheckProfiles( profile )
-        for factor in pairs( factors ) do
+        for _, factor in pairs( factors ) do
             if factor.CheckProfiles( profile ) then
                 return true
             end
@@ -31,7 +31,7 @@ function Start()
 
     function CheckConditions()
         local result = false
-        for factor in pairs( factors ) do
+        for _, factor in pairs( factors ) do
             if factor.CheckConditions() then
                 result = result or factor.ExecuteActions()
             end
