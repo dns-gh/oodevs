@@ -36,7 +36,7 @@ include "resources/config.lua"
 function Start()
 
     local frequency = 1 -- second(s) between mission start
-    local unitId = 0
+    local unit = nil
 
     local eventTable =
     {
@@ -74,8 +74,7 @@ function Start()
             { "</xsl:text><xsl:value-of select="$physical"/><xsl:text>_test_wait_unit_creation" },
             function( entity )
                 if entity:GetName() == "</xsl:text><xsl:value-of select="$physicalNotEncoded"/><xsl:text>" then
-                    unitId = entity:GetIdentifier()
-                <!--    Trace( "Agent created" .. tostring( unitId ) ) -->
+                    unit = entity
                     StartTimeSequence( "</xsl:text><xsl:value-of select="$physical"/><xsl:text>_messages" )
                 end
             end
@@ -115,7 +114,7 @@ end
             <xsl:text>
         TimeSequence( "</xsl:text><xsl:value-of select="$unit"/><xsl:text>_messages", frequency,
             function()
-                Mission.create( unitId, model.types.missions["</xsl:text><xsl:value-of select="@name"/><xsl:text>"] )
+                Mission.create( unit:GetIdentifier(), model.types.missions["</xsl:text><xsl:value-of select="@name"/><xsl:text>"] )
             </xsl:text>
                 <xsl:call-template name="common-parameters"/>
                 <xsl:for-each select="parameter[@optional='false']">
@@ -126,8 +125,14 @@ end
                 <xsl:text>
                     :Issue()
                 Trace( "</xsl:text><xsl:value-of select="$unit"/><xsl:text> : running </xsl:text><xsl:value-of select="@name"/><xsl:text>" )
+            end),
+        TimeSequence( "</xsl:text><xsl:value-of select="$unit"/><xsl:text>_messages", frequency,
+            function()
+                unit:Teleport( coord:UtmPosition( config.positions.start[1] ) )
+                unit:RecoverAll()
             end
         ),
+
         </xsl:text>
         </xsl:for-each>
     </xsl:template>
