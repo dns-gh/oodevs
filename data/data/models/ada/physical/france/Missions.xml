@@ -969,8 +969,14 @@
       <parameter dia-name="objectives" name="objectif" optional="false" type="UrbanBlockBM"/>
       <parameter dia-name="positions" name="positions de surveillance" optional="false" type="PointListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Semparer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Semparer" id="2072" name="MELEE S'emparer d'un Bloc Urbain">
-      <parameter dia-name="objectives" name="objectif" optional="false" type="UrbanBlockBM"/>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Semparer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Semparer" id="2072" name="MELEE S'emparer De">
+      <parameter dia-name="objective" name="objectif" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="PointBM"/>
+          <parameter type="AreaBM"/>
+          <parameter type="UrbanBlockBM"/>
+        </choice>
+      </parameter>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Boucler" dia-type="T_Mission_Pion_BouclerBU" id="2073" name="MELEE Boucler un Bloc Urbain">
       <parameter dia-name="objectives" name="objectif" optional="false" type="UrbanBlockBM"/>
@@ -988,7 +994,6 @@
           <parameter type="UrbanBlockBM"/>
         </choice>
       </parameter>
-      <parameter dia-name="position" name="position pour tenir" optional="false" type="PointBM"/>
       <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Interdire" dia-type="net.masagroup.sword.france.military.platoon.tasks.Interdire" id="2083" name="MELEE Interdire">
@@ -1033,6 +1038,11 @@
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Eclairer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Eclairer" id="2093" name="MELEE Eclairer un Itineraire">
       <parameter dia-name="objectives" name="itinéraire" optional="false" type="PointListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Harceler" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Harceler" id="2097" name="MELEE Harceler">
+      <parameter dia-name="objective" name="zone" optional="false" type="AreaBM"/>
+      <parameter dia-name="position" name="position d'observation" optional="false" type="PointBM"/>
+      <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" dia-type="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" id="2030" name="ASS Assurer la Mise En Oeuvre">
       <parameter dia-name="firePositions" name="firePositions" optional="false" type="PointListBM"/>
