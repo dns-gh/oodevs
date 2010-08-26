@@ -19,12 +19,12 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "ENT/ENT_Tr.h"
 #include "protocol/protocol.h"
 #include <time.h>
 
 using namespace geometry;
 using namespace gui;
-using namespace resource;
 
 // -----------------------------------------------------------------------------
 // Name: ResourceNetwork constructor
@@ -50,24 +50,6 @@ ResourceNetwork::~ResourceNetwork()
     // NOTHING
 }
 
-namespace
-{
-    // TODO temporaire : à faire dans ENT avec traductions
-    QString FindResourceName( EResourceType type )
-    {
-        switch( type )
-        {
-        default:
-        case eResourceTypeWater:
-            return "Water";
-        case eResourceTypeGaz:
-            return "Gaz";
-        case eResourceTypeElectricity:
-            return "Electricity";
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ResourceNetwork::Update
 // Created: JSR 2010-08-19
@@ -82,17 +64,17 @@ void ResourceNetwork::Update( const MsgsSimToClient::MsgUrbanAttributes_Infrastr
     for( int i = 0; i < message.resource_network_size(); ++i )
     {
         const MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork& network = message.resource_network( i );
-        EResourceType type;
+        E_ResourceType type;
         switch( network.type() )
         {
         case MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork::water:
-            type = eResourceTypeWater;
+            type = eResourceType_Water;
             break;
         case MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork::gaz:
-            type = eResourceTypeGaz;
+            type = eResourceType_Gaz;
             break;
         case MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork::electricity:
-            type = eResourceTypeElectricity;
+            type = eResourceType_Electricity;
             break;
         default:
             throw std::exception( "Bad resource type" );
@@ -105,7 +87,7 @@ void ResourceNetwork::Update( const MsgsSimToClient::MsgUrbanAttributes_Infrastr
         if( node.hasStock_ )
             node.stock_ = network.stock();
 
-        const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + FindResourceName( type )+ "/";
+        const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + ENT_Tr::ConvertFromResourceType( type, ENT_Tr::eToTr ).c_str() + "/";
         if( node.hasStock_ )
                 controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Stock" ) ) );
 
@@ -183,7 +165,7 @@ void ResourceNetwork::Draw( const Point2f&, const kernel::Viewport_ABC& viewport
 // Name: ResourceNetwork::GetLinkName
 // Created: JSR 2010-08-25
 // -----------------------------------------------------------------------------
-QString ResourceNetwork::GetLinkName( resource::EResourceType type, unsigned int i ) const
+QString ResourceNetwork::GetLinkName( E_ResourceType type, unsigned int i ) const
 {
     const ResourceNode* node = FindResourceNode( type );
     if( node == 0 || i >= node->links_.size() )
@@ -204,19 +186,19 @@ QString ResourceNetwork::GetLinkName( resource::EResourceType type, unsigned int
 // Name: ResourceNetwork::SetColor
 // Created: JSR 2010-08-20
 // -----------------------------------------------------------------------------
-void ResourceNetwork::SetColor( resource::EResourceType type ) const
+void ResourceNetwork::SetColor( E_ResourceType type ) const
 {
     // TODO régler les couleurs
     switch( type )
     {
     default:
-    case eResourceTypeWater:
+    case eResourceType_Water:
         glColor4f( 0.2f, 0.2f, 0.6f,  1.0f );
         break;
-    case eResourceTypeGaz:
+    case eResourceType_Gaz:
         glColor4f( 0.4f, 0.4f, 0.4f,  1.0f );
         break;
-    case eResourceTypeElectricity:
+    case eResourceType_Electricity:
         glColor4f( 0.4f, 0.4f, 0.7f,  1.0f );
         break;
     }
@@ -241,7 +223,7 @@ void ResourceNetwork::CreateDictionary( kernel::PropertiesDictionary& dico ) con
 {
     for( CIT_ResourceNodes node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
     {
-        const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + FindResourceName( node->second.type_ )+ "/";
+        const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + ENT_Tr::ConvertFromResourceType( node->second.type_, ENT_Tr::eToTr ).c_str() + "/";
         dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Enabled" ), node->second.isEnabled_ );
         dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Producer" ), node->second.isProducer_ );
         if( node->second.hasStock_ )

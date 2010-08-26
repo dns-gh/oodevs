@@ -790,7 +790,7 @@ std::vector< boost::shared_ptr< TER_Localisation > > DEC_GeometryFunctions::Spli
     MT_Droite backBound  ( vOrigin, vOrigin + vLineDirection );
     vOrigin += vTranslation;
     MT_Droite frontBound ( vOrigin, vOrigin + vLineDirection );
-    while( true )
+    for( ;; )
     {
         T_PointVector points;
         localisation.GetPointsClippedBetweenTwoLines( backBound, frontBound, points );

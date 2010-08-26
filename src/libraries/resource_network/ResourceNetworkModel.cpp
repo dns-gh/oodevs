@@ -32,21 +32,6 @@ ResourceNetworkModel::~ResourceNetworkModel()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetworkModel::FindResourceType
-// Created: JSR 2010-08-16
-// -----------------------------------------------------------------------------
-EResourceType ResourceNetworkModel::FindResourceType( const std::string& type )
-{
-    if( type == "water" )
-        return eResourceTypeWater;
-    if( type == "gaz" )
-        return eResourceTypeGaz;
-    if( type == "electricity" )
-        return eResourceTypeElectricity;
-    throw std::exception( std::string( "Unknown resource type : " + type ).c_str() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ResourceNetworkModel::Update
 // Created: JSR 2010-08-16
 // -----------------------------------------------------------------------------
@@ -73,7 +58,7 @@ void ResourceNetworkModel::RegisterNode( NodeProperties& nodeProperties, unsigne
 // Name: ResourceNetworkModel::Push
 // Created: JSR 2010-08-16
 // -----------------------------------------------------------------------------
-void ResourceNetworkModel::Push( unsigned int id, bool urban, int quantity, EResourceType type ) const
+void ResourceNetworkModel::Push( unsigned int id, bool urban, int quantity, E_ResourceType type ) const
 {
     NodeProperties* node = urban ? UrbanResolver::Find( id ) : ObjectResolver::Find( id );
     if( !node )

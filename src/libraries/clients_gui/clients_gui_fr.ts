@@ -534,6 +534,36 @@
     </message>
 </context>
 <context>
+    <name>ResourceLinksDialog</name>
+    <message>
+        <source>Resource Links</source>
+        <translation>Liens de Ressources</translation>
+    </message>
+</context>
+<context>
+    <name>ResourceLinksDialog_ABC</name>
+    <message>
+        <source>Target</source>
+        <translation>Cible</translation>
+    </message>
+    <message>
+        <source>Capacity</source>
+        <translation>Capacité</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Resource links</source>
+        <translation>Liens de ressources</translation>
+    </message>
+</context>
+<context>
     <name>R&#xe8;gle GL</name>
     <message>
         <source> %1m</source>

@@ -10,11 +10,12 @@
 #include "clients_gui_pch.h"
 #include "ResourceLinksDialog_ABC.h"
 #include "moc_ResourceLinksDialog_ABC.cpp"
+#include "TerrainObjectProxy.h"
+#include "tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
-#include "TerrainObjectProxy.h"
-#include "tools.h"
+#include "ENT/ENT_Tr.h"
 
 using namespace gui;
 using namespace kernel;
@@ -36,9 +37,9 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QWidget* parent, Controllers& 
     pMainLayout->setSpacing( 5 );
     pMainLayout->setMargin( 5 );
 
-    for( int i = 0; i < resource::eNbrResourceType; ++i )
+    for( int i = 0; i < eNbrResourceType; ++i )
     {
-        // TODO rajouter labels
+        label_[ i ] = new QLabel( ENT_Tr::ConvertFromResourceType( static_cast< E_ResourceType >( i ), ENT_Tr::eToTr ).c_str(), this );
         table_[ i ] = new QTable( this );
         table_[ i ]->setSelectionMode( QTable::NoSelection );
         table_[ i ]->setNumCols( 2 );
@@ -46,6 +47,7 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QWidget* parent, Controllers& 
         table_[ i ]->horizontalHeader()->setLabel( 1, tools::translate( "ResourceLinksDialog_ABC", "Capacity" ) );
         //table_[ i ]->setMinimumSize( 300, 200 );
         //table_[ i ]->setMinimumWidth( 200 );
+        pMainLayout->addWidget( label_[ i ] );
         pMainLayout->addWidget( table_[ i ] );
     }
 
@@ -134,14 +136,18 @@ QSize ResourceLinksDialog_ABC::sizeHint()
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::UpdateTables()
 {
-    for( int i = 0; i < resource::eNbrResourceType; ++i )
+    for( int i = 0; i < eNbrResourceType; ++i )
     {
-        resource::EResourceType type = static_cast< resource::EResourceType >( i );
+        E_ResourceType type = static_cast< E_ResourceType >( i );
         const ResourceNetwork_ABC::ResourceNode* node = selected_->FindResourceNode( type );
         if( !node )
+        {
+            label_[ i ]->hide();
             table_[ i ]->hide();
+        }
         else
         {
+            label_[ i ]->show();
             table_[ i ]->show();
             table_[ i ]->setNumRows( node->links_.size() );
             table_[ i ]->setColumnReadOnly( 0, true );

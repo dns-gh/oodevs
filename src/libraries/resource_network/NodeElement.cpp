@@ -10,6 +10,7 @@
 #include "NodeElement.h"
 #include "ResourceLink.h"
 #include "ResourceNetworkModel.h"
+#include "ENT/ENT_Tr.h"
 #include "protocol/protocol.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -21,7 +22,7 @@ using namespace resource;
 // -----------------------------------------------------------------------------
 NodeElement::NodeElement()
     : model_             ( 0 )
-    , resourceType_      ( static_cast< EResourceType>( -1 ) )
+    , resourceType_      ( static_cast< E_ResourceType>( -1 ) )
     , isActivated_       ( true )
     , isProducer_        ( false )
     , isStockActive_     ( false )
@@ -38,7 +39,7 @@ NodeElement::NodeElement()
 // Name: NodeElement constructor
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
-NodeElement::NodeElement( xml::xistream& xis, EResourceType resourceType )
+NodeElement::NodeElement( xml::xistream& xis, E_ResourceType resourceType )
     : model_             ( 0 )
     , resourceType_      ( resourceType )
     , isActivated_       ( true )
@@ -288,13 +289,13 @@ void NodeElement::Serialize( MsgsSimToClient::MsgUrbanAttributes_Infrastructures
     switch( resourceType_ )
     {
     default:
-    case eResourceTypeWater:
+    case eResourceType_Water:
         msg.set_type( MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork::water );
         break;
-    case eResourceTypeGaz:
+    case eResourceType_Gaz:
         msg.set_type( MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork::gaz );
         break;
-    case eResourceTypeElectricity:
+    case eResourceType_Electricity:
         msg.set_type( MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork::electricity );
         break;
     }
@@ -348,7 +349,7 @@ void NodeElement::ReadLink( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void NodeElement::ReadConsumption( xml::xistream& xis )
 {
-    EResourceType type = ResourceNetworkModel::FindResourceType( xis.attribute< std::string >( "type" ) );
+    E_ResourceType type = ENT_Tr::ConvertToResourceType( xis.attribute< std::string >( "type" ) );
     Consumption consumption;
     consumption.amount_ = xis.attribute< int >( "amount" );
     consumption.critical_ = xis.attribute< bool >( "critical" );

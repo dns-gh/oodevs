@@ -51,6 +51,7 @@ PopulationPanel.cpp \
 PreferencesDialog.cpp \
 PreferencesList.cpp \
 PropertiesPanel.cpp \
+ResourceLinksDialog_ABC.cpp\
 StatusBar.cpp \
 SupplyRoutePrototype_ABC.cpp \
 TerrainObjectProxy.cpp \

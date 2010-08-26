@@ -10,7 +10,9 @@
 #ifndef __NodeElement_h_
 #define __NodeElement_h_
 
-#include "Types.h"
+#include "ENT/ENT_Enums_Gen.h"
+#include <map>
+#include <vector>
 
 namespace Common
 {
@@ -44,11 +46,26 @@ public:
     //! @name Constructors/Destructor
     //@{
              NodeElement();
-             NodeElement( xml::xistream& xis, EResourceType resourceType );
+             NodeElement( xml::xistream& xis, E_ResourceType resourceType );
              NodeElement( const NodeElement& from );
     virtual ~NodeElement();
     //@}
 
+public:
+    //! @name Types
+    //@{
+    struct Consumption
+    {
+        int amount_;
+        bool critical_;
+    };
+
+    typedef std::map< E_ResourceType, Consumption >   T_Consumptions;
+    typedef T_Consumptions::iterator                IT_Consumptions;
+    typedef T_Consumptions::const_iterator         CIT_Consumptions;
+    //@}
+
+public:
     //! @name Operations
     //@{
     void SetModel( const ResourceNetworkModel& model );
@@ -67,17 +84,17 @@ public:
     //@}
 
 private:
+    //! @name Copy/Assignment
+    //@{
+    NodeElement& operator=( const NodeElement& ); //!< Assignment operator
+    //@}
+
+private:
     //! @name Types
     //@{
     typedef std::vector< ResourceLink* >      T_ResourceLinks;
     typedef T_ResourceLinks::iterator        IT_ResourceLinks;
     typedef T_ResourceLinks::const_iterator CIT_ResourceLinks;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    NodeElement& operator=( const NodeElement& ); //!< Assignment operator
     //@}
 
 private:
@@ -92,7 +109,7 @@ private:
     //! @name Member data
     //@{
     const ResourceNetworkModel* model_;
-    EResourceType resourceType_;
+    E_ResourceType resourceType_;
     T_ResourceLinks links_;
     T_Consumptions consumptions_;
     bool isActivated_;

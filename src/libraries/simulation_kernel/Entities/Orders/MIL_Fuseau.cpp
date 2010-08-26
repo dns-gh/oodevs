@@ -475,7 +475,7 @@ void GetNextPoint( MT_Vector2D& vCur, Iterator itEnd, Iterator& itNext, MT_Float
     if( rDirLength )
         vDir /= rDirLength;
 
-    while( true )
+    for( ;; )
     {
         if( rStep < rDirLength )
         {

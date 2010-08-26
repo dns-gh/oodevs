@@ -1420,6 +1420,25 @@
     </message>
 </context>
 <context>
+    <name>ResourceNetwork</name>
+    <message>
+        <source>Resources Networks</source>
+        <translation>Réseaux de ressource</translation>
+    </message>
+    <message>
+        <source>Stock</source>
+        <translation>Stock</translation>
+    </message>
+    <message>
+        <source>Enabled</source>
+        <translation>Activé</translation>
+    </message>
+    <message>
+        <source>Producer</source>
+        <translation>Producteur</translation>
+    </message>
+</context>
+<context>
     <name>Score</name>
     <message>
         <source>Name</source>
@@ -1538,7 +1557,7 @@
     </message>
     <message>
         <source>Maximum Progress:</source>
-        <translation type="unfinished"></translation>
+        <translation>Progrès maximum:</translation>
     </message>
 </context>
 <context>

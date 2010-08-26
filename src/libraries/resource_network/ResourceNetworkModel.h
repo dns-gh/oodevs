@@ -47,10 +47,9 @@ public:
 
     //! @name Operations
     //@{
-    static EResourceType FindResourceType( const std::string& type );
     void Update();
     void RegisterNode( NodeProperties& nodeProperties, unsigned int id, bool urban );
-    void Push( unsigned int id, bool urban, int quantity, EResourceType type ) const;
+    void Push( unsigned int id, bool urban, int quantity, E_ResourceType type ) const;
     //@}
 };
 

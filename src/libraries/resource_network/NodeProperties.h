@@ -33,7 +33,7 @@ namespace resource
 */
 // Created: JSR 2010-08-13
 // =============================================================================
-class NodeProperties : private tools::Resolver< NodeElement, EResourceType >
+class NodeProperties : private tools::Resolver< NodeElement, E_ResourceType >
 {
 public:
     //! @name Constructors/Destructor
@@ -49,7 +49,7 @@ public:
     void SetModel( const ResourceNetworkModel& model );
     void Update( xml::xistream& xis );
     void Update();
-    void Push( int quantity, EResourceType resourceType );
+    void Push( int quantity, E_ResourceType resourceType );
     //@}
 
     //! @name Network

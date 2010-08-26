@@ -2340,5 +2340,17 @@
         <source>short stopping</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Water</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gaz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Electricity</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

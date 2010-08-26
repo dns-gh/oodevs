@@ -9,6 +9,7 @@
 
 #include "NodeProperties.h"
 #include "ResourceNetworkModel.h"
+#include "ENT/ENT_Tr.h"
 #include "protocol/protocol.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -77,7 +78,7 @@ void NodeProperties::Update( xml::xistream& xis )
     xis >> xml::start( "network" )
             >> xml::attribute( "name", name )
             >> xml::attribute( "type", type );
-    NodeElement& element = Get( ResourceNetworkModel::FindResourceType( type ) ); // should exist
+    NodeElement& element = Get( ENT_Tr::ConvertToResourceType( type ) ); // should exist
     element.Update( xis );
     xis  >> xml::end();
 }
@@ -91,11 +92,11 @@ void NodeProperties::Update()
     // update intermediate stocks
     Apply( boost::bind( &NodeElement::UpdateImmediateStock, _1 ) );
     // get total consumption by resource type
-    T_Consumptions consumptions;
+    NodeElement::T_Consumptions consumptions;
     Apply( boost::bind( &NodeElement::AddConsumptions, _1, boost::ref( consumptions ) ) ); // TODO optimise and put in method above?
     // apply consumptions
     bool criticalNotSatisfied = false;
-    for( CIT_Consumptions it = consumptions.begin(); it != consumptions.end(); ++it )
+    for( NodeElement::CIT_Consumptions it = consumptions.begin(); it != consumptions.end(); ++it )
     {
         NodeElement* element = Find( it->first );
         if( element )
@@ -118,7 +119,7 @@ void NodeProperties::Update()
 // Name: NodeProperties::Push
 // Created: JSR 2010-08-16
 // -----------------------------------------------------------------------------
-void NodeProperties::Push( int quantity, EResourceType resourceType )
+void NodeProperties::Push( int quantity, E_ResourceType resourceType )
 {
     NodeElement* element = Find( resourceType );
     if( element )
@@ -144,7 +145,7 @@ void NodeProperties::Update( const Common::MsgMissionParameter_Value& msg )
     for( int i = 0; i< msg.list_size(); ++i )
     {
         Common::MsgMissionParameter_Value node = msg.list( i );
-        EResourceType resourceType = static_cast< EResourceType >( node.list( 0 ).identifier() );
+        E_ResourceType resourceType = static_cast< E_ResourceType >( node.list( 0 ).identifier() );
         NodeElement* element = Find( resourceType );
         if( element )
             element->Update( node.list( 1 ) );
@@ -157,6 +158,6 @@ void NodeProperties::Update( const Common::MsgMissionParameter_Value& msg )
 // -----------------------------------------------------------------------------
 void NodeProperties::ReadNode( xml::xistream& xis )
 {
-    EResourceType type = ResourceNetworkModel::FindResourceType( xis.attribute< std::string >( "resource" ) );
+    E_ResourceType type = ENT_Tr::ConvertToResourceType( xis.attribute< std::string >( "resource" ) );
     Register( type, *new NodeElement( xis, type ) );
 }

@@ -13,6 +13,7 @@
 
 #include "ADN_EditLine.h"
 
+#pragma warning( disable : 4355 )
 
 //-----------------------------------------------------------------------------
 // Name: ADN_IntValidator constructor

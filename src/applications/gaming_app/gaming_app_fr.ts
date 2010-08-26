@@ -1296,7 +1296,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Create Knowledge Group</source>
-        <translation>Création d'un groupe de connaissance</translation>
+        <translation>Création d&apos;un groupe de connaissance</translation>
     </message>
 </context>
 <context>

@@ -60,9 +60,9 @@ void ResourceLinksDialog::DoValidate()
     action->AddParameter( *new Bool( it.NextElement(), urban_ ) );
     ParameterList* nodes = new ParameterList( it.NextElement() );
     action->AddParameter( *nodes );
-    for( int i = 0; i < resource::eNbrResourceType; ++i )
+    for( int i = 0; i < eNbrResourceType; ++i )
     {
-        resource::EResourceType type = static_cast< resource::EResourceType >( i );
+        E_ResourceType type = static_cast< E_ResourceType >( i );
         const ResourceNetwork_ABC::ResourceNode* node = selected_->FindResourceNode( type );
         if( node )
         {

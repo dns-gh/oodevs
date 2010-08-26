@@ -44,6 +44,7 @@ PopulationFlowKnowledge.cpp \
 PopulationKnowledge.cpp \
 Profile.cpp \
 Reinforcements.cpp \
+ResourceNetwork.cpp\
 Score.cpp \
 StockAttribute.cpp \
 SupplyRouteAttribute.cpp \

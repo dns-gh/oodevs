@@ -10,6 +10,9 @@
 #ifndef __ENT_Tr_ABC_h_
 #define __ENT_Tr_ABC_h_
 
+#pragma warning( push )
+#pragma warning( disable : 4996 )
+
 #include <qapplication.h>
 #include <assert.h>
 #include <string>
@@ -102,5 +105,7 @@ public:
             conv[i].trname_ = qApp->translate( szContext, conv[i].appname_.c_str() ).ascii();
     }
 };
+
+#pragma warning( pop )
 
 #endif // __ENT_Tr_ABC_h_
