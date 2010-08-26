@@ -9,15 +9,16 @@
 
 #include "gaming_app_pch.h"
 #include "Dialogs.h"
+#include "BriefingDialog.h"
 #include "ChangeDiplomacyDialog.h"
+#include "ChangeHumanFactorsDialog.h"
 #include "ChangeLogisticLinksDialog.h"
 #include "LogisticSupplyChangeQuotasDialog.h"
 #include "LogisticSupplyPushFlowDialog.h"
 #include "LogisticSupplyRecompletionDialog.h"
-#include "ChangeHumanFactorsDialog.h"
-#include "BriefingDialog.h"
-#include "gaming/Model.h"
+#include "ResourceLinksDialog.h"
 #include "gaming/AgentsModel.h"
+#include "gaming/Model.h"
 
 using namespace kernel;
 
@@ -35,6 +36,7 @@ Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const Model& model,
     new LogisticSupplyRecompletionDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new ChangeHumanFactorsDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new BriefingDialog( parent, controllers, publisher, handler, config );
+    new ResourceLinksDialog( parent, controllers, actionsModel, staticModel, simulation, profile );
 }
 
 // -----------------------------------------------------------------------------

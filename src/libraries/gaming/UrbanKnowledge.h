@@ -91,8 +91,8 @@ private:
     urban::TerrainObject_ABC* pRealUrban_;
 
     kernel::OptionalValue< bool > bIsPerceived_;
-    kernel::OptionalValue< float > rProgress_;
-    kernel::OptionalValue< float > rMaxProgress_;
+    kernel::OptionalValue< int > rProgress_;
+    kernel::OptionalValue< int > rMaxProgress_;
     //@}
 };
 

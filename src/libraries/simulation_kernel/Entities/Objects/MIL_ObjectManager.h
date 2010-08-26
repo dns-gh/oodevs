@@ -23,6 +23,7 @@ namespace Common
 
 namespace MsgsClientToSim
 {
+    class MsgMagicAction;
     class MsgObjectMagicAction;
 }
 
@@ -92,6 +93,7 @@ public:
     void SendCreation();
     void SendFullState();
     void OnReceiveMsgObjectMagicAction( const MsgsClientToSim::MsgObjectMagicAction& asnMsg, unsigned int nCtx, const tools::Resolver< MIL_Army_ABC >& armies );
+    void OnReceiveMsgChangeResourceLinks( const MsgsClientToSim::MsgMagicAction& message, unsigned int nCtx );
     //@}
 
     //! @name

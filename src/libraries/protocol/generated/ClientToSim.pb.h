@@ -162,11 +162,12 @@ enum MsgMagicAction_Type {
   MsgMagicAction_Type_global_meteo = 0,
   MsgMagicAction_Type_local_meteo = 1,
   MsgMagicAction_Type_change_diplomacy = 2,
-  MsgMagicAction_Type_create_knowledge_group = 3
+  MsgMagicAction_Type_create_knowledge_group = 3,
+  MsgMagicAction_Type_change_resource_links = 4
 };
 bool MsgMagicAction_Type_IsValid(int value);
 const MsgMagicAction_Type MsgMagicAction_Type_Type_MIN = MsgMagicAction_Type_global_meteo;
-const MsgMagicAction_Type MsgMagicAction_Type_Type_MAX = MsgMagicAction_Type_create_knowledge_group;
+const MsgMagicAction_Type MsgMagicAction_Type_Type_MAX = MsgMagicAction_Type_change_resource_links;
 
 const ::google::protobuf::EnumDescriptor* MsgMagicAction_Type_descriptor();
 inline const ::std::string& MsgMagicAction_Type_Name(MsgMagicAction_Type value) {
@@ -1153,6 +1154,7 @@ class MsgMagicAction : public ::google::protobuf::Message {
   static const Type local_meteo = MsgMagicAction_Type_local_meteo;
   static const Type change_diplomacy = MsgMagicAction_Type_change_diplomacy;
   static const Type create_knowledge_group = MsgMagicAction_Type_create_knowledge_group;
+  static const Type change_resource_links = MsgMagicAction_Type_change_resource_links;
   static inline bool Type_IsValid(int value) {
     return MsgMagicAction_Type_IsValid(value);
   }

@@ -61,6 +61,7 @@ namespace MsgsSimToClient
     class MsgObjectUpdate;
     class MsgObjectDestruction;
     class MsgObjectMagicActionAck;
+    class MsgMagicActionAck;
     class MsgUnitKnowledgeCreation;
     class MsgUnitKnowledgeUpdate;
     class MsgUnitKnowledgeDestruction;
@@ -253,6 +254,7 @@ private:
     //! @name Message callbacks
     //@{
     void OnReceiveMsgSimToClient           ( const std::string& from, const MsgsSimToClient::MsgSimToClient&                        wrapper );
+    void OnReceiveMsgSimToClient2          ( const std::string& from, const MsgsSimToClient::MsgSimToClient&                        wrapper );
     void OnReceiveMsgAuthenticationToClient( const std::string& from, const MsgsAuthenticationToClient::MsgAuthenticationToClient&  wrapper );
     void OnReceiveMsgReplayToClient        ( const std::string& from, const MsgsReplayToClient::MsgReplayToClient&                  wrapper );
     void OnReceiveMsgAarToClient           ( const std::string& from, const MsgsAarToClient::MsgAarToClient&                        wrapper );
@@ -354,6 +356,9 @@ private:
     void OnReceiveMsgLimaCreation               ( const MsgsMessengerToClient::MsgLimaCreation&               message );
     void OnReceiveMsgLimaUpdate                 ( const MsgsMessengerToClient::MsgLimaUpdate&                 message );
     void OnReceiveMsgLimaDestruction            ( const MsgsMessengerToClient::MsgLimaDestruction&            message );
+
+    // Magic
+    void OnReceiveMsgMagicActionAck( const MsgsSimToClient::MsgMagicActionAck& message, unsigned long nCtx );
 
     // Object
     void OnReceiveMsgObjectCreation      ( const MsgsSimToClient::MsgObjectCreation&       message );

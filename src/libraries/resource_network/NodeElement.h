@@ -12,6 +12,11 @@
 
 #include "Types.h"
 
+namespace Common
+{
+    class MsgMissionParameter_Value;
+}
+
 namespace MsgsSimToClient
 {
     class MsgUrbanAttributes_Infrastructures_ResourceNetwork;
@@ -58,6 +63,7 @@ public:
     //! @name Network
     //@{
     void Serialize( MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork& msg ) const;
+    void Update( const Common::MsgMissionParameter_Value& msg );
     //@}
 
 private:

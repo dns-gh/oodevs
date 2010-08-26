@@ -1020,6 +1020,16 @@ void MIL_EntityManager::OnReceiveMsgChangeDiplomacy( const MsgMagicAction& messa
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnReceiveMsgChangeResourceLinks
+// Created: JSR 2010-08-25
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::OnReceiveMsgChangeResourceLinks( const MsgsClientToSim::MsgMagicAction& message, unsigned int nCtx )
+{
+    assert( pObjectManager_ );
+    pObjectManager_->OnReceiveMsgChangeResourceLinks( message, nCtx );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::ProcessMsgAutomateChangeKnowledgeGroup
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------

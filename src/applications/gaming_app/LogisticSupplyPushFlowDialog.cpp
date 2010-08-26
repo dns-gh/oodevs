@@ -157,9 +157,12 @@ void LogisticSupplyPushFlowDialog::Validate()
         return;
 
     targetCombo_->setFocus();
+
+    accept();
+
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "log_supply_push_flow" );
-    UnitMagicAction* action = new UnitMagicAction( *target, actionType, controllers_.controller_, tr( "Log Supply Push Flow" ).ascii(), true );
+    UnitMagicAction* action = new UnitMagicAction( *target, actionType, controllers_.controller_, tr( "Log Supply Push Flow" ), true );
 
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Automat( it.NextElement(), *selected_, controllers_.controller_ ) );
@@ -191,8 +194,6 @@ void LogisticSupplyPushFlowDialog::Validate()
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->Attach( *new ActionTasker( target, false ) );
     action->RegisterAndPublish( actionsModel_ );
-
-    hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -201,8 +202,8 @@ void LogisticSupplyPushFlowDialog::Validate()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::Reject()
 {
+    reject();
     selected_ = 0;
-    hide();
 }
 
 // -----------------------------------------------------------------------------

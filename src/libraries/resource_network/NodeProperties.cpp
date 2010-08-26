@@ -136,6 +136,22 @@ void NodeProperties::Serialize( MsgsSimToClient::MsgUrbanAttributes_Infrastructu
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeProperties::Update
+// Created: JSR 2010-08-26
+// -----------------------------------------------------------------------------
+void NodeProperties::Update( const Common::MsgMissionParameter_Value& msg )
+{
+    for( int i = 0; i< msg.list_size(); ++i )
+    {
+        Common::MsgMissionParameter_Value node = msg.list( i );
+        EResourceType resourceType = static_cast< EResourceType >( node.list( 0 ).identifier() );
+        NodeElement* element = Find( resourceType );
+        if( element )
+            element->Update( node.list( 1 ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeProperties::ReadNode
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------

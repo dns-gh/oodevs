@@ -9,22 +9,22 @@
 
 #include "clients_gui_pch.h"
 #include "UrbanLayer.h"
-#include <geometry/Types.h>
+#include "clients_gui/TerrainObjectProxy.h"
+#include "clients_gui/UrbanDrawer.h"
 #include "clients_gui/View_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
+#include "clients_kernel/Circle.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Lines.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/Point.h"
-#include "clients_kernel/Lines.h"
 #include "clients_kernel/Polygon.h"
-#include "clients_kernel/Circle.h"
-#include "clients_gui/UrbanDrawer.h"
-#include "clients_gui/TerrainObjectProxy.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include <boost/bind.hpp>
-#include <urban/TerrainObject_ABC.h>
+#include <geometry/Types.h>
 #include <urban/Drawer_ABC.h>
+#include <urban/TerrainObject_ABC.h>
 
 using namespace gui;
 // -----------------------------------------------------------------------------
@@ -131,37 +131,24 @@ bool UrbanLayer::HandleMousePress( QMouseEvent* input, const geometry::Point2f& 
     const int button = input->button();
     if( !input->state() || ( button != Qt::LeftButton && button != Qt::RightButton ) )
         return false;
-    if( button == Qt::RightButton )
+    if( selectedObject_ )
+        selectedObject_->SetSelected( false );
+    for( CIT_TerrainObjects it = objects_.begin(); it != objects_.end(); ++it )
     {
-        for( IT_TerrainObjects it = objects_.begin(); it != objects_.end(); ++it )
+        const TerrainObjectProxy* object = (*it);
+        if( object->IsInside( point ) )
         {
-            const TerrainObjectProxy* object = (*it);
-            if( object->IsInside( point ) )
-            {
+            if( selectedObject_ == object && button == Qt::LeftButton )
+                break;
+            selectedObject_ = object;
+            selectedObject_->SetSelected( true );
+            controllers_.actions_.Select( *static_cast< const kernel::Entity_ABC* >( object ) );
+            if( button == Qt::RightButton )
                 controllers_.actions_.ContextMenu( *object, input->globalPos() );
-                return true;
-            }
+            return true;
         }
     }
-    else if( button == Qt::LeftButton )
-    {
-        if( selectedObject_ )
-            selectedObject_->SetSelected( false );
-        for( IT_TerrainObjects it = objects_.begin(); it != objects_.end(); ++it )
-        {
-            const TerrainObjectProxy* object = (*it);
-            if( object->IsInside( point )  )
-            {
-               if( selectedObject_ == object )
-                    break;
-                selectedObject_ = object;
-                selectedObject_->SetSelected( true );
-                controllers_.actions_.Select( *static_cast< const kernel::Entity_ABC* >( object ) );
-                return true;
-            }
-        }
-        selectedObject_ = 0;
-    }
+    selectedObject_ = 0;
     return false;
 }
 
@@ -225,15 +212,4 @@ bool UrbanLayer::HandleMouseMove( QMouseEvent*, const geometry::Point2f& point )
         }*/
     }
     return selectionArea_ != 0;
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: EditorLayer::NotifyDone
-// Created: SLG 2009-03-23
-// -----------------------------------------------------------------------------
-void UrbanLayer::NotifyDone()
-{
-    selectionArea_ = 0;
-    selectionMode_ = false;
 }

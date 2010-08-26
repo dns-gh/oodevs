@@ -31,9 +31,6 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
-#include "protocol/ClientSenders.h"
-#include "protocol/Protocol.h"
-#include "protocol/SimulationSenders.h"
 
 using namespace kernel;
 using namespace gui;
@@ -538,9 +535,11 @@ void LogisticSupplyRecompletionDialog::Validate()
     if( ! selected_ )
         return;
 
+    accept();
+
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "partial_recovery" );
-    UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, tr( "Partial Recovery").ascii(),  true );
+    UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, tr( "Partial Recovery"), true );
 
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     parameters::ParameterList* equipments = new parameters::ParameterList( it.NextElement() );
@@ -566,7 +565,6 @@ void LogisticSupplyRecompletionDialog::Validate()
     action->RegisterAndPublish( actionsModel_ );
 
     selected_ = 0;
-    hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -575,8 +573,8 @@ void LogisticSupplyRecompletionDialog::Validate()
 // -----------------------------------------------------------------------------
 void LogisticSupplyRecompletionDialog::Reject()
 {
+    reject();
     selected_ = 0;
-    hide();
 }
 
 // -----------------------------------------------------------------------------

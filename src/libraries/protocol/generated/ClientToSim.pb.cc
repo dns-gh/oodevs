@@ -423,47 +423,47 @@ void protobuf_AddDesc_ClientToSim_2eproto() {
     "\n\rcrossing_site\020\007\022\020\n\014supply_route\020\010\022\017\n\013t"
     "oxic_cloud\020\t\022\010\n\004fire\020\n\022\025\n\021medical_treatm"
     "ent\020\013\022\026\n\022interaction_height\020\014\022\t\n\005stock\020\r"
-    "\022\r\n\tnbc_agent\020\016\022\020\n\014effect_delay\020\017\"\323\001\n\016Ms"
+    "\022\r\n\tnbc_agent\020\016\022\020\n\014effect_delay\020\017\"\356\001\n\016Ms"
     "gMagicAction\0222\n\004type\030\001 \002(\0162$.MsgsClientT"
     "oSim.MsgMagicAction.Type\0220\n\nparametres\030\002"
-    " \002(\0132\034.Common.MsgMissionParameters\"[\n\004Ty"
+    " \002(\0132\034.Common.MsgMissionParameters\"v\n\004Ty"
     "pe\022\020\n\014global_meteo\020\000\022\017\n\013local_meteo\020\001\022\024\n"
     "\020change_diplomacy\020\002\022\032\n\026create_knowledge_"
-    "group\020\003\"5\n MsgControlCheckPointSetFreque"
-    "ncy\022\021\n\tfrequency\030\001 \002(\005\"3\n\033MsgControlTogg"
-    "leVisionCones\022\024\n\014vision_cones\030\001 \002(\010\"\340\t\n\016"
-    "MsgClientToSim\022\022\n\007context\030\001 \001(\005:\0010\0228\n\007me"
-    "ssage\030\002 \002(\0132\'.MsgsClientToSim.MsgClientT"
-    "oSim.Content\032\377\010\n\007Content\022,\n\014control_stop"
-    "\030\001 \001(\0132\026.Common.MsgControlStop\022.\n\rcontro"
-    "l_pause\030\002 \001(\0132\027.Common.MsgControlPause\0220"
-    "\n\016control_resume\030\003 \001(\0132\030.Common.MsgContr"
-    "olResume\022F\n\032control_change_time_factor\030\004"
-    " \001(\0132\".Common.MsgControlChangeTimeFactor"
-    "\022K\n\030control_date_time_change\030\005 \001(\0132).Msg"
-    "sClientToSim.MsgControlDatetimeChange\022Q\n"
-    "\033control_checkpoint_save_now\030\006 \001(\0132,.Msg"
-    "sClientToSim.MsgControlCheckPointSaveNow"
-    "\022[\n control_checkpoint_set_frequency\030\007 \001"
-    "(\01321.MsgsClientToSim.MsgControlCheckPoin"
-    "tSetFrequency\022Q\n\033control_toggle_vision_c"
-    "ones\030\010 \001(\0132,.MsgsClientToSim.MsgControlT"
-    "oggleVisionCones\022(\n\nunit_order\030\t \001(\0132\024.C"
-    "ommon.MsgUnitOrder\022.\n\rautomat_order\030\n \001("
-    "\0132\027.Common.MsgAutomatOrder\0224\n\020population"
-    "_order\030\013 \001(\0132\032.Common.MsgPopulationOrder"
-    "\0221\n\nfrag_order\030\014 \001(\0132\035.MsgsClientToSim.M"
-    "sgFragOrder\022<\n\020set_automat_mode\030\r \001(\0132\"."
-    "MsgsClientToSim.MsgSetAutomatMode\022F\n\025uni"
-    "t_creation_request\030\016 \001(\0132\'.MsgsClientToS"
-    "im.MsgUnitCreationRequest\022>\n\021unit_magic_"
-    "action\030\017 \001(\0132#.MsgsClientToSim.MsgUnitMa"
-    "gicAction\022B\n\023object_magic_action\030\020 \001(\0132%"
-    ".MsgsClientToSim.MsgObjectMagicAction\022H\n"
-    "\026knowledge_magic_action\030\021 \001(\0132(.MsgsClie"
-    "ntToSim.MsgKnowledgeMagicAction\0225\n\014magic"
-    "_action\030\022 \001(\0132\037.MsgsClientToSim.MsgMagic"
-    "Action", 3486);
+    "group\020\003\022\031\n\025change_resource_links\020\004\"5\n Ms"
+    "gControlCheckPointSetFrequency\022\021\n\tfreque"
+    "ncy\030\001 \002(\005\"3\n\033MsgControlToggleVisionCones"
+    "\022\024\n\014vision_cones\030\001 \002(\010\"\340\t\n\016MsgClientToSi"
+    "m\022\022\n\007context\030\001 \001(\005:\0010\0228\n\007message\030\002 \002(\0132\'"
+    ".MsgsClientToSim.MsgClientToSim.Content\032"
+    "\377\010\n\007Content\022,\n\014control_stop\030\001 \001(\0132\026.Comm"
+    "on.MsgControlStop\022.\n\rcontrol_pause\030\002 \001(\013"
+    "2\027.Common.MsgControlPause\0220\n\016control_res"
+    "ume\030\003 \001(\0132\030.Common.MsgControlResume\022F\n\032c"
+    "ontrol_change_time_factor\030\004 \001(\0132\".Common"
+    ".MsgControlChangeTimeFactor\022K\n\030control_d"
+    "ate_time_change\030\005 \001(\0132).MsgsClientToSim."
+    "MsgControlDatetimeChange\022Q\n\033control_chec"
+    "kpoint_save_now\030\006 \001(\0132,.MsgsClientToSim."
+    "MsgControlCheckPointSaveNow\022[\n control_c"
+    "heckpoint_set_frequency\030\007 \001(\01321.MsgsClie"
+    "ntToSim.MsgControlCheckPointSetFrequency"
+    "\022Q\n\033control_toggle_vision_cones\030\010 \001(\0132,."
+    "MsgsClientToSim.MsgControlToggleVisionCo"
+    "nes\022(\n\nunit_order\030\t \001(\0132\024.Common.MsgUnit"
+    "Order\022.\n\rautomat_order\030\n \001(\0132\027.Common.Ms"
+    "gAutomatOrder\0224\n\020population_order\030\013 \001(\0132"
+    "\032.Common.MsgPopulationOrder\0221\n\nfrag_orde"
+    "r\030\014 \001(\0132\035.MsgsClientToSim.MsgFragOrder\022<"
+    "\n\020set_automat_mode\030\r \001(\0132\".MsgsClientToS"
+    "im.MsgSetAutomatMode\022F\n\025unit_creation_re"
+    "quest\030\016 \001(\0132\'.MsgsClientToSim.MsgUnitCre"
+    "ationRequest\022>\n\021unit_magic_action\030\017 \001(\0132"
+    "#.MsgsClientToSim.MsgUnitMagicAction\022B\n\023"
+    "object_magic_action\030\020 \001(\0132%.MsgsClientTo"
+    "Sim.MsgObjectMagicAction\022H\n\026knowledge_ma"
+    "gic_action\030\021 \001(\0132(.MsgsClientToSim.MsgKn"
+    "owledgeMagicAction\0225\n\014magic_action\030\022 \001(\013"
+    "2\037.MsgsClientToSim.MsgMagicAction", 3513);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "ClientToSim.proto", &protobuf_RegisterTypes);
   MsgControlDatetimeChange::default_instance_ = new MsgControlDatetimeChange();
@@ -2811,6 +2811,7 @@ bool MsgMagicAction_Type_IsValid(int value) {
     case 1:
     case 2:
     case 3:
+    case 4:
       return true;
     default:
       return false;
@@ -2822,6 +2823,7 @@ const MsgMagicAction_Type MsgMagicAction::global_meteo;
 const MsgMagicAction_Type MsgMagicAction::local_meteo;
 const MsgMagicAction_Type MsgMagicAction::change_diplomacy;
 const MsgMagicAction_Type MsgMagicAction::create_knowledge_group;
+const MsgMagicAction_Type MsgMagicAction::change_resource_links;
 const MsgMagicAction_Type MsgMagicAction::Type_MIN;
 const MsgMagicAction_Type MsgMagicAction::Type_MAX;
 #endif  // _MSC_VER

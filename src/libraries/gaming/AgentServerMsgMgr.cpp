@@ -578,6 +578,15 @@ void AgentServerMsgMgr::OnReceiveMsgObjectMagicActionAck( const MsgsSimToClient:
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgMagicActionAck
+// Created: JSR 2010-08-26
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgMagicActionAck( const MsgsSimToClient::MsgMagicActionAck& message, unsigned long /*nCtx*/ )
+{
+    CheckAcknowledge( logger_, message, "MagicActionAck" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgControlMeteoGlobalAck
 // Created: NLD 2003-08-05
 // -----------------------------------------------------------------------------
@@ -1634,7 +1643,7 @@ namespace
 // Name: AgentServerMsgMgr::OnReceiveMsgSimToClient
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const MsgsSimToClient::MsgSimToClient& wrapper )
+void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& from, const MsgsSimToClient::MsgSimToClient& wrapper )
 {
     if( host_.empty() )
         return;
@@ -1657,13 +1666,15 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const Msgs
     else if( wrapper.message().has_automat_change_knowledge_group_ack() )
         OnReceiveMsgAutomatChangeKnowledgeGroupAck     (  wrapper.message().automat_change_knowledge_group_ack() , wrapper.context() );
     else if( wrapper.message().has_object_magic_action_ack() )
-      OnReceiveMsgObjectMagicActionAck               ( wrapper.message().object_magic_action_ack() , wrapper.context() );
+        OnReceiveMsgObjectMagicActionAck               ( wrapper.message().object_magic_action_ack() , wrapper.context() );
+    else if( wrapper.message().has_magic_action_ack() )
+        OnReceiveMsgMagicActionAck                     ( wrapper.message().magic_action_ack(), wrapper.context() );
     else if( wrapper.message().has_automat_change_logistic_links_ack() )
-       OnReceiveMsgAutomatChangeLogisticLinksAck      (  wrapper.message().automat_change_logistic_links_ack() , wrapper.context() );
+        OnReceiveMsgAutomatChangeLogisticLinksAck      (  wrapper.message().automat_change_logistic_links_ack() , wrapper.context() );
     else if( wrapper.message().has_automat_change_logistic_links() )
-       OnReceiveMsgAutomatChangeLogisticLinks         ( wrapper.message().automat_change_logistic_links() );
+        OnReceiveMsgAutomatChangeLogisticLinks         ( wrapper.message().automat_change_logistic_links() );
     else if( wrapper.message().has_automat_change_superior_ack() )
-       OnReceiveMsgAutomatChangeSuperiorAck           (  wrapper.message().automat_change_superior_ack() , wrapper.context() );
+        OnReceiveMsgAutomatChangeSuperiorAck           (  wrapper.message().automat_change_superior_ack() , wrapper.context() );
     else if( wrapper.message().has_log_supply_push_flow_ack() )
         OnReceiveMsgLogSupplyPushFlowAck               (  wrapper.message().log_supply_push_flow_ack() , wrapper.context() );
     else if( wrapper.message().has_log_supply_change_quotas_ack() )
@@ -1835,7 +1846,18 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const Msgs
     else if( wrapper.message().has_population_flow_update() )
         OnMsgPopulationFlowUpdate              ( wrapper.message().population_flow_update() );
 
-    else if( wrapper.message().has_population_knowledge_creation() )
+    else
+        OnReceiveMsgSimToClient2( from, wrapper );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgSimToClient2
+// Created: JSR 2010-08-26
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgSimToClient2( const std::string&, const MsgsSimToClient::MsgSimToClient&                        wrapper )
+{
+    // break in two parts to prevent "fatal error C1061: compiler limit : blocks nested too deeply"
+    if( wrapper.message().has_population_knowledge_creation() )
         OnReceiveMsgPopulationKnowledgeCreation                ( wrapper.message().population_knowledge_creation() );
     else if( wrapper.message().has_population_knowledge_update() )
         OnReceiveMsgPopulationKnowledgeUpdate                  ( wrapper.message().population_knowledge_update() );

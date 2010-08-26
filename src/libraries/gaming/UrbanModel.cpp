@@ -98,7 +98,7 @@ void UrbanModel::Update( const MsgsSimToClient::MsgUrbanUpdate& message )
             if( message.attributes().infrastructures().resource_network_size() > 0 )
             {
                 TerrainObjectProxy& entity = GetObject( message.oid() );
-                if( entity.Retrieve< ResourceNetwork >() )
+                if( entity.Retrieve< kernel::ResourceNetwork_ABC >() )
                     model_.resourceNetwork_.UrbanUpdate( message.oid(), message.attributes().infrastructures() );
                 else
                     model_.resourceNetwork_.UrbanCreate( GetObject( message.oid() ), message.attributes().infrastructures() );

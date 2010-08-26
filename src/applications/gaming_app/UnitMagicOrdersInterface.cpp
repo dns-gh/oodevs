@@ -156,7 +156,7 @@ void UnitMagicOrdersInterface::Handle( kernel::Location_ABC& location )
             {
                 // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
                 MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "teleport" );
-                UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Teleport" ).ascii(), true );
+                UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Teleport" ), true );
                 tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
                 action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
                 action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
@@ -187,7 +187,7 @@ namespace
         void operator()( const Agent_ABC& agent ) const
         {
             std::string strType;
-            std::string name;
+            QString name;
             switch( id_ )
             {
             case MsgsClientToSim::MsgUnitMagicAction_Type_recover_all:
@@ -316,7 +316,7 @@ void UnitMagicOrdersInterface::SurrenderTo( int teamPtr )
     {
         // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "surrender" );
-        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Surrender" ).ascii(), true );
+        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Surrender" ), true );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new parameters::Army( it.NextElement(), *( Team_ABC* ) teamPtr, controllers_.controller_ ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
@@ -375,7 +375,7 @@ void UnitMagicOrdersInterface::CreateAndPublish( const std::string& actionStr, c
 {
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( actionStr );
-    UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, name.ascii(), true );
+    UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, name, true );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->Attach( *new ActionTasker( selectedEntity_, false ) );
     action->RegisterAndPublish( actionsModel_ );

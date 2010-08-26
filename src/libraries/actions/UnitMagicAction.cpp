@@ -20,24 +20,24 @@ using namespace actions;
 // Name: UnitMagicAction::MagicAction
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------
-UnitMagicAction::UnitMagicAction( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, const std::string& name, bool registered /*= true*/)
+UnitMagicAction::UnitMagicAction( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, const QString& name, bool registered /*= true*/)
     : ActionWithTarget_ABC ( controller, magic, entity )
     , controller_( controller )
     , registered_( registered )
 {
-    Rename( name.c_str() );
+    Rename( name );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UnitMagicAction::MagicAction
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------
-UnitMagicAction::UnitMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const kernel::Entity_ABC& entity, const std::string& name )
+UnitMagicAction::UnitMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const kernel::Entity_ABC& entity, const QString& name )
     : ActionWithTarget_ABC( xis, controller, magic, entity )
     , controller_         ( controller )
     , registered_         ( true )
 {
-    Rename( name.c_str() );
+    Rename( name );
 }
 
 // -----------------------------------------------------------------------------

@@ -154,9 +154,12 @@ void LogisticSupplyChangeQuotasDialog::Validate()
         return;
 
     targetCombo_->setFocus();
+
+    accept();
+
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "log_supply_change_quotas" );
-    UnitMagicAction* action = new UnitMagicAction( *target, actionType, controllers_.controller_, tr( "Log Supply Change Quotas" ).ascii(), true );
+    UnitMagicAction* action = new UnitMagicAction( *target, actionType, controllers_.controller_, tr( "Log Supply Change Quotas" ), true );
 
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Automat( it.NextElement(), *selected_, controllers_.controller_ ) );
@@ -177,7 +180,6 @@ void LogisticSupplyChangeQuotasDialog::Validate()
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->Attach( *new ActionTasker( target, false ) );
     action->RegisterAndPublish( actionsModel_ );
-    hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -186,8 +188,8 @@ void LogisticSupplyChangeQuotasDialog::Validate()
 // -----------------------------------------------------------------------------
 void LogisticSupplyChangeQuotasDialog::Reject()
 {
+    reject();
     selected_ = 0;
-    hide();
 }
 
 // -----------------------------------------------------------------------------

@@ -107,13 +107,15 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
     else if( wrapper.message().has_object_magic_action() )
         workspace.GetEntityManager        ().OnReceiveMsgObjectMagicAction              ( wrapper.message().object_magic_action()                , nCtx );
     else if( wrapper.message().has_magic_action() )
-        if( wrapper.message().magic_action().type() == MsgsClientToSim::MsgMagicAction_Type_global_meteo
-         || wrapper.message().magic_action().type() == MsgsClientToSim::MsgMagicAction_Type_local_meteo )
+        if( wrapper.message().magic_action().type() == MsgsClientToSim::MsgMagicAction::global_meteo
+         || wrapper.message().magic_action().type() == MsgsClientToSim::MsgMagicAction::local_meteo )
             workspace.GetMeteoDataManager     ().OnReceiveMsgMeteo                      ( wrapper.message().magic_action()                              );
-        else if( wrapper.message().magic_action().type() == MsgsClientToSim::MsgMagicAction_Type_change_diplomacy )
+        else if( wrapper.message().magic_action().type() == MsgsClientToSim::MsgMagicAction::change_diplomacy )
             workspace.GetEntityManager        ().OnReceiveMsgChangeDiplomacy            ( wrapper.message().magic_action()                       , nCtx );
+        else if( wrapper.message().magic_action().type() == MsgsClientToSim::MsgMagicAction::change_resource_links)
+            workspace.GetEntityManager        ().OnReceiveMsgChangeResourceLinks        ( wrapper.message().magic_action()                       , nCtx );
     // LTO BEGIN
-        else if( wrapper.message().magic_action().type() == MsgsClientToSim::MsgMagicAction_Type_create_knowledge_group )
+        else if( wrapper.message().magic_action().type() == MsgsClientToSim::MsgMagicAction::create_knowledge_group )
             workspace.GetEntityManager        ().OnReceiveMsgKnowledgeGroupCreation     ( wrapper.message().magic_action()                       , nCtx );
     // LTO END
 }

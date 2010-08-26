@@ -232,4 +232,10 @@ void MagicActionType::Initialize()
         CreateOrderParameter( "Parent", "identifier" );
         CreateOrderParameter( "Type", "string" );
     }
+    else if( name_ == "change_resource_links" )
+    {
+        CreateOrderParameter( "Target", "identifier" );
+        CreateOrderParameter( "Urban", "bool" );
+        CreateOrderParameter( "Nodes", "list" );
+    }
 }

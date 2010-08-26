@@ -109,7 +109,7 @@ void FireCreationPanel::Commit()
     if( selectedTarget_ && interventionType_->text().toFloat() > 0 && selectedReporter_ )
     {
         kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "fire_order" );
-        UnitMagicAction* action = new UnitMagicAction( *selectedReporter_, actionType, controllers_.controller_, tr( "Fire order" ).ascii(), true );
+        UnitMagicAction* action = new UnitMagicAction( *selectedReporter_, actionType, controllers_.controller_, tr( "Fire order" ), true );
         tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new parameters::Identifier( it.NextElement(), selectedTarget_->GetId() ) );
         action->AddParameter( *new parameters::DotationType( it.NextElement(), ammunitionsBox_->GetValue(), staticModel_.objectTypes_ ) );

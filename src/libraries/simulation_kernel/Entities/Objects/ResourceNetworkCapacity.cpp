@@ -71,6 +71,15 @@ void ResourceNetworkCapacity::Update( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceNetworkCapacity::Update
+// Created: JSR 2010-08-26
+// -----------------------------------------------------------------------------
+void ResourceNetworkCapacity::Update( const Common::MsgMissionParameter_Value& msg )
+{
+    nodeProperties_->Update( msg );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceNetworkCapacity::serialize
 // Created: JSR 2010-08-12
 // -----------------------------------------------------------------------------

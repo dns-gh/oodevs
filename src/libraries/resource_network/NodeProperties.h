@@ -55,6 +55,7 @@ public:
     //! @name Network
     //@{
     void Serialize( MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg ) const;
+    void Update( const Common::MsgMissionParameter_Value& msg );
     //@}
 
 private:

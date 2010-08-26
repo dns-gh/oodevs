@@ -160,6 +160,7 @@ public:
     void OnReceiveMsgUnitCreationRequest         ( const MsgsClientToSim::MsgUnitCreationRequest&           message, unsigned int nCtx );
     void OnReceiveMsgKnowledgeMagicAction        ( const MsgsClientToSim::MsgKnowledgeMagicAction&          message, unsigned int nCtx );
     void OnReceiveMsgChangeDiplomacy             ( const MsgsClientToSim::MsgMagicAction&                   message, unsigned int nCtx );
+    void OnReceiveMsgChangeResourceLinks         ( const MsgsClientToSim::MsgMagicAction&                   message, unsigned int nCtx );
     // LTO begin
     void OnReceiveMsgKnowledgeGroupCreation      ( const MsgsClientToSim::MsgMagicAction&                   message, unsigned int nCtx );
     // LTO end

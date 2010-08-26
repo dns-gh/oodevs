@@ -20,6 +20,7 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "protocol/protocol.h"
+#include <time.h>
 
 using namespace geometry;
 using namespace gui;
@@ -147,13 +148,15 @@ void ResourceNetwork::Draw( const Point2f&, const kernel::Viewport_ABC& viewport
     glPushAttrib( GL_LINE_BIT );
     glLineWidth( 3.f );
 
-    for( std::map< resource::EResourceType, ResourceNode >::const_iterator node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
+    for( CIT_ResourceNodes node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
     {
         SetColor( node->second.type_ );
         if( node->second.links_.size() > 0 )
         {
+            glEnable( GL_LINE_STIPPLE );
             for( std::vector< ResourceLink >::const_iterator link = node->second.links_.begin(); link != node->second.links_.end(); ++link )
             {
+                UpdateStipple( link->capacity_ );
                 if( link->urban_ )
                 {
                     TerrainObjectProxy& proxy = urbanResolver_.Get( link->id_ );
@@ -164,14 +167,37 @@ void ResourceNetwork::Draw( const Point2f&, const kernel::Viewport_ABC& viewport
                 else
                     to = objectResolver_.Get( link->id_ ).Get< kernel::Positions >().GetPosition();
                 if( viewport.IsVisible( Rectangle2f( from, to ) ) )
-                    tools.DrawCurvedArrow( from, to, 0.5f );
+                    tools.DrawLine( from, to );
+                    //tools.DrawCurvedArrow( from, to, 0.5f );
             }
+            glDisable( GL_LINE_STIPPLE );
         }
         else
             if( filter == 0 || selected )
                 tools.DrawCircle( from, 50.0 );
     }
     glPopAttrib();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetwork::GetLinkName
+// Created: JSR 2010-08-25
+// -----------------------------------------------------------------------------
+QString ResourceNetwork::GetLinkName( resource::EResourceType type, unsigned int i ) const
+{
+    const ResourceNode* node = FindResourceNode( type );
+    if( node == 0 || i >= node->links_.size() )
+        return "";
+    const ResourceLink& link = node->links_[ i ];
+    kernel::Entity_ABC* entity = 0;
+    if( link.urban_ )
+        entity = &urbanResolver_.Get( link.id_ );
+    else
+        entity = &objectResolver_.Get( link.id_ );
+    QString ret = entity->GetName();
+    if( ret.isEmpty() )
+        ret = QString::number( link.id_ );
+    return ret;
 }
 
 // -----------------------------------------------------------------------------
@@ -197,12 +223,23 @@ void ResourceNetwork::SetColor( resource::EResourceType type ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceNetwork::UpdateStipple
+// Created: JSR 2010-08-25
+// -----------------------------------------------------------------------------
+void ResourceNetwork::UpdateStipple( int value ) const
+{
+    long time = clock();
+    unsigned short shift = ( unsigned short ) ( ( long ) ( time * value / 256 ) % 128 ) / 8;
+    glLineStipple( 1, 0x00FF << shift | 0x00FF >> ( 16-shift ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceNetwork::CreateDictionary
 // Created: JSR 2010-08-23
 // -----------------------------------------------------------------------------
 void ResourceNetwork::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 {
-    for( std::map< resource::EResourceType, ResourceNode >::const_iterator node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
+    for( CIT_ResourceNodes node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
     {
         const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + FindResourceName( node->second.type_ )+ "/";
         dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Enabled" ), node->second.isEnabled_ );

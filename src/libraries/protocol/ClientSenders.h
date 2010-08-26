@@ -121,6 +121,7 @@ GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient , SetAutomatModeAck       
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient , PopulationMagicActionAck                     , population_magic_action_ack                       )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient , Trace                                        , trace                                             )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient , DebugPoints                                  , debug_points                                      )
+GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient , MagicActionAck                               , magic_action_ack                                  )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient , ObjectMagicActionAck                         , object_magic_action_ack                           )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient , LogSupplyChangeQuotasAck                     , log_supply_change_quotas_ack                      )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient , LogSupplyPushFlowAck                         , log_supply_push_flow_ack                          )

@@ -14,6 +14,8 @@
 #include "UrbanKnowledgeFactory.h"
 #include "protocol/Simulation.h"
 
+#pragma warning( disable : 4355 )
+
 using namespace kernel;
 
 // -----------------------------------------------------------------------------

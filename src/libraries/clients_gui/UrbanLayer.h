@@ -10,12 +10,10 @@
 #ifndef __UrbanLayer_h_
 #define __UrbanLayer_h_
 
-
+#include "Layer_ABC.h"
 #include "tools/Observer_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
-#include "Layer_ABC.h"
-
 
 namespace urban
 {
@@ -57,7 +55,6 @@ public:
     //@{
     virtual void Paint( kernel::Viewport_ABC& viewport );
     virtual void Reset2d();
-    void NotifyDone(); // Pas top
     //@}
 
 protected:
@@ -74,7 +71,6 @@ protected:
     virtual void NotifyDeleted      ( const TerrainObjectProxy& );
     virtual void NotifyActivated    ( const TerrainObjectProxy& );
     virtual void NotifySelected     ( const TerrainObjectProxy* );
-
     //@}
 
 private:
@@ -95,7 +91,6 @@ private:
 private:
     //! @name Member data
     //@{
-
     kernel::Controllers&        controllers_;
     const kernel::GlTools_ABC&  tools_;
     urban::Drawer_ABC*          urbanDrawer_;

@@ -15,6 +15,7 @@
 #include "MIL_AgentServer.h"
 #include "MIL_ObjectFactory.h"
 #include "MIL_ObjectType_ABC.h"
+#include "ResourceNetworkCapacity.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
@@ -305,4 +306,17 @@ void MIL_Object_ABC::MarkForDestruction()
     bMarkedForDestruction_ = true;
     interaction_.ClearInteraction( *this );
     TER_Object_ABC::Terminate(); // Degueu : vire l'objet du monde
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object_ABC::OnUpdateResourceLinks
+// Created: JSR 2010-08-26
+// -----------------------------------------------------------------------------
+MsgsSimToClient::MsgMagicActionAck_ErrorCode MIL_Object_ABC::OnUpdateResourceLinks( const Common::MsgMissionParameter_Value& msg )
+{
+    ResourceNetworkCapacity* capacity = Retrieve< ResourceNetworkCapacity >();
+    if( !capacity )
+        return MsgsSimToClient::MsgMagicActionAck::error_invalid_attribute;
+    capacity->Update( msg );
+    return MsgsSimToClient::MsgMagicActionAck::no_error;
 }

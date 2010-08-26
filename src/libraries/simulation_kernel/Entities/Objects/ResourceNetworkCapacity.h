@@ -12,9 +12,9 @@
 
 #include "ObjectCapacity_ABC.h"
 
-namespace xml
+namespace Common
 {
-    class xistream;
+    class MsgMissionParameter_Value;
 }
 
 namespace MsgsSimToClient
@@ -25,6 +25,11 @@ namespace MsgsSimToClient
 namespace resource
 {
     class NodeProperties;
+}
+
+namespace xml
+{
+    class xistream;
 }
 
 // =============================================================================
@@ -46,6 +51,7 @@ public:
     //! @name Operations
     //@{
     void Update( xml::xistream& xis );
+    void Update( const Common::MsgMissionParameter_Value& msg );
     template< typename Archive > void serialize( Archive& file, const unsigned int );
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;

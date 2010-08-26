@@ -140,7 +140,7 @@ void KnowledgeGroupMagicOrdersInterface::OnCreateSubKnowledgeGroup()
         {
             // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
             MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "create_knowledge_group" );
-            MagicAction* action = new MagicAction( actionType, controllers_.controller_, true );
+            MagicAction* action = new MagicAction( actionType, controllers_.controller_, tr( "Create Knowledge Group").ascii(), true );
             tools::Iterator< const OrderParameter& > paramIt = actionType.CreateIterator();
             action->AddParameter( *new parameters::Identifier( paramIt.NextElement(), hierarchies->GetTop().GetId() ) );
             action->AddParameter( *new parameters::Identifier( paramIt.NextElement(), selectedEntity_->GetId() ) );

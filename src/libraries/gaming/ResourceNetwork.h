@@ -11,6 +11,7 @@
 #define __ResourceNetwork_h_
 
 #include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/ResourceNetwork_ABC.h"
 #include "resource_network/Types.h"
 #include "tools/Resolver_ABC.h"
 
@@ -21,9 +22,8 @@ namespace gui
 
 namespace kernel
 {
-    class Extension_ABC;
-    class Object_ABC;
     class PropertiesDictionary;
+    class Object_ABC;
 }
 
 namespace MsgsSimToClient
@@ -37,27 +37,9 @@ namespace MsgsSimToClient
 */
 // Created: JSR 2010-08-19
 // =============================================================================
-class ResourceNetwork : public kernel::Drawable_ABC
-                      , public kernel::Extension_ABC
+class ResourceNetwork : public kernel::ResourceNetwork_ABC
+                      , public kernel::Drawable_ABC
 {
-    // TODO structures temporaires, à cleaner/déplacer.
-    struct ResourceLink
-    {
-        bool urban_;
-        unsigned int id_;
-        int capacity_;
-    };
-
-    struct ResourceNode
-    {
-        bool isProducer_;
-        resource::EResourceType type_;
-        std::vector< ResourceLink > links_;    
-        bool isEnabled_;
-        bool hasStock_;
-        unsigned int stock_;
-    };
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -67,8 +49,9 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& message );
+    virtual void Update( const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& message );
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual QString GetLinkName( resource::EResourceType type, unsigned int i ) const;
     //@}
 
 private:
@@ -81,6 +64,7 @@ private:
     //! @name Helpers
     //@{
     void SetColor( resource::EResourceType type ) const;
+    void UpdateStipple( int value ) const;
     void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
     //@}
 
@@ -92,7 +76,6 @@ private:
     bool isUrban_;
     const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver_;
     const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver_;
-    std::map< resource::EResourceType, ResourceNode > resourceNodes_;
     //@}
 };
 

@@ -272,13 +272,16 @@ bool Profile::IsInHierarchy( const Entity_ABC& entity, const T_Entities& entitie
         return true;
 
     if( const Hierarchies* hierarchies = FindHierarchies( entity ) )
+    {
         for( CIT_Entities it = entities.begin(); it != entities.end(); ++it )
         {
             const Entity_ABC& possibleSuperior = **it;
             if( IsInHierarchy( entity, *hierarchies, possibleSuperior, childOnly ) )
                 return true;
         }
-    return false;
+        return false;
+    }
+    return true;
 }
 
 // -----------------------------------------------------------------------------

@@ -349,7 +349,7 @@ actions::Action_ABC* ActionFactory::CreateMagicAction( xml::xistream& xis, bool 
 {
     const std::string id = xis.attribute< std::string >( "id" );
     std::auto_ptr< actions::MagicAction > action;
-    action.reset( new actions::MagicAction( xis, controller_, magicActions_.Get( id ) ) );
+    action.reset( new actions::MagicAction( xis, controller_, magicActions_.Get( id ), "" ) );
     action->Attach( *new ActionTiming( xis, controller_, simulation_, *action ) );
     action->Attach( *new ActionTasker( 0, readonly ) );
     action->Polish();

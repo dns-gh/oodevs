@@ -20,24 +20,24 @@ using namespace actions;
 // Name: MagicAction constructor
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------
-MagicAction::MagicAction( const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered /*= true*/ )
+MagicAction::MagicAction( const kernel::MagicActionType& magic, kernel::Controller& controller, const QString& name, bool registered /*= true*/ )
     : Action_ABC ( controller, magic )
     , controller_( controller )
     , registered_( registered )
 {
-    // NOTHING
+    Rename( name );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MagicAction constructor
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------
-MagicAction::MagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic )
+MagicAction::MagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const QString& name )
     : Action_ABC( xis, controller, magic )
     , controller_         ( controller )
     , registered_         ( true )
 {
-    // NOTHING
+    Rename( name );
 }
 
 // -----------------------------------------------------------------------------

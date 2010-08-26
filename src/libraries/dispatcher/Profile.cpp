@@ -220,15 +220,16 @@ bool Profile::CheckRights( const MsgsClientToSim::MsgClientToSim& wrapper ) cons
         return true;
     if( message.has_unit_magic_action() )
     {
-        if( message.unit_magic_action().type()== MsgsClientToSim::MsgUnitMagicAction_Type_create_fire_order )
+        if( message.unit_magic_action().type()== MsgsClientToSim::MsgUnitMagicAction::create_fire_order )
             return bSupervision_;
         return true;
     }
     if( message.has_magic_action() )
     {
-        if( message.magic_action().type()== MsgsClientToSim::MsgMagicAction_Type_global_meteo
-            || message.magic_action().type()== MsgsClientToSim::MsgMagicAction_Type_local_meteo
-            || message.magic_action().type()== MsgsClientToSim::MsgMagicAction_Type_create_knowledge_group )
+        if( message.magic_action().type()== MsgsClientToSim::MsgMagicAction::global_meteo
+            || message.magic_action().type()== MsgsClientToSim::MsgMagicAction::local_meteo
+            || message.magic_action().type()== MsgsClientToSim::MsgMagicAction::create_knowledge_group
+            || message.magic_action().type()== MsgsClientToSim::MsgMagicAction::change_resource_links )
             return bSupervision_;
         return true;
     }

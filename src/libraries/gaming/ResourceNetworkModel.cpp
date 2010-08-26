@@ -40,8 +40,8 @@ ResourceNetworkModel::~ResourceNetworkModel()
 void ResourceNetworkModel::UrbanCreate( kernel::Entity_ABC& entity, const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg )
 {
     kernel::PropertiesDictionary& dico = entity.Get< kernel::PropertiesDictionary >();
-    ResourceNetwork* element = factory_.Create( entity.GetId(), msg, true, dico );
-    entity.Attach< ResourceNetwork >( *element );
+    kernel::ResourceNetwork_ABC* element = factory_.Create( entity.GetId(), msg, true, dico );
+    entity.Attach< kernel::ResourceNetwork_ABC >( *element );
     UrbanResourceResolver::Register( entity.GetId(), *element );
 }
 

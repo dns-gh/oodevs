@@ -1294,6 +1294,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Activate</source>
         <translation>Activer</translation>
     </message>
+    <message>
+        <source>Create Knowledge Group</source>
+        <translation>Création d'un groupe de connaissance</translation>
+    </message>
 </context>
 <context>
     <name>LendingsListView</name>

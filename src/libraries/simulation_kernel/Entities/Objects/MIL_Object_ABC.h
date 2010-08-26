@@ -23,6 +23,7 @@
 
 namespace MsgsSimToClient
 {
+    enum MsgMagicActionAck_ErrorCode;
     enum MsgObjectMagicActionAck_ErrorCode;
 }
 
@@ -161,7 +162,8 @@ public:
 
     //! @name Network
     //@{
-    virtual MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode OnUpdate( const Common::MsgMissionParameter_Value& asn ) = 0;
+    virtual MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode OnUpdate( const Common::MsgMissionParameter_Value& msg ) = 0;
+    virtual MsgsSimToClient::MsgMagicActionAck_ErrorCode OnUpdateResourceLinks( const Common::MsgMissionParameter_Value& msg );
     virtual void SendCreation() const = 0;
     virtual void SendDestruction() const = 0;
     virtual void SendFullState() const = 0;

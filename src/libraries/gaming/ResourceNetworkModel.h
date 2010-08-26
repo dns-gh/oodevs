@@ -12,24 +12,28 @@
 
 #include "tools/Resolver.h"
 
+namespace kernel
+{
+    class ResourceNetwork_ABC;
+}
+
 namespace MsgsSimToClient
 {
     class MsgUrbanAttributes_Infrastructures;
 }
 
-class ResourceNetwork;
 class ResourceNetworkFactory;
 
-class UrbanResourceResolver : public tools::Resolver< ResourceNetwork >
+class UrbanResourceResolver : public tools::Resolver< kernel::ResourceNetwork_ABC >
 {
 public:
-    UrbanResourceResolver() : tools::Resolver< ResourceNetwork >() {}
+    UrbanResourceResolver() : tools::Resolver< kernel::ResourceNetwork_ABC >() {}
 };
 
-class ObjectResourceResolver : public tools::Resolver< ResourceNetwork >
+class ObjectResourceResolver : public tools::Resolver< kernel::ResourceNetwork_ABC >
 {
 public:
-    ObjectResourceResolver() : tools::Resolver< ResourceNetwork >() {}
+    ObjectResourceResolver() : tools::Resolver< kernel::ResourceNetwork_ABC >() {}
 };
 
 // =============================================================================

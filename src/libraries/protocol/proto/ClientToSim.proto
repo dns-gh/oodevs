@@ -111,6 +111,7 @@ message MsgMagicAction {
         local_meteo            = 1;
         change_diplomacy       = 2;
         create_knowledge_group = 3;
+        change_resource_links  = 4;
     }
    required Type                        type       = 1;
    required Common.MsgMissionParameters parametres = 2;

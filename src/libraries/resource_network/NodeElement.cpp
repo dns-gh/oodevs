@@ -306,6 +306,21 @@ void NodeElement::Serialize( MsgsSimToClient::MsgUrbanAttributes_Infrastructures
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeElement::Update
+// Created: JSR 2010-08-26
+// -----------------------------------------------------------------------------
+void NodeElement::Update( const Common::MsgMissionParameter_Value& msg )
+{
+    for( int i = 0; i < msg.list_size(); ++ i )
+    {
+        const Common::MsgMissionParameter_Value& link = msg.list( i );
+        unsigned int index = link.list( 0 ).identifier();
+        if( index < links_.size() )
+            links_[ index ]->SetCapacity( link.list( 1 ).quantity() );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeElement::ReadLink
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
