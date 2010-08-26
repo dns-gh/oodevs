@@ -764,26 +764,35 @@
       <parameter dia-name="refugies_" name="Refugies" optional="false" type="AgentKnowledgeList"/>
       <parameter dia-name="campRefugies_" name="Camp refugies" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToAgentKnowledgeList" id="2010" name="TEST MoveToAgentKnowledgeList">
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" id="2010" name="TEST MoveToAgentKnowledgeList">
       <parameter dia-name="objectives" name="objectives" optional="false" type="AgentKnowledgeListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToAgentList" id="2009" name="TEST MoveToAgentList">
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroadAgentList" id="2009" name="TEST MoveToAgentList">
       <parameter dia-name="objectives" name="objectives" optional="false" type="AgentListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToAutomateList" id="2008" name="TEST MoveToAutomateList">
-      <parameter dia-name="objectives" name="objectives" optional="false" type="AutomateListBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToPointList" id="2006" name="TEST MoveToPointList">
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroadPointList" id="2006" name="TEST MoveToPointList">
       <parameter dia-name="objectives" name="objectives" optional="false" type="PointListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToPolygonList" id="2007" name="TEST MoveToPolygonList">
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroadPolygonList" id="2007" name="TEST MoveToPolygonList">
       <parameter dia-name="objectives" name="objectives" optional="false" type="AreaListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToObjectKnowledgeList" id="2011" name="TEST MoveToObjectKnowledgeList">
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroadObjectKnowledgeList" id="2011" name="TEST MoveToObjectKnowledgeList">
       <parameter dia-name="objectives" name="objectives" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Detruire" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Detruire" id="2013" name="MELEE Detruire">
-      <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveAlong" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveAlong" id="2012" name="TEST MoveAlongAgentKnowledgeList">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="AgentKnowledgeListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveAlong" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveAlongAgentList" id="2049" name="TEST MoveAlongAgentList">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="AgentListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveAlong" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveAlongPointList" id="2055" name="TEST MoveAlongPointList">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="PointListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveAlong" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveAlongPolygonList" id="2060" name="TEST MoveAlongPolygonList">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="AreaListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveAlong" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveAlongObjectKnowledgeList" id="2066" name="TEST MoveAlongObjectKnowledgeList">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Destroy" dia-type="net.masagroup.sword.test.military.platoon.tasks.Destroy" id="2094" name="TEST DestroyAgents">
       <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
@@ -800,7 +809,7 @@
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.ObserveToward" dia-type="net.masagroup.sword.test.military.platoon.tasks.ObserveToward" id="2017" name="TEST ObservePoint">
       <parameter dia-name="objectives" name="target" optional="false" type="PointListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.ObserveToward" dia-type="T_Mission_Pion_ObserveAgent" id="2019" name="TEST ObserveAgent">
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.ObserveToward" dia-type="net.masagroup.sword.test.military.platoon.tasks.ObserveTowardAgent" id="2019" name="TEST ObserveAgent">
       <parameter dia-name="objectives" name="target" optional="false" type="AgentKnowledgeListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.NeutralizeAgents" dia-type="net.masagroup.sword.test.military.platoon.tasks.NeutralizeAgents" id="2025" name="TEST NeutralizeAgents">
@@ -815,27 +824,16 @@
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.EngageAgents" dia-type="net.masagroup.sword.test.military.platoon.tasks.EngageAgents" id="2029" name="TEST EngageAgents">
       <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" dia-type="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" id="2030" name="ASS Assurer la Mise En Oeuvre">
-      <parameter dia-name="firePositions" name="firePositions" optional="false" type="PointListBM"/>
-      <parameter dia-name="safeguardPositions" name="safeguardPositions" optional="true" type="PointListBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" dia-type="T_Mission_Pion_MiseEnOeuvre" id="2061" name="ASS Deploy">
-      <parameter dia-name="firePositions" name="fireArea" optional="false" type="ObjectKnowledgeListBM"/>
-      <parameter dia-name="safeguardPositions" name="safeguardPositions" optional="true" type="PointListBM"/>
-    </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.TakeCover" dia-type="net.masagroup.sword.test.military.platoon.tasks.TakeCover" id="2031" name="TEST TakeCover"/>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Flee" dia-type="net.masagroup.sword.test.military.platoon.tasks.Flee" id="2032" name="TEST Flee"/>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.SelfProtect" dia-type="net.masagroup.sword.test.military.platoon.tasks.SelfProtect" id="2033" name="TEST SelfProtect">
       <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Build" dia-type="net.masagroup.sword.test.military.platoon.tasks.Build" id="2034" name="TEST BuildObjects">
-      <parameter dia-name="entities" name="entities" optional="false" type="GenObjectListBM"/>
+      <parameter dia-name="obstacles" name="obstacles" optional="false" type="GenObjectListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Valorize" dia-type="net.masagroup.sword.test.military.platoon.tasks.Valorize" id="2035" name="TEST ValorizeObjects">
       <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.military.platoon.tasks.RealizeTacticalObject" dia-type="net.masagroup.sword.military.platoon.tasks.RealizeTacticalObject" id="2036" name="GEN Realiser Travaux">
-      <parameter dia-name="entities" name="entities" optional="false" type="GenObjectListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Activate" dia-type="net.masagroup.sword.test.military.platoon.tasks.Activate" id="2037" name="TEST ActivateObjects">
       <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
@@ -846,17 +844,14 @@
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveObserveReconnoiter" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveObserveReconnoiter" id="2039" name="TEST MoveObserveReconnoiter">
       <parameter dia-name="objectives" name="destination" optional="false" type="PointListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Reconnaitre" dia-type="net.masagroup.sword.france.military.platoon.tasks.Reconnaitre" id="2040" name="MELEE Reconnaitre Itineraire">
-      <parameter dia-name="objectives" name="destination" optional="false" type="PointListBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveOnRoute" id="2041" name="TEST MoveOnRoute">
-      <parameter dia-name="objectives" name="destination" optional="false" type="PathBM"/>
-    </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Reconnoiter" dia-type="net.masagroup.sword.test.military.platoon.tasks.Reconnoiter" id="2043" name="TEST ReconnoiterPoint">
       <parameter dia-name="objective" name="objectif" optional="false" type="PointBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Reconnoiter" dia-type="T_Mission_Pion_ReconnoiterBU" id="2044" name="TEST ReconnoiterUrbanBlock">
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Reconnoiter" dia-type="net.masagroup.sword.test.military.platoon.tasks.ReconnoiterUrbanBlock" id="2044" name="TEST ReconnoiterUrbanBlock">
       <parameter dia-name="objective" name="objectif" optional="false" type="UrbanBlockBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Reconnoiter" dia-type="net.masagroup.sword.test.military.platoon.tasks.ReconnoiterArea" id="2042" name="TEST ReconnoiterArea">
+      <parameter dia-name="objective" name="objectif" optional="false" type="AreaBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Search" dia-type="net.masagroup.sword.test.military.platoon.tasks.Search" id="2098" name="TEST SearchUrbanBlock">
       <parameter dia-name="objective" name="objectif" optional="false" type="UrbanBlockBM"/>
@@ -864,20 +859,11 @@
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Search" dia-type="net.masagroup.sword.test.military.platoon.tasks.SearchArea" id="2100" name="TEST SearchArea">
       <parameter dia-name="objective" name="objectif" optional="false" type="AreaBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Reconnoiter" dia-type="T_Mission_Pion_ReconnoiterArea" id="2042" name="TEST ReconnoiterArea">
-      <parameter dia-name="objective" name="objectif" optional="false" type="AreaBM"/>
-    </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Identify" dia-type="net.masagroup.sword.test.military.platoon.tasks.Identify" id="2024" name="TEST IdentifyAgent">
       <parameter dia-name="objectives" name="objectives" optional="false" type="AgentKnowledgeListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.RemoveObstacle" dia-type="net.masagroup.sword.test.military.platoon.tasks.RemoveObstacle" id="2045" name="TEST RemoveObstacle">
       <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.FaireMouvement" dia-type="net.masagroup.sword.france.military.platoon.tasks.FaireMouvement" id="2046" name="COMMUNES Faire Mouvement">
-      <parameter dia-name="objectives" name="itineraire" optional="false" type="PointListBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.OuvrirItineraire" dia-type="net.masagroup.sword.france.military.platoon.tasks.OuvrirItineraire" id="2047" name="GEN OuvrirItineraire">
-      <parameter dia-name="objectives" name="destination" optional="false" type="PointListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Animate" dia-type="T_Mission_Pion_Animate" id="2048" name="TEST AnimateObjects">
       <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
@@ -887,6 +873,42 @@
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Advance" dia-type="net.masagroup.sword.test.military.platoon.tasks.Advance" id="2052" name="TEST Advance">
       <parameter dia-name="objectives" name="objectives" optional="false" type="PointListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.SealOff" dia-type="net.masagroup.sword.test.military.platoon.tasks.SealOff" id="2064" name="TEST Seal Off">
+      <parameter dia-name="objectives" name="objectifs" optional="false" type="AreaBM"/>
+      <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Control" dia-type="net.masagroup.sword.test.military.platoon.tasks.Control" id="2074" name="TEST Control">
+      <parameter dia-name="objectives" name="zone" optional="false" type="AreaBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.GetDecon" dia-type="net.masagroup.sword.test.military.platoon.tasks.GetDecon" id="2080" name="TEST GetDecon">
+      <parameter dia-name="objective" name="site de decontamination" optional="false" type="ObjectKnowledgeBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.GuideAndLoad" dia-type="net.masagroup.sword.test.military.platoon.tasks.GuideAndLoad" id="2081" name="TEST GuideAndLoad">
+      <parameter dia-name="entity" name="unité" optional="false" type="AgentKnowledgeBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Open" dia-type="net.masagroup.sword.test.military.platoon.tasks.Open" id="2082" name="TEST Open">
+      <parameter dia-name="objectives" name="itinéraire" optional="false" type="PointListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.ReconnoiterAdvance" dia-type="net.masagroup.sword.test.military.platoon.tasks.ReconnoiterAdvance" id="2085" name="TEST ReconnoiterAdvance">
+      <parameter dia-name="objectives" name="itinéraire" optional="false" type="PointListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.SearchAdvance" dia-type="net.masagroup.sword.test.military.platoon.tasks.SearchAdvance" id="2086" name="TEST SearchAdvance">
+      <parameter dia-name="objective" name="objectif" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="AreaBM"/>
+          <parameter type="UrbanBlockBM"/>
+        </choice>
+      </parameter>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Survey" dia-type="net.masagroup.sword.test.military.platoon.tasks.Survey" id="2087" name="TEST Survey">
+      <parameter dia-name="entities" name="unite a charger" optional="false" type="AgentListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.WaitTransport" dia-type="net.masagroup.sword.test.military.platoon.tasks.WaitTransport" id="2088" name="TEST WaitTransport">
+      <parameter dia-name="position" name="Point d'embarquement" optional="false" type="PointBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.FaireMouvement" dia-type="net.masagroup.sword.france.military.platoon.tasks.FaireMouvement" id="2046" name="COMMUNES Faire Mouvement">
+      <parameter dia-name="objectives" name="itineraire" optional="false" type="PointListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Suivre" dia-type="net.masagroup.sword.france.military.platoon.tasks.Suivre" id="2053" name="COMMUNES Suivre">
       <parameter dia-name="objective" name="unite a suivre" optional="false" type="AgentBM"/>
@@ -908,19 +930,25 @@
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Decrocher" dia-type="net.masagroup.sword.france.military.platoon.tasks.Decrocher" id="2059" name="COMMUNES Decrocher">
       <parameter dia-name="position" name="point de regroupement" optional="false" type="PointBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Appuyer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Appuyer" id="2062" name="MELEE Appuyer">
-      <parameter dia-name="objectives" name="unites a appuyer" optional="false" type="AgentListBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Appuyer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Soutenir" id="2095" name="MELEE Soutenir">
-      <parameter dia-name="objectives" name="unites a soutenir" optional="false" type="AgentListBM"/>
-    </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.PrendreEnComptePrisonniers" dia-type="net.masagroup.sword.france.military.platoon.tasks.PrendreEnComptePrisonniers" id="2063" name="COMMUNES Prendre En Compte Prisonniers">
       <parameter dia-name="people" name="prisonniers" optional="false" type="AgentKnowledgeBM"/>
       <parameter dia-name="camp" name="camp de prisonniers" optional="false" type="ObjectKnowledgeBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.SealOff" dia-type="net.masagroup.sword.test.military.platoon.tasks.SealOff" id="2064" name="TEST Seal Off">
-      <parameter dia-name="objectives" name="objectifs" optional="false" type="AreaBM"/>
-      <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Franchir" dia-type="net.masagroup.sword.france.military.platoon.tasks.Franchir" id="2071" name="COMMUNES Franchir">
+      <parameter dia-name="crossingSite" name="site de franchissement" optional="false" type="ObjectKnowledgeBM"/>
+      <parameter dia-name="objective" name="point de destination" optional="false" type="PointBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Reconnaitre" dia-type="net.masagroup.sword.france.military.platoon.tasks.Reconnaitre" id="2040" name="MELEE Reconnaitre Itineraire">
+      <parameter dia-name="objectives" name="destination" optional="false" type="PointListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Appuyer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Appuyer" id="2062" name="MELEE Appuyer">
+      <parameter dia-name="objectives" name="unites a appuyer" optional="false" type="AgentListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Detruire" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Detruire" id="2013" name="MELEE Detruire">
+      <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Appuyer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Soutenir" id="2095" name="MELEE Soutenir">
+      <parameter dia-name="objectives" name="unites a soutenir" optional="false" type="AgentListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Illuminer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Illuminer" id="2065" name="MELEE Illuminer">
       <parameter dia-name="entities" name="cible" optional="false" type="AgentKnowledgeListBM"/>
@@ -941,10 +969,6 @@
       <parameter dia-name="objectives" name="objectif" optional="false" type="UrbanBlockBM"/>
       <parameter dia-name="positions" name="positions de surveillance" optional="false" type="PointListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Franchir" dia-type="net.masagroup.sword.france.military.platoon.tasks.Franchir" id="2071" name="COMMUNES Franchir">
-      <parameter dia-name="crossingSite" name="site de franchissement" optional="false" type="ObjectKnowledgeBM"/>
-      <parameter dia-name="objective" name="point de destination" optional="false" type="PointBM"/>
-    </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Semparer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Semparer" id="2072" name="MELEE S'emparer d'un Bloc Urbain">
       <parameter dia-name="objectives" name="objectif" optional="false" type="UrbanBlockBM"/>
     </mission>
@@ -953,21 +977,8 @@
       <parameter dia-name="positions" name="positions d'installation" optional="false" type="PointListBM"/>
       <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Control" dia-type="net.masagroup.sword.test.military.platoon.tasks.Control" id="2074" name="TEST Control">
-      <parameter dia-name="objectives" name="zone" optional="false" type="AreaBM"/>
-    </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Controler" dia-type="net.masagroup.sword.france.military.platoon.tasks.Controler" id="2075" name="MELEE Controler">
       <parameter dia-name="objectives" name="zone" optional="false" type="AreaBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Construire" dia-type="net.masagroup.sword.france.military.platoon.tasks.Construire" id="2076" name="GEN Construire">
-      <parameter dia-name="entities" name="entities" optional="false" type="GenObjectListBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Animer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Animer" id="2077" name="Animer">
-      <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.military.platoon.stabilisation.tasks.ControlArea" dia-type="net.masagroup.sword.military.platoon.stabilisation.tasks.ControlArea" id="2078" name="ControlArea">
-      <parameter dia-name="objectives" name="zone" optional="false" type="AreaBM"/>
-      <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Tenir" dia-type="net.masagroup.sword.france.military.platoon.tasks.Tenir" id="2079" name="MELEE Tenir">
       <parameter dia-name="objective" name="objectif" optional="false" type="LocationComposite">
@@ -978,11 +989,6 @@
         </choice>
       </parameter>
       <parameter dia-name="position" name="position pour tenir" optional="false" type="PointBM"/>
-      <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Deny" dia-type="net.masagroup.sword.test.military.platoon.tasks.Deny" id="2082" name="TEST Deny">
-      <parameter dia-name="objectives" name="objectif" optional="false" type="UrbanBlockBM"/>
-      <parameter dia-name="positions" name="positions pour interdire" optional="false" type="PointListBM"/>
       <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Interdire" dia-type="net.masagroup.sword.france.military.platoon.tasks.Interdire" id="2083" name="MELEE Interdire">
@@ -1007,7 +1013,7 @@
       <parameter dia-name="position" name="position pour defendre" optional="false" type="PointBM"/>
       <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.ContreAttaquer" dia-type="T_Mission_Pion_ContreAttaquer_Point" id="2088" name="MELEE Contre Attaquer sur un Point">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.ContreAttaquer" dia-type="T_Mission_Pion_ContreAttaquer_Point" id="2096" name="MELEE Contre Attaquer sur un Point">
       <parameter dia-name="objectives" name="objectifs" optional="false" type="PointListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.ContreAttaquer" dia-type="T_Mission_Pion_ContreAttaquer_Zone" id="2089" name="MELEE Contre Attaquer dans une Zone">
@@ -1027,6 +1033,30 @@
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Eclairer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Eclairer" id="2093" name="MELEE Eclairer un Itineraire">
       <parameter dia-name="objectives" name="itinéraire" optional="false" type="PointListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" dia-type="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" id="2030" name="ASS Assurer la Mise En Oeuvre">
+      <parameter dia-name="firePositions" name="firePositions" optional="false" type="PointListBM"/>
+      <parameter dia-name="safeguardPositions" name="safeguardPositions" optional="true" type="PointListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" dia-type="T_Mission_Pion_MiseEnOeuvre" id="2061" name="ASS Deploy">
+      <parameter dia-name="firePositions" name="fireArea" optional="false" type="ObjectKnowledgeListBM"/>
+      <parameter dia-name="safeguardPositions" name="safeguardPositions" optional="true" type="PointListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.OuvrirItineraire" dia-type="net.masagroup.sword.france.military.platoon.tasks.OuvrirItineraire" id="2047" name="GEN OuvrirItineraire">
+      <parameter dia-name="objectives" name="destination" optional="false" type="PointListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Construire" dia-type="net.masagroup.sword.france.military.platoon.tasks.Construire" id="2076" name="GEN Construire">
+      <parameter dia-name="entities" name="entities" optional="false" type="GenObjectListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.military.platoon.tasks.RealizeTacticalObject" dia-type="net.masagroup.sword.military.platoon.tasks.RealizeTacticalObject" id="2036" name="GEN Realiser Travaux">
+      <parameter dia-name="entities" name="entities" optional="false" type="GenObjectListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Animer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Animer" id="2077" name="Animer">
+      <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.military.platoon.stabilisation.tasks.ControlArea" dia-type="net.masagroup.sword.military.platoon.stabilisation.tasks.ControlArea" id="2078" name="ControlArea">
+      <parameter dia-name="objectives" name="zone" optional="false" type="AreaBM"/>
+      <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
   </units>
   <automats>

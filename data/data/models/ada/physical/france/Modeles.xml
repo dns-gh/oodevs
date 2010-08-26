@@ -106,39 +106,43 @@
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PlatoonTest">
       <missions>
-        <mission name="TEST ActivateObjects"/>
-        <mission name="TEST Advance"/>
         <mission name="TEST AnimateObjects"/>
         <mission name="TEST BuildObjects"/>
         <mission name="TEST BypassObjects"/>
         <mission name="TEST Control"/>
-        <mission name="TEST Deny"/>
         <mission name="TEST DestroyAgents"/>
         <mission name="TEST EngageAgents"/>
         <mission name="TEST Flee"/>
+        <mission name="TEST GetDecon"/>
+        <mission name="TEST GuideAndLoad"/>
         <mission name="TEST IdentifyAgent"/>
-        <mission name="TEST MoveOnRoute"/>
+        <mission name="TEST MoveAlongPointList"/>
+        <mission name="TEST MoveAlongPolygonList"/>
+        <mission name="TEST MoveAlongAgentList"/>
+        <mission name="TEST MoveAlongAgentKnowledgeList"/>
+        <mission name="TEST MoveAlongObjectKnowledgeList"/>
         <mission name="TEST MoveToPointList"/>
         <mission name="TEST MoveToPolygonList"/>
-        <mission name="TEST MoveToAutomateList"/>
         <mission name="TEST MoveToAgentList"/>
         <mission name="TEST MoveToAgentKnowledgeList"/>
         <mission name="TEST MoveToObjectKnowledgeList"/>
         <mission name="TEST NeutralizeAgents"/>
+        <mission name="TEST Open"/>
         <mission name="TEST ObservePoint"/>
         <mission name="TEST ObserveAgent"/>
         <mission name="TEST ReconnoiterPoint"/>
         <mission name="TEST ReconnoiterUrbanBlock"/>
         <mission name="TEST ReconnoiterArea"/>
+        <mission name="TEST ReconnoiterAdvance"/>
         <mission name="TEST RemoveObstacle"/>
-        <mission name="TEST Seal Off"/>
         <mission name="TEST SearchUrbanBlock"/>
         <mission name="TEST SearchArea"/>
-        <mission name="TEST SelfProtect"/>
+        <mission name="TEST SearchAdvance"/>
+        <mission name="TEST Survey"/>
         <mission name="TEST StayClose"/>
         <mission name="TEST Support"/>
-        <mission name="TEST TakeCover"/>
         <mission name="TEST ValorizeObjects"/>
+        <mission name="TEST WaitTransport"/>
       </missions>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery" file="BMPion.bms" name="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery">
