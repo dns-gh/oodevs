@@ -10,7 +10,8 @@
     {
         automats =
         {
-            [ "ABC" ] = 12, -- must be generated
+            [ "ABC" ] = 7,
+            [ "SGTIA" ] = 10,
         }
     },
 

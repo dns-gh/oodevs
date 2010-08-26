@@ -62,8 +62,17 @@ function Start()
             { "</xsl:text><xsl:value-of select="$physical"/><xsl:text>_test_begin" },
             function()
                 sim:CreateUnit( coord:UtmPosition( config.positions.start[1] )
-                               , model.types.units["</xsl:text><xsl:value-of select="$physical"/><xsl:text>"]
-                               , model.entities.automats["ABC"] ) -- verifier comment ne pas passer d'automate ou comment trouver un automate correct
+                                , model.types.units["</xsl:text><xsl:value-of select="$physical"/><xsl:text>"]
+                                </xsl:text>
+                                <xsl:choose>
+                                    <xsl:when test="../@file = 'BMPion.bms'">
+                                        <xsl:text>, model.entities.automats["SGTIA"] )</xsl:text>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:text>, model.entities.automats["ABC"] )</xsl:text>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                               <xsl:text>
                 ChangeState( "</xsl:text><xsl:value-of select="$physical"/><xsl:text>_test_wait_unit_creation" )
                 Trace( "</xsl:text><xsl:value-of select="$physical"/><xsl:text> : agent creation" )
             end
@@ -156,24 +165,24 @@ end
             <xsl:when test="@type = 'Bool'">
                 <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "Bool", value = "false"} )</xsl:text>
             </xsl:when>
-            <xsl:when test="(@type = 'Path') or (@type = 'PathBM')">
+            <xsl:when test="(@type = 'Path')"> <!--  or (@type = 'PathBM') -->
                 <xsl:text>    :With( Path.create( "Route" ):AddPoint( "Destination", config.positions.destination[1] ) )</xsl:text>
             </xsl:when>
-            <xsl:when test="(@type = 'Point') or (@type = 'PointBM')">
+            <xsl:when test="(@type = 'Point')">   <!--  or (@type = 'PointBM') -->
                 <xsl:text>    :With( PointLocation.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", config.positions.destination[1] ) )</xsl:text>
             </xsl:when>
             <xsl:when test="@type = 'Polygon'">
                 <xsl:text>    :With( Polygon.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", { config.positions.destination[1], config.positions.destination[2], config.positions.destination[3] } ) )</xsl:text>
             </xsl:when>
-            <xsl:when test="@type = 'NatureAtlas'">
+        <!--    <xsl:when test="@type = 'NatureAtlas'">
                 <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "NatureAtlas", value = "256" } )</xsl:text>
             </xsl:when>
             <xsl:when test="@type = 'Numeric'">
                 <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "Numeric", value = "1" } )</xsl:text>
             </xsl:when>
-            <xsl:when test="(@type = 'Agent') or (@type = 'AgentBM')">
+            <xsl:when test="(@type = 'Agent') or (@type = 'AgentBM')"> 
                 <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "Agent", value = config.id.blueUnit } )</xsl:text>
-            </xsl:when>
+            </xsl:when> -->
             
             
             <xsl:otherwise>

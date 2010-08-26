@@ -6,21 +6,12 @@
       <objects/>
       <tactical>
         <formation id="6" level="x" name="Formation">
-          <automat engaged="false" id="12" knowledge-group="2" name="Escadron de Chars LECLERC [12]" type="Escadron de Chars LECLERC">
-            <unit command-post="true" id="13" name="Peloton LECLERC CDT ESC" position="31UEQ0928523861" type="Peloton LECLERC CDT ESC"/>
-            <unit command-post="false" id="8" name="Section CBT INF VAB CDS OFF" position="31UEQ0928523870" type="Section CBT INF VAB CDS OFF"/>
+          <automat engaged="false" id="7" knowledge-group="2" name="Escadron de Chars LECLERC" type="Escadron de Chars LECLERC">
+            <unit command-post="true" id="8" name="Peloton LECLERC CDT ESC" position="31UEQ0928523861" type="Peloton LECLERC CDT ESC"/>
+            <unit command-post="false" id="9" name="Section CBT INF VAB CDS OFF" position="31UEQ0928523870" type="Section CBT INF VAB CDS OFF"/>
           </automat>
-          <limit name="Limite 7">
-            <point>31UEQ0687827739</point>
-            <point>31UEQ0640623008</point>
-            <point>31UEQ0505917232</point>
-          </limit>
-          <limit name="Limite 8">
-            <point>31UEQ1459227148</point>
-            <point>31UEQ1540525405</point>
-            <point>31UEQ1307021141</point>
-            <point>31UEQ1195514320</point>
-          </limit>
+          <automat engaged="false" id="10" knowledge-group="2" name="Automate SGTIA" type="Automate SGTIA">
+          </automat>
         </formation>
       </tactical>
       <communication>

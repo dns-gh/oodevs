@@ -64,8 +64,9 @@
     </target>
 
     <target name="launch-only">
+        <mkdir dir="${reportDir}/${timenow}"/>
         <exec executable="bash.exe" failonerror="false">
-            <arg line='launch.sh "./reports/${timenow}_exec" ${test}'/>
+            <arg line='launch.sh ${reportDir}/${timenow} ${test}'/>
         </exec>
     </target>
 
