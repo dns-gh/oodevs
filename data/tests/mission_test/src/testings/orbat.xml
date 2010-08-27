@@ -10,7 +10,8 @@
             <unit command-post="true" id="8" name="Peloton LECLERC CDT ESC" position="31UEQ0928523861" type="Peloton LECLERC CDT ESC"/>
             <unit command-post="false" id="9" name="Section CBT INF VAB CDS OFF" position="31UEQ0928523870" type="Section CBT INF VAB CDS OFF"/>
           </automat>
-          <automat engaged="false" id="10" knowledge-group="2" name="Automate SGTIA" type="Automate SGTIA">
+          <automat engaged="false" id="10" knowledge-group="2" name="SGTIA" type="SGTIA">
+            <unit command-post="true" id="11" name="PC SGTIA" position="31UEQ0928523961" type="PC SGTIA"/>
           </automat>
         </formation>
       </tactical>

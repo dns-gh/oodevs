@@ -165,24 +165,24 @@ end
             <xsl:when test="@type = 'Bool'">
                 <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "Bool", value = "false"} )</xsl:text>
             </xsl:when>
-            <xsl:when test="(@type = 'Path')"> <!--  or (@type = 'PathBM') -->
+            <xsl:when test="(@type = 'Path')"> <!-- or (@type = 'PathBM') -->
                 <xsl:text>    :With( Path.create( "Route" ):AddPoint( "Destination", config.positions.destination[1] ) )</xsl:text>
             </xsl:when>
-            <xsl:when test="(@type = 'Point')">   <!--  or (@type = 'PointBM') -->
-                <xsl:text>    :With( PointLocation.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", config.positions.destination[1] ) )</xsl:text>
+            <xsl:when test="(@type = 'Point') or (@type = 'PointBM')">
+                <xsl:text>    :With( PointLocation.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", config.positions.destination[1], "</xsl:text><xsl:value-of select="@type"/><xsl:text>" ) )</xsl:text>
             </xsl:when>
             <xsl:when test="@type = 'Polygon'">
                 <xsl:text>    :With( Polygon.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", { config.positions.destination[1], config.positions.destination[2], config.positions.destination[3] } ) )</xsl:text>
             </xsl:when>
-        <!--    <xsl:when test="@type = 'NatureAtlas'">
+            <xsl:when test="@type = 'NatureAtlas'">
                 <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "NatureAtlas", value = "256" } )</xsl:text>
             </xsl:when>
             <xsl:when test="@type = 'Numeric'">
                 <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "Numeric", value = "1" } )</xsl:text>
             </xsl:when>
-            <xsl:when test="(@type = 'Agent') or (@type = 'AgentBM')"> 
-                <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "Agent", value = config.id.blueUnit } )</xsl:text>
-            </xsl:when> -->
+            <xsl:when test="(@type = 'Agent') or (@type = 'AgentBM')">
+                <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "</xsl:text><xsl:value-of select="@type"/><xsl:text>", value = config.id.blueUnit } )</xsl:text>
+            </xsl:when>
             
             
             <xsl:otherwise>
