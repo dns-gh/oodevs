@@ -31,6 +31,7 @@
         <mission name="MELEE Soutenir"/>
         <mission name="MELEE Surveiller un Bloc Urbain"/>
         <mission name="MELEE Tenir"/>
+        <mission name="STABILISATION AnimerPosteDeControle"/>
       </missions>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PlatoonABC">
@@ -79,6 +80,7 @@
         <mission name="MELEE Reconnaitre Itineraire"/>
         <mission name="MELEE S'emparer De"/>
         <mission name="MELEE Tenir"/>
+        <mission name="STABILISATION AnimerPosteDeControle"/>
       </missions>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PC">

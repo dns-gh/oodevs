@@ -1068,6 +1068,9 @@
       <parameter dia-name="objectives" name="zone" optional="false" type="AreaBM"/>
       <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.stabilisation.AnimerPosteDeControle" dia-type="net.masagroup.sword.france.military.platoon.stabilisation.AnimerPosteDeControle" id="2101" name="STABILISATION AnimerPosteDeControle">
+      <parameter dia-name="obstacles" name="obstacles" optional="false" type="GenObjectListBM"/>
+    </mission>
   </units>
   <automats>
     <context>
