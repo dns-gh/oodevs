@@ -150,11 +150,11 @@ end
 PointLocation = {}
 PointLocation.__index = PointLocation
 
-function PointLocation.create( name, coordinates )
+function PointLocation.create( name, coordinates, type )
     local new = {}
     setmetatable( new, PointLocation )
     new.name = name
-    new.type = "Point"
+    new.type = type
     new.children = { Point.create( coordinates ) }
     return new
 end
