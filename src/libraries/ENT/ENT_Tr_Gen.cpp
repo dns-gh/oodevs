@@ -465,14 +465,6 @@ ENT_Tr::T_ConverterPopulationAttitude ENT_Tr::PopulationAttitudeConverter_[] =
     T_ConverterPopulationAttitude( "", "", (E_PopulationAttitude)-1 )
 };
 
-ENT_Tr::T_ConverterResourceType ENT_Tr::ResourceTypeConverter_[] =
-{
-    T_ConverterResourceType( "water", QT_TRANSLATE_NOOP( "ENT_Tr", "Water" ), eResourceType_Water ),
-    T_ConverterResourceType( "gaz", QT_TRANSLATE_NOOP( "ENT_Tr", "Gaz" ), eResourceType_Gaz ),
-    T_ConverterResourceType( "electricity", QT_TRANSLATE_NOOP( "ENT_Tr", "Electricity" ), eResourceType_Electricity ),
-    T_ConverterResourceType( "", "", (E_ResourceType)-1 )
-};
-
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::InitTranslations
 // Created: AGR
@@ -522,7 +514,6 @@ void ENT_Tr::InitTranslations()
     InitTr( AutomatOrderFormationConverter_, "ENT_Tr" );
     InitTr( PopulationErrorCodeConverter_, "ENT_Tr" );
     InitTr( PopulationAttitudeConverter_, "ENT_Tr" );
-    InitTr( ResourceTypeConverter_, "ENT_Tr" );
 }
 
 //-----------------------------------------------------------------------------
@@ -912,15 +903,6 @@ const std::string& ENT_Tr::ConvertFromPopulationAttitude( E_PopulationAttitude n
     return ENT_Tr::InverseFindInConverter( PopulationAttitudeConverter_, nValue, nConverterType );
 }
 
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromResourceType
-// Created: JSR 2010-08-26
-// -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromResourceType( E_ResourceType nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( ResourceTypeConverter_, nValue, nConverterType );
-}
-
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToChangeHierarchyErrorCode
 // Created: AGR
@@ -1297,13 +1279,4 @@ E_PopulationErrorCode ENT_Tr::ConvertToPopulationErrorCode( const std::string& s
 E_PopulationAttitude ENT_Tr::ConvertToPopulationAttitude( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( PopulationAttitudeConverter_, strName );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToResourceType
-// Created: JSR 2010-08-26
-// -----------------------------------------------------------------------------
-E_ResourceType ENT_Tr::ConvertToResourceType( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( ResourceTypeConverter_, strName );
 }

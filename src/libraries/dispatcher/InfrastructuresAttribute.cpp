@@ -43,9 +43,11 @@ void InfrastructuresAttribute::Update( const MsgsSimToClient::MsgUrbanAttributes
     {
         const MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork& from = message.infrastructures().resource_network( i );
         ResourceNetwork& to = resourceMap_[ from.type() ];
-        to.producer_ = from.producer();
         to.type_ = from.type();
         to.enabled_ = from.enabled();
+        to.producer_ = from.has_production();
+        if( to.producer_ )
+            to.production_ = from.production();
         to.stockActive_ = from.has_stock();
         if( to.stockActive_ )
             to.stock_ = from.stock();
@@ -61,6 +63,7 @@ void InfrastructuresAttribute::Update( const MsgsSimToClient::MsgUrbanAttributes
             it->kind_ = linkFrom.kind();
             it->target_ = linkFrom.target_id();
             it->capacity_ = linkFrom.capacity();
+            it->flow_ = linkFrom.flow();
         }
     }
     // Infrastructures
@@ -77,9 +80,10 @@ void InfrastructuresAttribute::Send( MsgsSimToClient::MsgUrbanAttributes& messag
     {
         MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork* network =
             message.mutable_infrastructures()->add_resource_network();
-        network->set_producer( it->second.producer_ );
         network->set_type( static_cast< MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType >( it->second.type_ ) );
         network->set_enabled( it->second.enabled_ );
+        if( it->second.producer_ )
+            network->set_production( it->second.production_ );
         if( it->second.stockActive_ )
             network->set_stock( it->second.stock_ );
         for( std::vector< ResourceNetwork::Link >::const_iterator linkIt = it->second.links_.begin(); linkIt != it->second.links_.end(); ++linkIt )
@@ -88,6 +92,7 @@ void InfrastructuresAttribute::Send( MsgsSimToClient::MsgUrbanAttributes& messag
             link->set_kind( static_cast< MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind >( linkIt->kind_ ) );
             link->set_target_id( linkIt->target_ );
             link->set_capacity( linkIt->capacity_ );
+            link->set_flow( linkIt->flow_ );
         }
     }
 }

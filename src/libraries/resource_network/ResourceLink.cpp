@@ -21,6 +21,7 @@ ResourceLink::ResourceLink( unsigned int destination, EDestinationKind kind, int
     : destination_( destination )
     , kind_       ( kind )
     , capacity_   ( capacity )
+    , flow_       ( 0 )
 {
     // NOTHING
 }
@@ -33,6 +34,7 @@ ResourceLink::ResourceLink( const ResourceLink& from )
     : destination_( from.destination_ )
     , kind_       ( from.kind_ )
     , capacity_   ( from.capacity_ )
+    , flow_       ( from.flow_ )
 {
     // NOTHING
 }
@@ -97,6 +99,15 @@ ResourceLink::EDestinationKind ResourceLink::GetDestinationKind() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceLink::SetFlow
+// Created: JSR 2010-08-26
+// -----------------------------------------------------------------------------
+void ResourceLink::SetFlow( int flow )
+{
+    flow_ = flow;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceLink::Serialize
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------
@@ -107,4 +118,5 @@ void ResourceLink::Serialize( MsgsSimToClient::MsgUrbanAttributes_Infrastructure
         : MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_object );
     msg.set_target_id( destination_ );
     msg.set_capacity( GetEfficientCapacity() );
+    msg.set_flow( flow_ );
 }

@@ -45,7 +45,7 @@
 #include "clients_kernel/StaticModel.h"
 #include <MT/MT_Logger/MT_Logger_lib.h>
 #include <boost/bind.hpp>
-#pragma warning( disable : 4503, 4355 )
+#pragma warning( disable : 4503 4355 )
 
 using namespace dispatcher;
 

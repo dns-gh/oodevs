@@ -1437,6 +1437,18 @@
         <source>Producer</source>
         <translation>Producteur</translation>
     </message>
+    <message>
+        <source>Water</source>
+        <translation>Eau</translation>
+    </message>
+    <message>
+        <source>Gaz</source>
+        <translation>Gaz</translation>
+    </message>
+    <message>
+        <source>Electricity</source>
+        <translation>Electricité</translation>
+    </message>
 </context>
 <context>
     <name>Score</name>

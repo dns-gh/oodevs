@@ -17865,6 +17865,13 @@ class MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link : public ::google:
   inline ::google::protobuf::int32 capacity() const;
   inline void set_capacity(::google::protobuf::int32 value);
   
+  // required int32 flow = 4;
+  inline bool has_flow() const;
+  inline void clear_flow();
+  static const int kFlowFieldNumber = 4;
+  inline ::google::protobuf::int32 flow() const;
+  inline void set_flow(::google::protobuf::int32 value);
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -17872,11 +17879,12 @@ class MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link : public ::google:
   int kind_;
   ::google::protobuf::uint32 target_id_;
   ::google::protobuf::int32 capacity_;
+  ::google::protobuf::int32 flow_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -17972,53 +17980,53 @@ class MsgUrbanAttributes_Infrastructures_ResourceNetwork : public ::google::prot
   
   // accessors -------------------------------------------------------
   
-  // required bool producer = 1;
-  inline bool has_producer() const;
-  inline void clear_producer();
-  static const int kProducerFieldNumber = 1;
-  inline bool producer() const;
-  inline void set_producer(bool value);
-  
-  // required .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork.ResourceType type = 2;
+  // required .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork.ResourceType type = 1;
   inline bool has_type() const;
   inline void clear_type();
-  static const int kTypeFieldNumber = 2;
+  static const int kTypeFieldNumber = 1;
   inline ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType type() const;
   inline void set_type(::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType value);
   
-  // repeated .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork.Link link = 3;
+  // repeated .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork.Link link = 2;
   inline int link_size() const;
   inline void clear_link();
-  static const int kLinkFieldNumber = 3;
+  static const int kLinkFieldNumber = 2;
   inline const ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link >& link() const;
   inline ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link >* mutable_link();
   inline const ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link& link(int index) const;
   inline ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link* mutable_link(int index);
   inline ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link* add_link();
   
-  // required bool enabled = 4;
+  // required bool enabled = 3;
   inline bool has_enabled() const;
   inline void clear_enabled();
-  static const int kEnabledFieldNumber = 4;
+  static const int kEnabledFieldNumber = 3;
   inline bool enabled() const;
   inline void set_enabled(bool value);
   
-  // optional uint32 stock = 5;
+  // optional uint32 stock = 4;
   inline bool has_stock() const;
   inline void clear_stock();
-  static const int kStockFieldNumber = 5;
+  static const int kStockFieldNumber = 4;
   inline ::google::protobuf::uint32 stock() const;
   inline void set_stock(::google::protobuf::uint32 value);
+  
+  // optional uint32 production = 5;
+  inline bool has_production() const;
+  inline void clear_production();
+  static const int kProductionFieldNumber = 5;
+  inline ::google::protobuf::uint32 production() const;
+  inline void set_production(::google::protobuf::uint32 value);
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  bool producer_;
   int type_;
   ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link > link_;
   bool enabled_;
   ::google::protobuf::uint32 stock_;
+  ::google::protobuf::uint32 production_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
@@ -30274,44 +30282,44 @@ inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::set_capacit
   capacity_ = value;
 }
 
+// required int32 flow = 4;
+inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::has_flow() const {
+  return _has_bit(3);
+}
+inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::clear_flow() {
+  flow_ = 0;
+  _clear_bit(3);
+}
+inline ::google::protobuf::int32 MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::flow() const {
+  return flow_;
+}
+inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::set_flow(::google::protobuf::int32 value) {
+  _set_bit(3);
+  flow_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // MsgUrbanAttributes_Infrastructures_ResourceNetwork
 
-// required bool producer = 1;
-inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::has_producer() const {
-  return _has_bit(0);
-}
-inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::clear_producer() {
-  producer_ = false;
-  _clear_bit(0);
-}
-inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::producer() const {
-  return producer_;
-}
-inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::set_producer(bool value) {
-  _set_bit(0);
-  producer_ = value;
-}
-
-// required .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork.ResourceType type = 2;
+// required .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork.ResourceType type = 1;
 inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::has_type() const {
-  return _has_bit(1);
+  return _has_bit(0);
 }
 inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::clear_type() {
   type_ = 1;
-  _clear_bit(1);
+  _clear_bit(0);
 }
 inline ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType MsgUrbanAttributes_Infrastructures_ResourceNetwork::type() const {
   return static_cast< ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType >(type_);
 }
 inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::set_type(::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType value) {
   GOOGLE_DCHECK(::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_IsValid(value));
-  _set_bit(1);
+  _set_bit(0);
   type_ = value;
 }
 
-// repeated .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork.Link link = 3;
+// repeated .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork.Link link = 2;
 inline int MsgUrbanAttributes_Infrastructures_ResourceNetwork::link_size() const {
   return link_.size();
 }
@@ -30336,36 +30344,52 @@ inline ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Lin
   return link_.Add();
 }
 
-// required bool enabled = 4;
+// required bool enabled = 3;
 inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::has_enabled() const {
-  return _has_bit(3);
+  return _has_bit(2);
 }
 inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::clear_enabled() {
   enabled_ = false;
-  _clear_bit(3);
+  _clear_bit(2);
 }
 inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::enabled() const {
   return enabled_;
 }
 inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::set_enabled(bool value) {
-  _set_bit(3);
+  _set_bit(2);
   enabled_ = value;
 }
 
-// optional uint32 stock = 5;
+// optional uint32 stock = 4;
 inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::has_stock() const {
-  return _has_bit(4);
+  return _has_bit(3);
 }
 inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::clear_stock() {
   stock_ = 0u;
-  _clear_bit(4);
+  _clear_bit(3);
 }
 inline ::google::protobuf::uint32 MsgUrbanAttributes_Infrastructures_ResourceNetwork::stock() const {
   return stock_;
 }
 inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::set_stock(::google::protobuf::uint32 value) {
-  _set_bit(4);
+  _set_bit(3);
   stock_ = value;
+}
+
+// optional uint32 production = 5;
+inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::has_production() const {
+  return _has_bit(4);
+}
+inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::clear_production() {
+  production_ = 0u;
+  _clear_bit(4);
+}
+inline ::google::protobuf::uint32 MsgUrbanAttributes_Infrastructures_ResourceNetwork::production() const {
+  return production_;
+}
+inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::set_production(::google::protobuf::uint32 value) {
+  _set_bit(4);
+  production_ = value;
 }
 
 // -------------------------------------------------------------------

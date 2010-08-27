@@ -12,6 +12,7 @@
 
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
+#include "resource_network/Types.h"
 #include "tools/Resolver_ABC.h"
 
 namespace gui
@@ -50,7 +51,7 @@ public:
     //@{
     virtual void Update( const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& message );
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual QString GetLinkName( E_ResourceType type, unsigned int i ) const;
+    virtual QString GetLinkName( resource::E_ResourceType type, unsigned int i ) const;
     //@}
 
 private:
@@ -62,7 +63,7 @@ private:
 
     //! @name Helpers
     //@{
-    void SetColor( E_ResourceType type ) const;
+    void SetColor( resource::E_ResourceType type ) const;
     void UpdateStipple( int value ) const;
     void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
     //@}

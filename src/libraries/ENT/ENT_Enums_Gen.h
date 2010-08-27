@@ -467,12 +467,4 @@ enum E_PopulationAttitude
     eNbrPopulationAttitude
 };
 
-enum E_ResourceType
-{
-    eResourceType_Water,
-    eResourceType_Gaz,
-    eResourceType_Electricity,
-    eNbrResourceType
-};
-
 #endif // __ENT_Enums_Gen_h_

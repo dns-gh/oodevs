@@ -11,7 +11,7 @@
 #define __ResourceNetwork_ABC_h_
 
 #include "clients_kernel/Extension_ABC.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "resource_network/Types.h"
 
 namespace MsgsSimToClient
 {
@@ -37,19 +37,21 @@ public:
         bool urban_;
         unsigned int id_;
         int capacity_;
+        int flow_;
     };
 
     struct ResourceNode
     {
         bool isProducer_;
-        E_ResourceType type_;
+        unsigned int production_;
+        resource::E_ResourceType type_;
         std::vector< ResourceLink > links_;    
         bool isEnabled_;
         bool hasStock_;
         unsigned int stock_;
     };
 
-    typedef std::map< E_ResourceType, ResourceNode > ResourceNodes;
+    typedef std::map< resource::E_ResourceType, ResourceNode > ResourceNodes;
     typedef ResourceNodes::const_iterator        CIT_ResourceNodes;
     //@}
 
@@ -63,8 +65,8 @@ public:
     //! @name Operations
     //@{
     virtual void Update( const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& message ) = 0;
-    virtual QString GetLinkName( E_ResourceType type, unsigned int i ) const = 0;
-    const ResourceNode* FindResourceNode( E_ResourceType type ) const
+    virtual QString GetLinkName( resource::E_ResourceType type, unsigned int i ) const = 0;
+    const ResourceNode* FindResourceNode( resource::E_ResourceType type ) const
     {
         CIT_ResourceNodes it = resourceNodes_.find( type );
         if( it == resourceNodes_.end() )

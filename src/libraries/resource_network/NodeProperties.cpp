@@ -9,7 +9,6 @@
 
 #include "NodeProperties.h"
 #include "ResourceNetworkModel.h"
-#include "ENT/ENT_Tr.h"
 #include "protocol/protocol.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -21,7 +20,7 @@ using namespace resource;
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
 NodeProperties::NodeProperties()
-    : model_( 0 )
+    : isFunctional_( true )
 {
     // NOTHING
 }
@@ -31,7 +30,7 @@ NodeProperties::NodeProperties()
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
 NodeProperties::NodeProperties( xml::xistream& xis )
-    : model_( 0 )
+    : isFunctional_( true )
 {
     // Read from urban.xml
     xis >> xml::list( "node", *this, &NodeProperties::ReadNode );
@@ -42,7 +41,7 @@ NodeProperties::NodeProperties( xml::xistream& xis )
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
 NodeProperties::NodeProperties( const NodeProperties& from )
-    : model_( 0 )
+    : isFunctional_( true )
 {
     for( CIT_Elements it = from.elements_.begin(); it != from.elements_.end(); ++it )
         Register( it->first, *new NodeElement( *it->second ) );
@@ -63,7 +62,6 @@ NodeProperties::~NodeProperties()
 // -----------------------------------------------------------------------------
 void NodeProperties::SetModel( const ResourceNetworkModel& model )
 {
-    model_ = &model;
     Apply( boost::bind( &NodeElement::SetModel, _1, boost::cref( model ) ) );
 }
 
@@ -78,7 +76,7 @@ void NodeProperties::Update( xml::xistream& xis )
     xis >> xml::start( "network" )
             >> xml::attribute( "name", name )
             >> xml::attribute( "type", type );
-    NodeElement& element = Get( ENT_Tr::ConvertToResourceType( type ) ); // should exist
+    NodeElement& element = Get( NodeElement::ConvertToResourceType( type ) ); // should exist
     element.Update( xis );
     xis  >> xml::end();
 }
@@ -90,29 +88,25 @@ void NodeProperties::Update( xml::xistream& xis )
 void NodeProperties::Update()
 {
     // update intermediate stocks
-    Apply( boost::bind( &NodeElement::UpdateImmediateStock, _1 ) );
+    Apply( boost::bind( &NodeElement::UpdateImmediateStock, _1, isFunctional_ ) );
     // get total consumption by resource type
     NodeElement::T_Consumptions consumptions;
     Apply( boost::bind( &NodeElement::AddConsumptions, _1, boost::ref( consumptions ) ) ); // TODO optimise and put in method above?
     // apply consumptions
-    bool criticalNotSatisfied = false;
+    isFunctional_ = true;
     for( NodeElement::CIT_Consumptions it = consumptions.begin(); it != consumptions.end(); ++it )
     {
         NodeElement* element = Find( it->first );
         if( element )
         {
             if( !element->Consume( it->second.amount_ ) && it->second.critical_ )
-                criticalNotSatisfied = true;
+                isFunctional_ = false;
         }
         else
             if( it->second.critical_ )
-                criticalNotSatisfied = true;
+                isFunctional_ = false;
     }
-    if( criticalNotSatisfied )
-    {
-        // TODO état fonctionnel -> 0
-    }
-    Apply( boost::bind( &NodeElement::DistributeResource, _1 ) );
+    Apply( boost::bind( &NodeElement::DistributeResource, _1, isFunctional_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -132,6 +126,7 @@ void NodeProperties::Push( int quantity, E_ResourceType resourceType )
 // -----------------------------------------------------------------------------
 void NodeProperties::Serialize( MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg ) const
 {
+    // TODO sérialiser isFunctional_?
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Serialize( *msg.add_resource_network() );
 }
@@ -158,6 +153,6 @@ void NodeProperties::Update( const Common::MsgMissionParameter_Value& msg )
 // -----------------------------------------------------------------------------
 void NodeProperties::ReadNode( xml::xistream& xis )
 {
-    E_ResourceType type = ENT_Tr::ConvertToResourceType( xis.attribute< std::string >( "resource" ) );
+    E_ResourceType type = NodeElement::ConvertToResourceType( xis.attribute< std::string >( "resource" ) );
     Register( type, *new NodeElement( xis, type ) );
 }

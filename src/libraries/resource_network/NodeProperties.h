@@ -73,7 +73,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const ResourceNetworkModel* model_; // useful?
+    bool isFunctional_;
     //@}
 };
 

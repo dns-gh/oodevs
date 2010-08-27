@@ -19,11 +19,13 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
 #include "gaming/StaticModel.h"
+#include "resource_network/Types.h"
 #include <qtable.h>
 
 using namespace actions;
 using namespace kernel;
 using namespace parameters;
+using namespace resource;
 
 // -----------------------------------------------------------------------------
 // Name: ResourceLinksDialog constructor

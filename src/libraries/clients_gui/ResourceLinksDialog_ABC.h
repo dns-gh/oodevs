@@ -11,7 +11,7 @@
 #define __ResourceLinksDialog_ABC_h_
 
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "resource_network/Types.h"
 
 namespace kernel
 {
@@ -75,8 +75,8 @@ protected:
     const kernel::ResourceNetwork_ABC* selected_;
     bool urban_;
     unsigned int id_;
-    QLabel* label_[ eNbrResourceType ];
-    QTable* table_[ eNbrResourceType ];
+    QLabel* label_[ resource::eNbrResourceType ];
+    QTable* table_[ resource::eNbrResourceType ];
     //@}
 };
 

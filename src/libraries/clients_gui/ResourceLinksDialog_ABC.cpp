@@ -15,10 +15,28 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
-#include "ENT/ENT_Tr.h"
 
 using namespace gui;
 using namespace kernel;
+using namespace resource;
+
+namespace
+{
+    QString ConvertFromResourceType( E_ResourceType type )
+    {
+        switch( type )
+        {
+        case eResourceType_Water:
+            return tools::translate( "ResourceLinksDialog_ABC", "Water" );
+        case eResourceType_Gaz:
+            return tools::translate( "ResourceLinksDialog_ABC", "Gaz" );
+        case eResourceType_Electricity:
+            return tools::translate( "ResourceLinksDialog_ABC", "Electricity" );
+        default:
+            throw std::exception( "Unknown resource type" ); 
+        }
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: ResourceLinksDialog_ABC constructor
@@ -39,7 +57,7 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QWidget* parent, Controllers& 
 
     for( int i = 0; i < eNbrResourceType; ++i )
     {
-        label_[ i ] = new QLabel( ENT_Tr::ConvertFromResourceType( static_cast< E_ResourceType >( i ), ENT_Tr::eToTr ).c_str(), this );
+        label_[ i ] = new QLabel( ConvertFromResourceType( static_cast< E_ResourceType >( i ) ), this );
         table_[ i ] = new QTable( this );
         table_[ i ]->setSelectionMode( QTable::NoSelection );
         table_[ i ]->setNumCols( 2 );

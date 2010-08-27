@@ -19,12 +19,30 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Viewport_ABC.h"
-#include "ENT/ENT_Tr.h"
 #include "protocol/protocol.h"
 #include <time.h>
 
 using namespace geometry;
 using namespace gui;
+using namespace resource;
+
+namespace
+{
+    QString ConvertFromResourceType( E_ResourceType type )
+    {
+        switch( type )
+        {
+        case eResourceType_Water:
+            return tools::translate( "ResourceNetwork", "Water" );
+        case eResourceType_Gaz:
+            return tools::translate( "ResourceNetwork", "Gaz" );
+        case eResourceType_Electricity:
+            return tools::translate( "ResourceNetwork", "Electricity" );
+        default:
+            throw std::exception( "Unknown resource type" ); 
+        }
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: ResourceNetwork constructor
@@ -80,14 +98,16 @@ void ResourceNetwork::Update( const MsgsSimToClient::MsgUrbanAttributes_Infrastr
             throw std::exception( "Bad resource type" );
         }
         ResourceNode& node = resourceNodes_[ type ];
-        node.isProducer_ = network.producer();
         node.type_ = type;
         node.isEnabled_ = network.enabled();
+        node.isProducer_ = network.has_production();
+        if( node.isProducer_ )
+            node.production_ = network.production();
         node.hasStock_ =  network.has_stock();
         if( node.hasStock_ )
             node.stock_ = network.stock();
 
-        const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + ENT_Tr::ConvertFromResourceType( type, ENT_Tr::eToTr ).c_str() + "/";
+        const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + ConvertFromResourceType( type ) + "/";
         if( node.hasStock_ )
                 controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Stock" ) ) );
 
@@ -98,6 +118,7 @@ void ResourceNetwork::Update( const MsgsSimToClient::MsgUrbanAttributes_Infrastr
             link.urban_ = network.link( j ).kind() == MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::urban;
             link.id_ = network.link( j ).target_id();
             link.capacity_ = network.link( j ).capacity();
+            link.flow_ = network.link( j ).flow();
             node.links_.push_back( link );
         }
     }
@@ -138,7 +159,7 @@ void ResourceNetwork::Draw( const Point2f&, const kernel::Viewport_ABC& viewport
             glEnable( GL_LINE_STIPPLE );
             for( std::vector< ResourceLink >::const_iterator link = node->second.links_.begin(); link != node->second.links_.end(); ++link )
             {
-                UpdateStipple( link->capacity_ );
+                UpdateStipple( link->flow_ );
                 if( link->urban_ )
                 {
                     TerrainObjectProxy& proxy = urbanResolver_.Get( link->id_ );
@@ -223,7 +244,7 @@ void ResourceNetwork::CreateDictionary( kernel::PropertiesDictionary& dico ) con
 {
     for( CIT_ResourceNodes node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
     {
-        const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + ENT_Tr::ConvertFromResourceType( node->second.type_, ENT_Tr::eToTr ).c_str() + "/";
+        const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + ConvertFromResourceType( node->second.type_ ) + "/";
         dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Enabled" ), node->second.isEnabled_ );
         dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Producer" ), node->second.isProducer_ );
         if( node->second.hasStock_ )

@@ -10,7 +10,6 @@
 #include "NodeElement.h"
 #include "ResourceLink.h"
 #include "ResourceNetworkModel.h"
-#include "ENT/ENT_Tr.h"
 #include "protocol/protocol.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -85,6 +84,21 @@ NodeElement::~NodeElement()
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeElement::ConvertToResourceType
+// Created: JSR 2010-08-27
+// -----------------------------------------------------------------------------
+E_ResourceType NodeElement::ConvertToResourceType( const std::string& type )
+{
+    if( type == "water" )
+        return eResourceType_Water;
+    if( type == "gaz" )
+        return eResourceType_Gaz;
+    if( type == "electricity" )
+        return eResourceType_Electricity;
+    throw std::exception( std::string( "Unknow resource type: " + type ).c_str() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeElement::SetModel
 // Created: JSR 2010-08-16
 // -----------------------------------------------------------------------------
@@ -134,12 +148,12 @@ void NodeElement::Update( xml::xistream& xis )
 // Name: NodeElement::UpdateImmediateStock
 // Created: JSR 2010-08-16
 // -----------------------------------------------------------------------------
-void NodeElement::UpdateImmediateStock()
+void NodeElement::UpdateImmediateStock( bool isFunctional )
 {
     if( !isActivated_ )
         return;
     immediateStock_ = receivedQuantity_ + isStockActive_ ? stockCapacity_ : 0;
-    if( isProducer_ )
+    if( isProducer_ && isFunctional )
     {
         if( productionCapacity_ == - 1 )
             immediateStock_ = -1;
@@ -188,9 +202,11 @@ bool NodeElement::Consume( int consumption )
 // Name: NodeElement::DistributeResource
 // Created: JSR 2010-08-16
 // -----------------------------------------------------------------------------
-void NodeElement::DistributeResource()
+void NodeElement::DistributeResource( bool isFunctional )
 {
-    if( !isActivated_ )
+    for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
+        ( *it )->SetFlow( 0 );
+    if( !isActivated_ || !isFunctional )
         return;
     if( immediateStock_ != 0 )
     {
@@ -219,7 +235,10 @@ void NodeElement::DoDistributeResource( T_ResourceLinks& links )
     {
         // remaining stock is sufficient
         for( CIT_ResourceLinks it = links.begin(); it != links.end(); ++it )
+        {
+            ( *it )->SetFlow( ( *it )->GetEfficientCapacity() );
             model_->Push( ( *it )->GetDestination(), ( *it )->GetDestinationKind()== ResourceLink::eDestinationKindUrban, ( *it )->GetEfficientCapacity(), resourceType_ );
+        }
         if( immediateStock_ != -1 )
             immediateStock_ -= totalFlow;
     }
@@ -233,6 +252,7 @@ void NodeElement::DoDistributeResource( T_ResourceLinks& links )
             int linkCapacity = ( *it )->GetEfficientCapacity();
             if( linkCapacity <= distributionMean )
             {
+                ( *it )->SetFlow( linkCapacity );
                 model_->Push( ( *it )->GetDestination(), ( *it )->GetDestinationKind()== ResourceLink::eDestinationKindUrban, linkCapacity, resourceType_ );
                 immediateStock_ -= linkCapacity;
                 updatedLinks.push_back( *it );
@@ -253,6 +273,7 @@ void NodeElement::DoDistributeResource( T_ResourceLinks& links )
                     distributed += excedent;
                     residual -= excedent;
                 }
+                ( *it )->SetFlow( distributed );
                 model_->Push( ( *it )->GetDestination(), ( *it )->GetDestinationKind()== ResourceLink::eDestinationKindUrban, distributed, resourceType_ );
             }
         }
@@ -275,7 +296,7 @@ void NodeElement::DoDistributeResource( T_ResourceLinks& links )
 // -----------------------------------------------------------------------------
 void NodeElement::Push( int quantity )
 {
-    receivedQuantity_ = isActivated_ ? quantity : 0;
+    receivedQuantity_ += isActivated_ ? quantity : 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -284,7 +305,6 @@ void NodeElement::Push( int quantity )
 // -----------------------------------------------------------------------------
 void NodeElement::Serialize( MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork& msg ) const
 {
-    msg.set_producer( isProducer_ );
     // TODO switch à virer quand on utilisera à dictionnaire
     switch( resourceType_ )
     {
@@ -302,6 +322,8 @@ void NodeElement::Serialize( MsgsSimToClient::MsgUrbanAttributes_Infrastructures
     msg.set_enabled( isActivated_ );
     if( isStockActive_ )
         msg.set_stock( stockCapacity_ );
+    if( isProducer_ )
+        msg.set_production( productionCapacity_ );
     for( CIT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
         ( *it )->Serialize( *msg.add_link() );
 }
@@ -349,7 +371,7 @@ void NodeElement::ReadLink( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void NodeElement::ReadConsumption( xml::xistream& xis )
 {
-    E_ResourceType type = ENT_Tr::ConvertToResourceType( xis.attribute< std::string >( "type" ) );
+    E_ResourceType type = ConvertToResourceType( xis.attribute< std::string >( "type" ) );
     Consumption consumption;
     consumption.amount_ = xis.attribute< int >( "amount" );
     consumption.critical_ = xis.attribute< bool >( "critical" );

@@ -30,8 +30,10 @@ class InfrastructuresAttribute : public UrbanObjectAttribute_ABC
             int kind_;
             unsigned int target_;
             int capacity_;
+            int flow_;
         };
         bool producer_;
+        unsigned int production_;
         unsigned int type_;
         bool enabled_;
         bool stockActive_;

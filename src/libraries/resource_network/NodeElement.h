@@ -10,7 +10,7 @@
 #ifndef __NodeElement_h_
 #define __NodeElement_h_
 
-#include "ENT/ENT_Enums_Gen.h"
+#include "Types.h"
 #include <map>
 #include <vector>
 
@@ -68,12 +68,13 @@ public:
 public:
     //! @name Operations
     //@{
+    static E_ResourceType ConvertToResourceType( const std::string& type );
     void SetModel( const ResourceNetworkModel& model );
     void Update( xml::xistream& xis );
-    void UpdateImmediateStock();
+    void UpdateImmediateStock( bool isFunctional );
     void AddConsumptions( T_Consumptions& consumptions ); 
     bool Consume( int consumption );
-    void DistributeResource();
+    void DistributeResource( bool isFunctional );
     void Push( int quantity );
     //@}
 

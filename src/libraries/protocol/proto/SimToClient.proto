@@ -1117,6 +1117,7 @@ message MsgUrbanAttributes {
                 required TargetKind kind  = 1;
                 required uint32 target_id = 2;
                 required int32  capacity  = 3;
+                required int32  flow      = 4;
             }
             enum ResourceType
             {
@@ -1124,11 +1125,11 @@ message MsgUrbanAttributes {
                 gaz         = 2;
                 electricity = 3;
             }
-            required bool         producer = 1;
-            required ResourceType type     = 2;
-            repeated Link         link     = 3;
-            required bool         enabled  = 4;
-            optional uint32       stock    = 5;
+            required ResourceType type       = 1;
+            repeated Link         link       = 2;
+            required bool         enabled    = 3;
+            optional uint32       stock      = 4;
+            optional uint32       production = 5;
         }
         repeated ResourceNetwork resource_network = 1;
     }
