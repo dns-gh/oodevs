@@ -207,6 +207,8 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Objects_GUI::eStructuralStateCapacityPresent]->Connect( &structural.bPresent_, bConnect );
     vItemConnectors_[ADN_Objects_GUI::eStructuralStateCapacity_Value]->Connect( &structural.rStructuralState_, bConnect );
 
+    builder.Link< ADN_Objects_Data::ADN_CapacityInfos_SealOff >( ADN_Objects_GUI::eSealOffCapacityPresent );
+
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Objects_GUI::eNbrGuiElements );
 }
 

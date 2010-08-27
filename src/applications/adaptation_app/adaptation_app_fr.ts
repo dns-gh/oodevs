@@ -3048,6 +3048,10 @@ du tireur</translation>
         <source>Initial value</source>
         <translation>Valeur initiale</translation>
     </message>
+    <message>
+        <source>SealOff</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>

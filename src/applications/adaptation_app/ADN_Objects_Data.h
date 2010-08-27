@@ -163,7 +163,8 @@ public:
         eAttitudeModifierCapacity,
         ePerceptionCapacity,
         eScatteringCapacity,
-        eDelayCapacity
+        eDelayCapacity,
+        eSealOffCapacity,
     };
 
     template< E_Capacities T, typename DefaultFieldsHolderType = NullType >
@@ -679,6 +680,18 @@ public:
 
     public:
         ADN_Type_Int humanByTimeStep_;
+    };
+
+    class ADN_CapacityInfos_SealOff
+        : public ADN_CapacityInfos_Default< eSealOffCapacity >
+    {
+    public:
+        ADN_CapacityInfos_SealOff();
+
+        void ReadArchive( xml::xistream& xis );
+        void WriteArchive( xml::xostream& xos );
+    public:
+
     };
 
 //*****************************************************************************

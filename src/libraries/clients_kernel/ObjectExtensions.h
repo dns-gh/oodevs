@@ -38,6 +38,7 @@ namespace kernel
     DECLARE_EXTENSION( StockAttribute_ABC )
     DECLARE_EXTENSION( OccupantAttribute_ABC )
     DECLARE_EXTENSION( DelayAttribute_ABC )
+    DECLARE_EXTENSION( SealOffAttribute_ABC )
 }
 
 #undef DECLARE_EXTENSION

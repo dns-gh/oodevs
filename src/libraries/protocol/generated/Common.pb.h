@@ -123,6 +123,7 @@ class MsgObjectAttributeToxicCloud;
 class MsgObjectAttributeFire;
 class MsgObjectAttributeMedicalTreatment;
 class MsgObjectAttributeNBCType;
+class MsgObjectAttributeSealOff;
 class MsgObjectAttributes;
 class MsgNote;
 class MsgMeteoAttributes;
@@ -9950,6 +9951,93 @@ class MsgObjectAttributeNBCType : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class MsgObjectAttributeSealOff : public ::google::protobuf::Message {
+ public:
+  MsgObjectAttributeSealOff();
+  virtual ~MsgObjectAttributeSealOff();
+  
+  MsgObjectAttributeSealOff(const MsgObjectAttributeSealOff& from);
+  
+  inline MsgObjectAttributeSealOff& operator=(const MsgObjectAttributeSealOff& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgObjectAttributeSealOff& default_instance();
+  void Swap(MsgObjectAttributeSealOff* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgObjectAttributeSealOff* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgObjectAttributeSealOff& from);
+  void MergeFrom(const MsgObjectAttributeSealOff& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required int32 level = 1;
+  inline bool has_level() const;
+  inline void clear_level();
+  static const int kLevelFieldNumber = 1;
+  inline ::google::protobuf::int32 level() const;
+  inline void set_level(::google::protobuf::int32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::int32 level_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgObjectAttributeSealOff* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class MsgObjectAttributes : public ::google::protobuf::Message {
  public:
   MsgObjectAttributes();
@@ -10115,6 +10203,13 @@ class MsgObjectAttributes : public ::google::protobuf::Message {
   inline const ::Common::MsgObjectAttributeEffectDelay& effect_delay() const;
   inline ::Common::MsgObjectAttributeEffectDelay* mutable_effect_delay();
   
+  // optional .Common.MsgObjectAttributeSealOff sealOff = 17;
+  inline bool has_sealoff() const;
+  inline void clear_sealoff();
+  static const int kSealOffFieldNumber = 17;
+  inline const ::Common::MsgObjectAttributeSealOff& sealoff() const;
+  inline ::Common::MsgObjectAttributeSealOff* mutable_sealoff();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -10135,11 +10230,12 @@ class MsgObjectAttributes : public ::google::protobuf::Message {
   ::Common::MsgObjectAttributeStock* stock_;
   ::Common::MsgObjectAttributeNBCType* nbc_agent_;
   ::Common::MsgObjectAttributeEffectDelay* effect_delay_;
+  ::Common::MsgObjectAttributeSealOff* sealoff_;
   friend void  protobuf_AddDesc_Common_2eproto();
   friend void protobuf_AssignDesc_Common_2eproto();
   friend void protobuf_ShutdownFile_Common_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(16 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(17 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -14759,6 +14855,26 @@ inline void MsgObjectAttributeNBCType::set_source_life_duration(::google::protob
 
 // -------------------------------------------------------------------
 
+// MsgObjectAttributeSealOff
+
+// required int32 level = 1;
+inline bool MsgObjectAttributeSealOff::has_level() const {
+  return _has_bit(0);
+}
+inline void MsgObjectAttributeSealOff::clear_level() {
+  level_ = 0;
+  _clear_bit(0);
+}
+inline ::google::protobuf::int32 MsgObjectAttributeSealOff::level() const {
+  return level_;
+}
+inline void MsgObjectAttributeSealOff::set_level(::google::protobuf::int32 value) {
+  _set_bit(0);
+  level_ = value;
+}
+
+// -------------------------------------------------------------------
+
 // MsgObjectAttributes
 
 // optional .Common.MsgObjectAttributeConstruction construction = 1;
@@ -15031,6 +15147,23 @@ inline ::Common::MsgObjectAttributeEffectDelay* MsgObjectAttributes::mutable_eff
   _set_bit(15);
   if (effect_delay_ == NULL) effect_delay_ = new ::Common::MsgObjectAttributeEffectDelay;
   return effect_delay_;
+}
+
+// optional .Common.MsgObjectAttributeSealOff sealOff = 17;
+inline bool MsgObjectAttributes::has_sealoff() const {
+  return _has_bit(16);
+}
+inline void MsgObjectAttributes::clear_sealoff() {
+  if (sealoff_ != NULL) sealoff_->::Common::MsgObjectAttributeSealOff::Clear();
+  _clear_bit(16);
+}
+inline const ::Common::MsgObjectAttributeSealOff& MsgObjectAttributes::sealoff() const {
+  return sealoff_ != NULL ? *sealoff_ : *default_instance_->sealoff_;
+}
+inline ::Common::MsgObjectAttributeSealOff* MsgObjectAttributes::mutable_sealoff() {
+  _set_bit(16);
+  if (sealoff_ == NULL) sealoff_ = new ::Common::MsgObjectAttributeSealOff;
+  return sealoff_;
 }
 
 // -------------------------------------------------------------------

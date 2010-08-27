@@ -16,6 +16,7 @@
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="MELEE Appuyer"/>
+        <mission name="MELEE Boucler"/>
         <mission name="MELEE Controler"/>
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Defendre"/>
@@ -46,6 +47,7 @@
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="MELEE Appuyer"/>
+        <mission name="MELEE Boucler"/>
         <mission name="MELEE Controler"/>
         <mission name="MELEE Eclairer un Itineraire"/>
         <mission name="MELEE Interdire"/>
@@ -67,6 +69,7 @@
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="MELEE Appuyer"/>
+        <mission name="MELEE Boucler"/>
         <mission name="MELEE Contre Attaquer sur un Point"/>
         <mission name="MELEE Contre Attaquer dans une Zone"/>
         <mission name="MELEE Controler"/>

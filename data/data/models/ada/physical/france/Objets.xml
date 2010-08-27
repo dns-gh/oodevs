@@ -332,4 +332,10 @@
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseBlocUrbain"/>
     <structural value="100"/>
   </object>
+  <object geometry="polygon" name="Zone bouclee" symbol="G*MPOGZ---****X" type="seal off area">
+    <avoidable distance="100"/>
+    <delay/>
+    <sealoff/>
+    <workable max-animator="10"/>
+  </object>
 </objects>

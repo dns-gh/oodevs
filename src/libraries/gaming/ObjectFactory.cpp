@@ -24,6 +24,7 @@
 #include "MedicalTreatmentAttribute.h"
 #include "ToxicCloudAttribute.h"
 #include "StockAttribute.h"
+#include "SealOffAttribute.h"
 #include "Explosions.h"
 #include "Model.h"
 #include "TeamsModel.h"
@@ -123,4 +124,7 @@ void ObjectFactory::Register( kernel::Object_ABC& result, const Common::MsgObjec
 
     if( attributes.has_stock() )
         result.Attach< kernel::StockAttribute_ABC >( *new StockAttribute( controllers_.controller_, static_.objectTypes_ ) );
+
+    if( attributes.has_sealoff()  )
+        result.Attach< kernel::SealOffAttribute_ABC >( *new SealOffAttribute( controllers_.controller_ ) );
 }

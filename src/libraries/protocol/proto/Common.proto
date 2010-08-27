@@ -715,6 +715,10 @@ message MsgObjectAttributeNBCType {
    required int32 concentration = 2;
    required int32 source_life_duration = 3;
 }
+
+message MsgObjectAttributeSealOff {
+   required int32 level = 1;
+}
    
 message MsgObjectAttributes {
    optional MsgObjectAttributeConstruction      construction        = 1;
@@ -733,6 +737,7 @@ message MsgObjectAttributes {
    optional MsgObjectAttributeStock             stock               = 14;
    optional MsgObjectAttributeNBCType           nbc_agent           = 15;
    optional MsgObjectAttributeEffectDelay       effect_delay        = 16;
+   optional MsgObjectAttributeSealOff           sealOff             = 17;
 }
 
 // LTO Begin

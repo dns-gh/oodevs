@@ -346,6 +346,11 @@ void ADN_Objects_GUI::Build()
         builder.AddField< ADN_EditLine_Int >( structural, tr( "Initial value"), vInfosConnectors[ eStructuralStateCapacity_Value ], tr( "%" ), ePercentage );
     }
 
+    ADN_GroupBox* sealOff = new ADN_GroupBox( 3, Qt::Horizontal, tr( "SealOff" ), hBox );
+    {
+        vInfosConnectors[ eSealOffCapacityPresent ] = & sealOff->GetConnector();
+    }
+
     // Connect the list to the interface.
     pList->SetItemConnectors( vInfosConnectors );
 

@@ -97,6 +97,7 @@ public:
         eDelayCapacityPresent,
         eStructuralStateCapacityPresent,
         eStructuralStateCapacity_Value,
+        eSealOffCapacityPresent,
         eNbrGuiElements
     };
 

@@ -437,6 +437,8 @@
   <report id="303" message="Munition autorisée : %1">
     <parameter type="DotationType"/>
   </report>
+  <report id="304" message="Debut du bouclage de la zone"/>
+  <report id="305" message="Fin du bouclage de la zone"/>
   <report id="3000" message="Embarquement - début"/>
   <report id="3001" message="Embarquement - interruption"/>
   <report id="3002" message="Embarquement - reprise"/>

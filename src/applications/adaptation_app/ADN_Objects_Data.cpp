@@ -1043,6 +1043,32 @@ void ADN_Objects_Data::ADN_CapacityInfos_Scattering::WriteArchive( xml::xostream
 }
 //@}
 
+//! @name ADN_CapacityInfos_SealOff
+//@{
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_SealOff
+// Created: MGD 2010-08-27
+// -----------------------------------------------------------------------------
+ADN_Objects_Data::ADN_CapacityInfos_SealOff::ADN_CapacityInfos_SealOff()
+{
+}
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_SealOff
+// Created: MGD 2010-08-27
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_SealOff::ReadArchive( xml::xistream& xis )
+{
+    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+}
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_SealOff
+// Created: MGD 2010-08-27
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_SealOff::WriteArchive( xml::xostream& /*xos*/ )
+{
+    // NOTHING
+}
+
 
 // =============================================================================
 // ObjectInfos
@@ -1090,6 +1116,7 @@ INIT_DATA( ADN_CapacityInfos_Structural      , "Structural",        "structural"
 INIT_DATA( ADN_CapacityInfos_AttitudeModifier, "AttitudeModifier",  "attitude-modifier" );
 INIT_DATA( ADN_CapacityInfos_Perception      , "Perception"      ,  "perception" );
 INIT_DATA( ADN_CapacityInfos_Scattering      , "Scattering"      ,  "scattering" );
+INIT_DATA( ADN_CapacityInfos_SealOff         , "SealOff"         ,  "sealoff" );
 
 #pragma warning( pop )
 
@@ -1166,6 +1193,7 @@ void ADN_Objects_Data::ObjectInfos::InitializeCapacities()
     capacities_[ ADN_CapacityInfos_AttitudeModifier::TAG ].reset( new ADN_CapacityInfos_AttitudeModifier() );
     capacities_[ ADN_CapacityInfos_Perception::TAG ].reset( new ADN_CapacityInfos_Perception() );
     capacities_[ ADN_CapacityInfos_Scattering::TAG ].reset( new ADN_CapacityInfos_Scattering() );
+    capacities_[ ADN_CapacityInfos_SealOff::TAG ].reset( new ADN_CapacityInfos_SealOff() );
 }
 
 // -----------------------------------------------------------------------------

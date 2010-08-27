@@ -2677,6 +2677,14 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Fire temperature:</source>
         <translation>Temperature du feu:</translation>
     </message>
+    <message>
+        <source>Decisionnal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sealing level:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>OrbatToolbar</name>

@@ -40,6 +40,7 @@
 #include "TerrainHeuristicCapacity.h"
 #include "TimeLimitedCapacity.h"
 #include "WorkableCapacity.h"
+#include "SealOffCapacity.h"
 #include "SupplyCapacity.h"
 #include "MIL_Object_ABC.h"
 #include "MIL_PropagationManager.h"
@@ -121,6 +122,7 @@ CapacityFactory::CapacityFactory()
     DoRegister( "perception", boost::bind( &AddBuilder< PerceptionCapacity >::Add, _1, _2 ) );
     DoRegister( "attitude-modifier", boost::bind( &AddBuilder< AttitudeModifierCapacity >::Add, _1, _2 ) );
     DoRegister( "scattering", boost::bind( &AddBuilder< ScatteringCapacity >::Add, _1, _2 ) );
+    DoRegister( "sealoff", boost::bind( &AddBuilder< SealOffCapacity >::Add, _1, _2 ) );
     DoRegister( "structural", boost::bind( &AddBuilder< StructuralCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< StructuralCapacity >::Update, _1, _2 ) );
     DoRegister( "resources", boost::bind( &AddBuilder< ResourceNetworkCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< ResourceNetworkCapacity >::Update, _1, _2 ) );
 }
