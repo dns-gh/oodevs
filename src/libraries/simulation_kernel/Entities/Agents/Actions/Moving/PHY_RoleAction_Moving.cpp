@@ -412,7 +412,6 @@ bool PHY_RoleAction_Moving::HasResources()
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Moving::SendRC( int nReportID ) const
 {
-
     MIL_Report::PostEvent( pion_, (MIL_Report::E_EngineReport)nReportID );
 }
 
