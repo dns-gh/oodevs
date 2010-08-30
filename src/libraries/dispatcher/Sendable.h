@@ -30,11 +30,18 @@ namespace dispatcher
 template< typename B = kernel::Entity_ABC >
 class Sendable : public SimpleEntity< B >
 {
-    public :
+public :
     //! @name Constructors/Destructor
     //@{
-    explicit Sendable( unsigned long id, const QString& name = "" );
-    virtual ~Sendable();
+    explicit Sendable( unsigned long id, const QString& name = "" )
+        : SimpleEntity( id, name )
+    {
+        // NOTHING
+    }
+    virtual ~Sendable()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
@@ -45,28 +52,6 @@ class Sendable : public SimpleEntity< B >
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const = 0;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: Sendable constructor
-// Created: MGD 2009-12-18
-// -----------------------------------------------------------------------------
-template< typename B >
-Sendable< B >::Sendable( unsigned long id, const QString& name /*= ""*/ )
-: SimpleEntity( id, name )
-{
-    // NOTHING
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: Sendable destructor
-// Created: MGD 2009-12-18
-// -----------------------------------------------------------------------------
-template< typename B >
-Sendable< B >::~Sendable()
-{
-    // NOTHING
-}
 
 }
 

@@ -17,7 +17,6 @@
 
 namespace dispatcher
 {
-
 // =============================================================================
 /** @class  SimpleEntity
     @brief  SimpleEntity
@@ -30,8 +29,16 @@ class SimpleEntity : public B
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit SimpleEntity( unsigned long id, const QString& name = "" );
-    virtual ~SimpleEntity();
+    explicit SimpleEntity( unsigned long id, const QString& name = "" )
+        : id_  ( id )
+        , name_( name )
+    {
+        // NOTHING
+    }
+    virtual ~SimpleEntity()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
@@ -42,12 +49,27 @@ public:
         B::Update( message );
     }
 
-    virtual QString GetName() const;
-    virtual unsigned long GetId() const;
+    virtual QString GetName() const
+    {
+        return name_;
+    }
+    virtual unsigned long GetId() const
+    {
+        return id_;
+    }
 
-    virtual void Select( kernel::ActionController& controller ) const;
-    virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
-    virtual void Activate( kernel::ActionController& controller ) const;
+    virtual void Select( kernel::ActionController& /*controller*/ ) const
+    {
+        // NOTHING
+    }
+    virtual void ContextMenu( kernel::ActionController& /*controller*/, const QPoint& /*where*/ ) const
+    {
+        // NOTHING
+    }
+    virtual void Activate( kernel::ActionController& /*controller*/ ) const
+    {
+        // NOTHING
+    }
     //@}
 
 private:
@@ -64,78 +86,6 @@ private:
     const QString name_;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: SimpleEntity constructor
-// Created: AGE 2008-06-20
-// -----------------------------------------------------------------------------
-template< typename B >
-SimpleEntity< B >::SimpleEntity( unsigned long id, const QString& name /*= ""*/ )
-    : id_  ( id )
-    , name_( name )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: SimpleEntity destructor
-// Created: AGE 2008-06-20
-// -----------------------------------------------------------------------------
-template< typename B >
-SimpleEntity< B >::~SimpleEntity()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: SimpleEntity::GetName
-// Created: AGE 2008-06-20
-// -----------------------------------------------------------------------------
-template< typename B >
-QString SimpleEntity< B >::GetName() const
-{
-    return name_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: SimpleEntity::GetId
-// Created: AGE 2008-06-20
-// -----------------------------------------------------------------------------
-template< typename B >
-unsigned long SimpleEntity< B >::GetId() const
-{
-    return id_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: SimpleEntity::Select
-// Created: AGE 2008-06-20
-// -----------------------------------------------------------------------------
-template< typename B >
-void SimpleEntity< B >::Select( kernel::ActionController& ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: SimpleEntity::ContextMenu
-// Created: AGE 2008-06-20
-// -----------------------------------------------------------------------------
-template< typename B >
-void SimpleEntity< B >::ContextMenu( kernel::ActionController& , const QPoint& ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: SimpleEntity::Activate
-// Created: AGE 2008-06-20
-// -----------------------------------------------------------------------------
-template< typename B >
-void SimpleEntity< B >::Activate( kernel::ActionController& ) const
-{
-    // NOTHING
-}
 
 }
 

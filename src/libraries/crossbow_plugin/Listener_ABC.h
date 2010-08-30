@@ -10,16 +10,10 @@
 #ifndef __Listener_ABC_h_
 #define __Listener_ABC_h_
 
-namespace dispatcher
-{
-    class Publisher_ABC;
-}
-
 namespace plugins
 {
 namespace crossbow
 {
-
 // =============================================================================
 /** @class  Listener_ABC
     @brief  Listener_ABC

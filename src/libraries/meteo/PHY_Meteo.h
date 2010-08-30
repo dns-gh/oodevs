@@ -10,11 +10,11 @@
 #ifndef __PHY_Meteo_h_
 #define __PHY_Meteo_h_
 
-#include <boost/noncopyable.hpp>
 #include "clients_kernel/Entity_ABC.h"
 #include "MT_Tools/MT_Tools_Types.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include <geometry/Types.h>
+#include <boost/noncopyable.hpp>
 
 namespace Common
 {
@@ -36,8 +36,6 @@ namespace xml
 {
     class xistream;
 }
-
-class Publisher_ABC;
 
 namespace weather
 {

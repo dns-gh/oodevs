@@ -41,10 +41,8 @@ Dispatcher::Dispatcher( const Config& config, int maxConnections )
     , logger_             ( new Logger() )
 {
     GOOGLE_PROTOBUF_VERIFY_VERSION;
-
     handler_->AddHandler( clientsNetworker_ );
     handler_->AddHandler( model_ );
-
     int argc = 0;
     qapp_.reset( new Application_ABC( argc, 0 ) );
     AddTranslations();
@@ -60,7 +58,6 @@ void Dispatcher::AddTranslations()
     settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
     QString locale = settings.readEntry( "/Common/Language", QTextCodec::locale() );
     qapp_->AddTranslator( locale, "messenger" );
-
 }
 
 // $$$$ AGE 2008-07-16: Les plugins / MessageHandlers doivent être enregistrés dans un certain ordre

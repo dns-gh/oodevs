@@ -34,8 +34,14 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit Agent_ABC( unsigned long id, const QString& name = "" )
-        : Sendable< kernel::Agent_ABC >( id, name ) {}
-    virtual ~Agent_ABC() {}
+        : Sendable< kernel::Agent_ABC >( id, name )
+    {
+        // NOTHING
+    }
+    virtual ~Agent_ABC()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Accessors

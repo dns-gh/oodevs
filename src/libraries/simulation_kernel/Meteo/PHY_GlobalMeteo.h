@@ -25,8 +25,6 @@ namespace weather
     class PHY_RawVisionData_ABC;
 }
 
-class Publisher_ABC;
-
 // =============================================================================
 /** @class  PHY_GlobalMeteo
     @brief  PHY Global meteo
