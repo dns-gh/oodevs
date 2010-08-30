@@ -23,7 +23,7 @@ namespace MsgsSimToClient
 namespace dispatcher
 {
     class Config;
-    class Model;
+    class Model_ABC;
 }
 
 namespace plugins
@@ -43,7 +43,7 @@ class SaverFacade : public dispatcher::MessageHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SaverFacade( dispatcher::Model& model, const dispatcher::Config& config );
+             SaverFacade( dispatcher::Model_ABC& model, const dispatcher::Config& config );
     virtual ~SaverFacade();
     //@}
 
@@ -69,7 +69,7 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::Model& model_;
+    dispatcher::Model_ABC& model_;
     std::auto_ptr< Saver > saver_;
     std::string encodingBuffer_;
     unsigned frameCount_;

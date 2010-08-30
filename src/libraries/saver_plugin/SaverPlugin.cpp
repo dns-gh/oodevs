@@ -16,7 +16,7 @@ using namespace plugins::saver;
 // Name: SaverPlugin constructor
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-SaverPlugin::SaverPlugin( dispatcher::Model& model, const dispatcher::Config& config )
+SaverPlugin::SaverPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& config )
     : saver_( new SaverFacade( model, config ) )
 {
     // NOTHING

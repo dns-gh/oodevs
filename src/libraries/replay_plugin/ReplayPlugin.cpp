@@ -10,7 +10,7 @@
 #include "ReplayPlugin.h"
 #include "ReplayExtensionFactory.h"
 #include "dispatcher/Loader.h"
-#include "dispatcher/Model.h"
+#include "dispatcher/Model_ABC.h"
 #include "dispatcher/Services.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
@@ -26,7 +26,7 @@ using namespace dispatcher;
 // Name: ReplayPlugin constructor
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-ReplayPlugin::ReplayPlugin( Model& model, ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& clientCommands,
+ReplayPlugin::ReplayPlugin( Model_ABC& model, ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& clientCommands,
                             Loader& loader, const ReplayModel_ABC& replayModel )
     : model_      ( model )
     , clients_    ( clients )

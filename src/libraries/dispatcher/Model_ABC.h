@@ -12,6 +12,16 @@
 
 #include "tools/Resolver.h"
 
+namespace kernel
+{
+    class ModelVisitor_ABC;
+}
+
+namespace Common
+{
+    enum EnumSimulationState;
+}
+
 namespace dispatcher
 {
     class Agent_ABC;
@@ -35,6 +45,7 @@ namespace dispatcher
     class Team_ABC;
     class UrbanObject;
     class Factory_ABC;
+    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  Model
@@ -55,6 +66,12 @@ public:
     //@{
     virtual void RegisterFactory( Factory_ABC& factory ) = 0;
     virtual void UnregisterFactory( Factory_ABC& factory ) = 0;
+
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const = 0;
+
+    virtual void Send( ClientPublisher_ABC& publisher ) const = 0;
+    virtual void SendFirstTick( ClientPublisher_ABC& publisher ) const = 0;
+    virtual void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, Common::EnumSimulationState status, unsigned int factor ) const = 0;
     //@}
 
     //! @name Accessors

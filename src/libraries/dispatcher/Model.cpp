@@ -461,7 +461,7 @@ void Model::SendFirstTick( ClientPublisher_ABC& publisher ) const
 // Name: Model::SendReplayInfo
 // Created: AGE 2007-10-15
 // -----------------------------------------------------------------------------
-void Model::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, Common::EnumSimulationState status, unsigned factor ) const
+void Model::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, Common::EnumSimulationState status, unsigned int factor ) const
 {
     simulation_->SendReplayInfo( publisher, totalTicks, status, factor );
 }

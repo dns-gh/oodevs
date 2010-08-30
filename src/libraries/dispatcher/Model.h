@@ -13,11 +13,6 @@
 #include "MessageHandler_ABC.h"
 #include "Model_ABC.h"
 
-namespace Common
-{
-    enum EnumSimulationState;
-}
-
 namespace kernel
 {
     class AgentType;
@@ -25,7 +20,6 @@ namespace kernel
     class FormationLevels;
     class FragOrderType;
     class MissionType;
-    class ModelVisitor_ABC;
     class ObjectType;
     class ObjectTypes;
     class StaticModel;
@@ -44,7 +38,6 @@ namespace dispatcher
     class MeteoModel;
     class SimulationModel;
     class UrbanKnowledge;
-    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  Model
@@ -67,10 +60,10 @@ public:
 
     virtual void Receive( const MsgsSimToClient::MsgSimToClient& asnMsg );
     void Update( const MsgsSimToClient::MsgSimToClient& asnMsg );
-    void Send( ClientPublisher_ABC& publisher ) const;
+    virtual void Send( ClientPublisher_ABC& publisher ) const;
 
-    void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, Common::EnumSimulationState status, unsigned factor ) const;
-    void SendFirstTick( ClientPublisher_ABC& publisher ) const;
+    virtual void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, Common::EnumSimulationState status, unsigned int factor ) const;
+    virtual void SendFirstTick( ClientPublisher_ABC& publisher ) const;
     //@}
 
     //! @name Operations
@@ -87,7 +80,7 @@ public:
 
     //! @name Accessors
     //@{
-    void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Accessors

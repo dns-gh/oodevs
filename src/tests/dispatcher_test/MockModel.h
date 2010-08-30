@@ -22,6 +22,10 @@ MOCK_BASE_CLASS( MockModel, dispatcher::Model_ABC )
 {
     MOCK_METHOD( RegisterFactory, 1 );
     MOCK_METHOD( UnregisterFactory, 1 );
+    MOCK_METHOD( Accept, 1 );
+    MOCK_METHOD( Send, 1 );
+    MOCK_METHOD( SendFirstTick, 1 );
+    MOCK_METHOD( SendReplayInfo, 4 );
     MOCK_METHOD( Sides, 0 );
     MOCK_METHOD( KnowledgeGroups, 0 );
     MOCK_METHOD( Formations, 0 );

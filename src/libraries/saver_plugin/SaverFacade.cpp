@@ -11,7 +11,7 @@
 #include "Saver.h"
 #include "Savable_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include "dispatcher/Model.h"
+#include "dispatcher/Model_ABC.h"
 #include "dispatcher/Visitors.h"
 #include "tools/OutputBinaryWrapper.h"
 #include <google/protobuf/Message.h>
@@ -24,7 +24,7 @@ using namespace plugins::saver;
 // Name: SaverFacade constructor
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-SaverFacade::SaverFacade( dispatcher::Model& model, const dispatcher::Config& config )
+SaverFacade::SaverFacade( dispatcher::Model_ABC& model, const dispatcher::Config& config )
     : model_     ( model )
     , saver_     ( new Saver( config ) )
     , frameCount_( 0 )
@@ -97,10 +97,10 @@ namespace
 {
     struct ModelMessage : public Savable_ABC, public dispatcher::ClientPublisher_ABC
     {
-        ModelMessage( dispatcher::Model& model, std::string& buffer, bool firstFrame )
-            : model_( &model )
-            , output_( 0 )
-            , buffer_( buffer )
+        ModelMessage( dispatcher::Model_ABC& model, std::string& buffer, bool firstFrame )
+            : model_     ( &model )
+            , output_    ( 0 )
+            , buffer_    ( buffer )
             , firstFrame_( firstFrame )
         {}
         virtual ~ModelMessage()
@@ -131,7 +131,7 @@ namespace
         virtual void Send( const MsgsMessengerToClient::MsgMessengerToClient& ) {}
         virtual void Send( const MsgsDispatcherToClient::MsgDispatcherToClient& ) {}
         virtual std::string GetEndpoint() const { return ""; }
-        dispatcher::Model* model_;
+        dispatcher::Model_ABC* model_;
         tools::OutputBinaryWrapper* output_;
         std::string& buffer_;
         bool firstFrame_;

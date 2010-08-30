@@ -15,7 +15,7 @@
 
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
     class Config;
 }
 
@@ -36,7 +36,7 @@ class SaverPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SaverPlugin( dispatcher::Model& model, const dispatcher::Config& config );
+             SaverPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& config );
     virtual ~SaverPlugin();
     //@}
 

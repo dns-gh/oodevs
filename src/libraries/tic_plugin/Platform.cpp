@@ -10,7 +10,6 @@
 #include "tic_plugin_pch.h"
 #include "Platform.h"
 #include "clients_kernel/ComponentType.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 
 using namespace plugins::tic;
 
