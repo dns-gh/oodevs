@@ -26,7 +26,6 @@
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/MIL_Army.h"
-#include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
@@ -597,10 +596,7 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
     assert( resultList_.empty() );
 
     if( !IsDestinationTrafficable() )
-    {
-        queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().PHY_MovingEntity_ABC::SendRC( MIL_Report::eReport_DifficultTerrain );
         Cancel();
-    }
     DEC_Path_ABC::Execute( pathfind );
 
 #ifndef NDEBUG
@@ -638,7 +634,7 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
 // -----------------------------------------------------------------------------
 bool DEC_Agent_Path::IsDestinationTrafficable() const
 {
-    const float weight = static_cast< float >( GetUnitMajorWeight() );
+    float weight = static_cast< float >( GetUnitMajorWeight() );
     for( CIT_PointVector it = pathPoints_.begin(); it != pathPoints_.end(); ++it )
     {
         if( !IsUrbanBlockTrafficable( *it, weight ) )
