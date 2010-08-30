@@ -12,7 +12,6 @@
 
 #include <boost/noncopyable.hpp>
 
-class OnComponentFunctor_ABC;
 class PHY_ComposantePion;
 
 // =============================================================================

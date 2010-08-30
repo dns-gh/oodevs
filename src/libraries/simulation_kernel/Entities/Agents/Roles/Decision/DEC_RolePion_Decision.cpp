@@ -307,6 +307,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< void( boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_ActionFunctions::Orientate, boost::ref( GetPion() ), _1 ) ) );
 
     // Embarquement / debarquement
+    brain.RegisterFunction( "DEC_Agent_EstEmbarquable",
+        boost::bind( &DEC_AgentFunctions::HasLoadable, boost::ref( GetPion() ) ) );
     brain.RegisterFunction( "DEC_Agent_EstEmbarque",
                             boost::bind( &DEC_AgentFunctions::IsLoaded, boost::ref( GetPion() ) ) );
     brain.RegisterFunction( "DEC_Agent_DureeEmbarquement",
@@ -412,6 +414,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     // Gestion des renforts
     brain.RegisterFunction( "DEC_Renforts" ,
         boost::function< std::vector<DEC_Decision_ABC*> () >( boost::bind( &DEC_MiscFunctions::GetReinforcements, boost::ref( GetPion() ) ) ) );
+     brain.RegisterFunction( "DEC_Agent_Renforts" ,
+        boost::function< std::vector<DEC_Decision_ABC*> ( DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::GetAgentReinforcements, _1 ) ) );
     brain.RegisterFunction( "DEC_Renforce",
         boost::function< bool ( const DEC_Decision_ABC* ) >(boost::bind( &DEC_MiscFunctions::Reinforce, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_AnnuleRenforcement" ,

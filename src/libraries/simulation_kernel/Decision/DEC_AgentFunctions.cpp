@@ -36,6 +36,7 @@
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Network/NET_Publisher_ABC.h"
+#include "OnComponentComputer_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "DEC_AutomateFunctions.h"
@@ -343,6 +344,53 @@ void DEC_AgentFunctions::DecisionalState( const MIL_Agent_ABC& callerAgent, cons
 bool DEC_AgentFunctions::IsLoaded( const MIL_Agent_ABC& callerAgent )
 {
     return callerAgent.GetRole< transport::PHY_RoleAction_Loading >().IsLoaded();
+}
+
+namespace
+{
+    class HasLoadableComputer : public OnComponentComputer_ABC
+    {
+    public:
+        //! @name Constructors/Destructor
+        //@{
+        HasLoadableComputer()
+            : bHasLoadable_( false )
+        {
+
+        }
+        virtual ~HasLoadableComputer() {}
+        //@}
+
+        //! @name Operations
+        //@{
+        virtual void ApplyOnComponent( PHY_ComposantePion& component )
+        {
+            if( component.IsLoadable() )
+                bHasLoadable_ = true;
+        }
+        //@}
+
+        //! @name Operations
+        //@{
+        bool HasLoadable()
+        {
+            return bHasLoadable_;
+        }
+        //@}
+
+    private :
+        bool bHasLoadable_;
+    };
+}
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::HasLoadable
+// Created: MGD 2010-08-30
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::HasLoadable( const MIL_Agent_ABC& callerAgent )
+{
+    HasLoadableComputer computer;
+    const_cast< MIL_Agent_ABC& >( callerAgent ).Execute< OnComponentComputer_ABC >( computer );
+    return computer.HasLoadable();
 }
 
 // -----------------------------------------------------------------------------

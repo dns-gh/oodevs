@@ -34,6 +34,14 @@ void DEC_MiscFunctions::SetMaxSpeedModificator( MIL_AgentPion& callerAgent, MT_F
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::GetAgentReinforcements
+// Created: MGD 2010-08-27
+// -----------------------------------------------------------------------------
+std::vector<DEC_Decision_ABC*> DEC_MiscFunctions::GetAgentReinforcements( const DEC_Decision_ABC* pAgent )
+{
+   return DEC_MiscFunctions::GetReinforcements( pAgent->GetPion() );
+}
+// -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::GetReinforcements
 // Created: NLD 2004-10-01
 // Modified: RPD 2009-08-03

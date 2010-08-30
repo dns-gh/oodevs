@@ -60,6 +60,7 @@ public:
 
     // Embarquement / débarquement
     static bool IsLoaded( const MIL_Agent_ABC& callerAgent );
+    static bool HasLoadable( const MIL_Agent_ABC& callerAgent );
     static MT_Float GetLoadingTime( const MIL_Agent_ABC& callerAgent );
     static MT_Float GetUnloadingTime( const MIL_Agent_ABC& callerAgent );
     static bool AreHumanTransportersReady( const MIL_Agent_ABC& callerAgent );
