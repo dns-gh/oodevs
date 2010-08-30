@@ -26,6 +26,7 @@
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/MIL_Army.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
