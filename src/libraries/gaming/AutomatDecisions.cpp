@@ -66,7 +66,7 @@ void AutomatDecisions::DoUpdate( const MsgsSimToClient::MsgAutomatAttributes& me
 void AutomatDecisions::DoUpdate( const Common::MsgAutomatOrder& message )
 {
     const tools::Resolver_ABC< Mission >& resolver = model_;
-    current_ = resolver.Find( message.mission() );
+    current_ = resolver.Find( message.type().id() );
     controller_.Update( *this );
 }
 
@@ -144,7 +144,7 @@ bool AutomatDecisions::IsEmbraye() const
 void AutomatDecisions::Engage() const
 {
     simulation::SetAutomatMode message;
-    message().set_oid( agent_.GetId() );
+    message().mutable_automate()->set_id( agent_.GetId() );
     message().set_mode( embraye );
     message.Send( publisher_, 0 );
 }
@@ -156,7 +156,7 @@ void AutomatDecisions::Engage() const
 void AutomatDecisions::Disengage() const
 {
     simulation::SetAutomatMode message;
-    message().set_oid( agent_.GetId() );
+    message().mutable_automate()->set_id( agent_.GetId() );
     message().set_mode( debraye );
     message.Send( publisher_, 0 );
 }

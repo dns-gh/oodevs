@@ -20,7 +20,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 MissionParameter_AgentKnowledge::MissionParameter_AgentKnowledge( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , agentKnowledge_     ( asn.value().unitknowledge().oid() )
+    , agentKnowledge_     ( asn.value().unitknowledge().id() )
 {
     // NOTHING
 }
@@ -41,5 +41,5 @@ MissionParameter_AgentKnowledge::~MissionParameter_AgentKnowledge()
 void MissionParameter_AgentKnowledge::Send( Common::MsgMissionParameter& asn ) const
 {
     MissionParameter_ABC::Send( asn );
-    asn.mutable_value()->mutable_unitknowledge()->set_oid( agentKnowledge_ );
+    asn.mutable_value()->mutable_unitknowledge()->set_id( agentKnowledge_ );
 }

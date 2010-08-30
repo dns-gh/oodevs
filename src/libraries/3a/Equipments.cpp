@@ -77,14 +77,14 @@ int Equipments::Extract( const MsgsSimToClient::MsgUnitAttributes& attributes )
     {
         --size;
         const MsgsSimToClient::EquipmentDotations_EquipmentDotation& equipment = attributes.dotation_eff_materiel().elem( size );
-        if( filter_.IsAllowed( equipment.type_equipement() ) )
+        if( filter_.IsAllowed( equipment.type().id() ) )
         {
             int quantity = 0;
             EquipmentDotationsMemberFn* data = equipmentData;
             for( unsigned i = 0; i < nEquipmentStates; ++i, ++data )
                 if( ( stateMask_ & ( 1 << i ) ) != 0 )
                     quantity += (equipment.**data)();
-            equipments_[ equipment.type_equipement() ] = quantity;
+            equipments_[ equipment.type().id() ] = quantity;
         }
     }
     int result = 0;

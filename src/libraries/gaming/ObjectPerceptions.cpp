@@ -38,11 +38,11 @@ ObjectPerceptions::~ObjectPerceptions()
 // -----------------------------------------------------------------------------
 void ObjectPerceptions::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
-    if( message.has_automat_perception()  )
+    if( message.has_perceiving_automats()  )
     {
         detectingAutomats_.clear();
-        detectingAutomats_.reserve( message.automat_perception().elem_size() );
-        for( int i = 0; i < message.automat_perception().elem_size(); ++i )
-            detectingAutomats_.push_back( & agentResolver_.Get( message.automat_perception().elem( i ) ) );
+        detectingAutomats_.reserve( message.perceiving_automats().elem_size() );
+        for( int i = 0; i < message.perceiving_automats().elem_size(); ++i )
+            detectingAutomats_.push_back( & agentResolver_.Get( message.perceiving_automats().elem( i ).id() ) );
     }
 }

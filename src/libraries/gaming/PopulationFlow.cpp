@@ -23,7 +23,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 PopulationFlow::PopulationFlow( const MsgsSimToClient::MsgPopulationFlowCreation& message, const CoordinateConverter_ABC& converter )
     : converter_ ( converter )
-    , nID_       ( message.oid() )
+    , nID_       ( message.id().id() )
     , itineraire_( )
     , flow_      ( 2, geometry::Point2f( 0, 0 ) )
     , nDirection_( 0 )

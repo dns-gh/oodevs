@@ -68,12 +68,13 @@ private:
 private:
     //! @name Member data
     //@{
-    const unsigned long id_;
-    const unsigned long emitter_;
-    const unsigned long report_;
+    const unsigned long                   id_;
+    const unsigned long                   emitter_;
+    const unsigned long                   report_;
     const MsgsSimToClient::EnumReportType type_;
-    std::string date_;
-    T_Parameters parameters_;
+    std::string                           date_;
+    T_Parameters                          parameters_;
+    Model&                                model_;
     //@}
 };
 

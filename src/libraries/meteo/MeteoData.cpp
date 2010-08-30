@@ -53,7 +53,7 @@ void MeteoData::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
 {
     client::ControlLocalMeteoCreation msg;
     Common::MsgMeteoAttributes* att = msg().mutable_attributes();
-    msg().set_oid( id_ );
+    msg().mutable_id()->set_id( id_ );
     att->set_wind_speed( static_cast< int >( wind_.rWindSpeed_ / conversionFactor_ ) );
     att->mutable_wind_direction()->set_heading( 0 );
     att->set_cloud_floor (nPlancherCouvertureNuageuse_ );
@@ -61,7 +61,7 @@ void MeteoData::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
     att->set_cloud_density( static_cast< int >( rDensiteCouvertureNuageuse_ ) );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( 0 );
-    att->set_lighting(Common::globalMeteoType_ );
+    //att->set_lighting( Common::globalMeteoType_ );
 
     geometry::Point2f downRight( rect_.Right(), rect_.Bottom() );
     geometry::Point2d latlong = converter_.ConvertToGeo( downRight );
@@ -82,6 +82,6 @@ void MeteoData::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
 void MeteoData::SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) const
 {
     client::ControlLocalMeteoDestruction msg;
-    msg().set_oid( id_ );
+    msg().mutable_id()->set_id( id_ );
     msg.Send( publisher );
 }

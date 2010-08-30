@@ -468,7 +468,6 @@ private:
     unsigned int nID_;
     std::string strMessage_;
     T_ParameterVector parameters_;
-
     static T_ReportMap reports_;
     static T_DiaEventVector diaEvents_;
     static MT_IdentifierManager ids_;

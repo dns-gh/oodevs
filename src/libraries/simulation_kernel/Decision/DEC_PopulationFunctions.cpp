@@ -32,8 +32,8 @@
 void DEC_PopulationFunctions::DecisionalState( const MIL_Population& callerPopulation, const std::string& key, const std::string& value )
 {
     client::DecisionalState msg;
-    msg().set_oid( callerPopulation.GetID() );
-    msg().set_key( key.c_str() );
+    msg().mutable_id()->mutable_population()->set_id( callerPopulation.GetID() );
+    msg().set_key  ( key.c_str() );
     msg().set_value( value.c_str() );
     msg.Send( NET_Publisher_ABC::Publisher() );
 }

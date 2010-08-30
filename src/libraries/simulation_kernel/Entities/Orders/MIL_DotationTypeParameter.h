@@ -25,7 +25,7 @@ class MIL_DotationTypeParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_DotationTypeParameter( const Common::MsgDotationType & asn );
+    explicit MIL_DotationTypeParameter( const Common::ResourceType & asn );
     explicit MIL_DotationTypeParameter( const PHY_DotationCategory* pCategory );
     virtual ~MIL_DotationTypeParameter();
     //@}
@@ -37,7 +37,7 @@ public:
 
     //! @name Conversions
     //@{
-    virtual bool ToDotationType( Common::MsgDotationType& ) const;
+    virtual bool ToDotationType( Common::ResourceType& ) const;
     virtual bool ToDotationType( const PHY_DotationCategory*& ) const;
     //@}
 

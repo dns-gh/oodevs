@@ -34,11 +34,11 @@ ObjectKnowledgeList::ObjectKnowledgeList( const OrderParameter& parameter )
 // Name: ObjectKnowledgeList constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ObjectKnowledgeList::ObjectKnowledgeList( const OrderParameter& parameter, const Common::MsgObjectKnowledgeList& message, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
+ObjectKnowledgeList::ObjectKnowledgeList( const OrderParameter& parameter, const Common::ObjectKnowledgeIdList& message, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
     for( int i = 0; i < message.elem_size(); ++i )
-        AddParameter( *new ObjectKnowledge( OrderParameter( tools::translate( "Parameter", "Object knowledge %1" ).arg( i + 1 ).ascii(), "objectknowledge", false ), message.elem().Get(i).oid(), converter, owner, controller ) );
+        AddParameter( *new ObjectKnowledge( OrderParameter( tools::translate( "Parameter", "Object knowledge %1" ).arg( i + 1 ).ascii(), "objectknowledge", false ), message.elem().Get(i).id(), converter, owner, controller ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,12 +73,12 @@ namespace
 {
     struct AsnSerializer : public ParameterVisitor_ABC
     {
-        explicit AsnSerializer( Common::MsgObjectKnowledgeList& message ) : message_( &message ) {}
+        explicit AsnSerializer( Common::ObjectKnowledgeIdList& message ) : message_( &message ) {}
         virtual void Visit( const ObjectKnowledge& param )
         {
             param.CommitTo( *message_->add_elem() );
         }
-        Common::MsgObjectKnowledgeList* message_;
+        Common::ObjectKnowledgeIdList* message_;
     };
 }
 
@@ -89,7 +89,7 @@ namespace
 void ObjectKnowledgeList::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
-    Common::MsgObjectKnowledgeList* list = message.mutable_value()->mutable_objectknowledgelist();
+    Common::ObjectKnowledgeIdList* list = message.mutable_value()->mutable_objectknowledgelist();
     if( IsSet() )
     {
         AsnSerializer serializer( *list );

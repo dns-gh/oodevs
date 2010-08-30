@@ -95,14 +95,14 @@ void AgentKnowledge::CommitTo( Common::MsgMissionParameter& message ) const
     message.set_null_value( !IsSet() );
     message.mutable_value()->mutable_unitknowledge();    // enforce initialisation of parameter to force his type
     if( IsSet() )
-        Entity< AgentKnowledge_ABC >::CommitTo( boost::bind ( &Common::MsgUnitKnowledge::set_oid, boost::ref(*message.mutable_value()->mutable_unitknowledge()), _1 ) );
+        Entity< AgentKnowledge_ABC >::CommitTo( boost::bind ( &Common::UnitKnowledgeId::set_id, boost::ref(*message.mutable_value()->mutable_unitknowledge()), _1 ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void AgentKnowledge::CommitTo( Common::MsgUnitKnowledge& message ) const
+void AgentKnowledge::CommitTo( Common::UnitKnowledgeId& message ) const
 {
     Entity< AgentKnowledge_ABC >::CommitTo( message );
 }

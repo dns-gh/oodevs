@@ -40,7 +40,7 @@ int Resources::Extract( const MsgsSimToClient::MsgUnitAttributes& attributes )
     while( size > 0 )
     {
         --size;
-        const int dotation = attributes.dotation_eff_ressource().elem( size ).ressource_id();
+        const int dotation = attributes.dotation_eff_ressource().elem( size ).type().id();
         const int quantity = attributes.dotation_eff_ressource().elem( size ).quantite_disponible();
         if( filter_.IsAllowed( dotation ) )
             resources_[ dotation ] = quantity;

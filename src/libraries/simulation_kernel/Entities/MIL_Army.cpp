@@ -566,7 +566,7 @@ E_Tristate MIL_Army::IsNeutral( const MIL_Army_ABC& army ) const
 void MIL_Army::SendCreation() const
 {
     client::TeamCreation asn;
-    asn().set_oid( nID_ );
+    asn().mutable_id()->set_id( nID_ );
     asn().set_nom( strName_.c_str() );
     asn().set_type( Common::EnumDiplomacy( nType_ ) );
     asn.Send( NET_Publisher_ABC::Publisher() );
@@ -585,8 +585,8 @@ void MIL_Army::SendFullState() const
     for( CIT_DiplomacyMap it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
     {
         client::ChangeDiplomacy asn;
-        asn().set_oid_camp1( nID_ );
-        asn().set_oid_camp2( it->first->GetID() );
+        asn().mutable_party1()->set_id( nID_ );
+        asn().mutable_party2()->set_id( it->first->GetID() );
         asn().set_diplomatie( Common::EnumDiplomacy( it->second ) );
         asn.Send( NET_Publisher_ABC::Publisher() );
     }

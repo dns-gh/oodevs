@@ -20,10 +20,10 @@ namespace kernel
 
 namespace Common
 {
-    class MsgUnitFire;
-    class MsgUnit;
-    enum MsgStartUnitFire_type;
-    class MsgDotationType;
+    class FireId;
+    class UnitId;
+    enum  MsgStartUnitFire_type;
+    class ResourceType;
     class MsgCoordLatLong;
 }
 
@@ -70,15 +70,15 @@ private:
 private:
     //! @name Member data
     //@{
-    Common::MsgUnitFire              oid_tir_;
-    Common::MsgUnit                  tireur_;
-    Common::MsgStartUnitFire_type    type_;
-    bool                             munitionPresent_;
-    Common::MsgDotationType          munition_;
-    int                              typeCible_;
-    int                              oid_cible_;
-    int                              population_cible_;
-    Common::MsgCoordLatLong          positionCible_;
+    Common::FireId                oid_tir_;
+    Common::UnitId                tireur_;
+    Common::MsgStartUnitFire_type type_;
+    bool                          munitionPresent_;
+    Common::ResourceType          munition_;
+    int                           typeCible_;
+    int                           oid_cible_;
+    int                           population_cible_;
+    Common::MsgCoordLatLong       positionCible_;
     //@}
 };
 

@@ -28,7 +28,7 @@ MIL_ObjectKnowledgeParameter::MIL_ObjectKnowledgeParameter( boost::shared_ptr< D
 // Name: MIL_ObjectKnowledgeParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_ObjectKnowledgeParameter::MIL_ObjectKnowledgeParameter( const Common::MsgObjectKnowledge& asn, const DEC_KnowledgeResolver_ABC& resolver )
+MIL_ObjectKnowledgeParameter::MIL_ObjectKnowledgeParameter( const Common::ObjectKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver )
     : pKnowledgeObject_( resolver.ResolveKnowledgeObject( asn ) )
 {
     // NOTHING
@@ -56,9 +56,9 @@ bool MIL_ObjectKnowledgeParameter::IsOfType( const MIL_ParameterType_ABC& type )
 // Name: MIL_ObjectKnowledgeParameter::ToObjectKnowledge
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool MIL_ObjectKnowledgeParameter::ToObjectKnowledge( Common::MsgObjectKnowledge& asn ) const
+bool MIL_ObjectKnowledgeParameter::ToObjectKnowledge( Common::ObjectKnowledgeId& asn ) const
 {
-    asn.set_oid( pKnowledgeObject_->GetID() );
+    asn.set_id( pKnowledgeObject_->GetID() );
     return true;
 }
 

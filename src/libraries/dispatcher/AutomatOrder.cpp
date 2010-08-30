@@ -21,7 +21,7 @@ using namespace dispatcher;
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 AutomatOrder::AutomatOrder( Model_ABC& model, Automat& automat, const Common::MsgAutomatOrder& asn )
-    : Order_ABC ( model, asn.mission(), asn.parametres() )
+    : Order_ABC ( model, asn.type().id(), asn.parameters() )
     , automat_  ( automat )
 {
     // NOTHING
@@ -43,11 +43,10 @@ AutomatOrder::~AutomatOrder()
 void AutomatOrder::Send( ClientPublisher_ABC& publisher )
 {
     client::AutomatOrder asn;
-    asn().set_oid(automat_.GetId());
-    asn().set_mission( missionID_ );
-    Order_ABC::Send( *asn().mutable_parametres() );
+    asn().mutable_tasker()->set_id( automat_.GetId() );
+    asn().mutable_type()->set_id( missionID_ );   
+    Order_ABC::Send( *asn().mutable_parameters() );
     asn.Send( publisher );
-    Delete( *asn().mutable_parametres() );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,8 +57,8 @@ void AutomatOrder::Send( ClientPublisher_ABC& publisher )
 void AutomatOrder::SendNoMission( const Automat& automat, ClientPublisher_ABC& publisher )
 {
     client::AutomatOrder asn;
-    asn().set_oid          ( automat.GetId() );
-    asn().set_mission      ( 0 );
-    asn().mutable_parametres(); // $$$$ FHD 2009-10-28: should be removed if field is optional inprotocol
+    asn().mutable_tasker()->set_id( automat.GetId() );
+    asn().mutable_type()->set_id( 0 );
+    asn().mutable_parameters(); // $$$$ FHD 2009-10-28: should be removed if field is optional inprotocol
     asn.Send( publisher );
 }

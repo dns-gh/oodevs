@@ -90,7 +90,7 @@ Intelligence_ABC* IntelligenceFactory::Create( Entity_ABC& superior, const std::
     message().mutable_intelligence()->set_diplomacy( ConvertToDiplomacy( karma ) );
     message().mutable_intelligence()->set_embarked( mounted );
     converter_.ConvertToGeo< Common::MsgCoordLatLong >( position, *message().mutable_intelligence()->mutable_location() );
-    message().mutable_intelligence()->mutable_formation()->set_oid( superior.GetId() );
+    message().mutable_intelligence()->mutable_formation()->set_id( superior.GetId() );
     message.Send( publisher_ );
     return 0;
 }

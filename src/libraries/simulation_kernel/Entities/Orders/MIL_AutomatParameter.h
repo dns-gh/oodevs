@@ -27,7 +27,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_AutomatParameter( DEC_AutomateDecision* pDecision );
-             MIL_AutomatParameter( const Common::MsgAutomat&, MIL_EntityManager_ABC& entityManager );
+             MIL_AutomatParameter( const Common::AutomatId&, MIL_EntityManager_ABC& entityManager );
     virtual ~MIL_AutomatParameter();
     //@}
 
@@ -38,7 +38,7 @@ public:
 
     //! @name Conversions
     //@{
-    virtual bool ToAutomat( Common::MsgAutomat& ) const;
+    virtual bool ToAutomat( Common::AutomatId& ) const;
     virtual bool ToAutomat( DEC_Decision_ABC*& ) const;
     //@}
 

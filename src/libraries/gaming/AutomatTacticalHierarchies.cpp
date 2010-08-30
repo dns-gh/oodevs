@@ -47,10 +47,10 @@ AutomatTacticalHierarchies::~AutomatTacticalHierarchies()
 // -----------------------------------------------------------------------------
 void AutomatTacticalHierarchies::DoUpdate( const Common::MsgAutomatChangeSuperior& message )
 {
-    if( message.oid_superior().has_automate() )
-        ChangeSuperior( &automatResolver_.Get( message.oid_superior().automate().oid() ) );
-    else if( message.oid_superior().has_formation() )
-        ChangeSuperior( &formationResolver_.Get( message.oid_superior().formation().oid() ) );
+    if( message.superior().has_automat() )
+        ChangeSuperior( &automatResolver_.Get( message.superior().automat().id() ) );
+    else if( message.superior().has_formation() )
+        ChangeSuperior( &formationResolver_.Get( message.superior().formation().id() ) );
 }
 
 // -----------------------------------------------------------------------------

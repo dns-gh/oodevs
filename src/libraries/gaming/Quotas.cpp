@@ -40,7 +40,7 @@ void Quotas::DoUpdate( const MsgsSimToClient::MsgLogSupplyQuotas& message )
 {
     quotas_.resize( message.quotas().elem_size() );
     for( int i = 0; i < message.quotas().elem_size(); ++i )
-        quotas_[ i ] = Dotation( dotationResolver_.Get( message.quotas().elem( i ).ressource_id() )
+        quotas_[ i ] = Dotation( dotationResolver_.Get( message.quotas().elem( i ).ressource_id().id() )
                                , message.quotas().elem( i ).quota_disponible() );
     controller_.Update( *this );
 }

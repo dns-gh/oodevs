@@ -68,8 +68,8 @@ void Dotations::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
     while ( nSize > 0 )
     {
         const MsgsSimToClient::ResourceDotations_ResourceDotation& value = message.dotation_eff_ressource().elem( --nSize );
-        Dotation previous( resolver_.Get( value.ressource_id() ) );
-        if( Dotation* dotation = Find( value.ressource_id() ) )
+        Dotation previous( resolver_.Get( value.type().id() ) );
+        if( Dotation* dotation = Find( value.type().id() ) )
             previous = *dotation;
         Dotation current( previous );
         current.quantity_ = value.quantite_disponible();

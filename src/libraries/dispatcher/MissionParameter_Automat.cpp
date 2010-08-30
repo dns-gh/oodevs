@@ -20,7 +20,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 MissionParameter_Automat::MissionParameter_Automat( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , automat_            ( asn.value().automat().oid() )
+    , automat_            ( asn.value().automat().id() )
 {
     // NOTHING
 }
@@ -41,5 +41,5 @@ MissionParameter_Automat::~MissionParameter_Automat()
 void MissionParameter_Automat::Send( Common::MsgMissionParameter& asn ) const
 {
     MissionParameter_ABC::Send( asn );
-    asn.mutable_value()->mutable_automat()->set_oid( automat_ );
+    asn.mutable_value()->mutable_automat()->set_id( automat_ );
 }

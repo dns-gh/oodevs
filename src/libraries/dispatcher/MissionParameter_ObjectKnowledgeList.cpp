@@ -23,7 +23,7 @@ MissionParameter_ObjectKnowledgeList::MissionParameter_ObjectKnowledgeList( cons
 {
     objectKnowledges_.reserve( asn.value().objectknowledgelist().elem_size() );
     for( int i = 0; i < asn.value().objectknowledgelist().elem_size(); ++i )
-        objectKnowledges_.push_back( asn.value().objectknowledgelist().elem( i ).oid() );
+        objectKnowledges_.push_back( asn.value().objectknowledgelist().elem( i ).id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,5 +44,5 @@ void MissionParameter_ObjectKnowledgeList::Send( Common::MsgMissionParameter& as
     MissionParameter_ABC::Send( asn );
     asn.mutable_value()->mutable_objectknowledgelist();
     for( std::vector< int >::const_iterator it = objectKnowledges_.begin(); it != objectKnowledges_.end(); ++it )
-        asn.mutable_value()->mutable_objectknowledgelist()->add_elem()->set_oid( *it );
+        asn.mutable_value()->mutable_objectknowledgelist()->add_elem()->set_id( *it );
 }

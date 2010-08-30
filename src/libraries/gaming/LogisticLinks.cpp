@@ -101,10 +101,10 @@ Automat_ABC* LogisticLinks::GetSupply() const
 // -----------------------------------------------------------------------------
 void LogisticLinks::DoUpdate( const Common::MsgAutomatChangeLogisticLinks& message )
 {
-    tc2_ = message.has_oid_tc2()? resolver_.Find( message.oid_tc2() ) : 0;
-    maintenanceSuperior_ = message.has_oid_maintenance() ? resolver_.Find( message.oid_maintenance() ) : 0;
-    medicalSuperior_ = message.has_oid_sante() ? resolver_.Find( message.oid_sante() ) : 0;
-    supplySuperior_ = message.has_oid_ravitaillement() ? resolver_.Find( message.oid_ravitaillement() ) : 0;
+    tc2_ = message.has_tc2()? resolver_.Find( message.tc2().id() ) : 0;
+    maintenanceSuperior_ = message.has_maintenance() ? resolver_.Find( message.maintenance().id() ) : 0;
+    medicalSuperior_ = message.has_health() ? resolver_.Find( message.health().id() ) : 0;
+    supplySuperior_ = message.has_supply() ? resolver_.Find( message.supply().id() ) : 0;
 
     controller_.Update( *(LogisticLinks_ABC*)this );
 }

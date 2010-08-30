@@ -37,12 +37,12 @@ using namespace dispatcher;
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
 ObjectKnowledge::ObjectKnowledge( const Model_ABC& model, const MsgsSimToClient::MsgObjectKnowledgeCreation& message )
-    : dispatcher::ObjectKnowledge_ABC( message.oid() )
+    : dispatcher::ObjectKnowledge_ABC( message.id().id() )
     , model_                         ( model )
-    , team_                          ( model.Sides().Get( message.team() ) )
-    , pObject_                       ( model.Objects().Find( message.real_object() ) )
-    , nType_                         ( message.type() )
-    , knowledgeGroup_                ( message.has_group() ? &model.KnowledgeGroups().Get( message.group() ) : 0 )
+    , team_                          ( model.Sides().Get( message.party().id() ) )
+    , pObject_                       ( model.Objects().Find( message.object().id() ) )
+    , nType_                         ( message.type().id() )
+    , knowledgeGroup_                ( message.has_knowledge_group() ? &model.KnowledgeGroups().Get( message.knowledge_group().id() ) : 0 )
     , localisation_                  ()
     , bPerceived_                    ( false )
     , automatPerceptions_            ()
@@ -142,8 +142,8 @@ void ObjectKnowledge::AddAttribute( ObjectAttribute_ABC* attribute )
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeCreation& message )
 {
-    if( ( message.real_object() && ! pObject_ ) || ( pObject_ && pObject_->GetId() != ( unsigned int )message.real_object() ) )
-        pObject_ = model_.Objects().Find( message.real_object() );
+    if( ( message.object().id() && ! pObject_ ) || ( pObject_ && pObject_->GetId() != ( unsigned int )message.object().id() ) )
+        pObject_ = model_.Objects().Find( message.object().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -167,16 +167,16 @@ void ObjectKnowledge::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate&
         nRelevance_ = message.relevance();
         optionals_.relevancePresent = 1;
     }
-    if( message.has_automat_perception() )
+    if( message.has_perceiving_automats() )
     {
         optionals_.automat_perceptionPresent = 1;
         automatPerceptions_.clear();
-        for( int i = 0; i < message.automat_perception().elem_size(); ++i )
-            automatPerceptions_.push_back( &model_.Automats().Get( message.automat_perception().elem( i )) );
+        for( int i = 0; i < message.perceiving_automats().elem_size(); ++i )
+            automatPerceptions_.push_back( &model_.Automats().Get( message.perceiving_automats().elem( i ).id() ) );
     }
-    if( message.has_real_object() )
+    if( message.has_object() )
     {
-        pObject_ = model_.Objects().Find( message.real_object() );
+        pObject_ = model_.Objects().Find( message.object().id() );
         optionals_.realObjectPresent = 1;
     }
     if( message.attributes().has_construction() )
@@ -212,13 +212,13 @@ void ObjectKnowledge::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate&
 void ObjectKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::ObjectKnowledgeCreation asn;
-    asn().set_oid( GetId() );
-    asn().set_team( team_.GetId() );
+    asn().mutable_id()->set_id( GetId() );
+    asn().mutable_party()->set_id( team_.GetId() );
     if( knowledgeGroup_ )
-        asn().set_group( knowledgeGroup_->GetId() );
+        asn().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
     if( optionals_.realObjectPresent )
-        asn().set_real_object( pObject_ ? pObject_->GetId() : 0 );
-    asn().set_type( nType_ );
+        asn().mutable_object()->set_id( pObject_ ? pObject_->GetId() : 0 );
+    asn().mutable_type()->set_id( nType_ );  // $$$$ _RC_ PHC 2010-07-07: ???
     std::for_each( attributes_.begin(), attributes_.end(),
                    boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
     asn.Send( publisher );
@@ -231,12 +231,12 @@ void ObjectKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 void ObjectKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::ObjectKnowledgeUpdate message;
-    message().set_oid( GetId() );
-    message().set_team( team_.GetId() );
+    message().mutable_id()->set_id( GetId() );
+    message().mutable_party()->set_id( team_.GetId() );
     if( knowledgeGroup_ )
-        message().set_group( knowledgeGroup_->GetId() );
+        message().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
     if( optionals_.realObjectPresent )
-        message().set_real_object( pObject_ ? pObject_->GetId() : 0 );
+        message().mutable_object()->set_id( pObject_ ? pObject_->GetId() : 0 );
     if( optionals_.locationPresent )
         localisation_.Send( *message().mutable_location() );
     if( optionals_.perceivedPresent )
@@ -245,8 +245,10 @@ void ObjectKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         message().set_relevance( nRelevance_ );
     if( optionals_.automat_perceptionPresent )
         for( std::vector< const kernel::Automat_ABC* >::const_iterator it = automatPerceptions_.begin(); it != automatPerceptions_.end(); ++it )
-            message().mutable_automat_perception()->add_elem( (*it)->GetId() );
-    message().mutable_attributes();
+        {
+            Common::AutomatId& data = *message().mutable_perceiving_automats()->add_elem();
+            data.set_id( (*it)->GetId() );
+        }
     std::for_each( attributes_.begin(), attributes_.end(),
                    boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( *message().mutable_attributes() ) ) );
     message.Send( publisher );
@@ -259,8 +261,8 @@ void ObjectKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 void ObjectKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::ObjectKnowledgeDestruction asn;
-    asn().set_oid( GetId() );
-    asn().set_team( team_.GetId() );
+    asn().mutable_id()->set_id( GetId() );
+    asn().mutable_party()->set_id( team_.GetId());
     asn.Send( publisher );
 }
 

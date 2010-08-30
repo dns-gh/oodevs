@@ -23,7 +23,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 PopulationConcentration::PopulationConcentration( const MsgsSimToClient::MsgPopulationConcentrationCreation& message, const CoordinateConverter_ABC& converter, float density )
     : position_( converter.ConvertToXY( message.position() ) )
-    , nID_( message.oid() )
+    , nID_( message.id().id() )
     , density_ ( density )
     , nLivingHumans_( 0 )
     , nDeadHumans_( 0 )

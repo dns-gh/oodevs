@@ -26,7 +26,7 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 Side::Side( const Model_ABC& model, const MsgsSimToClient::MsgTeamCreation& msg )
-    : Team_ABC( msg.oid(), QString( msg.nom().c_str() ) )
+    : Team_ABC( msg.id().id(), QString( msg.nom().c_str() ) )
     , model_( model )
     , name_( msg.nom() )
     , nType_( msg.type() )
@@ -56,7 +56,7 @@ Side::~Side()
 // -----------------------------------------------------------------------------
 void Side::DoUpdate( const Common::MsgChangeDiplomacy& asnMsg )
 {
-    const kernel::Team_ABC& side = model_.Sides().Get( asnMsg.oid_camp2() );
+    const kernel::Team_ABC& side = model_.Sides().Get( asnMsg.party2().id() );
     diplomacies_[ &side ] = asnMsg.diplomatie();
 }
 
@@ -66,7 +66,7 @@ void Side::DoUpdate( const Common::MsgChangeDiplomacy& asnMsg )
 // -----------------------------------------------------------------------------
 void Side::DoUpdate( const MsgsSimToClient::MsgChangeDiplomacyAck& asnMsg )
 {
-    const kernel::Team_ABC& side = model_.Sides().Get( asnMsg.oid_camp2() );
+    const kernel::Team_ABC& side = model_.Sides().Get( asnMsg.party2().id() );
     diplomacies_[ &side ] = asnMsg.diplomatie();
 }
 
@@ -77,7 +77,7 @@ void Side::DoUpdate( const MsgsSimToClient::MsgChangeDiplomacyAck& asnMsg )
 void Side::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::TeamCreation asn;
-    asn().set_oid( GetId() );
+    asn().mutable_id()->set_id( GetId() );
     asn().set_nom( name_.c_str() );
     asn().set_type( nType_ );
     asn.Send( publisher );
@@ -92,8 +92,8 @@ void Side::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     for( T_Diplomacies::const_iterator it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
     {
         client::ChangeDiplomacy asn;
-        asn().set_oid_camp1( GetId() );
-        asn().set_oid_camp2( it->first->GetId() );
+        asn().mutable_party1()->set_id( GetId() );
+        asn().mutable_party2()->set_id( it->first->GetId() );
         asn().set_diplomatie( it->second );
         asn.Send( publisher );
     }

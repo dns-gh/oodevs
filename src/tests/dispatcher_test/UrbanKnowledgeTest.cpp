@@ -40,9 +40,9 @@ namespace
         void createUrbanKnowledge()
         {
             MsgsSimToClient::MsgUrbanKnowledgeCreation& message = *expected.mutable_message()->mutable_urban_knowledge_creation();
-            message.set_oid( 1 );
-            message.set_team( side.GetId() );
-            message.set_real_urban( urban.GetId() );
+            message.mutable_id()->set_id( 1 );
+            message.mutable_party()->set_id( side.GetId() );
+            message.mutable_urban_block()->set_id( urban.GetId() );
             result.reset( new dispatcher::UrbanKnowledge( model, message ) );
             MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
             result->SendCreation( publisher );
@@ -79,8 +79,8 @@ BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeDestroyedWithoutAttributes, Fixture
 {
     createUrbanKnowledge();
     MsgsSimToClient::MsgUrbanKnowledgeDestruction& message = *expected.mutable_message()->mutable_urban_knowledge_destruction();
-    message.set_oid( 1 );
-    message.set_team( side.GetId() );
+    message.mutable_id()->set_id( 1 );
+    message.mutable_party()->set_id( side.GetId() );
     MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
     result->SendDestruction( publisher );
     publisher.verify();
@@ -95,13 +95,13 @@ BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeUpdatedWithoutAttributes, Fixture )
     createUrbanKnowledge();
     {
         MsgsSimToClient::MsgUrbanKnowledgeUpdate& message = *expected.mutable_message()->mutable_urban_knowledge_update();
-        message.set_oid( 1 );
-        message.set_real_urban( 0 );
-        message.set_team( side.GetId() );
+        message.mutable_id()->set_id( 1 );
+        message.mutable_urban_block()->set_id( 0 );
+        message.mutable_party()->set_id( side.GetId() );
         message.set_progress( 5 );
-        message.set_maxprogress( 7 );
+        message.set_max_progress( 7 );
         message.set_perceived( true );
-        message.mutable_automat_perception()->add_elem( automat.GetId() );
+        message.mutable_automat_perceptions()->add_elem()->set_id( automat.GetId() );
         result->Update( message );
         MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
         result->SendFullUpdate( publisher );
@@ -110,9 +110,9 @@ BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeUpdatedWithoutAttributes, Fixture )
     {
         expected.mutable_message()->Clear();
         MsgsSimToClient::MsgUrbanKnowledgeCreation& message = *expected.mutable_message()->mutable_urban_knowledge_creation();
-        message.set_oid( 1 );
-        message.set_team( side.GetId() );
-        message.set_real_urban( 0 );
+        message.mutable_id()->set_id( 1 );
+        message.mutable_party()->set_id( side.GetId() );
+        message.mutable_urban_block()->set_id( 0 );
         MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
         result->SendCreation( publisher );
         publisher.verify();

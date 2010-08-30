@@ -75,7 +75,7 @@ void PHY_FireDamages_Agent::NotifyHumanWoundChanged( const Human_ABC& human, con
 //-----------------------------------------------------------------------------
 void PHY_FireDamages_Agent::Serialize( const MIL_Agent_ABC& target, MsgsSimToClient::MsgUnitFireDamages& asn ) const
 {
-    asn.set_target( target.GetID() );
+    asn.mutable_target()->set_id( target.GetID() );
 
     asn.mutable_equipments();
     // Composantes
@@ -85,7 +85,7 @@ void PHY_FireDamages_Agent::Serialize( const MIL_Agent_ABC& target, MsgsSimToCli
         const T_ComposanteStates&      states =  itResult->second;
 
         MsgsSimToClient::MsgUnitEquipmentFireDamage& asnEquipement = *asn.mutable_equipments()->add_elem();
-        asnEquipement.set_equipement_type( type.GetMosID().equipment() );
+        asnEquipement.mutable_equipement_type()->set_id( type.GetMosID().id() );
         asnEquipement.set_available_nbr( states[ PHY_ComposanteState::undamaged_.GetID() ] );
         asnEquipement.set_repairable_nbr( states[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] + states[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] );
         asnEquipement.set_unavailable_nbr( states[ PHY_ComposanteState::dead_.GetID() ] );

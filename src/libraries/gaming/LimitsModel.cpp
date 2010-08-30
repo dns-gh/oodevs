@@ -47,7 +47,7 @@ void LimitsModel::Purge()
 void LimitsModel::Create( const MsgsMessengerToClient::MsgLimitCreation& message )
 {
     TacticalLine_ABC* line = factory_.Create( message );
-    Register( message.oid(), *line );
+    Register( message.id().id(), *line );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +57,7 @@ void LimitsModel::Create( const MsgsMessengerToClient::MsgLimitCreation& message
 void LimitsModel::Create( const MsgsMessengerToClient::MsgLimaCreation& message )
 {
     TacticalLine_ABC* line = factory_.Create( message );
-    Register( message.oid(), *line );
+    Register( message.id().id(), *line );
 }
 
 // -----------------------------------------------------------------------------

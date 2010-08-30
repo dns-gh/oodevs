@@ -53,17 +53,15 @@ void Transports::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 // -----------------------------------------------------------------------------
 void Transports::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 {
-    if( message.has_pions_transportes()  )
+    if( message.has_transported_units()  )
     {
         transported_.clear();
-        transported_.resize( message.pions_transportes().elem_size() );
-        for( int i = 0; i < message.pions_transportes().elem_size(); ++i )
-            transported_[i] = resolver_.Find( message.pions_transportes().elem( i ).oid() );
+        transported_.resize( message.transported_units().elem_size() );
+        for( int i = 0; i < message.transported_units().elem_size(); ++i )
+            transported_.push_back( resolver_.Find( message.transported_units().elem( i ).id() ) );
     }
-
-    if( message.has_pion_transporteur()  )
-        transporter_ = resolver_.Find( message.pion_transporteur() );
-
+    if( message.has_transporting_unit()  )
+        transporter_ = resolver_.Find( message.transporting_unit().id() );
     controller_.Update( *this );
 }
 

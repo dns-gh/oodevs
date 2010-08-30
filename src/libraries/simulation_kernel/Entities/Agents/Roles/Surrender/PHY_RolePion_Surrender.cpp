@@ -209,7 +209,7 @@ void PHY_RolePion_Surrender::SendFullState( client::UnitAttributes& msg ) const
     msg().set_prisonnier( IsPrisoner() );
 
     const MIL_Army_ABC* pArmySurrenderedTo = GetArmySurrenderedTo();
-    msg().set_rendu( pArmySurrenderedTo ? pArmySurrenderedTo->GetID() : 0 );
+    msg().mutable_surrendered_unit()->set_id( pArmySurrenderedTo ? pArmySurrenderedTo->GetID() : 0 );
 }
 
 // -----------------------------------------------------------------------------

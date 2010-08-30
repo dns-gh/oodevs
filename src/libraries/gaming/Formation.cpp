@@ -20,11 +20,11 @@ using namespace kernel;
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
 Formation::Formation( const Common::MsgFormationCreation& message, Controller& controller, const tools::Resolver_ABC< HierarchyLevel_ABC >& resolver  )
-    : EntityImplementation< Formation_ABC >( controller, message.oid(), QString( message.nom().c_str() ) )
-    , level_( resolver.Get( message.niveau() ) )
+    : EntityImplementation< Formation_ABC >( controller, message.formation().id(), QString( message.name().c_str() ) )
+    , level_( resolver.Get( message.level() ) )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %2" ).arg( level_.GetName() ).arg( message.oid() );
+        name_ = QString( "%1 %2" ).arg( level_.GetName() ).arg( message.formation().id() );
     CreateDictionary( controller );
 }
 

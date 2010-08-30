@@ -196,8 +196,8 @@ void MIL_KnowledgeGroup::Destroy()
         delete knowledgeBlackBoard_;
         // myself destruction
         client::KnowledgeGroupDestruction msg;
-        msg().set_oid( id_ );
-        msg().set_oid_camp( army_->GetID() );
+        msg().mutable_id()->set_id( id_ );
+        msg().mutable_party()->set_id( army_->GetID() );
         msg.Send( NET_Publisher_ABC::Publisher() );
         knowledgeBlackBoard_ = 0;
     }
@@ -341,12 +341,12 @@ void MIL_KnowledgeGroup::SendCreation() const
 {
     assert( army_ );
     client::KnowledgeGroupCreation msg;
-    msg().set_oid( id_ );
-    msg().set_oid_camp( army_->GetID() );
+    msg().mutable_id()->set_id( id_ );
+    msg().mutable_party()->set_id( army_->GetID() );
     msg().set_type(GetType().GetName());
     // LTO begin
     if( parent_ )
-        msg().set_oid_parent( parent_->GetId() );
+        msg().mutable_parent()->set_id( parent_->GetId() );
     // LTO end
     if( isJammed_ )
         msg().set_jam( true );
@@ -378,12 +378,12 @@ void MIL_KnowledgeGroup::UpdateKnowledgeGroup()
     if( hasBeenUpdated_ )
     {
         client::KnowledgeGroupUpdate message;
-        message().set_oid( id_ );
+        message().mutable_id()->set_id( id_ );
         if( MIL_KnowledgeGroup* parent = GetParent() )
-            message().set_oid_parent( parent->GetId() );
+            message().mutable_parent()->set_id( parent->GetId() );
         else
             // army is the parent
-            message().set_oid_parent( 0 );
+            message().mutable_parent()->set_id( 0 );
         message().set_type( GetType().GetName() );
         message().set_enabled( IsEnabled() );
         message.Send( NET_Publisher_ABC::Publisher() );
@@ -660,13 +660,13 @@ bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupEnable( const Common::MsgMiss
 // -----------------------------------------------------------------------------
 bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior( const Common::MsgMissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies, bool hasParent )
 {
-    MIL_Army_ABC* pTargetArmy = armies.Find( message.elem( 0 ).value().army().oid() );
+    MIL_Army_ABC* pTargetArmy = armies.Find( message.elem( 0 ).value().party().id() );
     if( !pTargetArmy || *pTargetArmy != GetArmy() )
         throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_error_invalid_camp );
     MIL_KnowledgeGroup* pNewParent = 0;
     if( hasParent )
     {
-        pNewParent = pTargetArmy->FindKnowledgeGroup( message.elem( 1 ).value().knowledgegroup().oid() );
+        pNewParent = pTargetArmy->FindKnowledgeGroup( message.elem( 1 ).value().knowledgegroup().id() );
         if( !pNewParent || pNewParent->IsJammed() )
             throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_error_invalid_superior );
     }

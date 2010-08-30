@@ -1,3 +1,12 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
 package MsgsClientToMessenger;
 
 import "Common.proto";
@@ -6,12 +15,12 @@ import "Common.proto";
 message MsgLimaCreationRequest {
    required Common.MsgTacticalLine tacticalline = 1;
 }
-message MsgLimaDestructionRequest {
-   required uint32 oid = 1;
-}
 message MsgLimaUpdateRequest {
-   required uint32                 oid           = 1;
+   required Common.TacticalLineId  id   = 1;
    optional Common.MsgTacticalLine tactical_line = 2;
+}
+message MsgLimaDestructionRequest {
+   required Common.TacticalLineId id = 1;
 }
 
 // Limits
@@ -19,11 +28,11 @@ message MsgLimitCreationRequest {
    required Common.MsgTacticalLine tacticalline = 1;
 }
 message MsgLimitUpdateRequest {
-   required uint32                 oid           = 1;
+   required Common.TacticalLineId  id   = 1;
    optional Common.MsgTacticalLine tactical_line = 2;
 }
 message MsgLimitDestructionRequest {
-   required uint32 oid = 1;
+   required Common.TacticalLineId id = 1;
 }
 
 // Intelligences
@@ -32,22 +41,27 @@ message MsgIntelligenceCreationRequest {
 }
 
 message MsgIntelligenceUpdateRequest {
-    required uint32                 oid       = 1;
-    optional uint32                 formation = 2;
-    optional string                 name      = 3;
-    optional string                 nature    = 4;
-    optional Common.EnumNatureLevel level     = 5;
-    optional bool                   embarked  = 6;
-    optional Common.MsgCoordLatLong location  = 7;
-    optional Common.EnumDiplomacy   diplomacy = 8;
+    required Common.IntelligenceId  intelligence    = 1;
+    optional Common.FormationId     formation       = 2;
+    optional string                 name            = 3;
+    optional string                 nature          = 4;
+    optional Common.EnumNatureLevel level           = 5;
+    optional bool                   embarked        = 6;
+    optional Common.MsgCoordLatLong location        = 7;
+    optional Common.EnumDiplomacy   diplomacy       = 8;
 }
 
+message MsgIntelligenceDestructionRequest {
+    required Common.IntelligenceId id = 1;
+}
+
+// Drawings
 message MsgShapeCreationRequest {
     required Common.MsgShape shape = 1;
 }
 
 message MsgShapeUpdateRequest {
-    required uint32                     oid       = 1;
+    required Common.DrawingId           shape     = 1;
     optional string                     category  = 2;
     optional string                     color     = 3;
     optional string                     template_ = 4;
@@ -55,10 +69,7 @@ message MsgShapeUpdateRequest {
 }
 
 message MsgShapeDestructionRequest {
-    required uint32 oid = 1;
-}
-message MsgIntelligenceDestructionRequest {
-    required uint32 oid = 1;
+    required Common.DrawingId id = 1;
 }
 
 // LTO begin

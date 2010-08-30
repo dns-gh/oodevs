@@ -434,7 +434,7 @@ void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, Msgs
     for( PHY_Composante_ABC::CIT_ComposanteUseMap itData = data.begin(); itData != data.end(); ++itData )
     {
         MsgsSimToClient::MsgLogSupplyEquimentAvailability& data = *asn.add_elem();
-        data.set_type_equipement( itData->first->GetMosID().equipment() );
+        data.mutable_equipment()->set_id( itData->first->GetMosID().id() );
         assert( itData->second.nNbrTotal_ );
 
         data.set_nbr_total       ( itData->second.nNbrTotal_ );
@@ -453,7 +453,7 @@ void PHY_RolePionLOG_Supply::SendFullState( client::UnitAttributes& asnUnit ) co
     UNREFERENCED_PARAMETER( asnUnit );
 
     client::LogSupplyState asn;
-    asn().set_oid_pion( pion_.GetID() );
+    asn().mutable_id()->set_id( pion_.GetID() );
     asn().set_chaine_activee( bSystemEnabled_ );
 
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
@@ -490,7 +490,7 @@ void PHY_RolePionLOG_Supply::SendChangedState( client::UnitAttributes& asnUnit )
         return;
 
     client::LogSupplyState asn;
-    asn().set_oid_pion( pion_.GetID() );
+    asn().mutable_id()->set_id( pion_.GetID() );
     if( bHasChanged_ || bExternalMustChangeState_ )
     {
         asn().set_chaine_activee( bSystemEnabled_ );

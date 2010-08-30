@@ -63,7 +63,7 @@ void FireManager::ReceiveFire( const MsgsSimToClient::MsgStartUnitFire& fire )
 {
     if( fire.target().has_position() )
     {
-        activeFires_[ fire.fire_oid() ] = fire.target().position();
+        activeFires_[ fire.id().id() ] = fire.target().position();
         CreateFire( fire.target().position() );
     }
 }
@@ -87,10 +87,10 @@ void FireManager::UpdateFireEffect( const MsgsSimToClient::MsgStartFireEffect& f
 void FireManager::ReceiveFire( const MsgsSimToClient::MsgStopUnitFire& fire )
 {
     DetonationPDU pdu( EntityIdentifier( 1, 1, 1 ), time_.GetTime(), exercise_ );
-    pdu.SetPosition( activeFires_[ fire.fire_oid() ].latitude(), activeFires_[ fire.fire_oid() ].longitude(), 0 );  // $$$$ AGE 2008-05-05: altitude
+    pdu.SetPosition( activeFires_[ fire.id().id() ].latitude(), activeFires_[ fire.id().id() ].longitude(), 0 );  // $$$$ AGE 2008-05-05: altitude
     network_.Send( pdu );
 
-    activeFires_.erase( fire.fire_oid() );
+    activeFires_.erase( fire.id().id() );
 }
 
 // -----------------------------------------------------------------------------

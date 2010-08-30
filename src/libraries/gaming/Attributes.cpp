@@ -166,7 +166,7 @@ void Attributes::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
         bCommJammed_ = message.communications().jammed() != 0;
 
     if( message.has_communications() && message.communications().has_knowledge_group()  )
-        knowledgeGroupJammed_ = message.communications().knowledge_group();
+        knowledgeGroupJammed_ = message.communications().knowledge_group().id();
 
     if( message.has_radio_emitter_disabled()  )
         bRadioEmitterSilence_ = message.radio_emitter_disabled() != 0;
@@ -180,8 +180,8 @@ void Attributes::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
     if( message.has_prisonnier()  )
         bPrisoner_ = message.prisonnier() != 0;
 
-    if( message.has_rendu()  )
-        surrenderedTo_ = teamResolver_.Find( message.rendu() );
+    if( message.has_surrendered_unit()  )
+        surrenderedTo_ = teamResolver_.Find( message.surrendered_unit().id() );
 
     if( message.has_refugie_pris_en_compte()  )
         bRefugeesManaged_ = message.refugie_pris_en_compte() != 0;

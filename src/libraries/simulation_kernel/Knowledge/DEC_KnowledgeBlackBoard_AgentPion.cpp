@@ -510,9 +510,9 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetPopulationsAttacking( T_KnowledgePopu
 // Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent( const Common::MsgUnitKnowledge& asn ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent( const Common::UnitKnowledgeId& asn ) const
 {
-    return pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( asn.oid() );
+    return pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( asn.id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -528,9 +528,9 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_AgentPion::Reso
 // Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject( const Common::MsgObjectKnowledge& asn ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject( const Common::ObjectKnowledgeId& asn ) const
 {
-    return pPion_->GetKnowledgeGroup().GetKnowledge().ResolveKnowledgeObject( asn.oid() );
+    return pPion_->GetKnowledgeGroup().GetKnowledge().ResolveKnowledgeObject( asn.id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -546,9 +546,9 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::Res
 // Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgePopulation
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgePopulation( const Common::MsgPopulationKnowledge& asn ) const
+DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgePopulation( const Common::PopulationKnowledgeId& asn ) const
 {
-    return pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( asn.oid() );
+    return pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( asn.id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -564,9 +564,9 @@ DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgePop
 // Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeUrban
 // Created: SLG 2010-02-01
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeUrban( const Common::MsgUrbanKnowledge& asn ) const
+boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeUrban( const Common::UrbanObjectKnowledgeId& asn ) const
 {
-    return pPion_->GetKnowledgeGroup().GetArmy().GetKnowledge().GetKnowledgeUrbanFromID( asn.oid() );
+    return pPion_->GetKnowledgeGroup().GetArmy().GetKnowledge().GetKnowledgeUrbanFromID( asn.id() );
 }
 
 // -----------------------------------------------------------------------------

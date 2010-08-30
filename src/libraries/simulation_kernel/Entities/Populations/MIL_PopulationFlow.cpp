@@ -568,8 +568,8 @@ MT_Vector2D MIL_PopulationFlow::GetSafetyPosition( const MIL_AgentPion& agent, M
 void MIL_PopulationFlow::SendCreation() const
 {
     client::PopulationFlowCreation asnMsg;
-    asnMsg().set_oid( GetID() );
-    asnMsg().set_oid_population( GetPopulation().GetID() );
+    asnMsg().mutable_id()->set_id( GetID() );
+    asnMsg().mutable_population()->set_id( GetPopulation().GetID() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -580,8 +580,8 @@ void MIL_PopulationFlow::SendCreation() const
 void MIL_PopulationFlow::SendDestruction() const
 {
     client::PopulationFlowDestruction asnMsg;
-    asnMsg().set_oid( GetID() );
-    asnMsg().set_oid_population( GetPopulation().GetID() );
+    asnMsg().mutable_id()->set_id( GetID() );
+    asnMsg().mutable_population()->set_id( GetPopulation().GetID() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -592,8 +592,8 @@ void MIL_PopulationFlow::SendDestruction() const
 void MIL_PopulationFlow::SendFullState( MIL_Population::sPeopleCounter& peopleCounter ) const
 {
     client::PopulationFlowUpdate asnMsg;
-    asnMsg().set_oid( GetID() );
-    asnMsg().set_oid_population( GetPopulation().GetID() );
+    asnMsg().mutable_id()->set_id( GetID() );
+    asnMsg().mutable_population()->set_id( GetPopulation().GetID() );
 //    if( SerializeCurrentPath( asnMsg().itineraire ) )
 //        asnMsg()//TOTODEL1;
     NET_ASN_Tools::WritePath( flowShape_, *asnMsg().mutable_flux() );
@@ -617,8 +617,8 @@ void MIL_PopulationFlow::SendChangedState( MIL_Population::sPeopleCounter& peopl
     if( !HasChanged() )
         return;
     client::PopulationFlowUpdate asnMsg;
-    asnMsg().set_oid( GetID() );
-    asnMsg().set_oid_population( GetPopulation().GetID() );
+    asnMsg().mutable_id()->set_id( GetID() );
+    asnMsg().mutable_population()->set_id( GetPopulation().GetID() );
 //    if( bPathUpdated_ && SerializeCurrentPath( asnMsg().itineraire ) )
 //        asnMsg()//TOTODEL1;
     if( bFlowShapeUpdated_ )

@@ -118,7 +118,7 @@ void LogisticAttribute::Register( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void LogisticAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 {
-    asn.mutable_logistic()->set_tc2( pTC2_->GetID() );
+    asn.mutable_logistic()->mutable_tc2()->set_id( pTC2_->GetID() );
 }
 
 // -----------------------------------------------------------------------------

@@ -212,17 +212,17 @@ void OrderParameterSerializer::Serialize( Common::MsgMissionParameter& message, 
     else if( type == "agent" )
         SerializeUnit( *message.mutable_value()->mutable_unit(), value );
     else if( type == "agentlist" )
-        SerializeValueList< Common::MsgUnit >( *message.mutable_value()->mutable_unitlist(), value, BIND_SERIALIZER( SerializeUnit ) );
+        SerializeValueList< Common::UnitId >( *message.mutable_value()->mutable_unitlist(), value, BIND_SERIALIZER( SerializeUnit ) );
     else if( type == "automatelist" )
-        SerializeValueList< Common::MsgAutomat >( *message.mutable_value()->mutable_automatlist(), value, BIND_SERIALIZER( SerializeAutomat ) );
+        SerializeValueList< Common::AutomatId >( *message.mutable_value()->mutable_automatlist(), value, BIND_SERIALIZER( SerializeAutomat ) );    
     else if( type == "agentknowledge" )
         SerializeUnitKnowledge( *message.mutable_value()->mutable_unitknowledge(), value );
     else if( type == "agentknowledgelist" )
-        SerializeValueList< Common::MsgUnitKnowledge >( *message.mutable_value()->mutable_unitknowledgelist(), value, BIND_SERIALIZER( SerializeUnitKnowledge ) );
+        SerializeValueList< Common::UnitKnowledgeId >( *message.mutable_value()->mutable_unitknowledgelist(), value, BIND_SERIALIZER( SerializeUnitKnowledge ) );
     else if( type == "objectknowledge" )
         SerializeObjectKnowledge( *message.mutable_value()->mutable_objectknowledge(), value );
     else if( type == "objectknowledgelist" )
-        SerializeValueList< Common::MsgObjectKnowledge >( *message.mutable_value()->mutable_objectknowledgelist(), value, BIND_SERIALIZER( SerializeObjectKnowledge ) );
+        SerializeValueList< Common::ObjectKnowledgeId >( *message.mutable_value()->mutable_objectknowledgelist(), value, BIND_SERIALIZER( SerializeObjectKnowledge ) );
     else if( type == "objective" )
         SerializeMissionObjective( *message.mutable_value()->mutable_missionobjective(), value );
     else if( type == "objectivelist" )
@@ -305,11 +305,11 @@ void OrderParameterSerializer::SerializeDirection( Common::MsgHeading& message, 
 // Updated: JCR 2009-10-15
 // Created: SBO 2007-06-07
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeAutomat( Common::MsgAutomat& message, const std::string& value ) const
+void OrderParameterSerializer::SerializeAutomat( Common::AutomatId& message, const std::string& value ) const
 {
     unsigned long id = boost::lexical_cast< unsigned long >( value );
     if( const dispatcher::Agent_ABC* agent = model_.Agents().Find( id ) )
-        message.set_oid( agent->GetSuperior().GetId() );
+        message.set_id( agent->GetSuperior().GetId() );
      // $$$$ SBO 2007-06-07: else...
     else
         throw std::runtime_error( "unknown automat [" + value + "]" );
@@ -319,12 +319,12 @@ void OrderParameterSerializer::SerializeAutomat( Common::MsgAutomat& message, co
 // Name: OrderParameterSerializer::SerializeUnit
 // Created: JCR 2009-10-15
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeUnit( Common::MsgUnit& message, const std::string& value ) const
+void OrderParameterSerializer::SerializeUnit( Common::UnitId& message, const std::string& value ) const
 {
     unsigned long id = boost::lexical_cast< unsigned long >( value );
     if( ! model_.Agents().Find( id ) )
         throw std::runtime_error( "unknown agent [" + value + "]" );
-    message.set_oid( id );
+    message.set_id( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -518,24 +518,24 @@ void OrderParameterSerializer::SerializeIntelligenceList( Common::MsgIntelligenc
 // Name: OrderParameterSerializer::SerializeUnitKnowledge
 // Created: JCR 2009-10-14
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeUnitKnowledge( Common::MsgUnitKnowledge& message, const std::string& value ) const
+void OrderParameterSerializer::SerializeUnitKnowledge( Common::UnitKnowledgeId& message, const std::string& value ) const
 {
     unsigned long id = boost::lexical_cast< unsigned long >( value );
     if( ! model_.AgentKnowledges().Find( id ) )
         throw std::runtime_error( "unknown unit knowledge [" + value + "]" );
-    message.set_oid( id );
+    message.set_id( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: OrderParameterSerializer::SerializeObjectKnowledge
 // Created: JCR 2009-10-14
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeObjectKnowledge( Common::MsgObjectKnowledge& message, const std::string& value ) const
+void OrderParameterSerializer::SerializeObjectKnowledge( Common::ObjectKnowledgeId& message, const std::string& value ) const
 {
     unsigned long id = boost::lexical_cast< unsigned long >( value );
     if( ! model_.ObjectKnowledges().Find( id ) )
         throw std::runtime_error( "unknown object knowledge [" + value + "]" );
-    message.set_oid( id );
+    message.set_id( id );
 }
 
 // -----------------------------------------------------------------------------

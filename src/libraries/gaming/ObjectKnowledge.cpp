@@ -31,13 +31,13 @@ using namespace kernel;
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
 ObjectKnowledge::ObjectKnowledge( const Entity_ABC& owner, const MsgsSimToClient::MsgObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter,
-                                  const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::Resolver_ABC< ObjectType, std::string >& typeResolver )
-    : EntityImplementation< ObjectKnowledge_ABC >( controller, message.oid(), "" )
+                                 const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver )
+    : EntityImplementation< ObjectKnowledge_ABC >( controller, message.id().id(), "" )
     , converter_     ( converter )
     , owner_         ( owner )
     , objectResolver_( objectResolver )
-    , type_          ( & typeResolver.Get( message.type() ) )
-    , pRealObject_   ( objectResolver_.Find( message.real_object() ) )
+    , type_          ( & typeResolver.Get( message.type().id() ) )
+    , pRealObject_   ( objectResolver_.Find( message.object().id() ) )
 {
     RegisterSelf( *this );
 }
@@ -57,8 +57,8 @@ ObjectKnowledge::~ObjectKnowledge()
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
-    if( message.has_real_object() )
-        pRealObject_ = objectResolver_.Find( message.real_object() );
+    if( message.has_object()  )
+        pRealObject_ = objectResolver_.Find( message.object().id() );
     if( message.has_relevance() )
         nRelevance_ = message.relevance();
     if( message.has_perceived() )

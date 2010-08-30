@@ -140,7 +140,7 @@ void DEC_Knowledge_ObjectAttributeNBCType::UpdateOnCollision( const DEC_Knowledg
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeNBCType::Send( Common::MsgObjectAttributes& message ) const
 {
-    message.mutable_nbc_agent()->set_agent_id( pAgent_? pAgent_->GetID() : -1 );
+    message.mutable_nbc_agent()->mutable_agent()->set_id( pAgent_? pAgent_->GetID() : -1 );
     message.mutable_nbc_agent()->set_concentration( concentration_ );
     message.mutable_nbc_agent()->set_source_life_duration( sourceLifeDuration_ );
 }

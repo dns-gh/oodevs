@@ -107,7 +107,7 @@ Intelligence::Intelligence( unsigned int id, const MsgsClientToMessenger::MsgInt
 // Name: Intelligence constructor
 // Created: RDS 2008-04-08
 // -----------------------------------------------------------------------------
-Intelligence::Intelligence( unsigned int id, xml::xistream& xis, const Common::MsgFormation& formation, const kernel::CoordinateConverter_ABC& converter )
+Intelligence::Intelligence( unsigned int id, xml::xistream& xis, const Common::FormationId& formation, const kernel::CoordinateConverter_ABC& converter )
     : id_       ( id )
     , name_     ( xis.attribute< std::string >( "name" ) )
     , nature_   ( xis.attribute< std::string >( "nature" ) )
@@ -155,8 +155,8 @@ void Intelligence::Update( const MsgsClientToMessenger::MsgIntelligenceUpdateReq
 void Intelligence::SendUpdate( dispatcher::ClientPublisher_ABC& publisher ) const
 {
     plugins::messenger::IntelligenceUpdate message;
-    message().set_oid       ( id_ );
-    message().set_formation ( formation_.oid() );
+    message().mutable_id()->set_id( id_ );
+    message().mutable_formation()->set_id( formation_.id() );
     message().set_name(name_.c_str());
     message().set_nature(nature_.c_str());
     message().set_embarked(embarked_ ? 1 : 0);
@@ -173,7 +173,7 @@ void Intelligence::SendUpdate( dispatcher::ClientPublisher_ABC& publisher ) cons
 void Intelligence::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
 {
     plugins::messenger::IntelligenceCreation message;
-    message().set_oid ( id_ );
+    message().mutable_id()->set_id( id_ );
     message().mutable_intelligence()->set_name( name_ );
     message().mutable_intelligence()->set_nature( nature_ );
     message().mutable_intelligence()->set_embarked( embarked_ );
@@ -191,7 +191,7 @@ void Intelligence::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) co
 void Intelligence::SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) const
 {
     plugins::messenger::IntelligenceDestruction message;
-    message().set_oid ( id_ );
+    message().mutable_id()->set_id( id_ );
     message.Send( publisher );
 }
 

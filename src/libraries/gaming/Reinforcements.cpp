@@ -53,21 +53,21 @@ void Reinforcements::CreateDictionary( kernel::PropertiesDictionary& dico ) cons
 // -----------------------------------------------------------------------------
 void Reinforcements::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 {
-    if( message.has_pions_renforcant()  )
+    if( message.has_reinforcements()  )
     {
         reinforcements_.clear();
-        reinforcements_.reserve( message.pions_renforcant().elem_size() );
-        for( int i = 0; i < message.pions_renforcant().elem_size(); ++i )
+        reinforcements_.reserve( message.reinforcements().elem_size() );
+        for( int i = 0; i < message.reinforcements().elem_size(); ++i )
         {
-            Agent_ABC* agent = resolver_.Find( message.pions_renforcant().elem( i ).oid() );
+            Agent_ABC* agent = resolver_.Find( message.reinforcements().elem( i ).id() );
             reinforcements_.push_back( agent );
         }
     }
 
-    if( message.has_pion_renforce()  )
-        reinforced_ = resolver_.Find( message.pion_renforce() );
+    if( message.has_reinforced_unit()  )
+        reinforced_ = resolver_.Find( message.reinforced_unit().id() );
 
-    if( message.has_pion_renforce()  || message.has_pions_renforcant()  )
+    if( message.has_reinforced_unit()  || message.has_reinforcements()  )
         controller_.Update( *this );
 }
 

@@ -181,8 +181,8 @@ void PHY_MaintenanceComposanteState::SendFullState() const
 
     SendMsgCreation();
     client::LogMaintenanceHandlingUpdate asn;
-    asn().set_oid_consigne( nID_ );
-    asn().set_oid_pion( pPion_->GetID() );
+    asn().mutable_id()->set_id( nID_ );
+    asn().mutable_unit()->set_id( pPion_->GetID() );
 
 //    asn().set_diagnostique_effectuePresent( 1 );
 //    asn().set_diagnostique_effectuePresent( bDiagnosed_ );
@@ -191,7 +191,7 @@ void PHY_MaintenanceComposanteState::SendFullState() const
         pConsign_->SendFullState( asn );
     else
     {
-        asn().set_oid_pion_log_traitant( 0 );
+        asn().mutable_provider()->set_id( 0 );
         asn().set_etat( Common::termine_maintenance );
     }
     asn.Send( NET_Publisher_ABC::Publisher() );
@@ -209,8 +209,8 @@ void PHY_MaintenanceComposanteState::SendChangedState() const
     assert( pPion_ );
 
     client::LogMaintenanceHandlingUpdate asn;
-    asn().set_oid_consigne( nID_ );
-    asn().set_oid_pion( pPion_->GetID() );
+    asn().mutable_id()->set_id( nID_ );
+    asn().mutable_unit()->set_id( pPion_->GetID() );
 
 //    asn().set_diagnostique_effectuePresent( 1 );
 //    asn().set_diagnostique_effectuePresent( bDiagnosed_ );
@@ -219,7 +219,7 @@ void PHY_MaintenanceComposanteState::SendChangedState() const
         pConsign_->SendChangedState( asn );
     else
     {
-        asn().set_oid_pion_log_traitant( 0 );
+        asn().mutable_provider()->set_id( 0 );
         asn().set_etat( Common::termine_maintenance );
     }
     asn.Send( NET_Publisher_ABC::Publisher() );
@@ -246,11 +246,11 @@ void PHY_MaintenanceComposanteState::SendMsgCreation() const
     assert( pComposante_ );
 
     client::LogMaintenanceHandlingCreation asn;
-    asn().set_oid_consigne( nID_ );
-    asn().set_oid_pion( pPion_->GetID() );
+    asn().mutable_id()->set_id( nID_ );
+    asn().mutable_unit()->set_id( pPion_->GetID() );
     asn().set_tick_creation( nCreationTick_ );
-    asn().set_type_equipement( pComposante_->GetType().GetMosID().equipment() );
-    asn().set_type_panne( GetComposanteBreakdown().GetID() );
+    asn().mutable_equipement()->set_id( pComposante_->GetType().GetMosID().id() );
+    asn().mutable_breakdown()->set_id( GetComposanteBreakdown().GetID() );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -263,8 +263,8 @@ void PHY_MaintenanceComposanteState::SendMsgDestruction() const
     assert( pPion_ );
 
     client::LogMaintenanceHandlingDestruction asn;
-    asn().set_oid_consigne( nID_ );
-    asn().set_oid_pion( pPion_->GetID() );
+    asn().mutable_id()->set_id( nID_ );
+    asn().mutable_unit()->set_id( pPion_->GetID() );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 

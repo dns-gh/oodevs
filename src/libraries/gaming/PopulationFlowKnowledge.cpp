@@ -56,10 +56,10 @@ PopulationFlowKnowledge::PopulationFlowKnowledge( Controller& controller, const 
     : controller_( controller )
     , converter_ ( converter )
     , popu_      ( popu )
-    , nID_       ( message.oid_connaissance_flux() )
+    , nID_       ( message.id().id() )
     , pFlow_     ( 0 )
 {
-    pFlow_ = popu_.FindFlow( message.oid_flux_reel() );
+    pFlow_ = popu_.FindFlow( message.flow().id() );
     controller_.Create( *this );
 }
 
@@ -90,8 +90,8 @@ void PopulationFlowKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationFlow
         nNbrAliveHumans_ = ( uint )message.nb_humains_vivants();
     if( message.has_nb_humains_morts()  )
         nNbrDeadHumans_ = ( uint )message.nb_humains_morts();
-    if( message.has_oid_flux_reel()  )
-        pFlow_ = popu_.FindFlow( message.oid_flux_reel() );
+    if( message.has_flow()  )
+        pFlow_ = popu_.FindFlow( message.flow().id() );
     if( message.has_portions_flux()  )
     {
         boundingBox_ = geometry::Rectangle2f();

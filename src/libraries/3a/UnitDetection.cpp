@@ -64,7 +64,7 @@ bool UnitDetection::HasValue( const MsgsSimToClient::MsgSimToClient& wrapper ) c
     if( wrapper.message().has_unit_detection() )
     {
         const MsgsSimToClient::MsgUnitDetection& message = wrapper.message().unit_detection();
-        return detectedUnitId_ == unsigned long( message.detected_unit_oid() );
+        return detectedUnitId_ == unsigned long( message.detected_unit().id() );
     }
     return false;
 }
@@ -76,7 +76,7 @@ bool UnitDetection::HasValue( const MsgsSimToClient::MsgSimToClient& wrapper ) c
 float UnitDetection::Extract( const MsgsSimToClient::MsgSimToClient& wrapper ) const
 {
     const MsgsSimToClient::MsgUnitDetection& message = wrapper.message().unit_detection();
-    if( detectedUnitId_ == unsigned long( message.detected_unit_oid() ) && ( visibilityMask_ & ( 1 << message.current_visibility() ) ) != 0 )
+    if( detectedUnitId_ == unsigned long( message.detected_unit().id() ) && ( visibilityMask_ & ( 1 << message.current_visibility() ) ) != 0 )
         return 1.f;
     return 0.f;
 }

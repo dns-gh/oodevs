@@ -22,7 +22,7 @@
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
 Drawing::Drawing( kernel::Controller& controller, const MsgsMessengerToClient::MsgShapeCreation& message, const gui::DrawingTypes& types, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
-    : gui::DrawerShape( controller, message.oid(), types.Get( message.shape().category().c_str() ).GetTemplate( message.shape().template_() ), QColor( QString( message.shape().color().c_str() ) ), proxy )
+    : gui::DrawerShape( controller, message.id().id(), types.Get( message.shape().category().c_str() ).GetTemplate( message.shape().template_() ), QColor( QString( message.shape().color().c_str() ) ), proxy )
     , publisher_( publisher )
     , converter_( converter )
     , publishUpdate_( true )
@@ -105,7 +105,7 @@ void Drawing::Update()
     if( publishUpdate_ )
     {
         plugins::messenger::ShapeUpdateRequest message;
-        message().set_oid( GetId() );
+        message().mutable_shape()->set_id( GetId() );
         message().set_category( style_.GetCategory().ascii() );
         std::string color = color_.name().ascii();
         message().set_color( color.c_str() );

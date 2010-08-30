@@ -29,7 +29,7 @@ PHY_ComposanteType_ABC::PHY_ComposanteType_ABC( const std::string& strName, xml:
     int equipmenttype_val;
     xis >> xml::attribute( "id", equipmenttype_val )
         >> xml::attribute( "protection", strVal );
-    nMosID_.set_equipment( equipmenttype_val );
+    nMosID_.set_id( equipmenttype_val );
     pProtection_ = PHY_Protection::Find( strVal );
     if( !pProtection_ )
         xis.error( "Unknown protection '" + strVal + "'" );
@@ -53,7 +53,7 @@ PHY_ComposanteType_ABC::~PHY_ComposanteType_ABC()
 // Name: PHY_ComposanteType_ABC::GetMosID
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
-Common::MsgEquipmentType PHY_ComposanteType_ABC::GetMosID() const
+Common::EquipmentType PHY_ComposanteType_ABC::GetMosID() const
 {
     return nMosID_;
 }

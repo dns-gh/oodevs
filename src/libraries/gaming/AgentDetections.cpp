@@ -45,7 +45,7 @@ AgentDetections::~AgentDetections()
 // -----------------------------------------------------------------------------
 void AgentDetections::DoUpdate( const MsgsSimToClient::MsgUnitDetection& message )
 {
-    detections_[ & resolver_.Get( message.detected_unit_oid() ) ] = message.current_visibility();
+    detections_[ & resolver_.Get( message.detected_unit().id() ) ] = message.current_visibility();
     controller_.Update( *this );
 }
 

@@ -1,3 +1,12 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
 package MsgsAuthenticationToClient;
 
 import "Common.proto"; 
@@ -5,16 +14,16 @@ import "Version.proto";
 
 message MsgAuthenticationResponse {
     enum ErrorCode {
-        success                         = 0;
-        invalid_login                   = 1;
-        too_many_connections            = 2;
-        mismatched_protocol_version     = 4;
+        success                     = 0;
+        invalid_login               = 1;
+        too_many_connections        = 2;
+        mismatched_protocol_version = 4;
     }
-    required ErrorCode  error_code = 1;
-    optional MsgProfile profile    = 2; 
-    optional MsgProfileDescriptionList profiles = 3;
-    required Version.ProtocolVersion server_version  	= 4;
-	optional Common.MsgDateTime restart_date_time       = 5;
+    required ErrorCode                 error_code        = 1;
+    optional MsgProfile                profile           = 2; 
+    optional MsgProfileDescriptionList profiles          = 3;
+    required Version.ProtocolVersion   server_version  	 = 4;
+	optional Common.MsgDateTime        restart_date_time = 5;
 }
 
 message MsgProfileCreation {
@@ -63,18 +72,6 @@ message MsgProfileDestructionRequestAck {
     required string    login      = 2;
 }
 
-message FormationList {
-    repeated Common.MsgFormation elem = 1;
-}
-
-message TeamList {
-    repeated Common.MsgTeam elem = 1;
-}
-
-message PopulationList {
-    repeated Common.MsgPopulation elem = 1;
-}
-
 // Scipio roles :
 enum Role {
     superviseur	= 0; 
@@ -86,18 +83,18 @@ enum Role {
 }
 
 message MsgProfile {
-    required string                login                   = 1;
-    optional string                password                = 2;
-    optional FormationList         read_only_formations    = 3;
-    optional FormationList         read_write_formations   = 4;
-    optional Common.MsgAutomatList read_only_automates     = 5;
-    optional Common.MsgAutomatList read_write_automates    = 6;
-    optional TeamList              read_only_camps         = 7;
-    optional TeamList              read_write_camps        = 8;
-    optional PopulationList        read_only_populations   = 9;
-    optional PopulationList        read_write_populations  = 10;
-    required bool                  superviseur             = 11;
-    optional Role                  role                    = 12;
+    required string                  login                   = 1;
+    optional string                  password                = 2;
+    optional Common.FormationIdList  read_only_formations    = 3;
+    optional Common.FormationIdList  read_write_formations   = 4;
+    optional Common.AutomatIdList    read_only_automates     = 5;
+    optional Common.AutomatIdList    read_write_automates    = 6;
+    optional Common.PartyIdList      read_only_camps         = 7;
+    optional Common.PartyIdList      read_write_camps        = 8;
+    optional Common.PopulationIdList read_only_populations   = 9;
+    optional Common.PopulationIdList read_write_populations  = 10;
+    required bool                    superviseur             = 11;
+    optional Role                    role                    = 12;
 }
 
 message MsgProfileDescriptionList {
@@ -105,9 +102,9 @@ message MsgProfileDescriptionList {
 }
 
 message MsgProfileDescription {
-    required string                login                   = 1;
-    required bool                  password                = 2;
-    required bool                  supervisor              = 3;
+    required string login      = 1;
+    required bool   password   = 2;
+    required bool   supervisor = 3;
 }
 
 message MsgAuthenticationToClient {

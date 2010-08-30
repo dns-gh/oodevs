@@ -13,17 +13,17 @@
 namespace Common
 {
     class MsgMissionParameter;
-    class MsgObjectKnowledge;
-    class MsgUnitKnowledge;
+    class ObjectKnowledgeId;
+    class UnitKnowledgeId;
     class MsgIntelligenceList;
     class MsgHeading;
     class MsgLimasOrder;
     class MsgLimaOrder;
     class MsgMissionObjective;
     class MsgMissionObjectiveList;
-    class MsgUnit;
+    class UnitId;
     class MsgLine;
-    class MsgAutomat;
+    class AutomatId;
     class MsgLocation;
     class MsgPointList;
 }
@@ -88,10 +88,10 @@ private:
     void SerializeDirection( Common::MsgHeading& message, const std::string& value ) const;
     void SerializeIntelligenceList( Common::MsgIntelligenceList& message, const std::string& value ) const;
 
-    void SerializeUnit( Common::MsgUnit& message, const std::string& value ) const;
-    void SerializeAutomat( Common::MsgAutomat& message, const std::string& value ) const;
-    void SerializeUnitKnowledge( Common::MsgUnitKnowledge& message, const std::string& value ) const;
-    void SerializeObjectKnowledge( Common::MsgObjectKnowledge& message, const std::string& value ) const;
+    void SerializeUnit( Common::UnitId& message, const std::string& value ) const;
+    void SerializeAutomat( Common::AutomatId& message, const std::string& value ) const;
+    void SerializeUnitKnowledge( Common::UnitKnowledgeId& message, const std::string& value ) const;
+    void SerializeObjectKnowledge( Common::ObjectKnowledgeId& message, const std::string& value ) const;
     void SerializeBool( bool& message, const std::string& value ) const;
     void SerializeMissionObjective( Common::MsgMissionObjective& message, const std::string& value ) const;
     void SerializeMissionObjectiveList( Common::MsgMissionObjectiveList& message, const std::string& value ) const;

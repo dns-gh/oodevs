@@ -21,7 +21,7 @@ using namespace dispatcher;
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 PopulationOrder::PopulationOrder( Model_ABC& model, Population& population, const Common::MsgPopulationOrder& asn )
-    : Order_ABC  ( model, asn.mission(), asn.parametres() )
+    : Order_ABC  ( model, asn.type().id(), asn.parameters() )
     , population_( population )
 {
     // NOTHING
@@ -47,14 +47,10 @@ PopulationOrder::~PopulationOrder()
 void PopulationOrder::Send( ClientPublisher_ABC& publisher )
 {
     client::PopulationOrder asn;
-    asn().set_oid( population_.GetId() );
-    asn().set_mission( missionID_ );
-
-    Order_ABC::Send( *asn().mutable_parametres() );
-
+    asn().mutable_tasker()->set_id( population_.GetId() );
+    asn().mutable_type()->set_id( missionID_ );
+    Order_ABC::Send( *asn().mutable_parameters() );
     asn.Send( publisher );
-
-    Delete( *asn().mutable_parametres() );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,8 +61,7 @@ void PopulationOrder::Send( ClientPublisher_ABC& publisher )
 void PopulationOrder::SendNoMission( const Population& population, ClientPublisher_ABC& publisher )
 {
     client::PopulationOrder asn;
-
-    asn().set_oid( population.GetId() );
-    asn().set_mission( 0 );
+    asn().mutable_tasker()->set_id( population.GetId() );
+    asn().mutable_type()->set_id( 0 );
     asn.Send( publisher );
 }

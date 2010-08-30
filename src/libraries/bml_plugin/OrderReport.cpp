@@ -25,7 +25,7 @@ using namespace plugins::bml;
 OrderReport::OrderReport( const dispatcher::Agent_ABC& agent, const tools::Resolver_ABC< kernel::MissionType >& missions, const Common::MsgUnitOrder& asn )
     : who_( new Who( agent ) )
     , reportingData_( new ReportingData( agent ) )
-    , activityCode_( GetCodeFromMissionId( missions, asn.mission() ) )
+    , activityCode_( GetCodeFromMissionId( missions, asn.type().id() ) )
 {
     // NOTHING
 }
@@ -37,7 +37,7 @@ OrderReport::OrderReport( const dispatcher::Agent_ABC& agent, const tools::Resol
 OrderReport::OrderReport( const dispatcher::Automat_ABC& automat, const tools::Resolver_ABC< kernel::MissionType >& missions, const Common::MsgAutomatOrder& asn )
     : who_( new Who( automat ) )
     , reportingData_( new ReportingData( automat ) )
-    , activityCode_( GetCodeFromMissionId( missions, asn.mission() ) )
+    , activityCode_( GetCodeFromMissionId( missions, asn.type().id() ) )
 {
     // NOTHING
 }

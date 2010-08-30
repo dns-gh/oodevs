@@ -107,7 +107,7 @@ void PHY_MaintenanceConsign_ABC::SendFullState( client::LogMaintenanceHandlingUp
     assert( pComposanteState_ );
     assert( pMaintenance_ );
 
-    asn().set_oid_pion_log_traitant( pMaintenance_->GetID() );
+    asn().mutable_provider()->set_id( pMaintenance_->GetID() );
     asn().set_etat( Common::EnumLogMaintenanceHandlingStatus( nState_ ) );
 }
 

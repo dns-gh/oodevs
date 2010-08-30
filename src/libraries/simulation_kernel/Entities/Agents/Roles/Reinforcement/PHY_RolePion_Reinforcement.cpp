@@ -176,12 +176,12 @@ void PHY_RolePion_Reinforcement::Clean()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::SendFullState( client::UnitAttributes& msg ) const
 {
-    msg().set_pion_renforce( pPionReinforced_ ? pPionReinforced_->GetID() : 0 );
+    msg().mutable_reinforced_unit()->set_id( pPionReinforced_ ? pPionReinforced_->GetID() : 0 );
     if( !reinforcements_.empty() )
     {
         unsigned int i = 0;
         for( CIT_PionSet it = reinforcements_.begin(); it != reinforcements_.end(); ++it, ++i )
-            msg().mutable_pions_renforcant()->add_elem()->set_oid( (**it).GetID() );
+            msg().mutable_reinforcements()->add_elem()->set_id( (**it).GetID() );
     }
 }
 

@@ -19,12 +19,12 @@
 // Name: MIL_AgentListParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_AgentListParameter::MIL_AgentListParameter( const Common::MsgUnitList& asn, MIL_EntityManager_ABC& entityManager )
+MIL_AgentListParameter::MIL_AgentListParameter( const Common::UnitIdList& asn, MIL_EntityManager_ABC& entityManager )
 {
     unitList_.reserve( asn.elem_size() );
     for( int i = 0; i < asn.elem_size(); ++i )
     {
-        MIL_AgentPion* pPion = entityManager.FindAgentPion( asn .elem( i ).oid() );
+        MIL_AgentPion* pPion = entityManager.FindAgentPion( asn .elem( i ).id() );
         if( !pPion )
             throw std::runtime_error( "Agent does not exist" );
         DEC_RolePion_Decision* pAgent = dynamic_cast< DEC_RolePion_Decision* >( &pPion->GetDecision() );
@@ -64,11 +64,11 @@ bool MIL_AgentListParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 // Name: MIL_AgentListParameter::ToAgentList
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool MIL_AgentListParameter::ToAgentList( Common::MsgUnitList& asn ) const
+bool MIL_AgentListParameter::ToAgentList( Common::UnitIdList& asn ) const
 {
     unsigned int size = unitList_.size();
     for( unsigned int i = 0; i < size; ++i )
-        asn.add_elem()->set_oid( unitList_[i]->GetPion().GetID() );
+        asn.add_elem()->set_id( unitList_[i]->GetPion().GetID() );
     return true;
 }
 

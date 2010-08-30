@@ -24,10 +24,10 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 KnowledgeGroup::KnowledgeGroup( Model_ABC& model, const MsgsSimToClient::MsgKnowledgeGroupCreation& msg )
-    : KnowledgeGroup_ABC( msg.oid() )
+    : KnowledgeGroup_ABC( msg.id().id() )
     , model_( model )
-    , team_( model_.Sides().Get( msg.oid_camp() ) )
-    , parent_( msg.has_oid_parent() ? &model_.KnowledgeGroups().Get( msg.oid_parent() ) : 0 )
+    , team_( model_.Sides().Get( msg.party().id() ) )
+    , parent_( msg.has_parent() ? &model_.KnowledgeGroups().Get( msg.parent().id() ) : 0 )
     , type_( msg.type() ) // LTO
     , enabled_( true ) // LTO
     , jammed_( msg.has_jam() && msg.jam() )
@@ -76,8 +76,8 @@ void KnowledgeGroup::DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& m
         type_ = message.type();
     if( message.has_enabled() )
         enabled_ = message.enabled();
-    if( message.has_oid_parent() )
-        ChangeSuperior( message.oid_parent() ? &model_.KnowledgeGroups().Get( message.oid_parent() ) : 0 );
+    if( message.has_parent() )
+        ChangeSuperior( message.parent().id() ? &model_.KnowledgeGroups().Get( message.parent().id() ) : 0 );
     // LTO end
 }
 
@@ -110,12 +110,12 @@ void KnowledgeGroup::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::KnowledgeGroupCreation message;
 
-    message().set_oid( GetId() );
-    message().set_oid_camp( team_.GetId() );
+    message().mutable_id()->set_id( GetId() );
+    message().mutable_party()->set_id( team_.GetId() );
     // LTO begin
     message().set_type( type_ );
     if( parent_ )
-        message().set_oid_parent( parent_->GetId() );
+        message().mutable_parent()->set_id( parent_->GetId() );
     if( jammed_ )
         message().set_jam( true );
     // LTO end
@@ -129,11 +129,11 @@ void KnowledgeGroup::SendCreation( ClientPublisher_ABC& publisher ) const
 void KnowledgeGroup::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::KnowledgeGroupUpdate message;
-    message().set_oid( GetId() );
+    message().mutable_id()->set_id( GetId() );
     if( parent_ )
-        message().set_oid_parent( parent_->GetId() );
+        message().mutable_parent()->set_id( parent_->GetId() );
     else
-        message().set_oid_camp( team_.GetId() );
+        message().mutable_party()->set_id( team_.GetId() );
     message().set_type( type_ );
     message().set_enabled( enabled_ );
     message.Send( publisher );
@@ -146,8 +146,8 @@ void KnowledgeGroup::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 void KnowledgeGroup::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::KnowledgeGroupDestruction message;
-    message().set_oid( GetId() );
-    message().set_oid_camp( team_.GetId() );
+    message().mutable_id()->set_id( GetId() );
+    message().mutable_party()->set_id( team_.GetId() );
     message.Send( publisher );
 }
 

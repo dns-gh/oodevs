@@ -29,6 +29,7 @@ namespace Common
     class MsgAutomatChangeLogisticLinks;
     class MsgAutomatChangeSuperior;
     class MsgUnitChangeSuperior;
+    class Tasker;
 }
 
 namespace MsgsSimToClient
@@ -117,10 +118,12 @@ public:
 
     //! @name Accessors
     //@{
-    virtual       MIL_Automate*       FindAutomate  ( uint nID ) const;
-    virtual       MIL_KnowledgeGroup* FindKnowledgeGroup( uint nID ) const; // LTO
-    virtual       MIL_AgentPion*      FindAgentPion ( uint nID ) const;
-                  MIL_Object_ABC*     FindObject    ( uint nID ) const;
+    virtual       MIL_Automate*       FindAutomate  ( unsigned int nID ) const;
+    virtual       MIL_Population*     FindPopulation( unsigned int nID ) const;
+    virtual       MIL_Formation*      FindFormation ( unsigned int nID ) const;
+    virtual       MIL_KnowledgeGroup* FindKnowledgeGroup( unsigned int nID ) const; // LTO
+    virtual       MIL_AgentPion*      FindAgentPion ( unsigned int nID ) const;
+                  MIL_Object_ABC*     FindObject    ( unsigned int nID ) const;
     virtual const MIL_ObjectType_ABC& FindObjectType( const std::string& type ) const;
 
     const tools::Resolver< MIL_Army_ABC >& MIL_EntityManager::GetArmies() const;
@@ -146,6 +149,11 @@ public:
     void SendStateToNewClient() const;
     void Update              ();
     void Clean               ();
+    //@}
+
+    //! @external helper
+    //@{
+    void SetToTasker( Common::Tasker& tasker, unsigned int id ) const;
     //@}
 
     //! @name Network

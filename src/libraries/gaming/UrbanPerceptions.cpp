@@ -42,11 +42,11 @@ UrbanPerceptions::~UrbanPerceptions()
 // -----------------------------------------------------------------------------
 void UrbanPerceptions::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& message )
 {
-    if( message.has_automat_perception() )
+    if( message.automat_perceptions().elem_size() )
     {
         detectingAutomats_.clear();
-        detectingAutomats_.reserve( message.automat_perception().elem_size() );
-        for( int i = 0; i < message.automat_perception().elem_size(); ++i )
-            detectingAutomats_.push_back( & agentResolver_.Get( message.automat_perception().elem(i) ) );
+        detectingAutomats_.reserve( message.automat_perceptions().elem_size() );
+        for( int i = 0; i < message.automat_perceptions().elem_size(); ++i )
+            detectingAutomats_.push_back( & agentResolver_.Get( message.automat_perceptions().elem( i ).id() ) );
     }
 }

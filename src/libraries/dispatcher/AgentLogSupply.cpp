@@ -55,13 +55,13 @@ void AgentLogSupply::Update( const MsgsSimToClient::MsgLogSupplyState& asnMsg )
     if( asnMsg.has_stocks() )
         for( int i = 0; i < asnMsg.stocks().elem_size(); ++i )
         {
-            Dotation* pDotation = stocks_.Find( asnMsg.stocks().elem( i ).ressource_id() );
+            Dotation* pDotation = stocks_.Find( asnMsg.stocks().elem( i ).ressource_id().id() );
             if( pDotation )
                 pDotation->Update( asnMsg.stocks().elem( i ) );
             else
             {
                 pDotation = new Dotation( asnMsg.stocks().elem( i ) );
-                stocks_.Register( asnMsg.stocks().elem( i ).ressource_id(), *pDotation );
+                stocks_.Register( asnMsg.stocks().elem( i ).ressource_id().id(), *pDotation );
             }
         }
 }
@@ -73,7 +73,7 @@ void AgentLogSupply::Update( const MsgsSimToClient::MsgLogSupplyState& asnMsg )
 void AgentLogSupply::Send( ClientPublisher_ABC& publisher ) const
 {
     client::LogSupplyState asn;
-    asn().set_oid_pion( agent_.GetId() );
+    asn().mutable_id()->set_id( agent_.GetId() );
     asn().set_chaine_activee( bSystemEnabled_ );
     {
         for( std::vector< T_Availability >::const_iterator it = convoyersAvailability_.begin(); it != convoyersAvailability_.end(); ++it )

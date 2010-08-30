@@ -123,5 +123,5 @@ void DEC_Knowledge_ObjectAttributeLogistic::UpdateOnCollision( const DEC_Knowled
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeLogistic::Send( Common::MsgObjectAttributes& asn ) const
 {
-    asn.mutable_logistic()->set_tc2( pTC2_->GetID() );
+    asn.mutable_logistic()->mutable_tc2()->set_id( pTC2_->GetID() );
 }

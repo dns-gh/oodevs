@@ -26,7 +26,7 @@
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const Common::MsgAutomatOrder& asn )
-    : MIL_Mission_ABC          ( type, automate.GetKnowledge(), asn.parametres(), automate.GetPionPC().GetRole< PHY_RoleInterface_Location >().GetPosition() )
+    : MIL_Mission_ABC          ( type, automate.GetKnowledge(), asn.parameters(), automate.GetPionPC().GetRole< PHY_RoleInterface_Location >().GetPosition() )
     , automate_                ( automate )
     , bDIAMrtBehaviorActivated_( false )
     , bDIACdtBehaviorActivated_( false )
@@ -154,9 +154,9 @@ void MIL_AutomateMission::GoToCdt( boost::shared_ptr< MIL_Mission_ABC > self )
 void MIL_AutomateMission::SendNoMission( const MIL_Automate& automate )
 {
     client::AutomatOrder asn;
-    asn().set_oid( automate.GetID() );
-    asn().set_mission( 0 );
-    asn().mutable_parametres(); //->set_n( 0 );
+    asn().mutable_tasker()->set_id( automate.GetID() );
+    asn().mutable_type()->set_id( 0 );
+    asn().mutable_parameters(); //->set_n( 0 );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -167,9 +167,9 @@ void MIL_AutomateMission::SendNoMission( const MIL_Automate& automate )
 void MIL_AutomateMission::Send() const
 {
     client::AutomatOrder asn;
-    asn().set_oid( automate_.GetID() );
-    asn().set_mission( GetType().GetID() );
-    MIL_Mission_ABC::Serialize( *asn().mutable_parametres() );
+    asn().mutable_tasker()->set_id( automate_.GetID() );
+    asn().mutable_type()->set_id( GetType().GetID() );
+    MIL_Mission_ABC::Serialize( *asn().mutable_parameters() );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 

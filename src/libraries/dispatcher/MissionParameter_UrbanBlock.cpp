@@ -20,7 +20,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 MissionParameter_UrbanBlock::MissionParameter_UrbanBlock( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , block_              ( asn.value().urbanblock().oid() )
+    , block_              ( asn.value().urbanblock().id() )
 {
     // NOTHING
 }
@@ -41,5 +41,5 @@ MissionParameter_UrbanBlock::~MissionParameter_UrbanBlock()
 void MissionParameter_UrbanBlock::Send( Common::MsgMissionParameter& asn ) const
 {
     MissionParameter_ABC::Send( asn );
-    asn.mutable_value()->mutable_urbanblock()->set_oid( block_ );
+    asn.mutable_value()->mutable_urbanblock()->set_id( block_ ); 
 }

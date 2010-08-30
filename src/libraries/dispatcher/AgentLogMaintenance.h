@@ -14,7 +14,7 @@
 
 namespace Common
 {
-    class MsgEquipmentType;
+    class EquipmentType;
 }
 
 namespace MsgsSimToClient
@@ -33,6 +33,7 @@ namespace dispatcher
 {
     class Model_ABC;
     class ClientPublisher_ABC;
+    class MaintenanceEquipmentAvailability;
 
 // =============================================================================
 /** @class  AgentLogMaintenance
@@ -56,12 +57,6 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef EquipmentAvailability< MsgsSimToClient::MsgLogMaintenanceEquipmentAvailability > T_Availability;
-    //@}
-
-private:
     //! @name Copy/Assignment
     //@{
     AgentLogMaintenance( const AgentLogMaintenance& );            //!< Copy constructor
@@ -72,11 +67,11 @@ private:
     const Model_ABC&         model_;
     const kernel::Agent_ABC& agent_;
     bool                     bSystemEnabled_;
-    std::vector< Common::MsgEquipmentType >        priorities_;
+    std::vector< Common::EquipmentType >        priorities_;
     std::vector< const kernel::Automat_ABC* > tacticalPriorities_;
 
-    std::vector< T_Availability > haulersAvailability_;
-    std::vector< T_Availability > repairersAvailability_;
+    std::vector< MaintenanceEquipmentAvailability > haulersAvailability_;
+    std::vector< MaintenanceEquipmentAvailability > repairersAvailability_;
 };
 
 }

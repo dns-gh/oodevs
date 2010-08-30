@@ -107,11 +107,11 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
     if( message.value().has_acharstr() )
         return new actions::parameters::String( parameter, message.value().acharstr().c_str() );
     if( message.value().has_unit() )
-        return new actions::parameters::Agent( parameter, message.value().unit().oid(), entities_, controller_ );
+        return new actions::parameters::Agent( parameter, message.value().unit().id(), entities_, controller_ );
     if( message.value().has_areal() )
         return new actions::parameters::Numeric( parameter, message.value().areal() );
     if( message.value().has_automat() )
-        return new actions::parameters::Automat( parameter, message.value().automat().oid(), entities_, controller_ );
+        return new actions::parameters::Automat( parameter, message.value().automat().id(), entities_, controller_ );
     if( message.value().has_heading() )
         return new actions::parameters::Direction( parameter, message.value().heading().heading() );
     if( message.value().has_enumeration() )
@@ -119,11 +119,11 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
     if( message.value().has_path() )
         return new actions::parameters::Path( parameter, converter_, message.value().path().location() );
     if( message.value().has_unitknowledge() )
-        return new actions::parameters::AgentKnowledge( parameter, message.value().unitknowledge().oid(), agentKnowledgeConverter_, entity, controller_ );
+        return new actions::parameters::AgentKnowledge( parameter, message.value().unitknowledge().id(), agentKnowledgeConverter_, entity, controller_ );
     if( message.value().has_objectknowledge() )
-        return new actions::parameters::ObjectKnowledge( parameter, message.value().objectknowledge().oid(), objectKnowledgeConverter_, entity, controller_ );
+        return new actions::parameters::ObjectKnowledge( parameter, message.value().objectknowledge().id(), objectKnowledgeConverter_, entity, controller_ );
     if( message.value().has_populationknowledge() )
-        return new actions::parameters::PopulationKnowledge( parameter, message.value().populationknowledge().oid(), agentKnowledgeConverter_, entity, controller_ );
+        return new actions::parameters::PopulationKnowledge( parameter, message.value().populationknowledge().id(), agentKnowledgeConverter_, entity, controller_ );
     if( message.value().has_unitlist() )
         return new actions::parameters::AgentList( parameter, message.value().unitlist(), entities_, controller_ );
     if( message.value().has_automatlist() )
@@ -156,8 +156,8 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
         return new actions::parameters::Point( parameter, converter_, message.value().point() );
     if( message.value().has_polygon() )
         return new actions::parameters::Polygon( parameter, converter_, message.value().polygon().location() );
-    if( message.value().has_dotationtype() )
-        return new actions::parameters::DotationType( parameter, message.value().dotationtype().oid(), staticModel_.objectTypes_ );
+    if( message.value().has_resourcetype() )
+        return new actions::parameters::DotationType( parameter, message.value().resourcetype().id(), staticModel_.objectTypes_ );
     if( message.value().has_equipmenttype() )
         return 0;
     if( message.value().has_logmaintenancepriorities() )
@@ -175,17 +175,17 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
     if( message.value().has_datetime() )
         return new actions::parameters::DateTime( parameter, message.value().datetime() );
     if( message.value().has_urbanblock() )
-        return new actions::parameters::UrbanBlock( parameter, message.value().urbanblock() );
-    if( message.value().has_army() )
-        return new actions::parameters::Army( parameter, message.value().army().oid(), entities_, controller_ );
+        return new actions::parameters::UrbanBlock( parameter, message.value().urbanblock().id() );
+    if( message.value().has_party() )
+        return new actions::parameters::Army( parameter, message.value().party().id(), entities_, controller_ );
     if( message.value().has_formation() )
-        return new actions::parameters::Formation( parameter, message.value().formation().oid(), entities_, controller_ );
+        return new actions::parameters::Formation( parameter, message.value().formation().id(), entities_, controller_ );
     if( message.value().has_quantity() )
         return new actions::parameters::Quantity( parameter, message.value().quantity() );
     if( message.value().has_identifier() )
         return new actions::parameters::Identifier( parameter, message.value().identifier() );
     if( message.value().has_knowledgegroup() )
-        return new actions::parameters::KnowledgeGroup( parameter, message.value().knowledgegroup().oid(), entities_, controller_ );
+        return new actions::parameters::KnowledgeGroup( parameter, message.value().knowledgegroup().id(), entities_, controller_ );
     if( message.value().list_size() )
         return new actions::parameters::ParameterList( parameter );
     return 0;

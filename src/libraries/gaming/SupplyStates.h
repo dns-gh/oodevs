@@ -10,7 +10,7 @@
 #ifndef __SupplyStates_h_
 #define __SupplyStates_h_
 
-#include "Availability.h"
+#include "SupplyAvailability.h"
 #include "Dotation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
@@ -30,6 +30,7 @@ namespace MsgsSimToClient
 {
     class MsgLogSupplyState;
 }
+class SupplyAvailability;
 // =============================================================================
 /** @class  SupplyStates
     @brief  SupplyStates
@@ -67,7 +68,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< Availability >         T_Availabilities;
+    typedef std::vector< SupplyAvailability >         T_Availabilities;
     //@}
 
 public:

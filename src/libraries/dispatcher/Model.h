@@ -104,6 +104,9 @@ public:
     virtual const tools::Resolver_ABC< PopulationFire >&        PopulationFires() const { return populationFires_; }
     virtual const tools::Resolver_ABC< FireEffect >&            FireEffects() const { return fireEffects_; }
     virtual const tools::Resolver_ABC< Report >&                Reports() const { return reports_; }
+
+    virtual void SetToTasker( Common::Tasker& tasker, unsigned int id ) const;
+    unsigned int TaskerToId( const Common::Tasker& tasker ) const;
     //@}
 
 private:
@@ -117,6 +120,8 @@ private:
     //@{
     template< typename Concrete, typename Base, typename Message >
     void CreateUpdate( tools::Resolver< Base >& resolver, const Message& message );
+    template< typename Concrete, typename Base, typename Message >
+    void CreateUpdate2( tools::Resolver< Base >& resolver, const Message& message );
     template< typename Concrete, typename Base, typename Message >
     void CreateUpdate( tools::Resolver< Base >& resolver, unsigned id, const Message& message );
     template< typename Concrete, typename Base, typename Message, typename Parameter >

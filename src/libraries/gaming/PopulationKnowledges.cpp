@@ -46,7 +46,7 @@ PopulationKnowledges::~PopulationKnowledges()
 template< typename T >
 void PopulationKnowledges::UpdatePopulation( const T& message )
 {
-    if( PopulationKnowledge_ABC* k = Find( message.oid_connaissance_population() ) )
+    if( PopulationKnowledge_ABC* k = Find( message.population().id() ) )
     {
         k->Update( message );
         controller_.Update( *this );
@@ -59,10 +59,10 @@ void PopulationKnowledges::UpdatePopulation( const T& message )
 // -----------------------------------------------------------------------------
 void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgPopulationKnowledgeCreation& message )
 {
-    if( ! Find( message.oid_connaissance() ) )
+    if( ! Find( message.id().id() ) )
     {
         PopulationKnowledge_ABC* knowledge = factory_.CreatePopulationKnowledge( owner_, message );
-        Register( message.oid_connaissance(), *knowledge );
+        Register( message.id().id(), *knowledge );
         controller_.Update( *this );
     }
 }
@@ -73,7 +73,7 @@ void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgPopulationKnowled
 // -----------------------------------------------------------------------------
 void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgPopulationKnowledgeUpdate& message )
 {
-    if( PopulationKnowledge_ABC* k = Find( message.oid_connaissance() ) )
+    if( PopulationKnowledge_ABC* k = Find( message.id().id() ) )
     {
         k->Update( message );
         controller_.Update( *this );
@@ -86,8 +86,8 @@ void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgPopulationKnowled
 // -----------------------------------------------------------------------------
 void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgPopulationKnowledgeDestruction& message )
 {
-    delete Find( message.oid_connaissance() );
-    Remove( message.oid_connaissance() );
+    delete Find( message.id().id() );
+    Remove( message.id().id() );
     controller_.Update( *this );
 }
 

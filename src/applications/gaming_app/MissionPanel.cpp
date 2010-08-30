@@ -310,7 +310,7 @@ void MissionPanel::AddMissions( const Decisions_ABC& decisions, kernel::ContextM
 void MissionPanel::ActivateAgentMission( int id )
 {
     SetInterface( 0 );
-    const MissionType& mission = static_cast< tools::Resolver_ABC< MissionType >& >( static_.types_).Get( id );
+    const kernel::MissionType& mission = static_cast< tools::Resolver_ABC< kernel::MissionType >& >( static_.types_).Get( id );
     SetInterface( new UnitMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, *interfaceBuilder_, actionsModel_ ) );
 }
 
@@ -321,7 +321,7 @@ void MissionPanel::ActivateAgentMission( int id )
 void MissionPanel::ActivateAutomatMission( int id )
 {
     SetInterface( 0 );
-    const MissionType& mission = static_cast< tools::Resolver_ABC< MissionType >& >( static_.types_).Get( id );
+    const kernel::MissionType& mission = static_cast< tools::Resolver_ABC< kernel::MissionType >& >( static_.types_).Get( id );
     Entity_ABC* entity = selectedEntity_.ConstCast();
     if( !entity->Retrieve< AutomatDecisions >() )
         entity = const_cast< kernel::Entity_ABC* >( entity->Get< kernel::TacticalHierarchies >().GetSuperior() );
@@ -335,7 +335,7 @@ void MissionPanel::ActivateAutomatMission( int id )
 void MissionPanel::ActivatePopulationMission( int id )
 {
     SetInterface( 0 );
-    const MissionType& mission = static_cast< tools::Resolver_ABC< MissionType >& >( static_.types_).Get( id );
+    const kernel::MissionType& mission = static_cast< tools::Resolver_ABC< kernel::MissionType >& >( static_.types_).Get( id );
     SetInterface( new PopulationMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, *interfaceBuilder_, actionsModel_ ) );
 }
 
@@ -346,7 +346,7 @@ void MissionPanel::ActivatePopulationMission( int id )
 void MissionPanel::ActivateFragOrder( int id )
 {
     SetInterface( 0 );
-    const FragOrderType& order = static_cast< tools::Resolver_ABC< FragOrderType >& >( static_.types_).Get( id );
+    const kernel::FragOrderType& order = static_cast< tools::Resolver_ABC< kernel::FragOrderType >& >( static_.types_).Get( id );
     Entity_ABC* entity = selectedEntity_.ConstCast();
     if( !entity->Retrieve< AutomatDecisions >() )
     {

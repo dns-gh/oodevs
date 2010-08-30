@@ -439,7 +439,10 @@ void DEC_Knowledge_Object::BuildMsgPerceptionSources( MsgsSimToClient::MsgObject
     if( !IsAttributeUpdated( eAttr_PerceptionSources ) )
         return;
     for( CIT_PerceptionSourceSet it = perceptionPerAutomateSet_.begin(); it != perceptionPerAutomateSet_.end(); ++it )
-        asn.mutable_automat_perception()->add_elem( (*it)->GetID() );
+    {
+        Common::AutomatId& data = *asn.mutable_perceiving_automats()->add_elem();
+        data.set_id( (*it)->GetID() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -496,7 +499,7 @@ void DEC_Knowledge_Object::BuildMsgAttributes( MsgsSimToClient::MsgObjectKnowled
 void DEC_Knowledge_Object::BuildMsgRealObject( MsgsSimToClient::MsgObjectKnowledgeUpdate& asn ) const
 {
     if( IsAttributeUpdated( eAttr_RealObject ) )
-        asn.set_real_object( pObjectKnown_ ? pObjectKnown_->GetID() : 0 );
+        asn.mutable_object()->set_id( pObjectKnown_ ? pObjectKnown_->GetID() : 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -513,11 +516,11 @@ void DEC_Knowledge_Object::UpdateOnNetwork()
         return;
 
     client::ObjectKnowledgeUpdate asn;
-    asn().set_oid( nID_ );
+    asn().mutable_id()->set_id( nID_ );
     assert( pArmyKnowing_ );
-    asn().set_team( pArmyKnowing_->GetID() );
+    asn().mutable_party()->set_id( pArmyKnowing_->GetID() );
     if( pGroupKnowing_ )
-        asn().set_group( pGroupKnowing_->GetId() );
+        asn().mutable_knowledge_group()->set_id( pGroupKnowing_->GetId() );
 
     BuildMsgRealObject( asn() );
     BuildMsgPerceptionSources( asn() );
@@ -535,13 +538,13 @@ void DEC_Knowledge_Object::UpdateOnNetwork()
 void DEC_Knowledge_Object::SendMsgCreation() const
 {
     client::ObjectKnowledgeCreation asn;
-    asn().set_oid( nID_ );
-    asn().set_real_object( pObjectKnown_ ? pObjectKnown_->GetID() : 0 );
+    asn().mutable_id()->set_id( nID_ );
+    asn().mutable_object()->set_id( pObjectKnown_ ? pObjectKnown_->GetID() : 0 );
     assert( pArmyKnowing_ );
-    asn().set_team( pArmyKnowing_->GetID() );
+    asn().mutable_party()->set_id( pArmyKnowing_->GetID() );
     if( pGroupKnowing_ )
-        asn().set_group( pGroupKnowing_->GetId() );
-    asn().set_type( pObjectType_->GetName().c_str() );
+        asn().mutable_knowledge_group()->set_id( pGroupKnowing_->GetId() );
+    asn().mutable_type()->set_id( pObjectType_->GetName().c_str() );
     std::for_each( attributes_.begin(), attributes_.end(),
         boost::bind( &DEC_Knowledge_ObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
 
@@ -557,9 +560,9 @@ void DEC_Knowledge_Object::SendMsgCreation() const
 void DEC_Knowledge_Object::SendMsgDestruction() const
 {
     client::ObjectKnowledgeDestruction asn;
-    asn().set_oid( nID_ );
+    asn().mutable_id()->set_id( nID_ );
     assert( pArmyKnowing_ );
-    asn().set_team( pArmyKnowing_->GetID() );
+    asn().mutable_party()->set_id( pArmyKnowing_->GetID() );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 

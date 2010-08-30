@@ -35,11 +35,11 @@ AgentList::AgentList( const kernel::OrderParameter& parameter )
 // Name: AgentList constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-AgentList::AgentList( const OrderParameter& parameter, const Common::MsgUnitList& message, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
+AgentList::AgentList( const OrderParameter& parameter, const Common::UnitIdList& message, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
     for( int i = 0; i < message.elem_size(); ++i )
-        AddParameter( *new Agent( OrderParameter( tools::translate( "Parameter", "Agent %1" ).arg( i + 1 ).ascii(), "agent", false ), message.elem(i).oid(),  resolver, controller ) );
+        AddParameter( *new Agent( OrderParameter( tools::translate( "Parameter", "Agent %1" ).arg( i + 1 ).ascii(), "agent", false ), message.elem(i).id(),  resolver, controller ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,12 +99,12 @@ namespace
 {
     struct AsnSerializer : public ParameterVisitor_ABC
     {
-        explicit AsnSerializer( Common::MsgUnitList& message ) : message_( &message ) {}
+        explicit AsnSerializer( Common::UnitIdList& message ) : message_( &message ) {}
         virtual void Visit( const Agent& param )
         {
             param.CommitTo( *message_->add_elem() );
         }
-        Common::MsgUnitList* message_;
+        Common::UnitIdList* message_;
     };
 }
 
@@ -115,7 +115,7 @@ namespace
 void AgentList::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value ( !IsSet() );
-    Common::MsgUnitList* list = message.mutable_value()->mutable_unitlist();
+    Common::UnitIdList* list = message.mutable_value()->mutable_unitlist();
     if( IsSet() )
     {
         AsnSerializer serializer( *list );

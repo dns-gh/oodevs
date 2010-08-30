@@ -24,11 +24,11 @@ using namespace dispatcher;
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
 AgentKnowledge::AgentKnowledge( Model& model, const MsgsSimToClient::MsgUnitKnowledgeCreation& message )
-    : dispatcher::AgentKnowledge_ABC( message.oid() )
+    : dispatcher::AgentKnowledge_ABC( message.id().id() )
     , model_                        ( model )
-    , knowledgeGroup_               ( model.KnowledgeGroups().Get( message.oid_groupe_possesseur() ) )
-    , agent_                        ( model.Agents().Get( message.oid_unite_reelle() ) )
-    , type_                         ( message.type_unite() )
+    , knowledgeGroup_               ( model.KnowledgeGroups().Get( message.knowledge_group().id() ) )
+    , agent_                        ( model.Agents().Get( message.unit().id() ) )
+    , type_                         ( message.type() )
     , nRelevance_                   ( 0 )
     , nPerceptionLevel_             ( MsgsSimToClient::signale )
     , nMaxPerceptionLevel_          ( MsgsSimToClient::signale )
@@ -75,11 +75,25 @@ AgentKnowledge::~AgentKnowledge()
         optionals_.##ASN##Present = 1;             \
     }
 
+#define UPDATE_ASN_ATTRIBUTE_ID(MESSAGE, ASN, CPP ) \
+    if( ##MESSAGE##.has_##ASN##() )              \
+{                                            \
+    CPP = ##MESSAGE##.##ASN().id();               \
+}
+
+
 #define SEND_ASN_ATTRIBUTE( MESSAGE, ASN, CPP )  \
     if( optionals_.##ASN##Present )    \
     {                                   \
         ##MESSAGE##.set_##ASN( CPP );  \
     }
+
+#define SEND_ASN_ATTRIBUTE_MUT( MESSAGE, ASN, CPP )  \
+    if ( ##MESSAGE##.has_##ASN##() )    \
+{                                   \
+##MESSAGE##.mutable_##ASN## ()->set_id( ##CPP## );  \
+}   
+
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledge::DoUpdate
@@ -94,10 +108,14 @@ void AgentKnowledge::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& me
     UPDATE_ASN_ATTRIBUTE( message, mort                    , bDead_               );
     UPDATE_ASN_ATTRIBUTE( message, speed                   , nSpeed_              );
     UPDATE_ASN_ATTRIBUTE( message, nature_pc               , bPC_                 );
-    UPDATE_ASN_ATTRIBUTE( message, rendu                   , surrendered_         );
     UPDATE_ASN_ATTRIBUTE( message, prisonnier              , bPrisoner_           );
     UPDATE_ASN_ATTRIBUTE( message, refugie_pris_en_compte  , bRefugeeManaged_     );
 
+    if( message.has_surrendered_unit() )
+    {
+        surrendered_ = message.surrendered_unit().id();
+        optionals_.renduPresent = 1;
+    }
     if( message.has_position() )
     {
         position_.Set( message.position().latitude(), message.position().longitude() );
@@ -108,9 +126,9 @@ void AgentKnowledge::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& me
         nDirection_ = message.direction().heading();
         optionals_.directionPresent = 1;
     }
-    if( message.has_camp() )
+    if( message.has_party() )
     {
-        team_ = &model_.Sides().Get( message.camp() );
+        team_ = &model_.Sides().Get( message.party().id() );
         optionals_.campPresent = 1;
     }
     if( message.has_perception_par_compagnie() )
@@ -129,10 +147,10 @@ void AgentKnowledge::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& me
 void AgentKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::UnitKnowledgeCreation message;
-    message().set_oid( GetId() );
-    message().set_oid_groupe_possesseur( knowledgeGroup_.GetId() );
-    message().set_oid_unite_reelle( agent_.GetId() );
-    message().mutable_type_unite()->set_type( type_.type() );
+    message().mutable_id()->set_id( GetId() );
+    message().mutable_knowledge_group()->set_id( knowledgeGroup_.GetId() );
+    message().mutable_unit()->set_id( agent_.GetId() );
+    message().mutable_type()->set_id( type_.id() );
     message.Send( publisher );
 }
 
@@ -143,8 +161,8 @@ void AgentKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 void AgentKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::UnitKnowledgeUpdate message;
-    message().set_oid( GetId() );
-    message().set_oid_groupe_possesseur( knowledgeGroup_.GetId() );
+    message().mutable_id()->set_id( GetId() );
+    message().mutable_knowledge_group()->set_id( knowledgeGroup_.GetId() );
     SEND_ASN_ATTRIBUTE( message(), pertinence              , nRelevance_          );
     SEND_ASN_ATTRIBUTE( message(), identification_level    , nPerceptionLevel_    );
     SEND_ASN_ATTRIBUTE( message(), max_identification_level, nMaxPerceptionLevel_ );
@@ -152,9 +170,10 @@ void AgentKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     SEND_ASN_ATTRIBUTE( message(), mort                    , bDead_               );
     SEND_ASN_ATTRIBUTE( message(), speed                   , nSpeed_              );
     SEND_ASN_ATTRIBUTE( message(), nature_pc               , bPC_                 );
-    SEND_ASN_ATTRIBUTE( message(), rendu                   , surrendered_         );
     SEND_ASN_ATTRIBUTE( message(), prisonnier              , bPrisoner_           );
     SEND_ASN_ATTRIBUTE( message(), refugie_pris_en_compte  , bRefugeeManaged_     );
+    if( optionals_.renduPresent )
+        message().mutable_surrendered_unit()->set_id( surrendered_ );
     if( optionals_.positionPresent )
     {
         message().mutable_position()->set_latitude( position_.X() );
@@ -163,7 +182,7 @@ void AgentKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     if( optionals_.directionPresent )
         message().mutable_direction()->set_heading( nDirection_ );
     if( team_ && optionals_.campPresent )
-        message().set_camp( team_->GetId() );
+        message().mutable_party()->set_id( team_->GetId() );
     if( optionals_.perception_par_compagniePresent )
         for( unsigned int i = 0; i < automatePerceptions_.size(); ++i )
             *message().mutable_perception_par_compagnie()->add_elem() = automatePerceptions_[ i ];
@@ -177,8 +196,8 @@ void AgentKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 void AgentKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::UnitKnowledgeDestruction message;
-    message().set_oid( GetId() );
-    message().set_oid_groupe_possesseur( knowledgeGroup_.GetId() );
+    message().mutable_id()->set_id( GetId() );
+    message().mutable_knowledge_group()->set_id( knowledgeGroup_.GetId() );
     message.Send( publisher );
 }
 

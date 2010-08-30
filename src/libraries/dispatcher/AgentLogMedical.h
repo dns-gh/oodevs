@@ -33,6 +33,7 @@ namespace dispatcher
 {
     class Model_ABC;
     class ClientPublisher_ABC;
+    class MedicalEquipmentAvailability;
 
 // =============================================================================
 /** @class  AgentLogMedical
@@ -62,11 +63,6 @@ private:
     AgentLogMedical& operator=( const AgentLogMedical& ); //!< Assignment operator
     //@}
 
-    //! @name Types
-    //@{
-    typedef EquipmentAvailability< MsgsSimToClient::MsgLogMedicalEquipmentAvailability > T_Availability;
-    //@}
-
 private:
     //! @name Member data
     //@{
@@ -77,9 +73,9 @@ private:
     std::vector< Common::EnumHumanWound >       priorities_;
     std::vector< const kernel::Automat_ABC* > tacticalPriorities_;
 
-    std::vector< T_Availability > evacuationAmbulancesAvailability_;
-    std::vector< T_Availability > collectionAmbulancesAvailability_;
-    std::vector< T_Availability > doctorsAvailability_;
+    std::vector< MedicalEquipmentAvailability > evacuationAmbulancesAvailability_;
+    std::vector< MedicalEquipmentAvailability > collectionAmbulancesAvailability_;
+    std::vector< MedicalEquipmentAvailability > doctorsAvailability_;
     //@}
 };
 

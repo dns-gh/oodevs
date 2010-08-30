@@ -18,9 +18,10 @@
 
 namespace Common
 {
-    class MsgObjectKnowledge;
-    class MsgPopulationKnowledge;
-    class MsgUnitKnowledge;
+    class ObjectKnowledgeId;
+    class PopulationKnowledgeId;
+    class UnitKnowledgeId;
+    class UrbanObjectKnowledgeId;
 }
 
 class MIL_KnowledgeGroup;
@@ -85,17 +86,17 @@ public:
 
     //! @name tools::Resolver
     //@{
-    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent( const Common::MsgUnitKnowledge& asn ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent ( const Common::UnitKnowledgeId&  asn ) const;
     virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent( unsigned int nID ) const;
 
-    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const Common::MsgObjectKnowledge& asn ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const Common::ObjectKnowledgeId& asn ) const;
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( unsigned int nID ) const;
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( MIL_Object_ABC& object ) const;
 
-    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const Common::MsgPopulationKnowledge& asn ) const;
+    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const Common::PopulationKnowledgeId& asn ) const;
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( unsigned int nID ) const;
 
-    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( const Common::MsgUrbanKnowledge& asn ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( const Common::UrbanObjectKnowledgeId& asn ) const;
     virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( unsigned int nID ) const;
     //@}
 

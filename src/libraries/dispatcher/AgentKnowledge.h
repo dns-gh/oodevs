@@ -88,7 +88,7 @@ private:
     const Model& model_;
     const kernel::KnowledgeGroup_ABC& knowledgeGroup_;
     const dispatcher::Agent_ABC& agent_;
-    const Common::MsgUnitType type_;
+    const Common::UnitType type_;
     unsigned int nRelevance_;
     MsgsSimToClient::EnumUnitIdentificationLevel nPerceptionLevel_;
     MsgsSimToClient::EnumUnitIdentificationLevel nMaxPerceptionLevel_;

@@ -28,7 +28,7 @@ MIL_AgentKnowledgeParameter::MIL_AgentKnowledgeParameter( boost::shared_ptr< DEC
 // Name: MIL_AgentKnowledgeParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_AgentKnowledgeParameter::MIL_AgentKnowledgeParameter( const Common::MsgUnitKnowledge& asn, const DEC_KnowledgeResolver_ABC& resolver )
+MIL_AgentKnowledgeParameter::MIL_AgentKnowledgeParameter( const Common::UnitKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver )
     : pKnowledgeAgent_( NET_ASN_Tools::ReadAgentKnowledge( asn, resolver ) )
 {
     // NOTHING
@@ -56,9 +56,9 @@ bool MIL_AgentKnowledgeParameter::IsOfType( const MIL_ParameterType_ABC& type ) 
 // Name: MIL_AgentKnowledgeParameter::ToAgentKnowledge
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool MIL_AgentKnowledgeParameter::ToAgentKnowledge( Common::MsgUnitKnowledge& asn ) const
+bool MIL_AgentKnowledgeParameter::ToAgentKnowledge( Common::UnitKnowledgeId& asn ) const
 {
-    asn.set_oid( pKnowledgeAgent_->GetID() );
+    asn.set_id( pKnowledgeAgent_->GetID() );
     return true;
 }
 

@@ -47,8 +47,8 @@ void MedicalTreatmentAttribute::Update( const Common::MsgObjectAttributes& messa
         availableBeds_      = message.medical_treatment().available_beds();
         doctors_            = message.medical_treatment().doctors();
         availableDoctors_   = message.medical_treatment().available_doctors();
-        for( int i = 0 ; i < message.medical_treatment().type_id().elem_size() ; i++ )
-            medicalTreatmentList_.push_back( message.medical_treatment().type_id().elem( i ) );
+        for( unsigned int i = 0 ; i < message.medical_treatment().type_id_size() ; i++ )
+            medicalTreatmentList_.push_back( message.medical_treatment().type_id( i ) );
     }
 }
 
@@ -64,6 +64,6 @@ void MedicalTreatmentAttribute::Send( Common::MsgObjectAttributes& message ) con
     message.mutable_medical_treatment()->set_doctors          ( doctors_ );
     //Get the list of the ID of each medical treatment
     for( std::list< int >::const_iterator iter = medicalTreatmentList_.begin() ; iter != medicalTreatmentList_.end() ; ++iter )
-        message.mutable_medical_treatment()->mutable_type_id()->add_elem( *iter );
+        message.mutable_medical_treatment()->add_type_id( *iter );
 
 }

@@ -29,11 +29,11 @@ using namespace kernel;
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
 PopulationKnowledge::PopulationKnowledge( const KnowledgeGroup_ABC& group, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< Population_ABC >& resolver, const MsgsSimToClient::MsgPopulationKnowledgeCreation& message )
-    : EntityImplementation< PopulationKnowledge_ABC >( controller, message.oid_connaissance(), "" )
+    : EntityImplementation< PopulationKnowledge_ABC >( controller, message.id().id(), "" )
     , group_     ( group )
     , controller_( controller )
     , converter_ ( converter )
-    , popu_      ( resolver.Get( message.oid_population_reelle() ) )
+    , popu_      ( resolver.Get( message.population().id() ) )
     , domination_( 0 )
 {
     RegisterSelf( *this );
@@ -78,10 +78,10 @@ void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationKnowledg
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation& message )
 {
-    if( ! tools::Resolver< PopulationConcentrationKnowledge >::Find( message.oid_connaissance_concentration() ) )
+    if( ! tools::Resolver< PopulationConcentrationKnowledge >::Find( message.id().id() ) )
     {
         PopulationConcentrationKnowledge* pKnowledge = new PopulationConcentrationKnowledge( controller_, converter_, popu_, message );
-        tools::Resolver< PopulationConcentrationKnowledge >::Register( message.oid_connaissance_concentration(), *pKnowledge );
+        tools::Resolver< PopulationConcentrationKnowledge >::Register( message.id().id(), *pKnowledge );
         Touch();
     }
 }
@@ -92,7 +92,7 @@ void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationConcentr
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate& message )
 {
-    tools::Resolver< PopulationConcentrationKnowledge >::Get( message.oid_connaissance_concentration() )
+    tools::Resolver< PopulationConcentrationKnowledge >::Get( message.id().id() )
         .DoUpdate( message );
 }
 
@@ -102,8 +102,8 @@ void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationConcentr
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeDestruction& message )
 {
-    delete tools::Resolver< PopulationConcentrationKnowledge >::Find( message.oid_connaissance_concentration() );
-    tools::Resolver< PopulationConcentrationKnowledge >::Remove( message.oid_connaissance_concentration() );
+    delete tools::Resolver< PopulationConcentrationKnowledge >::Find( message.id().id() );
+    tools::Resolver< PopulationConcentrationKnowledge >::Remove( message.id().id() );
     Touch();
 }
 
@@ -113,10 +113,10 @@ void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationConcentr
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationFlowKnowledgeCreation& message )
 {
-    if( ! tools::Resolver< PopulationFlowKnowledge >::Find( message.oid_connaissance_flux() ) )
+    if( ! tools::Resolver< PopulationFlowKnowledge >::Find( message.id().id() ) )
     {
         PopulationFlowKnowledge* pKnowledge = new PopulationFlowKnowledge( controller_, converter_, popu_, message );
-        tools::Resolver< PopulationFlowKnowledge >::Register( message.oid_connaissance_flux(), *pKnowledge );
+        tools::Resolver< PopulationFlowKnowledge >::Register( message.id().id(), *pKnowledge );
         Touch();
     };
 }
@@ -127,7 +127,7 @@ void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationFlowKnow
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate& message )
 {
-    tools::Resolver< PopulationFlowKnowledge >::Get( message.oid_connaissance_flux() )
+    tools::Resolver< PopulationFlowKnowledge >::Get( message.id().id() )
         .DoUpdate( message );
 }
 
@@ -137,8 +137,8 @@ void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationFlowKnow
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationFlowKnowledgeDestruction& message )
 {
-    delete tools::Resolver< PopulationFlowKnowledge >::Find( message.oid_connaissance_flux() );
-    tools::Resolver< PopulationFlowKnowledge >::Remove( message.oid_connaissance_flux() );
+    delete tools::Resolver< PopulationFlowKnowledge >::Find( message.id().id() );
+    tools::Resolver< PopulationFlowKnowledge >::Remove( message.id().id() );
     Touch();
 }
 

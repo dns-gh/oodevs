@@ -81,9 +81,9 @@ Team_ABC* TeamFactory::CreateTeam( const MsgsSimToClient::MsgTeamCreation& messa
 // -----------------------------------------------------------------------------
 kernel::Formation_ABC* TeamFactory::CreateFormation( const Common::MsgFormationCreation& message )
 {
-    Entity_ABC* superior = message.has_oid_formation_parente()  ?
-        (Entity_ABC*) &model_.teams_.Resolver< Formation_ABC >::Get( message.oid_formation_parente() ) :
-        (Entity_ABC*) &model_.teams_.Resolver< Team_ABC >::Get( message.oid_camp() );
+    Entity_ABC* superior = message.has_parent()  ? 
+        (Entity_ABC*) &model_.teams_.Resolver< Formation_ABC >::Get( message.parent().id() ) :
+        (Entity_ABC*) &model_.teams_.Resolver< Team_ABC >::Get( message.party().id() );
 
     Formation* result = new Formation( message, controllers_.controller_, model_.static_.levels_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();

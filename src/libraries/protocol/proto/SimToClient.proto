@@ -1,3 +1,11 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
 
 package MsgsSimToClient;
 
@@ -33,22 +41,22 @@ message OrderAck {
 }
 
 message MsgUnitOrderAck {
-   required uint32             oid        = 1;
+   required Common.UnitId      tasker     = 1;
    required OrderAck.ErrorCode error_code = 2;
 }
 
 message MsgAutomatOrderAck {
-   required uint32             oid        = 1;
+   required Common.AutomatId   tasker     = 1;
    required OrderAck.ErrorCode error_code = 2;
 }
 
 message MsgPopulationOrderAck {
-   required uint32             oid        = 1;
-   required OrderAck.ErrorCode error_code = 2;
+   required Common.PopulationId tasker     = 1;
+   required OrderAck.ErrorCode  error_code = 2;
 }
 
 message MsgFragOrderAck {
-   required uint32             oid        = 1;
+   required Common.Tasker      tasker    = 1;
    required OrderAck.ErrorCode error_code = 2;
 }
 
@@ -58,8 +66,8 @@ message MsgSetAutomatModeAck {
         error_invalid_unit = 1;
         error_not_allowed  = 2;
     }
-   required uint32    oid        = 1;
-   required ErrorCode error_code = 2;
+   required Common.AutomatId id         = 1;
+   required ErrorCode        error_code = 2;
 }
 
 message UnitActionAck {
@@ -84,7 +92,7 @@ message MsgMagicActionAck {
 }
 
 message MsgUnitMagicActionAck {
-   required uint32                  oid        = 1;
+   required Common.UnitId           id         = 1;
    required UnitActionAck.ErrorCode error_code = 2;
 }
 
@@ -107,19 +115,19 @@ message MsgPopulationMagicActionAck {
         error_invalid_unit      = 1;
         error_invalid_attribute = 2;
     }
-    required uint32    oid        = 1;
-    required ErrorCode error_code = 2;
+    required Common.PopulationId id         = 1;
+    required ErrorCode           error_code = 2;
 }
 
 message MsgChangeDiplomacyAck {
-   required int32                oid_camp1  = 1;
-   required int32                oid_camp2  = 2;
-   required Common.EnumDiplomacy diplomatie = 3;
-   enum EnumChangeDiplomacyErrorCode {
+    required Common.PartyId       party1     = 1;
+    required Common.PartyId       party2     = 2;
+    required Common.EnumDiplomacy diplomatie = 3;
+    enum EnumChangeDiplomacyErrorCode {
         no_error_diplomacy           = 0;
         error_invalid_camp_diplomacy = 1;
     }
-   required EnumChangeDiplomacyErrorCode  error_code = 4;
+    required EnumChangeDiplomacyErrorCode error_code = 4;
 }
 
 message HierarchyModificationAck {
@@ -244,23 +252,23 @@ message MsgControlResumeAck {
 }
 
 message MsgTeamCreation {
-   required uint32               oid  = 1;
+   required Common.PartyId       id   = 1;
    required string               nom  = 2;
    required Common.EnumDiplomacy type = 3;
 }
 
 message MsgAutomatCreation_oid_parent {
-    optional Common.MsgFormation formation = 1;
-    optional Common.MsgAutomat   automate  = 2;
+    optional Common.FormationId formation = 1;
+    optional Common.AutomatId   automat   = 2;
 }
 
 message MsgAutomatCreation {
-   optional uint32                        oid                     = 1;
-   optional uint32                        type_automate           = 2;
-   optional string                        nom                     = 3;
-   optional MsgAutomatCreation_oid_parent oid_parent              = 4;
-   optional uint32                        oid_camp                = 5;
-   optional uint32                        oid_groupe_connaissance = 6;
+    optional Common.AutomatId              id              = 1;
+    optional Common.AutomatType            type            = 2;
+    optional string                        nom             = 3;
+    optional MsgAutomatCreation_oid_parent oid_parent      = 4;
+    optional Common.PartyId                party           = 5;
+    optional Common.KnowledgeGroupId       knowledge_group = 6;
 }
 
 message RulesOfEngagement {
@@ -282,7 +290,7 @@ message ForceRatio {
 }
 
 message MsgAutomatAttributes {
-   required uint32                             oid                 = 1;
+   required Common.AutomatId                   id                  = 1;
    optional Common.EnumAutomatMode             etat_automate       = 2;
    optional ForceRatio.Value                   rapport_de_force    = 3;
    optional Common.EnumMeetingEngagementStatus combat_de_rencontre = 4;
@@ -290,48 +298,49 @@ message MsgAutomatAttributes {
    optional RulesOfEngagement.Value            roe                 = 6;
 }
 
+
 message MsgUnitCreation {
-   required uint32 oid          = 1;
-   required uint32 type_pion    = 2;
-   required string nom          = 3;
-   required uint32 oid_automate = 4;
-   required bool   pc           = 5;
+   required Common.UnitId    id      = 1;
+   required Common.UnitType  type    = 2;
+   required string           nom     = 3;
+   required Common.AutomatId automat = 4;
+   required bool             pc      = 5;
 }
 
 message BorrowedEquipments {
     message BorrowedEquipment {
-        required uint32 oid_pion_preteur = 1;
-        required uint32 type_equipement  = 2;
-        required int32  nombre           = 3;
+        required Common.UnitId        owner  = 1;
+        required Common.EquipmentType type   = 2;
+        required int32               nombre = 3;
     }
     repeated BorrowedEquipment elem = 1;
 }
 
 message LentEquipments {
     message LentEquipment {
-        required uint32 oid_pion_emprunteur = 1;
-        required uint32 type_equipement     = 2;
-        required int32  nombre              = 3;
+        required Common.UnitId        borrower = 1;
+        required Common.EquipmentType type     = 2;
+        required int32               nombre   = 3;
     }
     repeated LentEquipment elem = 1;
 }
 
 message ResourceDotations {
     message ResourceDotation {
-        required uint32 ressource_id        = 1;
-        required int32  quantite_disponible = 2;
+        required Common.ResourceType type               = 1;
+        required int32              quantite_disponible = 2;
     }
     repeated ResourceDotation elem = 1;
 }
 
 message EquipmentDotations {
     message EquipmentDotation {
-        required uint32 type_equipement            = 1;
-        required int32  nb_disponibles             = 2;
-        required int32  nb_indisponibles           = 3;
-        required int32  nb_reparables              = 4;
-        required int32  nb_dans_chaine_maintenance = 5;
-        required int32  nb_prisonniers             = 6;
+        required Common.EquipmentType type                       = 1;
+        required int32                nb_disponibles             = 2;
+        required int32                nb_indisponibles           = 3;
+        required int32                nb_reparables              = 4;
+        required int32                nb_dans_chaine_maintenance = 5;
+        required int32                nb_prisonniers             = 6;
     }
     repeated EquipmentDotation elem = 1;
 }
@@ -356,9 +365,13 @@ message ContaminationState {
    optional float quantity   = 2;
 }
 
+message NBCAgents {
+    repeated Common.NBCAgentType elem = 1;
+}
+
 message Communication {
-   optional bool   jammed          = 1[default = false];
-   optional int32  knowledge_group = 2[default = 0];;
+    optional bool                     jammed          = 1 [default = false];
+    optional Common.KnowledgeGroupId  knowledge_group = 2;
 }
 
 message MsgUnitAttributes {
@@ -383,7 +396,7 @@ message MsgUnitAttributes {
         dispersion_par_moyens_de_defense_actifs   = 3;
         armes_letales_autorisees                  = 4;
     }
-    required uint32                             oid                           = 1;
+    required Common.UnitId                      id                           = 1;
     optional HumanDotations                     dotation_eff_personnel        = 2;
     optional EquipmentDotations                 dotation_eff_materiel         = 3;
     optional ResourceDotations                  dotation_eff_ressource        = 4;
@@ -395,8 +408,8 @@ message MsgUnitAttributes {
     optional int32                              altitude                      = 10 [default = 0];
     optional int32                              vitesse                       = 11 [default = 0];
     optional int32                              etat_operationnel_brut        = 12 [default = 0];
-    optional Common.MsgUnitList                 pions_renforcant              = 13;
-    optional int32                              pion_renforce                 = 14 [default = 0];
+    optional Common.UnitIdList                  reinforcements                = 13;
+    optional Common.UnitId                      reinforced_unit               = 14;
     optional bool                               mort                          = 15 [default = false];
     optional bool                               neutralise                    = 16 [default = false];
     optional bool                               mode_furtif_actif             = 17 [default = false];
@@ -407,14 +420,14 @@ message MsgUnitAttributes {
     optional int32                              posture_pourcentage           = 22 [default = 0];
     optional int32                              etat_installation             = 23 [default = 0];
     optional bool                               en_tenue_de_protection_nbc    = 24 [default = false];
-    optional Common.MsgListOID                  contamine_par_agents_nbc      = 25;
+    optional NBCAgents                          contamine_par_agents_nbc      = 25;
     optional ContaminationState                 etat_contamination            = 26;
     optional Communication                      communications                = 27;
     optional bool                               radio_emitter_disabled        = 28 [default = true];
     optional bool                               radio_receiver_disabled       = 29 [default = true];
     optional bool                               radar_actif                   = 30 [default = false];
-    optional Common.MsgUnitList                 pions_transportes             = 31;
-    optional int32                              pion_transporteur             = 32 [default = 0];
+    optional Common.UnitIdList                  transported_units             = 31;
+    optional Common.UnitId                      transporting_unit             = 32;
     optional ForceRatio.Value                   rapport_de_force              = 33;
     optional Common.EnumMeetingEngagementStatus combat_de_rencontre           = 34;
     optional Common.EnumOperationalStatus       etat_operationnel             = 35;
@@ -424,86 +437,85 @@ message MsgUnitAttributes {
     optional Common.EnumUnitTiredness           fatigue                       = 39;
     optional Common.EnumUnitMorale              moral                         = 40;
     optional Common.EnumUnitExperience          experience                    = 41;
-    optional int32                              rendu                         = 42;
+    optional Common.UnitId                      surrendered_unit              = 42;
     optional bool                               prisonnier                    = 43 [default = false];
     optional bool                               refugie_pris_en_compte        = 44 [default = false];
 }
 
 message MsgUnitPathFind {
-   required int32          oid        = 1;
+   required Common.UnitId  id         = 1;
    required Common.MsgPath itineraire = 2;
 }
 
 message MsgUnitDestruction  {
-    required int32 oid = 1;
+    required Common.UnitId id = 1;
 }
 
 message MsgUnitEnvironmentType {
-   required int32 oid    = 1;
-   required int32 area   = 2;
-   required int32 left   = 3;
-   required int32 right  = 4;
-   required int32 linear = 5;
+    required Common.UnitId id     = 1;
+    required int32         area   = 2;
+    required int32         left   = 3;
+    required int32         right  = 4;
+    required int32         linear = 5;
 }
 
 message MsgUnitKnowledgeCreation {
-   required int32              oid                   = 1;
-   required int32              oid_groupe_possesseur = 2;
-   required int32              oid_unite_reelle      = 3;
-   required Common.MsgUnitType type_unite            = 4;
+    required Common.UnitKnowledgeId  id              = 1;
+    required Common.KnowledgeGroupId knowledge_group = 2;
+    required Common.UnitId           unit            = 3;
+    required Common.UnitType         type            = 4;
 }
 
 enum EnumUnitIdentificationLevel {
-   identifiee = 0;
-   reconnue   = 1;
-   detectee   = 2;
-   signale    = 3;
+    identifiee = 0;
+    reconnue   = 1;
+    detectee   = 2;
+    signale    = 3;
 }
 
 message AutomatPerception {
-   required int32                       oid_compagnie        = 1;
-   required EnumUnitIdentificationLevel identification_level = 2;
+    required Common.AutomatId            automat              = 1;
+    required EnumUnitIdentificationLevel identification_level = 2;
 }
 
 message SeqOfAutomatPerception {
-   repeated AutomatPerception elem = 1;
+    repeated AutomatPerception elem = 1;
 }
-
 message MsgUnitKnowledgeUpdate {
-   required int32                       oid                       = 1;
-   required int32                       oid_groupe_possesseur     = 2;
-   optional int32                       pertinence                = 3 [default = 0 ];
-   optional EnumUnitIdentificationLevel identification_level      = 4;
-   optional EnumUnitIdentificationLevel max_identification_level  = 5;
-   optional int32                       etat_op                   = 6 [default = 0 ];
-   optional bool                        mort                      = 7 [default = false ];
-   optional Common.MsgCoordLatLong      position                  = 8;
-   optional Common.MsgHeading           direction                 = 9;
-   optional int32                       speed                     = 10 [default = 0 ];
-   optional int32                       camp                      = 11 [default = 0 ];
-   optional bool                        nature_pc                 = 12 [default = false ];
-   optional SeqOfAutomatPerception      perception_par_compagnie  = 13;
-   optional int32                       rendu                     = 14 [default = 0 ];
-   optional bool                        prisonnier                = 15 [default = false ];
-   optional bool                        refugie_pris_en_compte    = 16 [default = false ];
+    required Common.UnitKnowledgeId      id                        = 1;
+    required Common.KnowledgeGroupId     knowledge_group           = 2;
+    optional int32                      pertinence                = 3 [default = 0 ];
+    optional EnumUnitIdentificationLevel identification_level      = 4;
+    optional EnumUnitIdentificationLevel max_identification_level  = 5;
+    optional int32                      etat_op                   = 6 [default = 0 ];
+    optional bool                        mort                      = 7 [default = false ];
+    optional Common.MsgCoordLatLong      position                  = 8;
+    optional Common.MsgHeading           direction                 = 9;
+    optional int32                      speed                     = 10 [default = 0 ];
+    optional Common.PartyId              party                     = 11;
+    optional bool                        nature_pc                 = 12 [default = false ];
+    optional SeqOfAutomatPerception      perception_par_compagnie  = 13;
+    optional Common.UnitId               surrendered_unit          = 14;
+    optional bool                        prisonnier                = 15 [default = false ];
+    optional bool                        refugie_pris_en_compte    = 16 [default = false ];
 }
 
 message MsgUnitKnowledgeDestruction {
-   required int32  oid                   = 1;
-   required int32  oid_groupe_possesseur = 2;
+   required Common.UnitKnowledgeId  id              = 1;
+   required Common.KnowledgeGroupId knowledge_group = 2;
 }
 
 message MsgStartUnitFire_target {
-    optional int32                  unit       = 1;
-    optional int32                  population = 2;
+    optional Common.UnitId          unit       = 1;
+    optional Common.PopulationId    population = 2;
     optional Common.MsgCoordLatLong position   = 3;
 }
 message MsgStartUnitFire {
-   required int32                        fire_oid   = 1;
-   required int32                        firer_oid  = 2;
-   required MsgStartUnitFire_target      target     = 3;
-   required Common.MsgStartUnitFire_type type       = 4;
-   optional int32                        ammunition = 5 [default = 0];
+    required Common.FireId                id          = 1;
+    required Common.UnitId                firing_unit = 2;
+    required MsgStartUnitFire_target      target      = 3;
+    required Common.MsgStartUnitFire_type type        = 4;
+    optional Common.ResourceType          ammunition  = 5;
 }
 
 message UnitHumanFireDamage {
@@ -521,10 +533,10 @@ message SeqOfUnitHumanFireDamage {
 }
 
 message MsgUnitEquipmentFireDamage {
-   required int32  equipement_type = 1;
-   required uint32 available_nbr   = 2;
-   required uint32 unavailable_nbr = 3;
-   required uint32 repairable_nbr  = 4;
+   required Common.EquipmentType equipement_type = 1;
+   required uint32               available_nbr   = 2;
+   required uint32               unavailable_nbr = 3;
+   required uint32               repairable_nbr  = 4;
 }
 
 message SeqOfUnitEquipmentFireDamage {
@@ -532,9 +544,9 @@ message SeqOfUnitEquipmentFireDamage {
 }
 
 message MsgUnitFireDamages {
-   required int32                        target     = 1;
-   required SeqOfUnitHumanFireDamage     humans     = 2;
-   required SeqOfUnitEquipmentFireDamage equipments = 3;
+    required Common.UnitId                target     = 1;
+    required SeqOfUnitHumanFireDamage     humans     = 2;
+    required SeqOfUnitEquipmentFireDamage equipments = 3;
 }
 
 message MsgUnitsFireDamages {
@@ -542,8 +554,8 @@ message MsgUnitsFireDamages {
 }
 
 message MsgPopulationFireDamages {
-   required int32 target   = 1;
-   required int32 dead_nbr = 2;
+   required Common.PopulationId target   = 1;
+   required int32               dead_nbr = 2;
 }
 
 message MsgPopulationsFireDamages {
@@ -551,35 +563,35 @@ message MsgPopulationsFireDamages {
 }
 
 message MsgStopUnitFire {
-   required int32                     fire_oid            = 1;
+   required Common.FireId             id                  = 1;
    optional MsgUnitsFireDamages       units_damages       = 2;
    optional MsgPopulationsFireDamages populations_damages = 3;
 }
 
 message MsgStartPopulationFire {
-   required int32 fire_oid  = 1;
-   required int32 firer_oid = 2;
+   required Common.FireId       id                = 1;
+   required Common.PopulationId firing_population = 2;
 }
 
 message MsgStopPopulationFire {
-   required int32               fire_oid      = 1;
+   required Common.FireId       id            = 1;
    required MsgUnitsFireDamages units_damages = 2;
 }
 
 message MsgExplosion {
-   required int32                     object_oid          = 1;
+   required Common.ObjectId           id                  = 1;
    optional MsgUnitsFireDamages       units_damages       = 2;
    optional MsgPopulationsFireDamages populations_damages = 3;
 }
 
 message MsgStartFireEffect {
-   required int32                     effect_oid = 1;
-   required Common.MsgLocation        location   = 2;
-   required Common.EnumFireEffectType type       = 3;
+    required Common.FireEffectId       id       = 1;
+    required Common.MsgLocation        location = 2;
+    required Common.EnumFireEffectType type     = 3;
 }
 
 message MsgStopFireEffect  {
-    required int32 oid = 1;
+    required Common.FireEffectId id = 1;
 }
 
 enum EnumReportType {
@@ -590,32 +602,32 @@ enum EnumReportType {
 }
 
 message MsgReport {
-   required int32                       oid        = 1;
-   required int32                       cr         = 2;
-   required int32                       cr_oid     = 3;
-   required EnumReportType              type       = 4;
-   required Common.MsgDateTime          time       = 5;
-   optional Common.MsgMissionParameters parametres = 6;
+    required Common.ReportId             id         = 1;
+    required Common.Tasker               cr     = 2;
+    required Common.ReportType           cr_oid       = 3;
+    required EnumReportType              type   = 4;
+    required Common.MsgDateTime          time       = 5;
+    optional Common.MsgMissionParameters parametres = 6;
 }
 
 message MsgInvalidateReport {
-   required int32 oid    = 1;
-   required int32 cr_oid = 2;
+    required Common.ReportId id     = 1;
+    required Common.Tasker   source = 2;
 }
 
 message MsgTrace {
-   required int32  oid     = 1;
+   required Common.Tasker source  = 1;
    required string message = 2;
 }
 
 message MsgDecisionalState {
-   required int32  oid   = 1;
-   required string key   = 2;
-   required string value = 3;
+   required Common.Tasker id    = 1;
+   required string        key   = 2;
+   required string        value = 3;
 }
 
 message MsgDebugPoints {
-   required int32                      oid         = 1;
+   required Common.Tasker              id          = 1;
    required Common.MsgCoordLatLongList coordinates = 2;
 }
 
@@ -635,127 +647,128 @@ message SeqOfVisionCone {
 }
 
 message MsgUnitVisionCones {
-   required int32           oid        = 1;
+   required Common.UnitId   id         = 1;
    required SeqOfVisionCone cones      = 2;
    required float           elongation = 3;
 }
 
 message MsgUnitDetection {
-   required int32                     oid                = 1;
-   required int32                     detected_unit_oid  = 2;
+   required Common.UnitId             observer      = 1;
+   required Common.UnitId             detected_unit = 2;
    required Common.EnumUnitVisibility current_visibility = 3;
    required Common.EnumUnitVisibility max_visibility     = 4;
 }
 
 message MsgObjectDetection {
-   required int32                     oid        = 1;
-   required int32                     object_oid = 2;
+   required Common.UnitId             observer        = 1;
+   required Common.ObjectId           detected_object = 2;
    required Common.EnumUnitVisibility visibility = 3;
 }
 
 message MsgPopulationConcentrationDetection {
-   required int32                     oid               = 1;
-   required int32                     population_oid    = 2;
-   required int32                     concentration_oid = 3;
-   required Common.EnumUnitVisibility visibility        = 4;
+   required Common.UnitId                    id                     = 1;
+   required Common.PopulationId              detected_population    = 2;
+   required Common.PopulationConcentrationId detected_concentration = 3;
+   required Common.EnumUnitVisibility        visibility             = 4;
 }
 
 message MsgPopulationFlowDetection {
-   required int32          oid            = 1;
-   required int32          population_oid = 2;
-   required int32          flow_oid       = 3;
-   required Common.MsgPath visible_flow   = 4;
+   required Common.UnitId           id                  = 1;
+   required Common.PopulationId     detected_population = 2;
+   required Common.PopulationFlowId detected_flow       = 3;
+   required Common.MsgPath          visible_flow        = 4;
 }
 
 message MsgObjectCreation {
-   required int32                      oid        = 1;
-   required string                     type       = 2;
+   required Common.ObjectId            id         = 1;
+   required Common.ObjectType          type       = 2;
    required string                     name       = 3;
-   required int32                      team       = 4;
+   required Common.PartyId             party      = 4;
    required Common.MsgLocation         location   = 5;
    required Common.MsgObjectAttributes attributes = 6;
 }
 
 message MsgObjectDestruction  {
-    required int32 oid = 1;
+    required Common.ObjectId id = 1;
 }
 
 message MsgObjectUpdate {
-   required int32                      oid        = 1;
+   required Common.ObjectId            id         = 1;
    optional Common.MsgLocation         location   = 2;
    required Common.MsgObjectAttributes attributes = 3;
 }
 
 message MsgObjectKnowledgeCreation {
-   required int32                      oid         = 1;
-   required int32                      team        = 2;
-   required int32                      real_object = 3;
-   required string                     type        = 4;
-   required Common.MsgObjectAttributes attributes  = 5;
-   optional int32                      group       = 6;
+   required Common.ObjectKnowledgeId   id              = 1;
+   required Common.PartyId             party           = 2;
+   required Common.ObjectId            object          = 3;
+   required Common.ObjectType          type            = 4;
+   required Common.MsgObjectAttributes attributes      = 5;
+   optional Common.KnowledgeGroupId    knowledge_group = 6;
 }
 
 message MsgObjectKnowledgeUpdate {
-   required int32                      oid                = 1;
-   required int32                      team               = 2;
-   optional int32                      real_object        = 3 [default = 0];
-   optional int32                      relevance          = 4 [default = 0];
-   optional Common.MsgLocation         location           = 5;
-   optional Common.MsgObjectAttributes attributes         = 6;
-   optional bool                       perceived          = 7 [default = false];
-   optional Common.MsgListOID          automat_perception = 8;
-   optional int32                      group              = 9;
+   required Common.ObjectKnowledgeId   id                  = 1;
+   required Common.PartyId             party               = 2;
+   optional Common.ObjectId            object              = 3;
+   optional int32                      relevance           = 4 [default = 0];
+   optional Common.MsgLocation         location            = 5;
+   optional Common.MsgObjectAttributes attributes          = 6;
+   optional bool                       perceived           = 7 [default = false];
+   optional Common.AutomatIdList       perceiving_automats = 8;
+   optional Common.KnowledgeGroupId    knowledge_group     = 9;
 }
+
 message MsgObjectKnowledgeDestruction {
-   required int32  oid  = 1;
-   required int32  team = 2;
+   required Common.ObjectKnowledgeId id    = 1;
+   required Common.PartyId           party = 2;
 }
 
 message MsgUrbanKnowledgeCreation {
-   required int32                       oid                 = 1;
-   required int32                       team                = 2;
-   required int32                       real_urban          = 3;
+    required Common.UrbanObjectKnowledgeId id          = 1;
+    required Common.PartyId                party       = 2;
+    required Common.UrbanObjectId          urban_block = 3;
 }
 
 message MsgUrbanKnowledgeUpdate {
- required int32                        oid                     = 1;
- required int32                        team                    = 2;
- required int32                        real_urban              = 3; 
- optional int32                        progress                = 4;
- optional int32                        maxProgress             = 5;
- optional bool                         perceived               = 6;
- optional Common.MsgListOID            automat_perception      = 7;
+    required Common.UrbanObjectKnowledgeId id                   = 1;
+    required Common.PartyId                party                = 2;
+    required Common.UrbanObjectId          urban_block          = 3; 
+    optional int32                         progress             = 4;
+    optional int32                         max_progress         = 5;
+    optional bool                          perceived            = 6;
+    optional Common.AutomatIdList          automat_perceptions  = 7;
 }
 
 message MsgUrbanKnowledgeDestruction {
-  required int32                        oid                     = 1;
-  required int32                        team                    = 2;
+    required Common.UrbanObjectKnowledgeId id    = 1;
+    required Common.PartyId                party = 2;
 }
 
 message MsgLogMedicalHandlingCreation {
-   required int32                 oid_consigne  = 1;
-   required int32                 oid_pion      = 2;
-   required int32                 tick_creation = 3;
-   required Common.EnumHumanRank  rang          = 4;
-   required Common.EnumHumanWound blessure      = 5;
-   optional bool                  blesse_mental = 6 [default = false];
-   optional bool                  contamine_nbc = 7 [default = false];
+   required Common.MedicalRequestId id            = 1;
+   required Common.UnitId           unit          = 2;
+   required int32                   tick_creation = 3;
+   required Common.EnumHumanRank    rang          = 4;
+   required Common.EnumHumanWound   blessure      = 5;
+   optional bool                    blesse_mental = 6 [default = false];
+   optional bool                    contamine_nbc = 7 [default = false];
 }
 
 message MsgLogMedicalHandlingUpdate {
-   required int32                               oid_consigne          = 1;
-   required int32                               oid_pion              = 2;
-   optional int32                               oid_pion_log_traitant = 3 [default = 0];
-   optional Common.EnumHumanWound               blessure              = 4;
-   optional bool                                blesse_mental         = 5 [default = false];
-   optional bool                                contamine_nbc         = 6 [default = false];
-   optional Common.EnumLogMedicalHandlingStatus etat                  = 7;
-   optional bool                                diagnostique_effectue = 8 [default = false];
+    required Common.MedicalRequestId             id               = 1;
+    required Common.UnitId                       unit             = 2;
+    optional Common.UnitId                       provider         = 3;
+    optional Common.EnumHumanWound               blessure           = 4;
+    optional bool                                blesse_mental = 5 [default = false];
+    optional bool                                contamine_nbc     = 6 [default = false];
+    optional Common.EnumLogMedicalHandlingStatus etat             = 7;
+    optional bool                                diagnostique_effectue        = 8 [default = false];
 }
 
 message MsgLogMedicalHandlingDestruction {
-   required int32  oid_consigne = 1;
-   required int32  oid_pion     = 2;
+   required Common.MedicalRequestId id   = 1;
+   required Common.UnitId           unit = 2;
 }
 
 message MsgLogMedicalEquipmentAvailability{
@@ -772,34 +785,34 @@ message SeqOfLogMedicalEquipmentAvailability {
 }
 
 message MsgLogMedicalState {
-   required int32                                oid_pion                            = 1;
-   optional bool                                 chaine_activee                      = 2 [default = false];
-   optional Common.MsgLogMedicalPriorities       priorites                           = 3;
-   optional Common.MsgAutomatList                priorites_tactiques                 = 4;
-   optional SeqOfLogMedicalEquipmentAvailability disponibilites_ambulances_releve    = 5;
-   optional SeqOfLogMedicalEquipmentAvailability disponibilites_ambulances_ramassage = 6;
-   optional SeqOfLogMedicalEquipmentAvailability disponibilites_medecins             = 7;
+    required Common.UnitId                        id                                  = 1;
+    optional bool                                 chaine_activee                             = 2 [default = false];
+    optional Common.MsgLogMedicalPriorities       priorites                           = 3;
+    optional Common.AutomatIdList                 tactical_priorities                 = 4;
+    optional SeqOfLogMedicalEquipmentAvailability disponibilites_ambulances_releve    = 5;
+    optional SeqOfLogMedicalEquipmentAvailability disponibilites_ambulances_ramassage = 6;
+    optional SeqOfLogMedicalEquipmentAvailability disponibilites_medecins             = 7;
 }
 
 message MsgLogMaintenanceHandlingCreation {
-   required int32  oid_consigne    = 1;
-   required int32  oid_pion        = 2;
-   required int32  tick_creation   = 3;
-   required int32  type_equipement = 4;
-   required int32  type_panne      = 5;
+   required Common.MaintenanceRequestId id            = 1;
+   required Common.UnitId               unit          = 2;
+   required int32                       tick_creation = 3;
+   required Common.EquipmentType        equipement    = 4;
+   required Common.BreakdownType        breakdown     = 5;
 }
 
 message MsgLogMaintenanceHandlingUpdate {
-   required int32                                   oid_consigne          = 1;
-   required int32                                   oid_pion              = 2;
-   required int32                                   oid_pion_log_traitant = 3;
-   optional Common.EnumLogMaintenanceHandlingStatus etat                  = 4;
+   required Common.MaintenanceRequestId             id        = 1;
+   required Common.UnitId                           unit      = 2;
+   required Common.UnitId                           provider  = 3;
+   optional Common.EnumLogMaintenanceHandlingStatus etat     = 4;
    optional bool                                    diagnostique_effectue = 5 [default = false];
 }
 
 message MsgLogMaintenanceHandlingDestruction {
-   required int32  oid_consigne = 1;
-   required int32  oid_pion     = 2;
+   required Common.MaintenanceRequestId id   = 1;
+   required Common.UnitId               unit = 2;
 }
 
 message MsgLogMaintenanceEquipmentAvailability {
@@ -816,27 +829,27 @@ message SeqOfLogMaintenanceEquipmentAvailability {
 }
 
 message MsgLogMaintenanceState {
-   required int32                                    oid_pion                   = 1;
-   optional bool                                     chaine_activee             = 2;
+   required Common.UnitId                            id                         = 1;
+   optional bool                                     chaine_activee                      = 2;
    optional Common.EnumLogMaintenanceRegimeTravail   regime_travail             = 3;
    optional Common.MsgLogMaintenancePriorities       priorites                  = 4;
-   optional Common.MsgAutomatList                    priorites_tactiques        = 5;
+   optional Common.AutomatIdList                     priorites_tactiques        = 5;
    optional SeqOfLogMaintenanceEquipmentAvailability disponibilites_remorqueurs = 6;
    optional SeqOfLogMaintenanceEquipmentAvailability disponibilites_reparateurs = 7;
 }
 
 message MsgLogSupplyHandlingCreation {
-   optional int32              oid_consigne  = 1;
-   optional int32              oid_automate  = 2;
-   optional int32              tick_creation = 3;
-   optional SeqOfDotationQuery dotations     = 4;
+   optional Common.SupplyRequestId id            = 1;
+   optional Common.AutomatId       consumer      = 2;
+   optional int32                  tick_creation = 3;
+   optional SeqOfDotationQuery     dotations     = 4;
 }
 
 message MsgDotationQuery {
-   optional int32 ressource_id        = 1;
-   optional int32 quantite_demandee   = 2;
-   optional int32 quantite_accordee   = 3;
-   optional int32 quantite_en_transit = 4;
+   optional Common.ResourceType resource            = 1;
+   optional int32               quantite_demandee   = 2;
+   optional int32               quantite_accordee   = 3;
+   optional int32               quantite_en_transit = 4;
 }
 
 message SeqOfDotationQuery {
@@ -844,27 +857,27 @@ message SeqOfDotationQuery {
 }
  
 message MsgLogSupplyHandlingUpdate {
-   optional int32                       oid_consigne                               = 1;
-   optional int32                       oid_automate                               = 2;
-   optional int32                       oid_automate_log_traitant                  = 3;
-   optional int32                       oid_automate_log_fournissant_moyens_convoi = 4;
-   optional int32                       oid_pion_convoyant                         = 5;
-   optional EnumLogSupplyHandlingStatus etat                                       = 6;
-   optional SeqOfDotationQuery          dotations                                  = 7;
+   optional Common.SupplyRequestId      id              = 1;
+   optional Common.AutomatId            consumer        = 2;
+   optional Common.AutomatId            supplier        = 3;
+   optional Common.AutomatId            convoy_provider = 4;
+   optional Common.UnitId               convoying_unit  = 5;
+   optional EnumLogSupplyHandlingStatus etat            = 6;
+   optional SeqOfDotationQuery          dotations       = 7;
 }
 
 message MsgLogSupplyHandlingDestruction {
-   required int32 oid_consigne = 1;
-   required int32 oid_automate = 2;
+   required Common.SupplyRequestId id       = 1;
+   required Common.AutomatId       consumer = 2;
 }
 
 message MsgLogSupplyEquimentAvailability {
-   optional int32 type_equipement = 1;
-   optional int32 nbr_total       = 2;
-   optional int32 nbr_disponibles = 3;
-   optional int32 nbr_au_travail  = 4;
-   optional int32 nbr_pretes      = 5 [default = 0];
-   optional int32 nbr_au_repos    = 6;
+   optional Common.EquipmentType equipment       = 1;
+   optional int32                nbr_total       = 2;
+   optional int32                nbr_disponibles = 3;
+   optional int32                nbr_au_travail  = 4;
+   optional int32                nbr_pretes      = 5 [default = 0];
+   optional int32                nbr_au_repos    = 6;
 }
 
 message SeqOfLogSupplyEquimentAvailability {
@@ -872,62 +885,61 @@ message SeqOfLogSupplyEquimentAvailability {
 }
 
 message MsgLogSupplyState {
-   optional int32                               oid_pion                             = 1;
-   optional bool                                chaine_activee                       = 2;
-   optional Common.SeqOfDotationStock           stocks                               = 3;
-   optional SeqOfLogSupplyEquimentAvailability  disponibilites_transporteurs_convois = 4;
+    optional Common.UnitId                       id                                   = 1;
+    optional bool                                chaine_activee                              = 2;
+    optional Common.SeqOfDotationStock           stocks                               = 3;
+    optional SeqOfLogSupplyEquimentAvailability  disponibilites_transporteurs_convois = 4;
 }
 
 message MsgLogSupplyQuotas {
-   required int32                     oid_automate = 1;
-   required Common.SeqOfDotationQuota quotas       = 2;
+    required Common.AutomatId          id     = 1;
+    required Common.SeqOfDotationQuota quotas = 2;
 }
 
 message MsgPopulationCreation {
-   required int32  oid             = 1;
-   required int32  type_population = 2;
-   optional string nom             = 3;
-   required int32  oid_camp        = 4;
+   required Common.PopulationId   id    = 1;
+   required Common.PopulationType type  = 2;
+   optional string                nom   = 3;
+   required Common.PartyId        party = 4;
 }
 
 message MsgPopulationUpdate {
-   required int32  oid             = 1;
-   optional int32  etat_domination = 2 [default = 0];
+   required Common.PopulationId id              = 1;
+   optional int32               etat_domination = 2 [default = 0];
 }
 
 message MsgPopulationConcentrationCreation {
-   required int32                  oid            = 1;
-   required int32                  oid_population = 2;
-   required Common.MsgCoordLatLong position       = 3;
-   
+   required Common.PopulationConcentrationId id         = 1;
+   required Common.PopulationId              population = 2;
+   required Common.MsgCoordLatLong           position   = 3;
 }
 
 message MsgPopulationConcentrationDestruction {
-   required int32  oid            = 1;
-   required int32  oid_population = 2;
+   required Common.PopulationConcentrationId id         = 1;
+   required Common.PopulationId              population = 2;
 }
 
 message MsgPopulationConcentrationUpdate {
-   required int32                          oid                = 1;
-   required int32                          oid_population     = 2;
-   optional int32                          nb_humains_vivants = 3 [default = 0];
-   optional int32                          nb_humains_morts   = 4 [default = 0];
-   optional Common.EnumPopulationAttitude  attitude           = 5;
+   required Common.PopulationConcentrationId id                 = 1;
+   required Common.PopulationId              population         = 2;
+   optional int32                            nb_humains_vivants = 3 [default = 0];
+   optional int32                            nb_humains_morts   = 4 [default = 0];
+   optional Common.EnumPopulationAttitude    attitude           = 5;
 }
 
 message MsgPopulationFlowCreation {
-   required int32  oid            = 1;
-   required int32  oid_population = 2;
+   required Common.PopulationFlowId  id         = 1;
+   required Common.PopulationId      population = 2;
 }
 
 message MsgPopulationFlowDestruction {
-   required int32  oid            = 1;
-   required int32  oid_population = 2;
+   required Common.PopulationFlowId  id         = 1;
+   required Common.PopulationId      population = 2;
 }
 
 message MsgPopulationFlowUpdate {
-   required int32                          oid                = 1;
-   required int32                          oid_population     = 2;
+   required Common.PopulationFlowId        id                 = 1;
+   required Common.PopulationId            population         = 2;
    optional Common.MsgPath                 itineraire         = 3;
    optional Common.MsgPath                 flux               = 4;
    optional Common.MsgHeading              direction          = 5;
@@ -938,53 +950,54 @@ message MsgPopulationFlowUpdate {
 }
 
 message MsgPopulationKnowledgeCreation {
-   required int32  oid_connaissance      = 1;
-   required int32  oid_groupe_possesseur = 2;
-   optional int32  oid_population_reelle = 3;
-   optional int32  camp                  = 4;
+   required Common.PopulationKnowledgeId  id              = 1;
+   required Common.KnowledgeGroupId       knowledge_group = 2;
+   optional Common.PopulationId           population      = 3;
+   optional Common.PartyId                party           = 4;
 }
 
 message MsgPopulationKnowledgeUpdate {
-   required int32  oid_connaissance      = 1;
-   required int32  oid_groupe_possesseur = 2;
-   optional int32  etat_domination       = 3 [default = 0];
+   required Common.PopulationKnowledgeId  id              = 1;
+   required Common.KnowledgeGroupId       knowledge_group = 2;
+   optional int32                         etat_domination = 3 [default = 0];
 }
 
 message MsgPopulationKnowledgeDestruction {
-   required int32  oid_connaissance      = 1;
-   required int32  oid_groupe_possesseur = 2;
+   required Common.PopulationKnowledgeId  id              = 1;
+   required Common.KnowledgeGroupId       knowledge_group = 2;
 }
 
 message MsgPopulationConcentrationKnowledgeCreation {
-   required int32                   oid_connaissance_concentration = 1;
-   required int32                   oid_connaissance_population    = 2;
-   required int32                   oid_groupe_possesseur          = 3;
-   optional int32                   oid_concentration_reelle       = 4;
-   optional Common.MsgCoordLatLong  position                       = 5;
-}
-message MsgPopulationConcentrationKnowledgeDestruction {
-   required int32  oid_connaissance_concentration = 1;
-   required int32  oid_connaissance_population    = 2;
-   required int32  oid_groupe_possesseur          = 3;
+    required Common.PopulationConcentrationKnowledgeId  id              = 1;
+    required Common.PopulationKnowledgeId               population      = 2;
+    required Common.KnowledgeGroupId                    knowledge_group = 3;
+    required Common.PopulationConcentrationId           concentration   = 4;
+    optional Common.MsgCoordLatLong                     position        = 5;
 }
 
 message MsgPopulationConcentrationKnowledgeUpdate {
-   required int32                          oid_connaissance_concentration = 1;
-   required int32                          oid_connaissance_population    = 2;
-   required int32                          oid_groupe_possesseur          = 3;
-   optional int32                          oid_concentration_reelle       = 4;
-   optional int32                          nb_humains_vivants             = 5;
-   optional int32                          nb_humains_morts               = 6;
-   optional Common.EnumPopulationAttitude  attitude                       = 7;
-   optional int32                          pertinence                     = 8;
-   optional bool                           est_percu                      = 9;
+    required Common.PopulationConcentrationKnowledgeId  id                 = 1;
+    required Common.PopulationKnowledgeId               population         = 2;
+    required Common.KnowledgeGroupId                    knowledge_group    = 3;
+    optional Common.PopulationConcentrationId           concentration      = 4;
+    optional int32                                      nb_humains_vivants = 5;
+    optional int32                                      nb_humains_morts   = 6;
+    optional Common.EnumPopulationAttitude              attitude           = 7;
+    optional int32                                      pertinence         = 8;
+    optional bool                                       est_percu          = 9;
+}
+
+message MsgPopulationConcentrationKnowledgeDestruction {
+    required Common.PopulationConcentrationKnowledgeId  id              = 1;
+    required Common.PopulationKnowledgeId               population      = 2;
+    required Common.KnowledgeGroupId                    knowledge_group = 3;
 }
 
 message MsgPopulationFlowKnowledgeCreation {
-   required int32  oid_connaissance_flux       = 1;
-   required int32  oid_connaissance_population = 2;
-   required int32  oid_groupe_possesseur       = 3;
-   required int32  oid_flux_reel               = 4;
+    required Common.PopulationFlowKnowledgeId   id              = 1;
+    required Common.PopulationKnowledgeId       population      = 2;
+    required Common.KnowledgeGroupId            knowledge_group = 3;
+    required Common.PopulationFlowId            flow            = 4;
 }
 
 message MsgFlowPart {
@@ -996,24 +1009,24 @@ message SeqOfFlowPart {
    repeated MsgFlowPart elem = 1;
 }
 
-message MsgPopulationFlowKnowledgeDestruction {
-   required int32  oid_connaissance_flux       = 1;
-   required int32  oid_connaissance_population = 2;
-   required int32  oid_groupe_possesseur       = 3;
+message MsgPopulationFlowKnowledgeUpdate {
+    required Common.PopulationFlowKnowledgeId   id                  = 1;
+    required Common.PopulationKnowledgeId       population          = 2;
+    required Common.KnowledgeGroupId            knowledge_group     = 3;
+    optional Common.PopulationFlowId            flow                = 4;
+    optional SeqOfFlowPart                      portions_flux       = 5;
+    optional Common.MsgHeading                  direction           = 6;
+    optional int32                              vitesse             = 7;
+    optional int32                              nb_humains_vivants  = 8;
+    optional int32                              nb_humains_morts    = 9;
+    optional Common.EnumPopulationAttitude      attitude            = 10;
+    optional bool                               est_percu           = 11;
 }
 
-message MsgPopulationFlowKnowledgeUpdate {
-   required int32                          oid_connaissance_flux       = 1;
-   required int32                          oid_connaissance_population = 2;
-   required int32                          oid_groupe_possesseur       = 3;
-   optional int32                          oid_flux_reel               = 4;
-   optional SeqOfFlowPart                  portions_flux               = 5;
-   optional Common.MsgHeading              direction                   = 6;
-   optional int32                          vitesse                     = 7;
-   optional int32                          nb_humains_vivants          = 8;
-   optional int32                          nb_humains_morts            = 9;
-   optional Common.EnumPopulationAttitude  attitude                    = 10;
-   optional bool                           est_percu                   = 11;
+message MsgPopulationFlowKnowledgeDestruction {
+    required Common.PopulationFlowKnowledgeId   id              = 1;
+    required Common.PopulationKnowledgeId       population      = 2;
+    required Common.KnowledgeGroupId            knowledge_group = 3;
 }
 
 // Folk
@@ -1037,10 +1050,6 @@ message MsgFolkGraphEdgeUpdate {
 message MsgFolkGraphUpdate {
    repeated MsgFolkGraphEdgeUpdate elem = 1;
 }
-
-// Weather
-message MsgControlGlobalMeteoAck {}
-message MsgControlLocalMeteoAck {}
 
 // Checkpoints
 message MsgControlCheckPointSetFrequencyAck {}
@@ -1165,19 +1174,19 @@ message MsgUrbanUpdate {
 
 // Knowledge groups
 message MsgKnowledgeGroupCreation {
-   required uint32 oid         = 1;
-   required uint32 oid_camp    = 2;
-   optional uint32 oid_parent  = 3;
-   required string type        = 4;
-   optional bool jam           = 5;
+   required Common.KnowledgeGroupId id     = 1;
+   required Common.PartyId          party  = 2;
+   optional Common.KnowledgeGroupId parent = 3;
+   required string                  type   = 4;
+   optional bool                    jam = 5;
 }
 
 message MsgKnowledgeGroupUpdate {
-   required uint32 oid        = 1;
-   optional uint32 oid_camp   = 2;
-   optional uint32 oid_parent = 3;
-   optional bool   enabled    = 4;
-   optional string type       = 5;
+   required Common.KnowledgeGroupId id      = 1;
+   optional Common.PartyId          party   = 2;
+   optional Common.KnowledgeGroupId parent  = 3;
+   optional bool                    enabled = 4;
+   optional string                  type    = 5;
 }
 
 message KnowledgeGroupAck {
@@ -1192,41 +1201,44 @@ message KnowledgeGroupAck {
 }
 
 message MsgKnowledgeGroupMagicActionAck {
-    required uint32                      oid        = 1;
+    required Common.KnowledgeGroupId     id         = 1;
     required KnowledgeGroupAck.ErrorCode error_code = 2;
 }
 
 message MsgKnowledgeGroupCreationAck {
-    required uint32                      oid        = 1;
+    required Common.KnowledgeGroupId     id         = 1;
     required KnowledgeGroupAck.ErrorCode error_code = 2;
 }
 
 message MsgKnowledgeGroupUpdateAck {
-    required uint32                      oid        = 1;
+    required Common.KnowledgeGroupId     id         = 1;
     required KnowledgeGroupAck.ErrorCode error_code = 2;
 }
 
 message MsgKnowledgeGroupDestruction {
-    required uint32 oid         = 1;
-    required uint32 oid_camp    = 2;
+    required Common.KnowledgeGroupId id    = 1;
+    required Common.PartyId          party = 2;
 }
 
-//meteo 
+// Weather
+message MsgControlGlobalMeteoAck {}
+message MsgControlLocalMeteoAck {}
+
 message MsgControlGlobalMeteo {
-   required Common.MsgMeteoAttributes attributes = 1;
-   required uint32 oid                           = 2;
+    required Common.WeatherId          id         = 1;
+    required Common.MsgMeteoAttributes attributes = 2;
 }
 
 message MsgControlLocalMeteoCreation {
-   required uint32 oid                                     = 1;
-   optional Common.MsgCoordLatLong top_left_coordinate     = 2;
-   optional Common.MsgCoordLatLong bottom_right_coordinate = 3;
-   optional Common.MsgMeteoAttributes     attributes       = 4;
+   required Common.WeatherId          id                      = 1;
+   optional Common.MsgCoordLatLong    top_left_coordinate     = 2;
+   optional Common.MsgCoordLatLong    bottom_right_coordinate = 3;
+   optional Common.MsgMeteoAttributes attributes              = 4;
 
 }
 
 message MsgControlLocalMeteoDestruction {
-   required uint32 oid                                     = 1;
+   required Common.WeatherId id = 1;
 }
 
 // Message container

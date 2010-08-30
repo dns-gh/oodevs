@@ -165,10 +165,9 @@ void Model::ReadFormation( xml::xistream& xis )
     xis >> xml::attribute( "id", id );
 
     Common::MsgTacticalLine_Diffusion diffusion;
-    Common::MsgFormation formation;
-    formation.set_oid( id );
-
-    diffusion.set_formation( id ) ;
+    Common::FormationId formation;
+    formation.set_id( id );
+    diffusion.mutable_formation()->set_id( id ) ;
     xis >> xml::list( "lima"        , tacticalLines_, &TacticalLinesModel::ReadLima , diffusion )
         >> xml::list( "limit"       , tacticalLines_, &TacticalLinesModel::ReadLimit, diffusion )
         >> xml::list( "intelligence", intelligences_, &IntelligencesModel::ReadIntelligence, formation )
@@ -186,7 +185,7 @@ void Model::ReadAutomat( xml::xistream& xis )
     xis >> xml::attribute( "id", id );
     Common::MsgTacticalLine_Diffusion diffusion;
 
-    diffusion.set_automat( id );
+    diffusion.mutable_automat()->set_id( id );
     xis >> xml::list( "lima" , tacticalLines_, &TacticalLinesModel::ReadLima , diffusion )
         >> xml::list( "limit", tacticalLines_, &TacticalLinesModel::ReadLimit, diffusion );
 }

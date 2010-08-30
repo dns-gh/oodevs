@@ -37,13 +37,13 @@ public:
     // Conversions to empty lists are allowed.
     virtual bool ToPointList( Common::MsgPointList& ) const;
     virtual bool ToPolygonList( Common::MsgPolygonList& ) const;
-    virtual bool ToAgentKnowledgeList( Common::MsgUnitKnowledgeList& asn ) const;
-    virtual bool ToAgentList( Common::MsgUnitList& asn ) const;
-    virtual bool ToAutomatList( Common::MsgAutomatList& ) const;
+    virtual bool ToAgentKnowledgeList( Common::UnitKnowledgeIdList& asn ) const;
+    virtual bool ToAgentList( Common::UnitIdList& asn ) const;
+    virtual bool ToAutomatList( Common::AutomatIdList& ) const;
     virtual bool ToGenObjectList( Common::MsgPlannedWorkList& ) const;
     virtual bool ToLocationList( Common::MsgLocationList& ) const;
     virtual bool ToObjectiveList( Common::MsgMissionObjectiveList& asn ) const;
-    virtual bool ToObjectKnowledgeList( Common::MsgObjectKnowledgeList& asn ) const;
+    virtual bool ToObjectKnowledgeList( Common::ObjectKnowledgeIdList& asn ) const;
     virtual bool ToPathList( Common::MsgPathList& asn ) const;
     virtual bool ToNatureAtlas( Common::MsgAtlasNature& asn ) const;
     //@}

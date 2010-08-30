@@ -16,11 +16,11 @@ namespace dispatcher
 // -----------------------------------------------------------------------------
 template< typename T > inline
 EquipmentAvailability< T >::EquipmentAvailability( const T& asn )
-    : nEquipmentType_( asn.type_equipement()  )
-    , nNbrTotal_     ( asn.nbr_total()        )
-    , nNbrAvailable_ ( asn.nbr_disponibles()  )
-    , nNbrWorking_   ( asn.nbr_au_travail()   )
-    , nNbrLent_      ( asn.nbr_pretes()       )
+    : nEquipmentType_( asn.equipment().id() )
+    , nNbrTotal_     ( asn.nbr_total() )
+    , nNbrAvailable_ ( asn.nbr_disponibles() )
+    , nNbrWorking_   ( asn.nbr_au_travail() )
+    , nNbrLent_      ( asn.nbr_pretes() )
     , nNbrResting_   ( asn.has_nbr_au_repos() ? asn.nbr_au_repos() : std::numeric_limits< unsigned int >::max() )
 {
     // NOTHING
@@ -43,7 +43,7 @@ EquipmentAvailability< T >::~EquipmentAvailability()
 template< typename T > inline
 void EquipmentAvailability< T >::Send( T& asn ) const
 {
-    asn.set_type_equipement( nEquipmentType_ );
+    asn.mutable_equipment()->set_id( nEquipmentType_ );
     asn.set_nbr_total( nNbrTotal_ );
     asn.set_nbr_disponibles( nNbrAvailable_ );
     asn.set_nbr_au_travail( nNbrWorking_ );

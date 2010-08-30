@@ -139,7 +139,7 @@ void IntelligencePositions::DoUpdate( const MsgsMessengerToClient::MsgIntelligen
 void IntelligencePositions::Set( const geometry::Point2f& point )
 {
     plugins::messenger::IntelligenceUpdateRequest message;
-    message().set_oid( holder_.GetId() );
+    message().mutable_intelligence()->set_id( holder_.GetId() );
     converter_.ConvertToGeo( point, *message().mutable_location() );
     message.Send( publisher_ );
 }

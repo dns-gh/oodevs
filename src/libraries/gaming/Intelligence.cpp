@@ -49,9 +49,9 @@ namespace
 // Created: SBO 2007-10-17
 // -----------------------------------------------------------------------------
 Intelligence::Intelligence( const MsgsMessengerToClient::MsgIntelligenceCreation& message, Controller& controller, const tools::Resolver_ABC< Formation_ABC >& formations, const tools::Resolver_ABC< HierarchyLevel_ABC >& levels, Publisher_ABC& publisher )
-    : EntityImplementation< Intelligence_ABC >( controller, message.oid(), QString( message.intelligence().name().c_str() ) )
+    : EntityImplementation< Intelligence_ABC >( controller, message.id().id(), QString( message.intelligence().name().c_str() ) )
     , levels_   ( levels )
-    , formation_( formations.Get( message.intelligence().formation().oid() ) )
+    , formation_( formations.Get( message.intelligence().formation().id() ) )
     , symbol_   ( message.intelligence().nature() )
     , level_    ( &levels_.Get( message.intelligence().level() ) )
     , karma_    ( &ConvertToKarma( message.intelligence().diplomacy() ) )
@@ -180,7 +180,7 @@ void Intelligence::CreateDictionary( Controller& controller )
 void Intelligence::Delete()
 {
     plugins::messenger::IntelligenceDestructionRequest message;
-    message().set_oid( id_ );
+    message().mutable_id()->set_id( id_ );
     message.Send( publisher_ );
 }
 
@@ -191,7 +191,7 @@ void Intelligence::Delete()
 void Intelligence::Rename( const QString& name )
 {
     plugins::messenger::IntelligenceUpdateRequest message;
-    message().set_oid( id_ );
+    message().mutable_intelligence()->set_id( id_ );
     message().set_name( name.ascii() );
     message.Send( publisher_ );
 }

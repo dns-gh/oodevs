@@ -221,7 +221,10 @@ void PHY_RolePion_NBC::SendFullState( client::UnitAttributes& msg ) const
 {
     if( !nbcAgentTypesContaminating_.empty() )
         for( CIT_NbcAgentTypeSet itNbcAgent = nbcAgentTypesContaminating_.begin(); itNbcAgent != nbcAgentTypesContaminating_.end(); ++itNbcAgent )
-            msg().mutable_contamine_par_agents_nbc()->add_elem( (**itNbcAgent).GetID() );
+        {
+            Common::NBCAgentType& data = *msg().mutable_contamine_par_agents_nbc()->add_elem();
+            data.set_id( (**itNbcAgent).GetID() );
+        }
     msg().set_en_tenue_de_protection_nbc( bNbcProtectionSuitWorn_ );
     msg().mutable_etat_contamination()->set_percentage( static_cast< unsigned int >( rContaminationState_ * 100. ) );
     msg().mutable_etat_contamination()->set_quantity( static_cast< float >( rContaminationQuantity_ ) );

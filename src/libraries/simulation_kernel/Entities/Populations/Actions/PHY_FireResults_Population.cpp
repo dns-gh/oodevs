@@ -25,8 +25,8 @@ PHY_FireResults_Population::PHY_FireResults_Population( const MIL_Population& fi
     , nID_  ( idManager_.GetFreeId() )
 {
     client::StartPopulationFire asnMsg;
-    asnMsg().set_fire_oid( nID_ );
-    asnMsg().set_firer_oid( firer_.GetID() );
+    asnMsg().mutable_id()->set_id( nID_ );
+    asnMsg().mutable_firing_population()->set_id( firer_.GetID() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -37,7 +37,7 @@ PHY_FireResults_Population::PHY_FireResults_Population( const MIL_Population& fi
 PHY_FireResults_Population::~PHY_FireResults_Population()
 {
     client::StopPopulationFire asnMsg;
-    asnMsg().set_fire_oid( nID_ );
+    asnMsg().mutable_id()->set_id( nID_ );
     Serialize( *asnMsg().mutable_units_damages() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }

@@ -20,7 +20,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 MissionParameter_DotationType::MissionParameter_DotationType( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , dotationType_       ( asn.value().dotationtype().oid() )
+    , dotationType_       ( asn.value().resourcetype().id() )
 {
     // NOTHING
 }
@@ -41,5 +41,5 @@ MissionParameter_DotationType::~MissionParameter_DotationType()
 void MissionParameter_DotationType::Send( Common::MsgMissionParameter& asn ) const
 {
     MissionParameter_ABC::Send( asn );
-    asn.mutable_value()->mutable_dotationtype()->set_oid( dotationType_ );
+    asn.mutable_value()->mutable_resourcetype()->set_id( dotationType_ );
 }

@@ -31,8 +31,8 @@ using namespace kernel;
 PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population_ABC& resolver, const MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation& message )
     : controller_     ( controller )
     , resolver_       ( resolver )
-    , nID_            ( message.oid_connaissance_concentration() )
-    , concentrationId_( message.oid_concentration_reelle() )
+    , nID_            ( message.id().id() )
+    , concentrationId_( message.concentration().id() )
     , position_       ( converter.ConvertToXY( message.position() ) )
     , radius_         ( 100.f )
     , deadRadius_     ( 0 )
@@ -64,8 +64,8 @@ void PopulationConcentrationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopul
         nNbrAliveHumans_ = ( uint )message.nb_humains_vivants();
     if( message.has_nb_humains_morts()  )
         nNbrDeadHumans_ = ( uint )message.nb_humains_morts();
-    if( message.has_oid_concentration_reelle()  )
-        concentrationId_ = message.oid_concentration_reelle();
+    if( message.has_concentration()  )
+        concentrationId_ = message.concentration().id();
     if( message.has_pertinence()  )
         rRelevance_ = float( message.pertinence() );
 

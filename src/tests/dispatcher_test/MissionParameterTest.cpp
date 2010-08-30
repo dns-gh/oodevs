@@ -78,7 +78,7 @@ namespace
 BOOST_AUTO_TEST_CASE( ParametersSerialization_Agent )
 {
     Common::MsgMissionParameter input;
-    input.mutable_value()->mutable_unit()->set_oid( 42 );
+    input.mutable_value()->mutable_unit()->set_id( 42 );
     CheckSerialization< dispatcher::MissionParameter_Agent >( input );
 }
 
@@ -89,7 +89,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Agent )
 BOOST_AUTO_TEST_CASE( ParametersSerialization_AgentKnowledge )
 {
     Common::MsgMissionParameter input;
-    input.mutable_value()->mutable_unitknowledge()->set_oid( 42 );
+    input.mutable_value()->mutable_unitknowledge()->set_id( 42 );
     CheckSerialization< dispatcher::MissionParameter_AgentKnowledge >( input );
 }
 
@@ -106,9 +106,9 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_AgentKnowledgeList )
     }
     {
         Common::MsgMissionParameter input;
-        input.mutable_value()->mutable_unitknowledgelist()->add_elem()->set_oid( 42 );
-        input.mutable_value()->mutable_unitknowledgelist()->add_elem()->set_oid( 51 );
-        input.mutable_value()->mutable_unitknowledgelist()->add_elem()->set_oid( 69 );
+        input.mutable_value()->mutable_unitknowledgelist()->add_elem()->set_id( 42 );
+        input.mutable_value()->mutable_unitknowledgelist()->add_elem()->set_id( 51 );
+        input.mutable_value()->mutable_unitknowledgelist()->add_elem()->set_id( 69 );
         CheckSerialization< dispatcher::MissionParameter_AgentKnowledgeList >( input );
     }
 }
@@ -126,9 +126,9 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_AgentList )
     }
     {
         Common::MsgMissionParameter input;
-        input.mutable_value()->mutable_unitlist()->add_elem()->set_oid( 42 );
-        input.mutable_value()->mutable_unitlist()->add_elem()->set_oid( 51 );
-        input.mutable_value()->mutable_unitlist()->add_elem()->set_oid( 69 );
+        input.mutable_value()->mutable_unitlist()->add_elem()->set_id( 42 );
+        input.mutable_value()->mutable_unitlist()->add_elem()->set_id( 51 );
+        input.mutable_value()->mutable_unitlist()->add_elem()->set_id( 69 );
         CheckSerialization< dispatcher::MissionParameter_AgentList >( input );
     }
 }
@@ -140,7 +140,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_AgentList )
 BOOST_AUTO_TEST_CASE( ParametersSerialization_Automat )
 {
     Common::MsgMissionParameter input;
-    input.mutable_value()->mutable_automat()->set_oid( 42 );
+    input.mutable_value()->mutable_automat()->set_id( 42 );
     CheckSerialization< dispatcher::MissionParameter_Automat >( input );
 }
 
@@ -157,9 +157,9 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_AutomatList )
     }
     {
         Common::MsgMissionParameter input;
-        input.mutable_value()->mutable_automatlist()->add_elem()->set_oid( 42 );
-        input.mutable_value()->mutable_automatlist()->add_elem()->set_oid( 51 );
-        input.mutable_value()->mutable_automatlist()->add_elem()->set_oid( 69 );
+        input.mutable_value()->mutable_automatlist()->add_elem()->set_id( 42 );
+        input.mutable_value()->mutable_automatlist()->add_elem()->set_id( 51 );
+        input.mutable_value()->mutable_automatlist()->add_elem()->set_id( 69 );
         CheckSerialization< dispatcher::MissionParameter_AutomatList >( input );
     }
 }
@@ -193,7 +193,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Direction )
 BOOST_AUTO_TEST_CASE( ParametersSerialization_DotationType )
 {
     Common::MsgMissionParameter input;
-    input.mutable_value()->mutable_dotationtype()->set_oid( 42 );
+    input.mutable_value()->mutable_resourcetype()->set_id( 42 );
     CheckSerialization< dispatcher::MissionParameter_DotationType >( input );
 }
 
@@ -215,7 +215,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Enumeration )
 BOOST_AUTO_TEST_CASE( ParametersSerialization_EquipmentType )
 {
     Common::MsgMissionParameter input;
-    input.mutable_value()->mutable_equipmenttype()->set_equipment( 42 );
+    input.mutable_value()->mutable_equipmenttype()->set_id( 42 );
     CheckSerialization< dispatcher::MissionParameter_EquipmentType >( input );
 }
 
@@ -264,7 +264,7 @@ namespace
         object.set_type_obstacle( Common::ObstacleType_DemolitionTargetType_preliminary );
         object.set_activity_time( 1 );
         object.set_densite( 0.5f );
-        object.set_tc2( 42 );
+        object.mutable_tc2()->set_id( 42 );
         MakePoint( *object.mutable_position() );
     }
 }
@@ -306,7 +306,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_GenObjectList )
 BOOST_AUTO_TEST_CASE( ParametersSerialization_IndirectFire )
 {
     Common::MsgMissionParameter input;
-    input.mutable_value()->set_tirindirect( 42 );
+    input.mutable_value()->mutable_tirindirect()->set_id( 42 );
     CheckSerialization< dispatcher::MissionParameter_IndirectFire >( input );
 }
 
@@ -319,7 +319,7 @@ namespace
         intel.set_level( Common::i );
         intel.set_name( "MyName" );
         intel.set_nature( "my/nature" );
-        intel.mutable_formation()->set_oid( 42 );
+        intel.mutable_formation()->set_id( 42 );
         MakePoint( *intel.mutable_location() );
     }
 }
@@ -441,7 +441,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_MaintenancePriorities )
     {
         Common::MsgMissionParameter input;
         for( unsigned int i = 0; i < 5; ++i )
-            input.mutable_value()->mutable_logmaintenancepriorities()->add_elem()->set_equipment( 42 + i );
+            input.mutable_value()->mutable_logmaintenancepriorities()->add_elem()->set_id( 42 + i );
         CheckSerialization< dispatcher::MissionParameter_MaintenancePriorities >( input );
     }
 }
@@ -526,7 +526,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_ObjectiveList )
 BOOST_AUTO_TEST_CASE( ParametersSerialization_ObjectKnowledge )
 {
     Common::MsgMissionParameter input;
-    input.mutable_value()->mutable_objectknowledge()->set_oid( 42 );
+    input.mutable_value()->mutable_objectknowledge()->set_id( 42 );
     CheckSerialization< dispatcher::MissionParameter_ObjectKnowledge >( input );
 }
 
@@ -543,9 +543,9 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_ObjectKnowledgeList )
     }
     {
         Common::MsgMissionParameter input;
-        input.mutable_value()->mutable_objectknowledgelist()->add_elem()->set_oid( 42 );
-        input.mutable_value()->mutable_objectknowledgelist()->add_elem()->set_oid( 51 );
-        input.mutable_value()->mutable_objectknowledgelist()->add_elem()->set_oid( 69 );
+        input.mutable_value()->mutable_objectknowledgelist()->add_elem()->set_id( 42 );
+        input.mutable_value()->mutable_objectknowledgelist()->add_elem()->set_id( 51 );
+        input.mutable_value()->mutable_objectknowledgelist()->add_elem()->set_id( 69 );
         CheckSerialization< dispatcher::MissionParameter_ObjectKnowledgeList >( input );
     }
 }
@@ -647,7 +647,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_PolygonList )
 BOOST_AUTO_TEST_CASE( ParametersSerialization_PopulationKnowledge )
 {
     Common::MsgMissionParameter input;
-    input.mutable_value()->mutable_populationknowledge()->set_oid( 42 );
+    input.mutable_value()->mutable_populationknowledge()->set_id( 42 );
     CheckSerialization< dispatcher::MissionParameter_PopulationKnowledge >( input );
 }
 
@@ -669,6 +669,6 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_String )
 BOOST_AUTO_TEST_CASE( ParametersSerialization_UrbanBlock )
 {
     Common::MsgMissionParameter input;
-    input.mutable_value()->mutable_urbanblock()->set_oid( 42 );
+    input.mutable_value()->mutable_urbanblock()->set_id( 42 );
     CheckSerialization< dispatcher::MissionParameter_UrbanBlock >( input );
 }

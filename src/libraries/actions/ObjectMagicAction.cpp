@@ -84,7 +84,7 @@ void ObjectMagicAction::Publish( Publisher_ABC& publisher ) const
     MsgsClientToSim::MsgObjectMagicAction_Type type =
         ( MsgsClientToSim::MsgObjectMagicAction_Type ) GetType().GetId();
     simulation::ObjectMagicAction message;
-    message().set_oid( objectId_ );
+    message().mutable_object()->set_id( objectId_ );
     message().set_type( type );
     CommitTo( *message().mutable_parametres() );
     message.Send( publisher );

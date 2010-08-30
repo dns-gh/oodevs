@@ -20,8 +20,8 @@ using namespace dispatcher;
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
 Loan::Loan( const Model_ABC& model, const MsgsSimToClient::BorrowedEquipments_BorrowedEquipment& message )
-    : agent_        ( model.Agents().Get( message.oid_pion_preteur() ) )
-    , equipmentType_( message.type_equipement() )
+    : agent_        ( model.Agents().Get( message.owner().id() ) )
+    , equipmentType_( message.type().id() )
     , quantity_     ( message.nombre() )
 {
     // NOTHING
@@ -32,8 +32,8 @@ Loan::Loan( const Model_ABC& model, const MsgsSimToClient::BorrowedEquipments_Bo
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
 Loan::Loan( const Model_ABC& model, const MsgsSimToClient::LentEquipments_LentEquipment& message )
-    : agent_        ( model.Agents().Get( message.oid_pion_emprunteur() ) )
-    , equipmentType_( message.type_equipement() )
+    : agent_        ( model.Agents().Get( message.borrower().id() ) )
+    , equipmentType_( message.type().id() )
     , quantity_     ( message.nombre() )
 {
     // NOTHING
@@ -54,8 +54,8 @@ Loan::~Loan()
 // -----------------------------------------------------------------------------
 void Loan::Send( MsgsSimToClient::BorrowedEquipments_BorrowedEquipment& message ) const
 {
-    message.set_type_equipement( equipmentType_ );
-    message.set_oid_pion_preteur( agent_.GetId() );
+    message.mutable_type()->set_id( equipmentType_ );
+    message.mutable_owner()->set_id( agent_.GetId() );
     message.set_nombre( quantity_ );
 }
 
@@ -65,7 +65,7 @@ void Loan::Send( MsgsSimToClient::BorrowedEquipments_BorrowedEquipment& message 
 // -----------------------------------------------------------------------------
 void Loan::Send( MsgsSimToClient::LentEquipments_LentEquipment& message ) const
 {
-    message.set_type_equipement( equipmentType_ );
-    message.set_oid_pion_emprunteur( agent_.GetId() );
+    message.mutable_type()->set_id( equipmentType_ );
+    message.mutable_borrower()->set_id( agent_.GetId() );
     message.set_nombre( quantity_ );
 }

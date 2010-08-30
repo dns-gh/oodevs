@@ -21,6 +21,7 @@ namespace urban
 {
     class TerrainObject_ABC;
     class DrawingToolbox_ABC;
+    class Block;
 }
 
 namespace gui

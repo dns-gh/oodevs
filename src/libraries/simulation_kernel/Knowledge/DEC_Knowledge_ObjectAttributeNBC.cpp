@@ -154,5 +154,8 @@ void DEC_Knowledge_ObjectAttributeNBC::Send( Common::MsgObjectAttributes& messag
     message.mutable_nbc()->mutable_nbc_agents();
     if( attr_ )
         for( NBCAttribute::CIT_NBCAgents iter = attr_->GetNBCAgents().begin() ; iter != attr_->GetNBCAgents().end() ; ++iter )
-            message.mutable_nbc()->mutable_nbc_agents()->add_elem( ( *iter )->GetID() );
+        {
+            Common::NBCAgentType& data = *message.mutable_nbc()->add_nbc_agents();
+            data.set_id( ( *iter )->GetID() ) ;
+        }
 }

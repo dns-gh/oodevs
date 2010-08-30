@@ -179,5 +179,5 @@ void DEC_Knowledge_ObjectAttributeMedicalTreatment::Send( Common::MsgObjectAttri
     // Get the list of the ID of each medical treatment
     if( attr_ )
         for( MedicalTreatmentAttribute::CIT_MedicalTreatmentMap iter = attr_->GetMap().begin() ; iter != attr_->GetMap().end() ; ++iter )
-            asn.mutable_medical_treatment()->mutable_type_id()->add_elem( MIL_MedicalTreatmentType::Find( iter->first )->GetID() );
+            asn.mutable_medical_treatment()->add_type_id( MIL_MedicalTreatmentType::Find( iter->first )->GetID() );
 }

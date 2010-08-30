@@ -54,9 +54,9 @@ void ParamDotationDType::BuildInterface( QWidget* parent )
             const kernel::DotationType& type = it.NextElement();
             if( type.IsAmmunition() && dotations->Accept( type ) )
             {
-                Common::MsgDotationType dot;
-                dot.set_oid( type.GetId() );
-                AddItem( type.GetCategory().c_str(), dot.oid() );
+                Common::ResourceType dot;
+                dot.set_id( type.GetId() );
+                AddItem( type.GetCategory().c_str(), dot.id() );
             }
         }
     }

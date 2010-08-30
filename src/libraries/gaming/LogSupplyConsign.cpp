@@ -38,16 +38,16 @@ LogSupplyConsign::LogSupplyConsign( Controller& controller, const tools::Resolve
     , resolver_             ( resolver )
     , agentResolver_        ( agentResolver )
     , dotationResolver_     ( dotationResolver )
-    , nID_                  ( message.oid_consigne() )
-    , consumer_             ( resolver.Get( message.oid_automate() ) )
+    , nID_                  ( message.id().id() )
+    , consumer_             ( resolver.Get( message.consumer().id() ) )
     , pAutomateLogHandling_ ( 0 )
     , pPionLogConvoying_    ( 0 )
     , pAutomateLogProvidingConvoyResources_( 0 )
     , nState_( eLogSupplyHandlingStatus_Termine )
 {
     for( int i = 0; i < message.dotations().elem_size(); ++i )
-        Register( message.dotations().elem( i ).ressource_id() ,
-                  * new DotationRequest( dotationResolver_.Get( message.dotations().elem( i ).ressource_id() ),
+        Register( message.dotations().elem( i ).resource().id(),
+                  * new DotationRequest( dotationResolver_.Get( message.dotations().elem( i ).resource().id() ),
                                          message.dotations().elem( i ).quantite_demandee(),
                                          message.dotations().elem( i ).quantite_accordee(),
                                          message.dotations().elem( i ).quantite_en_transit() ) );
@@ -74,38 +74,38 @@ LogSupplyConsign::~LogSupplyConsign()
 // -----------------------------------------------------------------------------
 void LogSupplyConsign::Update( const MsgsSimToClient::MsgLogSupplyHandlingUpdate& message )
 {
-    if( message.has_oid_automate_log_traitant() && ( !pAutomateLogHandling_ || message.oid_automate_log_traitant() != int( pAutomateLogHandling_ ->GetId() ) ) )
+    if( message.has_supplier() && ( !pAutomateLogHandling_ || message.supplier().id() != int( pAutomateLogHandling_ ->GetId() ) ) )
     {
         if( pAutomateLogHandling_ )
             pAutomateLogHandling_->Get< LogSupplyConsigns >().TerminateConsign( *this );
-        pAutomateLogHandling_ = resolver_.Find( message.oid_automate_log_traitant() );
+        pAutomateLogHandling_ = resolver_.Find( message.supplier().id() );
         if( pAutomateLogHandling_ )
             pAutomateLogHandling_->Get< LogSupplyConsigns >().HandleConsign( *this );
     }
-    if( message.has_oid_pion_convoyant() && ( !pPionLogConvoying_ || message.oid_pion_convoyant() != int( pPionLogConvoying_->GetId() ) ) )
+    if( message.has_convoying_unit() && ( !pPionLogConvoying_ || message.convoying_unit().id() != int( pPionLogConvoying_->GetId() ) ) )
     {
         if( pPionLogConvoying_ )
             pPionLogConvoying_->Get< LogSupplyConsigns >().TerminateConsign( *this );
-        pPionLogConvoying_ = agentResolver_.Find( message.oid_pion_convoyant() );
-        if( message.oid_pion_convoyant() )
+        pPionLogConvoying_ = agentResolver_.Find( message.convoying_unit().id() );
+        if( message.convoying_unit().id() )
             pPionLogConvoying_->Get< LogSupplyConsigns >().HandleConsign( *this );
     }
-    if( message.has_oid_automate_log_fournissant_moyens_convoi()  )
-        pAutomateLogProvidingConvoyResources_ = resolver_.Find( message.oid_automate_log_fournissant_moyens_convoi() );
+    if( message.has_convoy_provider()  )
+        pAutomateLogProvidingConvoyResources_ = resolver_.Find( message.convoy_provider().id() );
     if( message.has_etat()  )
         nState_ = E_LogSupplyHandlingStatus( message.etat() );
     if( message.has_dotations()  )
         for( int i = 0; i < message.dotations().elem_size(); ++i )
         {
-            if( DotationRequest* request = Find( message.dotations().elem( i ).ressource_id() ) )
+            if( DotationRequest* request = Find( message.dotations().elem( i ).resource().id() ) )
             {
                 request->requested_ = message.dotations().elem( i ).quantite_demandee();
                 request->granted_   = message.dotations().elem( i ).quantite_accordee();
                 request->convoyed_  = message.dotations().elem( i ).quantite_en_transit();
             }
             else
-                Register( message.dotations().elem( i ).ressource_id(),
-                  * new DotationRequest( dotationResolver_.Get( message.dotations().elem( i ).ressource_id() ),
+                Register( message.dotations().elem( i ).resource().id(),
+                  * new DotationRequest( dotationResolver_.Get( message.dotations().elem( i ).resource().id() ),
                                          message.dotations().elem( i ).quantite_demandee(),
                                          message.dotations().elem( i ).quantite_accordee(),
                                          message.dotations().elem( i ).quantite_en_transit() ) );

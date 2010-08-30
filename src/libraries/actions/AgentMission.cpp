@@ -25,7 +25,7 @@ using namespace actions;
 // Name: AgentMission constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-AgentMission::AgentMission( const Entity_ABC& entity, const MissionType& mission, Controller& controller, bool registered /*= true*/ )
+AgentMission::AgentMission( const Entity_ABC& entity, const kernel::MissionType& mission, Controller& controller, bool registered /*= true*/ )
     : Mission( entity, mission, controller, registered )
 {
     // NOTHING
@@ -35,7 +35,7 @@ AgentMission::AgentMission( const Entity_ABC& entity, const MissionType& mission
 // Name: AgentMission constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-AgentMission::AgentMission( xml::xistream& xis, Controller& controller, const tools::Resolver_ABC< MissionType >& missions, const kernel::Entity_ABC& entity, bool stub )
+AgentMission::AgentMission( xml::xistream& xis, Controller& controller, const tools::Resolver_ABC< kernel::MissionType >& missions, const kernel::Entity_ABC& entity, bool stub )
     : Mission( xis, controller, missions, entity, stub )
 {
     // NOTHING
@@ -57,9 +57,9 @@ AgentMission::~AgentMission()
 void AgentMission::Publish( Publisher_ABC& publisher ) const
 {
     simulation::UnitOrder message;
-    message().set_oid ( GetEntity().GetId() );
-    message().set_mission ( GetType().GetId() );
-    CommitTo( *message().mutable_parametres() );
+    message().mutable_tasker()->set_id( GetEntity().GetId() );
+    message().mutable_type()->set_id( GetType().GetId() );
+    CommitTo( *message().mutable_parameters() );
     message.Send( publisher, 0 );
-    Clean( *message().mutable_parametres() );
+    Clean( *message().mutable_parameters() );
 }

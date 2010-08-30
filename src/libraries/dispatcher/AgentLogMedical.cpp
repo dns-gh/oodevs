@@ -14,6 +14,7 @@
 #include "Agent_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/clientsenders.h"
+#include "MedicalEquipmentAvailability.h"
 
 using namespace dispatcher;
 
@@ -51,28 +52,28 @@ void AgentLogMedical::Update( const MsgsSimToClient::MsgLogMedicalState& asnMsg 
     {
         collectionAmbulancesAvailability_.clear();
         for( int i = 0; i < asnMsg.disponibilites_ambulances_ramassage().elem_size(); ++i )
-            collectionAmbulancesAvailability_.push_back( T_Availability( asnMsg.disponibilites_ambulances_ramassage().elem( i ) ) );
+            collectionAmbulancesAvailability_.push_back( MedicalEquipmentAvailability( asnMsg.disponibilites_ambulances_ramassage().elem( i ) ) );
     }
 
     if( asnMsg.has_disponibilites_ambulances_releve()  )
     {
         evacuationAmbulancesAvailability_.clear();
         for( int i = 0; i < asnMsg.disponibilites_ambulances_releve().elem_size(); ++i )
-            evacuationAmbulancesAvailability_.push_back( T_Availability( asnMsg.disponibilites_ambulances_releve().elem( i ) ) );
+            evacuationAmbulancesAvailability_.push_back( MedicalEquipmentAvailability( asnMsg.disponibilites_ambulances_releve().elem( i ) ) );
     }
 
     if( asnMsg.has_disponibilites_medecins()  )
     {
         doctorsAvailability_.clear();
         for( int i = 0; i < asnMsg.disponibilites_medecins().elem_size(); ++i )
-            doctorsAvailability_.push_back( T_Availability( asnMsg.disponibilites_medecins().elem( i ) ) );
+            doctorsAvailability_.push_back( MedicalEquipmentAvailability( asnMsg.disponibilites_medecins().elem( i ) ) );
     }
 
-    if( asnMsg.has_priorites_tactiques()  )
+    if( asnMsg.has_tactical_priorities()  )
     {
         tacticalPriorities_.clear();
-        for( int i = 0; i < asnMsg.priorites_tactiques().elem_size(); ++i )
-            tacticalPriorities_.push_back( &model_.Automats().Get( asnMsg.priorites_tactiques().elem( i ).oid() ) );
+        for( int i = 0; i < asnMsg.tactical_priorities().elem_size(); ++i )
+            tacticalPriorities_.push_back( &model_.Automats().Get( asnMsg.tactical_priorities().elem( i ).id() ) );
     }
 
     if( asnMsg.has_priorites()  )
@@ -90,24 +91,24 @@ void AgentLogMedical::Update( const MsgsSimToClient::MsgLogMedicalState& asnMsg 
 void AgentLogMedical::Send( ClientPublisher_ABC& publisher ) const
 {
     client::LogMedicalState asn;
-    asn().set_oid_pion ( agent_.GetId() );
+    asn().mutable_id()->set_id( agent_.GetId() );
     asn().set_chaine_activee ( bSystemEnabled_ );
 
     {
-        for( std::vector< T_Availability >::const_iterator it = evacuationAmbulancesAvailability_.begin(); it != evacuationAmbulancesAvailability_.end(); ++it )
+        for( std::vector< MedicalEquipmentAvailability >::const_iterator it = evacuationAmbulancesAvailability_.begin(); it != evacuationAmbulancesAvailability_.end(); ++it )
             it->Send( *asn().mutable_disponibilites_ambulances_releve()->add_elem() );
     }
     {
-        for( std::vector< T_Availability >::const_iterator it = collectionAmbulancesAvailability_.begin(); it != collectionAmbulancesAvailability_.end(); ++it )
+        for( std::vector< MedicalEquipmentAvailability >::const_iterator it = collectionAmbulancesAvailability_.begin(); it != collectionAmbulancesAvailability_.end(); ++it )
             it->Send( *asn().mutable_disponibilites_ambulances_ramassage()->add_elem() );
     }
     {
-        for( std::vector< T_Availability >::const_iterator it = doctorsAvailability_.begin(); it != doctorsAvailability_.end(); ++it )
+        for( std::vector< MedicalEquipmentAvailability >::const_iterator it = doctorsAvailability_.begin(); it != doctorsAvailability_.end(); ++it )
             it->Send( *asn().mutable_disponibilites_medecins()->add_elem() );
     }
     {
         for( std::vector< const kernel::Automat_ABC* >::const_iterator it = tacticalPriorities_.begin(); it != tacticalPriorities_.end(); ++it )
-            asn().mutable_priorites_tactiques()->add_elem()->set_oid( (*it)->GetId() );
+            asn().mutable_tactical_priorities()->add_elem()->set_id( (*it)->GetId() );
     }
     {
         for( std::vector< Common::EnumHumanWound >::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
@@ -124,6 +125,6 @@ void AgentLogMedical::Send( ClientPublisher_ABC& publisher ) const
         asn().mutable_disponibilites_medecins()->Clear();
     if( asn().priorites().elem_size() > 0 )
         asn().mutable_priorites()->Clear();
-    if( asn().priorites_tactiques().elem_size() > 0 )
-        asn().mutable_priorites_tactiques()->Clear();
+    if( asn().tactical_priorities().elem_size() > 0 )
+        asn().mutable_tactical_priorities()->Clear();
 }

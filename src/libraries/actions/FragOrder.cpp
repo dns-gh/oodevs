@@ -25,7 +25,7 @@ using namespace MsgsClientToSim;
 
 namespace
 {
-    const OrderType& ResolveType( xml::xistream& xis, const tools::Resolver_ABC< FragOrderType >& missions, const Entity_ABC& entity )
+    const OrderType& ResolveType( xml::xistream& xis, const tools::Resolver_ABC< kernel::FragOrderType >& missions, const Entity_ABC& entity )
     {
         const unsigned int id = xis.attribute< unsigned int >( "id", 0 );
         const std::string name = xis.attribute< std::string >( "name", "" );
@@ -41,7 +41,7 @@ namespace
 // Name: FragOrder constructor
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-FragOrder::FragOrder( const Entity_ABC& entity, const FragOrderType& fragOrder, Controller& controller, bool registered )
+FragOrder::FragOrder( const Entity_ABC& entity, const kernel::FragOrderType& fragOrder, Controller& controller, bool registered )
     : ActionWithTarget_ABC( controller, fragOrder, entity )
     , controller_         ( controller )
     , registered_         ( registered )
@@ -53,7 +53,7 @@ FragOrder::FragOrder( const Entity_ABC& entity, const FragOrderType& fragOrder, 
 // Name: FragOrder constructor
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-FragOrder::FragOrder( xml::xistream& xis, Controller& controller, const tools::Resolver_ABC< FragOrderType >& fragOrders, const Entity_ABC& entity )
+FragOrder::FragOrder( xml::xistream& xis, Controller& controller, const tools::Resolver_ABC< kernel::FragOrderType >& fragOrders, const Entity_ABC& entity )
     : ActionWithTarget_ABC( xis, controller, ResolveType( xis, fragOrders, entity ), entity )
     , controller_         ( controller )
     , registered_         ( true )
@@ -99,8 +99,13 @@ void FragOrder::Serialize( xml::xostream& xos ) const
 void FragOrder::Publish( Publisher_ABC& publisher ) const
 {
     simulation::FragOrder message;
-    message().set_oid( GetEntity().GetId() );
-    message().set_frag_order( GetType().GetId() );
+    if( GetEntity().GetTypeName() == "automat" )
+        message().mutable_tasker()->mutable_automat()->set_id( GetEntity().GetId() );
+    else if( GetEntity().GetTypeName() == "population" )
+        message().mutable_tasker()->mutable_population()->set_id( GetEntity().GetId() );
+    else if( GetEntity().GetTypeName() == "agent" )
+        message().mutable_tasker()->mutable_unit()->set_id( GetEntity().GetId() );
+    message().mutable_frag_order()->set_id( GetType().GetId() );
     CommitTo( *message().mutable_parametres() );
     message.Send( publisher );
     message().Clear();

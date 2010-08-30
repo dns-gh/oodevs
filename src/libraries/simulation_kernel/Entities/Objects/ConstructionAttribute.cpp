@@ -168,7 +168,7 @@ void ConstructionAttribute::SendFullState( Common::MsgObjectAttributes& asn ) co
 {
     if( dotation_ )
     {
-        asn.mutable_construction()->set_dotation_type( dotation_->GetMosID() );
+        asn.mutable_construction()->mutable_resource()->set_id( dotation_->GetMosID() );
         asn.mutable_construction()->set_dotation_nbr( nCurrentNbrDotation_ );
         asn.mutable_construction()->set_percentage( unsigned int( rConstructionPercentage_ * 100. ) );
     }

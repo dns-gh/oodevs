@@ -29,11 +29,11 @@ using namespace dispatcher;
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
 PopulationKnowledge::PopulationKnowledge( Model& model, const MsgsSimToClient::MsgPopulationKnowledgeCreation& msg )
-    : SimpleEntity< kernel::PopulationKnowledge_ABC >( msg.oid_connaissance())
+    : SimpleEntity< kernel::PopulationKnowledge_ABC >( msg.id().id() )
     , model_           ( model )
-    , knowledgeGroup_  ( model.KnowledgeGroups().Get( msg.oid_groupe_possesseur() ) )
-    , population_      ( model.Populations().Get( msg.oid_population_reelle() ) )
-    , team_            ( model.Sides().Get( msg.camp() ) )
+    , knowledgeGroup_  ( model.KnowledgeGroups().Get( msg.knowledge_group().id() ) )
+    , population_      ( model.Populations().Get( msg.population().id() ) )
+    , team_            ( model.Sides().Get( msg.party().id() ) )
     , nDominationState_( 0 )
 {
     // NOTHING
@@ -64,7 +64,7 @@ void PopulationKnowledge::Update( const MsgsSimToClient::MsgPopulationKnowledgeU
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Update( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation& msg )
 {
-    PopulationConcentrationKnowledge* element = concentrations_.Find( msg.oid_connaissance_concentration() );
+    PopulationConcentrationKnowledge* element = concentrations_.Find( msg.id().id() );
     if( !element )
     {
         element = new PopulationConcentrationKnowledge( *this, msg );
@@ -80,7 +80,7 @@ void PopulationKnowledge::Update( const MsgsSimToClient::MsgPopulationConcentrat
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Update( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate&  msg )
 {
-    concentrations_.Get( msg.oid_connaissance_concentration() ).Update( msg );
+    concentrations_.Get( msg.id().id() ).Update( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,8 +89,8 @@ void PopulationKnowledge::Update( const MsgsSimToClient::MsgPopulationConcentrat
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Update( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeDestruction& msg )
 {
-    PopulationConcentrationKnowledge* knowledge = concentrations_.Find( msg.oid_connaissance_concentration() );
-    concentrations_.Remove( msg.oid_connaissance_concentration() );
+    PopulationConcentrationKnowledge* knowledge = concentrations_.Find( msg.id().id() );
+    concentrations_.Remove( msg.id().id() );
     delete knowledge;
 }
 
@@ -100,7 +100,7 @@ void PopulationKnowledge::Update( const MsgsSimToClient::MsgPopulationConcentrat
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Update( const MsgsSimToClient::MsgPopulationFlowKnowledgeCreation& msg )
 {
-    PopulationFlowKnowledge* element = flows_.Find( msg.oid_connaissance_flux() );
+    PopulationFlowKnowledge* element = flows_.Find( msg.id().id() );
     if( !element )
     {
         element = new PopulationFlowKnowledge( *this, msg );
@@ -116,7 +116,7 @@ void PopulationKnowledge::Update( const MsgsSimToClient::MsgPopulationFlowKnowle
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Update( const MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate& msg )
 {
-    flows_.Get( msg.oid_connaissance_flux() ).Update( msg );
+    flows_.Get( msg.id().id() ).Update( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -125,8 +125,8 @@ void PopulationKnowledge::Update( const MsgsSimToClient::MsgPopulationFlowKnowle
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Update( const MsgsSimToClient::MsgPopulationFlowKnowledgeDestruction& msg )
 {
-    PopulationFlowKnowledge* flow = flows_.Find( msg.oid_connaissance_flux() );
-    flows_.Remove( msg.oid_connaissance_flux() );
+    PopulationFlowKnowledge* flow = flows_.Find( msg.id().id() );
+    flows_.Remove( msg.id().id() );
     delete flow;
 }
 
@@ -137,12 +137,10 @@ void PopulationKnowledge::Update( const MsgsSimToClient::MsgPopulationFlowKnowle
 void PopulationKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationKnowledgeCreation asn;
-
-    asn().set_oid_connaissance( GetId() );
-    asn().set_oid_groupe_possesseur( knowledgeGroup_.GetId() );
-    asn().set_oid_population_reelle( population_.GetId() );
-    asn().set_camp( team_.GetId() );
-
+    asn().mutable_id()->set_id( GetId() );
+    asn().mutable_knowledge_group()->set_id( knowledgeGroup_.GetId() );
+    asn().mutable_population()->set_id( population_.GetId() );
+    asn().mutable_party()->set_id( team_.GetId() );
     asn.Send( publisher );
 }
 
@@ -154,8 +152,8 @@ void PopulationKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationKnowledgeUpdate asn;
 
-    asn().set_oid_connaissance( GetId() );
-    asn().set_oid_groupe_possesseur( knowledgeGroup_.GetId() );
+    asn().mutable_id()->set_id( GetId() );
+    asn().mutable_knowledge_group()->set_id( knowledgeGroup_.GetId() );
     asn().set_etat_domination( nDominationState_ );
 
     asn.Send( publisher );
@@ -179,8 +177,8 @@ void PopulationKnowledge::Accept( kernel::ModelVisitor_ABC& visitor ) const
 void PopulationKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationKnowledgeDestruction asn;
-    asn().set_oid_connaissance( GetId() );
-    asn().set_oid_groupe_possesseur( knowledgeGroup_.GetId() );
+    asn().mutable_id()->set_id( GetId() );
+    asn().mutable_knowledge_group()->set_id( knowledgeGroup_.GetId() );
     asn.Send( publisher );
 }
 

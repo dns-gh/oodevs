@@ -14,10 +14,10 @@
 
 namespace Common
 {
-    class MsgObjectKnowledge;
-    class MsgPopulationKnowledge;
-    class MsgUnitKnowledge;
-    class MsgUrbanKnowledge;
+    class ObjectKnowledgeId;
+    class PopulationKnowledgeId;
+    class UnitKnowledgeId;
+    class UrbanObjectKnowledgeId;
 }
 
 class DEC_Knowledge_Agent;
@@ -42,13 +42,14 @@ public:
 
     //! @name Operations
     //@{
-    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent( const Common::MsgUnitKnowledge& asn ) const = 0;
+    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent ( const Common::UnitKnowledgeId&  asn ) const = 0;
     virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent( unsigned int nID ) const = 0;
-    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const Common::MsgObjectKnowledge& asn ) const = 0;
+
+    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const Common::ObjectKnowledgeId& asn ) const = 0;
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( unsigned int nID ) const = 0;
-    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( const Common::MsgUrbanKnowledge& asn ) const = 0;
+    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( const  Common::UrbanObjectKnowledgeId& asn ) const = 0;
     virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( unsigned int nID ) const = 0;
-    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const Common::MsgPopulationKnowledge& asn ) const = 0;
+    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const Common::PopulationKnowledgeId& asn ) const = 0;
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( unsigned int nID ) const = 0;
     //@}
 

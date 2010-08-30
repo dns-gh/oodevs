@@ -66,7 +66,7 @@ void ReportUpdater::Update( const MsgsSimToClient::MsgReport& msg )
     std::auto_ptr< Table_ABC > table( database_.OpenTable( "Reports" ) );
 
     Row_ABC& row = table->CreateRow();
-    row.SetField( "unit_id", FieldVariant( msg.oid() ) );
+    row.SetField( "unit_id", FieldVariant( (long)msg.id().id() ) );
     row.SetField( "message", FieldVariant( reportFactory_->CreateMessage( msg ) ) );
     row.SetField( "session_id", FieldVariant( session_.GetId() ) );
     table->InsertRow( row );

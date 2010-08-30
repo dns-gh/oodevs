@@ -42,7 +42,7 @@ AutomatHierarchies::~AutomatHierarchies()
 // -----------------------------------------------------------------------------
 void AutomatHierarchies::DoUpdate( const MsgsSimToClient::MsgAutomatCreation& message )
 {
-    SetSuperior( &groupResolver_.Get( message.oid_groupe_connaissance()) );
+    SetSuperior( &groupResolver_.Get( message.knowledge_group().id() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +51,7 @@ void AutomatHierarchies::DoUpdate( const MsgsSimToClient::MsgAutomatCreation& me
 // -----------------------------------------------------------------------------
 void AutomatHierarchies::DoUpdate( const Common::MsgAutomatChangeKnowledgeGroup& message )
 {
-    ChangeSuperior( & groupResolver_.Get( message.oid_groupe_connaissance()) );
+    ChangeSuperior( & groupResolver_.Get( message.knowledge_group().id() ) );
 }
 
 // -----------------------------------------------------------------------------

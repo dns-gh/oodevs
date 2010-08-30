@@ -23,7 +23,7 @@ MissionParameter_MaintenancePriorities::MissionParameter_MaintenancePriorities( 
 {
     maintenancePriorities_.reserve( asn.value().logmaintenancepriorities().elem_size() );
     for( int i = 0; i < asn.value().logmaintenancepriorities().elem_size(); ++i )
-        maintenancePriorities_.push_back( asn.value().logmaintenancepriorities().elem( i ).equipment() );
+        maintenancePriorities_.push_back( asn.value().logmaintenancepriorities().elem( i ).id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,5 +44,5 @@ void MissionParameter_MaintenancePriorities::Send( Common::MsgMissionParameter& 
     MissionParameter_ABC::Send( asn );
     asn.mutable_value()->mutable_logmaintenancepriorities();
     for( std::vector< int >::const_iterator it = maintenancePriorities_.begin(); it != maintenancePriorities_.end(); ++it )
-        asn.mutable_value()->mutable_logmaintenancepriorities()->add_elem()->set_equipment( *it );
+        asn.mutable_value()->mutable_logmaintenancepriorities()->add_elem()->set_id( *it );
 }

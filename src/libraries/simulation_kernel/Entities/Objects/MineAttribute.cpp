@@ -177,7 +177,7 @@ void MineAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 {
     if( dotation_ )
     {
-        asn.mutable_mine()->set_dotation_type( dotation_->GetMosID() );
+        asn.mutable_mine()->mutable_resource()->set_id( dotation_->GetMosID() );
         asn.mutable_mine()->set_percentage( unsigned int( rMiningPercentage_ * 100. ) );
         asn.mutable_mine()->set_dotation_nbr( nCurrentNbrDotation_ );
     }

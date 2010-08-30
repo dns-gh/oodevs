@@ -56,10 +56,10 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
 // -----------------------------------------------------------------------------
 void EngineerConstruction::SetParameters( const Common::MsgPlannedWork& message, const kernel::EntityResolver_ABC& entities, kernel::Controller& controller )
 {
-    if( message.tc2() != 0 )
+    if( message.tc2().id() != 0 )
     {
         const OrderParameter param( tools::translate( "ActionParameter", "TC2" ).ascii(), "tc2", false );
-        AddParameter( *new Automat( param, message.tc2(), entities, controller ) );
+        AddParameter( *new Automat( param, message.tc2().id(), entities, controller ) );
     }
     if( message.densite() != 0 )
     {
@@ -171,11 +171,11 @@ void EngineerConstruction::CommitTo( Common::MsgPlannedWork& message ) const
         if( type == "location" )
             static_cast< const Location* >( it->second )->CommitTo( *message.mutable_position() );
         else if( type == "obstacletype" )
-            static_cast< const ObstacleType* >( it->second )->CommitTo( boost::bind( &Common::MsgPlannedWork::set_type_obstacle, boost::ref(message), _1 ) );
+            static_cast< const ObstacleType* >( it->second )->CommitTo( boost::bind( &Common::MsgPlannedWork::set_type_obstacle, boost::ref( message ), _1 ) );
         else if( type == "density" )
-            static_cast< const Numeric* >( it->second )->CommitTo( boost::bind( &Common::MsgPlannedWork::set_densite, boost::ref(message), _1 ) );
+            static_cast< const Numeric* >( it->second )->CommitTo( boost::bind( &Common::MsgPlannedWork::set_densite, boost::ref( message ), _1 ) );
         else if( type == "tc2" || type == "automate" )
-            static_cast< const Automat* >( it->second )->CommitTo( boost::bind( &Common::MsgPlannedWork::set_tc2, boost::ref(message), _1 ) );
+            static_cast< const Automat* >( it->second )->CommitTo( boost::bind( &Common::AutomatId::set_id, boost::ref( *message.mutable_tc2() ), _1 ) );
     }
 }
 

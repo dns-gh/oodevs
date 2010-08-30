@@ -18,8 +18,8 @@
 // Name: MIL_DotationTypeParameter constructor
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-MIL_DotationTypeParameter::MIL_DotationTypeParameter( const Common::MsgDotationType & asn )
-    : pCategory_( PHY_DotationType::FindDotationCategory( asn.oid() ) )
+MIL_DotationTypeParameter::MIL_DotationTypeParameter( const Common::ResourceType & asn )
+    : pCategory_( PHY_DotationType::FindDotationCategory( asn.id() ) )
 {
     // NOTHING
 }
@@ -56,11 +56,11 @@ bool MIL_DotationTypeParameter::IsOfType( const MIL_ParameterType_ABC& type ) co
 // Name: MIL_DotationTypeParameter::ToDotationType
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-bool MIL_DotationTypeParameter::ToDotationType( Common::MsgDotationType& asn ) const
+bool MIL_DotationTypeParameter::ToDotationType( Common::ResourceType& asn ) const
 {
     if( !pCategory_ )
         return false;
-    asn.set_oid( pCategory_->GetMosID() );
+    asn.set_id( pCategory_->GetMosID() );
     return true;
 }
 

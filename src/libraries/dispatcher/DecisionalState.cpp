@@ -9,6 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "DecisionalState.h"
+#include "Model.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/clientsenders.h"
 
@@ -18,7 +19,8 @@ using namespace dispatcher;
 // Name: DecisionalState constructor
 // Created: ZEBRE 2007-06-21
 // -----------------------------------------------------------------------------
-DecisionalState::DecisionalState()
+DecisionalState::DecisionalState( Model_ABC& model )
+    : model_( model )
 {
     // NOTHING
 }
@@ -46,9 +48,9 @@ void DecisionalState::Clear()
 // Name: DecisionalState::Update
 // Created: ZEBRE 2007-06-21
 // -----------------------------------------------------------------------------
-void DecisionalState::Update( const MsgsSimToClient::MsgDecisionalState& asnMsg )
+void DecisionalState::Update( const MsgsSimToClient::MsgDecisionalState& message )
 {
-    decisionalInfos_[ asnMsg.key() ] = asnMsg.value();
+    decisionalInfos_[ message.key() ] = message.value();
 }
 
 // -----------------------------------------------------------------------------
@@ -59,10 +61,10 @@ void DecisionalState::Send( unsigned id, ClientPublisher_ABC& publisher ) const
 {
     for( std::map< std::string, std::string >::const_iterator it = decisionalInfos_.begin(); it != decisionalInfos_.end(); ++it )
     {
-        client::DecisionalState asn;
-        asn().set_oid   ( id );
-        asn().set_key   ( it->first );
-        asn().set_value ( it->second );
-        asn.Send( publisher );
+        client::DecisionalState message;
+        model_.SetToTasker( *message().mutable_id(), id );
+        message().set_key( it->first.c_str() );
+        message().set_value( it->second.c_str() );
+        message.Send( publisher );
     }
 }

@@ -49,8 +49,8 @@ void FiresModel::Purge()
 // -----------------------------------------------------------------------------
 void FiresModel::AddFire( const MsgsSimToClient::MsgStartUnitFire& message )
 {
-    if( ! Find( message.fire_oid() ) )
-        Register( message.fire_oid(), agents_.Get( message.firer_oid() ) );
+    if( ! Find( message.id().id() ) )
+        Register( message.id().id(), agents_.Get( message.firing_unit().id() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,8 +59,8 @@ void FiresModel::AddFire( const MsgsSimToClient::MsgStartUnitFire& message )
 // -----------------------------------------------------------------------------
 void FiresModel::AddFire( const MsgsSimToClient::MsgStartPopulationFire& message )
 {
-    if( ! Find( message.fire_oid() ) )
-        Register( message.fire_oid(), populations_.Get( message.firer_oid() ) );
+    if( ! Find( message.id().id() ) )
+        Register( message.id().id(), populations_.Get( message.firing_population().id() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,7 +69,7 @@ void FiresModel::AddFire( const MsgsSimToClient::MsgStartPopulationFire& message
 // -----------------------------------------------------------------------------
 Entity_ABC* FiresModel::FindFirer( const MsgsSimToClient::MsgStopUnitFire& message )
 {
-    return Find( message.fire_oid() );
+    return Find( message.id().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +78,7 @@ Entity_ABC* FiresModel::FindFirer( const MsgsSimToClient::MsgStopUnitFire& messa
 // -----------------------------------------------------------------------------
 Entity_ABC* FiresModel::FindFirer( const MsgsSimToClient::MsgStopPopulationFire& message )
 {
-    return Find( message.fire_oid() );
+    return Find( message.id().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +87,7 @@ Entity_ABC* FiresModel::FindFirer( const MsgsSimToClient::MsgStopPopulationFire&
 // -----------------------------------------------------------------------------
 void FiresModel::RemoveFire( const MsgsSimToClient::MsgStopUnitFire& message )
 {
-    Remove( message.fire_oid() );
+    Remove( message.id().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,5 +96,5 @@ void FiresModel::RemoveFire( const MsgsSimToClient::MsgStopUnitFire& message )
 // -----------------------------------------------------------------------------
 void FiresModel::RemoveFire( const MsgsSimToClient::MsgStopPopulationFire& message )
 {
-    Remove( message.fire_oid() );
+    Remove( message.id().id() );
 }

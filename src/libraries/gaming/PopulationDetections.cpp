@@ -48,7 +48,7 @@ PopulationDetections::~PopulationDetections()
 // -----------------------------------------------------------------------------
 void PopulationDetections::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationDetection& message )
 {
-    const PopulationPart_ABC* pConcentration = & resolver_.Get( message.population_oid() ).GetConcentration( message.concentration_oid() );
+    const PopulationPart_ABC* pConcentration = & resolver_.Get( message.detected_population().id() ).GetConcentration( message.detected_concentration().id() );
     if( message.visibility() == Common::invisible )
         perceived_.erase( pConcentration );
     else
@@ -61,7 +61,7 @@ void PopulationDetections::DoUpdate( const MsgsSimToClient::MsgPopulationConcent
 // -----------------------------------------------------------------------------
 void PopulationDetections::DoUpdate( const MsgsSimToClient::MsgPopulationFlowDetection& message )
 {
-    const PopulationPart_ABC* pFlow = & resolver_.Get( message.population_oid() ).GetFlow( message.flow_oid() );
+    const PopulationPart_ABC* pFlow = & resolver_.Get( message.detected_population().id() ).GetFlow( message.detected_flow().id() );
     if( message.visible_flow().location().coordinates().elem_size() )
         perceived_.insert( pFlow );
     else

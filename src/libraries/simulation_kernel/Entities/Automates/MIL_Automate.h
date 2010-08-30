@@ -104,7 +104,7 @@ public:
 
     //! @name Accessors
     //@{
-          unsigned int                              GetID            () const;
+          unsigned int                      GetID            () const;
     const MIL_AutomateType&                 GetType          () const;
           MIL_Army_ABC&                     GetArmy          () const;
           MIL_KnowledgeGroup&               GetKnowledgeGroup() const;
@@ -146,11 +146,11 @@ public:
 
     //! @name Prisoners
     //@{
-          bool      IsSurrendered       () const;
+          bool      IsSurrendered           () const;
     const MIL_Army_ABC* GetArmySurrenderedTo() const;
-          bool      NotifyCaptured      ( const MIL_AgentPion& pionTakingPrisoner );
-          bool      NotifyReleased      ();
-          bool      NotifyImprisoned    ( const MIL_Object_ABC& camp );
+          bool      NotifyCaptured          ( const MIL_AgentPion& pionTakingPrisoner );
+          bool      NotifyReleased          ();
+          bool      NotifyImprisoned        ( const MIL_Object_ABC& camp );
     //@}
 
     //! @name Refugees $$$$ A revoir
@@ -238,7 +238,7 @@ protected:
 
 private:
     const MIL_AutomateType* pType_;
-    const unsigned int              nID_;
+    const unsigned int      nID_;
           MIL_Formation*    pParentFormation_;
           MIL_Automate*     pParentAutomate_;
           bool              bEngaged_;

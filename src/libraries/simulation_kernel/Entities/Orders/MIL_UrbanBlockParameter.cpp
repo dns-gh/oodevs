@@ -20,8 +20,8 @@
 // Name: MIL_UrbanBlockParameter constructor
 // Created: MGD 2009-11-02
 // -----------------------------------------------------------------------------
-MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( const Common::MsgUrbanBlock& asn, const DEC_KnowledgeResolver_ABC& resolver )
-: pKnowledgeUrbanBlock_( resolver.ResolveKnowledgeUrban( asn.oid() ) )
+MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( const Common::UrbanObjectId& asn, const DEC_KnowledgeResolver_ABC& resolver )
+: pKnowledgeUrbanBlock_( resolver.ResolveKnowledgeUrban( asn.id() ) )
 {
 }
 
@@ -57,9 +57,9 @@ bool MIL_UrbanBlockParameter::IsOfType( const MIL_ParameterType_ABC& type ) cons
 // Name: MIL_UrbanBlockParameter::ToUrbanBlock
 // Created: MGD 2009-11-02
 // -----------------------------------------------------------------------------
-bool MIL_UrbanBlockParameter::ToUrbanBlock( Common::MsgUrbanBlock& asn ) const
+bool MIL_UrbanBlockParameter::ToUrbanBlock( Common::UrbanObjectId& asn ) const
 {
-    asn.set_oid( pKnowledgeUrbanBlock_->GetId() );
+    asn.set_id( pKnowledgeUrbanBlock_->GetId() );
     return true;
 }
 

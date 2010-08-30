@@ -197,12 +197,12 @@ void Mission::Send( dispatcher::SimulationPublisher_ABC& publisher ) const
 void Mission::SendAutomatMission( dispatcher::SimulationPublisher_ABC& publisher ) const
 {
     simulation::AutomatOrder asn;
-    asn().set_oid ( automatTaskee_->GetId());
-    asn().set_mission ( type_.GetId());
-    if( asn().parametres().elem_size() > 0 )
-        for( int i = 0; i < asn().parametres().elem_size(); ++i )
-            asn().mutable_parametres()->add_elem();
-    Serialize( *asn().mutable_parametres() );
+    asn().mutable_tasker()->set_id( automatTaskee_->GetId());
+    asn().mutable_type()->set_id( type_.GetId());
+    if( asn().parameters().elem_size() > 0 )
+        for( int i = 0; i < asn().parameters().elem_size(); ++i )
+            asn().mutable_parameters()->add_elem();
+    Serialize( *asn().mutable_parameters() );
     asn.Send( publisher );
 }
 
@@ -213,12 +213,12 @@ void Mission::SendAutomatMission( dispatcher::SimulationPublisher_ABC& publisher
 void Mission::SendAgentMission( dispatcher::SimulationPublisher_ABC& publisher ) const
 {
     simulation::UnitOrder asn;
-    asn().set_oid ( agentTaskee_->GetId() );
-    asn().set_mission ( type_.GetId() );
+    asn().mutable_tasker()->set_id( agentTaskee_->GetId() );
+    asn().mutable_type()->set_id( type_.GetId() );
     if( type_.Count() > 0 )
         for (unsigned int i = 0; i < type_.Count(); ++i)
-            asn().mutable_parametres()->add_elem();
-    Serialize( *asn().mutable_parametres() );
+            asn().mutable_parameters()->add_elem();
+    Serialize( *asn().mutable_parameters() );
     asn.Send( publisher );
 }
 

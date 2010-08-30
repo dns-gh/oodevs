@@ -18,7 +18,7 @@ using namespace dispatcher;
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
 Dotation::Dotation( const MsgsSimToClient::ResourceDotations_ResourceDotation& asnMsg )
-   : nDotationType_( asnMsg.ressource_id() )
+   : nDotationType_( asnMsg.type().id() )
    , nNbr_         ( asnMsg.quantite_disponible() )
 {
     // NOTHING
@@ -29,7 +29,7 @@ Dotation::Dotation( const MsgsSimToClient::ResourceDotations_ResourceDotation& a
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
 Dotation::Dotation( const Common::MsgDotationStock & asnMsg )
-   : nDotationType_( asnMsg.ressource_id() )
+   : nDotationType_( asnMsg.ressource_id().id() )
    , nNbr_         ( asnMsg.quantite_disponible() )
 {
     // NOTHING
@@ -68,7 +68,7 @@ void Dotation::Update( const Common::MsgDotationStock& asnMsg )
 // -----------------------------------------------------------------------------
 void Dotation::Send( MsgsSimToClient::ResourceDotations_ResourceDotation& asnMsg ) const
 {
-    asnMsg.set_ressource_id( nDotationType_ );
+    asnMsg.mutable_type()->set_id( nDotationType_ );
     asnMsg.set_quantite_disponible( nNbr_ );
 }
 
@@ -78,6 +78,6 @@ void Dotation::Send( MsgsSimToClient::ResourceDotations_ResourceDotation& asnMsg
 // -----------------------------------------------------------------------------
 void Dotation::Send( Common::MsgDotationStock& asnMsg ) const
 {
-    asnMsg.set_ressource_id( nDotationType_ );
+    asnMsg.mutable_ressource_id()->set_id( nDotationType_ );
     asnMsg.set_quantite_disponible( nNbr_ );
 }

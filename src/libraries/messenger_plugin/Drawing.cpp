@@ -118,7 +118,7 @@ void Drawing::Update( const MsgsClientToMessenger::MsgShapeUpdateRequest& asn )
 void Drawing::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
 {
     plugins::messenger::ShapeCreation message;
-    message().set_oid( id_ );
+    message().mutable_id()->set_id( id_ );
     message().mutable_shape()->set_category( category_.c_str() );
     message().mutable_shape()->set_color( color_.c_str() );
     message().mutable_shape()->set_template_( template_.c_str() );
@@ -136,7 +136,7 @@ void Drawing::SendUpdate( dispatcher::ClientPublisher_ABC& publisher ) const
 {
     // $$$$ SBO 2008-06-09: keep track of updated fields...
     messenger::ShapeUpdate message;
-    message().set_oid( id_ );
+    message().mutable_id()->set_id( id_ );
     message().set_category( category_.c_str() );
     message().set_color    ( color_.c_str() );
     message().set_template_( template_.c_str() );
@@ -162,7 +162,7 @@ void Drawing::SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) cons
 {
     plugins::messenger::ShapeDestruction message;
     //MsgShapeDestruction message;
-    message().set_oid( id_ );
+    message().mutable_id()->set_id( id_ );
     message.Send( publisher );
 }
 

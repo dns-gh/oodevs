@@ -219,14 +219,14 @@ void PHY_MedicalHumanState::SendFullState() const
 
     SendMsgCreation();
     client::LogMedicalHandlingUpdate asn;
-    asn().set_oid_consigne( nID_ );
-    asn().set_oid_pion( pPion_->GetID() );
+    asn().mutable_id()->set_id( nID_ );
+    asn().mutable_unit()->set_id( pPion_->GetID() );
 
     if( pConsign_ )
         pConsign_->SendFullState( asn );
     else
     {
-        asn().set_oid_pion_log_traitant( 0 );
+        asn().mutable_provider()->set_id( 0 );
         asn().set_etat( Common::termine );
     }
 
@@ -251,13 +251,13 @@ void PHY_MedicalHumanState::SendChangedState() const
     assert( pHuman_ );
 
     client::LogMedicalHandlingUpdate asn;
-    asn().set_oid_consigne( nID_ );
-    asn().set_oid_pion( pPion_->GetID() );
+    asn().mutable_id()->set_id( nID_ );
+    asn().mutable_unit()->set_id( pPion_->GetID() );
     if( pConsign_ )
         pConsign_->SendChangedState( asn );
     else
     {
-        asn().set_oid_pion_log_traitant( 0 );
+        asn().mutable_provider()->set_id( 0 );
         asn().set_etat( Common::termine );
     }
     if( bHumanStateHasChanged_ )
@@ -293,8 +293,8 @@ void PHY_MedicalHumanState::SendMsgCreation() const
     assert( pHuman_ );
 
     client::LogMedicalHandlingCreation asn;
-    asn().set_oid_consigne( nID_ );
-    asn().set_oid_pion( pPion_->GetID() );
+    asn().mutable_id()->set_id( nID_ );
+    asn().mutable_unit()->set_id( pPion_->GetID() );
     asn().set_tick_creation( nCreationTick_ );
     asn().set_rang         ( pHuman_->GetRank ().GetAsnID() );
     asn().set_blessure( pHuman_->GetWound().GetAsnID() );
@@ -312,8 +312,8 @@ void PHY_MedicalHumanState::SendMsgDestruction() const
     assert( pPion_ );
 
     client::LogMedicalHandlingDestruction asn;
-    asn().set_oid_consigne( nID_ );
-    asn().set_oid_pion( pPion_->GetID() );
+    asn().mutable_id()->set_id( nID_ );
+    asn().mutable_unit()->set_id( pPion_->GetID() );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 

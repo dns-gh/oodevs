@@ -27,12 +27,12 @@ const PHY_ComposanteTypePion* PHY_ComposanteTypePion::Find( const std::string& s
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
 inline
-const PHY_ComposanteTypePion* PHY_ComposanteTypePion::Find( Common::MsgEquipmentType nAsnID )
+const PHY_ComposanteTypePion* PHY_ComposanteTypePion::Find( Common::EquipmentType nAsnID )
 {
     for( CIT_ComposanteTypeMap it = composantesTypes_.begin(); it != composantesTypes_.end(); ++it )
     {
         const PHY_ComposanteTypePion& composanteType = *it->second;
-        if( composanteType.GetMosID().equipment() == nAsnID.equipment() )
+        if( composanteType.GetMosID().id() == nAsnID.id() )
             return &composanteType;
     }
     return 0;

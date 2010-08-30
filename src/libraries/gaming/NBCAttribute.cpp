@@ -45,10 +45,10 @@ void NBCAttribute::UpdateData( const T& message )
 {
     if( message.has_nbc()  )
     {
-        agents_.resize( message.nbc().nbc_agents().elem_size() );
+        agents_.resize( message.nbc().nbc_agents_size() );
 
-        for( int i = 0; i < message.nbc().nbc_agents().elem_size(); ++i )
-            agents_[ i ] = & resolver_.Get( message.nbc().nbc_agents().elem( i ) );
+        for( int i = 0; i < message.nbc().nbc_agents_size(); ++i )
+            agents_[ i ] = & resolver_.Get( message.nbc().nbc_agents( i ).id() );
         danger_ = message.nbc().danger_level();
 
         controller_.Update( *(NBCAttribute_ABC*)this );

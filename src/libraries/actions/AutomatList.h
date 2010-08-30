@@ -14,7 +14,7 @@
 
 namespace Common
 {
-    class MsgAutomatList;
+    class AutomatIdList;
 }
 
 namespace kernel
@@ -39,7 +39,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit AutomatList( const kernel::OrderParameter& parameter );
-             AutomatList( const kernel::OrderParameter& parameter, const Common::MsgAutomatList& message, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
+             AutomatList( const kernel::OrderParameter& parameter, const Common::AutomatIdList& message, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
              AutomatList( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
     virtual ~AutomatList();
     //@}

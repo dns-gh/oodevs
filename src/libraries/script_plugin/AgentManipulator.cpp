@@ -156,7 +156,7 @@ unsigned int AgentManipulator::GetMission() const
 void AgentManipulator::Teleport( const dispatcher::Position& position )
 {
     simulation::UnitMagicAction message;
-    message().set_oid( agent_.GetId() );
+    message().mutable_id()->set_id( agent_.GetId() );
     message().set_type( MsgsClientToSim::MsgUnitMagicAction_Type_move_to );
     Common::MsgPoint point;
     Common::MsgMissionParameter& parameter = *message().mutable_parametres()->add_elem();
@@ -174,7 +174,7 @@ void AgentManipulator::Teleport( const dispatcher::Position& position )
 void AgentManipulator::RecoverAll()
 {
     simulation::UnitMagicAction message;
-    message().set_oid( agent_.GetId() );
+    message().mutable_id()->set_id( agent_.GetId() );
     message().set_type( MsgsClientToSim::MsgUnitMagicAction_Type_recover_all );
     message().mutable_parametres();
     message.Send( publisher_ );

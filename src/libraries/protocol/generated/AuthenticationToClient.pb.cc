@@ -38,15 +38,6 @@ const ::google::protobuf::Descriptor* MsgProfileDestructionRequestAck_descriptor
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgProfileDestructionRequestAck_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* MsgProfileDestructionRequestAck_ErrorCode_descriptor_ = NULL;
-const ::google::protobuf::Descriptor* FormationList_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  FormationList_reflection_ = NULL;
-const ::google::protobuf::Descriptor* TeamList_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  TeamList_reflection_ = NULL;
-const ::google::protobuf::Descriptor* PopulationList_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  PopulationList_reflection_ = NULL;
 const ::google::protobuf::Descriptor* MsgProfile_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgProfile_reflection_ = NULL;
@@ -190,52 +181,7 @@ void protobuf_AssignDesc_AuthenticationToClient_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgProfileDestructionRequestAck));
   MsgProfileDestructionRequestAck_ErrorCode_descriptor_ = MsgProfileDestructionRequestAck_descriptor_->enum_type(0);
-  FormationList_descriptor_ = file->message_type(7);
-  static const int FormationList_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FormationList, elem_),
-  };
-  FormationList_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      FormationList_descriptor_,
-      FormationList::default_instance_,
-      FormationList_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FormationList, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FormationList, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(FormationList));
-  TeamList_descriptor_ = file->message_type(8);
-  static const int TeamList_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TeamList, elem_),
-  };
-  TeamList_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      TeamList_descriptor_,
-      TeamList::default_instance_,
-      TeamList_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TeamList, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TeamList, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(TeamList));
-  PopulationList_descriptor_ = file->message_type(9);
-  static const int PopulationList_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PopulationList, elem_),
-  };
-  PopulationList_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      PopulationList_descriptor_,
-      PopulationList::default_instance_,
-      PopulationList_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PopulationList, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PopulationList, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(PopulationList));
-  MsgProfile_descriptor_ = file->message_type(10);
+  MsgProfile_descriptor_ = file->message_type(7);
   static const int MsgProfile_offsets_[12] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, login_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, password_),
@@ -261,7 +207,7 @@ void protobuf_AssignDesc_AuthenticationToClient_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgProfile));
-  MsgProfileDescriptionList_descriptor_ = file->message_type(11);
+  MsgProfileDescriptionList_descriptor_ = file->message_type(8);
   static const int MsgProfileDescriptionList_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfileDescriptionList, elem_),
   };
@@ -276,7 +222,7 @@ void protobuf_AssignDesc_AuthenticationToClient_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgProfileDescriptionList));
-  MsgProfileDescription_descriptor_ = file->message_type(12);
+  MsgProfileDescription_descriptor_ = file->message_type(9);
   static const int MsgProfileDescription_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfileDescription, login_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfileDescription, password_),
@@ -293,7 +239,7 @@ void protobuf_AssignDesc_AuthenticationToClient_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgProfileDescription));
-  MsgAuthenticationToClient_descriptor_ = file->message_type(13);
+  MsgAuthenticationToClient_descriptor_ = file->message_type(10);
   static const int MsgAuthenticationToClient_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAuthenticationToClient, context_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAuthenticationToClient, message_),
@@ -358,12 +304,6 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgProfileDestructionRequestAck_descriptor_, &MsgProfileDestructionRequestAck::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    FormationList_descriptor_, &FormationList::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    TeamList_descriptor_, &TeamList::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    PopulationList_descriptor_, &PopulationList::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgProfile_descriptor_, &MsgProfile::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgProfileDescriptionList_descriptor_, &MsgProfileDescriptionList::default_instance());
@@ -392,12 +332,6 @@ void protobuf_ShutdownFile_AuthenticationToClient_2eproto() {
   delete MsgProfileDestruction_reflection_;
   delete MsgProfileDestructionRequestAck::default_instance_;
   delete MsgProfileDestructionRequestAck_reflection_;
-  delete FormationList::default_instance_;
-  delete FormationList_reflection_;
-  delete TeamList::default_instance_;
-  delete TeamList_reflection_;
-  delete PopulationList::default_instance_;
-  delete PopulationList_reflection_;
   delete MsgProfile::default_instance_;
   delete MsgProfile_reflection_;
   delete MsgProfileDescriptionList::default_instance_;
@@ -454,52 +388,45 @@ void protobuf_AddDesc_AuthenticationToClient_2eproto() {
     "icationToClient.MsgProfileDestructionReq"
     "uestAck.ErrorCode\022\r\n\005login\030\002 \002(\t\":\n\tErro"
     "rCode\022\013\n\007success\020\000\022\023\n\017invalid_profile\020\001\022"
-    "\013\n\007failure\020\002\"3\n\rFormationList\022\"\n\004elem\030\001 "
-    "\003(\0132\024.Common.MsgFormation\")\n\010TeamList\022\035\n"
-    "\004elem\030\001 \003(\0132\017.Common.MsgTeam\"5\n\016Populati"
-    "onList\022#\n\004elem\030\001 \003(\0132\025.Common.MsgPopulat"
-    "ion\"\206\005\n\nMsgProfile\022\r\n\005login\030\001 \002(\t\022\020\n\010pas"
-    "sword\030\002 \001(\t\022G\n\024read_only_formations\030\003 \001("
-    "\0132).MsgsAuthenticationToClient.Formation"
-    "List\022H\n\025read_write_formations\030\004 \001(\0132).Ms"
-    "gsAuthenticationToClient.FormationList\0223"
-    "\n\023read_only_automates\030\005 \001(\0132\026.Common.Msg"
-    "AutomatList\0224\n\024read_write_automates\030\006 \001("
-    "\0132\026.Common.MsgAutomatList\022=\n\017read_only_c"
-    "amps\030\007 \001(\0132$.MsgsAuthenticationToClient."
-    "TeamList\022>\n\020read_write_camps\030\010 \001(\0132$.Msg"
-    "sAuthenticationToClient.TeamList\022I\n\025read"
-    "_only_populations\030\t \001(\0132*.MsgsAuthentica"
-    "tionToClient.PopulationList\022J\n\026read_writ"
-    "e_populations\030\n \001(\0132*.MsgsAuthentication"
-    "ToClient.PopulationList\022\023\n\013superviseur\030\013"
-    " \002(\010\022.\n\004role\030\014 \001(\0162 .MsgsAuthenticationT"
-    "oClient.Role\"\\\n\031MsgProfileDescriptionLis"
-    "t\022?\n\004elem\030\001 \003(\01321.MsgsAuthenticationToCl"
-    "ient.MsgProfileDescription\"L\n\025MsgProfile"
-    "Description\022\r\n\005login\030\001 \002(\t\022\020\n\010password\030\002"
-    " \002(\010\022\022\n\nsupervisor\030\003 \002(\010\"\345\005\n\031MsgAuthenti"
-    "cationToClient\022\022\n\007context\030\001 \001(\005:\0010\022N\n\007me"
-    "ssage\030\002 \002(\0132=.MsgsAuthenticationToClient"
-    ".MsgAuthenticationToClient.Content\032\343\004\n\007C"
-    "ontent\022V\n\027authentication_response\030\001 \001(\0132"
-    "5.MsgsAuthenticationToClient.MsgAuthenti"
-    "cationResponse\022H\n\020profile_creation\030\002 \001(\013"
-    "2..MsgsAuthenticationToClient.MsgProfile"
-    "Creation\022^\n\034profile_creation_request_ack"
-    "\030\003 \001(\01328.MsgsAuthenticationToClient.MsgP"
-    "rofileCreationRequestAck\022D\n\016profile_upda"
-    "te\030\004 \001(\0132,.MsgsAuthenticationToClient.Ms"
-    "gProfileUpdate\022Z\n\032profile_update_request"
-    "_ack\030\005 \001(\01326.MsgsAuthenticationToClient."
-    "MsgProfileUpdateRequestAck\022N\n\023profile_de"
-    "struction\030\006 \001(\01321.MsgsAuthenticationToCl"
-    "ient.MsgProfileDestruction\022d\n\037profile_de"
-    "struction_request_ack\030\007 \001(\0132;.MsgsAuthen"
-    "ticationToClient.MsgProfileDestructionRe"
-    "questAck*Y\n\004Role\022\017\n\013superviseur\020\000\022\n\n\006ani"
-    "bas\020\001\022\t\n\005eniex\020\002\022\t\n\005direx\020\003\022\021\n\renvironne"
-    "ment\020\004\022\013\n\007analyse\020\005", 3219);
+    "\013\n\007failure\020\002\"\232\004\n\nMsgProfile\022\r\n\005login\030\001 \002"
+    "(\t\022\020\n\010password\030\002 \001(\t\0225\n\024read_only_format"
+    "ions\030\003 \001(\0132\027.Common.FormationIdList\0226\n\025r"
+    "ead_write_formations\030\004 \001(\0132\027.Common.Form"
+    "ationIdList\0222\n\023read_only_automates\030\005 \001(\013"
+    "2\025.Common.AutomatIdList\0223\n\024read_write_au"
+    "tomates\030\006 \001(\0132\025.Common.AutomatIdList\022,\n\017"
+    "read_only_camps\030\007 \001(\0132\023.Common.PartyIdLi"
+    "st\022-\n\020read_write_camps\030\010 \001(\0132\023.Common.Pa"
+    "rtyIdList\0227\n\025read_only_populations\030\t \001(\013"
+    "2\030.Common.PopulationIdList\0228\n\026read_write"
+    "_populations\030\n \001(\0132\030.Common.PopulationId"
+    "List\022\023\n\013superviseur\030\013 \002(\010\022.\n\004role\030\014 \001(\0162"
+    " .MsgsAuthenticationToClient.Role\"\\\n\031Msg"
+    "ProfileDescriptionList\022?\n\004elem\030\001 \003(\01321.M"
+    "sgsAuthenticationToClient.MsgProfileDesc"
+    "ription\"L\n\025MsgProfileDescription\022\r\n\005logi"
+    "n\030\001 \002(\t\022\020\n\010password\030\002 \002(\010\022\022\n\nsupervisor\030"
+    "\003 \002(\010\"\345\005\n\031MsgAuthenticationToClient\022\022\n\007c"
+    "ontext\030\001 \001(\005:\0010\022N\n\007message\030\002 \002(\0132=.MsgsA"
+    "uthenticationToClient.MsgAuthenticationT"
+    "oClient.Content\032\343\004\n\007Content\022V\n\027authentic"
+    "ation_response\030\001 \001(\01325.MsgsAuthenticatio"
+    "nToClient.MsgAuthenticationResponse\022H\n\020p"
+    "rofile_creation\030\002 \001(\0132..MsgsAuthenticati"
+    "onToClient.MsgProfileCreation\022^\n\034profile"
+    "_creation_request_ack\030\003 \001(\01328.MsgsAuthen"
+    "ticationToClient.MsgProfileCreationReque"
+    "stAck\022D\n\016profile_update\030\004 \001(\0132,.MsgsAuth"
+    "enticationToClient.MsgProfileUpdate\022Z\n\032p"
+    "rofile_update_request_ack\030\005 \001(\01326.MsgsAu"
+    "thenticationToClient.MsgProfileUpdateReq"
+    "uestAck\022N\n\023profile_destruction\030\006 \001(\01321.M"
+    "sgsAuthenticationToClient.MsgProfileDest"
+    "ruction\022d\n\037profile_destruction_request_a"
+    "ck\030\007 \001(\0132;.MsgsAuthenticationToClient.Ms"
+    "gProfileDestructionRequestAck*Y\n\004Role\022\017\n"
+    "\013superviseur\020\000\022\n\n\006anibas\020\001\022\t\n\005eniex\020\002\022\t\n"
+    "\005direx\020\003\022\021\n\renvironnement\020\004\022\013\n\007analyse\020\005", 2960);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "AuthenticationToClient.proto", &protobuf_RegisterTypes);
   MsgAuthenticationResponse::default_instance_ = new MsgAuthenticationResponse();
@@ -509,9 +436,6 @@ void protobuf_AddDesc_AuthenticationToClient_2eproto() {
   MsgProfileUpdate::default_instance_ = new MsgProfileUpdate();
   MsgProfileDestruction::default_instance_ = new MsgProfileDestruction();
   MsgProfileDestructionRequestAck::default_instance_ = new MsgProfileDestructionRequestAck();
-  FormationList::default_instance_ = new FormationList();
-  TeamList::default_instance_ = new TeamList();
-  PopulationList::default_instance_ = new PopulationList();
   MsgProfile::default_instance_ = new MsgProfile();
   MsgProfileDescriptionList::default_instance_ = new MsgProfileDescriptionList();
   MsgProfileDescription::default_instance_ = new MsgProfileDescription();
@@ -524,9 +448,6 @@ void protobuf_AddDesc_AuthenticationToClient_2eproto() {
   MsgProfileUpdate::default_instance_->InitAsDefaultInstance();
   MsgProfileDestruction::default_instance_->InitAsDefaultInstance();
   MsgProfileDestructionRequestAck::default_instance_->InitAsDefaultInstance();
-  FormationList::default_instance_->InitAsDefaultInstance();
-  TeamList::default_instance_->InitAsDefaultInstance();
-  PopulationList::default_instance_->InitAsDefaultInstance();
   MsgProfile::default_instance_->InitAsDefaultInstance();
   MsgProfileDescriptionList::default_instance_->InitAsDefaultInstance();
   MsgProfileDescription::default_instance_->InitAsDefaultInstance();
@@ -2552,609 +2473,6 @@ void MsgProfileDestructionRequestAck::Swap(MsgProfileDestructionRequestAck* othe
 
 // ===================================================================
 
-#ifndef _MSC_VER
-const int FormationList::kElemFieldNumber;
-#endif  // !_MSC_VER
-
-FormationList::FormationList() {
-  SharedCtor();
-}
-
-void FormationList::InitAsDefaultInstance() {
-}
-
-FormationList::FormationList(const FormationList& from) {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void FormationList::SharedCtor() {
-  _cached_size_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-FormationList::~FormationList() {
-  SharedDtor();
-}
-
-void FormationList::SharedDtor() {
-  if (this != default_instance_) {
-  }
-}
-
-const ::google::protobuf::Descriptor* FormationList::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return FormationList_descriptor_;
-}
-
-const FormationList& FormationList::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_AuthenticationToClient_2eproto();  return *default_instance_;
-}
-
-FormationList* FormationList::default_instance_ = NULL;
-
-FormationList* FormationList::New() const {
-  return new FormationList;
-}
-
-void FormationList::Clear() {
-  elem_.Clear();
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool FormationList::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .Common.MsgFormation elem = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_elem:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-              input, add_elem()));
-        if (input->ExpectTag(10)) goto parse_elem;
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-      
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void FormationList::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
-  if (raw_buffer != NULL) {
-    FormationList::SerializeWithCachedSizesToArray(raw_buffer);
-    return;
-  }
-  
-  // repeated .Common.MsgFormation elem = 1;
-  for (int i = 0; i < this->elem_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      1, this->elem(i), output);
-  }
-  
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* FormationList::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // repeated .Common.MsgFormation elem = 1;
-  for (int i = 0; i < this->elem_size(); i++) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        1, this->elem(i), target);
-  }
-  
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int FormationList::ByteSize() const {
-  int total_size = 0;
-  
-  // repeated .Common.MsgFormation elem = 1;
-  total_size += 1 * this->elem_size();
-  for (int i = 0; i < this->elem_size(); i++) {
-    total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->elem(i));
-  }
-  
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  _cached_size_ = total_size;
-  return total_size;
-}
-
-void FormationList::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const FormationList* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const FormationList*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void FormationList::MergeFrom(const FormationList& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  elem_.MergeFrom(from.elem_);
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void FormationList::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void FormationList::CopyFrom(const FormationList& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool FormationList::IsInitialized() const {
-  
-  for (int i = 0; i < elem_size(); i++) {
-    if (!this->elem(i).IsInitialized()) return false;
-  }
-  return true;
-}
-
-void FormationList::Swap(FormationList* other) {
-  if (other != this) {
-    elem_.Swap(&other->elem_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata FormationList::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = FormationList_descriptor_;
-  metadata.reflection = FormationList_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int TeamList::kElemFieldNumber;
-#endif  // !_MSC_VER
-
-TeamList::TeamList() {
-  SharedCtor();
-}
-
-void TeamList::InitAsDefaultInstance() {
-}
-
-TeamList::TeamList(const TeamList& from) {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void TeamList::SharedCtor() {
-  _cached_size_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-TeamList::~TeamList() {
-  SharedDtor();
-}
-
-void TeamList::SharedDtor() {
-  if (this != default_instance_) {
-  }
-}
-
-const ::google::protobuf::Descriptor* TeamList::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return TeamList_descriptor_;
-}
-
-const TeamList& TeamList::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_AuthenticationToClient_2eproto();  return *default_instance_;
-}
-
-TeamList* TeamList::default_instance_ = NULL;
-
-TeamList* TeamList::New() const {
-  return new TeamList;
-}
-
-void TeamList::Clear() {
-  elem_.Clear();
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool TeamList::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .Common.MsgTeam elem = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_elem:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-              input, add_elem()));
-        if (input->ExpectTag(10)) goto parse_elem;
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-      
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void TeamList::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
-  if (raw_buffer != NULL) {
-    TeamList::SerializeWithCachedSizesToArray(raw_buffer);
-    return;
-  }
-  
-  // repeated .Common.MsgTeam elem = 1;
-  for (int i = 0; i < this->elem_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      1, this->elem(i), output);
-  }
-  
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* TeamList::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // repeated .Common.MsgTeam elem = 1;
-  for (int i = 0; i < this->elem_size(); i++) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        1, this->elem(i), target);
-  }
-  
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int TeamList::ByteSize() const {
-  int total_size = 0;
-  
-  // repeated .Common.MsgTeam elem = 1;
-  total_size += 1 * this->elem_size();
-  for (int i = 0; i < this->elem_size(); i++) {
-    total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->elem(i));
-  }
-  
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  _cached_size_ = total_size;
-  return total_size;
-}
-
-void TeamList::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const TeamList* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const TeamList*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void TeamList::MergeFrom(const TeamList& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  elem_.MergeFrom(from.elem_);
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void TeamList::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void TeamList::CopyFrom(const TeamList& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool TeamList::IsInitialized() const {
-  
-  for (int i = 0; i < elem_size(); i++) {
-    if (!this->elem(i).IsInitialized()) return false;
-  }
-  return true;
-}
-
-void TeamList::Swap(TeamList* other) {
-  if (other != this) {
-    elem_.Swap(&other->elem_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata TeamList::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = TeamList_descriptor_;
-  metadata.reflection = TeamList_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int PopulationList::kElemFieldNumber;
-#endif  // !_MSC_VER
-
-PopulationList::PopulationList() {
-  SharedCtor();
-}
-
-void PopulationList::InitAsDefaultInstance() {
-}
-
-PopulationList::PopulationList(const PopulationList& from) {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void PopulationList::SharedCtor() {
-  _cached_size_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-PopulationList::~PopulationList() {
-  SharedDtor();
-}
-
-void PopulationList::SharedDtor() {
-  if (this != default_instance_) {
-  }
-}
-
-const ::google::protobuf::Descriptor* PopulationList::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return PopulationList_descriptor_;
-}
-
-const PopulationList& PopulationList::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_AuthenticationToClient_2eproto();  return *default_instance_;
-}
-
-PopulationList* PopulationList::default_instance_ = NULL;
-
-PopulationList* PopulationList::New() const {
-  return new PopulationList;
-}
-
-void PopulationList::Clear() {
-  elem_.Clear();
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool PopulationList::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .Common.MsgPopulation elem = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_elem:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-              input, add_elem()));
-        if (input->ExpectTag(10)) goto parse_elem;
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-      
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void PopulationList::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
-  if (raw_buffer != NULL) {
-    PopulationList::SerializeWithCachedSizesToArray(raw_buffer);
-    return;
-  }
-  
-  // repeated .Common.MsgPopulation elem = 1;
-  for (int i = 0; i < this->elem_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      1, this->elem(i), output);
-  }
-  
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* PopulationList::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // repeated .Common.MsgPopulation elem = 1;
-  for (int i = 0; i < this->elem_size(); i++) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        1, this->elem(i), target);
-  }
-  
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int PopulationList::ByteSize() const {
-  int total_size = 0;
-  
-  // repeated .Common.MsgPopulation elem = 1;
-  total_size += 1 * this->elem_size();
-  for (int i = 0; i < this->elem_size(); i++) {
-    total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->elem(i));
-  }
-  
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  _cached_size_ = total_size;
-  return total_size;
-}
-
-void PopulationList::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const PopulationList* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const PopulationList*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void PopulationList::MergeFrom(const PopulationList& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  elem_.MergeFrom(from.elem_);
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void PopulationList::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void PopulationList::CopyFrom(const PopulationList& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool PopulationList::IsInitialized() const {
-  
-  for (int i = 0; i < elem_size(); i++) {
-    if (!this->elem(i).IsInitialized()) return false;
-  }
-  return true;
-}
-
-void PopulationList::Swap(PopulationList* other) {
-  if (other != this) {
-    elem_.Swap(&other->elem_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata PopulationList::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = PopulationList_descriptor_;
-  metadata.reflection = PopulationList_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
 const ::std::string MsgProfile::_default_login_;
 const ::std::string MsgProfile::_default_password_;
 #ifndef _MSC_VER
@@ -3177,14 +2495,14 @@ MsgProfile::MsgProfile() {
 }
 
 void MsgProfile::InitAsDefaultInstance() {
-  read_only_formations_ = const_cast< ::MsgsAuthenticationToClient::FormationList*>(&::MsgsAuthenticationToClient::FormationList::default_instance());
-  read_write_formations_ = const_cast< ::MsgsAuthenticationToClient::FormationList*>(&::MsgsAuthenticationToClient::FormationList::default_instance());
-  read_only_automates_ = const_cast< ::Common::MsgAutomatList*>(&::Common::MsgAutomatList::default_instance());
-  read_write_automates_ = const_cast< ::Common::MsgAutomatList*>(&::Common::MsgAutomatList::default_instance());
-  read_only_camps_ = const_cast< ::MsgsAuthenticationToClient::TeamList*>(&::MsgsAuthenticationToClient::TeamList::default_instance());
-  read_write_camps_ = const_cast< ::MsgsAuthenticationToClient::TeamList*>(&::MsgsAuthenticationToClient::TeamList::default_instance());
-  read_only_populations_ = const_cast< ::MsgsAuthenticationToClient::PopulationList*>(&::MsgsAuthenticationToClient::PopulationList::default_instance());
-  read_write_populations_ = const_cast< ::MsgsAuthenticationToClient::PopulationList*>(&::MsgsAuthenticationToClient::PopulationList::default_instance());
+  read_only_formations_ = const_cast< ::Common::FormationIdList*>(&::Common::FormationIdList::default_instance());
+  read_write_formations_ = const_cast< ::Common::FormationIdList*>(&::Common::FormationIdList::default_instance());
+  read_only_automates_ = const_cast< ::Common::AutomatIdList*>(&::Common::AutomatIdList::default_instance());
+  read_write_automates_ = const_cast< ::Common::AutomatIdList*>(&::Common::AutomatIdList::default_instance());
+  read_only_camps_ = const_cast< ::Common::PartyIdList*>(&::Common::PartyIdList::default_instance());
+  read_write_camps_ = const_cast< ::Common::PartyIdList*>(&::Common::PartyIdList::default_instance());
+  read_only_populations_ = const_cast< ::Common::PopulationIdList*>(&::Common::PopulationIdList::default_instance());
+  read_write_populations_ = const_cast< ::Common::PopulationIdList*>(&::Common::PopulationIdList::default_instance());
 }
 
 MsgProfile::MsgProfile(const MsgProfile& from) {
@@ -3260,30 +2578,30 @@ void MsgProfile::Clear() {
       }
     }
     if (_has_bit(2)) {
-      if (read_only_formations_ != NULL) read_only_formations_->::MsgsAuthenticationToClient::FormationList::Clear();
+      if (read_only_formations_ != NULL) read_only_formations_->::Common::FormationIdList::Clear();
     }
     if (_has_bit(3)) {
-      if (read_write_formations_ != NULL) read_write_formations_->::MsgsAuthenticationToClient::FormationList::Clear();
+      if (read_write_formations_ != NULL) read_write_formations_->::Common::FormationIdList::Clear();
     }
     if (_has_bit(4)) {
-      if (read_only_automates_ != NULL) read_only_automates_->::Common::MsgAutomatList::Clear();
+      if (read_only_automates_ != NULL) read_only_automates_->::Common::AutomatIdList::Clear();
     }
     if (_has_bit(5)) {
-      if (read_write_automates_ != NULL) read_write_automates_->::Common::MsgAutomatList::Clear();
+      if (read_write_automates_ != NULL) read_write_automates_->::Common::AutomatIdList::Clear();
     }
     if (_has_bit(6)) {
-      if (read_only_camps_ != NULL) read_only_camps_->::MsgsAuthenticationToClient::TeamList::Clear();
+      if (read_only_camps_ != NULL) read_only_camps_->::Common::PartyIdList::Clear();
     }
     if (_has_bit(7)) {
-      if (read_write_camps_ != NULL) read_write_camps_->::MsgsAuthenticationToClient::TeamList::Clear();
+      if (read_write_camps_ != NULL) read_write_camps_->::Common::PartyIdList::Clear();
     }
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (_has_bit(8)) {
-      if (read_only_populations_ != NULL) read_only_populations_->::MsgsAuthenticationToClient::PopulationList::Clear();
+      if (read_only_populations_ != NULL) read_only_populations_->::Common::PopulationIdList::Clear();
     }
     if (_has_bit(9)) {
-      if (read_write_populations_ != NULL) read_write_populations_->::MsgsAuthenticationToClient::PopulationList::Clear();
+      if (read_write_populations_ != NULL) read_write_populations_->::Common::PopulationIdList::Clear();
     }
     superviseur_ = false;
     role_ = 0;
@@ -3329,7 +2647,7 @@ bool MsgProfile::MergePartialFromCodedStream(
         break;
       }
       
-      // optional .MsgsAuthenticationToClient.FormationList read_only_formations = 3;
+      // optional .Common.FormationIdList read_only_formations = 3;
       case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -3342,7 +2660,7 @@ bool MsgProfile::MergePartialFromCodedStream(
         break;
       }
       
-      // optional .MsgsAuthenticationToClient.FormationList read_write_formations = 4;
+      // optional .Common.FormationIdList read_write_formations = 4;
       case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -3355,7 +2673,7 @@ bool MsgProfile::MergePartialFromCodedStream(
         break;
       }
       
-      // optional .Common.MsgAutomatList read_only_automates = 5;
+      // optional .Common.AutomatIdList read_only_automates = 5;
       case 5: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -3368,7 +2686,7 @@ bool MsgProfile::MergePartialFromCodedStream(
         break;
       }
       
-      // optional .Common.MsgAutomatList read_write_automates = 6;
+      // optional .Common.AutomatIdList read_write_automates = 6;
       case 6: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -3381,7 +2699,7 @@ bool MsgProfile::MergePartialFromCodedStream(
         break;
       }
       
-      // optional .MsgsAuthenticationToClient.TeamList read_only_camps = 7;
+      // optional .Common.PartyIdList read_only_camps = 7;
       case 7: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -3394,7 +2712,7 @@ bool MsgProfile::MergePartialFromCodedStream(
         break;
       }
       
-      // optional .MsgsAuthenticationToClient.TeamList read_write_camps = 8;
+      // optional .Common.PartyIdList read_write_camps = 8;
       case 8: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -3407,7 +2725,7 @@ bool MsgProfile::MergePartialFromCodedStream(
         break;
       }
       
-      // optional .MsgsAuthenticationToClient.PopulationList read_only_populations = 9;
+      // optional .Common.PopulationIdList read_only_populations = 9;
       case 9: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -3420,7 +2738,7 @@ bool MsgProfile::MergePartialFromCodedStream(
         break;
       }
       
-      // optional .MsgsAuthenticationToClient.PopulationList read_write_populations = 10;
+      // optional .Common.PopulationIdList read_write_populations = 10;
       case 10: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -3507,49 +2825,49 @@ void MsgProfile::SerializeWithCachedSizes(
       2, this->password(), output);
   }
   
-  // optional .MsgsAuthenticationToClient.FormationList read_only_formations = 3;
+  // optional .Common.FormationIdList read_only_formations = 3;
   if (_has_bit(2)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       3, this->read_only_formations(), output);
   }
   
-  // optional .MsgsAuthenticationToClient.FormationList read_write_formations = 4;
+  // optional .Common.FormationIdList read_write_formations = 4;
   if (_has_bit(3)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       4, this->read_write_formations(), output);
   }
   
-  // optional .Common.MsgAutomatList read_only_automates = 5;
+  // optional .Common.AutomatIdList read_only_automates = 5;
   if (_has_bit(4)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       5, this->read_only_automates(), output);
   }
   
-  // optional .Common.MsgAutomatList read_write_automates = 6;
+  // optional .Common.AutomatIdList read_write_automates = 6;
   if (_has_bit(5)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       6, this->read_write_automates(), output);
   }
   
-  // optional .MsgsAuthenticationToClient.TeamList read_only_camps = 7;
+  // optional .Common.PartyIdList read_only_camps = 7;
   if (_has_bit(6)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       7, this->read_only_camps(), output);
   }
   
-  // optional .MsgsAuthenticationToClient.TeamList read_write_camps = 8;
+  // optional .Common.PartyIdList read_write_camps = 8;
   if (_has_bit(7)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       8, this->read_write_camps(), output);
   }
   
-  // optional .MsgsAuthenticationToClient.PopulationList read_only_populations = 9;
+  // optional .Common.PopulationIdList read_only_populations = 9;
   if (_has_bit(8)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       9, this->read_only_populations(), output);
   }
   
-  // optional .MsgsAuthenticationToClient.PopulationList read_write_populations = 10;
+  // optional .Common.PopulationIdList read_write_populations = 10;
   if (_has_bit(9)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       10, this->read_write_populations(), output);
@@ -3594,56 +2912,56 @@ void MsgProfile::SerializeWithCachedSizes(
         2, this->password(), target);
   }
   
-  // optional .MsgsAuthenticationToClient.FormationList read_only_formations = 3;
+  // optional .Common.FormationIdList read_only_formations = 3;
   if (_has_bit(2)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         3, this->read_only_formations(), target);
   }
   
-  // optional .MsgsAuthenticationToClient.FormationList read_write_formations = 4;
+  // optional .Common.FormationIdList read_write_formations = 4;
   if (_has_bit(3)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         4, this->read_write_formations(), target);
   }
   
-  // optional .Common.MsgAutomatList read_only_automates = 5;
+  // optional .Common.AutomatIdList read_only_automates = 5;
   if (_has_bit(4)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         5, this->read_only_automates(), target);
   }
   
-  // optional .Common.MsgAutomatList read_write_automates = 6;
+  // optional .Common.AutomatIdList read_write_automates = 6;
   if (_has_bit(5)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         6, this->read_write_automates(), target);
   }
   
-  // optional .MsgsAuthenticationToClient.TeamList read_only_camps = 7;
+  // optional .Common.PartyIdList read_only_camps = 7;
   if (_has_bit(6)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         7, this->read_only_camps(), target);
   }
   
-  // optional .MsgsAuthenticationToClient.TeamList read_write_camps = 8;
+  // optional .Common.PartyIdList read_write_camps = 8;
   if (_has_bit(7)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         8, this->read_write_camps(), target);
   }
   
-  // optional .MsgsAuthenticationToClient.PopulationList read_only_populations = 9;
+  // optional .Common.PopulationIdList read_only_populations = 9;
   if (_has_bit(8)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         9, this->read_only_populations(), target);
   }
   
-  // optional .MsgsAuthenticationToClient.PopulationList read_write_populations = 10;
+  // optional .Common.PopulationIdList read_write_populations = 10;
   if (_has_bit(9)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
@@ -3686,42 +3004,42 @@ int MsgProfile::ByteSize() const {
           this->password());
     }
     
-    // optional .MsgsAuthenticationToClient.FormationList read_only_formations = 3;
+    // optional .Common.FormationIdList read_only_formations = 3;
     if (has_read_only_formations()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->read_only_formations());
     }
     
-    // optional .MsgsAuthenticationToClient.FormationList read_write_formations = 4;
+    // optional .Common.FormationIdList read_write_formations = 4;
     if (has_read_write_formations()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->read_write_formations());
     }
     
-    // optional .Common.MsgAutomatList read_only_automates = 5;
+    // optional .Common.AutomatIdList read_only_automates = 5;
     if (has_read_only_automates()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->read_only_automates());
     }
     
-    // optional .Common.MsgAutomatList read_write_automates = 6;
+    // optional .Common.AutomatIdList read_write_automates = 6;
     if (has_read_write_automates()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->read_write_automates());
     }
     
-    // optional .MsgsAuthenticationToClient.TeamList read_only_camps = 7;
+    // optional .Common.PartyIdList read_only_camps = 7;
     if (has_read_only_camps()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->read_only_camps());
     }
     
-    // optional .MsgsAuthenticationToClient.TeamList read_write_camps = 8;
+    // optional .Common.PartyIdList read_write_camps = 8;
     if (has_read_write_camps()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -3730,14 +3048,14 @@ int MsgProfile::ByteSize() const {
     
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // optional .MsgsAuthenticationToClient.PopulationList read_only_populations = 9;
+    // optional .Common.PopulationIdList read_only_populations = 9;
     if (has_read_only_populations()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->read_only_populations());
     }
     
-    // optional .MsgsAuthenticationToClient.PopulationList read_write_populations = 10;
+    // optional .Common.PopulationIdList read_write_populations = 10;
     if (has_read_write_populations()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -3787,30 +3105,30 @@ void MsgProfile::MergeFrom(const MsgProfile& from) {
       set_password(from.password());
     }
     if (from._has_bit(2)) {
-      mutable_read_only_formations()->::MsgsAuthenticationToClient::FormationList::MergeFrom(from.read_only_formations());
+      mutable_read_only_formations()->::Common::FormationIdList::MergeFrom(from.read_only_formations());
     }
     if (from._has_bit(3)) {
-      mutable_read_write_formations()->::MsgsAuthenticationToClient::FormationList::MergeFrom(from.read_write_formations());
+      mutable_read_write_formations()->::Common::FormationIdList::MergeFrom(from.read_write_formations());
     }
     if (from._has_bit(4)) {
-      mutable_read_only_automates()->::Common::MsgAutomatList::MergeFrom(from.read_only_automates());
+      mutable_read_only_automates()->::Common::AutomatIdList::MergeFrom(from.read_only_automates());
     }
     if (from._has_bit(5)) {
-      mutable_read_write_automates()->::Common::MsgAutomatList::MergeFrom(from.read_write_automates());
+      mutable_read_write_automates()->::Common::AutomatIdList::MergeFrom(from.read_write_automates());
     }
     if (from._has_bit(6)) {
-      mutable_read_only_camps()->::MsgsAuthenticationToClient::TeamList::MergeFrom(from.read_only_camps());
+      mutable_read_only_camps()->::Common::PartyIdList::MergeFrom(from.read_only_camps());
     }
     if (from._has_bit(7)) {
-      mutable_read_write_camps()->::MsgsAuthenticationToClient::TeamList::MergeFrom(from.read_write_camps());
+      mutable_read_write_camps()->::Common::PartyIdList::MergeFrom(from.read_write_camps());
     }
   }
   if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from._has_bit(8)) {
-      mutable_read_only_populations()->::MsgsAuthenticationToClient::PopulationList::MergeFrom(from.read_only_populations());
+      mutable_read_only_populations()->::Common::PopulationIdList::MergeFrom(from.read_only_populations());
     }
     if (from._has_bit(9)) {
-      mutable_read_write_populations()->::MsgsAuthenticationToClient::PopulationList::MergeFrom(from.read_write_populations());
+      mutable_read_write_populations()->::Common::PopulationIdList::MergeFrom(from.read_write_populations());
     }
     if (from._has_bit(10)) {
       set_superviseur(from.superviseur());

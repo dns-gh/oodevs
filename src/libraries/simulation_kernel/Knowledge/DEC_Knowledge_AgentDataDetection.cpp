@@ -248,7 +248,7 @@ void DEC_Knowledge_AgentDataDetection::SendFullState( MsgsSimToClient::MsgUnitKn
     NET_ASN_Tools::WritePoint( vPosition_, *asnMsg.mutable_position() );
     NET_ASN_Tools::WriteDirection( vDirection_, *asnMsg.mutable_direction() );
     asnMsg.set_speed( static_cast< int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
-    asnMsg.set_rendu( pArmySurrenderedTo_ ? pArmySurrenderedTo_->GetID() : 0 );
+    asnMsg.mutable_surrendered_unit()->set_id( pArmySurrenderedTo_ ? pArmySurrenderedTo_->GetID() : 0 );
     asnMsg.set_prisonnier( bPrisoner_ );
     asnMsg.set_refugie_pris_en_compte( bRefugeeManaged_ );
     asnMsg.set_mort( bDead_ );
@@ -267,7 +267,7 @@ void DEC_Knowledge_AgentDataDetection::SendChangedState( MsgsSimToClient::MsgUni
     if( bSpeedUpdated_ )
         asnMsg.set_speed( static_cast< int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
     if( bSurrenderedUpdated_ )
-        asnMsg.set_rendu( pArmySurrenderedTo_ ? pArmySurrenderedTo_->GetID() : 0 );
+        asnMsg.mutable_surrendered_unit()->set_id( pArmySurrenderedTo_ ? pArmySurrenderedTo_->GetID() : 0 );
     if( bPrisonerUpdated_ )
         asnMsg.set_prisonnier( bPrisoner_ );
     if( bRefugeeManagedUpdated_ )

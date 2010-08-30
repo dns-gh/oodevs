@@ -53,7 +53,7 @@ bool PopulationDecisions::CanBeOrdered() const
 void PopulationDecisions::DoUpdate( const Common::MsgPopulationOrder& message )
 {
     const tools::Resolver_ABC< Mission >& resolver = GetDecisionalModel();
-    current_ = resolver.Find( message.mission() );
+    current_ = resolver.Find( message.type().id() );
     controller_.Update( *this );
 }
 

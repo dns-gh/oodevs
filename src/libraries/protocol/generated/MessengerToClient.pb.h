@@ -283,12 +283,12 @@ class MsgLimitCreation : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required uint32 oid = 1;
-  inline bool has_oid() const;
-  inline void clear_oid();
-  static const int kOidFieldNumber = 1;
-  inline ::google::protobuf::uint32 oid() const;
-  inline void set_oid(::google::protobuf::uint32 value);
+  // required .Common.TacticalLineId id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline const ::Common::TacticalLineId& id() const;
+  inline ::Common::TacticalLineId* mutable_id();
   
   // required .Common.MsgTacticalLine tactical_line = 2;
   inline bool has_tactical_line() const;
@@ -301,7 +301,7 @@ class MsgLimitCreation : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::uint32 oid_;
+  ::Common::TacticalLineId* id_;
   ::Common::MsgTacticalLine* tactical_line_;
   friend void  protobuf_AddDesc_MessengerToClient_2eproto();
   friend void protobuf_AssignDesc_MessengerToClient_2eproto();
@@ -378,12 +378,12 @@ class MsgLimitUpdate : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required uint32 oid = 1;
-  inline bool has_oid() const;
-  inline void clear_oid();
-  static const int kOidFieldNumber = 1;
-  inline ::google::protobuf::uint32 oid() const;
-  inline void set_oid(::google::protobuf::uint32 value);
+  // required .Common.TacticalLineId id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline const ::Common::TacticalLineId& id() const;
+  inline ::Common::TacticalLineId* mutable_id();
   
   // required .Common.MsgTacticalLine tactical_line = 2;
   inline bool has_tactical_line() const;
@@ -396,7 +396,7 @@ class MsgLimitUpdate : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::uint32 oid_;
+  ::Common::TacticalLineId* id_;
   ::Common::MsgTacticalLine* tactical_line_;
   friend void  protobuf_AddDesc_MessengerToClient_2eproto();
   friend void protobuf_AssignDesc_MessengerToClient_2eproto();
@@ -473,18 +473,18 @@ class MsgLimitDestruction : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // optional uint32 oid = 1;
-  inline bool has_oid() const;
-  inline void clear_oid();
-  static const int kOidFieldNumber = 1;
-  inline ::google::protobuf::uint32 oid() const;
-  inline void set_oid(::google::protobuf::uint32 value);
+  // required .Common.TacticalLineId id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline const ::Common::TacticalLineId& id() const;
+  inline ::Common::TacticalLineId* mutable_id();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::uint32 oid_;
+  ::Common::TacticalLineId* id_;
   friend void  protobuf_AddDesc_MessengerToClient_2eproto();
   friend void protobuf_AssignDesc_MessengerToClient_2eproto();
   friend void protobuf_ShutdownFile_MessengerToClient_2eproto();
@@ -821,12 +821,12 @@ class MsgLimaCreation : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required uint32 oid = 1;
-  inline bool has_oid() const;
-  inline void clear_oid();
-  static const int kOidFieldNumber = 1;
-  inline ::google::protobuf::uint32 oid() const;
-  inline void set_oid(::google::protobuf::uint32 value);
+  // required .Common.TacticalLineId id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline const ::Common::TacticalLineId& id() const;
+  inline ::Common::TacticalLineId* mutable_id();
   
   // required .Common.MsgTacticalLine tactical_line = 2;
   inline bool has_tactical_line() const;
@@ -839,7 +839,7 @@ class MsgLimaCreation : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::uint32 oid_;
+  ::Common::TacticalLineId* id_;
   ::Common::MsgTacticalLine* tactical_line_;
   friend void  protobuf_AddDesc_MessengerToClient_2eproto();
   friend void protobuf_AssignDesc_MessengerToClient_2eproto();
@@ -916,18 +916,18 @@ class MsgLimaDestruction : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required uint32 oid = 1;
-  inline bool has_oid() const;
-  inline void clear_oid();
-  static const int kOidFieldNumber = 1;
-  inline ::google::protobuf::uint32 oid() const;
-  inline void set_oid(::google::protobuf::uint32 value);
+  // required .Common.TacticalLineId id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline const ::Common::TacticalLineId& id() const;
+  inline ::Common::TacticalLineId* mutable_id();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::uint32 oid_;
+  ::Common::TacticalLineId* id_;
   friend void  protobuf_AddDesc_MessengerToClient_2eproto();
   friend void protobuf_AssignDesc_MessengerToClient_2eproto();
   friend void protobuf_ShutdownFile_MessengerToClient_2eproto();
@@ -1003,12 +1003,12 @@ class MsgLimaUpdate : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required uint32 oid = 1;
-  inline bool has_oid() const;
-  inline void clear_oid();
-  static const int kOidFieldNumber = 1;
-  inline ::google::protobuf::uint32 oid() const;
-  inline void set_oid(::google::protobuf::uint32 value);
+  // required .Common.TacticalLineId id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline const ::Common::TacticalLineId& id() const;
+  inline ::Common::TacticalLineId* mutable_id();
   
   // required .Common.MsgTacticalLine tactical_line = 2;
   inline bool has_tactical_line() const;
@@ -1021,7 +1021,7 @@ class MsgLimaUpdate : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::uint32 oid_;
+  ::Common::TacticalLineId* id_;
   ::Common::MsgTacticalLine* tactical_line_;
   friend void  protobuf_AddDesc_MessengerToClient_2eproto();
   friend void protobuf_AssignDesc_MessengerToClient_2eproto();
@@ -1359,12 +1359,12 @@ class MsgIntelligenceCreation : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required uint32 oid = 1;
-  inline bool has_oid() const;
-  inline void clear_oid();
-  static const int kOidFieldNumber = 1;
-  inline ::google::protobuf::uint32 oid() const;
-  inline void set_oid(::google::protobuf::uint32 value);
+  // required .Common.IntelligenceId id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline const ::Common::IntelligenceId& id() const;
+  inline ::Common::IntelligenceId* mutable_id();
   
   // required .Common.MsgIntelligence intelligence = 2;
   inline bool has_intelligence() const;
@@ -1377,7 +1377,7 @@ class MsgIntelligenceCreation : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::uint32 oid_;
+  ::Common::IntelligenceId* id_;
   ::Common::MsgIntelligence* intelligence_;
   friend void  protobuf_AddDesc_MessengerToClient_2eproto();
   friend void protobuf_AssignDesc_MessengerToClient_2eproto();
@@ -1454,19 +1454,19 @@ class MsgIntelligenceUpdate : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required uint32 oid = 1;
-  inline bool has_oid() const;
-  inline void clear_oid();
-  static const int kOidFieldNumber = 1;
-  inline ::google::protobuf::uint32 oid() const;
-  inline void set_oid(::google::protobuf::uint32 value);
+  // required .Common.IntelligenceId id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline const ::Common::IntelligenceId& id() const;
+  inline ::Common::IntelligenceId* mutable_id();
   
-  // optional uint32 formation = 2;
+  // optional .Common.FormationId formation = 2;
   inline bool has_formation() const;
   inline void clear_formation();
   static const int kFormationFieldNumber = 2;
-  inline ::google::protobuf::uint32 formation() const;
-  inline void set_formation(::google::protobuf::uint32 value);
+  inline const ::Common::FormationId& formation() const;
+  inline ::Common::FormationId* mutable_formation();
   
   // optional string name = 3;
   inline bool has_name() const;
@@ -1520,8 +1520,8 @@ class MsgIntelligenceUpdate : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::uint32 oid_;
-  ::google::protobuf::uint32 formation_;
+  ::Common::IntelligenceId* id_;
+  ::Common::FormationId* formation_;
   ::std::string* name_;
   static const ::std::string _default_name_;
   ::std::string* nature_;
@@ -1605,18 +1605,18 @@ class MsgIntelligenceDestruction : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required uint32 oid = 1;
-  inline bool has_oid() const;
-  inline void clear_oid();
-  static const int kOidFieldNumber = 1;
-  inline ::google::protobuf::uint32 oid() const;
-  inline void set_oid(::google::protobuf::uint32 value);
+  // required .Common.IntelligenceId id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline const ::Common::IntelligenceId& id() const;
+  inline ::Common::IntelligenceId* mutable_id();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::uint32 oid_;
+  ::Common::IntelligenceId* id_;
   friend void  protobuf_AddDesc_MessengerToClient_2eproto();
   friend void protobuf_AssignDesc_MessengerToClient_2eproto();
   friend void protobuf_ShutdownFile_MessengerToClient_2eproto();
@@ -2056,12 +2056,12 @@ class MsgShapeCreation : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required uint32 oid = 1;
-  inline bool has_oid() const;
-  inline void clear_oid();
-  static const int kOidFieldNumber = 1;
-  inline ::google::protobuf::uint32 oid() const;
-  inline void set_oid(::google::protobuf::uint32 value);
+  // required .Common.DrawingId id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline const ::Common::DrawingId& id() const;
+  inline ::Common::DrawingId* mutable_id();
   
   // required .Common.MsgShape shape = 2;
   inline bool has_shape() const;
@@ -2074,7 +2074,7 @@ class MsgShapeCreation : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::uint32 oid_;
+  ::Common::DrawingId* id_;
   ::Common::MsgShape* shape_;
   friend void  protobuf_AddDesc_MessengerToClient_2eproto();
   friend void protobuf_AssignDesc_MessengerToClient_2eproto();
@@ -2151,12 +2151,12 @@ class MsgShapeUpdate : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required uint32 oid = 1;
-  inline bool has_oid() const;
-  inline void clear_oid();
-  static const int kOidFieldNumber = 1;
-  inline ::google::protobuf::uint32 oid() const;
-  inline void set_oid(::google::protobuf::uint32 value);
+  // required .Common.DrawingId id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline const ::Common::DrawingId& id() const;
+  inline ::Common::DrawingId* mutable_id();
   
   // optional string category = 2;
   inline bool has_category() const;
@@ -2199,7 +2199,7 @@ class MsgShapeUpdate : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::uint32 oid_;
+  ::Common::DrawingId* id_;
   ::std::string* category_;
   static const ::std::string _default_category_;
   ::std::string* color_;
@@ -2282,18 +2282,18 @@ class MsgShapeDestruction : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required uint32 oid = 1;
-  inline bool has_oid() const;
-  inline void clear_oid();
-  static const int kOidFieldNumber = 1;
-  inline ::google::protobuf::uint32 oid() const;
-  inline void set_oid(::google::protobuf::uint32 value);
+  // required .Common.DrawingId id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline const ::Common::DrawingId& id() const;
+  inline ::Common::DrawingId* mutable_id();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::uint32 oid_;
+  ::Common::DrawingId* id_;
   friend void  protobuf_AddDesc_MessengerToClient_2eproto();
   friend void protobuf_AssignDesc_MessengerToClient_2eproto();
   friend void protobuf_ShutdownFile_MessengerToClient_2eproto();
@@ -3428,20 +3428,21 @@ class MsgMessengerToClient : public ::google::protobuf::Message {
 
 // MsgLimitCreation
 
-// required uint32 oid = 1;
-inline bool MsgLimitCreation::has_oid() const {
+// required .Common.TacticalLineId id = 1;
+inline bool MsgLimitCreation::has_id() const {
   return _has_bit(0);
 }
-inline void MsgLimitCreation::clear_oid() {
-  oid_ = 0u;
+inline void MsgLimitCreation::clear_id() {
+  if (id_ != NULL) id_->::Common::TacticalLineId::Clear();
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 MsgLimitCreation::oid() const {
-  return oid_;
+inline const ::Common::TacticalLineId& MsgLimitCreation::id() const {
+  return id_ != NULL ? *id_ : *default_instance_->id_;
 }
-inline void MsgLimitCreation::set_oid(::google::protobuf::uint32 value) {
+inline ::Common::TacticalLineId* MsgLimitCreation::mutable_id() {
   _set_bit(0);
-  oid_ = value;
+  if (id_ == NULL) id_ = new ::Common::TacticalLineId;
+  return id_;
 }
 
 // required .Common.MsgTacticalLine tactical_line = 2;
@@ -3465,20 +3466,21 @@ inline ::Common::MsgTacticalLine* MsgLimitCreation::mutable_tactical_line() {
 
 // MsgLimitUpdate
 
-// required uint32 oid = 1;
-inline bool MsgLimitUpdate::has_oid() const {
+// required .Common.TacticalLineId id = 1;
+inline bool MsgLimitUpdate::has_id() const {
   return _has_bit(0);
 }
-inline void MsgLimitUpdate::clear_oid() {
-  oid_ = 0u;
+inline void MsgLimitUpdate::clear_id() {
+  if (id_ != NULL) id_->::Common::TacticalLineId::Clear();
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 MsgLimitUpdate::oid() const {
-  return oid_;
+inline const ::Common::TacticalLineId& MsgLimitUpdate::id() const {
+  return id_ != NULL ? *id_ : *default_instance_->id_;
 }
-inline void MsgLimitUpdate::set_oid(::google::protobuf::uint32 value) {
+inline ::Common::TacticalLineId* MsgLimitUpdate::mutable_id() {
   _set_bit(0);
-  oid_ = value;
+  if (id_ == NULL) id_ = new ::Common::TacticalLineId;
+  return id_;
 }
 
 // required .Common.MsgTacticalLine tactical_line = 2;
@@ -3502,20 +3504,21 @@ inline ::Common::MsgTacticalLine* MsgLimitUpdate::mutable_tactical_line() {
 
 // MsgLimitDestruction
 
-// optional uint32 oid = 1;
-inline bool MsgLimitDestruction::has_oid() const {
+// required .Common.TacticalLineId id = 1;
+inline bool MsgLimitDestruction::has_id() const {
   return _has_bit(0);
 }
-inline void MsgLimitDestruction::clear_oid() {
-  oid_ = 0u;
+inline void MsgLimitDestruction::clear_id() {
+  if (id_ != NULL) id_->::Common::TacticalLineId::Clear();
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 MsgLimitDestruction::oid() const {
-  return oid_;
+inline const ::Common::TacticalLineId& MsgLimitDestruction::id() const {
+  return id_ != NULL ? *id_ : *default_instance_->id_;
 }
-inline void MsgLimitDestruction::set_oid(::google::protobuf::uint32 value) {
+inline ::Common::TacticalLineId* MsgLimitDestruction::mutable_id() {
   _set_bit(0);
-  oid_ = value;
+  if (id_ == NULL) id_ = new ::Common::TacticalLineId;
+  return id_;
 }
 
 // -------------------------------------------------------------------
@@ -3585,20 +3588,21 @@ inline void MsgLimitDestructionRequestAck::set_error_code(::MsgsMessengerToClien
 
 // MsgLimaCreation
 
-// required uint32 oid = 1;
-inline bool MsgLimaCreation::has_oid() const {
+// required .Common.TacticalLineId id = 1;
+inline bool MsgLimaCreation::has_id() const {
   return _has_bit(0);
 }
-inline void MsgLimaCreation::clear_oid() {
-  oid_ = 0u;
+inline void MsgLimaCreation::clear_id() {
+  if (id_ != NULL) id_->::Common::TacticalLineId::Clear();
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 MsgLimaCreation::oid() const {
-  return oid_;
+inline const ::Common::TacticalLineId& MsgLimaCreation::id() const {
+  return id_ != NULL ? *id_ : *default_instance_->id_;
 }
-inline void MsgLimaCreation::set_oid(::google::protobuf::uint32 value) {
+inline ::Common::TacticalLineId* MsgLimaCreation::mutable_id() {
   _set_bit(0);
-  oid_ = value;
+  if (id_ == NULL) id_ = new ::Common::TacticalLineId;
+  return id_;
 }
 
 // required .Common.MsgTacticalLine tactical_line = 2;
@@ -3622,40 +3626,42 @@ inline ::Common::MsgTacticalLine* MsgLimaCreation::mutable_tactical_line() {
 
 // MsgLimaDestruction
 
-// required uint32 oid = 1;
-inline bool MsgLimaDestruction::has_oid() const {
+// required .Common.TacticalLineId id = 1;
+inline bool MsgLimaDestruction::has_id() const {
   return _has_bit(0);
 }
-inline void MsgLimaDestruction::clear_oid() {
-  oid_ = 0u;
+inline void MsgLimaDestruction::clear_id() {
+  if (id_ != NULL) id_->::Common::TacticalLineId::Clear();
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 MsgLimaDestruction::oid() const {
-  return oid_;
+inline const ::Common::TacticalLineId& MsgLimaDestruction::id() const {
+  return id_ != NULL ? *id_ : *default_instance_->id_;
 }
-inline void MsgLimaDestruction::set_oid(::google::protobuf::uint32 value) {
+inline ::Common::TacticalLineId* MsgLimaDestruction::mutable_id() {
   _set_bit(0);
-  oid_ = value;
+  if (id_ == NULL) id_ = new ::Common::TacticalLineId;
+  return id_;
 }
 
 // -------------------------------------------------------------------
 
 // MsgLimaUpdate
 
-// required uint32 oid = 1;
-inline bool MsgLimaUpdate::has_oid() const {
+// required .Common.TacticalLineId id = 1;
+inline bool MsgLimaUpdate::has_id() const {
   return _has_bit(0);
 }
-inline void MsgLimaUpdate::clear_oid() {
-  oid_ = 0u;
+inline void MsgLimaUpdate::clear_id() {
+  if (id_ != NULL) id_->::Common::TacticalLineId::Clear();
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 MsgLimaUpdate::oid() const {
-  return oid_;
+inline const ::Common::TacticalLineId& MsgLimaUpdate::id() const {
+  return id_ != NULL ? *id_ : *default_instance_->id_;
 }
-inline void MsgLimaUpdate::set_oid(::google::protobuf::uint32 value) {
+inline ::Common::TacticalLineId* MsgLimaUpdate::mutable_id() {
   _set_bit(0);
-  oid_ = value;
+  if (id_ == NULL) id_ = new ::Common::TacticalLineId;
+  return id_;
 }
 
 // required .Common.MsgTacticalLine tactical_line = 2;
@@ -3742,20 +3748,21 @@ inline void MsgLimaDestructionRequestAck::set_error_code(::MsgsMessengerToClient
 
 // MsgIntelligenceCreation
 
-// required uint32 oid = 1;
-inline bool MsgIntelligenceCreation::has_oid() const {
+// required .Common.IntelligenceId id = 1;
+inline bool MsgIntelligenceCreation::has_id() const {
   return _has_bit(0);
 }
-inline void MsgIntelligenceCreation::clear_oid() {
-  oid_ = 0u;
+inline void MsgIntelligenceCreation::clear_id() {
+  if (id_ != NULL) id_->::Common::IntelligenceId::Clear();
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 MsgIntelligenceCreation::oid() const {
-  return oid_;
+inline const ::Common::IntelligenceId& MsgIntelligenceCreation::id() const {
+  return id_ != NULL ? *id_ : *default_instance_->id_;
 }
-inline void MsgIntelligenceCreation::set_oid(::google::protobuf::uint32 value) {
+inline ::Common::IntelligenceId* MsgIntelligenceCreation::mutable_id() {
   _set_bit(0);
-  oid_ = value;
+  if (id_ == NULL) id_ = new ::Common::IntelligenceId;
+  return id_;
 }
 
 // required .Common.MsgIntelligence intelligence = 2;
@@ -3779,36 +3786,38 @@ inline ::Common::MsgIntelligence* MsgIntelligenceCreation::mutable_intelligence(
 
 // MsgIntelligenceUpdate
 
-// required uint32 oid = 1;
-inline bool MsgIntelligenceUpdate::has_oid() const {
+// required .Common.IntelligenceId id = 1;
+inline bool MsgIntelligenceUpdate::has_id() const {
   return _has_bit(0);
 }
-inline void MsgIntelligenceUpdate::clear_oid() {
-  oid_ = 0u;
+inline void MsgIntelligenceUpdate::clear_id() {
+  if (id_ != NULL) id_->::Common::IntelligenceId::Clear();
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 MsgIntelligenceUpdate::oid() const {
-  return oid_;
+inline const ::Common::IntelligenceId& MsgIntelligenceUpdate::id() const {
+  return id_ != NULL ? *id_ : *default_instance_->id_;
 }
-inline void MsgIntelligenceUpdate::set_oid(::google::protobuf::uint32 value) {
+inline ::Common::IntelligenceId* MsgIntelligenceUpdate::mutable_id() {
   _set_bit(0);
-  oid_ = value;
+  if (id_ == NULL) id_ = new ::Common::IntelligenceId;
+  return id_;
 }
 
-// optional uint32 formation = 2;
+// optional .Common.FormationId formation = 2;
 inline bool MsgIntelligenceUpdate::has_formation() const {
   return _has_bit(1);
 }
 inline void MsgIntelligenceUpdate::clear_formation() {
-  formation_ = 0u;
+  if (formation_ != NULL) formation_->::Common::FormationId::Clear();
   _clear_bit(1);
 }
-inline ::google::protobuf::uint32 MsgIntelligenceUpdate::formation() const {
-  return formation_;
+inline const ::Common::FormationId& MsgIntelligenceUpdate::formation() const {
+  return formation_ != NULL ? *formation_ : *default_instance_->formation_;
 }
-inline void MsgIntelligenceUpdate::set_formation(::google::protobuf::uint32 value) {
+inline ::Common::FormationId* MsgIntelligenceUpdate::mutable_formation() {
   _set_bit(1);
-  formation_ = value;
+  if (formation_ == NULL) formation_ = new ::Common::FormationId;
+  return formation_;
 }
 
 // optional string name = 3;
@@ -3966,20 +3975,21 @@ inline void MsgIntelligenceUpdate::set_diplomacy(Common::EnumDiplomacy value) {
 
 // MsgIntelligenceDestruction
 
-// required uint32 oid = 1;
-inline bool MsgIntelligenceDestruction::has_oid() const {
+// required .Common.IntelligenceId id = 1;
+inline bool MsgIntelligenceDestruction::has_id() const {
   return _has_bit(0);
 }
-inline void MsgIntelligenceDestruction::clear_oid() {
-  oid_ = 0u;
+inline void MsgIntelligenceDestruction::clear_id() {
+  if (id_ != NULL) id_->::Common::IntelligenceId::Clear();
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 MsgIntelligenceDestruction::oid() const {
-  return oid_;
+inline const ::Common::IntelligenceId& MsgIntelligenceDestruction::id() const {
+  return id_ != NULL ? *id_ : *default_instance_->id_;
 }
-inline void MsgIntelligenceDestruction::set_oid(::google::protobuf::uint32 value) {
+inline ::Common::IntelligenceId* MsgIntelligenceDestruction::mutable_id() {
   _set_bit(0);
-  oid_ = value;
+  if (id_ == NULL) id_ = new ::Common::IntelligenceId;
+  return id_;
 }
 
 // -------------------------------------------------------------------
@@ -4053,20 +4063,21 @@ inline void MsgIntelligenceDestructionRequestAck::set_error_code(::MsgsMessenger
 
 // MsgShapeCreation
 
-// required uint32 oid = 1;
-inline bool MsgShapeCreation::has_oid() const {
+// required .Common.DrawingId id = 1;
+inline bool MsgShapeCreation::has_id() const {
   return _has_bit(0);
 }
-inline void MsgShapeCreation::clear_oid() {
-  oid_ = 0u;
+inline void MsgShapeCreation::clear_id() {
+  if (id_ != NULL) id_->::Common::DrawingId::Clear();
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 MsgShapeCreation::oid() const {
-  return oid_;
+inline const ::Common::DrawingId& MsgShapeCreation::id() const {
+  return id_ != NULL ? *id_ : *default_instance_->id_;
 }
-inline void MsgShapeCreation::set_oid(::google::protobuf::uint32 value) {
+inline ::Common::DrawingId* MsgShapeCreation::mutable_id() {
   _set_bit(0);
-  oid_ = value;
+  if (id_ == NULL) id_ = new ::Common::DrawingId;
+  return id_;
 }
 
 // required .Common.MsgShape shape = 2;
@@ -4090,20 +4101,21 @@ inline ::Common::MsgShape* MsgShapeCreation::mutable_shape() {
 
 // MsgShapeUpdate
 
-// required uint32 oid = 1;
-inline bool MsgShapeUpdate::has_oid() const {
+// required .Common.DrawingId id = 1;
+inline bool MsgShapeUpdate::has_id() const {
   return _has_bit(0);
 }
-inline void MsgShapeUpdate::clear_oid() {
-  oid_ = 0u;
+inline void MsgShapeUpdate::clear_id() {
+  if (id_ != NULL) id_->::Common::DrawingId::Clear();
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 MsgShapeUpdate::oid() const {
-  return oid_;
+inline const ::Common::DrawingId& MsgShapeUpdate::id() const {
+  return id_ != NULL ? *id_ : *default_instance_->id_;
 }
-inline void MsgShapeUpdate::set_oid(::google::protobuf::uint32 value) {
+inline ::Common::DrawingId* MsgShapeUpdate::mutable_id() {
   _set_bit(0);
-  oid_ = value;
+  if (id_ == NULL) id_ = new ::Common::DrawingId;
+  return id_;
 }
 
 // optional string category = 2;
@@ -4253,20 +4265,21 @@ inline ::Common::MsgCoordLatLongList* MsgShapeUpdate::mutable_points() {
 
 // MsgShapeDestruction
 
-// required uint32 oid = 1;
-inline bool MsgShapeDestruction::has_oid() const {
+// required .Common.DrawingId id = 1;
+inline bool MsgShapeDestruction::has_id() const {
   return _has_bit(0);
 }
-inline void MsgShapeDestruction::clear_oid() {
-  oid_ = 0u;
+inline void MsgShapeDestruction::clear_id() {
+  if (id_ != NULL) id_->::Common::DrawingId::Clear();
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 MsgShapeDestruction::oid() const {
-  return oid_;
+inline const ::Common::DrawingId& MsgShapeDestruction::id() const {
+  return id_ != NULL ? *id_ : *default_instance_->id_;
 }
-inline void MsgShapeDestruction::set_oid(::google::protobuf::uint32 value) {
+inline ::Common::DrawingId* MsgShapeDestruction::mutable_id() {
   _set_bit(0);
-  oid_ = value;
+  if (id_ == NULL) id_ = new ::Common::DrawingId;
+  return id_;
 }
 
 // -------------------------------------------------------------------

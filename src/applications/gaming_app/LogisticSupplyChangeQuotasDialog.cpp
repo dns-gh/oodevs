@@ -104,7 +104,7 @@ void LogisticSupplyChangeQuotasDialog::NotifyContextMenu( const Automat_ABC& age
 {
     if( profile_.CanBeOrdered( agent ) )
     {
-        const AutomatType& type = agent.GetType();
+        const kernel::AutomatType& type = agent.GetType();
         if( type.IsLogisticSupply() )
         {
             selected_ = &agent;

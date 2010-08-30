@@ -1,5 +1,86 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
 package Common;
 
+// Entity Id types
+message AutomatId                          { required uint32              id = 1; }
+message AutomatIdList                      { repeated AutomatId         elem = 1; }
+message FormationId                        { required uint32              id = 1; }
+message FormationIdList                    { repeated FormationId       elem = 1; }
+message KnowledgeGroupId                   { required uint32              id = 1; }
+message ObjectId                           { required uint32              id = 1; }
+message ObjectKnowledgeId                  { required uint32              id = 1; }
+message ObjectKnowledgeIdList              { repeated ObjectKnowledgeId elem = 1; }
+message PartyId                            { required uint32              id = 1; }
+message PartyIdList                        { repeated PartyId           elem = 1; }
+message PopulationId                       { required uint32              id = 1; }
+message PopulationIdList                   { repeated PopulationId      elem = 1; }
+message PopulationKnowledgeId              { required uint32              id = 1; }
+message PopulationConcentrationId          { required uint32              id = 1; }
+message PopulationConcentrationKnowledgeId { required uint32              id = 1; }
+message PopulationFlowId                   { required uint32              id = 1; }
+message PopulationFlowKnowledgeId          { required uint32              id = 1; }
+message UnitId                             { required uint32              id = 1; }
+message UnitIdList                         { repeated UnitId            elem = 1; }
+message UnitKnowledgeId                    { required uint32              id = 1; }
+message UnitKnowledgeIdList                { repeated UnitKnowledgeId   elem = 1; }
+message UrbanObjectId                      { required uint32              id = 1; }
+message UrbanObjectKnowledgeId             { required uint32              id = 1; }
+
+message Tasker {
+    optional AutomatId    automat    = 1;
+    optional FormationId  formation  = 2;
+    optional PopulationId population = 3;
+    optional UnitId       unit       = 4;
+}
+
+// messenger entities
+message DrawingId             { required uint32  id = 1; }
+message IntelligenceId        { required uint32  id = 1; }
+message TacticalLineId        { required uint32  id = 1; }
+
+// reports
+message FireId                { required uint32 id = 1; }
+message FireEffectId          { required uint32 id = 1; }
+message ReportId              { required uint32 id = 1; }
+message WeatherId             { required uint32 id = 1; }
+
+// logistics requests
+message MaintenanceRequestId  { required uint32 id = 1; }
+message MedicalRequestId      { required uint32 id = 1; }
+message SupplyRequestId       { required uint32 id = 1; }
+
+// Static types
+message AutomatType           { required uint32 id = 1; }
+message BreakdownType         { required uint32 id = 1; }
+message EquipmentType         { required uint32 id = 1; }
+message FragOrderType         { required uint32 id = 1; }
+message MissionType           { required uint32 id = 1; }
+message NBCAgentType          { required uint32 id = 1; }
+message ObjectType            { required string id = 1; } // should be an integer
+message PopulationType        { required uint32 id = 1; }
+message ReportType            { required uint32 id = 1; }
+message ResourceType          { required uint32 id = 1; }
+message UnitType              { required uint32 id = 1; }
+
+// Helpers
+message MsgHeading {
+   required int32 heading = 1;
+}
+
+message MsgDateTime {
+   required string data = 1;
+}
+
+// Enumerations
+///////////// begin <not used by protocol> /////////////
 enum EnumDotationFamily {
    munition                                         = 0;
    carburant                                        = 1;
@@ -16,6 +97,9 @@ enum EnumAmmunitionFamily {
    missile_air                                      = 2;
    mitraille                                        = 3;
 }
+///////////// end <not used by protocol> /////////////
+
+///////////// begin <only used by SimToClient> /////////////
 
 enum EnumPrecipitationType {
    pas_de_precipitation                             = 0;
@@ -40,6 +124,73 @@ enum EnumLightingType {
    eclairant_                                       = 10;
    globalMeteoType_                                 = 11;
 }
+
+enum EnumFireEffectType {
+   fumigene                                         = 0;
+   eclairant                                        = 1;
+}
+
+enum MsgStartUnitFire_type {
+   direct                                           = 0;
+   indirect                                         = 1;
+}
+
+message MsgDotationStock {
+   required ResourceType ressource_id        = 1;
+   required int32        quantite_disponible = 2;
+}
+
+message SeqOfDotationStock {
+   repeated MsgDotationStock elem = 1;
+}
+
+message MsgDotationQuota {
+   required ResourceType ressource_id        = 1;
+   required int32        quota_disponible    = 2;
+}
+
+message SeqOfDotationQuota {
+   repeated MsgDotationQuota            elem                = 1;
+}
+
+message MsgAutomatChangeKnowledgeGroup {
+   required AutomatId        automat         = 1;
+   required PartyId          party           = 2;
+   required KnowledgeGroupId knowledge_group = 3;
+}
+
+message MsgAutomatChangeLogisticLinks {
+   required AutomatId automat     = 1;
+   optional AutomatId tc2         = 2;
+   optional AutomatId maintenance = 3;
+   optional AutomatId health      = 4;
+   optional AutomatId supply      = 5;
+}
+
+message MsgAutomatChangeSuperior_oid_superior {
+   optional FormationId  formation = 1;
+   optional AutomatId    automat   = 2;
+}
+
+message MsgAutomatChangeSuperior {
+   required AutomatId                               automat  = 1;
+   required MsgAutomatChangeSuperior_oid_superior   superior = 2;
+}
+
+message MsgUnitChangeSuperior {
+   required UnitId    unit   = 1;
+   required AutomatId parent = 2;
+}
+
+message MsgFormationCreation {
+   required FormationId      formation  = 1;
+   required PartyId          party      = 2;
+   optional FormationId      parent     = 3;
+   required EnumNatureLevel  level      = 4;
+   required string           name       = 5;
+}
+
+///////////// end <only used by SimToClient> /////////////
 
 enum EnumLogMaintenanceHandlingStatus {
    deplacement_vers_chaine                          = 0;
@@ -89,11 +240,6 @@ enum EnumUnitVisibility {
    recorded                                         = 4;
 }
 
-enum EnumFireEffectType {
-   fumigene                                         = 0;
-   eclairant                                        = 1;
-}
-
 enum EnumSimulationState {
    running                                          = 0;
    paused                                           = 1;
@@ -112,83 +258,6 @@ enum EnumOperationalStatus {
    detruit_totalement                               = 0;
    detruit_tactiquement                             = 1;
    operationnel                                     = 2;
-}
-
-enum MsgStartUnitFire_type {
-   direct                                           = 0;
-   indirect                                         = 1;
-}
-
-message MsgTeam {
-   required int32                       oid                 = 1;
-}
-
-message MsgPopulation {
-   required int32                       oid                 = 1;
-}
-
-message MsgAutomat {
-   required int32                       oid                 = 1;
-}
-
-message MsgUnit {
-   required int32                       oid                 = 1;
-}
-
-message MsgArmy {
-   required int32                       oid                 = 1;
-}
-
-message MsgKnowledgeGroup {
-   required int32                       oid                 = 1;
-}
-
-message MsgUnitFire {
-   required int32                       oid                 = 1;
-}
-
-message MsgDotationStock {
-   required int32                       ressource_id        = 1;
-   required int32                       quantite_disponible = 2;
-}
-
-message MsgHeading {
-   required int32                       heading             = 1;
-}
-
-message MsgUnitType {
-   required int32                       type                = 1;
-}
-
-message MsgListOID {
-   repeated int32                       elem                = 1;
-}
-
-message MsgDateTime {
-   required string                      data                = 1;
-}
-
-message MsgDotationQuota {
-   required int32                       ressource_id        = 1;
-   required int32                       quota_disponible    = 2;
-}
-
-message SeqOfDotationQuota {
-   repeated MsgDotationQuota            elem                = 1;
-}
-
-message MsgControlStop   {}
-message MsgControlPause  {}
-message MsgControlResume {}
-
-message MsgExercise  {
-   required string	name		= 1; 
-   optional bool	running  	= 2 [default = false]; 
-}
-
-message MsgNetworkAddress  {
-   required string	IP		= 1; 
-   required int32	port  		= 2 [default = 8080]; 
 }
 
 enum EnumAutomatMode {
@@ -235,47 +304,6 @@ enum EnumDiplomacy {
    neutral_diplo                                    = 3;
 }
 
-message MsgLine {
-   required MsgLocation                 location            = 1;
-}
-
-message MsgControlChangeTimeFactor {
-   required int32                       time_factor         = 1;
-}
-
-message MsgAutomatChangeKnowledgeGroup {
-   required int32                       oid                         = 1;
-   required int32                       oid_camp                    = 2;
-   required int32                       oid_groupe_connaissance     = 3;
-}
-
-message MsgAutomatChangeLogisticLinks {
-   required int32                       oid                 = 1;
-   optional int32                       oid_tc2             = 2;
-   optional int32                       oid_maintenance     = 3;
-   optional int32                       oid_sante           = 4;
-   optional int32                       oid_ravitaillement  = 5;
-}
-
-message MsgAutomatChangeSuperior_oid_superior {
-   optional MsgFormation                formation           = 1;
-   optional MsgAutomat                  automate            = 2;
-}
-
-message MsgAutomatChangeSuperior {
-   required int32                                   oid             = 1;
-   required MsgAutomatChangeSuperior_oid_superior   oid_superior    = 2;
-}
-
-message MsgUnitChangeSuperior {
-   required uint32 oid          = 1;
-   required uint32 oid_automate = 2;
-}
-
-message MsgAutomatList {
-   repeated MsgAutomat elem = 1;
-}
-
 enum EnumHumanWound {
    non_blesse             = 0;
    mort                   = 1;
@@ -292,25 +320,43 @@ enum EnumLogMaintenanceRegimeTravail {
    regime_4 = 3;
 }
 
-message MsgLogMedicalPriorities {
-   repeated EnumHumanWound elem = 1;
+enum EnumNatureLevel {
+   none_naturelevel = 0;
+   o                = 1;
+   oo               = 2;
+   ooo              = 3;
+   i                = 4;
+   ii               = 5;
+   iii              = 6;
+   x                = 7;
+   xx               = 8;
+   xxx              = 9;
+   xxxx             = 10;
+   xxxxx            = 11;
 }
 
-message MsgPolygon {
-   required MsgLocation location = 1;
+// Control messages
+message MsgControlStop   {}
+message MsgControlPause  {}
+message MsgControlResume {}
+message MsgControlChangeTimeFactor {
+   required int32 time_factor = 1;
 }
 
-message MsgPath {
-   required MsgLocation location = 1;
+message MsgExercise  {
+   required string  name     = 1; 
+   optional bool    running  = 2 [default = false]; 
 }
 
-message MsgPathList {
-   repeated MsgPath elem = 1;
+message MsgNetworkAddress  {
+   required string  IP      = 1; 
+   required int32   port    = 2 [default = 8080]; 
 }
 
+// Geometry
 message MsgCoordLatLong {
-   required double latitude  = 1;
-   required double longitude = 2;
+    required double latitude  = 1;
+    required double longitude = 2;
 }
 
 message MsgCoordLatLongList {
@@ -332,40 +378,18 @@ message MsgLocation {
    optional MsgCoordLatLongList coordinates = 2;
 }
 
-message MsgPoint {
-    required MsgLocation location = 1;
-}
+message MsgLine         { required MsgLocation location = 1; }
+message MsgLocationList { repeated MsgLocation     elem = 1; }
+message MsgPath         { required MsgLocation location = 1; }
+message MsgPathList     { repeated MsgPath         elem = 1; }
+message MsgPoint        { required MsgLocation location = 1; }
+message MsgPointList    { repeated MsgPoint        elem = 1; }
+message MsgPolygon      { required MsgLocation location = 1; }
+message MsgPolygonList  { repeated MsgPolygon      elem = 1; }
 
-message MsgUnitList {
-    repeated MsgUnit elem = 1;
-}
-
-message MsgPointList {
-    repeated MsgPoint elem = 1;
-}
-
-message MsgPolygonList {
-    repeated MsgPolygon elem = 1;
-}
-
-message MsgLocationList {
-    repeated MsgLocation elem = 1;
-}
-
-message MsgUnitKnowledge {
-    required uint32 oid = 1;
-}
-
-message MsgUnitKnowledgeList {
-   repeated MsgUnitKnowledge elem = 1;
-}
-
-message MsgObjectKnowledge {
-   required uint32 oid = 1;
-}
-
-message MsgObjectKnowledgeList {
-   repeated MsgObjectKnowledge elem = 1;
+// Order parameters
+message MsgLogMedicalPriorities {
+   repeated EnumHumanWound elem = 1;
 }
 
 message ObstacleType
@@ -381,7 +405,7 @@ message MsgPlannedWork {
    required MsgLocation                       position            = 2;
    optional ObstacleType.DemolitionTargetType type_obstacle       = 3 [default = preliminary];
    optional float                             densite             = 4 [default = 0];
-   optional uint32                            tc2                 = 5 [default = 0];
+   optional AutomatId                         tc2                 = 5;
    optional int32                             activity_time       = 6 [default = 0];
 }
 
@@ -390,7 +414,7 @@ message MsgPlannedWorkList {
 }
 
 message MsgLogMaintenancePriorities {
-   repeated MsgEquipmentType elem = 1;
+   repeated EquipmentType elem = 1;
 }
 
 message MsgMissionObjective {
@@ -424,14 +448,6 @@ message MsgLimasOrder {
    repeated MsgLimaOrder elem = 1;
 }
 
-message SeqOfDotationStock {
-   repeated MsgDotationStock elem = 1;
-}
-
-message MsgPopulationKnowledge {
-   required uint32 oid = 1;
-}
-
 message MsgIntelligence {
    required string          name      = 1;
    required string          nature    = 2;
@@ -439,7 +455,7 @@ message MsgIntelligence {
    required bool            embarked  = 4;
    required MsgCoordLatLong location  = 5;
    required EnumDiplomacy   diplomacy = 6;
-   required MsgFormation    formation = 7;
+   required FormationId     formation = 7;
 }
 
 message MsgIntelligenceList {
@@ -447,8 +463,8 @@ message MsgIntelligenceList {
 }
 
 message MsgChangeDiplomacy {
-   required uint32        oid_camp1  = 1;
-   required uint32        oid_camp2  = 2;
+   required PartyId       party1     = 1;
+   required PartyId       party2     = 2;
    required EnumDiplomacy diplomatie = 3;
 }
 
@@ -472,22 +488,6 @@ message MsgAtlasNature {
    required int32 nature = 1;
 }
 
-message MsgEquipmentType {
-    required uint32 equipment = 1;
-}
-
-message MsgDotationType {
-    required uint32 oid = 1;
-}
-
-message MsgUrbanBlock {
-    required uint32 oid = 1;
-}
-
-message MsgUrbanKnowledge {
-    required uint32 oid = 1;
-}
-
 message MsgMissionParameter {
     message Value {
         optional bool                        aBool                       = 1;
@@ -503,20 +503,20 @@ message MsgMissionParameter {
         optional MsgLocationList             locationList                = 11;
         optional MsgHeading                  heading                     = 12;
         optional MsgAtlasNature              atlasNature                 = 13;
-        optional MsgUnit                     unit                        = 14;
-        optional MsgUnitList                 unitList                    = 15;
-        optional MsgAutomat                  automat                     = 16;
-        optional MsgAutomatList              automatList                 = 17;
-        optional MsgUnitKnowledge            unitKnowledge               = 18;
-        optional MsgUnitKnowledgeList        unitKnowledgeList           = 19;
-        optional MsgObjectKnowledge          objectKnowledge             = 20;
-        optional MsgObjectKnowledgeList      objectKnowledgeList         = 21;
-        optional MsgPopulationKnowledge      populationKnowledge         = 22;
+        optional UnitId                      unit                        = 14;
+        optional UnitIdList                  unitList                    = 15;
+        optional AutomatId                   automat                     = 16;
+        optional AutomatIdList               automatList                 = 17;
+        optional UnitKnowledgeId             unitKnowledge               = 18;
+        optional UnitKnowledgeIdList         unitKnowledgeList           = 19;
+        optional ObjectKnowledgeId           objectKnowledge             = 20;
+        optional ObjectKnowledgeIdList       objectKnowledgeList         = 21;
+        optional PopulationKnowledgeId       populationKnowledge         = 22;
         optional MsgPlannedWork              plannedWork                 = 23;
         optional MsgPlannedWorkList          plannedWorkList             = 24;
-        optional MsgDotationType             dotationType                = 25;
-        optional MsgEquipmentType            equipmentType               = 26;
-        optional int32                       tirIndirect                 = 27;
+        optional ResourceType                resourceType                = 25;
+        optional EquipmentType               equipmentType               = 26;
+        optional FireId                      tirIndirect                 = 27;
         optional MsgDateTime                 dateTime                    = 28;
         optional MsgLogMaintenancePriorities logMaintenancePriorities    = 29;
         optional MsgLogMedicalPriorities     logMedicalPriorities        = 30;
@@ -526,13 +526,13 @@ message MsgMissionParameter {
         optional MsgLine                     line                        = 34;
         optional MsgLimasOrder               limasOrder                  = 35;
         optional MsgIntelligenceList         intelligenceList            = 36;
-        optional MsgUrbanBlock               urbanBlock                  = 37;
-        optional MsgArmy                     army                        = 38;
-        optional MsgFormation                formation                   = 39;
+        optional UrbanObjectId               urbanBlock                  = 37;
+        optional PartyId                     party                        = 38;
+        optional FormationId                 formation                   = 39;
         optional uint32                      identifier                  = 40;
         optional int32                       quantity                    = 41;
-        optional MsgKnowledgeGroup           knowledgeGroup              = 42;
-        repeated Value                       list                   = 43;
+        optional KnowledgeGroupId            knowledgeGroup              = 42;
+        repeated Value                       list                        = 43;
     }
     optional bool  null_value = 1 [default = false];
     optional Value value      = 2;
@@ -542,26 +542,40 @@ message MsgMissionParameters {
    repeated MsgMissionParameter elem = 1;
 }
 
-enum EnumNatureLevel {
-   none_naturelevel                                 = 0;
-   o                                                = 1;
-   oo                                               = 2;
-   ooo                                              = 3;
-   i                                                = 4;
-   ii                                               = 5;
-   iii                                              = 6;
-   x                                                = 7;
-   xx                                               = 8;
-   xxx                                              = 9;
-   xxxx                                             = 10;
-   xxxxx                                            = 11;
+message MsgUnitOrder {
+    required UnitId               tasker     = 1;
+    required MissionType          type       = 2;
+    optional MsgMissionParameters parameters = 3;
+}
+
+message MsgAutomatOrder {
+    required AutomatId            tasker     = 1;
+    required MissionType          type       = 2;
+    optional MsgMissionParameters parameters = 3;
+}
+
+message MsgPopulationOrder {
+    required PopulationId         tasker     = 1;
+    required MissionType          type       = 2;
+    optional MsgMissionParameters parameters = 3;
+}
+
+// Messenger common types
+message MsgTacticalLine {
+    message Diffusion {
+       optional AutomatId   automat   = 1;
+       optional FormationId formation = 2;
+    }
+    required string      name      = 1;
+    required MsgLocation geometry  = 2;
+    required Diffusion   diffusion = 3;
 }
 
 message MsgShape {
-   required string                      category            = 1;
-   required string                      color               = 2;
-   required string                      template_           = 3;
-   required MsgCoordLatLongList         points              = 4;
+   required string              category  = 1;
+   required string              color     = 2;
+   required string              template_ = 3;
+   required MsgCoordLatLongList points    = 4;
 }
 
 message MsgChatTarget {
@@ -569,67 +583,28 @@ message MsgChatTarget {
 }
 
 message MsgTextMessage {
-   required MsgChatTarget               source              = 1;
-   required MsgChatTarget               target              = 2;
-   required string                      message             = 3;
+    required MsgChatTarget source  = 1;
+    required MsgChatTarget target  = 2;
+    required string        message = 3;
 }
 
-message MsgTacticalLine {
-    message Diffusion {
-       optional uint32 automat   = 1;
-       optional uint32 formation = 2;
-    }
-    required string      name      = 1;
-    required MsgLocation geometry  = 2;
-    required Diffusion   diffusion = 3;
-}
-
-message MsgFormation {
-   required int32                       oid                 = 1;
-}
-
-message MsgFormationCreation {
-   required int32                       oid                     = 1;
-   required int32                       oid_camp                = 2;
-   optional int32                       oid_formation_parente   = 3 [default = 0];
-   required EnumNatureLevel             niveau                  = 4;
-   required string                      nom                     = 5;
-}
-
-message MsgUnitOrder {
-   required int32                       oid                 = 1;
-   required int32                       mission             = 2;
-   optional MsgMissionParameters        parametres          = 3;
-}
-
-message MsgAutomatOrder {
-   required int32                       oid                 = 1;
-   required int32                       mission             = 2;
-   optional MsgMissionParameters        parametres          = 3;
-}
-
-message MsgPopulationOrder {
-   required int32                       oid                 = 1;
-   required int32                       mission             = 2;
-   optional MsgMissionParameters        parametres          = 3;
-}
-
+// Object attributes
 message MsgObjectAttributeConstruction {
-   optional int32                       dotation_type       = 1 [default = 0];
-   optional int32                       dotation_nbr        = 2 [default = 0];
-   optional float                       density             = 3 [default = 0];
-   optional int32                       percentage          = 4 [default = 0];
+   optional ResourceType resource       = 1;
+   optional int32        dotation_nbr   = 2 [default = 0];
+   optional float        density        = 3 [default = 0];
+   optional int32        percentage     = 4 [default = 0];
 }
 
 message MsgObjectAttributeMine {
-   optional int32                       dotation_type       = 1 [default = 0];
-   optional int32                       dotation_nbr        = 2 [default = 0];
-   optional float                       density             = 3 [default = 0];
-   optional int32                       percentage          = 4 [default = 0];
+   optional ResourceType resource       = 1;
+   optional int32        dotation_nbr   = 2 [default = 0];
+   optional float        density        = 3 [default = 0];
+   optional int32        percentage     = 4 [default = 0];
 }
 
 message MsgObjectAttributeLogistic {
-   required int32                       tc2                 = 1;
+   required AutomatId tc2 = 1;
 }
 
 message MsgObjectAttributeInteractionHeight {
@@ -655,14 +630,14 @@ message MsgObjectAttributeEffectDelay {
 }
 
 message MsgObjectAttributeNBC {
-   required int32                       danger_level        = 1;
-   required MsgListOID                  nbc_agents          = 2;
+   required int32                danger_level        = 1;
+   repeated NBCAgentType         nbc_agents          = 2;
 }
 
 message StockResource {
-   required MsgDotationType             dotation_type       = 1;
-   required int32                       current             = 2;
-   optional int32                       maximum             = 3;
+   required ResourceType         resource = 1;
+   required int32                current  = 2;
+   optional int32                maximum  = 3;
 }
 
 message MsgObjectAttributeStock {
@@ -703,17 +678,17 @@ message MsgObjectAttributeFire {
 }
 
 message MsgObjectAttributeMedicalTreatment {
-   required MsgListOID                  type_id             = 1;
-   required int32                       beds                = 2;
-   required int32                       available_beds      = 3;
-   required int32                       doctors             = 4;
-   required int32                       available_doctors   = 5;
+   repeated uint32 type_id           = 1;
+   required int32  beds              = 2;
+   required int32  available_beds    = 3;
+   required int32  doctors           = 4;
+   required int32  available_doctors = 5;
 }
 
 message MsgObjectAttributeNBCType {
-   required int32 agent_id = 1;
-   required int32 concentration = 2;
-   required int32 source_life_duration = 3;
+   required NBCAgentType agent = 1;
+   required int32        concentration = 2;
+   required int32        source_life_duration = 3;
 }
 
 message MsgObjectAttributeSealOff {
@@ -752,13 +727,11 @@ message MsgNote {
 
 // meteo
 message MsgMeteoAttributes {
-   required int32                        temperature     = 1;
-   required int32                        wind_speed      = 2;
-   required Common.MsgHeading            wind_direction  = 3;
-   required int32                        cloud_floor     = 4;
-   required int32                        cloud_ceiling   = 5;
-   required int32                        cloud_density   = 6;
-   required Common.EnumPrecipitationType precipitation   = 7;
-   required Common.EnumLightingType      lighting        = 8;
+   required int32                 temperature     = 1;
+   required int32                 wind_speed      = 2;
+   required MsgHeading            wind_direction  = 3;
+   required int32                 cloud_floor     = 4;
+   required int32                 cloud_ceiling   = 5;
+   required int32                 cloud_density   = 6;
+   required EnumPrecipitationType precipitation   = 7;
 }
-

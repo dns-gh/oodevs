@@ -27,7 +27,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_AgentParameter( DEC_RolePion_Decision* pAgent );
-             MIL_AgentParameter( const Common::MsgUnit&, MIL_EntityManager_ABC& entityManager );
+             MIL_AgentParameter( const Common::UnitId&, MIL_EntityManager_ABC& entityManager );
     virtual ~MIL_AgentParameter();
     //@}
 
@@ -38,7 +38,7 @@ public:
 
     //! @name Conversions
     //@{
-    virtual bool ToAgent( Common::MsgUnit& ) const;
+    virtual bool ToAgent( Common::UnitId& ) const;
     virtual bool ToAgent( DEC_Decision_ABC*& ) const;
     //@}
 

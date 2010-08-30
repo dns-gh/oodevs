@@ -127,8 +127,8 @@ void DEC_Knowledge_ObjectPerception::UpdateOnNetwork() const
 void DEC_Knowledge_ObjectPerception::SendStateToNewClient() const
 {
     client::ObjectDetection asn;
-    asn().set_oid( pAgentPerceiving_->GetID() );
-    asn().set_object_oid( pObjectPerceived_->GetID() );
+    asn().mutable_observer()->set_id( pAgentPerceiving_->GetID() );
+    asn().mutable_detected_object()->set_id( pObjectPerceived_->GetID() );
     asn().set_visibility( Common::EnumUnitVisibility( pCurrentPerceptionLevel_->GetID() ) );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }

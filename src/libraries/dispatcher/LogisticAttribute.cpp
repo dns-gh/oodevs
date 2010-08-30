@@ -41,8 +41,8 @@ LogisticAttribute::~LogisticAttribute()
 // -----------------------------------------------------------------------------
 void LogisticAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 {
-    if( asnMsg.has_logistic() )
-        pTC2_ = &automats_.Get( asnMsg.logistic().tc2() );
+    if ( asnMsg.has_logistic()  )
+        pTC2_ = &automats_.Get( asnMsg.logistic().tc2().id() );    
 }
 
 // -----------------------------------------------------------------------------
@@ -53,5 +53,5 @@ void LogisticAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
 {
     if( !pTC2_ )
         throw std::runtime_error( __FUNCTION__ ": logistic superior is not defined" );
-    asnMsg.mutable_logistic()->set_tc2( pTC2_->GetId() );
+    asnMsg.mutable_logistic()->mutable_tc2()->set_id( pTC2_->GetId() );
 }

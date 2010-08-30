@@ -1066,9 +1066,9 @@ void MIL_Population::OnReceiveMsgResurrect( const MsgsClientToSim::MsgUnitMagicA
 void MIL_Population::SendCreation() const
 {
     client::PopulationCreation asnMsg;
-    asnMsg().set_oid( nID_ );
-    asnMsg().set_type_population( pType_->GetID() );
-    asnMsg().set_oid_camp       ( pArmy_->GetID() );
+    asnMsg().mutable_id()->set_id( nID_ );
+    asnMsg().mutable_type()->set_id( pType_->GetID() );
+    asnMsg().mutable_party()->set_id( pArmy_->GetID() );
     asnMsg().set_nom            ( GetName().c_str() ); // !! pointeur sur const char*
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 
@@ -1090,7 +1090,7 @@ void MIL_Population::SendCreation() const
 void MIL_Population::SendFullState() const
 {
     client::PopulationUpdate asnMsg;
-    asnMsg().set_oid( nID_ );
+    asnMsg().mutable_id()->set_id( nID_ );
     GetRole< DEC_PopulationDecision >().SendFullState( asnMsg );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 
@@ -1119,7 +1119,7 @@ void MIL_Population::UpdateNetwork()
     if( GetRole< DEC_PopulationDecision >().HasStateChanged() )
     {
         client::PopulationUpdate asnMsg;
-        asnMsg().set_oid( nID_ );
+        asnMsg().mutable_id()->set_id( nID_ );
         GetRole< DEC_PopulationDecision >().SendChangedState( asnMsg );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }

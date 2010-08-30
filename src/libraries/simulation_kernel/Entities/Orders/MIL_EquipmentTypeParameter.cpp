@@ -16,7 +16,7 @@
 // Name: MIL_EquipmentTypeParameter constructor
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-MIL_EquipmentTypeParameter::MIL_EquipmentTypeParameter( const Common::MsgEquipmentType & asn )
+MIL_EquipmentTypeParameter::MIL_EquipmentTypeParameter( const Common::EquipmentType & asn )
     : pType_( PHY_ComposanteTypePion::Find( asn ) )
 {
     // NOTHING
@@ -54,7 +54,7 @@ bool MIL_EquipmentTypeParameter::IsOfType( const MIL_ParameterType_ABC& type ) c
 // Name: MIL_EquipmentTypeParameter::ToEquipmentType
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-bool MIL_EquipmentTypeParameter::ToEquipmentType( Common::MsgEquipmentType& asn ) const
+bool MIL_EquipmentTypeParameter::ToEquipmentType( Common::EquipmentType& asn ) const
 {
     if( !pType_ )
         return false;

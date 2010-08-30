@@ -61,9 +61,9 @@ void PHY_SupplyConsign_ABC::SendFullState( client::LogSupplyHandlingUpdate& asn 
     assert( pSuppliedAutomate_ );
 
     asn().set_etat( (MsgsSimToClient::EnumLogSupplyHandlingStatus ) nState_  );
-    asn().set_oid_automate_log_traitant( pSupplyingAutomate_->GetID() );
-    asn().set_oid_automate_log_fournissant_moyens_convoi( pConvoyingAutomate_->GetID() );
-    asn().set_oid_pion_convoyant( 0 );
+    asn().mutable_supplier()->set_id( pSupplyingAutomate_->GetID() );
+    asn().mutable_convoy_provider()->set_id( pConvoyingAutomate_->GetID() );
+    asn().mutable_convoying_unit()->set_id( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,9 +82,9 @@ void PHY_SupplyConsign_ABC::SendChangedState( client::LogSupplyHandlingUpdate& a
 // -----------------------------------------------------------------------------
 void PHY_SupplyConsign_ABC::SendDefaultState( client::LogSupplyHandlingUpdate& asn )
 {
-    asn().set_oid_pion_convoyant( 0 );
-    asn().set_oid_automate_log_fournissant_moyens_convoi( 0 );
-    asn().set_oid_automate_log_traitant( 0 );
+    asn().mutable_convoying_unit()->set_id( 0 );
+    asn().mutable_convoy_provider()->set_id( 0 );
+    asn().mutable_supplier()->set_id( 0 );
     asn().set_etat( MsgsSimToClient::termine );
 }
 

@@ -20,6 +20,7 @@ namespace MsgsSimToClient
 namespace dispatcher
 {
     class ClientPublisher_ABC;
+    class Model_ABC;
 
 // =============================================================================
 /** @class  DecisionalState
@@ -32,7 +33,7 @@ class DecisionalState
 public:
     //! @name Constructors/Destructor
     //@{
-             DecisionalState();
+    explicit DecisionalState( Model_ABC& model );
     virtual ~DecisionalState();
     //@}
 
@@ -44,9 +45,16 @@ public:
     //@}
 
 private:
+    //! @name Copy/Assignment
+    //@{
+    DecisionalState( const DecisionalState& );            //!< Copy constructor
+    DecisionalState& operator=( const DecisionalState& ); //!< Assignment operator
+    //@}
+
     //! @name Member data
     //@{
     std::map< std::string, std::string > decisionalInfos_;
+    Model_ABC& model_;
     //@}
 };
 

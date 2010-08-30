@@ -30,7 +30,7 @@ BOOST_AUTO_TEST_CASE( Team_CanBeCreated )
         MsgsSimToClient::MsgSimToClient expected;
         expected.set_context( 0 );
         MsgsSimToClient::MsgTeamCreation& message = *expected.mutable_message()->mutable_side_creation();
-        message.set_oid( 1 );
+        message.mutable_id()->set_id( 1 );
         message.set_nom( "test" );
         message.set_type( Common::friend_diplo );
 
@@ -65,7 +65,7 @@ BOOST_AUTO_TEST_CASE( Team_DiplomacyCanBeChanged )
             MsgsSimToClient::MsgSimToClient expected;
             expected.set_context( 0 );
             MsgsSimToClient::MsgTeamCreation& message = *expected.mutable_message()->mutable_side_creation();
-            message.set_oid( 1 );
+            message.mutable_id()->set_id( 1 );
             message.set_nom( "test" );
             message.set_type( Common::friend_diplo );
 
@@ -78,8 +78,8 @@ BOOST_AUTO_TEST_CASE( Team_DiplomacyCanBeChanged )
             MsgsSimToClient::MsgSimToClient expected;
             expected.set_context( 0 );
             Common::MsgChangeDiplomacy& message = *expected.mutable_message()->mutable_change_diplomacy();
-            message.set_oid_camp1( result->GetId() );
-            message.set_oid_camp2( side.GetId() );
+            message.mutable_party1()->set_id( result->GetId() );
+            message.mutable_party2()->set_id( side.GetId() );
             message.set_diplomatie( Common::enemy_diplo );
             sides.Get( 1 ).Update( message );
 
@@ -95,8 +95,8 @@ BOOST_AUTO_TEST_CASE( Team_DiplomacyCanBeChanged )
                 MsgsSimToClient::MsgSimToClient expected;
                 expected.set_context( 0 );
                 MsgsSimToClient::MsgChangeDiplomacyAck& message = *expected.mutable_message()->mutable_change_diplomacy_ack();
-                message.set_oid_camp1( result->GetId() );
-                message.set_oid_camp2( side.GetId() );
+                message.mutable_party1()->set_id( result->GetId() );
+                message.mutable_party2()->set_id( side.GetId() );
                 message.set_diplomatie( Common::neutral_diplo );
                 message.set_error_code( MsgsSimToClient::MsgChangeDiplomacyAck::no_error_diplomacy );
                 sides.Get( 1 ).Update( message );
@@ -104,8 +104,8 @@ BOOST_AUTO_TEST_CASE( Team_DiplomacyCanBeChanged )
             MsgsSimToClient::MsgSimToClient expected;
             expected.set_context( 0 );
             Common::MsgChangeDiplomacy& message = *expected.mutable_message()->mutable_change_diplomacy();
-            message.set_oid_camp1( result->GetId() );
-            message.set_oid_camp2( side.GetId() );
+            message.mutable_party1()->set_id( result->GetId() );
+            message.mutable_party2()->set_id( side.GetId() );
             message.set_diplomatie( Common::neutral_diplo );
 
             // network serialization

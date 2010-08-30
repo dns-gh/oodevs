@@ -19,7 +19,7 @@ using namespace dispatcher;
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
 LogSupplyDotation::LogSupplyDotation( const Model& /*model*/, const MsgsSimToClient::MsgDotationQuery& asn )
-    : nDotationType_( asn.ressource_id()        )
+    : nDotationType_( asn.resource().id()       )
     , nNbrRequested_( asn.quantite_demandee()   )
     , nNbrGranted_  ( asn.quantite_accordee()   )
     , nNbrConvoyed_ ( asn.quantite_en_transit() )
@@ -52,7 +52,7 @@ void LogSupplyDotation::Update( const MsgsSimToClient::MsgDotationQuery& asn )
 // -----------------------------------------------------------------------------
 void LogSupplyDotation::Send( MsgsSimToClient::MsgDotationQuery& asn ) const
 {
-    asn.set_ressource_id( nDotationType_ );
+    asn.mutable_resource()->set_id( nDotationType_ );
     asn.set_quantite_demandee( nNbrRequested_ );
     asn.set_quantite_accordee( nNbrGranted_ );
     asn.set_quantite_en_transit( nNbrConvoyed_ );

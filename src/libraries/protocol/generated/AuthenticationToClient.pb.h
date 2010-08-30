@@ -39,9 +39,6 @@ class MsgProfileUpdateRequestAck;
 class MsgProfileUpdate;
 class MsgProfileDestruction;
 class MsgProfileDestructionRequestAck;
-class FormationList;
-class TeamList;
-class PopulationList;
 class MsgProfile;
 class MsgProfileDescriptionList;
 class MsgProfileDescription;
@@ -941,276 +938,6 @@ class MsgProfileDestructionRequestAck : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class FormationList : public ::google::protobuf::Message {
- public:
-  FormationList();
-  virtual ~FormationList();
-  
-  FormationList(const FormationList& from);
-  
-  inline FormationList& operator=(const FormationList& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const FormationList& default_instance();
-  void Swap(FormationList* other);
-  
-  // implements Message ----------------------------------------------
-  
-  FormationList* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const FormationList& from);
-  void MergeFrom(const FormationList& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // repeated .Common.MsgFormation elem = 1;
-  inline int elem_size() const;
-  inline void clear_elem();
-  static const int kElemFieldNumber = 1;
-  inline const ::google::protobuf::RepeatedPtrField< ::Common::MsgFormation >& elem() const;
-  inline ::google::protobuf::RepeatedPtrField< ::Common::MsgFormation >* mutable_elem();
-  inline const ::Common::MsgFormation& elem(int index) const;
-  inline ::Common::MsgFormation* mutable_elem(int index);
-  inline ::Common::MsgFormation* add_elem();
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::google::protobuf::RepeatedPtrField< ::Common::MsgFormation > elem_;
-  friend void  protobuf_AddDesc_AuthenticationToClient_2eproto();
-  friend void protobuf_AssignDesc_AuthenticationToClient_2eproto();
-  friend void protobuf_ShutdownFile_AuthenticationToClient_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static FormationList* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class TeamList : public ::google::protobuf::Message {
- public:
-  TeamList();
-  virtual ~TeamList();
-  
-  TeamList(const TeamList& from);
-  
-  inline TeamList& operator=(const TeamList& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const TeamList& default_instance();
-  void Swap(TeamList* other);
-  
-  // implements Message ----------------------------------------------
-  
-  TeamList* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const TeamList& from);
-  void MergeFrom(const TeamList& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // repeated .Common.MsgTeam elem = 1;
-  inline int elem_size() const;
-  inline void clear_elem();
-  static const int kElemFieldNumber = 1;
-  inline const ::google::protobuf::RepeatedPtrField< ::Common::MsgTeam >& elem() const;
-  inline ::google::protobuf::RepeatedPtrField< ::Common::MsgTeam >* mutable_elem();
-  inline const ::Common::MsgTeam& elem(int index) const;
-  inline ::Common::MsgTeam* mutable_elem(int index);
-  inline ::Common::MsgTeam* add_elem();
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::google::protobuf::RepeatedPtrField< ::Common::MsgTeam > elem_;
-  friend void  protobuf_AddDesc_AuthenticationToClient_2eproto();
-  friend void protobuf_AssignDesc_AuthenticationToClient_2eproto();
-  friend void protobuf_ShutdownFile_AuthenticationToClient_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static TeamList* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class PopulationList : public ::google::protobuf::Message {
- public:
-  PopulationList();
-  virtual ~PopulationList();
-  
-  PopulationList(const PopulationList& from);
-  
-  inline PopulationList& operator=(const PopulationList& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const PopulationList& default_instance();
-  void Swap(PopulationList* other);
-  
-  // implements Message ----------------------------------------------
-  
-  PopulationList* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const PopulationList& from);
-  void MergeFrom(const PopulationList& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // repeated .Common.MsgPopulation elem = 1;
-  inline int elem_size() const;
-  inline void clear_elem();
-  static const int kElemFieldNumber = 1;
-  inline const ::google::protobuf::RepeatedPtrField< ::Common::MsgPopulation >& elem() const;
-  inline ::google::protobuf::RepeatedPtrField< ::Common::MsgPopulation >* mutable_elem();
-  inline const ::Common::MsgPopulation& elem(int index) const;
-  inline ::Common::MsgPopulation* mutable_elem(int index);
-  inline ::Common::MsgPopulation* add_elem();
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::google::protobuf::RepeatedPtrField< ::Common::MsgPopulation > elem_;
-  friend void  protobuf_AddDesc_AuthenticationToClient_2eproto();
-  friend void protobuf_AssignDesc_AuthenticationToClient_2eproto();
-  friend void protobuf_ShutdownFile_AuthenticationToClient_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static PopulationList* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class MsgProfile : public ::google::protobuf::Message {
  public:
   MsgProfile();
@@ -1284,61 +1011,61 @@ class MsgProfile : public ::google::protobuf::Message {
   inline void set_password(const char* value, size_t size);
   inline ::std::string* mutable_password();
   
-  // optional .MsgsAuthenticationToClient.FormationList read_only_formations = 3;
+  // optional .Common.FormationIdList read_only_formations = 3;
   inline bool has_read_only_formations() const;
   inline void clear_read_only_formations();
   static const int kReadOnlyFormationsFieldNumber = 3;
-  inline const ::MsgsAuthenticationToClient::FormationList& read_only_formations() const;
-  inline ::MsgsAuthenticationToClient::FormationList* mutable_read_only_formations();
+  inline const ::Common::FormationIdList& read_only_formations() const;
+  inline ::Common::FormationIdList* mutable_read_only_formations();
   
-  // optional .MsgsAuthenticationToClient.FormationList read_write_formations = 4;
+  // optional .Common.FormationIdList read_write_formations = 4;
   inline bool has_read_write_formations() const;
   inline void clear_read_write_formations();
   static const int kReadWriteFormationsFieldNumber = 4;
-  inline const ::MsgsAuthenticationToClient::FormationList& read_write_formations() const;
-  inline ::MsgsAuthenticationToClient::FormationList* mutable_read_write_formations();
+  inline const ::Common::FormationIdList& read_write_formations() const;
+  inline ::Common::FormationIdList* mutable_read_write_formations();
   
-  // optional .Common.MsgAutomatList read_only_automates = 5;
+  // optional .Common.AutomatIdList read_only_automates = 5;
   inline bool has_read_only_automates() const;
   inline void clear_read_only_automates();
   static const int kReadOnlyAutomatesFieldNumber = 5;
-  inline const ::Common::MsgAutomatList& read_only_automates() const;
-  inline ::Common::MsgAutomatList* mutable_read_only_automates();
+  inline const ::Common::AutomatIdList& read_only_automates() const;
+  inline ::Common::AutomatIdList* mutable_read_only_automates();
   
-  // optional .Common.MsgAutomatList read_write_automates = 6;
+  // optional .Common.AutomatIdList read_write_automates = 6;
   inline bool has_read_write_automates() const;
   inline void clear_read_write_automates();
   static const int kReadWriteAutomatesFieldNumber = 6;
-  inline const ::Common::MsgAutomatList& read_write_automates() const;
-  inline ::Common::MsgAutomatList* mutable_read_write_automates();
+  inline const ::Common::AutomatIdList& read_write_automates() const;
+  inline ::Common::AutomatIdList* mutable_read_write_automates();
   
-  // optional .MsgsAuthenticationToClient.TeamList read_only_camps = 7;
+  // optional .Common.PartyIdList read_only_camps = 7;
   inline bool has_read_only_camps() const;
   inline void clear_read_only_camps();
   static const int kReadOnlyCampsFieldNumber = 7;
-  inline const ::MsgsAuthenticationToClient::TeamList& read_only_camps() const;
-  inline ::MsgsAuthenticationToClient::TeamList* mutable_read_only_camps();
+  inline const ::Common::PartyIdList& read_only_camps() const;
+  inline ::Common::PartyIdList* mutable_read_only_camps();
   
-  // optional .MsgsAuthenticationToClient.TeamList read_write_camps = 8;
+  // optional .Common.PartyIdList read_write_camps = 8;
   inline bool has_read_write_camps() const;
   inline void clear_read_write_camps();
   static const int kReadWriteCampsFieldNumber = 8;
-  inline const ::MsgsAuthenticationToClient::TeamList& read_write_camps() const;
-  inline ::MsgsAuthenticationToClient::TeamList* mutable_read_write_camps();
+  inline const ::Common::PartyIdList& read_write_camps() const;
+  inline ::Common::PartyIdList* mutable_read_write_camps();
   
-  // optional .MsgsAuthenticationToClient.PopulationList read_only_populations = 9;
+  // optional .Common.PopulationIdList read_only_populations = 9;
   inline bool has_read_only_populations() const;
   inline void clear_read_only_populations();
   static const int kReadOnlyPopulationsFieldNumber = 9;
-  inline const ::MsgsAuthenticationToClient::PopulationList& read_only_populations() const;
-  inline ::MsgsAuthenticationToClient::PopulationList* mutable_read_only_populations();
+  inline const ::Common::PopulationIdList& read_only_populations() const;
+  inline ::Common::PopulationIdList* mutable_read_only_populations();
   
-  // optional .MsgsAuthenticationToClient.PopulationList read_write_populations = 10;
+  // optional .Common.PopulationIdList read_write_populations = 10;
   inline bool has_read_write_populations() const;
   inline void clear_read_write_populations();
   static const int kReadWritePopulationsFieldNumber = 10;
-  inline const ::MsgsAuthenticationToClient::PopulationList& read_write_populations() const;
-  inline ::MsgsAuthenticationToClient::PopulationList* mutable_read_write_populations();
+  inline const ::Common::PopulationIdList& read_write_populations() const;
+  inline ::Common::PopulationIdList* mutable_read_write_populations();
   
   // required bool superviseur = 11;
   inline bool has_superviseur() const;
@@ -1362,14 +1089,14 @@ class MsgProfile : public ::google::protobuf::Message {
   static const ::std::string _default_login_;
   ::std::string* password_;
   static const ::std::string _default_password_;
-  ::MsgsAuthenticationToClient::FormationList* read_only_formations_;
-  ::MsgsAuthenticationToClient::FormationList* read_write_formations_;
-  ::Common::MsgAutomatList* read_only_automates_;
-  ::Common::MsgAutomatList* read_write_automates_;
-  ::MsgsAuthenticationToClient::TeamList* read_only_camps_;
-  ::MsgsAuthenticationToClient::TeamList* read_write_camps_;
-  ::MsgsAuthenticationToClient::PopulationList* read_only_populations_;
-  ::MsgsAuthenticationToClient::PopulationList* read_write_populations_;
+  ::Common::FormationIdList* read_only_formations_;
+  ::Common::FormationIdList* read_write_formations_;
+  ::Common::AutomatIdList* read_only_automates_;
+  ::Common::AutomatIdList* read_write_automates_;
+  ::Common::PartyIdList* read_only_camps_;
+  ::Common::PartyIdList* read_write_camps_;
+  ::Common::PopulationIdList* read_only_populations_;
+  ::Common::PopulationIdList* read_write_populations_;
   bool superviseur_;
   int role_;
   friend void  protobuf_AddDesc_AuthenticationToClient_2eproto();
@@ -2237,93 +1964,6 @@ inline ::std::string* MsgProfileDestructionRequestAck::mutable_login() {
 
 // -------------------------------------------------------------------
 
-// FormationList
-
-// repeated .Common.MsgFormation elem = 1;
-inline int FormationList::elem_size() const {
-  return elem_.size();
-}
-inline void FormationList::clear_elem() {
-  elem_.Clear();
-}
-inline const ::google::protobuf::RepeatedPtrField< ::Common::MsgFormation >&
-FormationList::elem() const {
-  return elem_;
-}
-inline ::google::protobuf::RepeatedPtrField< ::Common::MsgFormation >*
-FormationList::mutable_elem() {
-  return &elem_;
-}
-inline const ::Common::MsgFormation& FormationList::elem(int index) const {
-  return elem_.Get(index);
-}
-inline ::Common::MsgFormation* FormationList::mutable_elem(int index) {
-  return elem_.Mutable(index);
-}
-inline ::Common::MsgFormation* FormationList::add_elem() {
-  return elem_.Add();
-}
-
-// -------------------------------------------------------------------
-
-// TeamList
-
-// repeated .Common.MsgTeam elem = 1;
-inline int TeamList::elem_size() const {
-  return elem_.size();
-}
-inline void TeamList::clear_elem() {
-  elem_.Clear();
-}
-inline const ::google::protobuf::RepeatedPtrField< ::Common::MsgTeam >&
-TeamList::elem() const {
-  return elem_;
-}
-inline ::google::protobuf::RepeatedPtrField< ::Common::MsgTeam >*
-TeamList::mutable_elem() {
-  return &elem_;
-}
-inline const ::Common::MsgTeam& TeamList::elem(int index) const {
-  return elem_.Get(index);
-}
-inline ::Common::MsgTeam* TeamList::mutable_elem(int index) {
-  return elem_.Mutable(index);
-}
-inline ::Common::MsgTeam* TeamList::add_elem() {
-  return elem_.Add();
-}
-
-// -------------------------------------------------------------------
-
-// PopulationList
-
-// repeated .Common.MsgPopulation elem = 1;
-inline int PopulationList::elem_size() const {
-  return elem_.size();
-}
-inline void PopulationList::clear_elem() {
-  elem_.Clear();
-}
-inline const ::google::protobuf::RepeatedPtrField< ::Common::MsgPopulation >&
-PopulationList::elem() const {
-  return elem_;
-}
-inline ::google::protobuf::RepeatedPtrField< ::Common::MsgPopulation >*
-PopulationList::mutable_elem() {
-  return &elem_;
-}
-inline const ::Common::MsgPopulation& PopulationList::elem(int index) const {
-  return elem_.Get(index);
-}
-inline ::Common::MsgPopulation* PopulationList::mutable_elem(int index) {
-  return elem_.Mutable(index);
-}
-inline ::Common::MsgPopulation* PopulationList::add_elem() {
-  return elem_.Add();
-}
-
-// -------------------------------------------------------------------
-
 // MsgProfile
 
 // required string login = 1;
@@ -2410,139 +2050,139 @@ inline ::std::string* MsgProfile::mutable_password() {
   return password_;
 }
 
-// optional .MsgsAuthenticationToClient.FormationList read_only_formations = 3;
+// optional .Common.FormationIdList read_only_formations = 3;
 inline bool MsgProfile::has_read_only_formations() const {
   return _has_bit(2);
 }
 inline void MsgProfile::clear_read_only_formations() {
-  if (read_only_formations_ != NULL) read_only_formations_->::MsgsAuthenticationToClient::FormationList::Clear();
+  if (read_only_formations_ != NULL) read_only_formations_->::Common::FormationIdList::Clear();
   _clear_bit(2);
 }
-inline const ::MsgsAuthenticationToClient::FormationList& MsgProfile::read_only_formations() const {
+inline const ::Common::FormationIdList& MsgProfile::read_only_formations() const {
   return read_only_formations_ != NULL ? *read_only_formations_ : *default_instance_->read_only_formations_;
 }
-inline ::MsgsAuthenticationToClient::FormationList* MsgProfile::mutable_read_only_formations() {
+inline ::Common::FormationIdList* MsgProfile::mutable_read_only_formations() {
   _set_bit(2);
-  if (read_only_formations_ == NULL) read_only_formations_ = new ::MsgsAuthenticationToClient::FormationList;
+  if (read_only_formations_ == NULL) read_only_formations_ = new ::Common::FormationIdList;
   return read_only_formations_;
 }
 
-// optional .MsgsAuthenticationToClient.FormationList read_write_formations = 4;
+// optional .Common.FormationIdList read_write_formations = 4;
 inline bool MsgProfile::has_read_write_formations() const {
   return _has_bit(3);
 }
 inline void MsgProfile::clear_read_write_formations() {
-  if (read_write_formations_ != NULL) read_write_formations_->::MsgsAuthenticationToClient::FormationList::Clear();
+  if (read_write_formations_ != NULL) read_write_formations_->::Common::FormationIdList::Clear();
   _clear_bit(3);
 }
-inline const ::MsgsAuthenticationToClient::FormationList& MsgProfile::read_write_formations() const {
+inline const ::Common::FormationIdList& MsgProfile::read_write_formations() const {
   return read_write_formations_ != NULL ? *read_write_formations_ : *default_instance_->read_write_formations_;
 }
-inline ::MsgsAuthenticationToClient::FormationList* MsgProfile::mutable_read_write_formations() {
+inline ::Common::FormationIdList* MsgProfile::mutable_read_write_formations() {
   _set_bit(3);
-  if (read_write_formations_ == NULL) read_write_formations_ = new ::MsgsAuthenticationToClient::FormationList;
+  if (read_write_formations_ == NULL) read_write_formations_ = new ::Common::FormationIdList;
   return read_write_formations_;
 }
 
-// optional .Common.MsgAutomatList read_only_automates = 5;
+// optional .Common.AutomatIdList read_only_automates = 5;
 inline bool MsgProfile::has_read_only_automates() const {
   return _has_bit(4);
 }
 inline void MsgProfile::clear_read_only_automates() {
-  if (read_only_automates_ != NULL) read_only_automates_->::Common::MsgAutomatList::Clear();
+  if (read_only_automates_ != NULL) read_only_automates_->::Common::AutomatIdList::Clear();
   _clear_bit(4);
 }
-inline const ::Common::MsgAutomatList& MsgProfile::read_only_automates() const {
+inline const ::Common::AutomatIdList& MsgProfile::read_only_automates() const {
   return read_only_automates_ != NULL ? *read_only_automates_ : *default_instance_->read_only_automates_;
 }
-inline ::Common::MsgAutomatList* MsgProfile::mutable_read_only_automates() {
+inline ::Common::AutomatIdList* MsgProfile::mutable_read_only_automates() {
   _set_bit(4);
-  if (read_only_automates_ == NULL) read_only_automates_ = new ::Common::MsgAutomatList;
+  if (read_only_automates_ == NULL) read_only_automates_ = new ::Common::AutomatIdList;
   return read_only_automates_;
 }
 
-// optional .Common.MsgAutomatList read_write_automates = 6;
+// optional .Common.AutomatIdList read_write_automates = 6;
 inline bool MsgProfile::has_read_write_automates() const {
   return _has_bit(5);
 }
 inline void MsgProfile::clear_read_write_automates() {
-  if (read_write_automates_ != NULL) read_write_automates_->::Common::MsgAutomatList::Clear();
+  if (read_write_automates_ != NULL) read_write_automates_->::Common::AutomatIdList::Clear();
   _clear_bit(5);
 }
-inline const ::Common::MsgAutomatList& MsgProfile::read_write_automates() const {
+inline const ::Common::AutomatIdList& MsgProfile::read_write_automates() const {
   return read_write_automates_ != NULL ? *read_write_automates_ : *default_instance_->read_write_automates_;
 }
-inline ::Common::MsgAutomatList* MsgProfile::mutable_read_write_automates() {
+inline ::Common::AutomatIdList* MsgProfile::mutable_read_write_automates() {
   _set_bit(5);
-  if (read_write_automates_ == NULL) read_write_automates_ = new ::Common::MsgAutomatList;
+  if (read_write_automates_ == NULL) read_write_automates_ = new ::Common::AutomatIdList;
   return read_write_automates_;
 }
 
-// optional .MsgsAuthenticationToClient.TeamList read_only_camps = 7;
+// optional .Common.PartyIdList read_only_camps = 7;
 inline bool MsgProfile::has_read_only_camps() const {
   return _has_bit(6);
 }
 inline void MsgProfile::clear_read_only_camps() {
-  if (read_only_camps_ != NULL) read_only_camps_->::MsgsAuthenticationToClient::TeamList::Clear();
+  if (read_only_camps_ != NULL) read_only_camps_->::Common::PartyIdList::Clear();
   _clear_bit(6);
 }
-inline const ::MsgsAuthenticationToClient::TeamList& MsgProfile::read_only_camps() const {
+inline const ::Common::PartyIdList& MsgProfile::read_only_camps() const {
   return read_only_camps_ != NULL ? *read_only_camps_ : *default_instance_->read_only_camps_;
 }
-inline ::MsgsAuthenticationToClient::TeamList* MsgProfile::mutable_read_only_camps() {
+inline ::Common::PartyIdList* MsgProfile::mutable_read_only_camps() {
   _set_bit(6);
-  if (read_only_camps_ == NULL) read_only_camps_ = new ::MsgsAuthenticationToClient::TeamList;
+  if (read_only_camps_ == NULL) read_only_camps_ = new ::Common::PartyIdList;
   return read_only_camps_;
 }
 
-// optional .MsgsAuthenticationToClient.TeamList read_write_camps = 8;
+// optional .Common.PartyIdList read_write_camps = 8;
 inline bool MsgProfile::has_read_write_camps() const {
   return _has_bit(7);
 }
 inline void MsgProfile::clear_read_write_camps() {
-  if (read_write_camps_ != NULL) read_write_camps_->::MsgsAuthenticationToClient::TeamList::Clear();
+  if (read_write_camps_ != NULL) read_write_camps_->::Common::PartyIdList::Clear();
   _clear_bit(7);
 }
-inline const ::MsgsAuthenticationToClient::TeamList& MsgProfile::read_write_camps() const {
+inline const ::Common::PartyIdList& MsgProfile::read_write_camps() const {
   return read_write_camps_ != NULL ? *read_write_camps_ : *default_instance_->read_write_camps_;
 }
-inline ::MsgsAuthenticationToClient::TeamList* MsgProfile::mutable_read_write_camps() {
+inline ::Common::PartyIdList* MsgProfile::mutable_read_write_camps() {
   _set_bit(7);
-  if (read_write_camps_ == NULL) read_write_camps_ = new ::MsgsAuthenticationToClient::TeamList;
+  if (read_write_camps_ == NULL) read_write_camps_ = new ::Common::PartyIdList;
   return read_write_camps_;
 }
 
-// optional .MsgsAuthenticationToClient.PopulationList read_only_populations = 9;
+// optional .Common.PopulationIdList read_only_populations = 9;
 inline bool MsgProfile::has_read_only_populations() const {
   return _has_bit(8);
 }
 inline void MsgProfile::clear_read_only_populations() {
-  if (read_only_populations_ != NULL) read_only_populations_->::MsgsAuthenticationToClient::PopulationList::Clear();
+  if (read_only_populations_ != NULL) read_only_populations_->::Common::PopulationIdList::Clear();
   _clear_bit(8);
 }
-inline const ::MsgsAuthenticationToClient::PopulationList& MsgProfile::read_only_populations() const {
+inline const ::Common::PopulationIdList& MsgProfile::read_only_populations() const {
   return read_only_populations_ != NULL ? *read_only_populations_ : *default_instance_->read_only_populations_;
 }
-inline ::MsgsAuthenticationToClient::PopulationList* MsgProfile::mutable_read_only_populations() {
+inline ::Common::PopulationIdList* MsgProfile::mutable_read_only_populations() {
   _set_bit(8);
-  if (read_only_populations_ == NULL) read_only_populations_ = new ::MsgsAuthenticationToClient::PopulationList;
+  if (read_only_populations_ == NULL) read_only_populations_ = new ::Common::PopulationIdList;
   return read_only_populations_;
 }
 
-// optional .MsgsAuthenticationToClient.PopulationList read_write_populations = 10;
+// optional .Common.PopulationIdList read_write_populations = 10;
 inline bool MsgProfile::has_read_write_populations() const {
   return _has_bit(9);
 }
 inline void MsgProfile::clear_read_write_populations() {
-  if (read_write_populations_ != NULL) read_write_populations_->::MsgsAuthenticationToClient::PopulationList::Clear();
+  if (read_write_populations_ != NULL) read_write_populations_->::Common::PopulationIdList::Clear();
   _clear_bit(9);
 }
-inline const ::MsgsAuthenticationToClient::PopulationList& MsgProfile::read_write_populations() const {
+inline const ::Common::PopulationIdList& MsgProfile::read_write_populations() const {
   return read_write_populations_ != NULL ? *read_write_populations_ : *default_instance_->read_write_populations_;
 }
-inline ::MsgsAuthenticationToClient::PopulationList* MsgProfile::mutable_read_write_populations() {
+inline ::Common::PopulationIdList* MsgProfile::mutable_read_write_populations() {
   _set_bit(9);
-  if (read_write_populations_ == NULL) read_write_populations_ = new ::MsgsAuthenticationToClient::PopulationList;
+  if (read_write_populations_ == NULL) read_write_populations_ = new ::Common::PopulationIdList;
   return read_write_populations_;
 }
 

@@ -169,7 +169,7 @@ void StockAttribute::Send( Common::MsgObjectAttributeStock& attribute, bool send
     for( CIT_DotationProgress it = stock_.begin(); it != stock_.end(); ++it, ++i )
     {
         Common::StockResource* resource = attribute.add_resources();
-        resource->mutable_dotation_type()->set_oid( it->first->GetType().GetID() );
+        resource->mutable_resource()->set_id( it->first->GetType().GetID() );
         resource->set_current( it->second.first );
         if( send_max )
             resource->set_maximum( it->second.second );

@@ -45,7 +45,7 @@ MIL_PopulationOrderManager::~MIL_PopulationOrderManager()
 //-----------------------------------------------------------------------------
 void MIL_PopulationOrderManager::OnReceiveMission( const Common::MsgPopulationOrder& asnMsg )
 {
-    const MIL_MissionType_ABC* pMissionType = MIL_PopulationMissionType::Find( asnMsg.mission() );
+    const MIL_MissionType_ABC* pMissionType = MIL_PopulationMissionType::Find( asnMsg.type().id() );
     if( !pMissionType || !IsMissionAvailable( *pMissionType ) )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission );
     boost::shared_ptr< MIL_Mission_ABC > pMission ( new MIL_PopulationMission( *pMissionType, population_, asnMsg ) );
@@ -58,7 +58,7 @@ void MIL_PopulationOrderManager::OnReceiveMission( const Common::MsgPopulationOr
 // -----------------------------------------------------------------------------
 void MIL_PopulationOrderManager::OnReceiveFragOrder( const MsgsClientToSim::MsgFragOrder& asn )
 {
-    const MIL_FragOrderType* pType = MIL_FragOrderType::Find( asn.frag_order() );
+    const MIL_FragOrderType* pType = MIL_FragOrderType::Find( asn.frag_order().id() );
     if( !pType )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_order_conduite );
     if( !pType->IsAvailableWithoutMission() && ( !GetCurrentMission() || !GetCurrentMission()->IsFragOrderAvailable( *pType ) ) )

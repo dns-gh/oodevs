@@ -157,7 +157,7 @@ MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObje
     if( message.elem_size() != 5 ) // type, location, name, team, attributes
         return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_error_invalid_specific_attributes;
 
-    MIL_Army_ABC* pArmy = armies.Find( message.elem( 3 ).value().army().oid() );
+    MIL_Army_ABC* pArmy = armies.Find( message.elem( 3 ).value().party().id() );
     if( !pArmy )
         return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_error_invalid_camp;
     return builder_->BuildObject( message, *pArmy );
@@ -312,7 +312,7 @@ void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( const MsgsClientToSim::Ms
     }
     else if( msg.type() == MsgsClientToSim::MsgObjectMagicAction::destroy )
     {
-        MIL_Object_ABC* pObject = Find( msg.oid() );
+        MIL_Object_ABC* pObject = Find( msg.object().id() );
         if( !pObject )
             nErrorCode = MsgsSimToClient::MsgObjectMagicActionAck::error_invalid_object;
         else
@@ -321,7 +321,7 @@ void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( const MsgsClientToSim::Ms
 
     else if( msg.type() == MsgsClientToSim::MsgObjectMagicAction::update )
     {
-        MIL_Object_ABC* pObject = Find( msg.oid() );
+        MIL_Object_ABC* pObject = Find( msg.object().id() );
         if( !pObject )
             nErrorCode = MsgsSimToClient::MsgObjectMagicActionAck::error_invalid_object;
         else

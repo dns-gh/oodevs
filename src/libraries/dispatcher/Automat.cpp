@@ -29,14 +29,15 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 Automat::Automat( Model_ABC& model, const MsgsSimToClient::MsgAutomatCreation& msg )
-    : Automat_ABC       ( msg.oid(), QString( msg.nom().c_str() ) )
+    : Automat_ABC       ( msg.id().id(), QString( msg.nom().c_str() ) )
     , model_            ( model )
-    , type_             ( msg.type_automate() )
+    , decisionalInfos_  ( model )
+    , type_             ( msg.type().id() )
     , name_             ( msg.nom().c_str() )
-    , team_             ( model.Sides().Get( msg.oid_camp() ) )
-    , parentFormation_  ( msg.oid_parent().has_formation() ? &model.Formations().Get( msg.oid_parent().formation().oid() ) : 0 )
-    , parentAutomat_    ( msg.oid_parent().has_automate()  ? &model.Automats().Get( msg.oid_parent().automate().oid() ) : 0 )
-    , knowledgeGroup_   ( &model.KnowledgeGroups().Get( msg.oid_groupe_connaissance() ) )
+    , team_             ( model.Sides().Get( msg.party().id() ) )
+    , parentFormation_  ( msg.oid_parent().has_formation() ? &model.Formations().Get( msg.oid_parent().formation().id() ) : 0 )
+    , parentAutomat_    ( msg.oid_parent().has_automat()  ? &model.Automats().Get( msg.oid_parent().automat().id() ) : 0 )
+    , knowledgeGroup_   ( &model.KnowledgeGroups().Get( msg.knowledge_group().id() ) )
     , pTC2_             ( 0 )
     , pLogMaintenance_  ( 0 )
     , pLogMedical_      ( 0 )
@@ -117,12 +118,12 @@ void Automat::MoveAgents( dispatcher::Automat_ABC& superior )
 // -----------------------------------------------------------------------------
 void Automat::DoUpdate( const MsgsSimToClient::MsgAutomatCreation& msg )
 {
-    ChangeKnowledgeGroup( msg.oid_groupe_connaissance() );
-    if( parentFormation_ &&
-        ( msg.oid_parent().has_automate()  ||
-        ( msg.oid_parent().has_formation() && msg.oid_parent().formation().oid() != parentFormation_->GetId() ) ) )
+    ChangeKnowledgeGroup( msg.knowledge_group().id() );
+    if( parentFormation_ && 
+        ( msg.oid_parent().has_automat()  || 
+        ( msg.oid_parent().has_formation() && msg.oid_parent().formation().id() != parentFormation_->GetId() ) ) )
         ChangeSuperior( msg.oid_parent() );
-    if( parentAutomat_ && ( msg.oid_parent().has_formation() || ( msg.oid_parent().has_automate()  && msg.oid_parent().automate().oid()  != parentAutomat_->GetId() ) ) )
+    if( parentAutomat_ && ( msg.oid_parent().has_formation() || ( msg.oid_parent().has_automat()  && msg.oid_parent().automat().id()  != parentAutomat_->GetId() ) ) )
        ChangeSuperior( msg.oid_parent() );
     decisionalInfos_.Clear();
 }
@@ -133,14 +134,14 @@ void Automat::DoUpdate( const MsgsSimToClient::MsgAutomatCreation& msg )
 // -----------------------------------------------------------------------------
 void Automat::DoUpdate( const Common::MsgAutomatChangeLogisticLinks& msg )
 {
-    if( msg.has_oid_tc2() )
-        pTC2_ = msg.oid_tc2() == 0 ? 0 : &model_.Automats().Get( msg.oid_tc2() );
-    if( msg.has_oid_maintenance() )
-        pLogMaintenance_ = msg.oid_maintenance() == 0 ? 0 : &model_.Automats().Get( msg.oid_maintenance() );
-    if( msg.has_oid_sante() )
-        pLogMedical_ = msg.oid_sante() == 0 ? 0 : &model_.Automats().Get( msg.oid_sante() );
-    if( msg.has_oid_ravitaillement() )
-        pLogSupply_ = msg.oid_ravitaillement() == 0 ? 0 : &model_.Automats().Get( msg.oid_ravitaillement() );
+    if( msg.has_tc2()  )
+        pTC2_ = msg.tc2().id() == 0 ? 0 : &model_.Automats().Get( msg.tc2().id() );
+    if( msg.has_maintenance()  )
+        pLogMaintenance_ = msg.maintenance().id() == 0 ? 0 : &model_.Automats().Get( msg.maintenance().id() );
+    if( msg.has_health()  )
+        pLogMedical_ = msg.health().id() == 0 ? 0 : &model_.Automats().Get( msg.health().id() );
+    if( msg.has_supply()  )
+        pLogSupply_ = msg.supply().id() == 0 ? 0 : &model_.Automats().Get( msg.supply().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -149,7 +150,7 @@ void Automat::DoUpdate( const Common::MsgAutomatChangeLogisticLinks& msg )
 // -----------------------------------------------------------------------------
 void Automat::DoUpdate( const Common::MsgAutomatChangeSuperior& msg )
 {
-    ChangeSuperior( msg.oid_superior() );
+    ChangeSuperior( msg.superior() );
 }
 
 // -----------------------------------------------------------------------------
@@ -158,7 +159,7 @@ void Automat::DoUpdate( const Common::MsgAutomatChangeSuperior& msg )
 // -----------------------------------------------------------------------------
 void Automat::DoUpdate( const Common::MsgAutomatChangeKnowledgeGroup& msg )
 {
-    ChangeKnowledgeGroup( msg.oid_groupe_connaissance() );
+    ChangeKnowledgeGroup( msg.knowledge_group().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -183,9 +184,9 @@ template< typename Message >
 void Automat::ChangeSuperior( const Message& superior )
 {
     if( superior.has_formation() )
-        SetSuperior( model_.Formations().Get( superior.formation().oid() ) );
-    else if( superior.has_automate() )
-        SetSuperior( model_.Automats().Get( superior.automate().oid() ) );
+        SetSuperior( model_.Formations().Get( superior.formation().id() ) );
+    else if( superior.has_automat() )
+        SetSuperior( model_.Automats().Get( superior.automat().id() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -265,7 +266,7 @@ void Automat::DoUpdate( const MsgsSimToClient::MsgLogSupplyQuotas& msg )
     for( int i = 0; i < msg.quotas().elem_size(); ++i )
     {
         DotationQuota* quota = new DotationQuota( model_, msg.quotas().elem( i ) );
-        quotas_.Register( msg.quotas().elem( i ).ressource_id(), *quota );
+        quotas_.Register( msg.quotas().elem( i ).ressource_id().id(), *quota );
     }
 }
 
@@ -276,7 +277,7 @@ void Automat::DoUpdate( const MsgsSimToClient::MsgLogSupplyQuotas& msg )
 void Automat::DoUpdate( const Common::MsgAutomatOrder& msg )
 {
     order_.reset();
-    if( msg.mission() != 0 )
+    if( msg.type().id() != 0 )
         order_.reset( new AutomatOrder( model_, *this, msg ) );
 }
 
@@ -296,21 +297,21 @@ void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     {
         client::AutomatCreation asn;
-        asn().set_oid( GetId() );
-        asn().set_type_automate( type_ );
+        asn().mutable_id()->set_id( GetId() );
+        asn().mutable_type()->set_id( type_ );
         asn().set_nom( name_ );
-        asn().set_oid_camp( team_.GetId() );
-        asn().set_oid_groupe_connaissance( knowledgeGroup_->GetId() );
+        asn().mutable_party()->set_id( team_.GetId() );
+        asn().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
 
         if( parentFormation_ )
-            asn().mutable_oid_parent()->mutable_formation()->set_oid( parentFormation_->GetId() );
+            asn().mutable_oid_parent()->mutable_formation()->set_id( parentFormation_->GetId() );
         if( parentAutomat_ )
-            asn().mutable_oid_parent()->mutable_automate()->set_oid( parentAutomat_->GetId() );
+            asn().mutable_oid_parent()->mutable_automat()->set_id( parentAutomat_->GetId() );
         asn.Send( publisher );
     }
     {
         client::LogSupplyQuotas asn;
-        asn().set_oid_automate ( GetId() );
+        asn().mutable_id()->set_id( GetId() );
         quotas_.Apply( boost::bind( &::SerializeQuota, boost::ref( *asn().mutable_quotas() ), _1 ) );
         asn.Send( publisher );
     }
@@ -324,7 +325,7 @@ void Automat::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     {
         client::AutomatAttributes asn;
-        asn().set_oid ( GetId() );
+        asn().mutable_id()->set_id( GetId() );
         asn().set_etat_automate( nAutomatState_ );
         asn().set_rapport_de_force( nForceRatioState_);
         asn().set_combat_de_rencontre( nCloseCombatState_);
@@ -334,32 +335,32 @@ void Automat::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     }
     {
         client::AutomatChangeKnowledgeGroup asn;
-        asn().set_oid( GetId() );
-        asn().set_oid_camp( team_.GetId() );
-        asn().set_oid_groupe_connaissance( knowledgeGroup_->GetId() );
+        asn().mutable_automat()->set_id( GetId() );
+        asn().mutable_party()->set_id( team_.GetId() );
+        asn().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
         asn.Send( publisher );
     }
     {
         client::AutomatChangeSuperior asn;
-        asn().set_oid( GetId() );
+        asn().mutable_automat()->set_id( GetId() );
 
         if( parentFormation_ )
-            asn().mutable_oid_superior()->mutable_formation()->set_oid( parentFormation_->GetId() );
+            asn().mutable_superior()->mutable_formation()->set_id( parentFormation_->GetId() );
         if( parentAutomat_ )
-            asn().mutable_oid_superior()->mutable_automate()->set_oid( parentAutomat_->GetId() );
+            asn().mutable_superior()->mutable_automat()->set_id( parentAutomat_->GetId() );
         asn.Send( publisher );
     }
     {
         client::AutomatChangeLogisticLinks asn;
-        asn().set_oid( GetId() );
+        asn().mutable_automat()->set_id( GetId() );
         if( pTC2_ )
-            asn().set_oid_tc2( pTC2_->GetId() );
+            asn().mutable_tc2()->set_id( pTC2_->GetId() );
         if( pLogMaintenance_ )
-            asn().set_oid_maintenance( pLogMaintenance_->GetId() );
+            asn().mutable_maintenance()->set_id( pLogMaintenance_->GetId() );
         if( pLogMedical_ )
-            asn().set_oid_sante( pLogMedical_->GetId() );
+            asn().mutable_health()->set_id( pLogMedical_->GetId() );
         if( pLogSupply_ )
-            asn().set_oid_ravitaillement( pLogSupply_->GetId() );
+            asn().mutable_supply()->set_id( pLogSupply_->GetId() );
         asn.Send( publisher );
     }
     if( order_.get() )

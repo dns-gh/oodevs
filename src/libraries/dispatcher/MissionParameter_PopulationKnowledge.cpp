@@ -20,7 +20,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 MissionParameter_PopulationKnowledge::MissionParameter_PopulationKnowledge( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , populationKnowledge_( asn.value().populationknowledge().oid() )
+    , populationKnowledge_( asn.value().populationknowledge().id() )
 {
     // NOTHING
 }
@@ -41,5 +41,5 @@ MissionParameter_PopulationKnowledge::~MissionParameter_PopulationKnowledge()
 void MissionParameter_PopulationKnowledge::Send( Common::MsgMissionParameter& asn ) const
 {
     MissionParameter_ABC::Send( asn );
-    asn.mutable_value()->mutable_populationknowledge()->set_oid( populationKnowledge_ );
+    asn.mutable_value()->mutable_populationknowledge()->set_id( populationKnowledge_ );
 }

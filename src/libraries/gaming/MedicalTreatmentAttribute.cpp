@@ -57,9 +57,9 @@ void MedicalTreatmentAttribute::UpdateData( const T& message )
         doctors_          = message.medical_treatment().doctors();
         availableDoctors_ = message.medical_treatment().available_doctors();
 
-        nMedicalTreatmentType_ = message.medical_treatment().type_id().elem_size();
+        nMedicalTreatmentType_ = message.medical_treatment().type_id_size();
         for( int i = 0 ; i < nMedicalTreatmentType_ ; i++ )
-            typeList_.push_back( & resolver_.Get( message.medical_treatment().type_id().elem ( i ) ) );
+            typeList_.push_back( & resolver_.Get( message.medical_treatment().type_id( i ) ) );
 
         controller_.Update( *(MedicalTreatmentAttribute_ABC*)this );
     }

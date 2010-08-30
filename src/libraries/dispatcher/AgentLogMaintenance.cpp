@@ -14,6 +14,8 @@
 #include "Agent_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/clientsenders.h"
+#include "MaintenanceEquipmentAvailability.h"
+
 
 using namespace dispatcher;
 
@@ -51,21 +53,21 @@ void AgentLogMaintenance::Update( const MsgsSimToClient::MsgLogMaintenanceState&
     {
         haulersAvailability_.clear();
         for( int i = 0; i < asnMsg.disponibilites_remorqueurs().elem_size(); ++i )
-            haulersAvailability_.push_back( T_Availability( asnMsg.disponibilites_remorqueurs().elem( i ) ) );
+            haulersAvailability_.push_back( MaintenanceEquipmentAvailability( asnMsg.disponibilites_remorqueurs().elem( i ) ) );
     }
 
     if( asnMsg.has_disponibilites_reparateurs()  )
     {
         repairersAvailability_.clear();
         for( int i = 0; i < asnMsg.disponibilites_reparateurs().elem_size(); ++i )
-            repairersAvailability_.push_back( T_Availability( asnMsg.disponibilites_reparateurs().elem( i ) ) );
+            repairersAvailability_.push_back( MaintenanceEquipmentAvailability( asnMsg.disponibilites_reparateurs().elem( i ) ) );
     }
 
     if( asnMsg.has_priorites_tactiques()  )
     {
         tacticalPriorities_.clear();
         for( int i = 0; i < asnMsg.priorites_tactiques().elem_size(); ++i )
-            tacticalPriorities_.push_back( &model_.Automats().Get( asnMsg.priorites_tactiques().elem( i ).oid() ) );
+            tacticalPriorities_.push_back( &model_.Automats().Get( asnMsg.priorites_tactiques().elem( i ).id() ) );
     }
 
     if( asnMsg.has_priorites()  )
@@ -73,9 +75,9 @@ void AgentLogMaintenance::Update( const MsgsSimToClient::MsgLogMaintenanceState&
         priorities_.clear();
         for( int i = 0; i < asnMsg.priorites().elem_size(); ++i )
         {
-            Common::MsgEquipmentType msg;
-            msg.set_equipment( asnMsg.priorites().elem( i ).equipment() );
-            priorities_.push_back( msg);
+            Common::EquipmentType msg;
+            msg.set_id( asnMsg.priorites().elem( i ).id() );
+            priorities_.push_back( msg );
         }
     }
 }
@@ -87,23 +89,23 @@ void AgentLogMaintenance::Update( const MsgsSimToClient::MsgLogMaintenanceState&
 void AgentLogMaintenance::Send( ClientPublisher_ABC& publisher ) const
 {
     client::LogMaintenanceState asn;
-    asn().set_oid_pion ( agent_.GetId() );
+    asn().mutable_id()->set_id( agent_.GetId() );
     asn().set_chaine_activee ( bSystemEnabled_ );
     {
-        for( std::vector< T_Availability >::const_iterator it = repairersAvailability_.begin(); it != repairersAvailability_.end(); ++it )
+        for( std::vector< MaintenanceEquipmentAvailability >::const_iterator it = repairersAvailability_.begin(); it != repairersAvailability_.end(); ++it )
             it->Send( *asn().mutable_disponibilites_reparateurs()->add_elem() );
     }
     {
-        for( std::vector< T_Availability >::const_iterator it = haulersAvailability_.begin(); it != haulersAvailability_.end(); ++it )
+        for( std::vector< MaintenanceEquipmentAvailability >::const_iterator it = haulersAvailability_.begin(); it != haulersAvailability_.end(); ++it )
             it->Send( *asn().mutable_disponibilites_remorqueurs()->add_elem() );
     }
     {
         for( std::vector< const kernel::Automat_ABC* >::const_iterator it = tacticalPriorities_.begin(); it != tacticalPriorities_.end(); ++it)
-            asn().mutable_priorites_tactiques()->add_elem()->set_oid( (*it)->GetId() );
+            asn().mutable_priorites_tactiques()->add_elem()->set_id( (*it)->GetId() );
     }
     {
-        for( std::vector< Common::MsgEquipmentType >::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
-            asn().mutable_priorites()->add_elem()->set_equipment( it->equipment() );
+        for( std::vector< Common::EquipmentType >::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
+            asn().mutable_priorites()->add_elem()->set_id( (*it).id() );
     }
     asn.Send( publisher );
 }

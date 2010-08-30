@@ -29,10 +29,10 @@ MIL_AutomatParameter::MIL_AutomatParameter( DEC_AutomateDecision* pDecision )
 // Name: MIL_AutomatParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_AutomatParameter::MIL_AutomatParameter( const Common::MsgAutomat& asn, MIL_EntityManager_ABC& entityManager )
+MIL_AutomatParameter::MIL_AutomatParameter( const Common::AutomatId& asn, MIL_EntityManager_ABC& entityManager )
     : pDecision_( 0 )
 {
-    MIL_Automate* pAutomate = entityManager.FindAutomate( asn.oid() );
+    MIL_Automate* pAutomate = entityManager.FindAutomate( asn.id() );
     if( pAutomate )
         pDecision_ = &pAutomate->GetDecision();
 }
@@ -59,7 +59,7 @@ bool MIL_AutomatParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 // Name: MIL_AutomatParameter::ToAutomat
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool MIL_AutomatParameter::ToAutomat( Common::MsgAutomat& asn ) const
+bool MIL_AutomatParameter::ToAutomat( Common::AutomatId& asn ) const
 {
     if( !pDecision_ )
         return false;

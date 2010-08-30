@@ -42,8 +42,8 @@ void ConstructionAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 {
     if( asnMsg.has_construction()  )
     {
-        if( asnMsg.construction().has_dotation_type() )
-            dotation_ = asnMsg.construction().dotation_type();
+        if ( asnMsg.construction().has_resource() )
+            dotation_ = asnMsg.construction().resource().id();
         if( asnMsg.construction().has_dotation_nbr() )
             nNbrDotationForConstruction_ = asnMsg.construction().dotation_nbr();
         if( asnMsg.construction().has_percentage() )
@@ -57,7 +57,7 @@ void ConstructionAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 // -----------------------------------------------------------------------------
 void ConstructionAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
 {
-    asnMsg.mutable_construction()->set_dotation_type( dotation_ );
+    asnMsg.mutable_construction()->mutable_resource()->set_id( dotation_ );
     asnMsg.mutable_construction()->set_dotation_nbr( nNbrDotationForConstruction_ );
     asnMsg.mutable_construction()->set_percentage( nPercentageConstruction_ );
 }

@@ -95,7 +95,7 @@ bool MIL_BaseParameter::ToPolygonList( Common::MsgPolygonList& ) const
 // Name: MIL_BaseParameter::ToAgent
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToAgent( Common::MsgUnit& ) const
+bool MIL_BaseParameter::ToAgent( Common::UnitId& ) const
 {
     return false;
 }
@@ -104,7 +104,7 @@ bool MIL_BaseParameter::ToAgent( Common::MsgUnit& ) const
 // Name: MIL_BaseParameter::ToAgentKnowledge
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToAgentKnowledge( Common::MsgUnitKnowledge& ) const
+bool MIL_BaseParameter::ToAgentKnowledge( Common::UnitKnowledgeId& ) const
 {
     return false;
 }
@@ -113,7 +113,7 @@ bool MIL_BaseParameter::ToAgentKnowledge( Common::MsgUnitKnowledge& ) const
 // Name: MIL_BaseParameter::ToAgentKnowledgeList
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToAgentKnowledgeList( Common::MsgUnitKnowledgeList& ) const
+bool MIL_BaseParameter::ToAgentKnowledgeList( Common::UnitKnowledgeIdList& ) const
 {
     return false;
 }
@@ -122,7 +122,7 @@ bool MIL_BaseParameter::ToAgentKnowledgeList( Common::MsgUnitKnowledgeList& ) co
 // Name: MIL_BaseParameter::ToAgentList
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToAgentList( Common::MsgUnitList& ) const
+bool MIL_BaseParameter::ToAgentList( Common::UnitIdList& ) const
 {
     return false;
 }
@@ -131,7 +131,7 @@ bool MIL_BaseParameter::ToAgentList( Common::MsgUnitList& ) const
 // Name: MIL_BaseParameter::ToAutomat
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToAutomat( Common::MsgAutomat& ) const
+bool MIL_BaseParameter::ToAutomat( Common::AutomatId& ) const
 {
     return false;
 }
@@ -140,7 +140,7 @@ bool MIL_BaseParameter::ToAutomat( Common::MsgAutomat& ) const
 // Name: MIL_BaseParameter::ToAutomatList
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToAutomatList( Common::MsgAutomatList& ) const
+bool MIL_BaseParameter::ToAutomatList( Common::AutomatIdList& ) const
 {
     return false;
 }
@@ -158,7 +158,7 @@ bool MIL_BaseParameter::ToDirection( Common::MsgHeading& ) const
 // Name: MIL_BaseParameter::ToDotationType
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToDotationType( Common::MsgDotationType& ) const
+bool MIL_BaseParameter::ToDotationType( Common::ResourceType& ) const
 {
     return false;
 }
@@ -167,7 +167,7 @@ bool MIL_BaseParameter::ToDotationType( Common::MsgDotationType& ) const
 // Name: MIL_BaseParameter::ToEquipmentType
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToEquipmentType( Common::MsgEquipmentType& ) const
+bool MIL_BaseParameter::ToEquipmentType( Common::EquipmentType& ) const
 {
     return false;
 }
@@ -203,7 +203,7 @@ bool MIL_BaseParameter::ToGenObjectList( Common::MsgPlannedWorkList& ) const
 // Name: MIL_BaseParameter::ToIndirectFire
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToIndirectFire( Common::MsgUnitFire& ) const
+bool MIL_BaseParameter::ToIndirectFire( Common::FireId& ) const
 {
     return false;
 }
@@ -275,7 +275,7 @@ bool MIL_BaseParameter::ToObjectiveList( Common::MsgMissionObjectiveList& ) cons
 // Name: MIL_BaseParameter::ToObjectKnowledge
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToObjectKnowledge( Common::MsgObjectKnowledge& ) const
+bool MIL_BaseParameter::ToObjectKnowledge( Common::ObjectKnowledgeId& ) const
 {
     return false;
 }
@@ -284,7 +284,7 @@ bool MIL_BaseParameter::ToObjectKnowledge( Common::MsgObjectKnowledge& ) const
 // Name: MIL_BaseParameter::ToObjectKnowledgeList
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToObjectKnowledgeList( Common::MsgObjectKnowledgeList& ) const
+bool MIL_BaseParameter::ToObjectKnowledgeList( Common::ObjectKnowledgeIdList& ) const
 {
     return false;
 }
@@ -311,7 +311,7 @@ bool MIL_BaseParameter::ToPathList( Common::MsgPathList& ) const
 // Name: MIL_BaseParameter::ToPopulationKnowledge
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToPopulationKnowledge( Common::MsgPopulationKnowledge& ) const
+bool MIL_BaseParameter::ToPopulationKnowledge( Common::PopulationKnowledgeId& ) const
 {
     return false;
 }
@@ -573,10 +573,11 @@ bool MIL_BaseParameter::ToObjectiveList( std::vector< boost::shared_ptr< DEC_Obj
 // Name: MIL_BaseParameter::ToUrbanBlock
 // Created: MGD 2009-11-04
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToUrbanBlock( Common::MsgUrbanBlock& ) const
+bool MIL_BaseParameter::ToUrbanBlock( Common::UrbanObjectId& ) const
 {
     return false;
 }
+
 // -----------------------------------------------------------------------------
 // Name: MIL_BaseParameter::ToUrbanBlock
 // Created: MGD 2009-11-04

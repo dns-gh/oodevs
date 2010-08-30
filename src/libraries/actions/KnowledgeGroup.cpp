@@ -63,7 +63,7 @@ void KnowledgeGroup::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() && GetValue())
-        message.mutable_value()->mutable_knowledgegroup()->set_oid( GetValue()->GetId() );
+        message.mutable_value()->mutable_knowledgegroup()->set_id( GetValue()->GetId() );
 }
 
 // -----------------------------------------------------------------------------

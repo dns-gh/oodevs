@@ -73,8 +73,8 @@ namespace extractors
             return wrapper.message().has_log_maintenance_handling_creation();
         }
         NumericValue Extract( const MsgsSimToClient::MsgSimToClient& wrapper ) const
-        {
-            return NumericValue( wrapper.message().log_maintenance_handling_creation().oid_pion() );
+        { 
+            return NumericValue( wrapper.message().log_maintenance_handling_creation().unit().id() ); 
         }
         bool IsDestruction( const MsgsSimToClient::MsgSimToClient& wrapper ) const
         {
@@ -90,8 +90,8 @@ namespace extractors
                    wrapper.message().start_unit_fire().type() == Common::direct;
         }
         NumericValue Extract( const MsgsSimToClient::MsgSimToClient& wrapper ) const
-        {
-            return NumericValue( wrapper.message().start_unit_fire().firer_oid() );
+        { 
+            return NumericValue( wrapper.message().start_unit_fire().firing_unit().id() );
         }
         bool IsDestruction( const MsgsSimToClient::MsgSimToClient& wrapper ) const
         {
@@ -107,8 +107,8 @@ namespace extractors
                    wrapper.message().start_unit_fire().type() == Common::indirect;
         }
         NumericValue Extract( const MsgsSimToClient::MsgSimToClient& wrapper ) const
-        {
-            return NumericValue( wrapper.message().start_unit_fire().firer_oid() );
+        { 
+            return NumericValue( wrapper.message().start_unit_fire().firing_unit().id() );
         }
         bool IsDestruction( const MsgsSimToClient::MsgSimToClient& wrapper ) const
         {

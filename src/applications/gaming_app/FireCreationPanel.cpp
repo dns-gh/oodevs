@@ -132,9 +132,9 @@ void FireCreationPanel::NotifyUpdated( const kernel::ModelLoaded& )
         const kernel::DotationType& type = it.NextElement();
         if( type.IsDType() )
         {
-            Common::MsgDotationType dot;
-            dot.set_oid( type.GetId() );
-            ammunitionsBox_->AddItem( type.GetCategory(), dot.oid() );
+            Common::ResourceType dot;
+            dot.set_id( type.GetId() );
+            ammunitionsBox_->AddItem( type.GetCategory(), dot.id() );
         }
     }
 

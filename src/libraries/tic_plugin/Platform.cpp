@@ -54,7 +54,7 @@ void Platform::Update( const MsgsSimToClient::MsgUnitAttributes& asnMsg )
 // -----------------------------------------------------------------------------
 void Platform::Spread( MsgsSimToClient::EquipmentDotations_EquipmentDotation& updateMessage )
 {
-    if( type_.GetId() == (unsigned)updateMessage.type_equipement() )
+    if( type_.GetId() == (unsigned)updateMessage.type().id() )
         Apply( updateMessage );
 }
 

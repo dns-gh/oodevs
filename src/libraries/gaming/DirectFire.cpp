@@ -22,13 +22,13 @@ using namespace kernel;
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
 DirectFire::DirectFire( const MsgsSimToClient::MsgStartUnitFire& message, const tools::Resolver_ABC< Agent_ABC >& agentResolver, const tools::Resolver_ABC< Population_ABC >& populationResolver )
-    : Fire_ABC( agentResolver.Get( message.firer_oid() ) )
-    , id_( message.fire_oid() )
+    : Fire_ABC( agentResolver.Get( message.firing_unit().id() ) )
+    , id_( message.id().id() )
 {
     if( message.target().has_unit() )
-        target_ = & agentResolver.Get( message.target().unit() );
+        target_ = & agentResolver.Get( message.target().unit().id() );
     else if( message.target().has_population() )
-        target_ = & populationResolver.Get( message.target().population() );
+        target_ = & populationResolver.Get( message.target().population().id() );
     else
         throw std::runtime_error( "DirectFire on position..." );
 

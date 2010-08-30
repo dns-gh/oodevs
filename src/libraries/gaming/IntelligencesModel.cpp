@@ -59,9 +59,9 @@ void IntelligencesModel::Create( const MsgsMessengerToClient::MsgIntelligenceCre
 // -----------------------------------------------------------------------------
 void IntelligencesModel::Delete( const MsgsMessengerToClient::MsgIntelligenceDestruction& message )
 {
-    if( Intelligence_ABC* element = Find( message.oid() ) )
+    if( Intelligence_ABC* element = Find( message.id().id() ) )
     {
         delete element;
-        Remove( message.oid() );
+        Remove( message.id().id() );
     }
 }

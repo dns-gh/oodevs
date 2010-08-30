@@ -24,7 +24,7 @@
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, const Common::MsgUnitOrder& asn )
-    : MIL_Mission_ABC       ( type, pion.GetKnowledge(), asn.parametres(), pion.GetRole< PHY_RoleInterface_Location >().GetPosition() )
+    : MIL_Mission_ABC       ( type, pion.GetKnowledge(), asn.parameters(), pion.GetRole< PHY_RoleInterface_Location >().GetPosition() )
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
 {
@@ -129,9 +129,9 @@ void MIL_PionMission::Stop( boost::shared_ptr< MIL_Mission_ABC > self )
 void MIL_PionMission::SendNoMission( const MIL_AgentPion& pion )
 {
     client::UnitOrder asn;
-    asn().set_oid( pion.GetID() );
-    asn().set_mission( 0 );
-    asn().mutable_parametres();
+    asn().mutable_tasker()->set_id( pion.GetID() );
+    asn().mutable_type()->set_id( 0 );
+    asn().mutable_parameters();
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -142,9 +142,9 @@ void MIL_PionMission::SendNoMission( const MIL_AgentPion& pion )
 void MIL_PionMission::Send() const
 {
     client::UnitOrder asn;
-    asn().set_oid( pion_.GetID() );
-    asn().set_mission( GetType().GetID() );
-    Serialize( *asn().mutable_parametres() );
+    asn().mutable_tasker()->set_id( pion_.GetID() );
+    asn().mutable_type()->set_id( GetType().GetID() );
+    Serialize( *asn().mutable_parameters() );
     asn.Send( NET_Publisher_ABC::Publisher() );
     //asn().Clear();
 }

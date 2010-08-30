@@ -431,7 +431,7 @@ void PHY_DotationGroupContainer::SendChangedState( client::UnitAttributes& asn )
     {
         const PHY_Dotation& dotation = **itDotation;
         MsgsSimToClient::ResourceDotations_ResourceDotation& asnRessource = *asn().mutable_dotation_eff_ressource()->add_elem();
-        asnRessource.set_ressource_id( dotation.GetCategory().GetMosID() );
+        asnRessource.mutable_type()->set_id( dotation.GetCategory().GetMosID() );
         asnRessource.set_quantite_disponible( (unsigned int)dotation.GetValue() );
     }
 }
@@ -457,7 +457,7 @@ void PHY_DotationGroupContainer::SendFullState( client::UnitAttributes& asn ) co
         {
             const PHY_Dotation& dotation = *itDotation->second;
             MsgsSimToClient::ResourceDotations_ResourceDotation& asnRessource = *asn().mutable_dotation_eff_ressource()->add_elem();
-            asnRessource.set_ressource_id( dotation.GetCategory().GetMosID() );
+            asnRessource.mutable_type()->set_id( dotation.GetCategory().GetMosID() );
             asnRessource.set_quantite_disponible( (unsigned int)dotation.GetValue() );
         }
     }

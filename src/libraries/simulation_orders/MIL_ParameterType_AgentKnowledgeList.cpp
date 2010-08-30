@@ -37,10 +37,8 @@ MIL_ParameterType_AgentKnowledgeList::~MIL_ParameterType_AgentKnowledgeList()
 //-----------------------------------------------------------------------------
 bool MIL_ParameterType_AgentKnowledgeList::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
-    // Check source
     if( !from.IsOfType( *this ) )
         return false;
-
     to.set_null_value( false );
     return from.ToAgentKnowledgeList( *to.mutable_value()->mutable_unitknowledgelist() );
 }

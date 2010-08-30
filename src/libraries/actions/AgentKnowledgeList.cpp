@@ -34,11 +34,11 @@ AgentKnowledgeList::AgentKnowledgeList( const OrderParameter& parameter )
 // Name: AgentKnowledgeList constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-AgentKnowledgeList::AgentKnowledgeList( const OrderParameter& parameter, const Common::MsgUnitKnowledgeList& message, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
+AgentKnowledgeList::AgentKnowledgeList( const OrderParameter& parameter, const Common::UnitKnowledgeIdList& message, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
     for( int i = 0; i < message.elem_size(); ++i )
-        AddParameter( *new AgentKnowledge( OrderParameter( tools::translate( "Parameter", "Agent knowledge %1" ).arg( i + 1 ).ascii(), "agentknowledge", false ), message.elem(i).oid(), converter, owner, controller ) );
+        AddParameter( *new AgentKnowledge( OrderParameter( tools::translate( "Parameter", "Agent knowledge %1" ).arg( i + 1 ).ascii(), "agentknowledeg", false ), message.elem(i).id(), converter, owner, controller ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,12 +73,12 @@ namespace
 {
     struct AsnSerializer : public ParameterVisitor_ABC
     {
-        explicit AsnSerializer( Common::MsgUnitKnowledgeList& message ) : message_( &message ) {}
+        explicit AsnSerializer( Common::UnitKnowledgeIdList& message ) : message_( &message ) {}
         virtual void Visit( const AgentKnowledge& param )
         {
             param.CommitTo( *message_->add_elem() );
         }
-        Common::MsgUnitKnowledgeList* message_;
+        Common::UnitKnowledgeIdList* message_;
     };
 }
 
@@ -89,7 +89,7 @@ namespace
 void AgentKnowledgeList::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
-    Common::MsgUnitKnowledgeList* list = message.mutable_value()->mutable_unitknowledgelist();
+    Common::UnitKnowledgeIdList* list = message.mutable_value()->mutable_unitknowledgelist();
     if( IsSet() )
     {
         AsnSerializer serializer( *list );

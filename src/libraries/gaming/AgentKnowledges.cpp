@@ -45,10 +45,10 @@ AgentKnowledges::~AgentKnowledges()
 // -----------------------------------------------------------------------------
 void AgentKnowledges::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeCreation& message )
 {
-    if( ! Find( message.oid() ) )
+    if( ! Find( message.id().id() ) )
     {
         AgentKnowledge_ABC* pAgentKnowledge = factory_.CreateAgentKnowledge( group_, message );
-        Register( message.oid(), *pAgentKnowledge );
+        Register( message.id().id(), *pAgentKnowledge );
         controller_.Update( *this );
     }
 }
@@ -59,7 +59,7 @@ void AgentKnowledges::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeCreation&
 // -----------------------------------------------------------------------------
 void AgentKnowledges::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message )
 {
-    Get( message.oid() ).Update( message );
+    Get( message.id().id() ).Update( message );
     controller_.Update( *this );
 }
 
@@ -69,7 +69,7 @@ void AgentKnowledges::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& m
 // -----------------------------------------------------------------------------
 void AgentKnowledges::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeDestruction& message )
 {
-    delete Find( message.oid() );
-    Remove( message.oid() );
+    delete Find( message.id().id() );
+    Remove( message.id().id() );
     controller_.Update( *this );
 }

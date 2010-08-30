@@ -106,7 +106,7 @@ QDateTime ReportFactory::GetTime( const Common::MsgDateTime& d ) const
 // -----------------------------------------------------------------------------
 Report* ReportFactory::CreateReport( const kernel::Entity_ABC& agent, const MsgsSimToClient::MsgReport& message ) const
 {
-    ReportTemplate* report = Find( message.cr() );
+    ReportTemplate* report = Find( message.id().id() );
     if( !report )
         return 0;
     Report::E_Type type = Report::eRC;
@@ -125,7 +125,7 @@ Report* ReportFactory::CreateReport( const kernel::Entity_ABC& agent, const Msgs
 // -----------------------------------------------------------------------------
 std::string ReportFactory::FormatReport( const MsgsSimToClient::MsgReport& asn ) const
 {
-    ReportTemplate* report = Find( asn.cr() );
+    ReportTemplate* report = Find( asn.id().id() );
     if( report )
         return report->RenderMessage( asn.parametres() ).ascii();
     return std::string();
@@ -153,19 +153,19 @@ QString ReportFactory::RenderParameter( const Common::MsgMissionParameter& value
         if( value.value().has_areal() )
             return QString::number( value.value().areal() );
         if( value.value().has_unit() )
-            return rcResolver_.CreateLink( Agent_ABC::typeName_, value.value().unit().oid() );
+            return rcResolver_.CreateLink( Agent_ABC::typeName_, value.value().unit().id() );
         if( value.value().has_unitknowledge() )
-            return rcResolver_.CreateLink( AgentKnowledge_ABC::typeName_, value.value().unitknowledge().oid() );
+            return rcResolver_.CreateLink( AgentKnowledge_ABC::typeName_, value.value().unitknowledge().id() );
         if( value.value().has_objectknowledge() )
-            return rcResolver_.CreateLink( ObjectKnowledge_ABC::typeName_, value.value().objectknowledge().oid() );
+            return rcResolver_.CreateLink( ObjectKnowledge_ABC::typeName_, value.value().objectknowledge().id() );
         if( value.value().has_populationknowledge() )
-            return rcResolver_.CreateLink( PopulationKnowledge_ABC::typeName_, value.value().populationknowledge().oid() );
+            return rcResolver_.CreateLink( PopulationKnowledge_ABC::typeName_, value.value().populationknowledge().id() );
         if( value.value().has_equipmenttype() )
-            return equipmentResolver_.Get( value.value().equipmenttype().equipment() ).GetName().c_str();
-        if( value.value().has_dotationtype() )
-            return dotationResolver_.Get( value.value().dotationtype().oid() ).GetCategory().c_str();
+            return equipmentResolver_.Get( value.value().equipmenttype().id() ).GetName().c_str();
+        if( value.value().has_resourcetype() )
+            return dotationResolver_.Get( value.value().resourcetype().id() ).GetCategory().c_str();
         if( value.value().has_tirindirect() )
-            return QString::number( value.value().tirindirect() );
+            return QString::number( value.value().tirindirect().id() );
         if( value.value().has_acharstr() )
             return QString( value.value().acharstr().c_str() );
     }

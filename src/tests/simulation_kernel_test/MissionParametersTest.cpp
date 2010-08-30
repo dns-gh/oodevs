@@ -69,8 +69,8 @@ using namespace Common;
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_AgentKnowledgeListParameter_ToASN )
 {
-    MsgUnitKnowledgeList asnIn;
-    asnIn.add_elem()->set_oid( 0 );
+    UnitKnowledgeIdList asnIn;
+    asnIn.add_elem()->set_id( 0 );
     MockDEC_KnowledgeResolver_ABC resolver;
     MockMIL_Time_ABC time;
     MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
@@ -78,10 +78,10 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentKnowledgeListParameter_ToASN )
     MOCK_EXPECT( resolver, ResolveKnowledgeAgentFromMessage ).once().returns( knowledge );
     MIL_AgentKnowledgeListParameter param( asnIn, resolver );
     asnIn.Clear();
-    MsgUnitKnowledgeList asnOut;
+    UnitKnowledgeIdList asnOut;
     BOOST_CHECK_EQUAL( true, param.ToAgentKnowledgeList( asnOut ) );
     BOOST_CHECK_EQUAL( 1, asnOut.elem_size() );
-    BOOST_CHECK_EQUAL( 0u, asnOut.elem( 0 ).oid() ); // $$$$ LDC: = knowledge's id
+    BOOST_CHECK_EQUAL( 0, asnOut.elem( 0 ).id() ); // $$$$ LDC: = knowledge's id
     asnOut.Clear();
 }
 
@@ -91,17 +91,17 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentKnowledgeListParameter_ToASN )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_AgentKnowledgeParameter_ToASN )
 {
-    MsgUnitKnowledge asnIn;
-    asnIn.set_oid( 0 );
+    UnitKnowledgeId asnIn;
+    asnIn.set_id( 0 );
     MockDEC_KnowledgeResolver_ABC resolver;
     MockMIL_Time_ABC time;
     MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
     boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent() ); // $$$$ LDC: id == 0... :(
     MOCK_EXPECT( resolver, ResolveKnowledgeAgentFromMessage ).once().returns( knowledge );
     MIL_AgentKnowledgeParameter param( asnIn, resolver );
-    MsgUnitKnowledge asnOut;
+    UnitKnowledgeId asnOut;
     BOOST_CHECK_EQUAL( true, param.ToAgentKnowledge( asnOut ) );
-    BOOST_CHECK_EQUAL( 0u, asnOut.oid() ); // $$$$ LDC: = knowledge's id
+    BOOST_CHECK_EQUAL( 0u, asnOut.id() ); // $$$$ LDC: = knowledge's id
 }
 
 // -----------------------------------------------------------------------------
@@ -110,8 +110,8 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentKnowledgeParameter_ToASN )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_AgentListParameter_ToASN )
 {
-    MsgUnitList asnIn;
-    asnIn.add_elem()->set_oid( 12 );
+    UnitIdList asnIn;
+    asnIn.add_elem()->set_id( 12 );
     MockMIL_EntityManager_ABC entityManager;
     MIL_EffectManager effectManager;
     FixturePion fixture( effectManager );
@@ -120,10 +120,10 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentListParameter_ToASN )
     MOCK_EXPECT( entityManager, FindAgentPion ).once().returns( fixture.pPion_.get() );
     MIL_AgentListParameter param( asnIn, entityManager );
     asnIn.Clear();
-    MsgUnitList asnOut;
+    UnitIdList asnOut;
     BOOST_CHECK_EQUAL( true, param.ToAgentList( asnOut ) );
     BOOST_CHECK_EQUAL( 1, asnOut.elem_size() );
-    BOOST_CHECK_EQUAL( 12, asnOut.elem(0).oid() );
+    BOOST_CHECK_EQUAL( 12, asnOut.elem(0).id() );
     asnOut.Clear();
 }
 
@@ -134,8 +134,8 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentListParameter_ToASN )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_AgentParameter_ToASN )
 {
-    MsgUnit asnIn;
-    asnIn.set_oid( 12 );
+    UnitId asnIn;
+    asnIn.set_id( 12 );
     MockMIL_EntityManager_ABC entityManager;
     MIL_EffectManager effectManager;
     FixturePion fixture( effectManager );
@@ -143,9 +143,9 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentParameter_ToASN )
     fixture.pPion_->RegisterRole( *new DEC_RolePion_Decision( *fixture.pPion_, database ) );
     MOCK_EXPECT( entityManager, FindAgentPion ).once().returns( fixture.pPion_.get() );
     MIL_AgentParameter param( asnIn, entityManager );
-    MsgUnit asnOut;
+    UnitId asnOut;
     BOOST_CHECK_EQUAL( true, param.ToAgent( asnOut ) );
-    BOOST_CHECK_EQUAL( 12, asnOut.oid() );
+    BOOST_CHECK_EQUAL( 12, asnOut.id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -154,16 +154,16 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentParameter_ToASN )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_AutomatParameter_ToASN )
 {
-    MsgAutomat asnIn;
-    asnIn.set_oid( 0 );
+    AutomatId asnIn;
+    asnIn.set_id( 0 );
     MockMIL_EntityManager_ABC entityManager;
     FixtureAutomate fixture;
     //fixture.pAutomat_->RegisterRole( *new DEC_AutomateDecision( *fixture.pAutomat_ ) );
     MOCK_EXPECT( entityManager, FindAutomate ).once().returns( fixture.pAutomat_.get() );
     MIL_AutomatParameter param( asnIn, entityManager );
-    MsgAutomat asnOut;
+    AutomatId asnOut;
     BOOST_CHECK_EQUAL( true, param.ToAutomat( asnOut ) );
-    BOOST_CHECK_EQUAL( 0, asnOut.oid() );
+    BOOST_CHECK_EQUAL( 0, asnOut.id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,18 +172,18 @@ BOOST_AUTO_TEST_CASE( TestMIL_AutomatParameter_ToASN )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_AutomatListParameter_ToASN )
 {
-    MsgAutomatList asnIn;
-    asnIn.add_elem()->set_oid( 0 );
+    AutomatIdList asnIn;
+    asnIn.add_elem()->set_id( 0 );
     MockMIL_EntityManager_ABC entityManager;
     FixtureAutomate fixture;
     //fixture.pAutomat_->RegisterRole( *new DEC_AutomateDecision( *fixture.pAutomat_ ) );
     MOCK_EXPECT( entityManager, FindAutomate ).once().returns( fixture.pAutomat_.get() );
     MIL_AutomatListParameter param( asnIn, entityManager );
     asnIn.Clear();
-    MsgAutomatList asnOut;
+    AutomatIdList asnOut;
     BOOST_CHECK_EQUAL( true, param.ToAutomatList( asnOut ) );
     BOOST_CHECK_EQUAL( 1, asnOut.elem_size() );
-    BOOST_CHECK_EQUAL( 0, asnOut.elem(0).oid() );
+    BOOST_CHECK_EQUAL( 0, asnOut.elem(0).id() );
     asnOut.Clear();
 }
 
@@ -278,12 +278,12 @@ BOOST_AUTO_TEST_CASE( TestMIL_DotationTypeParameter_ToASN )
         "</dotations>" );
     MockMIL_EntityManager_ABC entityManager;
     PHY_DotationType::Initialize( xis );
-    MsgDotationType asnIn;
-    asnIn.set_oid( 42 );
+    ResourceType asnIn;
+    asnIn.set_id( 42 );
     MIL_DotationTypeParameter param( asnIn );
-    MsgDotationType asnOut;
+    ResourceType asnOut;
     BOOST_CHECK_EQUAL( true, param.ToDotationType( asnOut ) );
-    BOOST_CHECK_EQUAL( 42u, asnOut.oid() );
+    BOOST_CHECK_EQUAL( 42u, asnOut.id() );
     UrbanType::Terminate();
 }
 
@@ -472,8 +472,8 @@ BOOST_AUTO_TEST_CASE( TestMIL_LogMaintenancePrioritiesParameter_ToASN )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_ObjectKnowledgeParameter_ToASN )
 {
-    MsgObjectKnowledge asnIn;
-    asnIn.set_oid( 0 );
+    ObjectKnowledgeId asnIn;
+    asnIn.set_id( 0 );
     MockDEC_KnowledgeResolver_ABC resolver;
     MockMIL_Time_ABC time;
     MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
@@ -481,9 +481,9 @@ BOOST_AUTO_TEST_CASE( TestMIL_ObjectKnowledgeParameter_ToASN )
     MOCK_EXPECT( resolver, ResolveKnowledgeObjectFromMessage ).once().returns( knowledge );
 
     MIL_ObjectKnowledgeParameter param( asnIn, resolver );
-    MsgObjectKnowledge asnOut;
+    ObjectKnowledgeId asnOut;
     BOOST_CHECK_EQUAL( true, param.ToObjectKnowledge( asnOut ) );
-    BOOST_CHECK_EQUAL( 0u, asnOut.oid() ); // $$$$ LDC: = knowledge's id
+    BOOST_CHECK_EQUAL( 0u, asnOut.id() ); // $$$$ LDC: = knowledge's id
 }
 
 // -----------------------------------------------------------------------------
@@ -492,8 +492,8 @@ BOOST_AUTO_TEST_CASE( TestMIL_ObjectKnowledgeParameter_ToASN )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_ObjectKnowledgeListParameter_ToASN )
 {
-    MsgObjectKnowledgeList asnIn;
-    asnIn.add_elem()->set_oid( 0 );
+    ObjectKnowledgeIdList asnIn;
+    asnIn.add_elem()->set_id( 0 );
     MockDEC_KnowledgeResolver_ABC resolver;
     MockMIL_Time_ABC time;
     MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
@@ -502,10 +502,10 @@ BOOST_AUTO_TEST_CASE( TestMIL_ObjectKnowledgeListParameter_ToASN )
 
     MIL_ObjectKnowledgeListParameter param( asnIn, resolver );
     asnIn.clear_elem();
-    MsgObjectKnowledgeList asnOut;
+    ObjectKnowledgeIdList asnOut;
     BOOST_CHECK_EQUAL( true, param.ToObjectKnowledgeList( asnOut ) );
     BOOST_CHECK_EQUAL( 1, asnOut.elem_size() );
-    BOOST_CHECK_EQUAL( 0u, asnOut.elem(0).oid() ); // $$$$ LDC: = knowledge's id
+    BOOST_CHECK_EQUAL( 0u, asnOut.elem(0).id() ); // $$$$ LDC: = knowledge's id
     asnOut.clear_elem();
 }
 
@@ -594,7 +594,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkParameter_ToASN )
     FillRlyehLocation( *asnIn.mutable_position() );
     asnIn.set_type_obstacle( ObstacleType_DemolitionTargetType_reserved );
     asnIn.set_densite( 1 );
-    asnIn.set_tc2( 0 );
+    asnIn.mutable_tc2()->set_id( 0 );
     asnIn.set_activity_time( 2 );
     MockMIL_EntityManager_ABC entityManager;
     MockMIL_ObjectType_ABC objectType;
@@ -610,7 +610,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkParameter_ToASN )
     CompareLocationToRlyeh( *asnOut.mutable_position() );
     BOOST_CHECK_EQUAL( ObstacleType_DemolitionTargetType_reserved, asnOut.type_obstacle() );
     BOOST_CHECK_EQUAL( 1, asnOut.densite() );
-    BOOST_CHECK_EQUAL( 0u, asnOut.tc2() );
+    BOOST_CHECK_EQUAL( 0u, asnOut.tc2().id() );
     BOOST_CHECK_EQUAL( 2, asnOut.activity_time() );
     TER_World::DestroyWorld();
 }
@@ -631,7 +631,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkListParameter_ToASN )
         FillRlyehLocation( *asnIn.mutable_elem(0)->mutable_position());
         asnIn.mutable_elem(0)->set_type_obstacle( ObstacleType_DemolitionTargetType_reserved );
         asnIn.mutable_elem(0)->set_densite( 1 );
-        asnIn.mutable_elem(0)->set_tc2( 0 );
+        asnIn.mutable_elem(0)->mutable_tc2()->set_id( 0 );
         asnIn.mutable_elem(0)->set_activity_time( 2 );
         MockMIL_EntityManager_ABC entityManager;
         MockMIL_ObjectType_ABC objectType;
@@ -649,7 +649,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkListParameter_ToASN )
         CompareLocationToRlyeh( *asnOut.mutable_elem(0)->mutable_position() );
         BOOST_CHECK_EQUAL( ObstacleType_DemolitionTargetType_reserved, asnOut.elem(0).type_obstacle() );
         BOOST_CHECK_EQUAL( 1, asnOut.elem(0).densite() );
-        BOOST_CHECK_EQUAL( 0u, asnOut.elem(0).tc2() );
+        BOOST_CHECK_EQUAL( 0u, asnOut.elem(0).tc2().id() );
         BOOST_CHECK_EQUAL( 2, asnOut.elem(0).activity_time() );
     }
     catch( ... )
@@ -745,17 +745,17 @@ BOOST_AUTO_TEST_CASE( TestMIL_PolygonListParameter_ToASN )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_PopulationKnowledgeParameter_ToASN )
 {
-    MsgPopulationKnowledge asnIn;
-    asnIn.set_oid( 0 );
+    PopulationKnowledgeId asnIn;
+    asnIn.set_id( 0 );
     MockDEC_KnowledgeResolver_ABC resolver;
     MockMIL_Time_ABC time;
     MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
     DEC_Knowledge_Population knowledge; // $$$$ LDC: id == 0... :(
     MOCK_EXPECT( resolver, ResolveKnowledgePopulationFromMessage ).once().returns( &knowledge );
     MIL_PopulationKnowledgeParameter param( asnIn, resolver );
-    MsgPopulationKnowledge asnOut;
+    PopulationKnowledgeId asnOut;
     BOOST_CHECK_EQUAL( true, param.ToPopulationKnowledge( asnOut ) );
-    BOOST_CHECK_EQUAL( 0u, asnOut.oid() ); // $$$$ LDC: = knowledge's id
+    BOOST_CHECK_EQUAL( 0u, asnOut.id() ); // $$$$ LDC: = knowledge's id
 }
 
 // -----------------------------------------------------------------------------
@@ -790,19 +790,19 @@ BOOST_AUTO_TEST_CASE( TestMIL_StringParameter_ToASN )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_TirIndirectParameter_ToASN )
 {
-    MsgUnitFire asnIn;
-    asnIn.set_oid( 33 );
+    FireId asnIn;
+    asnIn.set_id( 33 );
     MIL_TirIndirectParameter param( asnIn );
-    MsgUnitFire asnOut;
+    FireId asnOut;
     BOOST_CHECK_EQUAL( true, param.ToIndirectFire( asnOut ) );
-    BOOST_CHECK_EQUAL( 33, asnOut.oid() );
+    BOOST_CHECK_EQUAL( 33, asnOut.id() );
 }
 
 namespace
 {
     void AddNullParameter( Common::MsgUnitOrder& order )
     {
-        order.mutable_parametres()->add_elem()->set_null_value( true );
+        order.mutable_parameters()->add_elem()->set_null_value( true );
     }
 
     void AddPoint( Common::MsgLocation& location, const std::string& /*utm*/ ) // $$$$ _RC_ LGY 2010-08-10: ???
@@ -819,11 +819,11 @@ namespace
 BOOST_AUTO_TEST_CASE( TestMIL_MissionWithNullParameters )
 {
     Common::MsgUnitOrder order;
-    order.set_mission( 173 );
-    order.set_oid( 159 );
+    order.mutable_type()->set_id( 173 );
+    order.mutable_tasker()->set_id( 159 );
     {
         // danger direction
-        Common::MsgMissionParameter& parameter = *order.mutable_parametres()->add_elem();
+        Common::MsgMissionParameter& parameter = *order.mutable_parameters()->add_elem();
         parameter.set_null_value( false );
         parameter.mutable_value()->mutable_heading()->set_heading( 128 );
     }
@@ -833,7 +833,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_MissionWithNullParameters )
     AddNullParameter( order ); // intelligences
     {
         // polygon area
-        Common::MsgMissionParameter& parameter = *order.mutable_parametres()->add_elem();
+        Common::MsgMissionParameter& parameter = *order.mutable_parameters()->add_elem();
         parameter.set_null_value( false );
         Common::MsgLocation& location = *parameter.mutable_value()->mutable_polygon()->mutable_location();
         location.set_type( Common::MsgLocation::polygon );

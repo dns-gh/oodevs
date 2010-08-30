@@ -108,9 +108,9 @@ void ObjectKnowledge::CommitTo( Common::MsgMissionParameter& message ) const
 // Name: ObjectKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::CommitTo( Common::MsgObjectKnowledge& message ) const
+void ObjectKnowledge::CommitTo( Common::ObjectKnowledgeId& message ) const
 {
-    Entity< ObjectKnowledge_ABC >::CommitTo< Common::MsgObjectKnowledge >( message );
+    Entity< ObjectKnowledge_ABC >::CommitTo< Common::ObjectKnowledgeId >( message );
 }
 
 // -----------------------------------------------------------------------------

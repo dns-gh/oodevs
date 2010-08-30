@@ -93,14 +93,14 @@ void NET_RolePion_Dotations::SendMsg( client::UnitAttributes& asnMsg ) const
 {
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 
-    if( asnMsg().has_pions_renforcant()  && asnMsg().pions_renforcant().elem_size() > 0 )
-        asnMsg().mutable_pions_renforcant()->Clear();
+    if( asnMsg().has_reinforcements()  && asnMsg().reinforcements().elem_size() > 0 )
+        asnMsg().mutable_reinforcements()->Clear();
 
     if( asnMsg().has_contamine_par_agents_nbc()  && asnMsg().contamine_par_agents_nbc().elem_size() > 0 )
         asnMsg().mutable_contamine_par_agents_nbc()->Clear();
 
-    if( asnMsg().has_pions_transportes()  && asnMsg().pions_transportes().elem_size() > 0 )
-        asnMsg().mutable_pions_transportes()->Clear();
+    if( asnMsg().has_transported_units()  && asnMsg().transported_units().elem_size() > 0 )
+        asnMsg().mutable_transported_units()->Clear();
 
     if( asnMsg().has_dotation_eff_ressource()  && asnMsg().dotation_eff_ressource().elem_size() > 0 )
         asnMsg().mutable_dotation_eff_ressource()->Clear();
@@ -128,7 +128,7 @@ void NET_RolePion_Dotations::SendChangedState() const
         return;
 
     client::UnitAttributes msg;
-    msg().set_oid( pion_.GetID() );
+    msg().mutable_id()->set_id( pion_.GetID() );
     pion_.Apply( &network::NetworkUnitMessageNotificationHandler_ABC::SendChangedState, msg );
 
     bool bIsDead = pion_.IsDead();
@@ -157,7 +157,7 @@ void NET_RolePion_Dotations::SendFullState() const
     // MsgUnitAttributes
 
     client::UnitAttributes msg;
-    msg().set_oid       ( pion_.GetID() );
+    msg().mutable_id()->set_id( pion_.GetID() );
     msg().set_mort      ( bLastStateDead_ = pion_.IsDead() );
     msg().set_neutralise( bLastStateNeutralized_ = pion_.IsNeutralized() );
 

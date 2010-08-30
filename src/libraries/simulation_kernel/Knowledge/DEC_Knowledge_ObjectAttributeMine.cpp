@@ -117,7 +117,7 @@ void DEC_Knowledge_ObjectAttributeMine::Send( Common::MsgObjectAttributes& asn )
 {
     asn.mutable_mine()->set_percentage( (unsigned int)( rMiningPercentage_ * 100. ) );
     asn.mutable_mine()->set_dotation_nbr( nNbrDotationForMining_ );
-    asn.mutable_mine()->set_dotation_type( nDotationType_ );
+    asn.mutable_mine()->mutable_resource()->set_id( nDotationType_ );
 }
 
 // =============================================================================

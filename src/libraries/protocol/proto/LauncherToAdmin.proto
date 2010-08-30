@@ -1,62 +1,66 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
 package MsgsLauncherToAdmin;
 
 import "Common.proto"; 
 import "Version.proto";
 
-message MsgConnectionAck
-{
+message MsgConnectionAck {
     enum ErrorCode {
-        success				= 0;
-        invalid_connection			= 1;
-        incompatible_protocol_version	= 2; 
+        success                         = 0;
+        invalid_connection              = 1;
+        incompatible_protocol_version   = 2; 
         exercise_already_running		= 3;
-
     }
-    required ErrorCode error_code		         	= 1;
-    optional int32 context		                	= 2; 
-    required Version.ProtocolVersion server_version  	= 3;
-    required Common.MsgNetworkAddress dispatcher_address  	= 4;
+    required ErrorCode                error_code         = 1;
+    optional int32                    context            = 2; 
+    required Version.ProtocolVersion  server_version     = 3;
+    required Common.MsgNetworkAddress dispatcher_address = 4;
 }
 
 message MsgExercicesListResponse {
     enum ErrorCode {
-        success				= 0;
-        failure				= 1;
+        success = 0;
+        failure	= 1;
     }
-    required ErrorCode  error_code			= 1;
-    repeated Common.MsgExercise exercise		= 2;
+    required ErrorCode          error_code  = 1;
+    repeated Common.MsgExercise exercise    = 2;
 }
 
-message MsgControlStartAck 
-{
+message MsgControlStartAck  {
     enum ErrorCode {
-        success				= 0;
-        bad_exercise_name			= 1;
-        exercise_already_running		= 2;
+        success                  = 0;
+        bad_exercise_name        = 1;
+        exercise_already_running = 2;
     }
-    required ErrorCode  error_code			= 1;
-    required Common.MsgExercise exercise		= 2;
+    required ErrorCode          error_code = 1;
+    required Common.MsgExercise exercise   = 2;
 }
 
-message MsgControlStopAck 
-{
+message MsgControlStopAck {
     enum ErrorCode {
-        success				= 0;
-        bad_exercise_name			= 1; 
-        exercise_not_running			= 2;
-
+        success              = 0;
+        bad_exercise_name    = 1; 
+        exercise_not_running = 2;
     }
-    required ErrorCode  error_code					= 1;
-    required Common.MsgExercise exercise				= 2;
-    optional Common.EnumSimulationState simulation_state		= 3;
+    required ErrorCode                  error_code       = 1;
+    required Common.MsgExercise         exercise         = 2;
+    optional Common.EnumSimulationState simulation_state = 3;
 }
 
 message MsgLauncherToAdmin {
     message Content {
-        optional MsgConnectionAck           connection_ack = 1;
+        optional MsgConnectionAck           connection_ack         = 1;
         optional MsgExercicesListResponse   exercise_list_response = 2;
-        optional MsgControlStartAck         control_start_ack = 3;
-        optional MsgControlStopAck          control_stop_ack = 4;
+        optional MsgControlStartAck         control_start_ack      = 3;
+        optional MsgControlStopAck          control_stop_ack       = 4;
     }
     optional int32   context = 1 [default = 0];
     required Content message = 2;

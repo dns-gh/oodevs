@@ -103,7 +103,7 @@ void PHY_LocalMeteo::SendCreation() const
 {
     client::ControlLocalMeteoCreation msg;
     Common::MsgMeteoAttributes* att = msg().mutable_attributes();
-    msg().set_oid( id_ );
+    msg().mutable_id()->set_id( id_ );
     att->set_wind_speed( static_cast< int >( wind_.rWindSpeed_ / conversionFactor_ ) );
     NET_ASN_Tools::WriteDirection(wind_.vWindDirection_, *(att->mutable_wind_direction()) );
     att->set_cloud_floor (nPlancherCouvertureNuageuse_ );
@@ -111,7 +111,7 @@ void PHY_LocalMeteo::SendCreation() const
     att->set_cloud_density( static_cast< int >( rDensiteCouvertureNuageuse_ * 100. + 0.01 ) );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( 0 );
-    att->set_lighting(Common::globalMeteoType_ );
+    //att->set_lighting(Common::globalMeteoType_ );
     Common::MsgCoordLatLong longlat;
     MIL_Tools::ConvertCoordSimToMos( downRight_, longlat);
     msg().mutable_bottom_right_coordinate()->set_latitude( longlat.latitude()  );
@@ -129,6 +129,6 @@ void PHY_LocalMeteo::SendCreation() const
 void PHY_LocalMeteo::SendDestruction()
 {
     client::ControlLocalMeteoDestruction msg;
-    msg().set_oid( id_ );
+    msg().mutable_id()->set_id( id_ );
     msg.Send( NET_Publisher_ABC::Publisher() );
 }

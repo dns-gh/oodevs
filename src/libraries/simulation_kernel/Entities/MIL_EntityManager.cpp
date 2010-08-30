@@ -100,6 +100,7 @@
 #pragma warning( pop )
 
 #include "protocol/ClientSenders.h"
+#include "protocol/protocol.h"
 
 namespace bfs = boost::filesystem;
 
@@ -109,6 +110,23 @@ using namespace MsgsClientToSim;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_EntityManager )
 
+namespace
+{
+
+long TaskerToId( const Tasker& tasker )
+{
+    if( tasker.has_unit() )
+        return tasker.unit().id();
+    if( tasker.has_automat() )
+        return tasker.automat().id();
+    if( tasker.has_population() )
+        return tasker.population().id();
+    if( tasker.has_formation() )
+        return tasker.formation().id();
+    throw( std::exception( "Misformed tasker in protocol message" ) );
+}
+
+}
 
 template< typename Archive >
 void save_construct_data( Archive& /*archive*/, const MIL_EntityManager* /*entities*/, const unsigned int /*version*/ )
@@ -748,11 +766,11 @@ void MIL_EntityManager::SendStateToNewClient() const
 void MIL_EntityManager::OnReceiveMsgUnitOrder( const Common::MsgUnitOrder& message, unsigned int nCtx )
 {
     client::UnitOrderAck ack;
-    ack().set_oid( message.oid() );
+    ack().mutable_tasker()->set_id( message.tasker().id() );
     ack().set_error_code( MsgsSimToClient::OrderAck_ErrorCode_no_error );
     try
     {
-        MIL_AgentPion* pPion = FindAgentPion( message.oid() );
+        MIL_AgentPion* pPion = FindAgentPion( message.tasker().id() );
         if( !pPion )
             throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_unit );
         pPion->OnReceiveMsgOrder( message );
@@ -771,11 +789,11 @@ void MIL_EntityManager::OnReceiveMsgUnitOrder( const Common::MsgUnitOrder& messa
 void MIL_EntityManager::OnReceiveMsgAutomatOrder( const Common::MsgAutomatOrder& message, unsigned int nCtx )
 {
     client::AutomatOrderAck ack;
-    ack().set_oid       ( message.oid() );
+    ack().mutable_tasker()->set_id( message.tasker().id() );
     ack().set_error_code( MsgsSimToClient::OrderAck_ErrorCode_no_error );
     try
     {
-        MIL_Automate* pAutomate = FindAutomate( message.oid() );
+        MIL_Automate* pAutomate = FindAutomate( message.tasker().id() );
         if( !pAutomate )
             throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_unit );
         pAutomate->OnReceiveMsgOrder( message );
@@ -794,7 +812,7 @@ void MIL_EntityManager::OnReceiveMsgAutomatOrder( const Common::MsgAutomatOrder&
 void MIL_EntityManager::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgUnitMagicAction& message, unsigned int nCtx )
 {
     client::UnitMagicActionAck ack;
-    ack().set_oid( message.oid() );
+    ack().mutable_id()->set_id( message.id().id() );
     ack().set_error_code( MsgsSimToClient::UnitActionAck_ErrorCode_no_error );
     try
     {
@@ -804,7 +822,7 @@ void MIL_EntityManager::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgU
             ProcessMsgMagicActionMoveTo( message, nCtx );
             break;
         case MsgsClientToSim::MsgUnitMagicAction_Type_unit_creation :
-            if( MIL_Automate*  pAutomate = FindAutomate ( message.oid() ) )
+            if( MIL_Automate*  pAutomate = FindAutomate ( message.id().id() ) )
                 pAutomate->OnReceiveMsgUnitCreationRequest( message );
             else
                 throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_unit );
@@ -813,7 +831,7 @@ void MIL_EntityManager::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgU
         case MsgsClientToSim::MsgUnitMagicAction_Type_population_kill:
         case MsgsClientToSim::MsgUnitMagicAction_Type_population_resurrect:
         case MsgsClientToSim::MsgUnitMagicAction_Type_population_change_attitude:
-            if( MIL_Population* pPopulation = pPopulation = populationFactory_->Find ( message.oid() ) )
+            if( MIL_Population* pPopulation = pPopulation = populationFactory_->Find ( message.id().id() ) )
                 pPopulation->OnReceiveMsgPopulationMagicAction( message );
             else
                 throw NET_AsnException< MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode >( MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode_error_invalid_unit );
@@ -841,9 +859,9 @@ void MIL_EntityManager::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgU
             ProcessMsgLogSupplyChangeQuotas( message, nCtx );
             break;
         default:
-            if( MIL_Automate*  pAutomate = FindAutomate ( message.oid() ) )
+            if( MIL_Automate*  pAutomate = FindAutomate ( message.id().id() ) )
                 pAutomate->OnReceiveMsgUnitMagicAction( message, *armyFactory_ );
-            else if( MIL_AgentPion* pPion = FindAgentPion( message.oid() ) )
+            else if( MIL_AgentPion* pPion = FindAgentPion( message.id().id() ) )
                 pPion->OnReceiveMsgUnitMagicAction( message, *armyFactory_ );
             else
                 throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_unit );
@@ -864,7 +882,7 @@ void MIL_EntityManager::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgU
 void MIL_EntityManager::OnReceiveMsgKnowledgeMagicAction( const MsgsClientToSim::MsgKnowledgeMagicAction& message, unsigned int nCtx )
 {
     client::KnowledgeGroupMagicActionAck ack;
-    ack().set_oid( message.oid() );
+    ack().mutable_id()->set_id( message.id().id() );
     ack().set_error_code( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_no_error );
     try
     {
@@ -895,11 +913,11 @@ void MIL_EntityManager::OnReceiveMsgKnowledgeMagicAction( const MsgsClientToSim:
 void MIL_EntityManager::OnReceiveMsgPopulationOrder( const Common::MsgPopulationOrder& message, unsigned int nCtx )
 {
     client::PopulationOrderAck ack;
-    ack().set_oid( message.oid() );
+    ack().mutable_tasker()->set_id( message.tasker().id() );
     ack().set_error_code( MsgsSimToClient::OrderAck_ErrorCode_no_error );
     try
     {
-        MIL_Population* pPopulation = populationFactory_->Find( message.oid() );
+        MIL_Population* pPopulation = populationFactory_->Find( message.tasker().id() );
         if( !pPopulation )
             throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_unit );
         pPopulation->OnReceiveMsgOrder( message );
@@ -918,17 +936,27 @@ void MIL_EntityManager::OnReceiveMsgPopulationOrder( const Common::MsgPopulation
 void MIL_EntityManager::OnReceiveMsgFragOrder( const MsgsClientToSim::MsgFragOrder& message, unsigned int nCtx )
 {
     client::FragOrderAck ack;
-    ack().set_oid( message.oid() );
+    unsigned int taskerId ( TaskerToId( message.tasker() ) );
+
     ack().set_error_code( MsgsSimToClient::OrderAck_ErrorCode_no_error );
 
     try
     {
-        if( MIL_Automate* pAutomate = FindAutomate  ( message.oid() ) )
+        if( MIL_Automate* pAutomate = FindAutomate  ( taskerId ) )
+        {
             pAutomate->OnReceiveMsgFragOrder( message );
-        else if( MIL_Population* pPopulation = populationFactory_->Find( message.oid() ) )
+            ack().mutable_tasker()->mutable_automat()->set_id( taskerId );
+        }
+        else if( MIL_Population* pPopulation = populationFactory_->Find( taskerId ) )
+        {
             pPopulation->OnReceiveMsgFragOrder( message );
-        else if( MIL_AgentPion* pPion = FindAgentPion ( message.oid() ) )
+            ack().mutable_tasker()->mutable_population()->set_id( taskerId );
+        }
+        else if( MIL_AgentPion* pPion = FindAgentPion ( taskerId ) )
+        {
             pPion->OnReceiveMsgFragOrder( message );
+            ack().mutable_tasker()->mutable_unit()->set_id( taskerId );
+        }
         else
             throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_unit );
     }
@@ -946,11 +974,11 @@ void MIL_EntityManager::OnReceiveMsgFragOrder( const MsgsClientToSim::MsgFragOrd
 void MIL_EntityManager::OnReceiveMsgSetAutomateMode( const MsgsClientToSim::MsgSetAutomatMode& message, unsigned int nCtx )
 {
     client::SetAutomatModeAck ack;
-    ack().set_oid( message.oid() );
+    ack().mutable_id()->set_id( message.automate().id() );
     ack().set_error_code( MsgsSimToClient::MsgSetAutomatModeAck_ErrorCode_no_error );
     try
     {
-        MIL_Automate* pAutomate = FindAutomate( message.oid() );
+        MIL_Automate* pAutomate = FindAutomate( message.automate().id() );
         if( !pAutomate )
             throw NET_AsnException< MsgsSimToClient::MsgSetAutomatModeAck_ErrorCode >( MsgsSimToClient::MsgSetAutomatModeAck_ErrorCode_error_invalid_unit );
         pAutomate->OnReceiveMsgSetAutomateMode( message );
@@ -972,7 +1000,7 @@ void MIL_EntityManager::OnReceiveMsgUnitCreationRequest( const MsgsClientToSim::
     ack().set_error( MsgsSimToClient::UnitActionAck_ErrorCode_no_error );
     try
     {
-        MIL_Automate* pAutomate = FindAutomate( message.oid_automate() );
+        MIL_Automate* pAutomate = FindAutomate( message.superior().id() );
         if( !pAutomate )
             throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_unit );
         pAutomate->OnReceiveMsgUnitCreationRequest( message );
@@ -1001,8 +1029,8 @@ void MIL_EntityManager::OnReceiveMsgObjectMagicAction( const MsgsClientToSim::Ms
 void MIL_EntityManager::OnReceiveMsgChangeDiplomacy( const MsgMagicAction& message, unsigned int nCtx )
 {
     client::ChangeDiplomacyAck ack;
-    ack().set_oid_camp1( message.parametres().elem( 0 ).value().identifier() );
-    ack().set_oid_camp2( message.parametres().elem( 1 ).value().identifier() );
+    ack().mutable_party1()->set_id( message.parametres().elem( 0 ).value().identifier() );
+    ack().mutable_party2()->set_id( message.parametres().elem( 1 ).value().identifier() );
     ack().set_diplomatie( ( Common::EnumDiplomacy ) message.parametres().elem( 2 ).value().enumeration() );
     ack().set_error_code( MsgsSimToClient::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode_no_error_diplomacy );
     try
@@ -1039,7 +1067,7 @@ void MIL_EntityManager::ProcessMsgAutomateChangeKnowledgeGroup( const MsgsClient
     ack().set_error_code( MsgsSimToClient::HierarchyModificationAck_ErrorCode_no_error_hierarchy );
     try
     {
-        MIL_Automate* pAutomate = FindAutomate( message.oid() );
+        MIL_Automate* pAutomate = FindAutomate( message.id().id() );
         if( !pAutomate )
             throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate );
         pAutomate->OnReceiveMsgChangeKnowledgeGroup( message, *armyFactory_ );
@@ -1056,11 +1084,11 @@ void MIL_EntityManager::ProcessMsgAutomateChangeKnowledgeGroup( const MsgsClient
             message.parametres().elem_size() == 2 )
         {
             client::AutomatChangeKnowledgeGroup resendMessage;
-            resendMessage().set_oid( message.oid() );
+            resendMessage().mutable_automat()->set_id( message.id().id() );
             if( message.parametres().elem( 0 ).has_value() && message.parametres().elem( 0 ).value().has_knowledgegroup() )
-                resendMessage().set_oid_groupe_connaissance( message.parametres().elem( 0 ).value().knowledgegroup().oid() );
-            if( message.parametres().elem( 1 ).has_value() && message.parametres().elem( 1 ).value().has_army() )
-                resendMessage().set_oid_camp( message.parametres().elem( 1 ).value().army().oid() );
+                resendMessage().mutable_knowledge_group()->set_id( message.parametres().elem( 0 ).value().knowledgegroup().id() );
+            if( message.parametres().elem( 1 ).has_value() && message.parametres().elem( 1 ).value().has_party() )
+                resendMessage().mutable_party()->set_id( message.parametres().elem( 1 ).value().party().id() );
             resendMessage.Send( NET_Publisher_ABC::Publisher() );
         }
     }
@@ -1076,7 +1104,7 @@ void MIL_EntityManager::ProcessMsgAutomateChangeLogisticLinks( const MsgsClientT
     ack().set_error_code( MsgsSimToClient::HierarchyModificationAck_ErrorCode_no_error_hierarchy );
     try
     {
-        MIL_Automate* pAutomate = FindAutomate( message.oid() );
+        MIL_Automate* pAutomate = FindAutomate( message.id().id() );
         if( !pAutomate )
             throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate );
         pAutomate->OnReceiveMsgChangeLogisticLinks( message );
@@ -1093,20 +1121,20 @@ void MIL_EntityManager::ProcessMsgAutomateChangeLogisticLinks( const MsgsClientT
             message.parametres().elem_size() == 4 )
         {
             client::AutomatChangeLogisticLinks resendMessage;
-            resendMessage().set_oid                ( message.oid() );
+            resendMessage().mutable_automat()->set_id( message.id().id() );
             const Common::MsgMissionParameter& tc2 = message.parametres().elem( 0 );
             const Common::MsgMissionParameter& maintenance = message.parametres().elem( 1 );
             const Common::MsgMissionParameter& sante = message.parametres().elem( 2 );
             const Common::MsgMissionParameter& supply = message.parametres().elem( 3 );
 
             if( tc2.has_value() && tc2.value().has_identifier() && tc2.value().identifier() != 0 && tc2.value().identifier() != (unsigned int) -1 )
-                resendMessage().set_oid_tc2( tc2.value().identifier() );
+                resendMessage().mutable_tc2()->set_id( tc2.value().identifier() );
             if( maintenance.has_value() && maintenance.value().has_identifier() && maintenance.value().identifier() != 0 && maintenance.value().identifier() != (unsigned int) -1 )
-                resendMessage().set_oid_maintenance( maintenance.value().identifier() );
+                resendMessage().mutable_maintenance()->set_id( maintenance.value().identifier() );
             if( sante.has_value() && sante.value().has_identifier() && sante.value().identifier() != 0 && sante.value().identifier() != (unsigned int) -1 )
-                resendMessage().set_oid_sante( sante.value().identifier() );
+                resendMessage().mutable_health()->set_id( sante.value().identifier() );
             if( supply.has_value() && supply.value().has_identifier() && supply.value().identifier() != 0 && supply.value().identifier() != (unsigned int) -1 )
-                resendMessage().set_oid_ravitaillement( supply.value().identifier() );
+                resendMessage().mutable_supply()->set_id( supply.value().identifier() );
             resendMessage.Send( NET_Publisher_ABC::Publisher() );
         }
     }
@@ -1122,7 +1150,7 @@ void MIL_EntityManager::ProcessMsgAutomateChangeSuperior( const MsgsClientToSim:
     ack().set_error_code( MsgsSimToClient::HierarchyModificationAck_ErrorCode_no_error_hierarchy );
     try
     {
-        MIL_Automate* pAutomate = FindAutomate( message.oid() );
+        MIL_Automate* pAutomate = FindAutomate( message.id().id() );
         if( !pAutomate )
             throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate );
         pAutomate->OnReceiveMsgChangeSuperior( message, *formationFactory_ );
@@ -1136,11 +1164,11 @@ void MIL_EntityManager::ProcessMsgAutomateChangeSuperior( const MsgsClientToSim:
     if( ack().error_code() == MsgsSimToClient::HierarchyModificationAck_ErrorCode_no_error_hierarchy )
     {
         client::AutomatChangeSuperior resendMessage;
-        resendMessage().set_oid( message.oid() );
+        resendMessage().mutable_automat()->set_id( message.id().id() );
         if( message.type() == MsgsClientToSim::MsgUnitMagicAction_Type_change_formation_superior )
-            resendMessage().mutable_oid_superior()->mutable_formation()->set_oid( message.parametres().elem( 0 ).value().formation().oid() );
+            resendMessage().mutable_superior()->mutable_formation()->set_id( message.parametres().elem( 0 ).value().formation().id() );
         else if( message.type() == MsgsClientToSim::MsgUnitMagicAction_Type_change_automat_superior )
-            resendMessage().mutable_oid_superior()->mutable_automate()->set_oid( message.parametres().elem( 0 ).value().automat().oid() );
+            resendMessage().mutable_superior()->mutable_automat()->set_id( message.parametres().elem( 0 ).value().automat().id() );
         resendMessage.Send( NET_Publisher_ABC::Publisher() );
     }
 }
@@ -1155,7 +1183,7 @@ void MIL_EntityManager::ProcessMsgUnitChangeSuperior( const MsgsClientToSim::Msg
     ack().set_error_code( MsgsSimToClient::HierarchyModificationAck_ErrorCode_no_error_hierarchy );
     try
     {
-        MIL_AgentPion* pPion = FindAgentPion( message.oid() );
+        MIL_AgentPion* pPion = FindAgentPion( message.id().id() );
         if( !pPion )
             throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_pion );
         pPion->OnReceiveMsgChangeSuperior( *this, message );
@@ -1168,8 +1196,8 @@ void MIL_EntityManager::ProcessMsgUnitChangeSuperior( const MsgsClientToSim::Msg
     if( ack().error_code() == MsgsSimToClient::HierarchyModificationAck_ErrorCode_no_error_hierarchy )
     {
         client::UnitChangeSuperior resendMessage;
-        resendMessage().set_oid ( message.oid() );
-        resendMessage().set_oid_automate( message.parametres().elem( 0 ).value().automat().oid() );
+        resendMessage().mutable_unit()->set_id ( message.id().id() );
+        resendMessage().mutable_parent()->set_id ( message.parametres().elem( 0 ).value().automat().id() );
         resendMessage.Send( NET_Publisher_ABC::Publisher() );
     }
 }
@@ -1184,7 +1212,7 @@ void MIL_EntityManager::ProcessMsgLogSupplyChangeQuotas( const MsgsClientToSim::
     ack().set_ack( MsgsSimToClient::MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas_no_error_quotas );
     try
     {
-        MIL_Automate* pReceiver = FindAutomate( message.oid() );
+        MIL_Automate* pReceiver = FindAutomate( message.id().id() );
         if( !pReceiver )
             throw NET_AsnException< MsgsSimToClient::MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas >( MsgsSimToClient::MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas_error_invalid_receveur_quotas );
         pReceiver->OnReceiveMsgLogSupplyChangeQuotas( message.parametres() );
@@ -1206,7 +1234,7 @@ void MIL_EntityManager::ProcessMsgLogSupplyPushFlow( const MsgsClientToSim::MsgU
     ack().set_ack( MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow_no_error_pushflow );
     try
     {
-        MIL_Automate* pReceiver = FindAutomate( message.oid() );
+        MIL_Automate* pReceiver = FindAutomate( message.id().id() );
         if( !pReceiver )
             throw NET_AsnException< MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow >( MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_receveur_pushflow );
         pReceiver->OnReceiveMsgLogSupplyPushFlow( message.parametres() );
@@ -1224,11 +1252,11 @@ void MIL_EntityManager::ProcessMsgLogSupplyPushFlow( const MsgsClientToSim::MsgU
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::ProcessMsgMagicActionMoveTo( const MsgsClientToSim::MsgUnitMagicAction& message, unsigned int )
 {
-    if( MIL_Automate*  pAutomate = FindAutomate ( message.oid() ) )
+    if( MIL_Automate*  pAutomate = FindAutomate ( message.id().id() ) )
         pAutomate->OnReceiveMsgMagicActionMoveTo( message );
-    else if( MIL_AgentPion* pPion = FindAgentPion( message.oid() ) )
+    else if( MIL_AgentPion* pPion = FindAgentPion( message.id().id() ) )
         pPion->OnReceiveMsgMagicActionMoveTo( message );
-    else if( MIL_Population* pPopulation = populationFactory_->Find( message.oid() ) )
+    else if( MIL_Population* pPopulation = populationFactory_->Find( message.id().id() ) )
         pPopulation->OnReceiveMsgPopulationMagicActionMoveTo( message );
     else
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_unit );
@@ -1242,7 +1270,7 @@ void MIL_EntityManager::ProcessMsgMagicActionMoveTo( const MsgsClientToSim::MsgU
 void MIL_EntityManager::OnReceiveMsgKnowledgeGroupCreation( const MsgsClientToSim::MsgMagicAction& /*message*/, unsigned int nCtx )
 {
     client::KnowledgeGroupCreationAck ack;
-    ack().set_oid( 0 );
+    ack().mutable_id()->set_id( 0 );
     ack().set_error_code( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_no_error );
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
@@ -1256,12 +1284,12 @@ void MIL_EntityManager::OnReceiveMsgKnowledgeGroupCreation( const MsgsClientToSi
 void MIL_EntityManager::ProcessMsgKnowledgeGroupUpdate( const MsgsClientToSim::MsgKnowledgeMagicAction& message, unsigned int nCtx )
 {
     client::KnowledgeGroupUpdateAck ack;
-    ack().set_oid( message.oid() );
+    ack().mutable_id()->set_id( message.id().id() );
     ack().set_error_code( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_no_error );
 
     try
     {
-        MIL_KnowledgeGroup* pReceiver = FindKnowledgeGroup( message.oid() );
+        MIL_KnowledgeGroup* pReceiver = FindKnowledgeGroup( message.id().id() );
         if( !pReceiver || pReceiver->IsJammed() )
             throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_error_invalid_type );
 
@@ -1288,7 +1316,7 @@ void MIL_EntityManager::ProcessMsgMagicActionCreateFireOrder( const MsgsClientTo
         if( !msg.has_parametres() || msg.parametres().elem_size() != 3)
             throw NET_AsnException< MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode >( MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_error_invalid_target );
 
-        MIL_Agent_ABC* reporter = FindAgentPion( msg.oid() );
+        MIL_Agent_ABC* reporter = FindAgentPion( msg.id().id() );
         if( !reporter )
             throw NET_AsnException< MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode >( MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_error_invalid_reporter );
 
@@ -1303,10 +1331,10 @@ void MIL_EntityManager::ProcessMsgMagicActionCreateFireOrder( const MsgsClientTo
 
         // Ammo
         const Common::MsgMissionParameter& ammo = msg.parametres().elem( 1 );
-        if( !ammo.has_value() || !ammo.value().has_dotationtype() )
+        if( !ammo.has_value() || !ammo.value().has_resourcetype() )
             throw NET_AsnException< MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode >( MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode_error_invalid_attribute );
 
-        const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( ammo.value().dotationtype().oid() );
+        const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( ammo.value().resourcetype().id() );
         if( !pDotationCategory )
             throw NET_AsnException< MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode >( MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_error_invalid_munition );
 
@@ -1442,9 +1470,29 @@ void MIL_EntityManager::WriteODB( xml::xostream& xos ) const
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
 MIL_Automate* MIL_EntityManager::FindAutomate( unsigned int nID ) const
-{//@TODO MGD Remove
+{
     return automateFactory_->Find( nID );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::FindPopulation
+// Created: RPD 2010-07-18
+// -----------------------------------------------------------------------------
+MIL_Population* MIL_EntityManager::FindPopulation( unsigned int nID ) const
+{
+    return populationFactory_->Find( nID );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::FindFormation
+// Created: RPD 2010-07-18
+// -----------------------------------------------------------------------------
+MIL_Formation* MIL_EntityManager::FindFormation( unsigned int nID ) const
+{
+    return formationFactory_->Find( nID );
+}
+
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::FindKnowledgeGroup
@@ -1452,7 +1500,7 @@ MIL_Automate* MIL_EntityManager::FindAutomate( unsigned int nID ) const
 // LTO
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup* MIL_EntityManager::FindKnowledgeGroup( unsigned int nID ) const
-{//@TODO MGD Remove
+{
     return knowledgeGroupFactory_->Find( nID );
 }
 
@@ -1554,4 +1602,21 @@ MT_Float MIL_EntityManager::GetEffectsTime() const
 MT_Float MIL_EntityManager::GetStatesTime() const
 {
     return rStatesTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::setToTasker
+// Created: PHC 2010-07-07
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::SetToTasker( Common::Tasker& tasker, unsigned int id ) const
+{
+    if( FindAutomate( id ) )
+        tasker.mutable_automat()->set_id( id );
+    else if( FindFormation( id ) )
+        tasker.mutable_formation()->set_id( id );
+    else if( FindPopulation( id ) )
+        tasker.mutable_population()->set_id( id );
+    else if( FindAgentPion( id ) )
+        tasker.mutable_unit()->set_id( id );
+    else throw( std::exception( "Misformed tasker in protocol message" ) );
 }

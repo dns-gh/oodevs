@@ -111,8 +111,8 @@ void ConstructionAttribute::UpdateData( const T& message )
 {
     if( message.has_construction()  )
     {
-        if( ! construction_ && message.construction().has_dotation_type()  )
-            construction_ = resolver_.Find( message.construction().dotation_type() );
+        if( ! construction_ && message.construction().has_resource()  )
+            construction_ = resolver_.Find( message.construction().resource().id() );
         if( message.construction().has_dotation_nbr()  )
             nDotationConstruction_ = message.construction().dotation_nbr();
         if( message.construction().has_percentage()  )

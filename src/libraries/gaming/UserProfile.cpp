@@ -108,7 +108,7 @@ namespace
     void CopyList( const std::vector< unsigned long >& from, List& to )
     {
         for( unsigned int i = 0; i < from.size(); ++i )
-            to.add_elem()->set_oid( from[i] );
+            to.add_elem()->set_id( from[i] );
     }
 }
 
@@ -154,7 +154,7 @@ namespace
             return;
         to.reserve( from.elem_size() );
         for( int i = 0; i < from.elem_size(); ++i )
-            to.push_back( from.elem(i).oid() );
+            to.push_back( from.elem(i).id() );
     }
 }
 

@@ -26,12 +26,12 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 Formation::Formation( const Model_ABC& model, const Common::MsgFormationCreation& msg, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels )
-    : Formation_ABC( msg.oid(), msg.nom().c_str() )
+    : Formation_ABC( msg.formation().id(), QString(msg.name().c_str()) )
     , model_ ( model )
-    , name_  ( msg.nom() )
-    , team_  ( model.Sides().Get( msg.oid_camp() ) )
-    , level_ ( levels.Get( msg.niveau() ) )
-    , parent_( msg.has_oid_formation_parente() ? &model.Formations().Get( msg.oid_formation_parente() ) : 0 )
+    , name_  ( msg.name() )
+    , team_  ( model.Sides().Get( msg.party().id() ) )
+    , level_ ( levels.Get( msg.level() ) )
+    , parent_( msg.has_parent() ? &model.Formations().Get( msg.parent().id() ) : 0 )
 {
     if( parent_ )
         parent_->Register( *this );
@@ -110,13 +110,13 @@ void Formation::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::FormationCreation message;
 
-    message().set_oid( GetId() );
-    message().set_oid_camp( team_.GetId() );
-    message().set_nom( name_ );
-    message().set_niveau( Common::EnumNatureLevel( level_.GetId() ) );
+    message().mutable_formation()->set_id( GetId() );
+    message().mutable_party()->set_id( team_.GetId() );
+    message().set_name( name_ );
+    message().set_level( Common::EnumNatureLevel( level_.GetId() ) );
 
     if( parent_ )
-        message().set_oid_formation_parente( parent_->GetId() );
+        message().mutable_parent()->set_id( parent_->GetId() );
 
     message.Send( publisher );
 }

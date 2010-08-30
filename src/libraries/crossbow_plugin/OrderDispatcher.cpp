@@ -155,9 +155,9 @@ void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publ
     try
     {
         const long orderId = GetField< long >( row, "id" );
-        message().set_oid( agent.GetId() );
-        message().set_mission( type->GetId() );
-        SetParameters( *message().mutable_parametres(), orderId, *type );
+        message().mutable_tasker()->set_id( agent.GetId() );
+        message().mutable_type()->set_id( type->GetId() );
+        SetParameters( *message().mutable_parameters(), orderId, *type );
         message.Send( publisher );
     }
     catch ( std::exception& e )
@@ -183,9 +183,9 @@ void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publ
     try
     {
         const long orderId = GetField< long >( row, "id" );
-        message().set_oid( automat.GetId() );
-        message().set_mission( type->GetId() );
-        SetParameters( *message().mutable_parametres(), orderId, *type );
+        message().mutable_tasker()->set_id( automat.GetId() );
+        message().mutable_type()->set_id( type->GetId() );
+        SetParameters( *message().mutable_parameters(), orderId, *type );
         message.Send( publisher );
     }
     catch ( std::exception& e )
@@ -204,8 +204,9 @@ void OrderDispatcher::DispatchFragOrder( dispatcher::SimulationPublisher_ABC& pu
     if( !type )
         return; // $$$$ SBO 2007-06-07:
     simulation::FragOrder message;
-    message().set_oid( targetId );
-    message().set_frag_order( type->GetId() );
+    model_.SetToTasker( *message().mutable_tasker(), targetId );
+    //message().set_id( targetId );
+    message().mutable_frag_order()->set_id( type->GetId() );
     message().mutable_parametres(); // $$$$ SBO 2007-06-07: parameters not supported !
     message.Send( publisher, 0 );
 }

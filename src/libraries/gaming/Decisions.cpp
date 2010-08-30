@@ -52,7 +52,7 @@ Decisions::~Decisions()
 void Decisions::DoUpdate( const Common::MsgUnitOrder& message )
 {
     const tools::Resolver_ABC< Mission >& resolver = GetDecisionalModel();
-    current_ = resolver.Find( message.mission() );
+    current_ = resolver.Find( message.type().id() );
     controller_.Update( *this );
 }
 

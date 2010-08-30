@@ -23,7 +23,7 @@ class MIL_TirIndirectParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_TirIndirectParameter( const Common::MsgUnitFire& fire );
+    explicit MIL_TirIndirectParameter( const Common::FireId& fire );
     virtual ~MIL_TirIndirectParameter();
     //@}
 
@@ -34,7 +34,7 @@ public:
 
     //! @name Conversions
     //@{
-    virtual bool ToIndirectFire( Common::MsgUnitFire& fire ) const;
+    virtual bool ToIndirectFire( Common::FireId& fire ) const;
     //@}
 
 private:

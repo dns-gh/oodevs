@@ -61,7 +61,7 @@ bool MIL_NullParameter::ToPolygonList( Common::MsgPolygonList& /*asn*/ ) const
 // Name: MIL_NullParameter::ToAgentKnowledgeList
 // Created: LDC 2009-05-25
 // -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToAgentKnowledgeList( Common::MsgUnitKnowledgeList& /*asn*/ ) const
+bool MIL_NullParameter::ToAgentKnowledgeList( Common::UnitKnowledgeIdList& /*asn*/ ) const
 {
     return true;
 }
@@ -70,7 +70,7 @@ bool MIL_NullParameter::ToAgentKnowledgeList( Common::MsgUnitKnowledgeList& /*as
 // Name: MIL_NullParameter::ToAgentList
 // Created: LDC 2009-05-25
 // -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToAgentList( Common::MsgUnitList& /*asn*/ ) const
+bool MIL_NullParameter::ToAgentList( Common::UnitIdList& /*asn*/ ) const
 {
     return true;
 }
@@ -79,7 +79,7 @@ bool MIL_NullParameter::ToAgentList( Common::MsgUnitList& /*asn*/ ) const
 // Name: MIL_NullParameter::ToAutomatList
 // Created: LDC 2009-05-25
 // -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToAutomatList( Common::MsgAutomatList& /*asn*/ ) const
+bool MIL_NullParameter::ToAutomatList( Common::AutomatIdList& /*asn*/ ) const
 {
     return true;
 }
@@ -115,7 +115,7 @@ bool MIL_NullParameter::ToObjectiveList( Common::MsgMissionObjectiveList& /*asn*
 // Name: MIL_NullParameter::ToObjectKnowledgeList
 // Created: LDC 2009-05-25
 // -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToObjectKnowledgeList( Common::MsgObjectKnowledgeList& /*asn*/ ) const
+bool MIL_NullParameter::ToObjectKnowledgeList( Common::ObjectKnowledgeIdList& /*asn*/ ) const
 {
     return true;
 }

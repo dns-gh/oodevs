@@ -50,8 +50,8 @@ void Lendings::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
     for( int i = 0; i < message.equipements_pretes().elem_size(); ++i )
     {
         const MsgsSimToClient::LentEquipments_LentEquipment& pret = message.equipements_pretes().elem( i );
-        lendings_.push_back( Loan( equipmentResolver_.Get( pret.type_equipement() ),
-                                   resolver_.Get( pret.oid_pion_emprunteur() ),
+        lendings_.push_back( Loan( equipmentResolver_.Get( pret.type().id() ),
+                                   resolver_.Get( pret.borrower().id() ),
                                    pret.nombre() ) );
     }
     controller_.Update( *this );

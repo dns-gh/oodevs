@@ -35,8 +35,8 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_CanBeUnderATeam )
         MsgsSimToClient::MsgSimToClient expected;
         expected.set_context( 0 );
         MsgsSimToClient::MsgKnowledgeGroupCreation& message = *expected.mutable_message()->mutable_knowledge_group_creation();
-        message.set_oid( 1 );
-        message.set_oid_camp( side.GetId() );
+        message.mutable_id()->set_id( 1 );
+        message.mutable_party()->set_id( side.GetId() );
         message.set_type( "Standard" );
         message.set_jam( true );
 
@@ -79,8 +79,8 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_AttributesCanBeChanged )
             MsgsSimToClient::MsgSimToClient expected;
             expected.set_context( 0 );
             MsgsSimToClient::MsgKnowledgeGroupCreation& message = *expected.mutable_message()->mutable_knowledge_group_creation();
-            message.set_oid( 1 );
-            message.set_oid_camp( side.GetId() );
+            message.mutable_id()->set_id( 1 );
+            message.mutable_party()->set_id( side.GetId() );
             message.set_type( "Standard" );
             message.set_jam( true );
             // creation
@@ -91,11 +91,11 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_AttributesCanBeChanged )
             MsgsSimToClient::MsgSimToClient expected;
             expected.set_context( 0 );
             MsgsSimToClient::MsgKnowledgeGroupUpdate& message = *expected.mutable_message()->mutable_knowledge_group_update();
-            message.set_oid( 1 );
-            message.set_oid_camp( side.GetId() );
+            message.mutable_id()->set_id( 1 );
+            message.mutable_party()->set_id( side.GetId() );
             message.set_type( "GTIA" );
             message.set_enabled( false );
-            message.set_oid_parent( knowledgeGroup.GetId() );
+            message.mutable_parent()->set_id( knowledgeGroup.GetId() );
             MOCK_EXPECT( side, RemoveKnowledgeGroup ).once().with( mock::same( *result ) );
             MOCK_EXPECT( knowledgeGroup, RegisterKnowledgeGroup ).once().with( mock::same( *result ) );
             result->Update( message );
@@ -104,11 +104,11 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_AttributesCanBeChanged )
             MsgsSimToClient::MsgSimToClient expected;
             expected.set_context( 0 );
             MsgsSimToClient::MsgKnowledgeGroupCreation& message = *expected.mutable_message()->mutable_knowledge_group_creation();
-            message.set_oid( 1 );
-            message.set_oid_camp( side.GetId() );
+            message.mutable_id()->set_id( 1 );
+            message.mutable_party()->set_id( side.GetId() );
             message.set_type( "GTIA" );
             message.set_jam( true );
-            message.set_oid_parent( knowledgeGroup.GetId() );
+            message.mutable_parent()->set_id( knowledgeGroup.GetId() );
 
             // network serialization
             MockClientPublisher publisher;

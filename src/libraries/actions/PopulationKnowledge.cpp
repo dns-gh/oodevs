@@ -76,16 +76,16 @@ void PopulationKnowledge::CommitTo( MsgMissionParameter& message ) const
     message.set_null_value ( !IsSet() );
     message.mutable_value()->mutable_populationknowledge();    // enforce initialisation of parameter to force his type
     if( IsSet() )
-        Entity< PopulationKnowledge_ABC >::CommitTo< MsgPopulationKnowledge >( *message.mutable_value()->mutable_populationknowledge() );
+        Entity< PopulationKnowledge_ABC >::CommitTo< PopulationKnowledgeId >( *message.mutable_value()->mutable_populationknowledge() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::CommitTo( MsgPopulationKnowledge& message ) const
+void PopulationKnowledge::CommitTo( PopulationKnowledgeId& message ) const
 {
-    Entity< PopulationKnowledge_ABC >::CommitTo< MsgPopulationKnowledge >( message );
+    Entity< PopulationKnowledge_ABC >::CommitTo< PopulationKnowledgeId >( message );
 }
 
 // -----------------------------------------------------------------------------

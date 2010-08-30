@@ -64,7 +64,7 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGloba
         pGlobalMeteo_->Update( msg.attributes() );
     else
     {
-        pGlobalMeteo_ = new weather::PHY_Meteo( msg.oid(), msg.attributes(), this );
+        pGlobalMeteo_ = new weather::PHY_Meteo( msg.id().id(), msg.attributes(), this );
         model_.AddExtensions( *pGlobalMeteo_ );
     }
  }
@@ -81,7 +81,7 @@ void MeteoModel::OnReceiveMsgLocalMeteoCreation( const MsgsSimToClient::MsgContr
     const geometry::Point2f vDownRight = converter_->ConvertFromGeo( bottomRight );
     if( msg.has_attributes() )
     {
-        weather::MeteoData* weather = new weather::MeteoData( msg.oid(), vUpLeft, vDownRight, msg.attributes(), *this, *converter_ );
+        weather::MeteoData* weather = new weather::MeteoData( msg.id().id(), vUpLeft, vDownRight, msg.attributes(), *this, *converter_ );
         model_.AddExtensions( *weather );
         RegisterMeteo( *weather );
     }
@@ -95,7 +95,7 @@ void MeteoModel::OnReceiveMsgLocalMeteoCreation( const MsgsSimToClient::MsgContr
 void MeteoModel::OnReceiveMsgLocalMeteoDestruction( const MsgsSimToClient::MsgControlLocalMeteoDestruction& message )
 {
     for( T_MeteoList::iterator it = meteos_.begin(); it != meteos_.end(); ++it )
-        if( (*it)->GetId() == message.oid() )
+        if( (*it)->GetId() == message.id().id() )
         {
             weather::PHY_Meteo* meteo = *it;
             ++it;

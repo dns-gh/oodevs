@@ -20,7 +20,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 MissionParameter_ObjectKnowledge::MissionParameter_ObjectKnowledge( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , objectKnowledge_    ( asn.value().objectknowledge().oid() )
+    , objectKnowledge_    ( asn.value().objectknowledge().id() )
 {
     // NOTHING
 }
@@ -41,5 +41,5 @@ MissionParameter_ObjectKnowledge::~MissionParameter_ObjectKnowledge()
 void MissionParameter_ObjectKnowledge::Send( Common::MsgMissionParameter& asn ) const
 {
     MissionParameter_ABC::Send( asn );
-    asn.mutable_value()->mutable_objectknowledge()->set_oid( objectKnowledge_ );
+    asn.mutable_value()->mutable_objectknowledge()->set_id( objectKnowledge_ );
 }

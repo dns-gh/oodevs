@@ -45,6 +45,11 @@ public:
         availability.Display( displayer );
     }
 
+    void Display( const SupplyAvailability& availability, kernel::Displayer_ABC& displayer, gui::ValuedListItem* )
+    {
+        availability.Display( displayer );
+    }
+
     void Display( const Dotation& dotation, kernel::Displayer_ABC& displayer, gui::ValuedListItem* )
     {
         displayer.Display( 0, dotation.type_ )

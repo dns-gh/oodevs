@@ -45,11 +45,11 @@ namespace
         void createObjectKnowledge()
         {
             MsgsSimToClient::MsgObjectKnowledgeCreation& message = *expected.mutable_message()->mutable_object_knowledge_creation();
-            message.set_oid( 1 );
-            message.set_team( side.GetId() );
-            message.set_real_object( object.GetId() );
-            message.set_type( "mines" );
-            message.set_group( knowledgeGroup.GetId() );
+            message.mutable_id()->set_id( 1 );
+            message.mutable_party()->set_id( side.GetId() );
+            message.mutable_object()->set_id( object.GetId() );
+            message.mutable_type()->set_id( "mines" );
+            message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
             message.mutable_attributes();
             // creation
             result.reset( new dispatcher::ObjectKnowledge( model, message ) );
@@ -90,8 +90,8 @@ BOOST_FIXTURE_TEST_CASE( ObjectKnowledge_CanBeDestroyedWithoutAttributes, Fixtur
 {
     createObjectKnowledge();
     MsgsSimToClient::MsgObjectKnowledgeDestruction& message = *expected.mutable_message()->mutable_object_knowledge_destruction();
-    message.set_oid( 1 );
-    message.set_team( side.GetId() );
+    message.mutable_id()->set_id( 1 );
+    message.mutable_party()->set_id( side.GetId() );
     // network serialization
     MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
     result->SendDestruction( publisher );
@@ -107,18 +107,18 @@ BOOST_FIXTURE_TEST_CASE( ObjectKnowledge_CanBeUpdatedWithoutAttributes, Fixture 
     createObjectKnowledge();
     {
         MsgsSimToClient::MsgObjectKnowledgeUpdate& message = *expected.mutable_message()->mutable_object_knowledge_update();
-        message.set_oid( 1 );
-        message.set_real_object( 0 );
+        message.mutable_id()->set_id( 1 );
+        message.mutable_object()->set_id( 0 );
         message.mutable_attributes();
         message.set_relevance( 99 );
         message.mutable_location()->set_type( Common::MsgLocation::point );
         message.mutable_location()->mutable_coordinates()->add_elem()->set_latitude( 42. );
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_longitude( 1. );
         message.set_perceived( true );
-        message.mutable_automat_perception()->add_elem( automat.GetId() );
+        message.mutable_perceiving_automats()->add_elem()->set_id( automat.GetId() );
         result->Update( message );
-        message.set_team( side.GetId() );
-        message.set_group( knowledgeGroup.GetId() );
+        message.mutable_party()->set_id( side.GetId() );
+        message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
         // network serialization
         MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
         result->SendFullUpdate( publisher );
@@ -127,11 +127,11 @@ BOOST_FIXTURE_TEST_CASE( ObjectKnowledge_CanBeUpdatedWithoutAttributes, Fixture 
     {
         expected.mutable_message()->Clear();
         MsgsSimToClient::MsgObjectKnowledgeCreation& message = *expected.mutable_message()->mutable_object_knowledge_creation();
-        message.set_oid( 1 );
-        message.set_team( side.GetId() );
-        message.set_real_object( 0 );
-        message.set_type( "mines" );
-        message.set_group( knowledgeGroup.GetId() );
+        message.mutable_id()->set_id( 1 );
+        message.mutable_party()->set_id( side.GetId() );
+        message.mutable_object()->set_id( 0 );
+        message.mutable_type()->set_id( "mines" );
+        message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
         message.mutable_attributes();
         // network serialization
         MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );

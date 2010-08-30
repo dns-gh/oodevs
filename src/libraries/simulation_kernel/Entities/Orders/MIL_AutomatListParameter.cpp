@@ -19,12 +19,12 @@
 // Name: MIL_AutomatListParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_AutomatListParameter::MIL_AutomatListParameter( const Common::MsgAutomatList& asn, MIL_EntityManager_ABC& entityManager )
+MIL_AutomatListParameter::MIL_AutomatListParameter( const Common::AutomatIdList& asn, MIL_EntityManager_ABC& entityManager )
 {
     automatList_.reserve( asn.elem_size() );
     for( int i = 0; i < asn.elem_size(); ++i )
     {
-        MIL_Automate* pAutomate = entityManager.FindAutomate( asn.elem(i).oid() );
+        MIL_Automate* pAutomate = entityManager.FindAutomate( asn.elem(i).id() );
         if( !pAutomate )
             throw std::runtime_error( "Automat does not exist" );
         automatList_.push_back( &pAutomate->GetDecision() );
@@ -63,11 +63,11 @@ bool MIL_AutomatListParameter::IsOfType( const MIL_ParameterType_ABC& type ) con
 // Name: MIL_AutomatListParameter::ToAutomatList
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool MIL_AutomatListParameter::ToAutomatList( Common::MsgAutomatList& asn ) const
+bool MIL_AutomatListParameter::ToAutomatList( Common::AutomatIdList& asn ) const
 {
     unsigned int size = automatList_.size();
     for( unsigned int i = 0; i < size; ++i )
-        asn.add_elem()->set_oid( automatList_[i]->GetAutomate().GetID() );
+        asn.add_elem()->set_id( automatList_[i]->GetAutomate().GetID() );
     return true;
 }
 

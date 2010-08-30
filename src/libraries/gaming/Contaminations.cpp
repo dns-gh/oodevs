@@ -73,7 +73,7 @@ void Contaminations::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message
         contaminatingNbcAgents_.clear();
         contaminatingNbcAgents_.reserve( message.contamine_par_agents_nbc().elem_size() );
         for( int i = 0; i < message.contamine_par_agents_nbc().elem_size(); ++i )
-            contaminatingNbcAgents_.push_back( &resolver_.Get( message.contamine_par_agents_nbc().elem( i ) ) );
+            contaminatingNbcAgents_.push_back( &resolver_.Get( message.contamine_par_agents_nbc().elem( i ).id() ) );
     }
 
     if( message.has_en_tenue_de_protection_nbc()  )

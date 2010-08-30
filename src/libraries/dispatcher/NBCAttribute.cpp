@@ -43,8 +43,8 @@ void NBCAttribute::Update( const Common::MsgObjectAttributes& asn )
         const Common::MsgObjectAttributeNBC& nbc = asn.nbc();
         danger_ = nbc.danger_level();
         agents_.clear();
-        for( int i = 0; i < nbc.nbc_agents().elem_size(); ++i )
-            agents_.push_back( nbc.nbc_agents().elem( i ) );
+        for( int i = 0; i < nbc.nbc_agents_size(); ++i )
+            agents_.push_back( nbc.nbc_agents( i ).id() );
         //nbc_.CopyFrom( asn.nbc() );
     }
 }
@@ -59,6 +59,9 @@ void NBCAttribute::Send( Common::MsgObjectAttributes& asn ) const
     nbc.set_danger_level( danger_ );
     nbc.mutable_nbc_agents();
     for( std::vector< unsigned int >::const_iterator it = agents_.begin(); it != agents_.end(); ++it )
-        nbc.mutable_nbc_agents()->add_elem( *it );
+    {
+        Common::NBCAgentType& data = *nbc.add_nbc_agents();
+        data.set_id( *it );
+    }
     //asn.mutable_nbc()->CopyFrom( nbc_ );
 }

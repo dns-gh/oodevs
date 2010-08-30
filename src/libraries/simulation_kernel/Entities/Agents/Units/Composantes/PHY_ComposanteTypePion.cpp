@@ -106,7 +106,7 @@ void PHY_ComposanteTypePion::ReadElement( xml::xistream& xis, const MIL_Time_ABC
         xis.error( "Composante type '" + strComposanteType + "' already registered" );
     pComposanteType = new PHY_ComposanteTypePion( time, strComposanteType, xis );
 
-    if( !ids_.insert( pComposanteType->GetMosID().equipment() ).second )
+    if( !ids_.insert( pComposanteType->GetMosID().id() ).second )
         xis.error( "Composante ID already used" );
 }
 

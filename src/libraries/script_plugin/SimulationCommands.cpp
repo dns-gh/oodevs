@@ -99,8 +99,8 @@ void SimulationCommands::ChangeTimeFactor( unsigned int factor )
 void SimulationCommands::CreateUnit( const Position& position, unsigned int type, unsigned int parent )
 {
     simulation::UnitCreationRequest request;
-    request().set_type_pion( type );
-    request().set_oid_automate( parent );
+    request().mutable_type()->set_id( type );
+    request().mutable_superior()->set_id( parent );
     converter_.ConvertToGeo( ToPoint( position ), *request().mutable_position() );
     request.Send( publisher_, 0 );
 }
@@ -112,7 +112,7 @@ void SimulationCommands::CreateUnit( const Position& position, unsigned int type
 void SimulationCommands::Engage( unsigned automat, bool engage )
 {
     simulation::SetAutomatMode mode;
-    mode().set_oid( automat );
+    mode().mutable_automate()->set_id( automat );
     mode().set_mode( engage ? Common::embraye : Common::debraye );
     mode.Send( publisher_,0 );
 }

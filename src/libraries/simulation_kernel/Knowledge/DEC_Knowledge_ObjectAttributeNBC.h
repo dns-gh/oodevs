@@ -15,6 +15,11 @@
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
 #include <boost/serialization/export.hpp>
 
+namespace Common
+{
+
+    class NBCAgentType;
+}
 class NBCAttribute;
 class MIL_NbcAgentType;
 class MIL_CheckPointInArchive;

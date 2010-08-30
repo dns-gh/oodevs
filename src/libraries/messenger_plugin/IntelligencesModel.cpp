@@ -46,7 +46,7 @@ IntelligencesModel::~IntelligencesModel()
 // Name: IntelligencesModel::ReadIntelligence
 // Created: RDS 2008-04-08
 // -----------------------------------------------------------------------------
-void IntelligencesModel::ReadIntelligence( xml::xistream& xis, const MsgFormation& formation )
+void IntelligencesModel::ReadIntelligence( xml::xistream& xis, const FormationId& formation )
 {
     std::auto_ptr< Intelligence > intelligence( new Intelligence( idManager_.NextId(), xis, formation, converter_ ) );
     Register( intelligence->GetID(), *intelligence );
@@ -94,7 +94,7 @@ void IntelligencesModel::HandleRequest( dispatcher::ClientPublisher_ABC& publish
     plugins::messenger::IntelligenceUpdateRequestAck ack ;
     ack().set_error_code( MsgsMessengerToClient::IntelligenceRequestAck_ErrorCode_no_error );
 
-    Intelligence* intelligence = Find( asn.oid() );
+    Intelligence* intelligence = Find( asn.intelligence().id() );
     if( intelligence )
     {
         intelligence->Update( asn );
@@ -114,12 +114,12 @@ void IntelligencesModel::HandleRequest( dispatcher::ClientPublisher_ABC& publish
     plugins::messenger::IntelligenceDestructionRequestAck ack ;
     ack().set_error_code( MsgsMessengerToClient::IntelligenceRequestAck_ErrorCode_no_error );
 
-    Intelligence* intelligence = Find( asn.oid() );
+    Intelligence* intelligence = Find( asn.id().id() );
     if( intelligence )
     {
         intelligence->SendDestruction( clients_ );
         delete intelligence;
-        Remove( asn.oid() );
+        Remove( asn.id().id() );
     }
     else
         ack().set_error_code( MsgsMessengerToClient::IntelligenceRequestAck_ErrorCode_error_invalid_oid );
@@ -143,5 +143,5 @@ void IntelligencesModel::SendStateToNewClient( dispatcher::ClientPublisher_ABC& 
 void IntelligencesModel::CollectFormations( T_FormationMap& collection )
 {
     for( T_Elements::const_iterator it = elements_.begin(); it != elements_.end(); ++it )
-        collection[ it->second->GetFormation().oid() ].insert( it->second );
+        collection[ it->second->GetFormation().id() ].insert( it->second );
 }

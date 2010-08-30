@@ -21,7 +21,7 @@ using namespace kernel;
 // Name: MedicalStates constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-MedicalStates::MedicalStates( Controller& controller, const tools::Resolver_ABC< EquipmentType >& resolver, const tools::Resolver_ABC< Automat_ABC >& automatResolver, PropertiesDictionary& dico )
+MedicalStates::MedicalStates( Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const tools::Resolver_ABC< Automat_ABC >& automatResolver, PropertiesDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
     , automatResolver_( automatResolver )
@@ -64,11 +64,11 @@ void MedicalStates::DoUpdate( const MsgsSimToClient::MsgLogMedicalState& message
         for( int i = 0; i < message.priorites().elem_size(); ++i )
             priorities_[i] = E_HumanWound( message.priorites().elem( i ) );
     }
-    if( message.has_priorites_tactiques()  )
+    if( message.has_tactical_priorities()  )
     {
-        tacticalPriorities_.resize( message.priorites_tactiques().elem_size() );
-        for( int i = 0; i < message.priorites_tactiques().elem_size(); ++i )
-            tacticalPriorities_[i] = & automatResolver_.Get( message.priorites_tactiques().elem( i ).oid() );
+        tacticalPriorities_.resize( message.tactical_priorities().elem_size() );
+        for( int i = 0; i < message.tactical_priorities().elem_size(); ++i )
+            tacticalPriorities_[i] = & automatResolver_.Get( message.tactical_priorities().elem( i ).id() );
     }
 
     if( message.has_disponibilites_ambulances_ramassage()  )

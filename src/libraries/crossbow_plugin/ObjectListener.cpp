@@ -109,7 +109,7 @@ void ObjectListener::SendCreation( const Row_ABC& row )
     creation->set_type( GetType( boost::get< std::string >( row.GetField( "Info" ) ) ).c_str() );
     creation->set_name( "" );
     row.GetGeometry().Serialize( *creation->mutable_location() );*/
-    message().set_oid( 0 );
+    message().mutable_object()->set_id( 0 );
     message().set_type( MsgsClientToSim::MsgObjectMagicAction_Type_create );
 
     // type
@@ -122,7 +122,7 @@ void ObjectListener::SendCreation( const Row_ABC& row )
     message().mutable_parametres()->add_elem()->mutable_value()->set_acharstr( "" );
 
     // team
-    message().mutable_parametres()->add_elem()->mutable_value()->mutable_army()->set_oid( 1 ); // $$$$ SBO 2007-09-23: Hard coded !!
+    message().mutable_parametres()->add_elem()->mutable_value()->mutable_party()->set_id( 1 ); // $$$$ SBO 2007-09-23: Hard coded !!
 
     // list (unused but must be created)
     message().mutable_parametres()->add_elem();

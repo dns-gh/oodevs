@@ -17,7 +17,7 @@ using namespace kernel;
 // Name: Equipment constructor
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-Equipment::Equipment( const EquipmentType& type )
+Equipment::Equipment( const kernel::EquipmentType& type )
     : type_( type )
     , available_( 0 )
     , unavailable_( 0 )

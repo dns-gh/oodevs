@@ -1,12 +1,21 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
 package MsgsClientToAuthentication;
 
 import "AuthenticationToClient.proto";
 import "Version.proto";
 
 message MsgAuthenticationRequest {
-   required string login    = 1;
-   required string password = 2; 
-   required Version.ProtocolVersion version = 3;
+   required string                  login    = 1;
+   required string                  password = 2; 
+   required Version.ProtocolVersion version  = 3;
 }
 
 message MsgProfileCreationRequest {

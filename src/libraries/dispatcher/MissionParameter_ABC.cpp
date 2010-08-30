@@ -110,7 +110,7 @@ MissionParameter_ABC* MissionParameter_ABC::Create( const Common::MsgMissionPara
         return new MissionParameter_GenObject( asn );
     if( asn.value().has_plannedworklist() )
         return new MissionParameter_GenObjectList( asn );
-    if( asn.value().has_dotationtype() )
+    if( asn.value().has_resourcetype() )
         return new MissionParameter_DotationType( asn );
     if( asn.value().has_equipmenttype() )
         return new MissionParameter_EquipmentType( asn );

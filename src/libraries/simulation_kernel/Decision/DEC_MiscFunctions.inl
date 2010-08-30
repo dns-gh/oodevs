@@ -252,7 +252,8 @@ template <typename T>
 void DEC_MiscFunctions::Trace( const T& caller, const std::string& message )
 {
     client::Trace msg;
-    msg().set_oid( caller.GetID() );
+    MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *msg().mutable_source(), caller.GetID() );
+    //msg().set_oid( caller.GetID() );
     *msg().mutable_message() = message.c_str();
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -278,7 +279,8 @@ template <typename T>
 void DEC_MiscFunctions::DebugDrawPoints(const T& caller, std::vector< boost::shared_ptr< MT_Vector2D > > points )
 {
     client::DebugPoints message;
-    message().set_oid( caller.GetID() );
+    MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *message().mutable_id(), caller.GetID() );
+    //message().set_oid( caller.GetID() );
     NET_ASN_Tools::WriteCoordinates( points, *message().mutable_coordinates() );
     message.Send( NET_Publisher_ABC::Publisher() );
     delete message().mutable_coordinates();
@@ -292,9 +294,9 @@ template <typename T>
 void DEC_MiscFunctions::DebugDrawPoint( const T& caller, const MT_Vector2D* pPoint )
 {
     assert( pPoint );
-
     client::DebugPoints message;
-    message().set_oid( caller.GetID() );
+    MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *message().mutable_id(), caller.GetID() );
+    //message().set_oid( caller.GetID() );
     NET_ASN_Tools::WritePoint( *pPoint, *message().mutable_coordinates()->add_elem() );
     message.Send( NET_Publisher_ABC::Publisher() );
 }

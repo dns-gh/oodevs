@@ -53,7 +53,7 @@ void MIL_AutomateOrderManager::OnReceiveMission( const Common::MsgAutomatOrder& 
     if( automate_.IsSurrendered() )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_unit_surrendered );
     // Instanciate and check the new mission
-    const MIL_MissionType_ABC* pMissionType = MIL_AutomateMissionType::Find( asnMsg.mission() );
+    const MIL_MissionType_ABC* pMissionType = MIL_AutomateMissionType::Find( asnMsg.type().id() );
     if( !pMissionType || !automate_.GetType().GetModel().IsMissionAvailable( *pMissionType ) )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission );
     boost::shared_ptr< MIL_Mission_ABC > pMission ( new MIL_AutomateMission( *pMissionType, automate_, asnMsg ) );
@@ -80,7 +80,7 @@ void MIL_AutomateOrderManager::OnReceiveFragOrder( const MsgsClientToSim::MsgFra
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_unit_surrendered );
     if( !automate_.IsEngaged() )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_unit_cannot_receive_order );
-    const MIL_FragOrderType* pType = MIL_FragOrderType::Find( asn.frag_order() );
+    const MIL_FragOrderType* pType = MIL_FragOrderType::Find( asn.frag_order().id() );
     if( !pType )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_order_conduite );
     if( !pType->IsAvailableWithoutMission() && ( !GetCurrentMission() || !GetCurrentMission()->IsFragOrderAvailable( *pType ) ) )

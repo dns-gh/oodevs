@@ -22,12 +22,12 @@ using namespace dispatcher;
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
 LogConsignMaintenance::LogConsignMaintenance( const Model& model, const MsgsSimToClient::MsgLogMaintenanceHandlingCreation& msg )
-    : SimpleEntity< >   ( msg.oid_consigne() )
+    : SimpleEntity< >   ( msg.id().id() )
     , model_            ( model )
-    , agent_            ( model.Agents().Get( msg.oid_pion() ) )
+    , agent_            ( model.Agents().Get( msg.unit().id() ) )
     , nTickCreation_    ( msg.tick_creation() )
-    , nEquipmentType_   ( msg.type_equipement() )
-    , nBreakdownType_   ( msg.type_panne() )
+    , nEquipmentType_   ( msg.equipement().id() )
+    , nBreakdownType_   ( msg.breakdown().id() )
     , pTreatingAgent_   ( 0 )
     , nState_           ( Common::attente_disponibilite_pieces )
     , bDiagnosed_       ( false )
@@ -54,7 +54,7 @@ void LogConsignMaintenance::Update( const MsgsSimToClient::MsgLogMaintenanceHand
         bDiagnosed_ = msg.diagnostique_effectue() != 0;
     if( msg.has_etat() )
         nState_ = msg.etat();
-    pTreatingAgent_ = ( msg.oid_pion_log_traitant() == 0 ) ? 0 : &model_.Agents().Get( msg.oid_pion_log_traitant() );
+    pTreatingAgent_ = ( msg.provider().id() == 0 )? 0 : &model_.Agents().Get( msg.provider().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,16 +63,16 @@ void LogConsignMaintenance::Update( const MsgsSimToClient::MsgLogMaintenanceHand
 // -----------------------------------------------------------------------------
 void LogConsignMaintenance::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    client::LogMaintenanceHandlingCreation asn;
+    client::LogMaintenanceHandlingCreation message;
 
-    asn().set_oid_consigne  ( GetId() );
-    asn().set_oid_pion      ( agent_.GetId() );
-    asn().set_tick_creation ( nTickCreation_ );
+    message().mutable_id()->set_id( GetId() );
+    message().mutable_unit()->set_id( agent_.GetId() );
+    message().set_tick_creation ( nTickCreation_ );
 
-    asn().set_type_equipement ( nEquipmentType_ );
-    asn().set_type_panne      ( nBreakdownType_ );
+    message().mutable_equipement()->set_id( nEquipmentType_ );
+    message().mutable_breakdown()->set_id( nBreakdownType_ );
 
-    asn.Send( publisher );
+    message.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,19 +81,15 @@ void LogConsignMaintenance::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void LogConsignMaintenance::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
-    client::LogMaintenanceHandlingUpdate asn;
+    client::LogMaintenanceHandlingUpdate message;
 
-    asn().set_oid_consigne( GetId() );
-    asn().set_oid_pion( agent_.GetId() );
+    message().mutable_id()->set_id( GetId() );
+    message().mutable_unit()->set_id( agent_.GetId() );
+    message().mutable_provider()->set_id( pTreatingAgent_ ? pTreatingAgent_->GetId() : 0 );
+    message().set_etat( nState_ );
+    message().set_diagnostique_effectue( bDiagnosed_ );
 
-//    asn.set_diagnostique_effectuePresent( 1 );
-//    asn.set_etatPresent( 1 );
-
-    asn().set_oid_pion_log_traitant( pTreatingAgent_ ? pTreatingAgent_->GetId() : 0 );
-    asn().set_etat( nState_ );
-    asn().set_diagnostique_effectue( bDiagnosed_ );
-
-    asn.Send( publisher );
+    message.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,10 +98,10 @@ void LogConsignMaintenance::SendFullUpdate( ClientPublisher_ABC& publisher ) con
 // -----------------------------------------------------------------------------
 void LogConsignMaintenance::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    client::LogMaintenanceHandlingDestruction asn;
-    asn().set_oid_consigne( GetId() );
-    asn().set_oid_pion( agent_.GetId() );
-    asn.Send( publisher );
+    client::LogMaintenanceHandlingDestruction message;
+    message().mutable_id()->set_id( GetId() );
+    message().mutable_unit()->set_id( agent_.GetId() );
+    message.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------

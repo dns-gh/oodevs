@@ -102,7 +102,7 @@ void LogisticSupplyPushFlowDialog::NotifyContextMenu( const Automat_ABC& agent, 
 {
     if( profile_.CanBeOrdered( agent ) )
     {
-        const AutomatType& type = agent.GetType();
+        const kernel::AutomatType& type = agent.GetType();
         if( type.IsLogisticSupply() )
         {
             selected_ = &agent;
@@ -128,7 +128,7 @@ void LogisticSupplyPushFlowDialog::Show()
         const Automat_ABC& automat = it.NextElement();
         if( &automat != selected_ )
         {
-            const AutomatType& type = automat.GetType();
+            const kernel::AutomatType& type = automat.GetType();
             if( type.IsLogisticSupply() && &automat.Get< kernel::TacticalHierarchies >().GetTop() == &team )
                 targetCombo_->AddItem( automat.GetName(), &automat );
         }

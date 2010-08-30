@@ -23,7 +23,7 @@ using namespace kernel;
 // Name: Equipments constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Equipments::Equipments( Controller& controller, const tools::Resolver_ABC< EquipmentType >& resolver, PropertiesDictionary& dico
+Equipments::Equipments( Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, PropertiesDictionary& dico
                        , const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver
                        , const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver
                        , const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver )
@@ -58,8 +58,8 @@ void Equipments::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
     while ( nSize > 0 )
     {
         const MsgsSimToClient::EquipmentDotations_EquipmentDotation& value = message.dotation_eff_materiel().elem( --nSize );
-        Equipment previous( resolver_.Get( value.type_equipement() ) );
-        if( Equipment* equipment = Find( value.type_equipement() ) )
+        Equipment previous( resolver_.Get( value.type().id() ) );
+        if( Equipment* equipment = Find( value.type().id() ) )
             previous = *equipment;
         Equipment current( previous );
         current.Update( value );

@@ -62,7 +62,7 @@ void UrbanBlock::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        message.mutable_value()->mutable_urbanblock()->set_oid( GetValue() );
+        message.mutable_value()->mutable_urbanblock()->set_id( GetValue() );
 }
 
 // -----------------------------------------------------------------------------

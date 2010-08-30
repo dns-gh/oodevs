@@ -112,7 +112,7 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
 {
     plugins::messenger::LimitUpdateRequestAck ack;
     ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_no_error );
-    Limit* limit = limits_.Find( asn.oid() );
+    Limit* limit = limits_.Find( asn.id().id() );
     if( limit )
     {
         limit->Update( asn );
@@ -131,12 +131,12 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
 {
     plugins::messenger::LimitDestructionRequestAck ack;
     ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_no_error );
-    Limit* limit = limits_.Find( asn.oid() );
+    Limit* limit = limits_.Find( asn.id().id() );
     if( limit )
     {
         limit->SendDestruction( clients_ );
         delete limit;
-        limits_.Remove( asn.oid() );
+        limits_.Remove( asn.id().id() );
     }
     else
         ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_error_invalid_id );
@@ -166,7 +166,7 @@ void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& pub
 {
     plugins::messenger::LimaUpdateRequestAck ack ;
     ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_no_error );
-    Lima* lima = limas_.Find( asn.oid() );
+    Lima* lima = limas_.Find( asn.id().id() );
     if( lima )
     {
         lima->Update( asn );
@@ -185,12 +185,12 @@ void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& pub
 {
     plugins::messenger::LimaDestructionRequestAck ack ;
     ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_no_error );
-    Lima* lima = limas_.Find( asn.oid() );
+    Lima* lima = limas_.Find( asn.id().id() );
     if( lima )
     {
         lima->SendDestruction( clients_ );
         delete lima;
-        limas_.Remove( asn.oid() );
+        limas_.Remove( asn.id().id() );
     }
     else
         ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_error_invalid_id );
@@ -227,7 +227,7 @@ void TacticalLinesModel::CollectFormations( T_FormationMap& formations )
         {
             const Limit& limit = it.NextElement();
             if( limit.GetDiffusion().has_formation() )
-                formations[ limit.GetDiffusion().formation() ].insert( &limit );
+                formations[ limit.GetDiffusion().formation().id() ].insert( &limit );
         }
     }
     {
@@ -236,7 +236,7 @@ void TacticalLinesModel::CollectFormations( T_FormationMap& formations )
         {
             const Lima& lima = it.NextElement();
             if( lima.GetDiffusion().has_formation() )
-                formations[ lima.GetDiffusion().formation() ].insert( &lima );
+                formations[ lima.GetDiffusion().formation().id() ].insert( &lima );
         }
     }
 }
@@ -253,7 +253,7 @@ void TacticalLinesModel::CollectAutomats( T_AutomatMap& automats )
         {
             const Limit& limit = it.NextElement();
             if( limit.GetDiffusion().has_automat() )
-                automats[ limit.GetDiffusion().automat() ].insert( &limit );
+                automats[ limit.GetDiffusion().automat().id() ].insert( &limit );
         }
     }
     {
@@ -262,7 +262,7 @@ void TacticalLinesModel::CollectAutomats( T_AutomatMap& automats )
         {
             const Lima& lima = it.NextElement();
             if( lima.GetDiffusion().has_automat() )
-                automats[ lima.GetDiffusion().automat() ].insert( &lima );
+                automats[ lima.GetDiffusion().automat().id() ].insert( &lima );
         }
     }
 }

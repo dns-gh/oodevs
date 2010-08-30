@@ -24,52 +24,45 @@ struct IdentifierValue : public InstantValue< NumericValue >
 
     enum { has_parameter = false };
 
-#define SET_OID( tag )                                  \
+#define SET_OID( tag, var )                             \
     if( wrapper.message().has_##tag() )                 \
-        Set( wrapper.message().tag().oid() );
-#define SET_CONSIGN_OID( tag )                          \
-    if( wrapper.message().has_##tag() )                 \
-        Set( wrapper.message().tag().oid_consigne() );
-#define SET_FIRE_OID( tag )                             \
-    if( wrapper.message().has_##tag() )                 \
-        Set( wrapper.message().tag().fire_oid() );
+        Set( wrapper.message().tag().##var() );
 
     //! @name Operations
     //@{
     void Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
     {
-            SET_OID         ( unit_order_ack );
-            SET_OID         ( unit_creation );
-            SET_OID         ( unit_attributes );
-            SET_OID         ( unit_pathfind );
-            SET_OID         ( unit_environment_type );
-            SET_OID         ( unit_change_superior );
-            SET_OID         ( decisional_state );
-            SET_OID         ( debug_points );
-            SET_OID         ( unit_vision_cones );
-            SET_OID         ( unit_detection );
-            SET_OID         ( object_detection );
-            SET_OID         ( population_concentration_detection );
-            SET_OID         ( population_flow_detection );
-            SET_OID         ( unit_order );
-            SET_CONSIGN_OID ( log_medical_handling_creation );
-            SET_CONSIGN_OID ( log_medical_handling_update );
-            SET_CONSIGN_OID ( log_medical_handling_destruction );
-            SET_CONSIGN_OID ( log_maintenance_handling_creation );
-            SET_CONSIGN_OID ( log_maintenance_handling_update );
-            SET_CONSIGN_OID ( log_maintenance_handling_destruction );
-            SET_CONSIGN_OID ( log_supply_handling_creation );
-            SET_CONSIGN_OID ( log_supply_handling_update );
-            SET_CONSIGN_OID ( log_supply_handling_destruction );
-            SET_FIRE_OID    ( start_unit_fire );
-            SET_FIRE_OID    ( stop_unit_fire );
-            SET_FIRE_OID    ( start_population_fire );
-            SET_FIRE_OID    ( stop_population_fire );
+            SET_OID( unit_order_ack, tasker().id );
+            SET_OID( unit_creation, id().id );
+            SET_OID( unit_attributes, id().id );
+            SET_OID( unit_pathfind, id().id );
+            SET_OID( unit_environment_type, id().id );
+            SET_OID( unit_change_superior, unit().id );
+            SET_OID( decisional_state, id().unit().id );
+            SET_OID( debug_points, id().unit().id );
+            SET_OID( unit_vision_cones, id().id );
+            SET_OID( unit_detection, observer().id );
+            SET_OID( object_detection, observer().id );
+            SET_OID( population_concentration_detection, id().id );
+            SET_OID( population_flow_detection, id().id );
+            SET_OID( unit_order, tasker().id );
+            SET_OID( log_medical_handling_creation, id().id );
+            SET_OID( log_medical_handling_update, id().id );
+            SET_OID( log_medical_handling_destruction, id().id );
+            SET_OID( log_maintenance_handling_creation, id().id );
+            SET_OID( log_maintenance_handling_update, id().id );
+            SET_OID( log_maintenance_handling_destruction, id().id );
+            SET_OID( log_supply_handling_creation, id().id );
+            SET_OID( log_supply_handling_update, id().id );
+            SET_OID( log_supply_handling_destruction, id().id );
+            SET_OID( start_unit_fire, id().id );
+            SET_OID( stop_unit_fire, id().id );
+            SET_OID( start_population_fire, id().id );
+            SET_OID( stop_population_fire, id().id );
             // $$$$ AGE 2007-08-29: objets, ...
     }
     //@}
 #undef SET_OID
-#undef SET_CONSIGN_OID
 };
 
 #endif // __IdentifierValue_h_

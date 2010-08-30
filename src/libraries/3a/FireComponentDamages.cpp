@@ -44,7 +44,7 @@ float FireComponentDamages::Extract( const MsgsSimToClient::MsgSimToClient& wrap
         for( int e = 0; e < damages.equipments().elem_size(); ++e )
         {
             const MsgsSimToClient::MsgUnitEquipmentFireDamage& damage = damages.equipments().elem( e );
-            if( filter_.IsAllowed( damage.equipement_type() ) )
+            if( filter_.IsAllowed( damage.equipement_type().id() ) )
                 result += damage.unavailable_nbr();
         }
     }

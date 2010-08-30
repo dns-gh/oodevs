@@ -219,9 +219,9 @@ void PHY_RolePion_Communications::SendFullState( client::UnitAttributes& msg ) c
     msg().mutable_communications()->set_jammed( !jammers_.empty() );
 
     if( !jammers_.empty() || bBlackoutEmmittedActivated_ )
-        msg().mutable_communications()->set_knowledge_group( GetKnowledgeGroup().GetId() );
+        msg().mutable_communications()->mutable_knowledge_group()->set_id( GetKnowledgeGroup().GetId() );
     else
-        msg().mutable_communications()->set_knowledge_group( 0 );
+        msg().mutable_communications()->mutable_knowledge_group()->set_id( 0 );
 
     msg().set_radio_emitter_disabled( bBlackoutEmmittedActivated_ );
     msg().set_radio_receiver_disabled( bBlackoutReceivedActivated_ );

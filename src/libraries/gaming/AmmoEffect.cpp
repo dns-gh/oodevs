@@ -22,7 +22,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 AmmoEffect::AmmoEffect( const MsgsSimToClient::MsgStartFireEffect& message, Controller& controller, const CoordinateConverter_ABC& converter )
     : controller_( controller )
-    , id_( message.effect_oid() )
+    , id_( message.id().id() )
     , type_( message.type() )
     , ellipse_( message.location(), converter )
     , meteo_( weather::PHY_Lighting::jourSansNuage_, weather::PHY_Precipitation::none_ )

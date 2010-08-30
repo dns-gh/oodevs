@@ -18,8 +18,8 @@ using namespace kernel;
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
 PopulationFire::PopulationFire( const MsgsSimToClient::MsgStartPopulationFire& message, const tools::Resolver_ABC< Population_ABC >& resolver )
-    : Fire_ABC( resolver.Get( message.firer_oid() ) )
-    , id_( message.fire_oid() )
+    : Fire_ABC( resolver.Get( message.firing_population().id() ) )
+    , id_( message.id().id() )
 {
     // NOTHING
 }

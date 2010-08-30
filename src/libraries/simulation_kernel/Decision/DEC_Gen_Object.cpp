@@ -32,9 +32,9 @@ DEC_Gen_Object::DEC_Gen_Object( const Common::MsgPlannedWork& asn, const MIL_Ent
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
     if( !NET_ASN_Tools::ReadLocation( asn.position(), localisation_ ) )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
-    if( asn.tc2() != 0 )
+    if( asn.tc2().id() != 0 )
     {
-        pTC2_ = entityManager.FindAutomate( asn.tc2() );
+        pTC2_ = entityManager.FindAutomate( asn.tc2().id() );
         if( !pTC2_ )
             throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
     }
@@ -103,7 +103,7 @@ void DEC_Gen_Object::Serialize( Common::MsgPlannedWork& asn ) const
 {
     asn.set_type( type_.c_str() );
     asn.set_type_obstacle( pObstacleType_ );
-    asn.set_tc2( pTC2_ ? pTC2_->GetID() : 0 );
+    asn.mutable_tc2()->set_id( pTC2_ ? pTC2_->GetID() : 0 );
     asn.set_densite( static_cast< float >( rDensity_ ) );
     asn.set_activity_time( nMinesActivityTime_ );
     NET_ASN_Tools::WriteLocation( localisation_, *asn.mutable_position() );

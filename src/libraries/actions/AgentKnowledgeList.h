@@ -15,7 +15,7 @@
 
 namespace Common
 {
-    class MsgUnitKnowledgeList;
+    class UnitKnowledgeIdList;
 }
 
 namespace kernel
@@ -42,7 +42,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit AgentKnowledgeList( const kernel::OrderParameter& parameter );
-             AgentKnowledgeList( const kernel::OrderParameter& parameter, const Common::MsgUnitKnowledgeList& message, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+             AgentKnowledgeList( const kernel::OrderParameter& parameter, const Common::UnitKnowledgeIdList& message, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
              AgentKnowledgeList( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
     virtual ~AgentKnowledgeList();
     //@}

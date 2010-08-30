@@ -21,9 +21,9 @@ using namespace dispatcher;
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
 PopulationFlow::PopulationFlow( const Population& population, const MsgsSimToClient::MsgPopulationFlowCreation& msg )
-    : dispatcher::PopulationFlow_ABC( msg.oid() )
+    : dispatcher::PopulationFlow_ABC( msg.id().id() )
     , population_     ( population )
-    , nID_            ( msg.oid() )
+    , nID_            ( msg.id().id() )
     , path_           ()
     , flow_           ()
     , nDirection_     ()
@@ -73,8 +73,8 @@ void PopulationFlow::DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate& m
 void PopulationFlow::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationFlowCreation asn;
-    asn().set_oid( nID_ );
-    asn().set_oid_population( population_.GetId() );
+    asn().mutable_id()->set_id( nID_ );
+    asn().mutable_population()->set_id( population_.GetId() );
     asn.Send( publisher );
 }
 
@@ -85,8 +85,8 @@ void PopulationFlow::SendCreation( ClientPublisher_ABC& publisher ) const
 void PopulationFlow::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationFlowUpdate asn;
-    asn().set_oid( nID_ );
-    asn().set_oid_population( population_.GetId() );
+    asn().mutable_id()->set_id( nID_ );
+    asn().mutable_population()->set_id( population_.GetId() );
     asn().mutable_direction()->set_heading( nDirection_ );
     asn().set_vitesse( nSpeed_ );
     asn().set_attitude( nAttitude_ );
@@ -104,8 +104,8 @@ void PopulationFlow::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 void PopulationFlow::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationFlowDestruction destruction;
-    destruction().set_oid           ( nID_ );
-    destruction().set_oid_population( population_.GetId() );
+    destruction().mutable_id()->set_id( nID_ );
+    destruction().mutable_population()->set_id( population_.GetId() );
     destruction.Send( publisher );
 }
 

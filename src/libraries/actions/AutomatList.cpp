@@ -35,11 +35,11 @@ AutomatList::AutomatList( const kernel::OrderParameter& parameter )
 // Name: AutomatList constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-AutomatList::AutomatList( const OrderParameter& parameter, const Common::MsgAutomatList& message, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
+AutomatList::AutomatList( const OrderParameter& parameter, const Common::AutomatIdList& message, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
     for( int i = 0; i < message.elem_size(); ++i )
-        AddParameter( *new Automat( OrderParameter( tools::translate( "Parameter", "Automat %1" ).arg( i + 1 ).ascii(), "automate", false ), message.elem(i).oid(), resolver, controller ) );
+        AddParameter( *new Automat( OrderParameter( tools::translate( "Parameter", "Automat %1" ).arg( i + 1 ).ascii(), "automat", false ), message.elem(i).id(), resolver, controller ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,12 +74,12 @@ namespace
 {
     struct AsnSerializer : public ParameterVisitor_ABC
     {
-        explicit AsnSerializer( Common::MsgAutomatList& message ) : message_( &message ) {}
+        explicit AsnSerializer( Common::AutomatIdList& message ) : message_( &message ) {}
         virtual void Visit( const Automat& param )
         {
             param.CommitTo( *message_->add_elem() );
         }
-        Common::MsgAutomatList* message_;
+        Common::AutomatIdList* message_;
     };
 }
 
@@ -90,7 +90,7 @@ namespace
 void AutomatList::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
-    Common::MsgAutomatList* list = message.mutable_value()->mutable_automatlist();
+    Common::AutomatIdList* list = message.mutable_value()->mutable_automatlist();
     if( IsSet() )
     {
         AsnSerializer serializer( *list );

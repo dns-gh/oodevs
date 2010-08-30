@@ -145,7 +145,7 @@ namespace
     {
         list.clear();
         for( int i = 0; i < source.elem_size(); ++i )
-            if( const B* entity = model.Find( source.elem(i).oid() ) )
+            if( const B* entity = model.Find( source.elem(i).id() ) )
                 list.insert( entity );
     }
 }
@@ -285,7 +285,7 @@ namespace
     void Serialize( List& message, const std::set< const Entity* >& list )
     {
         for( std::set< const Entity* >::const_iterator it = list.begin(); it != list.end(); ++it )
-            message.add_elem()->set_oid( (*it)->GetId() );
+            message.add_elem()->set_id( (*it)->GetId() );
     }
 }
 

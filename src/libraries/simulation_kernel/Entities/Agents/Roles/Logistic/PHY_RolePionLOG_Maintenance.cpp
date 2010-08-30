@@ -105,8 +105,8 @@ namespace boost
             file << size;
             for ( CIT_MaintenancePriorityVector it = vector.begin(); it != vector.end(); ++it )
             {
-                Common::MsgEquipmentType id = (*it)->GetMosID();
-                int equipment_type = id.equipment();
+                Common::EquipmentType id = (*it)->GetMosID();
+                int equipment_type = id.id();
                 file << equipment_type;
             }
         }
@@ -119,10 +119,10 @@ namespace boost
             vector.reserve( nNbr );
             while ( nNbr-- )
             {
-                Common::MsgEquipmentType nID;
+                Common::EquipmentType nID;
                 int equipment_type;
                 file >> equipment_type;
-                nID.set_equipment( equipment_type );
+                nID.set_id( equipment_type );
                 vector.push_back( PHY_ComposanteTypePion::Find( nID ) );
             }
         }
@@ -655,7 +655,7 @@ void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, Msgs
     for( PHY_Composante_ABC::CIT_ComposanteUseMap itData = data.begin(); itData != data.end(); ++itData )
     {
         MsgsSimToClient::MsgLogMaintenanceEquipmentAvailability& data = *asn.add_elem();
-        data.set_type_equipement( itData->first->GetMosID().equipment() );
+        data.set_type_equipement( itData->first->GetMosID().id() );
         assert( itData->second.nNbrTotal_ );
         data.set_nbr_total( itData->second.nNbrTotal_ );
         data.set_nbr_au_travail( itData->second.nNbrUsed_ );
@@ -678,15 +678,15 @@ void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, Msgs
 void PHY_RolePionLOG_Maintenance::SendFullState( client::UnitAttributes& /*asnUnit*/ ) const
 {
     client::LogMaintenanceState asn;
-    asn().set_oid_pion( pion_.GetID() );
+    asn().mutable_id()->set_id( pion_.GetID() );
     asn().set_chaine_activee( bSystemEnabled_ );
     asn().set_regime_travail( pWorkRate_->GetAsnID() );
     if( !priorities_.empty() )
         for( CIT_MaintenancePriorityVector itPriority = priorities_.begin(); itPriority != priorities_.end(); ++itPriority )
-            asn().mutable_priorites()->add_elem()->set_equipment( (**itPriority).GetMosID().equipment() );
+            asn().mutable_priorites()->add_elem()->set_id( (**itPriority).GetMosID().id() );
     if( !tacticalPriorities_.empty() )
         for( CIT_AutomateVector itPriority = tacticalPriorities_.begin(); itPriority != tacticalPriorities_.end(); ++itPriority )
-            asn().mutable_priorites_tactiques()->add_elem()->set_oid( (**itPriority).GetID() );
+            asn().mutable_priorites_tactiques()->add_elem()->set_id( (**itPriority).GetID() );
     {
         PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
         PHY_ComposanteUsePredicate predicate( &PHY_ComposantePion::CanHaul, &PHY_ComposanteTypePion::CanHaul );

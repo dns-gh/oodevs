@@ -204,12 +204,12 @@ void MIL_Formation::SendCreation() const
     assert( pLevel_ );
     assert( pArmy_ );
     client::FormationCreation asn;
-    asn().set_oid( nID_ );
-    asn().set_oid_camp( pArmy_->GetID() );
-    asn().set_nom( strName_.c_str() );
-    asn().set_niveau( pLevel_->GetAsnID() );
+    asn().mutable_formation()->set_id( nID_ );
+    asn().mutable_party()->set_id( pArmy_->GetID() );
+    asn().set_name( strName_.c_str() );
+    asn().set_level( pLevel_->GetAsnID() );
     if( pParent_ )
-        asn().set_oid_formation_parente( pParent_->GetID() );
+        asn().mutable_parent()->set_id( pParent_->GetID() );
     asn.Send( NET_Publisher_ABC::Publisher() );
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendCreation, _1 ) );//@TODO MGD Move to factory
     tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::SendCreation, _1 ) );

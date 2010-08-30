@@ -114,8 +114,8 @@ void MineAttribute::UpdateData( const T& message )
 {
     if( message.has_mine()  )
     {
-        if( ! valorization_ && message.mine().has_dotation_type()  )
-            valorization_ = resolver_.Find( message.mine().dotation_type() );
+        if( ! valorization_ && message.mine().has_resource()  )
+            valorization_ = resolver_.Find( message.mine().resource().id() );
 
         if( message.mine().has_dotation_nbr()  )
             nDotationValorization_ = message.mine().dotation_nbr();

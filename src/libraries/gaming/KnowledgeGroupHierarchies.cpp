@@ -42,19 +42,19 @@ KnowledgeGroupHierarchies::~KnowledgeGroupHierarchies()
 // -----------------------------------------------------------------------------
 void KnowledgeGroupHierarchies::DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message )
 {
-    if( message.has_oid_parent() )
+    if( message.has_parent() )
     {
-        if( message.oid_parent() != 0 )
-            ChangeSuperior( &resolver_.Get( message.oid_parent() ) );
+        if( message.parent().id() != 0 )
+            ChangeSuperior( &resolver_.Get( message.parent().id() ) );    
         else
         {
-            const kernel::Entity_ABC* top = &resolver_.Get( message.oid() ).Retrieve< kernel::CommunicationHierarchies >()->GetTop();
+            const kernel::Entity_ABC* top = &resolver_.Get( message.id().id() ).Retrieve< kernel::CommunicationHierarchies >()->GetTop();
             ChangeSuperior( const_cast< kernel::Entity_ABC* >( top ) );
         }
     }
-    else if( message.has_oid_camp() )
+    else if( message.has_party() )
     {
-        if( const kernel::Entity_ABC* top = &resolver_.Get( message.oid() ).Retrieve< kernel::CommunicationHierarchies >()->GetTop() )
+        if( const kernel::Entity_ABC* top = &resolver_.Get( message.id().id() ).Retrieve< kernel::CommunicationHierarchies >()->GetTop() )
             ChangeSuperior( const_cast< kernel::Entity_ABC* >( top ) );
     }
 }

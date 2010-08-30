@@ -217,7 +217,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Agent )
     std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "agent", input,
         bl::bind( bl::new_ptr< actions::parameters::Agent >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ) ) ) );
     CheckSet( *message );
-    BOOST_CHECK_EQUAL( 42, message->value().unit().oid() );
+    BOOST_CHECK_EQUAL( 42, message->value().unit().id() );
 }
 
 namespace
@@ -318,7 +318,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Automat )
     std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "automate", input,
         bl::bind( bl::new_ptr< actions::parameters::Automat >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ) ) ) );
     CheckSet( *message );
-    BOOST_CHECK_EQUAL( 42, message->value().automat().oid() );
+    BOOST_CHECK_EQUAL( 42, message->value().automat().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -539,7 +539,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_PopulationKnowledge )
     MOCK_EXPECT( knowledge, GetPopulationEntity ).returns( &population );
     std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "populationknowledge", input,
         bl::bind( bl::new_ptr< actions::parameters::PopulationKnowledge >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( converter ), bl::var( owner ), bl::var( controller ) ) ) );
-    BOOST_CHECK_EQUAL( 15u, message->value().populationknowledge().oid() );
+    BOOST_CHECK_EQUAL( 15u, message->value().populationknowledge().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -568,5 +568,5 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_ObjectKnowledge )
     kernel::Controller controller;
     std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "objectknowledge", input,
         bl::bind( bl::new_ptr< actions::parameters::ObjectKnowledge >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( converter ), bl::var( owner ), bl::var( controller ) ) ) );
-    BOOST_CHECK_EQUAL( 15u, message->value().objectknowledge().oid() );
+    BOOST_CHECK_EQUAL( 15u, message->value().objectknowledge().id() );
 }

@@ -53,10 +53,10 @@ void TeamsModel::Purge()
 // -----------------------------------------------------------------------------
 void TeamsModel::CreateTeam( const MsgsSimToClient::MsgTeamCreation& message )
 {
-    if( ! tools::Resolver< Team_ABC >::Find( message.oid() ) )
+    if( ! tools::Resolver< Team_ABC >::Find( message.id().id() ) )
     {
         Team_ABC* team = factory_.CreateTeam( message );
-        tools::Resolver< Team_ABC >::Register( message.oid(), *team );
+        tools::Resolver< Team_ABC >::Register( message.id().id(), *team );
     }
 }
 
@@ -66,10 +66,10 @@ void TeamsModel::CreateTeam( const MsgsSimToClient::MsgTeamCreation& message )
 // -----------------------------------------------------------------------------
 void TeamsModel::CreateFormation( const Common::MsgFormationCreation& message )
 {
-    if( ! tools::Resolver< Formation_ABC >::Find( message.oid() ) )
+    if( ! tools::Resolver< Formation_ABC >::Find( message.formation().id() ) )
     {
         Formation_ABC* formation = factory_.CreateFormation( message );
-        tools::Resolver< Formation_ABC >::Register( message.oid(), *formation );
+        tools::Resolver< Formation_ABC >::Register( message.formation().id(), *formation );
     }
 }
 

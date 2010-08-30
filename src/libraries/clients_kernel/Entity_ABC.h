@@ -87,7 +87,7 @@ protected:
     void RegisterSelf( Extension_ABC& ext );
     //@}
 
-private:
+public:
     //! @name Copy/Assignment
     //@{
     Entity_ABC( const Entity_ABC& );            //!< Copy constructor

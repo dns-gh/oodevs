@@ -144,7 +144,7 @@ void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, c
     plugins::messenger::ShapeUpdateRequestAck ack ;
     ack().set_error_code( MsgsMessengerToClient::ShapeRequestAck_ErrorCode_no_error );
 
-    Drawing* drawing = Find( message.oid() );
+    Drawing* drawing = Find( message.shape().id() );
     if( drawing )
     {
         drawing->Update( message );
@@ -164,12 +164,12 @@ void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, c
     plugins::messenger::ShapeDestructionRequestAck ack ;
     ack().set_error_code( MsgsMessengerToClient::ShapeRequestAck_ErrorCode_no_error );
 
-    Drawing* drawing = Find( message.oid() );
+    Drawing* drawing = Find( message.id().id() );
     if( drawing )
     {
         drawing->SendDestruction( clients_ );
         delete drawing;
-        Remove( message.oid() );
+        Remove( message.id().id() );
     }
     else
         ack().set_error_code( MsgsMessengerToClient::ShapeRequestAck_ErrorCode_error_invalid_oid );

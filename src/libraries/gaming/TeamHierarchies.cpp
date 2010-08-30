@@ -54,7 +54,6 @@ bool TeamHierarchies::CanCommunicate() const
     return true;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: TeamHierarchies::IsJammed
 // Created: HBD 2010-07-30

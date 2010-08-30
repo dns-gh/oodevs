@@ -412,19 +412,19 @@ class MsgFragOrder : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required uint32 oid = 1;
-  inline bool has_oid() const;
-  inline void clear_oid();
-  static const int kOidFieldNumber = 1;
-  inline ::google::protobuf::uint32 oid() const;
-  inline void set_oid(::google::protobuf::uint32 value);
+  // required .Common.Tasker tasker = 1;
+  inline bool has_tasker() const;
+  inline void clear_tasker();
+  static const int kTaskerFieldNumber = 1;
+  inline const ::Common::Tasker& tasker() const;
+  inline ::Common::Tasker* mutable_tasker();
   
-  // required uint32 frag_order = 2;
+  // required .Common.FragOrderType frag_order = 2;
   inline bool has_frag_order() const;
   inline void clear_frag_order();
   static const int kFragOrderFieldNumber = 2;
-  inline ::google::protobuf::uint32 frag_order() const;
-  inline void set_frag_order(::google::protobuf::uint32 value);
+  inline const ::Common::FragOrderType& frag_order() const;
+  inline ::Common::FragOrderType* mutable_frag_order();
   
   // optional .Common.MsgMissionParameters parametres = 3;
   inline bool has_parametres() const;
@@ -437,8 +437,8 @@ class MsgFragOrder : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::uint32 oid_;
-  ::google::protobuf::uint32 frag_order_;
+  ::Common::Tasker* tasker_;
+  ::Common::FragOrderType* frag_order_;
   ::Common::MsgMissionParameters* parametres_;
   friend void  protobuf_AddDesc_ClientToSim_2eproto();
   friend void protobuf_AssignDesc_ClientToSim_2eproto();
@@ -515,12 +515,12 @@ class MsgSetAutomatMode : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required int32 oid = 1;
-  inline bool has_oid() const;
-  inline void clear_oid();
-  static const int kOidFieldNumber = 1;
-  inline ::google::protobuf::int32 oid() const;
-  inline void set_oid(::google::protobuf::int32 value);
+  // required .Common.AutomatId automate = 1;
+  inline bool has_automate() const;
+  inline void clear_automate();
+  static const int kAutomateFieldNumber = 1;
+  inline const ::Common::AutomatId& automate() const;
+  inline ::Common::AutomatId* mutable_automate();
   
   // required .Common.EnumAutomatMode mode = 2;
   inline bool has_mode() const;
@@ -533,7 +533,7 @@ class MsgSetAutomatMode : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::int32 oid_;
+  ::Common::AutomatId* automate_;
   int mode_;
   friend void  protobuf_AddDesc_ClientToSim_2eproto();
   friend void protobuf_AssignDesc_ClientToSim_2eproto();
@@ -610,19 +610,19 @@ class MsgUnitCreationRequest : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required uint32 type_pion = 1;
-  inline bool has_type_pion() const;
-  inline void clear_type_pion();
-  static const int kTypePionFieldNumber = 1;
-  inline ::google::protobuf::uint32 type_pion() const;
-  inline void set_type_pion(::google::protobuf::uint32 value);
+  // required .Common.UnitType type = 1;
+  inline bool has_type() const;
+  inline void clear_type();
+  static const int kTypeFieldNumber = 1;
+  inline const ::Common::UnitType& type() const;
+  inline ::Common::UnitType* mutable_type();
   
-  // required uint32 oid_automate = 2;
-  inline bool has_oid_automate() const;
-  inline void clear_oid_automate();
-  static const int kOidAutomateFieldNumber = 2;
-  inline ::google::protobuf::uint32 oid_automate() const;
-  inline void set_oid_automate(::google::protobuf::uint32 value);
+  // required .Common.AutomatId superior = 2;
+  inline bool has_superior() const;
+  inline void clear_superior();
+  static const int kSuperiorFieldNumber = 2;
+  inline const ::Common::AutomatId& superior() const;
+  inline ::Common::AutomatId* mutable_superior();
   
   // required .Common.MsgCoordLatLong position = 3;
   inline bool has_position() const;
@@ -635,8 +635,8 @@ class MsgUnitCreationRequest : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::uint32 type_pion_;
-  ::google::protobuf::uint32 oid_automate_;
+  ::Common::UnitType* type_;
+  ::Common::AutomatId* superior_;
   ::Common::MsgCoordLatLong* position_;
   friend void  protobuf_AddDesc_ClientToSim_2eproto();
   friend void protobuf_AssignDesc_ClientToSim_2eproto();
@@ -759,12 +759,12 @@ class MsgUnitMagicAction : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required uint32 oid = 1;
-  inline bool has_oid() const;
-  inline void clear_oid();
-  static const int kOidFieldNumber = 1;
-  inline ::google::protobuf::uint32 oid() const;
-  inline void set_oid(::google::protobuf::uint32 value);
+  // required .Common.UnitId id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline const ::Common::UnitId& id() const;
+  inline ::Common::UnitId* mutable_id();
   
   // required .MsgsClientToSim.MsgUnitMagicAction.Type type = 2;
   inline bool has_type() const;
@@ -784,7 +784,7 @@ class MsgUnitMagicAction : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::uint32 oid_;
+  ::Common::UnitId* id_;
   int type_;
   ::Common::MsgMissionParameters* parametres_;
   friend void  protobuf_AddDesc_ClientToSim_2eproto();
@@ -886,12 +886,12 @@ class MsgKnowledgeMagicAction : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required uint32 oid = 1;
-  inline bool has_oid() const;
-  inline void clear_oid();
-  static const int kOidFieldNumber = 1;
-  inline ::google::protobuf::uint32 oid() const;
-  inline void set_oid(::google::protobuf::uint32 value);
+  // required .Common.KnowledgeGroupId id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline const ::Common::KnowledgeGroupId& id() const;
+  inline ::Common::KnowledgeGroupId* mutable_id();
   
   // required .MsgsClientToSim.MsgKnowledgeMagicAction.Type type = 2;
   inline bool has_type() const;
@@ -911,7 +911,7 @@ class MsgKnowledgeMagicAction : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::uint32 oid_;
+  ::Common::KnowledgeGroupId* id_;
   int type_;
   ::Common::MsgMissionParameters* parametres_;
   friend void  protobuf_AddDesc_ClientToSim_2eproto();
@@ -1048,12 +1048,12 @@ class MsgObjectMagicAction : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required uint32 oid = 1;
-  inline bool has_oid() const;
-  inline void clear_oid();
-  static const int kOidFieldNumber = 1;
-  inline ::google::protobuf::uint32 oid() const;
-  inline void set_oid(::google::protobuf::uint32 value);
+  // required .Common.ObjectId object = 1;
+  inline bool has_object() const;
+  inline void clear_object();
+  static const int kObjectFieldNumber = 1;
+  inline const ::Common::ObjectId& object() const;
+  inline ::Common::ObjectId* mutable_object();
   
   // required .MsgsClientToSim.MsgObjectMagicAction.Type type = 2;
   inline bool has_type() const;
@@ -1073,7 +1073,7 @@ class MsgObjectMagicAction : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::uint32 oid_;
+  ::Common::ObjectId* object_;
   int type_;
   ::Common::MsgMissionParameters* parametres_;
   friend void  protobuf_AddDesc_ClientToSim_2eproto();
@@ -1787,36 +1787,38 @@ inline ::std::string* MsgControlCheckPointSaveNow::mutable_name() {
 
 // MsgFragOrder
 
-// required uint32 oid = 1;
-inline bool MsgFragOrder::has_oid() const {
+// required .Common.Tasker tasker = 1;
+inline bool MsgFragOrder::has_tasker() const {
   return _has_bit(0);
 }
-inline void MsgFragOrder::clear_oid() {
-  oid_ = 0u;
+inline void MsgFragOrder::clear_tasker() {
+  if (tasker_ != NULL) tasker_->::Common::Tasker::Clear();
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 MsgFragOrder::oid() const {
-  return oid_;
+inline const ::Common::Tasker& MsgFragOrder::tasker() const {
+  return tasker_ != NULL ? *tasker_ : *default_instance_->tasker_;
 }
-inline void MsgFragOrder::set_oid(::google::protobuf::uint32 value) {
+inline ::Common::Tasker* MsgFragOrder::mutable_tasker() {
   _set_bit(0);
-  oid_ = value;
+  if (tasker_ == NULL) tasker_ = new ::Common::Tasker;
+  return tasker_;
 }
 
-// required uint32 frag_order = 2;
+// required .Common.FragOrderType frag_order = 2;
 inline bool MsgFragOrder::has_frag_order() const {
   return _has_bit(1);
 }
 inline void MsgFragOrder::clear_frag_order() {
-  frag_order_ = 0u;
+  if (frag_order_ != NULL) frag_order_->::Common::FragOrderType::Clear();
   _clear_bit(1);
 }
-inline ::google::protobuf::uint32 MsgFragOrder::frag_order() const {
-  return frag_order_;
+inline const ::Common::FragOrderType& MsgFragOrder::frag_order() const {
+  return frag_order_ != NULL ? *frag_order_ : *default_instance_->frag_order_;
 }
-inline void MsgFragOrder::set_frag_order(::google::protobuf::uint32 value) {
+inline ::Common::FragOrderType* MsgFragOrder::mutable_frag_order() {
   _set_bit(1);
-  frag_order_ = value;
+  if (frag_order_ == NULL) frag_order_ = new ::Common::FragOrderType;
+  return frag_order_;
 }
 
 // optional .Common.MsgMissionParameters parametres = 3;
@@ -1840,20 +1842,21 @@ inline ::Common::MsgMissionParameters* MsgFragOrder::mutable_parametres() {
 
 // MsgSetAutomatMode
 
-// required int32 oid = 1;
-inline bool MsgSetAutomatMode::has_oid() const {
+// required .Common.AutomatId automate = 1;
+inline bool MsgSetAutomatMode::has_automate() const {
   return _has_bit(0);
 }
-inline void MsgSetAutomatMode::clear_oid() {
-  oid_ = 0;
+inline void MsgSetAutomatMode::clear_automate() {
+  if (automate_ != NULL) automate_->::Common::AutomatId::Clear();
   _clear_bit(0);
 }
-inline ::google::protobuf::int32 MsgSetAutomatMode::oid() const {
-  return oid_;
+inline const ::Common::AutomatId& MsgSetAutomatMode::automate() const {
+  return automate_ != NULL ? *automate_ : *default_instance_->automate_;
 }
-inline void MsgSetAutomatMode::set_oid(::google::protobuf::int32 value) {
+inline ::Common::AutomatId* MsgSetAutomatMode::mutable_automate() {
   _set_bit(0);
-  oid_ = value;
+  if (automate_ == NULL) automate_ = new ::Common::AutomatId;
+  return automate_;
 }
 
 // required .Common.EnumAutomatMode mode = 2;
@@ -1877,36 +1880,38 @@ inline void MsgSetAutomatMode::set_mode(Common::EnumAutomatMode value) {
 
 // MsgUnitCreationRequest
 
-// required uint32 type_pion = 1;
-inline bool MsgUnitCreationRequest::has_type_pion() const {
+// required .Common.UnitType type = 1;
+inline bool MsgUnitCreationRequest::has_type() const {
   return _has_bit(0);
 }
-inline void MsgUnitCreationRequest::clear_type_pion() {
-  type_pion_ = 0u;
+inline void MsgUnitCreationRequest::clear_type() {
+  if (type_ != NULL) type_->::Common::UnitType::Clear();
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 MsgUnitCreationRequest::type_pion() const {
-  return type_pion_;
+inline const ::Common::UnitType& MsgUnitCreationRequest::type() const {
+  return type_ != NULL ? *type_ : *default_instance_->type_;
 }
-inline void MsgUnitCreationRequest::set_type_pion(::google::protobuf::uint32 value) {
+inline ::Common::UnitType* MsgUnitCreationRequest::mutable_type() {
   _set_bit(0);
-  type_pion_ = value;
+  if (type_ == NULL) type_ = new ::Common::UnitType;
+  return type_;
 }
 
-// required uint32 oid_automate = 2;
-inline bool MsgUnitCreationRequest::has_oid_automate() const {
+// required .Common.AutomatId superior = 2;
+inline bool MsgUnitCreationRequest::has_superior() const {
   return _has_bit(1);
 }
-inline void MsgUnitCreationRequest::clear_oid_automate() {
-  oid_automate_ = 0u;
+inline void MsgUnitCreationRequest::clear_superior() {
+  if (superior_ != NULL) superior_->::Common::AutomatId::Clear();
   _clear_bit(1);
 }
-inline ::google::protobuf::uint32 MsgUnitCreationRequest::oid_automate() const {
-  return oid_automate_;
+inline const ::Common::AutomatId& MsgUnitCreationRequest::superior() const {
+  return superior_ != NULL ? *superior_ : *default_instance_->superior_;
 }
-inline void MsgUnitCreationRequest::set_oid_automate(::google::protobuf::uint32 value) {
+inline ::Common::AutomatId* MsgUnitCreationRequest::mutable_superior() {
   _set_bit(1);
-  oid_automate_ = value;
+  if (superior_ == NULL) superior_ = new ::Common::AutomatId;
+  return superior_;
 }
 
 // required .Common.MsgCoordLatLong position = 3;
@@ -1930,20 +1935,21 @@ inline ::Common::MsgCoordLatLong* MsgUnitCreationRequest::mutable_position() {
 
 // MsgUnitMagicAction
 
-// required uint32 oid = 1;
-inline bool MsgUnitMagicAction::has_oid() const {
+// required .Common.UnitId id = 1;
+inline bool MsgUnitMagicAction::has_id() const {
   return _has_bit(0);
 }
-inline void MsgUnitMagicAction::clear_oid() {
-  oid_ = 0u;
+inline void MsgUnitMagicAction::clear_id() {
+  if (id_ != NULL) id_->::Common::UnitId::Clear();
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 MsgUnitMagicAction::oid() const {
-  return oid_;
+inline const ::Common::UnitId& MsgUnitMagicAction::id() const {
+  return id_ != NULL ? *id_ : *default_instance_->id_;
 }
-inline void MsgUnitMagicAction::set_oid(::google::protobuf::uint32 value) {
+inline ::Common::UnitId* MsgUnitMagicAction::mutable_id() {
   _set_bit(0);
-  oid_ = value;
+  if (id_ == NULL) id_ = new ::Common::UnitId;
+  return id_;
 }
 
 // required .MsgsClientToSim.MsgUnitMagicAction.Type type = 2;
@@ -1984,20 +1990,21 @@ inline ::Common::MsgMissionParameters* MsgUnitMagicAction::mutable_parametres() 
 
 // MsgKnowledgeMagicAction
 
-// required uint32 oid = 1;
-inline bool MsgKnowledgeMagicAction::has_oid() const {
+// required .Common.KnowledgeGroupId id = 1;
+inline bool MsgKnowledgeMagicAction::has_id() const {
   return _has_bit(0);
 }
-inline void MsgKnowledgeMagicAction::clear_oid() {
-  oid_ = 0u;
+inline void MsgKnowledgeMagicAction::clear_id() {
+  if (id_ != NULL) id_->::Common::KnowledgeGroupId::Clear();
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 MsgKnowledgeMagicAction::oid() const {
-  return oid_;
+inline const ::Common::KnowledgeGroupId& MsgKnowledgeMagicAction::id() const {
+  return id_ != NULL ? *id_ : *default_instance_->id_;
 }
-inline void MsgKnowledgeMagicAction::set_oid(::google::protobuf::uint32 value) {
+inline ::Common::KnowledgeGroupId* MsgKnowledgeMagicAction::mutable_id() {
   _set_bit(0);
-  oid_ = value;
+  if (id_ == NULL) id_ = new ::Common::KnowledgeGroupId;
+  return id_;
 }
 
 // required .MsgsClientToSim.MsgKnowledgeMagicAction.Type type = 2;
@@ -2038,20 +2045,21 @@ inline ::Common::MsgMissionParameters* MsgKnowledgeMagicAction::mutable_parametr
 
 // MsgObjectMagicAction
 
-// required uint32 oid = 1;
-inline bool MsgObjectMagicAction::has_oid() const {
+// required .Common.ObjectId object = 1;
+inline bool MsgObjectMagicAction::has_object() const {
   return _has_bit(0);
 }
-inline void MsgObjectMagicAction::clear_oid() {
-  oid_ = 0u;
+inline void MsgObjectMagicAction::clear_object() {
+  if (object_ != NULL) object_->::Common::ObjectId::Clear();
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 MsgObjectMagicAction::oid() const {
-  return oid_;
+inline const ::Common::ObjectId& MsgObjectMagicAction::object() const {
+  return object_ != NULL ? *object_ : *default_instance_->object_;
 }
-inline void MsgObjectMagicAction::set_oid(::google::protobuf::uint32 value) {
+inline ::Common::ObjectId* MsgObjectMagicAction::mutable_object() {
   _set_bit(0);
-  oid_ = value;
+  if (object_ == NULL) object_ = new ::Common::ObjectId;
+  return object_;
 }
 
 // required .MsgsClientToSim.MsgObjectMagicAction.Type type = 2;

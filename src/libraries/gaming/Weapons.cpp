@@ -91,11 +91,11 @@ void Weapons::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
     for( int i = 0; i < message.dotation_eff_materiel().elem_size(); ++i )
     {
         const MsgsSimToClient::EquipmentDotations_EquipmentDotation& value = message.dotation_eff_materiel().elem( i );
-        Equipment* equipment = Find( value.type_equipement() );
+        Equipment* equipment = Find( value.type().id() );
         if( !equipment )
         {
-            equipment = new Equipment( equipments_.Get( value.type_equipement() ) );
-            Register( value.type_equipement(), *equipment );
+            equipment = new Equipment( equipments_.Get( value.type().id() ) );
+            Register( value.type().id(), *equipment );
         }
         equipment->Update( value );
     }

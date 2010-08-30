@@ -12,6 +12,11 @@
 
 #include "tools/Resolver.h"
 
+namespace Common
+{
+    class Tasker;
+}
+
 namespace kernel
 {
     class ModelVisitor_ABC;
@@ -95,6 +100,8 @@ public:
     virtual const tools::Resolver_ABC< PopulationFire >&        PopulationFires() const = 0;
     virtual const tools::Resolver_ABC< FireEffect >&            FireEffects() const = 0;
     virtual const tools::Resolver_ABC< Report >&                Reports() const = 0;
+
+    virtual void SetToTasker( Common::Tasker& tasker, unsigned int id ) const = 0;
     //@}
 };
 

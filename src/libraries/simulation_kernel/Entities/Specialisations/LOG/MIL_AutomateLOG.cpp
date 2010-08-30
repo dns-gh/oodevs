@@ -844,14 +844,14 @@ void MIL_AutomateLOG::UpdateNetwork() const
 void MIL_AutomateLOG::SendQuotas() const
 {
     client::LogSupplyQuotas asn;
-    asn().set_oid_automate( GetID() );
+    asn().mutable_id()->set_id( GetID() );
     if( !stockQuotas_.empty() )
     {
         unsigned int i = 0;
         for( CIT_DotationQuotaMap it = stockQuotas_.begin(); it != stockQuotas_.end(); ++it, ++i )
         {
             Common::MsgDotationQuota& dotQuota = *asn().mutable_quotas()->add_elem();
-            dotQuota.set_ressource_id( it->first->GetMosID() );
+            dotQuota.mutable_ressource_id()->set_id( it->first->GetMosID() );
             dotQuota.set_quota_disponible( (unsigned int)it->second.rQuota_ );
         }
     }
@@ -957,7 +957,7 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( const MsgsClientToSim::Ms
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas( const Common::MsgMissionParameters& msg )
 {
-    if( !pSupplySuperior_ || GetLogisticAutomate( msg.elem( 0 ).value().automat().oid() ) != pSupplySuperior_ )
+    if( !pSupplySuperior_ || GetLogisticAutomate( msg.elem( 0 ).value().automat().id() ) != pSupplySuperior_ )
         throw NET_AsnException< MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas >( MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas_error_invalid_donneur_quotas );
 
     for( int i = 0; i < msg.elem( 1 ).value().list_size(); ++i )
@@ -981,7 +981,7 @@ void MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas( const Common::MsgMissio
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow( const Common::MsgMissionParameters& msg )
 {
-    MIL_AutomateLOG* pSupplier = GetLogisticAutomate( msg.elem( 0 ).value().automat().oid() );
+    MIL_AutomateLOG* pSupplier = GetLogisticAutomate( msg.elem( 0 ).value().automat().id() );
     if( !pSupplier )
         throw NET_AsnException< MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow >( MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_donneur_pushflow );
 
@@ -1001,28 +1001,28 @@ void MIL_AutomateLOG::SendLogisticLinks() const
 {
     client::AutomatChangeLogisticLinks asn;
 
-    asn().set_oid( GetID() );
+    asn().mutable_automat()->set_id( GetID() );
 
     if( GetTC2() )
     {
 //        asn().set_oid_tc2Present( 1 );
-        asn().set_oid_tc2( GetTC2()->GetID() );
+        asn().mutable_tc2()->set_id( GetTC2()->GetID() );
     }
 
     if( pMaintenanceSuperior_ )
     {
 //        asn().set_oid_maintenancePresent( 1 );
-        asn().set_oid_maintenance( pMaintenanceSuperior_->GetID() );
+        asn().mutable_maintenance()->set_id( pMaintenanceSuperior_->GetID() );
     }
     if( pMedicalSuperior_ )
     {
 //        asn().set_oid_santePresent( 1 );
-        asn().set_oid_sante( pMedicalSuperior_->GetID() );
+        asn().mutable_health()->set_id( pMedicalSuperior_->GetID() );
     }
     if( pSupplySuperior_ )
     {
 //        asn().set_oid_ravitaillementPresent( 1 );
-        asn().set_oid_ravitaillement( pSupplySuperior_->GetID() );
+        asn().mutable_supply()->set_id( pSupplySuperior_->GetID() );
     }
 
     asn.Send( NET_Publisher_ABC::Publisher() );

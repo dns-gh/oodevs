@@ -75,7 +75,7 @@ Intelligence::Intelligence( const OrderParameter& parameter, const CoordinateCon
     AddParameter( *new Karma    ( OrderParameter( tools::translate( "Parameter", "Karma" ).ascii()    , "karma"    , false ), message.diplomacy() ) );
     AddParameter( *new Level    ( OrderParameter( tools::translate( "Parameter", "Level" ).ascii()    , "level"    , false ), message.level(), levels ) );
     AddParameter( *new Bool     ( OrderParameter( tools::translate( "Parameter", "Mounted" ).ascii()  , "bool"     , false ), message.embarked() != 0 ) );
-    AddParameter( *new Formation( OrderParameter( tools::translate( "Parameter", "Formation" ).ascii(), "formation", false ), message.formation().oid(), formations, controller_ ) );
+    AddParameter( *new Formation( OrderParameter( tools::translate( "Parameter", "Formation" ).ascii(), "formation", false ), message.formation().id(), formations, controller_ ) );
     AddParameter( *new Point    ( OrderParameter( tools::translate( "Parameter", "Point" ).ascii()    , "point"    , false ), converter, MakePoint( converter, message.location() ) ) );
 }
 

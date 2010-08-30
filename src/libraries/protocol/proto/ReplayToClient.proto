@@ -1,3 +1,11 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
 
 package MsgsReplayToClient;
 
@@ -6,11 +14,11 @@ import "SimToClient.proto";
 
 message MsgControlReplayInformation {
    required int32                       current_tick      = 1;
-   required Common.MsgDateTime          initial_date_time = 2;
-   required Common.MsgDateTime          date_time         = 3;
+   required Common.MsgDateTime         initial_date_time = 2;
+   required Common.MsgDateTime         date_time         = 3;
    required int32                       tick_duration     = 4;
    required int32                       time_factor       = 5;
-   required Common.EnumSimulationState  status            = 6;
+   required Common.EnumSimulationState status            = 6;
    required int32                       tick_count        = 7;
 }
 

@@ -22,7 +22,7 @@ MIL_LogMaintenancePrioritiesParameter::MIL_LogMaintenancePrioritiesParameter( co
     priorities_.reserve( asn.elem_size() );
     for( int i = 0; i < asn.elem_size(); ++i )
     {
-        Common::MsgEquipmentType nCompTypeMosID = asn.elem(i);
+        Common::EquipmentType nCompTypeMosID = asn.elem(i);
         const PHY_ComposanteTypePion* pType = PHY_ComposanteTypePion::Find( nCompTypeMosID );
         if( !pType )
         {
@@ -60,7 +60,7 @@ bool MIL_LogMaintenancePrioritiesParameter::ToMaintenancePriorities( Common::Msg
     unsigned int size = priorities_.size();
     if( size )
         for( unsigned int i = 0; i < size; ++i )
-            asn.add_elem()->set_equipment( priorities_[ i ]->GetMosID().equipment() );
+            asn.add_elem()->set_id( priorities_[ i ]->GetMosID().id() );
     return true;
 }
 

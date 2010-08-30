@@ -45,6 +45,20 @@ MOCK_BASE_CLASS( MockModel, dispatcher::Model_ABC )
     MOCK_METHOD( PopulationFires, 0 );
     MOCK_METHOD( FireEffects, 0 );
     MOCK_METHOD( Reports, 0 );
+    
+    void SetToTasker( Common::Tasker& tasker, unsigned int id ) const
+    {
+        if( Automats().Find( id ) )
+            tasker.mutable_automat()->set_id( id );
+        else if( Formations().Find( id ) )
+            tasker.mutable_formation()->set_id( id );
+        else if( Populations().Find( id ) )
+            tasker.mutable_population()->set_id( id );
+        else if( Agents().Find( id ) )
+            tasker.mutable_unit()->set_id( id );
+        else
+            throw std::runtime_error( __FUNCTION__ " Misformed tasker in protocol message" );
+    }
 };
 
 #endif // __MockModel_h_

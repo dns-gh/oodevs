@@ -97,7 +97,7 @@ void ActionsLogger::Commit() const
 // -----------------------------------------------------------------------------
 void ActionsLogger::Log( const Common::MsgUnitOrder& message )
 {
-    if( message.has_mission() && message.mission() != 0 )
+    if( message.has_type() && message.type().id() != 0 )
         LogAction( message );
 }
 
@@ -107,7 +107,7 @@ void ActionsLogger::Log( const Common::MsgUnitOrder& message )
 // -----------------------------------------------------------------------------
 void ActionsLogger::Log( const Common::MsgAutomatOrder& message )
 {
-    if( message.has_mission() && message.mission() != 0 )
+    if( message.has_type() && message.type().id() != 0 )
         LogAction( message );
 }
 
@@ -117,7 +117,7 @@ void ActionsLogger::Log( const Common::MsgAutomatOrder& message )
 // -----------------------------------------------------------------------------
 void ActionsLogger::Log( const Common::MsgPopulationOrder& message )
 {
-    if( message.has_mission() && message.mission() != 0 )
+    if( message.has_type() && message.type().id() != 0 )
         LogAction( message );
 }
 
@@ -127,6 +127,6 @@ void ActionsLogger::Log( const Common::MsgPopulationOrder& message )
 // -----------------------------------------------------------------------------
 void ActionsLogger::Log( const MsgsClientToSim::MsgFragOrder& message )
 {
-    if( message.has_frag_order() && message.frag_order() != 0 )
+    if( message.has_frag_order() && message.frag_order().id() != 0 )
         LogAction( message );
 }

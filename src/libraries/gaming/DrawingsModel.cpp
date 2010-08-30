@@ -47,7 +47,7 @@ void DrawingsModel::Create( const MsgsMessengerToClient::MsgShapeCreation& messa
 // -----------------------------------------------------------------------------
 void DrawingsModel::Update( const MsgsMessengerToClient::MsgShapeUpdate& message )
 {
-    gui::Drawing_ABC* drawing = Find( message.oid() );
+    gui::Drawing_ABC* drawing = Find( message.id().id() );
     if( drawing )
         drawing->Update( message );
 }
@@ -58,5 +58,5 @@ void DrawingsModel::Update( const MsgsMessengerToClient::MsgShapeUpdate& message
 // -----------------------------------------------------------------------------
 void DrawingsModel::Delete( const MsgsMessengerToClient::MsgShapeDestruction& message )
 {
-    gui::DrawerModel::Delete( message.oid());
+    gui::DrawerModel::Delete( message.id().id() );
 }

@@ -39,7 +39,7 @@ PHY_FireDamages_Population::~PHY_FireDamages_Population()
 //-----------------------------------------------------------------------------
 void PHY_FireDamages_Population::Serialize( const MIL_Population& target, MsgsSimToClient::MsgPopulationFireDamages& asn ) const
 {
-    asn.set_target( target.GetID() );
+    asn.mutable_target()->set_id( target.GetID() );
     asn.set_dead_nbr( nNbrKilledHumans_ );
 }
 

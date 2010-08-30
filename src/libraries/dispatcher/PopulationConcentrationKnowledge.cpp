@@ -25,9 +25,9 @@ using namespace dispatcher;
 // Created: NLD 2006-10-03
 // -----------------------------------------------------------------------------
 PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation& msg )
-    : SimpleEntity< >     ( msg.oid_connaissance_concentration() )
+    : SimpleEntity< >     ( msg.id().id() )
     , populationKnowledge_( populationKnowledge )
-    , concentrationId_    ( msg.oid_concentration_reelle() )
+    , concentrationId_    ( msg.concentration().id() )
     , position_           ( msg.position() )
     , nNbrAliveHumans_    ( 0 )
     , nNbrDeadHumans_     ( 0 )
@@ -58,8 +58,8 @@ PopulationConcentrationKnowledge::~PopulationConcentrationKnowledge()
 // -----------------------------------------------------------------------------
 void PopulationConcentrationKnowledge::Update( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate& msg )
 {
-    if( msg.has_oid_concentration_reelle() )
-        concentrationId_ = msg.oid_concentration_reelle();
+    if( msg.has_concentration() )
+        concentrationId_ = msg.concentration().id();
 
     if( msg.has_attitude() )
     {
@@ -95,16 +95,14 @@ void PopulationConcentrationKnowledge::Update( const MsgsSimToClient::MsgPopulat
 void PopulationConcentrationKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationConcentrationKnowledgeCreation asn;
-
-    asn().set_oid_connaissance_concentration( GetId() );
-    asn().set_oid_connaissance_population( populationKnowledge_.GetId() );
+    asn().mutable_concentration()->set_id( GetId() );
+    asn().mutable_population()->set_id( populationKnowledge_.GetId() );
     if( populationKnowledge_.GetEntity()->FindConcentration( concentrationId_ ) )
-        asn().set_oid_concentration_reelle( concentrationId_ );
+        asn().mutable_concentration()->set_id( concentrationId_ );
     else
-        asn().set_oid_concentration_reelle( 0 );
-    asn().set_oid_groupe_possesseur( populationKnowledge_.GetOwner().GetId() );
+        asn().mutable_concentration()->set_id( 0 );
+    asn().mutable_knowledge_group()->set_id( populationKnowledge_.GetOwner().GetId() );
     *asn().mutable_position() = position_;
-
     asn.Send( publisher );
 }
 
@@ -115,16 +113,13 @@ void PopulationConcentrationKnowledge::SendCreation( ClientPublisher_ABC& publis
 void PopulationConcentrationKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationConcentrationKnowledgeUpdate asn;
-
-    asn().set_oid_connaissance_concentration( GetId() );
-    asn().set_oid_connaissance_population( populationKnowledge_.GetId() );
-    asn().set_oid_groupe_possesseur( populationKnowledge_.GetOwner().GetId() );
-
+    asn().mutable_concentration()->set_id( GetId() );
+    asn().mutable_population()->set_id( populationKnowledge_.GetId() );
+    asn().mutable_knowledge_group()->set_id( populationKnowledge_.GetOwner().GetId() );
     if( populationKnowledge_.GetEntity()->FindConcentration( concentrationId_ ) )
-        asn().set_oid_concentration_reelle( concentrationId_ );
+        asn().mutable_concentration()->set_id( concentrationId_ );
     else
-        asn().set_oid_concentration_reelle( 0 );
-
+        asn().mutable_concentration()->set_id( 0 );
     if( optionals_.nb_humains_mortsPresent )
         asn().set_nb_humains_morts( nNbrDeadHumans_ );
     if( optionals_.nb_humains_vivantsPresent )
@@ -135,7 +130,6 @@ void PopulationConcentrationKnowledge::SendFullUpdate( ClientPublisher_ABC& publ
         asn().set_pertinence( nRelevance_ );
     if( optionals_.est_percuPresent )
         asn().set_est_percu( bPerceived_ );
-
     asn.Send( publisher );
 }
 
@@ -146,9 +140,9 @@ void PopulationConcentrationKnowledge::SendFullUpdate( ClientPublisher_ABC& publ
 void PopulationConcentrationKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationConcentrationKnowledgeDestruction asn;
-    asn().set_oid_connaissance_concentration( GetId() );
-    asn().set_oid_connaissance_population( populationKnowledge_.GetId() );
-    asn().set_oid_groupe_possesseur( populationKnowledge_.GetOwner().GetId() );
+    asn().mutable_id()->set_id( GetId() );
+    asn().mutable_population()->set_id( populationKnowledge_.GetId() );
+    asn().mutable_knowledge_group()->set_id( populationKnowledge_.GetOwner().GetId() );
     asn.Send( publisher );
 }
 

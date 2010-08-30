@@ -28,8 +28,8 @@ using namespace kernel;
 LogMedicalConsign::LogMedicalConsign( Controller& controller, const tools::Resolver_ABC< Agent_ABC >& resolver, const MsgsSimToClient::MsgLogMedicalHandlingCreation& message )
     : controller_      ( controller )
     , resolver_        ( resolver )
-    , nID_             ( message.oid_consigne() )
-    , consumer_        ( resolver_.Get( message.oid_pion() ) )
+    , nID_             ( message.id().id() )
+    , consumer_        ( resolver_.Get( message.unit().id() ) )
     , pPionLogHandling_( 0 )
     , wound_           ( E_HumanWound( message.blessure() ) )
     , bMentalDeceased_ ( message.blesse_mental() )
@@ -57,11 +57,11 @@ LogMedicalConsign::~LogMedicalConsign()
 // -----------------------------------------------------------------------------
 void LogMedicalConsign::Update( const MsgsSimToClient::MsgLogMedicalHandlingUpdate& message )
 {
-    if( message.has_oid_pion_log_traitant() && ( !pPionLogHandling_ || message.oid_pion_log_traitant() != int( pPionLogHandling_->GetId() ) ) )
+    if( message.has_provider() && ( !pPionLogHandling_ || message.provider().id() != int( pPionLogHandling_->GetId() ) ) )
     {
         if( pPionLogHandling_ )
             pPionLogHandling_->Get< LogMedicalConsigns >().TerminateConsign( *this );
-        pPionLogHandling_ = resolver_.Find( message.oid_pion_log_traitant() );
+        pPionLogHandling_ = resolver_.Find( message.provider().id() );
         if( pPionLogHandling_ )
             pPionLogHandling_->Get< LogMedicalConsigns >().HandleConsign( *this );
     }

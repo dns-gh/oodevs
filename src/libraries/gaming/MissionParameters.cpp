@@ -45,7 +45,7 @@ MissionParameters::~MissionParameters()
 template< typename T >
 void MissionParameters::UpdateMessage( const T& message )
 {
-    if( message.mission() == 0 )
+    if( message.type().id() == 0 )
         return;
 
     try

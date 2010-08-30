@@ -20,7 +20,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 MissionParameter_IndirectFire::MissionParameter_IndirectFire( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , fire_               ( asn.value().tirindirect() )
+    , fire_               ( asn.value().tirindirect().id() )
 {
     // NOTHING
 }
@@ -41,5 +41,5 @@ MissionParameter_IndirectFire::~MissionParameter_IndirectFire()
 void MissionParameter_IndirectFire::Send( Common::MsgMissionParameter& asn ) const
 {
     MissionParameter_ABC::Send( asn );
-    asn.mutable_value()->set_tirindirect( fire_ );
+    asn.mutable_value()->mutable_tirindirect()->set_id( fire_ );
 }

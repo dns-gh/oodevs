@@ -21,7 +21,7 @@ using namespace kernel;
 // Name: MaintenanceStates constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-MaintenanceStates::MaintenanceStates( Controller& controller, const tools::Resolver_ABC< EquipmentType >& resolver, const tools::Resolver_ABC< Automat_ABC >& automatResolver, PropertiesDictionary& dico )
+MaintenanceStates::MaintenanceStates( Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const tools::Resolver_ABC< Automat_ABC >& automatResolver, PropertiesDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
     , automatResolver_( automatResolver )
@@ -67,13 +67,13 @@ void MaintenanceStates::DoUpdate( const MsgsSimToClient::MsgLogMaintenanceState&
     {
         priorities_.resize( message.priorites().elem_size() );
         for( int i = 0; i < message.priorites().elem_size(); ++i )
-            priorities_[i] = & resolver_.Get( message.priorites().elem( i ).equipment() );
+            priorities_[i] = & resolver_.Get( message.priorites().elem( i ).id() );
     }
     if( message.has_priorites_tactiques()  )
     {
         tacticalPriorities_.resize( message.priorites_tactiques().elem_size() );
         for( int i = 0; i < message.priorites_tactiques().elem_size(); ++i )
-            tacticalPriorities_[i] = & automatResolver_.Get( message.priorites_tactiques().elem( i ).oid() );
+            tacticalPriorities_[i] = & automatResolver_.Get( message.priorites_tactiques().elem( i ).id() );
     }
     if( message.has_disponibilites_remorqueurs()  )
     {

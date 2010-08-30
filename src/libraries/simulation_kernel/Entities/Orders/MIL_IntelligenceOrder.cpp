@@ -24,7 +24,7 @@ MIL_IntelligenceOrder::MIL_IntelligenceOrder( const Common::MsgIntelligence& asn
     , embarked_ ( asn.embarked() ? true : false )
     , position_ ( asn.location() )
     , diplomacy_( asn.diplomacy() )
-    , formation_( asn.formation().oid() )
+    , formation_( asn.formation().id() )
 {
     // NOTHING
 }
@@ -50,7 +50,7 @@ void MIL_IntelligenceOrder::Serialize( Common::MsgIntelligence& asn ) const
     asn.set_embarked( embarked_ );
     *asn.mutable_location() = position_;
     asn.set_diplomacy( diplomacy_ );
-    asn.mutable_formation()->set_oid( formation_ );
+    asn.mutable_formation()->set_id( formation_ );
 }
 
 // -----------------------------------------------------------------------------

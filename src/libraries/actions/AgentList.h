@@ -14,7 +14,7 @@
 
 namespace Common
 {
-    class MsgUnitList;
+    class UnitIdList;
 }
 
 namespace kernel
@@ -39,7 +39,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit AgentList( const kernel::OrderParameter& parameter );
-             AgentList( const kernel::OrderParameter& parameter, const Common::MsgUnitList& message, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
+             AgentList( const kernel::OrderParameter& parameter, const Common::UnitIdList& message, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
              AgentList( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
     virtual ~AgentList();
     //@}

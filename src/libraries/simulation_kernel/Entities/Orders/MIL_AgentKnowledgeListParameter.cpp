@@ -18,7 +18,7 @@
 // Name: MIL_AgentKnowledgeListParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_AgentKnowledgeListParameter::MIL_AgentKnowledgeListParameter( const Common::MsgUnitKnowledgeList& asn, const DEC_KnowledgeResolver_ABC& resolver )
+MIL_AgentKnowledgeListParameter::MIL_AgentKnowledgeListParameter( const Common::UnitKnowledgeIdList& asn, const DEC_KnowledgeResolver_ABC& resolver )
 {
     knowledgeAgentList_.reserve( asn.elem_size() );
     for( int i = 0; i < asn.elem_size(); ++i )
@@ -62,11 +62,11 @@ bool MIL_AgentKnowledgeListParameter::IsOfType( const MIL_ParameterType_ABC& typ
 // Name: MIL_AgentKnowledgeListParameter::ToAgentKnowledgeList
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool MIL_AgentKnowledgeListParameter::ToAgentKnowledgeList( Common::MsgUnitKnowledgeList& asn ) const
+bool MIL_AgentKnowledgeListParameter::ToAgentKnowledgeList( Common::UnitKnowledgeIdList& asn ) const
 {
     unsigned int size = knowledgeAgentList_.size();
     for( unsigned int i = 0; i < size; ++i )
-        asn.add_elem()->set_oid( knowledgeAgentList_[i]->GetID() );
+        asn.add_elem()->set_id( knowledgeAgentList_[i]->GetID() );
     return true;
 }
 

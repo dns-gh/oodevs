@@ -107,7 +107,7 @@ void PHY_MedicalConsign_ABC::SendFullState( client::LogMedicalHandlingUpdate& as
 {
     assert( pHumanState_ );
     assert( pMedical_ );
-    asn().set_oid_pion_log_traitant( pMedical_->GetPion().GetID() );
+    asn().mutable_provider()->set_id( pMedical_->GetPion().GetID() );
     asn().set_etat( Common::EnumLogMedicalHandlingStatus( nState_ ) );
 }
 

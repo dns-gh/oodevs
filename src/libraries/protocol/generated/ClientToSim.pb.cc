@@ -99,7 +99,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       sizeof(MsgControlCheckPointSaveNow));
   MsgFragOrder_descriptor_ = file->message_type(2);
   static const int MsgFragOrder_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgFragOrder, oid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgFragOrder, tasker_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgFragOrder, frag_order_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgFragOrder, parametres_),
   };
@@ -116,7 +116,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       sizeof(MsgFragOrder));
   MsgSetAutomatMode_descriptor_ = file->message_type(3);
   static const int MsgSetAutomatMode_offsets_[2] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSetAutomatMode, oid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSetAutomatMode, automate_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSetAutomatMode, mode_),
   };
   MsgSetAutomatMode_reflection_ =
@@ -132,8 +132,8 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       sizeof(MsgSetAutomatMode));
   MsgUnitCreationRequest_descriptor_ = file->message_type(4);
   static const int MsgUnitCreationRequest_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitCreationRequest, type_pion_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitCreationRequest, oid_automate_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitCreationRequest, type_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitCreationRequest, superior_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitCreationRequest, position_),
   };
   MsgUnitCreationRequest_reflection_ =
@@ -149,7 +149,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       sizeof(MsgUnitCreationRequest));
   MsgUnitMagicAction_descriptor_ = file->message_type(5);
   static const int MsgUnitMagicAction_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction, oid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction, type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction, parametres_),
   };
@@ -167,7 +167,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
   MsgUnitMagicAction_Type_descriptor_ = MsgUnitMagicAction_descriptor_->enum_type(0);
   MsgKnowledgeMagicAction_descriptor_ = file->message_type(6);
   static const int MsgKnowledgeMagicAction_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgKnowledgeMagicAction, oid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgKnowledgeMagicAction, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgKnowledgeMagicAction, type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgKnowledgeMagicAction, parametres_),
   };
@@ -185,7 +185,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
   MsgKnowledgeMagicAction_Type_descriptor_ = MsgKnowledgeMagicAction_descriptor_->enum_type(0);
   MsgObjectMagicAction_descriptor_ = file->message_type(7);
   static const int MsgObjectMagicAction_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectMagicAction, oid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectMagicAction, object_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectMagicAction, type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectMagicAction, parametres_),
   };
@@ -380,90 +380,94 @@ void protobuf_AddDesc_ClientToSim_2eproto() {
     "mmon.proto\"B\n\030MsgControlDatetimeChange\022&"
     "\n\tdate_time\030\001 \002(\0132\023.Common.MsgDateTime\"+"
     "\n\033MsgControlCheckPointSaveNow\022\014\n\004name\030\001 "
-    "\001(\t\"a\n\014MsgFragOrder\022\013\n\003oid\030\001 \002(\r\022\022\n\nfrag"
-    "_order\030\002 \002(\r\0220\n\nparametres\030\003 \001(\0132\034.Commo"
-    "n.MsgMissionParameters\"G\n\021MsgSetAutomatM"
-    "ode\022\013\n\003oid\030\001 \002(\005\022%\n\004mode\030\002 \002(\0162\027.Common."
-    "EnumAutomatMode\"l\n\026MsgUnitCreationReques"
-    "t\022\021\n\ttype_pion\030\001 \002(\r\022\024\n\014oid_automate\030\002 \002"
-    "(\r\022)\n\010position\030\003 \002(\0132\027.Common.MsgCoordLa"
-    "tLong\"\213\006\n\022MsgUnitMagicAction\022\013\n\003oid\030\001 \002("
-    "\r\0226\n\004type\030\002 \002(\0162(.MsgsClientToSim.MsgUni"
-    "tMagicAction.Type\0220\n\nparametres\030\003 \002(\0132\034."
-    "Common.MsgMissionParameters\"\375\004\n\004Type\022\013\n\007"
-    "move_to\020\000\022\020\n\014surrender_to\020\001\022\024\n\020cancel_su"
-    "rrender\020\002\022\030\n\024recover_transporters\020\003\022\025\n\021d"
-    "estroy_component\020\004\022\017\n\013recover_all\020\005\022\022\n\016r"
-    "ecover_troops\020\006\022\026\n\022recover_equipments\020\007\022"
-    "\025\n\021recover_resources\020\010\022\017\n\013destroy_all\020\t\022"
-    "\030\n\024change_human_factors\020\n\022\024\n\020partial_rec"
-    "overy\020\013\022\021\n\runit_creation\020\014\022\025\n\021create_fir"
-    "e_order\020\r\022 \n\034population_total_destructio"
-    "n\020\016\022\023\n\017population_kill\020\017\022\030\n\024population_r"
-    "esurrect\020\020\022\036\n\032population_change_attitude"
-    "\020\021\022\032\n\026change_knowledge_group\020\022\022\031\n\025change"
-    "_logistic_links\020\023\022\030\n\024unit_change_superio"
-    "r\020\024\022\033\n\027change_automat_superior\020\025\022\035\n\031chan"
-    "ge_formation_superior\020\026\022\032\n\026knowledge_gro"
-    "up_update\020\027\022\030\n\024log_supply_push_flow\020\030\022\034\n"
-    "\030log_supply_change_quotas\020\031\"\343\001\n\027MsgKnowl"
-    "edgeMagicAction\022\013\n\003oid\030\001 \002(\r\022;\n\004type\030\002 \002"
-    "(\0162-.MsgsClientToSim.MsgKnowledgeMagicAc"
-    "tion.Type\0220\n\nparametres\030\003 \002(\0132\034.Common.M"
-    "sgMissionParameters\"L\n\004Type\022\n\n\006enable\020\000\022"
-    "\017\n\013update_side\020\001\022\026\n\022update_side_parent\020\002"
-    "\022\017\n\013update_type\020\003\"\305\003\n\024MsgObjectMagicActi"
-    "on\022\013\n\003oid\030\001 \002(\r\0228\n\004type\030\002 \002(\0162*.MsgsClie"
-    "ntToSim.MsgObjectMagicAction.Type\0220\n\npar"
-    "ametres\030\003 \002(\0132\034.Common.MsgMissionParamet"
-    "ers\"+\n\004Type\022\n\n\006create\020\000\022\n\n\006update\020\001\022\013\n\007d"
-    "estroy\020\002\"\206\002\n\tAttribute\022\020\n\014construction\020\000"
-    "\022\014\n\010obstacle\020\001\022\010\n\004mine\020\002\022\021\n\ractivity_tim"
-    "e\020\003\022\n\n\006bypass\020\004\022\014\n\010logistic\020\005\022\007\n\003nbc\020\006\022\021"
-    "\n\rcrossing_site\020\007\022\020\n\014supply_route\020\010\022\017\n\013t"
-    "oxic_cloud\020\t\022\010\n\004fire\020\n\022\025\n\021medical_treatm"
-    "ent\020\013\022\026\n\022interaction_height\020\014\022\t\n\005stock\020\r"
-    "\022\r\n\tnbc_agent\020\016\022\020\n\014effect_delay\020\017\"\356\001\n\016Ms"
-    "gMagicAction\0222\n\004type\030\001 \002(\0162$.MsgsClientT"
-    "oSim.MsgMagicAction.Type\0220\n\nparametres\030\002"
-    " \002(\0132\034.Common.MsgMissionParameters\"v\n\004Ty"
-    "pe\022\020\n\014global_meteo\020\000\022\017\n\013local_meteo\020\001\022\024\n"
-    "\020change_diplomacy\020\002\022\032\n\026create_knowledge_"
-    "group\020\003\022\031\n\025change_resource_links\020\004\"5\n Ms"
-    "gControlCheckPointSetFrequency\022\021\n\tfreque"
-    "ncy\030\001 \002(\005\"3\n\033MsgControlToggleVisionCones"
-    "\022\024\n\014vision_cones\030\001 \002(\010\"\340\t\n\016MsgClientToSi"
-    "m\022\022\n\007context\030\001 \001(\005:\0010\0228\n\007message\030\002 \002(\0132\'"
-    ".MsgsClientToSim.MsgClientToSim.Content\032"
-    "\377\010\n\007Content\022,\n\014control_stop\030\001 \001(\0132\026.Comm"
-    "on.MsgControlStop\022.\n\rcontrol_pause\030\002 \001(\013"
-    "2\027.Common.MsgControlPause\0220\n\016control_res"
-    "ume\030\003 \001(\0132\030.Common.MsgControlResume\022F\n\032c"
-    "ontrol_change_time_factor\030\004 \001(\0132\".Common"
-    ".MsgControlChangeTimeFactor\022K\n\030control_d"
-    "ate_time_change\030\005 \001(\0132).MsgsClientToSim."
-    "MsgControlDatetimeChange\022Q\n\033control_chec"
-    "kpoint_save_now\030\006 \001(\0132,.MsgsClientToSim."
-    "MsgControlCheckPointSaveNow\022[\n control_c"
-    "heckpoint_set_frequency\030\007 \001(\01321.MsgsClie"
-    "ntToSim.MsgControlCheckPointSetFrequency"
-    "\022Q\n\033control_toggle_vision_cones\030\010 \001(\0132,."
-    "MsgsClientToSim.MsgControlToggleVisionCo"
-    "nes\022(\n\nunit_order\030\t \001(\0132\024.Common.MsgUnit"
-    "Order\022.\n\rautomat_order\030\n \001(\0132\027.Common.Ms"
-    "gAutomatOrder\0224\n\020population_order\030\013 \001(\0132"
-    "\032.Common.MsgPopulationOrder\0221\n\nfrag_orde"
-    "r\030\014 \001(\0132\035.MsgsClientToSim.MsgFragOrder\022<"
-    "\n\020set_automat_mode\030\r \001(\0132\".MsgsClientToS"
-    "im.MsgSetAutomatMode\022F\n\025unit_creation_re"
-    "quest\030\016 \001(\0132\'.MsgsClientToSim.MsgUnitCre"
-    "ationRequest\022>\n\021unit_magic_action\030\017 \001(\0132"
-    "#.MsgsClientToSim.MsgUnitMagicAction\022B\n\023"
-    "object_magic_action\030\020 \001(\0132%.MsgsClientTo"
-    "Sim.MsgObjectMagicAction\022H\n\026knowledge_ma"
-    "gic_action\030\021 \001(\0132(.MsgsClientToSim.MsgKn"
-    "owledgeMagicAction\0225\n\014magic_action\030\022 \001(\013"
-    "2\037.MsgsClientToSim.MsgMagicAction", 3513);
+    "\001(\t\"\213\001\n\014MsgFragOrder\022\036\n\006tasker\030\001 \002(\0132\016.C"
+    "ommon.Tasker\022)\n\nfrag_order\030\002 \002(\0132\025.Commo"
+    "n.FragOrderType\0220\n\nparametres\030\003 \001(\0132\034.Co"
+    "mmon.MsgMissionParameters\"_\n\021MsgSetAutom"
+    "atMode\022#\n\010automate\030\001 \002(\0132\021.Common.Automa"
+    "tId\022%\n\004mode\030\002 \002(\0162\027.Common.EnumAutomatMo"
+    "de\"\210\001\n\026MsgUnitCreationRequest\022\036\n\004type\030\001 "
+    "\002(\0132\020.Common.UnitType\022#\n\010superior\030\002 \002(\0132"
+    "\021.Common.AutomatId\022)\n\010position\030\003 \002(\0132\027.C"
+    "ommon.MsgCoordLatLong\"\232\006\n\022MsgUnitMagicAc"
+    "tion\022\032\n\002id\030\001 \002(\0132\016.Common.UnitId\0226\n\004type"
+    "\030\002 \002(\0162(.MsgsClientToSim.MsgUnitMagicAct"
+    "ion.Type\0220\n\nparametres\030\003 \002(\0132\034.Common.Ms"
+    "gMissionParameters\"\375\004\n\004Type\022\013\n\007move_to\020\000"
+    "\022\020\n\014surrender_to\020\001\022\024\n\020cancel_surrender\020\002"
+    "\022\030\n\024recover_transporters\020\003\022\025\n\021destroy_co"
+    "mponent\020\004\022\017\n\013recover_all\020\005\022\022\n\016recover_tr"
+    "oops\020\006\022\026\n\022recover_equipments\020\007\022\025\n\021recove"
+    "r_resources\020\010\022\017\n\013destroy_all\020\t\022\030\n\024change"
+    "_human_factors\020\n\022\024\n\020partial_recovery\020\013\022\021"
+    "\n\runit_creation\020\014\022\025\n\021create_fire_order\020\r"
+    "\022 \n\034population_total_destruction\020\016\022\023\n\017po"
+    "pulation_kill\020\017\022\030\n\024population_resurrect\020"
+    "\020\022\036\n\032population_change_attitude\020\021\022\032\n\026cha"
+    "nge_knowledge_group\020\022\022\031\n\025change_logistic"
+    "_links\020\023\022\030\n\024unit_change_superior\020\024\022\033\n\027ch"
+    "ange_automat_superior\020\025\022\035\n\031change_format"
+    "ion_superior\020\026\022\032\n\026knowledge_group_update"
+    "\020\027\022\030\n\024log_supply_push_flow\020\030\022\034\n\030log_supp"
+    "ly_change_quotas\020\031\"\374\001\n\027MsgKnowledgeMagic"
+    "Action\022$\n\002id\030\001 \002(\0132\030.Common.KnowledgeGro"
+    "upId\022;\n\004type\030\002 \002(\0162-.MsgsClientToSim.Msg"
+    "KnowledgeMagicAction.Type\0220\n\nparametres\030"
+    "\003 \002(\0132\034.Common.MsgMissionParameters\"L\n\004T"
+    "ype\022\n\n\006enable\020\000\022\017\n\013update_side\020\001\022\026\n\022upda"
+    "te_side_parent\020\002\022\017\n\013update_type\020\003\"\332\003\n\024Ms"
+    "gObjectMagicAction\022 \n\006object\030\001 \002(\0132\020.Com"
+    "mon.ObjectId\0228\n\004type\030\002 \002(\0162*.MsgsClientT"
+    "oSim.MsgObjectMagicAction.Type\0220\n\nparame"
+    "tres\030\003 \002(\0132\034.Common.MsgMissionParameters"
+    "\"+\n\004Type\022\n\n\006create\020\000\022\n\n\006update\020\001\022\013\n\007dest"
+    "roy\020\002\"\206\002\n\tAttribute\022\020\n\014construction\020\000\022\014\n"
+    "\010obstacle\020\001\022\010\n\004mine\020\002\022\021\n\ractivity_time\020\003"
+    "\022\n\n\006bypass\020\004\022\014\n\010logistic\020\005\022\007\n\003nbc\020\006\022\021\n\rc"
+    "rossing_site\020\007\022\020\n\014supply_route\020\010\022\017\n\013toxi"
+    "c_cloud\020\t\022\010\n\004fire\020\n\022\025\n\021medical_treatment"
+    "\020\013\022\026\n\022interaction_height\020\014\022\t\n\005stock\020\r\022\r\n"
+    "\tnbc_agent\020\016\022\020\n\014effect_delay\020\017\"\356\001\n\016MsgMa"
+    "gicAction\0222\n\004type\030\001 \002(\0162$.MsgsClientToSi"
+    "m.MsgMagicAction.Type\0220\n\nparametres\030\002 \002("
+    "\0132\034.Common.MsgMissionParameters\"v\n\004Type\022"
+    "\020\n\014global_meteo\020\000\022\017\n\013local_meteo\020\001\022\024\n\020ch"
+    "ange_diplomacy\020\002\022\032\n\026create_knowledge_gro"
+    "up\020\003\022\031\n\025change_resource_links\020\004\"5\n MsgCo"
+    "ntrolCheckPointSetFrequency\022\021\n\tfrequency"
+    "\030\001 \002(\005\"3\n\033MsgControlToggleVisionCones\022\024\n"
+    "\014vision_cones\030\001 \002(\010\"\340\t\n\016MsgClientToSim\022\022"
+    "\n\007context\030\001 \001(\005:\0010\0228\n\007message\030\002 \002(\0132\'.Ms"
+    "gsClientToSim.MsgClientToSim.Content\032\377\010\n"
+    "\007Content\022,\n\014control_stop\030\001 \001(\0132\026.Common."
+    "MsgControlStop\022.\n\rcontrol_pause\030\002 \001(\0132\027."
+    "Common.MsgControlPause\0220\n\016control_resume"
+    "\030\003 \001(\0132\030.Common.MsgControlResume\022F\n\032cont"
+    "rol_change_time_factor\030\004 \001(\0132\".Common.Ms"
+    "gControlChangeTimeFactor\022K\n\030control_date"
+    "_time_change\030\005 \001(\0132).MsgsClientToSim.Msg"
+    "ControlDatetimeChange\022Q\n\033control_checkpo"
+    "int_save_now\030\006 \001(\0132,.MsgsClientToSim.Msg"
+    "ControlCheckPointSaveNow\022[\n control_chec"
+    "kpoint_set_frequency\030\007 \001(\01321.MsgsClientT"
+    "oSim.MsgControlCheckPointSetFrequency\022Q\n"
+    "\033control_toggle_vision_cones\030\010 \001(\0132,.Msg"
+    "sClientToSim.MsgControlToggleVisionCones"
+    "\022(\n\nunit_order\030\t \001(\0132\024.Common.MsgUnitOrd"
+    "er\022.\n\rautomat_order\030\n \001(\0132\027.Common.MsgAu"
+    "tomatOrder\0224\n\020population_order\030\013 \001(\0132\032.C"
+    "ommon.MsgPopulationOrder\0221\n\nfrag_order\030\014"
+    " \001(\0132\035.MsgsClientToSim.MsgFragOrder\022<\n\020s"
+    "et_automat_mode\030\r \001(\0132\".MsgsClientToSim."
+    "MsgSetAutomatMode\022F\n\025unit_creation_reque"
+    "st\030\016 \001(\0132\'.MsgsClientToSim.MsgUnitCreati"
+    "onRequest\022>\n\021unit_magic_action\030\017 \001(\0132#.M"
+    "sgsClientToSim.MsgUnitMagicAction\022B\n\023obj"
+    "ect_magic_action\030\020 \001(\0132%.MsgsClientToSim"
+    ".MsgObjectMagicAction\022H\n\026knowledge_magic"
+    "_action\030\021 \001(\0132(.MsgsClientToSim.MsgKnowl"
+    "edgeMagicAction\0225\n\014magic_action\030\022 \001(\0132\037."
+    "MsgsClientToSim.MsgMagicAction", 3670);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "ClientToSim.proto", &protobuf_RegisterTypes);
   MsgControlDatetimeChange::default_instance_ = new MsgControlDatetimeChange();
@@ -939,7 +943,7 @@ void MsgControlCheckPointSaveNow::Swap(MsgControlCheckPointSaveNow* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int MsgFragOrder::kOidFieldNumber;
+const int MsgFragOrder::kTaskerFieldNumber;
 const int MsgFragOrder::kFragOrderFieldNumber;
 const int MsgFragOrder::kParametresFieldNumber;
 #endif  // !_MSC_VER
@@ -949,6 +953,8 @@ MsgFragOrder::MsgFragOrder() {
 }
 
 void MsgFragOrder::InitAsDefaultInstance() {
+  tasker_ = const_cast< ::Common::Tasker*>(&::Common::Tasker::default_instance());
+  frag_order_ = const_cast< ::Common::FragOrderType*>(&::Common::FragOrderType::default_instance());
   parametres_ = const_cast< ::Common::MsgMissionParameters*>(&::Common::MsgMissionParameters::default_instance());
 }
 
@@ -959,8 +965,8 @@ MsgFragOrder::MsgFragOrder(const MsgFragOrder& from) {
 
 void MsgFragOrder::SharedCtor() {
   _cached_size_ = 0;
-  oid_ = 0u;
-  frag_order_ = 0u;
+  tasker_ = NULL;
+  frag_order_ = NULL;
   parametres_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -971,6 +977,8 @@ MsgFragOrder::~MsgFragOrder() {
 
 void MsgFragOrder::SharedDtor() {
   if (this != default_instance_) {
+    delete tasker_;
+    delete frag_order_;
     delete parametres_;
   }
 }
@@ -992,8 +1000,12 @@ MsgFragOrder* MsgFragOrder::New() const {
 
 void MsgFragOrder::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    oid_ = 0u;
-    frag_order_ = 0u;
+    if (_has_bit(0)) {
+      if (tasker_ != NULL) tasker_->::Common::Tasker::Clear();
+    }
+    if (_has_bit(1)) {
+      if (frag_order_ != NULL) frag_order_->::Common::FragOrderType::Clear();
+    }
     if (_has_bit(2)) {
       if (parametres_ != NULL) parametres_->::Common::MsgMissionParameters::Clear();
     }
@@ -1008,29 +1020,27 @@ bool MsgFragOrder::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 oid = 1;
+      // required .Common.Tasker tasker = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &oid_));
-        _set_bit(0);
-        if (input->ExpectTag(16)) goto parse_frag_order;
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_tasker()));
+        if (input->ExpectTag(18)) goto parse_frag_order;
         break;
       }
       
-      // required uint32 frag_order = 2;
+      // required .Common.FragOrderType frag_order = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
        parse_frag_order:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &frag_order_));
-        _set_bit(1);
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_frag_order()));
         if (input->ExpectTag(26)) goto parse_parametres;
         break;
       }
@@ -1072,14 +1082,16 @@ void MsgFragOrder::SerializeWithCachedSizes(
     return;
   }
   
-  // required uint32 oid = 1;
+  // required .Common.Tasker tasker = 1;
   if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->oid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      1, this->tasker(), output);
   }
   
-  // required uint32 frag_order = 2;
+  // required .Common.FragOrderType frag_order = 2;
   if (_has_bit(1)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->frag_order(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      2, this->frag_order(), output);
   }
   
   // optional .Common.MsgMissionParameters parametres = 3;
@@ -1096,14 +1108,18 @@ void MsgFragOrder::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgFragOrder::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required uint32 oid = 1;
+  // required .Common.Tasker tasker = 1;
   if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->oid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->tasker(), target);
   }
   
-  // required uint32 frag_order = 2;
+  // required .Common.FragOrderType frag_order = 2;
   if (_has_bit(1)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->frag_order(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        2, this->frag_order(), target);
   }
   
   // optional .Common.MsgMissionParameters parametres = 3;
@@ -1124,17 +1140,17 @@ int MsgFragOrder::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 oid = 1;
-    if (has_oid()) {
+    // required .Common.Tasker tasker = 1;
+    if (has_tasker()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->oid());
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->tasker());
     }
     
-    // required uint32 frag_order = 2;
+    // required .Common.FragOrderType frag_order = 2;
     if (has_frag_order()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->frag_order());
     }
     
@@ -1171,10 +1187,10 @@ void MsgFragOrder::MergeFrom(const MsgFragOrder& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
-      set_oid(from.oid());
+      mutable_tasker()->::Common::Tasker::MergeFrom(from.tasker());
     }
     if (from._has_bit(1)) {
-      set_frag_order(from.frag_order());
+      mutable_frag_order()->::Common::FragOrderType::MergeFrom(from.frag_order());
     }
     if (from._has_bit(2)) {
       mutable_parametres()->::Common::MsgMissionParameters::MergeFrom(from.parametres());
@@ -1198,6 +1214,12 @@ void MsgFragOrder::CopyFrom(const MsgFragOrder& from) {
 bool MsgFragOrder::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
   
+  if (has_tasker()) {
+    if (!this->tasker().IsInitialized()) return false;
+  }
+  if (has_frag_order()) {
+    if (!this->frag_order().IsInitialized()) return false;
+  }
   if (has_parametres()) {
     if (!this->parametres().IsInitialized()) return false;
   }
@@ -1206,7 +1228,7 @@ bool MsgFragOrder::IsInitialized() const {
 
 void MsgFragOrder::Swap(MsgFragOrder* other) {
   if (other != this) {
-    std::swap(oid_, other->oid_);
+    std::swap(tasker_, other->tasker_);
     std::swap(frag_order_, other->frag_order_);
     std::swap(parametres_, other->parametres_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -1227,7 +1249,7 @@ void MsgFragOrder::Swap(MsgFragOrder* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int MsgSetAutomatMode::kOidFieldNumber;
+const int MsgSetAutomatMode::kAutomateFieldNumber;
 const int MsgSetAutomatMode::kModeFieldNumber;
 #endif  // !_MSC_VER
 
@@ -1236,6 +1258,7 @@ MsgSetAutomatMode::MsgSetAutomatMode() {
 }
 
 void MsgSetAutomatMode::InitAsDefaultInstance() {
+  automate_ = const_cast< ::Common::AutomatId*>(&::Common::AutomatId::default_instance());
 }
 
 MsgSetAutomatMode::MsgSetAutomatMode(const MsgSetAutomatMode& from) {
@@ -1245,7 +1268,7 @@ MsgSetAutomatMode::MsgSetAutomatMode(const MsgSetAutomatMode& from) {
 
 void MsgSetAutomatMode::SharedCtor() {
   _cached_size_ = 0;
-  oid_ = 0;
+  automate_ = NULL;
   mode_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -1256,6 +1279,7 @@ MsgSetAutomatMode::~MsgSetAutomatMode() {
 
 void MsgSetAutomatMode::SharedDtor() {
   if (this != default_instance_) {
+    delete automate_;
   }
 }
 
@@ -1276,7 +1300,9 @@ MsgSetAutomatMode* MsgSetAutomatMode::New() const {
 
 void MsgSetAutomatMode::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    oid_ = 0;
+    if (_has_bit(0)) {
+      if (automate_ != NULL) automate_->::Common::AutomatId::Clear();
+    }
     mode_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -1289,15 +1315,14 @@ bool MsgSetAutomatMode::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 oid = 1;
+      // required .Common.AutomatId automate = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
-              input, &oid_));
-        _set_bit(0);
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_automate()));
         if (input->ExpectTag(16)) goto parse_mode;
         break;
       }
@@ -1344,9 +1369,10 @@ void MsgSetAutomatMode::SerializeWithCachedSizes(
     return;
   }
   
-  // required int32 oid = 1;
+  // required .Common.AutomatId automate = 1;
   if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->oid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      1, this->automate(), output);
   }
   
   // required .Common.EnumAutomatMode mode = 2;
@@ -1363,9 +1389,11 @@ void MsgSetAutomatMode::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgSetAutomatMode::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required int32 oid = 1;
+  // required .Common.AutomatId automate = 1;
   if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->oid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->automate(), target);
   }
   
   // required .Common.EnumAutomatMode mode = 2;
@@ -1385,11 +1413,11 @@ int MsgSetAutomatMode::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 oid = 1;
-    if (has_oid()) {
+    // required .Common.AutomatId automate = 1;
+    if (has_automate()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->oid());
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->automate());
     }
     
     // required .Common.EnumAutomatMode mode = 2;
@@ -1424,7 +1452,7 @@ void MsgSetAutomatMode::MergeFrom(const MsgSetAutomatMode& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
-      set_oid(from.oid());
+      mutable_automate()->::Common::AutomatId::MergeFrom(from.automate());
     }
     if (from._has_bit(1)) {
       set_mode(from.mode());
@@ -1448,12 +1476,15 @@ void MsgSetAutomatMode::CopyFrom(const MsgSetAutomatMode& from) {
 bool MsgSetAutomatMode::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
   
+  if (has_automate()) {
+    if (!this->automate().IsInitialized()) return false;
+  }
   return true;
 }
 
 void MsgSetAutomatMode::Swap(MsgSetAutomatMode* other) {
   if (other != this) {
-    std::swap(oid_, other->oid_);
+    std::swap(automate_, other->automate_);
     std::swap(mode_, other->mode_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
@@ -1473,8 +1504,8 @@ void MsgSetAutomatMode::Swap(MsgSetAutomatMode* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int MsgUnitCreationRequest::kTypePionFieldNumber;
-const int MsgUnitCreationRequest::kOidAutomateFieldNumber;
+const int MsgUnitCreationRequest::kTypeFieldNumber;
+const int MsgUnitCreationRequest::kSuperiorFieldNumber;
 const int MsgUnitCreationRequest::kPositionFieldNumber;
 #endif  // !_MSC_VER
 
@@ -1483,6 +1514,8 @@ MsgUnitCreationRequest::MsgUnitCreationRequest() {
 }
 
 void MsgUnitCreationRequest::InitAsDefaultInstance() {
+  type_ = const_cast< ::Common::UnitType*>(&::Common::UnitType::default_instance());
+  superior_ = const_cast< ::Common::AutomatId*>(&::Common::AutomatId::default_instance());
   position_ = const_cast< ::Common::MsgCoordLatLong*>(&::Common::MsgCoordLatLong::default_instance());
 }
 
@@ -1493,8 +1526,8 @@ MsgUnitCreationRequest::MsgUnitCreationRequest(const MsgUnitCreationRequest& fro
 
 void MsgUnitCreationRequest::SharedCtor() {
   _cached_size_ = 0;
-  type_pion_ = 0u;
-  oid_automate_ = 0u;
+  type_ = NULL;
+  superior_ = NULL;
   position_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -1505,6 +1538,8 @@ MsgUnitCreationRequest::~MsgUnitCreationRequest() {
 
 void MsgUnitCreationRequest::SharedDtor() {
   if (this != default_instance_) {
+    delete type_;
+    delete superior_;
     delete position_;
   }
 }
@@ -1526,8 +1561,12 @@ MsgUnitCreationRequest* MsgUnitCreationRequest::New() const {
 
 void MsgUnitCreationRequest::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    type_pion_ = 0u;
-    oid_automate_ = 0u;
+    if (_has_bit(0)) {
+      if (type_ != NULL) type_->::Common::UnitType::Clear();
+    }
+    if (_has_bit(1)) {
+      if (superior_ != NULL) superior_->::Common::AutomatId::Clear();
+    }
     if (_has_bit(2)) {
       if (position_ != NULL) position_->::Common::MsgCoordLatLong::Clear();
     }
@@ -1542,29 +1581,27 @@ bool MsgUnitCreationRequest::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 type_pion = 1;
+      // required .Common.UnitType type = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &type_pion_));
-        _set_bit(0);
-        if (input->ExpectTag(16)) goto parse_oid_automate;
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_type()));
+        if (input->ExpectTag(18)) goto parse_superior;
         break;
       }
       
-      // required uint32 oid_automate = 2;
+      // required .Common.AutomatId superior = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-       parse_oid_automate:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &oid_automate_));
-        _set_bit(1);
+       parse_superior:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_superior()));
         if (input->ExpectTag(26)) goto parse_position;
         break;
       }
@@ -1606,14 +1643,16 @@ void MsgUnitCreationRequest::SerializeWithCachedSizes(
     return;
   }
   
-  // required uint32 type_pion = 1;
+  // required .Common.UnitType type = 1;
   if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->type_pion(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      1, this->type(), output);
   }
   
-  // required uint32 oid_automate = 2;
+  // required .Common.AutomatId superior = 2;
   if (_has_bit(1)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->oid_automate(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      2, this->superior(), output);
   }
   
   // required .Common.MsgCoordLatLong position = 3;
@@ -1630,14 +1669,18 @@ void MsgUnitCreationRequest::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgUnitCreationRequest::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required uint32 type_pion = 1;
+  // required .Common.UnitType type = 1;
   if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->type_pion(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->type(), target);
   }
   
-  // required uint32 oid_automate = 2;
+  // required .Common.AutomatId superior = 2;
   if (_has_bit(1)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->oid_automate(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        2, this->superior(), target);
   }
   
   // required .Common.MsgCoordLatLong position = 3;
@@ -1658,18 +1701,18 @@ int MsgUnitCreationRequest::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 type_pion = 1;
-    if (has_type_pion()) {
+    // required .Common.UnitType type = 1;
+    if (has_type()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->type_pion());
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->type());
     }
     
-    // required uint32 oid_automate = 2;
-    if (has_oid_automate()) {
+    // required .Common.AutomatId superior = 2;
+    if (has_superior()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->oid_automate());
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->superior());
     }
     
     // required .Common.MsgCoordLatLong position = 3;
@@ -1705,10 +1748,10 @@ void MsgUnitCreationRequest::MergeFrom(const MsgUnitCreationRequest& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
-      set_type_pion(from.type_pion());
+      mutable_type()->::Common::UnitType::MergeFrom(from.type());
     }
     if (from._has_bit(1)) {
-      set_oid_automate(from.oid_automate());
+      mutable_superior()->::Common::AutomatId::MergeFrom(from.superior());
     }
     if (from._has_bit(2)) {
       mutable_position()->::Common::MsgCoordLatLong::MergeFrom(from.position());
@@ -1732,6 +1775,12 @@ void MsgUnitCreationRequest::CopyFrom(const MsgUnitCreationRequest& from) {
 bool MsgUnitCreationRequest::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
   
+  if (has_type()) {
+    if (!this->type().IsInitialized()) return false;
+  }
+  if (has_superior()) {
+    if (!this->superior().IsInitialized()) return false;
+  }
   if (has_position()) {
     if (!this->position().IsInitialized()) return false;
   }
@@ -1740,8 +1789,8 @@ bool MsgUnitCreationRequest::IsInitialized() const {
 
 void MsgUnitCreationRequest::Swap(MsgUnitCreationRequest* other) {
   if (other != this) {
-    std::swap(type_pion_, other->type_pion_);
-    std::swap(oid_automate_, other->oid_automate_);
+    std::swap(type_, other->type_);
+    std::swap(superior_, other->superior_);
     std::swap(position_, other->position_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
@@ -1829,7 +1878,7 @@ const MsgUnitMagicAction_Type MsgUnitMagicAction::Type_MIN;
 const MsgUnitMagicAction_Type MsgUnitMagicAction::Type_MAX;
 #endif  // _MSC_VER
 #ifndef _MSC_VER
-const int MsgUnitMagicAction::kOidFieldNumber;
+const int MsgUnitMagicAction::kIdFieldNumber;
 const int MsgUnitMagicAction::kTypeFieldNumber;
 const int MsgUnitMagicAction::kParametresFieldNumber;
 #endif  // !_MSC_VER
@@ -1839,6 +1888,7 @@ MsgUnitMagicAction::MsgUnitMagicAction() {
 }
 
 void MsgUnitMagicAction::InitAsDefaultInstance() {
+  id_ = const_cast< ::Common::UnitId*>(&::Common::UnitId::default_instance());
   parametres_ = const_cast< ::Common::MsgMissionParameters*>(&::Common::MsgMissionParameters::default_instance());
 }
 
@@ -1849,7 +1899,7 @@ MsgUnitMagicAction::MsgUnitMagicAction(const MsgUnitMagicAction& from) {
 
 void MsgUnitMagicAction::SharedCtor() {
   _cached_size_ = 0;
-  oid_ = 0u;
+  id_ = NULL;
   type_ = 0;
   parametres_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -1861,6 +1911,7 @@ MsgUnitMagicAction::~MsgUnitMagicAction() {
 
 void MsgUnitMagicAction::SharedDtor() {
   if (this != default_instance_) {
+    delete id_;
     delete parametres_;
   }
 }
@@ -1882,7 +1933,9 @@ MsgUnitMagicAction* MsgUnitMagicAction::New() const {
 
 void MsgUnitMagicAction::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    oid_ = 0u;
+    if (_has_bit(0)) {
+      if (id_ != NULL) id_->::Common::UnitId::Clear();
+    }
     type_ = 0;
     if (_has_bit(2)) {
       if (parametres_ != NULL) parametres_->::Common::MsgMissionParameters::Clear();
@@ -1898,15 +1951,14 @@ bool MsgUnitMagicAction::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 oid = 1;
+      // required .Common.UnitId id = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &oid_));
-        _set_bit(0);
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_id()));
         if (input->ExpectTag(16)) goto parse_type;
         break;
       }
@@ -1966,9 +2018,10 @@ void MsgUnitMagicAction::SerializeWithCachedSizes(
     return;
   }
   
-  // required uint32 oid = 1;
+  // required .Common.UnitId id = 1;
   if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->oid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      1, this->id(), output);
   }
   
   // required .MsgsClientToSim.MsgUnitMagicAction.Type type = 2;
@@ -1991,9 +2044,11 @@ void MsgUnitMagicAction::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgUnitMagicAction::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required uint32 oid = 1;
+  // required .Common.UnitId id = 1;
   if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->oid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->id(), target);
   }
   
   // required .MsgsClientToSim.MsgUnitMagicAction.Type type = 2;
@@ -2020,11 +2075,11 @@ int MsgUnitMagicAction::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 oid = 1;
-    if (has_oid()) {
+    // required .Common.UnitId id = 1;
+    if (has_id()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->oid());
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->id());
     }
     
     // required .MsgsClientToSim.MsgUnitMagicAction.Type type = 2;
@@ -2066,7 +2121,7 @@ void MsgUnitMagicAction::MergeFrom(const MsgUnitMagicAction& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
-      set_oid(from.oid());
+      mutable_id()->::Common::UnitId::MergeFrom(from.id());
     }
     if (from._has_bit(1)) {
       set_type(from.type());
@@ -2093,6 +2148,9 @@ void MsgUnitMagicAction::CopyFrom(const MsgUnitMagicAction& from) {
 bool MsgUnitMagicAction::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
   
+  if (has_id()) {
+    if (!this->id().IsInitialized()) return false;
+  }
   if (has_parametres()) {
     if (!this->parametres().IsInitialized()) return false;
   }
@@ -2101,7 +2159,7 @@ bool MsgUnitMagicAction::IsInitialized() const {
 
 void MsgUnitMagicAction::Swap(MsgUnitMagicAction* other) {
   if (other != this) {
-    std::swap(oid_, other->oid_);
+    std::swap(id_, other->id_);
     std::swap(type_, other->type_);
     std::swap(parametres_, other->parametres_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -2146,7 +2204,7 @@ const MsgKnowledgeMagicAction_Type MsgKnowledgeMagicAction::Type_MIN;
 const MsgKnowledgeMagicAction_Type MsgKnowledgeMagicAction::Type_MAX;
 #endif  // _MSC_VER
 #ifndef _MSC_VER
-const int MsgKnowledgeMagicAction::kOidFieldNumber;
+const int MsgKnowledgeMagicAction::kIdFieldNumber;
 const int MsgKnowledgeMagicAction::kTypeFieldNumber;
 const int MsgKnowledgeMagicAction::kParametresFieldNumber;
 #endif  // !_MSC_VER
@@ -2156,6 +2214,7 @@ MsgKnowledgeMagicAction::MsgKnowledgeMagicAction() {
 }
 
 void MsgKnowledgeMagicAction::InitAsDefaultInstance() {
+  id_ = const_cast< ::Common::KnowledgeGroupId*>(&::Common::KnowledgeGroupId::default_instance());
   parametres_ = const_cast< ::Common::MsgMissionParameters*>(&::Common::MsgMissionParameters::default_instance());
 }
 
@@ -2166,7 +2225,7 @@ MsgKnowledgeMagicAction::MsgKnowledgeMagicAction(const MsgKnowledgeMagicAction& 
 
 void MsgKnowledgeMagicAction::SharedCtor() {
   _cached_size_ = 0;
-  oid_ = 0u;
+  id_ = NULL;
   type_ = 0;
   parametres_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -2178,6 +2237,7 @@ MsgKnowledgeMagicAction::~MsgKnowledgeMagicAction() {
 
 void MsgKnowledgeMagicAction::SharedDtor() {
   if (this != default_instance_) {
+    delete id_;
     delete parametres_;
   }
 }
@@ -2199,7 +2259,9 @@ MsgKnowledgeMagicAction* MsgKnowledgeMagicAction::New() const {
 
 void MsgKnowledgeMagicAction::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    oid_ = 0u;
+    if (_has_bit(0)) {
+      if (id_ != NULL) id_->::Common::KnowledgeGroupId::Clear();
+    }
     type_ = 0;
     if (_has_bit(2)) {
       if (parametres_ != NULL) parametres_->::Common::MsgMissionParameters::Clear();
@@ -2215,15 +2277,14 @@ bool MsgKnowledgeMagicAction::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 oid = 1;
+      // required .Common.KnowledgeGroupId id = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &oid_));
-        _set_bit(0);
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_id()));
         if (input->ExpectTag(16)) goto parse_type;
         break;
       }
@@ -2283,9 +2344,10 @@ void MsgKnowledgeMagicAction::SerializeWithCachedSizes(
     return;
   }
   
-  // required uint32 oid = 1;
+  // required .Common.KnowledgeGroupId id = 1;
   if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->oid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      1, this->id(), output);
   }
   
   // required .MsgsClientToSim.MsgKnowledgeMagicAction.Type type = 2;
@@ -2308,9 +2370,11 @@ void MsgKnowledgeMagicAction::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgKnowledgeMagicAction::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required uint32 oid = 1;
+  // required .Common.KnowledgeGroupId id = 1;
   if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->oid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->id(), target);
   }
   
   // required .MsgsClientToSim.MsgKnowledgeMagicAction.Type type = 2;
@@ -2337,11 +2401,11 @@ int MsgKnowledgeMagicAction::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 oid = 1;
-    if (has_oid()) {
+    // required .Common.KnowledgeGroupId id = 1;
+    if (has_id()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->oid());
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->id());
     }
     
     // required .MsgsClientToSim.MsgKnowledgeMagicAction.Type type = 2;
@@ -2383,7 +2447,7 @@ void MsgKnowledgeMagicAction::MergeFrom(const MsgKnowledgeMagicAction& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
-      set_oid(from.oid());
+      mutable_id()->::Common::KnowledgeGroupId::MergeFrom(from.id());
     }
     if (from._has_bit(1)) {
       set_type(from.type());
@@ -2410,6 +2474,9 @@ void MsgKnowledgeMagicAction::CopyFrom(const MsgKnowledgeMagicAction& from) {
 bool MsgKnowledgeMagicAction::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
   
+  if (has_id()) {
+    if (!this->id().IsInitialized()) return false;
+  }
   if (has_parametres()) {
     if (!this->parametres().IsInitialized()) return false;
   }
@@ -2418,7 +2485,7 @@ bool MsgKnowledgeMagicAction::IsInitialized() const {
 
 void MsgKnowledgeMagicAction::Swap(MsgKnowledgeMagicAction* other) {
   if (other != this) {
-    std::swap(oid_, other->oid_);
+    std::swap(id_, other->id_);
     std::swap(type_, other->type_);
     std::swap(parametres_, other->parametres_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -2509,7 +2576,7 @@ const MsgObjectMagicAction_Attribute MsgObjectMagicAction::Attribute_MIN;
 const MsgObjectMagicAction_Attribute MsgObjectMagicAction::Attribute_MAX;
 #endif  // _MSC_VER
 #ifndef _MSC_VER
-const int MsgObjectMagicAction::kOidFieldNumber;
+const int MsgObjectMagicAction::kObjectFieldNumber;
 const int MsgObjectMagicAction::kTypeFieldNumber;
 const int MsgObjectMagicAction::kParametresFieldNumber;
 #endif  // !_MSC_VER
@@ -2519,6 +2586,7 @@ MsgObjectMagicAction::MsgObjectMagicAction() {
 }
 
 void MsgObjectMagicAction::InitAsDefaultInstance() {
+  object_ = const_cast< ::Common::ObjectId*>(&::Common::ObjectId::default_instance());
   parametres_ = const_cast< ::Common::MsgMissionParameters*>(&::Common::MsgMissionParameters::default_instance());
 }
 
@@ -2529,7 +2597,7 @@ MsgObjectMagicAction::MsgObjectMagicAction(const MsgObjectMagicAction& from) {
 
 void MsgObjectMagicAction::SharedCtor() {
   _cached_size_ = 0;
-  oid_ = 0u;
+  object_ = NULL;
   type_ = 0;
   parametres_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -2541,6 +2609,7 @@ MsgObjectMagicAction::~MsgObjectMagicAction() {
 
 void MsgObjectMagicAction::SharedDtor() {
   if (this != default_instance_) {
+    delete object_;
     delete parametres_;
   }
 }
@@ -2562,7 +2631,9 @@ MsgObjectMagicAction* MsgObjectMagicAction::New() const {
 
 void MsgObjectMagicAction::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    oid_ = 0u;
+    if (_has_bit(0)) {
+      if (object_ != NULL) object_->::Common::ObjectId::Clear();
+    }
     type_ = 0;
     if (_has_bit(2)) {
       if (parametres_ != NULL) parametres_->::Common::MsgMissionParameters::Clear();
@@ -2578,15 +2649,14 @@ bool MsgObjectMagicAction::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 oid = 1;
+      // required .Common.ObjectId object = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &oid_));
-        _set_bit(0);
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_object()));
         if (input->ExpectTag(16)) goto parse_type;
         break;
       }
@@ -2646,9 +2716,10 @@ void MsgObjectMagicAction::SerializeWithCachedSizes(
     return;
   }
   
-  // required uint32 oid = 1;
+  // required .Common.ObjectId object = 1;
   if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->oid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      1, this->object(), output);
   }
   
   // required .MsgsClientToSim.MsgObjectMagicAction.Type type = 2;
@@ -2671,9 +2742,11 @@ void MsgObjectMagicAction::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgObjectMagicAction::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required uint32 oid = 1;
+  // required .Common.ObjectId object = 1;
   if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->oid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->object(), target);
   }
   
   // required .MsgsClientToSim.MsgObjectMagicAction.Type type = 2;
@@ -2700,11 +2773,11 @@ int MsgObjectMagicAction::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 oid = 1;
-    if (has_oid()) {
+    // required .Common.ObjectId object = 1;
+    if (has_object()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->oid());
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->object());
     }
     
     // required .MsgsClientToSim.MsgObjectMagicAction.Type type = 2;
@@ -2746,7 +2819,7 @@ void MsgObjectMagicAction::MergeFrom(const MsgObjectMagicAction& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
-      set_oid(from.oid());
+      mutable_object()->::Common::ObjectId::MergeFrom(from.object());
     }
     if (from._has_bit(1)) {
       set_type(from.type());
@@ -2773,6 +2846,9 @@ void MsgObjectMagicAction::CopyFrom(const MsgObjectMagicAction& from) {
 bool MsgObjectMagicAction::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
   
+  if (has_object()) {
+    if (!this->object().IsInitialized()) return false;
+  }
   if (has_parametres()) {
     if (!this->parametres().IsInitialized()) return false;
   }
@@ -2781,7 +2857,7 @@ bool MsgObjectMagicAction::IsInitialized() const {
 
 void MsgObjectMagicAction::Swap(MsgObjectMagicAction* other) {
   if (other != this) {
-    std::swap(oid_, other->oid_);
+    std::swap(object_, other->object_);
     std::swap(type_, other->type_);
     std::swap(parametres_, other->parametres_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);

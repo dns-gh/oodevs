@@ -382,7 +382,7 @@ void DEC_Knowledge_Agent::WriteMsgPerceptionSources( MsgsSimToClient::MsgUnitKno
         for( CIT_PerceptionAutomateSourceMap it = perceptionLevelPerAutomateMap_.begin(); it != perceptionLevelPerAutomateMap_.end(); ++it )
         {
             MsgsSimToClient::AutomatPerception& perception = *asnMsg.mutable_perception_par_compagnie()->add_elem();
-            perception.set_oid_compagnie( it->first->GetID() );
+            perception.mutable_automat()->set_id( it->first->GetID() );
             MsgsSimToClient::EnumUnitIdentificationLevel level;
             it->second->Serialize( level );
             perception.set_identification_level( level );
@@ -401,8 +401,8 @@ void DEC_Knowledge_Agent::SendChangedState()
         return;
     assert( pKnowledgeGroup_ );
     client::UnitKnowledgeUpdate asnMsg;
-    asnMsg().set_oid( nID_ );
-    asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_->GetId() );
+    asnMsg().mutable_id()->set_id( nID_ );
+    asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
     if( bRelevanceUpdated_ )
     {
         asnMsg().set_pertinence( (int)( rRelevance_ * 100. ) );
@@ -439,8 +439,8 @@ void DEC_Knowledge_Agent::SendFullState()
 {
     assert( pKnowledgeGroup_ );
     client::UnitKnowledgeUpdate asnMsg;
-    asnMsg().set_oid( nID_ );
-    asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_->GetId() );
+    asnMsg().mutable_id()->set_id( nID_ );
+    asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
     asnMsg().set_pertinence( static_cast< int >( rRelevance_ * 100. ) );
     rLastRelevanceSent_ = rRelevance_;
     MsgsSimToClient::EnumUnitIdentificationLevel level( asnMsg().identification_level() );
@@ -507,10 +507,10 @@ void DEC_Knowledge_Agent::SendMsgCreation() const
     assert( pKnowledgeGroup_ );
     assert( pAgentKnown_ );
     client::UnitKnowledgeCreation asnMsg;
-    asnMsg().set_oid( nID_ );
-    asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_->GetId() );
-    asnMsg().set_oid_unite_reelle( pAgentKnown_->GetID() );
-    asnMsg().mutable_type_unite()->set_type( pAgentKnown_->GetType().GetID() );
+    asnMsg().mutable_id()->set_id( nID_ );
+    asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
+    asnMsg().mutable_unit()->set_id( pAgentKnown_->GetID() );    
+    asnMsg().mutable_type()->set_id( pAgentKnown_->GetType().GetID() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -523,8 +523,8 @@ void DEC_Knowledge_Agent::SendMsgDestruction() const
     if( pKnowledgeGroup_ )
     {
         client::UnitKnowledgeDestruction asnMsg;
-        asnMsg().set_oid( nID_ );
-        asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_->GetId() );
+        asnMsg().mutable_id()->set_id( nID_ );
+        asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
 }

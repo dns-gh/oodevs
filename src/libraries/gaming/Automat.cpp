@@ -27,12 +27,12 @@ using namespace kernel;
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
 Automat::Automat( const MsgsSimToClient::MsgAutomatCreation& message, Controller& controller,
-                  const tools::Resolver_ABC< AutomatType >& resolver )
-    : EntityImplementation< Automat_ABC >( controller, message.oid(), QString( message.nom().c_str() ) )
-    , type_( resolver.Get( message.type_automate() ) )
+                  const tools::Resolver_ABC< kernel::AutomatType >& resolver )
+    : EntityImplementation< Automat_ABC >( controller, message.id().id(), QString( message.nom().c_str() ) )
+    , type_( resolver.Get( message.type().id() ) )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.oid() );
+        name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.id().id() );
     RegisterSelf( *this );
     PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     Attach( dictionary );
@@ -62,7 +62,7 @@ void Automat::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 // Name: Automat::GetType
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-const AutomatType& Automat::GetType() const
+const kernel::AutomatType& Automat::GetType() const
 {
     return type_;
 }

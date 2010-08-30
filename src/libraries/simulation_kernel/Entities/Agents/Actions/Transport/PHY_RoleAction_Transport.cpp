@@ -502,7 +502,7 @@ void PHY_RoleAction_Transport::SendFullState( client::UnitAttributes& msg ) cons
 {
     for( CIT_TransportedPionMap it = transportedPions_.begin(); it != transportedPions_.end(); ++it )
         if( it->second.rTransportedWeight_ > 0. )
-            msg().mutable_pions_transportes()->add_elem()->set_oid( (*it->first).GetID() );
+            msg().mutable_transported_units()->add_elem()->set_id( (*it->first).GetID() );
 }
 
 // -----------------------------------------------------------------------------

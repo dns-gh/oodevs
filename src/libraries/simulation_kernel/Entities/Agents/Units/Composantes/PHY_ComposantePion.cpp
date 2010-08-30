@@ -145,10 +145,10 @@ void PHY_ComposantePion::load( MIL_CheckPointInArchive& file, const unsigned int
     file >> nID;
     pState_ = &PHY_ComposanteState::Find( nID );
 
-    Common::MsgEquipmentType nEqID;
+    Common::EquipmentType nEqID;
     int equipment_type;
     file >> equipment_type;
-    nEqID.set_equipment( equipment_type );
+    nEqID.set_id( equipment_type );
     pType_ = PHY_ComposanteTypePion::Find( nEqID );
     assert( pType_ );
 
@@ -182,7 +182,7 @@ void PHY_ComposantePion::load( MIL_CheckPointInArchive& file, const unsigned int
 void PHY_ComposantePion::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     unsigned state = pState_->GetID(),
-             type  = pType_->GetMosID().equipment();
+             type  = pType_->GetMosID().id();
     file << boost::serialization::base_object< PHY_Composante_ABC >( *this )
          << pRole_
          << state

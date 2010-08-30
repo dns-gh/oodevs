@@ -33,12 +33,12 @@ using namespace kernel;
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
 AgentKnowledge::AgentKnowledge( const KnowledgeGroup_ABC& group, const MsgsSimToClient::MsgUnitKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< Agent_ABC >& resolver, const tools::Resolver_ABC< Team_ABC >& teamResolver )
-    : EntityImplementation< AgentKnowledge_ABC >( controller, message.oid(), "" )
+    : EntityImplementation< AgentKnowledge_ABC >( controller, message.id().id(), "" )
     , converter_   ( converter )
     , resolver_    ( resolver )
     , teamResolver_( teamResolver )
     , group_       ( group )
-    , realAgent_   ( resolver_.Get( message.oid_unite_reelle() ) )
+    , realAgent_   ( resolver_.Get( message.unit().id() ) )
     , team_        ( 0 )
     , nLevel_      ( eNatureLevel_None )
 {
@@ -86,8 +86,8 @@ void AgentKnowledge::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& me
     if( message.has_speed()  )
         nSpeed_ = message.speed();
 
-    if( message.has_camp() )
-        team_ = & teamResolver_.Get( message.camp() );
+    if( message.has_party()  )
+        team_ = & teamResolver_.Get( message.party().id() );
 
     if( message.has_nature_pc()  )
         bIsPC_ = message.nature_pc() != 0;
@@ -98,8 +98,8 @@ void AgentKnowledge::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& me
     if( message.has_prisonnier()  )
         bPrisonner_ = message.prisonnier() != 0;
 
-    if( message.has_rendu()  )
-        surrenderedTo_ = teamResolver_.Find( message.rendu() );
+    if( message.has_surrendered_unit()  )
+        surrenderedTo_ = teamResolver_.Find( message.surrendered_unit().id() );
 
     if( message.has_refugie_pris_en_compte()  )
         bRefugies_ = message.refugie_pris_en_compte() != 0;

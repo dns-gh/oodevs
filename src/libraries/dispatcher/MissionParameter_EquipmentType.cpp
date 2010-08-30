@@ -20,7 +20,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 MissionParameter_EquipmentType::MissionParameter_EquipmentType( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , equipmentType_      ( asn.value().equipmenttype().equipment() )
+    , equipmentType_      ( asn.value().equipmenttype().id() )
 {
     // NOTHING
 }
@@ -41,5 +41,5 @@ MissionParameter_EquipmentType::~MissionParameter_EquipmentType()
 void MissionParameter_EquipmentType::Send( Common::MsgMissionParameter& asn ) const
 {
     MissionParameter_ABC::Send( asn );
-    asn.mutable_value()->mutable_equipmenttype()->set_equipment( equipmentType_ );
+    asn.mutable_value()->mutable_equipmenttype()->set_id( equipmentType_ );
 }

@@ -15,7 +15,7 @@
 
 namespace Common
 {
-    class MsgObjectKnowledgeList;
+    class ObjectKnowledgeIdList;
 }
 
 namespace kernel
@@ -42,7 +42,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ObjectKnowledgeList( const kernel::OrderParameter& parameter );
-             ObjectKnowledgeList( const kernel::OrderParameter& parameter, const Common::MsgObjectKnowledgeList& asn, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+             ObjectKnowledgeList( const kernel::OrderParameter& parameter, const Common::ObjectKnowledgeIdList& asn, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
              ObjectKnowledgeList( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
     virtual ~ObjectKnowledgeList();
     //@}

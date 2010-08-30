@@ -31,13 +31,13 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 UrbanKnowledge::UrbanKnowledge( const Team_ABC& owner, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message, Controller& controller,
                                 const tools::Resolver_ABC< urban::TerrainObject_ABC >& terrainObjectResolver )
-    : EntityImplementation< UrbanKnowledge_ABC >( controller, message.oid(), "" )
+    : EntityImplementation< UrbanKnowledge_ABC >( controller, message.id().id(), "" )
     , owner_                ( owner )
     , terrainObjectResolver_( terrainObjectResolver )
     , pRealUrban_           ( 0 )
 {
     RegisterSelf( *this );
-    pRealUrban_ = terrainObjectResolver_.Find( message.real_urban() );
+    pRealUrban_ = terrainObjectResolver_.Find( message.urban_block().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,14 +55,14 @@ UrbanKnowledge::~UrbanKnowledge()
 // -----------------------------------------------------------------------------
 void UrbanKnowledge::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& message )
 {
-    if( message.has_real_urban() )
-        pRealUrban_ = terrainObjectResolver_.Find( message.real_urban() );
+    if( message.urban_block().id() )
+        pRealUrban_ = terrainObjectResolver_.Find( message.urban_block().id() );
     if( message.has_perceived() )
         bIsPerceived_ = message.perceived();
     if( message.has_progress() )
         rProgress_ = message.progress();
-    if( message.has_maxprogress() )
-        rMaxProgress_ = message.maxprogress();
+    if( message.has_max_progress() )
+        rMaxProgress_ = message.max_progress();
     Touch();
 }
 

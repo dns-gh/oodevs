@@ -189,10 +189,10 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgUnitAttributes& messag
         || message.has_mort()
         || message.has_neutralise()
 //        || message.has_oid()
-        || message.has_pion_renforce()
-        || message.has_pion_transporteur()
-        || message.has_pions_renforcant()
-        || message.has_pions_transportes()
+        || message.has_reinforced_unit()
+        || message.has_transporting_unit()
+        || message.has_reinforcements()
+        || message.has_transported_units()
         || message.has_position()
         || message.has_posture_new()
         || message.has_posture_old()
@@ -201,7 +201,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgUnitAttributes& messag
         || message.has_radar_actif()
         || message.has_rapport_de_force()
         || message.has_refugie_pris_en_compte()
-        || message.has_rendu()
+        || message.has_surrendered_unit()
         || message.has_roe()
         || message.has_roe_population()
         || message.has_radio_receiver_disabled()
@@ -217,7 +217,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgUnitAttributes& messag
 // -----------------------------------------------------------------------------
 bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message )
 {
-    return    message.has_camp()
+    return    message.has_party()
            || message.has_direction()
            || message.has_etat_op()
            || message.has_identification_level()
@@ -231,7 +231,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgUnitKnowledgeUpdate& m
            || message.has_position()
            || message.has_prisonnier()
            || message.has_refugie_pris_en_compte()
-           || message.has_rendu()
+           || message.has_surrendered_unit()
 //           || message.has_speed()
            ;
 }
@@ -252,13 +252,13 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgObjectUpdate& )
 bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
     return  message.has_attributes()
-         || message.has_automat_perception()
+         || message.has_perceiving_automats()
          || message.has_location()
-         || message.has_oid()
+         || message.has_id()
          || message.has_perceived()
-         || message.has_real_object()
+         || message.has_object()
 //         || message.has_relevance()
-         || message.has_team()
+         || message.has_party()
     ;
 }
 

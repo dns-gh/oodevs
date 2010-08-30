@@ -88,7 +88,7 @@ std::string EntityIntelligences::GetLevel() const
 // -----------------------------------------------------------------------------
 void EntityIntelligences::DoUpdate( const MsgsMessengerToClient::MsgIntelligenceCreation& message )
 {
-    SetSuperior( &resolver_.Get( message.intelligence().formation().oid() ) );
+    SetSuperior( &resolver_.Get( message.intelligence().formation().id() ) );
 }
 
 // -----------------------------------------------------------------------------

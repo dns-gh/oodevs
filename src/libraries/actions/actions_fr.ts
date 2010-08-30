@@ -36,6 +36,10 @@
         <source>Parameter mismatch in action &apos;%1&apos; (id: %2): %3.</source>
         <translation>Paramètre incorrect dans l&apos;action &apos;%1&apos; (id: %2) : %3.</translation>
     </message>
+    <message>
+        <source>Executing target not set</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ActionParameter</name>

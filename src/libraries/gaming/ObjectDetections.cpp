@@ -43,8 +43,7 @@ ObjectDetections::~ObjectDetections()
 // -----------------------------------------------------------------------------
 void ObjectDetections::DoUpdate( const MsgsSimToClient::MsgObjectDetection& message )
 {
-    Object_ABC* object = resolver_.Find( message.object_oid() );  // $$$$ _RC_ SLG 2010-07-28: Peut être null s'il s'agit d'un bloc urbain, revoir les détection des bloc urbain wrapper
-    if( object )
+    if( Object_ABC* object = resolver_.Find( message.observer().id() ) )
     {
         if( message.visibility() == Common::invisible )
             perceivedObjects_.erase( object );

@@ -17,8 +17,8 @@
 namespace Common
 {
     class MsgAtlasNature;
-    class MsgAutomat;
-    class MsgAutomatList;
+    class AutomatId;
+    class AutomatIdList;
     class MsgCoordLatLong;
     class MsgCoordLatLongList;
     class MsgDateTime;
@@ -30,8 +30,8 @@ namespace Common
     class MsgLogMedicalPriorities;
     class MsgMissionObjective;
     class MsgMissionObjectiveList;
-    class MsgObjectKnowledge;
-    class MsgObjectKnowledgeList;
+    class ObjectKnowledgeId;
+    class ObjectKnowledgeIdList;
     class MsgPath;
     class MsgPathList;
     class MsgPlannedWork;
@@ -40,11 +40,11 @@ namespace Common
     class MsgPointList;
     class MsgPolygon;
     class MsgPolygonList;
-    class MsgPopulationKnowledge;
-    class MsgUnit;
-    class MsgUnitKnowledge;
-    class MsgUnitKnowledgeList;
-    class MsgUnitList;
+    class PopulationKnowledgeId;
+    class UnitId;
+    class UnitKnowledgeId;
+    class UnitKnowledgeIdList;
+    class UnitIdList;
 }
 
 class TER_Localisation;
@@ -75,15 +75,15 @@ public:
     static void Delete( Common::MsgMissionObjectiveList& asn );
     static void Delete( Common::MsgPlannedWork& asn );
     static void Delete( Common::MsgPlannedWorkList& asn );
-    static void Delete( Common::MsgUnitList& asn );
-    static void Delete( Common::MsgAutomatList& asn );
+    static void Delete( Common::UnitIdList& asn );
+    static void Delete( Common::AutomatIdList& asn );
     static void Delete( Common::MsgPolygon& asn );
     static void Delete( Common::MsgPolygonList& asn );
     static void Delete( Common::MsgPointList& asn );
     static void Delete( Common::MsgPathList& asn );
     static void Delete( Common::MsgLocationList& asn );
-    static void Delete( Common::MsgUnitKnowledgeList& asn );
-    static void Delete( Common::MsgObjectKnowledgeList& asn );
+    static void Delete( Common::UnitKnowledgeIdList& asn );
+    static void Delete( Common::ObjectKnowledgeIdList& asn );
     static void Delete( Common::MsgLogMedicalPriorities& asn );
     static void Delete( Common::MsgLogMaintenancePriorities& asn );
     static void Delete( Common::MsgCoordLatLongList& asn );
@@ -142,13 +142,13 @@ public:
     static bool ReadPolygonList( const Common::MsgPolygonList& asn, T_LocalisationPtrVector& localisationVector, unsigned int nNbrEltMin = 0 );
     static bool ReadPathList( const Common::MsgPathList& asn, T_ItinerairePtrVector& itineraireVector );
 
-    static DEC_Decision_ABC* ReadAgent( const Common::MsgUnit& asn );
-    static DEC_Decision_ABC* ReadAutomate( const Common::MsgUnit& asn );
-    static boost::shared_ptr< DEC_Knowledge_Agent > ReadAgentKnowledge( const Common::MsgUnitKnowledge& asn, const DEC_KnowledgeResolver_ABC& resolver );
-    static DEC_Knowledge_Population* ReadPopulationKnowledge( const Common::MsgPopulationKnowledge& asn, const DEC_KnowledgeResolver_ABC& resolver );
+    static DEC_Decision_ABC*            ReadAgent              ( const Common::UnitId&               asn );
+    static DEC_Decision_ABC*            ReadAutomate           ( const Common::UnitId&               asn );
+    static boost::shared_ptr< DEC_Knowledge_Agent > ReadAgentKnowledge     ( const Common::UnitKnowledgeId&      asn, const DEC_KnowledgeResolver_ABC& resolver );
+    static DEC_Knowledge_Population*    ReadPopulationKnowledge( const Common::PopulationKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver );
 
-    static boost::shared_ptr< DEC_Knowledge_Object > ReadObjectKnowledge( const Common::MsgObjectKnowledge& asn, const DEC_KnowledgeResolver_ABC& resolver );
-    static bool ReadObjectKnowledgeList( const Common::MsgObjectKnowledgeList& asn, T_KnowledgeObjectDiaIDVector& knowledgeList, const DEC_KnowledgeResolver_ABC& resolver );
+    static boost::shared_ptr< DEC_Knowledge_Object > ReadObjectKnowledge    ( const Common::ObjectKnowledgeId&     asn, const DEC_KnowledgeResolver_ABC& resolver );
+    static bool                         ReadObjectKnowledgeList( const Common::ObjectKnowledgeIdList& asn, T_KnowledgeObjectDiaIDVector& knowledgeList, const DEC_KnowledgeResolver_ABC& resolver );
     //@}
 
     // @name Encoding tools
@@ -159,11 +159,11 @@ public:
     static void WritePathList( const T_ItinerairePtrVector& itineraireVector, Common::MsgPathList& asn );
     static void WritePointList( const T_PointVector& pointVector, Common::MsgPointList& asn );
 
-    static void WriteAgent( const DEC_Decision_ABC& pion, Common::MsgUnit& asn );
-    static void WriteAutomate( const DEC_Decision_ABC& automate, Common::MsgAutomat& asn );
-    static void WriteAgentKnowledge( const DEC_Knowledge_Agent& knowledge, Common::MsgUnitKnowledge& asnKnowledge );
-    static void WriteObjectKnowledge( const DEC_Knowledge_Object& knowledge, Common::MsgObjectKnowledge& asnKnowledge );
-    static void WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector& knowledges, Common::MsgObjectKnowledgeList& listResult, const DEC_KnowledgeResolver_ABC& resolver );
+    static void WriteAgent              ( const DEC_Decision_ABC&             pion      , Common::UnitId&     asn );
+    static void WriteAutomate           ( const DEC_Decision_ABC&             automate  , Common::AutomatId&  asn );
+    static void WriteAgentKnowledge     ( const DEC_Knowledge_Agent&          knowledge , Common::UnitKnowledgeId&      asnKnowledge );
+    static void WriteObjectKnowledge    ( const DEC_Knowledge_Object&         knowledge , Common::ObjectKnowledgeId&     asnKnowledge );
+    static void WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector& knowledges, Common::ObjectKnowledgeIdList& listResult, const DEC_KnowledgeResolver_ABC& resolver );
     //@}
 };
 

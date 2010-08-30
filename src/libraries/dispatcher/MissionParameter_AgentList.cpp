@@ -21,7 +21,7 @@ MissionParameter_AgentList::MissionParameter_AgentList( const Common::MsgMission
     : MissionParameter_ABC( asn )
 {
     for( int i = 0; i < asn.value().unitlist().elem_size(); ++i )
-        agents_.push_back( asn.value().unitlist().elem( i ).oid() );
+        agents_.push_back( asn.value().unitlist().elem( i ).id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,5 +42,5 @@ void MissionParameter_AgentList::Send( Common::MsgMissionParameter& asn ) const
     MissionParameter_ABC::Send( asn );
     asn.mutable_value()->mutable_unitlist();
     for( std::vector< int >::const_iterator it = agents_.begin(); it != agents_.end(); ++it )
-        asn.mutable_value()->mutable_unitlist()->add_elem()->set_oid( *it );
+        asn.mutable_value()->mutable_unitlist()->add_elem()->set_id( *it );
 }

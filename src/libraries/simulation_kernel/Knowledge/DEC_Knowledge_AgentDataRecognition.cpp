@@ -156,7 +156,7 @@ void DEC_Knowledge_AgentDataRecognition::SendChangedState( MsgsSimToClient::MsgU
     {
         assert( pArmy_ );
         assert( pAgentType_ );
-        asnMsg.set_camp( pArmy_->GetID() );
+        asnMsg.mutable_party()->set_id( pArmy_->GetID() );
         asnMsg.set_nature_pc( bIsPC_ );
     }
 }
@@ -172,8 +172,8 @@ void DEC_Knowledge_AgentDataRecognition::SendFullState( MsgsSimToClient::MsgUnit
     asnMsg.set_etat_op( std::max( 0, std::min( 100, (int)( rOperationalState_ * 100. ) ) ) );
     assert( pArmy_ );
     assert( pAgentType_ );
-    asnMsg.set_camp( pArmy_->GetID() );
-    asnMsg.set_nature_pc ( bIsPC_ );
+    asnMsg.mutable_party()->set_id( pArmy_->GetID() );
+    asnMsg.set_nature_pc( bIsPC_ );
 }
 
 // -----------------------------------------------------------------------------

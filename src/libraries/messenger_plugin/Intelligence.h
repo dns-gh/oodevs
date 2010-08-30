@@ -29,7 +29,6 @@ namespace xml
     class xostream;
 }
 
-
 namespace plugins
 {
 namespace messenger
@@ -47,14 +46,14 @@ public:
     //! @name Constructors/Destructor
     //@{
              Intelligence( unsigned int id, const MsgsClientToMessenger::MsgIntelligenceCreationRequest& message );
-             Intelligence( unsigned int id, xml::xistream&, const Common::MsgFormation& formation, const kernel::CoordinateConverter_ABC& converter );
+             Intelligence( unsigned int id, xml::xistream&, const Common::FormationId& formation, const kernel::CoordinateConverter_ABC& converter );
     virtual ~Intelligence();
     //@}
 
     //! @name Accessors
     //@{
-    unsigned int GetID() const  { return id_ ; }
-    const Common::MsgFormation& GetFormation() const { return formation_ ; }
+    unsigned int GetID() const  { return id_ ; } 
+    const Common::FormationId& GetFormation() const { return formation_ ; } 
     //@}
 
     //! @name Network
@@ -88,7 +87,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Common::MsgFormation formation_;
+    Common::FormationId formation_;
     unsigned int id_;
     std::string name_;
     std::string nature_;

@@ -80,10 +80,10 @@ BOOST_AUTO_TEST_CASE( Agent_IsCreatedUnderAnAutomat )
         MsgsSimToClient::MsgSimToClient expected;
         expected.set_context( 0 );
         MsgsSimToClient::MsgUnitCreation& message = *expected.mutable_message()->mutable_unit_creation();
-        message.set_oid( 1 );
-        message.set_type_pion( 42 );
+        message.mutable_id()->set_id( 1 );
+        message.mutable_type()->set_id( 42 );
         message.set_nom( "test" );
-        message.set_oid_automate( automat.GetId() );
+        message.mutable_automat()->set_id( automat.GetId() );
         message.set_pc( false );
 
         // creation
@@ -131,10 +131,10 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
             MsgsSimToClient::MsgSimToClient expected;
             expected.set_context( 0 );
             MsgsSimToClient::MsgUnitCreation& message = *expected.mutable_message()->mutable_unit_creation();
-            message.set_oid( 1 );
-            message.set_type_pion( 42 );
+            message.mutable_id()->set_id( 1 );
+            message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
-            message.set_oid_automate( automat.GetId() );
+            message.mutable_automat()->set_id( automat.GetId() );
             message.set_pc( false );
 
             // creation
@@ -148,7 +148,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
             expectedAttributes.set_context( 0 );
             {
                 MsgsSimToClient::MsgUnitAttributes& message = *expectedAttributes.mutable_message()->mutable_unit_attributes();
-                message.set_oid( result->GetId() );
+                message.mutable_id()->set_id( 1 );
 //            message.mutable_dotation_eff_personnel();
 //            message.mutable_dotation_eff_materiel();
 //            message.mutable_dotation_eff_ressource();
@@ -156,13 +156,13 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
 //            message.mutable_equipements_empruntes();
                 message.mutable_position()->set_latitude( 42. );
                 message.mutable_position()->set_longitude( 1. );
-                message.mutable_direction()->set_heading( 43.f );
+                message.mutable_direction()->set_heading( 43 );
                 message.set_hauteur( 23 );
                 message.set_altitude( 12 );
                 message.set_vitesse( 69 );
                 message.set_etat_operationnel_brut( 99 );
 //            message.mutable_pions_renforcant();
-                message.set_pion_renforce( 0 );
+                message.mutable_reinforced_unit()->set_id( 0 );
                 message.set_mort( true );
                 message.set_neutralise( true );
                 message.set_mode_furtif_actif( true );
@@ -177,12 +177,12 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
                 message.mutable_etat_contamination()->set_percentage( 0 );
                 message.mutable_etat_contamination()->set_quantity( 2.f );
                 message.mutable_communications()->set_jammed( true );
-                message.mutable_communications()->set_knowledge_group( 0 );
+                message.mutable_communications()->mutable_knowledge_group()->set_id( 0 );
                 message.set_radio_emitter_disabled( true );
                 message.set_radio_receiver_disabled( true );
                 message.set_radar_actif( true );
 //            message.mutable_pions_transportes();
-                message.set_pion_transporteur( 0 );
+                message.mutable_transporting_unit()->set_id( 0 );
                 message.set_rapport_de_force( MsgsSimToClient::ForceRatio::favorable );
                 message.set_combat_de_rencontre( Common::etat_fixe );
                 message.set_etat_operationnel( Common::detruit_totalement );
@@ -192,7 +192,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
                 message.set_fatigue( Common::fatigue );
                 message.set_moral( Common::fanatique );
                 message.set_experience( Common::veteran );
-                message.set_rendu( 0 );
+                message.mutable_surrendered_unit()->set_id( 0 );
                 message.set_prisonnier( true );
                 message.set_refugie_pris_en_compte( true );
                 agents.Get( 1 ).Update( message );
@@ -203,8 +203,8 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
             expectedChangeSuperior.set_context( 0 );
             {
                 Common::MsgUnitChangeSuperior& message = *expectedChangeSuperior.mutable_message()->mutable_unit_change_superior();
-                message.set_oid( result->GetId() );
-                message.set_oid_automate( automat.GetId() );
+                message.mutable_unit()->set_id( 1 );
+                message.mutable_parent()->set_id( automat.GetId() );
             }
 
             // order no mission
@@ -212,8 +212,8 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
             expectedNoMission.set_context( 0 );
             {
                 Common::MsgUnitOrder& message = *expectedNoMission.mutable_message()->mutable_unit_order();
-                message.set_oid( result->GetId() );
-                message.set_mission( 0 );
+                message.mutable_tasker()->set_id( result->GetId() );
+                message.mutable_type()->set_id( 0 );
             }
 
             // network serialization

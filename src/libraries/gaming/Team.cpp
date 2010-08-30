@@ -39,7 +39,7 @@ namespace
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
 Team::Team( const MsgsSimToClient::MsgTeamCreation& message, Controller& controller )
-    : EntityImplementation< Team_ABC >( controller, message.oid(), MakeName( message.nom() ) )
+    : EntityImplementation< Team_ABC >( controller, message.id().id(), QString( message.nom().c_str() ) )
     , karma_( MakeKarma( message.type() ) )
 {
     CreateDictionary( controller );

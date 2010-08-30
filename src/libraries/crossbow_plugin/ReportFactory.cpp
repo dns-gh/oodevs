@@ -63,8 +63,16 @@ void ReportFactory::ReadReport( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 std::string ReportFactory::CreateMessage( const MsgsSimToClient::MsgReport& message ) const
 {
-    CIT_Templates it = templates_.find( message.cr() );
-    if( it == templates_.end() )
+    CIT_Templates it;
+    if( message.cr().has_automat() )
+        CIT_Templates it = templates_.find( message.cr().automat().id() );
+    else if( message.cr().has_population() )
+        CIT_Templates it = templates_.find( message.cr().population().id() );
+    else if( message.cr().has_unit() )
+        CIT_Templates it = templates_.find( message.cr().unit().id() );
+    else if( message.cr().has_formation() )
+        CIT_Templates it = templates_.find( message.cr().formation().id() );
+    else
         return "Unknown report";
     return it->second->RenderMessage( message.parametres() );
 }
@@ -81,12 +89,12 @@ std::string ReportFactory::RenderParameter( const Common::MsgMissionParameter& v
         ss << value.value().areal();
     else if (value.value().has_unit() )
     {
-        if( const dispatcher::Agent_ABC* agent = model_.Agents().Find( value.value().unit().oid() ) )
+        if( const dispatcher::Agent_ABC* agent = model_.Agents().Find( value.value().unit().id() ) )
             ss << agent->GetName().ascii() << " [" << agent->GetId() << "]";
     }
     else if (value.value().has_unitknowledge() )
     {
-        if( const dispatcher::AgentKnowledge_ABC* knowledge = model_.AgentKnowledges().Find( value.value().unitknowledge().oid() ) )
+        if( const dispatcher::AgentKnowledge_ABC* knowledge = model_.AgentKnowledges().Find( value.value().unitknowledge().id() ) )
             ss << knowledge->GetName().ascii() << " [" << knowledge->GetId() << "]";
     }
 //    else if( value.value().has_objectknowledge() )

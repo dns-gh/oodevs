@@ -61,8 +61,8 @@ namespace
 template< typename T >
 void Diplomacies::UpdateData( const T& message )
 {
-    const Team_ABC& team1 = resolver_.Get( message.oid_camp1() );
-    const Team_ABC& team2 = resolver_.Get( message.oid_camp2() );
+    const Team_ABC& team1 = resolver_.Get( message.party1().id() );
+    const Team_ABC& team2 = resolver_.Get( message.party2().id() );
     if( & team1.Get< Diplomacies_ABC >() != this )
         return;
     if( & team2.Get< Diplomacies_ABC >() != this )

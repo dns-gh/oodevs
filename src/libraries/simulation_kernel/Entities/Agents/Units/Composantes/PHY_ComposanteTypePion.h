@@ -21,7 +21,7 @@
 
 namespace Common
 {
-    class MsgEquipmentType;
+    class EquipmentType;
 }
 
 namespace xml
@@ -67,7 +67,7 @@ public:
     static void Terminate ();
 
     static const PHY_ComposanteTypePion* Find( const std::string& strName );
-    static const PHY_ComposanteTypePion* Find( Common::MsgEquipmentType nAsnID );
+    static const PHY_ComposanteTypePion* Find( Common::EquipmentType nAsnID );
     //@}
 
     //! @name Instanciation

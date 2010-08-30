@@ -175,8 +175,8 @@ void DEC_Knowledge_AgentPerception::Update( const PHY_PerceptionLevel& perceptio
 void DEC_Knowledge_AgentPerception::SendStateToNewClient() const
 {
     client::UnitDetection asn;
-    asn().set_oid( pAgentPerceiving_->GetID() );
-    asn().set_detected_unit_oid( pAgentPerceived_->GetID() );
+    asn().mutable_observer()->set_id( pAgentPerceiving_->GetID() );
+    asn().mutable_detected_unit()->set_id( pAgentPerceived_->GetID() );
     asn().set_current_visibility( bRecordModeEnabled_ ? Common::recorded : Common::EnumUnitVisibility( pCurrentPerceptionLevel_->GetID() ) );
     asn().set_max_visibility( Common::EnumUnitVisibility( pMaxPerceptionLevel_->GetID() ) );
     asn.Send( NET_Publisher_ABC::Publisher() );

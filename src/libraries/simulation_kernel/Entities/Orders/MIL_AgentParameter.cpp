@@ -29,10 +29,10 @@ MIL_AgentParameter::MIL_AgentParameter( DEC_RolePion_Decision* pAgent )
 // Name: MIL_AgentParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_AgentParameter::MIL_AgentParameter( const Common::MsgUnit& asn, MIL_EntityManager_ABC& entityManager )
+MIL_AgentParameter::MIL_AgentParameter( const Common::UnitId& asn, MIL_EntityManager_ABC& entityManager )
     : pDecision_( 0 )
 {
-    MIL_AgentPion* pPion = entityManager.FindAgentPion( asn.oid() );
+    MIL_AgentPion* pPion = entityManager.FindAgentPion( asn.id() );
     if( pPion )
         pDecision_ = dynamic_cast< DEC_RolePion_Decision* >( &pPion->GetDecision() );
 }
@@ -59,7 +59,7 @@ bool MIL_AgentParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 // Name: MIL_AgentParameter::ToAgent
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool MIL_AgentParameter::ToAgent( Common::MsgUnit& asn ) const
+bool MIL_AgentParameter::ToAgent( Common::UnitId& asn ) const
 {
     if( !pDecision_ )
         return false;

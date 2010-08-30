@@ -64,9 +64,9 @@ void TacticalLineHierarchies::Update( const Common::MsgTacticalLine::Diffusion& 
 {
     superiorIsAutomat_ = message.has_automat();
     if( superiorIsAutomat_ )
-        SetSuperior( &automats_.Get( message.automat() ) );
+        SetSuperior( &automats_.Get( message.automat().id() ) );
     else
-        SetSuperior( &formations_.Get( message.formation() ) );
+        SetSuperior( &formations_.Get( message.formation().id() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +97,7 @@ void TacticalLineHierarchies::WriteTo( Common::MsgTacticalLine::Diffusion& messa
         throw std::runtime_error( __FUNCTION__ );
 
     if( superiorIsAutomat_ )
-        message.set_automat( GetSuperior()->GetId() );
+        message.mutable_automat()->set_id( GetSuperior()->GetId() );
     else
-        message.set_formation( GetSuperior()->GetId() );
+        message.mutable_formation()->set_id( GetSuperior()->GetId() );
 }

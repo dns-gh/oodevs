@@ -26,7 +26,7 @@ using namespace actions;
 // Name: UnitMissionInterface constructor
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-UnitMissionInterface::UnitMissionInterface( QWidget* parent, Entity_ABC& entity, const MissionType& mission, ActionController& controller
+UnitMissionInterface::UnitMissionInterface( QWidget* parent, Entity_ABC& entity, const kernel::MissionType& mission, ActionController& controller
                                           , MissionInterfaceBuilder& builder, ActionsModel& model )
     : actions::gui::MissionInterface_ABC( parent, mission, entity, controller )
     , model_( model )

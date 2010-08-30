@@ -24,7 +24,7 @@ IntelligenceOrder::IntelligenceOrder( const Common::MsgIntelligence& asn )
     , embarked_ ( asn.embarked() )
     , position_ ( asn.location() )
     , diplomacy_( asn.diplomacy() )
-    , formation_( asn.formation().oid() )
+    , formation_( asn.formation().id() )
 {
     // NOTHING
 }
@@ -47,7 +47,7 @@ void IntelligenceOrder::Send( Common::MsgIntelligence& message ) const
     message.set_diplomacy( diplomacy_ );
     message.set_embarked( embarked_ );
     message.set_level( level_ );
-    message.mutable_formation()->set_oid( formation_ );
+    message.mutable_formation()->set_id( formation_ );
     message.set_name( name_ );
     message.set_nature( nature_ );
     *message.mutable_location() = position_;

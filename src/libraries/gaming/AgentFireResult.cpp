@@ -17,18 +17,18 @@ using namespace kernel;
 // Name: AgentFireResult constructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-AgentFireResult::AgentFireResult( const MsgsSimToClient::MsgUnitFireDamages& message, const tools::Resolver_ABC< Agent_ABC >& resolver,  const tools::Resolver_ABC< EquipmentType >& equipmentResolver, const QDateTime& time )
-    : target_( resolver.Get( message.target() ) )
+AgentFireResult::AgentFireResult( const MsgsSimToClient::MsgUnitFireDamages& message, const tools::Resolver_ABC< Agent_ABC >& resolver,  const tools::Resolver_ABC< kernel::EquipmentType >& equipmentResolver, const QDateTime& time )
+    : target_( resolver.Get( message.target().id() ) )
     , time_( time )
 {
     for( int i = 0; i < message.equipments().elem_size(); ++i )
     {
-        const EquipmentType* type = & equipmentResolver.Get( message.equipments().elem( i ).equipement_type() );
+        const kernel::EquipmentType* type = & equipmentResolver.Get( message.equipments().elem( i ).equipement_type().id() );
         Equipment* equipment = new Equipment( *type );
         equipment->available_   = message.equipments().elem( i ).available_nbr();
         equipment->unavailable_ = message.equipments().elem( i ).unavailable_nbr();
         equipment->repairable_  = message.equipments().elem( i ).repairable_nbr();
-        Register( message.equipments().elem( i ).equipement_type(), *equipment );
+        Register( message.equipments().elem( i ).equipement_type().id(), *equipment );
     }
     for( int i = 0; i < eNbrHumanWound; ++i )
         casualties_[i].wound_ = E_HumanWound( i );

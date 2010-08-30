@@ -56,7 +56,7 @@ public:
     {
         // $$$$ FHD 2009-10-13: qt moc issues syntax error if not in class declaration
         if( GetValue() )
-            message.set_oid( GetValue()->GetId() );
+            message.set_id( GetValue()->GetId() );
     }
     void CommitTo( T_Setter setter ) const;
     virtual bool IsSet() const;

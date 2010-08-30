@@ -19,7 +19,7 @@ using namespace dispatcher;
 // Created: AGE 2007-04-18
 // -----------------------------------------------------------------------------
 PopulationFire::PopulationFire( Model& , const MsgsSimToClient::MsgStartPopulationFire& msg )
-    : SimpleEntity <>( msg.fire_oid() )
+    : SimpleEntity < >( msg.id().id() )
     , msg_( msg )
 {
     // NOTHING
@@ -61,7 +61,7 @@ void PopulationFire::SendCreation( ClientPublisher_ABC& publisher ) const
 void PopulationFire::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::StopPopulationFire message;
-    message().set_fire_oid( msg_.fire_oid() );
+    message().mutable_id()->set_id( msg_.id().id() );
     message().mutable_units_damages();
     message.Send( publisher );
 }

@@ -334,11 +334,11 @@ void DEC_Knowledge_PopulationFlow::SendFullState() const
 {
     assert( pPopulationKnowledge_ );
     client::PopulationFlowKnowledgeUpdate asnMsg;
-    asnMsg().set_oid_connaissance_flux( nID_ );
-    asnMsg().set_oid_connaissance_population( pPopulationKnowledge_->GetID() );
-    asnMsg().set_oid_groupe_possesseur( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
+    asnMsg().mutable_id()->set_id( nID_ );
+    asnMsg().mutable_population()->set_id( pPopulationKnowledge_->GetID() );
+    asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
     asnMsg().set_est_percu( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
-    asnMsg().set_oid_flux_reel( pFlowKnown_ ? pFlowKnown_->GetID() : 0 );
+    asnMsg().mutable_flow()->set_id( pFlowKnown_ ? pFlowKnown_->GetID() : 0 );
     asnMsg().set_vitesse( static_cast< int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
     NET_ASN_Tools::WriteDirection( direction_, *asnMsg().mutable_direction() );
     if( !flowParts_.empty() )
@@ -373,13 +373,13 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
     if( *pPreviousPerceptionLevel_ == *pCurrentPerceptionLevel_ && !bHumansUpdated_ && !bAttitudeUpdated_ && !bRealFlowUpdated_ && !bFlowPartsUpdated_ && !bDirectionUpdated_ && !bSpeedUpdated_ )
         return;
     client::PopulationFlowKnowledgeUpdate asnMsg;
-    asnMsg().set_oid_connaissance_flux( nID_ );
-    asnMsg().set_oid_connaissance_population( pPopulationKnowledge_->GetID() );
-    asnMsg().set_oid_groupe_possesseur( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
+    asnMsg().mutable_id()->set_id( nID_ );
+    asnMsg().mutable_population()->set_id( pPopulationKnowledge_->GetID() );
+    asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
     if( *pPreviousPerceptionLevel_ != *pCurrentPerceptionLevel_ )
         asnMsg().set_est_percu( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
     if( bRealFlowUpdated_ )
-        asnMsg().set_oid_flux_reel( pFlowKnown_ ? pFlowKnown_->GetID() : 0 );
+        asnMsg().mutable_flow()->set_id( pFlowKnown_ ? pFlowKnown_->GetID() : 0 );
     if( bDirectionUpdated_ )
         NET_ASN_Tools::WriteDirection( direction_, *asnMsg().mutable_direction() );
     if( bSpeedUpdated_ )
@@ -424,10 +424,10 @@ void DEC_Knowledge_PopulationFlow::SendMsgCreation() const
 {
     assert( pPopulationKnowledge_ );
     client::PopulationFlowKnowledgeCreation asnMsg;
-    asnMsg().set_oid_connaissance_flux( nID_ );
-    asnMsg().set_oid_connaissance_population ( pPopulationKnowledge_->GetID() );
-    asnMsg().set_oid_groupe_possesseur( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
-    asnMsg().set_oid_flux_reel( pFlowKnown_ ? pFlowKnown_->GetID() : 0 );
+    asnMsg().mutable_id()->set_id( nID_ );
+    asnMsg().mutable_population()->set_id( pPopulationKnowledge_->GetID() );
+    asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
+    asnMsg().mutable_flow()->set_id( pFlowKnown_ ? pFlowKnown_->GetID() : 0 );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -439,9 +439,9 @@ void DEC_Knowledge_PopulationFlow::SendMsgDestruction() const
 {
     assert( pPopulationKnowledge_ );
     client::PopulationFlowKnowledgeDestruction asnMsg;
-    asnMsg().set_oid_connaissance_flux( nID_ );
-    asnMsg().set_oid_connaissance_population( pPopulationKnowledge_->GetID() );
-    asnMsg().set_oid_groupe_possesseur( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
+    asnMsg().mutable_id()->set_id( nID_ );
+    asnMsg().mutable_population()->set_id( pPopulationKnowledge_->GetID() );
+    asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 

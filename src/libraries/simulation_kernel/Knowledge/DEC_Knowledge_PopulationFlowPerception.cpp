@@ -211,9 +211,9 @@ void DEC_Knowledge_PopulationFlowPerception::SendStateToNewClient() const
     assert( pPopulationKnowledge_ );
     assert( pPopulationFlowPerceived_ );
     client::PopulationFlowDetection asn;
-    asn().set_oid( pPopulationKnowledge_->GetAgentPerceiving().GetID() );
-    asn().set_population_oid( pPopulationKnowledge_->GetPopulationPerceived().GetID() );
-    asn().set_flow_oid( pPopulationFlowPerceived_->GetID() );
+    asn().mutable_id()->set_id( pPopulationKnowledge_->GetAgentPerceiving().GetID() );
+    asn().mutable_detected_population()->set_id( pPopulationKnowledge_->GetPopulationPerceived().GetID() );
+    asn().mutable_detected_flow()->set_id( pPopulationFlowPerceived_->GetID() );
     NET_ASN_Tools::WritePath( shape_, *asn().mutable_visible_flow() );
     asn.Send( NET_Publisher_ABC::Publisher() );
     asn().clear_visible_flow();

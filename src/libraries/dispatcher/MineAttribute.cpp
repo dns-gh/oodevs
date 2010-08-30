@@ -42,11 +42,11 @@ void MineAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 {
     if( asnMsg.has_mine()  )
     {
-        if( asnMsg.mine().has_dotation_type()  )
-            dotation_ = asnMsg.mine().dotation_type();
-        if( asnMsg.mine().has_dotation_nbr()  )
+        if( asnMsg.mine().has_resource() )
+            dotation_ = asnMsg.mine().resource().id();
+        if( asnMsg.mine().has_dotation_nbr() )
             nNbrDotationForMining_ = asnMsg.mine().dotation_nbr();
-        if( asnMsg.mine().has_percentage()  )
+        if( asnMsg.mine().has_percentage() )
             nPercentageMining_ = asnMsg.mine().percentage();
     }
 }
@@ -57,7 +57,7 @@ void MineAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 // -----------------------------------------------------------------------------
 void MineAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
 {
-    asnMsg.mutable_mine()->set_dotation_type( dotation_ );
+    asnMsg.mutable_mine()->mutable_resource()->set_id( dotation_ );
     asnMsg.mutable_mine()->set_dotation_nbr( nNbrDotationForMining_ );
     asnMsg.mutable_mine()->set_percentage( nPercentageMining_ );
 }

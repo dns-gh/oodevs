@@ -20,7 +20,7 @@ using namespace kernel;
 // Name: SupplyStates constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-SupplyStates::SupplyStates( Controller& controller, const tools::Resolver_ABC< EquipmentType >& resolver, const tools::Resolver_ABC< DotationType >& dotationResolver, PropertiesDictionary& dico )
+SupplyStates::SupplyStates( Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const tools::Resolver_ABC< DotationType >& dotationResolver, PropertiesDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
     , dotationResolver_( dotationResolver )
@@ -59,7 +59,7 @@ void SupplyStates::DoUpdate( const MsgsSimToClient::MsgLogSupplyState& message )
     {
         dispoTransporters_.resize( message.disponibilites_transporteurs_convois().elem_size() );
         for( int i = 0; i < message.disponibilites_transporteurs_convois().elem_size(); ++i )
-            dispoTransporters_[i] = Availability( resolver_, message.disponibilites_transporteurs_convois().elem( i ) );
+            dispoTransporters_[i] = SupplyAvailability( resolver_, message.disponibilites_transporteurs_convois().elem( i ) );
     }
 
     if( message.has_stocks()  )
@@ -68,12 +68,12 @@ void SupplyStates::DoUpdate( const MsgsSimToClient::MsgLogSupplyState& message )
         while( nSize > 0 )
         {
             const Common::MsgDotationStock& value = message.stocks().elem( --nSize );
-            DotationType& type = dotationResolver_.Get( value.ressource_id() );
-            Dotation* dotation = Find( value.ressource_id() );
+            DotationType& type = dotationResolver_.Get( value.ressource_id().id() );
+            Dotation* dotation = Find( value.ressource_id().id() );
             if( dotation )
                 dotation->quantity_ = value.quantite_disponible();
             else
-                Register( value.ressource_id(), *new Dotation( type, value.quantite_disponible() ) );
+                Register( value.ressource_id().id(), *new Dotation( type, value.quantite_disponible() ) );
         }
     }
     controller_.Update( *this );

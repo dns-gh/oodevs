@@ -27,7 +27,7 @@ MIL_ObjectKnowledgeListParameter::MIL_ObjectKnowledgeListParameter()
 // Name: MIL_ObjectKnowledgeListParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_ObjectKnowledgeListParameter::MIL_ObjectKnowledgeListParameter( const Common::MsgObjectKnowledgeList& asn, const DEC_KnowledgeResolver_ABC& resolver )
+MIL_ObjectKnowledgeListParameter::MIL_ObjectKnowledgeListParameter( const Common::ObjectKnowledgeIdList& asn, const DEC_KnowledgeResolver_ABC& resolver )
 {
     knowledgeObjectList_.reserve( asn.elem_size() );
     for( int i = 0; i < asn.elem_size(); ++i )
@@ -71,11 +71,11 @@ bool MIL_ObjectKnowledgeListParameter::IsOfType( const MIL_ParameterType_ABC& ty
 // Name: MIL_ObjectKnowledgeListParameter::ToObjectKnowledgeList
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool MIL_ObjectKnowledgeListParameter::ToObjectKnowledgeList( Common::MsgObjectKnowledgeList& asn ) const
+bool MIL_ObjectKnowledgeListParameter::ToObjectKnowledgeList( Common::ObjectKnowledgeIdList& asn ) const
 {
     unsigned int size = knowledgeObjectList_.size();
     for( unsigned int i = 0; i < size; ++i )
-        asn.add_elem()->set_oid( knowledgeObjectList_[i]->GetID() );
+        asn.add_elem()->set_id( knowledgeObjectList_[i]->GetID() );
     return true;
 }
 

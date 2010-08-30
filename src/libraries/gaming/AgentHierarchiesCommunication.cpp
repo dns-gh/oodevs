@@ -52,7 +52,7 @@ AgentHierarchiesCommunication::~AgentHierarchiesCommunication()
 void AgentHierarchiesCommunication::DoUpdate( const MsgsSimToClient::MsgUnitCreation& message )
 {
     AgentHierarchies< kernel::CommunicationHierarchies >::DoUpdate( message );
-    superior_ = &GetAutomatResolver().Get( message.oid_automate() );
+    superior_ = &GetAutomatResolver().Get( message.automat().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +67,7 @@ void AgentHierarchiesCommunication::DoUpdate( const MsgsSimToClient::MsgUnitAttr
         radioEmitterDisabled_ = message.has_radio_emitter_disabled() && message.radio_emitter_disabled();
         radioReceiverDisabled_ = message.has_radio_receiver_disabled() && message.radio_receiver_disabled();
         if( jammed_ || radioReceiverDisabled_ || radioEmitterDisabled_ )
-            UpdateSuperior( groupResolver_.Get( message.communications().knowledge_group() )  );
+            UpdateSuperior( groupResolver_.Get( message.communications().knowledge_group().id() )  );
         else
             UpdateSuperior( *superior_ );
     }
@@ -80,9 +80,9 @@ void AgentHierarchiesCommunication::DoUpdate( const MsgsSimToClient::MsgUnitAttr
 void AgentHierarchiesCommunication::DoUpdate( const Common::MsgUnitChangeSuperior& message )
 {
     if( jammed_ || radioEmitterDisabled_ )
-        superior_ = & GetAutomatResolver().Get( message.oid_automate() );
+        superior_ = & GetAutomatResolver().Get( message.parent().id() );
     else
-        UpdateSuperior( GetAutomatResolver().Get( message.oid_automate() ) );
+        UpdateSuperior( GetAutomatResolver().Get( message.parent().id() ) );
 }
 
 // -----------------------------------------------------------------------------

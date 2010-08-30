@@ -22,7 +22,7 @@ MissionParameter_AutomatList::MissionParameter_AutomatList( const Common::MsgMis
     : MissionParameter_ABC( asn )
 {
     for( int i = 0; i < asn.value().automatlist().elem_size(); ++i )
-        automats_.push_back( asn.value().automatlist().elem( i ).oid() );
+        automats_.push_back( asn.value().automatlist().elem( i ).id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,5 +43,5 @@ void MissionParameter_AutomatList::Send( Common::MsgMissionParameter& asn ) cons
     MissionParameter_ABC::Send( asn );
     asn.mutable_value()->mutable_automatlist();
     for( std::vector< int >::const_iterator it = automats_.begin(); it != automats_.end(); ++it )
-        asn.mutable_value()->mutable_automatlist()->add_elem()->set_oid( *it );
+        asn.mutable_value()->mutable_automatlist()->add_elem()->set_id( *it );
 }

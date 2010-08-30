@@ -16,8 +16,8 @@
 // Name: MIL_TirIndirectParameter constructor
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-MIL_TirIndirectParameter::MIL_TirIndirectParameter( const Common::MsgUnitFire & asn )
-    : data_( asn.oid() )
+MIL_TirIndirectParameter::MIL_TirIndirectParameter( const Common::FireId& asn )
+    : data_( asn.id() )
 {
     // NOTHING
 }
@@ -44,8 +44,8 @@ bool MIL_TirIndirectParameter::IsOfType( const MIL_ParameterType_ABC& type ) con
 // Name: MIL_TirIndirectParameter::ToIndirectFire
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-bool MIL_TirIndirectParameter::ToIndirectFire( Common::MsgUnitFire& asn ) const
+bool MIL_TirIndirectParameter::ToIndirectFire( Common::FireId& asn ) const
 {
-    asn.set_oid( data_ );
+    asn.set_id( data_ );
     return true;
 }

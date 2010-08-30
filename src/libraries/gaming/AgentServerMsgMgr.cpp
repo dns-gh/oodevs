@@ -196,7 +196,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitDestruction( const MsgsSimToClient::MsgU
 void AgentServerMsgMgr::OnReceiveMsgUnitVisionCones( const MsgsSimToClient::MsgUnitVisionCones& message )
 {
     if( !simulation_.IsPaused() )
-        GetModel().agents_.GetAgent( message.oid() ).Update( message );
+        GetModel().agents_.GetAgent( message.id().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -205,7 +205,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitVisionCones( const MsgsSimToClient::MsgU
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitInterVisibility( const MsgsSimToClient::MsgUnitDetection& message )
 {
-    GetModel().agents_.GetAgent( message.oid() ).Update( message );
+    GetModel().agents_.GetAgent( message.observer().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -214,7 +214,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitInterVisibility( const MsgsSimToClient::
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectInterVisibility( const MsgsSimToClient::MsgObjectDetection& message )
 {
-    GetModel().agents_.GetAgent( message.oid() ).Update( message );
+    GetModel().agents_.GetAgent( message.observer().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -223,7 +223,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectInterVisibility( const MsgsSimToClient
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationInterVisibility( const MsgsSimToClient::MsgPopulationConcentrationDetection& message )
 {
-    GetModel().agents_.GetAgent( message.oid() ).Update( message );
+    GetModel().agents_.GetAgent( message.id().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,7 +232,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationInterVisibility( cons
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility( const MsgsSimToClient::MsgPopulationFlowDetection& message )
 {
-    GetModel().agents_.GetAgent( message.oid() ).Update( message );
+    GetModel().agents_.GetAgent( message.id().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -241,7 +241,14 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility( const MsgsSim
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints( const MsgsSimToClient::MsgDebugPoints& message )
 {
-    GetModel().agents_.FindAllAgent( message.oid() )->Update( message );
+    if( message.id().has_automat() )
+        GetModel().agents_.FindAllAgent( message.id().automat().id() )->Update( message );
+    if( message.id().has_unit() )
+        GetModel().agents_.FindAllAgent( message.id().unit().id() )->Update( message );
+    if( message.id().has_formation() )
+        GetModel().agents_.FindAllAgent( message.id().formation().id() )->Update( message );
+    if( message.id().has_population() )
+        GetModel().agents_.FindAllAgent( message.id().population().id() )->Update( message );
 }
 
 //-----------------------------------------------------------------------------
@@ -403,7 +410,7 @@ void AgentServerMsgMgr::OnReceiveMsgProfileUpdateRequestAck( const MsgsAuthentic
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitAttributes( const MsgsSimToClient::MsgUnitAttributes& message )
 {
-    GetModel().agents_.GetAgent( message.oid() ).Update( message );
+    GetModel().agents_.GetAgent( message.id().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -412,7 +419,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitAttributes( const MsgsSimToClient::MsgUn
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgAutomatAttributes( const MsgsSimToClient::MsgAutomatAttributes& message )
 {
-    GetModel().agents_.GetAutomat( message.oid() ).Update( message );
+    GetModel().agents_.GetAutomat( message.id().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -430,7 +437,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceHandlingCreation( const MsgsSi
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceHandlingDestruction( const MsgsSimToClient::MsgLogMaintenanceHandlingDestruction& message )
 {
-    GetModel().logistics_.DeleteMaintenanceConsign( message.oid_consigne() );
+    GetModel().logistics_.DeleteMaintenanceConsign( message.id().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -439,7 +446,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceHandlingDestruction( const Msg
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceHandlingUpdate( const MsgsSimToClient::MsgLogMaintenanceHandlingUpdate& message )
 {
-    GetModel().logistics_.GetMaintenanceConsign( message.oid_consigne() ).Update( message );
+    GetModel().logistics_.GetMaintenanceConsign( message.id().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -448,7 +455,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceHandlingUpdate( const MsgsSimT
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceState( const MsgsSimToClient::MsgLogMaintenanceState& message )
 {
-    GetModel().agents_.GetAgent( message.oid_pion() ).Update( message );
+    GetModel().agents_.GetAgent( message.id().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -466,7 +473,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogMedicalHandlingCreation( const MsgsSimToC
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogMedicalHandlingDestruction( const MsgsSimToClient::MsgLogMedicalHandlingDestruction& message )
 {
-    GetModel().logistics_.DeleteMedicalConsign( message.oid_consigne() );
+    GetModel().logistics_.DeleteMedicalConsign( message.id().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -475,7 +482,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogMedicalHandlingDestruction( const MsgsSim
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogMedicalHandlingUpdate( const MsgsSimToClient::MsgLogMedicalHandlingUpdate& message )
 {
-    GetModel().logistics_.GetMedicalConsign( message.oid_consigne() ).Update( message );
+    GetModel().logistics_.GetMedicalConsign( message.id().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -484,7 +491,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogMedicalHandlingUpdate( const MsgsSimToCli
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogMedicalState( const MsgsSimToClient::MsgLogMedicalState& message )
 {
-    GetModel().agents_.GetAgent( message.oid_pion() ).Update( message );
+    GetModel().agents_.GetAgent( message.id().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -502,7 +509,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogSupplyHandlingCreation( const MsgsSimToCl
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogSupplyHandlingDestruction( const MsgsSimToClient::MsgLogSupplyHandlingDestruction& message )
 {
-    GetModel().logistics_.DeleteSupplyConsign( message.oid_consigne() );
+    GetModel().logistics_.DeleteSupplyConsign( message.id().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -511,7 +518,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogSupplyHandlingDestruction( const MsgsSimT
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogSupplyHandlingUpdate( const MsgsSimToClient::MsgLogSupplyHandlingUpdate& message )
 {
-    GetModel().logistics_.GetSupplyConsign( message.oid_consigne() ).Update( message );
+    GetModel().logistics_.GetSupplyConsign( message.id().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -520,7 +527,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogSupplyHandlingUpdate( const MsgsSimToClie
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogSupplyState( const MsgsSimToClient::MsgLogSupplyState&  message )
 {
-    GetModel().agents_.GetAgent( message.oid_pion() ).Update( message );
+    GetModel().agents_.GetAgent( message.id().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -529,7 +536,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogSupplyState( const MsgsSimToClient::MsgLo
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogSupplyQuotas( const MsgsSimToClient::MsgLogSupplyQuotas& message )
 {
-    GetModel().agents_.GetAutomat( message.oid_automate() ).Update( message );
+    GetModel().agents_.GetAutomat( message.id().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -556,7 +563,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogSupplyPushFlowAck( const MsgsSimToClient:
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitPathFind( const MsgsSimToClient::MsgUnitPathFind& message )
 {
-    GetModel().agents_.GetAgent( message.oid() ).Update( message );
+    GetModel().agents_.GetAgent( message.id().id() ).Update( message );
 }
 
 //-----------------------------------------------------------------------------
@@ -619,7 +626,7 @@ void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupCreation( const MsgsSimToClien
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupDestruction( const MsgsSimToClient::MsgKnowledgeGroupDestruction& message )
 {
-    GetModel().knowledgeGroups_.Delete( message.oid() );
+    GetModel().knowledgeGroups_.Delete( message.id().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -749,7 +756,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimitCreation( const MsgsMessengerToClient::
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimitUpdate( const MsgsMessengerToClient::MsgLimitUpdate& message )
 {
-    GetModel().limits_.Get( message.oid() ).Update( message );
+    GetModel().limits_.Get( message.id().id() ).Update( message );
 }
 
 //-----------------------------------------------------------------------------
@@ -758,7 +765,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimitUpdate( const MsgsMessengerToClient::Ms
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimitDestruction( const MsgsMessengerToClient::MsgLimitDestruction& message )
 {
-    GetModel().limits_.DeleteLimit( message.oid() );
+    GetModel().limits_.DeleteLimit( message.id().id() );
 }
 
 //-----------------------------------------------------------------------------
@@ -776,7 +783,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimaCreation( const MsgsMessengerToClient::M
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimaUpdate( const MsgsMessengerToClient::MsgLimaUpdate& message )
 {
-    GetModel().limits_.Get( message.oid() ).Update( message );
+    GetModel().limits_.Get( message.id().id() ).Update( message );
 }
 
 //-----------------------------------------------------------------------------
@@ -785,7 +792,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimaUpdate( const MsgsMessengerToClient::Msg
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimaDestruction( const MsgsMessengerToClient::MsgLimaDestruction& message )
 {
-    GetModel().limits_.DeleteLima( message.oid() );
+    GetModel().limits_.DeleteLima( message.id().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -794,7 +801,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimaDestruction( const MsgsMessengerToClient
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgAutomatOrder( const Common::MsgAutomatOrder& message )
 {
-    GetModel().agents_.GetAutomat( message.oid() ).Update( message );
+    GetModel().agents_.GetAutomat( message.tasker().id() ).Update( message );
 }
 
 //-----------------------------------------------------------------------------
@@ -804,7 +811,7 @@ void AgentServerMsgMgr::OnReceiveMsgAutomatOrder( const Common::MsgAutomatOrder&
 void AgentServerMsgMgr::OnReceiveMsgAutomatOrderAck( const MsgsSimToClient::MsgAutomatOrderAck& message, unsigned long /*nCtx*/ )
 {
     if( CheckAcknowledge( logger_, message, "AutomatOrderAck" ) )
-        GetModel().agents_.GetAutomat( message.oid() ).Update( message );
+        GetModel().agents_.GetAutomat( message.tasker().id() ).Update( message );
 }
 
 //-----------------------------------------------------------------------------
@@ -814,7 +821,7 @@ void AgentServerMsgMgr::OnReceiveMsgAutomatOrderAck( const MsgsSimToClient::MsgA
 void AgentServerMsgMgr::OnReceiveMsgUnitOrderAck( const MsgsSimToClient::MsgUnitOrderAck& message, unsigned long /*nCtx*/ )
 {
     if( CheckAcknowledge( logger_, message, "UnitOrderAck" ) )
-        GetModel().agents_.GetAgent( message.oid() ).Update( message );
+        GetModel().agents_.GetAgent( message.tasker().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -823,7 +830,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitOrderAck( const MsgsSimToClient::MsgUnit
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitOrder( const Common::MsgUnitOrder& message )
 {
-    GetModel().agents_.GetAgent( message.oid() ).Update( message );
+    GetModel().agents_.GetAgent( message.tasker().id() ).Update( message );
 }
 
 //-----------------------------------------------------------------------------
@@ -850,7 +857,15 @@ void AgentServerMsgMgr::OnReceiveMsgUnitCreationRequestAck( const MsgsSimToClien
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCR( const MsgsSimToClient::MsgReport& message )
 {
-    GetModel().agents_.FindAllAgent( message.oid() )->Update( message );
+    unsigned int id (0);
+    if ( message.cr().has_automat() )
+        id = message.cr().automat().id();
+    else if ( message.cr().has_unit() )
+        id = message.cr().unit().id();
+    else if ( message.cr().has_population() )
+        id = message.cr().population().id();
+    else throw ( std::exception( "MsgReport misformed" ) ); 
+    GetModel().agents_.FindAllAgent( id )->Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -859,7 +874,7 @@ void AgentServerMsgMgr::OnReceiveMsgCR( const MsgsSimToClient::MsgReport& messag
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgInvalidateReport( const MsgsSimToClient::MsgInvalidateReport& message )
 {
-    GetModel().agents_.FindAllAgent( message.oid() )->Update( message );
+    GetModel().agents_.FindAllAgent( message.id().id() )->Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -868,7 +883,14 @@ void AgentServerMsgMgr::OnReceiveMsgInvalidateReport( const MsgsSimToClient::Msg
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgTrace( const MsgsSimToClient::MsgTrace& message )
 {
-    GetModel().agents_.FindAllAgent( message.oid() )->Update( message );
+    if( message.source().has_automat() )
+        GetModel().agents_.FindAllAgent( message.source().automat().id() )->Update( message );
+    if( message.source().has_unit() )
+        GetModel().agents_.FindAllAgent( message.source().unit().id() )->Update( message );
+    if( message.source().has_formation() )
+        GetModel().agents_.FindAllAgent( message.source().formation().id() )->Update( message );
+    if( message.source().has_population() )
+        GetModel().agents_.FindAllAgent( message.source().population().id() )->Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -877,7 +899,14 @@ void AgentServerMsgMgr::OnReceiveMsgTrace( const MsgsSimToClient::MsgTrace& mess
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgDecisionalState( const MsgsSimToClient::MsgDecisionalState& message )
 {
-    GetModel().agents_.FindAllAgent( message.oid() )->Update( message );
+    if( message.id().has_automat() )
+        GetModel().agents_.FindAllAgent( message.id().automat().id() )->Update( message );
+    if( message.id().has_unit() )
+        GetModel().agents_.FindAllAgent( message.id().unit().id() )->Update( message );
+    if( message.id().has_formation() )
+        GetModel().agents_.FindAllAgent( message.id().formation().id() )->Update( message );
+    if( message.id().has_population() )
+        GetModel().agents_.FindAllAgent( message.id().population().id() )->Update( message );
 }
 
 //-----------------------------------------------------------------------------
@@ -904,7 +933,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitChangeSuperiorAck( const MsgsSimToClient
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitChangeSuperior( const Common::MsgUnitChangeSuperior& message )
 {
-    GetModel().agents_.GetAgent( message.oid() ).Update( message );
+    GetModel().agents_.GetAgent( message.unit().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -914,7 +943,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitChangeSuperior( const Common::MsgUnitCha
 void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck( const MsgsSimToClient::MsgChangeDiplomacyAck& message, unsigned long )
 {
     if( CheckAcknowledge( logger_, message, "ChangeDiplomacyAck" ) )
-        GetModel().teams_.GetTeam( message.oid_camp1() ).Update( message );
+        GetModel().teams_.GetTeam( message.party1().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -923,7 +952,7 @@ void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck( const MsgsSimToClient::M
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgAutomatChangeSuperior( const Common::MsgAutomatChangeSuperior& message )
 {
-    GetModel().agents_.GetAutomat( message.oid() ).Update( message );
+    GetModel().agents_.GetAutomat( message.automat().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -941,7 +970,7 @@ void AgentServerMsgMgr::OnReceiveMsgAutomatChangeSuperiorAck( const MsgsSimToCli
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgAutomatChangeKnowledgeGroup( const Common::MsgAutomatChangeKnowledgeGroup& message )
 {
-    GetModel().agents_.GetAutomat( message.oid() ).Update( message );
+    GetModel().agents_.GetAutomat( message.automat().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -959,7 +988,7 @@ void AgentServerMsgMgr::OnReceiveMsgAutomatChangeKnowledgeGroupAck( const MsgsSi
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgAutomatChangeLogisticLinks( const Common::MsgAutomatChangeLogisticLinks& message )
 {
-    GetModel().agents_.GetAutomat( message.oid() ).Update( message );
+    GetModel().agents_.GetAutomat( message.automat().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -977,7 +1006,7 @@ void AgentServerMsgMgr::OnReceiveMsgAutomatChangeLogisticLinksAck( const MsgsSim
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeCreation( const MsgsSimToClient::MsgUnitKnowledgeCreation& message )
 {
-    GetModel().knowledgeGroups_.Get( message.oid_groupe_possesseur() ).Update( message );
+    GetModel().knowledgeGroups_.Get( message.knowledge_group().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -986,7 +1015,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeCreation( const MsgsSimToClient
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message )
 {
-    GetModel().knowledgeGroups_.Get( message.oid_groupe_possesseur() ).Update( message );
+    GetModel().knowledgeGroups_.Get( message.knowledge_group().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -995,7 +1024,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeUpdate( const MsgsSimToClient::
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeDestruction( const MsgsSimToClient::MsgUnitKnowledgeDestruction& message )
 {
-    GetModel().knowledgeGroups_.Get( message.oid_groupe_possesseur() ).Update( message );
+    GetModel().knowledgeGroups_.Get( message.knowledge_group().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1004,10 +1033,10 @@ void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeDestruction( const MsgsSimToCli
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeCreation( const MsgsSimToClient::MsgObjectKnowledgeCreation& message )
 {
-    if( message.has_group() )
-        GetModel().knowledgeGroups_.Get( message.group() ).Update( message );
+    if( message.has_knowledge_group() )
+        GetModel().knowledgeGroups_.Get( message.knowledge_group().id() ).Update( message );
     else
-        GetModel().teams_.GetTeam( message.team() ).Update( message );
+        GetModel().teams_.GetTeam( message.party().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1016,10 +1045,10 @@ void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeCreation( const MsgsSimToClie
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
-    if( message.has_group() )
-        GetModel().knowledgeGroups_.Get( message.group() ).Update( message );
+    if( message.has_knowledge_group() )
+        GetModel().knowledgeGroups_.Get( message.knowledge_group().id() ).Update( message );
     else
-        GetModel().teams_.GetTeam( message.team() ).Update( message );
+        GetModel().teams_.GetTeam( message.party().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1028,7 +1057,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeUpdate( const MsgsSimToClient
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeDestruction( const MsgsSimToClient::MsgObjectKnowledgeDestruction& message )
 {
-    GetModel().teams_.GetTeam( message.team() ).Update( message );
+    GetModel().teams_.GetTeam( message.party().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1037,7 +1066,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeDestruction( const MsgsSimToC
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeCreation( const MsgsSimToClient::MsgPopulationKnowledgeCreation& message )
 {
-    GetModel().knowledgeGroups_.Get( message.oid_groupe_possesseur() ).Update( message );
+    GetModel().knowledgeGroups_.Get( message.knowledge_group().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1046,7 +1075,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeCreation( const MsgsSimTo
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeUpdate( const MsgsSimToClient::MsgPopulationKnowledgeUpdate& message )
 {
-    GetModel().knowledgeGroups_.Get( message.oid_groupe_possesseur() ).Update( message );
+    GetModel().knowledgeGroups_.Get( message.knowledge_group().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1055,7 +1084,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeUpdate( const MsgsSimToCl
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeDestruction( const MsgsSimToClient::MsgPopulationKnowledgeDestruction& message )
 {
-    GetModel().knowledgeGroups_.Get( message.oid_groupe_possesseur() ).Update( message );
+    GetModel().knowledgeGroups_.Get( message.knowledge_group().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1064,7 +1093,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeDestruction( const MsgsSi
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeCreation( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation& message )
 {
-    GetModel().knowledgeGroups_.Get( message.oid_groupe_possesseur() ).Update( message );
+    GetModel().knowledgeGroups_.Get( message.knowledge_group().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1073,7 +1102,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeCreation( co
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeUpdate( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate& message )
 {
-    GetModel().knowledgeGroups_.Get( message.oid_groupe_possesseur() ).Update( message );
+    GetModel().knowledgeGroups_.Get( message.knowledge_group().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1082,7 +1111,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeUpdate( cons
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeDestruction( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeDestruction& message )
 {
-    GetModel().knowledgeGroups_.Get( message.oid_groupe_possesseur() ).Update( message );
+    GetModel().knowledgeGroups_.Get( message.knowledge_group().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1091,7 +1120,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeDestruction(
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeCreation( const MsgsSimToClient::MsgPopulationFlowKnowledgeCreation& message )
 {
-    GetModel().knowledgeGroups_.Get( message.oid_groupe_possesseur() ).Update( message );
+    GetModel().knowledgeGroups_.Get( message.knowledge_group().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1100,7 +1129,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeCreation( const MsgsS
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeUpdate( const MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate& message )
 {
-    GetModel().knowledgeGroups_.Get( message.oid_groupe_possesseur() ).Update( message );
+    GetModel().knowledgeGroups_.Get( message.knowledge_group().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1109,7 +1138,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeUpdate( const MsgsSim
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeDestruction( const MsgsSimToClient::MsgPopulationFlowKnowledgeDestruction& message )
 {
-    GetModel().knowledgeGroups_.Get( message.oid_groupe_possesseur() ).Update( message );
+    GetModel().knowledgeGroups_.Get( message.knowledge_group().id() ).Update( message );
 }
 
 //-----------------------------------------------------------------------------
@@ -1127,7 +1156,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectCreation( const MsgsSimToClient::MsgOb
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
 {
-    GetModel().objects_.GetObject( message.oid() ).Update( message );
+    GetModel().objects_.GetObject( message.id().id() ).Update( message );
 }
 
 //-----------------------------------------------------------------------------
@@ -1136,7 +1165,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectUpdate( const MsgsSimToClient::MsgObje
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectDestruction( const MsgsSimToClient::MsgObjectDestruction& message )
 {
-    GetModel().objects_.DeleteObject( message.oid() );
+    GetModel().objects_.DeleteObject( message.id().id() );
 }
 
 //-----------------------------------------------------------------------------
@@ -1145,7 +1174,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectDestruction( const MsgsSimToClient::Ms
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgStartUnitFire( const MsgsSimToClient::MsgStartUnitFire& message )
 {
-    Agent_ABC& src = GetModel().agents_.GetAgent( message.firer_oid() );
+    Agent_ABC& src = GetModel().agents_.GetAgent( message.firing_unit().id() );
     src.Update( message );
     GetModel().fires_.AddFire( message );
 }
@@ -1186,7 +1215,7 @@ void AgentServerMsgMgr::OnReceiveMsgStopFireEffect( const MsgsSimToClient::MsgSt
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgExplosion( const MsgsSimToClient::MsgExplosion& message )
 {
-    GetModel().objects_.GetObject( message.object_oid() ).Update( message );
+    GetModel().objects_.GetObject( message.id().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1195,7 +1224,7 @@ void AgentServerMsgMgr::OnReceiveMsgExplosion( const MsgsSimToClient::MsgExplosi
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgStartPopulationFire( const MsgsSimToClient::MsgStartPopulationFire& message )
 {
-    Population_ABC& src = GetModel().agents_.GetPopulation( message.firer_oid() );
+    Population_ABC& src = GetModel().agents_.GetPopulation( message.firing_population().id() );
     src.Update( message );
     GetModel().fires_.AddFire( message );
 }
@@ -1218,7 +1247,7 @@ void AgentServerMsgMgr::OnReceiveMsgStopPopulationFire( const MsgsSimToClient::M
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacy( const Common::MsgChangeDiplomacy& message )
 {
-    GetModel().teams_.GetTeam( message.oid_camp1() ).Update( message );
+    GetModel().teams_.GetTeam( message.party1().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1236,7 +1265,7 @@ void AgentServerMsgMgr::OnMsgPopulationCreation( const MsgsSimToClient::MsgPopul
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnMsgPopulationUpdate( const MsgsSimToClient::MsgPopulationUpdate& message )
 {
-    GetModel().agents_.GetPopulation( message.oid() ).Update( message );
+    GetModel().agents_.GetPopulation( message.id().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1245,7 +1274,7 @@ void AgentServerMsgMgr::OnMsgPopulationUpdate( const MsgsSimToClient::MsgPopulat
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnMsgPopulationConcentrationCreation( const MsgsSimToClient::MsgPopulationConcentrationCreation& message )
 {
-    GetModel().agents_.GetPopulation( message.oid_population() ).Update( message );
+    GetModel().agents_.GetPopulation( message.population().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1254,7 +1283,7 @@ void AgentServerMsgMgr::OnMsgPopulationConcentrationCreation( const MsgsSimToCli
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnMsgPopulationConcentrationDestruction( const MsgsSimToClient::MsgPopulationConcentrationDestruction& message )
 {
-    GetModel().agents_.GetPopulation( message.oid_population() ).Update( message );
+    GetModel().agents_.GetPopulation( message.population().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1263,7 +1292,7 @@ void AgentServerMsgMgr::OnMsgPopulationConcentrationDestruction( const MsgsSimTo
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnMsgPopulationConcentrationUpdate( const MsgsSimToClient::MsgPopulationConcentrationUpdate& message )
 {
-    GetModel().agents_.GetPopulation( message.oid_population() ).Update( message );
+    GetModel().agents_.GetPopulation( message.population().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1272,7 +1301,7 @@ void AgentServerMsgMgr::OnMsgPopulationConcentrationUpdate( const MsgsSimToClien
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnMsgPopulationFlowCreation( const MsgsSimToClient::MsgPopulationFlowCreation& message )
 {
-    GetModel().agents_.GetPopulation( message.oid_population() ).Update( message );
+    GetModel().agents_.GetPopulation( message.population().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1281,7 +1310,7 @@ void AgentServerMsgMgr::OnMsgPopulationFlowCreation( const MsgsSimToClient::MsgP
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnMsgPopulationFlowDestruction  ( const MsgsSimToClient::MsgPopulationFlowDestruction& message )
 {
-    GetModel().agents_.GetPopulation( message.oid_population() ).Update( message );
+    GetModel().agents_.GetPopulation( message.population().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1290,7 +1319,7 @@ void AgentServerMsgMgr::OnMsgPopulationFlowDestruction  ( const MsgsSimToClient:
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnMsgPopulationFlowUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate& message )
 {
-    GetModel().agents_.GetPopulation( message.oid_population() ).Update( message );
+    GetModel().agents_.GetPopulation( message.population().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1317,7 +1346,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationOrderAck( const MsgsSimToClient::M
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationOrder( const Common::MsgPopulationOrder& message )
 {
-    GetModel().agents_.GetPopulation( message.oid() ).Update( message );
+    GetModel().agents_.GetPopulation( message.tasker().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1362,7 +1391,7 @@ void AgentServerMsgMgr::OnReceiveMsgIntelligenceCreation( const MsgsMessengerToC
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgIntelligenceUpdate( const MsgsMessengerToClient::MsgIntelligenceUpdate& message )
 {
-    GetModel().intelligences_.Get( message.oid() ).Update( message );
+    GetModel().intelligences_.Get( message.id().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1582,7 +1611,7 @@ void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupUpdateAck( const MsgsSimToClie
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message )
 {
-    GetModel().knowledgeGroups_.Get( message.oid() ).Update( message );
+    GetModel().knowledgeGroups_.Get( message.id().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1601,7 +1630,7 @@ void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupCreationAck( const MsgsSimToCl
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUrbanKnowledgeCreation( const MsgsSimToClient::MsgUrbanKnowledgeCreation& message )
 {
-    GetModel().teams_.GetTeam( message.team() ).Update( message );
+    GetModel().teams_.GetTeam( message.party().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1610,7 +1639,7 @@ void AgentServerMsgMgr::OnReceiveMsgUrbanKnowledgeCreation( const MsgsSimToClien
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUrbanKnowledgeUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& message )
 {
-    GetModel().teams_.GetTeam( message.team() ).Update( message );
+    GetModel().teams_.GetTeam( message.party().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1619,7 +1648,7 @@ void AgentServerMsgMgr::OnReceiveMsgUrbanKnowledgeUpdate( const MsgsSimToClient:
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUrbanKnowledgeDestruction( const MsgsSimToClient::MsgUrbanKnowledgeDestruction& message )
 {
-    GetModel().teams_.GetTeam( message.team() ).Update( message );
+    GetModel().teams_.GetTeam( message.party().id() ).Update( message );
 }
 
 namespace

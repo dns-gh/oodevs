@@ -16,12 +16,12 @@ namespace {
 const ::google::protobuf::Descriptor* MsgLimaCreationRequest_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgLimaCreationRequest_reflection_ = NULL;
-const ::google::protobuf::Descriptor* MsgLimaDestructionRequest_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  MsgLimaDestructionRequest_reflection_ = NULL;
 const ::google::protobuf::Descriptor* MsgLimaUpdateRequest_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgLimaUpdateRequest_reflection_ = NULL;
+const ::google::protobuf::Descriptor* MsgLimaDestructionRequest_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  MsgLimaDestructionRequest_reflection_ = NULL;
 const ::google::protobuf::Descriptor* MsgLimitCreationRequest_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgLimitCreationRequest_reflection_ = NULL;
@@ -37,6 +37,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* MsgIntelligenceUpdateRequest_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgIntelligenceUpdateRequest_reflection_ = NULL;
+const ::google::protobuf::Descriptor* MsgIntelligenceDestructionRequest_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  MsgIntelligenceDestructionRequest_reflection_ = NULL;
 const ::google::protobuf::Descriptor* MsgShapeCreationRequest_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgShapeCreationRequest_reflection_ = NULL;
@@ -46,9 +49,6 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* MsgShapeDestructionRequest_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgShapeDestructionRequest_reflection_ = NULL;
-const ::google::protobuf::Descriptor* MsgIntelligenceDestructionRequest_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  MsgIntelligenceDestructionRequest_reflection_ = NULL;
 const ::google::protobuf::Descriptor* MsgNoteCreationRequest_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgNoteCreationRequest_reflection_ = NULL;
@@ -89,24 +89,9 @@ void protobuf_AssignDesc_ClientToMessenger_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgLimaCreationRequest));
-  MsgLimaDestructionRequest_descriptor_ = file->message_type(1);
-  static const int MsgLimaDestructionRequest_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLimaDestructionRequest, oid_),
-  };
-  MsgLimaDestructionRequest_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      MsgLimaDestructionRequest_descriptor_,
-      MsgLimaDestructionRequest::default_instance_,
-      MsgLimaDestructionRequest_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLimaDestructionRequest, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLimaDestructionRequest, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(MsgLimaDestructionRequest));
-  MsgLimaUpdateRequest_descriptor_ = file->message_type(2);
+  MsgLimaUpdateRequest_descriptor_ = file->message_type(1);
   static const int MsgLimaUpdateRequest_offsets_[2] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLimaUpdateRequest, oid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLimaUpdateRequest, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLimaUpdateRequest, tactical_line_),
   };
   MsgLimaUpdateRequest_reflection_ =
@@ -120,6 +105,21 @@ void protobuf_AssignDesc_ClientToMessenger_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgLimaUpdateRequest));
+  MsgLimaDestructionRequest_descriptor_ = file->message_type(2);
+  static const int MsgLimaDestructionRequest_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLimaDestructionRequest, id_),
+  };
+  MsgLimaDestructionRequest_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      MsgLimaDestructionRequest_descriptor_,
+      MsgLimaDestructionRequest::default_instance_,
+      MsgLimaDestructionRequest_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLimaDestructionRequest, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLimaDestructionRequest, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(MsgLimaDestructionRequest));
   MsgLimitCreationRequest_descriptor_ = file->message_type(3);
   static const int MsgLimitCreationRequest_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLimitCreationRequest, tacticalline_),
@@ -137,7 +137,7 @@ void protobuf_AssignDesc_ClientToMessenger_2eproto() {
       sizeof(MsgLimitCreationRequest));
   MsgLimitUpdateRequest_descriptor_ = file->message_type(4);
   static const int MsgLimitUpdateRequest_offsets_[2] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLimitUpdateRequest, oid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLimitUpdateRequest, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLimitUpdateRequest, tactical_line_),
   };
   MsgLimitUpdateRequest_reflection_ =
@@ -153,7 +153,7 @@ void protobuf_AssignDesc_ClientToMessenger_2eproto() {
       sizeof(MsgLimitUpdateRequest));
   MsgLimitDestructionRequest_descriptor_ = file->message_type(5);
   static const int MsgLimitDestructionRequest_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLimitDestructionRequest, oid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLimitDestructionRequest, id_),
   };
   MsgLimitDestructionRequest_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -183,7 +183,7 @@ void protobuf_AssignDesc_ClientToMessenger_2eproto() {
       sizeof(MsgIntelligenceCreationRequest));
   MsgIntelligenceUpdateRequest_descriptor_ = file->message_type(7);
   static const int MsgIntelligenceUpdateRequest_offsets_[8] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgIntelligenceUpdateRequest, oid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgIntelligenceUpdateRequest, intelligence_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgIntelligenceUpdateRequest, formation_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgIntelligenceUpdateRequest, name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgIntelligenceUpdateRequest, nature_),
@@ -203,7 +203,22 @@ void protobuf_AssignDesc_ClientToMessenger_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgIntelligenceUpdateRequest));
-  MsgShapeCreationRequest_descriptor_ = file->message_type(8);
+  MsgIntelligenceDestructionRequest_descriptor_ = file->message_type(8);
+  static const int MsgIntelligenceDestructionRequest_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgIntelligenceDestructionRequest, id_),
+  };
+  MsgIntelligenceDestructionRequest_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      MsgIntelligenceDestructionRequest_descriptor_,
+      MsgIntelligenceDestructionRequest::default_instance_,
+      MsgIntelligenceDestructionRequest_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgIntelligenceDestructionRequest, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgIntelligenceDestructionRequest, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(MsgIntelligenceDestructionRequest));
+  MsgShapeCreationRequest_descriptor_ = file->message_type(9);
   static const int MsgShapeCreationRequest_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShapeCreationRequest, shape_),
   };
@@ -218,9 +233,9 @@ void protobuf_AssignDesc_ClientToMessenger_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgShapeCreationRequest));
-  MsgShapeUpdateRequest_descriptor_ = file->message_type(9);
+  MsgShapeUpdateRequest_descriptor_ = file->message_type(10);
   static const int MsgShapeUpdateRequest_offsets_[5] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShapeUpdateRequest, oid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShapeUpdateRequest, shape_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShapeUpdateRequest, category_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShapeUpdateRequest, color_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShapeUpdateRequest, template__),
@@ -237,9 +252,9 @@ void protobuf_AssignDesc_ClientToMessenger_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgShapeUpdateRequest));
-  MsgShapeDestructionRequest_descriptor_ = file->message_type(10);
+  MsgShapeDestructionRequest_descriptor_ = file->message_type(11);
   static const int MsgShapeDestructionRequest_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShapeDestructionRequest, oid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShapeDestructionRequest, id_),
   };
   MsgShapeDestructionRequest_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -252,21 +267,6 @@ void protobuf_AssignDesc_ClientToMessenger_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgShapeDestructionRequest));
-  MsgIntelligenceDestructionRequest_descriptor_ = file->message_type(11);
-  static const int MsgIntelligenceDestructionRequest_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgIntelligenceDestructionRequest, oid_),
-  };
-  MsgIntelligenceDestructionRequest_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      MsgIntelligenceDestructionRequest_descriptor_,
-      MsgIntelligenceDestructionRequest::default_instance_,
-      MsgIntelligenceDestructionRequest_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgIntelligenceDestructionRequest, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgIntelligenceDestructionRequest, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(MsgIntelligenceDestructionRequest));
   MsgNoteCreationRequest_descriptor_ = file->message_type(12);
   static const int MsgNoteCreationRequest_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNoteCreationRequest, note_),
@@ -378,9 +378,9 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgLimaCreationRequest_descriptor_, &MsgLimaCreationRequest::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    MsgLimaDestructionRequest_descriptor_, &MsgLimaDestructionRequest::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgLimaUpdateRequest_descriptor_, &MsgLimaUpdateRequest::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    MsgLimaDestructionRequest_descriptor_, &MsgLimaDestructionRequest::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgLimitCreationRequest_descriptor_, &MsgLimitCreationRequest::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
@@ -392,13 +392,13 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgIntelligenceUpdateRequest_descriptor_, &MsgIntelligenceUpdateRequest::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    MsgIntelligenceDestructionRequest_descriptor_, &MsgIntelligenceDestructionRequest::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgShapeCreationRequest_descriptor_, &MsgShapeCreationRequest::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgShapeUpdateRequest_descriptor_, &MsgShapeUpdateRequest::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgShapeDestructionRequest_descriptor_, &MsgShapeDestructionRequest::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    MsgIntelligenceDestructionRequest_descriptor_, &MsgIntelligenceDestructionRequest::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgNoteCreationRequest_descriptor_, &MsgNoteCreationRequest::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
@@ -416,10 +416,10 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void protobuf_ShutdownFile_ClientToMessenger_2eproto() {
   delete MsgLimaCreationRequest::default_instance_;
   delete MsgLimaCreationRequest_reflection_;
-  delete MsgLimaDestructionRequest::default_instance_;
-  delete MsgLimaDestructionRequest_reflection_;
   delete MsgLimaUpdateRequest::default_instance_;
   delete MsgLimaUpdateRequest_reflection_;
+  delete MsgLimaDestructionRequest::default_instance_;
+  delete MsgLimaDestructionRequest_reflection_;
   delete MsgLimitCreationRequest::default_instance_;
   delete MsgLimitCreationRequest_reflection_;
   delete MsgLimitUpdateRequest::default_instance_;
@@ -430,14 +430,14 @@ void protobuf_ShutdownFile_ClientToMessenger_2eproto() {
   delete MsgIntelligenceCreationRequest_reflection_;
   delete MsgIntelligenceUpdateRequest::default_instance_;
   delete MsgIntelligenceUpdateRequest_reflection_;
+  delete MsgIntelligenceDestructionRequest::default_instance_;
+  delete MsgIntelligenceDestructionRequest_reflection_;
   delete MsgShapeCreationRequest::default_instance_;
   delete MsgShapeCreationRequest_reflection_;
   delete MsgShapeUpdateRequest::default_instance_;
   delete MsgShapeUpdateRequest_reflection_;
   delete MsgShapeDestructionRequest::default_instance_;
   delete MsgShapeDestructionRequest_reflection_;
-  delete MsgIntelligenceDestructionRequest::default_instance_;
-  delete MsgIntelligenceDestructionRequest_reflection_;
   delete MsgNoteCreationRequest::default_instance_;
   delete MsgNoteCreationRequest_reflection_;
   delete MsgNoteUpdateRequest::default_instance_;
@@ -461,102 +461,107 @@ void protobuf_AddDesc_ClientToMessenger_2eproto() {
     "\n\027ClientToMessenger.proto\022\025MsgsClientToM"
     "essenger\032\014Common.proto\"G\n\026MsgLimaCreatio"
     "nRequest\022-\n\014tacticalline\030\001 \002(\0132\027.Common."
-    "MsgTacticalLine\"(\n\031MsgLimaDestructionReq"
-    "uest\022\013\n\003oid\030\001 \002(\r\"S\n\024MsgLimaUpdateReques"
-    "t\022\013\n\003oid\030\001 \002(\r\022.\n\rtactical_line\030\002 \001(\0132\027."
-    "Common.MsgTacticalLine\"H\n\027MsgLimitCreati"
-    "onRequest\022-\n\014tacticalline\030\001 \002(\0132\027.Common"
-    ".MsgTacticalLine\"T\n\025MsgLimitUpdateReques"
-    "t\022\013\n\003oid\030\001 \002(\r\022.\n\rtactical_line\030\002 \001(\0132\027."
-    "Common.MsgTacticalLine\")\n\032MsgLimitDestru"
-    "ctionRequest\022\013\n\003oid\030\001 \002(\r\"O\n\036MsgIntellig"
-    "enceCreationRequest\022-\n\014intelligence\030\001 \002("
-    "\0132\027.Common.MsgIntelligence\"\353\001\n\034MsgIntell"
-    "igenceUpdateRequest\022\013\n\003oid\030\001 \002(\r\022\021\n\tform"
-    "ation\030\002 \001(\r\022\014\n\004name\030\003 \001(\t\022\016\n\006nature\030\004 \001("
-    "\t\022&\n\005level\030\005 \001(\0162\027.Common.EnumNatureLeve"
-    "l\022\020\n\010embarked\030\006 \001(\010\022)\n\010location\030\007 \001(\0132\027."
-    "Common.MsgCoordLatLong\022(\n\tdiplomacy\030\010 \001("
-    "\0162\025.Common.EnumDiplomacy\":\n\027MsgShapeCrea"
-    "tionRequest\022\037\n\005shape\030\001 \002(\0132\020.Common.MsgS"
-    "hape\"\205\001\n\025MsgShapeUpdateRequest\022\013\n\003oid\030\001 "
-    "\002(\r\022\020\n\010category\030\002 \001(\t\022\r\n\005color\030\003 \001(\t\022\021\n\t"
+    "MsgTacticalLine\"j\n\024MsgLimaUpdateRequest\022"
+    "\"\n\002id\030\001 \002(\0132\026.Common.TacticalLineId\022.\n\rt"
+    "actical_line\030\002 \001(\0132\027.Common.MsgTacticalL"
+    "ine\"?\n\031MsgLimaDestructionRequest\022\"\n\002id\030\001"
+    " \002(\0132\026.Common.TacticalLineId\"H\n\027MsgLimit"
+    "CreationRequest\022-\n\014tacticalline\030\001 \002(\0132\027."
+    "Common.MsgTacticalLine\"k\n\025MsgLimitUpdate"
+    "Request\022\"\n\002id\030\001 \002(\0132\026.Common.TacticalLin"
+    "eId\022.\n\rtactical_line\030\002 \001(\0132\027.Common.MsgT"
+    "acticalLine\"@\n\032MsgLimitDestructionReques"
+    "t\022\"\n\002id\030\001 \002(\0132\026.Common.TacticalLineId\"O\n"
+    "\036MsgIntelligenceCreationRequest\022-\n\014intel"
+    "ligence\030\001 \002(\0132\027.Common.MsgIntelligence\"\241"
+    "\002\n\034MsgIntelligenceUpdateRequest\022,\n\014intel"
+    "ligence\030\001 \002(\0132\026.Common.IntelligenceId\022&\n"
+    "\tformation\030\002 \001(\0132\023.Common.FormationId\022\014\n"
+    "\004name\030\003 \001(\t\022\016\n\006nature\030\004 \001(\t\022&\n\005level\030\005 \001"
+    "(\0162\027.Common.EnumNatureLevel\022\020\n\010embarked\030"
+    "\006 \001(\010\022)\n\010location\030\007 \001(\0132\027.Common.MsgCoor"
+    "dLatLong\022(\n\tdiplomacy\030\010 \001(\0162\025.Common.Enu"
+    "mDiplomacy\"G\n!MsgIntelligenceDestruction"
+    "Request\022\"\n\002id\030\001 \002(\0132\026.Common.Intelligenc"
+    "eId\":\n\027MsgShapeCreationRequest\022\037\n\005shape\030"
+    "\001 \002(\0132\020.Common.MsgShape\"\232\001\n\025MsgShapeUpda"
+    "teRequest\022 \n\005shape\030\001 \002(\0132\021.Common.Drawin"
+    "gId\022\020\n\010category\030\002 \001(\t\022\r\n\005color\030\003 \001(\t\022\021\n\t"
     "template_\030\004 \001(\t\022+\n\006points\030\005 \001(\0132\033.Common"
-    ".MsgCoordLatLongList\")\n\032MsgShapeDestruct"
-    "ionRequest\022\013\n\003oid\030\001 \002(\r\"0\n!MsgIntelligen"
-    "ceDestructionRequest\022\013\n\003oid\030\001 \002(\r\"7\n\026Msg"
-    "NoteCreationRequest\022\035\n\004note\030\001 \002(\0132\017.Comm"
-    "on.MsgNote\"e\n\024MsgNoteUpdateRequest\022\n\n\002id"
-    "\030\001 \002(\r\022\014\n\004name\030\002 \001(\t\022\016\n\006number\030\003 \001(\t\022\023\n\013"
-    "description\030\004 \001(\t\022\016\n\006parent\030\005 \001(\r\";\n\031Msg"
-    "NoteDestructionRequest\022\n\n\002id\030\001 \002(\r\022\022\n\nde"
-    "lete_all\030\002 \002(\010\"\202\013\n\024MsgClientToMessenger\022"
-    "\022\n\007context\030\001 \001(\005:\0010\022D\n\007message\030\002 \002(\01323.M"
-    "sgsClientToMessenger.MsgClientToMessenge"
-    "r.Content\032\217\n\n\007Content\022N\n\026limit_creation_"
-    "request\030\001 \001(\0132..MsgsClientToMessenger.Ms"
-    "gLimitCreationRequest\022T\n\031limit_destructi"
-    "on_request\030\002 \001(\01321.MsgsClientToMessenger"
-    ".MsgLimitDestructionRequest\022J\n\024limit_upd"
-    "ate_request\030\003 \001(\0132,.MsgsClientToMessenge"
-    "r.MsgLimitUpdateRequest\022L\n\025lima_creation"
-    "_request\030\004 \001(\0132-.MsgsClientToMessenger.M"
-    "sgLimaCreationRequest\022R\n\030lima_destructio"
-    "n_request\030\005 \001(\01320.MsgsClientToMessenger."
-    "MsgLimaDestructionRequest\022H\n\023lima_update"
-    "_request\030\006 \001(\0132+.MsgsClientToMessenger.M"
-    "sgLimaUpdateRequest\022\\\n\035intelligence_crea"
-    "tion_request\030\007 \001(\01325.MsgsClientToMesseng"
-    "er.MsgIntelligenceCreationRequest\022X\n\033int"
-    "elligence_update_request\030\010 \001(\01323.MsgsCli"
-    "entToMessenger.MsgIntelligenceUpdateRequ"
-    "est\022b\n intelligence_destruction_request\030"
-    "\t \001(\01328.MsgsClientToMessenger.MsgIntelli"
-    "genceDestructionRequest\022N\n\026shape_creatio"
-    "n_request\030\n \001(\0132..MsgsClientToMessenger."
-    "MsgShapeCreationRequest\022T\n\031shape_destruc"
-    "tion_request\030\013 \001(\01321.MsgsClientToMesseng"
-    "er.MsgShapeDestructionRequest\022J\n\024shape_u"
-    "pdate_request\030\014 \001(\0132,.MsgsClientToMessen"
-    "ger.MsgShapeUpdateRequest\022,\n\014text_messag"
-    "e\030\r \001(\0132\026.Common.MsgTextMessage\022L\n\025note_"
-    "creation_request\030\016 \001(\0132-.MsgsClientToMes"
-    "senger.MsgNoteCreationRequest\022H\n\023note_up"
-    "date_request\030\017 \001(\0132+.MsgsClientToMesseng"
-    "er.MsgNoteUpdateRequest\022R\n\030note_destruct"
-    "ion_request\030\020 \001(\01320.MsgsClientToMessenge"
-    "r.MsgNoteDestructionRequest", 2707);
+    ".MsgCoordLatLongList\";\n\032MsgShapeDestruct"
+    "ionRequest\022\035\n\002id\030\001 \002(\0132\021.Common.DrawingI"
+    "d\"7\n\026MsgNoteCreationRequest\022\035\n\004note\030\001 \002("
+    "\0132\017.Common.MsgNote\"e\n\024MsgNoteUpdateReque"
+    "st\022\n\n\002id\030\001 \002(\r\022\014\n\004name\030\002 \001(\t\022\016\n\006number\030\003"
+    " \001(\t\022\023\n\013description\030\004 \001(\t\022\016\n\006parent\030\005 \001("
+    "\r\";\n\031MsgNoteDestructionRequest\022\n\n\002id\030\001 \002"
+    "(\r\022\022\n\ndelete_all\030\002 \002(\010\"\202\013\n\024MsgClientToMe"
+    "ssenger\022\022\n\007context\030\001 \001(\005:\0010\022D\n\007message\030\002"
+    " \002(\01323.MsgsClientToMessenger.MsgClientTo"
+    "Messenger.Content\032\217\n\n\007Content\022N\n\026limit_c"
+    "reation_request\030\001 \001(\0132..MsgsClientToMess"
+    "enger.MsgLimitCreationRequest\022T\n\031limit_d"
+    "estruction_request\030\002 \001(\01321.MsgsClientToM"
+    "essenger.MsgLimitDestructionRequest\022J\n\024l"
+    "imit_update_request\030\003 \001(\0132,.MsgsClientTo"
+    "Messenger.MsgLimitUpdateRequest\022L\n\025lima_"
+    "creation_request\030\004 \001(\0132-.MsgsClientToMes"
+    "senger.MsgLimaCreationRequest\022R\n\030lima_de"
+    "struction_request\030\005 \001(\01320.MsgsClientToMe"
+    "ssenger.MsgLimaDestructionRequest\022H\n\023lim"
+    "a_update_request\030\006 \001(\0132+.MsgsClientToMes"
+    "senger.MsgLimaUpdateRequest\022\\\n\035intellige"
+    "nce_creation_request\030\007 \001(\01325.MsgsClientT"
+    "oMessenger.MsgIntelligenceCreationReques"
+    "t\022X\n\033intelligence_update_request\030\010 \001(\01323"
+    ".MsgsClientToMessenger.MsgIntelligenceUp"
+    "dateRequest\022b\n intelligence_destruction_"
+    "request\030\t \001(\01328.MsgsClientToMessenger.Ms"
+    "gIntelligenceDestructionRequest\022N\n\026shape"
+    "_creation_request\030\n \001(\0132..MsgsClientToMe"
+    "ssenger.MsgShapeCreationRequest\022T\n\031shape"
+    "_destruction_request\030\013 \001(\01321.MsgsClientT"
+    "oMessenger.MsgShapeDestructionRequest\022J\n"
+    "\024shape_update_request\030\014 \001(\0132,.MsgsClient"
+    "ToMessenger.MsgShapeUpdateRequest\022,\n\014tex"
+    "t_message\030\r \001(\0132\026.Common.MsgTextMessage\022"
+    "L\n\025note_creation_request\030\016 \001(\0132-.MsgsCli"
+    "entToMessenger.MsgNoteCreationRequest\022H\n"
+    "\023note_update_request\030\017 \001(\0132+.MsgsClientT"
+    "oMessenger.MsgNoteUpdateRequest\022R\n\030note_"
+    "destruction_request\030\020 \001(\01320.MsgsClientTo"
+    "Messenger.MsgNoteDestructionRequest", 2915);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "ClientToMessenger.proto", &protobuf_RegisterTypes);
   MsgLimaCreationRequest::default_instance_ = new MsgLimaCreationRequest();
-  MsgLimaDestructionRequest::default_instance_ = new MsgLimaDestructionRequest();
   MsgLimaUpdateRequest::default_instance_ = new MsgLimaUpdateRequest();
+  MsgLimaDestructionRequest::default_instance_ = new MsgLimaDestructionRequest();
   MsgLimitCreationRequest::default_instance_ = new MsgLimitCreationRequest();
   MsgLimitUpdateRequest::default_instance_ = new MsgLimitUpdateRequest();
   MsgLimitDestructionRequest::default_instance_ = new MsgLimitDestructionRequest();
   MsgIntelligenceCreationRequest::default_instance_ = new MsgIntelligenceCreationRequest();
   MsgIntelligenceUpdateRequest::default_instance_ = new MsgIntelligenceUpdateRequest();
+  MsgIntelligenceDestructionRequest::default_instance_ = new MsgIntelligenceDestructionRequest();
   MsgShapeCreationRequest::default_instance_ = new MsgShapeCreationRequest();
   MsgShapeUpdateRequest::default_instance_ = new MsgShapeUpdateRequest();
   MsgShapeDestructionRequest::default_instance_ = new MsgShapeDestructionRequest();
-  MsgIntelligenceDestructionRequest::default_instance_ = new MsgIntelligenceDestructionRequest();
   MsgNoteCreationRequest::default_instance_ = new MsgNoteCreationRequest();
   MsgNoteUpdateRequest::default_instance_ = new MsgNoteUpdateRequest();
   MsgNoteDestructionRequest::default_instance_ = new MsgNoteDestructionRequest();
   MsgClientToMessenger::default_instance_ = new MsgClientToMessenger();
   MsgClientToMessenger_Content::default_instance_ = new MsgClientToMessenger_Content();
   MsgLimaCreationRequest::default_instance_->InitAsDefaultInstance();
-  MsgLimaDestructionRequest::default_instance_->InitAsDefaultInstance();
   MsgLimaUpdateRequest::default_instance_->InitAsDefaultInstance();
+  MsgLimaDestructionRequest::default_instance_->InitAsDefaultInstance();
   MsgLimitCreationRequest::default_instance_->InitAsDefaultInstance();
   MsgLimitUpdateRequest::default_instance_->InitAsDefaultInstance();
   MsgLimitDestructionRequest::default_instance_->InitAsDefaultInstance();
   MsgIntelligenceCreationRequest::default_instance_->InitAsDefaultInstance();
   MsgIntelligenceUpdateRequest::default_instance_->InitAsDefaultInstance();
+  MsgIntelligenceDestructionRequest::default_instance_->InitAsDefaultInstance();
   MsgShapeCreationRequest::default_instance_->InitAsDefaultInstance();
   MsgShapeUpdateRequest::default_instance_->InitAsDefaultInstance();
   MsgShapeDestructionRequest::default_instance_->InitAsDefaultInstance();
-  MsgIntelligenceDestructionRequest::default_instance_->InitAsDefaultInstance();
   MsgNoteCreationRequest::default_instance_->InitAsDefaultInstance();
   MsgNoteUpdateRequest::default_instance_->InitAsDefaultInstance();
   MsgNoteDestructionRequest::default_instance_->InitAsDefaultInstance();
@@ -788,210 +793,7 @@ void MsgLimaCreationRequest::Swap(MsgLimaCreationRequest* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int MsgLimaDestructionRequest::kOidFieldNumber;
-#endif  // !_MSC_VER
-
-MsgLimaDestructionRequest::MsgLimaDestructionRequest() {
-  SharedCtor();
-}
-
-void MsgLimaDestructionRequest::InitAsDefaultInstance() {
-}
-
-MsgLimaDestructionRequest::MsgLimaDestructionRequest(const MsgLimaDestructionRequest& from) {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void MsgLimaDestructionRequest::SharedCtor() {
-  _cached_size_ = 0;
-  oid_ = 0u;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-MsgLimaDestructionRequest::~MsgLimaDestructionRequest() {
-  SharedDtor();
-}
-
-void MsgLimaDestructionRequest::SharedDtor() {
-  if (this != default_instance_) {
-  }
-}
-
-const ::google::protobuf::Descriptor* MsgLimaDestructionRequest::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return MsgLimaDestructionRequest_descriptor_;
-}
-
-const MsgLimaDestructionRequest& MsgLimaDestructionRequest::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_ClientToMessenger_2eproto();  return *default_instance_;
-}
-
-MsgLimaDestructionRequest* MsgLimaDestructionRequest::default_instance_ = NULL;
-
-MsgLimaDestructionRequest* MsgLimaDestructionRequest::New() const {
-  return new MsgLimaDestructionRequest;
-}
-
-void MsgLimaDestructionRequest::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    oid_ = 0u;
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool MsgLimaDestructionRequest::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 oid = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &oid_));
-        _set_bit(0);
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-      
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void MsgLimaDestructionRequest::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
-  if (raw_buffer != NULL) {
-    MsgLimaDestructionRequest::SerializeWithCachedSizesToArray(raw_buffer);
-    return;
-  }
-  
-  // required uint32 oid = 1;
-  if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->oid(), output);
-  }
-  
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* MsgLimaDestructionRequest::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // required uint32 oid = 1;
-  if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->oid(), target);
-  }
-  
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int MsgLimaDestructionRequest::ByteSize() const {
-  int total_size = 0;
-  
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 oid = 1;
-    if (has_oid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->oid());
-    }
-    
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  _cached_size_ = total_size;
-  return total_size;
-}
-
-void MsgLimaDestructionRequest::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const MsgLimaDestructionRequest* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const MsgLimaDestructionRequest*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void MsgLimaDestructionRequest::MergeFrom(const MsgLimaDestructionRequest& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from._has_bit(0)) {
-      set_oid(from.oid());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void MsgLimaDestructionRequest::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void MsgLimaDestructionRequest::CopyFrom(const MsgLimaDestructionRequest& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool MsgLimaDestructionRequest::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
-  
-  return true;
-}
-
-void MsgLimaDestructionRequest::Swap(MsgLimaDestructionRequest* other) {
-  if (other != this) {
-    std::swap(oid_, other->oid_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata MsgLimaDestructionRequest::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MsgLimaDestructionRequest_descriptor_;
-  metadata.reflection = MsgLimaDestructionRequest_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int MsgLimaUpdateRequest::kOidFieldNumber;
+const int MsgLimaUpdateRequest::kIdFieldNumber;
 const int MsgLimaUpdateRequest::kTacticalLineFieldNumber;
 #endif  // !_MSC_VER
 
@@ -1000,6 +802,7 @@ MsgLimaUpdateRequest::MsgLimaUpdateRequest() {
 }
 
 void MsgLimaUpdateRequest::InitAsDefaultInstance() {
+  id_ = const_cast< ::Common::TacticalLineId*>(&::Common::TacticalLineId::default_instance());
   tactical_line_ = const_cast< ::Common::MsgTacticalLine*>(&::Common::MsgTacticalLine::default_instance());
 }
 
@@ -1010,7 +813,7 @@ MsgLimaUpdateRequest::MsgLimaUpdateRequest(const MsgLimaUpdateRequest& from) {
 
 void MsgLimaUpdateRequest::SharedCtor() {
   _cached_size_ = 0;
-  oid_ = 0u;
+  id_ = NULL;
   tactical_line_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -1021,6 +824,7 @@ MsgLimaUpdateRequest::~MsgLimaUpdateRequest() {
 
 void MsgLimaUpdateRequest::SharedDtor() {
   if (this != default_instance_) {
+    delete id_;
     delete tactical_line_;
   }
 }
@@ -1042,7 +846,9 @@ MsgLimaUpdateRequest* MsgLimaUpdateRequest::New() const {
 
 void MsgLimaUpdateRequest::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    oid_ = 0u;
+    if (_has_bit(0)) {
+      if (id_ != NULL) id_->::Common::TacticalLineId::Clear();
+    }
     if (_has_bit(1)) {
       if (tactical_line_ != NULL) tactical_line_->::Common::MsgTacticalLine::Clear();
     }
@@ -1057,15 +863,14 @@ bool MsgLimaUpdateRequest::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 oid = 1;
+      // required .Common.TacticalLineId id = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &oid_));
-        _set_bit(0);
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_id()));
         if (input->ExpectTag(18)) goto parse_tactical_line;
         break;
       }
@@ -1107,9 +912,10 @@ void MsgLimaUpdateRequest::SerializeWithCachedSizes(
     return;
   }
   
-  // required uint32 oid = 1;
+  // required .Common.TacticalLineId id = 1;
   if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->oid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      1, this->id(), output);
   }
   
   // optional .Common.MsgTacticalLine tactical_line = 2;
@@ -1126,9 +932,11 @@ void MsgLimaUpdateRequest::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgLimaUpdateRequest::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required uint32 oid = 1;
+  // required .Common.TacticalLineId id = 1;
   if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->oid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->id(), target);
   }
   
   // optional .Common.MsgTacticalLine tactical_line = 2;
@@ -1149,11 +957,11 @@ int MsgLimaUpdateRequest::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 oid = 1;
-    if (has_oid()) {
+    // required .Common.TacticalLineId id = 1;
+    if (has_id()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->oid());
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->id());
     }
     
     // optional .Common.MsgTacticalLine tactical_line = 2;
@@ -1189,7 +997,7 @@ void MsgLimaUpdateRequest::MergeFrom(const MsgLimaUpdateRequest& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
-      set_oid(from.oid());
+      mutable_id()->::Common::TacticalLineId::MergeFrom(from.id());
     }
     if (from._has_bit(1)) {
       mutable_tactical_line()->::Common::MsgTacticalLine::MergeFrom(from.tactical_line());
@@ -1213,6 +1021,9 @@ void MsgLimaUpdateRequest::CopyFrom(const MsgLimaUpdateRequest& from) {
 bool MsgLimaUpdateRequest::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
   
+  if (has_id()) {
+    if (!this->id().IsInitialized()) return false;
+  }
   if (has_tactical_line()) {
     if (!this->tactical_line().IsInitialized()) return false;
   }
@@ -1221,7 +1032,7 @@ bool MsgLimaUpdateRequest::IsInitialized() const {
 
 void MsgLimaUpdateRequest::Swap(MsgLimaUpdateRequest* other) {
   if (other != this) {
-    std::swap(oid_, other->oid_);
+    std::swap(id_, other->id_);
     std::swap(tactical_line_, other->tactical_line_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
@@ -1234,6 +1045,218 @@ void MsgLimaUpdateRequest::Swap(MsgLimaUpdateRequest* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = MsgLimaUpdateRequest_descriptor_;
   metadata.reflection = MsgLimaUpdateRequest_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int MsgLimaDestructionRequest::kIdFieldNumber;
+#endif  // !_MSC_VER
+
+MsgLimaDestructionRequest::MsgLimaDestructionRequest() {
+  SharedCtor();
+}
+
+void MsgLimaDestructionRequest::InitAsDefaultInstance() {
+  id_ = const_cast< ::Common::TacticalLineId*>(&::Common::TacticalLineId::default_instance());
+}
+
+MsgLimaDestructionRequest::MsgLimaDestructionRequest(const MsgLimaDestructionRequest& from) {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void MsgLimaDestructionRequest::SharedCtor() {
+  _cached_size_ = 0;
+  id_ = NULL;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+MsgLimaDestructionRequest::~MsgLimaDestructionRequest() {
+  SharedDtor();
+}
+
+void MsgLimaDestructionRequest::SharedDtor() {
+  if (this != default_instance_) {
+    delete id_;
+  }
+}
+
+const ::google::protobuf::Descriptor* MsgLimaDestructionRequest::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return MsgLimaDestructionRequest_descriptor_;
+}
+
+const MsgLimaDestructionRequest& MsgLimaDestructionRequest::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_ClientToMessenger_2eproto();  return *default_instance_;
+}
+
+MsgLimaDestructionRequest* MsgLimaDestructionRequest::default_instance_ = NULL;
+
+MsgLimaDestructionRequest* MsgLimaDestructionRequest::New() const {
+  return new MsgLimaDestructionRequest;
+}
+
+void MsgLimaDestructionRequest::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (_has_bit(0)) {
+      if (id_ != NULL) id_->::Common::TacticalLineId::Clear();
+    }
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool MsgLimaDestructionRequest::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required .Common.TacticalLineId id = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_id()));
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+      
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void MsgLimaDestructionRequest::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
+  if (raw_buffer != NULL) {
+    MsgLimaDestructionRequest::SerializeWithCachedSizesToArray(raw_buffer);
+    return;
+  }
+  
+  // required .Common.TacticalLineId id = 1;
+  if (_has_bit(0)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      1, this->id(), output);
+  }
+  
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* MsgLimaDestructionRequest::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required .Common.TacticalLineId id = 1;
+  if (_has_bit(0)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->id(), target);
+  }
+  
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int MsgLimaDestructionRequest::ByteSize() const {
+  int total_size = 0;
+  
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required .Common.TacticalLineId id = 1;
+    if (has_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->id());
+    }
+    
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  _cached_size_ = total_size;
+  return total_size;
+}
+
+void MsgLimaDestructionRequest::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const MsgLimaDestructionRequest* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgLimaDestructionRequest*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void MsgLimaDestructionRequest::MergeFrom(const MsgLimaDestructionRequest& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from._has_bit(0)) {
+      mutable_id()->::Common::TacticalLineId::MergeFrom(from.id());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void MsgLimaDestructionRequest::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MsgLimaDestructionRequest::CopyFrom(const MsgLimaDestructionRequest& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgLimaDestructionRequest::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  
+  if (has_id()) {
+    if (!this->id().IsInitialized()) return false;
+  }
+  return true;
+}
+
+void MsgLimaDestructionRequest::Swap(MsgLimaDestructionRequest* other) {
+  if (other != this) {
+    std::swap(id_, other->id_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata MsgLimaDestructionRequest::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = MsgLimaDestructionRequest_descriptor_;
+  metadata.reflection = MsgLimaDestructionRequest_reflection_;
   return metadata;
 }
 
@@ -1453,7 +1476,7 @@ void MsgLimitCreationRequest::Swap(MsgLimitCreationRequest* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int MsgLimitUpdateRequest::kOidFieldNumber;
+const int MsgLimitUpdateRequest::kIdFieldNumber;
 const int MsgLimitUpdateRequest::kTacticalLineFieldNumber;
 #endif  // !_MSC_VER
 
@@ -1462,6 +1485,7 @@ MsgLimitUpdateRequest::MsgLimitUpdateRequest() {
 }
 
 void MsgLimitUpdateRequest::InitAsDefaultInstance() {
+  id_ = const_cast< ::Common::TacticalLineId*>(&::Common::TacticalLineId::default_instance());
   tactical_line_ = const_cast< ::Common::MsgTacticalLine*>(&::Common::MsgTacticalLine::default_instance());
 }
 
@@ -1472,7 +1496,7 @@ MsgLimitUpdateRequest::MsgLimitUpdateRequest(const MsgLimitUpdateRequest& from) 
 
 void MsgLimitUpdateRequest::SharedCtor() {
   _cached_size_ = 0;
-  oid_ = 0u;
+  id_ = NULL;
   tactical_line_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -1483,6 +1507,7 @@ MsgLimitUpdateRequest::~MsgLimitUpdateRequest() {
 
 void MsgLimitUpdateRequest::SharedDtor() {
   if (this != default_instance_) {
+    delete id_;
     delete tactical_line_;
   }
 }
@@ -1504,7 +1529,9 @@ MsgLimitUpdateRequest* MsgLimitUpdateRequest::New() const {
 
 void MsgLimitUpdateRequest::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    oid_ = 0u;
+    if (_has_bit(0)) {
+      if (id_ != NULL) id_->::Common::TacticalLineId::Clear();
+    }
     if (_has_bit(1)) {
       if (tactical_line_ != NULL) tactical_line_->::Common::MsgTacticalLine::Clear();
     }
@@ -1519,15 +1546,14 @@ bool MsgLimitUpdateRequest::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 oid = 1;
+      // required .Common.TacticalLineId id = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &oid_));
-        _set_bit(0);
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_id()));
         if (input->ExpectTag(18)) goto parse_tactical_line;
         break;
       }
@@ -1569,9 +1595,10 @@ void MsgLimitUpdateRequest::SerializeWithCachedSizes(
     return;
   }
   
-  // required uint32 oid = 1;
+  // required .Common.TacticalLineId id = 1;
   if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->oid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      1, this->id(), output);
   }
   
   // optional .Common.MsgTacticalLine tactical_line = 2;
@@ -1588,9 +1615,11 @@ void MsgLimitUpdateRequest::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgLimitUpdateRequest::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required uint32 oid = 1;
+  // required .Common.TacticalLineId id = 1;
   if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->oid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->id(), target);
   }
   
   // optional .Common.MsgTacticalLine tactical_line = 2;
@@ -1611,11 +1640,11 @@ int MsgLimitUpdateRequest::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 oid = 1;
-    if (has_oid()) {
+    // required .Common.TacticalLineId id = 1;
+    if (has_id()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->oid());
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->id());
     }
     
     // optional .Common.MsgTacticalLine tactical_line = 2;
@@ -1651,7 +1680,7 @@ void MsgLimitUpdateRequest::MergeFrom(const MsgLimitUpdateRequest& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
-      set_oid(from.oid());
+      mutable_id()->::Common::TacticalLineId::MergeFrom(from.id());
     }
     if (from._has_bit(1)) {
       mutable_tactical_line()->::Common::MsgTacticalLine::MergeFrom(from.tactical_line());
@@ -1675,6 +1704,9 @@ void MsgLimitUpdateRequest::CopyFrom(const MsgLimitUpdateRequest& from) {
 bool MsgLimitUpdateRequest::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
   
+  if (has_id()) {
+    if (!this->id().IsInitialized()) return false;
+  }
   if (has_tactical_line()) {
     if (!this->tactical_line().IsInitialized()) return false;
   }
@@ -1683,7 +1715,7 @@ bool MsgLimitUpdateRequest::IsInitialized() const {
 
 void MsgLimitUpdateRequest::Swap(MsgLimitUpdateRequest* other) {
   if (other != this) {
-    std::swap(oid_, other->oid_);
+    std::swap(id_, other->id_);
     std::swap(tactical_line_, other->tactical_line_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
@@ -1703,7 +1735,7 @@ void MsgLimitUpdateRequest::Swap(MsgLimitUpdateRequest* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int MsgLimitDestructionRequest::kOidFieldNumber;
+const int MsgLimitDestructionRequest::kIdFieldNumber;
 #endif  // !_MSC_VER
 
 MsgLimitDestructionRequest::MsgLimitDestructionRequest() {
@@ -1711,6 +1743,7 @@ MsgLimitDestructionRequest::MsgLimitDestructionRequest() {
 }
 
 void MsgLimitDestructionRequest::InitAsDefaultInstance() {
+  id_ = const_cast< ::Common::TacticalLineId*>(&::Common::TacticalLineId::default_instance());
 }
 
 MsgLimitDestructionRequest::MsgLimitDestructionRequest(const MsgLimitDestructionRequest& from) {
@@ -1720,7 +1753,7 @@ MsgLimitDestructionRequest::MsgLimitDestructionRequest(const MsgLimitDestruction
 
 void MsgLimitDestructionRequest::SharedCtor() {
   _cached_size_ = 0;
-  oid_ = 0u;
+  id_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1730,6 +1763,7 @@ MsgLimitDestructionRequest::~MsgLimitDestructionRequest() {
 
 void MsgLimitDestructionRequest::SharedDtor() {
   if (this != default_instance_) {
+    delete id_;
   }
 }
 
@@ -1750,7 +1784,9 @@ MsgLimitDestructionRequest* MsgLimitDestructionRequest::New() const {
 
 void MsgLimitDestructionRequest::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    oid_ = 0u;
+    if (_has_bit(0)) {
+      if (id_ != NULL) id_->::Common::TacticalLineId::Clear();
+    }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -1762,15 +1798,14 @@ bool MsgLimitDestructionRequest::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 oid = 1;
+      // required .Common.TacticalLineId id = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &oid_));
-        _set_bit(0);
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_id()));
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -1799,9 +1834,10 @@ void MsgLimitDestructionRequest::SerializeWithCachedSizes(
     return;
   }
   
-  // required uint32 oid = 1;
+  // required .Common.TacticalLineId id = 1;
   if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->oid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      1, this->id(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -1812,9 +1848,11 @@ void MsgLimitDestructionRequest::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgLimitDestructionRequest::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required uint32 oid = 1;
+  // required .Common.TacticalLineId id = 1;
   if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->oid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->id(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -1828,11 +1866,11 @@ int MsgLimitDestructionRequest::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 oid = 1;
-    if (has_oid()) {
+    // required .Common.TacticalLineId id = 1;
+    if (has_id()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->oid());
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->id());
     }
     
   }
@@ -1861,7 +1899,7 @@ void MsgLimitDestructionRequest::MergeFrom(const MsgLimitDestructionRequest& fro
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
-      set_oid(from.oid());
+      mutable_id()->::Common::TacticalLineId::MergeFrom(from.id());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -1882,12 +1920,15 @@ void MsgLimitDestructionRequest::CopyFrom(const MsgLimitDestructionRequest& from
 bool MsgLimitDestructionRequest::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
   
+  if (has_id()) {
+    if (!this->id().IsInitialized()) return false;
+  }
   return true;
 }
 
 void MsgLimitDestructionRequest::Swap(MsgLimitDestructionRequest* other) {
   if (other != this) {
-    std::swap(oid_, other->oid_);
+    std::swap(id_, other->id_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -2120,7 +2161,7 @@ void MsgIntelligenceCreationRequest::Swap(MsgIntelligenceCreationRequest* other)
 const ::std::string MsgIntelligenceUpdateRequest::_default_name_;
 const ::std::string MsgIntelligenceUpdateRequest::_default_nature_;
 #ifndef _MSC_VER
-const int MsgIntelligenceUpdateRequest::kOidFieldNumber;
+const int MsgIntelligenceUpdateRequest::kIntelligenceFieldNumber;
 const int MsgIntelligenceUpdateRequest::kFormationFieldNumber;
 const int MsgIntelligenceUpdateRequest::kNameFieldNumber;
 const int MsgIntelligenceUpdateRequest::kNatureFieldNumber;
@@ -2135,6 +2176,8 @@ MsgIntelligenceUpdateRequest::MsgIntelligenceUpdateRequest() {
 }
 
 void MsgIntelligenceUpdateRequest::InitAsDefaultInstance() {
+  intelligence_ = const_cast< ::Common::IntelligenceId*>(&::Common::IntelligenceId::default_instance());
+  formation_ = const_cast< ::Common::FormationId*>(&::Common::FormationId::default_instance());
   location_ = const_cast< ::Common::MsgCoordLatLong*>(&::Common::MsgCoordLatLong::default_instance());
 }
 
@@ -2145,8 +2188,8 @@ MsgIntelligenceUpdateRequest::MsgIntelligenceUpdateRequest(const MsgIntelligence
 
 void MsgIntelligenceUpdateRequest::SharedCtor() {
   _cached_size_ = 0;
-  oid_ = 0u;
-  formation_ = 0u;
+  intelligence_ = NULL;
+  formation_ = NULL;
   name_ = const_cast< ::std::string*>(&_default_name_);
   nature_ = const_cast< ::std::string*>(&_default_nature_);
   level_ = 0;
@@ -2168,6 +2211,8 @@ void MsgIntelligenceUpdateRequest::SharedDtor() {
     delete nature_;
   }
   if (this != default_instance_) {
+    delete intelligence_;
+    delete formation_;
     delete location_;
   }
 }
@@ -2189,8 +2234,12 @@ MsgIntelligenceUpdateRequest* MsgIntelligenceUpdateRequest::New() const {
 
 void MsgIntelligenceUpdateRequest::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    oid_ = 0u;
-    formation_ = 0u;
+    if (_has_bit(0)) {
+      if (intelligence_ != NULL) intelligence_->::Common::IntelligenceId::Clear();
+    }
+    if (_has_bit(1)) {
+      if (formation_ != NULL) formation_->::Common::FormationId::Clear();
+    }
     if (_has_bit(2)) {
       if (name_ != &_default_name_) {
         name_->clear();
@@ -2218,29 +2267,27 @@ bool MsgIntelligenceUpdateRequest::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 oid = 1;
+      // required .Common.IntelligenceId intelligence = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &oid_));
-        _set_bit(0);
-        if (input->ExpectTag(16)) goto parse_formation;
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_intelligence()));
+        if (input->ExpectTag(18)) goto parse_formation;
         break;
       }
       
-      // optional uint32 formation = 2;
+      // optional .Common.FormationId formation = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
        parse_formation:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &formation_));
-        _set_bit(1);
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_formation()));
         if (input->ExpectTag(26)) goto parse_name;
         break;
       }
@@ -2364,14 +2411,16 @@ void MsgIntelligenceUpdateRequest::SerializeWithCachedSizes(
     return;
   }
   
-  // required uint32 oid = 1;
+  // required .Common.IntelligenceId intelligence = 1;
   if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->oid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      1, this->intelligence(), output);
   }
   
-  // optional uint32 formation = 2;
+  // optional .Common.FormationId formation = 2;
   if (_has_bit(1)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->formation(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      2, this->formation(), output);
   }
   
   // optional string name = 3;
@@ -2423,14 +2472,18 @@ void MsgIntelligenceUpdateRequest::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgIntelligenceUpdateRequest::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required uint32 oid = 1;
+  // required .Common.IntelligenceId intelligence = 1;
   if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->oid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->intelligence(), target);
   }
   
-  // optional uint32 formation = 2;
+  // optional .Common.FormationId formation = 2;
   if (_has_bit(1)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->formation(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        2, this->formation(), target);
   }
   
   // optional string name = 3;
@@ -2488,17 +2541,17 @@ int MsgIntelligenceUpdateRequest::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 oid = 1;
-    if (has_oid()) {
+    // required .Common.IntelligenceId intelligence = 1;
+    if (has_intelligence()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->oid());
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->intelligence());
     }
     
-    // optional uint32 formation = 2;
+    // optional .Common.FormationId formation = 2;
     if (has_formation()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->formation());
     }
     
@@ -2566,10 +2619,10 @@ void MsgIntelligenceUpdateRequest::MergeFrom(const MsgIntelligenceUpdateRequest&
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
-      set_oid(from.oid());
+      mutable_intelligence()->::Common::IntelligenceId::MergeFrom(from.intelligence());
     }
     if (from._has_bit(1)) {
-      set_formation(from.formation());
+      mutable_formation()->::Common::FormationId::MergeFrom(from.formation());
     }
     if (from._has_bit(2)) {
       set_name(from.name());
@@ -2608,6 +2661,12 @@ void MsgIntelligenceUpdateRequest::CopyFrom(const MsgIntelligenceUpdateRequest& 
 bool MsgIntelligenceUpdateRequest::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
   
+  if (has_intelligence()) {
+    if (!this->intelligence().IsInitialized()) return false;
+  }
+  if (has_formation()) {
+    if (!this->formation().IsInitialized()) return false;
+  }
   if (has_location()) {
     if (!this->location().IsInitialized()) return false;
   }
@@ -2616,7 +2675,7 @@ bool MsgIntelligenceUpdateRequest::IsInitialized() const {
 
 void MsgIntelligenceUpdateRequest::Swap(MsgIntelligenceUpdateRequest* other) {
   if (other != this) {
-    std::swap(oid_, other->oid_);
+    std::swap(intelligence_, other->intelligence_);
     std::swap(formation_, other->formation_);
     std::swap(name_, other->name_);
     std::swap(nature_, other->nature_);
@@ -2635,6 +2694,218 @@ void MsgIntelligenceUpdateRequest::Swap(MsgIntelligenceUpdateRequest* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = MsgIntelligenceUpdateRequest_descriptor_;
   metadata.reflection = MsgIntelligenceUpdateRequest_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int MsgIntelligenceDestructionRequest::kIdFieldNumber;
+#endif  // !_MSC_VER
+
+MsgIntelligenceDestructionRequest::MsgIntelligenceDestructionRequest() {
+  SharedCtor();
+}
+
+void MsgIntelligenceDestructionRequest::InitAsDefaultInstance() {
+  id_ = const_cast< ::Common::IntelligenceId*>(&::Common::IntelligenceId::default_instance());
+}
+
+MsgIntelligenceDestructionRequest::MsgIntelligenceDestructionRequest(const MsgIntelligenceDestructionRequest& from) {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void MsgIntelligenceDestructionRequest::SharedCtor() {
+  _cached_size_ = 0;
+  id_ = NULL;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+MsgIntelligenceDestructionRequest::~MsgIntelligenceDestructionRequest() {
+  SharedDtor();
+}
+
+void MsgIntelligenceDestructionRequest::SharedDtor() {
+  if (this != default_instance_) {
+    delete id_;
+  }
+}
+
+const ::google::protobuf::Descriptor* MsgIntelligenceDestructionRequest::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return MsgIntelligenceDestructionRequest_descriptor_;
+}
+
+const MsgIntelligenceDestructionRequest& MsgIntelligenceDestructionRequest::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_ClientToMessenger_2eproto();  return *default_instance_;
+}
+
+MsgIntelligenceDestructionRequest* MsgIntelligenceDestructionRequest::default_instance_ = NULL;
+
+MsgIntelligenceDestructionRequest* MsgIntelligenceDestructionRequest::New() const {
+  return new MsgIntelligenceDestructionRequest;
+}
+
+void MsgIntelligenceDestructionRequest::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (_has_bit(0)) {
+      if (id_ != NULL) id_->::Common::IntelligenceId::Clear();
+    }
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool MsgIntelligenceDestructionRequest::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required .Common.IntelligenceId id = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_id()));
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+      
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void MsgIntelligenceDestructionRequest::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
+  if (raw_buffer != NULL) {
+    MsgIntelligenceDestructionRequest::SerializeWithCachedSizesToArray(raw_buffer);
+    return;
+  }
+  
+  // required .Common.IntelligenceId id = 1;
+  if (_has_bit(0)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      1, this->id(), output);
+  }
+  
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* MsgIntelligenceDestructionRequest::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required .Common.IntelligenceId id = 1;
+  if (_has_bit(0)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->id(), target);
+  }
+  
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int MsgIntelligenceDestructionRequest::ByteSize() const {
+  int total_size = 0;
+  
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required .Common.IntelligenceId id = 1;
+    if (has_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->id());
+    }
+    
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  _cached_size_ = total_size;
+  return total_size;
+}
+
+void MsgIntelligenceDestructionRequest::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const MsgIntelligenceDestructionRequest* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgIntelligenceDestructionRequest*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void MsgIntelligenceDestructionRequest::MergeFrom(const MsgIntelligenceDestructionRequest& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from._has_bit(0)) {
+      mutable_id()->::Common::IntelligenceId::MergeFrom(from.id());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void MsgIntelligenceDestructionRequest::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MsgIntelligenceDestructionRequest::CopyFrom(const MsgIntelligenceDestructionRequest& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgIntelligenceDestructionRequest::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  
+  if (has_id()) {
+    if (!this->id().IsInitialized()) return false;
+  }
+  return true;
+}
+
+void MsgIntelligenceDestructionRequest::Swap(MsgIntelligenceDestructionRequest* other) {
+  if (other != this) {
+    std::swap(id_, other->id_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata MsgIntelligenceDestructionRequest::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = MsgIntelligenceDestructionRequest_descriptor_;
+  metadata.reflection = MsgIntelligenceDestructionRequest_reflection_;
   return metadata;
 }
 
@@ -2857,7 +3128,7 @@ const ::std::string MsgShapeUpdateRequest::_default_category_;
 const ::std::string MsgShapeUpdateRequest::_default_color_;
 const ::std::string MsgShapeUpdateRequest::_default_template__;
 #ifndef _MSC_VER
-const int MsgShapeUpdateRequest::kOidFieldNumber;
+const int MsgShapeUpdateRequest::kShapeFieldNumber;
 const int MsgShapeUpdateRequest::kCategoryFieldNumber;
 const int MsgShapeUpdateRequest::kColorFieldNumber;
 const int MsgShapeUpdateRequest::kTemplateFieldNumber;
@@ -2869,6 +3140,7 @@ MsgShapeUpdateRequest::MsgShapeUpdateRequest() {
 }
 
 void MsgShapeUpdateRequest::InitAsDefaultInstance() {
+  shape_ = const_cast< ::Common::DrawingId*>(&::Common::DrawingId::default_instance());
   points_ = const_cast< ::Common::MsgCoordLatLongList*>(&::Common::MsgCoordLatLongList::default_instance());
 }
 
@@ -2879,7 +3151,7 @@ MsgShapeUpdateRequest::MsgShapeUpdateRequest(const MsgShapeUpdateRequest& from) 
 
 void MsgShapeUpdateRequest::SharedCtor() {
   _cached_size_ = 0;
-  oid_ = 0u;
+  shape_ = NULL;
   category_ = const_cast< ::std::string*>(&_default_category_);
   color_ = const_cast< ::std::string*>(&_default_color_);
   template__ = const_cast< ::std::string*>(&_default_template__);
@@ -2902,6 +3174,7 @@ void MsgShapeUpdateRequest::SharedDtor() {
     delete template__;
   }
   if (this != default_instance_) {
+    delete shape_;
     delete points_;
   }
 }
@@ -2923,7 +3196,9 @@ MsgShapeUpdateRequest* MsgShapeUpdateRequest::New() const {
 
 void MsgShapeUpdateRequest::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    oid_ = 0u;
+    if (_has_bit(0)) {
+      if (shape_ != NULL) shape_->::Common::DrawingId::Clear();
+    }
     if (_has_bit(1)) {
       if (category_ != &_default_category_) {
         category_->clear();
@@ -2953,15 +3228,14 @@ bool MsgShapeUpdateRequest::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 oid = 1;
+      // required .Common.DrawingId shape = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &oid_));
-        _set_bit(0);
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_shape()));
         if (input->ExpectTag(18)) goto parse_category;
         break;
       }
@@ -3051,9 +3325,10 @@ void MsgShapeUpdateRequest::SerializeWithCachedSizes(
     return;
   }
   
-  // required uint32 oid = 1;
+  // required .Common.DrawingId shape = 1;
   if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->oid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      1, this->shape(), output);
   }
   
   // optional string category = 2;
@@ -3097,9 +3372,11 @@ void MsgShapeUpdateRequest::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgShapeUpdateRequest::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required uint32 oid = 1;
+  // required .Common.DrawingId shape = 1;
   if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->oid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->shape(), target);
   }
   
   // optional string category = 2;
@@ -3150,11 +3427,11 @@ int MsgShapeUpdateRequest::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 oid = 1;
-    if (has_oid()) {
+    // required .Common.DrawingId shape = 1;
+    if (has_shape()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->oid());
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->shape());
     }
     
     // optional string category = 2;
@@ -3211,7 +3488,7 @@ void MsgShapeUpdateRequest::MergeFrom(const MsgShapeUpdateRequest& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
-      set_oid(from.oid());
+      mutable_shape()->::Common::DrawingId::MergeFrom(from.shape());
     }
     if (from._has_bit(1)) {
       set_category(from.category());
@@ -3244,6 +3521,9 @@ void MsgShapeUpdateRequest::CopyFrom(const MsgShapeUpdateRequest& from) {
 bool MsgShapeUpdateRequest::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
   
+  if (has_shape()) {
+    if (!this->shape().IsInitialized()) return false;
+  }
   if (has_points()) {
     if (!this->points().IsInitialized()) return false;
   }
@@ -3252,7 +3532,7 @@ bool MsgShapeUpdateRequest::IsInitialized() const {
 
 void MsgShapeUpdateRequest::Swap(MsgShapeUpdateRequest* other) {
   if (other != this) {
-    std::swap(oid_, other->oid_);
+    std::swap(shape_, other->shape_);
     std::swap(category_, other->category_);
     std::swap(color_, other->color_);
     std::swap(template__, other->template__);
@@ -3275,7 +3555,7 @@ void MsgShapeUpdateRequest::Swap(MsgShapeUpdateRequest* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int MsgShapeDestructionRequest::kOidFieldNumber;
+const int MsgShapeDestructionRequest::kIdFieldNumber;
 #endif  // !_MSC_VER
 
 MsgShapeDestructionRequest::MsgShapeDestructionRequest() {
@@ -3283,6 +3563,7 @@ MsgShapeDestructionRequest::MsgShapeDestructionRequest() {
 }
 
 void MsgShapeDestructionRequest::InitAsDefaultInstance() {
+  id_ = const_cast< ::Common::DrawingId*>(&::Common::DrawingId::default_instance());
 }
 
 MsgShapeDestructionRequest::MsgShapeDestructionRequest(const MsgShapeDestructionRequest& from) {
@@ -3292,7 +3573,7 @@ MsgShapeDestructionRequest::MsgShapeDestructionRequest(const MsgShapeDestruction
 
 void MsgShapeDestructionRequest::SharedCtor() {
   _cached_size_ = 0;
-  oid_ = 0u;
+  id_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -3302,6 +3583,7 @@ MsgShapeDestructionRequest::~MsgShapeDestructionRequest() {
 
 void MsgShapeDestructionRequest::SharedDtor() {
   if (this != default_instance_) {
+    delete id_;
   }
 }
 
@@ -3322,7 +3604,9 @@ MsgShapeDestructionRequest* MsgShapeDestructionRequest::New() const {
 
 void MsgShapeDestructionRequest::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    oid_ = 0u;
+    if (_has_bit(0)) {
+      if (id_ != NULL) id_->::Common::DrawingId::Clear();
+    }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -3334,15 +3618,14 @@ bool MsgShapeDestructionRequest::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 oid = 1;
+      // required .Common.DrawingId id = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &oid_));
-        _set_bit(0);
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_id()));
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -3371,9 +3654,10 @@ void MsgShapeDestructionRequest::SerializeWithCachedSizes(
     return;
   }
   
-  // required uint32 oid = 1;
+  // required .Common.DrawingId id = 1;
   if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->oid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      1, this->id(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -3384,9 +3668,11 @@ void MsgShapeDestructionRequest::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgShapeDestructionRequest::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required uint32 oid = 1;
+  // required .Common.DrawingId id = 1;
   if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->oid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->id(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -3400,11 +3686,11 @@ int MsgShapeDestructionRequest::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 oid = 1;
-    if (has_oid()) {
+    // required .Common.DrawingId id = 1;
+    if (has_id()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->oid());
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->id());
     }
     
   }
@@ -3433,7 +3719,7 @@ void MsgShapeDestructionRequest::MergeFrom(const MsgShapeDestructionRequest& fro
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
-      set_oid(from.oid());
+      mutable_id()->::Common::DrawingId::MergeFrom(from.id());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -3454,12 +3740,15 @@ void MsgShapeDestructionRequest::CopyFrom(const MsgShapeDestructionRequest& from
 bool MsgShapeDestructionRequest::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
   
+  if (has_id()) {
+    if (!this->id().IsInitialized()) return false;
+  }
   return true;
 }
 
 void MsgShapeDestructionRequest::Swap(MsgShapeDestructionRequest* other) {
   if (other != this) {
-    std::swap(oid_, other->oid_);
+    std::swap(id_, other->id_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -3471,209 +3760,6 @@ void MsgShapeDestructionRequest::Swap(MsgShapeDestructionRequest* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = MsgShapeDestructionRequest_descriptor_;
   metadata.reflection = MsgShapeDestructionRequest_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int MsgIntelligenceDestructionRequest::kOidFieldNumber;
-#endif  // !_MSC_VER
-
-MsgIntelligenceDestructionRequest::MsgIntelligenceDestructionRequest() {
-  SharedCtor();
-}
-
-void MsgIntelligenceDestructionRequest::InitAsDefaultInstance() {
-}
-
-MsgIntelligenceDestructionRequest::MsgIntelligenceDestructionRequest(const MsgIntelligenceDestructionRequest& from) {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void MsgIntelligenceDestructionRequest::SharedCtor() {
-  _cached_size_ = 0;
-  oid_ = 0u;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-MsgIntelligenceDestructionRequest::~MsgIntelligenceDestructionRequest() {
-  SharedDtor();
-}
-
-void MsgIntelligenceDestructionRequest::SharedDtor() {
-  if (this != default_instance_) {
-  }
-}
-
-const ::google::protobuf::Descriptor* MsgIntelligenceDestructionRequest::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return MsgIntelligenceDestructionRequest_descriptor_;
-}
-
-const MsgIntelligenceDestructionRequest& MsgIntelligenceDestructionRequest::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_ClientToMessenger_2eproto();  return *default_instance_;
-}
-
-MsgIntelligenceDestructionRequest* MsgIntelligenceDestructionRequest::default_instance_ = NULL;
-
-MsgIntelligenceDestructionRequest* MsgIntelligenceDestructionRequest::New() const {
-  return new MsgIntelligenceDestructionRequest;
-}
-
-void MsgIntelligenceDestructionRequest::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    oid_ = 0u;
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool MsgIntelligenceDestructionRequest::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 oid = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &oid_));
-        _set_bit(0);
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-      
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void MsgIntelligenceDestructionRequest::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
-  if (raw_buffer != NULL) {
-    MsgIntelligenceDestructionRequest::SerializeWithCachedSizesToArray(raw_buffer);
-    return;
-  }
-  
-  // required uint32 oid = 1;
-  if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->oid(), output);
-  }
-  
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* MsgIntelligenceDestructionRequest::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // required uint32 oid = 1;
-  if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->oid(), target);
-  }
-  
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int MsgIntelligenceDestructionRequest::ByteSize() const {
-  int total_size = 0;
-  
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 oid = 1;
-    if (has_oid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->oid());
-    }
-    
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  _cached_size_ = total_size;
-  return total_size;
-}
-
-void MsgIntelligenceDestructionRequest::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const MsgIntelligenceDestructionRequest* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const MsgIntelligenceDestructionRequest*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void MsgIntelligenceDestructionRequest::MergeFrom(const MsgIntelligenceDestructionRequest& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from._has_bit(0)) {
-      set_oid(from.oid());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void MsgIntelligenceDestructionRequest::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void MsgIntelligenceDestructionRequest::CopyFrom(const MsgIntelligenceDestructionRequest& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool MsgIntelligenceDestructionRequest::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
-  
-  return true;
-}
-
-void MsgIntelligenceDestructionRequest::Swap(MsgIntelligenceDestructionRequest* other) {
-  if (other != this) {
-    std::swap(oid_, other->oid_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata MsgIntelligenceDestructionRequest::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MsgIntelligenceDestructionRequest_descriptor_;
-  metadata.reflection = MsgIntelligenceDestructionRequest_reflection_;
   return metadata;
 }
 

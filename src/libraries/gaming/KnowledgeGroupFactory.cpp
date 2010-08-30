@@ -51,12 +51,12 @@ KnowledgeGroupFactory::~KnowledgeGroupFactory()
 kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::CreateKnowledgeGroup( const MsgsSimToClient::MsgKnowledgeGroupCreation& message )
 {
     // LTO begin
-    Entity_ABC* superior = message.has_oid_parent() ?
-        (Entity_ABC*) &model_.knowledgeGroups_.Resolver< KnowledgeGroup_ABC >::Get( message.oid_parent() ) :
-    (Entity_ABC*) &model_.teams_.Resolver< Team_ABC >::Get( message.oid_camp() );
+    Entity_ABC* superior = message.has_parent() ?
+        (Entity_ABC*) &model_.knowledgeGroups_.Resolver< KnowledgeGroup_ABC >::Get( message.parent().id() ) :
+    (Entity_ABC*) &model_.teams_.Resolver< Team_ABC >::Get( message.party().id() );
     // LTO end
 
-    KnowledgeGroup* result = new KnowledgeGroup( message.oid(), controllers_.controller_, message.type(), model_.static_.types_ );
+    KnowledgeGroup* result = new KnowledgeGroup( message.id().id(), controllers_.controller_, message.type(), model_.static_.types_ );
     result->Attach( *new AgentKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );
     bool jam = message.has_jam() && message.jam();
     if( jam )

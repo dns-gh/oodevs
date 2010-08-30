@@ -18,7 +18,7 @@ using namespace dispatcher;
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
 Equipment::Equipment( const MsgsSimToClient::EquipmentDotations_EquipmentDotation& message )
-   : nEquipmentType_   ( message.type_equipement() )
+   : nEquipmentType_   ( message.type().id() )
    , nNbrAvailable_    ( message.nb_disponibles() )
    , nNbrUnavailable_  ( message.nb_indisponibles() )
    , nNbrRepairable_   ( message.nb_reparables() )
@@ -56,7 +56,7 @@ void Equipment::Update( const MsgsSimToClient::EquipmentDotations_EquipmentDotat
 // -----------------------------------------------------------------------------
 void Equipment::Send( MsgsSimToClient::EquipmentDotations_EquipmentDotation& message ) const
 {
-    message.set_type_equipement            ( nEquipmentType_ );
+    message.mutable_type()->set_id         ( nEquipmentType_ );
     message.set_nb_disponibles             ( nNbrAvailable_ );
     message.set_nb_indisponibles           ( nNbrUnavailable_ );
     message.set_nb_reparables              ( nNbrRepairable_ );

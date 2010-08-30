@@ -41,5 +41,5 @@ bool MIL_ParameterType_DotationType::Copy( const MIL_MissionParameter_ABC& from,
     if( !from.IsOfType( *this ) )
         return false;
     to.set_null_value( false );
-    return from.ToDotationType( *to.mutable_value()->mutable_dotationtype() );
+    return from.ToDotationType( *to.mutable_value()->mutable_resourcetype() );
 }

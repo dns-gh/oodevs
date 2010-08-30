@@ -119,7 +119,7 @@ AgentHierarchies< I >::~AgentHierarchies()
 template< typename I >
 void AgentHierarchies< I >::DoUpdate( const MsgsSimToClient::MsgUnitCreation& message )
 {
-    kernel::Automat_ABC& superior = automatResolver_.Get( message.oid_automate() );
+    kernel::Automat_ABC& superior = automatResolver_.Get( message.automat().id() );
     const kernel::Diplomacies_ABC* diplo = superior.Get< I >().GetTop().Retrieve< kernel::Diplomacies_ABC >();
     if( diplo )
         kernel::App6Symbol::SetKarma( symbol_, diplo->GetKarma() );
@@ -133,7 +133,7 @@ void AgentHierarchies< I >::DoUpdate( const MsgsSimToClient::MsgUnitCreation& me
 template< typename I >
 void AgentHierarchies< I >::DoUpdate( const Common::MsgUnitChangeSuperior& message )
 {
-    UpdateSuperior( automatResolver_.Get( message.oid_automate() ) );
+    UpdateSuperior( automatResolver_.Get( message.parent().id() ) );
 }
 
 // -----------------------------------------------------------------------------

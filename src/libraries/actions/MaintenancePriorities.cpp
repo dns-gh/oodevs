@@ -39,7 +39,7 @@ MaintenancePriorities::MaintenancePriorities( const OrderParameter& parameter, c
     : Parameter< std::string >( parameter )
 {
     for( int i = 0; i < message.elem_size(); ++i )
-        AddPriority( resolver.Get( message.elem(i).equipment() ) );
+        AddPriority( resolver.Get( message.elem(i).id() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,7 +88,7 @@ void MaintenancePriorities::CommitTo( Common::MsgMissionParameter& message ) con
     Common::MsgLogMaintenancePriorities* list = message.mutable_value()->mutable_logmaintenancepriorities();
     if( IsSet() )
         for( unsigned int i = 0; i < priorities_.size(); ++i )
-            list->add_elem()->set_equipment( priorities_.at( i )->GetId() );
+            list->add_elem()->set_id( priorities_.at( i )->GetId() );
 }
 
 // -----------------------------------------------------------------------------

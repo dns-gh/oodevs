@@ -249,7 +249,7 @@ MT_Vector2D PHY_RoleAction_Moving::ExtrapolatePosition( const double rTime, cons
 void PHY_RoleAction_Moving::SendEnvironmentType() const
 {
     client::UnitEnvironmentType asn;
-    asn().set_oid( pion_.GetID() );
+    asn().mutable_id()->set_id( pion_.GetID() );
     SerializeEnvironmentType( asn() );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -261,7 +261,7 @@ void PHY_RoleAction_Moving::SendEnvironmentType() const
 void PHY_RoleAction_Moving::SendCurrentPath() const
 {
     client::UnitPathFind asnMsg;
-    asnMsg().set_oid( pion_.GetID() );
+    asnMsg().mutable_id()->set_id( pion_.GetID() );   
     if( !SerializeCurrentPath( *asnMsg().mutable_itineraire() ) )
         return;
 

@@ -18,7 +18,7 @@ using namespace dispatcher;
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
 DotationQuota::DotationQuota( const Model_ABC& /*model*/, const Common::MsgDotationQuota& message )
-   : nDotationType_( message.ressource_id() )
+   : nDotationType_( message.ressource_id().id() )
    , nQuota_       ( message.quota_disponible() )
 {
     // NOTHING
@@ -48,6 +48,6 @@ void DotationQuota::Update( const Common::MsgDotationQuota& message )
 // -----------------------------------------------------------------------------
 void DotationQuota::Send( Common::MsgDotationQuota& message ) const
 {
-    message.set_ressource_id( nDotationType_ );
+    message.mutable_ressource_id()->set_id( nDotationType_ );
     message.set_quota_disponible( nQuota_ );
 }

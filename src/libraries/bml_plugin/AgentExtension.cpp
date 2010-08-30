@@ -94,7 +94,7 @@ void AgentExtension::DoUpdate( const MsgsSimToClient::MsgUnitDetection& message 
 {
     try
     {
-        DetectionReport report( holder_, model_.Agents().Get( message.detected_unit_oid() ), message.current_visibility() );
+        DetectionReport report( holder_, model_.Agents().Get( message.detected_unit().id() ), message.current_visibility() );
         report.Send( publisher_ );
     }
     catch( std::exception& e )

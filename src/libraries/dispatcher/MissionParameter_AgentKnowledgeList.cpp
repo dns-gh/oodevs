@@ -21,7 +21,7 @@ MissionParameter_AgentKnowledgeList::MissionParameter_AgentKnowledgeList( const 
     : MissionParameter_ABC( asn )
 {
     for( int i = 0; i < asn.value().unitknowledgelist().elem_size(); ++i )
-        agentKnowledges_.push_back( asn.value().unitknowledgelist().elem( i ).oid() );
+        agentKnowledges_.push_back( asn.value().unitknowledgelist().elem( i ).id() );    
 }
 
 // -----------------------------------------------------------------------------
@@ -42,5 +42,5 @@ void MissionParameter_AgentKnowledgeList::Send( Common::MsgMissionParameter& asn
     MissionParameter_ABC::Send( asn );
     asn.mutable_value()->mutable_unitknowledgelist();
     for( std::vector< int >::const_iterator it = agentKnowledges_.begin(); it != agentKnowledges_.end(); ++it )
-        asn.mutable_value()->mutable_unitknowledgelist()->add_elem()->set_oid( *it );
+        asn.mutable_value()->mutable_unitknowledgelist()->add_elem()->set_id( *it );
 }

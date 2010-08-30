@@ -94,7 +94,7 @@ void Profile::ReadList( const T& idList, T_Ids& ids )
     ids.clear();
     ids.reserve( idList.elem_size() );
     for( int i = 0; i < idList.elem_size(); ++i )
-        ids.push_back( idList.elem( i ).oid() );
+        ids.push_back( idList.elem( i ).id() );
     std::sort( ids.begin(), ids.end() );
 }
 

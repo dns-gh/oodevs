@@ -61,8 +61,8 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
         builder.SetField( "density", construction.density() ); //real
     if( construction.has_percentage() )
         builder.SetField( "percentage", construction.percentage() ); //int
-    if( construction.has_dotation_type() )
-        builder.SetField( "dotation_type", construction.dotation_type() ); //int
+    if( construction.has_resource() )
+        builder.SetField( "resource", (long)construction.resource().id() ); //int
     if( construction.has_dotation_nbr() )
         builder.SetField( "dotation_nbr", construction.dotation_nbr() ); //int
 
@@ -90,8 +90,8 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
         builder.SetField( "density", mine.density() );
     if( mine.has_percentage() )
         builder.SetField( "percentage", mine.percentage() );
-    if( mine.has_dotation_type() )
-        builder.SetField( "dotation_type", mine.dotation_type() );
+    if( mine.has_resource() )
+        builder.SetField( "resource", (long)mine.resource().id() );
     if( mine.has_dotation_nbr() )
         builder.SetField( "dotation_nbr", mine.dotation_nbr() );
 
@@ -124,7 +124,7 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
 
     builder.SetId( "id" );
     builder.SetField( "object_id", objectId );
-    builder.SetField( "tc2", logistic.tc2() ); // automat id
+    builder.SetField( "tc2", (long)logistic.tc2().id() ); // automat id
 
     db.Execute( builder );
 }
@@ -210,9 +210,9 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
 
     builder.SetId( "id" );
     builder.SetField( "object_id", objectId );
-    builder.SetField( "agent_id", nbc_agent.agent_id() ); // int
-    builder.SetField( "concentration", nbc_agent.concentration() ); // int
-    builder.SetField( "source_life_duration", nbc_agent.source_life_duration() ); // int
+    builder.SetField( "agent_id", (long)nbc_agent.agent().id() ); // int 
+    builder.SetField( "concentration", nbc_agent.concentration() ); // int 
+    builder.SetField( "source_life_duration", nbc_agent.source_life_duration() ); // int 
 
     db.Execute( builder );
 }

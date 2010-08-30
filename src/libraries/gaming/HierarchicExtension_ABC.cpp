@@ -44,7 +44,7 @@ HierarchicExtension_ABC::~HierarchicExtension_ABC()
 // -----------------------------------------------------------------------------
 void HierarchicExtension_ABC::DoUpdate( const MsgsSimToClient::MsgUnitCreation& message )
 {
-    superior_ = &automatResolver_.Get( message.oid_automate() );
+    superior_ = &automatResolver_.Get( message.automat().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -53,10 +53,10 @@ void HierarchicExtension_ABC::DoUpdate( const MsgsSimToClient::MsgUnitCreation& 
 // -----------------------------------------------------------------------------
 void HierarchicExtension_ABC::DoUpdate( const MsgsSimToClient::MsgAutomatCreation& message )
 {
-    if( message.has_oid_parent() && message.oid_parent().has_automate() )
-        superior_ = &automatResolver_.Get( message.oid_parent().automate().oid() );
+    if( message.has_oid_parent() && message.oid_parent().has_automat() )
+        superior_ = &automatResolver_.Get( message.oid_parent().automat().id() );
     else if( message.has_oid_parent() && message.oid_parent().has_formation() )
-        superior_ = &formationResolver_.Get( message.oid_parent().formation().oid() );
+        superior_ = &formationResolver_.Get( message.oid_parent().formation().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,10 +65,10 @@ void HierarchicExtension_ABC::DoUpdate( const MsgsSimToClient::MsgAutomatCreatio
 // -----------------------------------------------------------------------------
 void HierarchicExtension_ABC::DoUpdate( const Common::MsgFormationCreation& message )
 {
-    if( message.has_oid_formation_parente()  )
-        superior_ = &formationResolver_.Get( message.oid_formation_parente() );
+    if( message.has_parent()  )
+        superior_ = &formationResolver_.Get( message.parent().id() );
     else
-        superior_ = &teamResolver_.Get( message.oid_camp() );
+        superior_ = &teamResolver_.Get( message.party().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +77,7 @@ void HierarchicExtension_ABC::DoUpdate( const Common::MsgFormationCreation& mess
 // -----------------------------------------------------------------------------
 void HierarchicExtension_ABC::DoUpdate( const Common::MsgUnitChangeSuperior& message )
 {
-    UpdateSuperior( automatResolver_.Get( message.oid_automate() ) );
+    UpdateSuperior( automatResolver_.Get( message.parent().id() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,10 +86,10 @@ void HierarchicExtension_ABC::DoUpdate( const Common::MsgUnitChangeSuperior& mes
 // -----------------------------------------------------------------------------
 void HierarchicExtension_ABC::DoUpdate( const Common::MsgAutomatChangeSuperior& message )
 {
-    if( message.has_oid_superior() && message.oid_superior().has_automate() )
-        UpdateSuperior( automatResolver_.Get( message.oid_superior().automate().oid() ) );
-    else if( message.has_oid_superior() && message.oid_superior().has_formation() )
-        UpdateSuperior( formationResolver_.Get( message.oid_superior().formation().oid() ) );
+    if( message.has_superior() && message.superior().has_automat() )
+        UpdateSuperior( automatResolver_.Get( message.superior().automat().id() ) );
+    else if( message.has_superior() && message.superior().has_formation() )
+        UpdateSuperior( formationResolver_.Get( message.superior().formation().id() ) );
 }
 
 // -----------------------------------------------------------------------------

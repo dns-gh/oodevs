@@ -561,10 +561,10 @@ void MIL_AgentPion::SendCreation() const
     assert( pType_ );
 
     client::UnitCreation asnMsg;
-    asnMsg().set_oid         ( GetID() );
-    asnMsg().set_type_pion   ( pType_->GetID() );
+    asnMsg().mutable_id()->set_id( GetID() );
+    asnMsg().mutable_type()->set_id( pType_->GetID() );
     asnMsg().set_nom         ( GetName().c_str() ); // !! pointeur sur const char*
-    asnMsg().set_oid_automate( GetAutomate().GetID() );
+    asnMsg().mutable_automat()->set_id( GetAutomate().GetID() );
     asnMsg().set_pc          ( IsPC() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -763,8 +763,8 @@ void MIL_AgentPion::OnReceiveMsgResupply( const Common::MsgMissionParameters& ms
         PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
         for( int i = 0; i < msg.elem( 0 ).value().list_size(); ++i )
         {
-            Common::MsgEquipmentType type;
-            type.set_equipment( msg.elem( 0 ).value().list( i ).list( 0 ).identifier() );
+            Common::EquipmentType type;
+            type.set_id( msg.elem( 0 ).value().list( i ).list( 0 ).identifier() );
             int number = msg.elem( 0 ).value().list( i ).list( 1 ).quantity();
             const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( type );
             if( pComposanteType )
@@ -921,7 +921,7 @@ void MIL_AgentPion::OnReceiveMagicCancelSurrender()
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveMsgChangeSuperior( const MIL_EntityManager& manager, const MsgsClientToSim::MsgUnitMagicAction& msg )
 {
-    MIL_Automate* pNewAutomate = manager.FindAutomate( msg.parametres().elem( 0 ).value().automat().oid() );
+    MIL_Automate* pNewAutomate = manager.FindAutomate( msg.parametres().elem( 0 ).value().automat().id() );
     if( !pNewAutomate )
         throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate );
 
@@ -991,8 +991,8 @@ void MIL_AgentPion::ChangeSuperior( MIL_Automate& newAutomate )
     pAutomate_->RegisterPion  ( *this );
 
     client::UnitChangeSuperior asnMsg;
-    asnMsg().set_oid( GetID() );
-    asnMsg().set_oid_automate( newAutomate.GetID() );
+    asnMsg().mutable_unit()->set_id( GetID() );
+    asnMsg().mutable_parent()->set_id( newAutomate.GetID() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 

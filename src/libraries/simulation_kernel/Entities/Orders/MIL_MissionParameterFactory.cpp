@@ -129,14 +129,14 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
             ptr = new MIL_PlannedWorkParameter( asn.value().plannedwork(), entityManager );
         else if( asn.value().has_plannedworklist() )
             ptr = new MIL_PlannedWorkListParameter( asn.value().plannedworklist(), entityManager );
-        else if( asn.value().has_dotationtype() )
-            ptr = new MIL_DotationTypeParameter( asn.value().dotationtype() );
+        else if ( asn.value().has_resourcetype() )
+            ptr = new MIL_DotationTypeParameter( asn.value().resourcetype() );
         else if( asn.value().has_equipmenttype() )
             ptr = new MIL_EquipmentTypeParameter( asn.value().equipmenttype() );
         else if( asn.value().has_tirindirect() )
         {
-            Common::MsgUnitFire msg;
-            msg.set_oid( asn.value().tirindirect() );
+            Common::FireId msg;
+            msg.set_id( asn.value().tirindirect().id() );
             ptr = new MIL_TirIndirectParameter( msg );
         }
         else if( asn.value().has_urbanblock() )
@@ -282,8 +282,8 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateTir( int id )
 {
-    Common::MsgUnitFire msg;
-    msg.set_oid( id );
+    Common::FireId msg;
+    msg.set_id( id );
     boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_TirIndirectParameter( msg ) );
     return result;
 }

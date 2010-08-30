@@ -60,7 +60,7 @@ void Lima::Update( const MsgsClientToMessenger::MsgLimaUpdateRequest& message )
 void Lima::SendCreation( dispatcher::ClientPublisher_ABC& client ) const
 {
     MsgsMessengerToClient::MsgLimaCreation creation ;
-    creation.set_oid( GetID() );
+    creation.mutable_id()->set_id( GetID() );
     TacticalLine_ABC::Send( *creation.mutable_tactical_line() );
     plugins::messenger::LimaCreation message;
     message() = creation;
@@ -74,7 +74,7 @@ void Lima::SendCreation( dispatcher::ClientPublisher_ABC& client ) const
 void Lima::SendUpdate( dispatcher::ClientPublisher_ABC& client ) const
 {
     MsgsMessengerToClient::MsgLimaUpdate update;
-    update.set_oid( GetID() );
+    update.mutable_id()->set_id( GetID() );
     TacticalLine_ABC::Send( *update.mutable_tactical_line() );
     plugins::messenger::LimaUpdate message( update );
     message.Send( client );
@@ -87,7 +87,7 @@ void Lima::SendUpdate( dispatcher::ClientPublisher_ABC& client ) const
 void Lima::SendDestruction( dispatcher::ClientPublisher_ABC& client ) const
 {
     MsgsMessengerToClient::MsgLimaDestruction destruction;
-    destruction.set_oid( GetID() );
+    destruction.mutable_id()->set_id( GetID() );
     plugins::messenger::LimaDestruction message( destruction );
     message.Send( client );
 }

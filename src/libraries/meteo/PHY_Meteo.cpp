@@ -152,6 +152,7 @@ void PHY_Meteo::Update( const Common::MsgMeteoAttributes& msg )
         pPrecipitation_ = &PHY_Precipitation::none_;
 
     // Lighting
+    /*
     pLighting_ = PHY_Lighting::FindLighting( msg.lighting() );
 
     if( !pLighting_ )
@@ -161,6 +162,7 @@ void PHY_Meteo::Update( const Common::MsgMeteoAttributes& msg )
         else
             pLighting_ = &PHY_Lighting::jourSansNuage_;
     }
+    */
 }
 
 // -----------------------------------------------------------------------------
@@ -273,7 +275,7 @@ void PHY_Meteo::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
 {
     client::ControlGlobalMeteo msg;
     Common::MsgMeteoAttributes* att = msg().mutable_attributes();
-    msg().set_oid( id_ );
+    msg().mutable_id()->set_id( id_ );
     att->set_wind_speed( static_cast< int >( wind_.rWindSpeed_ / conversionFactor_ ) );
     att->mutable_wind_direction()->set_heading( 0 );
     att->set_cloud_floor( nPlancherCouvertureNuageuse_ );
@@ -281,7 +283,7 @@ void PHY_Meteo::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
     att->set_cloud_density( static_cast< int >( rDensiteCouvertureNuageuse_ * 100. + 0.01 ) );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( 0 );
-    att->set_lighting( pLighting_->GetAsnID() );
+    //att->set_lighting( pLighting_->GetAsnID() );
     msg.Send( publisher );
 }
 

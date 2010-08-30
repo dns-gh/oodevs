@@ -17,7 +17,7 @@ class DEC_Knowledge_Urban;
 
 namespace Common
 {
-    class MsgUrbanBlock;
+    class UrbanObjectId;
 }
 
 namespace urban
@@ -36,7 +36,7 @@ class MIL_UrbanBlockParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_UrbanBlockParameter( const Common::MsgUrbanBlock& asn, const DEC_KnowledgeResolver_ABC& resolver );
+    explicit MIL_UrbanBlockParameter( const Common::UrbanObjectId& asn, const DEC_KnowledgeResolver_ABC& resolver );
     explicit MIL_UrbanBlockParameter( boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock );
     virtual ~MIL_UrbanBlockParameter();
     //@}
@@ -48,7 +48,7 @@ public:
 
     //! @name Conversions
     //@{
-    virtual bool ToUrbanBlock( Common::MsgUrbanBlock& ) const;
+    virtual bool ToUrbanBlock( Common::UrbanObjectId& ) const;
     virtual bool ToUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urban >& ) const;
     //@}
 

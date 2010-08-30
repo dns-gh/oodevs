@@ -30,14 +30,14 @@ unsigned long Population::nMaxId_ = 200;
 // Name: Population constructor
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-Population::Population( const MsgsSimToClient::MsgPopulationCreation& message, Controllers& controllers, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< PopulationType >& typeResolver )
-    : EntityImplementation< Population_ABC >( controllers.controller_, message.oid(), QString( message.nom().c_str() ) )
+Population::Population( const MsgsSimToClient::MsgPopulationCreation& message, Controllers& controllers, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::PopulationType >& typeResolver )
+    : EntityImplementation< Population_ABC >( controllers.controller_, message.id().id(), QString( message.nom().c_str() ) )
     , controllers_  ( controllers )
     , converter_    ( converter )
-    , type_         ( typeResolver.Get( message.type_population() ) )
+    , type_         ( typeResolver.Get( message.type().id() ) )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.oid() );
+        name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.id().id() );
     RegisterSelf( *this );
     Attach( *new PropertiesDictionary( controllers.controller_ ) );
     controllers_.Register( *this );
@@ -101,7 +101,7 @@ unsigned int Population::GetLivingHumans() const
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate& message )
 {
-    static_cast< PopulationFlow& >( tools::Resolver< PopulationFlow_ABC >::Get( message.oid() ) ).Update( message );
+    static_cast< PopulationFlow& >( tools::Resolver< PopulationFlow_ABC >::Get( message.id().id() ) ).Update( message );
     ComputeCenter();
     Touch();
 }
@@ -112,7 +112,7 @@ void Population::DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate& messa
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationUpdate& message )
 {
-    static_cast< PopulationConcentration& >( tools::Resolver< PopulationConcentration_ABC >::Get( message.oid() ) ).Update( message );
+    static_cast< PopulationConcentration& >( tools::Resolver< PopulationConcentration_ABC >::Get( message.id().id() ) ).Update( message );
     ComputeCenter();
     Touch();
 }
@@ -123,11 +123,11 @@ void Population::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationUpda
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const MsgsSimToClient::MsgPopulationFlowCreation& message )
 {
-    if( ! tools::Resolver< PopulationFlow_ABC >::Find( message.oid() ) )
+    if( ! tools::Resolver< PopulationFlow_ABC >::Find( message.id().id() ) )
     {
         PopulationFlow* entity = new PopulationFlow( message, converter_ );
         entity->Attach< kernel::Positions >( *new PopulationPartPositionsProxy( *entity ) );
-        tools::Resolver< PopulationFlow_ABC >::Register( message.oid(), *entity );
+        tools::Resolver< PopulationFlow_ABC >::Register( message.id().id(), *entity );
         ComputeCenter();
         Touch();
     }
@@ -139,11 +139,11 @@ void Population::DoUpdate( const MsgsSimToClient::MsgPopulationFlowCreation& mes
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationCreation& message )
 {
-    if( ! tools::Resolver< PopulationConcentration_ABC >::Find( message.oid() ) )
+    if( ! tools::Resolver< PopulationConcentration_ABC >::Find( message.id().id() ) )
     {
         PopulationConcentration* entity = new PopulationConcentration( message, converter_, type_.GetDensity() );
         entity->Attach< kernel::Positions >( *new PopulationPartPositionsProxy( *entity ) );
-        tools::Resolver< PopulationConcentration_ABC >::Register( message.oid(), *entity );
+        tools::Resolver< PopulationConcentration_ABC >::Register( message.id().id(), *entity );
         ComputeCenter();
         Touch();
     }
@@ -155,8 +155,8 @@ void Population::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationCrea
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const MsgsSimToClient::MsgPopulationFlowDestruction& message )
 {
-    delete tools::Resolver< PopulationFlow_ABC >::Find( message.oid() );
-    tools::Resolver< PopulationFlow_ABC >::Remove( message.oid() );
+    delete tools::Resolver< PopulationFlow_ABC >::Find( message.id().id() );
+    tools::Resolver< PopulationFlow_ABC >::Remove( message.id().id() );
     ComputeCenter();
     Touch();
 }
@@ -167,8 +167,8 @@ void Population::DoUpdate( const MsgsSimToClient::MsgPopulationFlowDestruction& 
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationDestruction& message )
 {
-    delete tools::Resolver< PopulationConcentration_ABC >::Find( message.oid() );
-    tools::Resolver< PopulationConcentration_ABC >::Remove( message.oid() );
+    delete tools::Resolver< PopulationConcentration_ABC >::Find( message.id().id() );
+    tools::Resolver< PopulationConcentration_ABC >::Remove( message.id().id() );
     ComputeCenter();
     Touch();
 }
@@ -328,7 +328,7 @@ void Population::Accept( kernel::LocationVisitor_ABC& visitor ) const
 // Name: Population::GetType
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-const PopulationType& Population::GetType() const
+const kernel::PopulationType& Population::GetType() const
 {
     return type_;
 }

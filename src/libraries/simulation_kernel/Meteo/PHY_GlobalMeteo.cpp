@@ -51,7 +51,7 @@ PHY_GlobalMeteo::~PHY_GlobalMeteo()
 void PHY_GlobalMeteo::SendCreation() const
 {
     client::ControlGlobalMeteo msg;
-    msg().set_oid( id_ );
+    msg().mutable_id()->set_id( id_ );
     Common::MsgMeteoAttributes* att = msg().mutable_attributes();
     att->set_wind_speed( static_cast< int >( wind_.rWindSpeed_ / conversionFactor_ ) );
     NET_ASN_Tools::WriteDirection( wind_.vWindDirection_, *( att->mutable_wind_direction() ) );
@@ -60,6 +60,6 @@ void PHY_GlobalMeteo::SendCreation() const
     att->set_cloud_density( static_cast< int >( rDensiteCouvertureNuageuse_ * 100. + 0.01 ) );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( 0 );
-    att->set_lighting( GetLighting().GetAsnID() );
+    //att->set_lighting( GetLighting().GetAsnID() );
     msg.Send( NET_Publisher_ABC::Publisher() );
 }

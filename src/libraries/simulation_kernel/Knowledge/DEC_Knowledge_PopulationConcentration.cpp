@@ -258,10 +258,11 @@ void DEC_Knowledge_PopulationConcentration::SendMsgCreation() const
 {
     assert( pPopulationKnowledge_ );
     client::PopulationConcentrationKnowledgeCreation asnMsg;
-    asnMsg().set_oid_connaissance_concentration( nID_ );
-    asnMsg().set_oid_connaissance_population( pPopulationKnowledge_->GetID() );
-    asnMsg().set_oid_groupe_possesseur( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
-    asnMsg().set_oid_concentration_reelle( pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0 );
+    asnMsg().mutable_id()->set_id( nID_ );
+    asnMsg().mutable_population()->set_id( pPopulationKnowledge_->GetID() );
+    asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
+    asnMsg().mutable_concentration()->set_id( pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0 );
+
     NET_ASN_Tools::WritePoint( position_, *asnMsg().mutable_position() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -274,9 +275,9 @@ void DEC_Knowledge_PopulationConcentration::SendMsgDestruction() const
 {
     assert( pPopulationKnowledge_ );
     client::PopulationConcentrationKnowledgeDestruction asnMsg;
-    asnMsg().set_oid_connaissance_concentration( nID_ );
-    asnMsg().set_oid_connaissance_population( pPopulationKnowledge_->GetID() );
-    asnMsg().set_oid_groupe_possesseur( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
+    asnMsg().mutable_id()->set_id( nID_ );
+    asnMsg().mutable_population()->set_id( pPopulationKnowledge_->GetID() );
+    asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() ); 
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -288,12 +289,12 @@ void DEC_Knowledge_PopulationConcentration::SendFullState()
 {
     assert( pPopulationKnowledge_ );
     client::PopulationConcentrationKnowledgeUpdate asnMsg;
-    asnMsg().set_oid_connaissance_concentration( nID_ );
-    asnMsg().set_oid_connaissance_population ( pPopulationKnowledge_->GetID() );
-    asnMsg().set_oid_groupe_possesseur( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
-    asnMsg().set_est_percu( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
-    asnMsg().set_oid_concentration_reelle( pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0 );
-    asnMsg().set_pertinence( static_cast< unsigned int >( rRelevance_ * 100. ) );
+    asnMsg().mutable_id()->set_id( nID_ );
+    asnMsg().mutable_population()->set_id( pPopulationKnowledge_->GetID() );
+    asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
+    asnMsg().set_est_percu                ( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
+    asnMsg().mutable_concentration()->set_id( pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0 );
+    asnMsg().set_pertinence               ( (unsigned int)( rRelevance_ * 100. ) );
     rLastRelevanceSent_ = rRelevance_;
     if( bReconAttributesValid_ )
     {
@@ -316,13 +317,14 @@ void DEC_Knowledge_PopulationConcentration::UpdateOnNetwork()
     if( *pPreviousPerceptionLevel_ == *pCurrentPerceptionLevel_ && !bHumansUpdated_ && !bAttitudeUpdated_ && !bRealConcentrationUpdated_ && !bRelevanceUpdated_ )
         return;
     client::PopulationConcentrationKnowledgeUpdate asnMsg;
-    asnMsg().set_oid_connaissance_concentration( nID_ );
-    asnMsg().set_oid_connaissance_population( pPopulationKnowledge_->GetID() );
-    asnMsg().set_oid_groupe_possesseur( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
+    asnMsg().mutable_id()->set_id( nID_ );
+    asnMsg().mutable_population()->set_id( pPopulationKnowledge_->GetID() );
+    asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
+
     if( *pPreviousPerceptionLevel_ != *pCurrentPerceptionLevel_ )
         asnMsg().set_est_percu( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
     if( bRealConcentrationUpdated_ )
-        asnMsg().set_oid_concentration_reelle( pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0 );
+        asnMsg().mutable_concentration()->set_id( pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0 );
     if( bRelevanceUpdated_ )
     {
         asnMsg().set_pertinence( static_cast< unsigned int >( rRelevance_ * 100. ) );

@@ -21,9 +21,9 @@ using namespace dispatcher;
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
 PopulationConcentration::PopulationConcentration( const Population& population, const MsgsSimToClient::MsgPopulationConcentrationCreation& msg )
-    : dispatcher::PopulationConcentration_ABC( msg.oid() )
+    : dispatcher::PopulationConcentration_ABC( msg.id().id() )
     , population_     ( population )
-    , nID_            ( msg.oid() )
+    , nID_            ( msg.id().id() )
     , position_       ( msg.position() )
     , nNbrAliveHumans_( 0 )
     , nNbrDeadHumans_ ( 0 )
@@ -62,8 +62,8 @@ void PopulationConcentration::DoUpdate( const MsgsSimToClient::MsgPopulationConc
 void PopulationConcentration::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationConcentrationCreation asn;
-    asn().set_oid( nID_ );
-    asn().set_oid_population( population_.GetId() );
+    asn().mutable_id()->set_id( nID_ );
+    asn().mutable_population()->set_id( population_.GetId() );
     *asn().mutable_position() = position_;
     asn.Send( publisher );
 }
@@ -75,8 +75,8 @@ void PopulationConcentration::SendCreation( ClientPublisher_ABC& publisher ) con
 void PopulationConcentration::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationConcentrationUpdate asn;
-    asn().set_oid( nID_ );
-    asn().set_oid_population( population_.GetId() );
+    asn().mutable_id()->set_id( nID_ );
+    asn().mutable_population()->set_id( population_.GetId() );
     asn().set_attitude( nAttitude_ );
     asn().set_nb_humains_morts( nNbrDeadHumans_ );
     asn().set_nb_humains_vivants( nNbrAliveHumans_ );
@@ -90,8 +90,8 @@ void PopulationConcentration::SendFullUpdate( ClientPublisher_ABC& publisher ) c
 void PopulationConcentration::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationConcentrationDestruction destruction;
-    destruction().set_oid_population( population_.GetId() );
-    destruction().set_oid           ( nID_ );
+    destruction().mutable_population()->set_id( population_.GetId() );
+    destruction().mutable_id()->set_id           ( nID_ );
     destruction.Send( publisher );
 }
 

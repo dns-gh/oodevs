@@ -1,3 +1,12 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
 package MsgsMessengerToClient;
 
 import "Common.proto";
@@ -14,15 +23,15 @@ message TacticalLineAck {
 
 // Limits
 message MsgLimitCreation {
-   required uint32                 oid           = 1;
-   required Common.MsgTacticalLine tactical_line = 2;
+    required Common.TacticalLineId  id   = 1;
+    required Common.MsgTacticalLine tactical_line = 2;
 }
 message MsgLimitUpdate {
-   required uint32                 oid           = 1;
-   required Common.MsgTacticalLine tactical_line = 2;
+    required Common.TacticalLineId  id   = 1;
+    required Common.MsgTacticalLine tactical_line = 2;
 }
 message MsgLimitDestruction {
-    optional uint32 oid = 1;
+    required Common.TacticalLineId id = 1;
 }
 message MsgLimitCreationRequestAck {
     optional TacticalLineAck.ErrorCode error_code = 1;
@@ -36,14 +45,14 @@ message MsgLimitDestructionRequestAck {
 
 // Phase lines
 message MsgLimaCreation {
-   required uint32                 oid           = 1;
-   required Common.MsgTacticalLine tactical_line = 2;
+    required Common.TacticalLineId  id   = 1;
+    required Common.MsgTacticalLine tactical_line = 2;
 }
 message MsgLimaDestruction {
-   required uint32 oid = 1;
+    required Common.TacticalLineId id = 1;
 }
 message MsgLimaUpdate {
-    required uint32 oid = 1;
+    required Common.TacticalLineId  id   = 1;
     required Common.MsgTacticalLine tactical_line = 2;
 }
 message MsgLimaCreationRequestAck {
@@ -58,12 +67,12 @@ message MsgLimaDestructionRequestAck {
 
 // Intelligences
 message MsgIntelligenceCreation {
-   required uint32                 oid          = 1;
+   required Common.IntelligenceId  id           = 1;
    required Common.MsgIntelligence intelligence = 2;
 }
 message MsgIntelligenceUpdate {
-   required uint32                 oid       = 1;
-   optional uint32                 formation = 2;
+   required Common.IntelligenceId  id        = 1;
+   optional Common.FormationId     formation = 2;
    optional string                 name      = 3;
    optional string                 nature    = 4;
    optional Common.EnumNatureLevel level     = 5;
@@ -72,7 +81,7 @@ message MsgIntelligenceUpdate {
    optional Common.EnumDiplomacy   diplomacy = 8;
 }
 message MsgIntelligenceDestruction {
-   required uint32 oid = 1;
+   required Common.IntelligenceId id = 1;
 }
 message IntelligenceRequestAck {
     enum ErrorCode {
@@ -94,19 +103,19 @@ message MsgIntelligenceDestructionRequestAck {
 
 // Drawing/shapes
 message MsgShapeCreation {
-   required uint32          oid   = 1;
+   required Common.DrawingId id    = 1;
    required Common.MsgShape shape = 2;
 }
 
 message MsgShapeUpdate {
-   required uint32                     oid       = 1;
+   required Common.DrawingId           id        = 1;
    optional string                     category  = 2;
    optional string                     color     = 3;
    optional string                     template_ = 4;
    optional Common.MsgCoordLatLongList points    = 5;
 }
 message MsgShapeDestruction {
-   required uint32 oid = 1;
+   required Common.DrawingId id = 1;
 }
 message ShapeRequestAck {
     enum ErrorCode {
@@ -127,7 +136,6 @@ message MsgShapeDestructionRequestAck {
     required ShapeRequestAck.ErrorCode error_code = 1;
 }
 
-
 // LTO begin
 message MsgNoteCreation {
     required uint32                     id          = 1;
@@ -142,7 +150,6 @@ message MsgNoteUpdate {
     optional string                     number	    = 4;
     optional string                     description = 5;
     optional uint32                     parent      = 6;
-    
 }
 
 message MsgNoteDestruction {

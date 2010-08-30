@@ -27,7 +27,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_AgentKnowledgeParameter( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
-             MIL_AgentKnowledgeParameter( const Common::MsgUnitKnowledge& asn, const DEC_KnowledgeResolver_ABC& resolver );
+             MIL_AgentKnowledgeParameter( const Common::UnitKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver );
     virtual ~MIL_AgentKnowledgeParameter();
     //@}
 
@@ -38,7 +38,7 @@ public:
 
     //! @name Conversions
     //@{
-    virtual bool ToAgentKnowledge( Common::MsgUnitKnowledge& asn ) const;
+    virtual bool ToAgentKnowledge( Common::UnitKnowledgeId& asn ) const;
     virtual bool ToAgentKnowledge( boost::shared_ptr< DEC_Knowledge_Agent >& value ) const;
     //@}
 

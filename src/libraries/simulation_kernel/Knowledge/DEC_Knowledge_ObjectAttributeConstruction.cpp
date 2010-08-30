@@ -110,7 +110,7 @@ void DEC_Knowledge_ObjectAttributeConstruction::Send( Common::MsgObjectAttribute
 {
     asn.mutable_construction()->set_percentage( int( rConstructionPercentage_ * 100) );
     asn.mutable_construction()->set_dotation_nbr( nNbrDotation_ );
-    asn.mutable_construction()->set_dotation_type( nDotationType_ );
+    asn.mutable_construction()->mutable_resource()->set_id( nDotationType_ );
 }
 
 // =============================================================================

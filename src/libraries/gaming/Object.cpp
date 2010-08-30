@@ -26,16 +26,16 @@ const QString Object::typeName_ = "object";
 // Name: Object::Object
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-Object::Object( const MsgsSimToClient::MsgObjectCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& typeResolver )
-    : EntityImplementation< Object_ABC >( controller, message.oid(), QString( message.name().c_str() ) )
+Object::Object( const MsgsSimToClient::MsgObjectCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver )
+    : EntityImplementation< Object_ABC >( controller, message.id().id(), QString( message.name().c_str() ) )
     , converter_        ( converter )
-    , type_             ( typeResolver.Get( message.type() ) )
+    , type_             ( typeResolver.Get( message.type().id() ) )
     , nTypeLocalisation_( message.location().type() )
     , construction_     ( 0 )
     , valorization_     ( 0 )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.oid() );
+        name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.id().id() );
     RegisterSelf( *this );
     if( message.attributes().has_obstacle()  )
     {
@@ -62,7 +62,7 @@ Object::~Object()
 // Name: Object::GetType
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-const ObjectType& Object::GetType() const
+const kernel::ObjectType& Object::GetType() const
 {
     return type_;
 }

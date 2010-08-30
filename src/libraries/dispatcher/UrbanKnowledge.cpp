@@ -25,10 +25,10 @@ using namespace dispatcher;
 // Created: MGD 2009-12-11
 // -----------------------------------------------------------------------------
 UrbanKnowledge::UrbanKnowledge( const Model_ABC& model, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message )
-    : dispatcher::UrbanKnowledge_ABC( message.oid() )
+    : dispatcher::UrbanKnowledge_ABC( message.id().id() )
     , model_                        ( model )
-    , team_                         ( model.Sides().Get( message.team() ) )
-    , pUrban_                       ( model.UrbanBlocks().Find( message.real_urban() ) )
+    , team_                         ( model.Sides().Get( message.party().id() ) )
+    , pUrban_                       ( model.UrbanBlocks().Find( message.urban_block().id() ) )
     , bPerceived_                   ( false )
     , rProgress_                    ( 0 )
 {
@@ -54,8 +54,8 @@ UrbanKnowledge::~UrbanKnowledge()
 // -----------------------------------------------------------------------------
 void UrbanKnowledge::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeCreation& message )
 {
-    if( ( message.real_urban() && ! pUrban_ ) || ( pUrban_ && pUrban_->GetId() != unsigned int( message.real_urban() ) ) )
-        pUrban_ = model_.UrbanBlocks().Find( message.real_urban() );
+    if( ( message.urban_block().id() && ! pUrban_ ) || ( pUrban_ && pUrban_->GetId() != unsigned int( message.urban_block().id() ) ) )
+        pUrban_ = model_.UrbanBlocks().Find( message.urban_block().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,8 +64,8 @@ void UrbanKnowledge::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeCreation&
 // -----------------------------------------------------------------------------
 void UrbanKnowledge::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& message )
 {
-    if( message.has_real_urban() )
-        pUrban_ = model_.UrbanBlocks().Find( message.real_urban() );
+    if( message.has_urban_block() )
+        pUrban_ = model_.UrbanBlocks().Find( message.urban_block().id() );
     if( message.has_perceived() )
     {
         optionals_.perceivedPresent = 1;
@@ -76,17 +76,17 @@ void UrbanKnowledge::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& m
         optionals_.progressPresent = 1;
         rProgress_ = message.progress();
     }
-    if( message.has_maxprogress() )
+    if( message.has_max_progress() )
     {
         optionals_.maxProgressPresent = 1;
-        rMaxProgress_ = message.maxprogress();
+        rMaxProgress_ = message.max_progress();
     }
-    if( message.has_automat_perception() )
+    if( message.has_automat_perceptions() )
     {
         optionals_.automat_perceptionPresent = 1;
         automatPerceptions_.clear();
-        for( int i = 0; i < message.automat_perception().elem_size(); ++i )
-            automatPerceptions_.push_back( &model_.Automats().Get( message.automat_perception().elem( i ) ) );
+        for( int i = 0; i < message.automat_perceptions().elem_size(); ++i )
+            automatPerceptions_.push_back( &model_.Automats().Get( message.automat_perceptions().elem( i ).id() ) );
     }
 }
 
@@ -97,9 +97,9 @@ void UrbanKnowledge::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& m
 void UrbanKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::UrbanKnowledgeCreation message;
-    message().set_oid( GetId() );
-    message().set_team( team_.GetId() );
-    message().set_real_urban( pUrban_ ? pUrban_->GetId() : 0 );
+    message().mutable_id()->set_id( GetId() );
+    message().mutable_party()->set_id( team_.GetId() );
+    message().mutable_urban_block()->set_id( pUrban_ ? pUrban_->GetId() : 0 );
     message.Send( publisher );
 }
 
@@ -110,18 +110,21 @@ void UrbanKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 void UrbanKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::UrbanKnowledgeUpdate message;
-    message().set_oid( GetId() );
-    message().set_team( team_.GetId() );
-    message().set_real_urban( pUrban_ ? pUrban_->GetId() : 0 );
+    message().mutable_id()->set_id( GetId() );
+    message().mutable_party()->set_id( team_.GetId() );
+    message().mutable_urban_block()->set_id( pUrban_ ? pUrban_->GetId() : 0 );
     if( optionals_.perceivedPresent )
         message().set_perceived( bPerceived_ );
     if( optionals_.progressPresent )
         message().set_progress( rProgress_ );
     if( optionals_.maxProgressPresent )
-        message().set_maxprogress( rMaxProgress_ );
+        message().set_max_progress( rMaxProgress_ );
     if( optionals_.automat_perceptionPresent )
         for( std::vector< const kernel::Automat_ABC* >::const_iterator it = automatPerceptions_.begin(); it != automatPerceptions_.end(); ++it )
-            message().mutable_automat_perception()->add_elem( (*it)->GetId() );
+        {
+            Common::AutomatId &data = *message().mutable_automat_perceptions()->add_elem();
+            data.set_id( (*it)->GetId() );
+        }
     message.Send( publisher );
 }
 
@@ -132,8 +135,8 @@ void UrbanKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 void UrbanKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::UrbanKnowledgeDestruction message;
-    message().set_oid( GetId() );
-    message().set_team( team_.GetId() );
+    message().mutable_id()->set_id( GetId() );
+    message().mutable_party()->set_id( team_.GetId() );
     message.Send( publisher );
 }
 

@@ -43,10 +43,10 @@ namespace
         void createObject()
         {
             MsgsSimToClient::MsgObjectCreation& message = *expected.mutable_message()->mutable_object_creation();
-            message.set_oid( 1 );
-            message.set_type( "my_type" );
+            message.mutable_id()->set_id( 1 );
+            message.mutable_type()->set_id( "my_type" );
             message.set_name( "test" );
-            message.set_team( team.GetId() );
+            message.mutable_party()->set_id( team.GetId() );
             message.mutable_location()->set_type( Common::MsgLocation::point );
             message.mutable_location()->mutable_coordinates()->add_elem();
             message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 42. );
@@ -88,7 +88,7 @@ BOOST_FIXTURE_TEST_CASE( Object_IsDestroyed, Fixture )
 {
     createObject();
     MsgsSimToClient::MsgObjectDestruction& message = *expected.mutable_message()->mutable_object_destruction();
-    message.set_oid( 1 );
+    message.mutable_id()->set_id( 1 );
     MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
     result->SendDestruction( publisher );
     publisher.verify();
@@ -103,7 +103,7 @@ BOOST_FIXTURE_TEST_CASE( Object_IsUpdated, Fixture )
     {
         createObject();
         MsgsSimToClient::MsgObjectUpdate& message = *expected.mutable_message()->mutable_object_update();
-        message.set_oid( 1 );
+        message.mutable_id()->set_id( 1 );
         message.mutable_location()->set_type( Common::MsgLocation::line );
         message.mutable_location()->mutable_coordinates()->add_elem();
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 1. );
@@ -117,10 +117,10 @@ BOOST_FIXTURE_TEST_CASE( Object_IsUpdated, Fixture )
     {
         expected.mutable_message()->Clear();
         MsgsSimToClient::MsgObjectCreation& message = *expected.mutable_message()->mutable_object_creation();
-        message.set_oid( 1 );
-        message.set_type( "my_type" );
+        message.mutable_id()->set_id( 1 );
+        message.mutable_type()->set_id( "my_type" );
         message.set_name( "test" );
-        message.set_team( team.GetId() );
+        message.mutable_party()->set_id( team.GetId() );
         message.mutable_location()->set_type( Common::MsgLocation::line );
         message.mutable_location()->mutable_coordinates()->add_elem();
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 1. );
@@ -141,7 +141,7 @@ BOOST_FIXTURE_TEST_CASE( Object_IsUpdated_With_No_Optional, Fixture )
     {
         createObject();
         MsgsSimToClient::MsgObjectUpdate& message = *expected.mutable_message()->mutable_object_update();
-        message.set_oid( 1 );
+        message.mutable_id()->set_id( 1 );
         message.mutable_attributes();
         result->Update( message );
         MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
@@ -151,10 +151,10 @@ BOOST_FIXTURE_TEST_CASE( Object_IsUpdated_With_No_Optional, Fixture )
     {
         expected.mutable_message()->Clear();
         MsgsSimToClient::MsgObjectCreation& message = *expected.mutable_message()->mutable_object_creation();
-        message.set_oid( 1 );
-        message.set_type( "my_type" );
+        message.mutable_id()->set_id( 1 );
+        message.mutable_type()->set_id( "my_type" );
         message.set_name( "test" );
-        message.set_team( team.GetId() );
+        message.mutable_party()->set_id( team.GetId() );
         message.mutable_location()->set_type( Common::MsgLocation::point );
         message.mutable_location()->mutable_coordinates()->add_elem();
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 42. );

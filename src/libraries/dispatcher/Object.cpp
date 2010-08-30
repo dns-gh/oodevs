@@ -36,11 +36,11 @@ using namespace dispatcher;
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
 Object::Object( Model_ABC& model, const MsgsSimToClient::MsgObjectCreation& msg, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types )
-    : dispatcher::Object_ABC( msg.oid(), QString( msg.name().c_str() ) )
-    , type_                 ( types.Get( msg.type() ) )
+    : dispatcher::Object_ABC( msg.id().id(), QString( msg.name().c_str() ) )
+    , type_                 ( types.Get( msg.type().id() ) )
     , strName_              ( msg.name()  )
     , localisation_         ( msg.location() )
-    , side_                 ( model.Sides().Get( msg.team() ) )
+    , side_                 ( model.Sides().Get( msg.party().id() ) )
 {
     Initialize( model, msg.attributes() );
     side_.Register( *this );
@@ -113,10 +113,10 @@ void Object::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& msg )
 void Object::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::ObjectCreation asn;
-    asn().set_oid( GetId() );
-    asn().set_type( type_.GetType().c_str() );
+    asn().mutable_id()->set_id( GetId() );
+    asn().mutable_type()->set_id( type_.GetType().c_str() );
     asn().set_name( strName_.c_str() );
-    asn().set_team( side_.GetId() );
+    asn().mutable_party()->set_id( side_.GetId() );
     localisation_.Send( *asn().mutable_location() );
     std::for_each( attributes_.begin(), attributes_.end(),
                    boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
@@ -130,7 +130,7 @@ void Object::SendCreation( ClientPublisher_ABC& publisher ) const
 void Object::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::ObjectUpdate asn;
-    asn().set_oid( GetId() );
+    asn().mutable_id()->set_id( GetId() );
     if( optionals_.localisationPresent )
         localisation_.Send( *asn().mutable_location() );
     std::for_each( attributes_.begin(), attributes_.end(),
@@ -145,7 +145,7 @@ void Object::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 void Object::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::ObjectDestruction destruction;
-    destruction().set_oid( GetId() );
+    destruction().mutable_id()->set_id( GetId() );
     destruction.Send( publisher );
 }
 

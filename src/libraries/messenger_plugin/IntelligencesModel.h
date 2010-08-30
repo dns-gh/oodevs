@@ -62,7 +62,7 @@ public:
 
     //! @name xml read / write
     //@{
-    void ReadIntelligence( xml::xistream& xis, const Common::MsgFormation& formation );
+    void ReadIntelligence( xml::xistream& xis, const Common::FormationId& formation );
     void Write           ( xml::xostream& xos );
     //@}
 

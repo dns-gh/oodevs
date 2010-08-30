@@ -207,7 +207,7 @@ void MedicalTreatmentAttribute::SendFullState( Common::MsgObjectAttributes& asn 
     asn.mutable_medical_treatment()->set_doctors           ( doctors_ );
     //Get the list of the ID of each medical treatment
     for( CIT_MedicalTreatmentMap iter = medicalTreatmentMap_.begin() ; iter != medicalTreatmentMap_.end() ; ++iter )
-        asn.mutable_medical_treatment()->mutable_type_id()->add_elem(  MIL_MedicalTreatmentType::Find( iter->first )->GetID() );
+        asn.mutable_medical_treatment()->add_type_id( MIL_MedicalTreatmentType::Find( iter->first )->GetID() );
 }
 
 // -----------------------------------------------------------------------------

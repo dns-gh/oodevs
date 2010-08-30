@@ -692,10 +692,10 @@ void MedicalPrioritiesFunction( const directia::ScriptRef& refMission, const std
 }
 void IndirectFireFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    Common::MsgUnitFire fire;
-    fire.set_oid( 0 );
-    if( element.ToIndirectFire( fire ) && fire.oid() )
-        refMission.RegisterObject( name, fire.oid() );
+    Common::FireId fire;
+    fire.set_id( 0 );
+    if( element.ToIndirectFire( fire ) && fire.id() )
+        refMission.RegisterObject( name, fire.id() );
 }
 void StringFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {

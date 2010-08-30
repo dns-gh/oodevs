@@ -16,7 +16,7 @@
 
 namespace Common
 {
-    class MsgObjectKnowledge;
+    class ObjectKnowledgeId;
 }
 
 namespace kernel
@@ -52,7 +52,7 @@ public:
     //@{
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     virtual void CommitTo( Common::MsgMissionParameter& message ) const;
-    void CommitTo( Common::MsgObjectKnowledge& message ) const;
+    void CommitTo( Common::ObjectKnowledgeId& message ) const;
     //@}
 
 private:

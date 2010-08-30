@@ -293,7 +293,7 @@ void PHY_SupplyStockConsign::SendFullState( client::LogSupplyHandlingUpdate& asn
 
     assert( pConvoy_ );
 //    asn().set_oid_pion_convoyantPresent( 1 );
-    asn().set_oid_pion_convoyant( pConvoy_->GetPionConvoy() ? pConvoy_->GetPionConvoy()->GetID() : 0 );
+    asn().mutable_convoying_unit()->set_id( pConvoy_->GetPionConvoy() ? pConvoy_->GetPionConvoy()->GetID() : 0 );
 }
 
 // -----------------------------------------------------------------------------

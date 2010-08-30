@@ -64,7 +64,7 @@ void StockAttribute::UpdateData( const T& message )
         for( int i = 0; i < message.stock().resources_size(); ++i )
         {
             const Common::StockResource& resource = message.stock().resources( i );
-            const DotationType* type = resolver_.Find( resource.dotation_type().oid() );
+            const DotationType* type = resolver_.Find( resource.resource().id() );
             if( type )
                 Update( *type, resource );
             controller_.Update( *(StockAttribute_ABC*)this );

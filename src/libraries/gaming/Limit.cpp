@@ -34,7 +34,7 @@ Limit::Limit( kernel::Controller& controller, Publisher_ABC& publisher, const ke
 // Created: NLD 2003-04-28
 //-----------------------------------------------------------------------------
 Limit::Limit( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter, const MsgsMessengerToClient::MsgLimitCreation& message )
-    : TacticalLine_ABC( QString( message.tactical_line().name().c_str() ), message.oid(), publisher, converter )
+    : TacticalLine_ABC( QString( message.tactical_line().name().c_str() ), message.id().id(), publisher, converter )
     , controller_( controller )
 {
     controller_.Create( *(kernel::TacticalLine_ABC*)this );
@@ -71,7 +71,7 @@ void Limit::UpdateToSim( E_State state )
     case eStateModified:
         {
             plugins::messenger::LimitUpdateRequest message;
-            message().set_oid( GetId() );
+            message().mutable_id()->set_id( GetId() );
             message().mutable_tactical_line()->set_name( GetName() );
             WriteGeometry ( *message().mutable_tactical_line()->mutable_geometry() );
             WriteDiffusion( *message().mutable_tactical_line()->mutable_diffusion() );
@@ -81,7 +81,7 @@ void Limit::UpdateToSim( E_State state )
         break;
     case eStateDeleted:
         plugins::messenger::LimitDestructionRequest message;
-        message().set_oid( GetId() );
+        message().mutable_id()->set_id( GetId() );
         Send( message );
         break;
     }

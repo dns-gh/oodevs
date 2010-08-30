@@ -50,23 +50,23 @@ public:
     { throw; }
     virtual bool ToPolygonList( Common::MsgPolygonList& ) const
     { throw; }
-    virtual bool ToAgent( Common::MsgUnit& ) const
+    virtual bool ToAgent( Common::UnitId& ) const
     { throw; }
-    virtual bool ToAgentKnowledge( Common::MsgUnitKnowledge& ) const
+    virtual bool ToAgentKnowledge( Common::UnitKnowledgeId& ) const
     { throw; }
-    virtual bool ToAgentKnowledgeList( Common::MsgUnitKnowledgeList& ) const
+    virtual bool ToAgentKnowledgeList( Common::UnitKnowledgeIdList& asn ) const
     { throw; }
-    virtual bool ToAgentList( Common::MsgUnitList& ) const
+    virtual bool ToAgentList( Common::UnitIdList& asn ) const
     { throw; }
-    virtual bool ToAutomat( Common::MsgAutomat& ) const
+    virtual bool ToAutomat( Common::AutomatId& ) const
     { throw; }
-    virtual bool ToAutomatList( Common::MsgAutomatList& ) const
+    virtual bool ToAutomatList( Common::AutomatIdList& ) const
     { throw; }
     virtual bool ToDirection( Common::MsgHeading& ) const
     { throw; }
-    virtual bool ToDotationType( Common::MsgDotationType& ) const
+    virtual bool ToDotationType( Common::ResourceType& ) const
     { throw; }
-    virtual bool ToEquipmentType( Common::MsgEquipmentType& ) const
+    virtual bool ToEquipmentType( Common::EquipmentType& ) const
     { throw; }
     virtual bool ToGDH( Common::MsgDateTime& ) const
     { throw; }
@@ -74,7 +74,7 @@ public:
     { throw; }
     virtual bool ToGenObjectList( Common::MsgPlannedWorkList& ) const
     { throw; }
-    virtual bool ToIndirectFire( Common::MsgUnitFire& ) const
+    virtual bool ToIndirectFire( Common::FireId& ) const
     { throw; }
     virtual bool ToLocation( Common::MsgLocation& ) const
     { throw; }
@@ -90,15 +90,15 @@ public:
     { throw; }
     virtual bool ToObjectiveList( Common::MsgMissionObjectiveList& ) const
     { throw; }
-    virtual bool ToObjectKnowledge( Common::MsgObjectKnowledge& ) const
+    virtual bool ToObjectKnowledge( Common::ObjectKnowledgeId& asn ) const
     { throw; }
-    virtual bool ToObjectKnowledgeList( Common::MsgObjectKnowledgeList& ) const
+    virtual bool ToObjectKnowledgeList( Common::ObjectKnowledgeIdList& asn ) const
     { throw; }
     virtual bool ToPath( Common::MsgPath& ) const
     { throw; }
     virtual bool ToPathList( Common::MsgPathList& ) const
     { throw; }
-    virtual bool ToPopulationKnowledge( Common::MsgPopulationKnowledge& ) const
+    virtual bool ToPopulationKnowledge( Common::PopulationKnowledgeId& asn ) const
     { throw; }
     virtual bool ToString( std::string& result ) const
     {
@@ -159,7 +159,7 @@ public:
     { throw; }
     virtual bool ToObjectiveList( std::vector< boost::shared_ptr< DEC_Objective > >& ) const
     { throw; }
-    virtual bool ToUrbanBlock( Common::MsgUrbanBlock& ) const
+    virtual bool ToUrbanBlock( Common::UrbanObjectId& ) const
     { throw; }
     virtual bool ToUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urban >& ) const
     { throw; }
