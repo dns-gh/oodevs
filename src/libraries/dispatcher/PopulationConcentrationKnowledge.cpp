@@ -95,7 +95,7 @@ void PopulationConcentrationKnowledge::Update( const MsgsSimToClient::MsgPopulat
 void PopulationConcentrationKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationConcentrationKnowledgeCreation asn;
-    asn().mutable_concentration()->set_id( GetId() );
+    asn().mutable_id()->set_id( GetId() );
     asn().mutable_population()->set_id( populationKnowledge_.GetId() );
     if( populationKnowledge_.GetEntity()->FindConcentration( concentrationId_ ) )
         asn().mutable_concentration()->set_id( concentrationId_ );
@@ -113,7 +113,7 @@ void PopulationConcentrationKnowledge::SendCreation( ClientPublisher_ABC& publis
 void PopulationConcentrationKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationConcentrationKnowledgeUpdate asn;
-    asn().mutable_concentration()->set_id( GetId() );
+    asn().mutable_id()->set_id( GetId() );
     asn().mutable_population()->set_id( populationKnowledge_.GetId() );
     asn().mutable_knowledge_group()->set_id( populationKnowledge_.GetOwner().GetId() );
     if( populationKnowledge_.GetEntity()->FindConcentration( concentrationId_ ) )
