@@ -596,7 +596,10 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
     assert( resultList_.empty() );
 
     if( !IsDestinationTrafficable() )
+    {
+        queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( MIL_Report::eReport_DifficultTerrain );
         Cancel();
+    }
     DEC_Path_ABC::Execute( pathfind );
 
 #ifndef NDEBUG

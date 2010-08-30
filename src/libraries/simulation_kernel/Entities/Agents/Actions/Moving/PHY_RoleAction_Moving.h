@@ -76,6 +76,7 @@ public:
     bool HasChanged() const;
     virtual void Execute( posture::PostureComputer_ABC& algorithm ) const;
     virtual void Execute( moving::SpeedComputer_ABC& algorithm ) const;
+    virtual void SendRC( int nReportID ) const;
     //@}
 
     //! @name Operations
@@ -123,7 +124,6 @@ private:
     virtual bool CanMove() const;
     virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const;
     virtual bool HasResources();
-    virtual void SendRC( int nReportID ) const;
     //@}
 
     //! @name Speed management
