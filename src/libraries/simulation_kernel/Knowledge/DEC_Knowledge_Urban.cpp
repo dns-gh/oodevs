@@ -147,7 +147,9 @@ void DEC_Knowledge_Urban::Update( const DEC_Knowledge_UrbanPerception& perceptio
 void DEC_Knowledge_Urban::ComputeProgress( const MIL_Agent_ABC& agent )
 {
     float complexity = object_->ComputeComplexity(); // ALGO TEMPORAIRE
-    float progress = 10 / complexity;//@TODO MGD Add true physical configuration in ADN
+    float progress = 0.f;
+    if( complexity != 0.f )
+        progress = 10 / complexity;//@TODO MGD Add true physical configuration in ADN
     const UrbanObjectWrapper* urbanBlock = agent.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
     float maxRecce = ( urbanBlock && object_ == &urbanBlock->GetObject() ) ? 1.0f : 0.25f;
     maxRecce = std::max( maxRecce, rProgressPercent_ );
