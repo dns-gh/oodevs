@@ -19,10 +19,10 @@
 
     <target name="clean">
         <delete dir="${output}"/>
-        <delete dir="${exercises}/${testName}"/>
     </target>
 
     <target name="realclean" depends="clean">
+        <delete dir="${exercises}/${testName}"/>
         <delete dir="reports"/>
     </target>
 

@@ -183,8 +183,10 @@ end
             <xsl:when test="(@type = 'Agent') or (@type = 'AgentBM')">
                 <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "</xsl:text><xsl:value-of select="@type"/><xsl:text>", value = config.id.blueUnit } )</xsl:text>
             </xsl:when>
-            
-            
+            <xsl:when test="@type = 'AgentList'">
+                <xsl:text>    :With( AgentList.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", { config.id.blueUnit } ) )</xsl:text>
+            </xsl:when>
+
             <xsl:otherwise>
                 <xsl:text>    -- Missing argument</xsl:text>
                 <redirect:write append="true" file="{$reportFile}">
