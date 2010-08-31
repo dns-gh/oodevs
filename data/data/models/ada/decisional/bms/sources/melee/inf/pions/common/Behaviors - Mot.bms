@@ -32,6 +32,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local lstEnisDangereux = DEC_Connaissances_UnitesEnnemiesDangereuses()
         for _,ksEni in pairs( lstEnisDangereux or {} ) do
         local _continue = true
@@ -62,6 +63,7 @@ node "BEH_MOT_Pion_INF_GarderSesDistancesFaceA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 --[[// Tir les fumigenes	
@@ -96,6 +98,7 @@ node "BEH_MOT_Pion_INF_GarderSesDistances_GererTransport"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DEC_Agent_EstEmbarque() and ( eNiveauInstallation_Poste == DEC_Agent_NiveauInstallation() ) ) then
             do
                 local lstEnisDangereux = DEC_Connaissances_UnitesEnnemiesDangereuses()
@@ -131,6 +134,7 @@ node "BEH_MOT_Pion_INF_EtrePrudent_GererTransport"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( F_Pion_GeteEtatDecPrudence( myself ) == eEtatDecPrudence_Actif and DEC_Agent_EstEmbarque() ) then
             do
                 local lstEnisDangereux = DEC_Connaissances_UnitesEnnemiesDangereuses()
@@ -168,6 +172,7 @@ node "BEH_Mot_Delai_Pion_INF_AugmenterAgression"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         if( ModuleBegins() ) then
             DEC_Trace( "CBT Rencontre : desactive" )
@@ -204,6 +209,7 @@ node "BEH_MOT_Pion_InitialisePreparationMission"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             SetStateVariable( "VE_PreparationMission", 0 )
         end
@@ -223,6 +229,7 @@ node "BEH_MOT_Pion_INF_InitialisePoste"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             SetStateVariable( "VE_SePoster", 0 )
         end
@@ -250,6 +257,7 @@ node "BEH_MOT_Pion_INF_Debarquer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DEC_Agent_TransporteursPret() and DEC_Agent_EstEmbarque() ) then
             StartActivateOverride( self, self.activations.ACT_Transport_Pion_INF_Debarquer, 2.01, {} )
         end

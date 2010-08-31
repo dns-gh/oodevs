@@ -28,6 +28,7 @@ includedFiles["sources/melee/abc/automates/ge40/missions/offensives/marcheennemi
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.objectifsPrioritaires = self.objectifsPrioritaires or {}--[[// Vide dans cette mission
 ]]
         Activate( self.activations.ACT_GTIA_AnalyserSituationPourReconnaitre, 1, {} )--[[// Analyse environnement
@@ -123,6 +124,7 @@ node "ACT_GTIA_AnalyserSituationPourReconnaitre"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_GTIA_AssignerLesMissionsReconnaissance, 1, {} )
         Activate( self.activations.BEH_GTIA_AssurerLaCoordination, 1, {} )--[[// idem Attaquer
 ]]
@@ -153,6 +155,7 @@ node "BEH_GTIA_AssignerLesMissionsReconnaissance"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.objectifsPrioritaires = self.objectifsPrioritaires or {}--[[// Vide dans cette mission
 ]]
         --[[// PremierEchelon, mission Attaquer ou Semparer si objectif dans le fuseaux
@@ -188,6 +191,7 @@ node "BEH_GTIA_AssignerMissionsRecoPE"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x in pairs( --[[// Assignation missions ABC
 ]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePions ) or {} ) do
         local _continue = true

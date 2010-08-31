@@ -48,6 +48,7 @@ includedFiles["sources/appui/nbc/pions/common/Behaviors - Dep.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// init
 ]]self.eEtat = self.eEtat or eActionEnCours
         --[[//-----------------------------------------------------------------------------
@@ -105,6 +106,7 @@ node "BEH_Obs_Pion_NBC_ReconnaitrePoint"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.point = self.point or DEC_Geometrie_CreerPoint()
         self.eEtat = self.eEtat or eActionEnCours
         --[[//-----------------------------------------------------------------------------
@@ -162,6 +164,7 @@ node "BEH_Obs_Pion_NBC_SePosterSurBond"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.point = self.point or DEC_Geometrie_CreerPoint()
         self.eEtat = self.eEtat or eActionEnCours
         --[[//-----------------------------------------------------------------------------

@@ -22,6 +22,7 @@ includedFiles["sources/melee/inf/automates/cie vab/missions/freiner/Freiner MRT.
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eCreationMRT = self.eCreationMRT or eActionEnCours
         local selPions = DEC_Automate_PionsSansPC()
         --[[//-----------------------------------------------------------------------------
@@ -99,6 +100,7 @@ node "BEH_Medo_Automate_INF_DonnerLesOrdresPourMissionRetrograde"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Pions subordonnés à l'Auto
 ]]local selPions = DEC_Automate_PionsSansPC()
         self.ePhase = self.ePhase or eMRT_DeterminerEchelonsGlobals
@@ -245,6 +247,7 @@ node "BEH_Medo_Automate_INF_AssignerMissionFreinerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-------------------------------------------------------------------------
 ]]--[[// Le fuseau de l'escadron est coupé proportionnellement
 ]]--[[//-------------------------------------------------------------------------
@@ -292,6 +295,7 @@ node "BEH_Mission_Automate_INF_AssignerFreinerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do

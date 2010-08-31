@@ -40,7 +40,17 @@ AgentKnowledge::AgentKnowledge( const KnowledgeGroup_ABC& group, const MsgsSimTo
     , group_       ( group )
     , realAgent_   ( resolver_.Get( message.unit().id() ) )
     , team_        ( 0 )
+    , nDirection_  ( 0u, false )
+    , nSpeed_      ( 0u, false )
+    , nEtatOps_    ( 0u, false )
+    , nCurrentPerceptionLevel_( eNotSeen, false )
+    , nMaxPerceptionLevel_( eNotSeen, false )
     , nLevel_      ( eNatureLevel_None )
+    , bIsPC_       ( false, false )
+    , surrenderedTo_( 0, false )
+    , bPrisonner_  ( false, false )
+    , bRefugies_   ( false, false )
+    , nRelevance_  ( 0u, false )
 {
     fullSymbol_  = realAgent_.GetType().GetSymbol();
     UpdateSymbol();

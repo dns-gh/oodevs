@@ -27,6 +27,7 @@ includedFiles["sources/appui/rens/pions/rohum/rbrr/pat recherche rasit/missions/
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.pointARenseigner = self.pointARenseigner or S_Geometrie_BarycentreZone( self._namedParams.mission.zoneAObserver_ )

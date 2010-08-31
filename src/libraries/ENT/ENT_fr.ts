@@ -2007,7 +2007,7 @@
     </message>
     <message>
         <source>stopped</source>
-        <translation>arrétée</translation>
+        <translation>poste reflexe</translation>
     </message>
     <message>
         <source>pas de precipitation</source>

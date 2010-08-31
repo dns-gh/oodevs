@@ -22,6 +22,7 @@ node "MIS_Automate_MRT_ALAT_Freiner"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eMRT_AssignerMissions
         self.eEtatMissionsFreiner = self.eEtatMissionsFreiner or eActionEnCours
         self.affectationFuseauOk = self.affectationFuseauOk or false

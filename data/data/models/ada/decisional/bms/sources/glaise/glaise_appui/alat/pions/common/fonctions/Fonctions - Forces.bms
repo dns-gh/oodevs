@@ -161,7 +161,7 @@ function S_Force_Pion_ALAT_Defendre( pion, agent, typePrioritaire )
 
     local distanceEniTirMax = S_Tir_PorteeMaxPourEtreTireParAgent( agent, 0 )
     local distanceAAmi = DEC_Geometrie_Distance( pion:DEC_Agent_Position(), S_Eni_Position( agent ) )
-    if( ( distanceEniTirMax == 0 or distanceEniTirMax == nil ) or ( distanceAAmi >= ( 2 * distanceEniTirMax ) ) ) then
+    if( distanceEniTirMax == 0 or ( distanceAAmi >= ( 2 * distanceEniTirMax ) ) ) then
         do
             _returnValue = 0
                         do return _returnValue end

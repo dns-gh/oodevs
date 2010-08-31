@@ -30,7 +30,8 @@ include "bit.lua"
     end,
 
     activate = function( self )
-        if( ( ( self._namedParams.pionRecueil == 0 or self._namedParams.pionRecueil == nil ) or self._namedParams.ptPIA == 0 or ( self._namedParams.pionRecueil == 0 or self._namedParams.pionRecueil == nil ) or self._namedParams.ptPIA == nil ) ) then
+        local Activate = Activate
+        if( self._namedParams.pionRecueil == nil or self._namedParams.ptPIA == nil ) then
             Halt( self )
             do return end
         end

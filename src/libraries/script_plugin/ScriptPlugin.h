@@ -13,9 +13,16 @@
 #include "dispatcher/Plugin_ABC.h"
 #include "dispatcher/Registrable_ABC.h"
 #include "dispatcher/Position.h"
-#include <directia/ScriptRef.h>
-#include "protocol/protocol.h"
 #include <boost/ptr_container/ptr_vector.hpp>
+#include "directia/tools/binders/ScriptRef.h"
+
+#include "protocol/protocol.h"
+
+using namespace Common;
+using namespace MsgsClientToMessenger;
+using namespace MsgsSimToClient;
+using namespace MsgsAarToClient;
+
 
 namespace dispatcher
 {
@@ -50,26 +57,27 @@ namespace script
 
 // =============================================================================
 /** @class  ScriptPlugin
-    @brief  Script plugin
+    @brief  ScriptPlugin
 */
 // Created: AGE 2008-06-12
 // =============================================================================
 class ScriptPlugin : public dispatcher::Plugin_ABC
                    , public dispatcher::Registrable_ABC
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
              ScriptPlugin( dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, const dispatcher::Config& config, dispatcher::SimulationPublisher_ABC& publisher
-                         , tools::MessageDispatcher_ABC& dispatcher, dispatcher::ClientPublisher_ABC& clients, dispatcher::LinkResolver_ABC& resolver
-                         , dispatcher::CompositeRegistrable& registrables );
+                 , tools::MessageDispatcher_ABC& dispatcher, dispatcher::ClientPublisher_ABC& clients, dispatcher::LinkResolver_ABC& resolver
+                 , dispatcher::CompositeRegistrable& registrables );
     virtual ~ScriptPlugin();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Receive                  ( const MsgsSimToClient::MsgSimToClient& message );
-    virtual void Receive                  ( const MsgsAarToClient::MsgAarToClient& message );
+    virtual void Receive                  ( const MsgSimToClient& message );
+    virtual void Receive                  ( const MsgAarToClient& message );
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
     virtual void Update();
@@ -86,11 +94,11 @@ private:
     //@{
     void LoadScripts();
     void LoadScript( const std::string& file );
-    void OnReceiveClientToMessenger( const std::string&, const MsgsClientToMessenger::MsgClientToMessenger& );
-    virtual void RegisterIn( directia::Brain& brain );
+    void OnReceiveClientToMessenger( const std::string&, const MsgClientToMessenger& );
+    virtual void RegisterIn( directia::brain::Brain& brain );
 
     void Reset();
-    void Later( const directia::ScriptRef& function );
+    void Later( const directia::tools::binders::ScriptRef& function );
     std::string ToUtm( const dispatcher::Position& position );
     dispatcher::Position UtmPosition( const std::string& utm );
 
@@ -108,7 +116,7 @@ private:
     std::auto_ptr< ExtensionFactory > factory_;
     std::auto_ptr< Actions > actions_;
     boost::ptr_vector< Script > scripts_;
-    boost::ptr_vector< directia::ScriptRef > pending_;
+    boost::ptr_vector< directia::tools::binders::ScriptRef > pending_;
     long time_;
     bool reset_;
     unsigned int tickDuration_;

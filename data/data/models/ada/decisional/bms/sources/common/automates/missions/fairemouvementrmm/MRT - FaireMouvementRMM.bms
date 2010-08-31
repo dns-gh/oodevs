@@ -31,6 +31,7 @@ includedFiles["sources/common/automates/missions/fairemouvementrmm/MRT - FaireMo
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eDonnerMission
         self.eEtat = self.eEtat or eActionEnCours
         --[[//---------------------------------------------------------------------

@@ -22,6 +22,7 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/attaqu
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eMRT_AssignerMissions
         self.eEtatMissionsAttaquer = self.eEtatMissionsAttaquer or eActionEnCours
         self.selPions = self.selPions or DEC_Automate_PionsSansPC()

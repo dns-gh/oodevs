@@ -23,6 +23,7 @@ includedFiles["sources/glaise/glaise_appui/genie/automates/cie blindee/missions/
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listeSectionGenie = S_Cherche_Automate_Filtre_TypePion( DEC_Automate_PionsSansPC(), "SectionGenie" )
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
@@ -30,7 +31,7 @@ includedFiles["sources/glaise/glaise_appui/genie/automates/cie blindee/missions/
 ]]if( ModuleBegins() ) then
             do
                 --[[// Verif
-]]if( ( #( listeSectionGenie ) == 0 or #( listeSectionGenie ) == nil ) ) then
+]]if( #( listeSectionGenie ) == 0 ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
                                                 Halt( self )
@@ -73,6 +74,7 @@ node "BEH_Medo_Automate_GEN_MRT_AssignerRetablirItineraire"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Assignation et vérification
@@ -133,11 +135,12 @@ node "BEH_Medo_Automate_GEN_MRT_FaireRetablir"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.listePoints = self.listePoints or {}--[[// Détermination du secteur
 ]]
         self.rIterateurItineraire = self.rIterateurItineraire or 0
         --[[// Sécurité mais testé dans le comportement au dessus
-]]if( ( #( self._namedParams.listePionsGenie ) == 0 or #( self._namedParams.listePionsGenie ) == nil ) ) then
+]]if( #( self._namedParams.listePionsGenie ) == 0 ) then
             do return end
         end
 

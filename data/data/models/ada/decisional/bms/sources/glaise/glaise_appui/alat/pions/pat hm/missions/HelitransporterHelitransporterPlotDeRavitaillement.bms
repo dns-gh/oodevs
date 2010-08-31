@@ -37,6 +37,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or eRejoindre
         local TC2 = DEC_Pion_TC2()

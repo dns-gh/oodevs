@@ -32,6 +32,7 @@ includedFiles["sources/glaise/glaise_common/automates/missions/sefairetransporte
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eCreationMRT = self.eCreationMRT or eActionEnCours
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
@@ -98,6 +99,7 @@ node "BEH_Medo_Automate_PreparerMission_SeFaireTransporter"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.selPions = self.selPions or DEC_Automate_PionsAvecPC()
         self.ePhase = self.ePhase or eMRT_SelectionnerPions
         self.eActionMRT = self.eActionMRT or eActionEnCours
@@ -113,7 +115,7 @@ node "BEH_Medo_Automate_PreparerMission_SeFaireTransporter"
                     --[[//-----------------------------------------------------------------------------
 ]]--[[//	Distribution des types de mission
 ]]--[[//-----------------------------------------------------------------------------
-]]if( ( #( self.selPions ) == 0 or #( self.selPions ) == nil ) ) then
+]]if( #( self.selPions ) == 0 ) then
                         do
                                                         self:SendFeedback( eActionImpossible )
                             Halt( self )
@@ -190,6 +192,7 @@ node "BEH_Medo_Automate_FaireTransporter_DansZone"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ptCentreZone = self.ptCentreZone or S_Geometrie_BarycentreZone( self._namedParams.locZone )
         for _,x_pion in pairs( self._namedParams.selPions or {} ) do
         local _continue = true
@@ -223,6 +226,7 @@ node "BEH_Mission_Automate_AssignerSeFaireTransporterA_DansZone"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ptTransport = self.ptTransport or DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.ptZone, 100 )
         if( ModuleBegins() ) then
             StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerSeFaireTransporterA, 1, { ePhase_MRT, self._namedParams.pion, self.ptTransport, } )

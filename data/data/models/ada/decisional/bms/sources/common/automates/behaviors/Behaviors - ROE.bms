@@ -31,6 +31,7 @@ includedFiles["sources/common/automates/behaviors/Behaviors - ROE.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_ROE_Automate_RecevoirOrdreInopine, 1, {} )--[[// Ordres inopiné de l'anibas
 ]]
     end,
@@ -61,6 +62,7 @@ node "BEH_ROE_Automate_RecevoirOrdreInopine"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Reception d'un ordre du superieur
 ]]--[[//-----------------------------------------------------------------------------
@@ -139,6 +141,7 @@ node "BEH_ROE_Automate_TirLibre"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
         local _continue = true
             Activate( self.activations.ACT_ROE_Automate_DonnerOrdreTirLibre, 1, { pion, } )
@@ -168,6 +171,7 @@ node "BEH_ROE_Automate_TirRestreint"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
         local _continue = true
             Activate( self.activations.ACT_ROE_Automate_DonnerOrdreTirRestreint, 1, { pion, } )
@@ -197,6 +201,7 @@ node "BEH_ROE_Automate_TirInterdit"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
         local _continue = true
             Activate( self.activations.ACT_ROE_Automate_DonnerOrdreTirInterdit, 1, { pion, } )

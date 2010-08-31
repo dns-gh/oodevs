@@ -26,6 +26,7 @@ includedFiles["sources/appui/log/pions/missions/DecontaminerBlesses.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         if( ModuleBegins() ) then
@@ -54,7 +55,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     --[[// Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     --[[// Déploiement sur place
-]]if( ( self._namedParams.mission.positionDeploiement_ == 0 or self._namedParams.mission.positionDeploiement_ == nil ) ) then
+]]if( self._namedParams.mission.positionDeploiement_ == nil ) then
                         self.ePhaseMission = eDeployer
                     else
                         self.ePhaseMission = eProgresser

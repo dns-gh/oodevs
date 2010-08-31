@@ -152,6 +152,7 @@ elseif switch_1 == ePhase_CDT then
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.eActionFuseau = self.eActionFuseau or eActionEnCours
         self.ePhaseMRT = self.ePhaseMRT or eMRT_AssignerMissions
@@ -199,7 +200,7 @@ elseif switch_1 == ePhase_CDT then
                 if( not self.ptZone ) then
                     do
                         self.ptZone = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self._namedParams.locZone )
-                        if( ( self.ptZone == 0 or self.ptZone == nil ) ) then
+                        if( self.ptZone == nil ) then
                             self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
@@ -271,6 +272,7 @@ node "ACT_Mission_Automate_INF_AssignerA_SurveillerSurPosition"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.eActionFuseau = self.eActionFuseau or eActionEnCours
         self.ePhaseMRT = self.ePhaseMRT or eMRT_AssignerMissions
@@ -502,8 +504,8 @@ elseif switch_1 == ePhase_CDT then
         end
 
         S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
-        --[[//DEC_Debug( "assert halt failed : " +  "AssignerA_Harceler: ptRegroupement != 0"  );	
-]]if( not ( ( self.ptRegroupement ~= 0 and self.ptRegroupement ~= nil ) ) ) then
+        --[[//DEC_Debug( "assert halt failed : " +  "AssignerA_Harceler: ptRegroupement != nil"  );	
+]]if( not ( self.ptRegroupement ~= nil ) ) then
             do
                                 self:SendFeedback( eActionImpossible )
                 Halt( self )
@@ -670,7 +672,7 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// $$$$ ?
 ]]self.dest = DEC_Geometrie_CalculerPointArriveePourPion( self._namedParams.pPion )
         --[[//DEC_Debug( "assert halt failed : " +  "pas de point d'arrivee"  );
-]]if( not ( ( self.dest ~= 0 and self.dest ~= nil ) ) ) then
+]]if( not ( self.dest ~= nil ) ) then
             do
                                 self:SendFeedback( eActionImpossible )
                 Halt( self )
@@ -1081,9 +1083,9 @@ elseif switch_1 == ePhase_CDT then
         end
 
         S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
-        --[[// if ( !(  missionPion.pointAInterdire_ != 0 ) )	{		halt( eActionImpossible );	}//DEC_Debug( "assert halt failed : " +  "missionPion.zoneInterdite_ != 0"  );
-]]--[[//DEC_Debug( "assert halt failed : " +  "AssignerA_Interdire: ptInterdire != 0"  );
-]]if( not ( ( self._namedParams.ptInterdire ~= 0 and self._namedParams.ptInterdire ~= nil ) ) ) then
+        --[[// if ( !(  missionPion.pointAInterdire_ != nil ) )	{		halt( eActionImpossible );	}//DEC_Debug( "assert halt failed : " +  "missionPion.zoneInterdite_ != nil"  );
+]]--[[//DEC_Debug( "assert halt failed : " +  "AssignerA_Interdire: ptInterdire != nil"  );
+]]if( not ( self._namedParams.ptInterdire ~= nil ) ) then
             do
                                 self:SendFeedback( eActionImpossible )
                 Halt( self )
@@ -1171,9 +1173,9 @@ elseif switch_1 == ePhase_CDT then
         end
 
         S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
-        --[[// if ( !(  missionPion.pointADefendre_ != 0 ) )	{		halt( eActionImpossible );	}//DEC_Debug( "assert halt failed : " +  "missionPion.zoneInterdite_ != 0"  );
-]]--[[//DEC_Debug( "assert halt failed : " +  "AssignerA_Defendre: ptDefendre != 0"  );
-]]if( not ( ( self._namedParams.ptDefendre ~= 0 and self._namedParams.ptDefendre ~= nil ) ) ) then
+        --[[// if ( !(  missionPion.pointADefendre_ != nil ) )	{		halt( eActionImpossible );	}//DEC_Debug( "assert halt failed : " +  "missionPion.zoneInterdite_ != nil"  );
+]]--[[//DEC_Debug( "assert halt failed : " +  "AssignerA_Defendre: ptDefendre != nil"  );
+]]if( not ( self._namedParams.ptDefendre ~= nil ) ) then
             do
                                 self:SendFeedback( eActionImpossible )
                 Halt( self )
@@ -1264,7 +1266,7 @@ elseif switch_1 == ePhase_CDT then
 
         --[[//calcul des itineraires des missions attaquer des pions
 ]]--[[// $$$$ ?				
-]]if( ( self._namedParams.ptRgpt == 0 or self._namedParams.ptRgpt == nil ) ) then
+]]if( self._namedParams.ptRgpt == nil ) then
             self.ptDest = DEC_Geometrie_CalculerPointArriveePourPion( self._namedParams.pPion )
         end
 
@@ -1358,7 +1360,7 @@ elseif switch_1 == ePhase_CDT then
             do return end
         end
 
-        --[[//DEC_Debug( "assert halt failed : " +  "AssignerA_Couvrir pAppui != 0."  );
+        --[[//DEC_Debug( "assert halt failed : " +  "AssignerA_Couvrir pAppui != nil"  );
 ]]if( not ( self._namedParams.pAppui ~= nil ) ) then
             do
                                 self:SendFeedback( eActionImpossible )
@@ -1380,7 +1382,7 @@ elseif switch_1 == ePhase_CDT then
         DEC_Copie_DirectionDanger_Mission( self.dirCouv, self.missionPion )
         --[[/*M_DISTANCE_COUVERTURE()*/]]self.ptCouv = DEC_Geometrie_PositionTranslateDir( self._namedParams.ptLoc, self.dirCouv, 1500 )
         --[[//DEC_Debug( "assert halt failed : " +  "BEH_Mission_Automate_INF_AssignerA_Couvrir : ptCouv"  );
-]]if( not ( ( self.ptCouv ~= 0 and self.ptCouv ~= nil ) ) ) then
+]]if( not ( self.ptCouv ~= nil ) ) then
             do
                                 self:SendFeedback( eActionImpossible )
                 Halt( self )
@@ -1432,6 +1434,7 @@ elseif switch_1 == ePhase_CDT then
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.eActionFuseau = self.eActionFuseau or eActionEnCours
         self.ePhaseMRT = self.ePhaseMRT or eMRT_AssignerMissions
@@ -1483,15 +1486,15 @@ elseif switch_1 == ePhase_CDT then
             local switch_1 = self.ePhaseMRT
             local cases_switch_1 = {}
                 if switch_1 == eMRT_AssignerMissions then
-                    --[[//DEC_Debug( "assert halt failed : " +  "ACT_Mission_Automate_INF_AssignerA_Barrer : ptBarrer != 0"  );
-]]if( not ( ( self._namedParams.ptBarrer ~= 0 and self._namedParams.ptBarrer ~= nil ) ) ) then
+                    --[[//DEC_Debug( "assert halt failed : " +  "ACT_Mission_Automate_INF_AssignerA_Barrer : ptBarrer != nil"  );
+]]if( not ( self._namedParams.ptBarrer ~= nil ) ) then
                         do
                                                         self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
                         end
---[[// if ( !(  missionPion.positionABarrer_ != 0 ) )	{		halt( eActionImpossible );	}//DEC_Debug( "assert halt failed : " +  "ACT_Mission_Automate_INF_AssignerA_Barrer : missionPion.positionABarrer_ != 0"  );
+--[[// if ( !(  missionPion.positionABarrer_ != nil ) )	{		halt( eActionImpossible );	}//DEC_Debug( "assert halt failed : " +  "ACT_Mission_Automate_INF_AssignerA_Barrer : missionPion.positionABarrer_ != nil"  );
 ]]--[[// Dans le cas ou une section HOT a ete rajoute en renforcement,
 ]]--[[// on la recule de 1000m (au risque qu'elle ne voit rien ...)
 ]]                    end

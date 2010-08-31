@@ -20,6 +20,7 @@ node "MIS_Automate_CDT_ALAT_AttaquerFormationAeromobile"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eDetruire
         self.listePionsSgpt = self.listePionsSgpt or {}
         self.listeAttaquer = self.listeAttaquer or {}

@@ -23,6 +23,7 @@ node "MIS_Automate_CDT_ALAT_Escorter"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eEscorter
         self.listePionsSgpt = self.listePionsSgpt or {}
         self.listePionsSgptSansRavitaillementsEnCours = self.listePionsSgptSansRavitaillementsEnCours or {}

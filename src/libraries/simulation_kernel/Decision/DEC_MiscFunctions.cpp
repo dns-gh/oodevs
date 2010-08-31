@@ -11,8 +11,13 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_MiscFunctions.h"
+
+#include "Entities/MIL_Entity_ABC.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
+#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
+#include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Decision/DEC_Representations.h"
 
 // -----------------------------------------------------------------------------
@@ -32,6 +37,10 @@ void DEC_MiscFunctions::SetMaxSpeedModificator( MIL_AgentPion& callerAgent, MT_F
 {
     callerAgent.GetRole< moving::PHY_RoleAction_Moving >().SetMaxSpeedModificator( rFactor );
 }
+
+// =============================================================================
+// REINFORCEMENT
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::GetAgentReinforcements
@@ -129,14 +138,14 @@ void DEC_MiscFunctions::DeleteOrderRepresentation( MIL_Entity_ABC& callerAgent, 
 
 namespace DEC_DecisionImpl
 {
-    void RegisterMissionParameters( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const boost::shared_ptr< MIL_Mission_ABC > mission );
+    void RegisterMissionParameters( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const boost::shared_ptr< MIL_Mission_ABC > mission );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::FillMissionParameters
 // Created: LDC 2009-05-04
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::FillMissionParameters( const directia::Brain& brain, directia::ScriptRef& initTaskFunction, const directia::ScriptRef& refMission, boost::shared_ptr< MIL_Mission_ABC > pMission )
+void DEC_MiscFunctions::FillMissionParameters( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& initTaskFunction, const directia::tools::binders::ScriptRef& refMission, boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
     if( pMission )
         DEC_DecisionImpl::RegisterMissionParameters( brain, initTaskFunction, refMission, pMission );

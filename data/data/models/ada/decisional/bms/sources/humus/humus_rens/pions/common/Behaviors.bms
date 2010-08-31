@@ -27,6 +27,7 @@ includedFiles["sources/humus/humus_rens/pions/common/Behaviors.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// TEMP 0
 ]]Activate( self.activations.ACT_Dep_Pion_Rens_ActiverFurtivite, 1, { 0.01, } )
     end,
@@ -52,6 +53,7 @@ node "BEH_Dep_Pion_GererFurtivite"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_MAJ_Pion_Rens_Furtivite, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// Furtivite
 ]]--[[//-----------------------------------------------------------------------------
@@ -74,6 +76,7 @@ node "BEH_MAJ_Pion_Rens_Furtivite"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------
@@ -110,6 +113,7 @@ node "BEH_Rens_EnSurveillanceDe"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
             Activate( self.activations.ACT_Obs_SurveillerZone, 1, { self._namedParams.zone, } )
         end
@@ -139,6 +143,7 @@ node "BEH_Rens_EnSurveillanceRadarDe"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
             Activate( self.activations.ACT_Obs_Pion_RENS_ActiverRadarDans, 1, { self._namedParams.zone, } )
         end
@@ -168,6 +173,7 @@ node "BEH_Rens_EnEcouteSur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
             Activate( self.activations.ACT_Obs_Pion_RENS_ActiverEcouteDans, 1, { self._namedParams.zone, } )
         end
@@ -197,6 +203,7 @@ node "BEH_Rens_EnEcouteRadarSur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
             Activate( self.activations.ACT_Obs_Pion_RENS_ActiverEcouteRadarDans, 1, { self._namedParams.zone, } )
         end
@@ -226,6 +233,7 @@ node "BEH_Rens_ActiverBrouillage"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
             Activate( self.activations.ACT_Obs_Pion_RENS_ActiverBrouillage, 1, { self._namedParams.eTypeObjectZoneBrouillage, } )
         end
@@ -256,6 +264,7 @@ node "BEH_Dep_Virtuel_ProgressionVers"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.point, self._namedParams.eTypeProgression, self._namedParams.eTypeIti, } )
     end,
 
@@ -273,6 +282,7 @@ node "BEH_Dep_Virtuel_PreparationAction"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self:SendFeedback( eActionEffectuee )
         do return end
 

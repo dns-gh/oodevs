@@ -52,6 +52,7 @@ node "BEH_Eni_Pion_VAB_Fixer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionFixer = self.eActionFixer or eActionEnCours
         self.ptEni_EnCours = self.ptEni_EnCours or S_Eni_Position( self._namedParams.repEni )
         --[[// On arrete de tirer lorsque la section est detruite tactiquement
@@ -143,6 +144,7 @@ node "BEH_Eni_Pion_INF_GererContactEni"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DEC_ConnaissanceAgent_EstDetruitTactique( self._namedParams.ksEni ) ) then
             do return end
         end

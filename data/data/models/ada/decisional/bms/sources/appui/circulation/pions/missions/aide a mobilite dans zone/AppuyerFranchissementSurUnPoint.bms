@@ -24,6 +24,7 @@ includedFiles["sources/appui/circulation/pions/missions/aide a mobilite dans zon
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Validité de la connaissance
 ]]if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.mission.pontFlottant_ ) ) then
             self:SendFeedback( eActionEffectuee )

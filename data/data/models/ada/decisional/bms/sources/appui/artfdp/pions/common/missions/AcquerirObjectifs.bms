@@ -32,6 +32,7 @@ includedFiles["sources/appui/artfdp/pions/common/missions/AcquerirObjectifs.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         self.ePhase = self.ePhase or eRejoindre
         self.eAction = self.eAction or eActionEnCours
@@ -72,6 +73,7 @@ node "BEH_Obs_Pion_ASS_ReconnaissanceZone"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ptEntreeLocalisation = self.ptEntreeLocalisation or S_Geometrie_BarycentreZone( self._namedParams.locObservation )
         self.rDist_Loc = self.rDist_Loc or 0
         if( ModuleBegins() ) then

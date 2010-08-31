@@ -31,6 +31,7 @@ node "BEH_Eni_Pion_Milice_GererContactEni"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_MAJ_EnnemiEnCours, 1, { self._namedParams.ksEni, } )
         Activate( self.activations.BEH_Feu_Pion_Milice_ConduireLesFeux_Sur, 1, { self._namedParams.ksEni, } )
     end,
@@ -60,6 +61,7 @@ node "BEH_Feu_Pion_Milice_ConduireLesFeux_Sur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.rEtatInitialAvantSerie = self.rEtatInitialAvantSerie or DEC_ConnaissanceAgent_EtatOps( self._namedParams.ksEni )
         self.eAction_Tir = self.eAction_Tir or eActionEnCours
         self.eActionEfficacite = self.eActionEfficacite or eActionEnCours
@@ -145,6 +147,7 @@ node "BEH_Tir_Pion_Milice_FaireFeu"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.stMsg = self.stMsg or "Distance tir ( " .. FloatToString( GetStateVariable( "VE_Agressivite_Tir" ) ) .. " ) : "
         local eActionReturn = self.eAction
@@ -197,6 +200,7 @@ node "BEH_Eni_Pion_VAB_Offensif_Manoeuvre"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Si le pion n'est pas dans son fuseau, on n'agit pas sur les ennemis
 ]]if( not DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
             do return end

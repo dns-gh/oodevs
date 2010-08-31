@@ -14,7 +14,7 @@
 template< typename T >
 void DEC_Decision_ABC::Callback( unsigned int actionId, T value )
 {
-    directia::ScriptRef function = GetBrain().GetScriptFunction( "CallbackAction" );
+    directia::tools::binders::ScriptRef function = GetBrain()[ "CallbackAction" ];
     function( actionId, value );
 }
 
@@ -25,7 +25,7 @@ void DEC_Decision_ABC::Callback( unsigned int actionId, T value )
 template <typename T>
 void DEC_Decision_ABC::SetVariable( const std::string& name, T value )
 {
-    GetBrain().RegisterObject( name, value );
+    GetBrain()[ name ] = value;
 }
 
 
@@ -47,11 +47,11 @@ template< typename T >
 T DEC_Decision_ABC::GetVariable( const std::string& name )
 {
     T value;
-    directia::ScriptRef scriptRef = GetBrain().GetScriptVariable( name );
+    directia::tools::binders::ScriptRef scriptRef = GetBrain()[ name ];
     if( !scriptRef )
-        GetBrain().RegisterObject( name, value );
-    GetBrain().RegisterFunction( "DEC_SetVariable__", boost::function< void( const T& ) >( boost::bind( &DEC_Decision_ABC::SetScriptVariable<T>, _1, boost::ref( value ) ) ) );
-    GetBrain().GetScriptFunction( "DEC_SetVariable__" )( GetBrain().GetScriptVariable( name ) );
+        GetBrain()[ name ] = value;
+    GetBrain()[ "DEC_SetVariable__" ] = boost::function< void( const T& ) >( boost::bind( &DEC_Decision_ABC::SetScriptVariable<T>, _1, boost::ref( value ) ) );
+    GetBrain()[ "DEC_SetVariable__" ]( GetBrain()[ name ] );
     return value;
 }
 
@@ -63,10 +63,10 @@ template< typename T >
 T DEC_Decision_ABC::GetScalarVariable( const std::string& name )
 {
     T value = 0;
-    directia::ScriptRef scriptRef = GetBrain().GetScriptVariable( name );
+    directia::tools::binders::ScriptRef scriptRef = GetBrain()[ name ];
     if( !scriptRef )
-        GetBrain().RegisterObject( name, value );
-    GetBrain().RegisterFunction( "DEC_SetVariable__", boost::function< void( const T& ) >( boost::bind( &DEC_Decision_ABC::SetScriptVariable<T>, _1, boost::ref( value ) ) ) );
-    GetBrain().GetScriptFunction( "DEC_SetVariable__" )( GetBrain().GetScriptVariable( name ) );
+        GetBrain()[ name ] = value;
+    GetBrain()[ "DEC_SetVariable__" ] = boost::function< void( const T& ) >( boost::bind( &DEC_Decision_ABC::SetScriptVariable<T>, _1, boost::ref( value ) ) );
+    GetBrain()[ "DEC_SetVariable__" ]( GetBrain()[ name ] );
     return value;
 }

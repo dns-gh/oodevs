@@ -27,11 +27,12 @@ includedFiles["sources/appui/rens/pions/radint/cougar horizon/missions/Renseigne
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.positionInitiale = self.positionInitiale or DEC_Geometrie_CreerPoint()
         self.positionObservation = self.positionObservation or DEC_Geometrie_CreerPoint()
-        if( ( #( self._namedParams.mission.zonesDeRecherche_ ) ~= 0 and #( self._namedParams.mission.zonesDeRecherche_ ) ~= nil ) ) then
+        if( #( self._namedParams.mission.zonesDeRecherche_ ) ~= 0 ) then
             self.positionObservation = S_Geometrie_BarycentreZone( DEC_UserTypeList_GetAt( self._namedParams.mission.zonesDeRecherche_, 0 ) )
         else
 do
@@ -117,6 +118,7 @@ node "BEH_Obs_Pion_Rens_Radint_RenseignerDans"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,zone in pairs( --[[//---------------------------------------------------------------------
 ]]--[[// Observation ( si station => exploitation du Rens possible)
 ]]--[[//---------------------------------------------------------------------

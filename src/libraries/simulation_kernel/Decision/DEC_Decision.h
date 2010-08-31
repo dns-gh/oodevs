@@ -12,7 +12,8 @@
 
 #include "MIL.h"
 #include "Decision/DEC_Decision_ABC.h"
-#include <MT/MT_Logger/MT_Logger_lib.h>
+#include "MT/MT_Logger/MT_Logger_lib.h"
+#include <directia/brain/Brain.h>
 
 class DEC_DataBase;
 class DEC_Knowledge_Object;
@@ -22,24 +23,30 @@ class MIL_Mission_ABC;
 
 namespace directia
 {
-    class Brain;
-    class ScriptRef;
+    namespace tools
+    {
+        namespace binders
+        {
+            class ScriptRef;
+        }
+    }
 }
 
 // =============================================================================
 /** @class  DEC_Decision
-    @brief  DEC decision
-    Template T must be a subclass of MIL_Entity_ABC
+    @brief  DEC_Decision
+    Template T must be a subcless of MIL_Entity_ABC
 */
 // Created: LDC 2009-02-27
 // =============================================================================
-template < class T >
+template <class T >
 class DEC_Decision : public DEC_Decision_ABC
 {
+
 public:
     //! @name Constructor
     //@{
-             DEC_Decision( T& entity, DEC_DataBase& database );
+             DEC_Decision( T& entity, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
     virtual ~DEC_Decision();
     //@}
 
@@ -58,7 +65,7 @@ public:
     virtual MIL_AgentPion& GetPion() const;
     virtual MIL_Automate& GetAutomate() const;
 
-    virtual void GarbageCollect();
+    //virtual void GarbageCollect();
 
     virtual void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission );
     virtual void StopMissionBehavior ( const boost::shared_ptr< MIL_Mission_ABC > mission );
@@ -126,6 +133,7 @@ public:
     {
         ar & boost::serialization::base_object< DEC_Decision_ABC >( *this );
     }
+
     //@}
 
 protected:
@@ -142,39 +150,44 @@ protected:
     void StopMission( const std::string& strBehavior );
 
     virtual void EndCleanStateAfterCrash  () = 0;
-    virtual void RegisterUserFunctions( directia::Brain& brain ) = 0;
+	void RegisterDebugFunctions( directia::brain::Brain& brain, unsigned int id );
+    virtual void RegisterUserFunctions( directia::brain::Brain& brain ) = 0;
+	virtual void RegisterUserArchetypeFunctions ( directia::brain::Brain& brain ) = 0;
 
     template< typename FunctionType >
     void RegisterFunction( const std::string& strFunctionName, FunctionType function )
     {
-        pBrain_->RegisterFunction( strFunctionName, function );
+        (*pBrain_)[ strFunctionName ] = function;
     }
     //@}
 
 private://! @name Helpers
     //@{
     void HandleUpdateDecisionError ();
-    virtual directia::Brain& GetBrain();
+    virtual directia::brain::Brain& GetBrain();
 
-    virtual void RegisterSelf( directia::Brain& brain ) = 0;
+    virtual void RegisterSelf( directia::brain::Brain& brain ) = 0;
     //@}
 
 protected:
     //!@name Data
     //@{
-    T*                                   pEntity_;
+    T*                              pEntity_;
     boost::shared_ptr< MIL_Mission_ABC > pMission_;
-    std::string                          diaType_;
-    DEC_DataBase&                        database_;
+    std::string                     diaType_;
+    DEC_DataBase&                   database_;
+	unsigned int                    gcPause_;
+    unsigned int                    gcMult_;
     //@}
 
 private:
     //!@name Data
     //@{
-    std::auto_ptr< directia::Brain >   pBrain_;
+    boost::shared_ptr< directia::brain::Brain > pBrain_;
     std::auto_ptr< struct ScriptRefs > pRefs_;
     std::string                        brainFile_;
     std::string                        includePath_;
+
     std::string                        modelName_;
     //@}
 };
@@ -182,14 +195,20 @@ private:
 struct ScriptRefs
 {
 public:
-    ScriptRefs( directia::Brain& brain );
+    ScriptRefs( directia::brain::Brain& brain );
 
-    directia::ScriptRef sendEvent_;
-    directia::ScriptRef startEvent_;
-    directia::ScriptRef stopEvents_;
-    directia::ScriptRef setStateVariable_;
-    directia::ScriptRef collectgarbage_;
-    directia::ScriptRef step_;
+    directia::tools::binders::ScriptRef sendEvent_;
+    directia::tools::binders::ScriptRef startEvent_;
+    directia::tools::binders::ScriptRef stopEvents_;
+    directia::tools::binders::ScriptRef setStateVariable_;
+    directia::tools::binders::ScriptRef collectgarbage_;
+    directia::tools::binders::ScriptRef step_;
+    directia::tools::binders::ScriptRef callbackPerception_;
+    directia::tools::binders::ScriptRef knowledgeCallbackAction_;
+    directia::tools::binders::ScriptRef removeAction_;
+    directia::tools::binders::ScriptRef initTaskParameter_;
+    directia::tools::binders::ScriptRef cleanBrainBeforeDeletion_;
+
 private:
     ScriptRefs();
     ScriptRefs( const ScriptRefs& );

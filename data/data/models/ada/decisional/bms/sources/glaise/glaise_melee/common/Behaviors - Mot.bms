@@ -31,6 +31,7 @@ includedFiles["sources/glaise/glaise_melee/common/Behaviors - Mot.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
                 if( DEC_FacteurHumain_Moral() ~= eMoral_Fanatique ) then
             SetStateVariable( "VE_RapFor", ( 5 - DEC_RapportDeForceLocal() ) )
         else
@@ -41,7 +42,7 @@ includedFiles["sources/glaise/glaise_melee/common/Behaviors - Mot.bms"] = true
             SetStateVariable( "VE_Tenir", ( DEC_RapportDeForceLocal() + myself.rTenir_ ) )
         end
 
-        if( ( DEC_GetMission( myself ) == 0 or DEC_GetMission( myself ) == nil ) ) then
+        if( DEC_GetMission( myself ) == nil ) then
             --[[// Par defaut    		    		    	
 ]]SetStateVariable( "VE_Agressivite_Tir", 0 )
         end
@@ -69,6 +70,7 @@ node "BEH_MOT_TenirFaceAuxEnnemis"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
         for _,eni in pairs( listeConnaissances or {} ) do
         local _continue = true

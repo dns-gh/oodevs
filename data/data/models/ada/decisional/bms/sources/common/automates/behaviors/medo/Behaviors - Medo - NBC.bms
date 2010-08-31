@@ -40,6 +40,7 @@ include "Common/Automates/Actions/Medo/Actions - Medo - NBC.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -95,6 +96,7 @@ node "BEH_Mission_Automate_NBC_AssignerArmerSiteA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -150,6 +152,7 @@ node "BEH_Mission_Automate_NBC_AssignerReconnaitreZoneA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -205,6 +208,7 @@ node "BEH_Mission_Automate_NBC_AssignerReconnaitreSiteA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -260,6 +264,7 @@ node "BEH_Mission_Automate_NBC_AssignerDecontaminerZoneA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do

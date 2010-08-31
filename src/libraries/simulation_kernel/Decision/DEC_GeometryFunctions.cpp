@@ -1,25 +1,39 @@
 // *****************************************************************************
 //
-// This file is part of a MASA library or program.
-// Refer to the included end-user license agreement for restrictions.
-//
-// Copyright (c) 2003 MASA Group
+// $Created: NLD 2003-08-20 $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Functions/DEC_GeometryFunctions.cpp $
+// $Author: Nld $
+// $Modtime: 7/06/05 9:59 $
+// $Revision: 46 $
+// $Workfile: DEC_GeometryFunctions.cpp $
 //
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+
 #include "DEC_GeometryFunctions.h"
 #include "DEC_FrontAndBackLinesComputer.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Terrain/PHY_RoleInterface_TerrainAnalysis.h"
+#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Orders/MIL_Fuseau.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Meteo/PHY_MeteoDataManager.h"
-#include "simulation_terrain/TER_World.h"
+#include "Tools/MIL_Tools.h"
+#include "simulation_terrain/TER_Localisation.h"
+#include "MT_Tools/MT_Random.h"
 
 #define PRECISION 0.0000001
+
+// =============================================================================
+// TOUT POURRI
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeAgentsBarycenter
@@ -32,10 +46,13 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeAgentsBarycenter(
     {
         DEC_Decision_ABC* pKnow = *it;
         assert( pKnow );
+
         *pResult += pKnow->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
     }
+
     if( !selection.empty() )
         *pResult = (*pResult / static_cast< MT_Float >( selection.size() ) );
+
     return pResult;
 }
 
@@ -47,8 +64,13 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeDestPointForPion(
 {
     assert( pPion );
     assert( std::find( callerAutomate.GetPions().begin(), callerAutomate.GetPions().end(), &pPion->GetPion() ) != callerAutomate.GetPions().end() );
+
     return ComputeDestPoint( pPion->GetPion() );
 }
+
+// =============================================================================
+// CREATION / DESTRUCTION
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::CreateLocalisation
@@ -89,6 +111,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CopyPoint( boost::shared
     return pVect;
 }
 
+
 //-----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::CreateDirection
 // Created: NLD 2003-05-13
@@ -97,6 +120,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreateDirection( MT_Vect
 {
     assert( pPosSource );
     assert( pPosDest   );
+
     boost::shared_ptr< MT_Vector2D > pResult;
     if( *pPosSource == *pPosDest )
     {
@@ -120,11 +144,14 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreateOrthoDirection( MT
 {
     assert( pDir );
     assert( MT_IsZero( pDir->SquareMagnitude() - 1. ) );
+
     boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D( *pDir ) );
+
     if( bCounterClockwise )
         pResult->Rotate90();
     else
         pResult->Rotate90ClockWise();
+
     return pResult;
 }
 
@@ -132,14 +159,16 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreateOrthoDirection( MT
 // OPERATIONS
 // =============================================================================
 
+
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeDistance
 // Created: MGD 2010-02-19
 // -----------------------------------------------------------------------------
 float DEC_GeometryFunctions::ComputeDistance( boost::shared_ptr< MT_Vector2D > pos1, boost::shared_ptr< MT_Vector2D > pos2 )
 {
-    return static_cast< float >( pos1->Distance( *pos2 ) );
+    return (float)pos1->Distance( *pos2 );
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ReverseDirection
@@ -158,6 +187,7 @@ void DEC_GeometryFunctions::ReverseDirection( boost::shared_ptr< MT_Vector2D > p
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CopyAndReverseDirection( const MT_Vector2D* pDir )
 {
     assert( pDir );
+
     boost::shared_ptr< MT_Vector2D > pNewDir( new MT_Vector2D( *pDir ) );
     *pNewDir *= -1.;
     return pNewDir;
@@ -170,6 +200,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CopyAndReverseDirection(
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CopyAndRotateDirection( const MT_Vector2D* pDir, const MT_Float angle )
 {
     assert( pDir );
+
     boost::shared_ptr< MT_Vector2D > pNewDir( new MT_Vector2D( *pDir ) );
     const MT_Float rAngle = - ( angle * MT_PI / 180. );
     pNewDir->Rotate( rAngle );
@@ -189,7 +220,9 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CopyAndRotateDirection( 
 std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeLocalisationPointsForPionsInFuseau( const std::vector< DEC_Decision_ABC* >& pions, TER_Localisation* pLocalisation, MT_Vector2D* pDirDanger, MT_Float rDistMaxBtwPoints )
 {
     assert( !pions.empty() );
+
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
+
     // 1. Vérifie si les pions sont bien dans le même fuseau
     const MIL_Fuseau& fuseau = ( **pions.begin() ).GetPion().GetOrderManager().GetFuseau();
     std::vector< DEC_Decision_ABC* >::const_iterator itPion = pions.begin();
@@ -198,31 +231,37 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeLo
         if( ( **itPion ).GetPion().GetOrderManager().GetFuseau() != fuseau ) //$$$ beark
             return result;
     }
+
     // 2. Clippe le polygone dans le fuseau
     T_PointVector clippedPointVector;
     pLocalisation->GetPointsClippedByPolygon( fuseau, clippedPointVector );
     if( clippedPointVector.empty() )
         return result;
+
     // 3. Barycentre polygone clippé
     MT_Vector2D vBarycenter = MT_ComputeBarycenter( clippedPointVector );
     assert( fuseau.IsInside( vBarycenter ) );
     assert( TER_World::GetWorld().IsValidPosition( vBarycenter ) );
+
     // 4. Droite perpendiculaire dir dangereuse
     MT_Vector2D vDirTmp( *pDirDanger );
     vDirTmp.Normalize();
     MT_Float rTmp = vDirTmp.rX_;
-    vDirTmp.rX_ = vDirTmp.rY_;
-    vDirTmp.rY_ = -rTmp;
+    vDirTmp.rX_   = vDirTmp.rY_;
+    vDirTmp.rY_   = -rTmp;
     MT_Droite lineForPositions( vBarycenter, vDirTmp + vBarycenter );
+
     // 5. Extrémités dans fuseau
     MT_Vector2D vLeftPoint;
     MT_Vector2D vRightPoint;
     fuseau.ComputeExtremities( lineForPositions, vLeftPoint, vRightPoint );
+
     // 6. Extrémités réélles dans objet clippé - fait que si l'objet est un polygone
     if( clippedPointVector.size() > 2 )
     {
         MT_Line segmentLeftSide ( vBarycenter, vLeftPoint  );
         MT_Line segmentRightSide( vBarycenter, vRightPoint );
+
         TER_DistanceLess cmp( vBarycenter );
         T_PointSet collisionSet( cmp );
         collisionSet.clear();
@@ -234,15 +273,19 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeLo
         if( !collisionSet.empty() )
             vRightPoint = *(--collisionSet.end());
     }
+
     // 7. Répartition des points
     result.reserve( pions.size() + 1 );
+
     // Nombre impaire => un pion est au barycentre
     if( pions.size() % 2 )
     {
         boost::shared_ptr< MT_Vector2D > point( new MT_Vector2D( vBarycenter ) );
         result.push_back( point );
     }
+
     unsigned int nNbrPointsPerSide = pions.size() / 2;
+
     // Left side
     MT_Vector2D vDir( vLeftPoint - vBarycenter );
     MT_Float rIncr = std::min( vDir.Magnitude() / ( nNbrPointsPerSide + 1 ), rDistMaxBtwPoints );
@@ -252,6 +295,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeLo
         boost::shared_ptr< MT_Vector2D > point( new MT_Vector2D( vBarycenter + vDir * ( rIncr * i ) ) );
         result.push_back( point );
     }
+
     // Right side
     vDir = MT_Vector2D( vRightPoint - vBarycenter );
     rIncr = std::min( vDir.Magnitude() / ( nNbrPointsPerSide + 1 ), rDistMaxBtwPoints );
@@ -273,6 +317,11 @@ bool DEC_GeometryFunctions::IsPointInsideLocalisation( MT_Vector2D* pPoint, TER_
 {
     return pLocalisation->IsInside( *pPoint );
 }
+
+
+// =============================================================================
+// GEOMETRY - POINTS
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ConvertPointToLocalisation
@@ -304,11 +353,13 @@ MT_Float DEC_GeometryFunctions::Distance( const MT_Vector2D* p1, const MT_Vector
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::TranslatePosition( MT_Vector2D* p1, MT_Vector2D* p2, MT_Float d )
 {
     assert( p1 && p2 );
+
     boost::shared_ptr< MT_Vector2D > res( new MT_Vector2D() );
     if( (*p1) == (*p2) )
         *res = *p1;
     else
         *res=*p1+ d*(*p2-*p1).Normalized();
+
     return res;
 }
 
@@ -320,8 +371,10 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::TranslatePositionInDirec
 {
     assert( p1 && p2 );
     assert( MT_IsZero( p2->SquareMagnitude() - 1. ) );
+
     boost::shared_ptr< MT_Vector2D > res( new MT_Vector2D() );
     *res = *p1 + d * (*p2);
+
     return res;
 }
 
@@ -332,11 +385,17 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::TranslatePositionInDirec
 bool DEC_GeometryFunctions::ComparePositions( MT_Vector2D* p1, MT_Vector2D* p2 )
 {
     assert( p1 && p2 );
+
     // $$$ JVT : Débile : si il y a besoin d'une "weldvalue" elle doit être prise en compte
     //           directement dans l'objet vecteur et dans ses operateurs ( en l'occurence == )
     static const MT_Float rWeldValue = TER_World::GetWorld().GetWeldValue();
+
     return( p1->Distance( *p2 ) <= rWeldValue );
 }
+
+// =============================================================================
+// CALCULS DE POSITIONS
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeSupportPosition
@@ -345,12 +404,17 @@ bool DEC_GeometryFunctions::ComparePositions( MT_Vector2D* p1, MT_Vector2D* p2 )
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSupportPosition( const MIL_AgentPion& callerAgent, DEC_Decision_ABC* pAgentToSupport, MT_Float rDist )
 {
     assert( pAgentToSupport != 0 );
+
     const MT_Vector2D& vUnitToSupportPos = pAgentToSupport->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition ();
     const MIL_Fuseau& fuseau             = callerAgent.GetOrderManager().GetFuseau();
+
     MT_Vector2D  vDirLooked;
     pAgentToSupport->GetPion().GetRole< PHY_RoleInterface_Perceiver >().GetMainPerceptionDirection( vDirLooked );
+
     vDirLooked.Rotate90ClockWise();
+
     boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D() );
+
     // $$$$ Position dans le fuseau : devrait être générique
     MT_Vector2D vSupportPos1( vUnitToSupportPos + vDirLooked * rDist );
     if( fuseau.IsInside( vSupportPos1 ) )
@@ -358,16 +422,20 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSupportPosition( 
         *pResult = vSupportPos1;
         return pResult;
     }
+
     MT_Vector2D vSupportPos2( vUnitToSupportPos + vDirLooked * -rDist );
     if( fuseau.IsInside( vSupportPos2 ) )
     {
         *pResult = vSupportPos2;
         return pResult;
     }
+
     MT_Line line1( vUnitToSupportPos, vSupportPos1 );
     MT_Line line2( vUnitToSupportPos, vSupportPos2 );
+
     TER_DistanceLess cmpLeft( vUnitToSupportPos );
     T_PointSet collisions( cmpLeft );
+
     fuseau.IntersectWithBorder( line1, collisions );
     fuseau.IntersectWithBorder( line2, collisions );
     if( collisions.empty() )
@@ -375,6 +443,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSupportPosition( 
         *pResult = vSupportPos1; //$$$ POURRI
         return pResult;
     }
+
     *pResult = *collisions.begin();
     return pResult;
 }
@@ -387,12 +456,16 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeAmbushPosition( c
 {
     assert( pAmbushPosition  );
     assert( pRetreatPosition );
+
     boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D() );
+
     MT_Vector2D vDirAmbushPos = callerAgent.GetOrderManager().GetDirDanger();
     vDirAmbushPos.Rotate90ClockWise();
     vDirAmbushPos.Normalize();
+
     MT_Vector2D vAmbushPos1( *pAmbushPosition + vDirAmbushPos *  rDist );
     MT_Vector2D vAmbushPos2( *pAmbushPosition + vDirAmbushPos * -rDist );
+
     if( pRetreatPosition->SquareDistance( vAmbushPos1 ) < pRetreatPosition->SquareDistance( vAmbushPos2 ) )
         *pResult = vAmbushPos1;
     else
@@ -411,11 +484,15 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPosition( c
     {
         // Position de l'ennemi
         const MT_Vector2D& vEnemyPos  = pKnowledgeEnemy->GetPosition();
+
         MT_Vector2D vDirEniToAmi = ( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() - vEnemyPos).Normalize();
         if( vDirEniToAmi.IsZero() )
             vDirEniToAmi = -callerAgent.GetOrderManager().GetDirDanger();
+
         MT_Vector2D vSafetyPos = vEnemyPos + vDirEniToAmi * rMinDistance;
+
         TER_World::GetWorld().ClipPointInsideWorld( vSafetyPos );
+
         pResult.reset( new MT_Vector2D( vSafetyPos ) );
     }
     return pResult;
@@ -428,19 +505,26 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPosition( c
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeStaticSafetyPosition( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledgeEnemy )
 {
     static std::map< unsigned int, std::pair< boost::shared_ptr< MT_Vector2D >, MT_Vector2D > > buffer;//@TODO MGD Replace by a buffer module for terrain analysis
+
     MT_Float rMinDistance = pKnowledgeEnemy->GetMaxRangeToFireOn(callerAgent,0)+200;
+
     if( pKnowledgeEnemy && pKnowledgeEnemy->IsValid() )
     {
         unsigned int key = callerAgent.GetID() * 100000 + pKnowledgeEnemy->GetID();
         std::map< unsigned int, std::pair< boost::shared_ptr< MT_Vector2D >, MT_Vector2D > >::iterator search = buffer.find( key);
+
         // Position de l'ennemi
         const MT_Vector2D& vEnemyPos  = pKnowledgeEnemy->GetPosition();
+
         MT_Vector2D vDirEniToAmi = ( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() - vEnemyPos).Normalize();
         if( vDirEniToAmi.IsZero() )
             vDirEniToAmi = -callerAgent.GetOrderManager().GetDirDanger();
+
         MT_Vector2D vSafetyPos = vEnemyPos + vDirEniToAmi * rMinDistance;
+
         TER_World::GetWorld().ClipPointInsideWorld( vSafetyPos );
         //MT_Vector2D vCornerPoint= UrbanModel::GetSingleton().GetCornerPoint( vSafetyPos );
+
         //update buffer when delta > 100 m
         if( search == buffer.end() )
         {
@@ -459,6 +543,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeStaticSafetyPosit
     }
     return boost::shared_ptr< MT_Vector2D >();
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeSafetyPositionWithPopulation
@@ -484,10 +569,15 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWit
     if( pKnowledgeEnnemy.get() && pKnowledgeEnnemy->IsValid() )
     {
         assert( pObjective );
-        MT_Float rMinDistance = MIL_Tools::ConvertMeterToSim( rMinMeterDistance );
-        const MT_Vector2D& vEnnemiPos = pKnowledgeEnnemy->GetPosition();
-        MT_Vector2D vDirEniToAmi = ( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() - vEnnemiPos).Normalize();
+
+
+        MT_Float     rMinDistance = MIL_Tools::ConvertMeterToSim( rMinMeterDistance );
+
+        const MT_Vector2D& vEnnemiPos  = pKnowledgeEnnemy->GetPosition();
+
+        MT_Vector2D vDirEniToAmi       = ( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() - vEnnemiPos).Normalize();
         MT_Vector2D vDirEniToObjective = ( *pObjective - vEnnemiPos ).Normalize();
+
         MT_Vector2D vSafetyPos;
         if( vDirEniToAmi.IsZero() )
             vSafetyPos = vEnnemiPos + vDirEniToObjective * rMinDistance;
@@ -496,11 +586,14 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWit
             const MT_Float rAngle = Angle( vDirEniToAmi, vDirEniToObjective );
             vSafetyPos = vEnnemiPos + vDirEniToAmi.Rotate( rAngle  * -0.5 ) * rMinDistance;
         }
+
         TER_World::GetWorld().ClipPointInsideWorld( vSafetyPos );
+
         pResult.reset( new MT_Vector2D( vSafetyPos ) );
     }
     return pResult;
 }
+
 
 //-----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeNearestFuseauEntryPoint
@@ -512,6 +605,10 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestFuseauEntr
     callerAgent.GetOrderManager().GetFuseau().ComputeEntryPoint( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), *pResult );
     return pResult;
 }
+
+// =============================================================================
+// ASA
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputePosDeploiementASAOmni
@@ -542,6 +639,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePo
 std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePosDeploiementASANasse( int positionCount, const MT_Vector2D* center, float angle, float initialDistance, float spacing, const MT_Vector2D* direction )
 {
     assert( direction && center && MT_IsZero( direction->SquareMagnitude() - 1. ) );
+
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
     if( positionCount <= 0 )
         return result;
@@ -549,8 +647,10 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePo
     initialDistance = ( float ) MIL_Tools::ConvertMeterToSim( initialDistance );
     spacing         = ( float ) MIL_Tools::ConvertMeterToSim( spacing );
     MT_Vector2D vCenter = *center + initialDistance * *direction;
+
     const MT_Vector2D vSupport1( direction->Rotated(  semiAngle ) * spacing );
     const MT_Vector2D vSupport2( direction->Rotated( -semiAngle ) * spacing );
+
     result.reserve( positionCount );
     if( positionCount % 2 )
     {    // cas impair : on a en plus un point au centre
@@ -558,6 +658,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePo
         if( !--positionCount )
             return result;
     }
+
     result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( vCenter + vSupport1 ) ) );
     result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( vCenter + vSupport2 ) ) );
     for( positionCount -= 2; positionCount; positionCount -= 2 )
@@ -575,23 +676,29 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePo
 std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePosDeploiementASADoubleRideau( int positionCount, const MT_Vector2D* center, float initialDistance, float lineSpacing, float pointSpacing, const MT_Vector2D* direction )
 {
     assert( direction && center && MT_IsZero( direction->SquareMagnitude() - 1. ) );
+
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
     if( positionCount <= 0 )
         return result;
+
     initialDistance = ( float ) MIL_Tools::ConvertMeterToSim( initialDistance );
-    lineSpacing = ( float ) MIL_Tools::ConvertMeterToSim( lineSpacing );
-    pointSpacing = ( float ) MIL_Tools::ConvertMeterToSim( pointSpacing );
+    lineSpacing     = ( float ) MIL_Tools::ConvertMeterToSim( lineSpacing );
+    pointSpacing    = ( float ) MIL_Tools::ConvertMeterToSim( pointSpacing );
     MT_Vector2D vDirection = *direction;
+
     MT_Vector2D vSupport1( vDirection.Rotated90() );
     MT_Vector2D vSupport2( -vSupport1 );
+
     result.reserve( positionCount );
     result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( *center + initialDistance * vDirection + ( pointSpacing * .5 ) * vSupport1 ) ) );
     if( !--positionCount )
         return result;
     result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( *center + initialDistance * vDirection + ( pointSpacing * .5 ) * vSupport2 ) ) );
+
     vDirection *= lineSpacing;
-    vSupport1 *= pointSpacing;
-    vSupport2 *= pointSpacing;
+    vSupport1  *= pointSpacing;
+    vSupport2  *= pointSpacing;
+
     while( --positionCount )
     {
         result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( **( result.rbegin() + 1 ) + vDirection ) ) );
@@ -606,6 +713,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePo
     return result;
 }
 
+
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputePointsBeforeLima
 // Created: NLD 2004-05-25
@@ -614,6 +722,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePo
 std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePointsBeforeLima( const MIL_Automate& callerAutomate, unsigned int nLimaID, MT_Float rDistBeforeLima, unsigned int nNbrPoints )
 {
     MIL_LimaOrder* pLima = callerAutomate.GetOrderManager().FindLima( nLimaID );
+
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
     if( pLima != 0 )
     {
@@ -628,6 +737,10 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePo
     return result;
 }
 
+// =============================================================================
+// LIGNES AVANT / ARRIERE /MIDDLE
+// =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeDistanceFromMiddleLine
 // Created: NLD 2003-10-01
@@ -636,12 +749,16 @@ float DEC_GeometryFunctions::ComputeDistanceFromMiddleLine( const std::vector< D
 {
     if( selPions.empty() )
         return 0.f;
+
     // Barycenter of the pions given
     MT_Vector2D vBarycenter;
     for( std::vector< DEC_Decision_ABC*>::const_iterator itPion = selPions.begin(); itPion != selPions.end(); ++itPion )
         vBarycenter += (*itPion)->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
     vBarycenter /= selPions.size();
+
     const MT_Vector2D& vReferencePionPosition = pReferencePion->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
+
+    //
     const MIL_Fuseau& fuseau = pReferencePion->GetPion().GetOrderManager().GetFuseau();
     MT_Float rDist;
     if( fuseau.IsNull() )
@@ -699,9 +816,11 @@ void DEC_GeometryFunctions::StopComputingFrontAndBackLines( DEC_FrontAndBackLine
 float DEC_GeometryFunctions::ComputeDistanceFromFrontLine( DEC_FrontAndBackLinesComputer* pComputer, DEC_Decision_ABC* pPion )
 {
     assert( pComputer );
+
     MT_Float rDist = 0;
     assert( pPion );
     rDist = pComputer->ComputeDistanceFromFrontLine( pPion->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() );
+
     return( MIL_Tools::ConvertSimToMeter( rDist ) );
 }
 
@@ -712,11 +831,13 @@ float DEC_GeometryFunctions::ComputeDistanceFromFrontLine( DEC_FrontAndBackLines
 float DEC_GeometryFunctions::ComputeDistanceAutomatFromFrontLine( DEC_FrontAndBackLinesComputer* pComputer, DEC_Decision_ABC* pAutomate )
 {
     assert( pComputer );
+
     MT_Float rDist = 0;
     assert( pAutomate );
     MT_Vector2D barycenter;
     if( pAutomate->GetAutomate().GetAlivePionsBarycenter( barycenter ) )
         rDist = pComputer->ComputeDistanceFromFrontLine( barycenter );
+
     return MIL_Tools::ConvertSimToMeter( rDist );
 }
 
@@ -727,9 +848,11 @@ float DEC_GeometryFunctions::ComputeDistanceAutomatFromFrontLine( DEC_FrontAndBa
 float DEC_GeometryFunctions::ComputeDistanceFromBackLine( DEC_FrontAndBackLinesComputer* pComputer, DEC_Decision_ABC* pPion )
 {
     assert( pComputer );
+
     MT_Float rDist = 0;
     assert( pPion );
     rDist = pComputer->ComputeDistanceFromBackLine( pPion->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() );
+
     return MIL_Tools::ConvertSimToMeter( rDist );
 }
 
@@ -746,6 +869,7 @@ float DEC_GeometryFunctions::ComputeDistanceAutomatFromBackLine( const MIL_Autom
     MT_Vector2D barycenter;
     if( pAutomate->GetAutomate().GetAlivePionsBarycenter( barycenter ) )
         rDist = pComputer->ComputeDistanceFromBackLine( barycenter );
+
     return MIL_Tools::ConvertSimToMeter( rDist );
 }
 
@@ -758,8 +882,10 @@ bool DEC_GeometryFunctions::ClipLocalisationInFuseau( const TER_Localisation& lo
     // Clippe le polygone dans le fuseau
     T_PointVector clippedPointVector;
     localisation.GetPointsClippedByPolygon( fuseau, clippedPointVector );
+
     if( clippedPointVector.empty() )
         return false;
+
     clippedLocalisation.Reset( clippedPointVector ); //$$$ NAZE
     return true;
 }
@@ -771,12 +897,16 @@ bool DEC_GeometryFunctions::ClipLocalisationInFuseau( const TER_Localisation& lo
 unsigned int DEC_GeometryFunctions::SplitLocalisation( const TER_Localisation& localisation, unsigned int nNbrParts, std::vector< boost::shared_ptr< TER_Localisation > >& result )
 {
     assert( nNbrParts > 0 );
+
     result.clear();
     localisation.Split( nNbrParts, result );
+
     if( result.size() != nNbrParts )
         return eWarning_DecoupageIncomplet;
-    return eNoError;
+    else
+        return eNoError;
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::SplitLocalisation
@@ -785,18 +915,24 @@ unsigned int DEC_GeometryFunctions::SplitLocalisation( const TER_Localisation& l
 std::vector< boost::shared_ptr< TER_Localisation > > DEC_GeometryFunctions::SplitLocalisation( const TER_Localisation& localisation, MT_Vector2D vOrigin, const MT_Vector2D& vDirection, MT_Float rSectionLength )
 {
     T_LocalisationPtrVector splitLocVector;
+
     const MT_Vector2D vTranslation   = rSectionLength * vDirection;
     const MT_Vector2D vLineDirection = vDirection.Rotated90();
+
     MT_Droite backBound  ( vOrigin, vOrigin + vLineDirection );
     vOrigin += vTranslation;
     MT_Droite frontBound ( vOrigin, vOrigin + vLineDirection );
-    for( ;; )
+
+    while( true )
     {
         T_PointVector points;
         localisation.GetPointsClippedBetweenTwoLines( backBound, frontBound, points );
+
         if( points.empty() )
             return splitLocVector;
+
         splitLocVector.push_back( boost::shared_ptr< TER_Localisation >( new TER_Localisation( TER_Localisation::ePolygon, points ) ) );
+
         vOrigin += vTranslation;
         backBound  = frontBound;
         frontBound.MT_Droite::MT_Droite( vOrigin, vOrigin + vLineDirection );
@@ -832,6 +968,7 @@ MT_Float DEC_GeometryFunctions::ComputeAreaSize( TER_Localisation* pLocalisation
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeMeanDirection( const std::vector< MT_Vector2D* >& selection )
 {
     boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D( 0., 0. ) );
+
     if( selection.empty() )
     {
         assert( !"Should not be called when empty !" );
@@ -842,13 +979,16 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeMeanDirection( co
     {
         for( std::vector< MT_Vector2D* >::const_iterator it = selection.begin(); it != selection.end(); ++it )
             *pResult += *(*it);
+
         if( pResult->IsZero() )
             *pResult = *selection.front();
         else
             pResult->Normalize();
     }
+
     return pResult;
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeKnowledgeAgentBarycenter
@@ -858,6 +998,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeMeanDirection( co
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeKnowledgeAgentBarycenter( const MIL_AgentPion& /*caller*/, const std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > vKnowledges )
 {
     boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D( 0., 0. ) );
+
     unsigned int nNbr = 0;
     for( std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >::const_iterator it = vKnowledges.begin(); it != vKnowledges.end(); ++it )
     {
@@ -865,11 +1006,13 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeKnowledgeAgentBar
         if( pKnowledge && pKnowledge->IsValid() )
         {
             *pResult += pKnowledge->GetPosition();
-            ++nNbr;
+            ++ nNbr;
         }
     }
+
     if( nNbr )
         *pResult /= (MT_Float)nNbr;
+
     return pResult;
 }
 
@@ -882,20 +1025,25 @@ DEC_Decision_ABC* DEC_GeometryFunctions::GetFrontestPion( const std::vector< DEC
     const MT_Line     support( MT_Vector2D( 0., 0. ), *pDirection );
     DEC_Decision_ABC* pResult = 0;
     MT_Float          rSquareDistResult = -1.;
+
     for ( std::vector< DEC_Decision_ABC* >::const_iterator it = pions.begin(); it != pions.end(); ++it )
     {
         DEC_Decision_ABC* pKnow = *it;
         assert( pKnow );
+
         MT_Vector2D vProjectedPoint;
         MT_Float    rSquareDist;
+
         const bool bInDirection = support.ProjectPointOnLine( GetPosition( pKnow->GetPion() ), vProjectedPoint ) >= 0.;
+
         rSquareDist = vProjectedPoint.rX_ * vProjectedPoint.rX_ + vProjectedPoint.rY_ * vProjectedPoint.rY_;
         if( !pResult || ( bInDirection &&  rSquareDist > rSquareDistResult ) || ( !bInDirection && rSquareDist < rSquareDistResult )  )
         {
             rSquareDistResult = rSquareDist;
-            pResult = pKnow;
+            pResult           = pKnow;
         }
     }
+
     return pResult;
 }
 // -----------------------------------------------------------------------------
@@ -916,27 +1064,33 @@ DEC_Decision_ABC* DEC_GeometryFunctions::ComputeBackestAgent( const std::vector<
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeCoverPosition( const std::vector< DEC_Decision_ABC* >& pions, MT_Vector2D* pDirection, float distance )
 {
     boost::shared_ptr< MT_Vector2D > result;
+
     if( pions.empty() )
     {
         assert( !"La liste ne doit pas etre vide" );
         return result;
     }
     assert( pDirection );
+
     // calcul de la première ligne de support ( perpendiculaire à la direction passant par le pion le plus avancé )
     const DEC_Decision_ABC* pFrontestPion = GetFrontestPion( pions, pDirection );
     assert( pFrontestPion );
     const MT_Vector2D& vFrontestPionPosition = pFrontestPion->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
     const MT_Droite support1( vFrontestPionPosition, vFrontestPionPosition + pDirection->Rotated90() );
+
     // calcul de la seconde ligne de support ( dans la direction passant par le barycentre des pions )
     MT_Vector2D vOrigin;
     for( std::vector< DEC_Decision_ABC* >::const_iterator it = pions.begin(); it != pions.end(); ++it )
         vOrigin += ( *it )->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
     vOrigin /= (MT_Float)pions.size();
     const MT_Droite support2( vOrigin, vOrigin + *pDirection );
+
     // calcul du point de couverture
     result.reset( new MT_Vector2D() );
     support1.Intersect2D( support2, *result );
+
     *result += ( *pDirection * MIL_Tools::ConvertMeterToSim( distance ) );
+
     return result;
 }
 
@@ -962,14 +1116,21 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointInCirc
 {
     const MT_Float rRadius_ = MIL_Tools::ConvertMeterToSim( radius );
     assert( pCenter );
+
     // retrieve a random position in the circle (vCenter_,rRadius_)
     const MT_Float rAlpha = MIL_Random::rand_ii( -MT_PI, MT_PI );
     const MT_Float rMod   = MIL_Random::rand_oi();
+
     boost::shared_ptr< MT_Vector2D > pRandomPosition( new MT_Vector2D( *pCenter ) );
     (*pRandomPosition) += MT_Vector2D( rMod * rRadius_ * cos( rAlpha ), rMod * rRadius_ * sin( rAlpha ) );
+
     TER_World::GetWorld().ClipPointInsideWorld( *pRandomPosition );
     return pRandomPosition;
 }
+
+// =============================================================================
+// Interception
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::GetInterceptionPoint
@@ -977,7 +1138,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointInCirc
 // -----------------------------------------------------------------------------
 bool DEC_GeometryFunctions::GetInterceptionPoint( const MT_Vector2D& vToInterceptPosition, const MT_Vector2D& vToInterceptSpeed, const MT_Vector2D& vInterceptingPosition, MT_Float rInterceptingSpeed, MT_Vector2D& result )
 {
-    // Soit les équations suivantes ( inconnues = vxnB, vynB (vecteur direction normé de B) et t (temps de l'interception) ) :
+    // Soit les équations suivantes ( inconnues = vxnB, vynB (vercteur direction normé de B) et t (temps de l'interception) ) :
     // vToInterceptPosition.rX_ + vToInterceptSpeed.rX_ * t = vInterceptingPosition.rX_ + rInterceptingSpeed * vxnB * t
     // vToInterceptPosition.rY_ + vToInterceptSpeed.rY_ * t = vInterceptingPosition.rY_ + rInterceptingSpeed * vynB * t
     //                            vxnB * vxnB + vynB * vynB = 1
@@ -986,14 +1147,20 @@ bool DEC_GeometryFunctions::GetInterceptionPoint( const MT_Vector2D& vToIntercep
     const MT_Float rA = vToInterceptSpeed.rX_ * vToInterceptSpeed.rX_ + vToInterceptSpeed.rY_ * vToInterceptSpeed.rY_ - rInterceptingSpeed * rInterceptingSpeed;
     const MT_Float rB = 2. * ( vToInterceptPosition.rY_ * vToInterceptSpeed.rY_ + vToInterceptPosition.rX_ * vToInterceptSpeed.rX_ - vToInterceptSpeed.rY_ * vInterceptingPosition.rY_ - vToInterceptSpeed.rX_ * vInterceptingPosition.rX_ );
     const MT_Float rC = vToInterceptPosition.rY_ * vToInterceptPosition.rY_ + vInterceptingPosition.rY_ * vInterceptingPosition.rY_ - 2. * vToInterceptPosition.rY_ * vInterceptingPosition.rY_ + vInterceptingPosition.rX_ * vInterceptingPosition.rX_ - 2. * vToInterceptPosition.rX_ * vInterceptingPosition.rX_ + vToInterceptPosition.rX_ * vToInterceptPosition.rX_;
+
     const MT_Float delta = rB * rB - 4. * rA * rC;
+
     if( rA == 0. || delta < 0. )
         return false;
+
     MT_Float t = ( std::sqrt( delta ) - rB ) / ( 2. * rA );
+
     if( t < 0. && ( t = ( std::sqrt( delta ) + rB ) / ( -2. * rA ) ) < 0. )
         return false;
+
     result.rX_ = vToInterceptPosition.rX_ + vToInterceptSpeed.rX_ * t;
     result.rY_ = vToInterceptPosition.rY_ + vToInterceptSpeed.rY_ * t;
+
     return TER_World::GetWorld().IsValidPosition( result );
 }
 
@@ -1049,6 +1216,7 @@ std::vector< DEC_Decision_ABC* > DEC_GeometryFunctions::ListUncoordinatedPawns( 
     std::vector< DEC_Decision_ABC* > notCoordinatedPions( unCoordinatedPions );
     std::vector< DEC_Decision_ABC* > coordinatedPions;
     coordinatedPions.push_back( pion );
+
     bool bDummy = true;
     while( bDummy )
     {
@@ -1082,6 +1250,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::SplitList
         for( std::vector< MT_Vector2D* >::const_iterator it = listPoints.begin(); it != listPoints.end(); ++it )
             points.push_back( **it );
         MT_Polyline polyLine( points );
+
         if( nNbrParts <= 0 )
         {
             boost::shared_ptr< MT_Vector2D > point( new MT_Vector2D( polyLine.GetPointAt( polyLine.Magnitude() / 2. ) ) );
@@ -1092,7 +1261,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::SplitList
             result.reserve( nNbrParts + 1 );
             const MT_Float rPartSize = polyLine.Magnitude() / nNbrParts;
             MT_Float rDist = 0.;
-            for( unsigned int i = 0; i < nNbrParts + 1; ++i, rDist += rPartSize )
+            for( unsigned int i = 0; i < nNbrParts + 1; ++i, rDist+= rPartSize )
             {
                 boost::shared_ptr< MT_Vector2D > point( new MT_Vector2D( polyLine.GetPointAt( rDist ) ) );
                 result.push_back( point );
@@ -1106,9 +1275,7 @@ namespace
 {
     float ComputeClosedTerrainRatio( const TER_Localisation& location )
     {
-        unsigned int nForestSurface = 0;
-        unsigned int nEmptySurface  = 0;
-        unsigned int nUrbanSurface  = 0;
+        unsigned int nForestSurface = 0, nEmptySurface  = 0, nUrbanSurface  = 0;
         MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetVisionObjectsInSurface( location, nEmptySurface, nForestSurface, nUrbanSurface );
         return static_cast< float >( nForestSurface + nUrbanSurface ) / static_cast< float >( nForestSurface + nUrbanSurface + nEmptySurface );
     }
@@ -1155,8 +1322,8 @@ float DEC_GeometryFunctions::ComputeOpenTerrainRatioInFuseau( const MIL_Fuseau* 
     return pFuseau ? pFuseau->ComputeOpenTerrainRatio() : 0.f;
 }
 
-namespace
-{
+namespace {
+
     bool CompareTerrainOpening( TER_Localisation* location1, TER_Localisation* location2 )
     {
         return ComputeOpenTerrainRatio( *location1 ) < ComputeOpenTerrainRatio( *location2 );
@@ -1197,6 +1364,7 @@ std::vector< MIL_Fuseau* > DEC_GeometryFunctions::SortFuseauxAccordingToTerrainO
 boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::ConvertFuseauToLocalisation( const MIL_Fuseau* pFuseau )
 {
     assert( pFuseau );
+
     boost::shared_ptr< TER_Localisation > pLocalisation( new TER_Localisation( *pFuseau ) );
     return pLocalisation;
 }
@@ -1215,7 +1383,7 @@ MT_Vector2D DEC_GeometryFunctions::_ComputeAutomatesBarycenter( const std::vecto
         if( ( **it ).GetAutomate().GetAlivePionsBarycenter( tmp ) )
         {
             barycenter += tmp;
-            ++nNbrElt;
+            ++ nNbrElt;
         }
     }
     if( nNbrElt > 0 )
@@ -1230,9 +1398,11 @@ MT_Vector2D DEC_GeometryFunctions::_ComputeAutomatesBarycenter( const std::vecto
 DEC_Objective* DEC_GeometryFunctions::GetNextObjectiveInFuseau( const MIL_Fuseau* pFuseau, const MT_Vector2D* pRefPoint, const std::vector< DEC_Objective* >& objectives )
 {
     DEC_Objective* result = 0;
+
     if( pFuseau )
     {
         MT_Float rDist = std::numeric_limits< MT_Float >::max();
+
         for( std::vector< DEC_Objective* >::const_iterator it = objectives.begin(); it != objectives.end(); ++it )
         {
             DEC_Objective* pObjective = *it;
@@ -1258,7 +1428,9 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::ComputeAreaInZone( 
 {
     boost::shared_ptr< TER_Localisation > result;
     if( zone && center )
+    {
         result.reset( new TER_Localisation( *center, zone->Distance( *center, true ) ) );
+    }
     return result;
 }
 
@@ -1270,13 +1442,14 @@ float DEC_GeometryFunctions::ComputeAutomatDelayFromSchedule( const MIL_Fuseau* 
 {
     // Calcul distance entre barycentre automates et element schedulé
     MT_Float rDistanceFromScheduled = std::numeric_limits< MT_Float >::max();
-    unsigned int nSchedule = 0;
+    unsigned int     nSchedule              = 0;
     if( pLima )
     {
         rDistanceFromScheduled = pFuseau->ComputeAverageDistanceFromLima( *pLima, _ComputeAutomatesBarycenter( automates ) );
         nSchedule = pLima->GetSchedule();
     }
-    return ComputeDelayFromSchedule( pFuseau, automates, static_cast< float >( rDistanceFromScheduled ), nSchedule );
+
+    return ComputeDelayFromSchedule( pFuseau, automates, ( float ) rDistanceFromScheduled, nSchedule );
 }
 
 // -----------------------------------------------------------------------------
@@ -1286,6 +1459,7 @@ float DEC_GeometryFunctions::ComputeAutomatDelayFromSchedule( const MIL_Fuseau* 
 float DEC_GeometryFunctions::ComputeDelayFromSchedule( const MIL_Fuseau* pFuseau, const std::vector< DEC_Decision_ABC* >& automates, float rDistanceFromScheduled, int nSchedule )
 {
     assert( pFuseau );
+
     // Calcul vitesse moyenne de l'automate
     MT_Float rSpeed = std::numeric_limits< MT_Float >::max();
     for( std::vector< DEC_Decision_ABC* >::const_iterator it = automates.begin(); it != automates.end(); ++it )
@@ -1293,15 +1467,18 @@ float DEC_GeometryFunctions::ComputeDelayFromSchedule( const MIL_Fuseau* pFuseau
         const MIL_Automate& automate = ( **it ).GetAutomate();
         rSpeed = std::min( rSpeed, automate.GetAlivePionsMaxSpeed() );
     }
+
     if( rDistanceFromScheduled == std::numeric_limits< MT_Float >::max() || rSpeed == 0. )
         return 0.f;
     else
     {
         const MT_Float rTimeToGoToElement = 1.439 * rDistanceFromScheduled / rSpeed; //$$$ Deplacer la formule magique (Cf. PHY_ComposantePion où elle existe aussi...)
         const MT_Float rTimeLeeway        = 1.439 * 2000. / rSpeed;
+
         // Valeur de retour : = 0 : en avance, ou à 2km de la lima
         //                    = 1 : en retard
         //              entre les 2 : marge de sécurité
+
         const MT_Float rDelay = nSchedule - ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + rTimeToGoToElement );
         if( rDelay < 0 )
             return 1.f;
@@ -1313,11 +1490,12 @@ float DEC_GeometryFunctions::ComputeDelayFromSchedule( const MIL_Fuseau* pFuseau
 // Name: DEC_GeometryFunctions::GetCrossroads
 // Created: MGD 2009-08-19
 // -----------------------------------------------------------------------------
-void DEC_GeometryFunctions::GetCrossroads( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table )
+void DEC_GeometryFunctions::GetCrossroads( directia::brain::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table )
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > points;
     pion.GetRole< PHY_RoleInterface_TerrainAnalysis >().GetCrossroads( points );
-    knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.Point" ), points, true );
+
+    knowledgeCreateFunction( table, brain[ "net.masagroup.sword.military.world.Point" ], points, true );
 }
 
 // -----------------------------------------------------------------------------

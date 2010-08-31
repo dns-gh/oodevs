@@ -24,6 +24,7 @@ includedFiles["sources/melee/abc/automates/ge40/missions/Reorganiser moyens.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DIA_IsListEmpty( self._namedParams.listePions ) ) then
             do return end
         end
@@ -65,6 +66,7 @@ node "BEH_GTIA_TransfererMoyensOp"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DIA_IsListEmpty( self._namedParams.listePions ) ) then
             do return end
         end
@@ -105,9 +107,9 @@ node "ACT_GTIA_TransfererMoyensVers"
     end,
 
     select = function( self )
-        if( DIA_GetLocalFakeActuator( self._namedParams.pionSub ) < GetActivity() ) then
+        if( DIA_GetLocalFakeActuator( "ACT_GTIA_TransfererMoyensVers", self._namedParams.pionSub ) < GetActivity() ) then
             do
-                DIA_SetLocalFakeActuator( self._namedParams.pionSub, GetActivity() )
+                DIA_SetLocalFakeActuator( "ACT_GTIA_TransfererMoyensVers", self._namedParams.pionSub, GetActivity() )
                 if( ModuleBegins() ) then
                     DEC_Pion_ChangeAutomate( self._namedParams.pionSub, self._namedParams.pionCompagnie )
                 end

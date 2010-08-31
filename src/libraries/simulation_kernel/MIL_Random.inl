@@ -26,7 +26,8 @@ unsigned long MIL_Random::rand32_ii( unsigned long min, unsigned long max, int c
 {
     if( ctxt != -1 && gaussianRandom_[ ctxt ] )
         return static_cast< unsigned long >( min + gaussian_ii( ctxt ) * ( max - min ) );
-    return MT_Random::GetInstance().rand32_ii( min, max );
+    else
+        return MT_Random::GetInstance().rand32_ii( min, max );
 }
 
 // -----------------------------------------------------------------------------
@@ -37,8 +38,9 @@ inline
 unsigned long MIL_Random::rand32_io( unsigned long min, unsigned long max, int ctxt /* = -1 */ )
 {
     if( ctxt != -1 && gaussianRandom_[ ctxt ] )
-        return static_cast< unsigned long >( min + gaussian_io( ctxt ) * ( max - min ) );
-    return MT_Random::GetInstance().rand32_io( min, max );
+        return unsigned long( min + gaussian_io( ctxt ) * ( max - min ) );
+    else
+        return MT_Random::GetInstance().rand32_io( min, max );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,8 +51,9 @@ inline
 unsigned long MIL_Random::rand32_oo( unsigned long min, unsigned long max, int ctxt /* = -1 */ )
 {
     if( ctxt != -1 && gaussianRandom_[ ctxt ] )
-        return static_cast< unsigned long >( min + gaussian_oo( ctxt ) * ( max - min ) );
-    return MT_Random::GetInstance().rand32_oo( min, max );
+        return unsigned long( min + gaussian_oo( ctxt ) * ( max - min ) );
+    else
+        return MT_Random::GetInstance().rand32_oo( min, max );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,8 +64,9 @@ inline
 unsigned long MIL_Random::rand32_oi( unsigned long min, unsigned long max, int ctxt /* = -1 */ )
 {
     if( ctxt != -1 && gaussianRandom_[ ctxt ] )
-        return static_cast< unsigned long >( min + gaussian_oi( ctxt ) * ( max - min ) );
-    return MT_Random::GetInstance().rand32_oi( min, max );
+        return unsigned long( min + gaussian_oi( ctxt ) * ( max - min ) );
+    else
+        return MT_Random::GetInstance().rand32_oi( min, max );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,7 +88,8 @@ double MIL_Random::rand_ii( int ctxt /* = -1 */ )
 {
     if( ctxt != -1 && gaussianRandom_[ ctxt ] )
         return gaussian_ii( ctxt );
-    return MT_Random::GetInstance().rand_ii();
+    else
+        return MT_Random::GetInstance().rand_ii();
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +101,8 @@ double MIL_Random::rand_io( int ctxt /* = -1 */ )
 {
     if( ctxt != -1 && gaussianRandom_[ ctxt ] )
         return gaussian_io( ctxt );
-    return MT_Random::GetInstance().rand_io();
+    else
+        return MT_Random::GetInstance().rand_io();
 }
 
 // -----------------------------------------------------------------------------
@@ -108,7 +114,8 @@ double MIL_Random::rand_oo( int ctxt /* = -1 */ )
 {
     if( ctxt != -1 && gaussianRandom_[ ctxt ] )
         return gaussian_oo( ctxt );
-    return MT_Random::GetInstance().rand_oo();
+    else
+        return MT_Random::GetInstance().rand_oo();
 }
 
 // -----------------------------------------------------------------------------
@@ -120,7 +127,8 @@ double MIL_Random::rand_oi( int ctxt /* = -1 */ )
 {
     if( ctxt != -1 && gaussianRandom_[ ctxt ] )
         return gaussian_oi( ctxt );
-    return MT_Random::GetInstance().rand_oi();
+    else
+        return MT_Random::GetInstance().rand_oi();
 }
 
 // -----------------------------------------------------------------------------
@@ -132,7 +140,8 @@ double MIL_Random::rand_ii( double min, double max, int ctxt /* = -1 */ )
 {
     if( ctxt != -1 && gaussianRandom_[ ctxt ] )
         return min + gaussian_ii( ctxt ) * ( max - min );
-    return MT_Random::GetInstance().rand_ii( min, max );
+    else
+        return MT_Random::GetInstance().rand_ii( min, max );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,7 +153,8 @@ double MIL_Random::rand_io( double min, double max, int ctxt /* = -1 */ )
 {
     if( ctxt != -1 && gaussianRandom_[ ctxt ] )
         return min + gaussian_io( ctxt ) * ( max - min );
-    return MT_Random::GetInstance().rand_io( min, max );
+    else
+        return MT_Random::GetInstance().rand_io( min, max );
 }
 
 // -----------------------------------------------------------------------------
@@ -156,7 +166,8 @@ double MIL_Random::rand_oo( double min, double max, int ctxt /* = -1 */ )
 {
     if( ctxt != -1 && gaussianRandom_[ ctxt ] )
         return min + gaussian_oo( ctxt ) * ( max - min );
-    return MT_Random::GetInstance().rand_oo( min, max );
+    else
+        return MT_Random::GetInstance().rand_oo( min, max );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,7 +179,8 @@ double MIL_Random::rand_oi( double min, double max, int ctxt /* = -1 */ )
 {
     if( ctxt != -1 && gaussianRandom_[ ctxt ] )
         return min + gaussian_oi( ctxt ) * ( max - min );
-    return MT_Random::GetInstance().rand_oi( min, max );
+    else
+        return MT_Random::GetInstance().rand_oi( min, max );
 }
 
 // -----------------------------------------------------------------------------

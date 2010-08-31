@@ -63,7 +63,7 @@ elseif switch_1 == ePhase_CDT then
 
         --[[//-------------------------------------------------------------------------
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
-        if( ( self._namedParams.pt ~= 0 and self._namedParams.pt ~= nil ) ) then
+        if( self._namedParams.pt ~= nil ) then
             DEC_Copie_Point_Mission( self._namedParams.pt, self.missionPion, "positionDeploiement_" )
         end
 
@@ -146,7 +146,7 @@ elseif switch_1 == ePhase_CDT then
 
         --[[//-------------------------------------------------------------------------
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
-        if( ( self._namedParams.pt ~= 0 and self._namedParams.pt ~= nil ) ) then
+        if( self._namedParams.pt ~= nil ) then
             DEC_Copie_Point_Mission( self._namedParams.pt, self.missionPion, "positionDeploiement_" )
         end
 
@@ -229,7 +229,7 @@ elseif switch_1 == ePhase_CDT then
 
         --[[//-------------------------------------------------------------------------
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
-        if( ( self._namedParams.pt ~= 0 and self._namedParams.pt ~= nil ) ) then
+        if( self._namedParams.pt ~= nil ) then
             DEC_Copie_Point_Mission( self._namedParams.pt, self.missionPion, "positionDeploiement_" )
         end
 
@@ -312,7 +312,7 @@ elseif switch_1 == ePhase_CDT then
 
         --[[//-------------------------------------------------------------------------
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
-        if( ( self._namedParams.pt ~= 0 and self._namedParams.pt ~= nil ) ) then
+        if( self._namedParams.pt ~= nil ) then
             DEC_Copie_Point_Mission( self._namedParams.pt, self.missionPion, "positionDeploiement_" )
         end
 
@@ -395,7 +395,7 @@ elseif switch_1 == ePhase_CDT then
 
         --[[//-------------------------------------------------------------------------
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
-        if( ( self._namedParams.pt ~= 0 and self._namedParams.pt ~= nil ) ) then
+        if( self._namedParams.pt ~= nil ) then
             DEC_Copie_Point_Mission( self._namedParams.pt, self.missionPion, "positionDeploiement_" )
         end
 
@@ -478,7 +478,7 @@ elseif switch_1 == ePhase_CDT then
 
         --[[//-------------------------------------------------------------------------
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
-        if( ( self._namedParams.pt ~= 0 and self._namedParams.pt ~= nil ) ) then
+        if( self._namedParams.pt ~= nil ) then
             DEC_Copie_Point_Mission( self._namedParams.pt, self.missionPion, "positionDeploiement_" )
         end
 

@@ -33,6 +33,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.objectifsPrioritaires = self.objectifsPrioritaires or {}--[[//Vide dans cette mission
 ]]
         Activate( self.activations.ACT_GTIA_AnalyserSituationPourMissionRetrograde, 1, {} )--[[// Analyse environnement
@@ -102,6 +103,7 @@ node "BEH_GTIA_Decrocher"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 if( S_Automate_EchelonEnDifficulte( eEtatEchelon_Premier ) ) then
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "Premier echelon en difficulte: Decrocher.", } )
@@ -136,6 +138,7 @@ node "BEH_GTIA_ORDRE_Decrocher"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 local ordres_recus = DEC_GetCategory( "ordres_recus" )
         for _,ordre in pairs( ordres_recus or {} ) do
         local _continue = true
@@ -177,6 +180,7 @@ node "BEH_GTIA_OrganiserLesMoyensPourDonnerCAR"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listePionsMeleeDetruits = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateNonOperationnels( S_Cherche_GE_Filtre_TypeAutomate_Melee( DEC_Automate_AutomatesSubordonnes() ) ) )
         Activate( self.activations.BEH_GTIA_OrganiserMoyensVersPionsOp, 1, { listePionsMeleeDetruits, } )
     end,
@@ -205,6 +209,7 @@ node "BEH_GTIA_AssignerLesOrdresPourCoupArret"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_GTIA_AssignerLesMissionsCAR, 1, { self._namedParams.travaux, self._namedParams.zoneRegroupement, } )
     end,
 
@@ -236,6 +241,7 @@ node "BEH_GTIA_AssignerLesMissionsCAR"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_GTIA_AssignerMissionsDefensesEcl, 1, { S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Eclairage ), self._namedParams.zoneRegroupement, } )
         Activate( self.activations.BEH_GTIA_AssignerMissionsDefensesPE, 1, { S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ), self._namedParams.zoneRegroupement, } )
         Activate( self.activations.BEH_GTIA_AssignerMissionsDefensesSE, 1, { S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second ), self._namedParams.zoneRegroupement, } )
@@ -271,6 +277,7 @@ node "BEH_GTIA_AssignerMissionsDefenseSEAppui"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,pion in pairs( --[[// TC2
 ]]S_Cherche_GE_Filtre_TypeAutomate_Log( self._namedParams.pions ) or {} ) do
         local _continue = true
@@ -321,6 +328,7 @@ node "BEH_GTIA_AssignerMissionDefenseGenieA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//On a des travaux 
 ]]if( not DIA_IsListEmpty( self._namedParams.travaux ) and not g_bPhaseReceuil ) then
             Activate( self.activations.ACT_GTIA_AssignerMissionDefensiveRealiserTravauxA, 1, { self._namedParams.pionGen, F_Automat_Getfuseau( self._namedParams.pionGen ), self._namedParams.travaux, self._namedParams.zoneRegroupement, } )
@@ -354,6 +362,7 @@ node "BEH_GTIA_AssignerMissionDefenseLogA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.positionDeploiement = self.positionDeploiement or DEC_Geometrie_PositionAleatoireSurCercle( S_Geometrie_BarycentreZone( self._namedParams.zoneRegroupement ), 100 )
         Activate( self.activations.ACT_GTIA_AssignerMissionDeployerTC2, 1, { self._namedParams.pionLog, F_Automat_Getfuseau( self._namedParams.pionLog ), self.positionDeploiement, } )
     end,
@@ -382,6 +391,7 @@ node "BEH_GTIA_AssignerMissionDefensePC"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.positionDeploiement = self.positionDeploiement or DEC_Geometrie_PositionAleatoireSurCercle( S_Geometrie_BarycentreZone( self._namedParams.zoneRegroupement ), 100 )
         Activate( self.activations.ACT_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, self._namedParams.pionPC, self.positionDeploiement, eEtatEchelon_Second, } )
     end,
@@ -411,6 +421,7 @@ node "BEH_GTIA_AssignerMissionsDefensesEcl"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( not g_bPhaseReceuil ) then
             Activate( self.activations.BEH_GTIA_AssignerMissionsDefensesPEclSurveiller, 1, { self._namedParams.listePions, } )
         else
@@ -443,6 +454,7 @@ node "BEH_GTIA_AssignerMissionsDefensesPEclSurveiller"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x in pairs( self._namedParams.listePions or {} ) do
         local _continue = true
 do
@@ -479,6 +491,7 @@ node "BEH_GTIA_AssignerMissionsDefensesPE"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( not g_bPhaseReceuil ) then
             Activate( self.activations.BEH_GTIA_AssignerMissionsDefensesPETenir, 1, { self._namedParams.listePions, } )
         else
@@ -511,6 +524,7 @@ node "BEH_GTIA_AssignerMissionsDefensesPETenir"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x in pairs( --[[// Assignation missions ABC
 ]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePions ) or {} ) do
         local _continue = true
@@ -558,6 +572,7 @@ node "BEH_GTIA_AssignerMissionsDefensesSE"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DIA_IsListEmpty( self._namedParams.listePions ) ) then
             do return end
         end
@@ -612,13 +627,14 @@ node "BEH_GTIA_AssignerMissionsDefensesSESoutenir"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x in pairs( --[[// Assignation missions ABC
 ]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePions ) or {} ) do
         local _continue = true
 do
                 local pion = x
                 --[[// securité
-]]if( ( F_Automat_Getfuseau( pion ) == 0 or F_Automat_Getfuseau( pion ) == nil ) ) then
+]]if( F_Automat_Getfuseau( pion ) == nil ) then
                     do return end
                 end
 
@@ -680,6 +696,7 @@ node "BEH_GTIA_AssignerMissionsDefensesDecrocher"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x in pairs( --[[// Assignation missions ABC et INF
 ]]self._namedParams.listePions or {} ) do
         local _continue = true
@@ -713,12 +730,12 @@ node "ACT_GTIA_AssignerMissionDefense"
     end,
 
     select = function( self )
-        if( DIA_GetLocalFakeActuator( self._namedParams.pion ) < GetActivity() ) then
+        if( DIA_GetLocalFakeActuator( "ACT_GTIA_AssignerMissionDefense", self._namedParams.pion ) < GetActivity() ) then
             do
-                DIA_SetLocalFakeActuator( self._namedParams.pion, GetActivity() )
+                DIA_SetLocalFakeActuator( "ACT_GTIA_AssignerMissionDefense", self._namedParams.pion, GetActivity() )
                 self.bMissionAssignee = self.bMissionAssignee or false
                 --[[// fuseau pas encore assigné
-]]if( ( self._namedParams.fuseau == 0 or self._namedParams.fuseau == nil ) or self.bMissionAssignee ) then
+]]if( self._namedParams.fuseau == nil or self.bMissionAssignee ) then
                     do return end
                 end
 
@@ -739,7 +756,7 @@ elseif switch_1 == "T_Mission_Automate_ABC_Tenir" then
                             local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
                             local lima = DEC_GetLima( eTypeLima_LCAR )
                             local point = DEC_Geometrie_CalculerPositionParRapportALimaDansFuseau( lima, 100, self._namedParams.fuseau )
-                            if( ( point == 0 or point == nil ) ) then
+                            if( point == nil ) then
                                 do
                                     DEC_Trace( "position impossible ABC" )
                                     _continue = false
@@ -758,7 +775,7 @@ elseif switch_1 == "T_Mission_Automate_INF_DefendreFerme" then
                             local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
                             local lima = DEC_GetLima( eTypeLima_LCAR )
                             local point = DEC_Geometrie_CalculerPositionParRapportALimaDansFuseau( lima, 100, self._namedParams.fuseau )
-                            if( ( point == 0 or point == nil ) ) then
+                            if( point == nil ) then
                                 do
                                     DEC_Trace( "position impossible ABC" )
                                     _continue = false
@@ -777,7 +794,7 @@ elseif switch_1 == "T_Mission_Automate_ABC_Surveiller" then
                             local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
                             local lima = DEC_GetLima( eTypeLima_LCAR )
                             local point = DEC_Geometrie_CalculerPositionParRapportALimaDansFuseau( lima, 100, self._namedParams.fuseau )
-                            if( ( point == 0 or point == nil ) ) then
+                            if( point == nil ) then
                                 do
                                     DEC_Trace( "position impossible ABC" )
                                     _continue = false
@@ -800,7 +817,7 @@ elseif switch_1 == "T_Mission_Automate_ABC_Couvrir" then
 ]]DEC_AssignMissionParameter( missionPion, "compagnie_", myself )
                             --[[// position
 ]]local point = DEC_Geometrie_CalculerPositionParRapportALimaDansFuseau( lima, 3000, self._namedParams.fuseau )
-                            if( ( point == 0 or point == nil ) ) then
+                            if( point == nil ) then
                                 do
                                     DEC_Trace( "position impossible ABC" )
                                     _continue = false
@@ -823,7 +840,7 @@ elseif switch_1 == "T_Mission_Automate_INF_BarrerDirection" then
                             local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
                             local lima = DEC_GetLima( eTypeLima_LCAR )
                             local point = DEC_Geometrie_CalculerPositionParRapportALimaDansFuseau( lima, 3000, self._namedParams.fuseau )
-                            if( ( point == 0 or point == nil ) ) then
+                            if( point == nil ) then
                                 do
                                     DEC_Trace( "position impossible INF" )
                                     _continue = false
@@ -846,7 +863,7 @@ elseif switch_1 == "T_Mission_Automate_SoutenirSurPositionEnMesureDe" then
                             local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
                             local lima = DEC_GetLima( eTypeLima_LCAR )
                             local point = DEC_Geometrie_CalculerPositionParRapportALimaDansFuseau( lima, 3000, self._namedParams.fuseau )
-                            if( ( point == 0 or point == nil ) ) then
+                            if( point == nil ) then
                                 do
                                     DEC_Trace( "position impossible" )
                                     _continue = false
@@ -891,7 +908,7 @@ elseif switch_1 == "T_Mission_Automate_SoutenirSurPositionEnMesureDe" then
 
     select = function( self )
         self.bMissionAssignee = self.bMissionAssignee or false
-        if( ( self._namedParams.fuseau == 0 or self._namedParams.fuseau == nil ) or self.bMissionAssignee ) then
+        if( self._namedParams.fuseau == nil or self.bMissionAssignee ) then
             do return end
         end
 

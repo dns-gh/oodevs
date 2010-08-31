@@ -33,6 +33,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
         local selPions = DEC_Automate_PionsSansPC()
         --[[// Pions recevant les appuis
@@ -44,7 +45,7 @@ include "bit.lua"
         do
         end
 
-        if( ( #( selPions_PE ) == 0 or #( selPions_PE ) == nil ) ) then
+        if( #( selPions_PE ) == 0 ) then
             do return end
         end
 
@@ -58,10 +59,10 @@ do
                 --[[// On donne la mission appuyer si le pion n'a pas de mission en cours
 ]]--[[// ou si le pion a la mission suivre
 ]]local mission = DEC_GetMission( pionAppui_INF )
-                if( ( ( mission == 0 or mission == nil ) ) or ( mission:GetType() == "T_Mission_Pion_Suivre" ) or ( mission:GetType() == "T_Mission_Pion_INF_Appuyer" ) ) then
+                if( ( mission == 0 ) or ( mission:GetType() == "T_Mission_Pion_Suivre" ) or ( mission:GetType() == "T_Mission_Pion_INF_Appuyer" ) ) then
                     do
                         local pionPE = S_Cherche_Automate_INF_PionReception_Appui( x_inf, selPions_PE )
-                        if( ( pionPE ~= 0 and pionPE ~= nil ) ) then
+                        if( pionPE ~= 0 ) then
                             do
                                 Activate( self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_CDT, x_inf, pionPE, eEtatEchelon_Second, } )
                                                                 do return end
@@ -96,6 +97,7 @@ node "BEH_Conduite_Automate_INF_GererAppuis_ABC"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local selPions = DEC_Automate_PionsSansPC()
         --[[// Pions recevant les appuis
 ]]local selPions_PE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
@@ -105,7 +107,7 @@ node "BEH_Conduite_Automate_INF_GererAppuis_ABC"
         do
         end
 
-        if( ( #( selPions_PE ) == 0 or #( selPions_PE ) == nil ) ) then
+        if( #( selPions_PE ) == 0 ) then
             do return end
         end
 
@@ -119,10 +121,10 @@ do
                 --[[// On donne la mission appuyer si le pion n'a pas de mission en cours
 ]]--[[// ou si le pion a la mission suivre
 ]]local mission = DEC_GetMission( pionAppui_ABC )
-                if( ( ( mission == 0 or mission == nil ) ) or ( mission:GetType() == "T_Mission_Pion_Suivre" ) or ( mission:GetType() == "T_Mission_Pion_ABC_Soutenir" ) or ( F_Pion_GeteEtatPhaseMission( pionAppui_ABC ) == eEtatPhaseMission_FinMission ) ) then
+                if( ( mission == 0 ) or ( mission:GetType() == "T_Mission_Pion_Suivre" ) or ( mission:GetType() == "T_Mission_Pion_ABC_Soutenir" ) or ( F_Pion_GeteEtatPhaseMission( pionAppui_ABC ) == eEtatPhaseMission_FinMission ) ) then
                     do
                         local pionPE = S_Cherche_Automate_INF_PionReception_Appui( pionAppui_ABC, selPions_PE )
-                        if( ( pionPE ~= 0 and pionPE ~= nil ) ) then
+                        if( pionPE ~= 0 ) then
                             do
                                 Activate( self.activations.BEH_Mission_Automate_ABC_AssignerSoutenirA, 1, { ePhase_CDT, pionAppui_ABC, pionPE, eEtatEchelon_Second, } )
                                                                 do return end
@@ -159,6 +161,7 @@ node "BEH_Conduite_Automate_INF_GererAppui_Mortier"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// DEC_Automate_PionsSansPC();
 ]]local selPions = S_ObtenirPionsOperationnels()
         local selAppuis_Mortier = S_Cherche_Automate_Filtre_TypePion( selPions, "GroupeInfanterie_Mortier" )
@@ -187,8 +190,9 @@ node "BEH_Conduite_Automate_INF_GererMission_Mortier"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local selPions_SE = S_ObtenirPionsDe_SansPC( eEtatEchelon_Second, eEtatDestruction_None )
-        if( ( #( selPions_SE ) == 0 or #( selPions_SE ) == nil ) ) then
+        if( #( selPions_SE ) == 0 ) then
             selPions_SE = S_ObtenirPionsDe_SansPC( eEtatEchelon_Premier, eEtatDestruction_None )
         end
 
@@ -198,7 +202,7 @@ node "BEH_Conduite_Automate_INF_GererMission_Mortier"
 do
                 local pionAppui_Mortier = x
                 local mission = DEC_GetMission( pionAppui_Mortier )
-                if( ( ( mission == 0 or mission == nil ) ) or ( mission:GetType() == "T_Mission_Pion_Suivre" ) or ( mission:GetType() == "T_Mission_Pion_INF_Appuyer" ) ) then
+                if( ( mission == 0 ) or ( mission:GetType() == "T_Mission_Pion_Suivre" ) or ( mission:GetType() == "T_Mission_Pion_INF_Appuyer" ) ) then
                     do
                         local pion = S_Cherche_Automate_INF_PionReception_Appui( pionAppui_Mortier, selPions_Appuye )
                         if( pion ~= nil ) then
@@ -239,6 +243,7 @@ node "BEH_Conduite_Automate_INF_GererOrdre_Mortier"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// --> S'il ya des pions en difficulte en PE, demande de les aider
 ]]--[[// S_ObtenirTousPionsDe( eEtatEchelon_Premier );
 ]]local selPions_PE = DEC_Automate_PionsAvecPC()
@@ -279,6 +284,7 @@ node "BEH_Conduite_Automate_INF_GererMission_PC"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x in pairs( DEC_Automate_PionsSansPC() or {} ) do
         local _continue = true
 do
@@ -308,7 +314,7 @@ elseif switch_1 == "SectionInfanterie"
 ]]--[[//		si le pion n'a pas de mission en cours
 ]]--[[// 		si le pion a la mission suivre						
 ]]
-                if( ( bInconnue and DEC_GetMission( pion ) == 0 or bInconnue and DEC_GetMission( pion ) == nil ) and F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon_Second ) then
+                if( bInconnue and DEC_GetMission( pion ) == nil and F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon_Second ) then
                     do
                         Activate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, pion, DEC_Automate_PionPC(), } )
                     end
@@ -339,6 +345,7 @@ node "BEH_Conduite_Automate_INF_Gerer_UniteInconnues"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x in pairs( DEC_Automate_PionsSansPC() or {} ) do
         local _continue = true
 do
@@ -368,7 +375,7 @@ elseif switch_1 == "SectionInfanterie"
 ]]--[[//		si le pion n'a pas de mission en cours
 ]]--[[// 		si le pion a la mission suivre						
 ]]
-                if( ( bInconnue and DEC_GetMission( pion ) == 0 or bInconnue and DEC_GetMission( pion ) == nil ) and F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon_Second ) then
+                if( bInconnue and DEC_GetMission( pion ) == nil and F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon_Second ) then
                     do
                         Activate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, pion, DEC_Automate_PionPC(), } )
                     end

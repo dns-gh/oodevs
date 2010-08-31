@@ -16,6 +16,7 @@ includedFiles["sources/appui/alat/automates/common/missions/appuyer/Appuyer - MR
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// variables presistantes
 ]]self.selPions = self.selPions or S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsSansPC() )
         self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePion( self.selPions, "AntitankHelicopterPatrol" )

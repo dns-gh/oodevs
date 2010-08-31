@@ -35,8 +35,8 @@ end
 function S_CreerItineraire_Embuscade( ptEmbuscade )
     local _returnValue = {}
     _returnValue = DEC_Geometrie_CreerListePoints()
-    assert( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ), "myself.objectifEsquive_ != 0" )
-    assert( ( ptEmbuscade ~= 0 and ptEmbuscade ~= nil ), "ptEmbuscade != 0" )
+    assert( myself.ptRegroupement_ ~= nil, "myself.objectifEsquive_ != nil" )
+    assert( ptEmbuscade ~= nil, "ptEmbuscade != nil" )
     DEC_Copie_PointDansListePoints( myself.ptRegroupement_, _returnValue )
     DEC_ListePoints_PushBack( _returnValue, ptEmbuscade )
     do return _returnValue end
@@ -48,7 +48,7 @@ function S_Geometrie_Milice_ChercherPositionObstacle( ptMission, natureObstacle,
     local rDelta = 1
     _returnValue = nil
     ptMineMieux = DEC_Geometrie_CalculerPositionObstacle( ptMission, S_TypeObject_ToString( natureObstacle ), 500 )
-    if( ( ptMineMieux ~= 0 and ptMineMieux ~= nil ) and not S_Geometrie_EstProchePosition( DEC_Agent_Position(), ptMineMieux, 200 ) ) then
+    if( ptMineMieux ~= nil and not S_Geometrie_EstProchePosition( DEC_Agent_Position(), ptMineMieux, 200 ) ) then
         do
             _returnValue = DEC_Geometrie_ConvertirPointEnLocalisation( ptMineMieux )
                         do return _returnValue end
@@ -63,7 +63,7 @@ function S_Geometrie_Milice_ChercherPositionObstacle( ptMission, natureObstacle,
     local mission = DEC_GetMission( myself )
     local ptMine = DEC_Geometrie_PositionTranslateDir( ptMission, DEC_GetDirectionDanger( mission ), rDelta * rDistMoyenObstacle )
     ptMineMieux = DEC_Geometrie_CalculerPositionObstacle( ptMine, S_TypeObject_ToString( natureObstacle ), 800 )
-    if( ( ptMineMieux ~= 0 and ptMineMieux ~= nil ) ) then
+    if( ptMineMieux ~= nil ) then
         do
             if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), ptMineMieux, 300 ) ) then
                 do return _returnValue end

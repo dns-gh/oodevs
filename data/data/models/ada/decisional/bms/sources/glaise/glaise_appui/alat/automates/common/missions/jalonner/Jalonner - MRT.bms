@@ -35,6 +35,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eMRT_AssignerMissions
         self.eEtatMissionsJalonner = self.eEtatMissionsJalonner or eActionEnCours
         self.affectationFuseauOk = self.affectationFuseauOk or false

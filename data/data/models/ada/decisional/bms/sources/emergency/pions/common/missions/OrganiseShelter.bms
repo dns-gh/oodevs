@@ -32,6 +32,7 @@ includedFiles["sources/emergency/pions/common/missions/OrganiseShelter.bms"] = t
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or eRejoindre
         if( ModuleBegins() ) then
@@ -113,6 +114,7 @@ node "BEH_Pion_Emergency_OrganiseShelter"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.shelter = self.shelter or nil
         self.locPosition = self.locPosition or nil
         if( ModuleBegins() ) then

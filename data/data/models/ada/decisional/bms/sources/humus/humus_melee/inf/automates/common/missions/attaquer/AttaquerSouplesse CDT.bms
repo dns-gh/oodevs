@@ -35,8 +35,9 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 local selPions_PE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
-        if( ( #( selPions_PE ) ~= 0 and #( selPions_PE ) ~= nil ) and #( selPions_PE ) == S_Conduite_Pions_EtatLima( selPions_PE, eEtatLima_LD ) ) then
+        if( #( selPions_PE ) ~= 0 and #( selPions_PE ) == S_Conduite_Pions_EtatLima( selPions_PE, eEtatLima_LD ) ) then
             StartActivateOverride( self, self.activations.BEH_Situation_Automate_INF_Attaquer_SurLD, 1, { selPions_PE, } )
         end
 
@@ -59,6 +60,7 @@ node "BEH_Situation_Automate_INF_Attaquer_SurLD"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local sUnites_INF = S_Cherche_Automate_Filtre_TypePion( self._namedParams.selPions_PE, "SectionInfanterie" )
         local sUnites_ABC = S_Cherche_Automate_Filtre_TypePion_ABC( self._namedParams.selPions_PE )
         --[[// with ( x_pion in selPions_PE )
@@ -84,6 +86,7 @@ node "BEH_Conduite_Automate_AssignerSemparerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.mission = self.mission or DEC_GetMission( myself )
         self.lstObjectifs = self.lstObjectifs or DEC_Geometrie_CreerListePoints()
         if( ModuleBegins() ) then

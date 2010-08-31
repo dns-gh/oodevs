@@ -17,6 +17,7 @@ includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Ambiance.bm
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAmbiance = self.eAmbiance or F_Pion_GeteEtatAmbiance( myself )
         self.presenceEnemie = self.presenceEnemie or false
         local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()

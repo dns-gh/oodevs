@@ -68,6 +68,7 @@ include "Glaise/Glaise_Appui/Nbc/Pions/Common/Behaviors - Dep.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Mot_Pion_NBC_AffecterVariablesDEtat, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// MAJ VE
 ]]--[[//-----------------------------------------------------------------------------
@@ -118,6 +119,7 @@ node "BEH_Nbc_GererAutoDecontamination"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
             Activate( self.activations.ACT_Nbc_SeDecontaminer, 1, {} )
         end
@@ -173,6 +175,7 @@ node "ACT_Nbc_SeDecontaminer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Ici normalement: si bonne gestion des objets (NBC)
 ]]--[[// If (pas mesurée) alors mesurer --> faire une action et pas un comportement
 ]]--[[//---------------------------------------------------------------------
@@ -212,6 +215,7 @@ node "BEH_Nbc_Pion_FaireUneMesureDans"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Car ne mesurer qu'une seule fois
 ]]self.bMesureEffectuee = self.bMesureEffectuee or false
         --[[// Mesure effectuee
@@ -302,6 +306,7 @@ node "ACT_NBC_FaireMesure"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//////////////// BMS OPTIM  ///////////////////
 ]]        if( F_Pion_GeteEtatDec( myself ) == eEtatDec_Sauvegarde ) then
             do return end
@@ -330,7 +335,7 @@ elseif switch_1 == eMoral_Moyen
                     --[[//-----------------------------------------------------------------------------
 ]]--[[// En fonction de la mission...  --> idem moral mauvais
 ]]--[[//-----------------------------------------------------------------------------
-]]if( ( DEC_GetMission( myself ) == 0 or DEC_GetMission( myself ) == nil ) ) then
+]]if( DEC_GetMission( myself ) == nil ) then
                         do
                             SetStateVariable( "VE_RapFor", ( 5 - DEC_RapportDeForceLocal() ) )
                             _continue = false
@@ -383,6 +388,7 @@ node "BEH_Dep_Virtuel_ProgressionVers"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.point, self._namedParams.eTypeProgression, self._namedParams.eTypeIti, } )
     end,
 
@@ -400,6 +406,7 @@ node "BEH_Dep_Virtuel_PreparationAction"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self:SendFeedback( eActionEffectuee )
         do return end
 

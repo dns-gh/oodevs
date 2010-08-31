@@ -12,6 +12,9 @@
 #ifndef __MIL_AutomateType_h_
 #define __MIL_AutomateType_h_
 
+#include "Tools/MIL_Config.h"
+#include "MIL.h"
+
 namespace xml
 {
     class xistream;
@@ -19,7 +22,10 @@ namespace xml
 
 namespace directia
 {
-    class Brain;
+    namespace brain
+    {
+        class Brain;
+    }
 }
 
 class DEC_DataBase;
@@ -35,6 +41,7 @@ class MIL_Formation;
 // ============================================================================
 class MIL_AutomateType : private boost::noncopyable
 {
+
 public:
     MIL_AutomateType( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AutomateType();
@@ -51,8 +58,8 @@ public:
 
     //! @name Instanciation
     //@{
-    virtual MIL_Automate& InstanciateAutomate( unsigned int nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database ) const;
-    virtual MIL_Automate& InstanciateAutomate( unsigned int nID, MIL_Automate&  parent, xml::xistream& xis, DEC_DataBase& database ) const;
+    virtual MIL_Automate& InstanciateAutomate( unsigned int nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult ) const;
+    virtual MIL_Automate& InstanciateAutomate( unsigned int nID, MIL_Automate&  parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult ) const;
     //@}
 
     //! @name Accessors
@@ -78,7 +85,7 @@ public:
 
     //! @name Logistic
     //@{
-    virtual void RegisterFunctions( directia::Brain& brain, MIL_Automate& automat ) const;
+    virtual void RegisterFunctions( directia::brain::Brain& brain, MIL_Automate& automat ) const;
     //@}
 
 protected:

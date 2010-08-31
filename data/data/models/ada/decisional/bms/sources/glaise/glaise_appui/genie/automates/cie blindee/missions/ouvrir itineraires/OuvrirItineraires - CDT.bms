@@ -28,6 +28,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//---------------------------------------------------------------------
@@ -43,7 +44,7 @@ include "bit.lua"
 ]]--[[// Vérification des moyens
 ]]--[[//---------------------------------------------------------------------
 ]]local listePionsGenie = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
-        if( ( #( listePionsGenie ) == 0 or #( listePionsGenie ) == nil ) ) then
+        if( #( listePionsGenie ) == 0 ) then
             do
                 Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
                                 do return end
@@ -85,6 +86,7 @@ node "BEH_Mission_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcement"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//---------------------------------------------------------------------
 ]]--[[// Mettre à jour la liste des objets traités --> association à un 
 ]]--[[// T_ConnaissanceObjet_local
@@ -165,8 +167,9 @@ node "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstacle"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Sécurité
-]]if( ( ( self._namedParams.objetABrecher:GetpionRenforcement_() == 0 or self._namedParams.objetABrecher:GetpionRenforcement_() == nil ) or self._namedParams.objetABrecher:Getpion_() == 0 or ( self._namedParams.objetABrecher:GetpionRenforcement_() == 0 or self._namedParams.objetABrecher:GetpionRenforcement_() == nil ) or self._namedParams.objetABrecher:Getpion_() == nil ) ) then
+]]if( self._namedParams.objetABrecher:GetpionRenforcement_() == 0 or self._namedParams.objetABrecher:Getpion_() == 0 ) then
             do return end
         end
 
@@ -177,7 +180,7 @@ node "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstacle"
 ]]--[[// Cast
 ]]local section = self._namedParams.objetABrecher:Getpion_()
         --[[// Fin brechage 
-]]if( ( section:GetobjMisEnCours_() == 0 or section:GetobjMisEnCours_() == nil ) ) then
+]]if( section:GetobjMisEnCours_() == 0 ) then
             --[[// --> REMISE A DIPSOSITION
 ]]Activate( self.activations.BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstaclePour, 1, { self._namedParams.objetABrecher:GetpionRenforcement_(), self._namedParams.objetABrecher, } )
         end
@@ -208,6 +211,7 @@ node "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstaclePour"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-------------------------------------------------------------------------
 ]]--[[// A l'init...
 ]]--[[//-------------------------------------------------------------------------
@@ -242,6 +246,7 @@ node "BEH_Misc_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcementDe"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.genObs = self.genObs or DEC_CreerDIAThing( "T_ConnaissanceObjet_local" )
         --[[//-----------------------------------------------------------------
 ]]--[[// Init
@@ -282,6 +287,7 @@ node "BEH_Conduite_Automate_GEN_OuvrirAxe_GererSE_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion pions détruit
 ]]--[[//-----------------------------------------------------------------------------
@@ -327,6 +333,7 @@ node "BEH_Conduite_Automate_GEN_OuvrirAxe_FaireSuivre"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion SE
 ]]--[[//-----------------------------------------------------------------------------

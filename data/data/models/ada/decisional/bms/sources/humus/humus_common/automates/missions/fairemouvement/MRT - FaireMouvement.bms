@@ -32,6 +32,7 @@ includedFiles["sources/humus/humus_common/automates/missions/fairemouvement/MRT 
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
@@ -102,6 +103,7 @@ node "BEH_Medo_Automate_AssignerFaireMouvementA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         --[[//---------------------------------------------------------------------
 ]]--[[// Assignation des missions

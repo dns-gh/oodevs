@@ -53,6 +53,7 @@ include "Population/Populations/Missions/Manifester.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Default, 1, {} )
     end,
 
@@ -79,6 +80,7 @@ node "BEH_Default"
     end,
 
     activate = function( self )
+        local Activate = Activate
         S_ChangerAttitude( S_AggraveAttitudeAttrition( GetStateVariable( "VE_Morts" ) ) )
         UpdateStateVariable( "VE_Morts", DEC_Population_Morts() - GetStateVariable( "VE_Morts" ) )
         --[[// =============================================================================
@@ -91,7 +93,7 @@ node "BEH_Default"
 ]]--[[// Gestion du blocage du tir avec la domination à deux seuils
 ]]--[[// =============================================================================
 ]]local rCourage = GetStateVariable( "VE_Courage" )
-        if( ( GetStateVariable( "VE_Domination" ) == 0 or GetStateVariable( "VE_Domination" ) == nil ) and rCourage == 1 ) then
+        if( GetStateVariable( "VE_Domination" ) == 0 and rCourage == 1 ) then
             do
                 UpdateStateVariable( "VE_Courage", -rCourage )
                 if( GetStimulus( "STIM_ZoneSecurisee" ) > 0 ) then
@@ -102,7 +104,7 @@ node "BEH_Default"
 
             end
         else
-if( ( GetStateVariable( "VE_Domination" ) == 1 and rCourage == 0 or GetStateVariable( "VE_Domination" ) == 1 and rCourage == nil ) ) then
+if( GetStateVariable( "VE_Domination" ) == 1 and rCourage == 0 ) then
                 do
                     UpdateStateVariable( "VE_Courage", 1 - rCourage )
                 end
@@ -173,6 +175,7 @@ node "BEH_Pop_RejoindrePoint"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Pop_RejoindrePoint, 1, { self._namedParams.point, } )
     end,
 
@@ -197,6 +200,7 @@ node "BEH_Pop_Stationner"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 if( ModuleBegins() ) then
             DEC_RC( eRC_EnStationnement )
         end
@@ -232,6 +236,7 @@ node "BEH_Pop_RejoindreInstallation"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.objectif = self.objectif or nil
         if( ModuleBegins() ) then
             do
@@ -267,6 +272,7 @@ node "BEH_Pop_DegraderInstallations"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtatDelai = self.eEtatDelai or eActionEnCours
         if( self.eEtatDelai == eActionEnCours and GetStateVariable( "VE_Courage" ) > 0 ) then
             do
@@ -308,6 +314,7 @@ node "BEH_Pop_RalentissementPions"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Pop_RalentissementPions, 1, {} )
     end,
 
@@ -333,6 +340,7 @@ node "BEH_Pop_PAPPions"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtatDelai = self.eEtatDelai or eActionEnCours
         if( self.eEtatDelai == eActionEnCours and GetStateVariable( "VE_Courage" ) > 0 ) then
             do
@@ -377,6 +385,7 @@ node "BEH_Pop_PAPPion"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtatDelai = self.eEtatDelai or eActionEnCours
         if( self.eEtatDelai == eActionEnCours and GetStateVariable( "VE_Courage" ) > 0 ) then
             do
@@ -418,6 +427,7 @@ node "BEH_Pop_RepondreALaPriseAPartie"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local lstPions = DEC_Connaissances_PionsPrenantAPartie()
         for _,pion in pairs( lstPions or {} ) do
         local _continue = true

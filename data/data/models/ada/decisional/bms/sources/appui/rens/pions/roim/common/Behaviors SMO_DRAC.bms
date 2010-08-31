@@ -21,6 +21,7 @@ includedFiles["sources/appui/rens/pions/roim/common/Behaviors SMO_DRAC.bms"] = t
     end,
 
     activate = function( self )
+        local Activate = Activate
         local selDrones = S_Misc_Pion_Rens_ObtenirDronesAssignes()
         --[[//-----------------------------------------------------------------------------
 ]]--[[// INIT
@@ -80,6 +81,7 @@ node "BEH_Dep_Pion_Rens_GererEmbarquementDrone"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// On ne gere pas les drones détruits
 ]]--[[//-----------------------------------------------------------------------------
@@ -129,6 +131,7 @@ node "BEH_Transport_Pion_Rens_GererEmbarquementDrone"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion embarquement
 ]]--[[//-----------------------------------------------------------------------------
@@ -162,6 +165,7 @@ node "BEH_Transport_Pion_Rens_EmbarquerDrone"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Misc_Pion_Rens_EmbarquerDrone, 1, { self._namedParams.pionDrone, } )
     end,
 
@@ -189,6 +193,7 @@ node "BEH_Transport_Pion_Rens_ExploiterDrone"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                                 do

@@ -27,6 +27,7 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/freine
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eFreiner
         self.listePionsSgpt = self.listePionsSgpt or {}
         self.listeFreiner = self.listeFreiner or {}

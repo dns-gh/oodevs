@@ -146,6 +146,7 @@ void MIL_AgentTypePion::ReadUnit( xml::xistream& xis )
     if( pType )
         xis.error( "Pion type already defined" );
     pType = (*itPionAllocator->second)( strName, xis );
+
     if( !ids_.insert( pType->GetID() ).second )
         xis.error( "Pion type ID already used" );
 }
@@ -310,7 +311,7 @@ MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( MIL_Automate& automate, const
 // Created: MGD 2009-08-13
 // @TODO REPLACE BY XML in factory
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, DEC_DataBase& database ) const
+void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult ) const
 {
     const bool bIsAutonomous = pion.IsAutonomous();
     pion.RegisterRole( *new network::NET_RolePion_Dotations( pion ) );
@@ -339,7 +340,7 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, DEC_DataBase& databa
     pion.RegisterRole( *new firing::PHY_RoleAction_DirectFiring( pion ) );
     pion.RegisterRole( *new firing::PHY_RoleAction_IndirectFiring( pion ) );
     pion.RegisterRole( *new PHY_RolePion_Illumination( pion ) ); // LTO
-    pion.RegisterRole( *new DEC_RolePion_Decision( pion, database ) );
+    pion.RegisterRole( *new DEC_RolePion_Decision( pion, database, gcPause, gcMult ) );
     pion.RegisterRole( *new PHY_RoleAction_FolkInfluence() );
     pion.RegisterRole( *new DEC_Representations() );
     pion.RegisterRole( *new PHY_RolePion_TerrainAnalysis( pion ) );
@@ -353,7 +354,7 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, DEC_DataBase& databa
 // Name: MIL_AgentTypePion::RegisterFunctions
 // Created: LDC 2009-04-23
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePion::RegisterFunctions( directia::Brain& /*brain*/, MIL_Agent_ABC& /*agent*/ ) const
+void MIL_AgentTypePion::RegisterFunctions( directia::brain::Brain& /*brain*/, MIL_Agent_ABC& /*agent*/ ) const
 {
     // NOTHING
 }

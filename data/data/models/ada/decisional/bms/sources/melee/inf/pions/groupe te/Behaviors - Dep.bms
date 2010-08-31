@@ -42,6 +42,7 @@ node "BEH_Dep_Pion_INF_AborderEnnemi"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eActionDeplacement = self.eActionDeplacement or eActionEnCours
         self.ptPosition_Ennemie = self.ptPosition_Ennemie or DEC_Geometrie_CreerPoint()
         --[[// Si l'ennemi s'eloigne de plus de 300m, on essaie de revenir dessus

@@ -36,6 +36,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or eAppuyer
         self.listeCourantePionsAAppuyer = self.listeCourantePionsAAppuyer or {}
@@ -201,6 +202,7 @@ node "BEH_Eni_Pion_ALAT_GererEniAppuyer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x in pairs( self._namedParams.listeUnitesAAppuyer or {} ) do
         local _continue = true
 do

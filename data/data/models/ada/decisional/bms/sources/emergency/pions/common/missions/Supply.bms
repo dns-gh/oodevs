@@ -35,6 +35,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or eRejoindre
         self.target = self.target or S_Geometrie_BarycentreZone( self._namedParams.mission.area_ )
@@ -108,6 +109,7 @@ node "BEH_Pion_Emergency_OrganiseSupply"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 local listSupplyPoint = DEC_Connaissances_ObjetsDansZone( self._namedParams.zone, S_TypeObject_ToString( eTypeObjectSupplyFacility ) )
         for _,x_object in pairs( listSupplyPoint or {} ) do
         local _continue = true
@@ -145,6 +147,7 @@ node "BEH_Pion_Emergency_SupplyPoint"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eAction = self.eAction or eActionEnCours
         self.position = self.position or S_Obj_Position( self._namedParams.objet )
         if( self.eAction == eActionEnCours or DEC_Geometrie_Distance( self.position, DEC_Agent_Position() ) > 50 ) then

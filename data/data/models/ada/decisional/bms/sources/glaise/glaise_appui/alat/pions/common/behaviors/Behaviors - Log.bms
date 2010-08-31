@@ -34,6 +34,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.positionPlotRavitaillement = self.positionPlotRavitaillement or DEC_Geometrie_CreerPoint()
         self.ePhase = self.ePhase or eRejoindre
@@ -44,7 +45,7 @@ include "bit.lua"
         end
 
         --[[// Si on n'a pas de TC2 ni de plot de ravitaillement attribué
-]]if( not ( DEC_ConnaissanceObjet_EstValide( myself.plotRavitaillementAssigne_ ) and TC2 == 0 or DEC_ConnaissanceObjet_EstValide( myself.plotRavitaillementAssigne_ ) and TC2 == nil ) ) then
+]]if( not DEC_ConnaissanceObjet_EstValide( myself.plotRavitaillementAssigne_ ) and TC2 == 0 ) then
             do return end
         end
 
@@ -110,7 +111,7 @@ self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat =
 --[[//rejoindre le TC2 si on en a un
 ]]                    else
 do
-                            if( ( pionTC2 == 0 or pionTC2 == nil ) ) then
+                            if( pionTC2 == 0 ) then
                                 do return end
                             end
 
@@ -209,6 +210,7 @@ node "BEH_Log_Pion_ALAT_GererPlotsRavitaillement"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local TC2 = DEC_Pion_TC2()
         local pionTC2 = nil
         local distance = 1105199104
@@ -271,6 +273,7 @@ node "BEH_Log_Pion_ALAT_SeRecompleterSurPlot"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.plotRavitaillement ) ) then
             self:SendFeedback( eActionImpossible )
@@ -334,6 +337,7 @@ node "BEH_Log_Pion_ALAT_SeRecompleterSurTC2"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         Activate( self.activations.ACT_RC, 1, { eRC_EnCoursRavitaillement, } )
         if( self.eEtat == eActionEffectuee ) then
@@ -387,6 +391,7 @@ node "BEH_Log_Pion_ALAT_AjoutNouveauPlotsDansFuseau"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// OPT MIA: les objets sont forcément valides
 ]]--[[// OPT MIA: Faire avec DEC_Connaissances_ObjetsDansFuseau
 ]]local sConnaissancesObjets = DEC_Connaissances_ObjetsDansFuseau( S_TypeObject_ToString( eTypeObjectPlotRavitaillement ) )

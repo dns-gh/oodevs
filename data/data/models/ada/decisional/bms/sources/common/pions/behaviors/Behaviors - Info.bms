@@ -37,6 +37,7 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Info.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// debug TEMP
 ]]Activate( self.activations.ACT_AFFICHE_EtatDecisionnel, 1, { "Echelon", EnumToString( F_Pion_GeteEtatEchelon( myself ), E_EtatPion_Echelon ), } )
         Activate( self.activations.ACT_AFFICHE_EtatDecisionnel, 1, { "Lima", EnumToString( F_Pion_GeteEtatLima( myself ), E_EtatPion_Lima ), } )
@@ -95,6 +96,7 @@ node "BEH_Info_Pion_RendreCompteSurNBC"
     end,
 
     activate = function( self )
+        local Activate = Activate
          do
             local _continue = true
             local switch_1 = --[[//-----------------------------------------------------------------------------
@@ -145,6 +147,7 @@ node "BEH_Info_Pion_RendreCompteSurROE"
     end,
 
     activate = function( self )
+        local Activate = Activate
          do
             local _continue = true
             local switch_1 = --[[//-----------------------------------------------------------------------------
@@ -191,6 +194,7 @@ node "BEH_Info_Pion_RendreCompteSurLima"
     end,
 
     activate = function( self )
+        local Activate = Activate
          do
             local _continue = true
             local switch_1 = --[[//-----------------------------------------------------------------------------
@@ -264,6 +268,7 @@ node "BEH_Info_Pion_RendreCompteSurSituationCoordination"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Evite des faire des CR sur la coordination de l'automate!
 ]]if( DEC_Agent_AutomateEstEmbraye() ) then
             do return end
@@ -316,6 +321,7 @@ node "BEH_Info_Pion_RendreCompteSurSilenceRadio"
     end,
 
     activate = function( self )
+        local Activate = Activate
          do
             local _continue = true
             local switch_1 = --[[//-----------------------------------------------------------------------------
@@ -361,6 +367,7 @@ node "BEH_Info_Pion_RendreCompteSurSilenceRadar"
     end,
 
     activate = function( self )
+        local Activate = Activate
          do
             local _continue = true
             local switch_1 = --[[//-----------------------------------------------------------------------------
@@ -402,6 +409,7 @@ node "BEH_Info_Pion_RendreCompteSurEtatOperationnel"
     end,
 
     activate = function( self )
+        local Activate = Activate
          do
             local _continue = true
             local switch_1 = F_Pion_GeteEtatDestruction( myself )
@@ -445,6 +453,7 @@ node "BEH_Info_Pion_RendreCompteSurAmbiance"
     end,
 
     activate = function( self )
+        local Activate = Activate
          do
             local _continue = true
             local switch_1 = F_Pion_GeteEtatAmbiance( myself )
@@ -478,6 +487,7 @@ node "BEH_Info_Pion_RendreCompteSurSituationMissions"
     end,
 
     activate = function( self )
+        local Activate = Activate
     end,
 
 --[[// JSR Ce code est repris dans ACT_MAJ_EtatPhaseMission et devrait être inutile ici.
@@ -506,6 +516,7 @@ node "BEH_Info_Pion_RendreCompteSurPriseAPartiParArt"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( myself:DEC_Agent_EstNeutralise() ) then
             do
                 Activate( self.activations.ACT_Warning, 1, { eRC_DebutNeutralisation, } )
@@ -538,6 +549,7 @@ node "BEH_Info_Pion_RendreCompteSurPriseAPartiParEnis"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listeUnitesPrenantAPartie = DEC_Connaissances_UnitesPrenantAPartie()
         for _,repEni in pairs( listeUnitesPrenantAPartie or {} ) do
         local _continue = true
@@ -570,6 +582,7 @@ node "BEH_Info_Pion_RendreCompteSurPriseAPartiDe"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Validité
 ]]--[[//-----------------------------------------------------------------------------
@@ -608,6 +621,7 @@ node "BEH_Info_Pion_RendreCompteSurPriseDeContact"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// vrai pendant au moins un tic
 ]]if( F_Pion_GeteEtatFeu( myself ) == eEtatFeu_Executer ) then
             StartActivateOverride( self, self.activations.ACT_RC, 1, { eRC_PriseContact, } )
@@ -636,6 +650,7 @@ node "BEH_Info_Pion_RendreCompteSurPresencePop"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,eniRendu in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Prisoniers
 ]]--[[//-----------------------------------------------------------------------------
@@ -678,6 +693,7 @@ node "BEH_Info_Pion_RendreCompteSurSituationDeplacement"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.rDist = self.rDist or 0
         self.repObjet = self.repObjet or nil
         self.bObjetProcheSurItineraire = self.bObjetProcheSurItineraire or false
@@ -764,6 +780,7 @@ node "BEH_Info_Mos"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Info_RenseignerSurRapFor, 1, {} )
         Activate( self.activations.BEH_Info_RenseignerSurROE, 1, {} )
         Activate( self.activations.BEH_Info_RenseignerSurEtatDec, 1, {} )--[[// Résultat des motivations
@@ -799,6 +816,7 @@ node "BEH_Info_RenseignerSurRapFor"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Mise à jour de la valeur interpretée du rapFor
 ]]--[[//-----------------------------------------------------------------------------
@@ -904,6 +922,7 @@ node "BEH_Info_RenseignerSurROE"
     end,
 
     activate = function( self )
+        local Activate = Activate
          do
             local _continue = true
             local switch_1 = --[[//-----------------------------------------------------------------------------
@@ -984,6 +1003,7 @@ node "BEH_Info_RenseignerSurEtatDec"
     end,
 
     activate = function( self )
+        local Activate = Activate
          do
             local _continue = true
             local switch_1 = --[[//-----------------------------------------------------------------------------
@@ -1027,6 +1047,7 @@ node "BEH_Info_RenseignerSurEtatOperationnel"
     end,
 
     activate = function( self )
+        local Activate = Activate
          do
             local _continue = true
             local switch_1 = F_Pion_GeteEtatDestruction( myself )

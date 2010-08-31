@@ -21,6 +21,7 @@ node "MIS_Automate_CDT_Transporter"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eTransporter
         self.listePionsSgpt = self.listePionsSgpt or {}
         self.listeTransporteur = self.listeTransporteur or {}

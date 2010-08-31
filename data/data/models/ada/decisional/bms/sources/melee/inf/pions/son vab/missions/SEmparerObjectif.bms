@@ -33,6 +33,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.bBondEffectue = self.bBondEffectue or false
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
@@ -188,6 +189,7 @@ node "BEH_Dep_Pion_INF_GererDeboucher"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Init
 ]]--[[//-----------------------------------------------------------------------------		
 ]]local listePointInterressant = DEC_GetCategory( "points_interressants" )
@@ -250,6 +252,7 @@ node "BEH_Ordre_SePosterPourDeboucher"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 --[[// On ne se rapproche pas trop pour eviter de se faire prendre 
@@ -262,7 +265,7 @@ node "BEH_Ordre_SePosterPourDeboucher"
         end
 
         Activate( self.activations.ACT_Dep_PasserSurLima, 1, { eEtatLima_LD, } )
-        if( ( GetStateVariable( "VE_SePoster" ) == 0 or GetStateVariable( "VE_SePoster" ) == nil ) ) then
+        if( GetStateVariable( "VE_SePoster" ) == 0 ) then
             do
                 DEC_SetMissionLimaFlagHoraire( self._namedParams.LimaLD, true )
                 DEC_SetMissionLimaFlag( self._namedParams.LimaLD, true )
@@ -297,6 +300,7 @@ node "BEH_Mission_Pion_VAB_Semparer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Si la reconnaissance renvoie eActionEffectuee, on n'a pas rencontre d'enis, 
 ]]self.mission = self.mission or DEC_GetMission( myself )
         --[[//	 sinon eActionHalt
@@ -434,7 +438,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
 elseif switch_1 == eFouiller then
                     Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )--[[//-----------------------------------------------------------------------------		
 ]]
-                    if( ( F_Pion_GeteniEnCours( myself ) ~= 0 and F_Pion_GeteniEnCours( myself ) ~= nil ) ) then
+                    if( F_Pion_GeteniEnCours( myself ) ~= nil ) then
                         do
                             --[[// L'ennemi est trop loin de la position
 ]]self.ePhase = eRejoindreAssaut
@@ -490,6 +494,7 @@ node "BEH_Eni_Pion_VAB_Semparer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//=============================================================================
 ]]        self.mission = self.mission or DEC_GetMission( myself )
         --[[//	On a besoin d'un ordre de conduite la part de la hierarchie sur une 
@@ -558,6 +563,7 @@ node "BEH_Ordre_Pion_VAB_Semparer_Demande"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eOrdre = self.eOrdre or eActionEnCours
         if( self.eOrdre == eActionEffectuee ) then
             self:SendFeedback( eActionEffectuee )
@@ -590,6 +596,7 @@ node "BEH_Eni_Pion_VAB_PreparerEngagement"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.bUniteAppuis_OK = self.bUniteAppuis_OK or false
         self.bUniteAppuis_OK = self.bUniteAppuis_OK or S_UnitesAppuis_EnPosition()
         if( ModuleBegins() ) then

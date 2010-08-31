@@ -35,6 +35,7 @@ includedFiles["sources/humus/humus_common/pions/missions/Franchir.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.eEtat = self.eEtat or eActionEnCours
         self.positionSite = self.positionSite or nil
@@ -43,7 +44,7 @@ includedFiles["sources/humus/humus_common/pions/missions/Franchir.bms"] = true
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
                 DEC_SetMission( myself, self._namedParams.mission )
                 local localisation = DEC_ConnaissanceObjet_Localisation( self._namedParams.mission.pontFlottant_ )
-                if( ( localisation == 0 or localisation == nil ) ) then
+                if( localisation == 0 ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                 self:SendFeedback( eActionImpossible )
@@ -54,7 +55,7 @@ includedFiles["sources/humus/humus_common/pions/missions/Franchir.bms"] = true
                 end
 
                 self.positionSite = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( localisation )
-                if( ( self.positionSite == 0 or self.positionSite == nil ) ) then
+                if( self.positionSite == 0 ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                 self:SendFeedback( eActionImpossible )

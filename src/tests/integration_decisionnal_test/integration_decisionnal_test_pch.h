@@ -24,4 +24,20 @@ std::string BOOST_RESOLVE( const std::string& filename );
 # define uint unsigned int
 #endif
 
+#ifndef PLATFORM
+#define PLATFORM _vc80
+#endif
+
+#ifndef PLUGIN
+#ifdef NDEBUG
+#define PLUGIN46( plugin ) "'plugin_" + plugin + BOOST_PP_STRINGIZE( PLATFORM ) + "-mt-4_6.plugin',"
+#define PLUGIN( plugin ) "'plugin_" + plugin + BOOST_PP_STRINGIZE( PLATFORM ) + "-mt.plugin',"
+#else
+#define PLUGIN46( plugin ) "'plugin_" + plugin + BOOST_PP_STRINGIZE( PLATFORM ) + "-mt-gd-4_6.plugin',"
+#define PLUGIN( plugin ) "'plugin_" + plugin + BOOST_PP_STRINGIZE( PLATFORM ) + "-mt-gd.plugin',"
+#endif
+#endif
+
+#define BRAIN_INIT() std::string( "plugins={" ) + PLUGIN( "masalife_brain" ) + PLUGIN( "services" ) + PLUGIN( "knowledge" ) + "} cwd='" + BOOST_RESOLVE( "." ) + "'"
+
 #endif // __integration_decisionnal_test_pch_h_

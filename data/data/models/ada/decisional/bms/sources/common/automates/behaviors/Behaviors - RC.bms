@@ -33,6 +33,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_RC_Automate_Situation_Ambiance, 1, {} )--[[//-------------------------------------------------------------------------
 ]]--[[// CRs en dehors du cadre de la mission
 ]]--[[//-------------------------------------------------------------------------
@@ -80,6 +81,7 @@ node "BEH_RC_Automate_Situation_Neutralisation"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,pion in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Juste CR Prise à partie par Art
 ]]--[[// pour voir neutralisation cf CR. des pions
@@ -118,6 +120,7 @@ node "BEH_RC_Automate_Situation_Ambiance"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Des qu'un pion à changé d'ambiance...
 ]]--[[//-------------------------------------------------------------------------
@@ -161,6 +164,7 @@ node "BEH_RC_Automate_Situation_Coordination"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-------------------------------------------------------------------------
 ]]--[[// CR si on donne l'ordre à l'automate d'attendre
 ]]--[[//-------------------------------------------------------------------------
@@ -202,6 +206,7 @@ node "BEH_RC_Automate_Situation_RapFor"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-------------------------------------------------------------------------
 ]]--[[// Peut être testé le rapFort du premier echelon plutôt...
 ]]--[[//-------------------------------------------------------------------------
@@ -227,6 +232,7 @@ node "BEH_RC_Automate_Situation_RapForDef"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do return end
         end
@@ -255,6 +261,7 @@ node "BEH_RC_Automate_Situation_ROE"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-------------------------------------------------------------------------
 ]]--[[// ROE
 ]]--[[//-------------------------------------------------------------------------
@@ -312,6 +319,7 @@ node "BEH_RC_Automate_Situation_Radio"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Sur tous les pions
 ]]--[[//-------------------------------------------------------------------------
@@ -357,6 +365,7 @@ node "BEH_RC_Automate_Situation_Radar"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Sur tous les pions
 ]]--[[//-------------------------------------------------------------------------
@@ -399,6 +408,7 @@ node "BEH_RC_Automate_Situation_NBC"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local rNbrePions = #( DEC_Automate_PionsAvecPC() )
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Alerte de niveau 4 sur ordre
@@ -456,6 +466,7 @@ node "BEH_RC_Automate_Situation_Mission"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-------------------------------------------------------------------------
 ]]--[[// Situation mission
 ]]--[[//-------------------------------------------------------------------------
@@ -517,6 +528,7 @@ node "BEH_RC_Automate_Situation_FinMission"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// cas particulier de fin de mission si Pecl
 ]]local listePionsPecl = S_ObtenirPionsDe( eEtatEchelon_Eclairage, eEtatDestruction_None )
         local listePionsPE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
@@ -573,6 +585,7 @@ node "BEH_RC_Automate_Situation_Contact"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Sur tous les pions même le PC...
 ]]--[[//-------------------------------------------------------------------------
@@ -611,6 +624,7 @@ node "BEH_RC_Automate_Situation_Limas"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-------------------------------------------------------------------------
 ]]--[[// Suivant le diffétent type de lima
 ]]--[[//-------------------------------------------------------------------------
@@ -645,6 +659,7 @@ node "BEH_RC_Automate_SurLima"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Le premier pion a atteindre la lima = CR
 ]]--[[//-------------------------------------------------------------------------
@@ -712,6 +727,7 @@ node "BEH_RC_Automate_Sur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_RC_Automate, 1, { self._namedParams.typeRC, self._namedParams.rNombrePions, } )
     end,
 
@@ -739,6 +755,7 @@ node "BEH_RC_Automate"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( GetActivity() >= self._namedParams.rNombrePions ) then
             Activate( self.activations.ACT_RC_Automate, 1, { self._namedParams.typeRC, } )
         end

@@ -41,6 +41,7 @@ include "Melee/Abc/Automates/GE40/Missions/Missions.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_AFFICHE_EtatDecisionnel, 1, { "--------------", "--------------", } )
         if( g_rEstimationDelais == 1 ) then
             Activate( self.activations.ACT_AFFICHE_EtatDecisionnel, 1, { "DELAIS", "-- COURTS -- ", } )

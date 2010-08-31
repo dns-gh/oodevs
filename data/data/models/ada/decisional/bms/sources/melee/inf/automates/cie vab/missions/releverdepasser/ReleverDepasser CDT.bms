@@ -31,6 +31,7 @@ node "MIS_Automate_CDT_INF_Relever"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eActionMission = self.eActionMission or eActionEnCours
         self.eActionReleve = self.eActionReleve or eActionEnCours
         --[[//-----------------------------------------------------------------------------
@@ -85,6 +86,7 @@ node "BEH_Conduite_Automate_INF_Relever"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         self.eActionReleve = self.eActionReleve or eActionEnCours
         self.ePhase = self.ePhase or eRejoindre
@@ -167,6 +169,7 @@ node "BEH_Situation_Automate_INF_Relever"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.selPions = self.selPions or S_ObtenirTousPionsDe( eEtatEchelon_Premier )
         local rPion_FinMouvement = 0
         for _,x in pairs( self.selPions or {} ) do
@@ -175,7 +178,7 @@ do
                 local x_pion = x
                 --[[// Situation Mission
 ]]--[[// --------------------------------------------------------------------
-]]if( ( ( DEC_GetMission( x_pion ) == 0 or DEC_GetMission( x_pion ) == nil ) or F_Pion_GeteEtatPhaseMission( x_pion ) == eEtatPhaseMission_FinMission ) and F_Pion_GetmissionPrecedente( x_pion ) == "T_Mission_Pion_FaireMouvement" ) then
+]]if( ( DEC_GetMission( x_pion ) == nil or F_Pion_GeteEtatPhaseMission( x_pion ) == eEtatPhaseMission_FinMission ) and F_Pion_GetmissionPrecedente( x_pion ) == "T_Mission_Pion_FaireMouvement" ) then
                     StartActivateOverride( self, self.activations.BEH_Conduite_Automate_INF_Relever_PrepareReleveSur, 1, { self._namedParams.rN_PE, x_pion, } )
                 end
 
@@ -203,6 +206,7 @@ node "BEH_Conduite_Automate_INF_Relever_PrepareReleveSur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide, 1, { self._namedParams.rN_, } )
     end,
 
@@ -218,6 +222,7 @@ node "BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( self._namedParams.rN_ == ( GetActivity() - 1 ) ) then
             self:SendFeedback( eActionEffectuee )
             do return end
@@ -245,6 +250,7 @@ node "BEH_Conduite_Automate_INF_Relever_AssignerReleve"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.rN_PionOK = self.rN_PionOK or 0
         local selUnites = S_ObtenirPionsOperationnels_SansPC()
         if( ModuleBegins() ) then
@@ -271,7 +277,7 @@ node "BEH_Conduite_Automate_INF_Relever_AssignerReleve"
 
                 end
 
-                if( ( self.rN_PionOK == 0 or self.rN_PionOK == nil ) ) then
+                if( self.rN_PionOK == 0 ) then
                     self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
@@ -300,6 +306,7 @@ node "BEH_Conduite_Automate_INF_Relever_ApresReleve"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
             end

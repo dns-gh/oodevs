@@ -53,6 +53,7 @@ node "ActivatedByMOT_TenirFaceAuxEnnemis"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------

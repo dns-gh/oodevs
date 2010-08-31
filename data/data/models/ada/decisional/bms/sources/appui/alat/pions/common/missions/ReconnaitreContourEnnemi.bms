@@ -43,6 +43,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or eReconnaitre
         self.pointFinFuseau = self.pointFinFuseau or DEC_Geometrie_CalculerPointArrivee()
@@ -190,7 +191,7 @@ do
                         end
                     else
 do
-                            if( ( self.localisationCourante == 0 or self.localisationCourante == nil ) ) then
+                            if( self.localisationCourante == nil ) then
                                 do return end
                             end
 
@@ -304,6 +305,7 @@ node "BEH_Eni_Pion_ALAT_GererEniRecoContourEni"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtatProgressionTactique = self.eEtatProgressionTactique or eActionEnCours
         local listeUnitesDetecteesDansFuseau = DEC_Connaissances_UnitesDetecteesDansFuseau()
         for _,x in pairs( listeUnitesDetecteesDansFuseau or {} ) do

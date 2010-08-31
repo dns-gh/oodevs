@@ -26,6 +26,7 @@ includedFiles["sources/common/automates/missions/fairemouvementrmm/CDT - FaireMo
     end,
 
     activate = function( self )
+        local Activate = Activate
     end,
 
 }

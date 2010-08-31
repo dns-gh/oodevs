@@ -10,7 +10,7 @@
 #include "script_plugin_pch.h"
 #include "ScriptCommands.h"
 #include "MiscEvents.h"
-#include <directia/Brain.h>
+#include "directia/brain/Brain.h"
 #include "clients_kernel/Controller.h"
 
 using namespace plugins::script;
@@ -38,10 +38,10 @@ ScriptCommands::~ScriptCommands()
 // Name: ScriptCommands::RegisterIn
 // Created: SBO 2008-07-02
 // -----------------------------------------------------------------------------
-void ScriptCommands::RegisterIn( directia::Brain& brain )
+void ScriptCommands::RegisterIn( directia::brain::Brain& brain )
 {
-    brain.RegisterObject( "script", this );
-    brain.RegisterFunction( "ChangePhase", &ScriptCommands::ChangePhase );
+    brain[ "script" ] = this;
+    brain.Register( "ChangePhase", &ScriptCommands::ChangePhase );
 }
 
 // -----------------------------------------------------------------------------

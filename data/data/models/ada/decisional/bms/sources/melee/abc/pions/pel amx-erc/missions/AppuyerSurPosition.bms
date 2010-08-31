@@ -22,6 +22,7 @@ includedFiles["sources/melee/abc/pions/pel amx-erc/missions/AppuyerSurPosition.b
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or nil
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Terminaison

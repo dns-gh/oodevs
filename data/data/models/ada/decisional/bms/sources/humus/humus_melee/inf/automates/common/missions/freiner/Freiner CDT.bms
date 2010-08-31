@@ -27,6 +27,7 @@ node "BEH_Conduite_Automate_INF_Freiner"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 StartActivateOverride( self, self.activations.BEH_Dispositif_Automate_INF_Freiner_Perroquet, 1, {} )
@@ -58,6 +59,7 @@ node "BEH_Conduite_Automate_INF_OrdreConduite"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Recevoir un ordre
 ]]--[[//-----------------------------------------------------------------------------
@@ -94,6 +96,7 @@ node "BEH_Dispositif_Automate_INF_Freiner_Perroquet"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local lstPions = DEC_Automate_PionsAvecPC()
         --[[// selection lstPions_PE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None );
 ]]local lstPions_PE = S_Cherche_Automate_Filtre_TypeMission( lstPions, "T_Mission_Pion_INF_Freiner" )
@@ -111,7 +114,7 @@ node "BEH_Dispositif_Automate_INF_Freiner_Perroquet"
         local _continue = true
 do
                 local pion = x_pion
-                if( ( DEC_GetMission( pion ) == 0 or DEC_GetMission( pion ) == nil ) ) then
+                if( DEC_GetMission( pion ) == nil ) then
                     do return end
                 end
 
@@ -144,19 +147,20 @@ node "BEH_Conduite_Automate_INF_Freiner_Assigner_AppuiPionSE"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         self.pionAppui = self.pionAppui or nil
         local sPions_OK = S_ObtenirPionsDe( eEtatEchelon_Second, eEtatDestruction_None )
         if( ModuleBegins() ) then
             do
                 self.pionAppui = S_Cherche_Automate_TypePion( sPions_OK, "SectionInfanterie_HOT" )
-                if( ( self.pionAppui == 0 or self.pionAppui == nil ) ) then
+                if( self.pionAppui == 0 ) then
                     self.pionAppui = S_Cherche_Automate_TypePion( sPions_OK, "SectionInfanterie_MILAN" )
                 end
 
                 --[[// if ( pionAppui == 0 )
 ]]--[[// 	pionAppui = S_Cherche_Automate_TypePion( sPions_Appuis, SectionInfanterie );
-]]if( ( self.pionAppui == 0 or self.pionAppui == nil ) ) then
+]]if( self.pionAppui == 0 ) then
                     Halt( self )
                     do return end
                 end
@@ -214,6 +218,7 @@ node "BEH_Conduite_Automate_INF_AppuyerCompromis"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                  do
@@ -251,6 +256,7 @@ node "BEH_Dispositif_Automate_INF_Gerer_RepliAppuis"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.ptRegroupement = self.ptRegroupement or DEC_Geometrie_CalculerPointArrivee()
         for _,x in pairs( DEC_Automate_PionsSansPC() or {} ) do
         local _continue = true
@@ -293,6 +299,7 @@ node "BEH_Situation_Automate_INF_Freiner"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local selPions_PE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
         for _,x_pion in pairs( selPions_PE or {} ) do
         local _continue = true
@@ -334,6 +341,7 @@ node "BEH_Situation_Automate_INF_Freiner_SurLCAR"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionSituation = self.eActionSituation or eActionEnCours
         if( self.eActionSituation == eActionEffectuee ) then
             do

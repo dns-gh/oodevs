@@ -22,6 +22,7 @@ includedFiles["sources/appui/rens/pions/roim/son mise en oeuvre drac/missions/Me
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or nil
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Terminaison
@@ -78,6 +79,7 @@ node "BEH_Mission_Pion_RENS_MettreEnOeuvre_DRAC"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.pionDrone = self.pionDrone or nil
@@ -203,6 +205,7 @@ node "BEH_Dispositif_Pion_Rens_MettreEnOeuvreDRAC"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Programmation du drone

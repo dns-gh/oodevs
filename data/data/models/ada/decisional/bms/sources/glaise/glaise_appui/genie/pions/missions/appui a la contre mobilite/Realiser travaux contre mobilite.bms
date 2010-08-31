@@ -25,6 +25,7 @@ includedFiles["sources/glaise/glaise_appui/genie/pions/missions/appui a la contr
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         if( ModuleBegins() ) then

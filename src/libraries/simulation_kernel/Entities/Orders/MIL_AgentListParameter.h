@@ -12,7 +12,7 @@
 
 #include "MIL_BaseParameter.h"
 
-class DEC_RolePion_Decision;
+class DEC_Decision_ABC;
 class MIL_EntityManager_ABC;
 
 // =============================================================================
@@ -27,7 +27,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_AgentListParameter( const Common::UnitIdList& asn, MIL_EntityManager_ABC& entityManager );
-    explicit MIL_AgentListParameter( const std::vector< DEC_RolePion_Decision* >& unitList );
+    explicit MIL_AgentListParameter( const std::vector< DEC_Decision_ABC* >& unitList );
     virtual ~MIL_AgentListParameter();
     //@}
 
@@ -52,7 +52,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::vector< DEC_RolePion_Decision* > unitList_;
+    std::vector< DEC_Decision_ABC* > unitList_;
     //@}
 };
 

@@ -37,6 +37,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local rIterateurPionASuivre = 0
         --[[// Ces listes peuvent évoluer...en fonction des destructions
 ]]--[[// SMO et drone

@@ -29,6 +29,7 @@ includedFiles["sources/appui/artdsa/pions/samp hawk/behaviors/Behaviors - Eni.bm
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DEC_ConnaissanceAgent_EstMort( self._namedParams.ennemi ) ) then
             self:SendFeedback( eActionEffectuee )
             Halt( self )
@@ -58,6 +59,7 @@ node "BEH_Eni_GererDemandesDeTirsCentralisees"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// variables locales
 ]]local nbComposanteesRestantes = M_MODELE_NOMBRE_UNITES_ENI_ENGAGEABLE_PAR_TIC()
         local nbComposantees = 0
@@ -77,7 +79,7 @@ do
                         nbComposantees = 1 / nbComposanteesRestantes
                                                 nbComposanteesRestantes = nbComposanteesRestantes - 1
                         --[[//critere d'arret sur nb de prises a partie
-]]if( ( nbComposanteesRestantes == 0 or nbComposanteesRestantes == nil ) ) then
+]]if( nbComposanteesRestantes == 0 ) then
                             do return end
                         end
 

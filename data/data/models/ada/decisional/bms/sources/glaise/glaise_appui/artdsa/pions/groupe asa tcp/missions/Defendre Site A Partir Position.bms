@@ -36,6 +36,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//variables persistantes
 ]]self.eEtat = self.eEtat or eActionEnCours
         self.eEtatODC = self.eEtatODC or eActionEnCours

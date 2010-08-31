@@ -24,6 +24,7 @@ includedFiles["sources/appui/rens/automates/roim/cl289/missions/renseignersur/Re
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------
@@ -64,12 +65,13 @@ node "BEH_Conduite_Automate_RENS_ROIM_CL289_GererMiseEnOeuvre"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.bLancementEffectue = self.bLancementEffectue or false
         local pionDrone = S_Dispositif_Automate_RENS_ObtenirPionDroneMiseEnOeuvre( "Drone_CL289" )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Si pas de drone disponible, attendre
 ]]--[[//----------------------------------------------------------------------------- 
-]]if( ( pionDrone == 0 or pionDrone == nil ) ) then
+]]if( pionDrone == nil ) then
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "Waiting for drone to be operated", } )
                                 do return end
@@ -113,6 +115,7 @@ node "BEH_Conduite_Automate_RENS_ROIM_CL289_LancerDrone"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Assigner mission au drone
 ]]--[[//-----------------------------------------------------------------------------

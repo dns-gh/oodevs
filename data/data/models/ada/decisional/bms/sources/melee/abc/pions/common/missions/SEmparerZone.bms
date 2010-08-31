@@ -30,6 +30,7 @@ includedFiles["sources/melee/abc/pions/common/missions/SEmparerZone.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.bBondEffectue = self.bBondEffectue or false
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission

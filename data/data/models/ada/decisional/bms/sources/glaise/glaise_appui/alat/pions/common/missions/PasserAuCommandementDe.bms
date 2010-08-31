@@ -24,6 +24,7 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/missions/PasserAuCo
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.pionPC = self.pionPC or DEC_Pion_PionPCDeAutomate( self._namedParams.mission.automate_ )
         self.ePhase = self.ePhase or eRejoindrePosition
         self.eEtat = self.eEtat or eActionEnCours

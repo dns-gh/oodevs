@@ -31,6 +31,7 @@ includedFiles["sources/appui/alat/automates/common/missions/couvrir/Couvrir - MR
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtatMissionsCouvrir = self.eEtatMissionsCouvrir or eActionEnCours
         self.selPions = self.selPions or DEC_Automate_PionsSansPC()
         self.listeHM = self.listeHM or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "TransportHelicopterPatrol" )

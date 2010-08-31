@@ -16,6 +16,7 @@ includedFiles["sources/appui/alat/automates/sgpt hm/missions/helitransporter/Hel
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.selPions = self.selPions or DEC_Automate_PionsSansPC()
         self.listeHM = self.listeHM or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "TransportHelicopterPatrol" )
         self.listePionsAHeliporter = self.listePionsAHeliporter or {}

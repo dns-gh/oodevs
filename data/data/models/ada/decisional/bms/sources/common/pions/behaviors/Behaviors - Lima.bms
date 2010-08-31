@@ -29,6 +29,7 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Lima.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Traiter les points interressants
 ]]--[[//-----------------------------------------------------------------------------
@@ -209,6 +210,7 @@ node "BEH_Lima_GererLCAR"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------
@@ -307,6 +309,7 @@ node "BEH_Lima_GererLR"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Traiter les points interressants
 ]]--[[//-----------------------------------------------------------------------------
@@ -383,6 +386,7 @@ node "BEH_Lima_GererLIA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Traiter les points interressants
 ]]--[[//-----------------------------------------------------------------------------
@@ -442,6 +446,7 @@ node "BEH_Lima_Pion_SePosterSurLC"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eOrdre = self.eOrdre or eActionEnCours
         if( self.eOrdre == eActionEffectuee ) then
             do

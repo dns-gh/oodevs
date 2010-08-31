@@ -23,6 +23,7 @@ includedFiles["sources/common/automates/missionsreactionpopulations/filtrerpopul
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
         self.ePhase = self.ePhase or eMRT_AssignerMissions
         self.points = self.points or DEC_Geometrie_CreerListePoints()
@@ -39,7 +40,7 @@ if( DEC_Geometrie_EstPointDansFuseau( DEC_ListePoints_GetAt( self._namedParams.m
                 i = i + 1
                 end
 
-                if( ( DEC_ListePoints_Size( self.points ) == 0 or DEC_ListePoints_Size( self.points ) == nil ) ) then
+                if( DEC_ListePoints_Size( self.points ) == 0 ) then
                     do
                         DEC_RC( eRC_MissionImpossibleZoneHorsFuseau )
                                                 self:SendFeedback( eActionImpossible )

@@ -37,7 +37,7 @@ class DEC_AutomateDecision : public DEC_Decision< MIL_Automate >
                            , private boost::noncopyable
 {
 public:
-             DEC_AutomateDecision( MIL_Automate& automate, DEC_DataBase& database );
+             DEC_AutomateDecision( MIL_Automate& automate, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
     virtual ~DEC_AutomateDecision();
 
     //! @name CheckPoints
@@ -84,11 +84,12 @@ public:
     virtual void SeteEtatLima(  int value );
     virtual int GeteEtatDec() const;
     virtual void SeteEtatDec(  int value );
-    float GetrDestruction() const;
-    void SetrDestruction( float value );
     virtual int GeteEtatEchelon() const;
     virtual void SeteEtatEchelon( int );
-    MIL_Fuseau* Getfuseau() const;
+
+    float GetrDestruction() const;
+    void SetrDestruction( float value );
+    const MIL_Fuseau* Getfuseau() const;
     void Setfuseau( MIL_Fuseau* value );
     TER_Localisation* Getzone() const;
     void Setzone( TER_Localisation* value );
@@ -116,13 +117,14 @@ protected:
     //@{
     virtual void      EndCleanStateAfterCrash      ();
 
-    virtual void RegisterUserFunctions( directia::Brain& brain );
+    virtual void RegisterUserFunctions( directia::brain::Brain& brain );
+	virtual void RegisterUserArchetypeFunctions( directia::brain::Brain& brain );
     //@}
 
 private:
     //! @name Tools
     //@{
-    virtual void RegisterSelf( directia::Brain& brain );
+    virtual void RegisterSelf( directia::brain::Brain& brain );
     //@}
 
 private:
@@ -149,6 +151,7 @@ private:
     bool                     bOrdreTenirSurLR_;
     bool                     bOrdreTenir_;
 
+	MIL_Fuseau* fuseau_;
 
 private:
     static int nDIAMissionIdx_; // index de mission_ dans T_Automate
@@ -161,7 +164,9 @@ void save_construct_data( Archive& archive, const DEC_AutomateDecision* role, co
 {
     const DEC_DataBase* const database = &role->database_;
     archive << role->pEntity_
-        << database;
+        << database
+        << role->gcPause_
+        << role->gcMult_;
 }
 
 template< typename Archive >
@@ -169,9 +174,13 @@ void load_construct_data( Archive& archive, DEC_AutomateDecision* role, const un
 {
     MIL_Automate* automate;
     DEC_DataBase* database;
+    unsigned int gcPause;
+    unsigned int gcMult;
     archive >> automate
-        >> database;
-    ::new( role )DEC_AutomateDecision( *automate, *database );
+        >> database
+        >> gcPause
+        >> gcMult;
+    ::new( role )DEC_AutomateDecision( *automate, *database, gcPause, gcMult );
 }
 
 #endif // __DEC_AutomateDecision_h_

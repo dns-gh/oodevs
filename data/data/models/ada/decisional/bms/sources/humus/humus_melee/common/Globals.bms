@@ -43,7 +43,7 @@ include "Humus/Humus_Melee/Abc/Automates/Common/Globals.bms"
 ]]--[[//=============================================================================
 ]]function S_Eni_Automate_EstDetruitTactique( cible )
     local _returnValue = false
-    _returnValue = ( DEC_ConnaissanceAgent_EtatOps( cible ) == 0 or DEC_ConnaissanceAgent_EtatOps( cible ) == nil )
+    _returnValue = DEC_ConnaissanceAgent_EtatOps( cible ) == 0
     do return _returnValue end
 end
 
@@ -329,7 +329,7 @@ end
 		with( x in DEC_Automate_PionsAvecPC() )
 		{
 			 T_PionModeleDEC pion = x;
-			 if( DEC_GetMission(pion) == 0 )
+			 if( DEC_GetMission(pion) == nil )
 			 	DIA_PushFront( selTemp, pion );
 		}
 		S_Dispositif_Automate_ABC_PionsSansMission = selTemp;
@@ -623,7 +623,7 @@ function S_Automate_INF_UniteMission_Appuyer( pPionAppui )
     local _returnValue = nil
     local pionFoo = nil
     _returnValue = pionFoo
-    if( ( DEC_GetMission( pPionAppui ) == 0 or DEC_GetMission( pPionAppui ) == nil ) ) then
+    if( DEC_GetMission( pPionAppui ) == nil ) then
         do return _returnValue end
     end
 
@@ -666,7 +666,7 @@ function S_Automate_INF_EstAppuye( pPion, sPionsAppui )
     local _continue = true
 do
             local pAppui = x
-            if( ( DEC_GetMission( pAppui ) ~= 0 and DEC_GetMission( pAppui ) ~= nil ) ) then
+            if( DEC_GetMission( pAppui ) ~= nil ) then
                 do
                     _returnValue = S_Automate_INF_EstAppuye_Par( pPion, pAppui )
                     if( _returnValue ) then
@@ -845,7 +845,7 @@ do
                         rForceAppui = 2.5
                     end
 
-                    if( ( #( F_Pion_GetselUnitesEnAppui( pion ) ) == 0 or #( F_Pion_GetselUnitesEnAppui( pion ) ) == nil ) ) then
+                    if( #( F_Pion_GetselUnitesEnAppui( pion ) ) == 0 ) then
                         rForceAppui = 3.5
                     end
 

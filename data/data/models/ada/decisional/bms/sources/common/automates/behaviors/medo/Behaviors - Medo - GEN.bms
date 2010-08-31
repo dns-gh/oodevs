@@ -43,6 +43,7 @@ include "Common/Automates/Actions/Medo/Actions - Medo - GEN.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -99,6 +100,7 @@ node "BEH_Mission_Automate_GEN_AssignerDegagerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -155,6 +157,7 @@ node "BEH_Mission_Automate_GEN_AssignerContournerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -211,6 +214,7 @@ node "BEH_Mission_Automate_GEN_AssignerReconnaitreZoneA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -267,6 +271,7 @@ node "BEH_Mission_Automate_GEN_AssignerOuvrirItineraireA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -323,6 +328,7 @@ node "BEH_Mission_Automate_GEN_AssignerRetablirItineraireA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -379,6 +385,7 @@ node "BEH_Mission_Automate_GEN_AssignerReconnaitreSiteA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -437,6 +444,7 @@ node "BEH_Mission_Automate_GEN_AssignerEquiperExploiterA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -493,6 +501,7 @@ node "BEH_Mission_Automate_GEN_AssignerMissionConstruireA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do

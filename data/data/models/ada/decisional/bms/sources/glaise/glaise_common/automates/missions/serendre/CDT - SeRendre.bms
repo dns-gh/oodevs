@@ -18,6 +18,7 @@ includedFiles["sources/glaise/glaise_common/automates/missions/serendre/CDT - Se
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------

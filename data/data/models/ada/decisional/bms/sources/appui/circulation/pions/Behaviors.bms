@@ -80,6 +80,7 @@ include "Appui/Circulation/Pions/Missions/Missions.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local mission = DEC_GetMission( myself )
         if( mission ~= nil and mission:GetType() ~= "T_Mission_Pion_LOG_AppuyerMouvement" ) then
             do
@@ -134,6 +135,7 @@ node "BEH_Mot_AffecterVariablesDEtat"
     end,
 
     activate = function( self )
+        local Activate = Activate
     end,
 
 --[[// $$$$ MIA: esquive seulement sur PAP
@@ -158,6 +160,7 @@ node "BEH_LOG_Pion_FaireDesMesures"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Ici normalement: si bonne gestion des objets (NBC)
 ]]--[[// If (pas mesurée) alors mesurer --> faire une action et pas un comportement
 ]]--[[//---------------------------------------------------------------------
@@ -197,6 +200,7 @@ node "BEH_LOG_Pion_FaireUneMesureDans"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Car ne mesurer qu'une seule fois
 ]]self.bMesureEffectuee = self.bMesureEffectuee or false
         --[[// Mesure effectuee
@@ -248,6 +252,7 @@ node "BEH_Ordre_Pion_CIRCU_OrdresInopines"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
         for _,x in pairs( ordres_recus or {} ) do
         local _continue = true
@@ -308,6 +313,7 @@ node "BEH_Dep_Virtuel_ProgressionVers"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.point, self._namedParams.eTypeProgression, self._namedParams.eTypeIti, } )
     end,
 
@@ -327,6 +333,7 @@ node "BEH_Dep_Virtuel_PreparationAction"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self:SendFeedback( eActionEffectuee )
         do return end
 
@@ -353,6 +360,7 @@ node "BEH_Pion_Circu_InstallerDispositif"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
             Activate( self.activations.ACT_Pion_Circu_InstallerDisposifif, 1, {} )
         end

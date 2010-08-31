@@ -37,6 +37,7 @@ includedFiles["sources/humus/humus_melee/abc/automates/common/MRT generique mis 
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Pions subordonnés à l'Auto
 ]]local selPions = DEC_Automate_PionsSansPC()
         self.ePhase = self.ePhase or eMRT_DeterminerEchelonsGlobals

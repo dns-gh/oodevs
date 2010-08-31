@@ -12,7 +12,10 @@
 
 namespace directia
 {
-    class Brain;
+    namespace brain
+    {
+        class Brain;
+    }
 }
 
 class DEC_Decision_ABC;
@@ -31,7 +34,7 @@ class TER_Localisation;
 class DEC_CommunicationFunctions
 {
 public:
-    static void Register( directia::Brain& brain );
+    static void Register( directia::brain::Brain& brain );
 
     static int F_Pion_GeteEtatDecPrudence( DEC_Decision_ABC* pPion );
     static void F_Pion_SeteEtatDecPrudence( DEC_Decision_ABC* pPion, int value );
@@ -94,7 +97,7 @@ public:
     static void F_SeteEtatLima( DEC_Decision_ABC* pAgent, int value );
     static int  F_GeteEtatDec( DEC_Decision_ABC* pAgent );
     static void F_SeteEtatDec( DEC_Decision_ABC* pAgent, int value );
-    static int  F_GeteEtatEchelon( DEC_Decision_ABC* pAgent );
+	static int  F_GeteEtatEchelon( DEC_Decision_ABC* pAgent );
     static void F_SeteEtatEchelon( DEC_Decision_ABC* pAgent, int value );
     static bool F_GetbOrdreDecrocher( DEC_Decision_ABC* pAgent );
     static void F_SetbOrdreDecrocher( DEC_Decision_ABC* pAgent, bool value );
@@ -105,7 +108,7 @@ public:
 
     static float F_Automat_GetrDestruction( DEC_Decision_ABC* pAutomat );
     static void F_Automat_SetrDestruction( DEC_Decision_ABC* pAutomat, float value );
-    static MIL_Fuseau* F_Automat_Getfuseau( DEC_Decision_ABC* pAutomat );
+    static const MIL_Fuseau* F_Automat_Getfuseau( DEC_Decision_ABC* pAutomat );
     static void F_Automat_Setfuseau( DEC_Decision_ABC* pAutomat, MIL_Fuseau* value );
     static TER_Localisation* F_Automat_Getzone( DEC_Decision_ABC* pAutomat );
     static void F_Automat_Setzone( DEC_Decision_ABC* pAutomat, TER_Localisation* value );

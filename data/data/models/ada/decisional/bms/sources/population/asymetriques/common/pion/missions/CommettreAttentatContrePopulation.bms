@@ -27,6 +27,7 @@ includedFiles["sources/population/asymetriques/common/pion/missions/CommettreAtt
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.eAction = self.eAction or eActionEnCours
         self.lieuAttentat = self.lieuAttentat or DEC_ListePoints_GetAt( self._namedParams.mission.itineraire_, DEC_ListePoints_Size( self._namedParams.mission.itineraire_ ) - 1 )
@@ -134,7 +135,7 @@ elseif switch_1 == eAgirSurEni then
                     end
 
                     local pointPopu = DEC_ConnaissancePopulation_PointPlusProche( self._namedParams.mission.populationCible_ )
-                    if( ( pointPopu == 0 or pointPopu == nil ) ) then
+                    if( pointPopu == nil ) then
                         do
                             DEC_RC( eRC_MissionImpossible )
                             DEC_Trace( "connaissance non valide" )

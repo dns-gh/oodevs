@@ -32,6 +32,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or eReconnaitre
         self.eCurrentPhase = self.eCurrentPhase or ePreparerMission
@@ -142,6 +143,7 @@ node "BEH_Eni_Pion_VAB_RecoAxe"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// On traite l'unite si elle est dans le fuseau de la section    								
 ]]        if( not DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
             Halt( self )

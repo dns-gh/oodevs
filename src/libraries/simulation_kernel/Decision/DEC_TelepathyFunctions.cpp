@@ -11,17 +11,17 @@
 #include "DEC_TelepathyFunctions.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
-#include <directia/Brain.h>
+#include <directia/brain/Brain.h>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_TelepathyFunctions::Register
 // Created: LDC 2009-07-31
 // -----------------------------------------------------------------------------
-void DEC_TelepathyFunctions::Register( directia::Brain& brain )
+void DEC_TelepathyFunctions::Register( directia::brain::Brain& brain )
 {
-    brain.RegisterFunction( "F_CopyPlotsRavitaillement", &DEC_TelepathyFunctions::CopyPlotsRavitaillement );
-    brain.RegisterFunction( "F_GetListeEnisTirAutorise", &DEC_TelepathyFunctions::GetListeEnisTirAutorise );
-    brain.RegisterFunction( "F_RemoveAgentFromListeEnisTirAutorise", &DEC_TelepathyFunctions::RemoveAgentFromListeEnisTirAutorise );
+    brain[ "F_CopyPlotsRavitaillement" ] = &DEC_TelepathyFunctions::CopyPlotsRavitaillement;
+    brain[ "F_GetListeEnisTirAutorise" ] = &DEC_TelepathyFunctions::GetListeEnisTirAutorise;
+    brain[ "F_RemoveAgentFromListeEnisTirAutorise" ] = &DEC_TelepathyFunctions::RemoveAgentFromListeEnisTirAutorise;
 }
 
 // -----------------------------------------------------------------------------

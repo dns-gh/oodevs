@@ -49,6 +49,7 @@ include "Appui/Alat/Automates/Common/Behaviors/Behaviors - Ordre.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.listePionsAvecPC = self.listePionsAvecPC or {}
         self.listePionsAvecPC = DEC_Automate_PionsAvecPC()
         myself.sPlotsDeRavitaillement_ = S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ )

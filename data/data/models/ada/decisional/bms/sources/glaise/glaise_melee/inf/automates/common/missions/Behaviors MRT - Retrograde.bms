@@ -44,6 +44,7 @@ node "BEH_Medo_Automate_INF_PreparerMission_Retrograde"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.selPions = self.selPions or S_ObtenirPionsOperationnels_SansPC()
         self.lstPionsAttaque = self.lstPionsAttaque or {}
         self.lstPionsAppui = self.lstPionsAppui or {}
@@ -63,7 +64,7 @@ node "BEH_Medo_Automate_INF_PreparerMission_Retrograde"
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
-                if( ( self.limaLCAR == 0 or self.limaLCAR == nil ) ) then
+                if( self.limaLCAR == 0 ) then
                     self.limaLCAR = DEC_GetLima( eTypeLima_LI )
                 end
 
@@ -113,7 +114,7 @@ elseif switch_2 == "T_Mission_Automate_INF_RompreContact" then
                                 --[[// Determine les echelons	
 ]]rN_PE_AC = #( sUnites_INF ) + #( sUnites_MILAN )
                                 rN_PE = Max( #( sUnites_HOT ), rN_PE_AC - Floor( rN_PE_AC / 3 ) )
-                                if( ( self._namedParams.rN_Position ~= 0 and self._namedParams.rN_Position ~= nil ) ) then
+                                if( self._namedParams.rN_Position ~= 0 ) then
                                     rN_PE = Min( self._namedParams.rN_Position, rN_PE )
                                 end
 
@@ -152,7 +153,7 @@ elseif switch_2 == "T_Mission_Automate_INF_AppuyerUnFreinage" then
 --[[// 
 ]]--[[// L'execution de la mission necessite la presence d'un 1er ech
 ]]
-                    if( ( self._namedParams.eTypeMission ~= "T_Mission_Automate_INF_RompreContact" and #( self.lstPionsAttaque ) == 0 or self._namedParams.eTypeMission ~= "T_Mission_Automate_INF_RompreContact" and #( self.lstPionsAttaque ) == nil ) ) then
+                    if( self._namedParams.eTypeMission ~= "T_Mission_Automate_INF_RompreContact" and #( self.lstPionsAttaque ) == 0 ) then
                         do
                             DEC_Trace( "Pas de 1er echelon" )
                             DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
@@ -308,11 +309,12 @@ node "BEH_Medo_Automate_INF_OrganiserMissions_Freiner"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.bAppui = self.bAppui or false
         local rItPion = 0
         local rItLoc = 0
         local rNSize_PE = #( self._namedParams.selPions_PE )
-        if( ( rNSize_PE == 0 or rNSize_PE == nil ) ) then
+        if( rNSize_PE == 0 ) then
             self:SendFeedback( eActionImpossible )
             do return end
         end
@@ -424,6 +426,7 @@ node "BEH_Medo_Automate_INF_AssignerFreiner"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ptRgpt_Foo = self.ptRgpt_Foo or nil
         --[[// Mission Pion		
 ]]if( ModuleBegins() ) then
@@ -454,6 +457,7 @@ node "BEH_Medo_Automate_INF_AssignerDecrocher_RgptDansZone"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Mission Pion		
 ]]if( ModuleBegins() ) then
 for _,x_inf in pairs( self._namedParams.selPions_PE or {} ) do
@@ -483,6 +487,7 @@ node "BEH_Medo_Automate_INF_AssignerDecrocherA_RgptDansZone"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ptRgpt_Automate = self.ptRgpt_Automate or S_Geometrie_BarycentreZone( self._namedParams.locRgpt )
         Activate( self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_MRT, self._namedParams.pPion, self.ptRgpt_Automate, eEtatEchelon_Premier, } )
     end,
@@ -505,6 +510,7 @@ node "BEH_Medo_Automate_INF_AssignerInterdire_Lima"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
 for _,x in pairs( self._namedParams.lstPionsAttaque or {} ) do
             local _continue = true
@@ -534,6 +540,7 @@ node "BEH_Medo_Automate_INF_AssignerInterdire_Lima_PourPion"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.ptLima = self.ptLima or nil
         self.ptInterdire = self.ptInterdire or nil
         self.ptRecherche = self.ptRecherche or nil
@@ -558,7 +565,7 @@ node "BEH_Medo_Automate_INF_AssignerInterdire_Lima_PourPion"
 
                 self.ptRecherche = S_Geometrie_Automate_INF_ChercherPosition_Interdire( self.ptLima, 600 )
                 self.ptInterdire = self.ptRecherche
-                if( ( self.ptInterdire == 0 or self.ptInterdire == nil ) ) then
+                if( self.ptInterdire == 0 ) then
                     self.ptInterdire = self.ptLima
                 end
 
@@ -598,6 +605,7 @@ node "BEH_Medo_Automate_INF_AssignerSurveiller_Lima"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
 for _,x in pairs( self._namedParams.lstPionsSurveillance or {} ) do
             local _continue = true
@@ -631,6 +639,7 @@ node "BEH_Medo_Automate_INF_AssignerSurveiller_Lima_PourPion"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.ptLima = self.ptLima or nil
         self.bCalcul = self.bCalcul or false
         if( ModuleBegins() ) then
@@ -638,7 +647,7 @@ node "BEH_Medo_Automate_INF_AssignerSurveiller_Lima_PourPion"
                 --[[// Calcule une position sur la LIMA
 ]]--[[// ------------------------------------------------------------		
 ]]self.ptLima = DEC_Automate_CalculerPositionParRapportALimaPourPion( self._namedParams.lima, M_DISTANCE_AVT_LIMA_DEFENDRE_USURE(), self._namedParams.pPion )
-                self.bCalcul = ( ( self.ptLima ~= 0 and self.ptLima ~= nil ) )
+                self.bCalcul = ( self.ptLima ~= 0 )
                 if( not self.bCalcul ) then
                     do
                         DEC_Trace( "Pas de position LCAR : Impossible d'assigner mission." )
@@ -680,8 +689,9 @@ node "BEH_Medo_Automate_INF_AssignerAppuyerFreinage"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local selPionsAppui_PE = S_ObtenirTousPionsPour( self._namedParams.compagnie, eEtatEchelon_Premier )
-        if( ( #( self._namedParams.selPions_PE ) == 0 or #( self._namedParams.selPions_PE ) == nil ) ) then
+        if( #( self._namedParams.selPions_PE ) == 0 ) then
             do
                 if( ModuleBegins() ) then
                     DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
@@ -694,7 +704,7 @@ node "BEH_Medo_Automate_INF_AssignerAppuyerFreinage"
             end
         end
 
-        if( ( #( selPionsAppui_PE ) == 0 or #( selPionsAppui_PE ) == nil ) ) then
+        if( #( selPionsAppui_PE ) == 0 ) then
             selPionsAppui_PE = S_ObtenirTousPionsPour( self._namedParams.compagnie, eEtatEchelon_Second )
         end
 

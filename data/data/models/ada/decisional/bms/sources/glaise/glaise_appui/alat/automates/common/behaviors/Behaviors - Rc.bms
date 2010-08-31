@@ -17,6 +17,7 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/behaviors/Behav
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listeUnites = DEC_Automate_PionsAvecPC()
         for _,x in pairs( --[[// Si demande ordre de conduite d'au moins un pion
 ]]--[[// -----------------------------------------------

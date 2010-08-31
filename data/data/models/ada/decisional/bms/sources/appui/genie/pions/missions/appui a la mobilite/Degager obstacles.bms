@@ -28,6 +28,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         --[[//-----------------------------------------------------------------
@@ -118,6 +119,7 @@ node "BEH_Dep_GEN_AllerReduireObstacle"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ptObst = self.ptObst or nil
         --[[//-----------------------------------------------------------------
 ]]--[[// Init
@@ -126,14 +128,14 @@ node "BEH_Dep_GEN_AllerReduireObstacle"
             do
                 --[[// erreur éventuelle
 ]]local loc = DEC_ConnaissanceObjet_Localisation( self._namedParams.obstacle )
-                if( ( loc == 0 or loc == nil ) ) then
+                if( loc == nil ) then
                     self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
                 end
 
                 self.ptObst = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( loc )
-                if( ( self.ptObst == 0 or self.ptObst == nil ) ) then
+                if( self.ptObst == nil ) then
                     self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
@@ -169,6 +171,7 @@ node "BEH_Dep_GEN_Retablir_ReagirFaceAObjetDeType"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local repObjet = nil
         local rDist = 0
         local bObjetProcheSurItineraire = false

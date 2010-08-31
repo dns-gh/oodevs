@@ -16,7 +16,6 @@
 #include "AgentManipulator.h"
 #include "AutomatManipulator.h"
 #include "KnowledgeManipulator.h"
-#include "ObjectManipulator.h"
 #include "PopulationManipulator.h"
 #include "SimulationCommands.h"
 #include "ClientCommands.h"
@@ -32,7 +31,7 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include <MT/MT_Logger/MT_Logger_lib.h>
-#include <directia/Brain.h>
+#include <directia/brain/Brain.h>
 #include <boost/filesystem.hpp>
 #include <boost/bind.hpp>
 
@@ -47,14 +46,14 @@ using namespace MsgsClientToMessenger;
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
 ScriptPlugin::ScriptPlugin( Model_ABC& model, const kernel::StaticModel& staticModel, const Config& config, SimulationPublisher_ABC& publisher, tools::MessageDispatcher_ABC& dispatcher, ClientPublisher_ABC& clients, LinkResolver_ABC& resolver, CompositeRegistrable& registrables )
-    : model_       ( model )
-    , config_      ( config )
+    : model_     ( model )
+    , config_    ( config )
     , registrables_( registrables )
-    , controller_  ( new kernel::Controller() )
-    , converter_   ( new kernel::CoordinateConverter( config ) )
-    , factory_     ( new ExtensionFactory( *controller_, *converter_, publisher ) )
-    , time_        ( -1 )
-    , reset_       ( true )
+    , controller_( new kernel::Controller() )
+    , converter_ ( new kernel::CoordinateConverter( config ) )
+    , factory_   ( new ExtensionFactory( *controller_, *converter_, publisher ) )
+    , time_      ( -1 )
+    , reset_     ( true )
     , tickDuration_( 10 )
 {
     model_.RegisterFactory( *factory_ );
@@ -64,7 +63,6 @@ ScriptPlugin::ScriptPlugin( Model_ABC& model, const kernel::StaticModel& staticM
     registrables_.Add( new AgentManipulator::Registrar() );
     registrables_.Add( new AutomatManipulator::Registrar() );
     registrables_.Add( new KnowledgeManipulator::Registrar() );
-    registrables_.Add( new ObjectManipulator::Registrar() );
     registrables_.Add( new PopulationManipulator::Registrar() );
     registrables_.Add( new SimulationCommands( publisher, *converter_ ) );
     registrables_.Add( new ClientCommands( clients, resolver ) );
@@ -85,7 +83,7 @@ ScriptPlugin::~ScriptPlugin()
 // Name: ScriptPlugin::Receive
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
-void ScriptPlugin::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
+void ScriptPlugin::Receive( const MsgSimToClient& wrapper )
 {
     if( wrapper.message().has_control_information() )
         if( wrapper.message().control_information().has_tick_duration() )
@@ -98,7 +96,7 @@ void ScriptPlugin::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
 // Name: ScriptPlugin::Receive
 // Created: SBO 2009-06-03
 // -----------------------------------------------------------------------------
-void ScriptPlugin::Receive( const MsgsAarToClient::MsgAarToClient& wrapper )
+void ScriptPlugin::Receive( const MsgAarToClient& wrapper )
 {
     if( wrapper.message().has_indicator() )
         controller_->Update( events::IndicatorChanged( wrapper.message().indicator().name(), wrapper.message().indicator().value() ) );
@@ -148,11 +146,13 @@ void ScriptPlugin::Update()
         reset_ = false;
         LoadScripts();
     }
+
     ApplyPendings();
+
     long newTime = clock();
     if( time_ > 0 )
     {
-        const float delta = static_cast< float >( newTime - time_ ) / static_cast< float >( CLOCKS_PER_SEC );
+        const float delta = float( newTime - time_ ) / float( CLOCKS_PER_SEC );
         controller_->Update( events::TimeFlowed( delta ) );
     }
     time_ = newTime;
@@ -195,14 +195,14 @@ void ScriptPlugin::LoadScript( const std::string& file )
 // Name: ScriptPlugin::RegisterIn
 // Created: AGE 2008-07-09
 // -----------------------------------------------------------------------------
-void ScriptPlugin::RegisterIn( directia::Brain& brain )
+void ScriptPlugin::RegisterIn( directia::brain::Brain& brain )
 {
-    brain.RegisterObject( "plugin", this );
-    brain.RegisterFunction( "Reset", &ScriptPlugin::Reset );
-    brain.RegisterFunction( "Later", &ScriptPlugin::Later );
-    brain.RegisterObject( "coord", this );
-    brain.RegisterFunction( "ToUtm", &ScriptPlugin::ToUtm );
-    brain.RegisterFunction( "UtmPosition", &ScriptPlugin::UtmPosition );
+    brain[ "plugin" ] = this;
+    brain.Register( "Reset", &ScriptPlugin::Reset );
+    brain.Register( "Later", &ScriptPlugin::Later );
+    brain[ "coord" ] = this;
+    brain.Register( "ToUtm", &ScriptPlugin::ToUtm );
+    brain.Register( "UtmPosition", &ScriptPlugin::UtmPosition );
 }
 
 // -----------------------------------------------------------------------------
@@ -218,9 +218,9 @@ void ScriptPlugin::Reset()
 // Name: ScriptPlugin::Later
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
-void ScriptPlugin::Later( const directia::ScriptRef& function )
+void ScriptPlugin::Later( const directia::tools::binders::ScriptRef& function )
 {
-    pending_.push_back( new directia::ScriptRef( function ) );
+    pending_.push_back( new directia::tools::binders::ScriptRef( function ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -247,7 +247,8 @@ dispatcher::Position ScriptPlugin::UtmPosition( const std::string& utm )
 // -----------------------------------------------------------------------------
 void ScriptPlugin::ApplyPendings()
 {
-    boost::ptr_vector< directia::ScriptRef > pending;
+    boost::ptr_vector< directia::tools::binders::ScriptRef > pending;
     pending.swap( pending_ );
-    std::for_each( pending.begin(), pending.end(), boost::apply< bool >() );
+    std::for_each( pending.begin(), pending.end(), boost::apply<void>() );
 }
+

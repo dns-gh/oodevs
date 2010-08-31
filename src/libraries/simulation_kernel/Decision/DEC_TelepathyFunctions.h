@@ -14,7 +14,10 @@
 
 namespace directia
 {
-    class Brain;
+    namespace brain
+    {
+        class Brain;
+    }
 }
 
 class DEC_Decision_ABC;
@@ -32,7 +35,7 @@ class DEC_TelepathyFunctions
 public:
     //! @name Registering all those functions in the brain
     //@{
-    static void Register( directia::Brain& brain );
+    static void Register( directia::brain::Brain& brain );
     //@}
 
     //! @name Functions used to directly access or modify another brain

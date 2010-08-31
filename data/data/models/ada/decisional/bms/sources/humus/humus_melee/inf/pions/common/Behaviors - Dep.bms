@@ -90,6 +90,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.rConst_DelaiMin = self.rConst_DelaiMin or 10
         self.rConst_Delai = self.rConst_Delai or 10 * 60
@@ -150,6 +151,7 @@ node "BEH_Dep_Pion_INF_RejoindreObjectif"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         if( ModuleBegins() ) then
             do
@@ -224,6 +226,7 @@ node "BEH_Dep_Pion_INF_PreciserContact"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.ptDest = self.ptDest or DEC_Geometrie_CreerPoint()
         local S_Demande_pHTir = GetStateVariable( "VE_Agressivite_Tir" )
@@ -318,6 +321,7 @@ node "BEH_Dep_Pion_INF_PreciserMaintenirContact"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or eRejoindre
         self.ptDest = self.ptDest or nil
@@ -365,7 +369,7 @@ node "BEH_Dep_Pion_INF_PreciserMaintenirContact"
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eRetrouver then
-                    if( ( self.ptDest == 0 or self.ptDest == nil ) or self.eAction == eActionImpossible ) then
+                    if( self.ptDest == 0 or self.eAction == eActionImpossible ) then
                         do
                             DEC_Trace( "impossible de retrouver l'ennemi" )
                                                         self:SendFeedback( eActionImpossible )
@@ -442,6 +446,7 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_Mission"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or ePreparerMission
         self.eAction = self.eAction or eActionEnCours
         self.eActionRejoindre = self.eActionRejoindre or eActionEnCours
@@ -592,6 +597,7 @@ node "BEH_Progression_Pion_INF_AborderObjectif"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or eReconnaitre
         if( self.eAction == eActionImpossible ) then
@@ -679,6 +685,7 @@ node "BEH_Progression_Pion_INF_Aborder"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.ptAborder_Copie = self.ptAborder_Copie or DEC_Geometrie_CreerPoint()
         if( ModuleBegins() ) then
@@ -727,6 +734,7 @@ node "BEH_Dep_Pion_INF_AborderEnnemi"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eActionDeplacement = self.eActionDeplacement or eActionEnCours
         self.ptPosition_Ennemie = self.ptPosition_Ennemie or DEC_Geometrie_CreerPoint()
         local ptEni_Courant = DEC_ConnaissanceAgent_Position( self._namedParams.ksEni )

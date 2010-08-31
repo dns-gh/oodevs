@@ -8,39 +8,48 @@
 // *****************************************************************************
 
 #include "integration_decisionnal_test_pch.h"
-#include "Fixture.h"
+
+#include <directia/brain/Brain.h>
+#include <boost/bind.hpp>
+#include <boost/function.hpp>
 
 namespace
 {
-    class BrainFixture : public Fixture
+    class BrainFixture
     {
     public:
-        void MagnitudeTest( directia::ScriptRef /*var1*/, directia::ScriptRef /*var2*/, double /*expected*/ )
+        BrainFixture()
+        : brain( BRAIN_INIT() ) 
+        {
+            brain[ "include" ]( std::string("Integration.lua") );
+        }
+        void MagnitudeTest( directia::tools::binders::ScriptRef var1, directia::tools::binders::ScriptRef var2, double expected )
         {
             BOOST_TODO;
             //@TODO MGD replace test with mock on MT_Vector2D
-            //directia::ScriptRef magnitude = *brain.GetScriptFunction( "integration.magnitude" );
+            //directia::tools::binders::ScriptRef magnitude = *brain.GetScriptFunction( "integration.magnitude" );
             //BOOST_CHECK( magnitude( var1, var2 ) );
             //brain.GetScriptFunction( "check" )( magnitude, expected );
         }
-        void NormalizedInversedDistanceTest( directia::ScriptRef /*var1*/, directia::ScriptRef /*var2*/, double /*expected*/ )
+        void NormalizedInversedDistanceTest( directia::tools::binders::ScriptRef /*var1*/, directia::tools::binders::ScriptRef /*var2*/, double /*expected*/ )
         {
-            BOOST_TODO;
             //@TODO MGD replace test with mock on MT_Vector2D
-            //directia::ScriptRef normalizedInversedDistance = *brain.GetScriptFunction( "integration.normalizedInversedDistance" );
+            //directia::tools::binders::ScriptRef normalizedInversedDistance = *brain.GetScriptFunction( "integration.normalizedInversedDistance" );
             //BOOST_CHECK( normalizedInversedDistance( var1, var2 ) );
             //brain.GetScriptFunction( "check" )( normalizedInversedDistance, expected );
         }
-        directia::ScriptRef CreateVarWithPosition( double x, double y , double z )
+        directia::tools::binders::ScriptRef CreateVarWithPosition( double x, double y , double z )
         {
-            directia::ScriptRef var = brain.RegisterObject();
-            directia::ScriptRef pos = brain.RegisterObject();
-            var.RegisterObject( "sim_pos", pos );
-            pos.RegisterObject( "x", x );
-            pos.RegisterObject( "y", y );
-            pos.RegisterObject( "z", z );
+            directia::tools::binders::ScriptRef var( brain );
+            directia::tools::binders::ScriptRef pos( brain );
+            var[ "sim_pos" ] = pos;
+            pos[ "x" ] = x;
+            pos[ "y" ] = y;
+            pos[ "z" ] = z;
             return var;
         }
+    public:
+        directia::brain::Brain brain;
     };
 }
 // -----------------------------------------------------------------------------

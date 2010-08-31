@@ -34,6 +34,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.repPt = self.repPt or DEC_Agent_Position()
         if( ModuleBegins() ) then
@@ -83,6 +84,7 @@ node "BEH_Lima_Pion_INF_SurLD"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eOrdre = self.eOrdre or eActionEnCours
         if( self.eOrdre == eActionEffectuee ) then
             do
@@ -123,6 +125,7 @@ node "BEH_Lima_Pion_INF_SurLCAR"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         if( ModuleBegins() ) then
             do
@@ -162,6 +165,7 @@ node "BEH_Lima_Pion_INF_SurLR"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
         end
@@ -189,7 +193,8 @@ node "BEH_Lima_Pion_INF_GererLIA"
     end,
 
     activate = function( self )
-        if( ( myself.ptPIA_ ~= 0 and myself.ptPIA_ ~= nil ) and S_Geometrie_EstProchePosition( DEC_Agent_Position(), myself.ptPIA_, 100 ) ) then
+        local Activate = Activate
+        if( myself.ptPIA_ ~= nil and S_Geometrie_EstProchePosition( DEC_Agent_Position(), myself.ptPIA_, 100 ) ) then
             do
                 Activate( self.activations.ACT_RC, 1, { eRC_PassageSurPIA, } )
             end

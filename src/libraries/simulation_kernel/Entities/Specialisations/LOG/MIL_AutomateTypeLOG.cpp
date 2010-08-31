@@ -16,7 +16,7 @@
 #include "Decision/DEC_Tools.h"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
-#include <directia/Brain.h>
+#include <directia/brain/Brain.h>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateTypeLOG constructor
@@ -50,18 +50,18 @@ bool MIL_AutomateTypeLOG::IsLogistic() const
 // Name: MIL_AutomateTypeLOG::InstanciateAutomate
 // Created: NLD 2004-12-27
 // -----------------------------------------------------------------------------
-MIL_Automate& MIL_AutomateTypeLOG::InstanciateAutomate( unsigned int nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database ) const
+MIL_Automate& MIL_AutomateTypeLOG::InstanciateAutomate( unsigned int nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult ) const
 {
-    return *new MIL_AutomateLOG( *this, nID, parent, xis, database );
+    return *new MIL_AutomateLOG( *this, nID, parent, xis, database, gcPause, gcMult );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateTypeLOG::InstanciateAutomate
 // Created: NLD 2004-12-27
 // -----------------------------------------------------------------------------
-MIL_Automate& MIL_AutomateTypeLOG::InstanciateAutomate( unsigned int nID, MIL_Automate& parent, xml::xistream& xis, DEC_DataBase& database ) const
+MIL_Automate& MIL_AutomateTypeLOG::InstanciateAutomate( unsigned int nID, MIL_Automate& parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult ) const
 {
-    return *new MIL_AutomateLOG( *this, nID, parent, xis, database );
+    return *new MIL_AutomateLOG( *this, nID, parent, xis, database, gcPause, gcMult );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,39 +77,39 @@ const MIL_AutomateType* MIL_AutomateTypeLOG::Create( const std::string& strName,
 // Name: MIL_AutomateTypeLOG::RegisterFunctions
 // Created: LDC 2009-04-23
 // -----------------------------------------------------------------------------
-void MIL_AutomateTypeLOG::RegisterFunctions( directia::Brain& brain, MIL_Automate& automat ) const
+void MIL_AutomateTypeLOG::RegisterFunctions( directia::brain::Brain& brain, MIL_Automate& automat ) const
 {
-    brain.RegisterFunction( "DEC_Maintenance_ActiverChaine",
-        boost::bind( &DEC_LogisticFunctions::AutomateMaintenanceEnableSystem, boost::ref( automat ) ) );
-    brain.RegisterFunction( "DEC_Maintenance_DesactiverChaine",
-        boost::bind( &DEC_LogisticFunctions::AutomateMaintenanceDisableSystem, boost::ref( automat ) ) );
-    brain.RegisterFunction( "DEC_Maintenance_ChangerPriorites",
-        boost::function< void( const std::vector< const PHY_ComposanteTypePion* >& ) >( boost::bind( &DEC_LogisticFunctions::AutomateMaintenanceChangePriorities, boost::ref( automat ), _1 ) ) );
-    brain.RegisterFunction( "DEC_Maintenance_ChangerPrioritesTactiques",
-        boost::function< void( const std::vector< const DEC_Decision_ABC* >& ) >( boost::bind( &DEC_LogisticFunctions::AutomateMaintenanceChangeTacticalPriorities, boost::ref( automat ), _1 ) ) );
-    brain.RegisterFunction( "DEC_Maintenance_ChangerRegimeTravail",
-        boost::function< void( int ) >( boost::bind( &DEC_LogisticFunctions::AutomateMaintenanceChangeWorkRate, boost::ref( automat ), _1 ) ) );
+    brain[ "DEC_Maintenance_ActiverChaine" ] =
+        boost::bind( &DEC_LogisticFunctions::AutomateMaintenanceEnableSystem, boost::ref( automat ) );
+    brain[ "DEC_Maintenance_DesactiverChaine" ] =
+        boost::bind( &DEC_LogisticFunctions::AutomateMaintenanceDisableSystem, boost::ref( automat ) );
+    brain[ "DEC_Maintenance_ChangerPriorites" ] =
+        boost::function< void( const std::vector< const PHY_ComposanteTypePion* >& ) >( boost::bind( &DEC_LogisticFunctions::AutomateMaintenanceChangePriorities, boost::ref( automat ), _1 ) );
+    brain[ "DEC_Maintenance_ChangerPrioritesTactiques" ] =
+        boost::function< void( const std::vector< const DEC_Decision_ABC* >& ) >( boost::bind( &DEC_LogisticFunctions::AutomateMaintenanceChangeTacticalPriorities, boost::ref( automat ), _1 ) );
+    brain[ "DEC_Maintenance_ChangerRegimeTravail" ] =
+        boost::function< void( int ) >( boost::bind( &DEC_LogisticFunctions::AutomateMaintenanceChangeWorkRate, boost::ref( automat ), _1 ) );
 
-    brain.RegisterFunction( "DEC_Sante_ActiverChaine",
-        boost::bind( &DEC_LogisticFunctions::AutomateMedicalEnableSystem, boost::ref( automat ) ) );
-    brain.RegisterFunction( "DEC_Sante_DesactiverChaine",
-        boost::bind( &DEC_LogisticFunctions::AutomateMedicalDisableSystem, boost::ref( automat ) ) );
-    brain.RegisterFunction( "DEC_Sante_ActiverFonctionTri",
-        boost::bind( &DEC_LogisticFunctions::AutomateMedicalEnableSortingFunction, boost::ref( automat ) ) );
-    brain.RegisterFunction( "DEC_Sante_DesactiverFonctionTri",
-        boost::bind( &DEC_LogisticFunctions::AutomateMedicalDisableSortingFunction, boost::ref( automat ) ) );
-    brain.RegisterFunction( "DEC_Sante_ActiverFonctionSoin",
-        boost::bind( &DEC_LogisticFunctions::AutomateMedicalEnableHealingFunction, boost::ref( automat ) ) );
-    brain.RegisterFunction( "DEC_Sante_DesactiverFonctionSoin",
-        boost::bind( &DEC_LogisticFunctions::AutomateMedicalDisableHealingFunction, boost::ref( automat ) ) );
-    brain.RegisterFunction( "DEC_Sante_ChangerPriorites",
-        boost::function< void( const std::vector< const PHY_HumanWound* >& ) >( boost::bind( &DEC_LogisticFunctions::AutomateMedicalChangePriorities, boost::ref( automat ), _1 ) ) );
-    brain.RegisterFunction( "DEC_Sante_ChangerPrioritesTactiques",
-        boost::function< void( const std::vector< const DEC_Decision_ABC* >& ) >( boost::bind( &DEC_LogisticFunctions::AutomateMedicalChangeTacticalPriorities, boost::ref( automat ), _1 ) ) );
+    brain[ "DEC_Sante_ActiverChaine" ] =
+        boost::bind( &DEC_LogisticFunctions::AutomateMedicalEnableSystem, boost::ref( automat ) );
+    brain[ "DEC_Sante_DesactiverChaine" ] =
+        boost::bind( &DEC_LogisticFunctions::AutomateMedicalDisableSystem, boost::ref( automat ) );
+    brain[ "DEC_Sante_ActiverFonctionTri" ] =
+        boost::bind( &DEC_LogisticFunctions::AutomateMedicalEnableSortingFunction, boost::ref( automat ) );
+    brain[ "DEC_Sante_DesactiverFonctionTri" ] =
+        boost::bind( &DEC_LogisticFunctions::AutomateMedicalDisableSortingFunction, boost::ref( automat ) );
+    brain[ "DEC_Sante_ActiverFonctionSoin" ] =
+        boost::bind( &DEC_LogisticFunctions::AutomateMedicalEnableHealingFunction, boost::ref( automat ) );
+    brain[ "DEC_Sante_DesactiverFonctionSoin" ] =
+        boost::bind( &DEC_LogisticFunctions::AutomateMedicalDisableHealingFunction, boost::ref( automat ) );
+    brain[ "DEC_Sante_ChangerPriorites" ] =
+        boost::function< void( const std::vector< const PHY_HumanWound* >& ) >( boost::bind( &DEC_LogisticFunctions::AutomateMedicalChangePriorities, boost::ref( automat ), _1 ) );
+    brain[ "DEC_Sante_ChangerPrioritesTactiques" ] =
+        boost::function< void( const std::vector< const DEC_Decision_ABC* >& ) >( boost::bind( &DEC_LogisticFunctions::AutomateMedicalChangeTacticalPriorities, boost::ref( automat ), _1 ) );
 
-    brain.RegisterFunction( "DEC_Ravitaillement_ActiverChaine",
-        boost::bind( &DEC_LogisticFunctions::AutomateSupplyEnableSystem, boost::ref( automat ) ) );
-    brain.RegisterFunction( "DEC_Ravitaillement_DesactiverChaine",
-        boost::bind( &DEC_LogisticFunctions::AutomateSupplyDisableSystem, boost::ref( automat ) ) );
+    brain[ "DEC_Ravitaillement_ActiverChaine" ] =
+        boost::bind( &DEC_LogisticFunctions::AutomateSupplyEnableSystem, boost::ref( automat ) );
+    brain[ "DEC_Ravitaillement_DesactiverChaine" ] =
+        boost::bind( &DEC_LogisticFunctions::AutomateSupplyDisableSystem, boost::ref( automat ) );
 }
 

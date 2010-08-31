@@ -32,6 +32,7 @@ includedFiles["sources/melee/inf/automates/section te/missions/reduiredetruire/R
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eCreationMRT = self.eCreationMRT or eActionEnCours
         self.rN_Loc = self.rN_Loc or DEC_ListePoints_Size( self._namedParams.mission.pointsResistance_ )
         --[[//-----------------------------------------------------------------------------

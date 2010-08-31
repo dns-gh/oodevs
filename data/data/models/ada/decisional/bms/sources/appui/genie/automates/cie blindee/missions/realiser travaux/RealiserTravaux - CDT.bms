@@ -27,6 +27,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.listeObjetsPlanifies = self.listeObjetsPlanifies or {}
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
@@ -47,7 +48,7 @@ include "bit.lua"
 ]]--[[// Vérification des moyens
 ]]--[[//---------------------------------------------------------------------
 ]]local listePionsGenie = S_ObtenirPionsOperationnelsFiltre( "SectionGenie" )
-        if( ( #( listePionsGenie ) == 0 or #( listePionsGenie ) == nil ) ) then
+        if( #( listePionsGenie ) == 0 ) then
             do
                 Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
                                 do return end
@@ -92,6 +93,7 @@ node "BEH_Mission_Automate_GEN_CDT_RealiserPlanObjets"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.positionRegroupement = self.positionRegroupement or S_Geometrie_BarycentreZone( self._namedParams.zoneRegroupement )
         if( ModuleBegins() ) then
             do
@@ -142,6 +144,7 @@ node "BEH_Misc_Automate_GEN_GererTravaux"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Copie? --> oui
 ]]self.listeGenObjetAConstruire = self.listeGenObjetAConstruire or DEC_Copie_Liste( self._namedParams.travaux )
         self.positionRegroupement = self.positionRegroupement or S_Geometrie_BarycentreZone( self._namedParams.zoneRegroupement )
@@ -199,6 +202,7 @@ node "BEH_Mission_Automate_Gen_AssignerConstruireObjetA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Mission_Automate_GEN_AssignerMissionConstruireA, 1, { ePhase_CDT, self._namedParams.pion, self._namedParams.objet, eEtatEchelon_Premier, } )
     end,
 
@@ -230,6 +234,7 @@ node "BEH_Misc_Automate_GEN_GererRenforcementsPourTravaux"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.positionRegroupement = self.positionRegroupement or S_Geometrie_BarycentreZone( self._namedParams.zoneRegroupement )
         --[[//-------------------------------------------------------------------------
 ]]--[[// CR sur renforcement 
@@ -314,8 +319,9 @@ node "BEH_Misc_Automate_GEN_GererFinRenforcementTravaux"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Sécurité
-]]if( ( ( self._namedParams.objetARealiser:GetpionRenforcement_() == 0 or self._namedParams.objetARealiser:GetpionRenforcement_() == nil ) or self._namedParams.objetARealiser:Getpion_() == 0 or ( self._namedParams.objetARealiser:GetpionRenforcement_() == 0 or self._namedParams.objetARealiser:GetpionRenforcement_() == nil ) or self._namedParams.objetARealiser:Getpion_() == nil ) ) then
+]]if( self._namedParams.objetARealiser:GetpionRenforcement_() == nil or self._namedParams.objetARealiser:Getpion_() == nil ) then
             do return end
         end
 
@@ -352,6 +358,7 @@ node "BEH_Misc_Automate_GEN_GererFinRenforcementPour"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 DEC_Trace( "Get " .. DEC_GetSzName( self._namedParams.pion ) .. " back" )
@@ -387,6 +394,7 @@ node "BEH_Misc_Automate_GEN_GererRenforcement"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Renforcement déjà assigné
 ]]if( self._namedParams.objetARealiser:GetpionRenforcement_() ~= nil ) then
             do return end
@@ -466,6 +474,7 @@ node "BEH_Misc_Automate_GEN_GererRenforcementDe"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Iteration sur les pions en renforcement
 ]]--[[//-------------------------------------------------------------------------
@@ -517,6 +526,7 @@ node "BEH_Mission_Automate_GEN_RenforcerGenObjet"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-------------------------------------------------------------------------
 ]]--[[// Assignation
 ]]--[[//-------------------------------------------------------------------------

@@ -17,6 +17,7 @@ node "BEH_Manoeuvre_Pion_ASA_SeDeployer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or eAttendre
         if( not myself:DEC_Agent_EstEnMouvement() ) then

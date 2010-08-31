@@ -98,7 +98,7 @@ class MIL_EntityManager : public MIL_EntityManager_ABC,
                           private boost::noncopyable
 {
 public:
-             MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, HLA_Federate* hla, DEC_DataBase& database );
+             MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, HLA_Federate* hla, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
     virtual ~MIL_EntityManager();
 
     //! @name Factory
@@ -278,6 +278,8 @@ private:
     MT_Float      rStatesTime_;
 
     unsigned int  nRandomBreakdownsNextTimeStep_;
+    unsigned int  gcPause_;
+    unsigned int  gcMult_;
     bool          infiniteDotations_;
 };
 

@@ -24,6 +24,7 @@ includedFiles["sources/glaise/glaise_common/automates/missionsreactionpopulation
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.listePionsInterdireFranchissement = self.listePionsInterdireFranchissement or {}
         self.listePionsSuivre = self.listePionsSuivre or {}
         self.points = self.points or DEC_Geometrie_CreerListePoints()

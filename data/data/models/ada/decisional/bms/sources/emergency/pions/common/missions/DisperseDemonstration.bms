@@ -29,6 +29,7 @@ includedFiles["sources/emergency/pions/common/missions/DisperseDemonstration.bms
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or eRejoindre
         if( ModuleBegins() ) then

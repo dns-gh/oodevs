@@ -24,6 +24,7 @@ includedFiles["sources/melee/abc/automates/ge40/missions/defensives/freiner/Coor
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// On recupère les unités de mêlée seulement
 ]]local listePionsPEcl = S_Cherche_GE_Filtre_TypeAutomate_Melee( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Eclairage ) )
         local listePionsPE = S_Cherche_GE_Filtre_TypeAutomate_Melee( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ) )
@@ -66,6 +67,7 @@ node "BEH_GTIA_AssurerLaCoordinationSurLR"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,pion in pairs( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second ) or {} ) do
         local _continue = true
             Activate( self.activations.ACT_GTIA_Automate_DonnerOrdreTenirSurLR, 1, { pion, } )
@@ -95,6 +97,7 @@ node "BEH_GTIA_AssurerLaCoordinationAuContact"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x in pairs( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ) or {} ) do
         local _continue = true
 do
@@ -130,6 +133,7 @@ node "BEH_GTIA_AssurerLaCoordinationRetrogradeSurRetard"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( S_AnalyseDelai_GE_EstEnRetard() ) then
             do
                 for _,pion in pairs( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ) or {} ) do
@@ -173,6 +177,7 @@ node "BEH_GTIA_AssurerLaCoordinationRetrogradeInterEchelon"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.resultatCalcul = self.resultatCalcul or nil
         if( ModuleBegins() ) then
             self.resultatCalcul = DEC_Geometrie_StartCalculAutomateLignesAvantEtArriere( self._namedParams.listePionsPE )
@@ -216,6 +221,7 @@ node "BEH_GTIA_AssurerLaCoordinationRetrogradeIntraEchelon"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.resultatCalcul = self.resultatCalcul or nil
         if( ModuleBegins() ) then
             self.resultatCalcul = DEC_Geometrie_StartCalculAutomateLignesAvantEtArriere( self._namedParams.listePions )

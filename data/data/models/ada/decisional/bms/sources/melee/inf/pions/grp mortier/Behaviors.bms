@@ -90,6 +90,7 @@ node "BEH_Misc_Pion_INF_Default"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_MOT_Pion_INF_GarderSesDistances_GererTransport, GetMotivation( "MOT_GarderSesDistances" ), {} )
         Activate( self.activations.BEH_MOT_Pion_INF_EtrePrudent_GererTransport, GetMotivation( "MOT_EtrePrudent" ), {} )
         if( DEC_GetMission( myself ) ~= nil ) then
@@ -121,6 +122,7 @@ node "BEH_Eni_Pion_INF_GererContactEni"
     end,
 
     activate = function( self )
+        local Activate = Activate
          do
             local _continue = true
             local switch_1 = F_Pion_GeteTypeContact( myself )

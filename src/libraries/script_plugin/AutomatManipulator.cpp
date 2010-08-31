@@ -9,7 +9,7 @@
 
 #include "script_plugin_pch.h"
 #include "AutomatManipulator.h"
-#include <directia/Brain.h>
+#include "directia/brain/Brain.h"
 #include "dispatcher/Automat.h"
 
 using namespace plugins::script;
@@ -37,9 +37,9 @@ AutomatManipulator::~AutomatManipulator()
 // Name: AutomatManipulator::RegisterIn
 // Created: SBO 2008-08-13
 // -----------------------------------------------------------------------------
-void AutomatManipulator::Registrar::RegisterIn( directia::Brain& brain )
+void AutomatManipulator::Registrar::RegisterIn( directia::brain::Brain& brain )
 {
-    brain.RegisterFunction( "GetIdentifier", &AutomatManipulator::GetIdentifier );
+    brain.Register( "GetIdentifier", &AutomatManipulator::GetIdentifier );
 }
 
 // -----------------------------------------------------------------------------

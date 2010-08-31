@@ -23,6 +23,7 @@ includedFiles["sources/common/automates/missions/soutenirenmesurede/MRT - Souten
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
@@ -93,6 +94,7 @@ node "BEH_Medo_Automate_AssignerFaireSoutenirEnMesureDe"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         if( ModuleBegins() ) then
 for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
@@ -128,6 +130,7 @@ node "MIS_Automate_MRT_SoutenirSurPositionEnMesureDe"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
@@ -199,6 +202,7 @@ node "BEH_Medo_Automate_AssignerFaireSoutenirSurPositionEnMesureDe"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.centre = self.centre or S_Geometrie_BarycentreZone( self._namedParams.locPosition )
         self.mission = self.mission or DEC_GetMission( myself )
         if( ModuleBegins() ) then

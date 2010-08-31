@@ -11,7 +11,9 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+
 #include "PHY_ComposantePion.h"
+
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationGroupContainer.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
@@ -37,6 +39,7 @@
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_SmokeData.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
+
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/AttritionCapacity.h"
@@ -46,6 +49,7 @@
 #include "Entities/Actions/PHY_FireDamages_Agent.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "MIL_Singletons.h"
+
 #include "simulation_kernel/WeaponAvailabilityComputer_ABC.h"
 
 double  PHY_ComposantePion::rOpStateWeightHumans_ = 0.;
@@ -57,15 +61,15 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_ComposantePion )
 // Created: NLD 2004-08-12
 // -----------------------------------------------------------------------------
 PHY_ComposantePion::PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_ComposanteTypePion& type, PHY_RolePion_Composantes& role, unsigned int nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy )
-    : PHY_Composante_ABC()
+    : PHY_Composante_ABC           ( )
     , time_                        ( time )
     , pState_                      ( &PHY_ComposanteState::undamaged_ )
-    , pRole_                       ( &role )
-    , pType_                       ( &type )
-    , bMajor_                      ( bMajor )
-    , bLoadable_                   ( bLoadable )
+    , pRole_                       ( &role              )
+    , pType_                       ( &type              )
+    , bMajor_                      ( bMajor             )
+    , bLoadable_                   ( bLoadable          )
     , bCanBePartOfConvoy_          ( bCanBePartOfConvoy )
-    , bUsedForLogistic_            ( false )
+    , bUsedForLogistic_            ( false              )
     , nAutoRepairTimeStep_         ( 0 )
     , pBreakdown_                  ( 0 )
     , pMaintenanceState_           ( 0 )
@@ -131,6 +135,10 @@ PHY_ComposantePion::~PHY_ComposantePion()
 
     delete pHumans_;
 }
+
+// =============================================================================
+// CHECKPOINTS
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::load
@@ -205,6 +213,10 @@ void PHY_ComposantePion::save( MIL_CheckPointOutArchive& file, const unsigned in
     }
 }
 
+// =============================================================================
+// OPERATIONS
+// =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::TransferComposante
 // Created: JVT 2005-01-17
@@ -231,6 +243,10 @@ void PHY_ComposantePion::TransferComposante( PHY_RoleInterface_Composantes& newR
     pRole_ = &newRole;
     pRole_->NotifyComposanteAdded( *this );
 }
+
+// =============================================================================
+// OPERATIONS
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::ReinitializeState
@@ -259,6 +275,10 @@ void PHY_ComposantePion::ReinitializeState( const PHY_ComposanteState& tmpState 
     assert( pRole_ );
     pRole_->NotifyComposanteChanged ( *this, *pOldState );
 }
+
+// =============================================================================
+// ACCESSORS
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::GetMaxSpeed
@@ -311,6 +331,10 @@ const PHY_ConsumptionType& PHY_ComposantePion::GetConsumptionMode( const MIL_Obj
     return pType_->GetConsumptionMode( objectType );
 }
 
+// =============================================================================
+// FIRE / DANGEROSITY
+// =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::ApplyFire
 // Created: NLD 2004-10-13
@@ -332,7 +356,16 @@ void PHY_ComposantePion::ApplyFire( const PHY_AttritionData& attritionData, MT_F
     if( pType_->GetProtection().IsHuman() && ( *pNewState == PHY_ComposanteState::repairableWithEvacuation_ || *pNewState == PHY_ComposanteState::repairableWithoutEvacuation_ ) )
         pNewState = &PHY_ComposanteState::undamaged_;
 
-    ApplyNewComposanteState( *pNewState, oldState );
+    if( *pNewState < *pState_ )
+    {
+        pState_ = pNewState;
+
+        if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
+            pBreakdown_ = new PHY_Breakdown( pType_->GetAttritionBreakdownType() );
+        ManageEndMaintenance();
+
+        pRole_->NotifyComposanteChanged( *this, oldState );
+    }
 
     fireDamages.NotifyComposanteStateChanged( *this, oldState, *pState_ );
 }
@@ -741,6 +774,10 @@ void PHY_ComposantePion::Repair()
     HealAllHumans();
 }
 
+// =============================================================================
+// MAIN
+// =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::Update
 // Created: NLD 2004-12-20
@@ -1054,7 +1091,7 @@ float PHY_ComposantePion::GetIdentificationMaxRange() const
     MT_Float distance = numeric_limits< MT_Float >::max();
     for( CIT_SensorVector itSensor = sensors_.begin(); itSensor != sensors_.end(); ++itSensor )
         distance = std::min( distance, (*itSensor)->GetType().GetTypeAgent()->IdentificationDistance() );
-    return static_cast< float >( distance );
+	return static_cast< float >( distance );
 }
 
 // -----------------------------------------------------------------------------
@@ -1066,7 +1103,7 @@ float PHY_ComposantePion::GetReconnoissanceMaxRange() const
     MT_Float distance = numeric_limits< MT_Float >::max();
     for( CIT_SensorVector itSensor = sensors_.begin(); itSensor != sensors_.end(); ++itSensor )
         distance = std::min( distance, (*itSensor)->GetType().GetTypeAgent()->ReconnoissanceDistance() );
-    return static_cast< float >( distance );
+	return static_cast< float >( distance );
 }
 
 // -----------------------------------------------------------------------------

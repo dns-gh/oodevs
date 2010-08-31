@@ -32,6 +32,7 @@ includedFiles["sources/appui/artdsa/pions/satcp mistral/missions/Defendre Site A
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or ePreparerMission
         if( ModuleBegins() ) then

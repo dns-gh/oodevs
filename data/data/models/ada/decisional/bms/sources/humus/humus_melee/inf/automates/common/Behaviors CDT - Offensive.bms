@@ -37,6 +37,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eAction = self.eAction or nil
         self.ptDest = self.ptDest or DEC_Geometrie_CalculerPointArrivee()
         if( not ModuleBegins() ) then
@@ -49,7 +50,7 @@ include "bit.lua"
 ]]--[[// n'est pas appuye, alors on l'appui
 ]]local selPionsPE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
         local pAAppuyer = S_Cherche_Automate_INF_PionAAppuyer( selPionsPE, self._namedParams.pPion )
-        if( ( pAAppuyer ~= 0 and pAAppuyer ~= nil ) ) then
+        if( pAAppuyer ~= 0 ) then
             do
                  do
                     local _continue = true
@@ -100,6 +101,7 @@ node "BEH_Conduite_Automate_INF_Reduire_Manoeuvre"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ksEni = self.ksEni or nil
         self.eAction = self.eAction or eActionEnCours
         if( self.eAction == eActionEffectuee ) then
@@ -113,7 +115,7 @@ node "BEH_Conduite_Automate_INF_Reduire_Manoeuvre"
         end
 
         local pPion = S_Cherche_Automate_INF_PionMission( DEC_Automate_PionsSansPC(), "T_Mission_Pion_INF_Semparer" )
-        if( ( pPion == 0 or pPion == nil ) ) then
+        if( pPion == 0 ) then
             self:SendFeedback( eActionEnCours )
             do return end
         end
@@ -149,6 +151,7 @@ node "BEH_Situation_Automate_INF_Assaut"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion des RC recus 
 ]]--[[//-----------------------------------------------------------------------------		
@@ -230,6 +233,7 @@ node "BEH_Conduite_Automate_INF_Assaut_Manoeuvre"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.mission = self.mission or DEC_GetMission( myself )
         self.misPion = self.misPion or DEC_GetMission( self._namedParams.pPion )
         self.loc = self.loc or nil
@@ -237,7 +241,7 @@ node "BEH_Conduite_Automate_INF_Assaut_Manoeuvre"
         self.ksEni = self.ksEni or S_Pion_EniEnCours( self._namedParams.pPion )
         --[[// Pas d'appui
 ]]--[[// --------------------------------------------------------------------------------
-]]if( ( #( selAppui ) == 0 or #( selAppui ) == nil ) or ( not DEC_ConnaissanceAgent_EstValide( self.ksEni ) and not DEC_ConnaissanceAgent_EstValide( self._namedParams.ksEniManoeuvre ) ) ) then
+]]if( #( selAppui ) == 0 or ( not DEC_ConnaissanceAgent_EstValide( self.ksEni ) and not DEC_ConnaissanceAgent_EstValide( self._namedParams.ksEniManoeuvre ) ) ) then
             self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
@@ -269,7 +273,7 @@ if( DEC_ConnaissanceAgent_EstValide( self._namedParams.ksEniManoeuvre ) ) then
 ]]--[[// Installation de la couverture
 ]]--[[//-----------------------------------------------------------------------------
 ]]local pionCouv = S_Cherche_Automate_TypePion( selAppui, "SectionInfanterie" )
-        if( ( pionCouv == 0 or pionCouv == nil ) ) then
+        if( pionCouv == 0 ) then
             self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
@@ -307,10 +311,11 @@ node "BEH_Conduite_Automate_INF_Assaut_Reduction_SurPriseContact"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 local pionAppui = S_Automate_INF_UniteMission_Appuyer( self._namedParams.pPion )
-                if( ( pionAppui ~= 0 and pionAppui ~= nil ) ) then
+                if( pionAppui ~= 0 ) then
                     StartActivateOverride( self, self.activations.BEH_Conduite_Automate_INF_Assaut_Reduction, 1, { pionAppui, } )
                 else
                     StartActivateOverride( self, self.activations.BEH_Conduite_Automate_INF_Assaut_Reduction, 1, { self._namedParams.pPion, } )
@@ -344,12 +349,13 @@ node "BEH_Conduite_Automate_INF_Assaut_Reduction"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.mission = self.mission or DEC_GetMission( myself )
         self.ksEni = self.ksEni or S_Pion_EniEnCours( self._namedParams.pPion )
         local selAppui = F_Pion_GetselUnitesEnAppui( self._namedParams.pPion )
         --[[// Pas d'appui
 ]]--[[// --------------------------------------------------------------------------------
-]]if( ( #( selAppui ) == 0 or #( selAppui ) == nil ) ) then
+]]if( #( selAppui ) == 0 ) then
             self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end

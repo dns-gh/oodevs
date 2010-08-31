@@ -92,6 +92,7 @@ include "Appui/ArtFdp/Pions/EOP/Missions/AcquerirObjectifs.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DEC_Agent_TransporteursPret() and DEC_Agent_EstEmbarque() ) then
             StartActivateOverride( self, self.activations.ACT_Transport_Pion_EOP_Debarquer, 2.01, { self._namedParams.bRecupererTransporteur, } )
         end
@@ -114,6 +115,7 @@ node "BEH_Transport_Pion_EOP_RecupererTransporteur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             DEC_RecupererTransporteursSansDelai()
         end

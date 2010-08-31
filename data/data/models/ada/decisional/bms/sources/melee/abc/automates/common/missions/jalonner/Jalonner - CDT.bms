@@ -25,6 +25,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// Mission
 ]]--[[//-----------------------------------------------------------------------------
@@ -58,6 +59,7 @@ node "BEH_Conduite_ABC_Automate_Jalonner_GererLesLC"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local selPionsFr = S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsAvecPC(), "T_Mission_Pion_ABC_Jalonner" )
         if( DEC_AutomateSuperieur_EstEmbraye() and F_Automat_GeteEtatEchelon( myself ) ~= eEtatEchelon_Premier ) then
 for _,pion in pairs( selPionsFr or {} ) do

@@ -41,6 +41,10 @@ namespace
 {
     PHY_Action_ABC* pExpectedAction;
     int callbackValue = -1;
+    void InitCallback( unsigned int action, int callback )
+    {
+        BOOST_CHECK_EQUAL( firing::PHY_RoleAction_IndirectFiring::eRunning, callback );
+    }
     void CheckCallback( unsigned int action, int callback )
     {
         BOOST_CHECK_EQUAL( action, pExpectedAction->GetId() );
@@ -85,6 +89,8 @@ BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
         MOCK_EXPECT( dotationRole, AddFireReservation ).once().returns( 1. );
 
         const PHY_DotationCategory* pCategory = PHY_DotationType::FindDotationCategory( "ammo" );
+
+        decision->RegisterFunction( "CallbackAction", &InitCallback );
 
         const MT_Vector2D targetPosition;
         PHY_ActionIndirectFire_Position* pAction = new PHY_ActionIndirectFire_Position( pion, pCategory, 1, &targetPosition );

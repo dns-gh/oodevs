@@ -38,6 +38,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.eActionFixer = self.eActionFixer or eActionEnCours
         --[[//-----------------------------------------------------------------------------
@@ -113,6 +114,7 @@ node "BEH_Eni_Pion_VAB_Offensif_Manoeuvre"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Si le pion n'est pas dans son fuseau, on n'agit pas sur les ennemis
 ]]if( not DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
             do return end
@@ -182,6 +184,7 @@ node "BEH_Dep_Pion_INF_GererDispositif_Offensif"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eActionPreciser = self.eActionPreciser or eActionEnCours
         self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or eDetruire
@@ -274,6 +277,7 @@ node "BEH_Eni_Pion_VAB_ManoeuvreDetruire"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionDeplacement = self.eActionDeplacement or eActionEnCours
         self.ePhase = self.ePhase or eRejoindre
         local rPH = GetStateVariable( "VE_Agressivite_Tir" )
@@ -392,6 +396,7 @@ node "BEH_Eni_Pion_ManoeuvreDetruire"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionDeplacement = self.eActionDeplacement or eActionEnCours
         self.ePhase = self.ePhase or eRejoindre
         local rPH = GetStateVariable( "VE_Agressivite_Tir" )
@@ -491,6 +496,7 @@ node "BEH_Poste_Pion_INF_NettoyerPosition"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.ptEni = self.ptEni or DEC_Geometrie_CreerPoint()
         self.eAction = self.eAction or eActionEnCours
         self.bInitFouille = self.bInitFouille or true

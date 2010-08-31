@@ -31,6 +31,7 @@ includedFiles["sources/appui/alat/automates/common/missions/reconnaitre/Reconnai
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eMRT_AssignerMissions
         self.eEtatMissionsReconnaitre = self.eEtatMissionsReconnaitre or eActionEnCours
         self.affectationFuseauOk = self.affectationFuseauOk or false

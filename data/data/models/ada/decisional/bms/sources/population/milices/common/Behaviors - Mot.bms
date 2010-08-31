@@ -27,6 +27,7 @@ includedFiles["sources/population/milices/common/Behaviors - Mot.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// MIA OPT: fonction?
 ]]local lstAgents = DEC_Connaissances_UnitesEnnemiesVivantesPercues()
         if( DEC_FacteurHumain_Moral() ~= eMoral_Fanatique ) then
@@ -39,7 +40,7 @@ includedFiles["sources/population/milices/common/Behaviors - Mot.bms"] = true
             SetStateVariable( "VE_Tenir", ( #( lstAgents ) - F_Pion_GetrTenir( myself ) ) )
         end
 
-        if( ( DEC_GetMission( myself ) == 0 or DEC_GetMission( myself ) == nil ) ) then
+        if( DEC_GetMission( myself ) == nil ) then
             --[[// Par defaut    		    		    	  
 ]]SetStateVariable( "VE_Agressivite_Tir", 0 )
         end
@@ -67,6 +68,7 @@ node "BEH_MOT_Milice_TirerSurEnis"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listeUnitesEnnemiesDangereuses = DEC_Connaissances_UnitesEnnemiesDangereuses()
         for _,repEni in pairs( listeUnitesEnnemiesDangereuses or {} ) do
         local _continue = true

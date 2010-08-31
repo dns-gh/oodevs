@@ -34,6 +34,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// variables persistantes
 ]]        self.eEtatAttaque = self.eEtatAttaque or eActionEnCours
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.ennemi ) ) then

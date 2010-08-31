@@ -81,7 +81,7 @@ private:
     //@{
     void Load( const dispatcher::Config& config );
     void ReadShape( xml::xistream& xis );
-    virtual void RegisterIn( directia::Brain& brain );
+    virtual void RegisterIn( directia::brain::Brain& brain );
     void ReadNamedShape( xml::xistream& xis, std::auto_ptr< Drawing >& result, const std::string& name );
     boost::shared_ptr< DrawingProxy > CreateDrawing( const std::string& name );
     //@}

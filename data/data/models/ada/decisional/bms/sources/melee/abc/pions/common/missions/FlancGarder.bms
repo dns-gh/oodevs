@@ -41,6 +41,7 @@ includedFiles["sources/melee/abc/pions/common/missions/FlancGarder.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
@@ -145,6 +146,7 @@ node "BEH_Dep_Pion_ABC_SeCoordonnerAvecAmis"
     end,
 
     activate = function( self )
+        local Activate = Activate
     end,
 
 --[[/*

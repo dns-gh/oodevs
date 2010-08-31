@@ -30,6 +30,7 @@ node "MIS_Automate_CDT_INF_AppuyerUnFreinage"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eActionMission = self.eActionMission or eActionEnCours
         self.eActionHorsFuseau = self.eActionHorsFuseau or eActionEnCours
         --[[//-----------------------------------------------------------------------------
@@ -87,6 +88,7 @@ node "BEH_Conduite_Automate_INF_AppuyerFreinage"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local selPionsPE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
         local selPionsHOT = S_Cherche_Automate_Filtre_TypePion( selPionsPE, "SectionInfanterie_HOT" )
         for _,x in pairs( selPionsHOT or {} ) do

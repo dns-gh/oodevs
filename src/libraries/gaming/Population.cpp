@@ -35,6 +35,7 @@ Population::Population( const MsgsSimToClient::MsgPopulationCreation& message, C
     , controllers_  ( controllers )
     , converter_    ( converter )
     , type_         ( typeResolver.Get( message.type().id() ) )
+    , nDomination_  ( 0, false )
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.id().id() );

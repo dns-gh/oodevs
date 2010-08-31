@@ -61,6 +61,7 @@ include "Humus/Humus_Melee/Abc/Automates/Common/Gestion pions detruits.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_RC_Automate_Situation, 1, {} )--[[// ---------------------------------------------------------------------
 ]]--[[// CR automates génériques sur eni et situation mission
 ]]--[[// ---------------------------------------------------------------------
@@ -88,7 +89,7 @@ include "Humus/Humus_Melee/Abc/Automates/Common/Gestion pions detruits.bms"
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Seulement pendant une mission
 ]]--[[//-----------------------------------------------------------------------------
-]]if( ( DEC_GetMission( myself ) ~= 0 and DEC_GetMission( myself ) ~= nil ) ) then
+]]if( DEC_GetMission( myself ) ~= nil ) then
             Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
         end
 
@@ -117,6 +118,7 @@ node "BEH_RC_Automate_GererConditionOperationnelle"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Gerer la condition opérationnelle de l'echelon
 ]]--[[//-----------------------------------------------------------------------------

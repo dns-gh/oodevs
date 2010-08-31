@@ -33,6 +33,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         --[[//---------------------------------------------------------------------
@@ -154,6 +155,7 @@ node "BEH_Obs_Pion_Rens_GererObservationDans"
     end,
 
     activate = function( self )
+        local StartActivateOverride = StartActivateOverride
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//---------------------------------------------------------------------
@@ -193,6 +195,7 @@ node "BEH_Obs_Pion_Rens_ActiverObservationDans"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DEC_Geometrie_EstPointDansLocalisation( myself:DEC_Agent_Position(), self._namedParams.zone ) ) then
             Activate( self.activations.ACT_Obs_Rens_ActiverObservationDans, 1, { self._namedParams.zone, } )
         end

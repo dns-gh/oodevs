@@ -38,6 +38,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/souteni
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eCoordonner
         --[[//---------------------------------------------------------------------
 ]]--[[// Init 
@@ -58,7 +59,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/souteni
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion appuis et releve et SE
 ]]--[[//-----------------------------------------------------------------------------
-]]if( ( DEC_GetMission( self._namedParams.uniteAAppuyer ) ~= 0 and DEC_GetMission( self._namedParams.uniteAAppuyer ) ~= nil ) ) then
+]]if( DEC_GetMission( self._namedParams.uniteAAppuyer ) ~= nil ) then
             Activate( self.activations.BEH_CoordDep_Automate_ABC_SeCoordonnerAvecAmi_, 1, { self._namedParams.uniteAAppuyer, false, } )
         else
 do

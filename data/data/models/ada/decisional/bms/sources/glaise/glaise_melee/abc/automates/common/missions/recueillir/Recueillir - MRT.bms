@@ -29,9 +29,10 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/recueil
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.rIterateurPosition = self.rIterateurPosition or 0
         self.listePositions = self.listePositions or {}
-        if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
+        if( #( self._namedParams.selPions ) == 0 ) then
             do return end
         end
 
@@ -42,7 +43,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/recueil
             do
                 --[[// On recupère la LR
 ]]local LR = DEC_GetLima( eTypeLima_LR )
-                if( ( LR == 0 or LR == nil ) ) then
+                if( LR == 0 ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
                                                 self:SendFeedback( eActionImpossible )
@@ -53,7 +54,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/recueil
 ]]                end
 
                 self.listePositions = DEC_Geometrie_CalculerPositionsParRapportALima( LR, 10, #( self._namedParams.selPions ) )
-                if( ( self.listePositions == 0 or self.listePositions == nil ) ) then
+                if( self.listePositions == 0 ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
                                                 self:SendFeedback( eActionImpossible )
@@ -112,9 +113,10 @@ node "BEH_Medo_Automate_ABC_Recueillir_AssignerMissionSurveillerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.rIterateurPosition = self.rIterateurPosition or 0
         self.listePositions = self.listePositions or {}
-        if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
+        if( #( self._namedParams.selPions ) == 0 ) then
             do return end
         end
 
@@ -125,7 +127,7 @@ node "BEH_Medo_Automate_ABC_Recueillir_AssignerMissionSurveillerA"
             do
                 --[[// On recupère la LR
 ]]local LIA = DEC_GetLima( eTypeLima_LIA )
-                if( ( LIA == 0 or LIA == nil ) ) then
+                if( LIA == 0 ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
                                                 self:SendFeedback( eActionImpossible )
@@ -136,7 +138,7 @@ node "BEH_Medo_Automate_ABC_Recueillir_AssignerMissionSurveillerA"
 ]]                end
 
                 self.listePositions = DEC_Geometrie_CalculerPositionsParRapportALima( LIA, 10, #( self._namedParams.selPions ) )
-                if( ( self.listePositions == 0 or self.listePositions == nil ) ) then
+                if( self.listePositions == 0 ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
                                                 self:SendFeedback( eActionImpossible )

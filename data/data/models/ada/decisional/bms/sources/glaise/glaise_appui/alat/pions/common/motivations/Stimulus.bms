@@ -17,7 +17,7 @@ motivation_plugin.emotions = motivation_plugin.emotions or {}
 motivation_plugin.motivations = motivation_plugin.motivations or {}
 
 motivation_plugin.stimuli["STIM_Mission"] = function()
-        if( ( DEC_GetMission( myself ) ~= 0 and DEC_GetMission( myself ) ~= nil ) ) then
+        if( DEC_GetMission( myself ) ~= nil ) then
             SetStimulus( "STIM_Mission", 1 )
         else
             SetStimulus( "STIM_Mission", 0 )

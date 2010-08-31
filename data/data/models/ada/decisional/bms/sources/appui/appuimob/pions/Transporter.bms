@@ -20,6 +20,7 @@ node "MIS_Pion_LOG_TransporterUniteChars"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtat = self.eEtat or eActionEnCours
         self.eEtatInfiltration = self.eEtatInfiltration or eActionEnCours
         self.ePhase = self.ePhase or eTransporter
@@ -44,7 +45,7 @@ node "MIS_Pion_LOG_TransporterUniteChars"
 
         --[[//Check des pions transportable avec le matériel
 ]]self.listePionsATransporter = S_Liste_PionsTransportables( self.listePionsATransporter, false )
-        if( ( #( self.listePionsATransporter ) == 0 or #( self.listePionsATransporter ) == nil ) ) then
+        if( #( self.listePionsATransporter ) == 0 ) then
             do
                 DEC_Trace( "Il n'y a pas de pion héliportable dans la liste passée en argument" )
                 DEC_Warning( eRC_MissionImpossible )

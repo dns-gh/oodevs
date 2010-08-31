@@ -29,6 +29,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         if( ModuleBegins() ) then
@@ -117,6 +118,7 @@ node "BEH_Dep_GEN_Retablir_ReagirFaceAObstacles"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.repObjet = self.repObjet or nil
         self.rDist = self.rDist or 0
         self.bObjetProcheSurItineraire = self.bObjetProcheSurItineraire or false
@@ -155,6 +157,7 @@ node "BEH_Objet_Pion_GEN_ReduireObstacle"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------
 ]]--[[// Validité de l'objet
 ]]--[[//-----------------------------------------------------------------

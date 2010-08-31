@@ -52,12 +52,13 @@ includedFiles["sources/population/milices/pion/Behaviors - Obj.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.locPtMine = self.locPtMine or nil
         self.ptMission = self.ptMission or nil
         if( ModuleBegins() ) then
             do
-                if( ( self._namedParams.locMine == 0 or self._namedParams.locMine == nil ) ) then
+                if( self._namedParams.locMine == nil ) then
                     self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
@@ -65,14 +66,14 @@ includedFiles["sources/population/milices/pion/Behaviors - Obj.bms"] = true
 
                 DEC_Trace( "  installation plan d'obstacle" )
                 self.ptMission = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self._namedParams.locMine )
-                if( ( self.ptMission == 0 or self.ptMission == nil ) ) then
+                if( self.ptMission == nil ) then
                     self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
                 end
 
                 self.locPtMine = DEC_Geometrie_CalculerPositionObstacle( self.ptMission, S_TypeObject_ToString( eTypeObjectBouchonMines ), 800 )
-                if( ( self.locPtMine == 0 or self.locPtMine == nil ) ) then
+                if( self.locPtMine == nil ) then
 --[[// Pour le moment, on fait un bouchon de mines
 ]]                    self:SendFeedback( eActionEffectuee )
                     Halt( self )

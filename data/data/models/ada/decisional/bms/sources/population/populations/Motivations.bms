@@ -38,6 +38,7 @@ node "ActivatedByMOT_Mission"
     end,
 
     activate = function( self )
+        local Activate = Activate
     end,
 
 }
@@ -95,6 +96,7 @@ node "ActivatedByMOT_Riposte"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs
 ]]--[[// -----------------------------------------------------------------------------
@@ -153,6 +155,7 @@ node "ActivatedByMOT_Stationner"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs
 ]]--[[// -----------------------------------------------------------------------------

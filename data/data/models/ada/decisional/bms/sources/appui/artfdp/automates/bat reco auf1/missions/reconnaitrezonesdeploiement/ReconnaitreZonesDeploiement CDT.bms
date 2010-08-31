@@ -30,6 +30,7 @@ includedFiles["sources/appui/artfdp/automates/bat reco auf1/missions/reconnaitre
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init

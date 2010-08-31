@@ -25,6 +25,7 @@ node "MIS_Automate_MRT_INF_Interdire"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eCreationMRT = self.eCreationMRT or eActionEnCours
         self.rN_Position = self.rN_Position or DEC_ListePoints_Size( self._namedParams.mission.pointsAInterdire_ )
         --[[//-----------------------------------------------------------------------------

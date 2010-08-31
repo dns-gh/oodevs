@@ -89,6 +89,9 @@ void MIL_Config::Parse( int argc, char** argv )
 // -----------------------------------------------------------------------------
 void MIL_Config::ReadSessionFile( const std::string& file )
 {
+	setpause_ = 100;
+	setstepmul_ = 200;
+
     xml::xifstream xis( file );
     xis >> xml::start( "session" )
         >> xml::start( "config" )
@@ -118,6 +121,10 @@ void MIL_Config::ReadSessionFile( const std::string& file )
                     >> xml::optional >> xml::attribute( "end-tick", endTick_ )
                     >> xml::optional >> xml::attribute( "paused", bPausedAtStartup_ )
                 >> xml::end
+                >> xml::optional() >> xml::start( "parametresGC" )
+                    >> xml::attribute( "setpause", setpause_ )
+					>> xml::attribute( "setstepmul", setstepmul_ )
+				>> xml::end()
                 >> xml::start( "pathfinder" )
                     >> xml::attribute( "threads", pathFinderThreads_ )
                 >> xml::end

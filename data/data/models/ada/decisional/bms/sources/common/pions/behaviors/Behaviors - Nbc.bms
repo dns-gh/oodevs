@@ -23,6 +23,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion de l'ordre de conduite
 ]]--[[//-----------------------------------------------------------------------------
@@ -58,6 +59,7 @@ node "BEH_Nbc_Recevoir_OrdreInopine"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
         for _,x in pairs( ordres_recus or {} ) do
         local _continue = true
@@ -108,6 +110,7 @@ node "BEH_Nbc_GererAlerteNiv4"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Nbc_MettreTenueProtection, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// Mettre la combi
 ]]--[[//-----------------------------------------------------------------------------

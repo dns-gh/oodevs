@@ -26,6 +26,7 @@ includedFiles["sources/melee/inf/automates/cie vab/missions/semparer/SEmparer MR
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eCreationMRT = self.eCreationMRT or eActionEnCours
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init

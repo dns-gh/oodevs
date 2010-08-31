@@ -110,9 +110,10 @@ node "BEH_Misc_Pion_INF_Default"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_MOT_Pion_INF_GarderSesDistances_GererTransport, GetMotivation( "MOT_GarderSesDistances" ), {} )
         Activate( self.activations.BEH_MOT_Pion_INF_EtrePrudent_GererTransport, GetMotivation( "MOT_EtrePrudent" ), {} )
-        if( ( DEC_GetMission( myself ) ~= 0 and DEC_GetMission( myself ) ~= nil ) ) then
+        if( DEC_GetMission( myself ) ~= nil ) then
             do
                 if( S_Misc_EstMissionAffectee_Generique() ) then
                     Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
@@ -147,6 +148,7 @@ node "BEH_Tir_Pion_INF_TirDebarque"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         local eActionReturn = self.eAction
         Activate( self.activations.ACT_Tir_Pion_INF_TirDebarque, 1, { self._namedParams.ksEni, } )

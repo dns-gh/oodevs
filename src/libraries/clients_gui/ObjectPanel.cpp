@@ -11,7 +11,6 @@
 #include "ObjectPanel.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectType.h"
-#include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/DotationType.h"

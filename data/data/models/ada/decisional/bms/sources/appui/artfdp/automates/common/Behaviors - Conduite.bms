@@ -29,6 +29,7 @@ includedFiles["sources/appui/artfdp/automates/common/Behaviors - Conduite.bms"] 
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionMission = self.eActionMission or eActionEnCours
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion de la sauvegarde de la compagnie
@@ -70,8 +71,9 @@ node "BEH_Situation_Automate_ASS_FinMission"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.lst_Pions_EnTete = self.lst_Pions_EnTete or {}
-        if( ( #( self.lst_Pions_EnTete ) == 0 or #( self.lst_Pions_EnTete ) == nil ) ) then
+        if( #( self.lst_Pions_EnTete ) == 0 ) then
             do
                 self.lst_Pions_EnTete = S_ObtenirTousPionsDe( eEtatEchelon_Premier )
                                 do return end
@@ -127,6 +129,7 @@ node "BEH_Conduite_Automate_ASS_SuivreA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, self._namedParams.pPion, self._namedParams.pAAppuyer, } )
         end
@@ -151,6 +154,7 @@ node "BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             StartActivateOverride( self, self.activations.BEH_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA, 1, { ePhase_CDT, self._namedParams.pPion, self._namedParams.ptZone, } )
         end

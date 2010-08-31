@@ -13,7 +13,6 @@
 #include "clients_kernel/Types.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "protocol/Protocol.h"
 

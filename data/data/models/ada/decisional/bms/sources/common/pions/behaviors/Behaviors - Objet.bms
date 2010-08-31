@@ -20,6 +20,7 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Objet.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.positionInitiale = self.positionInitiale or DEC_Geometrie_CreerPoint()
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init --> sauvegarde position initiale
@@ -76,6 +77,7 @@ node "BEH_Obj_RejoindreEmbossementLibre"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.positionEmbossement = self.positionEmbossement or S_Obj_Position( self._namedParams.embossement )
         --[[//-----------------------------------------------------------------------------
@@ -112,7 +114,7 @@ node "BEH_Obj_RejoindreEmbossementLibre"
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        if( ( self.positionEmbossement ~= 0 and self.positionEmbossement ~= nil ) ) then
+        if( self.positionEmbossement ~= nil ) then
             Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionEmbossement, eProgressionDirect, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
         else

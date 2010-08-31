@@ -33,6 +33,7 @@ includedFiles["sources/melee/inf/pions/groupe te/missions/Harceler.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhaseMission = self.ePhaseMission or eSeMettreEnPlace
         self.ePhase = self.ePhase or eSurveiller
         self.eAction = self.eAction or eActionEnCours
@@ -83,7 +84,7 @@ self.done_BEH_Mission_Pion_INF_Harceler = function( self, _, v ) self.ePhaseMiss
                 --[[// Rejoins la position de replis
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eSeReplier then
-                    if( ( F_Pion_GeteniEnCours( myself ) == 0 or F_Pion_GeteniEnCours( myself ) == nil ) ) then
+                    if( F_Pion_GeteniEnCours( myself ) == nil ) then
                         StartActivateOverride( self, self.activations.BEH_Obj_Pion_VAB_NettoyerObstacle, 1.2, {} )
                     end
 

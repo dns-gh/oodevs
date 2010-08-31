@@ -33,6 +33,7 @@ includedFiles["sources/humus/humus_melee/inf/pions/common/missions/Decrocher_Inf
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         if( ModuleBegins() ) then

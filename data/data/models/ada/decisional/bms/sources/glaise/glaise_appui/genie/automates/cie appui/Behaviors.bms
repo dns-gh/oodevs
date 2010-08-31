@@ -43,6 +43,7 @@ include "glaise/glaise_appui/Genie/Automates/Cie Appui/Missions/Missions.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_RC_Automate_Situation, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// CR
 ]]--[[//-----------------------------------------------------------------------------

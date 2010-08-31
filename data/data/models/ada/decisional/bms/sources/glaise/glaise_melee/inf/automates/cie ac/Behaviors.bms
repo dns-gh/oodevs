@@ -59,6 +59,7 @@ node "BEH_Conduite_Automate_HOT_Defaut"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Gestion des pions detruits		
 ]]Activate( self.activations.BEH_Dispositif_Automate_INF_GererLesPionsDetruits, 1, { true, } )
         Activate( self.activations.BEH_Dispositif_Automate_INF_GererReleve, 1, {} )

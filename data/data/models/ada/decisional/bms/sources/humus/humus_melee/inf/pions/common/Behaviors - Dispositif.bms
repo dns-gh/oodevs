@@ -51,6 +51,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eAction = self.eAction or eActionEnCours
         if( ModuleBegins() ) then
             do
@@ -65,7 +66,7 @@ include "bit.lua"
                     end
                 end
 
-                if( ( self._namedParams.rDelaiPoste == 0 or self._namedParams.rDelaiPoste == nil ) ) then
+                if( self._namedParams.rDelaiPoste == 0 ) then
                     do
                         DEC_Trace( "assert: rDelaiPoste == 0, arret court." )
                                                 self:SendFeedback( eActionEffectuee )
@@ -128,6 +129,7 @@ node "BEH_Obs_Pion_INF_RecoPoint_Copie"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.ptCopie = self.ptCopie or DEC_Geometrie_CreerPoint()
         if( ModuleBegins() ) then
@@ -176,11 +178,12 @@ node "BEH_Obs_Pion_INF_RecoPoint"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.eActionArret = self.eActionArret or eActionEnCours
         if( ModuleBegins() ) then
             do
-                if( ( self._namedParams.pt == 0 or self._namedParams.pt == nil ) ) then
+                if( self._namedParams.pt == 0 ) then
                     self.eAction = eActionEffectuee
                 end
 
@@ -240,6 +243,7 @@ node "BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// --------------------------------------------------------------------
 ]]--[[// On s'eloigne de plus de 300m
 ]]        self.rDelta = self.rDelta or 300
@@ -256,7 +260,7 @@ node "BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu"
 --[[// Si on s'eloigne du point, on arrete simplement la reco
 ]]        end
 
-        if( ( self._namedParams.ptRecoCopie == 0 or self._namedParams.ptRecoCopie == nil ) or not S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ptRecoCopie, self.rDistInit ) ) then
+        if( self._namedParams.ptRecoCopie == 0 or not S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ptRecoCopie, self.rDistInit ) ) then
             do
                 --[[// Destruction de la copie    		
 ]]DEC_Trace( "BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu : halt" )
@@ -304,6 +308,7 @@ node "BEH_Obs_Pion_INF_EnReconnaissance"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionReco = self.eActionReco or eActionEnCours
         --[[// Le point est detruit dans lorsque le thread se termine
 ]]self.ptMissionCopie = self.ptMissionCopie or DEC_Geometrie_CreerPoint()
@@ -360,6 +365,7 @@ node "BEH_Obs_Pion_INF_SurveillerSecteur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         if( self.eAction == eActionEffectuee ) then
             Activate( self.activations.ACT_Info_Trace, 1, { "Surveillance : dispositif installe.", } )
@@ -391,6 +397,7 @@ node "BEH_Delai_Pion_INF_PreparerMission"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
         if( self.eAction == eActionEffectuee ) then

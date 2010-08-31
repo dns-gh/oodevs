@@ -189,7 +189,7 @@ end
 function S_Misc_EstDetruitTactique( )
     local _returnValue = false
     _returnValue = false
-    if( ( DEC_Agent_EtatOpsMajeur() == 0 or DEC_Agent_EtatOpsMajeur() == nil ) ) then
+    if( DEC_Agent_EtatOpsMajeur() == nil ) then
         _returnValue = true
     end
 
@@ -199,7 +199,7 @@ end
 function S_Misc_EstPionDetruitTactique( pion )
     local _returnValue = false
     _returnValue = false
-    if( ( pion:DEC_Agent_EtatOpsMajeur() == 0 or pion:DEC_Agent_EtatOpsMajeur() == nil ) ) then
+    if( pion:DEC_Agent_EtatOpsMajeur() == 0 ) then
         _returnValue = true
     end
 
@@ -244,7 +244,7 @@ function S_Geometrie_LocalisationProche( listeLocalisation )
     local _continue = true
 do
             ptEntreeLocalisation = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( loc )
-            if( ( ptEntreeLocalisation == 0 or ptEntreeLocalisation == nil ) ) then
+            if( ptEntreeLocalisation == 0 ) then
                 do return _returnValue end
             end
 
@@ -288,7 +288,7 @@ end
 function S_Force_DangerSur( repEni )
     local _returnValue = 0
     local rForceDanger = DEC_ConnaissanceAgent_Dangerosite( repEni )
-    if( ( rForceDanger == 0 or rForceDanger == nil ) ) then
+    if( rForceDanger == 0 ) then
         _returnValue = -1
     else
         _returnValue = rForceDanger
@@ -307,7 +307,7 @@ function S_Force_Distance( ksEni )
     local _returnValue = 0
     local positionEni = nil
     positionEni = DEC_ConnaissanceAgent_Position( ksEni )
-    if( ( positionEni == 0 or positionEni == nil ) ) then
+    if( positionEni == 0 ) then
         _returnValue = 0
     else
         _returnValue = S_Force_DistancePt( positionEni )
@@ -326,7 +326,7 @@ function S_Pion_ForceDistance( pion, ksEni )
     local _returnValue = 0
     local positionEni = nil
     positionEni = DEC_ConnaissanceAgent_Position( ksEni )
-    if( ( positionEni == 0 or positionEni == nil ) ) then
+    if( positionEni == 0 ) then
         _returnValue = 0
     else
         _returnValue = S_Pion_ForceDistancePt( pion, positionEni )
@@ -340,7 +340,7 @@ function S_Connaissance_ForceDistance( ksAmi, ksEni )
     local positionEni = nil
     local positionAmi = nil
     positionEni = DEC_ConnaissanceAgent_Position( ksEni )
-    if( ( positionEni == 0 or positionEni == nil ) ) then
+    if( positionEni == 0 ) then
         do
             _returnValue = 0
                         do return _returnValue end
@@ -349,7 +349,7 @@ function S_Connaissance_ForceDistance( ksAmi, ksEni )
     end
 
     positionAmi = DEC_ConnaissanceAgent_Position( ksAmi )
-    if( ( positionAmi == 0 or positionAmi == nil ) ) then
+    if( positionAmi == 0 ) then
         do
             _returnValue = 0
                         do return _returnValue end

@@ -16,6 +16,7 @@ includedFiles["sources/glaise/glaise_appui/genie/pions/Behaviors - Mot.bms"] = t
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//////////////// BMS OPTIM  ///////////////////
 ]]        if( F_Pion_GeteEtatDec( myself ) == eEtatDec_Sauvegarde ) then
             do return end
@@ -45,7 +46,7 @@ elseif switch_1 == eMoral_Moyen
                     --[[//-----------------------------------------------------------------------------
 ]]--[[// En fonction de la mission...  --> idem moral mauvais
 ]]--[[//-----------------------------------------------------------------------------
-]]if( ( DEC_GetMission( myself ) == 0 or DEC_GetMission( myself ) == nil ) ) then
+]]if( DEC_GetMission( myself ) == nil ) then
                         do
                             SetStateVariable( "VE_RapFor", ( 5 - DEC_RapportDeForceLocal() ) )
                             _continue = false

@@ -528,10 +528,7 @@ void MIL_MissionParameterFactory::SetGenObjectListParameter( boost::shared_ptr< 
 // -----------------------------------------------------------------------------
 void MIL_MissionParameterFactory::SetPionListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< DEC_Decision_ABC* >& pionList )
 {
-    std::vector< DEC_RolePion_Decision* > agentList;
-    for( std::vector< DEC_Decision_ABC* >::const_iterator it = pionList.begin(); it != pionList.end(); ++it )
-        agentList.push_back( dynamic_cast<DEC_RolePion_Decision*>( *it ) );
-    boost::shared_ptr< MIL_AgentListParameter > listParam( new MIL_AgentListParameter( agentList ) );
+    boost::shared_ptr< MIL_AgentListParameter > listParam( new MIL_AgentListParameter( pionList ) );
     pMission->SetParameter( parameter, listParam );
 }
 

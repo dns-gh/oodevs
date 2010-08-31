@@ -23,6 +23,7 @@ includedFiles["sources/glaise/glaise_appui/nbc/automates/common/missions/armersi
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         Activate( self.activations.BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// Gen
@@ -62,6 +63,7 @@ node "BEH_Dispositif_Automate_NBC_FaireArmerSite_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.positionSite = self.positionSite or nil
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
@@ -73,7 +75,7 @@ node "BEH_Dispositif_Automate_NBC_FaireArmerSite_"
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion erreur
 ]]--[[//-----------------------------------------------------------------------------
-]]if( ( self.positionSite == 0 or self.positionSite == nil ) ) then
+]]if( self.positionSite == 0 ) then
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { " BEH_Dispositif_Automate_NBC_FaireArmerSite: Localisation invalide", } )
                                 do return end

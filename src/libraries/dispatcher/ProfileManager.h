@@ -92,7 +92,7 @@ private:
     void ReadProfile( xml::xistream& xis );
     static void RegisterRole( const std::string roleName );
 
-    virtual void RegisterIn( directia::Brain& brain );
+    virtual void RegisterIn( directia::brain::Brain& brain );
     void SetAutomatRight( const std::string& profile, unsigned int automat, bool readonly, bool readwrite );
     //@}
 

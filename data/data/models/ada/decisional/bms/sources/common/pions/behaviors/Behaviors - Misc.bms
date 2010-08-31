@@ -24,6 +24,7 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Misc.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x_appui in pairs( F_Pion_GetselUnitesEnAppui( myself ) or {} ) do
         local _continue = true
             Activate( self.activations.ACT_MAJ_EnAppuiPionMobile, 1, { x_appui, } )
@@ -58,6 +59,7 @@ node "BEH_Misc_Pion_DefinirTypeMission"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eTypeContact_Old = self.eTypeContact_Old or F_Pion_GeteTypeContact( myself )
         if( ModuleBegins() ) then
             F_Pion_SeteTypeContact( myself, self._namedParams.eTypeContact )

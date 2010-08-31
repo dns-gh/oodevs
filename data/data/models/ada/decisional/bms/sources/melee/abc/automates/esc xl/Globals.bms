@@ -55,7 +55,7 @@ include "Melee/Abc/Automates/Esc XL/Parameters.bms"
 do
             local pion = x
             local missionPion = DEC_GetMission( pion )
-            if( ( missionPion ~= 0 and missionPion ~= nil ) and missionPion:GetType() == "T_Mission_Pion_ABC_Attaquer" ) then
+            if( missionPion ~= nil and missionPion:GetType() == "T_Mission_Pion_ABC_Attaquer" ) then
                 DIA_PushBack( listePionsAttaquant, pion )
             end
 

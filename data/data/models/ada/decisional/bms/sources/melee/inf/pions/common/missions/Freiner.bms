@@ -37,6 +37,7 @@ node "BEH_Mission_Pion_INF_Freiner"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.mission = self.mission or DEC_GetMission( myself )
         self.ePhase = self.ePhase or ePreparerMission
         self.eAction = self.eAction or eActionEnCours
@@ -164,12 +165,13 @@ node "BEH_Dep_Pion_INF_Freiner_Decrocher"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.ptDepart = self.ptDepart or DEC_Geometrie_CreerPoint()
         self.rDist_Decroche = self.rDist_Decroche or 0
         --[[// Tire les fumigenes		
 ]]--[[// $$$$ JCR: Peut etre a faire ailleurs et autrement
 ]]local eniEnCours = F_Pion_GeteniEnCours( myself )
-        if( ( eniEnCours ~= 0 and eniEnCours ~= nil ) ) then
+        if( eniEnCours ~= nil ) then
             Activate( self.activations.ACT_Tir_INF_FumigeneVersEni, 1, { eniEnCours, } )
         end
 

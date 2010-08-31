@@ -22,6 +22,7 @@ includedFiles["sources/appui/rens/automates/roem/common/missions/appuyer/Appuyer
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         Activate( self.activations.BEH_Mission_Automate_RENS_ROEM_AssignerAppuyerA, 1, { ePhase_MRT, self._namedParams.pionPC, self.mission.positionDeploiement_, self.mission.pointRegroupement_, eEtatEchelon_Premier, } )
     end,

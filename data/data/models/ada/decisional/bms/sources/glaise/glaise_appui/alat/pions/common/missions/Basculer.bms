@@ -24,6 +24,7 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/missions/Basculer.b
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//persistent T_PionModeleDEC  pionPC  = DEC_Pion_PionPCDeAutomate( mission.automatePourBascule_ );
 ]]self.ePhase = self.ePhase or eRejoindrePosition
         self.eEtat = self.eEtat or eActionEnCours

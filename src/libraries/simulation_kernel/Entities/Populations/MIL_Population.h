@@ -60,7 +60,7 @@ class MIL_Population : public MIL_Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army& army, DEC_DataBase& database );
+             MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army& army, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
     virtual ~MIL_Population();
     //@}
 

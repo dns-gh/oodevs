@@ -31,6 +31,7 @@ includedFiles["sources/melee/abc/automates/pel eei/missions/tenir/Tenir - MRT.bm
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------

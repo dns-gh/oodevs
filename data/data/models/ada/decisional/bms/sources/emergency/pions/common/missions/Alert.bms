@@ -31,6 +31,7 @@ includedFiles["sources/emergency/pions/common/missions/Alert.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or eRejoindre
         if( ModuleBegins() ) then
@@ -115,6 +116,7 @@ node "BEH_Dep_Pion_Emergency_OrganizeAlert"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.rIterateur = self.rIterateur or 0
         Activate( self.activations.ACT_RC_PreparationMission, 1, { 1, } )
@@ -177,6 +179,7 @@ node "ACT_Info_ReportPhase"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.lstLocalisations = self.lstLocalisations or {}
         self.eAction = self.eAction or eActionEnCours
         self.bSwitch = self.bSwitch or -1
@@ -294,6 +297,7 @@ node "BEH_Dep_Pion_Emergency_AlertInZone"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.target = self.target or nil
         self.eAction = self.eAction or eActionEnCours
         if( ModuleBegins() ) then

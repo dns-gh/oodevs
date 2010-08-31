@@ -25,10 +25,11 @@ includedFiles["sources/appui/nbc/automates/common/missions/reconnaitrezone/Recon
     end,
 
     activate = function( self )
+        local Activate = Activate
         local mission = DEC_GetMission( myself )
         self.listeZone = self.listeZone or {}
         self.nErrorCode = self.nErrorCode or nil
-        if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
+        if( #( self._namedParams.selPions ) == 0 ) then
             do return end
         end
 

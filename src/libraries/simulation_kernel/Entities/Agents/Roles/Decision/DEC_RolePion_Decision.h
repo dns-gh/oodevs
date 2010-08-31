@@ -1,9 +1,11 @@
 // *****************************************************************************
 //
-// This file is part of a MASA library or program.
-// Refer to the included end-user license agreement for restrictions.
-//
-// Copyright (c) 2004 MASA Group
+// $Created: JVT 2004-08-03 $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h $
+// $Author: Nld $
+// $Modtime: 23/06/05 10:29 $
+// $Revision: 10 $
+// $Workfile: DEC_RolePion_Decision.h $
 //
 // *****************************************************************************
 
@@ -42,12 +44,10 @@ class DEC_RolePion_Decision : public DEC_Decision< MIL_AgentPion >
                             , public network::NetworkUnitMessageNotificationHandler_ABC
                             , private boost::noncopyable
 {
+
 public:
-    //! @name Constructors/Destructor
-    //@{
-             DEC_RolePion_Decision( MIL_AgentPion& pion, DEC_DataBase& database );
+             DEC_RolePion_Decision( MIL_AgentPion& pion, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
     virtual ~DEC_RolePion_Decision();
-    //@}
 
     //! @name CheckPoints
     //@{
@@ -61,6 +61,8 @@ public:
     //@{
     void Clean         ();
 
+    virtual void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission );
+    virtual void StopMissionBehavior ( const boost::shared_ptr< MIL_Mission_ABC > mission );
     virtual void NotifyHasChanged();
     //@}
 
@@ -76,39 +78,40 @@ public:
 
     virtual const std::string& GetDIAType() const;
 
+	virtual int GetRulesOfEngagementState() const;
+
     virtual int GeteEtatDec() const;
     virtual void SeteEtatDec( int value );
-    int GetRulesOfEngagementState() const;
-    int GeteEtatDecPrudence() const;
-    void SeteEtatDecPrudence( int value );
+    virtual int GeteEtatDecPrudence() const;
+    virtual void SeteEtatDecPrudence( int value );
     virtual int GeteEtatLima() const;
     virtual void SeteEtatLima( int value );
-    int GeteEtatNbc() const;
-    void SeteEtatNbc( int value );
-    int GeteEtatDestruction() const;
-    void SeteEtatDestruction( int value );
-    int GeteEtatFeu() const;
-    void SeteEtatFeu( int value );
-    int GeteEtatAmbiance() const;
-    void SeteEtatAmbiance( int value );
-    int GeteEtatRadio() const;
-    void SeteEtatRadio( int value );
-    int GeteEtatRadar() const;
-    void SeteEtatRadar( int value );
-    int GeteEtatDeplacement() const;
-    void SeteEtatDeplacement( int value );
-    int GeteEtatOrdreCoordination() const;
-    void SeteEtatOrdreCoordination( int value );
-    int GeteConsigneTir() const;
-    void SeteConsigneTir( int value );
-    int GeteConsigneTirPopulation() const;
-    void SeteConsigneTirPopulation( int value );
+    virtual int GeteEtatNbc() const;
+    virtual void SeteEtatNbc( int value );
+    virtual int GeteEtatDestruction() const;
+    virtual void SeteEtatDestruction( int value );
+    virtual int GeteEtatFeu() const;
+    virtual void SeteEtatFeu( int value );
+    virtual int GeteEtatAmbiance() const;
+    virtual void SeteEtatAmbiance( int value );
+    virtual int GeteEtatRadio() const;
+    virtual void SeteEtatRadio( int value );
+    virtual int GeteEtatRadar() const;
+    virtual void SeteEtatRadar( int value );
+    virtual int GeteEtatDeplacement() const;
+    virtual void SeteEtatDeplacement( int value );
+    virtual int GeteEtatOrdreCoordination() const;
+    virtual void SeteEtatOrdreCoordination( int value );
+    virtual int GeteConsigneTir() const;
+    virtual void SeteConsigneTir( int value );
+    virtual int GeteConsigneTirPopulation() const;
+    virtual void SeteConsigneTirPopulation( int value );
     virtual int GeteEtatEchelon() const;
     virtual void SeteEtatEchelon( int value );
-    int GeteEtatSoutien() const;
-    void SeteEtatSoutien( int value );
-    int GeteEtatSituationEnnemi() const;
-    void SeteEtatSituationEnnemi( int value );
+    virtual int GeteEtatSoutien() const;
+    virtual void SeteEtatSoutien( int value );
+    virtual int GeteEtatSituationEnnemi() const;
+    virtual void SeteEtatSituationEnnemi( int value );
     virtual int GeteEtatPhaseMission() const;
     virtual void SeteEtatPhaseMission( int value );
     bool GetbOrdreInterrompreMission() const;
@@ -165,13 +168,15 @@ protected:
     //! @name Helpers
     //@{
     virtual void EndCleanStateAfterCrash  ();
-    virtual void RegisterUserFunctions( directia::Brain& brain );
+
+    virtual void RegisterUserFunctions( directia::brain::Brain& brain );
+	virtual void RegisterUserArchetypeFunctions( directia::brain::Brain& brain );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    virtual void RegisterSelf( directia::Brain& brain );
+    virtual void RegisterSelf( directia::brain::Brain& brain );
     //@}
 
     //! @name Functions called from dia
@@ -194,9 +199,12 @@ private:
     template< typename Archive > friend  void load_construct_data( Archive& archive, DEC_RolePion_Decision* role, const unsigned int /*version*/ );
     //@}
 
-private:
-    //! @name Member data
+    //! @name Checkpoint
     //@{
+	//struct sStates;
+    //@}
+
+private:
     // Etat décisionnel
           E_ForceRatioState        nForceRatioState_;
           E_RulesOfEngagementState nRulesOfEngagementState_;
@@ -205,28 +213,33 @@ private:
           E_FireAvailability       nIndirectFireAvailability_;
     const PHY_RoePopulation*       pRoePopulation_; //$$$ à déplacer dans Role_Population ?
 
-    int eEtatDec_;
-    int eEtatDecPrudence_;
-    int eEtatLima_;
-    int eEtatNbc_;
-    int eEtatDestruction_;
-    int eEtatFeu_;
-    int eEtatAmbiance_;
-    int eEtatRadio_;
-    int eEtatRadar_;
-    int eEtatDeplacement_;
-    int eEtatOrdreCoordination_;
-    int eConsigneTir_;
-    int eConsigneTirPopulation_;
-    int eEtatEchelon_;
-    int eEtatSoutien_;
-    int eEtatSituationEnnemi_;
-    int eEtatPhaseMission_;
+	int eEtatEchelon_;
+	int eEtatDec_;
+	int eEtatDecPrudence_;
+	int eEtatLima_;
+	int eEtatNbc_;
+	int eEtatDestruction_;
+	int eEtatFeu_;
+	int eEtatAmbiance_;
+	int eEtatRadio_;
+	int eEtatRadar_;
+	int eEtatDeplacement_;
+	int eEtatOrdreCoordination_;
+	int eConsigneTir_;
+	int eConsigneTirPopulation_;
+	int eEtatSoutien_;
+	int eEtatSituationEnnemi_;
+	int eEtatPhaseMission_;
+	int eTypeContact_;
+	int eNiveauAction_;
+
     bool bOrdreInterrompreMission_;
     bool bOrdreDecrocher_;
     bool bOrdreTenirSurLR_;
     bool bOrdreTenir_;
     bool bPasserSurLC_;
+    bool bDefenseStatique_Mobile_;
+    bool bStateHasChanged_;     // Network
     DEC_Decision_ABC* pionEnEscorte_;
     std::vector< DEC_Decision_ABC* > pionsEnAppui_;
     boost::shared_ptr< DEC_Path_ABC > itMvt_;
@@ -234,16 +247,9 @@ private:
     boost::shared_ptr< DEC_Knowledge_Agent > eniEnCours_;
     std::string missionPrecedente_;
     float rTenir_;
-    int eTypeContact_;
-    int eNiveauAction_;
-    bool bDefenseStatique_Mobile_;
-
-    // Network
-    bool bStateHasChanged_;
 
     std::string              name_;
     DEC_AutomateDecision*    pAutomate_;
-    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_RolePion_Decision )
@@ -252,8 +258,12 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const DEC_RolePion_Decision* role, const unsigned int /*version*/ )
 {
     const DEC_DataBase* const database = &role->database_;
+    unsigned int gcPause = role->gcPause_;
+    unsigned int gcMult = role->gcMult_;
     archive << role->pEntity_
-        << database;
+        << database
+        << gcPause
+        << gcMult;
 }
 
 template< typename Archive >
@@ -261,9 +271,13 @@ void load_construct_data( Archive& archive, DEC_RolePion_Decision* role, const u
 {
     MIL_AgentPion* pion;
     DEC_DataBase* database;
+    unsigned int gcPause;
+    unsigned int gcMult;
     archive >> pion
-        >> database;
-    ::new( role )DEC_RolePion_Decision( *pion, *database );
+        >> database
+        >> gcPause
+        >> gcMult;
+    ::new( role )DEC_RolePion_Decision( *pion, *database, gcPause, gcMult );
 }
 
 #endif // __DEC_RolePion_Decision_h_

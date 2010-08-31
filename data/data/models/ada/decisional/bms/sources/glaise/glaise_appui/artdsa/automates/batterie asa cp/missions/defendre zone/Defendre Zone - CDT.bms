@@ -19,6 +19,7 @@ includedFiles["sources/glaise/glaise_appui/artdsa/automates/batterie asa cp/miss
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Info_Trace, 1, { "Mission Sgpt ASA Roland Carol : Defendre Zone", } )
     end,
 

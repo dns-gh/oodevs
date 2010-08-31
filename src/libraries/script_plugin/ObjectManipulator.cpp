@@ -10,7 +10,7 @@
 #include "script_plugin_pch.h"
 #include "ObjectManipulator.h"
 #include "clients_kernel/ObjectType.h"
-#include <directia/Brain.h>
+#include <directia/brain/Brain.h>
 #include "dispatcher/Object_ABC.h"
 
 using namespace plugins::script;
@@ -38,11 +38,11 @@ ObjectManipulator::~ObjectManipulator()
 // Name: ObjectManipulator::Registrar::RegisterIn
 // Created: SBO 2010-07-13
 // -----------------------------------------------------------------------------
-void ObjectManipulator::Registrar::RegisterIn( directia::Brain& brain )
+void ObjectManipulator::Registrar::RegisterIn( directia::brain::Brain& brain )
 {
-    brain.RegisterFunction( "GetIdentifier", &ObjectManipulator::GetIdentifier );
-    brain.RegisterFunction( "GetName",       &ObjectManipulator::GetName       );
-    brain.RegisterFunction( "GetType",       &ObjectManipulator::GetType       );
+    brain.Register( "GetIdentifier", &ObjectManipulator::GetIdentifier );
+    brain.Register( "GetName", &ObjectManipulator::GetName );
+    brain.Register( "GetType", &ObjectManipulator::GetType );
 }
 
 // -----------------------------------------------------------------------------

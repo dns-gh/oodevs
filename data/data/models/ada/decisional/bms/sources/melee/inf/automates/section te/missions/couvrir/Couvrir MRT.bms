@@ -24,6 +24,7 @@ includedFiles["sources/melee/inf/automates/section te/missions/couvrir/Couvrir M
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eCreationMRT = self.eCreationMRT or eActionEnCours
         self.rN_Position = self.rN_Position or DEC_ListePoints_Size( self._namedParams.mission.objectifs_ )
         --[[//-----------------------------------------------------------------------------

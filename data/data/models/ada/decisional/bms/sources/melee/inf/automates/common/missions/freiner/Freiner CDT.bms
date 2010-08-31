@@ -25,6 +25,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Dispositif_Automate_INF_GererLeDispositifRetrograde_, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// Mission
 ]]--[[//-----------------------------------------------------------------------------
@@ -58,6 +59,7 @@ node "BEH_Conduite_INF_Automate_Freiner_GererLesLC"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local selPionsFr = S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsAvecPC(), "T_Mission_Pion_INF_Freiner" )
         if( DEC_AutomateSuperieur_EstEmbraye() and F_Automat_GeteEtatEchelon( myself ) == eEtatEchelon_Second ) then
 for _,pion in pairs( selPionsFr or {} ) do
@@ -91,6 +93,7 @@ node "BEH_Dispositif_Automate_INF_GererLeDispositifRetrograde_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.positionArrivee = self.positionArrivee or DEC_Geometrie_CalculerPointArrivee()
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Mission aux pions sans missions --> Faire mouvement vers la fin du fuseau 
@@ -164,6 +167,7 @@ node "BEH_CoordDep_Automate_INF_CoordinationRetrograde_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_CoordDep_Automate_INF_CoordonnerJalonnement, 1, {} )--[[// définie dans mission jalonner
 ]]
         Activate( self.activations.BEH_CoordDep_Automate_INF_CoordonnerMouvement, 1, {} )
@@ -190,6 +194,7 @@ node "BEH_CoordDep_Automate_INF_CoordonnerJalonnement"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.pionEnQueue = self.pionEnQueue or nil
         self.resultatCalcul = self.resultatCalcul or nil
         --[[// Persistent car les pions on tj la mission jalonner meme si detruit
@@ -247,6 +252,7 @@ node "BEH_CoordDep_Automate_INF_CoordonnerMouvement"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.resultatCalcul = self.resultatCalcul or nil
         local listePionACoordonner = S_ObtenirPionsOperationnels()
         --[[//---------------------------------------------------------------------
@@ -331,6 +337,7 @@ node "BEH_Conduite_Automate_INF_AppuyerCompromis"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                  do

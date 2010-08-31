@@ -26,9 +26,10 @@ includedFiles["sources/melee/abc/automates/common/missions/tenir/Tenir - MRT.bms
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.listePoint = self.listePoint or {}
         self.rIterateurPoint = self.rIterateurPoint or 0
-        if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
+        if( #( self._namedParams.selPions ) == 0 ) then
             do return end
         end
 
@@ -42,7 +43,7 @@ includedFiles["sources/melee/abc/automates/common/missions/tenir/Tenir - MRT.bms
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion erreur
 ]]--[[//-----------------------------------------------------------------------------
-]]if( ( self.listePoint ~= 0 and self.listePoint ~= nil ) ) then
+]]if( self.listePoint ~= nil ) then
                     do
                         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Assignation des mission une par une au pion (pas simultanément)

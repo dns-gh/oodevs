@@ -12,7 +12,13 @@
 
 namespace directia
 {
-    class ScriptRef;
+    namespace tools
+    {
+        namespace binders
+        {
+            class ScriptRef;
+        }
+    }
 }
 
 namespace plugins
@@ -38,7 +44,7 @@ public:
     //! @name Operations
     //@{
     virtual void Activate( bool ) = 0;
-    virtual void SetTarget( const directia::ScriptRef& function ) = 0;
+    virtual void SetTarget( const directia::tools::binders::ScriptRef& function ) = 0;
     //@}
 };
 

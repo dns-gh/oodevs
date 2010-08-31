@@ -83,6 +83,7 @@ include "Appui/Rens/Pions/Roim/Drone SDTI/Missions/Missions.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//---------------------------------------------------------------------
@@ -132,6 +133,7 @@ node "BEH_Dep_Virtuel_ProgressionVers"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.point, self._namedParams.eTypeProgression, self._namedParams.eTypeIti, } )
     end,
 
@@ -149,6 +151,7 @@ node "BEH_Dep_Virtuel_PreparationAction"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self:SendFeedback( eActionEffectuee )
         do return end
 

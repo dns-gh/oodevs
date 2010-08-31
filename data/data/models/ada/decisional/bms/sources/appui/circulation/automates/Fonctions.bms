@@ -16,7 +16,7 @@ includedFiles["sources/appui/circulation/automates/Fonctions.bms"] = true
     local _continue = true
 do
             local pion = x
-            assert( ( DEC_GetAutomate( pion ) ~= 0 and DEC_GetAutomate( pion ) ~= nil ), "pion.automate_ != 0" )
+            assert( DEC_GetAutomate( pion ) ~= nil, "pion.automate_ != 0" )
             local tPion = DEC_Automate_PionPCDeAutomate( DEC_GetAutomate( pion ) )
             if( pion == tPion ) then
                 do

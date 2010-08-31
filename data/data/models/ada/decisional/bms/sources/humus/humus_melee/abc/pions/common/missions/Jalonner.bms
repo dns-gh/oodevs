@@ -50,6 +50,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.eEtatRecueil = self.eEtatRecueil or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
@@ -177,6 +178,7 @@ node "BEH_Eni_Pion_ABC_JalonnerLesGros"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// On jalonne les unites eni seulement
 ]]--[[//-----------------------------------------------------------------------------
@@ -231,6 +233,7 @@ node "BEH_Eni_Pion_ABC_JalonnementSur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtatPerteContact = self.eEtatPerteContact or eActionEnCours
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Tenir l'eni sous son regard / Vitesse
@@ -273,6 +276,7 @@ node "BEH_Lima_Pion_ABC_Jalonner_GererLimas"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Traiter les points interressants
 ]]--[[//-----------------------------------------------------------------------------
@@ -342,6 +346,7 @@ node "BEH_Dep_Pion_ABC_RejoindreFuseau"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// init
 ]]self.eEtat = self.eEtat or eActionEnCours
         self.positionArrivee = self.positionArrivee or DEC_Geometrie_CalculerEntreeFuseauLaPlusProche()
@@ -402,6 +407,7 @@ node "BEH_Lima_Pion_ABC_Jalonner_PasserSurLC"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
 if( not F_Pion_GetbPasserSurLC( myself ) ) then
                 do
@@ -437,6 +443,7 @@ node "BEH_Lima_Pion_ABC_Jalonner_PasserSurLR"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
 if( not F_Pion_GetbPasserSurLC( myself ) ) then
                 do
@@ -472,6 +479,7 @@ node "BEH_Lima_Pion_ABC_Jalonner_PasserSurLIA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
 if( not F_Pion_GetbPasserSurLC( myself ) ) then
                 do

@@ -31,6 +31,7 @@ includedFiles["sources/population/refugies/pions/common/Behaviors.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_MAJ_EtatDefaut, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// MAJ de l'état DEC par défaut 
 ]]--[[//-----------------------------------------------------------------------------
@@ -61,6 +62,7 @@ node "BEH_Dep_Virtuel_ProgressionVers"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.point, self._namedParams.eTypeProgression, self._namedParams.eTypeIti, } )
     end,
 
@@ -78,6 +80,7 @@ node "BEH_Dep_Virtuel_PreparationAction"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self:SendFeedback( eActionEffectuee )
         do return end
 

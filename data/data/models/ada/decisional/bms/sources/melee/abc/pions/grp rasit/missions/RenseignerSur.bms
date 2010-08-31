@@ -23,6 +23,7 @@ includedFiles["sources/melee/abc/pions/grp rasit/missions/RenseignerSur.bms"] = 
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or nil
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Terminaison
@@ -76,6 +77,7 @@ node "BEH_Mission_Pion_ABC_RASIT_RenseignerSur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.pointARenseigner = self.pointARenseigner or S_Geometrie_BarycentreZone( self._namedParams.mission.zone_ )
@@ -170,6 +172,7 @@ node "BEH_Pion_ABC_RASIT_EnSurveillanceRadarDe"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
             Activate( self.activations.ACT_Obs_Pion_ABC_ActiverRadarDans, 1, { self._namedParams.zone, } )
         end

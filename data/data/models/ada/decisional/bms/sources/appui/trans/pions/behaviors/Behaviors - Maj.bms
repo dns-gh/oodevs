@@ -22,6 +22,7 @@ includedFiles["sources/appui/trans/pions/behaviors/Behaviors - Maj.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_MAJ_EtatOperationnel, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// MAJ etat destruction
 ]]--[[//-----------------------------------------------------------------------------
@@ -51,6 +52,7 @@ node "BEH_MAJ_EtatOperationnel"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Destruction totale --> plus aucune composante
 ]]if( S_Misc_EstDetruitPhysique() ) then
             do

@@ -18,11 +18,11 @@ includedFiles["sources/common/automates/actions/Actions - Conduite.bms"] = true
     end,
 
     select = function( self )
-        if( ( self._namedParams.ptRegroupement == 0 or self._namedParams.ptRegroupement == nil ) ) then
+        if( self._namedParams.ptRegroupement == nil ) then
             do return end
         end
 
-        if( ( F_Pion_GetobjectifEsquive( self._namedParams.pion ) == 0 or F_Pion_GetobjectifEsquive( self._namedParams.pion ) == nil ) ) then
+        if( F_Pion_GetobjectifEsquive( self._namedParams.pion ) == nil ) then
             F_Pion_SetobjectifEsquive( self._namedParams.pion, DEC_Geometrie_CreerPoint() )
         end
 

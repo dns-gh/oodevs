@@ -30,6 +30,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtatOrdreConduite = self.eEtatOrdreConduite or eActionEnCours
         self.positionRegroupement = self.positionRegroupement or nil
         --[[//-------------------------------------------------------------------------
@@ -45,7 +46,7 @@ include "bit.lua"
                     do
                         --[[// Erreur si position site
 ]]local localisationObjet = DEC_ConnaissanceObjet_Localisation( site )
-                        if( ( localisationObjet == 0 or localisationObjet == nil ) ) then
+                        if( localisationObjet == 0 ) then
                             do
                                 DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                                 Halt( self )
@@ -56,7 +57,7 @@ include "bit.lua"
 ]]                        end
 
                         local ptObjet = S_Geometrie_BarycentreZone( localisationObjet )
-                        if( ( ptObjet == 0 or ptObjet == nil ) ) then
+                        if( ptObjet == 0 ) then
                             do
                                 DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                                 Halt( self )
@@ -73,7 +74,7 @@ include "bit.lua"
                 end
 
                 self.positionRegroupement = S_Geometrie_BarycentreZone( self._namedParams.mission.zoneRegroupement_ )
-                if( ( self.positionRegroupement == 0 or self.positionRegroupement == nil ) ) then
+                if( self.positionRegroupement == 0 ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                 Halt( self )
@@ -140,6 +141,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererReconnaissanceDesSites"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-------------------------------------------------------------------------
@@ -195,6 +197,7 @@ node "BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-------------------------------------------------------------------------
@@ -237,6 +240,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererExploitation"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,site in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// On gère ici seulement les sites reconnus
 ]]--[[//-------------------------------------------------------------------------
@@ -289,6 +293,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererRenforcements"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eDeterminerSite
         self.rIterateur = self.rIterateur or 0
         --[[//-------------------------------------------------------------------------
@@ -298,7 +303,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererRenforcements"
         --[[//-------------------------------------------------------------------------
 ]]--[[// Aucun sites encore reconnus
 ]]--[[//-------------------------------------------------------------------------
-]]if( ( #( g_selConnaissanceObs ) == 0 or #( g_selConnaissanceObs ) == nil ) ) then
+]]if( #( g_selConnaissanceObs ) == 0 ) then
             do return end
         end
 
@@ -365,6 +370,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//liste des moyens disponibles dans le sous groupement  
 ]]local selPAA = S_Cherche_Automate_Filtre_TypePionEchelon( DEC_Automate_PionsSansPC(), "GroupePAA", eEtatEchelon_Second )
         local selMLF = S_Cherche_Automate_Filtre_TypePionEchelon( DEC_Automate_PionsSansPC(), "GroupeMLF", eEtatEchelon_Second )
@@ -492,6 +498,7 @@ node "BEH_Mission_Automate_GEN_AssignerRenforcer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self._namedParams.conSite:SetbEstRenforce_( true )
         --[[// MIA : Hack ne pas virer
 ]]F_Pion_SeteEtatEchelon( self._namedParams.pion, eEtatEchelon_Premier )
@@ -519,6 +526,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererUnitesDeuxiemeEchelon"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local rIterateurPionASuivre = 0
         local listePionsPE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
         local listePionsSE = S_ObtenirTousPionsDe( eEtatEchelon_Second )
@@ -574,6 +582,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererFinMission"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------
 ]]--[[// Init
 ]]--[[// Donner l'ordre d'interrompre aux section du génie:
@@ -631,6 +640,7 @@ node "BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
         self.obs = self.obs or nil
         local bOrdreConduiteInterrompre = false
@@ -698,6 +708,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererVariantement"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
         self.obs = self.obs or nil
         for _,x in pairs( --[[//-----------------------------------------------------------------
@@ -747,6 +758,7 @@ node "BEH_Ordre_Automate_GEN_CDT_Varianter"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------
 ]]--[[// Validité
 ]]--[[//-----------------------------------------------------------------
@@ -776,7 +788,7 @@ do
 ]]
         end
 
-        if( ( conSiteOriginal ~= 0 and conSiteOriginal ~= nil ) ) then
+        if( conSiteOriginal ~= 0 ) then
             DIA_Remove( g_selConnaissanceObs, conSiteOriginal )
         end
 

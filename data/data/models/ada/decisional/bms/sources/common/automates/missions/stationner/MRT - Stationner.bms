@@ -32,6 +32,7 @@ includedFiles["sources/common/automates/missions/stationner/MRT - Stationner.bms
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
@@ -102,9 +103,10 @@ node "BEH_Medo_Automate_AssignerStationnerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         self.positionSite = self.positionSite or S_Geometrie_BarycentreZone( self.mission.zoneAttente_ )
-        assert( ( self.positionSite ~= 0 and self.positionSite ~= nil ), "BEH_Medo_Automate_AssignerStationnerA zone arrivée invalide" )
+        assert( self.positionSite ~= 0, "BEH_Medo_Automate_AssignerStationnerA zone arrivée invalide" )
         --[[//---------------------------------------------------------------------
 ]]--[[// Assignation des missions
 ]]--[[// Starté sinon le pointeut T_Point change à chq iteration (donc l'instance

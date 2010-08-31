@@ -17,6 +17,7 @@ includedFiles["sources/population/refugies/automates/refugie/missions/SeRendreVe
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------

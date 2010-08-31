@@ -103,6 +103,7 @@ include "Melee/Abc/Pions/Pel XL/Missions/Missions.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
     end,
 
 --[[// *****************************************************************************
@@ -122,6 +123,7 @@ node "BEH_MAJ_Pion_ABC_EnvieDeSInfiltrer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init / On ne s'esquive pas --> indépendant du moral
 ]]--[[//-----------------------------------------------------------------------------
@@ -153,6 +155,7 @@ node "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Garder ses distances sur enis dangereux
 ]]local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
         for _,repEni in pairs( listeConnaissances or {} ) do
@@ -192,6 +195,7 @@ node "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrerFaceA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.rDistanceEfficace = self.rDistanceEfficace or S_Tir_PorteeMaxPourEtreTireParAgent( self._namedParams.repEni, M_POLY_PH_TIR_ENI_EFFICACE() )
         --[[//Cf. erreur de precision
 ]]self.rDistanceSurete = self.rDistanceSurete or S_Tir_PorteeMaxPourEtreTireParAgent( self._namedParams.repEni, 0.3 ) + 10
@@ -233,6 +237,7 @@ node "BEH_Pion_ABC_Eni_SInfiltrerFaceA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.rDistanceEffective = self.rDistanceEffective or self._namedParams.rDistance + self._namedParams.rDistanceSecurite
         self.eEtat = self.eEtat or eActionEnCours
         self.positionSurete = self.positionSurete or nil
@@ -269,7 +274,7 @@ node "BEH_Pion_ABC_Eni_SInfiltrerFaceA"
                 end
 
                 --[[// Vérification
-]]if( ( self.positionSurete == 0 or self.positionSurete == nil ) ) then
+]]if( self.positionSurete == nil ) then
                     Halt( self )
                     do return end
                 end

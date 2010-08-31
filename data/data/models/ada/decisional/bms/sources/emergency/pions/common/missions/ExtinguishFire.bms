@@ -43,6 +43,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or eSelectionnerFeuAEteindre
         self.fireKnowledge = self.fireKnowledge or 0

@@ -19,6 +19,7 @@ includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Manoeuvre.b
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x in pairs( myself.listePionsCoordination_ or {} ) do
         local _continue = true
 do
@@ -55,6 +56,7 @@ node "BEH_Manoeuvre_Pion_GestionDestruction"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         if( S_Misc_EstDetruitTactique() ) then
             do
@@ -91,6 +93,7 @@ node "BEH_Manoeuvre_Pion_AllerStationner"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.objectif, } )
         Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { self._namedParams.objectif, eProgressionDefaut, eTypeItiInfiltration, } )
@@ -125,6 +128,7 @@ node "BEH_Manoeuvre_Pion_GererRecueil"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Lima_GererLIA, 1, {} )
         Activate( self.activations.BEH_Lima_GererLR, 1, {} )
     end,

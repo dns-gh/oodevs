@@ -39,6 +39,7 @@ node "MIS_Pion_Decrocher"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         if( ModuleBegins() ) then

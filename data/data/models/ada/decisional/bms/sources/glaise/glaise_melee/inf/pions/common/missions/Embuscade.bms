@@ -43,6 +43,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.locEmbuscade = self.locEmbuscade or nil
         self.eAction = self.eAction or eActionEnCours
         self.eActionAbattis = self.eActionAbattis or eActionEnCours
@@ -54,7 +55,7 @@ include "bit.lua"
         if( ModuleBegins() ) then
             do
                 self.locEmbuscade = S_Geometrie_INF_ChercherPositionObstacle( self._namedParams.ptEmbuscade, self._namedParams.eTypeObjet, 500 )
-                if( ( self.locEmbuscade == 0 or self.locEmbuscade == nil ) ) then
+                if( self.locEmbuscade == 0 ) then
                     self.locEmbuscade = DEC_Geometrie_ConvertirPointEnLocalisation( self._namedParams.ptEmbuscade )
                 end
 
@@ -146,7 +147,7 @@ elseif switch_1 == eActiverObstacle then
                         end
                     end
 
-                    if( ( F_Pion_GeteniEnCours( myself ) ~= 0 and F_Pion_GeteniEnCours( myself ) ~= nil ) ) then
+                    if( F_Pion_GeteniEnCours( myself ) ~= 0 ) then
                         do
                             Activate( self.activations.ACT_Info_Trace, 1, { "unite eni se presente bien", } )
                             --[[// Si il est a porte de tir, on lance l'assaut    				    				
@@ -199,6 +200,7 @@ node "BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         --[[// Cree la position d'observation		
 ]]self.ptEmbuscade = self.ptEmbuscade or nil
@@ -265,6 +267,7 @@ node "BEH_Eni_Pion_INF_DetruireEmbuscade"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionDelai = self.eActionDelai or eActionEnCours
         self.eActionObst = self.eActionObst or eActionEnCours
         if( self.eActionDelai == eActionEffectuee ) then

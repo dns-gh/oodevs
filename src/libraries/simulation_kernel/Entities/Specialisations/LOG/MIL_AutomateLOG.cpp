@@ -61,8 +61,8 @@ void load_construct_data( Archive& archive, MIL_AutomateLOG* automat, const unsi
 // Name: MIL_AutomateLOG constructor
 // Created: NLD 2004-12-21
 // -----------------------------------------------------------------------------
-MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database )
-    : MIL_Automate                ( type, nID, parent, xis, database )
+MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
+    : MIL_Automate                ( type, nID, parent, xis, database, gcPause, gcMult )
     , pMaintenanceSuperior_       ( 0 )
     , pMedicalSuperior_           ( 0 )
     , pSupplySuperior_            ( 0 )
@@ -82,8 +82,8 @@ MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int 
 // Name: MIL_AutomateLOG constructor
 // Created: NLD 2007-03-29
 // -----------------------------------------------------------------------------
-MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID, MIL_Automate&  parent, xml::xistream& xis, DEC_DataBase& database )
-    : MIL_Automate                ( type, nID, parent, xis, database )
+MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID, MIL_Automate&  parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
+    : MIL_Automate                ( type, nID, parent, xis, database, gcPause, gcMult )
     , pMaintenanceSuperior_       ( 0 )
     , pMedicalSuperior_           ( 0 )
     , pSupplySuperior_            ( 0 )
@@ -99,7 +99,7 @@ MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int 
     this->RegisterAction( pLogisticAction_ );
 }
 
-MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID)
+MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID )
     : MIL_Automate(type, nID)
     , pMaintenanceSuperior_       ( 0 )
     , pMedicalSuperior_           ( 0 )

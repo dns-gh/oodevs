@@ -40,6 +40,7 @@ node "ActivatedByMOT_Furtivite"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_MOT_Rens_ActiverFurtivite, 1, {} )--[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------

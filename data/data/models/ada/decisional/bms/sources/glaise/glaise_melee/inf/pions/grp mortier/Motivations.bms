@@ -52,6 +52,7 @@ node "ActivatedByMOT_AppliquerLesFeux"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------

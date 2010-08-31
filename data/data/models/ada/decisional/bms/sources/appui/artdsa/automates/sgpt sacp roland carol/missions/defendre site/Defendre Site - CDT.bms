@@ -14,6 +14,7 @@ includedFiles["sources/appui/artdsa/automates/sgpt sacp roland carol/missions/de
     end,
 
     activate = function( self )
+        local Activate = Activate
     end,
 
 }

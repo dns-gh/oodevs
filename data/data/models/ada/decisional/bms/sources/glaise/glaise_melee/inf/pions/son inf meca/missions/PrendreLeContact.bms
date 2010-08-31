@@ -38,6 +38,7 @@ node "MIS_Pion_INF_PrendrePreciserContact"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.eActionOrdre = self.eActionOrdre or eActionEnCours
         self.ePhase = self.ePhase or ePrendreContact
@@ -167,6 +168,7 @@ node "BEH_Mission_Pion_VAB_PrendrePreciserContact"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         self.ksMission = self.ksMission or self.mission.ennemi_
         self.eActionEni = self.eActionEni or eActionEnCours
@@ -175,7 +177,7 @@ node "BEH_Mission_Pion_VAB_PrendrePreciserContact"
 ]]if( self.eActionPreciser == eActionImpossible or self.eActionEni == eActionImpossible ) then
             do
                 DEC_Trace( "Action impossible sur Eni" )
-                if( ( F_Pion_GeteniEnCours( myself ) ~= 0 and F_Pion_GeteniEnCours( myself ) ~= nil ) ) then
+                if( F_Pion_GeteniEnCours( myself ) ~= 0 ) then
                     do return end
                 end
 

@@ -50,6 +50,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 if( ModuleBegins() ) then
             DEC_Trace( "Tir couverture : debut" )
         end
@@ -138,6 +139,7 @@ node "BEH_Feu_Pion_INF_FixerNeutraliser"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         --[[// surete vis a vis des tirs ennemis
 ]]if( ModuleBegins() ) then
@@ -191,6 +193,7 @@ node "BEH_Feu_Pion_INF_TirFixer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         if( ModuleBegins() ) then
             do
@@ -279,6 +282,7 @@ node "BEH_Feu_Pion_INF_TirCouverture_Fixe"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         if( ModuleBegins() ) then
             do
@@ -367,6 +371,7 @@ node "BEH_Feu_Pion_INF_ConduireLesFeux_Sur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.rEtatInitialAvantSerie = self.rEtatInitialAvantSerie or DEC_ConnaissanceAgent_EtatOps( self._namedParams.ksEni )
         self.eAction_Tir = self.eAction_Tir or eActionEnCours
         self.eActionEfficacite = self.eActionEfficacite or eActionEnCours
@@ -472,6 +477,7 @@ node "BEH_Tir_Pion_INF_FaireFeu_Embarque"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.stMsg = self.stMsg or "Distance tir 'embarque' ( " .. FloatToString( GetStateVariable( "VE_Agressivite_Tir" ) ) .. " ) : "
         local eActionReturn = self.eAction
@@ -534,6 +540,7 @@ node "BEH_Tir_Pion_INF_FaireFeu_Debarque"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.stMsg = self.stMsg or "Distance tir 'debarque' ( " .. FloatToString( GetStateVariable( "VE_Agressivite_Tir" ) ) .. " ) : "
         local eActionReturn = self.eAction
@@ -596,6 +603,7 @@ node "BEH_Tir_Pion_INF_FaireFeu"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.stMsg = self.stMsg or "Distance tir ( " .. FloatToString( GetStateVariable( "VE_Agressivite_Tir" ) ) .. " ) : "
         local eActionReturn = self.eAction

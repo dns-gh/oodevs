@@ -27,6 +27,7 @@ includedFiles["sources/appui/genie/pions/missions/Reprendre travaux.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.mission.travail_ ) ) then
             Halt( self )
             do return end
@@ -42,7 +43,7 @@ includedFiles["sources/appui/genie/pions/missions/Reprendre travaux.bms"] = true
                 DEC_Trace( "MIS_Pion_GEN_ReprendreMissionConstruction" )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
                 self.ptObst = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( DEC_ConnaissanceObjet_Localisation( self._namedParams.mission.travail_ ) )
-                if( ( self.ptObst == 0 or self.ptObst == nil ) ) then
+                if( self.ptObst == nil ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                 self:SendFeedback( eActionImpossible )
@@ -157,6 +158,7 @@ node "BEH_Objet_Pion_GEN_ReprendreTravaux"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         --[[//-----------------------------------------------------------------
 ]]--[[// Validité de l'objet

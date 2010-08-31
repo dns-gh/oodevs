@@ -44,6 +44,7 @@ node "ActivatedByMOT_GarderSesDistances"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//VE_RapFor = [0]U[4.8,10]
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
@@ -105,6 +106,7 @@ node "ActivatedByMOT_EtrePrudent"
     end,
 
     activate = function( self )
+        local Activate = Activate
     end,
 
 }
@@ -166,6 +168,7 @@ node "ActivatedByMOT_ManoeuvrerSurEnis"
     end,
 
     activate = function( self )
+        local Activate = Activate
     end,
 
 }
@@ -235,6 +238,7 @@ node "ActivatedByMOT_Manoeuvrer"
     end,
 
     activate = function( self )
+        local Activate = Activate
     end,
 
 }
@@ -299,6 +303,7 @@ node "ActivatedByMOT_TirerSurEnis"
     end,
 
     activate = function( self )
+        local Activate = Activate
     end,
 
 }
@@ -360,6 +365,7 @@ node "ActivatedByMOT_RiposterSurEnis"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -425,6 +431,7 @@ node "ActivatedByMOT_SePoster"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -487,6 +494,7 @@ node "ActivatedByMOT_SeRecompleter"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[//
@@ -554,6 +562,7 @@ node "ActivatedByMOT_PasserEnSilenceRadio"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -616,6 +625,7 @@ node "ActivatedByMOT_PasserEnAlerteDeNiveau4"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -678,6 +688,7 @@ node "ActivatedByMOT_PasserEnTirRestreint"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -740,6 +751,7 @@ node "ActivatedByMOT_PasserEnTirInterdit"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -802,6 +814,7 @@ node "ActivatedByMOT_PasserEnTirLibre"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// si les états tir interdit et tir restreint engendrent une motivation 

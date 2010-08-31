@@ -11,7 +11,7 @@
 #include "IndicatorConditions.h"
 #include "EventCondition.h"
 #include "MiscEvents.h"
-#include <directia/Brain.h>
+#include "directia/brain/Brain.h"
 
 using namespace plugins::script;
 
@@ -38,10 +38,10 @@ IndicatorConditions::~IndicatorConditions()
 // Name: IndicatorConditions::RegisterIn
 // Created: SBO 2009-06-03
 // -----------------------------------------------------------------------------
-void IndicatorConditions::RegisterIn( directia::Brain& brain )
+void IndicatorConditions::RegisterIn( directia::brain::Brain& brain )
 {
-    brain.RegisterObject( "events.indicators", this );
-    brain.RegisterFunction( "IndicatorChanged", &IndicatorConditions::IndicatorChanged );
+    brain[ "events.indicators" ] = this;
+    brain.Register( "IndicatorChanged", &IndicatorConditions::IndicatorChanged );
 }
 
 // -----------------------------------------------------------------------------

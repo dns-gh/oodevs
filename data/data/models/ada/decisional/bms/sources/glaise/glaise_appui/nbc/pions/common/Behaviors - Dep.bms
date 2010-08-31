@@ -43,6 +43,7 @@ includedFiles["sources/glaise/glaise_appui/nbc/pions/common/Behaviors - Dep.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------
@@ -112,6 +113,7 @@ node "BEH_Lima_Pion_NBC_SePosterSurLCA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// init
 ]]self.eEtat = self.eEtat or eActionEnCours
         --[[//-----------------------------------------------------------------------------
@@ -169,6 +171,7 @@ node "BEH_Obs_Pion_NBC_ReconnaitrePoint"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.point = self.point or DEC_Geometrie_CreerPoint()
         self.eEtat = self.eEtat or eActionEnCours
         --[[//-----------------------------------------------------------------------------
@@ -226,6 +229,7 @@ node "BEH_Obs_Pion_NBC_SePosterSurBond"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.point = self.point or DEC_Geometrie_CreerPoint()
         self.eEtat = self.eEtat or eActionEnCours
         --[[//-----------------------------------------------------------------------------

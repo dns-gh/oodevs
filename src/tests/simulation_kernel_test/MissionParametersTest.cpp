@@ -116,7 +116,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentListParameter_ToASN )
     MIL_EffectManager effectManager;
     FixturePion fixture( effectManager );
     StubDEC_Database database;
-    fixture.pPion_->RegisterRole( *new DEC_RolePion_Decision( *fixture.pPion_, database ) );
+    fixture.pPion_->RegisterRole( *new DEC_RolePion_Decision( *fixture.pPion_, database, 100, 100 ) );
     MOCK_EXPECT( entityManager, FindAgentPion ).once().returns( fixture.pPion_.get() );
     MIL_AgentListParameter param( asnIn, entityManager );
     asnIn.Clear();
@@ -140,7 +140,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentParameter_ToASN )
     MIL_EffectManager effectManager;
     FixturePion fixture( effectManager );
     StubDEC_Database database;
-    fixture.pPion_->RegisterRole( *new DEC_RolePion_Decision( *fixture.pPion_, database ) );
+    fixture.pPion_->RegisterRole( *new DEC_RolePion_Decision( *fixture.pPion_, database, 100, 100 ) );
     MOCK_EXPECT( entityManager, FindAgentPion ).once().returns( fixture.pPion_.get() );
     MIL_AgentParameter param( asnIn, entityManager );
     UnitId asnOut;

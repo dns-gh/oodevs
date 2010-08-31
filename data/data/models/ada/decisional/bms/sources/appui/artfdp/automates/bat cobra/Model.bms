@@ -43,7 +43,4 @@ local table = {
     motivation_plugin = motivation_plugin or {},
 }
 local dummyClass = setmetatable( { "dummyClass" }, { __persist = function() end } )
-masalife.brain.knowledge.createKnowledgeImplementation { className = dummyClass }
-masalife.brain.knowledge:registerRole( masalife.brain.knowledge.create( dummyClass, {} ) )
-masalife.brain.knowledge.me.body = masalife.brain.knowledge.create( dummyClass, {} )
 brain "name" ( table )

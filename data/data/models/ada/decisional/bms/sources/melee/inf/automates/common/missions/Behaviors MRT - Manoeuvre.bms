@@ -41,6 +41,7 @@ node "BEH_Medo_Automate_INF_PreparerMission_Manoeuvre"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.selPions = self.selPions or S_ObtenirPionsOperationnels_SansPC()
         self.lstPionsAttaque = self.lstPionsAttaque or {}
         self.lstPionsAppui = self.lstPionsAppui or {}
@@ -92,7 +93,7 @@ node "BEH_Medo_Automate_INF_PreparerMission_Manoeuvre"
                                 --[[// Determine les echelons
 ]]rN_PE_INF = #( sUnites_INF )
                                 rN_PE = Max( #( sUnites_ABC ), rN_PE_INF - Floor( rN_PE_INF / 2 ) )
-                                if( ( self._namedParams.rN_Position ~= 0 and self._namedParams.rN_Position ~= nil ) ) then
+                                if( self._namedParams.rN_Position ~= 0 ) then
                                     rN_PE = Min( self._namedParams.rN_Position, rN_PE )
                                 end
 
@@ -119,7 +120,7 @@ elseif switch_2 == "T_Mission_Automate_INF_Fixer"
 elseif switch_2 == "T_Mission_Automate_INF_Appuyer"
                             or switch_2 == "T_Mission_Automate_INF_Relever" then
                                 rN_PE = #( sUnites_INF ) - Floor( #( sUnites_INF ) / 2 )
-                                if( ( self._namedParams.rN_Position ~= 0 and self._namedParams.rN_Position ~= nil ) ) then
+                                if( self._namedParams.rN_Position ~= 0 ) then
                                     rN_PE = Min( rN_PE, self._namedParams.rN_Position )
                                 end
 
@@ -135,7 +136,7 @@ elseif switch_2 == "T_Mission_Automate_INF_Soutenir"
 ]]--[[//  ? ePhase = eMRT_AffecterFuseaux;
 ]]--[[// Determine les echelons	
 ]]rN_PE = #( sUnites_HOT ) - Floor( #( sUnites_HOT ) / 3 )
-                                if( ( self._namedParams.rN_Position ~= 0 and self._namedParams.rN_Position ~= nil ) ) then
+                                if( self._namedParams.rN_Position ~= 0 ) then
                                     rN_PE = Min( self._namedParams.rN_Position, rN_PE )
                                 end
 
@@ -152,7 +153,7 @@ elseif switch_2 == "T_Mission_Automate_INF_Soutenir"
 --[[// 
 ]]--[[// L'execution de la mission necessite la presence d'un 1er ech
 ]]
-                    if( ( #( self.lstPionsAttaque ) == 0 or #( self.lstPionsAttaque ) == nil ) ) then
+                    if( #( self.lstPionsAttaque ) == 0 ) then
                         do
                             DEC_Trace( "Pas de 1er echelon" )
                             DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
@@ -325,6 +326,7 @@ node "BEH_Medo_Automate_ABC_AssignerReconnaitre"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
 for _,x_abc in pairs( self._namedParams.selPion_ABC or {} ) do
             local _continue = true
@@ -352,6 +354,7 @@ node "BEH_Medo_Automate_INF_AssignerReconnaitre"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
 for _,x_inf in pairs( self._namedParams.selPion_INF or {} ) do
             local _continue = true
@@ -381,6 +384,7 @@ node "BEH_Medo_Automate_Melee_AssignerReconnaitrePtA"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.lstObjectifs = self.lstObjectifs or DEC_Geometrie_CreerListePoints()
         if( ModuleBegins() ) then
             do
@@ -433,6 +437,7 @@ node "BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.pionPC = self.pionPC or DEC_Automate_PionPC()
         if( ModuleBegins() ) then
 for _,x_inf in pairs( self._namedParams.selPions_Mortier or {} ) do
@@ -462,6 +467,7 @@ node "BEH_Medo_Automate_INF_AssignerFixerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 --[[//-------------------------------------------------------------------------
@@ -505,8 +511,9 @@ node "BEH_Medo_Automate_INF_AssignerSemparer_Zone"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ptZone = self.ptZone or S_Geometrie_BarycentreZone( self._namedParams.locZone )
-        if( ( self.ptZone == 0 or self.ptZone == nil ) ) then
+        if( self.ptZone == nil ) then
             do
                 if( ModuleBegins() ) then
                     do
@@ -553,6 +560,7 @@ node "BEH_Medo_Automate_INF_AssignerSemparer_Objectifs"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-------------------------------------------------------------------------
 ]]--[[// Assignement des missions aux differents pions
 ]]--[[//-------------------------------------------------------------------------
@@ -600,8 +608,9 @@ node "BEH_Medo_Automate_INF_AssignerAppuyerAttaque"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.selPionsAppui_PE = self.selPionsAppui_PE or S_ObtenirTousPionsPour( self._namedParams.compagnie, eEtatEchelon_Premier )
-        if( ( #( self._namedParams.selPions_PE ) == 0 or #( self._namedParams.selPions_PE ) == nil ) ) then
+        if( #( self._namedParams.selPions_PE ) == 0 ) then
             do
                 if( ModuleBegins() ) then
                     DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
@@ -618,29 +627,29 @@ node "BEH_Medo_Automate_INF_AssignerAppuyerAttaque"
         if( ModuleBegins() ) then
             do
                 --[[// Si pas de 1er echelon, on cherche un eventuel echelon d'eclairage (appuis de patrouille)
-]]if( ( #( self.selPionsAppui_PE ) == 0 or #( self.selPionsAppui_PE ) == nil ) ) then
+]]if( #( self.selPionsAppui_PE ) == 0 ) then
                     self.selPionsAppui_PE = S_ObtenirTousPionsPour( self._namedParams.compagnie, eEtatEchelon_Eclairage )
                 end
 
                 --[[// Si pas de 1er echelon, on prend le deuxieme
-]]if( ( #( self.selPionsAppui_PE ) == 0 or #( self.selPionsAppui_PE ) == nil ) ) then
+]]if( #( self.selPionsAppui_PE ) == 0 ) then
                     self.selPionsAppui_PE = S_ObtenirTousPionsPour( self._namedParams.compagnie, eEtatEchelon_Second )
                 end
 
                 --[[// Sinon, toutes les unites operationnelles
-]]if( ( #( self.selPionsAppui_PE ) == 0 or #( self.selPionsAppui_PE ) == nil ) ) then
+]]if( #( self.selPionsAppui_PE ) == 0 ) then
                     self.selPionsAppui_PE = S_ObtenirPionsOperationnelsPour( self._namedParams.compagnie )
                 end
 
                 --[[// Sinon, toutes les unites
-]]if( ( #( self.selPionsAppui_PE ) == 0 or #( self.selPionsAppui_PE ) == nil ) ) then
+]]if( #( self.selPionsAppui_PE ) == 0 ) then
                     self.selPionsAppui_PE = DEC_Automate_PionsDeAutomateAvecPC( self._namedParams.compagnie )
                 end
 
             end
         end
 
-        if( ( #( self.selPionsAppui_PE ) == 0 or #( self.selPionsAppui_PE ) == nil ) ) then
+        if( #( self.selPionsAppui_PE ) == 0 ) then
             do
                 if( ModuleBegins() ) then
                     DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
@@ -707,6 +716,7 @@ node "BEH_Medo_Automate_INF_AssignerRelever"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 local selPionARelever = S_ObtenirTousPionsPour( self._namedParams.compagnie, eEtatEchelon_Premier )

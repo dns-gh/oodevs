@@ -55,6 +55,7 @@ include "Humus/Humus_Common/Automates/Missions/Behaviors.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_RC_Automate_Situation, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// CR
 ]]--[[//-----------------------------------------------------------------------------

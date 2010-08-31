@@ -41,13 +41,14 @@ includedFiles["sources/glaise/glaise_melee/abc/pions/common/missions/Fixer.bms"]
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
         self.eEtat = self.eEtat or eActionEnCours
         self.eEtatEniMis = self.eEtatEniMis or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.positionEni = self.positionEni or S_Eni_Position( self._namedParams.mission.uniteAFixer_ )
         --[[// si la position de la connaissance n'est pas valide
-]]if( ( self.positionEni == 0 or self.positionEni == nil ) ) then
+]]if( self.positionEni == 0 ) then
             Halt( self )
             do return end
         end

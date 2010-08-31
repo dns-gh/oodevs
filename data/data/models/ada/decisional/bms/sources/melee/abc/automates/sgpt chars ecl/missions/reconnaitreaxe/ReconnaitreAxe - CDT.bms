@@ -34,6 +34,7 @@ includedFiles["sources/melee/abc/automates/sgpt chars ecl/missions/reconnaitreax
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//---------------------------------------------------------------------

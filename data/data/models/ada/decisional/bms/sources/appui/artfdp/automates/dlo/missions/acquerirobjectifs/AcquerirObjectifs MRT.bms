@@ -23,6 +23,7 @@ includedFiles["sources/appui/artfdp/automates/dlo/missions/acquerirobjectifs/Acq
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
@@ -95,6 +96,7 @@ node "BEH_Medo_Automate_AssignerAcquerirObjectifsA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local rIterateurZones = 0
         local rIterateurUnites = 0
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------

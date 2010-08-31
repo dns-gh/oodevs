@@ -42,6 +42,7 @@ node "MIS_Pion_INF_DetruireEmbuscade"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionPreparation = self.eActionPreparation or eActionEnCours
         self.eActionPos = self.eActionPos or eActionEnCours
         self.eActionEmbarquer = self.eActionEmbarquer or eActionEnCours
@@ -203,6 +204,7 @@ node "BEH_Mission_Pion_VAB_DetruireEmbuscade"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.mission = self.mission or DEC_GetMission( myself )
         self.ePhase = self.ePhase or eRejoindre
         self.eAction = self.eAction or eActionEnCours
@@ -333,6 +335,7 @@ node "BEH_Eni_Pion_VAB_DetruireEmbuscade"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.mission = self.mission or DEC_GetMission( myself )
         self.ptEmbuscade = self.ptEmbuscade or self.mission.positionEmbuscade_
         self.ksEni_Mission = self.ksEni_Mission or self.mission.ennemi_

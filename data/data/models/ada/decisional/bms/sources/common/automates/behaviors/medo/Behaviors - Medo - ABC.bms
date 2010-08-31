@@ -46,6 +46,7 @@ include "Common/Automates/Actions/Medo/Actions - Medo - ABC.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -102,6 +103,7 @@ node "BEH_Mission_Automate_ABC_AssignerAppuyerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -161,6 +163,7 @@ node "BEH_Mission_Automate_ABC_AssignerSemparerZoneA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -216,6 +219,7 @@ node "BEH_Mission_Automate_ABC_AssignerReconnaitreA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -272,6 +276,7 @@ node "BEH_Mission_Automate_ABC_AssignerReconnaitrePtA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -327,6 +332,7 @@ node "BEH_Mission_Automate_ABC_AssignerEclairerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -383,6 +389,7 @@ node "BEH_Mission_Automate_ABC_AssignerEclairerPtA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -439,6 +446,7 @@ node "BEH_Mission_Automate_ABC_AssignerReconnaitrePointA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -494,6 +502,7 @@ node "BEH_Mission_Automate_ABC_AssignerAttaquerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -550,6 +559,7 @@ node "BEH_Mission_Automate_ABC_AssignerReduireA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -606,6 +616,7 @@ node "BEH_Mission_Automate_ABC_AssignerFixerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -662,6 +673,7 @@ node "BEH_Mission_Automate_ABC_AssignerSurveillerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -718,6 +730,7 @@ node "BEH_Mission_Automate_ABC_AssignerControlerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -774,6 +787,7 @@ node "BEH_Mission_Automate_ABC_AssignerBarrerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -830,6 +844,7 @@ node "BEH_Mission_Automate_AssignerArmerPointControleA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -886,6 +901,7 @@ node "BEH_Mission_Automate_ABC_AssignerEscorterA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -942,6 +958,7 @@ node "BEH_Mission_Automate_ABC_AssignerEscorterAutomateA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1000,6 +1017,7 @@ node "BEH_Mission_Automate_ABC_AssignerFreinerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1055,6 +1073,7 @@ node "BEH_Mission_Automate_ABC_AssignerJalonnerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do

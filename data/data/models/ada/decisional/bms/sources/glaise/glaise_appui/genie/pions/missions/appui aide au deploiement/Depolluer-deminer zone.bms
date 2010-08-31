@@ -26,6 +26,7 @@ includedFiles["sources/glaise/glaise_appui/genie/pions/missions/appui aide au de
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or ePreparerMission
         self.ptObst = self.ptObst or nil
@@ -146,6 +147,7 @@ node "BEH_Objet_Pion_GEN_DeminerZone"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local ListObjets = DEC_Connaissances_ObjetsDansZone( self._namedParams.locSite, eTypeObjectBouchonMines, eTypeObjectZoneMineeLineaire, eTypeObjectZoneMineeParDispersion )
         --[[//-----------------------------------------------------------------
 ]]--[[// Pour chaque obstacles de la zone
@@ -172,7 +174,7 @@ do
 ]]
         end
 
-        if( ( rIterateur == 0 or rIterateur == nil ) ) then
+        if( rIterateur == 0 ) then
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "Plus d'obstacles connus dans la zone", } )
                 --[[// pas sûr: peut être laisser "tourner" le comportement si reco en même temps
@@ -214,6 +216,7 @@ node "BEH_Objet_Pion_GEN_Deminer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.positionProcheObjet = self.positionProcheObjet or 0
         --[[//-----------------------------------------------------------------
 ]]--[[// Init

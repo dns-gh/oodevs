@@ -16,6 +16,7 @@ includedFiles["sources/appui/rens/pions/roim/common/Behaviors Drone.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
     end,
 
 --[[// A FAIRE
@@ -101,6 +102,7 @@ node "ACT_Dep_Pion_RENS_VolerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( myself.bMiseEnOeuvre_ ) then
             Activate( self.activations.ACT_RC, 1, { eRC_DroneDisponible, } )
         end

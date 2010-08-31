@@ -29,6 +29,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtatDelai = self.eEtatDelai or eActionEnCours
         if( ModuleBegins() ) then
             do

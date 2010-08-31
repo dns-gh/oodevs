@@ -66,6 +66,7 @@ node "BEH_ASA_Defaut"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         if( ModuleBegins() ) then
             myself.toutesPiecesDisponibles_ = false

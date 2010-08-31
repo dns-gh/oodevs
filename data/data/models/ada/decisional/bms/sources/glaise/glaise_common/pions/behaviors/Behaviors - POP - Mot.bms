@@ -24,6 +24,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local lstPops = DEC_Connaissances_CollisionsPopulations()
         for _,pop in pairs( lstPops or {} ) do
         local _continue = true
@@ -56,6 +57,7 @@ node "BEH_MOT_DecrochageFaceAPopulations"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Pour certaines missions
 ]]if( g_bDesactiveSauvegarde ) then
             do return end
@@ -102,6 +104,7 @@ node "BEH_MOT_PasserEnEmploiForceInterdit"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_ROE_GererEmploiForceInterdit, 1, {} )
     end,
 
@@ -126,6 +129,7 @@ node "BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_ROE_GererMaintienADistanceParMoyensNonLetaux, 1, {} )
     end,
 
@@ -150,6 +154,7 @@ node "BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_ROE_GererDispersionParMoyensDeDefenseActifs, 1, {} )
     end,
 
@@ -174,6 +179,7 @@ node "BEH_MOT_PasserEnArmesLetalesAutorisees"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_ROE_GererArmesLetalesAutorisees, 1, {} )
     end,
 

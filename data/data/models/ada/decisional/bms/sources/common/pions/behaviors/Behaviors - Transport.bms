@@ -38,6 +38,7 @@ include "Common/Pions/Actions/Actions - Transport.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or eTransporterAllerEmbarquer
         self.sUnitesATransporter = self.sUnitesATransporter or S_Liste_PionsTransportables( self._namedParams.unitesATransporter, not self._namedParams.avecMateriel )
@@ -52,7 +53,7 @@ include "Common/Pions/Actions/Actions - Transport.bms"
             end
         end
 
-        if( ( #( self.sUnitesATransporter ) == 0 or #( self.sUnitesATransporter ) == nil ) ) then
+        if( #( self.sUnitesATransporter ) == 0 ) then
             self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
@@ -170,7 +171,7 @@ do
 ]]
                     end
 
-                    if( ( ( #( self.listeUnitesPretes ) ~= 0 and #( self.listeUnitesPretes ) ~= nil ) ) and not attendreUnites ) then
+                    if( ( #( self.listeUnitesPretes ) ~= 0 ) and not attendreUnites ) then
                         do
                             DEC_Transport_AjouterPions( self.listeUnitesPretes, not self._namedParams.avecMateriel )
                             Activate( self.activations.ACT_Transport_Pion_TransportEmbarquer, 1, {} )

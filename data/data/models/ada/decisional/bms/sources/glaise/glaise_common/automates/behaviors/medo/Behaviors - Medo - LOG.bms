@@ -28,13 +28,14 @@ include "Glaise/glaise_common/Automates/Actions/Medo/Actions - Medo - LOG.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 local pointBuffer = nil
                 for _,pion in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
-                        if( ( self._namedParams.positionDeploiement == 0 or self._namedParams.positionDeploiement == nil ) ) then
+                        if( self._namedParams.positionDeploiement == 0 ) then
                             pointBuffer = nil
                         else
                             pointBuffer = DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.positionDeploiement, 200 )
@@ -79,6 +80,7 @@ node "BEH_Mission_Automate_LOG_AssignerSeDeployerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -132,13 +134,14 @@ node "BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesAListe"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 local pointBuffer = nil
                 for _,pion in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
-                        if( ( self._namedParams.positionDeploiement == 0 or self._namedParams.positionDeploiement == nil ) ) then
+                        if( self._namedParams.positionDeploiement == 0 ) then
                             pointBuffer = nil
                         else
                             pointBuffer = DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.positionDeploiement, 200 )
@@ -183,6 +186,7 @@ node "BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -236,13 +240,14 @@ node "BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesAListe"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 local pointBuffer = nil
                 for _,pion in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
-                        if( ( self._namedParams.positionDeploiement == 0 or self._namedParams.positionDeploiement == nil ) ) then
+                        if( self._namedParams.positionDeploiement == 0 ) then
                             pointBuffer = nil
                         else
                             pointBuffer = DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.positionDeploiement, 200 )
@@ -287,6 +292,7 @@ node "BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -340,13 +346,14 @@ node "BEH_Mission_Automate_LOG_AssignerTraiterBlessesAListe"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 local pointBuffer = nil
                 for _,pion in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
-                        if( ( self._namedParams.positionDeploiement == 0 or self._namedParams.positionDeploiement == nil ) ) then
+                        if( self._namedParams.positionDeploiement == 0 ) then
                             pointBuffer = nil
                         else
                             pointBuffer = DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.positionDeploiement, 200 )
@@ -391,6 +398,7 @@ node "BEH_Mission_Automate_LOG_AssignerTraiterBlessesA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -444,13 +452,14 @@ node "BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalAListe"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 local pointBuffer = nil
                 for _,pion in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
-                        if( ( self._namedParams.positionDeploiement == 0 or self._namedParams.positionDeploiement == nil ) ) then
+                        if( self._namedParams.positionDeploiement == 0 ) then
                             pointBuffer = nil
                         else
                             pointBuffer = DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.positionDeploiement, 200 )
@@ -495,6 +504,7 @@ node "BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -548,13 +558,14 @@ node "BEH_Mission_Automate_LOG_AssignerReparerAListe"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 local pointBuffer = nil
                 for _,pion in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
-                        if( ( self._namedParams.positionDeploiement == 0 or self._namedParams.positionDeploiement == nil ) ) then
+                        if( self._namedParams.positionDeploiement == 0 ) then
                             pointBuffer = nil
                         else
                             pointBuffer = DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.positionDeploiement, 200 )
@@ -599,6 +610,7 @@ node "BEH_Mission_Automate_LOG_AssignerReparerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do

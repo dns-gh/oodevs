@@ -56,7 +56,7 @@ end
 ]]function S_DistanceInstallationObstacle( )
     local _returnValue = 0
     _returnValue = 0
-    if( ( DEC_GetMission( myself ) == 0 or DEC_GetMission( myself ) == nil ) ) then
+    if( DEC_GetMission( myself ) == nil ) then
         do return _returnValue end
     end
 

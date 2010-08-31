@@ -26,6 +26,7 @@ includedFiles["sources/appui/artfdp/pions/sam/missions/AssurerMiseEnOeuvre.bms"]
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or eMettreEnOeuvre
         if( ModuleBegins() ) then

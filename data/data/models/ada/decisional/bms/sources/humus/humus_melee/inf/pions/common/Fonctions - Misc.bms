@@ -127,7 +127,7 @@ function S_Eni_Pion_INF_ChercheAppui( )
     _returnValue = 0
     local sPionDemande = DEC_GetCategory( "demande_tir_appui" )
     local rMaxForce = 0
-    if( ( rMaxForce == 0 or rMaxForce == nil ) ) then
+    if( rMaxForce == 0 ) then
         _returnValue = S_Cherche_Pion_INF_EniPercu()
     end
 
@@ -139,7 +139,7 @@ function S_CreerItineraire_PIA( itBase, ptPIA )
     _returnValue = 0
     local ptDernier = S_Dep_PointItineraireDest( itBase )
     local rDist_Dest = DEC_Geometrie_Distance( DEC_Agent_Position(), ptDernier )
-    if( ( ptPIA == 0 or ptPIA == nil ) ) then
+    if( ptPIA == 0 ) then
         do return _returnValue end
     end
 

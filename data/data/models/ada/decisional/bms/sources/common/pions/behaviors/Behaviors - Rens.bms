@@ -20,6 +20,7 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Rens.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Rens_Recevoir_OrdreInopine, 1, {} )--[[// pour anibas 
 ]]
     end,
@@ -45,6 +46,7 @@ node "BEH_Rens_Recevoir_OrdreInopine"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
         for _,x in pairs( ordres_recus or {} ) do
         local _continue = true
@@ -110,6 +112,7 @@ node "BEH_Rens_PasserEnSilenceRadio"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 Activate( self.activations.ACT_Info_Trace, 1, { "Radio communication off", } )
         Activate( self.activations.ACT_Rens_CommuterRadio, 1, {} )--[[// Passer en silence radio
 ]]
@@ -142,6 +145,7 @@ node "BEH_Rens_PasserEnSilenceRadioPartiel"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 Activate( self.activations.ACT_Info_Trace, 1, { "Radio communication off/Can listen not talk", } )
         Activate( self.activations.ACT_Rens_CommuterRadioPartiel, 1, {} )--[[// Passer en silence radio
 ]]
@@ -175,6 +179,7 @@ node "BEH_Rens_PasserEnSilenceRadar"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Passer en silence radio
 ]]        Activate( self.activations.ACT_Pion_Rens_PasserEnSilenceRadar, 1, { self._namedParams.typeRadar, } )
     end,

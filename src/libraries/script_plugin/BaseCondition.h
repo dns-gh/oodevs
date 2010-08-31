@@ -11,9 +11,7 @@
 #define __BaseCondition_h_
 
 #include "Condition_ABC.h"
-#include <directia/ScriptRef.h>
-#include <directia/ScriptRef.inl>
-#include <directia/LuaBinder.h>
+#include "directia/tools/binders/ScriptRef.h"
 
 namespace plugins
 {
@@ -28,6 +26,7 @@ namespace script
 // =============================================================================
 class BaseCondition : public Condition_ABC
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -38,7 +37,7 @@ public:
     //! @name Operations
     //@{
     virtual void Activate( bool );
-    virtual void SetTarget( const directia::ScriptRef& function );
+    virtual void SetTarget( const directia::tools::binders::ScriptRef& function );
     //@}
 
 public:
@@ -68,7 +67,7 @@ private:
     //! @name Member data
     //@{
     bool active_;
-    std::auto_ptr< directia::ScriptRef > function_;
+    std::auto_ptr< directia::tools::binders::ScriptRef > function_;
     //@}
 };
 

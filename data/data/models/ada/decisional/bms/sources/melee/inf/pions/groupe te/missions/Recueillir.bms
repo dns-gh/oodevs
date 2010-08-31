@@ -31,6 +31,7 @@ includedFiles["sources/melee/inf/pions/groupe te/missions/Recueillir.bms"] = tru
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eCurrentPhase = self.eCurrentPhase or ePreparerMission
         self.ePhase = self.ePhase or eSeMettreEnPlace
         self.eAction = self.eAction or eActionEnCours
@@ -167,6 +168,7 @@ node "BEH_Mission_Pion_VAB_Recueillir"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         self.ePhase = self.ePhase or eSeMettreEnPlace
         self.eAction = self.eAction or eActionEnCours

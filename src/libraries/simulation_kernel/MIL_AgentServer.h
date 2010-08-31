@@ -34,7 +34,6 @@ class MIL_CheckPointManager;
 class MIL_EffectManager;
 class MIL_EntityManager;
 class HLA_Federate;
-class MIL_Folk;
 class MIL_ProfilerMgr;
 class MIL_TacticalLineManager;
 class NET_AgentServer;
@@ -102,7 +101,6 @@ public:
     //! @name Accessors
     //@{
     MIL_EntityManager& GetEntityManager() const;
-    MIL_Folk& GetFolkManager() const;
     UrbanModel& GetUrbanModel() const;
     DEC_Workspace& GetWorkspaceDIA() const;
     NET_AgentServer& GetAgentServer() const;
@@ -181,7 +179,6 @@ private:
     MIL_CheckPointManager* pCheckPointManager_;
     NET_AgentServer* pAgentServer_;
     HLA_Federate* pFederate_;
-    MIL_Folk* pFolk_;
     UrbanModel* pUrbanModel_;
     resource::ResourceNetworkModel* pResourceNetworkModel_;
     ProcessMonitor*  pProcessMonitor_;

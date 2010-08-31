@@ -27,6 +27,7 @@ includedFiles["sources/appui/alat/pions/common/missions/AllerSeRecompleter.bms"]
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or eSeRavitailler
         if( ModuleBegins() ) then

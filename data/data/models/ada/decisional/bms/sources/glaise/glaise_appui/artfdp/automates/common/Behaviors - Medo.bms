@@ -28,6 +28,7 @@ node "BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         self.selPions = self.selPions or DEC_Automate_PionsAvecPC()
         self.selPions_ASS_Reco = self.selPions_ASS_Reco or {}
@@ -53,7 +54,7 @@ node "BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement"
 ]]--[[//-----------------------------------------------------------------------------						
 ]]--[[// L'execution de la mission necessite la presence d'un 1er ech
 ]]self.selPions_ASS_Reco = S_Cherche_Automate_Filtre_TypePion( self.selPions, "SectionASS_Reco" )
-                    if( ( #( self.selPions_ASS_Reco ) == 0 or #( self.selPions_ASS_Reco ) == nil ) ) then
+                    if( #( self.selPions_ASS_Reco ) == 0 ) then
                         do
                             DEC_Trace( "Pas de 1er echelon" )
                                                         self:SendFeedback( eActionImpossible )
@@ -182,6 +183,7 @@ node "BEH_Medo_Automate_ASS_AssignerMission_PC"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 --[[//-----------------------------------------------------------------------------
@@ -204,7 +206,7 @@ node "BEH_Medo_Automate_ASS_AssignerMission_PC"
 
                 end
 
-                if( ( pAppui ~= 0 and pAppui ~= nil ) ) then
+                if( pAppui ~= 0 ) then
                     StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_MRT, DEC_Automate_PionPC(), pAppui, } )
                 end
 

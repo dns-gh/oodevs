@@ -209,6 +209,19 @@ unsigned int MIL_Config::GetTimeFactor() const
     return timeFactor_; 
 }
 
+inline
+unsigned int MIL_Config::ReadGCParameter_setPause() const
+{
+	return setpause_;
+}
+
+inline
+unsigned int MIL_Config::ReadGCParameter_setStepMul() const
+{
+	return setstepmul_;
+}
+
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Config::GetEndTick
 // Created: JSR 2010-03-02

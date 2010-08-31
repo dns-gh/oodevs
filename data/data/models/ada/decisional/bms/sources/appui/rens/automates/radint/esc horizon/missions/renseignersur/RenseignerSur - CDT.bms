@@ -17,6 +17,7 @@ includedFiles["sources/appui/rens/automates/radint/esc horizon/missions/renseign
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------

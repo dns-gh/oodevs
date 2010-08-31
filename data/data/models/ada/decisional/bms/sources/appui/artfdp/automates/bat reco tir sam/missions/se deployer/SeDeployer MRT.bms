@@ -33,6 +33,7 @@ includedFiles["sources/appui/artfdp/automates/bat reco tir sam/missions/se deplo
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init

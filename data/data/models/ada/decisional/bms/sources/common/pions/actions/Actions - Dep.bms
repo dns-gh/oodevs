@@ -1,9 +1,6 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/pions/actions/Actions - Dep.bms"] = true
 
-include "bit.lua"
-
-
 --[[// *****************************************************************************
 ]]--[[// ACT_Dep_SeDeplacer
 ]]--[[//
@@ -31,7 +28,7 @@ include "bit.lua"
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
-                assert( ( self._namedParams.it ~= 0 and self._namedParams.it ~= nil ), "ACT_Dep_SeDeplacer it invalide" )
+                assert( self._namedParams.it ~= nil, "ACT_Dep_SeDeplacer it invalide" )
                 self.actionDeplacement = DEC_StartDeplacement( self._namedParams.it )
                 actionCallbacks[ self.actionDeplacement ] = function( arg ) self.eEtatDeplacement = arg end
 
@@ -138,8 +135,7 @@ elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
     end,
 
     select = function( self )
-                assert( self._namedParams.rModulation > 0 and self._namedParams.rModulation <= 1, "ACT_Dep_ModulationVitesse: Modulation incorrecte" )
-        DEC_ModulationVitesseMax( self._namedParams.rModulation )
+                DEC_ModulationVitesseMax( self._namedParams.rModulation )
     end,
 
     deselect = function( self )
@@ -168,8 +164,7 @@ elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
     end,
 
     select = function( self )
-                assert( self._namedParams.rModulation > 0 or self._namedParams.rModulation <= 1, "ACT_Dep_ModulationVitesse: Modulation incorrecte" )
-        DEC_ModulationVitesseCourante( self._namedParams.rModulation )
+                DEC_ModulationVitesseCourante( self._namedParams.rModulation )
     end,
 
     deselect = function( self )

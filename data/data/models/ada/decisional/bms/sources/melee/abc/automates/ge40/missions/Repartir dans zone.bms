@@ -26,6 +26,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Fuseaux PE : melee
 ]]--[[//-----------------------------------------------------------------------------
@@ -80,6 +81,7 @@ node "BEH_GTIA_RepartirPionsDansZones"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DIA_IsListEmpty( self._namedParams.listePions ) ) then
             do return end
         end
@@ -123,6 +125,7 @@ node "BEH_GTIA_RepartirPionsMeleeDansZones"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DIA_IsListEmpty( self._namedParams.listePionsMelee ) ) then
             do return end
         end
@@ -158,6 +161,7 @@ node "BEH_GTIA_AssignerZoneMeleeSuivantTerrain"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Copie
 ]]local zonesTriees = DEC_Geometrie_TrierZonesSelonOuvertureTerrain( self._namedParams.zones )
         local listePionsABC = S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePionsMelee )
@@ -209,6 +213,7 @@ node "BEH_GTIA_AssignerZoneMeleeSuivantEnisDebarques"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local zonesTriees = DEC_Rens_TrierZonesSelonPresenceEnnemisDebarques( self._namedParams.zones )
         local listePionsABC = S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePionsMelee )
         local listePionsINF = S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePionsMelee )
@@ -264,6 +269,7 @@ node "BEH_GTIA_AssignerZoneMeleeSuivantEnisEmbarques"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local zonesTriees = DEC_Connaissances_TrierZonesSelonPresenceEnnemisEmbarques( self._namedParams.zones )
         local listePionsABC = S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePionsMelee )
         local listePionsINF = S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePionsMelee )
@@ -314,9 +320,9 @@ node "ACT_GTIA_AssignerZone"
     end,
 
     select = function( self )
-        if( DIA_GetLocalFakeActuator( self._namedParams.pion ) < GetActivity() ) then
+        if( DIA_GetLocalFakeActuator( "ACT_GTIA_AssignerZone", self._namedParams.pion ) < GetActivity() ) then
             do
-                DIA_SetLocalFakeActuator( self._namedParams.pion, GetActivity() )
+                DIA_SetLocalFakeActuator( "ACT_GTIA_AssignerZone", self._namedParams.pion, GetActivity() )
                 F_Automat_Setzone( self._namedParams.pion, self._namedParams.zone )
             end
         end

@@ -25,6 +25,7 @@ includedFiles["sources/glaise/glaise_appui/genie/automates/cie blindee/missions/
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//---------------------------------------------------------------------
@@ -40,7 +41,7 @@ includedFiles["sources/glaise/glaise_appui/genie/automates/cie blindee/missions/
 ]]--[[// Vérification des moyens
 ]]--[[//---------------------------------------------------------------------
 ]]local listePionsGenie = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
-        if( ( #( listePionsGenie ) == 0 or #( listePionsGenie ) == nil ) ) then
+        if( #( listePionsGenie ) == 0 ) then
             do
                 Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
                                 do return end
@@ -83,6 +84,7 @@ node "BEH_Mission_Automate_GEN_CDT_RetablirItinerairesGererRenforcement"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//---------------------------------------------------------------------
 ]]--[[// Mettre à jour la liste des objets traités --> association à un 
 ]]--[[// T_ConnaissanceObjet_local
@@ -164,6 +166,7 @@ node "BEH_Misc_Automate_GEN_GererRenforcementReductionObstacle"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Renforcement déjà assigné
 ]]if( self._namedParams.objetADetruire:GetpionRenforcement_() ~= nil ) then
             do return end
@@ -243,6 +246,7 @@ node "BEH_Misc_Automate_GEN_GererRenforcementReductionObstaclePour"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Iteration sur les pions en renforcement
 ]]--[[//-------------------------------------------------------------------------

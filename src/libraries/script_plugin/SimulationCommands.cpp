@@ -9,10 +9,11 @@
 
 #include "script_plugin_pch.h"
 #include "SimulationCommands.h"
-#include <directia/Brain.h>
+#include "directia/brain/Brain.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include <MT/MT_Logger/MT_Logger_lib.h>
+#include "MT/MT_Logger/MT_Logger_lib.h"
+
 #include "protocol/simulationsenders.h"
 
 using namespace plugins::script;
@@ -50,15 +51,15 @@ namespace
 // Name: SimulationCommands::RegisterIn
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
-void SimulationCommands::RegisterIn( directia::Brain& brain )
+void SimulationCommands::RegisterIn( directia::brain::Brain& brain )
 {
-    brain.RegisterObject  ( "sim", this );
-    brain.RegisterFunction( "Pause", &SimulationCommands::Pause );
-    brain.RegisterFunction( "Resume", &SimulationCommands::Resume );
-    brain.RegisterFunction( "ChangeTimeFactor", &SimulationCommands::ChangeTimeFactor );
-    brain.RegisterFunction( "CreateUnit", &SimulationCommands::CreateUnit );
-    brain.RegisterFunction( "Engage", &SimulationCommands::Engage );
-    brain.RegisterFunction( "Trace", &::Trace );
+    brain[ "sim" ] = this;
+    brain.Register( "Pause", &SimulationCommands::Pause );
+    brain.Register( "Resume", &SimulationCommands::Resume );
+    brain.Register( "ChangeTimeFactor", &SimulationCommands::ChangeTimeFactor );
+    brain.Register( "CreateUnit", &SimulationCommands::CreateUnit );
+    brain.Register( "Engage", &SimulationCommands::Engage );
+    brain[ "Trace" ] = &::Trace;
 }
 
 // -----------------------------------------------------------------------------

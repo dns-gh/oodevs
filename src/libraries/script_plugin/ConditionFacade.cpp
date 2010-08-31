@@ -12,14 +12,13 @@
 #include "SimulationConditions.h"
 #include "AgentConditions.h"
 #include "AutomatConditions.h"
-#include "ObjectConditions.h"
 #include "PopulationConditions.h"
 #include "EventCondition.h"
 #include "ClientConditions.h"
 #include "ScriptConditions.h"
 #include "IndicatorConditions.h"
 #include "MiscEvents.h"
-#include <directia/Brain.h>
+#include "directia/brain/Brain.h"
 
 using namespace plugins::script;
 
@@ -33,7 +32,6 @@ ConditionFacade::ConditionFacade( kernel::Controller& controller, const kernel::
     Add( new SimulationConditions( controller ) );
     Add( new AgentConditions( controller, converter ) );
     Add( new AutomatConditions( controller ) );
-    Add( new ObjectConditions( controller ) );
     Add( new PopulationConditions( controller, converter ) );
     Add( new ClientConditions( controller, model ) );
     Add( new ScriptConditions( controller ) );
@@ -53,26 +51,23 @@ ConditionFacade::~ConditionFacade()
 // Name: ConditionFacade::RegisterIn
 // Created: AGE 2008-06-25
 // -----------------------------------------------------------------------------
-void ConditionFacade::RegisterIn( directia::Brain& brain )
+void ConditionFacade::RegisterIn( directia::brain::Brain& brain )
 {
-    brain.RegisterObject( "events", this );
-    brain.RegisterFunction( "Once",  &ConditionFacade::Once );
-    brain.RegisterFunction( "Timer", &ConditionFacade::Timer );
+    brain[ "events" ] = this;
+    brain.Register( "Once",  &ConditionFacade::Once );
+    brain.Register( "Timer", &ConditionFacade::Timer );
     CompositeRegistrable::RegisterIn( brain );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ConditionFacade::Once
+// Name: boost::shared_ptr< Condition_ABC > ConditionFacade::Once
 // Created: AGE 2008-06-25
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > ConditionFacade::Once()
 {
     struct Once : public BaseCondition
     {
-        Once() : triggered_( false )
-        {
-            // NOTHING
-        }
+        Once() : triggered_( false ) {}
         virtual void Activate( bool active )
         {
             BaseCondition::Activate( active );
@@ -88,7 +83,7 @@ boost::shared_ptr< Condition_ABC > ConditionFacade::Once()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ConditionFacade::Timer
+// Name: boost::shared_ptr< Condition_ABC > ConditionFacade::Timer
 // Created: AGE 2008-06-25
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > ConditionFacade::Timer( float seconds )
@@ -97,10 +92,8 @@ boost::shared_ptr< Condition_ABC > ConditionFacade::Timer( float seconds )
     {
         Timer( kernel::Controller& controller, float time )
             : SimpleEventCondition( controller )
-            , time_( time )
-        {
-            // NOTHING
-        }
+            , time_( time ){}
+
         virtual void NotifyUpdated( const events::TimeFlowed& time )
         {
             time_ -= time.delta;
@@ -109,5 +102,6 @@ boost::shared_ptr< Condition_ABC > ConditionFacade::Timer( float seconds )
         };
         float time_;
     };
+
     return boost::shared_ptr< Condition_ABC >( new Timer( controller_, seconds ) );
 }

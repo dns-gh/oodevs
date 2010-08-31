@@ -37,6 +37,7 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/son inf meca/missions/Recue
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eCurrentPhase = self.eCurrentPhase or ePreparerMission
         self.ePhase = self.ePhase or eSeMettreEnPlace
         self.eAction = self.eAction or eActionEnCours
@@ -212,6 +213,7 @@ node "BEH_Mission_Pion_VAB_Recueillir"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Mission
 ]]--[[//----------------------------------------------------------------------
 ]]        self.mission = self.mission or DEC_GetMission( myself )
@@ -331,6 +333,7 @@ node "BEH_RC_Pion_VAB_SurveillerPIA"
     end,
 
     activate = function( self )
+        local Activate = Activate
     end,
 
 --[[//	with (  )

@@ -206,17 +206,6 @@ MIL_EntityManager& MIL_AgentServer::GetEntityManager() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentServer::GetEntityManager
-// Created: NLD 2004-08-11
-// -----------------------------------------------------------------------------
-inline
-MIL_Folk& MIL_AgentServer::GetFolkManager() const
-{
-    assert( pFolk_ );
-    return *pFolk_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::UrbanModel
 // Created: SLG 2009-10-11
 // -----------------------------------------------------------------------------

@@ -71,6 +71,7 @@ include "Appui/Trans/Automates/Missions/SeFaireTransporter/CDT - SeFaireTranspor
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DEC_Automate_EstEmbraye() ) then
             do
                 Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )

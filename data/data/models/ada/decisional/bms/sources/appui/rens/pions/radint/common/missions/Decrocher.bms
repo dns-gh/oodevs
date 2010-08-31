@@ -29,6 +29,7 @@ includedFiles["sources/appui/rens/pions/radint/common/missions/Decrocher.bms"] =
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         if( ModuleBegins() ) then

@@ -87,9 +87,9 @@ MIL_MedicalTreatmentType::E_InjuryCategories MIL_Injury_NBC::GetInjuryCategory()
 // Name: MIL_Injury_NBC::GetLifeExpectancy
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-float MIL_Injury_NBC::GetLifeExpectancy( MIL_MedicalTreatmentType::E_InjuryCategories /*injuryCategory*/ ) const
+float MIL_Injury_NBC::GetLifeExpectancy( MIL_MedicalTreatmentType::E_InjuryCategories injuryCategory ) const
 {
-    return MIL_MedicalTreatmentType::Find( injuryID_ )->GetLifeExpectancy( injuryCategory_ );
+    return MIL_MedicalTreatmentType::Find( injuryID_ )->GetLifeExpectancy( injuryCategory );
 }
 
 // -----------------------------------------------------------------------------

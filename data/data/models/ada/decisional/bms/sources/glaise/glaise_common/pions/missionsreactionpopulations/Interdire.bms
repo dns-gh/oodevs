@@ -23,6 +23,7 @@ includedFiles["sources/glaise/glaise_common/pions/missionsreactionpopulations/In
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.objectif = self.objectif or self._namedParams.mission.point_
         self.eEtatAction = self.eEtatAction or eActionEnCours
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, 0.5, } )

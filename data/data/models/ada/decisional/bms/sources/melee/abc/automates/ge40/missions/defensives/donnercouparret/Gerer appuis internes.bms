@@ -24,6 +24,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// On récupère les pions de premier échelons en difficultés 
 ]]local listePEEnDifficultes = S_Cherche_GE_Filtre_EtatSauvegarde( S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ) ) )
         if( DIA_IsListEmpty( listePEEnDifficultes ) ) then
@@ -57,6 +58,7 @@ node "BEH_GTIA_GererAppuiEnDefensePour"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,pion in pairs( self._namedParams.listePEEnDifficultes or {} ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionsPourAppuyerEnDefense, 1, { pion, } )
@@ -88,6 +90,7 @@ node "BEH_GTIA_AssignerMissionsPourAppuyerEnDefense"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// On récupère les pions de second échelons "en mesure de" 
 ]]local listePionsSE = S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second )
         local listePionSEAppui = S_Cherche_GE_Filtre_EnMesureDe( S_Cherche_GE_AutomateOperationnels( listePionsSE ) )
@@ -134,12 +137,12 @@ node "ACT_GTIA_AssignerMissionAppuyerPourDefense"
     end,
 
     select = function( self )
-        --[[/* POUR ACTUATEUR -->*/]]if( DIA_GetLocalFakeActuator( self._namedParams.pionAAppuyer ) < GetActivity() ) then
+        --[[/* POUR ACTUATEUR -->*/]]if( DIA_GetLocalFakeActuator( "ACT_GTIA_AssignerMissionAppuyerPourDefense", self._namedParams.pionAAppuyer ) < GetActivity() ) then
             do
-                DIA_SetLocalFakeActuator( self._namedParams.pionAAppuyer, GetActivity() )
+                DIA_SetLocalFakeActuator( "ACT_GTIA_AssignerMissionAppuyerPourDefense", self._namedParams.pionAAppuyer, GetActivity() )
                 self.bMissionAssignee = self.bMissionAssignee or false
                 --[[// fuseau pas encore assigné
-]]if( ( self._namedParams.fuseau == 0 or self._namedParams.fuseau == nil ) or self.bMissionAssignee ) then
+]]if( self._namedParams.fuseau == nil or self.bMissionAssignee ) then
                     do return end
                 end
 
@@ -153,7 +156,7 @@ node "ACT_GTIA_AssignerMissionAppuyerPourDefense"
                             local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
                             local lima = DEC_GetLima( eTypeLima_LCAR )
                             local listePositions = DEC_Geometrie_CalculerPositionsParRapportALima( lima, 100, 1 )
-                            if( ( listePositions == 0 or listePositions == nil ) ) then
+                            if( listePositions == nil ) then
                                 do
                                     DEC_Trace( "Mission impossible, position impossible" )
                                     _continue = false
@@ -172,7 +175,7 @@ elseif switch_1 == "T_Mission_Automate_INF_DefendreFerme" then
                             local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
                             local lima = DEC_GetLima( eTypeLima_LCAR )
                             local listePositions = DEC_Geometrie_CalculerPositionsParRapportALima( lima, 100, 1 )
-                            if( ( listePositions == 0 or listePositions == nil ) ) then
+                            if( listePositions == nil ) then
                                 do
                                     DEC_Trace( "Mission impossible, position impossible INF" )
                                     _continue = false

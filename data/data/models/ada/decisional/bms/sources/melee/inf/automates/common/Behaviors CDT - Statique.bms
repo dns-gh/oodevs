@@ -30,6 +30,7 @@ node "BEH_Situation_Automate_INF_CadreDefensif_InstallerPC"
     end,
 
     activate = function( self )
+        local Activate = Activate
          do
             local _continue = true
             local switch_1 = --[[// Situation Mission
@@ -69,23 +70,24 @@ node "BEH_Conduite_Automate_INF_AssignerMission_PC"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ptStatique = self.ptStatique or nil
         self.pAppui = self.pAppui or nil
         self.pFoo = self.pFoo or nil
         local selPions_PE = S_ObtenirPionsDe_SansPC( eEtatEchelon_Premier, eEtatDestruction_None )
         local selPions_SE = S_ObtenirTousPionsDe_SansPC( eEtatEchelon_Second )
-        if( ( ModuleBegins() or self.pAppui == 0 or ModuleBegins() or self.pAppui == nil ) ) then
+        if( ModuleBegins() or self.pAppui == nil ) then
             do
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------    			    
-]]if( ( #( selPions_SE ) ~= 0 and #( selPions_SE ) ~= nil ) ) then
+]]if( #( selPions_SE ) ~= 0 ) then
                     self.pAppui = DIA_GetAt( selPions_SE, Floor( #( selPions_SE ) / 2 ) )
                 else
                     self.pAppui = DIA_GetAt( selPions_PE, Floor( #( selPions_PE ) / 2 ) )
                 end
 
-                if( ( self.pAppui == 0 or self.pAppui == nil ) ) then
+                if( self.pAppui == nil ) then
                     do return end
                 end
 

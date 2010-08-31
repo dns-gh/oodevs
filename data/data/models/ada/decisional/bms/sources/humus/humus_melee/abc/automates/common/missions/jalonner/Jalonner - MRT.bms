@@ -35,6 +35,7 @@ includedFiles["sources/humus/humus_melee/abc/automates/common/missions/jalonner/
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-------------------------------------------------------------------------
 ]]--[[// Le fuseau de l'escadron est coupé proportionnellement
 ]]--[[//-------------------------------------------------------------------------

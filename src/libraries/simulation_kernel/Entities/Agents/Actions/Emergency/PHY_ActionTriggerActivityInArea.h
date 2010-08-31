@@ -17,12 +17,6 @@ class MIL_AgentPion;
 class PHY_RoleAction_FolkInfluence;
 class TER_Localisation;
 
-namespace population
-{
-    class Object_ABC;
-}
-
-
 // =============================================================================
 /** @class  PHY_ActionTriggerActivityInArea
     @brief  PHY_ActionTriggerActivityInArea
@@ -58,7 +52,6 @@ private:
     PHY_RoleAction_FolkInfluence&   role_;
     std::string                     activity_;
     double                          influence_;
-    population::Object_ABC*         pObject_;
     //@}
 };
 

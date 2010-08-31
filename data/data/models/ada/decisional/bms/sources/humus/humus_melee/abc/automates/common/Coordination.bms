@@ -66,6 +66,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Info_Automate_Trace, 1, { "***$$$ Activation des coordinations $$$***", } )
         Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerPEAvecSE_, 1, {} )
         Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerPEAvecPEcl_, 1, {} )
@@ -97,6 +98,7 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerPEAvecSE_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listePionsBlindes = S_ObtenirPionsEchelonPremierEtSecond( eEtatDestruction_None )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Inutile si plus de pions
@@ -132,6 +134,7 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerPEcl_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listePionsEclairant = S_ObtenirPionsDe( eEtatEchelon_Eclairage, eEtatDestruction_None )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Inutile si plus de pions
@@ -171,6 +174,7 @@ node "BEH_CoordDep_Automate_ABC_SeCoordonnerAvecAmi_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listePionsACoordonner = S_ObtenirPionsOperationnelsPour( self._namedParams.compagnieAmie )
         Activate( self.activations.BEH_CoordDep_Automate_ABC_ActiverCoordinationAmisSur, 1, { listePionsACoordonner, self._namedParams.bResterAHauteur, } )
     end,
@@ -201,6 +205,7 @@ node "BEH_CoordDep_Automate_ABC_ActiverCoordinationAmisSur"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.resultatCalcul = self.resultatCalcul or nil
         self.bPremierOrdreDonne = self.bPremierOrdreDonne or false
         --[[//-------------------------------------------------------------------------
@@ -241,7 +246,7 @@ do
 --[[// ERREUR // $$$$ MIA 03-11-19: temp?
 ]]                end
 
-                if( ( rDistanceLigne == 0 or rDistanceLigne == nil ) ) then
+                if( rDistanceLigne == 0 ) then
                     do
                         Activate( self.activations.ACT_Info_Automate_Trace, 1, { "-->Impossible de se coordonner avec ami...", } )
                         Activate( self.activations.ACT_Info_Automate_Trace, 1, { "-->L'ami n'a pas de mission??...", } )
@@ -292,6 +297,7 @@ node "BEH_CoordDep_Automate_ABC_ActiverCoordinnationSur"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.resultatCalcul = self.resultatCalcul or nil
         --[[//-------------------------------------------------------------------------
 ]]--[[// Init
@@ -310,7 +316,7 @@ node "BEH_CoordDep_Automate_ABC_ActiverCoordinnationSur"
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Pas de pion en queue
 ]]--[[//-----------------------------------------------------------------------------
-]]if( ( pionEnQueue == 0 or pionEnQueue == nil ) ) then
+]]if( pionEnQueue == 0 ) then
             do return end
         end
 
@@ -365,6 +371,7 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerPEclAvecPE_"
     end,
 
     activate = function( self )
+        local Activate = Activate
     end,
 
 --[[// $$$$ MIA 04-01-27: A faire ?
@@ -391,6 +398,7 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerPEAvecPEcl_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listePionsEclairant = S_ObtenirPionsDe( eEtatEchelon_Eclairage, eEtatDestruction_None )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Inutile si plus de pions
@@ -435,6 +443,7 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerPEAvecPEcl"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.resultatCalcul = self.resultatCalcul or nil
         --[[//-------------------------------------------------------------------------
 ]]--[[// Init
@@ -492,6 +501,7 @@ node "BEH_CoordDep_Automate_ABC_CoordinationRetrograde_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerJalonnement, 1, {} )--[[// définie dans mis jalonner
 ]]
         Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerFreinage, 1, {} )
@@ -520,6 +530,7 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerFreinage"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.resultatCalcul = self.resultatCalcul or nil
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
@@ -622,6 +633,7 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerJalonnement"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.pionEnQueue = self.pionEnQueue or nil
         self.resultatCalcul = self.resultatCalcul or nil
         --[[// Persistent car les pions on tj la mission jalonner meme si detruit
@@ -685,6 +697,7 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerMouvement"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.resultatCalcul = self.resultatCalcul or nil
         local listePionACoordonner = S_ObtenirPionsOperationnels()
         --[[//---------------------------------------------------------------------

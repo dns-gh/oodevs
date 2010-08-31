@@ -81,6 +81,7 @@ include "Appui/Genie/Pions/Missions/Missions.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Mot_Pion_GEN_AffecterVariablesDEtat, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// MAJ VE
 ]]--[[//-----------------------------------------------------------------------------
@@ -136,6 +137,7 @@ node "BEH_Dep_Virtuel_ProgressionVers"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.point, self._namedParams.eTypeProgression, self._namedParams.eTypeIti, } )
     end,
 
@@ -153,6 +155,7 @@ node "BEH_Dep_Virtuel_PreparationAction"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self:SendFeedback( eActionEffectuee )
         do return end
 

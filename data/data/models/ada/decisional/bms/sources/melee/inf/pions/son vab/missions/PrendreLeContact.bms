@@ -38,6 +38,7 @@ node "MIS_Pion_INF_PrendrePreciserContact"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or ePrendreContact
         self.eCurrentPhase = self.eCurrentPhase or eDetruire
@@ -159,6 +160,7 @@ node "BEH_Mission_Pion_VAB_PrendrePreciserContact"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         self.ksMission = self.ksMission or self.mission.ennemi_
         self.eActionEni = self.eActionEni or eActionEnCours

@@ -32,6 +32,7 @@ node "BEH_Situation_Automate_INF_Defaut"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local sComposants = DEC_Automate_PionsSansPC()
         for _,x in pairs( sComposants or {} ) do
         local _continue = true
@@ -94,6 +95,7 @@ node "BEH_Situation_Automate_INF_CadreOffensif"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local sComposants = DEC_Automate_PionsSansPC()
         for _,x in pairs( sComposants or {} ) do
         local _continue = true
@@ -172,8 +174,9 @@ node "BEH_Conduite_Automate_INF_AssignerSemparerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.ptZone = self.ptZone or S_Geometrie_BarycentreZone( self._namedParams.locZone )
-        if( ( self.ptZone == 0 or self.ptZone == nil ) ) then
+        if( self.ptZone == 0 ) then
             self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end

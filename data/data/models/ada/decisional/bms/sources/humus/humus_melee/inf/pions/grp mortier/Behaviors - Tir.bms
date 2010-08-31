@@ -34,6 +34,7 @@ node "BEH_Ordre_Pion_Mortier_AppliquerLesFeux"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         if( ModuleBegins() ) then
             Activate( self.activations.ACT_RC, 1, { eRC_ReceptionOrdreDeFeu, } )
@@ -78,6 +79,7 @@ node "BEH_Tir_Pion_Mortier_AppliquerFeux"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.dirCible = self.dirCible or DEC_Geometrie_CreerDirection( DEC_Agent_Position(), self._namedParams.ptCible )
         if( ModuleBegins() ) then
@@ -161,6 +163,7 @@ node "BEH_Tir_Pion_Mortier_PreparerTirSur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         if( self.eAction == eActionEnCours ) then
             do
@@ -193,6 +196,7 @@ node "BEH_Tir_Pion_INF_TirDebarque"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         local eActionReturn = self.eAction
         Activate( self.activations.ACT_Tir_DirectSur, 1, { self._namedParams.ksEni, 1, } )
@@ -224,6 +228,7 @@ node "BEH_MOT_Pion_Mortier_AppliquerLesFeux"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.rIT = self.rIT or 2
         if( ModuleBegins() ) then
             Activate( self.activations.ACT_RC, 1, { eRC_ReceptionOrdreDeFeu, } )

@@ -33,6 +33,7 @@ node "MIS_Pion_MILICE_PrendreEtTenir"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// --> Tiens lorsque le rapFor passe de 2.5 a 3.5
 ]]        self.ePhase = self.ePhase or eReconnaitre
         if( ModuleBegins() ) then
@@ -103,6 +104,7 @@ node "BEH_Mission_Pion_Milice_PrendreEtTenir"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         self.ePhase = self.ePhase or eReconnaitre
         self.eAction = self.eAction or eActionEnCours
@@ -155,6 +157,7 @@ node "BEH_Dep_Pion_Milice_PrendreEtTenir"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// On cherche une position d'observation
 ]]self.ePhase = self.ePhase or eReconnaitre
         self.eAction = self.eAction or eActionEnCours

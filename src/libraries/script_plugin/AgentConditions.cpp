@@ -12,11 +12,11 @@
 #include "SimpleEntityCondition.h"
 #include "AgentEvents.h"
 #include "AgentManipulator.h"
+#include "directia/brain/Brain.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/AgentKnowledge.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include <directia/Brain.h>
 
 using namespace plugins::script;
 using namespace dispatcher;
@@ -45,25 +45,24 @@ AgentConditions::~AgentConditions()
 // Name: AgentConditions::RegisterIn
 // Created: AGE 2008-06-13
 // -----------------------------------------------------------------------------
-void AgentConditions::RegisterIn( directia::Brain& brain )
+void AgentConditions::RegisterIn( directia::brain::Brain& brain )
 {
-    brain.RegisterObject( "events.agents", this );
-    brain.RegisterFunction( "AgentCreated",            &AgentConditions::AgentCreated );
-    brain.RegisterFunction( "AgentEnters",             &AgentConditions::AgentEnters );
-    brain.RegisterFunction( "KnowledgeEnters",         &AgentConditions::KnowledgeEnters );
-    brain.RegisterFunction( "OperationalStateChanged", &AgentConditions::OperationalStateChanged );
-    brain.RegisterFunction( "MountedStateChanged",     &AgentConditions::MountedStateChanged );
-    brain.RegisterFunction( "ForceRatioChanged",       &AgentConditions::ForceRatioChanged );
-    brain.RegisterFunction( "MissionStarted",          &AgentConditions::MissionStarted );
-    brain.RegisterFunction( "KnowledgeCreated",        &AgentConditions::KnowledgeCreated );
-    brain.RegisterFunction( "KnowledgeCreatedIn",      &AgentConditions::KnowledgeCreatedIn );
-    brain.RegisterFunction( "PerceptionChanged",       &AgentConditions::PerceptionChanged );
+    brain[ "events.agents" ] = this ;
+    brain.Register( "AgentCreated",            &AgentConditions::AgentCreated );
+    brain.Register( "AgentEnters",             &AgentConditions::AgentEnters );
+    brain.Register( "KnowledgeEnters",         &AgentConditions::KnowledgeEnters );
+    brain.Register( "OperationalStateChanged", &AgentConditions::OperationalStateChanged );
+    brain.Register( "ForceRatioChanged",       &AgentConditions::ForceRatioChanged );
+    brain.Register( "MissionStarted",          &AgentConditions::MissionStarted );
+    brain.Register( "KnowledgeCreated",        &AgentConditions::KnowledgeCreated );
+    brain.Register( "KnowledgeCreatedIn",      &AgentConditions::KnowledgeCreatedIn );
+    brain.Register( "PerceptionChanged",       &AgentConditions::PerceptionChanged );
 }
 
 namespace directia
 {
-    template<> inline void UsedByDIA    ( dispatcher::Agent* ) {}
-    template<> inline void ReleasedByDIA( dispatcher::Agent* ) {}
+    template< > inline void UsedByDIA    ( dispatcher::Agent* ) { }
+    template< > inline void ReleasedByDIA( dispatcher::Agent* ) { }
 }
 
 namespace
@@ -74,9 +73,9 @@ namespace
     public:
         Enters( const Zone& zone, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter )
             : SimpleEntityCondition< E >( controller )
-            , zone_     ( ToPolygon( zone ) )
-            , box_      ( zone_.BoundingBox() )
-            , converter_( converter )
+            , zone_      ( ToPolygon( zone ) )
+            , box_       ( zone_.BoundingBox() )
+            , converter_ ( converter )
         {
             // NOTHING
         }
@@ -101,7 +100,7 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentConditions::AgentCreated
+// Name: boost::shared_ptr< Condition_ABC > AgentConditions::AgentCreated
 // Created: SBO 2009-08-19
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > AgentConditions::AgentCreated()
@@ -119,7 +118,7 @@ boost::shared_ptr< Condition_ABC > AgentConditions::AgentEnters( const Zone& zon
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentConditions::KnowledgeEnters
+// Name: boost::shared_ptr< Condition_ABC > AgentConditions::KnowledgeEnters
 // Created: AGE 2008-08-01
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > AgentConditions::KnowledgeEnters( const dispatcher::Zone& zone )
@@ -128,7 +127,7 @@ boost::shared_ptr< Condition_ABC > AgentConditions::KnowledgeEnters( const dispa
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentConditions::KnowledgeCreatedIn
+// Name: boost::shared_ptr< Condition_ABC > AgentConditions::KnowledgeCreatedIn
 // Created: AGE 2008-08-01
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > AgentConditions::KnowledgeCreatedIn( const dispatcher::Zone& zone )
@@ -137,7 +136,7 @@ boost::shared_ptr< Condition_ABC > AgentConditions::KnowledgeCreatedIn( const di
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentConditions::MissionStarted
+// Name: boost::shared_ptr< Condition_ABC > AgentConditions::MissionStarted
 // Created: AGE 2008-06-17
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > AgentConditions::MissionStarted()
@@ -146,7 +145,7 @@ boost::shared_ptr< Condition_ABC > AgentConditions::MissionStarted()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentConditions::OperationalStateChanged
+// Name: boost::shared_ptr< Condition_ABC > AgentConditions::OperationalStateChanged
 // Created: AGE 2008-06-17
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > AgentConditions::OperationalStateChanged()
@@ -155,16 +154,7 @@ boost::shared_ptr< Condition_ABC > AgentConditions::OperationalStateChanged()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentConditions::MountedStateChanged
-// Created: SBO 2010-06-25
-// -----------------------------------------------------------------------------
-boost::shared_ptr< Condition_ABC > AgentConditions::MountedStateChanged()
-{
-    return boost::shared_ptr< Condition_ABC >( new SimpleEntityCondition< events::MountedStateChanged >( controller_ ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentConditions::ForceRatioChanged
+// Name: boost::shared_ptr< Condition_ABC > AgentConditions::ForceRatioChanged
 // Created: SBO 2009-09-29
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > AgentConditions::ForceRatioChanged()
@@ -173,7 +163,7 @@ boost::shared_ptr< Condition_ABC > AgentConditions::ForceRatioChanged()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentConditions::KnowledgeCreated
+// Name: boost::shared_ptr< Condition_ABC > AgentConditions::KnowledgeCreated
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > AgentConditions::KnowledgeCreated()
@@ -182,7 +172,7 @@ boost::shared_ptr< Condition_ABC > AgentConditions::KnowledgeCreated()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentConditions::PerceptionChanged
+// Name: boost::shared_ptr< Condition_ABC > AgentConditions::PerceptionChanged
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > AgentConditions::PerceptionChanged()

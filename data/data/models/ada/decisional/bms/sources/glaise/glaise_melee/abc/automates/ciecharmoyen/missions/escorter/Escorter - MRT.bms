@@ -24,6 +24,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/ciecharmoyen/missions/e
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//---------------------------------------------------------------------
@@ -77,6 +78,7 @@ node "MIS_Automate_MRT_ABC_EscorterUnites"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//---------------------------------------------------------------------

@@ -26,6 +26,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( not S_Analyse_GE_TousPionsDansFuseau( S_Cherche_GE_Filtre_TypeAutomate_Melee( DEC_Automate_AutomatesSubordonnes() ), DEC_Fuseau() ) ) then
             Activate( self.activations.BEH_GTIA_SePosterSurEntreeFuseau, 1, { DEC_Fuseau(), } )
         else
@@ -61,6 +62,7 @@ node "BEH_GTIA_AssurerLaCoordinationInterne"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listePEcl = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Eclairage ) )
         local listePE = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ) )
         local listeSEMelee = S_Cherche_GE_Filtre_TypeAutomate_Melee( S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second ) ) )
@@ -103,6 +105,7 @@ node "BEH_GTIA_SePosterSurEntreeFuseau"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,pion in pairs( S_Cherche_GE_Filtre_PionsDansFuseau( DEC_Automate_AutomatesSubordonnes(), self._namedParams.fuseau ) or {} ) do
         local _continue = true
             Activate( self.activations.ACT_GTIA_Automate_DonnerOrdreAttendre, 1, { pion, } )
@@ -136,6 +139,7 @@ node "BEH_GTIA_AssurerLaCoordinationExterne"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
         for _,ordre in pairs( ordres_recus or {} ) do
         local _continue = true
@@ -182,6 +186,7 @@ node "BEH_GTIA_Automate_Attendre"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.resultatCalcul = self.resultatCalcul or nil
         if( ModuleBegins() ) then
             self.resultatCalcul = DEC_Geometrie_StartCalculAutomateLignesAvantEtArriere( self._namedParams.listePions )
@@ -225,6 +230,7 @@ node "BEH_GTIA_Automate_Poursuivre"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,pion in pairs( self._namedParams.listePions or {} ) do
         local _continue = true
             Activate( self.activations.ACT_GTIA_Automate_DonnerOrdrePoursuivre, 1, { pion, } )
@@ -259,6 +265,7 @@ node "BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMax"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 if( DIA_IsListEmpty( self._namedParams.listePions2 ) ) then
             do return end
         end
@@ -308,6 +315,7 @@ node "BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMin"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 if( DIA_IsListEmpty( self._namedParams.listePions1 ) ) then
             do return end
         end

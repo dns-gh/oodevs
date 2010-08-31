@@ -30,6 +30,7 @@ includedFiles["sources/appui/alat/pions/common/missions/SeFaireDecontaminer.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.eEtat = self.eEtat or eActionEnCours
         self.positionSite = self.positionSite or S_Obj_Position( self._namedParams.mission.siteDecontamination_ )

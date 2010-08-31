@@ -21,6 +21,7 @@ includedFiles["sources/appui/trans/automates/behaviors/Behaviors - Ordre.bms"] =
     end,
 
     activate = function( self )
+        local Activate = Activate
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
         local bOrdreConduiteInterrompre = false
         for _,x in pairs( ordres_recus or {} ) do
@@ -65,6 +66,7 @@ node "BEH_Ordre_Automate_Interrompre_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Le PC peut avoir une mission
 ]]local listePions = DEC_Automate_PionsAvecPC()
         for _,x in pairs( listePions or {} ) do

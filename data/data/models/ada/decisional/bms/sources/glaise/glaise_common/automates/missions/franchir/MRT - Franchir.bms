@@ -31,6 +31,7 @@ includedFiles["sources/glaise/glaise_common/automates/missions/franchir/MRT - Fr
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
@@ -101,6 +102,7 @@ node "BEH_Medo_Automate_AssignerSeFaireFranchirA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         self.positionArrivee = self.positionArrivee or S_Geometrie_BarycentreZone( self.mission.zoneArrivee_ )
         --[[//---------------------------------------------------------------------

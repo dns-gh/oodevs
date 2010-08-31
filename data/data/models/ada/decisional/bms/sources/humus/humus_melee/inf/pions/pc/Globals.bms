@@ -51,7 +51,7 @@ end
 
 function S_CalculerPositionAppui( pion, rDist )
     local _returnValue = nil
-    if( ( F_Pion_GeteTypeContact( myself ) == eTypeContact_Offensif or DEC_GetMission( myself ) == 0 or F_Pion_GeteTypeContact( myself ) == eTypeContact_Offensif or DEC_GetMission( myself ) == nil ) ) then
+    if( F_Pion_GeteTypeContact( myself ) == eTypeContact_Offensif or DEC_GetMission( myself ) == nil ) then
         _returnValue = DEC_Geometrie_CalculerPositionAppui( pion, rDist )
     else
 do

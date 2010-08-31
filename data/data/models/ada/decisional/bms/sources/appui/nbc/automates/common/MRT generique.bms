@@ -37,6 +37,7 @@ includedFiles["sources/appui/nbc/automates/common/MRT generique.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Pions subordonnés à l'Auto
 ]]local selPions = DEC_Automate_PionsAvecPC()
         self.ePhase = self.ePhase or eMRT_DeterminerEchelonsGlobals

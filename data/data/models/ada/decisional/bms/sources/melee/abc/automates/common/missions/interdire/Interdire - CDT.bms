@@ -22,6 +22,7 @@ includedFiles["sources/melee/abc/automates/common/missions/interdire/Interdire -
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.LI = self.LI or DEC_GetLima( eTypeLima_LI )
         --[[// Ajout MIA ada
 ]]self.LR = self.LR or DEC_GetLima( eTypeLima_LR )--[[//-----------------------------------------------------------------------------

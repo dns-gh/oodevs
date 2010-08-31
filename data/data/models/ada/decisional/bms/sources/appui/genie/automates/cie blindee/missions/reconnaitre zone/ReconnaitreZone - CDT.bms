@@ -27,6 +27,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//---------------------------------------------------------------------
@@ -42,7 +43,7 @@ include "bit.lua"
 ]]--[[// Vérification des moyens
 ]]--[[//---------------------------------------------------------------------
 ]]local listePionsGenie = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
-        if( ( #( listePionsGenie ) == 0 or #( listePionsGenie ) == nil ) ) then
+        if( #( listePionsGenie ) == 0 ) then
             do
                 Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
                                 do return end
@@ -79,6 +80,7 @@ node "BEH_Conduite_Automate_GEN_RecoZoneDeploiement_GererSE_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion pions détruit
 ]]--[[//-----------------------------------------------------------------------------

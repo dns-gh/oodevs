@@ -41,7 +41,7 @@ public:
     //@{
     struct Registrar : public dispatcher::Registrable_ABC
     {
-        virtual void RegisterIn( directia::Brain& brain );
+        virtual void RegisterIn( directia::brain::Brain& brain );
     };
     void UsedByDIA() {}
     void ReleasedByDIA() {}

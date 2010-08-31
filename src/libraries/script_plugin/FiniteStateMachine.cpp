@@ -11,7 +11,7 @@
 #include "FiniteStateMachine.h"
 #include "Event.h"
 #include "Condition_ABC.h"
-#include <directia/Brain.h>
+#include "directia/brain/Brain.h"
 #include <boost/bind.hpp>
 
 using namespace plugins::script;
@@ -20,14 +20,14 @@ using namespace plugins::script;
 // Name: FiniteStateMachine constructor
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
-FiniteStateMachine::FiniteStateMachine( directia::Brain& brain )
-    : state_( "start" )
+FiniteStateMachine::FiniteStateMachine( directia::brain::Brain& brain )
+    : state_   ( "start" )
 {
-    brain.RegisterObject  ( "fsm", this );
-    brain.RegisterFunction( "DeclareEvent", &FiniteStateMachine::DeclareEvent );
-    brain.RegisterFunction( "CurrentState", &FiniteStateMachine::CurrentState );
-    brain.RegisterFunction( "ChangeState",  &FiniteStateMachine::ChangeState  );
-    brain.RegisterFunction( "Deactivate",   &FiniteStateMachine::Deactivate   );
+    brain[ "fsm" ] = this;
+    brain.Register( "DeclareEvent", &FiniteStateMachine::DeclareEvent );
+    brain.Register( "CurrentState", &FiniteStateMachine::CurrentState );
+    brain.Register( "ChangeState",  &FiniteStateMachine::ChangeState  );
+    brain.Register( "Deactivate",   &FiniteStateMachine::Deactivate   );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +43,7 @@ FiniteStateMachine::~FiniteStateMachine()
 // Name: FiniteStateMachine::DeclareEvent
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
-void FiniteStateMachine::DeclareEvent( boost::shared_ptr< Condition_ABC > condition, const std::vector< std::string >& states, const directia::ScriptRef& function )
+void FiniteStateMachine::DeclareEvent( boost::shared_ptr< Condition_ABC > condition, const std::vector< std::string >& states, const directia::tools::binders::ScriptRef& function )
 {
     events_.push_back( new Event( condition, states, function ) );
     events_.back().ChangeState( state_ );
@@ -76,3 +76,4 @@ void FiniteStateMachine::Deactivate()
 {
     std::for_each( events_.begin(), events_.end(), boost::bind( &Event::Deactivate, _1 ) );
 }
+

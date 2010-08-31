@@ -32,6 +32,7 @@ includedFiles["sources/glaise/glaise_appui/artdsa/pions/section asa cp/behaviors
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( myself.toutesPiecesDisponibles_ ) then
             do
                 Activate( self.activations.BEH_Eni_Pion_ASA_InterceptionBalistique_Direct, 1, { self._namedParams.ennemi, self._namedParams.niveauPerception, 1, self._namedParams.pH, self._namedParams.vitesseProjectile, self._namedParams.sePosterEnAttendant, } )
@@ -68,6 +69,7 @@ node "BEH_Eni_Pion_ASA_GererEniDefendreZone"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x in pairs( S_ConnaissancesEnnemiesVivantesPercuesVolantes() or {} ) do
         local _continue = true
 do
@@ -102,6 +104,7 @@ node "BEH_Eni_Pion_ASA_GererEniDefendreSite"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x in pairs( S_ConnaissancesEnnemiesVivantesPercuesVolantes() or {} ) do
         local _continue = true
 do
@@ -131,6 +134,7 @@ node "BEH_Eni_Pion_ASA_RolandCarol_GererEniSurveiller"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x in pairs( S_ConnaissancesEnnemiesVivantesPercuesVolantes() or {} ) do
         local _continue = true
 do

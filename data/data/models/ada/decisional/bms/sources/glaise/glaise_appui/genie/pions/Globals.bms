@@ -88,7 +88,7 @@ end
 
     _returnValue = false
     local fTailleSite = DEC_ConnaissanceObjet_LargeurSiteFranchissement( site, eValid )
-    if( ( fTailleSite == 0 or fTailleSite == nil ) or eValid == eRequeteInvalide ) then
+    if( fTailleSite == 0 or eValid == eRequeteInvalide ) then
         do return _returnValue end
     end
 
@@ -121,7 +121,7 @@ end
                 _continue = false
                         cases_switch_1[1] = true
 elseif switch_1 == eFranchissement_Discontinu then
-                if( ( #( selMLF ) + #( selEFA ) + #( selPFM ) == 0 or #( selMLF ) + #( selEFA ) + #( selPFM ) == nil ) ) then
+                if( #( selMLF ) + #( selEFA ) + #( selPFM ) == 0 ) then
                     _returnValue = false
                 end
 
@@ -171,7 +171,7 @@ function S_ObjetsPlanifiesAvecTC2( travaux )
 do
             if( DEC_GenObject_Type( camp ) == eTypeObjectCampPrisonniers or eTypeObjectCampRefugies ) then
                 do
-                    if( ( DEC_GenObject_TC2( camp ) == 0 or DEC_GenObject_TC2( camp ) == nil ) ) then
+                    if( DEC_GenObject_TC2( camp ) == nil ) then
                         do
                             _returnValue = false
                                                         do return _returnValue end

@@ -50,6 +50,7 @@ include "glaise/glaise_Appui/Alat/Automates/Common/Behaviors/Behaviors - Rc.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.listePionsAvecPC = self.listePionsAvecPC or {}
         self.listePionsAvecPC = DEC_Automate_PionsAvecPC()
         --[[//netoyage des connaissances
@@ -80,7 +81,7 @@ include "glaise/glaise_Appui/Alat/Automates/Common/Behaviors/Behaviors - Rc.bms"
 ]]--[[// Gestion de l'ordre de conduite Silence Radio/radar
 ]]--[[// ---------------------------------------------------------------------
 ]]
-                if( ( DEC_GetMission( myself ) ~= 0 and DEC_GetMission( myself ) ~= nil ) ) then
+                if( DEC_GetMission( myself ) ~= nil ) then
                     do
                         Activate( self.activations.BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau, 1, {} )--[[// -----------------------------------------------------------------
 ]]--[[// Ajout des plots dans mon fuseau si j'ai une mission

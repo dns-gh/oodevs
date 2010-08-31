@@ -52,6 +52,7 @@ node "BEH_Defaut"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_MAJ_EtatDefaut, 1, {} )--[[// MAJ de l'état DEC par défaut 
 ]]--[[//-------------------------------------------------------------------------
 ]]
@@ -106,6 +107,7 @@ node "BEH_Mot_AffecterVariablesDEtat"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//////////////// BMS OPTIM  ///////////////////
 ]]        if( F_Pion_GeteEtatDec( myself ) == eEtatDec_Sauvegarde ) then
             do return end
@@ -187,6 +189,7 @@ node "BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ptTir = self.ptTir or nil
         self.eAction = self.eAction or eActionEnCours
         if( self.eAction == eActionEnCours ) then
@@ -230,6 +233,7 @@ node "BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         if( self.eAction == eActionEffectuee ) then
             self:SendFeedback( eActionEffectuee )
@@ -260,6 +264,7 @@ node "BEH_MAJ_Pion_ASS_TirDefaut"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 --[[/*
@@ -308,6 +313,7 @@ node "BEH_Dep_Virtuel_ProgressionVers"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.point, self._namedParams.eTypeProgression, self._namedParams.eTypeIti, } )
     end,
 
@@ -321,6 +327,7 @@ node "BEH_Dep_Virtuel_PreparationAction"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self:SendFeedback( eActionEffectuee )
         do return end
 

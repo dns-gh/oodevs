@@ -11,10 +11,31 @@
 #include "Script.h"
 #include "FiniteStateMachine.h"
 #include "dispatcher/Registrable_ABC.h"
-#include <MT/MT_Logger/MT_Logger_lib.h>
-#include <directia/Brain.h>
+#include "directia/brain/Brain.h"
+#include "MT/MT_Logger/MT_Logger_lib.h"
 
 using namespace plugins::script;
+
+
+namespace
+{
+
+directia::brain::Brain* CreateBrain( const std::string& file )
+{
+    std::string path( file );
+    std::size_t lookHere = 0;
+    std::size_t foundHere;
+    while( ( foundHere = path.find( "\\", lookHere ) ) != std::string::npos )
+    {
+        path.replace( foundHere, 1, "/" );
+        lookHere = foundHere + 1;
+    }
+    foundHere = path.find_last_of( "/" );
+    std::string workingDirectory = ( foundHere == std::string::npos ) ? "." : path.substr( 0, foundHere );
+    std::string brainInit = std::string( "brain={file='" ) + path + "',type='brain'}plugins={} cwd='" + workingDirectory + "'";
+    return new directia::brain::Brain( brainInit );
+}
+}
 
 // -----------------------------------------------------------------------------
 // Name: Script constructor
@@ -22,11 +43,11 @@ using namespace plugins::script;
 // -----------------------------------------------------------------------------
 Script::Script( const std::string& file, dispatcher::Registrable_ABC& registrables )
     : file_ ( file )
-    , brain_( new directia::Brain( file, "brain" ) )
+    , brain_( CreateBrain( file ) )
     , fsm_  ( new FiniteStateMachine( *brain_ ) )
 {
     registrables.RegisterIn( *brain_ );
-    brain_->GetScriptFunction( "Start" )();
+    (*brain_)[ "Start" ]();
 }
 
 // -----------------------------------------------------------------------------

@@ -44,6 +44,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or ePreparerMission
         self.listePionsASuivre = self.listePionsASuivre or {}
@@ -270,6 +271,7 @@ node "Pion_ALAT_IMEX_GererTransport"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listePionsDetruits = {}
         local listePionsAvecBlesses = {}
         self.eEtat = self.eEtat or eActionEnCours

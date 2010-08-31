@@ -31,6 +31,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.bRenforceAutomate = self.bRenforceAutomate or self._namedParams.mission.unite_:DEC_Agent_EstPC()
@@ -68,7 +69,7 @@ elseif switch_1 == eRejoindrePosition then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     --[[// Progression
 ]]--[[// si mission donnée par automate apres renforcement par anibas
-]]if( ( DEC_Agent_AutomateEstEmbraye() or self.bRenforceAutomate or self._namedParams.mission.lieuRenforcement_ == 0 or DEC_Agent_AutomateEstEmbraye() or self.bRenforceAutomate or self._namedParams.mission.lieuRenforcement_ == nil ) ) then
+]]if( DEC_Agent_AutomateEstEmbraye() or self.bRenforceAutomate or self._namedParams.mission.lieuRenforcement_ == nil ) then
                         Activate( self.activations.BEH_Dep_Suivre, 1, { self._namedParams.mission.unite_, 100, } )
                     else
 do
@@ -128,6 +129,7 @@ node "BEH_Dep_Pion_GEN_RenforcerSurPosition"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.unite:DEC_Agent_Position() ) < 800 ) then
             Activate( self.activations.ACT_Misc_Pion_GEN_Renforcer, 1, { self._namedParams.unite, self._namedParams.bRenforceAutomate, } )
         end

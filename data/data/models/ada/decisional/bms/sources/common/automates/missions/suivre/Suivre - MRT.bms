@@ -23,6 +23,7 @@ includedFiles["sources/common/automates/missions/suivre/Suivre - MRT.bms"] = tru
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
@@ -93,6 +94,7 @@ node "BEH_Mission_Automate_AssignerFaireMouvement"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
 for _,pion in pairs( self._namedParams.listePions or {} ) do
             local _continue = true

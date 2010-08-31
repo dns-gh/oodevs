@@ -56,6 +56,7 @@ node "BEH_Dep_Pion_INF_Appuyer"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eAction = self.eAction or eActionEnCours
         self.eActionSuivre = self.eActionSuivre or eActionEnCours
         self.eCurrentPhase = self.eCurrentPhase or eSuivreUnite
@@ -110,6 +111,7 @@ node "BEH_Dep_Pion_INF_GererPhaseAppuyer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.eActionSuivi = self.eActionSuivi or eActionEnCours
         self.ePhase = self.ePhase or eSuivreUnite

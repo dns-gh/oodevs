@@ -44,6 +44,7 @@ node "BEH_Dispositif_Pion_VAB_InstallationDefensive"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 --[[//-----------------------------------------------------------------------------

@@ -35,6 +35,7 @@ includedFiles["sources/glaise/glaise_appui/rens/automates/common/Gestion pions d
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listePionsDetruits = S_ObtenirPionsDetruitsEchelonPremierEtEclairage()
         for _,x in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Revoir la place du pion dans le dispositif et le relever eventuellement

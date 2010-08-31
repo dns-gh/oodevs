@@ -39,6 +39,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or ePreparerMission
         self.eEtat = self.eEtat or eActionEnCours
         if( ModuleBegins() ) then
@@ -132,6 +133,7 @@ node "BEH_Dep_ProgressionAvecEscortePossibleSur"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.ePhase = self.ePhase or eCreerItineraire
         self.eEtatObstacle = self.eEtatObstacle or eActionEnCours
         self.eEtat = self.eEtat or eActionEnCours
@@ -165,7 +167,7 @@ elseif switch_1 == eProgresser then
 ]]--[[// GESTION ESCORTE
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Un pion veut nous escorter
-]]if( ( myself.pionEnEscorte_ ~= 0 and myself.pionEnEscorte_ ~= nil ) ) then
+]]if( myself.pionEnEscorte_ ~= 0 ) then
                         do
                             --[[// Attendre l'unité si distance supérieur à 1 km
 ]]if( not self.bAttenteEffectuee and DEC_Geometrie_Distance( DEC_Agent_Position(), myself.pionEnEscorte_:DEC_Agent_Position() ) > 1000 ) then

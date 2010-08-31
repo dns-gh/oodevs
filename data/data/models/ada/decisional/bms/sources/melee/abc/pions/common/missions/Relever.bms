@@ -39,6 +39,7 @@ includedFiles["sources/melee/abc/pions/common/missions/Relever.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.positionPionARelever = self.positionPionARelever or self._namedParams.mission.uniteARelever_:DEC_Agent_Position()
@@ -78,7 +79,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     end
                 end
 
-                if( ( DEC_GetMission( self._namedParams.mission.uniteARelever_ ) == 0 or DEC_GetMission( self._namedParams.mission.uniteARelever_ ) == nil ) ) then
+                if( DEC_GetMission( self._namedParams.mission.uniteARelever_ ) == nil ) then
                     self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end

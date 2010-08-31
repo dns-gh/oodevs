@@ -38,6 +38,7 @@ node "MIS_Pion_INF_Barrer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.eEtatPhase = self.eEtatPhase or eActionEnCours
         --[[// Phase de Gestion de la mission
@@ -218,6 +219,7 @@ node "BEH_Pion_INF_Barrer_DispositifArret"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionDebarquer = self.eActionDebarquer or eActionEnCours
         if( not DEC_Nuit() ) then
             do

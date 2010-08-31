@@ -44,6 +44,7 @@ includedFiles["sources/appui/rens/automates/roem/common/Behaviors.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_RC_Automate_Situation, 1, {} )--[[// ========================== En embrayé ET débrayé ===========================
 ]]--[[// CR automates sur eni et situation mission
 ]]

@@ -17,6 +17,7 @@ includedFiles["sources/glaise/glaise_common/automates/missions/serecompleter/CDT
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             DEC_DemandeDeRavitaillement()
         end

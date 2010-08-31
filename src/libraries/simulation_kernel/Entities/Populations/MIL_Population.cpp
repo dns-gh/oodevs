@@ -61,7 +61,7 @@ void load_construct_data( Archive& archive, MIL_Population* population, const un
 // Name: MIL_Population constructor
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army& army, DEC_DataBase& database )
+MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army& army, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
     : MIL_Entity_ABC          ( xis )
     , pType_                  ( &type )
     , nID_                    ( xis.attribute< unsigned int >( "id" ) )
@@ -82,7 +82,7 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
         xis.error( "Unknown attitude" );
 
     pKnowledge_ = new DEC_PopulationKnowledge( *this );
-    RegisterRole( *new DEC_PopulationDecision( *this, database ) );
+    RegisterRole( *new DEC_PopulationDecision( *this, database, gcPause, gcMult ) );
     RegisterRole( *new DEC_Representations() );
 
     MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, xis );
@@ -327,7 +327,7 @@ void MIL_Population::UpdateDecision( float duration )
     {
         MIL_Report::PostEvent( *this, MIL_Report::eReport_MissionImpossible_ );
     }
-    GetRole< DEC_Decision_ABC >().GarbageCollect();
+    //GetRole< DEC_Decision_ABC >().GarbageCollect();
 }
 
 // -----------------------------------------------------------------------------

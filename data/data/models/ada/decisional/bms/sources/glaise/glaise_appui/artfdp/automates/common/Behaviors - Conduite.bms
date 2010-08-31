@@ -29,6 +29,7 @@ includedFiles["sources/glaise/glaise_appui/artfdp/automates/common/Behaviors - C
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionMission = self.eActionMission or eActionEnCours
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion de la sauvegarde de la compagnie
@@ -70,8 +71,9 @@ node "BEH_Situation_Automate_ASS_FinMission"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.lst_Pions_EnTete = self.lst_Pions_EnTete or {}
-        if( ( #( self.lst_Pions_EnTete ) == 0 or #( self.lst_Pions_EnTete ) == nil ) ) then
+        if( #( self.lst_Pions_EnTete ) == 0 ) then
             do
                 self.lst_Pions_EnTete = S_ObtenirTousPionsDe( eEtatEchelon_Premier )
                                 do return end

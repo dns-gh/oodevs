@@ -44,7 +44,7 @@ void CompositeRegistrable::Add( Registrable_ABC* r )
 // Name: CompositeRegistrable::RegisterIn
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
-void CompositeRegistrable::RegisterIn( directia::Brain& brain )
+void CompositeRegistrable::RegisterIn( directia::brain::Brain& brain )
 {
     std::for_each( registrables_.begin(), registrables_.end(), boost::bind( &Registrable_ABC::RegisterIn, _1, boost::ref( brain ) ) );
 }

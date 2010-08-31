@@ -28,6 +28,7 @@ includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - POP - Fe
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtatDelai = self.eEtatDelai or eActionEnCours
         if( ModuleBegins() ) then
             do
@@ -85,6 +86,7 @@ node "BEH_RiposteSurPopulation"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtatDelai = self.eEtatDelai or eActionEnCours
         local lstPops = DEC_Connaissances_PopulationsPrenantAPartie()
         if( ModuleBegins() ) then

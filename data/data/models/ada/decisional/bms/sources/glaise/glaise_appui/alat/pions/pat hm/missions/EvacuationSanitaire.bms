@@ -33,6 +33,7 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/pat hm/missions/Evacuation
     end,
 
     activate = function( self )
+        local Activate = Activate
     end,
 
 }

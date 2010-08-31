@@ -77,6 +77,7 @@ objectifEsquive = 1,
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )--[[//-------------------------------------------------------------------------
 ]]--[[// Embarquement apres Heliportage
 ]]--[[// ------------------------------------------------------------------------

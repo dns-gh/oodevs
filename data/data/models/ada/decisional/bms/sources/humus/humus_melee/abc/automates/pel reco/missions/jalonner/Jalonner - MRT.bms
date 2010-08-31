@@ -33,6 +33,7 @@ includedFiles["sources/humus/humus_melee/abc/automates/pel reco/missions/jalonne
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------

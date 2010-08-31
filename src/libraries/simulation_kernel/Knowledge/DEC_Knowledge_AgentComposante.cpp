@@ -35,8 +35,8 @@ DEC_Knowledge_AgentComposante::DEC_Knowledge_AgentComposante()
 // -----------------------------------------------------------------------------
 DEC_Knowledge_AgentComposante::DEC_Knowledge_AgentComposante( const PHY_Composante_ABC& composante )
     : pType_               ( &composante.GetType() )
-    , bCanFire_            ( composante .CanFire() )
-    , bCanFireWhenUnloaded_( composante .CanFireWhenUnloaded() )
+    , bCanFire_            ( composante.CanFire() )
+    , bCanFireWhenUnloaded_( composante.CanFireWhenUnloaded() )
     , nMajorScore_         ( composante.GetMajorScore() )
 {
     // NOTHING

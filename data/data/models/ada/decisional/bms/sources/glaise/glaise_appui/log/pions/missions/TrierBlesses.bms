@@ -28,6 +28,7 @@ includedFiles["sources/glaise/glaise_appui/log/pions/missions/TrierBlesses.bms"]
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         if( ModuleBegins() ) then
@@ -56,7 +57,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     --[[// Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     --[[// Déploiement sur place
-]]if( ( self._namedParams.mis.positionDeploiement_ == 0 or self._namedParams.mis.positionDeploiement_ == nil ) ) then
+]]if( self._namedParams.mis.positionDeploiement_ == 0 ) then
                         self.ePhaseMission = eDeployer
                     else
                         self.ePhaseMission = eProgresser
@@ -125,6 +126,7 @@ node "BEH_Pion_Log_Trier"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Pions_SInstaller, 1, {} )
         if( DEC_Agent_EstInstalle() ) then
             do

@@ -36,13 +36,13 @@ public:
 
     //! @name Instanciation
     //@{
-    virtual MIL_Automate& InstanciateAutomate( unsigned int nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database ) const;
-    virtual MIL_Automate& InstanciateAutomate( unsigned int nID, MIL_Automate&  parent, xml::xistream& xis, DEC_DataBase& database ) const;
+    virtual MIL_Automate& InstanciateAutomate( unsigned int nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult ) const;
+    virtual MIL_Automate& InstanciateAutomate( unsigned int nID, MIL_Automate&  parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult ) const;
     //@}
 
     //! @name Instanciation
     //@{
-    virtual void RegisterFunctions( directia::Brain& brain, MIL_Automate& automat ) const;
+    virtual void RegisterFunctions( directia::brain::Brain& brain, MIL_Automate& automat ) const;
     //@}
 
     //! @name Main

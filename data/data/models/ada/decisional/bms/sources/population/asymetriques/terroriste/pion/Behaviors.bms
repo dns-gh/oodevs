@@ -104,6 +104,7 @@ include "Population/Asymetriques/Common/Pion/Missions/CommettreExactions.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             DEC_Perception_Furtivite( 0 )
         end

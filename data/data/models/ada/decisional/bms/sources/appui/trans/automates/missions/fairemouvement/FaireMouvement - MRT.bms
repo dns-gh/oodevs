@@ -32,6 +32,7 @@ includedFiles["sources/appui/trans/automates/missions/fairemouvement/FaireMouvem
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
         if( ModuleBegins() ) then
             DEC_SetMission( myself, self._namedParams.mission )
@@ -96,6 +97,7 @@ node "BEH_Medo_Automate_AssignerFaireMouvementA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         if( ModuleBegins() ) then
             do

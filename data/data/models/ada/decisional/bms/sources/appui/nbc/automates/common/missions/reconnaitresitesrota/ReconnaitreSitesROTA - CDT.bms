@@ -22,6 +22,7 @@ includedFiles["sources/appui/nbc/automates/common/missions/reconnaitresitesrota/
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Dispositif_Automate_NBC_GererPionsDetruits_, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// Gen
 ]]--[[//-----------------------------------------------------------------------------
@@ -57,6 +58,7 @@ node "BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         self.listeSitesNonReconnus = self.listeSitesNonReconnus or S_NBC_ObtenirSitesNonReconnus( self.mission.sitesROTA_ )
         --[[//-------------------------------------------------------------------------
@@ -77,14 +79,14 @@ node "BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA"
 do
                 --[[// Cherche le site le plus proche du pion disponible
 ]]local siteROTA = S_Misc_ObtenirSiteProche( self.listeSitesNonReconnus, DEC_Automate_PionPosition( pion ) )
-                if( ( siteROTA ~= 0 and siteROTA ~= nil ) ) then
+                if( siteROTA ~= nil ) then
                     do
                         Activate( self.activations.BEH_Obj_Automate_NBC_AssignerReconnaitreSiteA, 1, { pion, siteROTA, } )
                         DEC_UserTypeList_Remove( self.listeSitesNonReconnus, siteROTA )
                     end
                 else
 do
-                        if( ( #( listePionsPE ) ~= 0 and #( listePionsPE ) ~= nil ) ) then
+                        if( #( listePionsPE ) ~= 0 ) then
                             Activate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, pion, DIA_GetAt( listePionsPE, 0 ), } )
                         end
 
@@ -121,6 +123,7 @@ node "BEH_Obj_Automate_NBC_AssignerReconnaitreSiteA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[/*: max_instances( 1 )*/]]Activate( self.activations.BEH_Mission_Automate_NBC_AssignerReconnaitreSiteA, 1, { ePhase_CDT, self._namedParams.pion, self._namedParams.siteROTA, } )
     end,
 

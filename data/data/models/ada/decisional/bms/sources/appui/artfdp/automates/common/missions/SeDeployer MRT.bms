@@ -33,6 +33,7 @@ includedFiles["sources/appui/artfdp/automates/common/missions/SeDeployer MRT.bms
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         self.ptSite = self.ptSite or S_Geometrie_BarycentreZone( self.mission.zoneDeploiement_ )
         --[[//---------------------------------------------------------------------
@@ -68,6 +69,7 @@ node "BEH_Mission_Automate_AssignerFaireMouvementA_Aleatoire"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.position = self.position or DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.ptCible, 300 )
         --[[//---------------------------------------------------------------------
 ]]--[[// Assignation des missions

@@ -40,6 +40,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or eTransporterAllerEmbarquer
         self.bAuMoinsUneUniteSurPositionEmbarquement = self.bAuMoinsUneUniteSurPositionEmbarquement or false
@@ -142,7 +143,7 @@ do
                         do
                             self.eEtat = eActionEnCours
                                                         do
-                                if( ( #( self.listeUnitesPretes ) == 0 or #( self.listeUnitesPretes ) == nil ) ) then
+                                if( #( self.listeUnitesPretes ) == 0 ) then
                                     do
                                         self.eEtat = eActionEffectuee
                                                                                 do return end
@@ -376,6 +377,7 @@ node "BEH_Transport_Pion_ALAT_HM_Extraire"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.ePhase = self.ePhase or eRejoindre
         self.eEtat = self.eEtat or eActionEnCours
         self.pointEmbarquement = self.pointEmbarquement or DEC_Geometrie_CreerPoint()

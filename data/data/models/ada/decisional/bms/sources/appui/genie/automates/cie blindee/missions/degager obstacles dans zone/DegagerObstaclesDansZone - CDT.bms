@@ -24,6 +24,7 @@ includedFiles["sources/appui/genie/automates/cie blindee/missions/degager obstac
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.listeObjets = self.listeObjets or {}
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
@@ -44,7 +45,7 @@ includedFiles["sources/appui/genie/automates/cie blindee/missions/degager obstac
 ]]--[[// Vérification des moyens
 ]]--[[//---------------------------------------------------------------------
 ]]local listePionsGenie = S_ObtenirPionsOperationnelsFiltre( "SectionGenie" )
-        if( ( #( listePionsGenie ) == 0 or #( listePionsGenie ) == nil ) ) then
+        if( #( listePionsGenie ) == 0 ) then
             do
                 Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
                                 do return end
@@ -88,6 +89,7 @@ node "BEH_Mission_Automate_GEN_CDT_DegagerPlanObjets_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.positionRegroupement = self.positionRegroupement or S_Geometrie_BarycentreZone( self._namedParams.zoneRegroupement )
         --[[//-------------------------------------------------------------------------
 ]]--[[// Init --> deplacement vers la zone de regroupement
@@ -140,6 +142,7 @@ node "BEH_Misc_Automate_GEN_GererRenforcementsPourDegagerObstacles"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.positionRegroupement = self.positionRegroupement or S_Geometrie_BarycentreZone( self._namedParams.zoneRegroupement )
         --[[//-------------------------------------------------------------------------
 ]]--[[// CR sur renforcement 
@@ -227,6 +230,7 @@ node "BEH_Misc_Automate_GEN_GererReductionDesObstacles"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.positionRegroupement = self.positionRegroupement or S_Geometrie_BarycentreZone( self._namedParams.zoneRegroupement )
         self.listeObjetsADegager = self.listeObjetsADegager or {}
         --[[//copie ? --> NLD: oui
@@ -257,7 +261,7 @@ do
 ]]--[[// dans l'interface 
 ]]--[[//-------------------------------------------------------------------------
 ]]--[[// Avant: objetADegager = S_Obj_Automate_GEN_ObjetPlusProche( listeObjetsADegager, DEC_Automate_PionPosition( pion ) );
-]]if( ( #( self.listeObjetsADegager ) ~= 0 and #( self.listeObjetsADegager ) ~= nil ) ) then
+]]if( #( self.listeObjetsADegager ) ~= 0 ) then
                     objetADegager = DEC_UserTypeList_GetAt( self.listeObjetsADegager, 0 )
                 end
 
@@ -309,6 +313,7 @@ node "BEH_Mission_Automate_Gen_AssignerDegagerObjetA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Validité
 ]]if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.objet ) ) then
             Halt( self )

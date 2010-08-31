@@ -29,8 +29,9 @@ class MIL_Mission_ABC;
 class DEC_PopulationDecision : public DEC_Decision< MIL_Population >
                              , private boost::noncopyable
 {
+
 public:
-             DEC_PopulationDecision( MIL_Population& population, DEC_DataBase& database );
+             DEC_PopulationDecision( MIL_Population& population, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
     virtual ~DEC_PopulationDecision();
 
     //! @name CheckPoints
@@ -49,6 +50,42 @@ public:
     //@{
     void SetModel( const DEC_Model_ABC& model );
     void Clean         ();
+
+	/*
+	virtual int GeteEtatDecPrudence() const;
+    virtual void SeteEtatDecPrudence(int value );
+    virtual int GeteEtatNbc() const;
+    virtual void SeteEtatNbc(int value );
+    virtual int GeteEtatDestruction() const;
+    virtual void SeteEtatDestruction(int value );
+    virtual int GeteEtatFeu() const;
+    virtual void SeteEtatFeu(int value );
+    virtual int GeteEtatAmbiance() const;
+    virtual void SeteEtatAmbiance(int value );
+    virtual int GeteEtatRadio() const;
+    virtual void SeteEtatRadio(int value );
+    virtual int GeteEtatRadar() const;
+    virtual void SeteEtatRadar(int value );
+    virtual int GeteEtatDeplacement() const;
+    virtual void SeteEtatDeplacement(int value );
+    virtual int GeteEtatOrdreCoordination() const;
+    virtual void SeteEtatOrdreCoordination(int value );
+    virtual int GeteConsigneTir() const;
+    virtual void SeteConsigneTir(int value );
+    virtual int GeteConsigneTirPopulation() const;
+    virtual void SeteConsigneTirPopulation(int value );
+    virtual int GeteEtatSoutien() const;
+    virtual void SeteEtatSoutien(int value );
+    virtual int GeteEtatSituationEnnemi() const;
+    virtual void SeteEtatSituationEnnemi(int value );
+	virtual int GeteTypeContact() const;
+    virtual void SeteTypeContact(int value );
+    virtual int GeteNiveauAction() const;
+    virtual void SeteNiveauAction(int value );
+	*/
+
+    virtual void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission );
+    virtual void StopMissionBehavior ( const boost::shared_ptr< MIL_Mission_ABC > mission );
     //@}
 
     //! @name Accessors
@@ -76,13 +113,14 @@ protected:
     //@{
     virtual void      EndCleanStateAfterCrash      ();
 
-    virtual void RegisterUserFunctions( directia::Brain& brain );
+    virtual void RegisterUserFunctions( directia::brain::Brain& brain );
+	virtual void RegisterUserArchetypeFunctions( directia::brain::Brain& brain );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    virtual void RegisterSelf( directia::Brain& brain );
+    virtual void RegisterSelf( directia::brain::Brain& brain );
     //@}
 
 private:
@@ -103,7 +141,9 @@ void save_construct_data( Archive& archive, const DEC_PopulationDecision* role, 
 {
     const DEC_DataBase* const database = &role->database_;
     archive << role->pEntity_
-        << database;
+        << database
+        << role->gcPause_
+        << role->gcMult_;
 }
 
 template< typename Archive >
@@ -111,9 +151,13 @@ void load_construct_data( Archive& archive, DEC_PopulationDecision* role, const 
 {
     MIL_Population* population;
     DEC_DataBase* database;
+    unsigned int gcPause;
+    unsigned int gcMult;
     archive >> population
-        >> database;
-    ::new( role )DEC_PopulationDecision( *population, *database );
+        >> database
+        >> gcPause
+        >> gcMult;
+    ::new( role )DEC_PopulationDecision( *population, *database, gcPause, gcMult );
 }
 
 

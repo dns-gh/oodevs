@@ -8,11 +8,16 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+
 #include "AutomateFactory.h"
+#include "Decision/DEC_Representations.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Automates/MIL_AutomateType.h"
+#include "simulation_kernel/Decision/DEC_DataBase.h"
+#include "Tools/MIL_IDManager.h"
 #include <boost/serialization/export.hpp>
-#include <xeumeuleu/xml.hpp>
+#include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( AutomateFactory )
 
@@ -20,11 +25,13 @@ BOOST_CLASS_EXPORT_IMPLEMENT( AutomateFactory )
 // Name: AutomateFactory constructor
 // Created: MGD 2009-08-17
 // -----------------------------------------------------------------------------
-AutomateFactory::AutomateFactory( MIL_IDManager& idManager, DEC_DataBase& database )
+AutomateFactory::AutomateFactory( MIL_IDManager& idManager, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
     : idManager_( idManager )
-    , database_ ( database )
+    , database_( database )
+	, gcPause_( gcPause )
+    , gcMult_( gcMult )
 {
-    // NOTHING
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -42,14 +49,17 @@ AutomateFactory::~AutomateFactory()
 // -----------------------------------------------------------------------------
 MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Automate& parent )
 {
-    const unsigned int id = xis.attribute< unsigned int >( "id" );
-    const std::string strType = xis.attribute< std::string >( "type" );
+    uint id;
+    std::string strType;
+
+    xis >> xml::attribute( "id", id )
+        >> xml::attribute( "type", strType );
+
     const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( strType );
-    if( !pType )
-        throw std::exception( std::string( "Unknown automat type: " + strType ).c_str() );
-    MIL_Automate& automate = pType->InstanciateAutomate( id, parent, xis, database_ );
+    MIL_Automate& automate = pType->InstanciateAutomate( id, parent, xis, database_, gcPause_, gcMult_ );
     automate.ReadOverloading( xis );
     tools::Resolver< MIL_Automate >::Register( automate.GetID(), automate );
+
     return automate;
 }
 
@@ -59,14 +69,20 @@ MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Automate& parent 
 // -----------------------------------------------------------------------------
 MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Formation& parent )
 {
-    const unsigned int id = xis.attribute< unsigned int >( "id" );
-    const std::string strType = xis.attribute< std::string >( "type" );
+    uint id;
+    std::string strType;
+
+    xis >> xml::attribute( "id", id )
+        >> xml::attribute( "type", strType );
+
     const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( strType );
     if( !pType )
-        throw std::exception( std::string( "Unknown automat type: " + strType ).c_str() );
-    MIL_Automate& automate = pType->InstanciateAutomate( id, parent, xis, database_ );
+        xis.error( "Unknown automat type" );
+
+    MIL_Automate& automate = pType->InstanciateAutomate( id, parent, xis, database_, gcPause_, gcMult_ );
     automate.ReadOverloading( xis );
     tools::Resolver< MIL_Automate >::Register( automate.GetID(), automate );
+
     return automate;
 }
 

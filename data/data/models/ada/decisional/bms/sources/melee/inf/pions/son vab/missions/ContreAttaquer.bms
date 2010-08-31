@@ -32,6 +32,7 @@ node "MIS_Pion_INF_ContreAttaquer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eDonnerAssaut
         self.eCurrentPhase = self.eCurrentPhase or eDonnerAssaut
         self.eAction = self.eAction or eActionEnCours
@@ -142,6 +143,7 @@ node "BEH_Mission_Pion_VAB_ContreAttaquer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionEni = self.eActionEni or eActionEnCours
         if( ModuleBegins() ) then
             do

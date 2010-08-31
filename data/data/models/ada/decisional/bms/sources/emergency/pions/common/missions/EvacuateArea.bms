@@ -32,6 +32,7 @@ includedFiles["sources/emergency/pions/common/missions/EvacuateArea.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or eRejoindre
         self.position = self.position or S_Geometrie_BarycentreZone( self._namedParams.mission.area_ )
@@ -116,6 +117,7 @@ node "BEH_Pion_Emergency_EvacuateArea"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             StartActivateOverride( self, self.activations.ACT_Obj_Pion_Emergency_RealiserObjet, 1, { eTypeObjectZoneInterditeDeplacement, self._namedParams.area, } )
         end

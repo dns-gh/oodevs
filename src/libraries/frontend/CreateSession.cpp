@@ -83,6 +83,12 @@ void CreateSession::SetDefaultValues()
         setter_->SetValue( "session/config/simulation/profiling/@enabled"          , false );
         setter_->SetValue( "session/config/simulation/time/@step"                  , 10 );
         setter_->SetValue( "session/config/simulation/time/@factor"                , 10 );
+		
+		//Réglage des paramètres du GC
+        setter_->SetValue( "session/config/simulation/GarbageCollector/@setpause"  , 100 );
+		setter_->SetValue( "session/config/simulation/GarbageCollector/@setstepmul"  , 100 );
+		//
+
         setter_->SetValue( "session/config/simulation/pathfinder/@threads"         , 1 );
         setter_->SetValue( "session/config/simulation/hla/@enabled"                , false );
         setter_->SetValue( "session/config/simulation/hla/@federation"             , "MyFederation" );

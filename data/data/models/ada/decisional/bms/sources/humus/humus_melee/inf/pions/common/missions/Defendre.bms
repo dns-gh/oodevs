@@ -38,6 +38,7 @@ node "BEH_Mission_Pion_INF_Defendre"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         self.ePhase = self.ePhase or eSeMettreEnPlace
         self.eAction = self.eAction or eActionEnCours

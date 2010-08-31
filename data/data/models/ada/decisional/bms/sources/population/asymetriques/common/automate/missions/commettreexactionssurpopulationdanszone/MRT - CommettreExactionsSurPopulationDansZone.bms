@@ -25,6 +25,7 @@ includedFiles["sources/population/asymetriques/common/automate/missions/commettr
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
         self.missionExaction = self.missionExaction or self._namedParams.mission
         --[[//---------------------------------------------------------------------
@@ -121,6 +122,7 @@ node "BEH_Mission_Automate_ASY_AssignerCommettreExactionsA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do

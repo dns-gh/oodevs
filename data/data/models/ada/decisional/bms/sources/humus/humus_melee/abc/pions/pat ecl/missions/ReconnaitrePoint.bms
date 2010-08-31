@@ -33,6 +33,7 @@ includedFiles["sources/humus/humus_melee/abc/pions/pat ecl/missions/ReconnaitreP
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or nil
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Terminaison

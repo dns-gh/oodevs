@@ -46,6 +46,7 @@ includedFiles["sources/humus/humus_melee/abc/pions/common/missions/Reduire.bms"]
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.pPoint = self.pPoint or nil
@@ -166,6 +167,7 @@ node "BEH_Eni_Pion_ABC_ReduireEni"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.positionFin = self.positionFin or nil
         --[[//-----------------------------------------------------------------------------

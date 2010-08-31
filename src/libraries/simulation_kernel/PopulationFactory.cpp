@@ -22,8 +22,10 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PopulationFactory )
 // Name: PopulationFactory constructor
 // Created: MGD 2009-10-24
 // -----------------------------------------------------------------------------
-PopulationFactory::PopulationFactory( DEC_DataBase& database )
+PopulationFactory::PopulationFactory( DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
     : database_( database )
+    , gcPause_ ( gcPause )
+    , gcMult_  ( gcMult )
 {
 
     // NOTHING
@@ -52,7 +54,7 @@ MIL_Population& PopulationFactory::Create( xml::xistream& xis, MIL_Army& army )
     if( !pType )
         xis.error( "Unknown population type" );
 
-    MIL_Population& population = *new MIL_Population( xis, *pType, army, database_ );
+    MIL_Population& population = *new MIL_Population( xis, *pType, army, database_, gcPause_, gcMult_ );
     Register( population.GetID(), population );
     return population;
 }

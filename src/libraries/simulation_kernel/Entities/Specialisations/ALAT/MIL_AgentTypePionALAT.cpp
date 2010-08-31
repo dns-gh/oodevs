@@ -16,7 +16,7 @@
 #include "Decision/DEC_PerceptionFunctions.h"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
-#include <directia/Brain.h>
+#include <directia/brain/Brain.h>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionALAT constructor
@@ -50,14 +50,14 @@ const MIL_AgentTypePion* MIL_AgentTypePionALAT::Create( const std::string& strNa
 // Name: MIL_AgentTypePionALAT::RegisterFunctions
 // Created: LDC 2009-04-23
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePionALAT::RegisterFunctions( directia::Brain& brain, MIL_Agent_ABC& agent ) const
+void MIL_AgentTypePionALAT::RegisterFunctions( directia::brain::Brain& brain, MIL_Agent_ABC& agent ) const
 {
-    brain.RegisterFunction( "DEC_ALAT_ActiverReconnaissance",
-        boost::function< void( const TER_Localisation* ) >( boost::bind( &DEC_PerceptionFunctions::EnableRecoAlat, boost::ref( agent ), _1 ) ) );
-    brain.RegisterFunction( "DEC_ALAT_DesactiverReconnaissance", boost::bind( &DEC_PerceptionFunctions::DisableRecoAlat, boost::ref( agent ) ) );
-    brain.RegisterFunction( "DEC_ALAT_ReconnaissanceNonVuTerminee", boost::bind( &DEC_PerceptionFunctions::HasNoDelayedPeceptions, boost::cref( agent ) ) );
-    brain.RegisterFunction( "DEC_Perception_ActiverSurveillance",
-        boost::function< int( const TER_Localisation* ) >( boost::bind( &DEC_PerceptionFunctions::EnableSurveillanceLocalisation, boost::ref( agent ), _1 ) ) );
-    brain.RegisterFunction( "DEC_Perception_DesactiverSurveillance",
-        boost::function< void( int ) >( boost::bind( &DEC_PerceptionFunctions::DisableSurveillanceLocalisation, boost::ref( agent ), _1 ) ) );
+    brain[ "DEC_ALAT_ActiverReconnaissance" ] =
+        boost::function< void( const TER_Localisation* ) >( boost::bind( &DEC_PerceptionFunctions::EnableRecoAlat, boost::ref( agent ), _1 ) );
+    brain[ "DEC_ALAT_DesactiverReconnaissance" ] = boost::bind( &DEC_PerceptionFunctions::DisableRecoAlat, boost::ref( agent ) );
+    brain[ "DEC_ALAT_ReconnaissanceNonVuTerminee" ] = boost::bind( &DEC_PerceptionFunctions::HasNoDelayedPeceptions, boost::cref( agent ) );
+    brain[ "DEC_Perception_ActiverSurveillance" ] =
+        boost::function< int( const TER_Localisation* ) >( boost::bind( &DEC_PerceptionFunctions::EnableSurveillanceLocalisation, boost::ref( agent ), _1 ) );
+    brain[ "DEC_Perception_DesactiverSurveillance" ] =
+        boost::function< void( int ) >( boost::bind( &DEC_PerceptionFunctions::DisableSurveillanceLocalisation, boost::ref( agent ), _1 ) );
 }

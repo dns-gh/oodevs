@@ -27,6 +27,7 @@ includedFiles["sources/appui/alat/automates/common/missions/freiner/Freiner - CD
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eFreiner
         self.listePionsSgpt = self.listePionsSgpt or {}
         self.listeFreiner = self.listeFreiner or {}

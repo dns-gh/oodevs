@@ -27,6 +27,7 @@ includedFiles["sources/appui/circulation/pions/missions/RealiserObjetDansZone.bm
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtat = self.eEtat or eActionEnCours
         self.eEtatDefaut = self.eEtatDefaut or eActionEnCours
         self.ePhase = self.ePhase or ePreparerMission

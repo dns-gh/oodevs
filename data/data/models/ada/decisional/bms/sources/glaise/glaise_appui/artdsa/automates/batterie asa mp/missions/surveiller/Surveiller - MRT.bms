@@ -23,6 +23,7 @@ includedFiles["sources/glaise/glaise_appui/artdsa/automates/batterie asa mp/miss
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// variables persistantes
 ]]self.ePhase = self.ePhase or eMRT_AssignerMissions
         self.eEtatMissionsSurveiller = self.eEtatMissionsSurveiller or eActionEnCours
@@ -43,7 +44,7 @@ includedFiles["sources/glaise/glaise_appui/artdsa/automates/batterie asa mp/miss
                     end
                 end
 
-                if( ( DEC_ListePoints_Size( self._namedParams.mission.positionsSections_ ) == 0 or DEC_ListePoints_Size( self._namedParams.mission.positionsSections_ ) == nil ) ) then
+                if( DEC_ListePoints_Size( self._namedParams.mission.positionsSections_ ) == 0 ) then
                     self.ePhase = eMRT_MissionImpossible
                 end
 

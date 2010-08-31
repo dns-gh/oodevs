@@ -55,6 +55,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtat = self.eEtat or eActionEnCours
         self.eEtatAttendre = self.eEtatAttendre or eActionEnCours
         self.ePhase = self.ePhase or eAppuyer
@@ -254,6 +255,7 @@ node "BEH_Eni_Pion_ALAT_GererEniEscorter"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x in pairs( self._namedParams.listePionsEscortes or {} ) do
         local _continue = true
 do

@@ -12,12 +12,6 @@
 
 #include "MT_Tools/Role_ABC.h"
 
-namespace population
-{
-    class ObjectManager_ABC;
-    class Object_ABC;
-}
-
 class TER_Localisation;
 
 // =============================================================================
@@ -58,9 +52,6 @@ public:
 
     //! @name Operations
     //@{
-    population::Object_ABC* InfluenceActivity( const MT_Vector2D& vPos, const std::string& activity, double influence, int connectivity );
-    population::Object_ABC* InfluenceActivityInArea( const MT_Vector2D& vPos, const std::string& activity, double influence, const TER_Localisation& area );
-    void ReleaseInfluence( population::Object_ABC& object );
     //@}
 
 public:
@@ -77,7 +68,6 @@ public:
 private:
     //! @name Member data
     //@{
-    population::ObjectManager_ABC* pManager_;
     //@}
 };
 

@@ -31,6 +31,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.rDistanceEffective = self.rDistanceEffective or self._namedParams.rDistance + self._namedParams.rDistanceSecurite
         self.eEtat = self.eEtat or eActionEnCours
         self.positionSurete = self.positionSurete or nil
@@ -65,14 +66,14 @@ include "bit.lua"
                 if( F_Pion_GetobjectifEsquive( myself ) ~= nil ) then
                     self.positionSurete = DEC_Geometrie_CalculerPositionSureteAvecObjectif( self._namedParams.repUnite, self.rDistanceEffective, F_Pion_GetobjectifEsquive( myself ) )
                 else
-if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
+if( myself.ptRegroupement_ ~= nil ) then
                         self.positionSurete = DEC_Geometrie_CalculerPositionSureteAvecObjectif( self._namedParams.repUnite, self.rDistanceEffective, myself.ptRegroupement_ )
                     else
                         self.positionSurete = DEC_Geometrie_CalculerPositionSurete( self._namedParams.repUnite, self.rDistanceEffective )
                     end
                 end
 
-                if( ( self.positionSurete == 0 or self.positionSurete == nil ) ) then
+                if( self.positionSurete == nil ) then
                     Halt( self )
                     do return end
                 end
@@ -160,6 +161,7 @@ node "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         --[[//si la connaissance est invalide, halter le comportement
 ]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.bufferConnaissanceAgent ) ) then
@@ -256,6 +258,7 @@ node "BEH_Eni_Pion_ALAT_AllerDetruireEnnemi"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtatAttaque = self.eEtatAttaque or eActionEnCours
         self.eEtatTir = self.eEtatTir or eActionEnCours
         self.pointInterception = self.pointInterception or DEC_Geometrie_CreerPoint()
@@ -391,6 +394,7 @@ node "BEH_Eni_Pion_ALAT_Jalonner"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.rDistanceEfficace = self.rDistanceEfficace or S_Tir_PorteeMaxPourEtreTireParAgent( self._namedParams.repEni, M_POLY_PH_TIR_ENI_EFFICACE() )
         self.rDistanceEsquive = self.rDistanceEsquive or self.rDistanceEfficace + self._namedParams.distanceSecu
         --[[//Fin du comportement si la connaissance n'est plus valide    
@@ -447,6 +451,7 @@ node "BEH_Eni_Pion_ALAT_EviterContactsAvecEnnemisConnus"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.listeEnisPrec = self.listeEnisPrec or DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( myself:DEC_Agent_Position(), 10000 )
         local listeEnisCourant = DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( myself:DEC_Agent_Position(), 10000 )
         for _,x in pairs( listeEnisCourant or {} ) do

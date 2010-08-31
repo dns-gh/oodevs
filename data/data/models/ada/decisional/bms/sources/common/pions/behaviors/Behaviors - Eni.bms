@@ -32,6 +32,7 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Eni.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.rDistanceEffective = self.rDistanceEffective or self._namedParams.rDistance + self._namedParams.rDistanceSecurite
         self.eEtat = self.eEtat or eActionEnCours
         self.positionSurete = self.positionSurete or nil
@@ -62,7 +63,7 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Eni.bms"] = true
 ]]if( F_Pion_GetobjectifEsquive( myself ) ~= nil ) then
                     self.positionSurete = DEC_Geometrie_CalculerPositionSureteAvecObjectif( self._namedParams.repUnite, self.rDistanceEffective, F_Pion_GetobjectifEsquive( myself ) )
                 else
-if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
+if( myself.ptRegroupement_ ~= nil ) then
                         self.positionSurete = DEC_Geometrie_CalculerPositionSureteAvecObjectif( self._namedParams.repUnite, self.rDistanceEffective, myself.ptRegroupement_ )
                     else
                         self.positionSurete = DEC_Geometrie_CalculerPositionSurete( self._namedParams.repUnite, self.rDistanceEffective )
@@ -70,7 +71,7 @@ if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
                 end
 
                 --[[// Vérification
-]]if( ( self.positionSurete == 0 or self.positionSurete == nil ) ) then
+]]if( self.positionSurete == nil ) then
                     Halt( self )
                     do return end
                 end
@@ -123,6 +124,7 @@ node "BEH_Eni_SePosterFaceA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-------------------------------------------------------------------------
 ]]--[[// Vision / Posture
 ]]--[[//-------------------------------------------------------------------------

@@ -40,6 +40,7 @@ includedFiles["sources/glaise/glaise_appui/nbc/automates/common/Coordination.bms
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Info_Automate_Trace, 1, { "***$$$ Activation des coordinations $$$***", } )
         Activate( self.activations.BEH_CoordDep_Automate_NBC_CoordonnerPEAvecSE_, 1, {} )
     end,
@@ -68,6 +69,7 @@ node "BEH_CoordDep_Automate_NBC_CoordonnerPEAvecSE_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listePions = S_ObtenirPionsEchelonPremierEtSecond( eEtatDestruction_None )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Inutile si plus de pions
@@ -111,6 +113,7 @@ node "BEH_CoordDep_Automate_NBC_ActiverCoordinnationSur"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.resultatCalcul = self.resultatCalcul or nil
         self.pionEnQueue = self.pionEnQueue or nil
         --[[//-------------------------------------------------------------------------
@@ -139,7 +142,7 @@ do
 
         end
 
-        if( ( self.pionEnQueue == 0 or self.pionEnQueue == nil ) ) then
+        if( self.pionEnQueue == 0 ) then
             do return end
         end
 

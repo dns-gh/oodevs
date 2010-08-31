@@ -209,7 +209,7 @@ includedFiles["sources/melee/inf/pions/common/Actions.bms"] = true
     select = function( self )
                 if( ModuleBegins() ) then
             do
-                if( ( myself.ptRegroupement_ == 0 or myself.ptRegroupement_ == nil ) ) then
+                if( myself.ptRegroupement_ == nil ) then
                     myself.ptRegroupement_ = DEC_Geometrie_CreerPoint()
                 end
 

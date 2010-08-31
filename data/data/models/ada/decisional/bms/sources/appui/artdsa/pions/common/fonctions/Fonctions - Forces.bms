@@ -92,7 +92,7 @@ do
 
             end
 
-            if( ( nbEnnemisDangereuxVolant ~= 0 and nbEnnemisDangereuxVolant ~= nil ) ) then
+            if( nbEnnemisDangereuxVolant ~= 0 ) then
                 dangerSurEnnemis = dangerSurEnnemis / nbEnnemisDangereuxVolant
             end
 

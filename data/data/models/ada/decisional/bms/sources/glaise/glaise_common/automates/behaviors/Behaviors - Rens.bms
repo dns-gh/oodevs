@@ -20,6 +20,7 @@ includedFiles["sources/glaise/glaise_common/automates/behaviors/Behaviors - Rens
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio, 1, {} )--[[// Eventuellement d'autre comportements...
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion de l'ordre de conduite
@@ -47,6 +48,7 @@ node "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio"
     {
         { "BEH_Ordre_Automate_ConduitePasserEnSilenceRadio", { "done_BEH_Ordre_Automate_ConduitePasserEnSilenceRadio" } },
         { "BEH_Ordre_Automate_ConduiteFinSilenceRadio", { "done_BEH_Ordre_Automate_ConduiteFinSilenceRadio" } },
+        { "BEH_Ordre_Automate_BEH_Ordre_Automate_ConduitePasserEnSilenceRadioPartiel", { "done_BEH_Ordre_Automate_BEH_Ordre_Automate_ConduitePasserEnSilenceRadioPartiel" } },
         { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
@@ -54,6 +56,7 @@ node "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Recevoir un ordre
 ]]--[[//-----------------------------------------------------------------------------
@@ -72,6 +75,7 @@ do
                             DEC_Trace( "$ --- ORDRE Passer en Silence Radio ---$" )
                             StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadio, 1, {} )
                             StopActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadio, {} )
+                            StopActivateOverride( self, self.activations.BEH_Ordre_Automate_BEH_Ordre_Automate_ConduitePasserEnSilenceRadioPartiel, {} )
                             _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadio" then
@@ -126,6 +130,7 @@ node "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadar"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Recevoir un ordre
 ]]--[[//-----------------------------------------------------------------------------
@@ -196,6 +201,7 @@ node "BEH_Ordre_Automate_ConduitePasserEnSilenceRadio"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// RC
 ]]--[[//-----------------------------------------------------------------------------
@@ -236,6 +242,7 @@ node "BEH_Ordre_Automate_ConduiteFinSilenceRadio"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Donner l'ordre aux pions si embrayé
 ]]--[[//-----------------------------------------------------------------------------
@@ -326,6 +333,7 @@ node "ACT_Ordre_PasserEnSilenceRadio"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// RC
 ]]--[[//-----------------------------------------------------------------------------
@@ -365,6 +373,7 @@ node "BEH_Ordre_Automate_ConduiteFinSilenceRadar"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Donner l'ordre aux pions si embrayé
 ]]--[[//-----------------------------------------------------------------------------
@@ -446,5 +455,6 @@ connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_RecevoirOrdreSurSil
 connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadar, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
 connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio, "BEH_Ordre_Automate_ConduitePasserEnSilenceRadio", nodes.BEH_Ordre_Automate_ConduitePasserEnSilenceRadio }
 connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio, "BEH_Ordre_Automate_ConduiteFinSilenceRadio", nodes.BEH_Ordre_Automate_ConduiteFinSilenceRadio }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio, "BEH_Ordre_Automate_BEH_Ordre_Automate_ConduitePasserEnSilenceRadioPartiel", nodes.BEH_Ordre_Automate_BEH_Ordre_Automate_ConduitePasserEnSilenceRadioPartiel }
 connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
 connections[ #connections + 1 ] = { nodes.BEH_Rens_Automate_GererSilenceRadio, "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio", nodes.BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio }

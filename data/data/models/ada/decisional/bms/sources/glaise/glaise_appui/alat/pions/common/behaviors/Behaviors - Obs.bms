@@ -29,6 +29,7 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/behaviors/Behaviors
     end,
 
     activate = function( self )
+        local Activate = Activate
         assert( self._namedParams.zone ~= nil, "ReconnaitreZone : zone invalide" )
         self.positionARejoindre = self.positionARejoindre or S_Geometrie_BarycentreZone( self._namedParams.zone )
         self.eEtat = self.eEtat or eActionEnCours
@@ -118,6 +119,7 @@ node "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.anciennePosition = self.anciennePosition or DEC_Geometrie_CreerPoint()
         self.eEtat = self.eEtat or eActionEnCours
         self.eEtatDeplacement = self.eEtatDeplacement or eActionEnCours
@@ -228,6 +230,7 @@ node "BEH_Obs_Pion_ALAT_ReconnaitreUnite"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.eni ) ) then
             self:SendFeedback( eActionImpossible )
@@ -272,6 +275,7 @@ node "BEH_Eni_Pion_ALAT_GererUnitesDetectes"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// variable persistantes
 ]]self.eEtatProgressionTactique = self.eEtatProgressionTactique or eActionEnCours
         local listeUnitesDetecteesDansFuseau = DEC_Connaissances_UnitesDetecteesDansFuseau()

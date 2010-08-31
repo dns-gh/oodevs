@@ -28,6 +28,7 @@ includedFiles["sources/appui/trans/pions/behaviors/Behaviors - Dep.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtat = self.eEtat or eActionEnCours
         self.it = self.it or DEC_CreerItineraire( self._namedParams.pointArrivee, self._namedParams.eTypeIti )
         --[[//-----------------------------------------------------------------------------
@@ -83,6 +84,7 @@ node "BEH_Dep_SeDeplacer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         if( self.eEtat == eActionEffectuee ) then
             do
@@ -128,8 +130,9 @@ node "BEH_Dep_SePosterFaceADirectionDangereuse"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local mission = DEC_GetMission( myself )
-        if( ( mission == 0 or mission == nil ) ) then
+        if( mission == nil ) then
             do return end
         end
 
@@ -160,6 +163,7 @@ node "BEH_Dep_Virtuel_ProgressionVers"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.point, self._namedParams.eTypeProgression, self._namedParams.eTypeIti, } )
     end,
 
@@ -177,6 +181,7 @@ node "BEH_Dep_Virtuel_PreparationAction"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self:SendFeedback( eActionEffectuee )
         do return end
 

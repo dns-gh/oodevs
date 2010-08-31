@@ -128,6 +128,7 @@ node "BEH_Defaut"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 SetStateVariable( "VE_PreparationMission", 0 )
@@ -174,7 +175,7 @@ node "BEH_Defaut"
         Activate( self.activations.BEH_Misc_Pion_INF_Default, 1, {} )--[[// Default mis a jour par chaque type de modele
 ]]--[[// ------------------------------------------------------------------------
 ]]
-        if( ( DEC_GetMission( myself ) == 0 or DEC_GetMission( myself ) == nil ) ) then
+        if( DEC_GetMission( myself ) == nil ) then
             do
                 if( not DEC_Agent_AutomateEstEmbraye() ) then
                     Activate( self.activations.BEH_MOT_Pion_InitialisePreparationMission, 1, {} )
@@ -222,6 +223,7 @@ node "BEH_Poste_Pion_INF_TomberEnGarde"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.eActionDeb = self.eActionDeb or eActionEnCours
         --[[// Verifie que les HOT ne debarquent pas .. 
@@ -263,7 +265,8 @@ node "BEH_Misc_Pion_INF_MAJ_Mission"
     end,
 
     activate = function( self )
-        if( ( ModuleBegins() and self._namedParams.typeMission ~= 0 and ModuleBegins() and self._namedParams.typeMission ~= nil ) ) then
+        local Activate = Activate
+        if( ModuleBegins() and self._namedParams.typeMission ~= nil ) then
             F_Pion_SetmissionPrecedente( myself, self._namedParams.typeMission:GetType() )
         end
 
@@ -290,6 +293,7 @@ node "BEH_Misc_Pion_INF_ModulationVitesse"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Notification de l'ambiance au sein de la compagnie	
 ]]if( F_Pion_GeteEtatAmbiance( myself ) == eEtatAmbiance_Vitesse ) then
             do
@@ -329,6 +333,7 @@ node "BEH_Eni_Pion_INF_Tenir"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 if( ModuleBegins() ) then
             --[[// --> Tiens lorsque le rapFor passe de 2.5 a 3.5
 ]]F_Pion_SetrTenir( myself, self._namedParams.rTenir )
@@ -357,6 +362,7 @@ node "BEH_Mot_Pion_INF_AffecterVariablesDEtat"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//////////////// BMS OPTIM  ///////////////////
 ]]        if( F_Pion_GeteEtatDec( myself ) == eEtatDec_Sauvegarde ) then
             do return end
@@ -387,7 +393,7 @@ elseif switch_1 == eMoral_Moyen
                     --[[//-----------------------------------------------------------------------------
 ]]--[[// En fonction de la mission...  --> idem moral mauvais
 ]]--[[//-----------------------------------------------------------------------------
-]]if( ( DEC_GetMission( myself ) == 0 or DEC_GetMission( myself ) == nil ) ) then
+]]if( DEC_GetMission( myself ) == nil ) then
                         do
                             SetStateVariable( "VE_RapFor", ( 5 - DEC_RapportDeForceLocal() ) )
                             SetStateVariable( "VE_RapForPrudence", 0 )
@@ -471,6 +477,7 @@ node "BEH_Dep_Virtuel_ProgressionVers"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
         Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.point, self._namedParams.eTypeProgression, self._namedParams.eTypeIti, } )
@@ -495,6 +502,7 @@ node "BEH_Dep_Virtuel_PreparationAction"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
         if( not DEC_Agent_EstEmbarque() ) then
             self:SendFeedback( eActionEffectuee )
@@ -523,6 +531,7 @@ node "BEH_MAJ_Pion_INF_AgressiviteTir"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------
@@ -558,6 +567,7 @@ node "BEH_Dep_Pion_INF_RejoindrePositionAppui"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.ptAppui = self.ptAppui or S_CalculerPositionAppui( self._namedParams.tAmi, M_DISTANCE_APPUIS() )
         if( ModuleBegins() ) then
@@ -619,6 +629,7 @@ node "BEH_Dep_Pion_INF_RejoindrePositionAppuiPour"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.positionAppui = self.positionAppui or DEC_Geometrie_CalculerPositionAppui( self._namedParams.ami, M_MODELE_PION_INF_DISTANCE_POSITION_APPUI() )
         self.eEtat = self.eEtat or eActionEnCours
         --[[//-----------------------------------------------------------------------------
@@ -671,6 +682,7 @@ node "BEH_Feu_Pion_INF_TirAppui"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionDeplacement = self.eActionDeplacement or eActionEnCours
         self.eAction = self.eAction or eActionEnCours
         self.eActionFixer = self.eActionFixer or eActionEnCours

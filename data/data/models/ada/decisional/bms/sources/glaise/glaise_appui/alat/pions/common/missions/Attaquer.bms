@@ -37,6 +37,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or eDetruire
         self.pointFinFuseau = self.pointFinFuseau or nil
@@ -195,6 +196,7 @@ node "BEH_Eni_Pion_ALAT_GererEniAttaquer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.pointDislocation = self.pointDislocation or DEC_Geometrie_CreerPoint()
         self.zoneCourante = self.zoneCourante or DEC_Geometrie_CreerLocalisation()
         self.barycentreZone = self.barycentreZone or DEC_Geometrie_CreerPoint()
@@ -211,15 +213,15 @@ node "BEH_Eni_Pion_ALAT_GererEniAttaquer"
 ]]if( ModuleBegins() or F_Pion_GeteEtatFeu( myself ) == eEtatFeu_Executer ) then
             do
                 local zonePlusInterressanteBuffer = S_Geometrie_Pion_ALAT_ZonePlusInterressanteDansFuseau( self._namedParams.listeLocalisations )
-                if( ( zonePlusInterressanteBuffer ~= 0 and zonePlusInterressanteBuffer ~= nil ) ) then
+                if( zonePlusInterressanteBuffer ~= 0 ) then
                     do
                         DEC_Copie_Localisation( zonePlusInterressanteBuffer, self.zoneCourante )
                         local pointBuffer = S_Geometrie_BarycentreZone( self.zoneCourante )
-                        if( ( pointBuffer ~= 0 and pointBuffer ~= nil ) ) then
+                        if( pointBuffer ~= 0 ) then
                             do
                                 DEC_Copie_Point( pointBuffer, self.barycentreZone )
                                 self.orientationZone = DEC_Geometrie_CreerDirection( self.barycentreZone, self._namedParams.pointFinFuseau )
-                                if( ( self.orientationZone == 0 or self.orientationZone == nil ) ) then
+                                if( self.orientationZone == 0 ) then
                                     Halt( self )
                                     do return end
                                 end

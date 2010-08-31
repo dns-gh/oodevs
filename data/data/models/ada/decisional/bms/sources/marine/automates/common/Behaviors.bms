@@ -28,6 +28,7 @@ include "Common/Automates/Behaviors.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_RC_Automate_Situation, 1, {} )
         --[[// -------------------------------------------------------------------------
 ]]--[[// si l'automate n'est pas embrayé

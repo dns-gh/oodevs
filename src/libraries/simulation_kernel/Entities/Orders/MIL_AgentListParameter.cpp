@@ -11,8 +11,9 @@
 #include "protocol/protocol.h"
 #include "MIL_AgentListParameter.h"
 #include "MIL_AgentServer.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/MIL_EntityManager_ABC.h"
-#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "simulation_orders/MIL_ParameterType_AgentList.h"
 
 // -----------------------------------------------------------------------------
@@ -27,7 +28,7 @@ MIL_AgentListParameter::MIL_AgentListParameter( const Common::UnitIdList& asn, M
         MIL_AgentPion* pPion = entityManager.FindAgentPion( asn .elem( i ).id() );
         if( !pPion )
             throw std::runtime_error( "Agent does not exist" );
-        DEC_RolePion_Decision* pAgent = dynamic_cast< DEC_RolePion_Decision* >( &pPion->GetDecision() );
+        DEC_Decision_ABC* pAgent = &pPion->GetDecision();
         unitList_.push_back( pAgent );
     }
 }
@@ -36,7 +37,7 @@ MIL_AgentListParameter::MIL_AgentListParameter( const Common::UnitIdList& asn, M
 // Name: MIL_AgentListParameter constructor
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
-MIL_AgentListParameter::MIL_AgentListParameter( const std::vector< DEC_RolePion_Decision* >& unitList )
+MIL_AgentListParameter::MIL_AgentListParameter( const std::vector< DEC_Decision_ABC* >& unitList )
 : unitList_( unitList )
 {
     // NOTHING

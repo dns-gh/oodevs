@@ -36,10 +36,11 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/interdi
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Parcours de la liste
 ]]self.rIterateurPosition = self.rIterateurPosition or 0
         self.listePositions = self.listePositions or {}
-        if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
+        if( #( self._namedParams.selPions ) == 0 ) then
             do return end
         end
 
@@ -57,7 +58,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/interdi
 ]]lima = DEC_GetLima( eTypeLima_LR )
                 end
 
-                if( ( lima == 0 or lima == nil ) ) then
+                if( lima == 0 ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
                                                 self:SendFeedback( eActionImpossible )
@@ -68,7 +69,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/interdi
 ]]                end
 
                 self.listePositions = DEC_Geometrie_CalculerPositionsParRapportALima( lima, 10, #( self._namedParams.selPions ) )
-                if( ( self.listePositions == 0 or self.listePositions == nil ) ) then
+                if( self.listePositions == 0 ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
                                                 self:SendFeedback( eActionImpossible )
@@ -127,10 +128,11 @@ node "BEH_Medo_Automate_ABC_Interdire_AssignerMissionSurveillerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Parcours de la liste
 ]]self.rIterateurPosition = self.rIterateurPosition or 0
         self.listePositions = self.listePositions or {}
-        if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
+        if( #( self._namedParams.selPions ) == 0 ) then
             do return end
         end
 
@@ -148,7 +150,7 @@ node "BEH_Medo_Automate_ABC_Interdire_AssignerMissionSurveillerA"
 ]]lima = DEC_GetLima( eTypeLima_LR )
                 end
 
-                if( ( lima == 0 or lima == nil ) ) then
+                if( lima == 0 ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
                                                 self:SendFeedback( eActionImpossible )
@@ -159,7 +161,7 @@ node "BEH_Medo_Automate_ABC_Interdire_AssignerMissionSurveillerA"
 ]]                end
 
                 self.listePositions = DEC_Geometrie_CalculerPositionsParRapportALima( lima, 10, #( self._namedParams.selPions ) )
-                if( ( self.listePositions == 0 or self.listePositions == nil ) ) then
+                if( self.listePositions == 0 ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
                                                 self:SendFeedback( eActionImpossible )

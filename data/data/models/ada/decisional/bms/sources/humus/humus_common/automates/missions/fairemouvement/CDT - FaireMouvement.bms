@@ -31,6 +31,7 @@ includedFiles["sources/humus/humus_common/automates/missions/fairemouvement/CDT 
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 DEC_Trace( "$ MIS_Automate_CDT_FaireMouvement: debut $" )

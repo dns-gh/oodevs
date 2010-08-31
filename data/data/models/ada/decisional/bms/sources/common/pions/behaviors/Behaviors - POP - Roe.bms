@@ -21,6 +21,7 @@ includedFiles["sources/common/pions/behaviors/Behaviors - POP - Roe.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Tir_ChangerConsignePopulation, 1, { eEtatROEPopulation_EmploiForceInterdit, } )
         Activate( self.activations.ACT_RC, 1, { eRC_EmploiForceInterdit, } )
     end,
@@ -47,6 +48,7 @@ node "BEH_ROE_GererMaintienADistanceParMoyensNonLetaux"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Tir_ChangerConsignePopulation, 1, { eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux, } )
         Activate( self.activations.ACT_RC, 1, { eRC_MaintienADistanceParMoyensNonLetaux, } )
     end,
@@ -73,6 +75,7 @@ node "BEH_ROE_GererDispersionParMoyensDeDefenseActifs"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Tir_ChangerConsignePopulation, 1, { eEtatROEPopulation_DispersionParMoyensDeDefenseActifs, } )
         Activate( self.activations.ACT_RC, 1, { eRC_DispersionParMoyensDeDefenseActifs, } )
     end,
@@ -99,6 +102,7 @@ node "BEH_ROE_GererArmesLetalesAutorisees"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Tir_ChangerConsignePopulation, 1, { eEtatROEPopulation_ArmesLetalesAutorisees, } )
         Activate( self.activations.ACT_RC, 1, { eRC_ArmesLetalesAutorisees, } )
     end,
@@ -128,6 +132,7 @@ node "BEH_ROE_Recevoir_OrdreInopinePopulation"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------

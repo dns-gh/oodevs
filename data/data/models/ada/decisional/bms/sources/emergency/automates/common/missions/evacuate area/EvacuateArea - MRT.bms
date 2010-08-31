@@ -28,6 +28,7 @@ includedFiles["sources/emergency/automates/common/missions/evacuate area/Evacuat
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eCreationMRT = self.eCreationMRT or eActionEnCours
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
@@ -95,6 +96,7 @@ node "BEH_Medo_Automate_Emergency_PreparerMission_EvacuateArea"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eMRT_SelectionnerPions
         self.eActionMRT = self.eActionMRT or eActionEnCours
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
@@ -213,6 +215,7 @@ node "BEH_Medo_Automate_Emergency_EvacuateArea"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         self.lstLocalisations = self.lstLocalisations or {}
         self.eCodeLoc = self.eCodeLoc or eNoError

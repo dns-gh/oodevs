@@ -24,6 +24,7 @@ includedFiles["sources/appui/rens/automates/roim/drac/missions/renseignersur/Ren
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------
@@ -64,6 +65,7 @@ node "BEH_Conduite_Automate_RENS_ROIM_DRAC_GererMiseEnOeuvre"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.bLancementEffectue = self.bLancementEffectue or false
         local pionDrone = S_Dispositif_Automate_RENS_ObtenirPionDroneMiseEnOeuvre( "Drone_SDTI" )
         --[[//-----------------------------------------------------------------------------
@@ -113,6 +115,7 @@ node "BEH_Conduite_Automate_RENS_ROIM_DRAC_LancerDrone"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Assigner mission au drone
 ]]--[[//-----------------------------------------------------------------------------

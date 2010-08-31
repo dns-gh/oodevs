@@ -543,6 +543,7 @@ local initializeAssignMissions = function()
 assignMission[ "automateAAppuyer_" ] = DEC_AssignMissionAutomatParameter
 assignMission[ "automateAEscorter_" ] = DEC_AssignMissionAutomatParameter
 assignMission[ "avecMateriel_" ] = DEC_AssignMissionBoolParameter
+assignMission[ "bMarcheRetrograde_" ] = DEC_AssignMissionBoolParameter
 assignMission[ "campPrisonniers_" ] = DEC_AssignMissionObjectKnowledgeParameter
 assignMission[ "campRefugies_" ] = DEC_AssignMissionObjectKnowledgeParameter
 assignMission[ "cible_" ] = DEC_AssignMissionPionParameter
@@ -728,6 +729,19 @@ end
 
 function DEC_StopAction( actionID )
     if actionID then
-        DEC__StopAction( actionID )
+        return DEC__StopAction( actionID )
     end
+    return 0
+end
+
+function DIA_GetLocalFakeActuator( behavior, pion )
+    fakeActuators = fakeActuators or {}
+    fakeActuators[behavior] = fakeActuators[behavior] or {}
+    return fakeActuators[behavior][pion] or 0
+end
+
+function DIA_SetLocalFakeActuator( behavior, pion, activity )
+    fakeActuators = fakeActuators or {}
+    fakeActuators[behavior] = fakeActuators[behavior] or {}
+    fakeActuators[behavior][pion] = activity
 end

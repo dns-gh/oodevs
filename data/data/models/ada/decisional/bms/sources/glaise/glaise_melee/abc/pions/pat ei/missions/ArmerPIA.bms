@@ -36,6 +36,7 @@ includedFiles["sources/glaise/glaise_melee/abc/pions/pat ei/missions/ArmerPIA.bm
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or nil
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Terminaison

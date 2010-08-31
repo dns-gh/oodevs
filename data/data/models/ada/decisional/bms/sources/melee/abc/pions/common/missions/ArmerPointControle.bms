@@ -42,6 +42,7 @@ includedFiles["sources/melee/abc/pions/common/missions/ArmerPointControle.bms"] 
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.posteControle = self.posteControle or nil--[[// inti apres
@@ -90,7 +91,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                                 cases_switch_1[1] = true
 elseif switch_1 == eAnimer then
                     self.posteControle = S_Objet_Pion_ABC_ObtenirSiteSur( self._namedParams.mission.pointDeControle_ )
-                    if( ( self.posteControle == 0 or self.posteControle == nil ) ) then
+                    if( self.posteControle == nil ) then
                         do
                             Activate( self.activations.ACT_Pion_ABC_CreerSiteSur, 1, { self._namedParams.mission.pointDeControle_, } )
                                                         do return end

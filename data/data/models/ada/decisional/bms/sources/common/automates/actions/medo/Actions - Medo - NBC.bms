@@ -22,7 +22,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - NBC.bms"] 
     select = function( self )
         self.dest = self.dest or DEC_Geometrie_CalculerPointArriveePourPion( self._namedParams.pion )
         --[[//DEC_Debug( "assert halt failed : " +  "pas de point d'arrivee"  );
-]]if( not ( ( self.dest ~= 0 and self.dest ~= nil ) ) ) then
+]]if( not ( self.dest ~= nil ) ) then
             do
                                 self:SendFeedback( eActionImpossible )
                 Halt( self )

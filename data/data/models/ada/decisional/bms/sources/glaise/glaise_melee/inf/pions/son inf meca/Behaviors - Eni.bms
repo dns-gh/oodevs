@@ -70,6 +70,7 @@ node "BEH_Eni_Pion_VAB_Fixer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionFixer = self.eActionFixer or eActionEnCours
         self.ptEni_EnCours = self.ptEni_EnCours or S_Eni_Position( self._namedParams.repEni )
         --[[// On arrete de tirer lorsque la section est detruite tactiquement
@@ -173,6 +174,7 @@ node "BEH_Eni_Pion_VAB_ManoeuvreDetruire"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionDeplacement = self.eActionDeplacement or eActionEnCours
         self.ePhase = self.ePhase or eRejoindre
         local rPH = GetStateVariable( "VE_Agressivite_Tir" )
@@ -298,6 +300,7 @@ node "BEH_Dep_Pion_INF_GererDispositif_Offensif"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Si c'est un ami ... comme on start le comportment
 ]]        self.eActionPreciser = self.eActionPreciser or eActionEnCours
         self.eAction = self.eAction or eActionEnCours
@@ -378,6 +381,7 @@ node "BEH_Poste_Pion_INF_NettoyerPosition"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.ptEni = self.ptEni or DEC_Geometrie_CreerPoint()
         self.eAction = self.eAction or eActionEnCours
         self.bInitFouille = self.bInitFouille or true
@@ -430,6 +434,7 @@ node "BEH_Eni_Pion_VAB_Offensif_Manoeuvre"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( not DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
             do return end
         end
@@ -490,6 +495,7 @@ node "BEH_Eni_Pion_INF_GererContactEni"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DEC_ConnaissanceAgent_EstDetruitTactique( self._namedParams.ksEni ) ) then
             do return end
         end

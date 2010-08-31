@@ -21,6 +21,7 @@ includedFiles["sources/common/automates/behaviors/Behaviors - Rens.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio, 1, {} )--[[// Eventuellement d'autre comportements...
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion de l'ordre de conduite
@@ -56,6 +57,7 @@ node "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
         for _,x in pairs( ordres_recus or {} ) do
         local _continue = true
@@ -114,6 +116,7 @@ node "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadioPartiel"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
         for _,x in pairs( ordres_recus or {} ) do
         local _continue = true
@@ -168,6 +171,7 @@ node "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadar"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
         for _,x in pairs( ordres_recus or {} ) do
         local _continue = true
@@ -220,6 +224,7 @@ node "BEH_Ordre_Automate_ConduitePasserEnSilenceRadio"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// RC
 ]]--[[//-----------------------------------------------------------------------------
@@ -260,6 +265,7 @@ node "BEH_Ordre_Automate_ConduitePasserEnSilenceRadioPartiel"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// RC
 ]]--[[//-----------------------------------------------------------------------------
@@ -300,6 +306,7 @@ node "BEH_Ordre_Automate_ConduiteFinSilenceRadio"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Donner l'ordre aux pions si embrayé
 ]]--[[//-----------------------------------------------------------------------------
@@ -420,6 +427,7 @@ node "ACT_Ordre_PasserEnSilenceRadio"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// RC
 ]]--[[//-----------------------------------------------------------------------------
@@ -459,6 +467,7 @@ node "BEH_Ordre_Automate_ConduiteFinSilenceRadar"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Donner l'ordre aux pions si embrayé
 ]]--[[//-----------------------------------------------------------------------------

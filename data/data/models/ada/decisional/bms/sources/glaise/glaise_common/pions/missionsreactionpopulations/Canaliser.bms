@@ -28,6 +28,7 @@ includedFiles["sources/glaise/glaise_common/pions/missionsreactionpopulations/Ca
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.ePreparation = self.ePreparation or eActionEnCours

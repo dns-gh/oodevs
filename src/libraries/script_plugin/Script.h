@@ -12,7 +12,10 @@
 
 namespace directia
 {
-    class Brain;
+    namespace brain
+    {
+        class Brain;
+    }
 }
 
 namespace dispatcher
@@ -52,7 +55,7 @@ private:
     //! @name Member data
     //@{
     std::string file_;
-    std::auto_ptr< directia::Brain > brain_;
+    std::auto_ptr< directia::brain::Brain > brain_;
     std::auto_ptr< FiniteStateMachine > fsm_;
     //@}
 };

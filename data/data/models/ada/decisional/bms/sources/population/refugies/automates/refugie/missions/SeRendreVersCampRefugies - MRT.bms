@@ -26,12 +26,13 @@ includedFiles["sources/population/refugies/automates/refugie/missions/SeRendreVe
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
         self.posCampPrisonnier = self.posCampPrisonnier or DEC_PositionCampRefugies()
         --[[//---------------------------------------------------------------------
 ]]--[[// Test présence camps refugies
 ]]--[[//---------------------------------------------------------------------
-]]if( ( self.posCampPrisonnier == 0 or self.posCampPrisonnier == nil ) ) then
+]]if( self.posCampPrisonnier == nil ) then
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "----- Pas de camps de refugies ----- ", } )
                                 self:SendFeedback( eActionImpossible )
@@ -112,6 +113,7 @@ node "BEH_Medo_Automate_Refugies_AssignerFaireMouvementA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//---------------------------------------------------------------------
 ]]--[[// Assignation des missions
 ]]--[[//---------------------------------------------------------------------	

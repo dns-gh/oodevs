@@ -15,8 +15,17 @@
 
 namespace directia
 {
-    class Brain;
-    class ScriptRef;
+    namespace brain
+    {
+        class Brain;
+    }
+    namespace tools
+    {
+        namespace binders
+        {
+            class ScriptRef;
+        }
+    }
 }
 
 namespace plugins
@@ -38,7 +47,7 @@ class FiniteStateMachine
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FiniteStateMachine( directia::Brain& brain );
+    explicit FiniteStateMachine( directia::brain::Brain& brain );
     virtual ~FiniteStateMachine();
     //@}
 
@@ -57,7 +66,7 @@ private:
 
     //! @name Helpers
     //@{
-    void DeclareEvent( boost::shared_ptr< Condition_ABC >, const std::vector< std::string >& states, const directia::ScriptRef& function );
+    void DeclareEvent( boost::shared_ptr< Condition_ABC >, const std::vector< std::string >& states, const directia::tools::binders::ScriptRef& function );
     std::string CurrentState() const;
     void ChangeState( const std::string& );
     void Deactivate();

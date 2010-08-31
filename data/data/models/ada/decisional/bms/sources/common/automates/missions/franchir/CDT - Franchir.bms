@@ -30,6 +30,7 @@ includedFiles["sources/common/automates/missions/franchir/CDT - Franchir.bms"] =
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 DEC_Trace( "$ MIS_Automate_CDT_Franchir: debut $" )

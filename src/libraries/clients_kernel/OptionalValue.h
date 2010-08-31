@@ -26,7 +26,7 @@ public:
     //! @name Constructors/Destructor
     //@{
                  OptionalValue() : value_(), set_( false ) {};
-    /*implicit*/ OptionalValue( const T& value ) : value_( value ), set_( true ) {};
+    /*implicit*/ OptionalValue( const T& value, bool isSet = true ) : value_( value ), set_( isSet ) {};
     virtual     ~OptionalValue() {};
     //@}
 

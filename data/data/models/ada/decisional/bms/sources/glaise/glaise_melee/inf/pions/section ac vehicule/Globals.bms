@@ -76,7 +76,7 @@ end
 function S_CalculerPositionAppui( pion, rDist )
     local _returnValue = nil
     local mission = DEC_GetMission( myself )
-    if( ( F_Pion_GeteTypeContact( myself ) == eTypeContact_Offensif or mission == 0 or F_Pion_GeteTypeContact( myself ) == eTypeContact_Offensif or mission == nil ) ) then
+    if( F_Pion_GeteTypeContact( myself ) == eTypeContact_Offensif or mission == 0 ) then
         _returnValue = DEC_Geometrie_CalculerPositionAppui( pion, rDist )
     else
         _returnValue = S_Geometrie_PtInvDirDangereuse( pion:DEC_Agent_Position(), DEC_GetDirectionDanger( mission ), 900 )

@@ -27,6 +27,7 @@ node "MIS_Automate_MRT_INF_AppuyerUneAttaque"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eCreationMRT = self.eCreationMRT or eActionEnCours
         self.rN_Position = self.rN_Position or 0
         local selPions = DEC_Automate_PionsSansPC()

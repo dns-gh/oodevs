@@ -114,7 +114,7 @@ motivation_plugin.stimuli["STIM_PriseAPartiParPopulation"] = function()
 ]]    end
 
 motivation_plugin.stimuli["STIM_TenirFaceAPopulation"] = function()
-        if( ( DEC_Agent_EtatOpsMajeur() == 0 or DEC_Agent_EtatOpsMajeur() == nil ) ) then
+        if( DEC_Agent_EtatOpsMajeur() == nil ) then
             do
                 SetStimulus( "STIM_TenirFaceAPopulation", 0 )
             end

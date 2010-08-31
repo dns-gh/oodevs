@@ -46,6 +46,7 @@ includedFiles["sources/glaise/glaise_melee/abc/pions/common/missions/Freiner.bms
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.eEtatRecueil = self.eEtatRecueil or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission

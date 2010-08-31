@@ -26,6 +26,7 @@ includedFiles["sources/glaise/glaise_common/automates/behaviors/Behaviors - POP 
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Reception d'un ordre du superieur
 ]]--[[//-----------------------------------------------------------------------------
@@ -122,6 +123,7 @@ node "BEH_ROE_Automate_EmploiForceInterdit"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
         local _continue = true
             Activate( self.activations.ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit, 1, { pion, } )
@@ -151,6 +153,7 @@ node "BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
         local _continue = true
             Activate( self.activations.ACT_ROE_Automate_DonnerOrdreMaintienADistanceParMoyensNonLetaux, 1, { pion, } )
@@ -180,6 +183,7 @@ node "BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
         local _continue = true
             Activate( self.activations.ACT_ROE_Automate_DonnerOrdreDispersionParMoyensDeDefenseActifs, 1, { pion, } )
@@ -209,6 +213,7 @@ node "BEH_ROE_Automate_ArmesLetalesAutorisees"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
         local _continue = true
             Activate( self.activations.ACT_ROE_Automate_DonnerOrdreArmesLetalesAutorisees, 1, { pion, } )

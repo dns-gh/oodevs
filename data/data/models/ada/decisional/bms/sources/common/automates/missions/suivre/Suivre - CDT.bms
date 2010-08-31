@@ -23,6 +23,7 @@ includedFiles["sources/common/automates/missions/suivre/Suivre - CDT.bms"] = tru
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             DEC_SetMission( myself, self._namedParams.mission )
         end
@@ -67,6 +68,7 @@ node "BEH_CoordDep_Automate_ActiverCoordinationAmisSur"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.resultatCalcul = self.resultatCalcul or nil
         self.bPremierOrdreDonne = self.bPremierOrdreDonne or false
         --[[//-------------------------------------------------------------------------

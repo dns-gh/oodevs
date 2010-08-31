@@ -11,7 +11,7 @@
 #include "ObjectConditions.h"
 #include "SimpleEntityCondition.h"
 #include "AgentEvents.h"
-#include <directia/Brain.h>
+#include <directia/brain/Brain.h>
 
 using namespace plugins::script;
 
@@ -38,10 +38,10 @@ ObjectConditions::~ObjectConditions()
 // Name: ObjectConditions::RegisterIn
 // Created: SBO 2010-07-13
 // -----------------------------------------------------------------------------
-void ObjectConditions::RegisterIn( directia::Brain& brain )
+void ObjectConditions::RegisterIn( directia::brain::Brain& brain )
 {
-    brain.RegisterObject( "events.objects", this );
-    brain.RegisterFunction( "ObjectDestroyed", &ObjectConditions::ObjectDestroyed );
+    brain[ "events.objects"] = this;
+    brain.Register( "ObjectDestroyed", &ObjectConditions::ObjectDestroyed );
 }
 
 namespace directia

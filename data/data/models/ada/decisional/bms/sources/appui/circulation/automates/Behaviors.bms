@@ -62,6 +62,7 @@ include "Appui/Circulation/Automates/Missions/Missions.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// ========================== En embrayé SEULEMENT ============================
 ]]if( not DEC_Automate_EstEmbraye() ) then
             do return end

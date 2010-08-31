@@ -30,6 +30,7 @@ node "MIS_Automate_MRT_INF_ReleverEnRecueillant"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eCreationMRT = self.eCreationMRT or eActionEnCours
         local selPions = DEC_Automate_PionsSansPC()
         --[[//-----------------------------------------------------------------------------
@@ -100,6 +101,7 @@ node "BEH_Medo_Automate_INF_ReleverEnRecueillant"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 local mission = DEC_GetMission( myself )
         self.selPions = self.selPions or DEC_Automate_PionsSansPC()
         self.rNombrePions = self.rNombrePions or #( self.selPions )
@@ -173,7 +175,7 @@ elseif switch_2 == "SectionInfanterie_MILAN"
 ]]
                     end
 
-                    if( ( #( self.lstPionsAttaque ) == 0 or #( self.lstPionsAttaque ) == nil ) ) then
+                    if( #( self.lstPionsAttaque ) == 0 ) then
                         do
                             DEC_Trace( "Pas de 1er echelon" )
                                                         self:SendFeedback( eActionImpossible )

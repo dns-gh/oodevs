@@ -34,6 +34,7 @@ includedFiles["sources/glaise/glaise_melee/abc/pions/seccharlourd/missions/Barre
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or nil
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Terminaison

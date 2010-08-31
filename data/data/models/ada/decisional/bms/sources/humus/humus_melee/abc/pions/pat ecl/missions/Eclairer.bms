@@ -39,6 +39,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or nil
         Activate( self.activations.BEH_MAJ_Pion_ABC_EnvieDeSInfiltrer, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[//  /===========> ///////////// SPE MISSION EI /////////////<============

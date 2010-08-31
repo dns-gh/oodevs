@@ -35,6 +35,7 @@ includedFiles["sources/glaise/glaise_melee/inf/automates/common/Behaviors CDT - 
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Recupere les section d'infanterie en appui
 ]]local selPions_PourReleve = S_Cherche_Automate_PionsPourReleve()
         for _,x_pion in pairs( DEC_Automate_PionsSansPC() or {} ) do
@@ -88,6 +89,7 @@ node "BEH_Dispositif_Automate_INF_GererReleve_EnDepassant"
     end,
 
     activate = function( self )
+        local Activate = Activate
     end,
 
 }
@@ -100,6 +102,7 @@ node "BEH_Dispositif_Automate_INF_GererReleve_SurPlace"
     end,
 
     activate = function( self )
+        local Activate = Activate
     end,
 
 --[[// *****************************************************************************
@@ -133,6 +136,7 @@ node "BEH_Conduite_Automate_INF_AssignerReleve"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-------------------------------------------------------------------------

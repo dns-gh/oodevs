@@ -20,6 +20,7 @@ node "MIS_Automate_MRT_ASA_MISTRAL_Surveiller"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eMRT_AssignerMissions
         self.eEtatMissionsSurveiller = self.eEtatMissionsSurveiller or eActionEnCours
         self.pionPC = self.pionPC or DEC_Automate_PionPC()

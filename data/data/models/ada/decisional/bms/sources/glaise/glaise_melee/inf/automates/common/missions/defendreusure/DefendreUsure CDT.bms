@@ -29,6 +29,7 @@ node "BEH_Conduite_Automate_INF_MenerDefenseUsure"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_CoordDep_Automate_INF_Retrograde, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// Coordination du front
 ]]--[[//-----------------------------------------------------------------------------
@@ -67,6 +68,7 @@ node "BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local lstSectionSE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
         if( ModuleBegins() ) then
             do

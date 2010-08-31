@@ -100,6 +100,7 @@ include "Melee/Inf/Pions/Son Hot/Missions/Surveiller.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             myself.bAppuieFreinage_ = false
         end
@@ -124,6 +125,7 @@ node "BEH_Tir_Pion_INF_TirDebarque"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         local eActionReturn = self.eAction
         Activate( self.activations.ACT_Tir_DirectSur, 1, { self._namedParams.ksEni, 1, } )
@@ -150,6 +152,7 @@ node "BEH_Eni_Pion_INF_GererContactEni"
     end,
 
     activate = function( self )
+        local Activate = Activate
          do
             local _continue = true
             local switch_1 = F_Pion_GeteTypeContact( myself )

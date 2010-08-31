@@ -20,6 +20,7 @@ includedFiles["sources/glaise/glaise_appui/artdsa/automates/batterie asa mp/miss
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Info_Trace, 1, { "Mission Sgpt ASA : Surveiller", } )
         Activate( self.activations.BEH_Eni_ASA_HAWK_GererTirsSurveiller, 1, { self._namedParams.mission.zone_, } )
     end,

@@ -34,6 +34,7 @@ includedFiles["sources/melee/abc/pions/pat ei/missions/SEmparerZone.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or nil
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Terminaison

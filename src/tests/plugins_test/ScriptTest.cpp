@@ -9,7 +9,7 @@
 
 #include "plugins_test_pch.h"
 #include "script_plugin/CommandString.h"
-#include <directia/Brain.h>
+#include <directia/brain/Brain.h>
 #include <boost/filesystem.hpp>
 
 namespace bfs = boost::filesystem;
@@ -74,12 +74,17 @@ BOOST_AUTO_TEST_CASE( ScriptTest_CommandParsing )
     }
 }
 
+#include <iostream>
+
 namespace
 {
     void TestLibrary( const std::string& name )
     {
         const std::string filename = BOOST_RESOLVE( "script_plugin/" + name + ".lua" );
-        directia::Brain( bfs::path( filename, bfs::native ).native_directory_string(), "test_suite" ).GetScriptFunction( "RunTest" )();
+        const std::string brainParam = "brain={file='" + filename + "',type='test_suite'} plugins={} cwd='" + bfs::path( filename, bfs::native ).branch_path().string() + "'";
+        std::cerr << "Param = " << brainParam << std::endl;
+        directia::brain::Brain brain( brainParam );
+        brain[ "RunTest" ]();
     }
 }
 

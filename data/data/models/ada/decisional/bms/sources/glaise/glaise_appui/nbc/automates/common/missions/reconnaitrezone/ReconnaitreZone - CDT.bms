@@ -21,6 +21,7 @@ includedFiles["sources/glaise/glaise_appui/nbc/automates/common/missions/reconna
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// Gen
 ]]--[[//-----------------------------------------------------------------------------

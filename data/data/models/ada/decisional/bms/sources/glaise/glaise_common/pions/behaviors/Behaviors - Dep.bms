@@ -34,6 +34,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtat = self.eEtat or eActionEnCours
         self.it = self.it or DEC_CreerItineraireListe( self._namedParams.itineraire, self._namedParams.eTypeIti )
         --[[//-----------------------------------------------------------------------------
@@ -101,6 +102,7 @@ node "BEH_Dep_ProgressionVers"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtat = self.eEtat or eActionEnCours
         self.it = self.it or DEC_CreerItineraire( self._namedParams.pointArrivee, self._namedParams.eTypeIti )
         --[[//=============================================================================
@@ -160,6 +162,7 @@ node "BEH_Dep_SeDeplacer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         if( self.eEtat == eActionEffectuee ) then
             do
@@ -212,6 +215,7 @@ node "BEH_Dep_GererAvantPoint"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Regarder les eAvantPoint dans la liste des points interranssant
 ]]--[[//-----------------------------------------------------------------------------
@@ -333,6 +337,7 @@ node "BEH_Dep_GererPoint"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Regarder les points interssants
 ]]--[[//-----------------------------------------------------------------------------
@@ -415,6 +420,7 @@ node "BEH_Dep_GererProgression"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//=========================================================================
 ]]--[[//             ** Comportement spécifique à la progression tactique **
 ]]--[[//=========================================================================
@@ -470,6 +476,7 @@ node "BEH_Dep_Progresser"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion générique du deplacement
@@ -521,6 +528,7 @@ node "BEH_Dep_ReagirFaceAObstacle"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.repObjet = self.repObjet or nil
         self.rDist = self.rDist or 0
         self.bObjetProcheSurItineraire = self.bObjetProcheSurItineraire or false
@@ -548,7 +556,7 @@ node "BEH_Dep_ReagirFaceAObstacle"
                     else
 if( appuiGeniePions() ) then
                             do
-                                if( ( myself.mission_ ~= 0 and myself.mission_ ~= nil ) and myself.mission_:GetType() == "T_Mission_Pion_GEN_ReconnaitreItineraire" ) then
+                                if( myself.mission_ ~= 0 and myself.mission_:GetType() == "T_Mission_Pion_GEN_ReconnaitreItineraire" ) then
                                     Activate( self.activations.ACT_Dep_SePosterFaceAObstacle, 1, { self.repObjet, } )
                                 end
 
@@ -603,6 +611,7 @@ node "BEH_Dep_SePoster"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Dep_SePoster, 1, {} )
     end,
 
@@ -630,6 +639,7 @@ node "BEH_SePosterFaceAEni"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-------------------------------------------------------------------------
 ]]--[[// init comp
 ]]--[[//-------------------------------------------------------------------------
@@ -666,7 +676,8 @@ node "BEH_Dep_SePosterFaceADirectionDangereuse"
     end,
 
     activate = function( self )
-        if( ( DEC_GetMission( myself ) == 0 or DEC_GetMission( myself ) == nil ) ) then
+        local Activate = Activate
+        if( DEC_GetMission( myself ) == nil ) then
             do return end
         end
 
@@ -713,6 +724,7 @@ node "BEH_Dep_Suivre"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.itVersAmi = self.itVersAmi or nil
         self.eComportement = self.eComportement or eCreerItineraire
         self.eEtat = self.eEtat or eActionEnCours
@@ -829,6 +841,7 @@ node "BEH_Dep_Suivre_Elastique"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.itVersAmi = self.itVersAmi or nil
         self.eComportement = self.eComportement or eCreerItineraire
         self.eEtat = self.eEtat or eActionEnCours

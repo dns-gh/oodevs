@@ -306,7 +306,7 @@
                    libs="HLA,libFedTime,masalloc,tools,libprotobuf,
                          xerces-c_mt_static_2,Xerces-depdom_static_2,
                          MT_Tools,MT_Logger,MT_Memory,MT_IO,MT_Thread,
-                         directia-${platform}-mt-4_5,
+                         directia-${platform}-mt-4_6,
                          lib${ant.project.name}_actions-static-${platform}-mt@{suffix},
                          lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                          lib${ant.project.name}_protocol-${platform}-mt@{suffix},
@@ -347,7 +347,7 @@
 
     <target name="application.simulation_app.nocrossbow" description="build Sword Simulation executable without crossbow" depends="library.dispatcher,library.simulation_kernel,application.dispatcher_dll.nocrossbow">
         <build-app name="simulation_app" depends="mt,terrain,boost,xerces,flexlm,qt"
-            libs="HLA,libFedTime,masalloc,libprotobuf,directia-${platform}-mt-4_5,library-${platform}-mt,
+            libs="HLA,libFedTime,masalloc,libprotobuf,directia-${platform}-mt-4_6,library-${platform}-mt,
                   gdal_i,gdal_ogr,geodata,
                   population-${platform}-mt@{suffix},
                   dispatcher-${platform}-mt@{suffix},
@@ -371,7 +371,7 @@
     <target name="application.replayer_app.nocrossbow" description="build Sword replayer executable without crossbow" depends="application.dispatcher_dll.nocrossbow,library.dispatcher,library.3a,library.score_plugin">
         <!-- MT uses xerces dynamic lib by default -->
         <build-app name="replayer_app" depends="terrain,boost,flexlm,qt"
-            libs="HLA,libFedTime,tools,directia-${platform}-mt-4_5,libprotobuf,
+            libs="HLA,libFedTime,tools,directia-${platform}-mt-4_6,libprotobuf,
                   MT_Tools,MT_Logger,MT_Memory,MT_IO,MT_Thread,MT_Time,
                   xerces-c_mt_static_2,Xerces-depdom_static_2,
                   dispatcher-${platform}-mt@{suffix},
@@ -405,7 +405,7 @@
             libs="HLA,libFedTime,masalloc,tools,libprotobuf,gdal_i,
                   xerces-c_mt_static_2,Xerces-depdom_static_2,
                   MT_Tools,MT_Logger,MT_Memory,MT_IO,MT_Thread,
-                  directia-${platform}-mt-4_5,
+                  directia-${platform}-mt-4_6,
                   lib${ant.project.name}_actions-static-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
@@ -450,7 +450,7 @@
     <target name="application.simulation_app.crossbow" description="build Sword Simulation executable" depends="library.dispatcher,library.simulation_kernel,application.dispatcher_dll.crossbow">
         <build-app name="simulation_crossbow_app" depends="mt,terrain,boost,xerces,flexlm,qt"
             pattern="simulation_crossbow_app" input="simulation_app"
-            libs="HLA,libFedTime,masalloc,libprotobuf,directia-${platform}-mt-4_5,library-${platform}-mt,
+            libs="HLA,libFedTime,masalloc,libprotobuf,directia-${platform}-mt-4_6,library-${platform}-mt,
                   gdal_i,gdal_ogr,geodata,
                   population-${platform}-mt@{suffix},
                   dispatcher-crossbow-${platform}-mt@{suffix},
@@ -477,7 +477,7 @@
         <!-- MT uses xerces dynamic lib by default -->
         <build-app name="replayer_crossbow_app" depends="terrain,boost,flexlm,qt"
             pattern="replayer_crossbow_app" input="replayer_app"
-            libs="HLA,libFedTime,tools,libprotobuf,directia-${platform}-mt-4_5,
+            libs="HLA,libFedTime,tools,libprotobuf,directia-${platform}-mt-4_6,
                   MT_Tools,MT_Logger,MT_Memory,MT_IO,MT_Thread,MT_Time,
                   xerces-c_mt_static_2,Xerces-depdom_static_2,
                   dispatcher-crossbow-${platform}-mt@{suffix},
@@ -623,13 +623,13 @@
         <attribute name="dir"/>
         <sequential>
             <delete dir="@{dir}"/>
-            <update name="BM" package="@{database}" todir="@{dir}"/>
+            <update name="masalife" version="vm_sharing" package="@{database}" todir="@{dir}"/>
         </sequential>
     </macrodef>
 
     <target name="generate-database" description="compile behavior model database">
-        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/libs/core" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core"/>
-        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/libs/base" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core"/>
+        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/libs/core/src" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core/src"/>
+        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/libs/base" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core/src"/>
         <delete>
             <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src" includes="**/*.bmt,**/*.bmk,**/*.bmr"/>
             <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.test/src" includes="**/*.bmt,**/*.bmk,**/*.bmr"/>
@@ -637,11 +637,11 @@
             <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.security/src" includes="**/*.bmt,**/*.bmk,**/*.bmr"/>
             <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.worldwide/src" includes="**/*.bmt,**/*.bmk,**/*.bmr"/>
         </delete>
-        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core;${data.dir}/data/models/ada/decisional/directia5/models/libs/base"/>
-        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.test/src" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core;${data.dir}/data/models/ada/decisional/directia5/models/libs/base;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src;"/>
-        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.france/src" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core;${data.dir}/data/models/ada/decisional/directia5/models/libs/base;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src;"/>
-        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.security/src" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core;${data.dir}/data/models/ada/decisional/directia5/models/libs/base;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src;"/>
-        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.worldwide/src" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core;${data.dir}/data/models/ada/decisional/directia5/models/libs/base;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src;"/>
+        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core/src;${data.dir}/data/models/ada/decisional/directia5/models/libs/base"/>
+        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.test/src" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core/src;${data.dir}/data/models/ada/decisional/directia5/models/libs/base;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src;"/>
+        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.france/src" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core/src;${data.dir}/data/models/ada/decisional/directia5/models/libs/base;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src;"/>
+        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.security/src" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core/src;${data.dir}/data/models/ada/decisional/directia5/models/libs/base;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src;"/>
+        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.worldwide/src" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core/src;${data.dir}/data/models/ada/decisional/directia5/models/libs/base;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src;"/>
     </target>
 
     <target name="generate-data" depends="generate-database" description="generate data"/>
@@ -682,7 +682,7 @@
 
     <target name="plugins_test" depends="library.hla_plugin,library.tic_plugin,library.bml_plugin,library.crossbow_plugin">
         <build-test name="plugins" depends="xerces,terrain,boost"
-            libs="directia-${platform}-mt-4_5,libprotobuf,
+            libs="directia-${platform}-mt-4_6,libprotobuf,
             lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
             lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix},
             lib${ant.project.name}_tic_plugin-${platform}-mt@{suffix},
@@ -825,7 +825,7 @@
 
     <target name="application.simulation_kernel_test" description="build CSword Simulation kernel test executable" depends="library.simulation_kernel">
         <build-test name="simulation_kernel"
-                   libs="HLA,libFedTime,masalloc,tools,libprotobuf,directia-${platform}-mt-4_5,library-${platform}-mt,
+                   libs="HLA,libFedTime,masalloc,tools,libprotobuf,directia-${platform}-mt-4_6,library-${platform}-mt,
                    gdal_i,gdal_ogr,geodata,
                    population-${platform}-mt@{suffix},
                    dispatcher-${platform}-mt@{suffix},
@@ -847,7 +847,7 @@
 
     <target name="application.integration_decisionnal_test" description="build CSword Integration DIA5 test executable">
         <build-test name="integration_decisionnal"
-            libs="directia-${platform}-mt-4_5"
+            libs="directia-${platform}-mt-4_6"
             depends="boost"
             dir="../../data/data/models/ada/decisional/directia5">
             <includepath path="${libraries.dir}/simulation_kernel"/>
@@ -966,9 +966,10 @@
         <update name="boost"/>
         <update name="boost" package="geometry" todir="${include.dir}"/>
         <update name="rti"/>
-        <update name="BM" />
-        <update name="BM" package="bmc" todir="${bin.dir}"/>
-        <update name="BM" package="directia4_${platform}_plugins" todir="${run.dir}"/>
+        <update name="models/military"/>
+        <update name="masalife" version="vm_sharing" />
+        <update name="masalife" version="vm_sharing" package="bmc" todir="${bin.dir}"/>
+        <!--<update name="masalife_vm_sharing" package="directia4_${platform}_plugins" todir="${run.dir}"/>-->
         <update name="cgal"/> <!-- MGD For mpfr dll use in BM terrain analyse -->
         <update name="hla"/>
         <update name="tools"/>
@@ -989,8 +990,8 @@
         <update name="protobuf"/>
         <update name="vcredist" package="vcredist"/>
         <update name="system"/>
-        <update-database database="core-database" dir="${data.dir}/data/models/ada/decisional/directia5/models/libs/core"/>
-        <update-database database="generic-database" dir="${data.dir}/data/models/ada/decisional/directia5/models/libs/base"/>
+        <update-database database="directia.core" dir="${data.dir}/data/models/ada/decisional/directia5/models/libs/core"/>
+        <update name="models/military" package="net.masagroup.military" todir="${data.dir}/data/models/ada/decisional/directia5/models/libs/base"/>
         <antcall target="generate-data"/>
     </target>
 

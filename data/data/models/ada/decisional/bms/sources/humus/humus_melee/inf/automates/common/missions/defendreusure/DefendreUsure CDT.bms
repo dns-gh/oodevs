@@ -29,6 +29,7 @@ node "BEH_Conduite_Automate_INF_MenerDefenseUsure"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_CoordDep_Automate_INF_Retrograde, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// Coordination du front
 ]]--[[//-----------------------------------------------------------------------------
@@ -39,7 +40,7 @@ node "BEH_Conduite_Automate_INF_MenerDefenseUsure"
 do
                 local pionPE = x_pe
                 local mission = DEC_GetMission( pionPE )
-                if( ( ( mission ~= 0 and mission ~= nil ) and mission:GetType() == "T_Mission_Pion_INF_Interdire" ) and F_Pion_GeteEtatSituationEnnemi( pionPE ) == eEtatSituationEnnemi_PriseContact ) then
+                if( ( mission ~= 0 and mission:GetType() == "T_Mission_Pion_INF_Interdire" ) and F_Pion_GeteEtatSituationEnnemi( pionPE ) == eEtatSituationEnnemi_PriseContact ) then
                     StartActivateOverride( self, self.activations.BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis, 1, { pionPE, } )
                 end
 
@@ -67,6 +68,7 @@ node "BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local lstSectionSE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
         if( ModuleBegins() ) then
             do
@@ -76,7 +78,7 @@ node "BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis"
                     do
                         local pionSE = x_pion
                         local mission = DEC_GetMission( pionSE )
-                        if( ( mission ~= 0 and mission ~= nil ) and ( mission:GetType() == "T_Mission_Pion_INF_SurveillerSecteur" or mission:GetType() == "T_Mission_Pion_INF_Barrer" ) ) then
+                        if( mission ~= 0 and ( mission:GetType() == "T_Mission_Pion_INF_SurveillerSecteur" or mission:GetType() == "T_Mission_Pion_INF_Barrer" ) ) then
                             do
                                 local rForceAppuyer = ( 1 / ( 1 + #( F_Pion_GetselUnitesEnAppui( self._namedParams.pionEnTete ) ) ) )
                                 local rForceAppui = rForceAppuyer * S_ForceSoutien( pionSE, self._namedParams.pionEnTete )

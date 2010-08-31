@@ -40,6 +40,7 @@ node "BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         self.ePhase = self.ePhase or ePreparerMission
         self.eAction = self.eAction or eActionEnCours
@@ -191,6 +192,7 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationSimple"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.locInstallation = self.locInstallation or nil
         self.eActionObj = self.eActionObj or eActionEnCours
         if( ModuleBegins() ) then
@@ -243,6 +245,7 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationCanon"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.locInstallation_1 = self.locInstallation_1 or nil
         self.locInstallation_2 = self.locInstallation_2 or nil
         self.eActionObj1 = self.eActionObj1 or eActionEnCours
@@ -258,11 +261,11 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationCanon"
             do return end
         end
 
-        if( ( self.locInstallation_1 == 0 or self.locInstallation_1 == nil ) ) then
+        if( self.locInstallation_1 == 0 ) then
             self.eActionObj1 == eActionImpossible
         end
 
-        if( ( self.locInstallation_2 == 0 or self.locInstallation_2 == nil ) ) then
+        if( self.locInstallation_2 == 0 ) then
             self.eActionObj2 == eActionImpossible
         end
 
@@ -308,6 +311,7 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationLRM"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.lstPositions = self.lstPositions or {}
         self.locInstallation = self.locInstallation or nil
         self.eActionObj = self.eActionObj or eActionEnCours
@@ -316,7 +320,7 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationLRM"
             do
                 self.lstPositions = S_Geometrie_CreerPositionTir_LRM( self._namedParams.ptInstallation, 750 )
                 --[[// Recupere la premiere position d'installation
-]]if( ( DEC_ListePoints_Size( self.lstPositions ) == 0 or DEC_ListePoints_Size( self.lstPositions ) == nil ) ) then
+]]if( DEC_ListePoints_Size( self.lstPositions ) == 0 ) then
                     self:SendFeedback( eActionEffectuee )
                     do return end
                 end

@@ -24,6 +24,7 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/survei
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eMRT_AssignerMissions
         self.eEtatMissionsSurveiller = self.eEtatMissionsSurveiller or eActionEnCours
         self.localisationsASurveiller = self.localisationsASurveiller or {}

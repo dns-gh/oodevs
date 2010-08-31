@@ -45,6 +45,7 @@ node "BEH_Feu_Pion_VAB_Detruire_SurEni"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eActionDetruire = self.eActionDetruire or eActionEnCours
         self.eActionCouverture = self.eActionCouverture or eActionEnCours
         if( ModuleBegins() ) then

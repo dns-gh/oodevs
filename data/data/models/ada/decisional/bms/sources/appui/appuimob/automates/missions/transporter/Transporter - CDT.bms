@@ -16,6 +16,7 @@ node "MIS_Automate_CDT_LOG_TransporterUnites"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eTransporter
         self.listeTransporteur = self.listeTransporteur or {}
         self.pionPC = self.pionPC or DEC_Automate_PionPC()
@@ -43,7 +44,7 @@ self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.
         --[[// ---------------------------------------------------------------------
 ]]--[[// Condition d'arret : si plus aucun pion n'a la mission Transporer
 ]]--[[// ---------------------------------------------------------------------
-]]if( ( #( self.listeTransporteur ) == 0 or #( self.listeTransporteur ) == nil ) ) then
+]]if( #( self.listeTransporteur ) == 0 ) then
             do
                 self.ePhase = eFinMission
                                 do return end

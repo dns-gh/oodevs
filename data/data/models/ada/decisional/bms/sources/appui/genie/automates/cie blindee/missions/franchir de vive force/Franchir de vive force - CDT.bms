@@ -27,6 +27,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.listeObjets = self.listeObjets or {}
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
@@ -47,7 +48,7 @@ include "bit.lua"
 ]]--[[// Vérification des moyens
 ]]--[[//---------------------------------------------------------------------
 ]]local listePionsGenie = S_ObtenirPionsOperationnelsFiltre( "SectionGenie" )
-        if( ( #( listePionsGenie ) == 0 or #( listePionsGenie ) == nil ) ) then
+        if( #( listePionsGenie ) == 0 ) then
             do
                 Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
                                 do return end
@@ -91,6 +92,7 @@ node "BEH_Mission_Automate_GEN_CDT_OuvrirPlanObjets_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.positionRegroupement = self.positionRegroupement or S_Geometrie_BarycentreZone( self._namedParams.zoneRegroupement )
         --[[//-------------------------------------------------------------------------
 ]]--[[// Init --> deplacement vers la zone de regroupement
@@ -141,6 +143,7 @@ node "BEH_Misc_Automate_GEN_GererOuvertureDesObstacles"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.positionRegroupement = self.positionRegroupement or S_Geometrie_BarycentreZone( self._namedParams.zoneRegroupement )
         self.listeObjetsABrecher = self.listeObjetsABrecher or {}
         --[[//copie ? --> NLD: oui
@@ -170,11 +173,11 @@ do
 ]]--[[// ...On traite les objets dans l'ordre dans lequel ils ont été rentrés 
 ]]--[[// dans l'interface 
 ]]--[[//-------------------------------------------------------------------------
-]]if( ( #( self.listeObjetsABrecher ) ~= 0 and #( self.listeObjetsABrecher ) ~= nil ) ) then
+]]if( #( self.listeObjetsABrecher ) ~= 0 ) then
                     objetABrecher = DEC_UserTypeList_GetAt( self.listeObjetsABrecher, 0 )
                 end
 
-                if( ( objetABrecher ~= 0 and objetABrecher ~= nil ) ) then
+                if( objetABrecher ~= nil ) then
                     do
                         Activate( self.activations.BEH_Mission_Automate_Gen_AssignerContournerObjetA, 1, { pion, objetABrecher, } )
                         --[[// T_ConnaissanceObjet traité
@@ -225,6 +228,7 @@ node "BEH_Mission_Automate_Gen_AssignerContournerObjetA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Validité
 ]]if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.objet ) ) then
             Halt( self )
@@ -282,6 +286,7 @@ node "BEH_Misc_Automate_GEN_GererRenforcementsPourContournerObstacles"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.positionRegroupement = self.positionRegroupement or S_Geometrie_BarycentreZone( self._namedParams.zoneRegroupement )
         --[[//-------------------------------------------------------------------------
 ]]--[[// CR sur renforcement 
@@ -366,8 +371,9 @@ node "BEH_Misc_Automate_GEN_GererFinRenforcementObstacle"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Sécurité
-]]if( ( ( self._namedParams.objetABrecher:GetpionRenforcement_() == 0 or self._namedParams.objetABrecher:GetpionRenforcement_() == nil ) or self._namedParams.objetABrecher:Getpion_() == 0 or ( self._namedParams.objetABrecher:GetpionRenforcement_() == 0 or self._namedParams.objetABrecher:GetpionRenforcement_() == nil ) or self._namedParams.objetABrecher:Getpion_() == nil ) ) then
+]]if( self._namedParams.objetABrecher:GetpionRenforcement_() == nil or self._namedParams.objetABrecher:Getpion_() == nil ) then
             do return end
         end
 
@@ -405,6 +411,7 @@ node "BEH_Misc_Automate_GEN_GererFinRenforcementObjetPour"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 DEC_Trace( "Remise a disposition de " .. DEC_GetSzName( self._namedParams.pion ) )
@@ -440,6 +447,7 @@ node "BEH_Misc_Automate_GEN_GererRenforcementObstacle"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Renforcement déjà assigné
 ]]if( self._namedParams.objetABrecher:GetpionRenforcement_() ~= nil or not DEC_ConnaissanceObjet_EstValide( self._namedParams.objetABrecher:Getobstacle_() ) ) then
             do return end
@@ -519,6 +527,7 @@ node "BEH_Misc_Automate_GEN_GererRenforcementObstaclePour"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Iteration sur les pions en renforcement
 ]]--[[//-------------------------------------------------------------------------
@@ -571,6 +580,7 @@ node "BEH_Mission_Automate_GEN_RenforcerRepObjet"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-------------------------------------------------------------------------
 ]]--[[// Assignation
 ]]--[[//-------------------------------------------------------------------------

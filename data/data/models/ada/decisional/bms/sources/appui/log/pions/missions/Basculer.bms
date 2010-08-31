@@ -24,6 +24,7 @@ includedFiles["sources/appui/log/pions/missions/Basculer.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.pionPC = self.pionPC or DEC_Pion_PionPCDeAutomate( self._namedParams.mission.automatePourBascule_ )
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission

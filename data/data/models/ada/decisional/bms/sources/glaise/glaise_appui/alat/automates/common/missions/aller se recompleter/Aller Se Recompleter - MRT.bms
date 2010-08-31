@@ -26,6 +26,7 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/aller 
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eMRT_AssignerMissions
         self.eEtatMissionsAllerSeRecompleter = self.eEtatMissionsAllerSeRecompleter or eActionEnCours
         self.selPions = self.selPions or S_Cherche_Automate_PionsOperationnels( S_ListePionsALAT( DEC_Automate_PionsAvecPC() ) )

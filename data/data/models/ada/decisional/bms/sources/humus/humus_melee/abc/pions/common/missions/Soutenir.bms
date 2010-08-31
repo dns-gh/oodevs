@@ -47,6 +47,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
@@ -95,7 +96,7 @@ elseif switch_1 == eSuivreUnite then
 ]]--[[// doit tenir...
 ]]--[[//-----------------------------------------------------------------------------
 ]]local mission = DEC_GetMission( self._namedParams.pionAmi )
-                    if( ( mission ~= 0 and mission ~= nil ) and mission:GetType() == "T_Mission_Pion_ABC_Barrer" ) then
+                    if( mission ~= 0 and mission:GetType() == "T_Mission_Pion_ABC_Barrer" ) then
                         Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
                     end
 
@@ -156,6 +157,7 @@ node "BEH_Dep_Pion_ABC_Appuyer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )--[[//---------------------------------------------------------------------
 ]]--[[// Defaut

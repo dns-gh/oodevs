@@ -12,7 +12,7 @@
 #include "EventCondition.h"
 #include "MiscEvents.h"
 #include "tools/ElementObserver_ABC.h"
-#include <directia/Brain.h>
+#include "directia/brain/Brain.h"
 
 using namespace plugins::script;
 
@@ -39,10 +39,10 @@ ScriptConditions::~ScriptConditions()
 // Name: ScriptConditions::RegisterIn
 // Created: SBO 2008-07-02
 // -----------------------------------------------------------------------------
-void ScriptConditions::RegisterIn( directia::Brain& brain )
+void ScriptConditions::RegisterIn( directia::brain::Brain& brain )
 {
-    brain.RegisterObject( "events.script", this );
-    brain.RegisterFunction( "PhaseChanged", &ScriptConditions::PhaseChanged );
+    brain[ "events.script" ] = this;
+    brain.Register( "PhaseChanged", &ScriptConditions::PhaseChanged );
 }
 
 // -----------------------------------------------------------------------------

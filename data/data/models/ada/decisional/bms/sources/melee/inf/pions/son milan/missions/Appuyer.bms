@@ -48,6 +48,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or ePreparerMission
         self.tAmi = self.tAmi or self._namedParams.mission.uniteAAppuyer_
@@ -58,7 +59,7 @@ include "bit.lua"
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
                 --[[// unite a soutenir
 ]]--[[// mise a jour des infos sur le pion ami				
-]]if( ( self.tAmi == 0 or self.tAmi == nil ) ) then
+]]if( self.tAmi == nil ) then
                     do
                         DEC_Warning( eRC_MissionImpossible )
                                                 self:SendFeedback( eActionImpossible )
@@ -158,6 +159,7 @@ node "BEH_Eni_Pion_MILAN_Appuyer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local lstEnisPercus = DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau()
         for _,ksEni in pairs( lstEnisPercus or {} ) do
         local _continue = true

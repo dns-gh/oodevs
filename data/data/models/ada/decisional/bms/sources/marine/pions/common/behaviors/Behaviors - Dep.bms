@@ -31,11 +31,12 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         assert( self._namedParams.point ~= nil, "MARINE : Rejoindre Point" )
         --[[// variables persistantes
 ]]self.listePoints = self.listePoints or DEC_Geometrie_CreerListePoints()
         self.eEtat = self.eEtat or eActionEnCours
-        if( ( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.point ) == 0 or DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.point ) == nil ) ) then
+        if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.point ) == 0 ) then
             self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
@@ -85,6 +86,7 @@ node "BEH_Dep_Pion_MARINE_RejoindrePion"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 assert( self._namedParams.pion ~= nil, "MARINE : Rejoindre Pion" )
         --[[// variables persistantes
 ]]self.listePoints = self.listePoints or DEC_Geometrie_CreerListePoints()
@@ -94,7 +96,7 @@ node "BEH_Dep_Pion_MARINE_RejoindrePion"
             DEC_Copie_Point( self._namedParams.pion:DEC_Agent_Position(), self.positionPion )
         end
 
-        if( ( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.positionPion ) == 0 or DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.positionPion ) == nil ) ) then
+        if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.positionPion ) == 0 ) then
             self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
@@ -183,6 +185,7 @@ node "BEH_Dep_Pion_MARINE_RejoindreParItineraire"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//variables persistantes
 ]]        self.eEtat = self.eEtat or eActionEnCours
         self.itineraire = self.itineraire or nil
@@ -207,7 +210,7 @@ node "BEH_Dep_Pion_MARINE_RejoindreParItineraire"
         if( ModuleBegins() ) then
             do
                 assert( self._namedParams.listePoints ~= nil, "liste de points non valide" )
-                assert( ( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= 0 and DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil ), "liste de points vide" )
+                assert( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil, "liste de points vide" )
                 if( self._namedParams.distanceMax < self._namedParams.distanceMin ) then
                     self.distanceMaxEffective = self._namedParams.distanceMin
                 else
@@ -356,6 +359,7 @@ node "BEH_Dep_Pion_MARINE_Suivre"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// variables persistantes
 ]]self.eEtat = self.eEtat or eActionEnCours
         self.pointARejoindre = self.pointARejoindre or nil

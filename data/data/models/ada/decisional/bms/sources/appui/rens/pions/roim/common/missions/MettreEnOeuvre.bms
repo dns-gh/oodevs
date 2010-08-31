@@ -28,6 +28,7 @@ includedFiles["sources/appui/rens/pions/roim/common/missions/MettreEnOeuvre.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.pionDrone = self.pionDrone or nil
@@ -153,6 +154,7 @@ node "BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Programmation du drone

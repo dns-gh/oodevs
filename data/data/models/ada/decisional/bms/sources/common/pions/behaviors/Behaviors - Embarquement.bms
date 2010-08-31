@@ -28,6 +28,7 @@ include "Common/Pions/Actions/Actions - Embarquement.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DEC_Agent_TransporteursPret() and ( not DEC_Agent_EstEmbarque() ) ) then
             StartActivateOverride( self, self.activations.ACT_Transport_Pion_Embarquer, 2.01, {} )
         end

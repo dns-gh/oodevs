@@ -45,6 +45,7 @@ include "glaise/glaise_Appui/Rens/Automates/Rohum/Common/MRT generique.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// ========================== En embrayé ET débrayé ===========================
 ]]--[[// ========================== En embrayé SEULEMENT ============================
 ]]if( not DEC_Automate_EstEmbraye() ) then
@@ -70,7 +71,7 @@ include "glaise/glaise_Appui/Rens/Automates/Rohum/Common/MRT generique.bms"
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Seulement pendant une mission
 ]]--[[//-----------------------------------------------------------------------------
-]]if( ( DEC_GetMission( myself ) ~= 0 and DEC_GetMission( myself ) ~= nil ) ) then
+]]if( DEC_GetMission( myself ) ~= nil ) then
             do
                 Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )--[[// reception d'ordre venant du dessus
 ]]

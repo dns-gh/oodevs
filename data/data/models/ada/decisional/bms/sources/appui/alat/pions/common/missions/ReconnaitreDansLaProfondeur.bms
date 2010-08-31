@@ -34,6 +34,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or eRejoindre
         self.positionZoneDansListe = self.positionZoneDansListe or 0
@@ -201,7 +202,7 @@ elseif switch_1 == eReconnaitre then
                         end
                     end
 
-                    if( ( self.localisationCourante == 0 or self.localisationCourante == nil ) ) then
+                    if( self.localisationCourante == nil ) then
                         do return end
                     end
 
@@ -309,6 +310,7 @@ node "BEH_Eni_Pion_ALAT_GererEniRecoDansLaProfondeur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtatProgressionTactique = self.eEtatProgressionTactique or eActionEnCours
         local listeUnitesDetecteesDansZone = DEC_Connaissances_UnitesDetecteesDansZone( self._namedParams.localisation )
         for _,x in pairs( listeUnitesDetecteesDansZone or {} ) do

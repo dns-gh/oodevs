@@ -40,6 +40,10 @@ Changes between 1.1 and 1.0:
 assertEquals( expected, actual ).
 
 ]]--
+require "math"
+
+require "math"
+
 USE_EXPECTED_ACTUAL_IN_ASSERT_EQUALS = true
 
 function assertError(f, ...)

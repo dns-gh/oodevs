@@ -103,3 +103,4 @@ include "Humus/Humus_Melee/Abc/Automates/Common/Missions/ArmerPointControl/Armer
 include "Humus/Humus_Melee/Abc/Automates/Common/MRT generique mis offensives.bms"
 
 include "Humus/Humus_Melee/Abc/Automates/Common/MRT generique mis retrogrades.bms"
+

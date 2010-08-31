@@ -10,6 +10,7 @@
 #ifndef __PopulationFactory_h_
 #define __PopulationFactory_h_
 
+#include "Tools/MIL_Config.h"
 #include "PopulationFactory_ABC.h"
 
 class DEC_DataBase;
@@ -25,7 +26,7 @@ class PopulationFactory : public PopulationFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    PopulationFactory( DEC_DataBase& database );
+    PopulationFactory( DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
     virtual ~PopulationFactory();
     //@}
 
@@ -51,6 +52,8 @@ private:
 private:
     //! @name Member data
     //@{
+	unsigned int gcPause_;
+    unsigned int gcMult_;
     DEC_DataBase& database_;
     //@}
 };
@@ -61,14 +64,20 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const PopulationFactory* factory, const unsigned int /*version*/ )
 {
     const DEC_DataBase* const database = &factory->database_;
-    archive << database;
+    archive << database
+            << factory->gcPause_
+            << factory->gcMult_;
 }
 template< typename Archive >
 void load_construct_data( Archive& archive, PopulationFactory* factory, const unsigned int /*version*/ )
 {
     DEC_DataBase* database;
-    archive >> database;
-    ::new( factory )PopulationFactory( *database );
+    unsigned int gcPause;
+    unsigned int gcMult;
+    archive >> database
+            >> gcPause
+            >> gcMult;
+    ::new( factory )PopulationFactory( *database, gcPause, gcMult );
 }
 
 #endif // __PopulationFactory_h_

@@ -29,6 +29,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.genObs = self.genObs or DEC_CreerDIAThing( "T_GenObstacle_Local" )
@@ -43,7 +44,7 @@ include "bit.lua"
                 self.genObs:Setloc_obstacle_( self._namedParams.mission.zone_ )
                 --[[// Calcule de la position
 ]]self.ptObst = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self._namedParams.mission.zone_ )
-                if( ( self.ptObst == 0 or self.ptObst == nil ) ) then
+                if( self.ptObst == 0 ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                 self:SendFeedback( eActionImpossible )
@@ -162,6 +163,7 @@ node "BEH_Objet_Pion_GEN_RealiserZoneMobilite"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         if( self.eEtat == eActionEffectuee ) then
             do

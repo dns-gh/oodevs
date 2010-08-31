@@ -50,6 +50,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction_EnCours = self.eAction_EnCours or eActionEnCours
         self.eAction_NOK = self.eAction_NOK or eActionEnCours
         self.eAction_OK = self.eAction_OK or eActionEnCours
@@ -58,7 +59,7 @@ include "bit.lua"
             do return end
         end
 
-        if( ( self.eAction_OK == eActionEffectuee ) or ( ( self._namedParams.rN_Pion == 0 or self._namedParams.rN_Pion == nil ) ) ) then
+        if( ( self.eAction_OK == eActionEffectuee ) or ( self._namedParams.rN_Pion == nil ) ) then
             self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
@@ -100,6 +101,7 @@ node "BEH_Mission_Automate_AssignerSuivreA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -152,6 +154,7 @@ node "BEH_Mission_Automate_AssignerSuivreAListe"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
 for _,x in pairs( self._namedParams.listePions or {} ) do
             local _continue = true
@@ -193,6 +196,7 @@ node "BEH_Medo_Automate_AssignerMissionTransporterA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -248,7 +252,8 @@ node "BEH_Medo_Automate_AssignerMissionsTransporterAListe"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         assert( #( self._namedParams.listePions ) <= #( self._namedParams.listeUnitesATransporter ), "Trop de Pions Pour Transporter" )
         if( ModuleBegins() ) then
             do
@@ -260,7 +265,7 @@ node "BEH_Medo_Automate_AssignerMissionsTransporterAListe"
                 local _continue = true
                     do
                         --[[//si plus de pion a traiter, ne pas donner de mission pour rien
-]]if( ( #( listeCopiePionsATraiter ) == 0 or #( listeCopiePionsATraiter ) == nil ) ) then
+]]if( #( listeCopiePionsATraiter ) == nil ) then
                             do return end
                         end
 
@@ -329,6 +334,7 @@ node "BEH_Mission_Automate_AssignerFaireMouvementA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -386,6 +392,7 @@ node "BEH_Mission_Automate_AssignerPrendreEnComptePrisonniersA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -443,6 +450,7 @@ node "BEH_Mission_Automate_AssignerOrienterRefugiesA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -495,6 +503,7 @@ node "BEH_Mission_Automate_AssignerFaireMouvementAListe"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions or {} ) do
@@ -538,6 +547,7 @@ node "BEH_Mission_Automate_AssignerFaireMouvementSurItA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -593,6 +603,7 @@ node "BEH_Mission_Automate_AssignerSoutenirEnMesureDeA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -648,6 +659,7 @@ node "BEH_Mission_Automate_AssignerSoutenirSurPositionEnMesureDeA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -703,6 +715,7 @@ node "BEH_Mission_Automate_AssignerSeFaireTransporterA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -759,6 +772,7 @@ node "BEH_Mission_Automate_AssignerFranchir"
     end,
 
     activate = function( self )
+        local Activate = Activate
         do
         end
 --[[// Zone d'arrivee
@@ -819,6 +833,7 @@ node "BEH_Mission_Automate_AssignerSeFaireDecontaminerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.siteDecontamination ) ) then
             Halt( self )
             do return end
@@ -876,6 +891,7 @@ node "BEH_Mission_Automate_AssignerStationnerAListe"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions or {} ) do
@@ -919,6 +935,7 @@ node "BEH_Mission_Automate_AssignerStationnerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -975,6 +992,7 @@ node "BEH_Mission_Automate_AssignerDecrocherA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1030,6 +1048,7 @@ node "BEH_Mission_Automate_AssignerInterdireFranchissementPopulationsA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1082,6 +1101,7 @@ node "BEH_Mission_Automate_AssignerInterdireFranchissementPopulationsAListe"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -1132,6 +1152,7 @@ node "BEH_Mission_Automate_AssignerFiltrerPopulationsA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1184,6 +1205,7 @@ node "BEH_Mission_Automate_AssignerFiltrerPopulationsAListe"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -1234,6 +1256,7 @@ node "BEH_Mission_Automate_AssignerSecuriserZoneContrePopulationsA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1286,6 +1309,7 @@ node "BEH_Mission_Automate_AssignerSecuriserZoneContrePopulationsAListe"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -1336,6 +1360,7 @@ node "BEH_Mission_Automate_AssignerControlerPopulationsDansZoneA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1388,6 +1413,7 @@ node "BEH_Mission_Automate_AssignerControlerPopulationsDansZoneAListe"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -1438,6 +1464,7 @@ node "BEH_Mission_Automate_AssignerCanaliserPopulationsA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1490,6 +1517,7 @@ node "BEH_Mission_Automate_AssignerCanaliserPopulationsAListe"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 local iterateur = 0

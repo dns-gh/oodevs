@@ -177,6 +177,7 @@ node "MIS_Automate_CDT_INF_Rezzou"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eActionMission = self.eActionMission or eActionEnCours
         if( ModuleBegins() ) then
             do
@@ -224,6 +225,7 @@ node "BEH_Conduite_Automate_INF_Rezzou"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.mission = self.mission or DEC_GetMission( myself )
         if( ModuleBegins() ) then
             do
@@ -258,6 +260,7 @@ node "BEH_Situation_Automate_INF_Rezzou_GestionSituation"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local selEnTete = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
         self.eOrdre = self.eOrdre or eActionEnCours
         for _,x in pairs( DEC_Automate_PionsSansPC() or {} ) do

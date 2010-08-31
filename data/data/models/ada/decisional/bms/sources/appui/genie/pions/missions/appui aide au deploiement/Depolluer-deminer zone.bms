@@ -26,6 +26,7 @@ includedFiles["sources/appui/genie/pions/missions/appui aide au deploiement/Depo
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or ePreparerMission
         self.ptObst = self.ptObst or nil
@@ -36,7 +37,7 @@ includedFiles["sources/appui/genie/pions/missions/appui aide au deploiement/Depo
                 DEC_SetMission( myself, self._namedParams.mission )
                 --[[// Calcule de la position
 ]]self.ptObst = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self._namedParams.mission.zone_ )
-                if( ( self.ptObst == 0 or self.ptObst == nil ) ) then
+                if( self.ptObst == nil ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                 self:SendFeedback( eActionImpossible )
@@ -147,6 +148,7 @@ node "BEH_Objet_Pion_GEN_DeminerZone"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local ListObjets = DEC_Connaissances_ObjetsDansZone( self._namedParams.locSite, S_TypeObject_ToString( eTypeObjectBouchonMines ), S_TypeObject_ToString( eTypeObjectZoneMineeLineaire ), S_TypeObject_ToString( eTypeObjectZoneMineeParDispersion ) )
         --[[//-----------------------------------------------------------------
 ]]--[[// Pour chaque obstacles de la zone
@@ -171,7 +173,7 @@ do
 ]]
         end
 
-        if( ( rIterateur == 0 or rIterateur == nil ) ) then
+        if( rIterateur == 0 ) then
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "Plus d'obstacles connus dans la zone", } )
                 --[[// pas sûr: peut être laisser "tourner" le comportement si reco en même temps
@@ -213,6 +215,7 @@ node "BEH_Objet_Pion_GEN_Deminer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.positionProcheObjet = self.positionProcheObjet or nil
         --[[//-----------------------------------------------------------------
 ]]--[[// Init
@@ -221,7 +224,7 @@ node "BEH_Objet_Pion_GEN_Deminer"
             do
                 --[[// Normalement tj ok car localisation dans zone
 ]]self.positionProcheObjet = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( DEC_ConnaissanceObjet_Localisation( self._namedParams.obj ) )
-                if( ( self.positionProcheObjet == 0 or self.positionProcheObjet == nil ) ) then
+                if( self.positionProcheObjet == nil ) then
                     self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end

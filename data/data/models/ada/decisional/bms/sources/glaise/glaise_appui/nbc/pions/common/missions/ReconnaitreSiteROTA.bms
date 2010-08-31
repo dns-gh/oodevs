@@ -29,6 +29,7 @@ includedFiles["sources/glaise/glaise_appui/nbc/pions/common/missions/Reconnaitre
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.positionROTA = self.positionROTA or S_Obj_Position( self._namedParams.mission.siteROTA_ )
@@ -182,6 +183,7 @@ node "BEH_Pion_Nbc_ReconnaitreSiteROTA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         if( self.eEtat == eActionEffectuee ) then
             self:SendFeedback( eActionEffectuee )

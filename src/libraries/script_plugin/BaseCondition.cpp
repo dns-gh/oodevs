@@ -45,9 +45,9 @@ void BaseCondition::Activate( bool active )
 // Name: BaseCondition::SetTarget
 // Created: AGE 2008-06-17
 // -----------------------------------------------------------------------------
-void BaseCondition::SetTarget( const directia::ScriptRef& function )
+void BaseCondition::SetTarget( const directia::tools::binders::ScriptRef& function )
 {
-    function_.reset( new directia::ScriptRef( function ) );
+    function_.reset( new directia::tools::binders::ScriptRef( function ) );
 }
 
 // -----------------------------------------------------------------------------

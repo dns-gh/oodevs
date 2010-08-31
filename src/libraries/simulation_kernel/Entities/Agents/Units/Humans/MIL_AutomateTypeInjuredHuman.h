@@ -40,8 +40,8 @@ public:
 
     //! @name Instanciation
     //@{
-    virtual MIL_Automate& InstanciateAutomate( uint nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database ) const;
-    virtual MIL_Automate& InstanciateAutomate( uint nID, MIL_Automate&  parent, xml::xistream& xis, DEC_DataBase& database ) const;
+    virtual MIL_Automate& InstanciateAutomate( uint nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult ) const;
+    virtual MIL_Automate& InstanciateAutomate( uint nID, MIL_Automate&  parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult ) const;
     //@}
 
     //! @name Main

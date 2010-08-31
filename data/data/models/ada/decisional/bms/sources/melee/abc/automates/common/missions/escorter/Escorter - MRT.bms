@@ -36,6 +36,7 @@ includedFiles["sources/melee/abc/automates/common/missions/escorter/Escorter - M
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Affectation des missions à l'echelon
 ]]--[[//-----------------------------------------------------------------------------
@@ -45,7 +46,7 @@ includedFiles["sources/melee/abc/automates/common/missions/escorter/Escorter - M
                 for _,pion in pairs( self._namedParams.selPionPE or {} ) do
                 local _continue = true
                     do
-                        if( ( rIterateurPion == 0 or rIterateurPion == nil ) ) then
+                        if( rIterateurPion == 0 ) then
                             StartActivateOverride( self, self.activations.BEH_Mission_Automate_ABC_AssignerEscorterA, 1, { ePhase_MRT, pion, self._namedParams.convoiAEscorter, self._namedParams.eEtatEchelon, } )
                         else
 if( rIterateurPion == 1 ) then
@@ -92,6 +93,7 @@ node "BEH_Medo_Automate_ABC_AssignerMissionEscorterEclA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Affectation des missions à l'echelon
 ]]--[[//-----------------------------------------------------------------------------
@@ -101,7 +103,7 @@ node "BEH_Medo_Automate_ABC_AssignerMissionEscorterEclA"
                 for _,pion in pairs( self._namedParams.selPionPEcl or {} ) do
                 local _continue = true
                     do
-                        if( ( rIterateurPion == 0 or rIterateurPion == nil ) ) then
+                        if( rIterateurPion == 0 ) then
                             StartActivateOverride( self, self.activations.BEH_Mission_Automate_ABC_AssignerEscorterA, 1, { ePhase_MRT, pion, self._namedParams.convoiAEscorter, self._namedParams.eEtatEchelon, } )
                         end
 
@@ -145,6 +147,7 @@ node "BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Affectation des missions à l'echelon
 ]]--[[//-----------------------------------------------------------------------------
@@ -155,7 +158,7 @@ node "BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateA"
                 local _continue = true
                     do
                         --[[// un seul pion suffit
-]]if( ( rIterateurPion == 0 or rIterateurPion == nil ) ) then
+]]if( rIterateurPion == 0 ) then
                             StartActivateOverride( self, self.activations.BEH_Mission_Automate_ABC_AssignerEscorterAutomateA, 1, { ePhase_MRT, pion, self._namedParams.automateAEscorter, self._namedParams.eEtatEchelon, } )
                         else
 if( rIterateurPion == 1 ) then
@@ -202,6 +205,7 @@ node "BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateEclA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Affectation des missions à l'echelon
 ]]--[[//-----------------------------------------------------------------------------
@@ -212,7 +216,7 @@ node "BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateEclA"
                 local _continue = true
                     do
                         --[[// un seul pion suffit
-]]if( ( rIterateurPion == 0 or rIterateurPion == nil ) ) then
+]]if( rIterateurPion == 0 ) then
                             StartActivateOverride( self, self.activations.BEH_Mission_Automate_ABC_AssignerEscorterAutomateA, 1, { ePhase_MRT, pion, self._namedParams.automateAEscorter, self._namedParams.eEtatEchelon, } )
                         end
 

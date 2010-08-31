@@ -49,6 +49,7 @@ node "ActivatedByMOT_Mission"
     end,
 
     activate = function( self )
+        local Activate = Activate
     end,
 
 }
@@ -113,6 +114,7 @@ node "ActivatedByMOT_GarderSesDistances"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -181,6 +183,7 @@ node "ActivatedByMOT_GarderSesDistanceFaceATirsIndirects"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -248,6 +251,7 @@ node "ActivatedByMOT_Tenir"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -303,6 +307,7 @@ node "ActivatedByMOT_ManoeuvrerSurEnis"
     end,
 
     activate = function( self )
+        local Activate = Activate
     end,
 
 }
@@ -370,6 +375,7 @@ node "ActivatedByMOT_TirerSurEnis"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -433,6 +439,7 @@ node "ActivatedByMOT_RiposterSurEnis"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -500,6 +507,7 @@ node "ActivatedByMOT_SePoster"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -562,6 +570,7 @@ node "ActivatedByMOT_Ralentir"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -624,6 +633,7 @@ node "ActivatedByMOT_PasserEnAlerteDeNiveau4"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -686,6 +696,7 @@ node "ActivatedByMOT_PasserEnSilenceRadio"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -748,6 +759,7 @@ node "ActivatedByMOT_PasserEnSilenceRadioPartiel"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -810,6 +822,7 @@ node "ActivatedByMOT_PasserEnTirRestreint"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -872,6 +885,7 @@ node "ActivatedByMOT_PasserEnTirInterdit"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -934,6 +948,7 @@ node "ActivatedByMOT_PasserEnTirLibre"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// si les états tir interdit et tir restreint engendrent une motivation 
@@ -998,6 +1013,7 @@ node "ActivatedByMOT_PasserEnEmploiForceInterdit"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -1060,6 +1076,7 @@ node "ActivatedByMOT_PasserEnMaintienADistanceParMoyensNonLetaux"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -1122,6 +1139,7 @@ node "ActivatedByMOT_PasserEnDispersionParMoyensDeDefenseActifs"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -1184,6 +1202,7 @@ node "ActivatedByMOT_PasserEnArmesLetalesAutorisees"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -1246,6 +1265,7 @@ node "ActivatedByMOT_RiposteSurPopulations"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -1307,6 +1327,7 @@ node "ActivatedByMOT_EsquivePopulations"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------

@@ -8,24 +8,26 @@
 // *****************************************************************************
 
 #include "integration_decisionnal_test_pch.h"
-#include "Fixture.h"
+#include <directia/brain/Brain.h>
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 
 namespace
 {
-    class BrainFixture : public Fixture
+    class BrainFixture
     {
     public:
         BrainFixture()
+        : brain( BRAIN_INIT() ) 
         {
-            brain.RegisterFunction( "DEC_ConnaissanceAgent_EstUnEnnemi", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsEnemy, boost::cref( this ), _1  ) ) );
-            brain.RegisterFunction( "DEC_ConnaissanceAgent_EstUnAllie", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsAllie, boost::cref( this ), _1  ) ) );
-            brain.RegisterFunction( "DEC_ConnaissanceObject_EstUnEnnemi", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsEnemy, boost::cref( this ), _1  ) ) );
-            brain.RegisterFunction( "DEC_ConnaissanceObject_EstUnAllie", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsAllie, boost::cref( this ), _1  ) ) );
-            brain.RegisterFunction( "DEC_ConnaissanceObjet_NiveauDePerceptionCourant", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_GetPerceptionLevel, boost::cref( this ), _1  ) ) );
-            brain.RegisterFunction( "DEC_ConnaissanceAgent_NiveauDePerceptionCourant", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_GetPerceptionLevel, boost::cref( this ), _1  ) ) );
-            brain.RegisterFunction( "DEC_ConnaissanceUrbanBlock_NiveauDeReconnaissanceCourant", boost::function< float ( const std::string& ) >( boost::bind( &BrainFixture::Mock_GetRecceLevel, boost::cref( this ), _1  ) ) );
+            brain[ "include" ]( std::string("Integration.lua") );
+            brain[ "DEC_ConnaissanceAgent_EstUnEnnemi" ] = boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsEnemy, boost::cref(this), _1  ) );
+            brain[ "DEC_ConnaissanceAgent_EstUnAllie" ] = boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsAllie, boost::cref(this), _1  ) );
+            brain[ "DEC_ConnaissanceObject_EstUnEnnemi" ] = boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsEnemy, boost::cref(this), _1  ) );
+            brain[ "DEC_ConnaissanceObject_EstUnAllie" ] = boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsAllie, boost::cref(this), _1  ) );
+            brain[ "DEC_ConnaissanceObjet_NiveauDePerceptionCourant" ] = boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_GetPerceptionLevel, boost::cref(this), _1  ) );
+            brain[ "DEC_ConnaissanceAgent_NiveauDePerceptionCourant" ] = boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_GetPerceptionLevel, boost::cref(this), _1  ) );
+            brain[ "DEC_ConnaissanceUrbanBlock_NiveauDeReconnaissanceCourant" ] = boost::function< float ( const std::string& ) >( boost::bind( &BrainFixture::Mock_GetRecceLevel, boost::cref(this), _1 ) );
         }
         int Mock_IsEnemy( const std::string& name )
         {
@@ -43,6 +45,7 @@ namespace
                 return 1;
             return 2;
         }
+
         int Mock_GetPerceptionLevel( const std::string& name )
         {
             if( name == "enemyDetected" )
@@ -63,42 +66,39 @@ namespace
                 return 1.f;
             return 0;
         }
-        void ComputeRelationAgentTest( directia::ScriptRef unit, double expected )
+        void ComputeRelationAgentTest( directia::tools::binders::ScriptRef unit, double expected )
         {
-            directia::ScriptRef computeRelation = *brain.GetScriptFunction( "integration.computeRelationAgent" );
-            BOOST_CHECK( computeRelation( unit ) );
-            brain.GetScriptFunction( "check" )( computeRelation, expected );
+            directia::tools::binders::ScriptRef computeRelation = brain[ "integration.computeRelationAgent" ];
+            BOOST_CHECK_EQUAL( computeRelation.Call< double >( unit ), expected );
         }
-        void ComputeRelationObjectTest( directia::ScriptRef unit, double expected )
+        void ComputeRelationObjectTest( directia::tools::binders::ScriptRef unit, double expected )
         {
-            directia::ScriptRef computeRelation = *brain.GetScriptFunction( "integration.computeRelationAgent" );
-            BOOST_CHECK( computeRelation( unit ) );
-            brain.GetScriptFunction( "check" )( computeRelation, expected );
+            directia::tools::binders::ScriptRef computeRelation = brain[ "integration.computeRelationAgent" ];
+            BOOST_CHECK_EQUAL( computeRelation.Call< double >( unit ), expected );
         }
-        void GetAgentPerceptionLevelTest( directia::ScriptRef unit, double expected )
+        void GetAgentPerceptionLevelTest( directia::tools::binders::ScriptRef unit, double expected )
         {
-            directia::ScriptRef getAgentPerceptionLevel = *brain.GetScriptFunction( "integration.getAgentPerception" );
-            BOOST_CHECK( getAgentPerceptionLevel( unit ) );
-            brain.GetScriptFunction( "check" )( getAgentPerceptionLevel, expected );
+            directia::tools::binders::ScriptRef getAgentPerceptionLevel = brain[ "integration.getAgentPerception" ];
+            BOOST_CHECK_EQUAL( getAgentPerceptionLevel.Call< double >( unit ), expected );
         }
-        void GetObjectPerceptionLevelTest( directia::ScriptRef unit, double expected )
+        void GetObjectPerceptionLevelTest( directia::tools::binders::ScriptRef unit, double expected )
         {
-            directia::ScriptRef getObjectPerceptionLevel = *brain.GetScriptFunction( "integration.getObjectPerception" );
-            BOOST_CHECK( getObjectPerceptionLevel( unit ) );
-            brain.GetScriptFunction( "check" )( getObjectPerceptionLevel, expected );
+            directia::tools::binders::ScriptRef getObjectPerceptionLevel = brain[ "integration.getObjectPerception" ];
+            BOOST_CHECK_CLOSE( getObjectPerceptionLevel.Call< double >( unit ), expected, 0.0001 );
         }
-        void GetUrbanBlockPerceptionLevelTest( directia::ScriptRef unit, double expected )
+        void GetUrbanBlockPerceptionLevelTest( directia::tools::binders::ScriptRef unit, double expected )
         {
-            directia::ScriptRef getUrbanBlockPerceptionLevel = *brain.GetScriptFunction( "integration.getUrbanBlockPerception" );
-            BOOST_CHECK( getUrbanBlockPerceptionLevel( unit ) );
-            brain.GetScriptFunction( "checkClose" )( getUrbanBlockPerceptionLevel, expected );
+            directia::tools::binders::ScriptRef getUrbanBlockPerceptionLevel = brain[ "integration.getUrbanBlockPerception" ];
+            BOOST_CHECK_CLOSE( getUrbanBlockPerceptionLevel.Call< double >( unit ), expected, 0.0001 );
         }
-        directia::ScriptRef CreateAgent( const std::string& name )
+        directia::tools::binders::ScriptRef CreateAgent( const std::string& name )
         {
-            directia::ScriptRef agent = brain.RegisterObject();
-            agent.RegisterObject( "source", name );
-            return agent;
+            directia::tools::binders::ScriptRef enemy( brain );
+            enemy[ "source" ] = name;
+            return enemy;
         }
+    public:
+        directia::brain::Brain brain;
     };
 }
 // -----------------------------------------------------------------------------

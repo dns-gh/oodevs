@@ -181,3 +181,4 @@ include "Glaise/Glaise_Melee/Abc/Automates/Common/Missions/Escorter/Escorter - C
 include "Glaise/Glaise_Melee/Abc/Automates/Common/MRT generique mis offensives.bms"
 
 include "Glaise/Glaise_Melee/Abc/Automates/Common/MRT generique mis retrogrades.bms"
+

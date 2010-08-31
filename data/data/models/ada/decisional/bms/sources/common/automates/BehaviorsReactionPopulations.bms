@@ -23,6 +23,7 @@ include "Common/Automates/Behaviors/Behaviors - POP - ROE.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_ROE_Automate_RecevoirOrdreInopinePopulation, 1, {} )
     end,
 

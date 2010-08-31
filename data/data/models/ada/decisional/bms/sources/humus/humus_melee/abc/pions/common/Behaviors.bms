@@ -59,6 +59,7 @@ include "Humus/Humus_Melee/Abc/Pions/Common/Actions.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Mot_Pion_ABC_AffecterVariablesDEtat, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// MAJ VE
 ]]--[[//-----------------------------------------------------------------------------
@@ -109,6 +110,7 @@ node "BEH_Obs_Pion_ABC_ReconnaitrePoint"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.point = self.point or DEC_Geometrie_CreerPoint()
         self.eEtat = self.eEtat or eActionEnCours
         --[[//-----------------------------------------------------------------------------
@@ -169,6 +171,7 @@ node "BEH_Obs_Pion_ABC_SePosterSurBond"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.point = self.point or DEC_Geometrie_CreerPoint()
         self.eEtat = self.eEtat or eActionEnCours
         --[[//-----------------------------------------------------------------------------
@@ -233,6 +236,7 @@ node "BEH_Dep_Pion_ABC_GererDeboucher"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Regarder les eAvantPoint dans la liste des points interessants
 ]]--[[//-----------------------------------------------------------------------------
@@ -298,6 +302,7 @@ node "BEH_Ordre_SePosterPourDeboucher"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------		
@@ -312,7 +317,7 @@ node "BEH_Ordre_SePosterPourDeboucher"
 ]]        end
 
         Activate( self.activations.ACT_Dep_PasserSurLima, 1, { eEtatLima_LD, } )
-        if( ( GetStateVariable( "VE_SePoster" ) == 0 or GetStateVariable( "VE_SePoster" ) == nil ) ) then
+        if( GetStateVariable( "VE_SePoster" ) == 0 ) then
             do
                 DEC_SetMissionLimaFlagHoraire( self._namedParams.LimaLD, true )
                 DEC_SetMissionLimaFlag( self._namedParams.LimaLD, true )
@@ -349,6 +354,7 @@ node "BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.positionAppui = self.positionAppui or DEC_Geometrie_CalculerPositionAppui( self._namedParams.ami, M_MODELE_PION_ABC_DISTANCE_POSITION_APPUI() )
         self.eEtat = self.eEtat or eActionEnCours
         --[[//-----------------------------------------------------------------------------
@@ -393,6 +399,7 @@ node "BEH_Pion_ABC_InstallerDispositif"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
             Activate( self.activations.ACT_Pion_ABC_InstallerDisposifif, 1, {} )
         end
@@ -452,6 +459,7 @@ node "ACT_Pion_ABC_InstallerDisposifif"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Dep_SePosterFaceA, 1, { self._namedParams.repEni, } )
         Activate( self.activations.ACT_Tir_Pion_ABC_FaireFeuSur, 1, { self._namedParams.repEni, self._namedParams.pourcentageComposantes, } )
     end,
@@ -475,6 +483,7 @@ node "BEH_MAJ_Pion_ABC_AgressiviteTir"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------
@@ -506,6 +515,7 @@ node "BEH_MAJ_Pion_ABC_AgressiviteManoeuvre"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------
@@ -538,6 +548,7 @@ node "BEH_MAJ_Pion_ABC_EnvieTenir"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init / On s'esquive ou non en fonction du niveau de courage passé en paramètre --> indépendant du moral
 ]]--[[//-----------------------------------------------------------------------------
@@ -568,6 +579,7 @@ node "BEH_Mot_Pion_ABC_AffecterVariablesDEtat"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//////////////// BMS OPTIM  ///////////////////
 ]]        if( F_Pion_GeteEtatDec( myself ) == eEtatDec_Sauvegarde ) then
             do return end
@@ -598,7 +610,7 @@ elseif switch_1 == eMoral_Moyen
                     --[[//-----------------------------------------------------------------------------
 ]]--[[// En fonction de la mission...  --> idem moral mauvais
 ]]--[[//-----------------------------------------------------------------------------
-]]if( ( DEC_GetMission( myself ) == 0 or DEC_GetMission( myself ) == nil ) ) then
+]]if( DEC_GetMission( myself ) == nil ) then
                         do
                             SetStateVariable( "VE_RapFor", ( 5 - DEC_RapportDeForceLocal() ) )
                             SetStateVariable( "VE_RapForPrudence", 0 )
@@ -657,6 +669,7 @@ node "BEH_Dep_Virtuel_ProgressionVers"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.point, self._namedParams.eTypeProgression, self._namedParams.eTypeIti, } )
     end,
 
@@ -674,6 +687,7 @@ node "BEH_Dep_Virtuel_PreparationAction"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self:SendFeedback( eActionEffectuee )
         do return end
 

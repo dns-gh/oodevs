@@ -33,6 +33,7 @@ includedFiles["sources/melee/abc/automates/pel eei/missions/donnercouparret/Donn
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------

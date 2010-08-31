@@ -30,6 +30,7 @@ includedFiles["sources/humus/humus_common/pions/missions/SeFaireDecontaminer.bms
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.eEtat = self.eEtat or eActionEnCours
         self.positionSite = self.positionSite or nil--[[//init plus bas         

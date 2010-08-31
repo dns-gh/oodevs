@@ -37,6 +37,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
         for _,repEni in pairs( listeConnaissances or {} ) do
         local _continue = true
@@ -68,6 +69,7 @@ node "BEH_MOT_GarderSesDistances"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[/*********************************************/]]Activate( self.activations.ACT_MAJ_EtatDec, 1, { eEtatDec_Sauvegarde, } )
         --[[/*********************************************/]]--[[// Pour certaines missions
 ]]if( g_bDesactiveSauvegarde ) then
@@ -104,6 +106,7 @@ node "BEH_MOT_GarderSesDistancesFaceATirsIndirects"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init: calcule de la position de surete
 ]]--[[//-----------------------------------------------------------------------------
@@ -165,13 +168,14 @@ node "BEH_MOT_GarderSesDistancesFaceA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.rDistanceEfficace = self.rDistanceEfficace or S_Tir_PorteeMaxPourEtreTireParAgent( self._namedParams.repEni, M_POLY_PH_TIR_ENI_EFFICACE() )
         --[[//Cf. erreur de precision
 ]]self.rDistanceSurete = self.rDistanceSurete or S_Tir_PorteeMaxPourEtreTireParAgent( self._namedParams.repEni, 0.2 ) + 10
         self.rDeltaDistance = self.rDeltaDistance or self.rDistanceSurete - self.rDistanceEfficace
         local rCoefEsquive = 0
         --[[//si tir interdit ou tir restreint, alors, aller a la distance Surete    
-]]if( ( ( GetStateVariable( "VE_TirRestreint" ) == 0 or GetStateVariable( "VE_TirRestreint" ) == nil ) ) or ( ( GetStateVariable( "VE_TirInterdit" ) == 0 or GetStateVariable( "VE_TirInterdit" ) == nil ) ) ) then
+]]if( ( GetStateVariable( "VE_TirRestreint" ) == 0 ) or ( GetStateVariable( "VE_TirInterdit" ) == nil ) ) then
             rCoefEsquive = 1
         else
             --[[//si tir libre
@@ -215,6 +219,7 @@ node "BEH_MOT_TirerSurEnis"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listeConnaissances = DEC_Connaissances_UnitesEnnemiesVivantesPercues()
         for _,repEni in pairs( listeConnaissances or {} ) do
         local _continue = true
@@ -256,6 +261,7 @@ node "BEH_MOT_GererLesFeuxSur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( meleeAbcPionsCommon() ) then
 if( S_Eni_EstNiveauPerceptionGTIA( self._namedParams.repEni, eReconnu ) ) then
                 do
@@ -348,6 +354,7 @@ node "BEH_MOT_RiposterSurEnis"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listeConnaissances = DEC_Connaissances_UnitesPrenantAPartie()
         for _,repEni in pairs( listeConnaissances or {} ) do
         local _continue = true
@@ -398,6 +405,7 @@ node "BEH_MOT_SePoster"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[/*****************************************************/]]Activate( self.activations.ACT_MAJ_EtatOrdreCoordination, 1, { eEtatOrdreCoordination_Attendre, } )
         Activate( self.activations.ACT_Dep_SePoster, 1, {} )--[[/*****************************************************/]]
     end,
@@ -421,6 +429,7 @@ node "BEH_MOT_EtrePrudent"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[/*****************************************************/]]Activate( self.activations.ACT_MAJ_EtatPrudence, 1, { eEtatDecPrudence_Actif, } )
         Activate( self.activations.BEH_MOT_Ralentir, 1, {} )--[[/*****************************************************/]]
     end,
@@ -446,6 +455,7 @@ node "BEH_MOT_Ralentir"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// ici pas de 'action ACT_MAJ_EtatOrdreCoordination( eEtatOrdreCoordination_Ralentir );' car pas en compettion avec le poste
 ]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { M_POLY_DOCTRINE_MODULATION_VITESSE_RALENTIR(), } )
     end,
@@ -471,6 +481,7 @@ node "BEH_MOT_PasserEnAlerteDeNiveau4"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Nbc_GererAlerteNiv4, 1, {} )
     end,
 
@@ -495,6 +506,7 @@ node "BEH_MOT_PasserEnSilenceRadio"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Rens_PasserEnSilenceRadio, 1, {} )
     end,
 
@@ -519,6 +531,7 @@ node "BEH_MOT_SilenceRadars"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Rens_PasserEnSilenceRadar, 1, { eRadarType_Radar, } )
         Activate( self.activations.BEH_Rens_PasserEnSilenceRadar, 1, { eRadarType_Ecoute, } )
         Activate( self.activations.BEH_Rens_PasserEnSilenceRadar, 1, { eRadarType_EcouteRadar, } )
@@ -545,6 +558,7 @@ node "BEH_MOT_PasserEnTirRestreint"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_ROE_GererTirRestreint, 1, {} )
     end,
 
@@ -569,6 +583,7 @@ node "BEH_MOT_PasserEnTirInterdit"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_ROE_GererTirInterdit, 1, {} )
     end,
 
@@ -593,6 +608,7 @@ node "BEH_MOT_PasserEnTirLibre"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_ROE_GererTirLibre, 1, {} )
     end,
 
@@ -612,6 +628,7 @@ node "BEH_MOT_DesactiveSauvegarde"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 if( ModuleBegins() ) then
             g_bDesactiveSauvegarde = true
         end

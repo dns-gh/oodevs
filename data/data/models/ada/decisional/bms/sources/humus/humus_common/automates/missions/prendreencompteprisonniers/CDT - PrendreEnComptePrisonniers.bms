@@ -25,6 +25,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------
@@ -59,6 +60,7 @@ node "BEH_Dispositif_Automate_FaireSuivreLeSE"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local rIterateurPionASuivre = 0
         --[[// Ces listes peuvent évoluer...en fonction des destructions
 ]]local sel_PE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )

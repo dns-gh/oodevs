@@ -27,6 +27,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.ePhase = self.ePhase or eMettreEnOeuvre
         if( ModuleBegins() ) then
             do
@@ -98,6 +99,7 @@ node "BEH_Pion_ASS_RATAC_AcquerirObjectifs_Mission"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         self.ePhase = self.ePhase or ePreparerMission
         self.eAction = self.eAction or eActionEnCours

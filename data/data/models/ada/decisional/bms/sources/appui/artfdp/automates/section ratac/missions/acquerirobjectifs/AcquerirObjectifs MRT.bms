@@ -32,6 +32,7 @@ includedFiles["sources/appui/artfdp/automates/section ratac/missions/acquerirobj
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
@@ -97,6 +98,7 @@ node "BEH_Medo_Automate_PreparerMission_AcquerirObjectifs"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         self.selPions = self.selPions or DEC_Automate_PionsSansPC()
         self.selPions_ASS_RATAC = self.selPions_ASS_RATAC or {}
@@ -122,7 +124,7 @@ node "BEH_Medo_Automate_PreparerMission_AcquerirObjectifs"
 ]]--[[//-----------------------------------------------------------------------------						
 ]]--[[// L'execution de la mission necessite la presence d'un 1er ech
 ]]self.selPions_ASS_RATAC = S_Cherche_Automate_Filtre_TypePion( self.selPions, "GroupeASS_RATAC" )
-                    if( ( #( self.selPions_ASS_RATAC ) == 0 or #( self.selPions_ASS_RATAC ) == nil ) ) then
+                    if( #( self.selPions_ASS_RATAC ) == 0 ) then
                         do
                             DEC_Trace( "First echelon is empty" )
                                                         self:SendFeedback( eActionImpossible )
@@ -199,6 +201,7 @@ node "BEH_Medo_Automate_ASS_AcquerirObjectifs"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.lstPtTmp = self.lstPtTmp or DEC_Geometrie_CreerListePoints()
         self.lstPtZone = self.lstPtZone or DEC_Geometrie_CreerListePoints()
         if( ModuleBegins() ) then

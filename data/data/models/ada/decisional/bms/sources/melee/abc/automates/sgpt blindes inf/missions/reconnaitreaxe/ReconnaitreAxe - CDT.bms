@@ -34,6 +34,7 @@ includedFiles["sources/melee/abc/automates/sgpt blindes inf/missions/reconnaitre
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//---------------------------------------------------------------------

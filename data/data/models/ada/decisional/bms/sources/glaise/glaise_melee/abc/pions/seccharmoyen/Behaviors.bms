@@ -109,6 +109,7 @@ include "Glaise/Glaise_Melee/Abc/Pions/secCharMoyen/Missions/Missions.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
     end,
 
 }

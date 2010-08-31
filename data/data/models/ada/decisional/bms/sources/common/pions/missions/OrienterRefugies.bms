@@ -29,6 +29,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.ePhase = self.ePhase or ePreparerMission
         self.eEtat = self.eEtat or eActionEnCours
         --[[// Init
@@ -138,6 +139,7 @@ node "BEH_Dep_Pion_AllerRecupererRefugies"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,refugie in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion de chaque pion refugie
 ]]--[[//-----------------------------------------------------------------------------
@@ -175,6 +177,7 @@ node "BEH_Dep_Pion_GererEmbarquementRefugie"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DEC_Geometrie_Distance( DEC_ConnaissanceAgent_Position( self._namedParams.refugie ), DEC_Agent_Position() ) < 100 ) then
             Activate( self.activations.ACT_Transport_Pion_EmbarquerRefugie, 1, { self._namedParams.refugie, } )
         else
@@ -208,10 +211,11 @@ node "BEH_Dep_Pion_AllerDebarquerRefugies"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.point = self.point or nil
         self.localisation = self.localisation or DEC_ConnaissanceObjet_Localisation( self._namedParams.campRefugie )
         --[[// Gestion erreur
-]]if( ( self.localisation == 0 or self.localisation == nil ) ) then
+]]if( self.localisation == nil ) then
             self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
@@ -221,7 +225,7 @@ node "BEH_Dep_Pion_AllerDebarquerRefugies"
 ]]if( ModuleBegins() ) then
             do
                 self.point = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self.localisation )
-                if( ( self.point == 0 or self.point == nil ) ) then
+                if( self.point == nil ) then
                     self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end

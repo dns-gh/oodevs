@@ -16,11 +16,6 @@
 class MIL_AgentPion;
 class PHY_RoleAction_FolkInfluence;
 
-namespace population
-{
-    class Object_ABC;
-}
-
 // =============================================================================
 /** @class  PHY_ActionTriggerActivity
     @brief  PHY_ActionTriggerActivity
@@ -56,7 +51,6 @@ private:
     PHY_RoleAction_FolkInfluence&   role_;
     std::string                     activity_;
     double                          influence_;
-    population::Object_ABC*         pObject_;
     //@}
 };
 

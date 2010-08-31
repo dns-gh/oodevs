@@ -25,6 +25,7 @@ includedFiles["sources/appui/artfdp/automates/bat tir sam/missions/se deployer/S
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------

@@ -27,10 +27,12 @@ BOOST_CLASS_EXPORT_IMPLEMENT( AgentFactory )
 // Name: AgentFactory constructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-AgentFactory::AgentFactory( MIL_IDManager& idManager, DEC_DataBase& database )
+AgentFactory::AgentFactory( MIL_IDManager& idManager, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
     : idManager_( idManager )
     , algorithmsFactories_( new AlgorithmsFactories() )
     , database_( database )
+    , gcPause_ (gcPause )
+    , gcMult_  ( gcMult )
 {
     // NOTHING
 }
@@ -56,7 +58,7 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
 
     pPion = type.InstanciatePion( automate, *algorithmsFactories_, xis );
 
-    type.RegisterRoles( *pPion , database_ );
+    type.RegisterRoles( *pPion , database_, gcPause_, gcMult_ );
 
     std::string strPosition;
     xis >> xml::attribute( "position", strPosition );
@@ -76,7 +78,7 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
 MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition )
 {
     MIL_AgentPion* pPion = type.InstanciatePion( automate, *algorithmsFactories_ );
-    type.RegisterRoles( *pPion, database_ );
+    type.RegisterRoles( *pPion, database_, gcPause_, gcMult_ );
 
     Initialize( *pPion, vPosition );
     tools::Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );

@@ -100,6 +100,7 @@ node "BEH_Misc_Pion_INF_Default"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_MOT_Pion_INF_GarderSesDistances_GererTransport, GetMotivation( "MOT_GarderSesDistances" ), {} )
         Activate( self.activations.BEH_MOT_Pion_INF_EtrePrudent_GererTransport, GetMotivation( "MOT_EtrePrudent" ), {} )
         Activate( self.activations.ACT_Dep_Pion_INF_ActiverFurtivite, 1, { 0.5, } )
@@ -138,6 +139,7 @@ node "BEH_Tir_Pion_INF_TirDebarque"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         local eActionReturn = self.eAction
         Activate( self.activations.ACT_Tir_Pion_INF_TirDebarque, 1, { self._namedParams.ksEni, } )

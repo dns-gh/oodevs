@@ -31,6 +31,7 @@ includedFiles["sources/humus/humus_common/automates/missions/fairemouvementrmm/M
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eDonnerMission
         self.eEtat = self.eEtat or eActionEnCours
         --[[//---------------------------------------------------------------------

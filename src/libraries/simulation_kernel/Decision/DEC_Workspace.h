@@ -20,7 +20,10 @@ class MIL_Config;
 
 namespace directia
 {
-    class Brain;
+    namespace brain
+    {
+        class Brain;
+    }
 }
 
 
@@ -46,7 +49,7 @@ public:
     const DEC_Model_ABC*       FindModelPopulation   ( const std::string& strModelName  ) const;
     //@}
 
-    void InitKnowledges( directia::Brain& brain ) const;
+    void InitKnowledges( directia::brain::Brain& brain ) const;
     DEC_DataBase& GetDatabase() const;
 
 private:

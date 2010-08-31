@@ -27,6 +27,7 @@ includedFiles["sources/common/pions/missions/SoutenirEnMesureDe.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or ePreparerMission
         self.eEtat = self.eEtat or eActionEnCours
         if( ModuleBegins() ) then
@@ -114,6 +115,7 @@ node "MIS_Pion_SoutenirSurPositionEnMesureDe"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.eEtat = self.eEtat or eActionEnCours
         if( ModuleBegins() ) then
@@ -197,6 +199,7 @@ node "BEH_MAJ_Pion_AgressiviteTir"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 if( ModuleBegins() ) then
             SetStateVariable( "VE_Agressivite_Tir", self._namedParams.rPH )
         end
@@ -228,6 +231,7 @@ node "BEH_MAJ_Pion_EniDangereux"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
         for _,repEni in pairs( listeConnaissances or {} ) do
         local _continue = true

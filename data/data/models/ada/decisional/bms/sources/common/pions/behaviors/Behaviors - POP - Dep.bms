@@ -26,6 +26,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.bEsquiver = self.bEsquiver or false
         self.eROEPopulation = self.eROEPopulation or DEC_Agent_RoePopulation()
         --[[//on checke les changements de ROE, on reinitialise dans ce cas
@@ -41,7 +42,7 @@ include "bit.lua"
 
         if( self.bEsquiver ) then
             do
-                if( ( GetStimulus( "STIM_TenirFaceAPopulation" ) == 0 or GetStimulus( "STIM_TenirFaceAPopulation" ) == nil ) ) then
+                if( GetStimulus( "STIM_TenirFaceAPopulation" ) == 0 ) then
                     Activate( self.activations.BEH_Pop_Pion_EsquiveFaceA, 1, { self._namedParams.pop, } )
                 else
                     Activate( self.activations.BEH_EsquiverLaPopulationIncontrolable, 1, { self._namedParams.pop, } )
@@ -76,6 +77,7 @@ node "BEH_EsquiverLaPopulationIncontrolable"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.prevDomination = self.prevDomination or 0
         self.eEtatDelai = self.eEtatDelai or eActionEnCours
         self.bDerniereChance = self.bDerniereChance or false
@@ -132,7 +134,7 @@ do
                 self._namedParams.pop = domination.second
                 domination = domination.first
                 --[[//la domination doit avoir diminuée au moins de 20%
-]]if( ( ( domination < ( self.prevDomination - 0.2 ) ) or domination == 0 or ( domination < ( self.prevDomination - 0.2 ) ) or domination == nil ) ) then
+]]if( ( domination < ( self.prevDomination - 0.2 ) ) or domination == 0 ) then
                     do
                         self.prevDomination = domination
                         self.eEtatDelai = eActionEnCours
@@ -204,6 +206,7 @@ node "BEH_Pop_Pion_EsquiveFaceA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         --[[// Itineraire
 ]]self.positionSurete = self.positionSurete or nil
@@ -226,7 +229,7 @@ node "BEH_Pop_Pion_EsquiveFaceA"
 ]]
                 self.positionSurete = DEC_Geometrie_CalculerPositionSureteAvecPopulation( self._namedParams.pop, rDistance )
                 --[[//positionSurete = S_Dep_CalculerPositionEsquivePopulation( pop, rDistance );
-]]if( ( self.positionSurete ~= 0 and self.positionSurete ~= nil ) ) then
+]]if( self.positionSurete ~= nil ) then
                     do
                         DEC_DebugAffichePoint( self.positionSurete )
                         self.itEsquive = DEC_CreerItineraire( self.positionSurete, eTypeItiRepli )
@@ -285,6 +288,7 @@ node "BEH_Pop_Pion_SecuriserPopulation"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePreparation = self.ePreparation or eActionEnCours
         self.pointSecurisation = self.pointSecurisation or DEC_ConnaissancePopulation_PointSecurisation( self._namedParams.pop )
         DEC_DebugAffichePoint( self.pointSecurisation )
@@ -337,6 +341,7 @@ node "BEH_Pop_Pion_SecuriserPopulationDans"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Pour toutes les pops dans la zone... on sécurise la plus dangereuse
 ]]--[[//-----------------------------------------------------------------------------
@@ -351,7 +356,7 @@ do
                         domination = DEC_ConnaissancePopulation_Domination( pop )
                         pop = domination.second
                         domination = domination.first
-                        if( ( domination == 0 or domination == nil ) ) then
+                        if( domination == 0 ) then
                             danger = 0.1
                         end
 
@@ -399,6 +404,7 @@ node "BEH_Pop_Pion_BloquerPopulation"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.ePreparation = self.ePreparation or eActionEnCours
@@ -449,7 +455,7 @@ elseif switch_1 == eAnimer then
                     if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.objectif ) < self._namedParams.rMax ) then
                         do
                             --[[// l'objet n'existe pas encore... on le construit
-]]if( ( self.posteControle == 0 or self.posteControle == nil ) ) then
+]]if( self.posteControle == nil ) then
                                 do
                                     Activate( self.activations.ACT_Pion_CreerObjetSur, 1, { self.localisation, eTypeObjectPosteControle, } )
                                                                         do return end
@@ -513,6 +519,7 @@ node "BEH_Pop_GererPositionBarrage"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.centre = self.centre or DEC_Geometrie_CalculerBarycentreLocalisation( self._namedParams.localisationEtendue )
         --[[//par défaut on rejoint le centre de la localisation
 ]]if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.objectif ) > 20 ) then
@@ -549,6 +556,7 @@ node "BEH_Pop_Pion_AnimerBlocagePopulation"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() and ( self._namedParams.permeabilite > 0 ) ) then
             do
                                 do
@@ -599,6 +607,7 @@ node "BEH_Pop_Pion_RejoindrePopulationLaPlusProche"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local lstPops = DEC_Connaissances_Populations()
         for _,pop in pairs( lstPops or {} ) do
         local _continue = true
@@ -645,6 +654,7 @@ node "BEH_Pop_Pion_RejoindrePopulation"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.objectif = self.objectif or nil
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init

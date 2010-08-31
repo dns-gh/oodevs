@@ -308,7 +308,7 @@ elseif switch_1 == ePhase_CDT then
 
         --[[//-----------------------------------------------------------------------------
 ]]--[[//DEC_Debug( "assert halt failed : " +  "pas de point d'arrivee"  );
-]]if( not ( ( self.dest ~= 0 and self.dest ~= nil ) ) ) then
+]]if( not ( self.dest ~= 0 ) ) then
             do
                                 self:SendFeedback( eActionImpossible )
                 Halt( self )
@@ -403,7 +403,7 @@ elseif switch_1 == ePhase_CDT then
 
         --[[//-----------------------------------------------------------------------------
 ]]--[[//DEC_Debug( "assert halt failed : " +  "pas de point d'arrivee"  );
-]]if( not ( ( self._namedParams.pointAReconnaitre ~= 0 and self._namedParams.pointAReconnaitre ~= nil ) ) ) then
+]]if( not ( self._namedParams.pointAReconnaitre ~= 0 ) ) then
             do
                                 self:SendFeedback( eActionImpossible )
                 Halt( self )
@@ -499,7 +499,7 @@ elseif switch_1 == ePhase_CDT then
 
         --[[//-----------------------------------------------------------------------------
 ]]--[[//DEC_Debug( "assert halt failed : " +  "pas de point d'arrivee"  );
-]]if( not ( ( self.dest ~= 0 and self.dest ~= nil ) ) ) then
+]]if( not ( self.dest ~= 0 ) ) then
             do
                                 self:SendFeedback( eActionImpossible )
                 Halt( self )
@@ -601,7 +601,7 @@ elseif switch_1 == ePhase_CDT then
 
         --[[//-----------------------------------------------------------------------------
 ]]--[[//DEC_Debug( "assert halt failed : " +  "pas de point d'arrivee"  );
-]]if( not ( ( self._namedParams.ptDest ~= 0 and self._namedParams.ptDest ~= nil ) ) ) then
+]]if( not ( self._namedParams.ptDest ~= 0 ) ) then
             do
                                 self:SendFeedback( eActionImpossible )
                 Halt( self )

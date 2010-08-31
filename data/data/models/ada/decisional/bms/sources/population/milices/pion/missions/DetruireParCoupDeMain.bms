@@ -33,6 +33,7 @@ includedFiles["sources/population/milices/pion/missions/DetruireParCoupDeMain.bm
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhaseMission = self.ePhaseMission or eSeMettreEnPlace
         self.ePhase = self.ePhase or eSurveiller
         self.eAction = self.eAction or eActionEnCours

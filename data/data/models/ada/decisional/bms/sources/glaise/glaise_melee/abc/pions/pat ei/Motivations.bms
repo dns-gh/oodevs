@@ -59,6 +59,7 @@ node "ActivatedByMOT_SInfiltrer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -123,6 +124,7 @@ node "ActivatedByMOT_PoursuivreFaceAEni"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )--[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------

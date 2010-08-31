@@ -38,6 +38,7 @@ node "MIS_Pion_ASS_EOP_AcquerirObjectifs"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eAction = self.eAction or eActionEnCours
         self.eActionEmbarquer = self.eActionEmbarquer or eActionEnCours
         self.ePhase = self.ePhase or eReconnaitre
@@ -134,6 +135,7 @@ node "BEH_Pion_EOP_AcquerirObjectifs_Mission"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or ePreparerMission
@@ -203,6 +205,7 @@ node "BEH_Dep_Pion_EOP_PreparerDebarquement"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// start action ACT_Transport_Pion_EOP_Debarquer( true ) : strength = 1.1;
 ]]self.eActionDelai = self.eActionDelai or eActionEnCours
         Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
@@ -239,6 +242,7 @@ node "BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// On cree un itineraire qui passe par la position de debarquement
 ]]--[[// vers la position d'installation			
 ]]        self.itineraire_Pt = self.itineraire_Pt or S_Misc_CreerItineraire_Points( self._namedParams.ptDest, self._namedParams.ptPassage )

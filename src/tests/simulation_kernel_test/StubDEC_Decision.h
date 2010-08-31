@@ -9,7 +9,7 @@ class StubDEC_Decision : public DEC_Decision< T >
 {
 public:
     StubDEC_Decision( T& entity, DEC_DataBase& database )
-        : DEC_Decision< T >( entity, database )
+        : DEC_Decision< T >( entity, database, 100, 100 )
     {
         xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
         xis.start( "main" );
@@ -27,14 +27,15 @@ public:
     virtual DEC_AutomateDecision* GetDecAutomate() const { return 0; }
     virtual std::string GetName() const { throw; }
     virtual void EndCleanStateAfterCrash() {}
-    virtual void RegisterUserFunctions( directia::Brain& /*brain*/ ) {}
-    virtual void RegisterSelf( directia::Brain& /*brain*/ ) {}
-    virtual void UpdateMeKnowledge( directia::Brain& /*brain*/ ) {}
+    virtual void RegisterUserFunctions( directia::brain::Brain& brain ) {}
+    virtual void RegisterSelf( directia::brain::Brain& brain ) {}
+    virtual void UpdateMeKnowledge( directia::brain::Brain& brain ) {}
     template< typename FunctionType >
     void RegisterFunction( const std::string& strFunctionName, FunctionType function )
     {
         DEC_Decision< T >::RegisterFunction( strFunctionName, function );
     }
+    virtual void RegisterUserArchetypeFunctions ( directia::brain::Brain& brain ) {}
 private:
     std::auto_ptr< DEC_Model > model_;
 };

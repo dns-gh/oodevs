@@ -27,6 +27,7 @@ includedFiles["sources/appui/circulation/pions/missions/aide a mobilite sur itin
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.pointInstallation = self.pointInstallation or S_Geometrie_BarycentreZone( self._namedParams.mission.zone_ )
@@ -120,6 +121,7 @@ node "BEH_Circu_Obs_SurveillerItineraire"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Se mettre en position et surveiller
 ]]if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
             do

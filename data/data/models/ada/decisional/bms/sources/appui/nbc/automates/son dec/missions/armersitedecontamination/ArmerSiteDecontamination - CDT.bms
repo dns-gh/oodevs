@@ -22,6 +22,7 @@ includedFiles["sources/appui/nbc/automates/son dec/missions/armersitedecontamina
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//---------------------------------------------------------------------

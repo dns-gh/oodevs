@@ -110,6 +110,7 @@ include "Melee/Abc/Pions/Pel AMX-ERC/Missions/Missions.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
     end,
 
 }

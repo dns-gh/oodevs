@@ -32,6 +32,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or ePreparerMission
         self.listePionsADefendreCourante = self.listePionsADefendreCourante or {}
@@ -143,6 +144,7 @@ node "BEH_Eni_Pion_ASA_GererEniDefendreUnites"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,x in pairs( S_ConnaissancesEnnemiesVivantesPercuesVolantes() or {} ) do
         local _continue = true
 do

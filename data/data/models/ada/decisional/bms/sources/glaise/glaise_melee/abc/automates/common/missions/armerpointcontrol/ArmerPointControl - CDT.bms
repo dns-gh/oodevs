@@ -36,6 +36,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/armerpo
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ptControle = self.ptControle or S_Geometrie_BarycentreZone( self._namedParams.zoneControle )
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
@@ -85,6 +86,7 @@ node "BEH_Dispositif_Automate_ABC_FaireArmerPointControle_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Essayer d'armer le site
 ]]--[[//-----------------------------------------------------------------------------

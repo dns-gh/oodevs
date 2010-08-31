@@ -336,7 +336,7 @@ void DEC_Workspace::InitializeObjectNames( MIL_Config& config )
 // Name: DEC_Workspace::InitKnowledges
 // Created: MGD 2009-10-23
 // -----------------------------------------------------------------------------
-void DEC_Workspace::InitKnowledges( directia::Brain& brain ) const
+void DEC_Workspace::InitKnowledges( directia::brain::Brain& brain ) const
 {
     if( dataBase_.get() )
         dataBase_->InitKnowledges( brain );

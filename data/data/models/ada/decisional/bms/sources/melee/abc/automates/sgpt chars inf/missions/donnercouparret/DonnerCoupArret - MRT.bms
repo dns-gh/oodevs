@@ -33,6 +33,7 @@ includedFiles["sources/melee/abc/automates/sgpt chars inf/missions/donnercouparr
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------

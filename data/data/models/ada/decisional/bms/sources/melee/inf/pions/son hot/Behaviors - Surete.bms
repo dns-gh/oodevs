@@ -55,6 +55,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.eActionSuivi = self.eActionSuivi or eActionEnCours
         self.eCurrentPhase = self.eCurrentPhase or eSuivreUnite
@@ -103,6 +104,7 @@ node "BEH_Eni_Pion_HOT_Appuyer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local lstEnisPercus = DEC_Connaissances_UnitesEnnemiesVivantesPercues()
         for _,ksEni in pairs( lstEnisPercus or {} ) do
         local _continue = true
@@ -175,6 +177,7 @@ node "BEH_Dep_Pion_HOT_AppuyerFreinage"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or eAppuyer
         self.repCurEni = self.repCurEni or nil

@@ -10,7 +10,7 @@
 #ifndef __Application_ABC_h_
 #define __Application_ABC_h_
 
-#include <qapplication.h>
+#include "qapplication.h"
 
 // =============================================================================
 /** @class  Application_ABC

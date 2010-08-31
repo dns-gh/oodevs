@@ -84,6 +84,7 @@ include "glaise/glaise_Appui/Log/Pions/Missions/Missions.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Mot_AffecterVariablesDEtat, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// MAJ VE
 ]]--[[//-----------------------------------------------------------------------------
@@ -155,6 +156,7 @@ node "BEH_Mot_AffecterVariablesDEtat"
     end,
 
     activate = function( self )
+        local Activate = Activate
     end,
 
 --[[// $$$$ MIA: esquive uniquement sur PAP   
@@ -182,6 +184,7 @@ node "BEH_Ordre_Pion_LOG_OrdresInopines"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
         for _,x in pairs( ordres_recus or {} ) do
         local _continue = true
@@ -295,6 +298,7 @@ node "BEH_Log_Pion_GererActivationsChaines"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DEC_Agent_EstInstalle() ) then
             do
                 Activate( self.activations.ACT_Misc_Pion_LOG_ActiverSante, 1, {} )
@@ -329,6 +333,7 @@ node "BEH_Dep_Virtuel_ProgressionVers"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.point, self._namedParams.eTypeProgression, self._namedParams.eTypeIti, } )
     end,
 
@@ -346,6 +351,7 @@ node "BEH_Dep_Virtuel_PreparationAction"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self:SendFeedback( eActionEffectuee )
         do return end
 

@@ -26,6 +26,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_GTIA_RendreCompteDebutFinMission, 1, {} )
         Activate( self.activations.BEH_GTIA_RendreCompteSurOrdreDeConduite, 1, {} )
         Activate( self.activations.BEH_GTIA_RendreCompteSurLima, 1, {} )
@@ -54,6 +55,7 @@ node "BEH_GTIA_RendreCompteDebutFinMission"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 Activate( self.activations.ACT_RC_Automate, 1, { eRC_DebutMission, } )
@@ -91,6 +93,7 @@ node "BEH_GTIA_RendreCompteSurOrdreDeConduite"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
         for _,ordre in pairs( ordres_recus or {} ) do
         local _continue = true
@@ -136,9 +139,10 @@ node "BEH_GTIA_RendreCompteSurLima"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listePionsPE = S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier )
         --[[// Pas de PE donc pas de mission ou échouage
-]]if( ( #( listePionsPE ) == 0 or #( listePionsPE ) == nil ) ) then
+]]if( #( listePionsPE ) == 0 ) then
             do return end
         end
 

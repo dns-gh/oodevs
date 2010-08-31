@@ -31,6 +31,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         assert( self._namedParams.point ~= nil, "ASA : Rejoindre Point" )
         --[[// variables persistantes
 ]]self.listePoints = self.listePoints or DEC_Geometrie_CreerListePoints()
@@ -39,7 +40,7 @@ include "bit.lua"
             DEC_ListePoints_PushBack( self.listePoints, self._namedParams.point )
         end
 
-        if( ( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.point ) == 0 or DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.point ) == nil ) ) then
+        if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.point ) == 0 ) then
             self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
@@ -82,6 +83,7 @@ node "BEH_Dep_Pion_ASA_RejoindrePion"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 assert( self._namedParams.pion ~= nil, "ASA : Rejoindre Pion" )
         --[[// variables persistantes
 ]]self.listePoints = self.listePoints or DEC_Geometrie_CreerListePoints()
@@ -91,7 +93,7 @@ node "BEH_Dep_Pion_ASA_RejoindrePion"
             DEC_Copie_Point( self._namedParams.pion:DEC_Agent_Position(), self.positionPion )
         end
 
-        if( ( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.positionPion ) == 0 or DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.positionPion ) == nil ) ) then
+        if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.positionPion ) == 0 ) then
             self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
@@ -177,6 +179,7 @@ node "BEH_Dep_Pion_ASA_RejoindreParItineraire"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//variables persistantes
 ]]        self.eEtat = self.eEtat or eActionEnCours
         self.itineraire = self.itineraire or nil
@@ -201,7 +204,7 @@ node "BEH_Dep_Pion_ASA_RejoindreParItineraire"
         if( ModuleBegins() ) then
             do
                 assert( self._namedParams.listePoints ~= nil, "liste de points non valide" )
-                assert( ( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= 0 and DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil ), "liste de points vide" )
+                assert( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil, "liste de points vide" )
                 --[[//la distance Max doit etre au moins = a la distanceMin
 ]]if( self._namedParams.distanceMax < self._namedParams.distanceMin ) then
                     self.distanceMaxEffective = self._namedParams.distanceMin
@@ -354,6 +357,7 @@ node "BEH_Dep_Pion_ASA_Suivre"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// variables persistantes
 ]]self.eEtat = self.eEtat or eActionEnCours
         self.pointARejoindre = self.pointARejoindre or nil
@@ -437,6 +441,7 @@ node "BEH_Dep_Pion_ASA_EclairerItinerairePion"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.eEtatDelai = self.eEtatDelai or eActionEnCours
         self.pointARejoindre = self.pointARejoindre or DEC_Geometrie_CreerPoint()

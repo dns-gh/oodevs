@@ -21,6 +21,7 @@ node "MIS_Automate_CDT_Transporter"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eTransporter
         self.listePionsSgpt = self.listePionsSgpt or {}
         self.listeTransporteur = self.listeTransporteur or {}
@@ -111,7 +112,7 @@ elseif switch_1 == eFinMission then
                     local _continue = true
 do
                             local pionBuffer = x
-                            if( ( DEC_GetMission( pionBuffer ) ~= 0 and DEC_GetMission( pionBuffer ) ~= nil ) ) then
+                            if( DEC_GetMission( pionBuffer ) ~= nil ) then
                                 plusDeMissions = false
                             end
 

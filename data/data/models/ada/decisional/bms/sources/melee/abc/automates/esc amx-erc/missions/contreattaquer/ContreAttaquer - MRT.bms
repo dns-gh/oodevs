@@ -22,6 +22,7 @@ includedFiles["sources/melee/abc/automates/esc amx-erc/missions/contreattaquer/C
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------

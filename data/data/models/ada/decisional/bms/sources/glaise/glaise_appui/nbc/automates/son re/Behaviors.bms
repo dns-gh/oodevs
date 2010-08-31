@@ -67,3 +67,4 @@ include "Glaise/Glaise_Appui/Nbc/Automates/Common/Missions/DecontaminerZone/Deco
 
 --[[// MRT GEN Mis 
 ]]include "Glaise/Glaise_Appui/Nbc/Automates/Common/MRT generique.bms"
+

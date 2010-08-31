@@ -71,7 +71,7 @@ end
 
 function S_Eni_Automate_EstDetruitTactique( cible )
     local _returnValue = false
-    _returnValue = ( DEC_ConnaissanceAgent_EtatOps( cible ) == 0 or DEC_ConnaissanceAgent_EtatOps( cible ) == nil )
+    _returnValue = DEC_ConnaissanceAgent_EtatOps( cible ) == 0
     do return _returnValue end
 end
 
@@ -305,7 +305,7 @@ function S_Automate_INF_UniteMission_Appuyer( pPionAppui )
     local _returnValue = nil
     local pionFoo = nil
     _returnValue = pionFoo
-    if( ( DEC_GetMission( pPionAppui ) == 0 or DEC_GetMission( pPionAppui ) == nil ) ) then
+    if( DEC_GetMission( pPionAppui ) == nil ) then
         do return _returnValue end
     end
 
@@ -527,7 +527,7 @@ do
                         rForceAppui = 2.5
                     end
 
-                    if( ( #( F_Pion_GetselUnitesEnAppui( pion ) ) == 0 or #( F_Pion_GetselUnitesEnAppui( pion ) ) == nil ) ) then
+                    if( #( F_Pion_GetselUnitesEnAppui( pion ) ) == 0 ) then
                         rForceAppui = 3.5
                     end
 

@@ -24,6 +24,7 @@ includedFiles["sources/appui/artfdp/automates/bat reco tir sam/missions/recoetde
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
@@ -56,6 +57,7 @@ node "BEH_Conduite_Automate_ASS_RecoEtDeploiement_PourSAM"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//Définition du type de la mission ce qui permet d'accéder aux paramètres du formulaire associé
 ]]self.mission = self.mission or DEC_GetMission( myself )
         --[[//Création de la liste des points nécessaires à la reco(lstPos_Reco)
@@ -103,7 +105,7 @@ do
 ]]self.ptZone = S_Misc_Automate_ASS_ExtraitPoint_ProchePionDansFuseau( self.lstPos_Reco, x_ass )
                     --[[//Forcer le comportement à continuer car le point de reconnaissance n'est connu
 ]]--[[//qu'à la première lecture du code
-]]if( ( self.ptZone == 0 or self.ptZone == nil ) ) then
+]]if( self.ptZone == nil ) then
                         _continue = false
                     else
 do
@@ -112,7 +114,7 @@ do
                             indice = 0
                             --[[//Calcul du nombre d'éléments dans la liste des zones mortier
 ]]local taillelisteZones = #( self.listeZones )
-                            if( ( taillelisteZones ~= 0 and taillelisteZones ~= nil ) ) then
+                            if( taillelisteZones ~= 0 ) then
                                 do
                                     for _,x in pairs( self.listeZones or {} ) do
                                     local _continue = true
@@ -170,7 +172,7 @@ do
                 --[[//Calcul du nombre d'éléments dans la liste des zones canon
 ]]local tailleListeObstacle = #( self.listeObstacle )
                 --[[//Il existe des objets dans le fuseau de l'automate
-]]if( ( tailleListeObstacle ~= 0 and tailleListeObstacle ~= nil ) ) then
+]]if( tailleListeObstacle ~= 0 ) then
                     do
                         for _,x_pionTir in pairs( selPion_ASS_Tir or {} ) do
                         local _continue = true

@@ -28,7 +28,7 @@ includedFiles["sources/appui/rens/pions/roim/drone sdti/missions/RenseignerSur.b
     end,
 
     activate = function( self )
-        self.eEtat = self.eEtat or eActionEnCours
+        local Activate = Activate        self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         --[[//---------------------------------------------------------------------
 ]]--[[// Commencer le mode enregistrement

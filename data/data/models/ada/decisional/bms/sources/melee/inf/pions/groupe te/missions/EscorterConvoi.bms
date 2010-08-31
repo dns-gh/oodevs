@@ -28,6 +28,7 @@ includedFiles["sources/melee/inf/pions/groupe te/missions/EscorterConvoi.bms"] =
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eCurrentPhase = self.eCurrentPhase or ePreparerMission
         self.ePhase = self.ePhase or eSeMettreEnPlace
         self.eAction = self.eAction or eActionEnCours
@@ -115,6 +116,7 @@ node "BEH_Mission_Pion_VAB_EscorterUnConvoi"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         self.pionConvoi = self.pionConvoi or self.mission.uniteAEscorter_
         self.eAction = self.eAction or eActionEnCours
@@ -162,7 +164,7 @@ elseif switch_1 == eEscorter then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EscorteUnite, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "** Escorte de l'unité **", } )
                     --[[// Objectif de l'unité escorté                
-]]if( ( self.pionConvoi:GetitMvt_() == 0 or self.pionConvoi:GetitMvt_() == nil ) ) then
+]]if( self.pionConvoi:GetitMvt_() == nil ) then
                         do
                             Activate( self.activations.ACT_Info_Trace, 1, { "**** L'unite escorter doit avoir un objectif **** ", } )
                                                         do return end
@@ -208,6 +210,7 @@ node "BEH_Dep_Pion_INF_SeCoordonnerSurEscorte"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.bActiveAttente = self.bActiveAttente or false
         self.bActiveRelai = self.bActiveRelai or false
         if( not S_Geometrie_EstProchePosition( self._namedParams.pionAmi:DEC_Agent_Position(), DEC_Agent_Position(), self._namedParams.rDistMax + self._namedParams.rDistMin ) ) then
@@ -237,6 +240,7 @@ node "BEH_Dep_Pion_INF_Escorter"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eAction = self.eAction or eActionEnCours
         self.ptEnAvance = self.ptEnAvance or self._namedParams.pionAmi:DEC_Itineraire_ExtrapolerPosition( 2, true )
         if( self.eAction ~= eActionEnCours ) then

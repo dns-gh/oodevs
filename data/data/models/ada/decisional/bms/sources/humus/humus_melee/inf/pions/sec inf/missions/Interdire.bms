@@ -40,6 +40,7 @@ includedFiles["sources/humus/humus_melee/inf/pions/sec inf/missions/Interdire.bm
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eCurrentPhase = self.eCurrentPhase or ePreparerMission
         self.ePhase = self.ePhase or eSeMettreEnPlace
         self.eAction = self.eAction or eActionEnCours

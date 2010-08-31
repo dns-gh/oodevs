@@ -63,7 +63,7 @@ include "bit.lua"
 ]]--[[// ----------------------------------------------------------------------------
 ]]function S_Eni_EstDetruitTactique( cible )
     local _returnValue = false
-    _returnValue = ( DEC_ConnaissanceAgent_EtatOps( cible ) == 0 or DEC_ConnaissanceAgent_EtatOps( cible ) == nil )
+    _returnValue = DEC_ConnaissanceAgent_EtatOps( cible ) == 0
     do return _returnValue end
 end
 
@@ -136,7 +136,7 @@ function S_Eni_EstDansZone( ksEni, locZone )
     local _returnValue = false
     _returnValue = false
     local ptEni = DEC_ConnaissanceAgent_Position( ksEni )
-    if( ( ( ptEni == 0 or ptEni == nil ) or locZone == 0 or ( ptEni == 0 or ptEni == nil ) or locZone == nil ) ) then
+    if( ptEni == nil or locZone == nil ) then
         do return _returnValue end
     end
 

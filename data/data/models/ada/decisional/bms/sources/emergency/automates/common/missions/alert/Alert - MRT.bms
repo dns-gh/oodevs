@@ -28,6 +28,7 @@ includedFiles["sources/emergency/automates/common/missions/alert/Alert - MRT.bms
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eCreationMRT = self.eCreationMRT or eActionEnCours
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
@@ -96,6 +97,7 @@ node "BEH_Medo_Automate_Emergency_PrepareMission_Alert"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eMRT_SelectionnerPions
         self.eActionMRT = self.eActionMRT or eActionEnCours
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
@@ -248,6 +250,7 @@ node "BEH_Medo_Automate_Emergency_AssignAlert"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//--------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//--------------------------------------------------------------------------

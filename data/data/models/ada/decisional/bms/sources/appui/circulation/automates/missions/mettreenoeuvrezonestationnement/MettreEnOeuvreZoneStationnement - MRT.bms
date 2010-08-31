@@ -23,6 +23,7 @@ includedFiles["sources/appui/circulation/automates/missions/mettreenoeuvrezonest
     end,
 
     activate = function( self )
+        local Activate = Activate
         local selPions = S_Cherche_Automate_Filtre_TypePionOperationnels( DEC_Automate_PionsAvecPC(), "PatrouilleCirculation" )
         self.ePhase = self.ePhase or eMRT_AssignerMissions
         self.eEtatMissionAppuyer = self.eEtatMissionAppuyer or eActionEnCours
@@ -80,7 +81,7 @@ includedFiles["sources/appui/circulation/automates/missions/mettreenoeuvrezonest
                     Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( selPions ), } )
 self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtatMissionAppuyer = v[1] end
                     --[[// ordre de creation des missions
-]]if( ( #( selPions ) ~= 0 and #( selPions ) ~= nil ) ) then
+]]if( #( selPions ) ~= 0 ) then
                         Activate( self.activations.BEH_Mission_Automate_CIRCU_AssignerMettreEnOeuvreStationnementAListe, 1, { ePhase_MRT, selPions, self.listeSousSecteurs, } )
                     end
 

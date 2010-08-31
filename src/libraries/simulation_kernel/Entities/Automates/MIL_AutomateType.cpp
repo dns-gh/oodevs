@@ -33,7 +33,7 @@ MIL_AutomateType::T_AutomateTypeMap           MIL_AutomateType::automateTypes_;
 // Name: MIL_AutomateType::Create
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
-const MIL_AutomateType* MIL_AutomateType::Create( const std::string& strName, xml::xistream& xis )
+const MIL_AutomateType* MIL_AutomateType::Create( const std::string& strName, xml::xistream& xis)
 {
     return new MIL_AutomateType( strName, xis );
 }
@@ -277,25 +277,25 @@ void MIL_AutomateType::InitializeDiaFunctions()
 // Name: MIL_AutomateType::InstanciateAutomate
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Automate& MIL_AutomateType::InstanciateAutomate( unsigned int nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database ) const
+MIL_Automate& MIL_AutomateType::InstanciateAutomate( unsigned int nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult ) const
 {
-    return *new MIL_Automate( *this, nID, parent, xis, database );
+    return *new MIL_Automate( *this, nID, parent, xis, database, gcPause, gcMult );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateType::InstanciateAutomate
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Automate& MIL_AutomateType::InstanciateAutomate( unsigned int nID, MIL_Automate& parent, xml::xistream& xis, DEC_DataBase& database ) const
+MIL_Automate& MIL_AutomateType::InstanciateAutomate( unsigned int nID, MIL_Automate& parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult ) const
 {
-    return *new MIL_Automate( *this, nID, parent, xis, database );
+    return *new MIL_Automate( *this, nID, parent, xis, database, gcPause, gcMult );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateType::RegisterFunctions
 // Created: LDC 2009-04-23
 // -----------------------------------------------------------------------------
-void MIL_AutomateType::RegisterFunctions( directia::Brain& /*brain*/, MIL_Automate& /*automat*/ ) const
+void MIL_AutomateType::RegisterFunctions( directia::brain::Brain& /*brain*/, MIL_Automate& /*automat*/ ) const
 {
     // NOTHING
 }

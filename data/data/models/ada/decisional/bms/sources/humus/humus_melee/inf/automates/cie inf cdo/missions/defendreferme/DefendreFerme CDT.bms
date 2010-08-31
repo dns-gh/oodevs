@@ -29,6 +29,7 @@ node "MIS_Automate_CDT_INF_DefendreFerme"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eActionMission = self.eActionMission or eActionEnCours
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init

@@ -42,7 +42,7 @@ includedFiles["sources/common/Fonctions - Geometrie.bms"] = true
 ]]--[[// ----------------------------------------------------------------------------
 ]]function S_Geometrie_BarycentreAgents( listePions )
     local _returnValue = nil
-    if( ( #( listePions ) == 0 or #( listePions ) == nil ) ) then
+    if( #( listePions ) == 0 ) then
         do
             _returnValue = nil
                         do return _returnValue end
@@ -68,7 +68,7 @@ end
 
 function S_Geometrie_BarycentreZone( localisation )
     local _returnValue = nil
-    assert( ( localisation ~= 0 and localisation ~= nil ), "Pointeur Invalide" )
+    assert( localisation ~= nil, "Pointeur Invalide" )
     local ptRetour = nil
     local returnCode = nil
     ptRetour = DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau( localisation )

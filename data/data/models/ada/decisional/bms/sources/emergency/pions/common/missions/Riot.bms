@@ -33,6 +33,7 @@ includedFiles["sources/emergency/pions/common/missions/Riot.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or eReconnaitre
         if( ModuleBegins() ) then
@@ -125,6 +126,7 @@ node "BEH_Pion_Emergency_GartherPeople"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         Activate( self.activations.ACT_Pion_Emergency_TriggerActivity, 1, { "riot", 0.5, } )
         if( self.eAction == eActionEnCours ) then

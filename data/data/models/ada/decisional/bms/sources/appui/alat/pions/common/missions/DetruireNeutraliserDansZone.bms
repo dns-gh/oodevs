@@ -33,6 +33,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or eRejoindre
         if( ModuleBegins() ) then
@@ -226,11 +227,12 @@ node "BEH_Eni_Pion_ALAT_GererEniDetruireDansZone"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or eRejoindre
         self.pointDislo = self.pointDislo or DEC_Geometrie_CreerPoint()
         self.directionCentreZone = self.directionCentreZone or DEC_Geometrie_CreerDirection( self._namedParams.pointDislocation, S_Geometrie_BarycentreZone( self._namedParams.zone ) )
-        if( ( self.directionCentreZone == 0 or self.directionCentreZone == nil ) ) then
+        if( self.directionCentreZone == nil ) then
             Halt( self )
             do return end
         end

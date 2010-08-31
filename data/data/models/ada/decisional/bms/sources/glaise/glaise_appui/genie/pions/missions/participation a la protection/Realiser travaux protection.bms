@@ -25,6 +25,7 @@ includedFiles["sources/glaise/glaise_appui/genie/pions/missions/participation a 
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         --[[//-----------------------------------------------------------------
@@ -112,6 +113,7 @@ node "BEH_Dep_GEN_AllerFaireTravauxSur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.rIterateur = self.rIterateur or 0
         if( self.eEtat == eActionEffectuee ) then
@@ -159,6 +161,7 @@ node "BEH_Obj_GEN_AllerContruireObjetSur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.positionTest = self.positionTest or nil
         self.positionObjet = self.positionObjet or S_Geometrie_BarycentreZone( DEC_GenObject_Localisation( self._namedParams.objet ) )
@@ -229,6 +232,7 @@ node "BEH_Objet_Pion_GEN_RealiserObjet"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         if( self.eEtat == eActionEffectuee ) then
             do
@@ -294,6 +298,7 @@ node "BEH_Objet_Pion_GEN_RealiserTravaux"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or eRealiserObstacle
          do

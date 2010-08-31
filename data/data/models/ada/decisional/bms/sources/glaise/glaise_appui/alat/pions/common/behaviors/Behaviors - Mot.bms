@@ -18,6 +18,7 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/behaviors/Behaviors
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_MAJ_EtatOrdreCoordination, 1, { eEtatOrdreCoordination_Attendre, } )
         Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, {} )
     end,
@@ -44,6 +45,7 @@ node "BEH_MOT_Pion_ALAT_GarderSesDistances"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listeUnitesEnnemiesDangereuses = DEC_Connaissances_UnitesEnnemiesDangereuses()
         for _,repEni in pairs( listeUnitesEnnemiesDangereuses or {} ) do
         local _continue = true
@@ -96,6 +98,7 @@ node "BEH_MOT_Pion_ALAT_GarderSesDistancesFaceA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repEni ) ) then
             self:SendFeedback( eActionImpossible )
             Halt( self )
@@ -133,6 +136,7 @@ node "BEH_Mot_Pion_ALAT_AffecterVariablesDEtat"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// En fonction du moral...
 ]]--[[//-----------------------------------------------------------------------------

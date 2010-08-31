@@ -34,6 +34,7 @@ includedFiles["sources/melee/abc/automates/common/missions/fixer/Fixer - CDT.bms
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_CoordDep_Automate_ABC_AssurerLaCoordinationInterne_, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// Coordination
 ]]--[[//-----------------------------------------------------------------------------

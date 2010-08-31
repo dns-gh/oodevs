@@ -47,6 +47,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         if( ModuleBegins() ) then
@@ -117,7 +118,7 @@ elseif switch_1 == eRejoindre then
 elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EscorteUnite, } )
                     --[[// Objectif de l'unité escorté                
-]]if( ( F_Pion_GetitMvt( self._namedParams.pionAmi ) == 0 or F_Pion_GetitMvt( self._namedParams.pionAmi ) == nil ) ) then
+]]if( F_Pion_GetitMvt( self._namedParams.pionAmi ) == 0 ) then
                         do
                             Activate( self.activations.ACT_Info_Trace, 1, { "Waiting for friendly unit to have a mission", } )
                                                         do return end
@@ -196,6 +197,7 @@ node "BEH_Mission_Pion_ABC_EscorterAutomate"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         --[[//-------------------------------------------------------------------------
@@ -221,7 +223,7 @@ do
 
         end
 
-        if( ( pionTemoin == 0 or pionTemoin == nil ) ) then
+        if( pionTemoin == 0 ) then
             do
                 --[[// Cas ou un PC dans l'automate
 ]]local pionPC = DEC_Pion_PionPCDeAutomate( self._namedParams.automateAmi )
@@ -306,7 +308,7 @@ elseif switch_1 == eProgresser then
                     --[[// IL FAUT QUE L'AUTOMATE QUE L'ON ESCORTE AIT LA MISSION 'FAIRE MOUVEMENT'
 ]]--[[// On prend un pion l'itineraire d'un pion au hasard dans l'automate
 ]]--[[// Objectif de l'unité escortée    
-]]if( ( ( pionTemoin == 0 or pionTemoin == nil ) or F_Pion_GetitMvt( pionTemoin ) == 0 or ( pionTemoin == 0 or pionTemoin == nil ) or F_Pion_GetitMvt( pionTemoin ) == nil ) ) then
+]]if( pionTemoin == 0 or F_Pion_GetitMvt( pionTemoin ) == 0 ) then
                         do
                             Activate( self.activations.ACT_Info_Trace, 1, { "**** L'unite escortée doit avoir un objectif **** ", } )
                                                         do return end

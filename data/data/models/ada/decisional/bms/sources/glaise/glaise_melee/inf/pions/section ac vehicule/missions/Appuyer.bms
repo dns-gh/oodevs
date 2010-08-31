@@ -45,6 +45,7 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/section ac vehicule/mission
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.eActionOrdre = self.eActionOrdre or eActionEnCours
         self.ePhase = self.ePhase or ePreparerMission
@@ -54,7 +55,7 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/section ac vehicule/mission
             do
                 DEC_SetMission( myself, self._namedParams.mission )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
-                if( ( self.repAmi == 0 or self.repAmi == nil ) ) then
+                if( self.repAmi == 0 ) then
                     do
                         DEC_Warning( eRC_MissionImpossible )
                                                 self:SendFeedback( eActionImpossible )

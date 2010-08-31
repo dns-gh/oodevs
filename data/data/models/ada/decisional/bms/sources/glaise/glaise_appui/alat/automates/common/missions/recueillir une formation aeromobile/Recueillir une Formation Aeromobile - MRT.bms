@@ -33,6 +33,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eMRT_AssignerMissions
         self.eEtatMissionsDonnerCoupArret = self.eEtatMissionsDonnerCoupArret or eActionEnCours
         self.listeZonesDeRecueil = self.listeZonesDeRecueil or {}
@@ -81,7 +82,7 @@ do
                 DEC_SetMission( myself, self._namedParams.mission )
                 --[[//calcul de la liste des PIA
 ]]local LIA = DEC_GetLima( eTypeLima_LIA )
-                if( ( LIA == 0 or LIA == nil ) ) then
+                if( LIA == 0 ) then
                     do
                         DEC_Trace( "Manque LIA" )
                         DEC_Warning( eRC_MissionImpossibleLimaInvalide )

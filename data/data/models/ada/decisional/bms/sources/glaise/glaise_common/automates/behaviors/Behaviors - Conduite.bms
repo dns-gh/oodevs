@@ -28,6 +28,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionInit = self.eActionInit or eActionEnCours
         if( self.eActionInit == eActionEnCours ) then
             Activate( self.activations.BEH_Conduite_Automate_GererFuseau_Init, 1, {} )
@@ -54,6 +55,7 @@ node "BEH_Conduite_Automate_GererFuseau_Init"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.rN_PE_Init = self.rN_PE_Init or 0
         self.selPions = self.selPions or DEC_Automate_PionsSansPC()
         self.bOrdre_Donne = self.bOrdre_Donne or false
@@ -63,7 +65,7 @@ node "BEH_Conduite_Automate_GererFuseau_Init"
             self.rN_PE_Init = #( sUnites_PE )
         end
 
-        if( not ( self.bInit and #( sUnites_PE ) ~= 0 and self.bInit and #( sUnites_PE ) ~= nil ) ) then
+        if( not self.bInit and #( sUnites_PE ) ~= 0 ) then
             do
                 --[[// Dit a tous les pions dans le fuseau de se poster
 ]]local rPions_DansFuseau = 0
@@ -105,7 +107,7 @@ node "BEH_Conduite_Automate_GererFuseau_Init"
             do return end
         end
 
-        if( ( rPion_Rejoins ~= 0 and rPion_Rejoins ~= nil ) and rPion_SurFuseau == rPion_Rejoins ) then
+        if( rPion_Rejoins ~= 0 and rPion_SurFuseau == rPion_Rejoins ) then
             do
                 for _,x in pairs( sUnites_PE or {} ) do
                 local _continue = true
@@ -134,6 +136,7 @@ node "BEH_Conduite_Automate_GererFuseau_Valide"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local sUnites_PE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
         for _,x in pairs( sUnites_PE or {} ) do
         local _continue = true
@@ -164,6 +167,7 @@ node "BEH_Conduite_Automate_GererFinMission"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionMission = self.eActionMission or eActionEnCours
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion de la fin de mission
@@ -215,6 +219,7 @@ node "BEH_Situation_Automate_FinDeMission_Sur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             DEC_Trace( DEC_GetSzName( self._namedParams.pion ) .. " : fin de mission." )
         end
@@ -232,6 +237,7 @@ node "BEH_Situation_Automate_FinDeMission"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Revoir	 
 ]]self.lst_Pions_EnTete = self.lst_Pions_EnTete or DEC_Automate_PionsSansPC()
         local rFinDeMission = #( self.lst_Pions_EnTete ) + 1

@@ -41,6 +41,7 @@ include "Common/Automates/Actions/Medo/Actions - Medo - ASS.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -97,6 +98,7 @@ node "BEH_Mission_Automate_ASS_AcquerirObjectifsA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -154,6 +156,7 @@ node "BEH_Mission_Automate_ASS_DLOAcquerirObjectifsA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -210,6 +213,7 @@ node "BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do

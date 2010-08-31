@@ -62,6 +62,7 @@ include "Common/Pions/Behaviors/behaviors - Transport.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Info_Mos, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// INFO MOS
 ]]--[[//-----------------------------------------------------------------------------

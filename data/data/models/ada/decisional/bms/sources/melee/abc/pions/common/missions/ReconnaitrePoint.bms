@@ -46,6 +46,7 @@ includedFiles["sources/melee/abc/pions/common/missions/ReconnaitrePoint.bms"] = 
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
@@ -185,6 +186,7 @@ node "BEH_Obs_Pion_ABC_ReconnaitrePointMission"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init

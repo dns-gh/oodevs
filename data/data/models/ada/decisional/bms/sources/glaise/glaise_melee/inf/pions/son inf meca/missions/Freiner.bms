@@ -32,6 +32,7 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/son inf meca/missions/Frein
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.ePhaseMission = self.ePhaseMission or eSeMettreEnPlace
         self.ePhase = self.ePhase or eFreiner
         self.eAction = self.eAction or eActionEnCours

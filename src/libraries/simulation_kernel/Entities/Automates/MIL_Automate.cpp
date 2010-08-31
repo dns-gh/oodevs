@@ -39,7 +39,7 @@
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
 #include "Tools/MIL_Tools.h"
-#include <xeumeuleu/xml.hpp>
+#include <xeumeuleu/xml.h>
 
 #include "protocol/ClientSenders.h"
 #include "protocol/SimulationSenders.h"
@@ -63,24 +63,27 @@ void save_construct_data( Archive& archive, const MIL_Automate* automat, const u
 {
     assert( automat->pType_ );
     unsigned int type = automat->pType_->GetID();
-    archive << type;
+    archive << type
+        << automat->nID_;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, MIL_Automate* automat, const unsigned int /*version*/ )
 {
     unsigned int type;
-    archive >> type;
+    unsigned int nID;
+    archive >> type
+        >> nID;
     const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( type );
     assert( pType );
-    ::new( automat )MIL_Automate( *pType );
+    ::new( automat )MIL_Automate( *pType, nID );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database )
+MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
     : MIL_Entity_ABC                     ( xis )
     , pType_                             ( &type )
     , nID_                               ( nID )
@@ -103,7 +106,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , pKnowledgeBlackBoard_              ( new DEC_KnowledgeBlackBoard_Automate( *this ) )
     , pArmySurrenderedTo_                ( 0 )
 {
-    Initialize( xis, database );
+    Initialize( xis, database, gcPause, gcMult );
     pParentFormation_->RegisterAutomate( *this );
 }
 
@@ -111,7 +114,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
 // Name: MIL_Automate constructor
 // Created: NLD 2007-03-29
 // -----------------------------------------------------------------------------
-MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Automate& parent, xml::xistream& xis, DEC_DataBase& database )
+MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Automate& parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
     : MIL_Entity_ABC                     ( xis )
     , pType_                             ( &type )
     , nID_                               ( nID )
@@ -134,7 +137,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , pKnowledgeBlackBoard_              ( new DEC_KnowledgeBlackBoard_Automate( *this ) )
     , pArmySurrenderedTo_                ( 0 )
 {
-    Initialize( xis, database );
+    Initialize( xis, database, gcPause, gcMult );
     pParentAutomate_->RegisterAutomate( *this );
 }
 
@@ -142,7 +145,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
 // Name: MIL_Automate constructor
 // Created: LDC 2009-04-24
 // -----------------------------------------------------------------------------
-MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID)
+MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID )
     : MIL_Entity_ABC                     ( "" )
     , pType_                             ( &type )
     , nID_                               ( nID )
@@ -164,6 +167,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID)
     , nTickRcDotationSupplyQuerySent_    ( 0 )
     , pKnowledgeBlackBoard_              ( 0 )
     , pArmySurrenderedTo_                ( 0 )
+
 {
     // NOTHING
 }
@@ -313,9 +317,9 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
 // Name: MIL_Automate::Initialize
 // Created: NLD 2007-03-29
 // -----------------------------------------------------------------------------
-void MIL_Automate::Initialize( xml::xistream& xis, DEC_DataBase& database )
+void MIL_Automate::Initialize( xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
 {
-    xis >> xml::optional >> xml::attribute( "engaged", bEngaged_ );
+    xis >> xml::optional() >> xml::attribute( "engaged", bEngaged_ );
 
     unsigned int nKnowledgeGroup;
     xis >> xml::attribute( "knowledge-group", nKnowledgeGroup );
@@ -324,7 +328,7 @@ void MIL_Automate::Initialize( xml::xistream& xis, DEC_DataBase& database )
         xis.error( "Unknown knowledge group" );
     pKnowledgeGroup_->RegisterAutomate( *this );
 
-    RegisterRole( *new DEC_AutomateDecision( *this, database ) ) ;
+    RegisterRole( *new DEC_AutomateDecision( *this, database, gcPause, gcMult ) ) ;
     RegisterRole( *new DEC_Representations() );
 
     xis >> xml::list( "unit"    , *this, &MIL_Automate::ReadUnitSubordinate    )
@@ -343,20 +347,18 @@ void MIL_Automate::ReadUnitSubordinate( xml::xistream& xis )
     std::string strType;
     bool isPc = false;
     xis >> xml::attribute( "type", strType )
-        >> xml::optional >> xml::attribute( "command-post", isPc );
+        >> xml::optional() >> xml::attribute( "command-post", isPc );
 
     if( isPc && pPionPC_ )
         xis.error( "Automat's command post already defined" );
 
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( strType );
     if( !pType )
-        MT_LOG_ERROR_MSG( std::string( "Unknown pawn type: " + strType ).c_str() )
-    else
-    {
-        MIL_AgentPion& pion = MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, xis ); // Auto-registration
-        if( isPc )
-            pPionPC_ = &pion;
-    }
+        xis.error( "Unknown pawn type" );
+
+    MIL_AgentPion& pion = MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, xis ); // Auto-registration
+    if( isPc )
+        pPionPC_ = &pion;
 }
 
 // -----------------------------------------------------------------------------
@@ -373,7 +375,7 @@ void MIL_Automate::ReadAutomatSubordinate( xml::xistream& xis )
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::CreatePion
+// Name: MIL_Automate::CreatePion
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
 MIL_AgentPion& MIL_Automate::CreatePion( const MIL_AgentTypePion& type, const MT_Vector2D& vPosition )
@@ -427,7 +429,7 @@ void MIL_Automate::WriteODB( xml::xostream& xos ) const
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
         (**it).WriteODB( xos );
 
-    xos << xml::end; // automat
+    xos << xml::end(); // automat
 }
 
 // -----------------------------------------------------------------------------
@@ -468,8 +470,8 @@ void MIL_Automate::WriteLogisticLinksODB( xml::xostream& xos ) const
                 << xml::start( "subordinate" )
                     << xml::attribute( "id", GetID() )
                     << xml::attribute( "link", "tc2" )
-                << xml::end
-            << xml::end;
+                << xml::end()
+            << xml::end();
     }
 }
 
@@ -503,7 +505,7 @@ void MIL_Automate::UpdateDecision( float duration )
         orderManager_.CancelMission();
         MT_LOG_ERROR_MSG( "Entity " << GetID() << "('" << GetName() << "') : Mission impossible" );
     }
-    GetRole< DEC_Decision_ABC >().GarbageCollect();
+    //GetRole< DEC_Decision_ABC >().GarbageCollect();
 }
 
 // -----------------------------------------------------------------------------
@@ -1104,7 +1106,7 @@ void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( const MsgsClientToSim::MsgU
         throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_team_hierarchy );
 
     MIL_KnowledgeGroup* pNewKnowledgeGroup = pNewArmy->FindKnowledgeGroup( msg.parametres().elem( 0 ).value().knowledgegroup().id() );
-    if( !pNewKnowledgeGroup || pNewKnowledgeGroup->IsJammed() )
+    if( !pNewKnowledgeGroup )
         throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_knowledge_group );
 
     if( *pKnowledgeGroup_ != *pNewKnowledgeGroup )
@@ -1185,7 +1187,7 @@ void MIL_Automate::OnReceiveMsgChangeSuperior( const MsgsClientToSim::MsgUnitMag
 // -----------------------------------------------------------------------------
 void MIL_Automate::OnReceiveMsgLogSupplyChangeQuotas( const Common::MsgMissionParameters& /*msg*/ )
 {
-    throw NET_AsnException< MsgsSimToClient::MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas >( MsgsSimToClient::MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas_error_invalid_receveur_quotas );
+    throw NET_AsnException< MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow >( MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_receveur_pushflow );
 }
 
 // -----------------------------------------------------------------------------

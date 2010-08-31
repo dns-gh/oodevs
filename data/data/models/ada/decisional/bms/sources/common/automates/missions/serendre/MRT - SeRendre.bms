@@ -26,12 +26,13 @@ includedFiles["sources/common/automates/missions/serendre/MRT - SeRendre.bms"] =
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
         self.posCampPrisonnier = self.posCampPrisonnier or DEC_PositionCampPrisonniers()
         --[[//---------------------------------------------------------------------
 ]]--[[// Test présence camps prisonniers
 ]]--[[//---------------------------------------------------------------------
-]]if( ( self.posCampPrisonnier == 0 or self.posCampPrisonnier == nil ) ) then
+]]if( self.posCampPrisonnier == nil ) then
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "----- No prisoner of war camp ----- ", } )
                                 self:SendFeedback( eActionImpossible )
@@ -111,6 +112,7 @@ node "BEH_Medo_Automate_Prisonniers_AssignerFaireMouvementA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//---------------------------------------------------------------------
 ]]--[[// Assignation des missions
 ]]--[[//---------------------------------------------------------------------	

@@ -383,7 +383,7 @@ function S_Automate_INF_UniteMission_Appuyer( pPionAppui )
     local _returnValue = nil
     local pionFoo = nil
     _returnValue = pionFoo
-    if( ( DEC_GetMission( pPionAppui ) == 0 or DEC_GetMission( pPionAppui ) == nil ) ) then
+    if( DEC_GetMission( pPionAppui ) == nil ) then
         do return _returnValue end
     end
 
@@ -605,7 +605,7 @@ do
                         rForceAppui = 2.5
                     end
 
-                    if( ( #( F_Pion_GetselUnitesEnAppui( pion ) ) == 0 or #( F_Pion_GetselUnitesEnAppui( pion ) ) == nil ) ) then
+                    if( #( F_Pion_GetselUnitesEnAppui( pion ) ) == 0 ) then
                         rForceAppui = 3.5
                     end
 
@@ -991,7 +991,7 @@ function S_Dispositif_Automate_INF_PionsSansMission( )
     local _continue = true
 do
             local pion = x
-            if( ( DEC_GetMission( pion ) == 0 or DEC_GetMission( pion ) == nil ) ) then
+            if( DEC_GetMission( pion ) == nil ) then
                 DIA_PushFront( selTemp, pion )
             end
 

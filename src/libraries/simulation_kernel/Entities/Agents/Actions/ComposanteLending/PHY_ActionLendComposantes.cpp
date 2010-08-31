@@ -13,7 +13,7 @@
 #include "PHY_ActionLendComposantes.h"
 
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Decision/DEC_Tools.h"
@@ -22,7 +22,7 @@
 // Name: PHY_ActionLendComposantes constructor
 // Created: JVT 2005-05-12
 // -----------------------------------------------------------------------------
-PHY_ActionLendComposantes::PHY_ActionLendComposantes( MIL_AgentPion& pion, DEC_RolePion_Decision* pAgent, unsigned int nbrToLend, T_ComposantePredicate predicate )
+PHY_ActionLendComposantes::PHY_ActionLendComposantes( MIL_AgentPion& pion, DEC_Decision_ABC* pAgent, unsigned int nbrToLend, T_ComposantePredicate predicate )
     : PHY_DecisionCallbackAction_ABC    ( pion )
     , role_             ( pion.GetRole< PHY_RolePion_Composantes >() )
     , pTarget_          ( 0 )

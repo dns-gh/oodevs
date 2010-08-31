@@ -87,7 +87,7 @@ function S_NBC_ObtenirPionsROTADisposnibles( )
     local _continue = true
 do
             local pion = x
-            if( pion:GetType() == "Patrouille_NBC_RE" and F_Pion_GeteEtatDestruction( pion ) == eEtatDestruction_None and ( ( DEC_GetMission( pion ) == 0 or DEC_GetMission( pion ) == nil ) or F_Pion_GeteEtatPhaseMission( pion ) == eEtatPhaseMission_FinMission ) ) then
+            if( pion:GetType() == "Patrouille_NBC_RE" and F_Pion_GeteEtatDestruction( pion ) == eEtatDestruction_None and ( DEC_GetMission( pion ) == nil or F_Pion_GeteEtatPhaseMission( pion ) == eEtatPhaseMission_FinMission ) ) then
                 DIA_PushFront( listeTemp, pion )
             end
 

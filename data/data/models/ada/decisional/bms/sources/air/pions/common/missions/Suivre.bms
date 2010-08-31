@@ -26,6 +26,7 @@ includedFiles["sources/air/pions/common/missions/Suivre.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//variables persistantes
 ]]        self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or eSuivreUnite

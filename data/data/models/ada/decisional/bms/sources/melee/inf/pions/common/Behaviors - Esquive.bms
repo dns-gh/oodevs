@@ -46,6 +46,7 @@ node "BEH_Manoeuvre_RompreContact"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionRupture = self.eActionRupture or eActionEnCours
         --[[// Sur une mission retrograde
 ]]--[[// behavior BEH_Decrocher(); //  ? Stimulus, Esquive		
@@ -108,6 +109,7 @@ node "BEH_Manoeuvre_Pion_INF_SeReplier"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eCalculerPosition
         self.eAction = self.eAction or eActionEnCours
         self.eActionEmb = self.eActionEmb or eActionEnCours
@@ -168,6 +170,7 @@ node "BEH_Misc_Pion_INF_MAJ_Repli"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.bMAJ_A_Effectuer = self.bMAJ_A_Effectuer or false
         self.ptRepli_Courant = self.ptRepli_Courant or DEC_Geometrie_CreerPoint()
         if( ModuleBegins() ) then

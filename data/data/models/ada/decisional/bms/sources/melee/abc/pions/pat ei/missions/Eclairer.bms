@@ -26,6 +26,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or nil
         --[[//-----------------------------------------------------------------------------
 ]]--[[//  /===========> ///////////// SPE MISSION EI /////////////<============

@@ -26,6 +26,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//choisir une population ( la plus proche )et la rejoindre, en même temps agresser toute population ennemie à portée
 ]]local listePopus = DEC_Connaissances_Populations()
         local listePopusCollision = DEC_Connaissances_CollisionsPopulations()
@@ -38,7 +39,7 @@ do
                         --[[//rejoindre la population
 ]]Activate( self.activations.BEH_Eni_Pion_ASY_RejoindrePopulationDansZone, 1, { self._namedParams.zone, pop, } )
                         --[[//s'en prendre aux populations à portée
-]]if( ( GetStateVariable( "VE_EmploiForceInterdit" ) == 0 or GetStateVariable( "VE_EmploiForceInterdit" ) == nil ) and DEC_UserTypeList_Contient( listePopusCollision, pop ) ) then
+]]if( GetStateVariable( "VE_EmploiForceInterdit" ) == 0 and DEC_UserTypeList_Contient( listePopusCollision, pop ) ) then
                             Activate( self.activations.BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation, 1, { pop, } )
                         end
 
@@ -75,6 +76,7 @@ node "BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtatDelai = self.eEtatDelai or eActionEnCours
         if( ModuleBegins() ) then
             DEC_RC( eRC_AgressionDePopulation, self._namedParams.pop )
@@ -117,6 +119,7 @@ node "BEH_Eni_Pion_ASY_RejoindrePopulationDansZone"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.point = self.point or nil
         if( ModuleBegins() ) then
             self.point = DEC_ConnaissancePopulation_PointSecurisation( self._namedParams.pop )
@@ -160,6 +163,7 @@ node "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eAction = self.eAction or eActionEnCours
         self.it = self.it or DEC_CreerItineraire( self._namedParams.objectif, eTypeItiInfiltration )
         --[[//-----------------------------------------------------------------------------
@@ -215,6 +219,7 @@ node "BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eAction = self.eAction or eActionEnCours
         self.it = self.it or DEC_CreerItineraireListe( self._namedParams.listePoint, eTypeItiInfiltration )
         --[[//-----------------------------------------------------------------------------
@@ -266,6 +271,7 @@ node "BEH_Dep_Virtuel_ProgressionVers"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.point, self._namedParams.eTypeProgression, self._namedParams.eTypeIti, } )
     end,
 
@@ -283,6 +289,7 @@ node "BEH_Dep_Virtuel_PreparationAction"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self:SendFeedback( eActionEffectuee )
         do return end
 
@@ -313,6 +320,7 @@ node "BEH_Eni_Pion_ASY_CommettreAttentatContreForcesArmees"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eAction = self.eAction or eActionEnCours
         if( DEC_ConnaissanceAgent_EstValide( self._namedParams.repEni ) ) then
             do

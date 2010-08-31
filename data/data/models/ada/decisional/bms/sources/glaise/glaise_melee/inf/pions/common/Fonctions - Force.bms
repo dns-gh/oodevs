@@ -39,7 +39,7 @@ include "bit.lua"
 ]]function S_Force_Pion_INF_Regroupement( ptRegroupement )
     local _returnValue = 0
     _returnValue = 0
-    if( ( ptRegroupement ~= 0 and ptRegroupement ~= nil ) ) then
+    if( ptRegroupement ~= 0 ) then
         do
             _returnValue = 0.5
             if( not S_Geometrie_EstProchePosition( DEC_Agent_Position(), ptRegroupement, 300 ) ) then
@@ -69,7 +69,7 @@ function S_Force_DistanceReco( ptEni, rDistMax )
     local _returnValue = 0
     _returnValue = 0
     local mission = DEC_GetMission( myself )
-    if( ( ( ptEni == 0 or ptEni == nil ) or mission == 0 or ( ptEni == 0 or ptEni == nil ) or mission == nil ) ) then
+    if( ptEni == 0 or mission == 0 ) then
         do return _returnValue end
     end
 

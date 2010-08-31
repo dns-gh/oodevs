@@ -81,8 +81,8 @@ public:
     //@}
 
 public:
-             MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formation& formation, xml::xistream& xis, DEC_DataBase& database );
-             MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Automate&  parent   , xml::xistream& xis, DEC_DataBase& database);
+             MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formation& formation, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
+             MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Automate&  parent   , xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
     virtual ~MIL_Automate();
 
     //! @name CheckPoints
@@ -208,7 +208,7 @@ public:
 protected:
     //! @name Constructor
     //@{
-    MIL_Automate( const MIL_AutomateType& type, unsigned int nID=0 );
+    MIL_Automate( const MIL_AutomateType& type, unsigned int nID = 0 );
     //@}
 
     //! @name Tools
@@ -222,7 +222,7 @@ protected:
 private:
     //! @name Tools
     //@{
-    void Initialize( xml::xistream& xis, DEC_DataBase& database );
+    void Initialize( xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
     //@}
 
     //! @name Helpers

@@ -48,8 +48,10 @@ void load_construct_data( Archive& archive, MIL_AutomateInjuredHuman* automat, c
 MIL_AutomateInjuredHuman::MIL_AutomateInjuredHuman(     const MIL_AutomateTypeInjuredHuman& type
                                                         , uint nID, MIL_Formation& parent
                                                         , xml::xistream& xis
-                                                        , DEC_DataBase& database )
-    : MIL_Automate( type, nID, parent, xis, database )
+                                                        , DEC_DataBase& database
+														, unsigned int gcPause
+                                                        , unsigned int gcMult )
+    : MIL_Automate( type, nID, parent, xis, database, gcPause, gcMult )
 {
     // NOTHING
 }
@@ -61,8 +63,10 @@ MIL_AutomateInjuredHuman::MIL_AutomateInjuredHuman(     const MIL_AutomateTypeIn
 MIL_AutomateInjuredHuman::MIL_AutomateInjuredHuman(     const MIL_AutomateTypeInjuredHuman& type
                                                         , uint nID, MIL_Automate& parent
                                                         , xml::xistream& xis
-                                                        , DEC_DataBase& database )
-    : MIL_Automate( type, nID, parent, xis, database )
+                                                        , DEC_DataBase& database
+														, unsigned int gcPause
+                                                        , unsigned int gcMult )
+    : MIL_Automate( type, nID, parent, xis, database, gcPause, gcMult )
 {
     // NOTHING
 }

@@ -24,6 +24,7 @@ includedFiles["sources/appui/rens/automates/radint/pat viviane/missions/renseign
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Obtention Stations et cougar

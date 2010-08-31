@@ -15,17 +15,17 @@
 #include "actions/ActionsModel.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/Time_ABC.h"
+#include "directia/brain/Brain.h"
 #include "dispatcher/AgentKnowledgeConverter.h"
 #include "dispatcher/ModelAdapter.h"
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/ObjectKnowledgeConverter.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
-#include <MT/MT_Logger/MT_Logger_lib.h>
+#include "MT/MT_Logger/MT_Logger_lib.h"
 #include "protocol/protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "tools/ExerciseConfig.h"
-#include <xeumeuleu/xml.hpp>
-#include <directia/Brain.h>
+#include <xeumeuleu/xml.h>
 
 using namespace plugins::script;
 
@@ -45,11 +45,8 @@ namespace
 // -----------------------------------------------------------------------------
 struct Actions::Publisher : public Publisher_ABC
 {
-    explicit Publisher( dispatcher::SimulationPublisher_ABC& sim )
-        : sim_( &sim )
-    {
-        // NOTHING
-    }
+    explicit Publisher( dispatcher::SimulationPublisher_ABC& sim ) : sim_( &sim ) {}
+
     virtual void Send( const MsgsClientToSim::MsgClientToSim& message )
     {
         sim_->Send( message );
@@ -66,15 +63,15 @@ struct Actions::Publisher : public Publisher_ABC
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
 Actions::Actions( kernel::Controller& controller, const tools::ExerciseConfig& config, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& sim )
-    : entities_         ( new dispatcher::ModelAdapter( model ) )
-    , publisher_        ( new Publisher( sim ) )
-    , converter_        ( new kernel::CoordinateConverter( config ) )
-    , time_             ( new SimulationTime() )
-    , agentsKnowledges_ ( new dispatcher::AgentKnowledgeConverter( model ) )
+    : entities_( new dispatcher::ModelAdapter( model ) )
+    , publisher_( new Publisher( sim ) )
+    , converter_( new kernel::CoordinateConverter( config ) )
+    , time_( new SimulationTime() )
+    , agentsKnowledges_( new dispatcher::AgentKnowledgeConverter( model ) )
     , objectsKnowledges_( new dispatcher::ObjectKnowledgeConverter( model ) )
-    , parameters_       ( new actions::ActionParameterFactory( *converter_, *entities_, staticModel, *agentsKnowledges_, *objectsKnowledges_, controller ) )
-    , factory_          ( new actions::ActionFactory( controller, *parameters_, *entities_, staticModel, *time_ ) )
-    , file_             ( config.BuildExerciseChildFile( "scripts/resources/orders.ord" ) )
+    , parameters_( new actions::ActionParameterFactory( *converter_, *entities_, staticModel, *agentsKnowledges_, *objectsKnowledges_, controller ) )
+    , factory_( new actions::ActionFactory( controller, *parameters_, *entities_, staticModel, *time_ ) )
+    , file_   ( config.BuildExerciseChildFile( "scripts/resources/orders.ord" ) )
 {
     // NOTHING
 }
@@ -92,11 +89,11 @@ Actions::~Actions()
 // Name: Actions::RegisterIn
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
-void Actions::RegisterIn( directia::Brain& brain )
+void Actions::RegisterIn( directia::brain::Brain& brain )
 {
-    brain.RegisterObject( "actions", this );
-    brain.RegisterFunction( "IssueOrder", &Actions::IssueOrder );
-    brain.RegisterFunction( "IssueXmlOrder", &Actions::IssueXmlOrder );
+    brain[ "actions" ] = this;
+    brain.Register( "IssueOrder", &Actions::IssueOrder );
+    brain.Register( "IssueXmlOrder", &Actions::IssueXmlOrder );
 }
 
 // -----------------------------------------------------------------------------

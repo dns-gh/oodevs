@@ -65,6 +65,7 @@ include "glaise/glaise_Appui/Log/Automates/Missions/Missions.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( not DEC_Automate_EstEmbraye() ) then
             do return end
         end
@@ -92,7 +93,7 @@ include "glaise/glaise_Appui/Log/Automates/Missions/Missions.bms"
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Seulement pendant une mission
 ]]--[[//-----------------------------------------------------------------------------
-]]if( ( DEC_GetMission( myself ) ~= 0 and DEC_GetMission( myself ) ~= nil ) ) then
+]]if( DEC_GetMission( myself ) ~= nil ) then
             do
                 Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )--[[// reception d'ordre venant du dessus
 ]]
@@ -102,7 +103,7 @@ include "glaise/glaise_Appui/Log/Automates/Missions/Missions.bms"
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        if( ( DEC_GetMission( myself ) ~= 0 and DEC_GetMission( myself ) ~= nil ) ) then
+        if( DEC_GetMission( myself ) ~= nil ) then
             do
                 Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )--[[// reception d'ordre venant du dessus
 ]]

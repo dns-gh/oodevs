@@ -21,6 +21,7 @@ includedFiles["sources/melee/abc/automates/ge40/missions/offensives/Gerer appuis
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// On récupère les pions de premier échelons en difficultés 
 ]]local listePEEnDifficultes = S_Cherche_GE_Filtre_EtatSauvegarde( S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ) ) )
         if( DIA_IsListEmpty( listePEEnDifficultes ) ) then
@@ -54,6 +55,7 @@ node "BEH_GTIA_GererAppuiPour"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,pion in pairs( self._namedParams.listePEEnDifficultes or {} ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionsPourAppuyer, 1, { pion, } )
@@ -85,6 +87,7 @@ node "BEH_GTIA_AssignerMissionsPourAppuyer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// On récupère les pions de second échelons "en mesure de" 
 ]]local listePionsSE = S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second ) )
         local listePionSEDansFuseau = S_Cherche_GE_Filtre_PionsDansFuseau( listePionsSE, F_Automat_Getfuseau( self._namedParams.pion ) )

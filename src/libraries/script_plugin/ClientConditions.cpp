@@ -18,7 +18,7 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "protocol/Protocol.h"
 #include "tools/ElementObserver_ABC.h"
-#include <directia/Brain.h>
+#include <directia/brain/Brain.h>
 
 using namespace plugins::script;
 
@@ -46,12 +46,12 @@ ClientConditions::~ClientConditions()
 // Name: ClientConditions::RegisterIn
 // Created: SBO 2008-06-27
 // -----------------------------------------------------------------------------
-void ClientConditions::RegisterIn( directia::Brain& brain )
+void ClientConditions::RegisterIn( directia::brain::Brain& brain )
 {
-    brain.RegisterObject( "events.client", this );
-    brain.RegisterFunction( "UserChose", &ClientConditions::UserChose );
-    brain.RegisterFunction( "MissionChosen", &ClientConditions::MissionChosen );
-    brain.RegisterFunction( "EntitySelected", &ClientConditions::EntitySelected );
+    brain[ "events.client" ] = this;
+    brain.Register( "UserChose", &ClientConditions::UserChose );
+    brain.Register( "MissionChosen", &ClientConditions::MissionChosen );
+    brain.Register( "EntitySelected", &ClientConditions::EntitySelected );
 }
 
 // -----------------------------------------------------------------------------

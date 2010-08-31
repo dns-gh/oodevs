@@ -22,6 +22,7 @@ includedFiles["sources/glaise/glaise_appui/nbc/pions/pat dec/missions/AnimerPlot
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or nil
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Terminaison

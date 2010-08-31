@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_CASE( InstantiateBrainForMIL_AgentPion )
     MIL_EffectManager effectManager;
     FixturePion fixture( effectManager );
     StubDEC_Database database;
-    DEC_RolePion_Decision decision ( *fixture.pPion_, database );
+    DEC_RolePion_Decision decision ( *fixture.pPion_, database, 100, 100 );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +42,7 @@ BOOST_AUTO_TEST_CASE( InstantiateDEC_AutomateDecision )
 {
     FixtureAutomate fixture;
     StubDEC_Database database;
-    DEC_AutomateDecision decision( *fixture.pAutomat_, database );
+    DEC_AutomateDecision decision( *fixture.pAutomat_, database, 100, 100 );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,7 +58,7 @@ BOOST_AUTO_TEST_CASE( InstantiateDEC_PopulationDecision )
     StubMIL_PopulationType type( model );
     StubMIL_Population population( type );
     StubDEC_Database database;
-    DEC_PopulationDecision decision( population, database );
+    DEC_PopulationDecision decision( population, database, 100, 100 );
 }
 
 namespace mock
@@ -83,7 +83,7 @@ class DEC_TestPopulationDecision : public DEC_Decision< MIL_Population >
 {
 public:
     DEC_TestPopulationDecision( MIL_Population& population, DEC_TestPopulationDecision* pOther, DEC_DataBase& database )
-        : DEC_Decision( population, database )
+        : DEC_Decision( population, database, 100, 100 )
         , pOther_( pOther )
     {
         const DEC_Model_ABC& model = population.GetType().GetModel();
@@ -103,26 +103,28 @@ public:
     virtual DEC_AutomateDecision* GetDecAutomate() const { return 0; }
     virtual std::string GetName() const { return "Test Decision"; }
     virtual void EndCleanStateAfterCrash() {}
-    void RegisterSelf( directia::Brain& brain )
+    void RegisterSelf( directia::brain::Brain& brain )
     {
-        brain.RegisterObject( "myself", this );
+        brain[ "myself" ] = this;
     }
-    void UpdateMeKnowledge( directia::Brain& /*brain*/ ) {}
+    void UpdateMeKnowledge( directia::brain::Brain& /*brain*/ ) {}
+
     void UsedByDIA() {}
     void ReleasedByDIA () {}
 
 protected:
-    virtual void RegisterUserFunctions( directia::Brain& brain )
+    virtual void RegisterUserFunctions( directia::brain::Brain& brain )
     {
-        brain.RegisterFunction( "DEC_TestBehaviorCalled", mock::make_function( NotifyCallFromScript ) );
-        brain.RegisterFunction( "DEC_TestMissionCalled", mock::make_function( NotifyMissionCallFromScript ) );
-        brain.RegisterFunction( "DEC_GetRawMission", &GetRawMission );
-        directia::ScriptRef initFunction = brain.GetScriptFunction( "InitTaskParameter" );
-        brain.RegisterFunction( "DEC_FillMissionParameters",
-            boost::function< void( const directia::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref( brain ), boost::ref( initFunction ), _1 , _2 ) ) );
+        brain[ "DEC_TestBehaviorCalled" ] = mock::make_function( NotifyCallFromScript );
+        brain[ "DEC_TestMissionCalled" ] = mock::make_function( NotifyMissionCallFromScript );
+        brain[ "DEC_GetRawMission" ] = &GetRawMission;
+        directia::tools::binders::ScriptRef initFunction = brain[ "InitTaskParameter" ];
+        brain[ "DEC_FillMissionParameters" ] =
+            boost::function< void( const directia::tools::binders::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref( brain ), boost::ref( initFunction ), _1 , _2 ) );
         if( pOther_ )
-            brain.RegisterObject< DEC_TestPopulationDecision* >( "other", pOther_ );
+            brain[ "other" ] = pOther_;
     }
+    virtual void RegisterUserArchetypeFunctions(directia::brain::Brain &) {}
 private:
     DEC_TestPopulationDecision* pOther_;
 };

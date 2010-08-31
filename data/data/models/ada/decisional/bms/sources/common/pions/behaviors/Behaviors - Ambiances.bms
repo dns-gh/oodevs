@@ -24,6 +24,7 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Ambiances.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Passer en mode surete ou vitesse si ordre
 ]]--[[// Permet (Eventuellement!) de repasser en ambiance vitesse si besoin

@@ -36,6 +36,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eAction = self.eAction or eActionEnCours
         self.bStop = self.bStop or false
         self.ePhase = self.ePhase or ePhase_Decroche
@@ -48,7 +49,7 @@ include "bit.lua"
         if( ModuleBegins() ) then
             do
                 DEC_Trace( "Processus de rupture de contact : debut" )
-                if( ( #( self.sPion_PE ) == 0 or #( self.sPion_PE ) == nil ) ) then
+                if( #( self.sPion_PE ) == 0 ) then
                     self.sPion_PE = DEC_Automate_PionsSansPC()
                 end
 
@@ -87,7 +88,7 @@ include "bit.lua"
                         self.lstLocRgpt = self.lstLocRgpt.first
                     end
 
-                    if( ( eNoError ~= self.eCodeLoc and self.ptRgpt_Bary == 0 or eNoError ~= self.eCodeLoc and self.ptRgpt_Bary == nil ) ) then
+                    if( eNoError ~= self.eCodeLoc and self.ptRgpt_Bary == 0 ) then
                         self:SendFeedback( eActionImpossible )
                         Halt( self )
                         do return end
@@ -166,6 +167,7 @@ node "BEH_Conduite_Automate_INF_CoupArret"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         self.eActionDelai = self.eActionDelai or eActionEnCours
         self.eAction = self.eAction or eActionEnCours
@@ -230,6 +232,7 @@ node "BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionDelai = self.eActionDelai or eActionEnCours
         if( self.eActionDelai == eActionEffectuee ) then
             do
@@ -268,6 +271,7 @@ node "BEH_CoordDep_Automate_INF_RompreContact_SurDelai"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eActionDelai = self.eActionDelai or eActionEnCours
         self.eAction = self.eAction or eActionEnCours
         self.bStop = self.bStop or false
@@ -329,6 +333,7 @@ node "BEH_Conduite_Automate_INF_DesactiveSauvegarde"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.selPions = self.selPions or S_ObtenirPionsOperationnels()
         self.eAction = self.eAction or eActionEnCours
         if( self.eAction ~= eActionEnCours ) then

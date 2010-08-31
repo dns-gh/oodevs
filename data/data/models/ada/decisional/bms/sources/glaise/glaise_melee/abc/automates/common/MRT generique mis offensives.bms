@@ -46,6 +46,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local selPions = {}
         self.ePhase = self.ePhase or eMRT_DeterminerEchelonsGlobals
         self.eEtat = self.eEtat or eActionEnCours

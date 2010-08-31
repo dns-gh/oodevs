@@ -32,7 +32,10 @@ class PHY_HumanWound;
 
 namespace directia
 {
-    class Brain;
+    namespace brain
+    {
+        class Brain;
+    }
 }
 
 // =============================================================================
@@ -53,7 +56,7 @@ public:
 
     //! @name Operations
     //@{
-    static void Register( directia::Brain& brain );
+    static void Register( directia::brain::Brain& brain );
     //@}
 
     //! @name Types

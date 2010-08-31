@@ -33,6 +33,7 @@ node "BEH_Pion_ASS_GererOrdre_AppliquerFeux"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Prise en charge de l'ordre d'application des feux
 ]]--[[//---------------------------------------------------------------------	
 ]]local selOrder = DEC_GetCategory( "ordres_recus" )
@@ -85,6 +86,7 @@ node "BEH_Pion_ASS_GererOrdre_AppliquerFeux_SIC"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Prise en charge de l'ordre d'application des feux
 ]]--[[//---------------------------------------------------------------------	
 ]]local selOrder = DEC_GetCategory( "ordres_recus" )
@@ -148,6 +150,7 @@ node "BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or ePreparerMission
         self.eAction = self.eAction or eActionEnCours
         --[[// Parametres de la mission
@@ -327,6 +330,7 @@ node "ACT_Pion_ASS_DebarquerLanceur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ptObjImplantation = self.ptObjImplantation or S_Obj_Position( self._namedParams.repObjImplantation )
         local eNiveauInstallation = DEC_Agent_NiveauInstallation()
         --[[// S'oriente vers la direction dangereuses
@@ -372,6 +376,7 @@ node "BEH_Pion_ASS_InstallationSurPosition"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local eNiveauInstallation = DEC_Agent_NiveauInstallation()
         --[[// S'oriente vers la direction dangereuses
 ]]local mission = DEC_GetMission( myself )
@@ -418,6 +423,7 @@ node "BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ptTir = self.ptTir or nil
         self.eAction = self.eAction or eActionDebut
         if( myself.eEtatTir_Indirect_ == eActionTirIndirect_EnCours ) then
@@ -459,6 +465,7 @@ node "BEH_Dep_Pion_ASS_SePosterPourTirer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// On termine une fois que le tir a ete effectue
 ]]--[[// Il faut avoir la meme condition d'arret que 
 ]]--[[// ACT_Tir_Pion_ASS_SurPosition s'arrete sur 
@@ -487,6 +494,7 @@ node "BEH_Info_Pion_ASS_GererDisponibiliteAuTir"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_PretPourConduiteTir ) or ( self._namedParams.bAutorise_SurPosition and ( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_DispositifInstalle ) ) ) then
             Activate( self.activations.ACT_Info_Pion_ASS_DisponibiliteAuTir, 1, { eDisponibiliteAuTir_PretAuTir, } )
         end
@@ -517,6 +525,7 @@ node "BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir_SIC"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ptTir = self.ptTir or nil
         self.eAction = self.eAction or eActionDebut
         if( myself.eEtatTir_Indirect_ == eActionTirIndirect_EnCours ) then
@@ -570,6 +579,7 @@ node "BEH_Tir_Pion_ASS_AppliquerFeux"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         if( ModuleBegins() ) then
             do
@@ -654,6 +664,7 @@ node "BEH_Tir_Pion_ASS_PreparerTirSur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         if( self.eAction == eActionEnCours ) then
             do

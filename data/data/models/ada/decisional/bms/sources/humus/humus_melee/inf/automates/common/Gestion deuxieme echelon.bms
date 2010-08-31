@@ -38,6 +38,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Dispositif_Automate_INF_AssignerSoutienAuPE, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion des pions en RAS --> enlever un éventuel soutien
 ]]--[[//-----------------------------------------------------------------------------
@@ -66,6 +67,7 @@ node "BEH_Dispositif_Automate_INF_AssignerSoutienAuPE"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listePionEnDifficulte = S_Dispositif_Automate_INF_ObtenirPionsPE_EnDifficultes()
         local listePionsDeSoutien = S_Dispositif_Automate_INF_ObtenirPionsSoutien()
         for _,x in pairs( --[[//-----------------------------------------------------------------------------
@@ -123,6 +125,7 @@ node "BEH_Dispositif_Automate_INF_AssignerSoutien"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Soutenir l'unite si elle ne l'est pas
 ]]--[[//-----------------------------------------------------------------------------
@@ -150,6 +153,7 @@ node "BEH_Dispositif_Automate_INF_RendreDisposnibleLeSE"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// liste des pions en premier echelon si RAS
 ]]local listePionRAS = S_Dispositif_Automate_INF_ObtenirPionsPE_EnRAS()
         for _,x in pairs( --[[//-----------------------------------------------------------------------------
@@ -163,7 +167,7 @@ do
                 local pionEnRAS = x
                 --[[// Renvoie pion nul si pas de soutien
 ]]local pionEnSoutien = S_Dispositif_Automate_INF_ObtenirPionEnSoutienDe( pionEnRAS )
-                if( ( pionEnSoutien ~= 0 and pionEnSoutien ~= nil ) ) then
+                if( pionEnSoutien ~= 0 ) then
                     do
                         F_Pion_SeteEtatSoutien( pionEnRAS, eEtatSoutien_aucun )
                         Activate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, pionEnSoutien, pionEnRAS, } )
@@ -203,6 +207,7 @@ node "BEH_Dispositif_Automate_INF_GererLeDispositif_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eGererSecondEchelon
          do
             local _continue = true
@@ -263,6 +268,7 @@ node "BEH_Dispositif_Automate_INF_GererLeSE_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local rIterateurPionASuivre = 0
         --[[// Ces listes peuvent évoluer...en fonction des destructions
 ]]local selINF_PE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
@@ -321,6 +327,7 @@ node "BEH_Mission_Automate_AssignerMissionsSE"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// On donne suivre mais pour certain type d'unité on pourrait donner une autre mission
 ]]--[[// CF. adapation...
 ]]--[[//-----------------------------------------------------------------------------
@@ -335,7 +342,7 @@ node "BEH_Mission_Automate_AssignerMissionsSE"
 --[[// Sécurité --> si composantes reviennent sur dans le pion et téléportation vers PC
 ]]        end
 
-        if( ( DEC_GetMission( self._namedParams.pion ) == 0 or DEC_GetMission( self._namedParams.pion ) == nil ) and F_Pion_GeteEtatDestruction( self._namedParams.pion ) ~= eEtatDestruction_Total ) then
+        if( DEC_GetMission( self._namedParams.pion ) == nil and F_Pion_GeteEtatDestruction( self._namedParams.pion ) ~= eEtatDestruction_Total ) then
             Halt( self )
             do return end
         end
@@ -363,6 +370,7 @@ node "BEH_Dispositif_Automate_INF_GererLeDispositifRetrograde_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.positionArrivee = self.positionArrivee or DEC_Geometrie_CalculerPointArrivee()
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Mission aux pions sans missions --> Faire mouveemnt vers la fin du fuseau 
@@ -403,6 +411,7 @@ node "BEH_Dispositif_Automate_INF_GererLeDispositifStatique_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eGererSecondEchelon
          do
             local _continue = true
@@ -462,6 +471,7 @@ node "BEH_Dispositif_Automate_INF_GererLeSEStatique_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.point = self.point or nil
         self.listePoints = self.listePoints or {}
         self.direction = self.direction or nil
@@ -539,6 +549,7 @@ node "BEH_Dispositif_Automate_INF_GererLeDispositifStatiqueSurLima_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eGererSecondEchelon
          do
             local _continue = true
@@ -598,6 +609,7 @@ node "BEH_Dispositif_Automate_INF_GererLeSEStatiqueSurLima_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.point = self.point or nil
         self.listePoints = self.listePoints or {}
         self.direction = self.direction or nil

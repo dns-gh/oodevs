@@ -25,6 +25,7 @@ includedFiles["sources/glaise/glaise_appui/artfdp/automates/bat ass lrm/missions
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------

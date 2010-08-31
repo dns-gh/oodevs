@@ -12,6 +12,7 @@ includedFiles["sources/glaise/glaise_appui/artdsa/pions/common/behaviors/Behavio
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//////////////// BMS OPTIM  ///////////////////
 ]]        if( F_Pion_GeteEtatDec( myself ) == eEtatDec_Sauvegarde ) then
             do return end

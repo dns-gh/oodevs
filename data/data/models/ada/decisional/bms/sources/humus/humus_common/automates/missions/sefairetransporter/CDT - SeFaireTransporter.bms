@@ -26,6 +26,7 @@ includedFiles["sources/humus/humus_common/automates/missions/sefairetransporter/
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             DEC_SetMission( myself, self._namedParams.mission )
         end

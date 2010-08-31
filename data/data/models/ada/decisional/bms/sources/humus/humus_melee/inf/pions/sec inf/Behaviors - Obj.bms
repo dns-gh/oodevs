@@ -44,12 +44,13 @@ includedFiles["sources/humus/humus_melee/inf/pions/sec inf/Behaviors - Obj.bms"]
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eAction = self.eAction or eActionEnCours
         self.locPtMine = self.locPtMine or nil
         self.ptMission = self.ptMission or nil
         if( ModuleBegins() ) then
             do
-                if( ( self._namedParams.locMine == 0 or self._namedParams.locMine == nil ) ) then
+                if( self._namedParams.locMine == 0 ) then
                     self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
@@ -57,14 +58,14 @@ includedFiles["sources/humus/humus_melee/inf/pions/sec inf/Behaviors - Obj.bms"]
 
                 DEC_Trace( "  installation plan d'obstacle" )
                 self.ptMission = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self._namedParams.locMine )
-                if( ( self.ptMission == 0 or self.ptMission == nil ) ) then
+                if( self.ptMission == 0 ) then
                     self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
                 end
 
                 self.locPtMine = S_Geometrie_INF_ChercherPositionObstacle( self.ptMission, eTypeObjectBouchonMines, S_DistanceInstallationObstacle() )
-                if( ( self.locPtMine == 0 or self.locPtMine == nil ) ) then
+                if( self.locPtMine == 0 ) then
 --[[// Pour le moment, on fait un bouchon de mines
 ]]                    self:SendFeedback( eActionEffectuee )
                     Halt( self )
@@ -108,6 +109,7 @@ node "BEH_Obj_Pion_VAB_NettoyerObstacle"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Pas d'objet trouve
 ]]self.eAction = self.eAction or eActionEnCours
         self.repObj = self.repObj or 0
@@ -115,7 +117,7 @@ node "BEH_Obj_Pion_VAB_NettoyerObstacle"
             do
                 --[[// le detruit
 ]]self.repObj = DEC_Connaissances_ObjetLePlusProche( eTypeObjectBouchonMines )
-                if( ( self.repObj == 0 or self.repObj == nil ) ) then
+                if( self.repObj == 0 ) then
                     self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end

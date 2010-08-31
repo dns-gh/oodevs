@@ -51,6 +51,7 @@ include "Appui/Genie/Automates/Cie Blindee/Missions/Missions.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_RC_Automate_Situation, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// CR
 ]]--[[//-----------------------------------------------------------------------------
@@ -106,6 +107,7 @@ node "BEH_Ordre_Automate_GEN_ActiverObstacle"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------
 ]]--[[// En fonction de l'ordre recu
 ]]--[[//-----------------------------------------------------------------
@@ -154,6 +156,7 @@ node "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruireObjets"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,objet in pairs( self._namedParams.objets or {} ) do
         local _continue = true
             Activate( self.activations.BEH_Objet_Automate_GEN_VerifierRenfortPourConstruire, 1, { objet, } )
@@ -185,6 +188,7 @@ node "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruire"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local eValidite = nil
         local listePions = DEC_Automate_PionsSansPC()
         for _,pion in pairs( listePions or {} ) do
@@ -225,6 +229,7 @@ node "BEH_Ordre_Automate_GEN_VerifierRenfortPourDetruireObjets"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,objet in pairs( self._namedParams.objets or {} ) do
         local _continue = true
 if( DEC_ConnaissanceObjet_EstValide( objet ) ) then
@@ -258,6 +263,7 @@ node "BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local eValidite = nil
         local listePions = DEC_Automate_PionsSansPC()
         for _,pion in pairs( listePions or {} ) do
@@ -298,6 +304,7 @@ node "BEH_Objet_Automate_GEN_VerifierRenfortPourContournerObjets"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,objet in pairs( self._namedParams.objets or {} ) do
         local _continue = true
 if( DEC_ConnaissanceObjet_EstValide( objet ) ) then
@@ -331,6 +338,7 @@ node "BEH_Objet_Automate_GEN_VerifierRenfortPourContourner"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.objet ) ) then
             Halt( self )
             do return end

@@ -16,7 +16,7 @@
 #include "Decision/DEC_Tools.h"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
-#include <directia/Brain.h>
+#include <directia/brain/Brain.h>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionNBC constructor
@@ -50,9 +50,9 @@ const MIL_AgentTypePion* MIL_AgentTypePionNBC::Create( const std::string& strNam
 // Name: MIL_AgentTypePionNBC::RegisterFunctions
 // Created: LDC 2009-04-23
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePionNBC::RegisterFunctions( directia::Brain& brain, MIL_Agent_ABC& agent ) const
+void MIL_AgentTypePionNBC::RegisterFunctions( directia::brain::Brain& brain, MIL_Agent_ABC& agent ) const
 {
-    brain.RegisterFunction( "DEC_DecontaminerZone",
-        boost::function< void( const TER_Localisation* ) >( boost::bind( &DEC_KnowledgeObjectFunctions::DecontaminateZone, boost::cref( agent ), _1 ) ) );
-    brain.RegisterFunction( "DEC_Agent_SeDecontaminer", boost::bind( &DEC_AgentFunctions::SelfDecontaminate, boost::ref( agent ) ) );
+    brain[ "DEC_DecontaminerZone" ] =
+        boost::function< void( const TER_Localisation* ) >( boost::bind( &DEC_KnowledgeObjectFunctions::DecontaminateZone, boost::cref( agent ), _1 ) );
+    brain[ "DEC_Agent_SeDecontaminer" ] = boost::bind( &DEC_AgentFunctions::SelfDecontaminate, boost::ref( agent ) );
 }

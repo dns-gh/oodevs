@@ -36,9 +36,10 @@ includedFiles["sources/humus/humus_melee/abc/automates/common/missions/surveille
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.listePoint = self.listePoint or {}
         self.rIterateurPosition = self.rIterateurPosition or 0
-        if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
+        if( #( self._namedParams.selPions ) == 0 ) then
             do return end
         end
 
@@ -52,7 +53,7 @@ includedFiles["sources/humus/humus_melee/abc/automates/common/missions/surveille
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion erreur
 ]]--[[//-----------------------------------------------------------------------------
-]]if( ( self.listePoint ~= 0 and self.listePoint ~= nil ) ) then
+]]if( self.listePoint ~= nil ) then
                     do
                         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Assignation de la mission 

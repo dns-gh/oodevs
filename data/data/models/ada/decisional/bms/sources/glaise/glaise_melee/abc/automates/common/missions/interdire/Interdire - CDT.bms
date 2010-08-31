@@ -34,6 +34,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/interdi
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.LI = self.LI or DEC_GetLima( eTypeLima_LI )
         --[[//---------------------------------------------------------------------
 ]]--[[// Init

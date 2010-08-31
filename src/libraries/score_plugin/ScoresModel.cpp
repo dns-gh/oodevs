@@ -17,7 +17,7 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/foreach.hpp>
-#include <directia/Brain.h>
+#include <directia/brain/Brain.h>
 #include <xeumeuleu/xml.hpp>
 
 namespace bfs = boost::filesystem;
@@ -135,11 +135,11 @@ namespace directia
 // Name: ScoresModel::RegisterIn
 // Created: SBO 2009-08-20
 // -----------------------------------------------------------------------------
-void ScoresModel::RegisterIn( directia::Brain& brain )
+void ScoresModel::RegisterIn( directia::brain::Brain& brain )
 {
-    brain.RegisterObject( "indicators", this );
-    brain.RegisterFunction( "CreateVariable", &ScoresModel::CreateVariable );
-    brain.RegisterFunction( "Compute", &ScoresModel::ComputeIndicator );
+    brain[ "indicators" ] = this;
+    brain.Register( "CreateVariable", &ScoresModel::CreateVariable );
+    brain.Register( "Compute", &ScoresModel::ComputeIndicator );
 }
 
 // -----------------------------------------------------------------------------

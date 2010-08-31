@@ -29,6 +29,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Dep_Pions_ALAT_Voler, 1, { 0, } )
         if( not DEC_Agent_EstEnVol() ) then
             self:SendFeedback( eActionEffectuee )
@@ -70,6 +71,7 @@ node "BEH_Dep_Pion_ALAT_Voler"
     end,
 
     activate = function( self )
+        local Activate = Activate
          do
             local _continue = true
             local switch_1 = F_Pion_GeteEtatAmbiance( myself )
@@ -117,6 +119,7 @@ node "BEH_Dep_Pion_ALAT_PremiereAllure"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Dep_Pions_ALAT_Voler, 1, { M_POLY_PION_ALAT_HAUTEUR_VOL_TACTIQUE(), } )
         Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { M_DEP_PION_ALAT_VITESSE_PREMIERE_ALLURE(), } )
     end,
@@ -137,6 +140,7 @@ node "BEH_Dep_Pion_ALAT_PremiereAllureAvecAppuis"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Dep_Pions_ALAT_Voler, 1, { M_POLY_PION_ALAT_HAUTEUR_VOL_TACTIQUE(), } )
         Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { M_DEP_PION_ALAT_VITESSE_PREMIERE_ALLURE_AVEC_APPUIS(), } )
     end,
@@ -160,6 +164,7 @@ node "BEH_Dep_Pion_ALAT_SecondeAllure"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Dep_Pions_ALAT_Voler, 1, { M_POLY_PION_ALAT_HAUTEUR_VOL_TACTIQUE(), } )
         Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { M_DEP_PION_ALAT_VITESSE_SECONDE_ALLURE(), } )
     end,
@@ -180,6 +185,7 @@ node "BEH_Dep_Pion_ALAT_SecondeAllureAvecAppuis"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Dep_Pions_ALAT_Voler, 1, { M_POLY_PION_ALAT_HAUTEUR_VOL_TACTIQUE(), } )
         Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { M_DEP_PION_ALAT_VITESSE_SECONDE_ALLURE_AVEC_APPUIS(), } )
     end,
@@ -203,6 +209,7 @@ node "BEH_Dep_Pion_ALAT_TroisiemeAllure"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Dep_Pions_ALAT_Voler, 1, { M_POLY_PION_ALAT_HAUTEUR_VOL_NORMAL(), } )
         Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { M_DEP_PION_ALAT_VITESSE_TROISIEME_ALLURE(), } )
     end,
@@ -223,6 +230,7 @@ node "BEH_Dep_Pion_ALAT_TroisiemeAllureAvecAppuis"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Dep_Pions_ALAT_Voler, 1, { M_POLY_PION_ALAT_HAUTEUR_VOL_NORMAL(), } )
         Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { M_DEP_PION_ALAT_VITESSE_TROISIEME_ALLURE_AVEC_APPUIS(), } )
     end,
@@ -252,6 +260,7 @@ node "BEH_Dep_Pion_ALAT_RejoindrePoint"
     end,
 
     activate = function( self )
+        local Activate = Activate
         assert( self._namedParams.point ~= nil, "ALAT : Rejoindre Point" )
         self.listePoints = self.listePoints or DEC_Geometrie_CreerListePoints()
         self.eEtat = self.eEtat or eActionEnCours
@@ -310,6 +319,7 @@ node "BEH_Dep_Pion_ALAT_RejoindrePion"
     end,
 
     activate = function( self )
+        local Activate = Activate
         assert( self._namedParams.pion ~= nil, "ALAT : Rejoindre Pion" )
         self.eEtat = self.eEtat or eActionEnCours
         self.positionPion = self.positionPion or DEC_Geometrie_CreerPoint()
@@ -396,6 +406,7 @@ node "BEH_Dep_Pion_ALAT_RejoindreParItineraire"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtat = self.eEtat or eActionEnCours
         self.initialisationOK = self.initialisationOK or false
         self.forceDelai = self.forceDelai or 0
@@ -434,7 +445,7 @@ node "BEH_Dep_Pion_ALAT_RejoindreParItineraire"
         if( ModuleBegins() ) then
             do
                 assert( self._namedParams.listePoints ~= nil, "liste de points non valide" )
-                assert( ( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= 0 and DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil ), "liste de points vide" )
+                assert( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil, "liste de points vide" )
             end
 --[[// calcul de l'itineraire uniquement si en vol (pour le calcul d'évitement des objets)
 ]]        end
@@ -542,6 +553,7 @@ node "BEH_Dep_Pion_ALAT_SEloignerPositionVers"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.pointARejoindre = self.pointARejoindre or nil
         self.eEtat = self.eEtat or eActionEnCours
         if( ModuleBegins() ) then
@@ -591,6 +603,7 @@ node "BEH_Dep_Pion_ALAT_Suivre"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.pointARejoindre = self.pointARejoindre or DEC_Geometrie_CreerPoint()
         self.positionDebut = self.positionDebut or DEC_Geometrie_CreerPoint()
@@ -672,6 +685,7 @@ node "BEH_Dep_Pion_ALAT_SuivreSurFlanc"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.pointARejoindre = self.pointARejoindre or DEC_Geometrie_CreerPoint()
         self.pointDebut = self.pointDebut or DEC_Geometrie_CreerPoint()
@@ -750,10 +764,11 @@ node "BEH_Dep_Pion_ALAT_IntercepterConnaissances"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.pointInterception = self.pointInterception or DEC_Geometrie_CreerPoint()
         self.eEtat = self.eEtat or eActionEnCours
         local pointBuffer = S_Misc_Pion_ALAT_PointInterception( self._namedParams.listePionsADetruire )
-        if( ( pointBuffer ~= 0 and pointBuffer ~= nil ) ) then
+        if( pointBuffer ~= nil ) then
             do
                 DEC_Copie_Point( pointBuffer, self.pointInterception )
             end
@@ -761,7 +776,7 @@ node "BEH_Dep_Pion_ALAT_IntercepterConnaissances"
 ]]        else
 do
                 pointBuffer = DEC_Geometrie_CalculerBarycentreListeConnaissancesAgents( self._namedParams.listePionsADetruire )
-                if( ( pointBuffer ~= 0 and pointBuffer ~= nil ) ) then
+                if( pointBuffer ~= nil ) then
                     DEC_Copie_Point( pointBuffer, self.pointInterception )
                 else
                     self:SendFeedback( eActionImpossible )
@@ -808,6 +823,7 @@ node "BEH_Dep_Pion_ALAT_EclairerItinerairePion"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.eEtatDelai = self.eEtatDelai or eActionEnCours
         self.pointARejoindre = self.pointARejoindre or DEC_Geometrie_CreerPoint()

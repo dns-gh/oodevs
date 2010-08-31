@@ -38,6 +38,7 @@ node "MIS_Pion_INF_SurveillerSecteur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eSurveiller
         self.eCurrentPhase = self.eCurrentPhase or eSeMettreEnPlace
         self.eAction = self.eAction or eActionEnCours

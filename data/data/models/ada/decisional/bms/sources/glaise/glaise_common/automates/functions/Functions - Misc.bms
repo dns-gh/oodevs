@@ -154,7 +154,7 @@ end
 
 function S_Misc_Copie_MissionPion( misSrc, missionPion )
     local directionEnnemi = DEC_GetDirectionEnnemi( misSrc )
-    if( ( directionEnnemi ~= 0 and directionEnnemi ~= nil ) ) then
+    if( directionEnnemi ~= 0 ) then
         DEC_Copie_DirectionDanger_Mission( directionEnnemi, missionPion )
     end
 

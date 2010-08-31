@@ -294,7 +294,7 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// Infos globales	    
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
         --[[// Affecter la mission SeDeplacer au pion avec la position aléatoire
-]]assert_Mission( ( self.missionPion ~= 0 and self.missionPion ~= nil ), "Erreur dans BEH_Medo_Mission_Automate_AssignerSeDeplacerA" )
+]]assert_Mission( self.missionPion ~= nil, "Erreur dans BEH_Medo_Mission_Automate_AssignerSeDeplacerA" )
         DEC_Copie_PointDansListePoints_Mission( self._namedParams.ptDest, self.missionPion, "itineraire_" )
         F_Pion_SeteEtatEchelon( self._namedParams.pPion, self._namedParams.eEtatEchelon )
         --[[//-----------------------------------------------------------------------------

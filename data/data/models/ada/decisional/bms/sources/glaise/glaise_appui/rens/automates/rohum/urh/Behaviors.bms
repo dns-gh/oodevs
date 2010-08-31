@@ -87,6 +87,7 @@ include "glaise/glaise_Appui/Rens/Automates/Rohum/Common/Missions/RenseignerSur/
     end,
 
     activate = function( self )
+        local Activate = Activate
         local positionAmie = DEC_Geometrie_CalculerBarycentreAgents( DEC_Automate_PionsDeAutomateAvecPC( self._namedParams.ami ) )
         local maPosition = DEC_Geometrie_CalculerBarycentreAgents( myself:DEC_Automate_PionsAvecPC() )
         if( DEC_Geometrie_Distance( maPosition, positionAmie ) < 2000 ) then

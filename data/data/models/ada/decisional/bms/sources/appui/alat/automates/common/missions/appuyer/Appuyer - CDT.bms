@@ -32,6 +32,7 @@ includedFiles["sources/appui/alat/automates/common/missions/appuyer/Appuyer - CD
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eAppuyer
         self.listePionsSgpt = self.listePionsSgpt or {}
         self.listePionsSgptSansRavitaillementsEnCours = self.listePionsSgptSansRavitaillementsEnCours or {}
@@ -84,7 +85,7 @@ self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.
 ]]self.listePionsPourMissionAppuyerOuDetruireSansRavitaillementsEnCours or {} ) do
         local _continue = true
 do
-                if( ( compteur == 0 or compteur == nil ) ) then
+                if( compteur == 0 ) then
                     DIA_PushBack( self.listeAppuyer, x )
                 else
                     DIA_PushBack( self.listeDetruire, x )

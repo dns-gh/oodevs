@@ -27,6 +27,7 @@ includedFiles["sources/appui/nbc/pions/common/missions/ReconnaitreAxe.bms"] = tr
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours

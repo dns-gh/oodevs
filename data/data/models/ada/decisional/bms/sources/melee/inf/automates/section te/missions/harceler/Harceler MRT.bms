@@ -27,6 +27,7 @@ node "MIS_Automate_MRT_INF_Harceler"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eCreationMRT = self.eCreationMRT or eActionEnCours
         local selPions = DEC_Automate_PionsSansPC()
         --[[//-----------------------------------------------------------------------------

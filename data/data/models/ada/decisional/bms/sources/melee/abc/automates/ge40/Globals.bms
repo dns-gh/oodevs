@@ -518,7 +518,7 @@ do
 
     end
 
-    if( ( rIterateur ~= 0 and rIterateur ~= nil ) and rIterateur == #( listePions ) ) then
+    if( rIterateur ~= 0 and rIterateur == #( listePions ) ) then
         _returnValue = true
     end
 

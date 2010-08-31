@@ -28,6 +28,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         if( ModuleBegins() ) then
@@ -115,6 +116,7 @@ node "BEH_Dep_GEN_AllerContournerObstacle"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ptObst = self.ptObst or nil
         --[[//-----------------------------------------------------------------
 ]]--[[// Init
@@ -166,6 +168,7 @@ node "BEH_Dep_GEN_Ouvrir_ReagirFaceAObjetDeType"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local repObjet = nil
         local rDist = 0
         local bObjetProcheSurItineraire = false

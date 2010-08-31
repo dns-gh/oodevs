@@ -60,6 +60,7 @@ include "Melee/Inf/Automates/Common/Missions/Behaviors.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_RC_Automate_Situation, 1, {} )--[[// ---------------------------------------------------------------------
 ]]--[[// CR automates génériques sur eni et situation mission
 ]]--[[// ---------------------------------------------------------------------
@@ -87,7 +88,7 @@ include "Melee/Inf/Automates/Common/Missions/Behaviors.bms"
 ]]
         --[[// Lorsque l'automate a une mission	
 ]]--[[// =========================================================================
-]]if( ( DEC_GetMission( myself ) == 0 or DEC_GetMission( myself ) == nil ) ) then
+]]if( DEC_GetMission( myself ) == nil ) then
             do return end
         end
 
@@ -119,6 +120,7 @@ node "BEH_Situation_Automate_INF_FinDeMission_Sur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             DEC_Trace( DEC_GetSzName( self._namedParams.pion ) .. " : fin de mission." )
         end
@@ -136,10 +138,11 @@ node "BEH_Situation_Automate_INF_FinDeMission"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Revoir	 
 ]]self.lst_Pions_EnTete = self.lst_Pions_EnTete or S_ObtenirTousPionsDe( eEtatEchelon_Premier )
         --[[// On laisse un pas de temps pour la MAJ de S_PionsEnTete()	
-]]if( ( #( self.lst_Pions_EnTete ) == 0 or #( self.lst_Pions_EnTete ) == nil ) ) then
+]]if( #( self.lst_Pions_EnTete ) == 0 ) then
             do
                                 do
                 end
@@ -183,6 +186,7 @@ node "BEH_Ordre_Automate_INF_GererTransporteur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// =============================================================================
 ]]--[[// Reception d'un ordre de l'ANIBAS
 ]]--[[// =============================================================================
@@ -225,6 +229,7 @@ node "BEH_Conduite_Automate_HOT_Defaut"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Gestion des pions detruits		
 ]]Activate( self.activations.BEH_Dispositif_Automate_INF_GererLesPionsDetruits, 1, { true, } )
         Activate( self.activations.BEH_Dispositif_Automate_INF_GererReleve, 1, {} )
@@ -259,6 +264,7 @@ node "BEH_RC_Automate_GererConditionOperationnelle"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Gerer la condition opérationnelle de l'echelon
 ]]--[[//-----------------------------------------------------------------------------

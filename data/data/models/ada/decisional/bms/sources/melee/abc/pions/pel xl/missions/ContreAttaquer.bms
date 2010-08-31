@@ -34,6 +34,7 @@ includedFiles["sources/melee/abc/pions/pel xl/missions/ContreAttaquer.bms"] = tr
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or nil
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Terminaison

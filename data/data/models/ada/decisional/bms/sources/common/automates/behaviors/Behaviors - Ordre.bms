@@ -25,6 +25,7 @@ includedFiles["sources/common/automates/behaviors/Behaviors - Ordre.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( F_Automat_GetbOrdreRalentir( myself ) == true ) then
             Activate( self.activations.BEH_Ordre_Automate_Ralentir_, 1, {} )
         end
@@ -80,6 +81,7 @@ node "BEH_Ordre_Automate_RecevoirOrdreInopine"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 local ordres_recus = DEC_GetCategory( "ordres_recus" )
         for _,x in pairs( ordres_recus or {} ) do
         local _continue = true
@@ -160,6 +162,7 @@ node "BEH_Ordre_Automate_Interrompre_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Le PC peut avoir une mission
 ]]local listePions = DEC_Automate_PionsAvecPC()
         for _,pion in pairs( listePions or {} ) do
@@ -192,6 +195,7 @@ node "BEH_Ordre_Automate_Attendre_"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.resultatCalcul = self.resultatCalcul or nil
         local listePions = DEC_Automate_PionsAvecPC()
         if( ModuleBegins() ) then
@@ -238,6 +242,7 @@ node "BEH_Ordre_Automate_Ralentir_"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.resultatCalcul = self.resultatCalcul or nil
         local listePions = DEC_Automate_PionsAvecPC()
         if( ModuleBegins() ) then
@@ -285,6 +290,7 @@ node "BEH_Ordre_Automate_Poursuivre_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
         for _,pion in pairs( listePionsPE or {} ) do
         local _continue = true
@@ -315,6 +321,7 @@ node "BEH_Ordre_Automate_Decrocher_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
         for _,pion in pairs( listePionsPE or {} ) do
         local _continue = true
@@ -345,6 +352,7 @@ node "BEH_Ordre_Automate_AmbianceSurete_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
         for _,pion in pairs( listePionsPE or {} ) do
         local _continue = true
@@ -375,6 +383,7 @@ node "BEH_Ordre_Automate_AmbianceVitesse_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
         for _,pion in pairs( listePionsPE or {} ) do
         local _continue = true
@@ -405,6 +414,7 @@ node "BEH_Ordre_Automate_TenirSurLR_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
         for _,pion in pairs( listePionsPE or {} ) do
         local _continue = true
@@ -435,6 +445,7 @@ node "BEH_Ordre_Automate_Tenir_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
         for _,pion in pairs( listePionsPE or {} ) do
         local _continue = true

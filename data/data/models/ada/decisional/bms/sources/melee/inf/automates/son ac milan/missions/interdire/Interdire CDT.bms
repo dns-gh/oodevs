@@ -29,6 +29,7 @@ node "MIS_Automate_CDT_INF_Interdire"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eActionMission = self.eActionMission or eActionEnCours
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
@@ -74,6 +75,7 @@ node "BEH_Situation_Automate_INF_Interdire"
     end,
 
     activate = function( self )
+        local Activate = Activate
     end,
 
 }

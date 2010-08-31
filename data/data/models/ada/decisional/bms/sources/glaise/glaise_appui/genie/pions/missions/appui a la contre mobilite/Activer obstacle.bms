@@ -28,6 +28,7 @@ includedFiles["sources/glaise/glaise_appui/genie/pions/missions/appui a la contr
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.mis.obstacle_ ) ) then
             Halt( self )
             do return end
@@ -58,7 +59,7 @@ includedFiles["sources/glaise/glaise_appui/genie/pions/missions/appui a la contr
                 DEC_SetMission( myself, self._namedParams.mis )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
                 self.localisationObstacle = S_Obj_Localisation( self._namedParams.mis.obstacle_ )
-                if( ( self.localisationObstacle == 0 or self.localisationObstacle == nil ) ) then
+                if( self.localisationObstacle == 0 ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                 self:SendFeedback( eActionImpossible )

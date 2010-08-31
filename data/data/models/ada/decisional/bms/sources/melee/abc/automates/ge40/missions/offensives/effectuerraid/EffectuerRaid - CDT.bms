@@ -33,6 +33,7 @@ includedFiles["sources/melee/abc/automates/ge40/missions/offensives/effectuerrai
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Analyse environnement
 ]]--[[// idem Attaquer
 ]]Activate( self.activations.ACT_GTIA_AnalyserSituationPourAttaquer, 1, { self._namedParams.mission.objectifs_, } )

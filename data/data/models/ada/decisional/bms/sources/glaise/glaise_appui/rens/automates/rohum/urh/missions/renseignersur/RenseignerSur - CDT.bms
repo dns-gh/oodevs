@@ -22,6 +22,7 @@ includedFiles["sources/glaise/glaise_appui/rens/automates/rohum/urh/missions/ren
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------

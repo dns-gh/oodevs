@@ -27,6 +27,7 @@ includedFiles["sources/appui/genie/pions/missions/appui aide au deploiement/Reco
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or ePreparerMission
         self.eEtat = self.eEtat or eActionEnCours
         self.ptZone = self.ptZone or S_Geometrie_BarycentreZone( self._namedParams.mission.zone_ )

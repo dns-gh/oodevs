@@ -29,6 +29,7 @@ includedFiles["sources/glaise/glaise_appui/nbc/pions/common/missions/ArmerPlotDe
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.siteDecontamination = self.siteDecontamination or nil
@@ -87,7 +88,7 @@ elseif switch_1 == eProgresser then
 elseif switch_1 == eAnimer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     self.siteDecontamination = S_Nbc_ObtenirSiteSur( self._namedParams.mission.positionSiteDecontamination_ )
-                    if( ( self.siteDecontamination == 0 or self.siteDecontamination == nil ) ) then
+                    if( self.siteDecontamination == 0 ) then
                         do
                             Activate( self.activations.ACT_Pion_Nbc_CreerSiteSur, 1, { self._namedParams.mission.positionSiteDecontamination_, } )
                                                         do return end
@@ -156,6 +157,7 @@ node "BEH_Pion_NBC_AnimerSite"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
             Activate( self.activations.ACT_Pion_Nbc_AnimerSite, 1, { self._namedParams.siteDecontamination, } )
         end

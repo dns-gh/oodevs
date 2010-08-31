@@ -1,18 +1,26 @@
 // *****************************************************************************
 //
-// This file is part of a MASA library or program.
-// Refer to the included end-user license agreement for restrictions.
-//
-// Copyright (c) 2004 MASA Group
+// $Created: NLD 2004-03-31 $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Functions/DEC_KnowledgeFunctions.cpp $
+// $Author: Nld $
+// $Modtime: 23/03/05 18:22 $
+// $Revision: 7 $
+// $Workfile: DEC_KnowledgeFunctions.cpp $
 //
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeFunctions.h"
+
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/MIL_Army.h"
+#include "Entities/Orders/MIL_Fuseau.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Urban.h"
-#include <urban/TerrainObject_ABC.h>
+
+#include "urban/TerrainObject_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetDetectedAgentsInFuseau
@@ -22,6 +30,7 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetDetectedAgentsInFuseau( c
 {
     T_ConstKnowledgeAgentVector knowledges;
     callerAgent.GetKnowledgeGroup().GetKnowledge().GetDetectedAgentsInZone( knowledges, callerAgent.GetOrderManager().GetFuseau() );
+
     return knowledges;
 }
 
@@ -87,6 +96,7 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedInF
 {
     T_ConstKnowledgeAgentVector knowledges;
     callerAgent.GetKnowledge().GetLivingEnemiesPerceivedInZone( knowledges, callerAgent.GetOrderManager().GetFuseau() );
+
     return knowledges;
 }
 
@@ -97,8 +107,10 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedInF
 T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesInZone( const MIL_AgentPion& callerAgent, TER_Localisation* pZone )
 {
     assert( pZone );
+
     T_ConstKnowledgeAgentVector knowledges;
     callerAgent.GetKnowledgeGroup().GetKnowledge().GetLivingEnemiesInZone( knowledges, *pZone );
+
     return knowledges;
 }
 
@@ -110,6 +122,7 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesInFuseau( co
 {
     T_ConstKnowledgeAgentVector knowledges;
     callerAgent.GetKnowledgeGroup().GetKnowledge().GetLivingEnemiesInZone( knowledges, callerAgent.GetOrderManager().GetFuseau() );
+
     return knowledges;
 }
 
@@ -120,8 +133,10 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesInFuseau( co
 T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesInCircle( const MIL_AgentPion& callerAgent, const MT_Vector2D* pCenter, float radius )
 {
     assert( pCenter );
+
     T_ConstKnowledgeAgentVector knowledges;
     callerAgent.GetKnowledgeGroup().GetKnowledge().GetLivingEnemiesInCircle( knowledges, *pCenter, radius );
+
     return knowledges;
 }
 
@@ -129,67 +144,80 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesInCircle( co
 // Name: DEC_KnowledgeFunctions::GetObservableKnowledge
 // Created: MGD 2010-02-09
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetObservableKnowledge( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table )
+void DEC_KnowledgeFunctions::GetObservableKnowledge( directia::brain::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table )
 {
     //Agents
-    knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.Platoon" ), pion.GetKnowledgeGroup().GetKnowledge().GetEnemies(), true );
+    knowledgeCreateFunction( table, brain[ "net.masagroup.sword.military.world.Platoon" ], pion.GetKnowledgeGroup().GetKnowledge().GetEnemies(), true );
+
     //Object
     T_KnowledgeObjectVector objectsKn;
     pion.GetArmy().GetKnowledge().GetObjects( objectsKn );
-    knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.Object" ), objectsKn, true );
+
+    knowledgeCreateFunction( table, brain[ "net.masagroup.sword.military.world.Object" ], objectsKn, true );
+
     //Urban
     T_KnowledgeUrbanVector urbansKn;
     pion.GetArmy().GetKnowledge().GetUrbanObjects( urbansKn );
-    knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.UrbanBlock" ), urbansKn, true );
+
+    knowledgeCreateFunction( table, brain[ "net.masagroup.sword.military.world.UrbanBlock" ], urbansKn, true );
+
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetUrbanBlockKnowledge
 // Created: DDA 2010-03-15
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetUrbanBlockKnowledge( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table )
+void DEC_KnowledgeFunctions::GetUrbanBlockKnowledge( directia::brain::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table )
 {
     //Urban
     T_KnowledgeUrbanVector urbansKn;
     pion.GetArmy().GetKnowledge().GetUrbanObjects( urbansKn );
-    knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.UrbanBlock" ), urbansKn, true );
+
+    knowledgeCreateFunction( table, brain[ "net.masagroup.sword.military.world.UrbanBlock" ], urbansKn, true );
 
 }
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInCercle
 // Created: DDA 2010-03-16
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInCercle( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table, boost::shared_ptr< MT_Vector2D > center, float radius )
+void DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInCercle( directia::brain::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table, boost::shared_ptr< MT_Vector2D > center, float radius )
 {
     //Urban
     T_KnowledgeUrbanVector urbansKn;
     T_KnowledgeUrbanVector result;
     pion.GetArmy().GetKnowledge().GetUrbanObjects( urbansKn );
-    geometry::Point2f geoCenter( static_cast< float >( center->rX_ ), static_cast< float >( center->rY_ ) );
+    geometry::Point2f geoCenter( (float)center->rX_, (float)center->rY_ );
+
     for( T_KnowledgeUrbanVector::iterator it = urbansKn.begin(); it != urbansKn.end(); it++ )
+    {
         if( (*it)->GetTerrainObjectKnown().GetFootprint()->Intersect( geoCenter, radius ) )
             result.push_back( (*it) );
-    knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.UrbanBlock" ), result, true );
+    }
+
+
+    knowledgeCreateFunction( table, brain[ "net.masagroup.sword.military.world.UrbanBlock" ], result, true );
+
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetDestroyableKnowledge
 // Created: MGD 2010-02-10
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetDestroyableKnowledge( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table )
+void DEC_KnowledgeFunctions::GetDestroyableKnowledge( directia::brain::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table )
 {
     //Agents //@TODO Add private tools function
-    knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.Platoon" ), pion.GetKnowledgeGroup().GetKnowledge().GetEnemies(), true );
+    knowledgeCreateFunction( table, brain[ "net.masagroup.sword.military.world.Platoon" ], pion.GetKnowledgeGroup().GetKnowledge().GetEnemies(), true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetIdentifiableKnowledge
 // Created: PSN & GGE 2010-03-25
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetIdentifiableKnowledge( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table )
+void DEC_KnowledgeFunctions::GetIdentifiableKnowledge( directia::brain::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table )
 {
     //Agents //@TODO Add private tools function
-    knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.Platoon" ), pion.GetKnowledgeGroup().GetKnowledge().GetEnemies(), true );
+    knowledgeCreateFunction( table, brain[ "net.masagroup.sword.military.world.Platoon" ], pion.GetKnowledgeGroup().GetKnowledge().GetEnemies(), true );
 }
 
 // -----------------------------------------------------------------------------
@@ -211,6 +239,7 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetNearbySurrenderedAgents( 
 {
     T_ConstKnowledgeAgentVector knowledges;
     callerAgent.GetKnowledgeGroup().GetKnowledge().GetSurrenderedAgentsInCircle( knowledges, callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), radius );
+
     return knowledges;
 }
 
@@ -265,6 +294,7 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsColliding( const 
 {
     T_KnowledgeObjectDiaIDVector objectsColliding;
     callerAgent.GetKnowledge().GetObjectsColliding( objectsColliding );
+
     return objectsColliding;
 }
 
@@ -276,6 +306,7 @@ T_KnowledgePopulationDiaIDVector DEC_KnowledgeFunctions::GetPopulationsColliding
 {
     T_KnowledgePopulationDiaIDVector populationsColliding;
     callerAgent.GetKnowledge().GetPopulationsColliding( populationsColliding );
+
     return populationsColliding;
 }
 
@@ -287,5 +318,7 @@ T_KnowledgePopulationDiaIDVector DEC_KnowledgeFunctions::GetPopulationsAttacking
 {
     T_KnowledgePopulationDiaIDVector attackers;
     callerAgent.GetKnowledge().GetPopulationsAttacking( attackers );
+
     return attackers;
 }
+

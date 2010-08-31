@@ -26,6 +26,7 @@ includedFiles["sources/glaise/glaise_appui/artdsa/automates/section asa tcp/miss
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eMRT_AssignerMissions
         self.eEtatMissionsDefendreZone = self.eEtatMissionsDefendreZone or eActionEnCours
         self.pionPC = self.pionPC or DEC_Automate_PionPC()
@@ -35,7 +36,7 @@ includedFiles["sources/glaise/glaise_appui/artdsa/automates/section asa tcp/miss
         self.selPions = self.selPions or DEC_Automate_PionsSansPC()
         self.listeSectionMistral = self.listeSectionMistral or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "SatcpMistral" )
         self.listePC = self.listePC or {}
-        if( ( self.listePointsPourPC == 0 or self.listePointsPourPC == nil ) ) then
+        if( self.listePointsPourPC == 0 ) then
             self.ePhase = eMRT_MissionImpossible
         end
 
@@ -53,7 +54,7 @@ includedFiles["sources/glaise/glaise_appui/artdsa/automates/section asa tcp/miss
                 else
 do
                         self.listePoints = DEC_Geometrie_DecouperListePoints( self._namedParams.mission.itineraire_, #( self.listeSectionMistral ) - 1 )
-                        if( ( self.listePoints == 0 or self.listePoints == nil ) ) then
+                        if( self.listePoints == 0 ) then
                             self.ePhase = eMRT_MissionImpossible
                         end
 

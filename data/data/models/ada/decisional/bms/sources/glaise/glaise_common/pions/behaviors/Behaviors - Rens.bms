@@ -20,6 +20,7 @@ includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - Rens.bms
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Rens_Recevoir_OrdreInopine, 1, {} )--[[// pour anibas 
 ]]
     end,
@@ -45,6 +46,7 @@ node "BEH_Rens_Recevoir_OrdreInopine"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Reception d'un ordre du superieur
 ]]--[[//-----------------------------------------------------------------------------
@@ -126,6 +128,7 @@ node "BEH_Rens_PasserEnSilenceRadio"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 Activate( self.activations.ACT_Info_Trace, 1, { "Passage en Silence Radio", } )
         Activate( self.activations.ACT_Rens_CommuterRadio, 1, {} )--[[// Passer en silence radio
 ]]
@@ -159,6 +162,7 @@ node "BEH_Rens_PasserEnSilenceRadar"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Passer en silence radio
 ]]        Activate( self.activations.ACT_Pion_Rens_PasserEnSilenceRadar, 1, { self._namedParams.typeRadar, } )
     end,

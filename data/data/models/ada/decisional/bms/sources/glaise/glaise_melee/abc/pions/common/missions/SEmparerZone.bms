@@ -42,6 +42,7 @@ includedFiles["sources/glaise/glaise_melee/abc/pions/common/missions/SEmparerZon
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.bBondEffectue = self.bBondEffectue or false
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
         self.eEtat = self.eEtat or eActionEnCours

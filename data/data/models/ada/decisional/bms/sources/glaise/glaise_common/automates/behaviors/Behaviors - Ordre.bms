@@ -23,6 +23,7 @@ includedFiles["sources/glaise/glaise_common/automates/behaviors/Behaviors - Ordr
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Ordre_Automate_Pause, 1, { self._namedParams.pion, } )
     end,
 
@@ -52,6 +53,7 @@ node "BEH_Ordre_Automate_RecevoirOrdreInopine"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Recevoir un ordre
 ]]--[[//-----------------------------------------------------------------------------
@@ -160,6 +162,7 @@ node "BEH_Ordre_Automate_Interrompre_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Le PC peut avoir une mission
 ]]local listePions = DEC_Automate_PionsAvecPC()
         for _,x in pairs( listePions or {} ) do
@@ -195,6 +198,7 @@ node "BEH_Ordre_Automate_Attendre_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.resultatCalcul = self.resultatCalcul or nil
         --[[//S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None );
 ]]local listePions = DEC_Automate_PionsAvecPC()
@@ -246,6 +250,7 @@ node "BEH_Ordre_Automate_Poursuivre_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-------------------------------------------------------------------------
 ]]--[[// Donner l'ordre de poursuivre
 ]]--[[//-------------------------------------------------------------------------
@@ -282,6 +287,7 @@ node "BEH_Ordre_Automate_AmbianceSurete_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-------------------------------------------------------------------------
 ]]--[[// Donner l'ordre de poursuivre
 ]]--[[//-------------------------------------------------------------------------
@@ -318,6 +324,7 @@ node "BEH_Ordre_Automate_AmbianceVitesse_"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-------------------------------------------------------------------------
 ]]--[[// Donner l'ordre de poursuivre
 ]]--[[//-------------------------------------------------------------------------
@@ -358,8 +365,9 @@ node "BEH_Ordre_Automate_ArretSauvegardeSur"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtat = self.eEtat or eActionEnCours
-        if( ( self._namedParams.rTime == 0 or self._namedParams.rTime == nil ) ) then
+        if( self._namedParams.rTime == 0 ) then
             self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end

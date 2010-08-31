@@ -24,6 +24,7 @@ includedFiles["sources/common/automates/missions/prendreencompteprisonniers/MRT 
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
@@ -48,7 +49,7 @@ includedFiles["sources/common/automates/missions/prendreencompteprisonniers/MRT 
 
                 local loc = DEC_ConnaissanceObjet_Localisation( self._namedParams.mission.campPrisonniers_ )
                 local point = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( loc )
-                if( ( point == 0 or point == nil ) ) then
+                if( point == nil ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleZoneHorsFuseau, } )
                                                 Halt( self )

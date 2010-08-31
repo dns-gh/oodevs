@@ -38,6 +38,7 @@ includedFiles["sources/melee/abc/automates/common/missions/soutenir/Soutenir - C
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eCoordonner
         Activate( self.activations.BEH_CoordDep_Automate_ABC_AssurerLaCoordinationInterne_, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// Coordination de l'escadron

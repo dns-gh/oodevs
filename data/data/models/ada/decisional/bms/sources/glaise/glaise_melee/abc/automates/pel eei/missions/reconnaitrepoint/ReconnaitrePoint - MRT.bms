@@ -33,6 +33,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/pel eei/missions/reconn
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------

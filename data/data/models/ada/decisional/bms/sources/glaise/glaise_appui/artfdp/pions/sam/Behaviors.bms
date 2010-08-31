@@ -64,3 +64,4 @@ include "Glaise/glaise_Appui/ArtFdp/Pions/Common/Missions/MettreEnOeuvre.bms"
 include "Glaise/glaise_Appui/ArtFdp/Pions/SAM/Missions/AssurerMiseEnOeuvre.bms"
 
 include "Glaise/glaise_Appui/ArtFdp/Pions/SAM/Missions/AssurerMiseEnOeuvreSurPosition.bms"
+

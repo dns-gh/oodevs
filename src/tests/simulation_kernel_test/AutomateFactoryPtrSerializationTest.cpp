@@ -19,7 +19,7 @@ BOOST_AUTO_TEST_CASE( VerifyAutomateFactoryPtr_Serialization )
         std::vector< const std::string > stuff;
         DEC_DataBase database( libPath, stuff );
         MIL_CheckPointOutArchive outStream( stringstream );
-        AutomateFactory_ABC* automateFactory = new AutomateFactory( idManager, database );
+        AutomateFactory_ABC* automateFactory = new AutomateFactory( idManager, database, 100, 100 );
         outStream << automateFactory;
         delete automateFactory;
     }

@@ -27,6 +27,7 @@ includedFiles["sources/appui/circulation/pions/missions/aide a mobilite dans zon
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.positionDansZone = self.positionDansZone or S_Geometrie_BarycentreZone( self._namedParams.mission.zone_ )
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission

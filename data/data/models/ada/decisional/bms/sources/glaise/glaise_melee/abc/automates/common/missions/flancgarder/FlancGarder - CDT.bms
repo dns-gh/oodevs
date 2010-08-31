@@ -42,6 +42,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/flancga
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//---------------------------------------------------------------------
@@ -53,7 +54,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/flancga
 ]]--[[// Coordination --> est ce utile ici
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        if( ( DEC_GetMission( self._namedParams.pionACouvrir ) ~= 0 and DEC_GetMission( self._namedParams.pionACouvrir ) ~= nil ) ) then
+        if( DEC_GetMission( self._namedParams.pionACouvrir ) ~= nil ) then
             Activate( self.activations.BEH_CoordDep_Automate_ABC_SeCoordonnerAvecAmi_, 1, { self._namedParams.pionACouvrir, true, } )
         else
 do

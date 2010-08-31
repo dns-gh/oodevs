@@ -33,6 +33,7 @@ includedFiles["sources/melee/inf/automates/son proterre/missions/escorter/Escort
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//---------------------------------------------------------------------
@@ -86,6 +87,7 @@ node "MIS_Automate_MRT_INF_EscorterUnites"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//---------------------------------------------------------------------

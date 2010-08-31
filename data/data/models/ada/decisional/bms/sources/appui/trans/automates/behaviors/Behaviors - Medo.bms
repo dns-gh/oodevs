@@ -30,6 +30,7 @@ include "Appui/Trans/Automates/Actions/Actions - Medo.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction_EnCours = self.eAction_EnCours or eActionEnCours
         self.eAction_NOK = self.eAction_NOK or eActionEnCours
         self.eAction_OK = self.eAction_OK or eActionEnCours
@@ -38,7 +39,7 @@ include "Appui/Trans/Automates/Actions/Actions - Medo.bms"
             do return end
         end
 
-        if( ( self.eAction_OK == eActionEffectuee ) or ( ( self._namedParams.rN_Pion == 0 or self._namedParams.rN_Pion == nil ) ) ) then
+        if( ( self.eAction_OK == eActionEffectuee ) or ( self._namedParams.rN_Pion == 0 ) ) then
             self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
@@ -80,7 +81,8 @@ node "BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonAListe"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions or {} ) do
@@ -122,6 +124,7 @@ node "BEH_Mission_Automate_AssignerFaireMouvementSurItA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         do
         end
 
@@ -180,6 +183,7 @@ node "BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -236,6 +240,7 @@ node "BEH_Mission_Automate_AssignerFaireMouvementA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -291,6 +296,7 @@ node "BEH_Mission_Automate_AssignerSeFaireTransporterA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do

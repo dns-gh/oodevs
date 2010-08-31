@@ -20,6 +20,7 @@ includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - Ordre.bm
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// =============================================================================
 ]]--[[// Pour l'automate
 ]]--[[// =============================================================================
@@ -122,6 +123,7 @@ node "BEH_Ordre_SePoster_EnAttente"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 if( ModuleBegins() ) then
             do
                 DEC_Trace( "Se poste en attente d'ordre." )
@@ -134,7 +136,7 @@ node "BEH_Ordre_SePoster_EnAttente"
             end
         end
 
-        if( ( GetStateVariable( "VE_SePoster" ) == 0 or GetStateVariable( "VE_SePoster" ) == nil ) ) then
+        if( GetStateVariable( "VE_SePoster" ) == 0 ) then
             do
                 DEC_Trace( "Conduite 'poursuivre' recu." )
                                 self:SendFeedback( eActionEffectuee )

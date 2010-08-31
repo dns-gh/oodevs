@@ -11,7 +11,7 @@
 #define __DEC_Decision_ABC_h_
 
 #include "MT_Tools/Role_ABC.h"
-#include <directia/Brain.h>
+#include <directia/brain/Brain.h>
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 
@@ -25,7 +25,10 @@ class PHY_Action_ABC;
 
 namespace directia
 {
-    class Brain;
+    namespace brain
+    {
+        class Brain;
+    }
 }
 
 // =============================================================================
@@ -65,7 +68,7 @@ public:
     virtual MIL_AgentPion& GetPion() const = 0;
     virtual MIL_Automate& GetAutomate() const = 0;
 
-    virtual void GarbageCollect() = 0;
+    //virtual void GarbageCollect() = 0;
 
     virtual void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission ) = 0;
     virtual void StopMissionBehavior ( const boost::shared_ptr< MIL_Mission_ABC > mission ) = 0;
@@ -76,8 +79,9 @@ public:
     virtual void SeteEtatLima( int value ) = 0;
     virtual int  GeteEtatDec() const = 0;
     virtual void SeteEtatDec( int value ) = 0;
-    virtual int  GeteEtatEchelon() const = 0;
+	virtual int  GeteEtatEchelon() const = 0;
     virtual void SeteEtatEchelon( int value ) = 0;
+
     virtual bool GetbOrdreDecrocher() const = 0;
     virtual void SetbOrdreDecrocher( bool value ) = 0;
     virtual bool GetbOrdreTenirSurLR() const = 0;
@@ -144,7 +148,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual directia::Brain& GetBrain() = 0;
+    virtual directia::brain::Brain& GetBrain() = 0;
     template< typename T > static void SetScriptVariable( const T& source, T& dest );
     //@}
 

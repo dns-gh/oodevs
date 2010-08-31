@@ -4,7 +4,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentServer.h"
-#include "MIL_Folk.h"
 #include "UrbanModel.h"
 #include "CheckPoints/MIL_CheckPointManager.h"
 #include "Decision/DEC_PathFind_Manager.h"
@@ -50,7 +49,6 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pCheckPointManager_   ( 0 )
     , pAgentServer_         ( 0 )
     , pFederate_            ( 0 )
-    , pFolk_                ( new MIL_Folk( config ) )
     , pUrbanModel_          ( new UrbanModel() )
     , pResourceNetworkModel_( new resource::ResourceNetworkModel() )
     , pProcessMonitor_      ( new ProcessMonitor() )
@@ -65,7 +63,8 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     else
     {
         // $$$$ NLD 2007-01-11: A nettoyer - pb pEntityManager_ instancié par checkpoint
-        pEntityManager_     = new MIL_EntityManager    ( *this, *pEffectManager_, *pProfilerMgr_, pFederate_, pWorkspaceDIA_->GetDatabase() );
+        pUrbanModel_->ReadUrbanModel( config_ );
+        pEntityManager_     = new MIL_EntityManager    ( *this, *pEffectManager_, *pProfilerMgr_, pFederate_, pWorkspaceDIA_->GetDatabase(), config_.ReadGCParameter_setPause(), config.ReadGCParameter_setStepMul() );
         pCheckPointManager_ = new MIL_CheckPointManager( config_ );
         pEntityManager_->ReadODB( config_ );
         pEntityManager_->CreateUrbanObjects( *pUrbanModel_, config_ );
@@ -221,7 +220,6 @@ void MIL_AgentServer::MainSimLoop()
     pProfilerMgr_->NotifyTickBegin( GetCurrentTimeStep() );
     SendMsgBeginTick();
     pEntityManager_->Update();
-    pFolk_->Update( nCurrentTimeStep_ * nTimeStepDuration_, nTimeStepDuration_ );
     pMeteoDataManager_->Update( nRealTime_ );
     pResourceNetworkModel_->Update();
     pPathFindManager_->UpdateInSimulationThread();
@@ -283,7 +281,6 @@ void MIL_AgentServer::SendMsgEndTick() const
 void MIL_AgentServer::SendStateToNewClient() const
 {
     pEntityManager_->SendStateToNewClient();
-    pFolk_->SendStateToNewClient();
     pMeteoDataManager_->SendStateToNewClient();
 }
 

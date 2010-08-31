@@ -36,13 +36,14 @@ include "Melee/Inf/Automates/Common/Missions/Behaviors MRT - Retrograde.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------    	
 ]]local pAppui = nil
-                if( ( #( self._namedParams.selPion_SE ) ~= 0 and #( self._namedParams.selPion_SE ) ~= nil ) ) then
+                if( #( self._namedParams.selPion_SE ) ~= 0 ) then
                     pAppui = DIA_GetAt( self._namedParams.selPion_SE, #( self._namedParams.selPion_SE ) - 1 )
                 else
                     pAppui = DIA_GetAt( self._namedParams.selPion_PE, 0 )
@@ -79,6 +80,7 @@ node "BEH_Medo_Automate_INF_AssignerMissionRetrogradeVers_PC"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ptFin = self.ptFin or S_Geometrie_BarycentreZone( self._namedParams.locRgpt )
         --[[// Donner la mission freiner au pion PC			
 ]]if( ModuleBegins() ) then
@@ -110,6 +112,7 @@ node "BEH_Medo_Automate_INF_AssignerMissionRetrograde_PC"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ptFin = self.ptFin or DEC_Geometrie_CalculerPointArriveePourPion( DEC_Automate_PionPC() )
         --[[// Donner la mission freiner au pion PC
 ]]if( ModuleBegins() ) then
@@ -130,6 +133,7 @@ node "BEH_Medo_Automate_INF_InitialiseSE"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             S_Medo_Automate_InitialiseSE( self._namedParams.lstPionsAppui, eEtatEchelon_Second )
         end

@@ -35,6 +35,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.eEtatRecueil = self.eEtatRecueil or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
@@ -176,6 +177,7 @@ node "BEH_Eni_Pion_ABC_Freiner"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
         if( not DIA_IsListEmpty( listeConnaissances ) ) then
             do
@@ -229,6 +231,7 @@ node "BEH_Eni_Pion_ABC_FreinerSur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtatPerteContact = self.eEtatPerteContact or eActionEnCours
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Tenir l'eni sous son regard / Vitesse

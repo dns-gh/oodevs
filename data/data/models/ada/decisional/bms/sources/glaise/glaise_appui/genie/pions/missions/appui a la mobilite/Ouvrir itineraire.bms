@@ -29,6 +29,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.eEtatRenfort = self.eEtatRenfort or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or eProgresser
@@ -113,6 +114,7 @@ node "BEH_Dep_GEN_Ouvrir_ReagirFaceAObstacles"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.repObjet = self.repObjet or nil
         self.rDist = self.rDist or 0
         self.bObjetProcheSurItineraire = self.bObjetProcheSurItineraire or false
@@ -150,6 +152,7 @@ node "BEH_Objet_Pion_GEN_BrecherObstacle"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------
 ]]--[[// Brecher l'obstacle ou sinon le réduire
 ]]--[[//-----------------------------------------------------------------
@@ -187,6 +190,7 @@ node "BEH_Objet_Pion_GEN_Brecher"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------
 ]]--[[// Validité de l'objet
 ]]--[[//-----------------------------------------------------------------

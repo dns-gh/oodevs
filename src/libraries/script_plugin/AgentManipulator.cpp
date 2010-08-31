@@ -9,6 +9,7 @@
 
 #include "script_plugin_pch.h"
 #include "AgentManipulator.h"
+#include "directia/brain/Brain.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/AgentOrder.h"
 #include "dispatcher/Automat.h"
@@ -16,7 +17,6 @@
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "protocol/SimulationSenders.h"
-#include <directia/Brain.h>
 
 using namespace plugins::script;
 using namespace dispatcher;
@@ -46,18 +46,18 @@ AgentManipulator::~AgentManipulator()
 // Name: AgentManipulator::Registrar::RegisterIn
 // Created: AGE 2008-06-17
 // -----------------------------------------------------------------------------
-void AgentManipulator::Registrar::RegisterIn( directia::Brain& brain )
+void AgentManipulator::Registrar::RegisterIn( directia::brain::Brain& brain )
 {
-    brain.RegisterFunction( "GetIdentifier",       &AgentManipulator::GetIdentifier );
-    brain.RegisterFunction( "GetName",             &AgentManipulator::GetName       );
-    brain.RegisterFunction( "GetTeam",             &AgentManipulator::GetTeam       );
-    brain.RegisterFunction( "GetPosition",         &AgentManipulator::GetPosition   );
-    brain.RegisterFunction( "GetOperationalState", &AgentManipulator::GetOperationalState );
-    brain.RegisterFunction( "IsMounted",           &AgentManipulator::IsMounted );
-    brain.RegisterFunction( "GetForceRatio",       &AgentManipulator::GetForceRatio );
-    brain.RegisterFunction( "GetMission",          &AgentManipulator::GetMission );
-    brain.RegisterFunction( "Teleport",            &AgentManipulator::Teleport );
-    brain.RegisterFunction( "RecoverAll",          &AgentManipulator::RecoverAll );
+    brain.Register( "GetIdentifier",       &AgentManipulator::GetIdentifier );
+    brain.Register( "GetName",             &AgentManipulator::GetName       );
+    brain.Register( "GetTeam",             &AgentManipulator::GetTeam       );
+    brain.Register( "GetPosition",         &AgentManipulator::GetPosition   );
+    brain.Register( "GetOperationalState", &AgentManipulator::GetOperationalState );
+    brain.Register( "GetForceRatio",       &AgentManipulator::GetForceRatio );
+    brain.Register( "GetMission",          &AgentManipulator::GetMission );
+
+    brain.Register( "Teleport",   &AgentManipulator::Teleport );
+    brain.Register( "RecoverAll", &AgentManipulator::RecoverAll );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,15 +105,6 @@ Position AgentManipulator::GetPosition() const
 unsigned int AgentManipulator::GetOperationalState() const
 {
     return agent_.GetOperationalStateValue();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentManipulator::IsMounted
-// Created: SBO 2010-06-25
-// -----------------------------------------------------------------------------
-bool AgentManipulator::IsMounted() const
-{
-    return agent_.IsMounted();
 }
 
 namespace

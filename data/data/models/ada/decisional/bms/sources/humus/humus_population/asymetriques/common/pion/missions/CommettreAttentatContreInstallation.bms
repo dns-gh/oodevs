@@ -28,6 +28,7 @@ includedFiles["sources/humus/humus_population/asymetriques/common/pion/missions/
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.eAction = self.eAction or eActionEnCours
         self.objectif = self.objectif or nil
@@ -36,7 +37,7 @@ includedFiles["sources/humus/humus_population/asymetriques/common/pion/missions/
                 DEC_SetMission( myself, self._namedParams.mission )
                 Activate( self.activations.ACT_Maj_Pion_PasserEnTirInterdit, 1, {} )
                 self.objectif = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( DEC_ConnaissanceObjet_Localisation( self._namedParams.mission.installationCible_ ) )
-                if( ( self.objectif == 0 or self.objectif == nil ) ) then
+                if( self.objectif == 0 ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                 Halt( self )

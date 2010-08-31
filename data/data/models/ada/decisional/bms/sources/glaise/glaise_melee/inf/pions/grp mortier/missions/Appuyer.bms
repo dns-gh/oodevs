@@ -47,6 +47,7 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/grp mortier/missions/Appuye
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or ePreparerMission
         self.repAmi = self.repAmi or self._namedParams.mission.uniteAAppuyer_
@@ -56,7 +57,7 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/grp mortier/missions/Appuye
                 DEC_SetMission( myself, self._namedParams.mission )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
                 --[[// mise a jour des infos sur le pion ennemi
-]]if( ( self.repAmi == 0 or self.repAmi == nil ) ) then
+]]if( self.repAmi == 0 ) then
                     do
                         DEC_Warning( eRC_MissionImpossible )
                                                 self:SendFeedback( eActionImpossible )

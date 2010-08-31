@@ -30,6 +30,7 @@ node "BEH_Situation_Automate_INF_Controler"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         --[[//-------------------------------------------------------------------------
 ]]--[[// Gestion des pions detruits
@@ -67,6 +68,7 @@ node "BEH_Situation_Automate_INF_Controler_Reduire"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local selPions_SE = S_ObtenirPionsDe( eEtatEchelon_Second, eEtatDestruction_None )
         local selPions_SE_INF = S_Cherche_Automate_Filtre_TypePion_INF( selPions_SE )
         for _,x_appui in pairs( selPions_SE_INF or {} ) do
@@ -82,7 +84,7 @@ do
 ]]--[[// n'est pas selectionne
 ]]
                 local pionAppuye = S_Automate_INF_UniteMission_Appuyer( pAppui )
-                if( ( pionAppuye == 0 or pionAppuye == nil ) ) then
+                if( pionAppuye == 0 ) then
                     _continue = false
                 end
 
@@ -99,7 +101,7 @@ do
                         --[[// On cherche a appuye un pion en reduction et n'ayant pas le rapfor
 ]]--[[// favorable					
 ]]local ksEni_Zone = S_Cherche_Automate_INF_EniDangereux_DansZone( pionAppuye, misControler.zone_ )
-                        if( ( ksEni_Zone ~= 0 and ksEni_Zone ~= nil ) ) then
+                        if( ksEni_Zone ~= 0 ) then
                             Activate( self.activations.BEH_Conduite_Automate_INF_GererReductionSur, 1, { pAppui, ksEni_Zone, } )
                         end
 
@@ -135,6 +137,7 @@ node "BEH_Conduite_Automate_INF_GererReductionSur"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 if( ModuleBegins() ) then
             do
                                 do

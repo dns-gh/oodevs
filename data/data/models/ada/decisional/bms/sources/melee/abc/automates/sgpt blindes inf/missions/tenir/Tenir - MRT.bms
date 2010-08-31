@@ -31,6 +31,7 @@ includedFiles["sources/melee/abc/automates/sgpt blindes inf/missions/tenir/Tenir
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------

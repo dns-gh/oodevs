@@ -475,7 +475,7 @@ node "ACT_Misc_Pion_MILICE_MAJ_PositionRegroupement"
     select = function( self )
                 if( ModuleBegins() ) then
             do
-                if( ( myself.ptRegroupement_ == 0 or myself.ptRegroupement_ == nil ) ) then
+                if( myself.ptRegroupement_ == nil ) then
                     myself.ptRegroupement_ = DEC_Geometrie_CreerPoint()
                 end
 

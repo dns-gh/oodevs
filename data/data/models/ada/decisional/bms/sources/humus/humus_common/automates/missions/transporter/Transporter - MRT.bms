@@ -13,6 +13,7 @@ node "MIS_Automate_MRT_Transporter"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.selPions = self.selPions or DEC_Automate_PionsAvecPC()
         self.listeTransporteurs = self.listeTransporteurs or {}
         self.listePionsATransporter = self.listePionsATransporter or {}

@@ -27,6 +27,7 @@ node "MIS_Automate_MRT_INF_Couvrir"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eCreationMRT = self.eCreationMRT or eActionEnCours
         self.rN_PE = self.rN_PE or DEC_ListePoints_Size( self._namedParams.mission.objectifs_ )
         --[[//-----------------------------------------------------------------------------

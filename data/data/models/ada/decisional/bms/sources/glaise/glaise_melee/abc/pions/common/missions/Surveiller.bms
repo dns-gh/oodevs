@@ -42,6 +42,7 @@ includedFiles["sources/glaise/glaise_melee/abc/pions/common/missions/Surveiller.
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission

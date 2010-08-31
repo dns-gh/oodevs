@@ -19,6 +19,7 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/behaviors/Behav
     end,
 
     activate = function( self )
+        local Activate = Activate
                 local listePionsCopie = self._namedParams.listePions
         local directionGroupe = nil
         local listeDirectionsPions = {}
@@ -40,7 +41,7 @@ do
 
                         if _continue then
                         local directionPion = DEC_Geometrie_CreerDirection( DEC_Automate_PionPosition( x ), pionBuffer:GetobjectifCourant_() )
-                        if( ( directionPion ~= 0 and directionPion ~= nil ) ) then
+                        if( directionPion ~= 0 ) then
                             DEC_UserTypeList_PushBack( listeDirectionsPions, directionPion )
                         end
 
@@ -55,7 +56,7 @@ do
         end
 
         directionGroupe = DEC_Geometrie_DirectionMoyenne( listeDirectionsPions )
-        if( ( directionGroupe == 0 or directionGroupe == nil ) ) then
+        if( directionGroupe == 0 ) then
             do return end
         end
 
@@ -138,6 +139,7 @@ node "BEH_Manoeuvre_Automate_ALAT_GererReleves"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.listePionsQuiSeSontFaitRelever = self.listePionsQuiSeSontFaitRelever or {}
         local sPionsDetruits = S_Liste_Automate_ALAT_PionsNonOperationnels( self._namedParams.listePions )
         local sPionsEnCoursRavitaillement = S_Liste_Automate_ALAT_PionsEnCoursRavitaillement( self._namedParams.listePions )
@@ -249,6 +251,7 @@ node "BEH_Dispositif_Automate_ALAT_AssignerReleve"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.pionPeutRelever = self.pionPeutRelever or false
         if( ModuleBegins() ) then
             do

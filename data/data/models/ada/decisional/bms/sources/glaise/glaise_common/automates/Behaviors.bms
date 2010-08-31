@@ -57,6 +57,7 @@ include "Glaise/glaise_Common/Automates/Missions/Behaviors.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// CR
 ]]--[[//-----------------------------------------------------------------------------

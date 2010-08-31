@@ -32,6 +32,7 @@ includedFiles["sources/emergency/pions/common/missions/OrganizeDistribution.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or eRejoindre
         if( ModuleBegins() ) then
@@ -113,6 +114,7 @@ node "BEH_Pion_Emergency_OrganiseDistribution"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.supply = self.supply or nil
         self.area = self.area or DEC_Geometrie_CreerLocalisationCercle( self._namedParams.position, 500 )
         self.people = self.people or nil

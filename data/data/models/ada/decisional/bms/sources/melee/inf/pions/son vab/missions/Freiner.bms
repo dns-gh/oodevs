@@ -35,6 +35,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.eEtatRecueil = self.eEtatRecueil or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
@@ -178,6 +179,7 @@ node "BEH_Dep_Pion_INF_RejoindreFuseau"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// init
 ]]self.eEtat = self.eEtat or eActionEnCours
         self.positionArrivee = self.positionArrivee or DEC_Geometrie_CalculerEntreeFuseauLaPlusProche()
@@ -239,6 +241,7 @@ node "BEH_Lima_Pion_INF_Jalonner_GererLimas"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Traiter les points interressants
 ]]--[[//-----------------------------------------------------------------------------
@@ -307,6 +310,7 @@ node "BEH_Lima_Pion_INF_Jalonner_PasserSurLC"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
 if( not F_Pion_GetbPasserSurLC( myself ) ) then
                 do
@@ -342,6 +346,7 @@ node "BEH_Lima_Pion_INF_Jalonner_PasserSurLR"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
 if( not F_Pion_GetbPasserSurLC( myself ) ) then
                 do
@@ -377,6 +382,7 @@ node "BEH_Lima_Pion_INF_Jalonner_PasserSurLIA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
 if( not F_Pion_GetbPasserSurLC( myself ) ) then
                 do
@@ -411,6 +417,7 @@ node "BEH_Eni_Pion_INF_JalonnerLesGros"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
         if( not DIA_IsListEmpty( listeConnaissances ) ) then
             do
@@ -462,6 +469,7 @@ node "BEH_Eni_Pion_INF_JalonnementSur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtatPerteContact = self.eEtatPerteContact or eActionEnCours
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Tenir l'eni sous son regard / Vitesse

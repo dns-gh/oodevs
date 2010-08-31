@@ -12,6 +12,7 @@
 #ifndef __MIL_PopulationType_h_
 #define __MIL_PopulationType_h_
 
+#include "Tools/MIL_Config.h"
 #include "MIL_PopulationPionAttritionData.h"
 
 namespace xml
@@ -56,7 +57,7 @@ public:
 
     //! @name Operations
     //@{
-    MIL_Population& InstanciatePopulation( xml::xistream& xis, MIL_Army& army, DEC_DataBase& database ) const;
+    MIL_Population& InstanciatePopulation( xml::xistream& xis, MIL_Army& army, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult ) const;
     //@}
 
     //! @name Effects

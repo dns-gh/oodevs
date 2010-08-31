@@ -34,7 +34,8 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreZoneAListe"
     end,
 
     activate = function( self )
-        assert( ( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= 0 and DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil ), "La liste de positions ne doit pas etre vide" )
+        local Activate = Activate
+        assert( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil, "La liste de positions ne doit pas etre vide" )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -77,7 +78,8 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsDefendreZoneAListe"
     end,
 
     activate = function( self )
-        assert( ( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= 0 and DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil ), "La liste de positions ne doit pas etre vide" )
+        local Activate = Activate
+        assert( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil, "La liste de positions ne doit pas etre vide" )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -124,6 +126,7 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionDefendreZoneAPartirPositionA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -174,6 +177,7 @@ node "BEH_Medo_Automate_ASA_AssignerMissionDefendreZoneAPartirPositionA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -222,7 +226,8 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreSiteAListe"
     end,
 
     activate = function( self )
-        assert( ( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= 0 and DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil ), "La liste de positions ne doit pas etre vide" )
+        local Activate = Activate
+        assert( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil, "La liste de positions ne doit pas etre vide" )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -265,7 +270,8 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsDefendreSiteAListe"
     end,
 
     activate = function( self )
-        assert( ( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= 0 and DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil ), "La liste de positions ne doit pas etre vide" )
+        local Activate = Activate
+        assert( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil, "La liste de positions ne doit pas etre vide" )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -312,6 +318,7 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionDefendreSiteAPartirPositionA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -362,6 +369,7 @@ node "BEH_Medo_Automate_ASA_AssignerMissionDefendreSiteAPartirPositionA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -409,7 +417,8 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsSurveillerAListe"
     end,
 
     activate = function( self )
-        assert( ( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= 0 and DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil ), "La liste de positions ne doit pas etre vide" )
+        local Activate = Activate
+        assert( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil, "La liste de positions ne doit pas etre vide" )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -451,7 +460,8 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsSurveillerAListe"
     end,
 
     activate = function( self )
-        assert( ( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= 0 and DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil ), "La liste de positions ne doit pas etre vide" )
+        local Activate = Activate
+        assert( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil, "La liste de positions ne doit pas etre vide" )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -497,6 +507,7 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionSurveillerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -546,6 +557,7 @@ node "BEH_Medo_Automate_ASA_AssignerMissionSurveillerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -592,6 +604,7 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsDefendreUnitesAListe"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 local listePionsPC = S_Liste_Automate_PionsPC( self._namedParams.unitesADefendre )
@@ -644,6 +657,7 @@ node "BEH_Medo_Automate_ASA_AssignerMissionDefendreUnites"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do

@@ -31,6 +31,7 @@ includedFiles["sources/melee/abc/automates/esc amx-erc/missions/tenir/Tenir - MR
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------

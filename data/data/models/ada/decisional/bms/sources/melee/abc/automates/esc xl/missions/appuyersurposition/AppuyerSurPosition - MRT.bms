@@ -23,6 +23,7 @@ includedFiles["sources/melee/abc/automates/esc xl/missions/appuyersurposition/Ap
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------

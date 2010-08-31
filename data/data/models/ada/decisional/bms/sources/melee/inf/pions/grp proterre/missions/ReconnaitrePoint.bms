@@ -44,6 +44,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eReconnaitre
         self.eCurrentPhase = self.eCurrentPhase or eRejoindre
         self.eAction = self.eAction or eActionEnCours
@@ -160,6 +161,7 @@ node "BEH_Mission_Pion_VAB_RecoPoint"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eRejoindre
         self.eAction = self.eAction or eActionEnCours
         self.eActionRejoindre = self.eActionRejoindre or eActionEnCours
@@ -270,6 +272,7 @@ node "BEH_Eni_Pion_VAB_RecoPoint"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         self.eAction = self.eAction or eActionEnCours
         local lstEnisDansFuseau = DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau()

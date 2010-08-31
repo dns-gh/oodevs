@@ -49,7 +49,7 @@ include "bit.lua"
     local _returnValue = false
     _returnValue = false
     local ptTest = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( locTest )
-    if( ( ptTest ~= 0 and ptTest ~= nil ) ) then
+    if( ptTest ~= nil ) then
         _returnValue = DEC_Geometrie_Distance( ptDest, ptTest ) <= rEcart
     end
 

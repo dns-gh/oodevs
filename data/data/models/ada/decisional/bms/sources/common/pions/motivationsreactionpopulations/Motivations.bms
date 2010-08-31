@@ -41,6 +41,7 @@ node "ActivatedByMOT_RiposteSurPopulations"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -102,6 +103,7 @@ node "ActivatedByMOT_EsquivePopulations"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -165,6 +167,7 @@ node "ActivatedByMOT_PasserEnEmploiForceInterdit"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -227,6 +230,7 @@ node "ActivatedByMOT_PasserEnMaintienADistanceParMoyensNonLetaux"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -289,6 +293,7 @@ node "ActivatedByMOT_PasserEnDispersionParMoyensDeDefenseActifs"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
@@ -351,6 +356,7 @@ node "ActivatedByMOT_PasserEnArmesLetalesAutorisees"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------

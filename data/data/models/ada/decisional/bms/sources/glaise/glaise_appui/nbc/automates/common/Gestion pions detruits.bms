@@ -30,6 +30,7 @@ includedFiles["sources/glaise/glaise_appui/nbc/automates/common/Gestion pions de
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listePionsDetruits = S_ObtenirPionsDetruitsEchelonPremierEtEclairage()
         for _,x in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Revoir la place du pion dans le dispositif

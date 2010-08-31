@@ -11,8 +11,8 @@
 #include "ClientCommands.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "dispatcher/LinkResolver_ABC.h"
+#include "directia/brain/Brain.h"
 #include "protocol/MessengerSenders.h"
-#include <directia/Brain.h>
 
 using namespace plugins::script;
 
@@ -21,7 +21,7 @@ using namespace plugins::script;
 // Created: AGE 2008-06-24
 // -----------------------------------------------------------------------------
 ClientCommands::ClientCommands( dispatcher::ClientPublisher_ABC& clients, dispatcher::LinkResolver_ABC& resolver )
-    : clients_ ( clients )
+    : clients_( clients )
     , resolver_( resolver )
 {
     // NOTHING
@@ -40,11 +40,11 @@ ClientCommands::~ClientCommands()
 // Name: ClientCommands::RegisterIn
 // Created: AGE 2008-06-24
 // -----------------------------------------------------------------------------
-void ClientCommands::RegisterIn( directia::Brain& brain )
+void ClientCommands::RegisterIn( directia::brain::Brain& brain )
 {
-    brain.RegisterObject( "clients", this );
-    brain.RegisterFunction( "SendCommandToAll", &ClientCommands::SendCommandToAll );
-    brain.RegisterFunction( "SendCommand",      &ClientCommands::SendCommand );
+    brain[ "clients" ] = this;
+    brain.Register( "SendCommandToAll", &ClientCommands::SendCommandToAll );
+    brain.Register( "SendCommand",      &ClientCommands::SendCommand );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,8 +72,10 @@ void ClientCommands::SendCommand( const std::string& client, const std::string& 
 void ClientCommands::Send( const std::string& profile, const std::string& command, dispatcher::ClientPublisher_ABC& target )
 {
     MsgsMessengerToClient::MsgMessengerToClient answer;
-    answer.mutable_message()->mutable_text_message()->mutable_source()->set_profile( "script" );
-    answer.mutable_message()->mutable_text_message()->mutable_target()->set_profile( profile.c_str() );
-    answer.mutable_message()->mutable_text_message()->set_message( command.c_str() );
+
+    answer.mutable_message()->mutable_text_message()->mutable_source()->set_profile("script");
+    answer.mutable_message()->mutable_text_message()->mutable_target()->set_profile(profile.c_str());
+    answer.mutable_message()->mutable_text_message()->set_message(command.c_str());
+
     target.Send( answer );
 }

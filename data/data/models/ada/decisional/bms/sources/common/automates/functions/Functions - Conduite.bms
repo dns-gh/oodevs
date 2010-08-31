@@ -74,7 +74,7 @@ do
 
     end
 
-    if( ( rIterateur ~= 0 and rIterateur ~= nil ) and rIterateur == #( listePionsPE ) ) then
+    if( rIterateur ~= 0 and rIterateur == #( listePionsPE ) ) then
         _returnValue = true
     end
 

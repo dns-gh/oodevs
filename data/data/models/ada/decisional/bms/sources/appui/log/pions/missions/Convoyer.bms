@@ -29,6 +29,7 @@ includedFiles["sources/appui/log/pions/missions/Convoyer.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eTestConvoyerStep_DeplacementVersPointChargement
         self.eEtat = self.eEtat or eActionEnCours
         self.pionPCRavitaillant = self.pionPCRavitaillant or DEC_Pion_PionPCDeAutomate( DEC_Ravitaillement_Convoi_AutomateRavitaillant() )
@@ -167,6 +168,7 @@ node "BEH_Dep_LOG_Suivre"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.itVersAmi = self.itVersAmi or nil
         self.eComportement = self.eComportement or eCreerItineraire
         self.eEtat = self.eEtat or eActionEnCours

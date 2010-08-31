@@ -22,6 +22,7 @@ includedFiles["sources/appui/genie/automates/cie blindee/missions/franchir de vi
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//---------------------------------------------------------------------
@@ -34,7 +35,7 @@ includedFiles["sources/appui/genie/automates/cie blindee/missions/franchir de vi
 ]]--[[// Vérification des moyens
 ]]--[[//---------------------------------------------------------------------
 ]]local listePionsGenie = S_ObtenirPionsOperationnelsFiltre( "SectionGenie" )
-                if( ( #( listePionsGenie ) == 0 or #( listePionsGenie ) == nil ) ) then
+                if( #( listePionsGenie ) == 0 ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
                                                 Halt( self )

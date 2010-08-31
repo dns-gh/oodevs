@@ -36,6 +36,7 @@ node "MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 DEC_Trace( "DEDANS" )
         self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or eMettreEnOeuvre

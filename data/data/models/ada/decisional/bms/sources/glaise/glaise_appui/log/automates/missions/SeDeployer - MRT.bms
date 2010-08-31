@@ -29,6 +29,7 @@ includedFiles["sources/glaise/glaise_appui/log/automates/missions/SeDeployer - M
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eMRT_AssignerMissions
         self.eEtatMissionSeDeployer = self.eEtatMissionSeDeployer or eActionEnCours
         self.selPions = self.selPions or S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsAvecPC() )
@@ -131,7 +132,7 @@ elseif switch_2 == "PionConvoi" then
 ]]
                     end
 
-                    if( ( #( self.selPions ) ~= 0 and #( self.selPions ) ~= nil ) ) then
+                    if( #( self.selPions ) ~= 0 ) then
                         do
                             Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_groupeMaintenanceEvacuation, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
                             Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_pionStock, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
@@ -146,7 +147,7 @@ elseif switch_2 == "PionConvoi" then
                             Activate( self.activations.BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalAListe, 1, { ePhase_MRT, self.sel_uniteSpy, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
                             Activate( self.activations.BEH_Mission_Automate_LOG_AssignerReparerAListe, 1, { ePhase_MRT, self.sel_sectionMaintenance, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
                             --[[// pion inconnu --> juste deplacement si deploiement vers position
-]]if( ( self._namedParams.mission.positionDeploiement_ ~= 0 and self._namedParams.mission.positionDeploiement_ ~= nil ) ) then
+]]if( self._namedParams.mission.positionDeploiement_ ~= 0 ) then
                                 Activate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementAListe, 1, { ePhase_MRT, self.selAutres, self._namedParams.mission.positionDeploiement_, } )
                             end
 

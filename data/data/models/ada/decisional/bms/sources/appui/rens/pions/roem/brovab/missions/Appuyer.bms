@@ -27,6 +27,7 @@ includedFiles["sources/appui/rens/pions/roem/brovab/missions/Appuyer.bms"] = tru
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours

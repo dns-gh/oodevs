@@ -35,6 +35,7 @@ node "MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.ePhase = self.ePhase or eMettreEnOeuvre
         if( ModuleBegins() ) then
             do

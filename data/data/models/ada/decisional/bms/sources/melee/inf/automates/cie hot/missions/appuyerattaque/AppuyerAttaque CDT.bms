@@ -29,6 +29,7 @@ node "MIS_Automate_CDT_INF_AppuyerUneAttaque"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eActionMission = self.eActionMission or eActionEnCours
         self.eActionHorsFuseau = self.eActionHorsFuseau or eActionEnCours
         --[[//-----------------------------------------------------------------------------
@@ -84,6 +85,7 @@ node "BEH_Conduite_Automate_INF_AppuyerUneAttaque"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Gestion des pions detruits		
 ]]Activate( self.activations.BEH_Dispositif_Automate_INF_GererLesPionsDetruits, 1, { true, } )
         Activate( self.activations.BEH_Dispositif_Automate_INF_GererReleve, 1, {} )

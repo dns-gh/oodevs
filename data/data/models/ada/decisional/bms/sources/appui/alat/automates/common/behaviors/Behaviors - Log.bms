@@ -15,6 +15,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.TC2 = self.TC2 or DEC_Automate_TC2()
         self.pionTC2 = self.pionTC2 or nil
         if( self.TC2 ~= nil ) then
@@ -81,6 +82,7 @@ node "BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listeObjet = DEC_Connaissances_ObjetsDansFuseau( S_TypeObject_ToString( eTypeObjectPlotRavitaillement ) )
         for _,x in pairs( listeObjet or {} ) do
         local _continue = true
@@ -113,6 +115,7 @@ node "BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.bAlerteRavitaillentPourSsgpt = self.bAlerteRavitaillentPourSsgpt or false
         local listePionsACoordonner = S_ListePionsALAT( self._namedParams.listePions )
@@ -186,6 +189,7 @@ node "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.listePionsIMEX = self.listePionsIMEX or {}
         self.listePionsTransportPlots = self.listePionsTransportPlots or {}
         self.listePionsPourHeliporterPlots = self.listePionsPourHeliporterPlots or {}
@@ -239,7 +243,7 @@ do
             do
                 local barycentreAgents = DEC_Geometrie_CalculerBarycentreAgents( self.listePionsASoutenirRav )
                 local pointDebarquementBuffer = nil
-                if( ( #( S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ ) ) ~= 0 and #( S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ ) ) ~= nil ) ) then
+                if( #( S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ ) ) ~= 0 ) then
                     do
                         local pointPlotPlusProche = S_Geometrie_PositionObjetPlusProche( S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ ), barycentreAgents )
                         --[[//Calcul du point à distance / 2 km du plot le plus proche

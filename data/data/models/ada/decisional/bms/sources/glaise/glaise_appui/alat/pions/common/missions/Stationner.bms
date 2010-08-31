@@ -27,6 +27,7 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/missions/Stationner
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.ePhase = self.ePhase or eProgresser
         self.eEtat = self.eEtat or eActionEnCours
         if( ModuleBegins() ) then

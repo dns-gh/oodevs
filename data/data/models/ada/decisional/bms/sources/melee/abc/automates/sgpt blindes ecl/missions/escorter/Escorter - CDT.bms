@@ -33,6 +33,7 @@ includedFiles["sources/melee/abc/automates/sgpt blindes ecl/missions/escorter/Es
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//---------------------------------------------------------------------
@@ -69,6 +70,7 @@ node "MIS_Automate_CDT_ABC_EscorterUnites"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//---------------------------------------------------------------------

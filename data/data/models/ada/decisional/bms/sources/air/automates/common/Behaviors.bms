@@ -26,6 +26,7 @@ includedFiles["sources/air/automates/common/Behaviors.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.listePionsAvecPC = self.listePionsAvecPC or {}--[[// variables persistantes
 ]]
         --[[// variables locales    

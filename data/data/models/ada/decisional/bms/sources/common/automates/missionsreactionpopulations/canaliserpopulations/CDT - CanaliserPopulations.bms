@@ -23,6 +23,7 @@ includedFiles["sources/common/automates/missionsreactionpopulations/canaliserpop
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.listePionsCanaliserPopulation = self.listePionsCanaliserPopulation or {}
         self.listePionsSuivre = self.listePionsSuivre or {}
         self.eEtatODC = self.eEtatODC or eActionEnCours

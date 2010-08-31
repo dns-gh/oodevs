@@ -26,6 +26,7 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/survei
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eSurveiller
         self.localisationsASurveiller = self.localisationsASurveiller or {}
         self.listePionsSgpt = self.listePionsSgpt or {}
@@ -122,7 +123,7 @@ self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.
                             end
 
                             --[[// mission stationner à tous les autres
-]]if( ( #( S_Cherche_Automate_Filtre_PionNonDansListe( self.listePeutFaireSurveiller, listePionsSurveillerCDT ) ) ~= 0 and #( S_Cherche_Automate_Filtre_PionNonDansListe( self.listePeutFaireSurveiller, listePionsSurveillerCDT ) ) ~= nil ) ) then
+]]if( #( S_Cherche_Automate_Filtre_PionNonDansListe( self.listePeutFaireSurveiller, listePionsSurveillerCDT ) ) ~= 0 ) then
                                 Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, S_Cherche_Automate_Filtre_PionNonDansListe( self.listePeutFaireSurveiller, listePionsSurveillerCDT ), self._namedParams.mission.pointLogistique_, } )
                             end
 
@@ -145,7 +146,7 @@ do
 ]]Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, 30000, self._namedParams.mission.pointLogistique_, self._namedParams.mission.porteeAction_, true, } )
                             --[[// mission stationner à tous les pions qui peuvent surveiller et qui
 ]]--[[// ne stationnent pas ou qui ne surveillent pas
-]]if( ( #( self.listePionsPourStationner ) ~= 0 and #( self.listePionsPourStationner ) ~= nil ) ) then
+]]if( #( self.listePionsPourStationner ) ~= 0 ) then
                                 Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, self.listePionsPourStationner, self._namedParams.mission.pointLogistique_, } )
                             end
 

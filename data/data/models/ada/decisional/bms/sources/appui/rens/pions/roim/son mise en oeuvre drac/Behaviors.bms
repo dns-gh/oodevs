@@ -111,6 +111,7 @@ include "Appui/Rens/Pions/Roim/Son mise en oeuvre DRAC/Missions/Missions.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Mot_Pion_Rens_AffecterVariablesDEtat, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// MAJ VE
 ]]--[[//-----------------------------------------------------------------------------
@@ -157,6 +158,7 @@ node "BEH_Mot_Pion_Rens_AffecterVariablesDEtat"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//////////////// BMS OPTIM  ///////////////////
 ]]        if( F_Pion_GeteEtatDec( myself ) == eEtatDec_Sauvegarde ) then
             do return end
@@ -185,7 +187,7 @@ elseif switch_1 == eMoral_Moyen
                     --[[//-----------------------------------------------------------------------------
 ]]--[[// En fonction de la mission...  --> idem moral mauvais
 ]]--[[//-----------------------------------------------------------------------------
-]]if( ( DEC_GetMission( myself ) == 0 or DEC_GetMission( myself ) == nil ) ) then
+]]if( DEC_GetMission( myself ) == nil ) then
                         do
                             SetStateVariable( "VE_RapFor", ( 5 - DEC_RapportDeForceLocal() ) )
                             _continue = false

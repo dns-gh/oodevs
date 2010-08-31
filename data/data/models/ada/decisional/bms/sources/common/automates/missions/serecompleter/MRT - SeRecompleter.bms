@@ -33,6 +33,7 @@ includedFiles["sources/common/automates/missions/serecompleter/MRT - SeRecomplet
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
         self.ptZone = self.ptZone or S_Geometrie_BarycentreZone( self._namedParams.mission.zoneRavitaillement_ )
         --[[//---------------------------------------------------------------------

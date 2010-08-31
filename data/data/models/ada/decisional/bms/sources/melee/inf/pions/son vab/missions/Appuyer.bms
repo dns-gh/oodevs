@@ -49,6 +49,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.pionRompre = self.pionRompre or nil
         self.eAction = self.eAction or eActionEnCours
         self.eActionSuivi = self.eActionSuivi or eActionEnCours
@@ -60,7 +61,7 @@ include "bit.lua"
                 DEC_SetMission( myself, self._namedParams.mission )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
                 --[[// mise a jour des infos sur le pion ami
-]]if( ( self.repAmi == 0 or self.repAmi == nil ) ) then
+]]if( self.repAmi == nil ) then
                     do
                         DEC_Warning( eRC_MissionImpossible )
                                                 self:SendFeedback( eActionImpossible )
@@ -167,6 +168,7 @@ node "BEH_Eni_Pion_VAB_Appuyer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( not ( F_Pion_GetbDefenseStatique_Mobile( myself ) or F_Pion_GeteTypeContact( self._namedParams.tAmi ) == eTypeContact_Offensif ) ) then
             do return end
         end

@@ -57,9 +57,9 @@ MIL_AgentPion* MIL_AgentTypePionLOGConvoy::InstanciatePion( MIL_Automate& automa
 // Created: MGD 2009-08-13
 // @TODO REPLACE BY XML in AgentFactory
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePionLOGConvoy::RegisterRoles( MIL_AgentPion& pion, DEC_DataBase& database ) const
+void MIL_AgentTypePionLOGConvoy::RegisterRoles( MIL_AgentPion& pion, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult ) const
 {
-    MIL_AgentTypePion::RegisterRoles( pion, database );
+    MIL_AgentTypePion::RegisterRoles( pion, database, gcPause, gcMult );
     pion.RegisterRole( *new PHY_RolePionLOGConvoy_Supply( pion ) );
 }
 

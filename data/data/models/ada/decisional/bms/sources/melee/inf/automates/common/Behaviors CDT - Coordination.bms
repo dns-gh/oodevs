@@ -42,6 +42,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.resultatCalcul = self.resultatCalcul or nil
         self.bEnAttente = self.bEnAttente or false
         if( #( self._namedParams.selPions ) == 1 ) then
@@ -51,11 +52,11 @@ include "bit.lua"
         --[[//-------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-------------------------------------------------------------------------                  
-]]if( ( self.resultatCalcul == 0 or self.resultatCalcul == nil ) ) then
+]]if( self.resultatCalcul == nil ) then
             self.resultatCalcul = DEC_Geometrie_StartCalculLignesAvantEtArriere( self._namedParams.selPions )
         end
 
-        if( ( self.resultatCalcul == 0 or self.resultatCalcul == nil ) ) then
+        if( self.resultatCalcul == nil ) then
             do return end
         end
 
@@ -67,7 +68,7 @@ include "bit.lua"
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Pas de pion en queue
 ]]--[[//-----------------------------------------------------------------------------
-]]if( ( pionEnQueue == 0 or pionEnQueue == nil ) ) then
+]]if( pionEnQueue == nil ) then
             do return end
         end
 
@@ -122,7 +123,7 @@ if( self.bEnAttente and rDist_AvtLigne < self._namedParams.rDist_Min ) then
     end,
 
     destroy = function( self )
-                if( ( self.resultatCalcul ~= 0 and self.resultatCalcul ~= nil ) ) then
+                if( self.resultatCalcul ~= nil ) then
             DEC_Geometrie_StopCalculLignesAvantEtArriere( self.resultatCalcul )
         end
 
@@ -153,6 +154,7 @@ node "BEH_CoordDep_Automate_INF_AvecAutomate"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-------------------------------------------------------------------------
@@ -204,11 +206,12 @@ node "BEH_CoordDep_Automate_INF_AvecAutomate_Pion"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// persistent T_CalculLignesAvantArriere  resultatCalcul = nil;
 ]]        self.resultatCalcul_Ami = self.resultatCalcul_Ami or nil
         self.bEnAttente = self.bEnAttente or false
         --[[// On se poste en attente
-]]if( ( DEC_GetMission( self._namedParams.compagnieAmie ) == 0 or DEC_GetMission( self._namedParams.compagnieAmie ) == nil ) ) then
+]]if( DEC_GetMission( self._namedParams.compagnieAmie ) == nil ) then
             do
                 Activate( self.activations.ACT_Ordre_Automate_Pause, 1, { self._namedParams.pion, } )
                 Activate( self.activations.ACT_Info_Automate_Trace, 1, { " ==> Coordinnation avec AMI --> ORDRE attendre à " .. DEC_GetSzName( self._namedParams.pion ), } )
@@ -218,11 +221,11 @@ node "BEH_CoordDep_Automate_INF_AvecAutomate_Pion"
         end
 
         local selPionsCompagnie_Amie = DEC_Automate_PionsDeAutomateSansPC( self._namedParams.compagnieAmie )
-        if( ( self.resultatCalcul_Ami == 0 or self.resultatCalcul_Ami == nil ) ) then
+        if( self.resultatCalcul_Ami == nil ) then
             self.resultatCalcul_Ami = DEC_Geometrie_StartCalculLignesAvantEtArriere( selPionsCompagnie_Amie )
         end
 
-        if( ( self.resultatCalcul_Ami == 0 or self.resultatCalcul_Ami == nil ) ) then
+        if( self.resultatCalcul_Ami == nil ) then
             do return end
         end
 
@@ -231,7 +234,7 @@ node "BEH_CoordDep_Automate_INF_AvecAutomate_Pion"
 ]]--[[// Determiner le pion de tete
 ]]--[[//-----------------------------------------------------------------------------
 ]]local pionEnQueue_Ami = S_Coordination_PionEnQueue( self.resultatCalcul_Ami, selPionsCompagnie_Amie, true )
-        if( ( pionEnQueue_Ami == 0 or pionEnQueue_Ami == nil ) ) then
+        if( pionEnQueue_Ami == nil ) then
             do return end
         end
 
@@ -286,7 +289,7 @@ do
     end,
 
     destroy = function( self )
-                if( ( self.resultatCalcul_Ami ~= 0 and self.resultatCalcul_Ami ~= nil ) ) then
+                if( self.resultatCalcul_Ami ~= nil ) then
             DEC_Geometrie_StopCalculLignesAvantEtArriere( self.resultatCalcul_Ami )
         end
 
@@ -311,6 +314,7 @@ node "BEH_CoordDep_Automate_INF_Retrograde"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.resultatCalcul = self.resultatCalcul or nil
         self.bPoste = self.bPoste or false
         self.pionPC = self.pionPC or DEC_Automate_PionPC()
@@ -319,11 +323,11 @@ node "BEH_CoordDep_Automate_INF_Retrograde"
         --[[//-------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-------------------------------------------------------------------------                  
-]]if( ( self.resultatCalcul == 0 or self.resultatCalcul == nil ) ) then
+]]if( self.resultatCalcul == nil ) then
             self.resultatCalcul = DEC_Geometrie_StartCalculLignesAvantEtArriere( sPionsOperationnels )
         end
 
-        if( ( self.resultatCalcul == 0 or self.resultatCalcul == nil ) ) then
+        if( self.resultatCalcul == nil ) then
             do return end
         end
 
@@ -338,7 +342,7 @@ node "BEH_CoordDep_Automate_INF_Retrograde"
 ]]        end
 
         local pionEnQueue = S_Coordination_PionEnQueue( self.resultatCalcul, sPionsOperationnels, true )
-        if( ( pionEnQueue == 0 or pionEnQueue == nil ) ) then
+        if( pionEnQueue == nil ) then
             do return end
         end
 
@@ -368,7 +372,7 @@ node "BEH_CoordDep_Automate_INF_Retrograde"
     end,
 
     destroy = function( self )
-                if( ( self.resultatCalcul ~= 0 and self.resultatCalcul ~= nil ) ) then
+                if( self.resultatCalcul ~= nil ) then
             DEC_Geometrie_StopCalculLignesAvantEtArriere( self.resultatCalcul )
         end
 
@@ -388,6 +392,7 @@ node "BEH_Automate_INF_ConduitePause"
     end,
 
     activate = function( self )
+        local Activate = Activate
     end,
 
 }
@@ -409,6 +414,7 @@ node "BEH_Conduite_Automate_INF_FlancGarder"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_CoordDep_Automate_INF_AvecAutomate, 1, { self._namedParams.compagnie, true, } )
         Activate( self.activations.BEH_Conduite_Automate_INF_FlancGarder_Regroupement, 1, { self._namedParams.compagnie, } )
         Activate( self.activations.BEH_Conduite_Automate_INF_FlancGarder_Tenir, 1, { self._namedParams.compagnie, } )
@@ -431,10 +437,11 @@ node "BEH_Conduite_Automate_INF_FlancGarder_Regroupement"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Coordination avec les pions du 1er echelons de la compagnie voisine
 ]]local selPions_PE = S_ObtenirTousPionsDe( eEtatEchelon_Premier )
         local selPionsCompagnie_PE = S_ObtenirTousPionsPour( self._namedParams.compagnie, eEtatEchelon_Premier )
-        if( ( #( selPionsCompagnie_PE ) == 0 or #( selPionsCompagnie_PE ) == nil ) ) then
+        if( #( selPionsCompagnie_PE ) == 0 ) then
             do return end
         end
 
@@ -449,7 +456,7 @@ node "BEH_Conduite_Automate_INF_FlancGarder_Regroupement"
 ]]local selPions_SE = S_ObtenirTousPionsDe( eEtatEchelon_Second )
         local selPionsCompagnie_SE = S_ObtenirTousPionsPour( self._namedParams.compagnie, eEtatEchelon_Second )
         local ptRegroupement_SE = ptRegroupement_PE
-        if( ( #( selPionsCompagnie_SE ) ~= 0 and #( selPionsCompagnie_SE ) ~= nil ) ) then
+        if( #( selPionsCompagnie_SE ) ~= 0 ) then
             ptRegroupement_SE = DEC_Automate_PionPosition( DIA_GetAt( selPionsCompagnie_SE, 0 ) )
         end
 
@@ -478,6 +485,7 @@ node "BEH_Conduite_Automate_INF_FlancGarder_Tenir"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local selPion = DEC_Automate_PionsAvecPC()
         local selPion_PE = S_ObtenirTousPionsDe( eEtatEchelon_Premier )
         local bAuContact = false

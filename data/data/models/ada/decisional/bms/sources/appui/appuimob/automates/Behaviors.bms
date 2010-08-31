@@ -63,6 +63,7 @@ include "Common/Automates/Behaviors.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_RC_Automate_Situation, 1, {} )--[[// CR automates sur eni et situation mission
 ]]
         --[[// ========================== En embrayé SEULEMENT ============================

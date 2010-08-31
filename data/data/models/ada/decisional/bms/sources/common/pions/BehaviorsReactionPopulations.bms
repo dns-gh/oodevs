@@ -42,6 +42,7 @@ include "Common/Pions/behaviors/behaviors - POP - Rens.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_ROE_Recevoir_OrdreInopinePopulation, 1, {} )
         Activate( self.activations.BEH_Pop_RC, 1, {} )
         Activate( self.activations.BEH_Pop_RenseignerAuContact, 1, {} )
@@ -62,6 +63,7 @@ node "BEH_Pop_RC"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.populationDangereuseSignalee = self.populationDangereuseSignalee or false
         self.lstPopsPAPenCours = self.lstPopsPAPenCours or {}
         self.mission = self.mission or DEC_GetMission( myself )
@@ -134,7 +136,7 @@ if( not DEC_UserTypeList_Contient( self.lstPopsPAPenCours, pop ) ) then
 
         local rTailleAncienneListe = #( self.lstPopsPAPenCours )
         self.lstPopsPAPenCours = lstPopsPAP
-        if( ( ( GetMotivation( "MOT_EsquivePopulations" ) == 0 or GetMotivation( "MOT_EsquivePopulations" ) == nil ) ) and ( ( rTailleAncienneListe - ( rTailleNouvelleListe - rNouvellesPopPAP ) ) > 0 ) ) then
+        if( ( GetMotivation( "MOT_EsquivePopulations" ) == nil ) and ( ( rTailleAncienneListe - ( rTailleNouvelleListe - rNouvellesPopPAP ) ) > 0 ) ) then
             do
                 if( not DEC_Agent_AutomateEstEmbraye() ) then
                     DEC_RC( eRC_PopulationTemporairementRepoussee )

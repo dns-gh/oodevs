@@ -62,7 +62,7 @@ function S_Misc_Automate_UniteMission_Reduire( pion )
     local ksFoo = nil
     _returnValue = ksFoo
     local mission = pion:Getmission_()
-    if( ( mission ~= 0 and mission ~= nil ) ) then
+    if( mission ~= nil ) then
         _returnValue = mission.uniteAReduire_
     end
 

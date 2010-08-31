@@ -32,19 +32,24 @@
 #include "protocol/protocol.h"
 #include <geometry/Point2.h>
 #include <boost/bind.hpp>
-#include <directia/Brain.h>
+#include <directia/tools/binders/ScriptRef.h>
 
 // -----------------------------------------------------------------------------
 // Name: ScriptRefs
 // Created: LDC 2009-04-08
 // -----------------------------------------------------------------------------
-ScriptRefs::ScriptRefs( directia::Brain& brain  )
-    : sendEvent_       ( brain.GetScriptFunction( "SendEvent" ) )
-    , startEvent_      ( brain.GetScriptFunction( "StartEvent" ) )
-    , stopEvents_      ( brain.GetScriptFunction( "StopEvents" ) )
-    , setStateVariable_( brain.GetScriptFunction( "SetStateVariable" ) )
-    , collectgarbage_  ( brain.GetScriptFunction( "collectgarbage" ) )
-    , step_            ( brain.RegisterObject( std::string( "step" ) ) )
+ScriptRefs::ScriptRefs( directia::brain::Brain& brain  )
+    : sendEvent_               ( brain[ "SendEvent" ] )
+    , startEvent_              ( brain[ "StartEvent" ] )
+    , stopEvents_              ( brain[ "StopEvents" ] )
+    , setStateVariable_        ( brain[ "SetStateVariable" ] )
+    , collectgarbage_          ( brain[ "collectgarbage" ] )
+    , step_                    ( brain[ "step" ] )
+    , callbackPerception_      ( brain[ "CallbackPerception" ] )
+    , knowledgeCallbackAction_ ( brain[ "KnowledgeCallbackAction" ] )
+    , removeAction_            ( brain[ "RemoveAction" ] )
+    , initTaskParameter_       ( brain[ "InitTaskParameter" ] )
+    , cleanBrainBeforeDeletion_( brain[ "CleanBrainBeforeDeletion" ] )
 {
     // NOTHING
 }
@@ -56,263 +61,260 @@ namespace DEC_DecisionImpl
 // Name: DEC_Decision::RegisterGeometryFunctions
 // Created: SLI 2010-07-09
 // -----------------------------------------------------------------------------
-void RegisterGeometryFunctions( directia::Brain& brain )
+void RegisterGeometryFunctions( directia::brain::Brain& brain)
 {
-    brain.RegisterFunction( "DEC_Geometrie_DecouperListePoints",                &DEC_GeometryFunctions::SplitListPoints );
-    brain.RegisterFunction( "DEC_Geometrie_CalculerPositionCouverture",         &DEC_GeometryFunctions::ComputeCoverPosition );
-    brain.RegisterFunction( "DEC_Geometrie_CalculerBarycentreAgents",           &DEC_GeometryFunctions::ComputeAgentsBarycenter );
-    brain.RegisterFunction( "DEC_Geometrie_PositionTranslate",                  &DEC_GeometryFunctions::TranslatePosition );
-    brain.RegisterFunction( "DEC_Geometrie_PositionTranslateDir",               &DEC_GeometryFunctions::TranslatePositionInDirection );
-    brain.RegisterFunction( "DEC_Geometrie_PositionsEgales",                    &DEC_GeometryFunctions::ComparePositions );
-    brain.RegisterFunction( "DEC_Geometrie_Distance",                           &DEC_GeometryFunctions::Distance ); //@TODO MGD Replace by ComputeDistance on shared_ptr
-    brain.RegisterFunction( "DEC_Geometrie_ConvertirPointEnLocalisation",       &DEC_GeometryFunctions::ConvertPointToLocalisation );
-    brain.RegisterFunction( "DEC_Geometrie_EstPointDansLocalisation",           &DEC_GeometryFunctions::IsPointInsideLocalisation );
-    brain.RegisterFunction( "DEC_Geometrie_CreerLocalisation",                  &DEC_GeometryFunctions::CreateLocalisation );
-    brain.RegisterFunction( "DEC_Geometrie_CreerListePoints",                   &DEC_GeometryFunctions::CreateListPoint );
-    brain.RegisterFunction( "DEC_Geometrie_CreerPoint",                         &DEC_GeometryFunctions::CreatePoint );
-    brain.RegisterFunction( "DEC_Geometrie_CopiePoint",                         &DEC_GeometryFunctions::CopyPoint );
-    brain.RegisterFunction( "DEC_Geometrie_CreerDirection",                     &DEC_GeometryFunctions::CreateDirection );
-    brain.RegisterFunction( "DEC_Geometrie_CreerDirectionPerpendiculaire",      &DEC_GeometryFunctions::CreateOrthoDirection );
-    brain.RegisterFunction( "DEC_Geometrie_InverseDirection",                   &DEC_GeometryFunctions::ReverseDirection );
-    brain.RegisterFunction( "DEC_Geometrie_CopieEtInverseDirection",            &DEC_GeometryFunctions::CopyAndReverseDirection );
-    brain.RegisterFunction( "DEC_Geometrie_CopieEtRotateDirection",             &DEC_GeometryFunctions::CopyAndRotateDirection );
-    brain.RegisterFunction( "DEC_Geometrie_CalculerDistanceLigneMoyenne",       &DEC_GeometryFunctions::ComputeDistanceFromMiddleLine );
-    brain.RegisterFunction( "DEC_Geometrie_CalculerBarycentreLocalisation",     &DEC_GeometryFunctions::ComputeLocalisationBarycenter );
-    brain.RegisterFunction( "DEC_Geometrie_DirectionMoyenne",                   &DEC_GeometryFunctions::ComputeMeanDirection );
-    brain.RegisterFunction( "DEC_Geometrie_PositionAleatoireSurCercle",         &DEC_GeometryFunctions::ComputeRandomPointOnCircle );
-    brain.RegisterFunction( "DEC_Geometrie_PositionAleatoireDansCercle",        &DEC_GeometryFunctions::ComputeRandomPointInCircle );
-    brain.RegisterFunction( "DEC_Geometrie_CreerLocalisationCercle",            &DEC_GeometryFunctions::CreateCircleLocalisation );
-    brain.RegisterFunction( "DEC_Geometrie_PionEstCoordonne",                   &DEC_GeometryFunctions::ListUncoordinatedPawns );
-    brain.RegisterFunction( "DEC_Geometrie_PourcentageTerrainCompartimente",    &DEC_GeometryFunctions::ComputeClosedTerrainRatioInFuseau );
-    brain.RegisterFunction( "DEC_Geometrie_PourcentageTerrainOuvert",           &DEC_GeometryFunctions::ComputeOpenTerrainRatioInFuseau );
-    brain.RegisterFunction( "DEC_Geometrie_TrierZonesSelonOuvertureTerrain",    &DEC_GeometryFunctions::SortZonesAccordingToTerrainOpening );
-    brain.RegisterFunction( "DEC_Geometrie_PourcentageZoneTerrainCompartimente",&DEC_GeometryFunctions::ComputeClosedTerrainRatioInZone );
-    brain.RegisterFunction( "DEC_Geometrie_PourcentageZoneTerrainOuvert",       &DEC_GeometryFunctions::ComputeOpenTerrainRatioInZone );
-    brain.RegisterFunction( "DEC_Geometrie_TrierFuseauxSelonOuvertureTerrain",  &DEC_GeometryFunctions::SortFuseauxAccordingToTerrainOpening );
-    brain.RegisterFunction( "DEC_Geometrie_ConvertirFuseauEnLocalisation",      &DEC_GeometryFunctions::ConvertFuseauToLocalisation );
-    brain.RegisterFunction( "DEC_Geometrie_ProchainObjectifDansFuseau",         &DEC_GeometryFunctions::GetNextObjectiveInFuseau );
-    brain.RegisterFunction( "DEC_Geometrie_DistanceBetweenPoints",              &DEC_GeometryFunctions::ComputeDistance );
-    brain.RegisterFunction( "DEC_Geometrie_AreaSize",                           &DEC_GeometryFunctions::ComputeAreaSize );
+    brain[ "DEC_Geometrie_DecouperListePoints" ] = &DEC_GeometryFunctions::SplitListPoints;
+    brain[ "DEC_Geometrie_CalculerPositionCouverture" ] = &DEC_GeometryFunctions::ComputeCoverPosition;
+    brain[ "DEC_Geometrie_CalculerBarycentreAgents" ] = &DEC_GeometryFunctions::ComputeAgentsBarycenter;
+    brain[ "DEC_Geometrie_PositionTranslate" ] = &DEC_GeometryFunctions::TranslatePosition;
+    brain[ "DEC_Geometrie_PositionTranslateDir" ] = &DEC_GeometryFunctions::TranslatePositionInDirection;
+    brain[ "DEC_Geometrie_PositionsEgales" ] = &DEC_GeometryFunctions::ComparePositions;
+    brain[ "DEC_Geometrie_Distance" ] = &DEC_GeometryFunctions::Distance;//@TODO MGD Replace by ComputeDistance on shared_ptr
+    brain[ "DEC_Geometrie_ConvertirPointEnLocalisation" ] = &DEC_GeometryFunctions::ConvertPointToLocalisation;
+    brain[ "DEC_Geometrie_EstPointDansLocalisation" ] = &DEC_GeometryFunctions::IsPointInsideLocalisation;
+    brain[ "DEC_Geometrie_CreerLocalisation" ] = &DEC_GeometryFunctions::CreateLocalisation;
+    brain[ "DEC_Geometrie_CreerListePoints" ] = &DEC_GeometryFunctions::CreateListPoint;
+    brain[ "DEC_Geometrie_CreerPoint" ] = &DEC_GeometryFunctions::CreatePoint;
+	brain[ "DEC_Geometrie_CopiePoint" ] = &DEC_GeometryFunctions::CopyPoint;
+    brain[ "DEC_Geometrie_CreerDirection" ] = &DEC_GeometryFunctions::CreateDirection;
+    brain[ "DEC_Geometrie_CreerDirectionPerpendiculaire" ] = &DEC_GeometryFunctions::CreateOrthoDirection;
+    brain[ "DEC_Geometrie_InverseDirection" ] = &DEC_GeometryFunctions::ReverseDirection;
+    brain[ "DEC_Geometrie_CopieEtInverseDirection" ] = &DEC_GeometryFunctions::CopyAndReverseDirection;
+    brain[ "DEC_Geometrie_CopieEtRotateDirection" ] = &DEC_GeometryFunctions::CopyAndRotateDirection;
+    brain[ "DEC_Geometrie_CalculerDistanceLigneMoyenne" ] = &DEC_GeometryFunctions::ComputeDistanceFromMiddleLine;
+    brain[ "DEC_Geometrie_CalculerBarycentreLocalisation" ] = &DEC_GeometryFunctions::ComputeLocalisationBarycenter;
+    brain[ "DEC_Geometrie_DirectionMoyenne" ] = &DEC_GeometryFunctions::ComputeMeanDirection;
+    brain[ "DEC_Geometrie_PositionAleatoireSurCercle" ] = &DEC_GeometryFunctions::ComputeRandomPointOnCircle;
+    brain[ "DEC_Geometrie_PositionAleatoireDansCercle" ] = &DEC_GeometryFunctions::ComputeRandomPointInCircle;
+    brain[ "DEC_Geometrie_CreerLocalisationCercle" ] = &DEC_GeometryFunctions::CreateCircleLocalisation;
+    brain[ "DEC_Geometrie_PionEstCoordonne" ] = &DEC_GeometryFunctions::ListUncoordinatedPawns;
+    brain[ "DEC_Geometrie_PourcentageTerrainCompartimente" ] = &DEC_GeometryFunctions::ComputeClosedTerrainRatioInFuseau;
+    brain[ "DEC_Geometrie_PourcentageTerrainOuvert" ] = &DEC_GeometryFunctions::ComputeOpenTerrainRatioInFuseau;
+    brain[ "DEC_Geometrie_TrierZonesSelonOuvertureTerrain" ] = &DEC_GeometryFunctions::SortZonesAccordingToTerrainOpening;
+    brain[ "DEC_Geometrie_PourcentageZoneTerrainCompartimente" ] = &DEC_GeometryFunctions::ComputeClosedTerrainRatioInZone;
+    brain[ "DEC_Geometrie_PourcentageZoneTerrainOuvert" ] = &DEC_GeometryFunctions::ComputeOpenTerrainRatioInZone;
+    brain[ "DEC_Geometrie_TrierFuseauxSelonOuvertureTerrain" ] = &DEC_GeometryFunctions::SortFuseauxAccordingToTerrainOpening;
+    brain[ "DEC_Geometrie_ConvertirFuseauEnLocalisation" ] = &DEC_GeometryFunctions::ConvertFuseauToLocalisation;
+    brain[ "DEC_Geometrie_ProchainObjectifDansFuseau" ] = &DEC_GeometryFunctions::GetNextObjectiveInFuseau;
+    brain[ "DEC_Geometrie_DistanceBetweenPoints" ] = &DEC_GeometryFunctions::ComputeDistance;
+    brain[ "DEC_Geometrie_AreaSize" ] = &DEC_GeometryFunctions::ComputeAreaSize;
 }
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterAreaFunctions
 // Created: SLI 2010-07-09
 // -----------------------------------------------------------------------------
-void RegisterAreaFunctions( directia::Brain& brain )
+void RegisterAreaFunctions( directia::brain::Brain& brain )
 {
-    brain.RegisterFunction( "DEC_BMArea_Barycenter", &DEC_GeometryFunctions::ComputeBarycenter );
+    brain[ "DEC_BMArea_Barycenter" ] = &DEC_GeometryFunctions::ComputeBarycenter;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterTimeManagementFunctions
 // Created: SLI 2010-07-09
 // -----------------------------------------------------------------------------
-void RegisterTimeManagementFunctions( directia::Brain& brain )
+void RegisterTimeManagementFunctions( directia::brain::Brain& brain )
 {
     // $$$$ AGE 2007-10-11: Un seul temps
-    brain.RegisterFunction( "DEC_TempsSim",  &DEC_DIAFunctions::GetSimTime );
-    brain.RegisterFunction( "DEC_TempsReel", &DEC_DIAFunctions::GetRealTime );
-    brain.RegisterFunction( "DEC_Nuit",      &DEC_DIAFunctions::IsNight );
+    brain[ "DEC_TempsSim" ] = &DEC_DIAFunctions::GetSimTime;
+    brain[ "DEC_TempsReel" ] = &DEC_DIAFunctions::GetRealTime;
+    brain[ "DEC_Nuit" ] = &DEC_DIAFunctions::IsNight;
 }
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterParametersCopyFunctions
 // Created: SLI 2010-07-09
 // -----------------------------------------------------------------------------
-void RegisterParametersCopyFunctions( directia::Brain& brain )
+void RegisterParametersCopyFunctions( directia::brain::Brain& brain )
 {
-    brain.RegisterFunction( "DEC_Copie_Point",                                      &DEC_DIAFunctions::CopyPoint );
-    brain.RegisterFunction( "DEC_Copie_Point_Mission",                              &DEC_DIAFunctions::CopyPointMission );
-    brain.RegisterFunction( "DEC_Copie_ListePoints_Mission",                        &DEC_DIAFunctions::CopyPathMission );
-    brain.RegisterFunction( "DEC_Copie_PointDansListePoints_Mission",               &DEC_DIAFunctions::CopyPointToListPointMission );
-    brain.RegisterFunction( "DEC_Copie_Localisation",                               &DEC_DIAFunctions::CopyLocalisation );
-    brain.RegisterFunction( "DEC_Copie_Localisation_Mission",                       &DEC_DIAFunctions::CopyLocalisationMission );
-    brain.RegisterFunction( "DEC_Copie_ListeLocalisations_Mission",                 &DEC_DIAFunctions::CopyLocalisationListMission );
-    brain.RegisterFunction( "DEC_Copie_LocalisationDansListeLocalisations_Mission", &DEC_DIAFunctions::CopyLocalisationToLocationListMission );
-    brain.RegisterFunction( "DEC_UserTypeList_PushBack_Mission",                    &DEC_DIAFunctions::CopyKnowledgeObjectToKnowledgeObjectListMission );
-    brain.RegisterFunction( "DEC_GenObjectList_PushBack_Mission",                   &DEC_DIAFunctions::CopyGenObjectToGenObjectListMission );
+    brain[ "DEC_Copie_Point" ] = &DEC_DIAFunctions::CopyPoint;
+    brain[ "DEC_Copie_Point_Mission" ] = &DEC_DIAFunctions::CopyPointMission;
+    brain[ "DEC_Copie_ListePoints_Mission" ] = &DEC_DIAFunctions::CopyPathMission;
+    brain[ "DEC_Copie_PointDansListePoints_Mission" ] = &DEC_DIAFunctions::CopyPointToListPointMission;
+    brain[ "DEC_Copie_Localisation" ] = &DEC_DIAFunctions::CopyLocalisation;
+    brain[ "DEC_Copie_Localisation_Mission" ] = &DEC_DIAFunctions::CopyLocalisationMission;
+    brain[ "DEC_Copie_ListeLocalisations_Mission" ] = &DEC_DIAFunctions::CopyLocalisationListMission;
+    brain[ "DEC_Copie_LocalisationDansListeLocalisations_Mission" ] = &DEC_DIAFunctions::CopyLocalisationToLocationListMission;
+    brain[ "DEC_UserTypeList_PushBack_Mission" ] = &DEC_DIAFunctions::CopyKnowledgeObjectToKnowledgeObjectListMission;
+    brain[ "DEC_GenObjectList_PushBack_Mission" ] = &DEC_DIAFunctions::CopyGenObjectToGenObjectListMission;
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterListsManipulationFunctions
 // Created: SLI 2010-07-09
 // -----------------------------------------------------------------------------
-void RegisterListsManipulationFunctions( directia::Brain& brain )
+void RegisterListsManipulationFunctions( directia::brain::Brain& brain )
 {
-    brain.RegisterFunction( "DEC_ListePoints_GetAt", &DEC_DIAFunctions::ListPoint_GetAt );
-    brain.RegisterFunction( "DEC_ListePoints_Size",  &DEC_DIAFunctions::ListPoint_Size );
+    brain[ "DEC_ListePoints_GetAt" ] = &DEC_DIAFunctions::ListPoint_GetAt;
+    brain[ "DEC_ListePoints_Size" ] = &DEC_DIAFunctions::ListPoint_Size;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterLogisticFunctions
 // Created: SLI 2010-07-09
 // -----------------------------------------------------------------------------
-void RegisterLogisticFunctions( directia::Brain& brain )
+void RegisterLogisticFunctions( directia::brain::Brain& brain )
 {
-    brain.RegisterFunction( "DEC_NecessiteEvacuationBlesses",            &DEC_LogisticFunctions::HasWoundedHumansToEvacuate );
-    brain.RegisterFunction( "DEC_EvacuerBlessesVersTC2",                 &DEC_LogisticFunctions::EvacuateWoundedHumansToTC2 );
-    brain.RegisterFunction( "DEC_InterdireEvacuationAutomatiqueBlesses", &DEC_LogisticFunctions::ForbidWoundedHumansAutoEvacuation );
-    brain.RegisterFunction( "DEC_AutoriserEvacuationAutomatiqueBlesses", &DEC_LogisticFunctions::AllowWoundedHumansAutoEvacuation );
+    brain[ "DEC_NecessiteEvacuationBlesses" ] = &DEC_LogisticFunctions::HasWoundedHumansToEvacuate;
+    brain[ "DEC_EvacuerBlessesVersTC2" ] = &DEC_LogisticFunctions::EvacuateWoundedHumansToTC2;
+    brain[ "DEC_InterdireEvacuationAutomatiqueBlesses" ] = &DEC_LogisticFunctions::ForbidWoundedHumansAutoEvacuation;
+    brain[ "DEC_AutoriserEvacuationAutomatiqueBlesses" ] = &DEC_LogisticFunctions::AllowWoundedHumansAutoEvacuation;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterEngineerObjectsFunctions
 // Created: SLI 2010-07-09
 // -----------------------------------------------------------------------------
-void RegisterEngineerObjectsFunctions( directia::Brain& brain )
+void RegisterEngineerObjectsFunctions( directia::brain::Brain& brain )
 {
-    brain.RegisterFunction( "DEC_GenObject_Type",                  &DEC_ObjectFunctions::GetGenObjectType );
-    brain.RegisterFunction( "DEC_GenObject_Localisation",          &DEC_ObjectFunctions::GetGenObjectLocalisation );
-    brain.RegisterFunction( "DEC_GenObject_Densite",               &DEC_Gen_Object::GetDensity );
-    brain.RegisterFunction( "DEC_GenObject_TypeObstacleManoeuvre", &DEC_ObjectFunctions::GetGenObjectReservedObstacle );
-    brain.RegisterFunction( "DEC_GenObject_TC2",                   &DEC_ObjectFunctions::GetGenObjectTC2 );
-    brain.RegisterFunction( "DEC_GenObject_DelaiActiviteMines",    &DEC_Gen_Object::GetMinesActivityTime );
+    brain[ "DEC_GenObject_Type" ] = &DEC_ObjectFunctions::GetGenObjectType;
+    brain[ "DEC_GenObject_Localisation" ] = &DEC_ObjectFunctions::GetGenObjectLocalisation;
+    brain.Register( "DEC_GenObject_Densite",               &DEC_Gen_Object::GetDensity );
+    brain[ "DEC_GenObject_TypeObstacleManoeuvre" ] = &DEC_ObjectFunctions::GetGenObjectReservedObstacle;
+    brain[ "DEC_GenObject_TC2" ] = &DEC_ObjectFunctions::GetGenObjectTC2;
+    brain.Register( "DEC_GenObject_DelaiActiviteMines",    &DEC_Gen_Object::GetMinesActivityTime );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterObjectsFunctions
 // Created: SLI 2010-07-09
 // -----------------------------------------------------------------------------
-void RegisterObjectsFunctions( directia::Brain& brain )
+void RegisterObjectsFunctions( directia::brain::Brain& brain )
 {
-    brain.RegisterFunction( "S_TypeObject_ToString", &DEC_ObjectFunctions::ConvertTypeObjectToString );
+    brain[ "S_TypeObject_ToString" ] = &DEC_ObjectFunctions::ConvertTypeObjectToString;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterObjectivesFunctions
 // Created: SLI 2010-07-09
 // -----------------------------------------------------------------------------
-void RegisterObjectivesFunctions( directia::Brain& brain )
+void RegisterObjectivesFunctions( directia::brain::Brain& brain )
 {
-    brain.RegisterFunction( "DEC_Objectif_Localisation", &DEC_Objective::GetLocalisation );
-    brain.RegisterFunction( "DEC_Objectif_Flag",         &DEC_Objective::Flag );
+    brain.Register( "DEC_Objectif_Localisation", &DEC_Objective::GetLocalisation );
+    brain.Register( "DEC_Objectif_Flag",         &DEC_Objective::Flag );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterSpecificPointsFunctions
 // Created: SLI 2010-07-09
 // -----------------------------------------------------------------------------
-void RegisterSpecificPointsFunctions( directia::Brain& brain )
+void RegisterSpecificPointsFunctions( directia::brain::Brain& brain )
 {
-    brain.RegisterFunction( "DEC_GetRepPoint",      &DEC_PathFunctions::GetRepPoint );
-    brain.RegisterFunction( "DEC_IsAvantPoint",     &DEC_PathFunctions::IsAvantPoint );
-    brain.RegisterFunction( "DEC_IsPoint",          &DEC_PathFunctions::IsPoint );
-    brain.RegisterFunction( "DEC_GetTypePoint",     &DEC_PathFunctions::GetTypePoint );
-    brain.RegisterFunction( "DEC_GetDestPoint",     &DEC_PathFunctions::GetDestPoint );
-    brain.RegisterFunction( "DEC_GetTypeLimaPoint", &DEC_PathFunctions::GetTypeLimaPoint );
-    brain.RegisterFunction( "DEC_GetLimaPoint",     &DEC_PathFunctions::GetLimaPoint );
+    //Rep_Points
+    brain[ "DEC_GetRepPoint" ] = &DEC_PathFunctions::GetRepPoint;
+    brain[ "DEC_IsAvantPoint" ] = &DEC_PathFunctions::IsAvantPoint;
+    brain[ "DEC_IsPoint" ] = &DEC_PathFunctions::IsPoint;
+    brain[ "DEC_GetTypePoint" ] = &DEC_PathFunctions::GetTypePoint;
+    brain[ "DEC_GetDestPoint" ] = &DEC_PathFunctions::GetDestPoint;
+    brain[ "DEC_GetTypeLimaPoint" ] = &DEC_PathFunctions::GetTypeLimaPoint;
+    brain[ "DEC_GetLimaPoint" ] = &DEC_PathFunctions::GetLimaPoint;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterTypeFunctions
 // Created: SLI 2010-07-09
 // -----------------------------------------------------------------------------
-void RegisterTypeFunctions( directia::Brain& brain )
+void RegisterTypeFunctions( directia::brain::Brain& brain )
 {
-    brain.RegisterFunction( "GetType", &MIL_Mission_ABC::GetDIAType );
-    brain.RegisterFunction( "GetType", &DEC_Decision_ABC::GetDIAType );
-    brain.RegisterFunction( "GetType", &DEC_RolePion_Decision::GetDIAType );
-    brain.RegisterFunction( "GetType", &DEC_AutomateDecision::GetDIAType );
-    brain.RegisterFunction( "GetType", &DEC_PathPoint::GetDIAType );
+    brain.Register( "GetType", &MIL_Mission_ABC::GetDIAType );
+    brain.Register( "GetType", &DEC_Decision_ABC::GetDIAType );
+    brain.Register( "GetType", &DEC_RolePion_Decision::GetDIAType );
+    brain.Register( "GetType", &DEC_AutomateDecision::GetDIAType );
+    brain.Register( "GetType", &DEC_PathPoint::GetDIAType );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterMissionParametersFunctions
 // Created: SLI 2010-07-09
 // -----------------------------------------------------------------------------
-void RegisterMissionParametersFunctions( directia::Brain& brain )
+void RegisterMissionParametersFunctions( directia::brain::Brain& brain )
 {
-    brain.RegisterFunction( "DEC_AssignMissionPionParameter",                &MIL_MissionParameterFactory::SetPawnParameter );
-    brain.RegisterFunction( "DEC_AssignMissionAutomatParameter",             &MIL_MissionParameterFactory::SetAutomatParameter );
-    brain.RegisterFunction( "DEC_AssignMissionBoolParameter",                &MIL_MissionParameterFactory::SetBoolParameter );
-    brain.RegisterFunction( "DEC_AssignMissionObjectKnowledgeParameter",     &MIL_MissionParameterFactory::SetObjectKnowledgeParameter );
-    brain.RegisterFunction( "DEC_AssignMissionNatureAtlasTypeParameter",     &MIL_MissionParameterFactory::SetNatureAtlasTypeParameter );
-    brain.RegisterFunction( "DEC_AssignMissionAutomatListParameter",         &MIL_MissionParameterFactory::SetAutomatListParameter );
-    brain.RegisterFunction( "DEC_AssignMissionAgentKnowledgeParameter",      &MIL_MissionParameterFactory::SetAgentKnowledgeParameter );
-    brain.RegisterFunction( "DEC_AssignMissionPathListParameter",            &MIL_MissionParameterFactory::SetPathListParameter );
-    brain.RegisterFunction( "DEC_AssignMissionEnumereParameter",             &MIL_MissionParameterFactory::SetEnumereParameter );
-    brain.RegisterFunction( "DEC_AssignMissionLocationParameter",            &MIL_MissionParameterFactory::SetLocationParameter );
-    brain.RegisterFunction( "DEC_AssignMissionObjectKnowledgeListParameter", &MIL_MissionParameterFactory::SetObjectKnowledgeListParameter );
-    brain.RegisterFunction( "DEC_AssignMissionPointParameter",               &MIL_MissionParameterFactory::SetPointParameter );
-    brain.RegisterFunction( "DEC_AssignMissionAgentKnowledgeListParameter",  &MIL_MissionParameterFactory::SetAgentKnowledgeListParameter );
-    brain.RegisterFunction( "DEC_AssignMissionGenObjectListParameter",       &MIL_MissionParameterFactory::SetGenObjectListParameter );
-    brain.RegisterFunction( "DEC_AssignMissionPionListParameter",            &MIL_MissionParameterFactory::SetPionListParameter );
-    brain.RegisterFunction( "DEC_AssignMissionLocationListParameter",        &MIL_MissionParameterFactory::SetLocationListParameter );
-    brain.RegisterFunction( "DEC_AssignMissionPointListParameter",           &MIL_MissionParameterFactory::SetPointListParameter );
-    brain.RegisterFunction( "DEC_AssignMissionUrbanBlockParameter",          &MIL_MissionParameterFactory::SetUrbanBlockParameter );
-    brain.RegisterFunction( "DEC_AssignMissionDirectionParameter",           &MIL_MissionParameterFactory::SetDirectionParameter );
-    brain.RegisterFunction( "DEC_AssignMissionDotationTypeParameter",        &MIL_MissionParameterFactory::SetDotationTypeParameter );
-    brain.RegisterFunction( "DEC_AssignMissionNumericTypeParameter",         &MIL_MissionParameterFactory::SetNumericTypeParameter );
+    brain[ "DEC_AssignMissionPionParameter" ] = &MIL_MissionParameterFactory::SetPawnParameter;
+    brain[ "DEC_AssignMissionAutomatParameter" ] = &MIL_MissionParameterFactory::SetAutomatParameter;
+    brain[ "DEC_AssignMissionBoolParameter" ] = &MIL_MissionParameterFactory::SetBoolParameter;
+    brain[ "DEC_AssignMissionObjectKnowledgeParameter" ] = &MIL_MissionParameterFactory::SetObjectKnowledgeParameter;
+    brain[ "DEC_AssignMissionNatureAtlasTypeParameter" ] = &MIL_MissionParameterFactory::SetNatureAtlasTypeParameter;
+    brain[ "DEC_AssignMissionAutomatListParameter" ] = &MIL_MissionParameterFactory::SetAutomatListParameter;
+    brain[ "DEC_AssignMissionAgentKnowledgeParameter" ] = &MIL_MissionParameterFactory::SetAgentKnowledgeParameter;
+    brain[ "DEC_AssignMissionPathListParameter" ] = &MIL_MissionParameterFactory::SetPathListParameter;
+    brain[ "DEC_AssignMissionEnumereParameter" ] = &MIL_MissionParameterFactory::SetEnumereParameter;
+    brain[ "DEC_AssignMissionLocationParameter" ] = &MIL_MissionParameterFactory::SetLocationParameter;
+    brain[ "DEC_AssignMissionObjectKnowledgeListParameter" ] = &MIL_MissionParameterFactory::SetObjectKnowledgeListParameter;
+    brain[ "DEC_AssignMissionPointParameter" ] = &MIL_MissionParameterFactory::SetPointParameter;
+    brain[ "DEC_AssignMissionAgentKnowledgeListParameter" ] = &MIL_MissionParameterFactory::SetAgentKnowledgeListParameter;
+    brain[ "DEC_AssignMissionGenObjectListParameter" ] = &MIL_MissionParameterFactory::SetGenObjectListParameter;
+    brain[ "DEC_AssignMissionPionListParameter" ] = &MIL_MissionParameterFactory::SetPionListParameter;
+    brain[ "DEC_AssignMissionLocationListParameter" ] = &MIL_MissionParameterFactory::SetLocationListParameter;
+    brain[ "DEC_AssignMissionPointListParameter" ] = &MIL_MissionParameterFactory::SetPointListParameter;
+    brain[ "DEC_AssignMissionUrbanBlockParameter" ] = &MIL_MissionParameterFactory::SetUrbanBlockParameter;
+    brain[ "DEC_AssignMissionDirectionParameter" ] = &MIL_MissionParameterFactory::SetDirectionParameter;
 
-    directia::ScriptRef initParameterFunction = brain.GetScriptFunction( "InitTaskParameter" );
-    brain.RegisterFunction( "DEC_FillMissionParameters",
-        boost::function< void( const directia::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref( brain ), initParameterFunction, _1 , _2 ) ) );
+    directia::tools::binders::ScriptRef initParameterFunction = brain[ "InitTaskParameter" ];
+    brain[ "DEC_FillMissionParameters" ] =
+        boost::function< void( const directia::tools::binders::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref(brain), initParameterFunction, _1 , _2 ) );
 }
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterDebugFunctions
 // Created: SLI 2010-07-09
 // -----------------------------------------------------------------------------
-void RegisterDebugFunctions( directia::Brain& brain, unsigned int id )
+void RegisterDebugFunctions( directia::brain::Brain& brain, unsigned int id )
 {
-    brain.RegisterFunction( "DEC_PointToString",      &DEC_DIAFunctions::PointToString );
-    brain.RegisterFunction( "DEC_DirectionToString",  &DEC_DIAFunctions::DirectionToString );
-    brain.RegisterFunction( "DEC_ItineraireToString", &DEC_DIAFunctions::PathToString );
-    brain.RegisterFunction( "BreakForDebug",
-        boost::function< void( const std::string& ) >( boost::bind( &DEC_DIAFunctions::BreakForDebug, id ,_1 ) ) );
+    brain[ "DEC_PointToString" ] = &DEC_DIAFunctions::PointToString;
+    brain[ "DEC_DirectionToString" ] =  &DEC_DIAFunctions::DirectionToString ;
+    brain[ "DEC_ItineraireToString" ] = &DEC_DIAFunctions::PathToString ;
+    brain[ "BreakForDebug" ] =
+        boost::function< void( const std::string& ) >( boost::bind( &DEC_DIAFunctions::BreakForDebug, id ,_1 ) ) ;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterTelepathyFunctions
 // Created: SLI 2010-07-09
 // -----------------------------------------------------------------------------
-void RegisterTelepathyFunctions( directia::Brain& brain )
+void RegisterTelepathyFunctions( directia::brain::Brain& brain )
 {
-    brain.RegisterFunction( "SetStateVariable", &DEC_Decision_ABC::SetStateVariable );
-    brain.RegisterFunction( "SetambianceMission_", &DEC_Decision_ABC::SetAmbianceMission );
-    brain.RegisterFunction( "SetbAppuieFreinage_", &DEC_Decision_ABC::SetAppuieFreinage );
-    brain.RegisterFunction( "GetbDemandeOrdreConduitePoursuivre_", &DEC_Decision_ABC::GetDemandeOrdreConduitePoursuivre );
-    brain.RegisterFunction( "GetbEnCoursExtractionPersonnel_", &DEC_Decision_ABC::GetEnCoursExtractionPersonnel );
-    brain.RegisterFunction( "GetbEnExploitation_", &DEC_Decision_ABC::GetEnExploitation );
-    brain.RegisterFunction( "SetbEnExploitation_", &DEC_Decision_ABC::SetbEnExploitation );
-    brain.RegisterFunction( "GetbEnPhaseRavitaillement_", &DEC_Decision_ABC::GetEnPhaseRavitaillement );
-    brain.RegisterFunction( "SetbEnPhaseRavitaillement_", &DEC_Decision_ABC::SetEnPhaseRavitaillement );
-    brain.RegisterFunction( "GetbMiseEnOeuvre_", &DEC_Decision_ABC::GetMiseEnOeuvre );
-    brain.RegisterFunction( "SetbMiseEnOeuvre_", &DEC_Decision_ABC::SetMiseEnOeuvre );
-    brain.RegisterFunction( "GeteEtatFeu_", &DEC_Decision_ABC::GetEtatFeu );
-    brain.RegisterFunction( "GetlisteEnisTirAutorise_", &DEC_Decision_ABC::GetListeEnisTirAutorise );
-    brain.RegisterFunction( "SetlisteEnisTirAutorise_", &DEC_Decision_ABC::SetListeEnisTirAutorise );
-    brain.RegisterFunction( "ClearlisteEnisTirAutorise_", &DEC_Decision_ABC::ClearListeEnisTirAutorise );
-    brain.RegisterFunction( "GetlistePionsCoordination_", &DEC_Decision_ABC::GetListePionsCoordination );
-    brain.RegisterFunction( "ClearlistePionsCoordination_", &DEC_Decision_ABC::ClearListePionsCoordination );
-    brain.RegisterFunction( "GetobjMisEnCours_", &DEC_Decision_ABC::GetObjMisEnCours );
-    brain.RegisterFunction( "SetobjMisEnCours_", &DEC_Decision_ABC::SetObjMisEnCours );
-    brain.RegisterFunction( "GetobjectifCourant_", &DEC_Decision_ABC::GetObjectifCourant );
-    brain.RegisterFunction( "GetplotRavitaillementAssigne_", &DEC_Decision_ABC::GetPlotRavitaillementAssigne );
-    brain.RegisterFunction( "SetplotRavitaillementAssigne_", &DEC_Decision_ABC::SetPlotRavitaillementAssigne );
-    brain.RegisterFunction( "ClearplotsRavitaillement_", &DEC_Decision_ABC::ClearPlotsRavitaillement );
-    brain.RegisterFunction( "GetporteeAction_", &DEC_Decision_ABC::GetPorteeAction );
-    brain.RegisterFunction( "SetporteeAction_", &DEC_Decision_ABC::SetPorteeAction );
-    brain.RegisterFunction( "GetrNiveauAlerteRavitaillement_", &DEC_Decision_ABC::GetNiveauAlerteRavitaillement );
-    brain.RegisterFunction( "Getpoint_", &DEC_PathPoint::GetPos );
+    brain.Register( "SetStateVariable", &DEC_Decision_ABC::SetStateVariable );
+    brain.Register( "SetambianceMission_", &DEC_Decision_ABC::SetAmbianceMission );
+    brain.Register( "SetbAppuieFreinage_", &DEC_Decision_ABC::SetAppuieFreinage );
+    brain.Register( "GetbDemandeOrdreConduitePoursuivre_", &DEC_Decision_ABC::GetDemandeOrdreConduitePoursuivre );
+    brain.Register( "GetbEnCoursExtractionPersonnel_", &DEC_Decision_ABC::GetEnCoursExtractionPersonnel );
+    brain.Register( "GetbEnExploitation_", &DEC_Decision_ABC::GetEnExploitation );
+    brain.Register( "SetbEnExploitation_", &DEC_Decision_ABC::SetbEnExploitation );
+    brain.Register( "GetbEnPhaseRavitaillement_", &DEC_Decision_ABC::GetEnPhaseRavitaillement );
+    brain.Register( "SetbEnPhaseRavitaillement_", &DEC_Decision_ABC::SetEnPhaseRavitaillement );
+    brain.Register( "GetbMiseEnOeuvre_", &DEC_Decision_ABC::GetMiseEnOeuvre );
+    brain.Register( "SetbMiseEnOeuvre_", &DEC_Decision_ABC::SetMiseEnOeuvre );
+    brain.Register( "GeteEtatFeu_", &DEC_Decision_ABC::GetEtatFeu );
+    brain.Register( "GetlisteEnisTirAutorise_", &DEC_Decision_ABC::GetListeEnisTirAutorise );
+    brain.Register( "SetlisteEnisTirAutorise_", &DEC_Decision_ABC::SetListeEnisTirAutorise );
+    brain.Register( "ClearlisteEnisTirAutorise_", &DEC_Decision_ABC::ClearListeEnisTirAutorise );
+    brain.Register( "GetlistePionsCoordination_", &DEC_Decision_ABC::GetListePionsCoordination );
+    brain.Register( "ClearlistePionsCoordination_", &DEC_Decision_ABC::ClearListePionsCoordination );
+    brain.Register( "GetobjMisEnCours_", &DEC_Decision_ABC::GetObjMisEnCours );
+    brain.Register( "SetobjMisEnCours_", &DEC_Decision_ABC::SetObjMisEnCours );
+    brain.Register( "GetobjectifCourant_", &DEC_Decision_ABC::GetObjectifCourant );
+    brain.Register( "GetplotRavitaillementAssigne_", &DEC_Decision_ABC::GetPlotRavitaillementAssigne );
+    brain.Register( "SetplotRavitaillementAssigne_", &DEC_Decision_ABC::SetPlotRavitaillementAssigne );
+    brain.Register( "ClearplotsRavitaillement_", &DEC_Decision_ABC::ClearPlotsRavitaillement );
+    brain.Register( "GetporteeAction_", &DEC_Decision_ABC::GetPorteeAction );
+    brain.Register( "SetporteeAction_", &DEC_Decision_ABC::SetPorteeAction );
+    brain.Register( "GetrNiveauAlerteRavitaillement_", &DEC_Decision_ABC::GetNiveauAlerteRavitaillement );
+    brain.Register( "Getpoint_", &DEC_PathPoint::GetPos );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterItineraryFunctions
 // Created: SLI 2010-07-09
 // -----------------------------------------------------------------------------
-void RegisterItineraryFunctions( directia::Brain& brain )
+void RegisterItineraryFunctions( directia::brain::Brain& brain )
 {
-    brain.RegisterFunction( "DEC_Itineraire_DernierPoint", &DEC_Decision_ABC::GetLastPointOfPath );
-    brain.RegisterFunction( "DEC_Itineraire_ExtrapolerPosition" , &DEC_Decision_ABC::ExtrapolatePosition );
+    brain.Register( "DEC_Itineraire_DernierPoint", &DEC_Decision_ABC::GetLastPointOfPath );
+    brain.Register( "DEC_Itineraire_ExtrapolerPosition", &DEC_Decision_ABC::ExtrapolatePosition );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterCommonUserFunctions
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id )
+void RegisterCommonUserFunctions( directia::brain::Brain& brain/*, unsigned int id*/ )
 {
     RegisterGeometryFunctions( brain );
     RegisterAreaFunctions( brain );
@@ -326,390 +328,391 @@ void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id )
     RegisterSpecificPointsFunctions( brain );
     RegisterTypeFunctions( brain );
     RegisterMissionParametersFunctions( brain );
-    RegisterDebugFunctions( brain, id );
+    //RegisterDebugFunctions( brain, id );
     RegisterTelepathyFunctions( brain );
     RegisterItineraryFunctions( brain );
     DEC_TelepathyFunctions::Register( brain );
     MIL_FragOrder::Register( brain );
 }
 
-typedef void ( *T_Function )( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element );
-typedef bool ( *T_FunctionBM )( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element );
+typedef void (*T_Function)( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element );
+typedef bool (*T_FunctionBM)( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element );
 
-void BoolFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void BoolFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     bool value;
     if( element.ToBool( value ) )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-void EnumerationFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void EnumerationFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     int value;
     if( element.ToId( value ) )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-void PointFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void PointFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     boost::shared_ptr< MT_Vector2D > value;
     if( element.ToPoint( value ) && value.get() )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-void PointListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void PointListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > value;
     if( element.ToPointList( value ) )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-bool PointFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool PointFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     boost::shared_ptr< MT_Vector2D > value;
     if( element.ToPoint( value ) && value.get() )
     {
-        knowledgeCreateFunction( refMission,  brain.GetScriptVariable( "net.masagroup.sword.military.world.Point" ) , name, value, false );
+        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Point" ] , name, value, false );     
         return true;
     }
     return false;
 }
-bool PointListFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+
+bool PointListFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > value;
     if( element.ToPointList( value ) )
     {
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Point" ), name, value, true );
-    return true;
+        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Point" ], name, value, true );
+        return true;
     }
     return false;
 }
-void PolygonFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void PolygonFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     boost::shared_ptr< TER_Localisation > value;
     if( element.ToPolygon( value ) && value.get() )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-void PolygonListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void PolygonListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< TER_Localisation > > value;
     if( element.ToPolygonList( value ) )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-bool AreaFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool AreaFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     boost::shared_ptr< TER_Localisation > value;
     if( element.ToPolygon( value ) && value.get() )
     {
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Area" ), name, value, false );
-    return true;
+        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Area" ], name, value, false );
+	    return true;
     }
     return false;
 }
-bool AreaListFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool AreaListFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< TER_Localisation > > value;
     if( element.ToPolygonList( value ) )
     {
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Area" ), name, value, true );
-    return true;
+        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Area" ], name, value, true );
+	    return true;
     }
     return false;
 }
-void LocationFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void LocationFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     boost::shared_ptr< TER_Localisation > value;
     if( element.ToLocation( value ) && value.get() )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-void LocationListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void LocationListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< TER_Localisation > > value;
     if( element.ToLocationList( value ) )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-void PathFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void PathFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > value;
     if( element.ToPath( value ) && !value.empty() )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-void PathListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void PathListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > > value;
     if( element.ToPathList( value ) && !value.empty() )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-bool PathFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool PathFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > value;
     if( element.ToPath( value ) && !value.empty() )
     {
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Point" ), name, value, true );
-    return true;
+        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Point" ], name, value, true );       
+	    return true;
     }
     return false;
 }
-void DirectionFunction( const directia::ScriptRef& /*refMission*/, const std::string& /*name*/, MIL_MissionParameter_ABC& /*element*/ )
+void DirectionFunction( const directia::tools::binders::ScriptRef& /*refMission*/, const std::string& /*name*/, MIL_MissionParameter_ABC& /*element*/ )
 {
     // $$$$ LDC: FIXME The only existing Direction argument is dangerDirection_ which is never used by the brains.
 }
-bool DirectionFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool DirectionFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     boost::shared_ptr< MT_Vector2D > value;
     if( element.ToDirection( value ) && value.get() )
     {
-        knowledgeCreateFunction( refMission,  brain.GetScriptVariable( "net.masagroup.sword.military.world.Direction" ) , name, value, false );
-    return true;
+        knowledgeCreateFunction( refMission,  brain[ "net.masagroup.sword.military.world.Direction" ] , name, value, false );     
+	    return true;
     }
     return false;
 }
-void NatureAtlasFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void NatureAtlasFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     int value = 0;
     if( element.ToNatureAtlas( value ) )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-void AutomatFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void AutomatFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     DEC_Decision_ABC* value = 0;
     if( element.ToAutomat( value ) )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-bool AutomatFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool AutomatFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     DEC_Decision_ABC* value = 0;
     if( element.ToAutomat( value ) )
     {
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Company" ), name, value, false );
-    return true;
+        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Company" ], name, value, false );
+	    return true;
     }
     return false;
 }
-void AutomatListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void AutomatListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< DEC_Decision_ABC* > value;
     if( element.ToAutomatList( value ) )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-bool AutomatListFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool AutomatListFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< DEC_Decision_ABC* > value;
     if( element.ToAutomatList( value ) )
     {
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Company" ), name, value, true );
-    return true;
+        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Company" ], name, value, true );
+	    return true;
     }
     return false;
 }
-void AgentFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void AgentFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     DEC_Decision_ABC* value = 0; // $$$$ LDC: Parfois on se sert de champs dessus comme eniEnCours_...
     if( element.ToAgent( value ) )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-bool AgentFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool AgentFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     DEC_Decision_ABC* value = 0; // $$$$ LDC: Parfois on se sert de champs dessus comme eniEnCours_...
     if( element.ToAgent( value ) )
     {
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.PlatoonAlly" ), name, value, false );
-    return true;
+        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.PlatoonAlly" ], name, value, false );
+	    return true;
     }
     return false;
 }
-void AgentListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void AgentListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< DEC_Decision_ABC* > value;
     if( element.ToAgentList( value ) )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-bool AgentListFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool AgentListFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< DEC_Decision_ABC* > value;
     if( element.ToAgentList( value ) )
     {
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.PlatoonAlly" ), name, value, true );
-    return true;
+        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.PlatoonAlly" ], name, value, true );
+	    return true;
     }
     return false;
 }
-void AgentKnowledgeFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void AgentKnowledgeFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     boost::shared_ptr< DEC_Knowledge_Agent > value;
     if( element.ToAgentKnowledge( value ) && value.get() )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-bool AgentKnowledgeFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool AgentKnowledgeFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     boost::shared_ptr< DEC_Knowledge_Agent > value;//@TODO SEE how to bind agent and knowledge agent with the same BM knowledge
     if( element.ToAgentKnowledge( value ) && value.get() )
     {
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Platoon" ), name, value, false );
-    return true;
+        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Platoon" ], name, value, false );
+	    return true;
     }
     return false;
 }
-void AgentKnowledgeListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void AgentKnowledgeListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > value;
     if( element.ToAgentKnowledgeList( value ) )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-bool AgentKnowledgeListFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool AgentKnowledgeListFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > value;
     if( element.ToAgentKnowledgeList( value ) )
     {
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Platoon" ), name, value, true );
-    return true;
+        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Platoon" ], name, value, true );
+	    return true;
     }
     return false;
 }
-void ObjectKnowledgeFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void ObjectKnowledgeFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     boost::shared_ptr< DEC_Knowledge_Object > value;
     if( element.ToObjectKnowledge( value ) && value && value->IsValid() )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-bool ObjectKnowledgeFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool ObjectKnowledgeFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     boost::shared_ptr< DEC_Knowledge_Object > value;
     if( element.ToObjectKnowledge( value ) && value )
     {
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Object" ), name, value, false );
-    return true;
+        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Object" ], name, value, false );
+	    return true;
     }
     return false;
 }
-void ObjectKnowledgeListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void ObjectKnowledgeListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< DEC_Knowledge_Object > > value;
     if( element.ToObjectKnowledgeList( value ) )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-bool ObjectKnowledgeListFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool ObjectKnowledgeListFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< DEC_Knowledge_Object > > value;
     if( element.ToObjectKnowledgeList( value ) )
     {
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Object" ), name, value, true );
-    return true;
+        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Object" ], name, value, true );
+        return true;
     }
     return false;
 }
-void PopulationKnowledgeFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void PopulationKnowledgeFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     DEC_Knowledge_Population* value = 0;//@TODO MGD why not shared_ptr
     if( element.ToPopulationKnowledge( value ) && value )
-        refMission.RegisterObject( name, value->GetID() );
+        refMission[ name ] = value->GetID();
 }
-bool PopulationKnowledgeFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool PopulationKnowledgeFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     DEC_Knowledge_Population* value = 0;
     if( element.ToPopulationKnowledge( value ) && value )
     {
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Population" ), name, value, false );//@TODO MGD Add CompositeReachable for Population?
-    return true;
+        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Population" ], name, value, false );//@TODO MGD Add CompositeReachable for Population?
+         return true;
     }
     return false;
 }
 
-bool UrbanBlockFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool UrbanBlockFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     boost::shared_ptr< DEC_Knowledge_Urban > value;
     if( element.ToUrbanBlock( value ) && value )
     {
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.UrbanBlock" ), name, value, false );
-    return true;
+        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.UrbanBlock" ], name, value, false );  
+        return true;
     }
     return false;
 }
 
-void DotationTypeFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void DotationTypeFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     const PHY_DotationCategory* value = 0;
     if( element.ToDotationType( value ) && value )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-void EquipmentTypeFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void EquipmentTypeFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     const PHY_ComposanteTypePion* value = 0;
     if( element.ToEquipmentType( value ) && value )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-void GDHFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void GDHFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     float value = 0;
     if( element.ToGDH( value ) )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-void NumericFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void NumericFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     float value = 0;
     if( element.ToNumeric( value ) )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-void GenObjectFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void GenObjectFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     boost::shared_ptr< DEC_Gen_Object > value;
     if( element.ToGenObject( value ) && value.get() )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-bool GenObjectFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool GenObjectFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     boost::shared_ptr< DEC_Gen_Object > value;
     if( element.ToGenObject( value ) && value.get() )
     {
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.EngineerObject" ), name, value, true );
-    return true;
+        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.EngineerObject" ], name, value, true );
+        return true;
     }
     return false;
 }
-void GenObjectListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void GenObjectListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< DEC_Gen_Object > > value;
     if( element.ToGenObjectList( value ) )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-bool GenObjectListFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool GenObjectListFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< DEC_Gen_Object > > value;
     if( element.ToGenObjectList( value ) )
     {
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.EngineerObject" ), name, value, true );
-    return true;
+        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.EngineerObject" ], name, value, true );
+        return true;
     }
     return false;
 }
-void MaintenancePrioritiesFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void MaintenancePrioritiesFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< const PHY_ComposanteTypePion* > value;
     if( element.ToMaintenancePriorities( value ) )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value ;
 }
-void MedicalPrioritiesFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void MedicalPrioritiesFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< const PHY_HumanWound* > value;
     if( element.ToMedicalPriorities( value ) )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value ;
 }
-void IndirectFireFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void IndirectFireFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     Common::FireId fire;
     fire.set_id( 0 );
     if( element.ToIndirectFire( fire ) && fire.id() )
-        refMission.RegisterObject( name, fire.id() );
+        refMission[ name ] = fire.id();
 }
-void StringFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void StringFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::string value;
     if( element.ToString( value ) )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-void ObjectiveListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void ObjectiveListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< DEC_Objective > > value;
     if( element.ToObjectiveList( value ) )
-        refMission.RegisterObject( name, value );
+        refMission[ name ] = value;
 }
-bool LocationCompositeFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool LocationCompositeFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     return PointFunctionBM( brain, knowledgeCreateFunction, refMission, name, element )
         || PathFunctionBM( brain, knowledgeCreateFunction, refMission, name, element )
@@ -785,45 +788,105 @@ void InitFunctions()
     }
 }
 
+
 class RegisterMissionParameterVisitor : public MIL_MissionParameterVisitor_ABC
 {
 public:
-    RegisterMissionParameterVisitor( const directia::Brain& brain, const directia::ScriptRef& refMission, directia::ScriptRef& knowledgeCreateFunction )
-        : brain_                  ( brain )
-        , refMission_             ( refMission )
+    RegisterMissionParameterVisitor( directia::brain::Brain& brain, const directia::tools::binders::ScriptRef& refMission, directia::tools::binders::ScriptRef& knowledgeCreateFunction ) 
+        : brain_( brain )
+        , refMission_( refMission )
         , knowledgeCreateFunction_( knowledgeCreateFunction )
-    {
-        // NOTHING
-    }
+    {}
     virtual ~RegisterMissionParameterVisitor()
-    {
-        // NOTHING
-    }
+    {}
 
     virtual void Accept( const std::string& dianame, const MIL_ParameterType_ABC& type, MIL_MissionParameter_ABC& element )
     {
         std::map< std::string, T_Function >::iterator itFind = functors.find( type.GetName() );
         if( itFind != functors.end() )
             functors[ type.GetName() ]( refMission_, dianame, element );
-        else if( !!knowledgeCreateFunction_ )
+        else
             functorsBM[ type.GetName() ]( brain_, knowledgeCreateFunction_, refMission_, dianame, element );
     }
 
 private:
-     const directia::Brain& brain_;
-     const directia::ScriptRef& refMission_;
-     directia::ScriptRef& knowledgeCreateFunction_;
+     directia::brain::Brain& brain_;
+     const directia::tools::binders::ScriptRef& refMission_;
+     directia::tools::binders::ScriptRef& knowledgeCreateFunction_;
 };
 
 // -----------------------------------------------------------------------------
 // Name: RegisterMissionParameters
 // Created: LDC 2009-05-04
 // -----------------------------------------------------------------------------
-void RegisterMissionParameters( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const boost::shared_ptr< MIL_Mission_ABC > mission )
+void RegisterMissionParameters( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
     InitFunctions();
     RegisterMissionParameterVisitor visitor( brain, refMission, knowledgeCreateFunction );
     mission->Visit( visitor );
+}
+
+#ifndef PLATFORM
+#define PLATFORM _vc80
+#endif
+
+#ifndef PLUGIN
+#ifdef NDEBUG
+#define PLUGIN46( plugin ) "'plugin_" + plugin + BOOST_PP_STRINGIZE( PLATFORM ) + "-mt-4_6.plugin',"
+#define PLUGIN( plugin ) "'plugin_" + plugin + BOOST_PP_STRINGIZE( PLATFORM ) + "-mt.plugin',"
+#else
+#define PLUGIN46( plugin ) "'plugin_" + plugin + BOOST_PP_STRINGIZE( PLATFORM ) + "-mt-gd-4_6.plugin',"
+#define PLUGIN( plugin ) "'plugin_" + plugin + BOOST_PP_STRINGIZE( PLATFORM ) + "-mt-gd.plugin',"
+#endif
+#endif
+
+namespace
+{
+    std::map< std::string, boost::shared_ptr< directia::brain::Brain > > brainTable;
+}
+
+bool CreateBrain(boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, boost::shared_ptr< directia::brain::Brain >& pBrain, const std::string& includePath, const std::string& brainFile )
+{
+    pArchetypeBrain = brainTable[brainFile];
+
+    if( !pArchetypeBrain.get() )
+    {
+        std::string plugins;
+        if(brainFile == "BMAutomat.bms" || brainFile == "BMPion.bms")
+        {
+            plugins = std::string( "plugins={" )
+                + PLUGIN( "masalife_brain" )
+                + PLUGIN( "knowledge" )
+                + PLUGIN( "communication" )
+                + PLUGIN( "services" )
+                + PLUGIN( "default_engine" );
+            std::string brainInit = plugins
+                + "} cwd='" + includePath + "'";
+		    pBrain.reset( new directia::brain::Brain( brainInit ) );
+            pArchetypeBrain = pBrain;
+            return true;
+        }
+        else
+        {
+            plugins = std::string( "plugins={" )
+                + PLUGIN46( "eventmanager" )
+                + PLUGIN46( "motivation" );
+        std::string brainInit = plugins
+            + "} cwd='" + includePath + "'";
+        pArchetypeBrain.reset( new directia::brain::Brain( brainInit ) );
+        brainTable[brainFile] = pArchetypeBrain;
+	    pBrain.reset( new directia::brain::Brain( *pArchetypeBrain ) );
+        return true;
+        }
+    }
+    else
+        pBrain.reset( new directia::brain::Brain( *pArchetypeBrain ) );
+    return false;
+}
+
+void IncludeFile( directia::brain::Brain& brain, const std::string& brainFile ,const std::string& includePath,const std::string& type,const std::string& groupName )
+{
+    brain[ "include" ]( brainFile ,includePath, type, groupName );
 }
 
 }

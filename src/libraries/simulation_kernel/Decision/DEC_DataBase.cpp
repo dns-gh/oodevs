@@ -15,16 +15,16 @@
 
 namespace
 {
-    void ReadRepository( xml::xistream& xis, const std::string& path, directia5::Library::T_LibPaths& list )
+    void ReadRepository( xml::xistream& xis, const std::string& path, masalife::brain::library::Library::T_Paths& list )
     {
         std::string repository;
         xis >> repository;
         list.push_back( MIL_Config::BuildChildPath( path, repository ) );
     }
 
-    directia5::Library::T_LibPaths GetLibPaths( xml::xistream& xis, const std::string& strPath )
+    masalife::brain::library::Library::T_Paths GetLibPaths( xml::xistream& xis, const std::string& strPath )
     {
-        directia5::Library::T_LibPaths repositories;
+        masalife::brain::library::Library::T_Paths repositories;
         xis >> xml::start( "RepertoiresBM" )
                 >> xml::list( "Repertoire", boost::bind( &ReadRepository, _1, boost::ref( strPath ), boost::ref( repositories ) ) )
             >> xml::end;
@@ -44,9 +44,9 @@ namespace
 // Created: MGD 2009-08-06
 // -----------------------------------------------------------------------------
 DEC_DataBase::DEC_DataBase( xml::xistream& xis, const std::string& strPath )
-    : directia5::Library( GetLibPaths( xis, strPath ) )
+//    : masalife::brain::library::Library( GetLibPaths( xis, strPath ), std::vector< std::string >() )
 {
-    //@TODO MGD Change to aggregation for directia5::Library
+    //@TODO MGD Change to aggregation for masalife::brain::library::Library
     libPaths_ = GetLibPaths( xis, strPath );
     xis >> xml::start( "Knowledges" )
             >> xml::list( "Knowledge", boost::bind( &ReadKnowledge, _1, boost::ref( knowledges_ ) ) )
@@ -57,9 +57,9 @@ DEC_DataBase::DEC_DataBase( xml::xistream& xis, const std::string& strPath )
 // Name: DEC_DataBase constructor
 // Created: MGD 2009-08-27
 // -----------------------------------------------------------------------------
-DEC_DataBase::DEC_DataBase( T_LibPaths libPaths, const std::vector< const std::string >& knowledge )
-    : directia5::Library( libPaths )
-    , libPaths_  ( libPaths )
+DEC_DataBase::DEC_DataBase( masalife::brain::library::Library::T_Paths libPaths, const std::vector< const std::string >& knowledge )
+//: masalife::brain::library::Library( libPaths, std::vector< std::string >() )
+    : libPaths_  ( libPaths )
     , knowledges_( knowledge )
 {
     // NOTHING
@@ -78,8 +78,10 @@ DEC_DataBase::~DEC_DataBase()
 // Name: DEC_DataBase::InitKnowledges
 // Created: MGD 2009-08-06
 // -----------------------------------------------------------------------------
-void DEC_DataBase::InitKnowledges( directia::Brain& brain )
+void DEC_DataBase::InitKnowledges( directia::brain::Brain& brain )
 {
     for( std::vector< const std::string >::const_iterator it = knowledges_.begin(); it!= knowledges_.end(); it++ )
-        RegisterKnowledge( brain, *it );
+	{
+        // RegisterKnowledge( brain, *it );
+    }
 }

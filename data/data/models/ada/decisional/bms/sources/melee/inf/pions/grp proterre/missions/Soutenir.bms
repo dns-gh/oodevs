@@ -37,6 +37,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or nil
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Terminaison
@@ -90,6 +91,7 @@ node "BEH_Mission_Pion_INF_SoutenirUneUnite"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtat = self.eEtat or eActionEnCours
         self.eEtatRejoindre = self.eEtatRejoindre or eActionEnCours
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
@@ -231,6 +233,7 @@ node "BEH_Dep_Pion_MILAN_Appuyer"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtat = self.eEtat or eActionEnCours
         Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )--[[//---------------------------------------------------------------------
 ]]--[[// Defaut

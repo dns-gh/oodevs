@@ -22,6 +22,7 @@ includedFiles["sources/melee/abc/automates/ge40/missions/fairemouvement/FaireMou
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Init
 ]]if( ModuleBegins() ) then
             do
@@ -73,6 +74,7 @@ node "BEH_GTIA_AssignerLesOrdresPourFaireMouvement"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,pion in pairs( DEC_Automate_AutomatesSubordonnes() or {} ) do
         local _continue = true
             Activate( self.activations.ACT_GTIA_AssignerMissionFaireMouvementA, 1, { pion, self._namedParams.zoneArrivee, } )
@@ -106,6 +108,7 @@ node "BEH_GTIA_AssignerMissionsFaireMouvementPC"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.dest = self.dest or DEC_Geometrie_CalculerBarycentreLocalisation( self._namedParams.zoneArrivee )
         Activate( self.activations.ACT_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_CDT, self._namedParams.pion, self.dest, eEtatEchelon_Premier, } )
     end,

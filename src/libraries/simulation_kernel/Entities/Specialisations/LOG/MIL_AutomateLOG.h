@@ -55,8 +55,8 @@ public:
     };
 
 public:
-             MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database );
-             MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID, MIL_Automate&  parent, xml::xistream& xis, DEC_DataBase& database );
+             MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
+             MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID, MIL_Automate&  parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
     virtual ~MIL_AutomateLOG();
 
     //! @name CheckPoints

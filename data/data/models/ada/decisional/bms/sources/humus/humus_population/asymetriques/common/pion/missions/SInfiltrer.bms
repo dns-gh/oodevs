@@ -25,6 +25,7 @@ includedFiles["sources/humus/humus_population/asymetriques/common/pion/missions/
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.lieuInfiltre = self.lieuInfiltre or DEC_ListePoints_GetAt( self._namedParams.mission.itineraire_, DEC_ListePoints_Size( self._namedParams.mission.itineraire_ ) - 1 )

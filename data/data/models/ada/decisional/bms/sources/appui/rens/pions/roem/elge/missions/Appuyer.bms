@@ -27,6 +27,7 @@ includedFiles["sources/appui/rens/pions/roem/elge/missions/Appuyer.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
@@ -147,6 +148,7 @@ node "BEH_Objet_Rens_DeposerBrouilleur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
             self:SendFeedback( eActionEffectuee )
@@ -179,6 +181,7 @@ node "BEH_Objet_Rens_ActiverBrouilleur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         if( self.eEtat == eActionEffectuee ) then
             do

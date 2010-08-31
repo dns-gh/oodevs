@@ -275,7 +275,7 @@ function S_Dispositif_Automate_ABC_PionsSansMission( )
     local _continue = true
 do
             local pion = x
-            if( ( DEC_GetMission( pion ) == 0 or DEC_GetMission( pion ) == nil ) ) then
+            if( DEC_GetMission( pion ) == nil ) then
                 DIA_PushFront( selTemp, pion )
             end
 

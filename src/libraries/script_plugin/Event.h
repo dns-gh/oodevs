@@ -11,7 +11,7 @@
 #define __Event_h_
 
 #include <boost/shared_ptr.hpp>
-#include <directia/ScriptRef.h>
+#include "directia/tools/binders/ScriptRef.h"
 
 namespace plugins
 {
@@ -30,7 +30,7 @@ class Event
 public:
     //! @name Constructors/Destructor
     //@{
-             Event( boost::shared_ptr< Condition_ABC > condition, const std::vector< std::string >& states, const directia::ScriptRef& function );
+             Event( boost::shared_ptr< Condition_ABC > condition, const std::vector< std::string >& states, const directia::tools::binders::ScriptRef& function );
     virtual ~Event();
     //@}
 

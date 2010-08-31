@@ -40,6 +40,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/appuyer
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Init
 ]]self.bResterAHauteur = self.bResterAHauteur or false
         --[[//---------------------------------------------------------------------
@@ -82,7 +83,7 @@ do
 ]]--[[// Se coordonner si l'unité amie a une mission sinon...attendre sauf si rapFor def pour elle
 ]]        end
 
-        if( ( DEC_GetMission( self._namedParams.uniteAAppuyer ) ~= 0 and DEC_GetMission( self._namedParams.uniteAAppuyer ) ~= nil ) ) then
+        if( DEC_GetMission( self._namedParams.uniteAAppuyer ) ~= nil ) then
             Activate( self.activations.BEH_CoordDep_Automate_ABC_SeCoordonnerAvecAmi_, 1, { self._namedParams.uniteAAppuyer, self.bResterAHauteur, } )
         else
 do

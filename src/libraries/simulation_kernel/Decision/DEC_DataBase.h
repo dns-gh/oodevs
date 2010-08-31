@@ -10,11 +10,14 @@
 #ifndef __DEC_DataBase_h_
 #define __DEC_DataBase_h_
 
-#include <directia5/Library.h>
+#include <masalife/brain/library/Library.h>
 
 namespace directia
 {
-    class Brain;
+    namespace brain
+    {
+        class Brain;
+    }
 }
 
 namespace xml
@@ -28,19 +31,19 @@ namespace xml
 */
 // Created: MGD 2009-08-06
 // =============================================================================
-class DEC_DataBase : public directia5::Library
+class DEC_DataBase // : public masalife::brain::library::Library
 {
 public:
     //! @name Constructors/Destructor
     //@{
              DEC_DataBase( xml::xistream& xis, const std::string& strPath );
-             DEC_DataBase( T_LibPaths libPaths, const std::vector< const std::string >& knowledge );
+             DEC_DataBase( masalife::brain::library::Library::T_Paths libPaths, const std::vector< const std::string >& knowledge );
     virtual ~DEC_DataBase();
     //@}
 
     //! @name Operations
     //@{
-    void InitKnowledges( directia::Brain& brain );
+    void InitKnowledges( directia::brain::Brain& brain );
     //@}
 
     //! @name Checkpoint
@@ -52,7 +55,7 @@ public:
 
 private:
     std::vector< const std::string > knowledges_;
-    directia5::Library::T_LibPaths libPaths_;
+    masalife::brain::library::Library::T_Paths libPaths_;
 };
 
 template< typename Archive >
@@ -65,7 +68,7 @@ void save_construct_data( Archive& archive, const DEC_DataBase* database, const 
 template< typename Archive >
 void load_construct_data( Archive& archive, DEC_DataBase* database, const unsigned int /*version*/ )
 {
-    directia5::Library::T_LibPaths libPaths;
+    masalife::brain::library::Library::T_Paths libPaths;
     std::vector< const std::string > knowledges;
     archive >> libPaths
             >> knowledges;

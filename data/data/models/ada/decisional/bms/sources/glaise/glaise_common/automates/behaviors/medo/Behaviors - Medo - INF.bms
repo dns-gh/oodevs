@@ -78,6 +78,7 @@ node "BEH_Mission_Automate_INF_AssignerAppuyerA_Max"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.pAAppuyer, eEtatEchelon_Second, } )
     end,
 
@@ -105,6 +106,7 @@ node "BEH_Mission_Automate_INF_AssignerAppuyerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         do
         end
 
@@ -169,6 +171,7 @@ node "BEH_Mission_Automate_INF_AssignerA_Semparer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -221,6 +224,7 @@ node "BEH_Mission_Automate_INF_AssignerReconnaitreA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -294,6 +298,7 @@ node "BEH_Mission_Automate_INF_AssignerA_ReconnaitrePt"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -369,6 +374,7 @@ node "BEH_Mission_Automate_INF_AssignerA_Reduire"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -442,6 +448,7 @@ node "BEH_Mission_Automate_INF_AssignerA_PrendrePreciserContact"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -496,6 +503,7 @@ node "BEH_Mission_Automate_INF_AssignerA_Fixer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -572,6 +580,7 @@ node "BEH_Mission_Automate_INF_AssignerA_Interdire"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -625,6 +634,7 @@ node "BEH_Mission_Automate_INF_AssignerA_Defendre"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -677,6 +687,7 @@ node "BEH_Mission_Automate_INF_AssignerA_Freiner"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -734,6 +745,7 @@ node "BEH_Mission_Automate_INF_AssignerA_Couvrir"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -787,6 +799,7 @@ node "BEH_Mission_Automate_INF_AssignerA_SurveillerZone"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -840,6 +853,7 @@ node "BEH_Mission_Automate_INF_AssignerA_SurveillerSurPosition"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -894,6 +908,7 @@ node "BEH_Mission_Automate_INF_AssignerA_Controler"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -949,6 +964,7 @@ node "BEH_Mission_Automate_INF_AssignerA_Harceler"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1002,6 +1018,7 @@ node "BEH_Mission_Automate_INF_AssignerA_Barrer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1051,6 +1068,7 @@ node "BEH_Mission_Automate_INF_AssignerA_BarrerDansZone"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1103,6 +1121,7 @@ node "BEH_Mission_Automate_INF_AssignerA_SeDeplacer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ptDest = self.ptDest or DEC_Geometrie_CalculerPointArriveePourPion( self._namedParams.pPion )
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
@@ -1161,6 +1180,7 @@ node "BEH_Mission_Automate_INF_AssignerEscorterA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1217,6 +1237,7 @@ node "BEH_Mission_Automate_INF_AssignerEscorterAutomateA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1273,6 +1294,7 @@ node "BEH_Mission_Automate_INF_AssignerSoutenirA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do

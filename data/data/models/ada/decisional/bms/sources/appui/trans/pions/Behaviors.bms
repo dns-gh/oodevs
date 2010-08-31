@@ -82,6 +82,7 @@ include "Appui/Trans/Pions/Missions/FaireMouvement.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_MAJ_EtatDefaut, 1, {} )--[[// RC par défaut
 ]]
         Activate( self.activations.BEH_Info_Pion_RendreCompte, 1, {} )

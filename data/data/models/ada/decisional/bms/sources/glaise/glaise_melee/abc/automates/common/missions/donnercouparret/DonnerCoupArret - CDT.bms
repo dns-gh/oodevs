@@ -39,6 +39,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.bPriseDeContact = self.bPriseDeContact or false
         self.LCAR = self.LCAR or DEC_GetLima( eTypeLima_LCAR )
         --[[//---------------------------------------------------------------------
@@ -113,6 +114,7 @@ node "BEH_Conduite_Automate_ABC_DonnerCoupArret_FaireDecrocherLesPions"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         self.pointArrivee = self.pointArrivee or S_Geometrie_BarycentreZone( self.mission.zoneRegroupement_ )
         Activate( self.activations.ACT_Info_Trace, 1, { "----- OUVERTURE FEU -----", } )

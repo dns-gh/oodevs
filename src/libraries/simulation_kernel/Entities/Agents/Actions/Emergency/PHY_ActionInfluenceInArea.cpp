@@ -13,8 +13,6 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 
-#include <folk/Object_ABC.h>
-
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionInfluenceInArea constructor
 // Created: JCR 2007-09-12
@@ -26,14 +24,7 @@ PHY_ActionInfluenceInArea::PHY_ActionInfluenceInArea( MIL_AgentPion& pion, const
     , activity_           ( activity )
     , influence_          ( influence )
 {
-    // Register( GetRole().InfluenceActivityInArea( diaCall[ 1 ).ToString(), diaCall[ 2 ].ToFloat(), pLocalisation ) );
-    const MT_Vector2D&  vPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
-    if( pLocalisation )
-        pObject_ = role_.InfluenceActivityInArea( vPos, activity_, influence_, *pLocalisation );
-    if( !pObject_ )
-        Callback( static_cast< int >( PHY_RoleAction_FolkInfluence::eImpossible ) );
-    else
-        Callback( static_cast< int >( PHY_RoleAction_FolkInfluence::eRunning ) );
+    Callback( static_cast< int >( PHY_RoleAction_FolkInfluence::eImpossible ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,8 +42,6 @@ PHY_ActionInfluenceInArea::~PHY_ActionInfluenceInArea()
 // -----------------------------------------------------------------------------
 void PHY_ActionInfluenceInArea::StopAction()
 {
-    if( pObject_ )
-        role_.ReleaseInfluence( *pObject_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,11 +50,6 @@ void PHY_ActionInfluenceInArea::StopAction()
 // -----------------------------------------------------------------------------
 void PHY_ActionInfluenceInArea::Execute()
 {
-    if( pObject_ && !pObject_->IsActivated() )
-    {
-        pObject_->Activate();
-        Callback( static_cast< int >( PHY_RoleAction_FolkInfluence::eActivated ) );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -74,9 +58,4 @@ void PHY_ActionInfluenceInArea::Execute()
 // -----------------------------------------------------------------------------
 void PHY_ActionInfluenceInArea::ExecuteSuspended()
 {
-    if( pObject_ )
-    {
-        pObject_->Deactivate();
-        Callback( static_cast< int >( PHY_RoleAction_FolkInfluence::eDeactivated ) );
-    }
 }

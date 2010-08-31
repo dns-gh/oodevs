@@ -33,6 +33,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.rDistanceEffective = self.rDistanceEffective or self._namedParams.rDistance + self._namedParams.rDistanceSecurite
         self.eEtat = self.eEtat or eActionEnCours
         self.positionSurete = self.positionSurete or nil
@@ -53,14 +54,14 @@ include "bit.lua"
                 if( F_Pion_GetobjectifEsquive( myself ) ~= nil ) then
                     self.positionSurete = DEC_Geometrie_CalculerPositionSureteAvecObjectif( self._namedParams.repUnite, self.rDistanceEffective, F_Pion_GetobjectifEsquive( myself ) )
                 else
-if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
+if( myself.ptRegroupement_ ~= 0 ) then
                         self.positionSurete = DEC_Geometrie_CalculerPositionSureteAvecObjectif( self._namedParams.repUnite, self.rDistanceEffective, myself.ptRegroupement_ )
                     else
                         self.positionSurete = DEC_Geometrie_CalculerPositionSurete( self._namedParams.repUnite, self.rDistanceEffective )
                     end
                 end
 
-                if( ( self.positionSurete == 0 or self.positionSurete == nil ) ) then
+                if( self.positionSurete == 0 ) then
                     Halt( self )
                     do return end
                 end
@@ -121,6 +122,7 @@ node "BEH_Eni_Pion_ASA_DetruireEnnemiDirect"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// variables persistantes
 ]]        self.eEtatAttaque = self.eEtatAttaque or eActionEnCours
         self.eEtatTir = self.eEtatTir or eActionEnCours
@@ -210,6 +212,7 @@ node "BEH_Eni_Pion_ASA_AttendreDetruireDirect"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// variables persistantes
 ]]        self.eEtat = self.eEtat or eActionEnCours
         --[[//si la connaissance est invalide, halter le comportement
@@ -267,6 +270,7 @@ node "BEH_Eni_Pion_ASA_AttendreDetruireIndirect"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// variables persistantes
 ]]        self.eEtat = self.eEtat or eActionEnCours
         --[[//si la connaissance est invalide, halter le comportement
@@ -317,8 +321,9 @@ node "BEH_Eni_Pion_ASA_InterceptionBalistique_Direct"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//la vitesse du projectile sera dans adn
-]]assert( ( self._namedParams.vitesseProjectile ~= 0 and self._namedParams.vitesseProjectile ~= nil ), "Vitesse Nulle" )
+]]assert( self._namedParams.vitesseProjectile ~= 0, "Vitesse Nulle" )
         self.distanceCouverte = self.distanceCouverte or 0--[[// variables persistantes
 ]]
         self.pointInterception = self.pointInterception or nil
@@ -336,7 +341,7 @@ node "BEH_Eni_Pion_ASA_InterceptionBalistique_Direct"
         --[[//si pas de position d'interception possible => fin comportememnt
 ]]--[[//Si on était en train d'ouvrir le feu et que l'on perd le point 
 ]]--[[//d'interception, alors, on arrete le comportement 
-]]if( ( self.pointInterception == 0 or self.pointInterception == nil ) ) then
+]]if( self.pointInterception == 0 ) then
             do
                                 Halt( self )
                 do return end

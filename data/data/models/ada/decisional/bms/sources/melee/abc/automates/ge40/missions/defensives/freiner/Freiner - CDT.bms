@@ -30,6 +30,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.objectifsPrioritaires = self.objectifsPrioritaires or {}--[[// Vide dans cette mission
 ]]
         Activate( self.activations.ACT_GTIA_AnalyserSituationPourMissionRetrograde, 1, {} )--[[// Analyse environnement
@@ -94,6 +95,7 @@ node "BEH_GTIA_OrganiserLesMoyensPourFreiner"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listePionsMeleeDetruits = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateNonOperationnels( S_Cherche_GE_Filtre_TypeAutomate_Melee( DEC_Automate_AutomatesSubordonnes() ) ) )
         --[[// temp proto mia
 ]]Activate( self.activations.BEH_GTIA_OrganiserMoyensVersPionsOp, 1, { listePionsMeleeDetruits, } )
@@ -154,6 +156,7 @@ node "ACT_GTIA_AnalyserSituationPourMissionRetrograde"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_GTIA_AssignerLesMissionsRetrogrades, 1, { self._namedParams.travaux, } )
         Activate( self.activations.BEH_GTIA_AssurerLaCoordinationRetrograde, 1, {} )
     end,
@@ -186,6 +189,7 @@ node "BEH_GTIA_AssignerLesMissionsRetrogrades"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_GTIA_AssignerMissionsRetrogradesEcl, 1, { S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Eclairage ), } )
         Activate( self.activations.BEH_GTIA_AssignerMissionsRetrogradesPE, 1, { S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ), } )
         Activate( self.activations.BEH_GTIA_AssignerMissionsRetrogradesSE, 1, { S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second ), } )
@@ -216,6 +220,7 @@ node "BEH_GTIA_AssignerMissionsRetrogradesEcl"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,pion in pairs( self._namedParams.listePion or {} ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionRetrogradeMelee, 1, { pion, "T_Mission_Automate_ABC_Jalonner", } )
@@ -247,6 +252,7 @@ node "BEH_GTIA_AssignerMissionsRetrogradesPE"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,pion in pairs( --[[// Assignation missions ABC
 ]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePions ) or {} ) do
         local _continue = true
@@ -287,6 +293,7 @@ node "BEH_GTIA_AssignerMissionsRetrogradesSE"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,pion in pairs( --[[// Assignation missions ABC
 ]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePion ) or {} ) do
         local _continue = true
@@ -327,6 +334,7 @@ node "BEH_GTIA_AssignerMissionRetrogradeMelee"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_GTIA_AssignerMissionRetrograde, 1, { self._namedParams.pion, F_Automat_Getfuseau( self._namedParams.pion ), self._namedParams.mission, } )
     end,
 
@@ -357,6 +365,7 @@ node "BEH_GTIA_AssignerMissionsRetrogradesSEAppui"
     end,
 
     activate = function( self )
+        local Activate = Activate
         for _,pion in pairs( --[[// Assignation missions TC2
 ]]S_Cherche_GE_Filtre_TypeAutomate_Log( self._namedParams.listePion ) or {} ) do
         local _continue = true
@@ -404,6 +413,7 @@ node "BEH_GTIA_AssignerMissionRetrogradeART"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// TEMP hack
 ]]self.listeLoc = self.listeLoc or DEC_Geometrie_DecoupeFuseauEnTroncons( 50000 )
         local listePions = S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_Filtre_TypeAutomate_Melee( DEC_Automate_AutomatesSubordonnes() ) )
@@ -433,6 +443,7 @@ node "BEH_GTIA_AssignerMissionRetrogradeLogA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.positionDeploiement = self.positionDeploiement or DEC_Geometrie_PositionAleatoireSurCercle( DEC_Geometrie_CalculerPointArrivee(), 500 )
         Activate( self.activations.ACT_GTIA_AssignerMissionDeployerTC2, 1, { self._namedParams.pionLog, F_Automat_Getfuseau( self._namedParams.pionLog ), self.positionDeploiement, } )
     end,
@@ -460,6 +471,7 @@ node "BEH_GTIA_AssignerMissionRetrogradePC"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.dest = self.dest or DEC_Geometrie_CalculerPointArrivee()
         Activate( self.activations.ACT_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_CDT, self._namedParams.pionPC, self.dest, eEtatEchelon_Second, } )
     end,
@@ -489,6 +501,7 @@ node "BEH_GTIA_AssignerMissionRetrogradeGenieA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// On a des travaux à faire
 ]]if( not DIA_IsListEmpty( self._namedParams.travaux ) ) then
             Activate( self.activations.ACT_GTIA_AssignerMissionRealiserTravauxA, 1, { self._namedParams.pionGen, F_Automat_Getfuseau( self._namedParams.pionGen ), self._namedParams.travaux, } )
@@ -518,12 +531,12 @@ node "ACT_GTIA_AssignerMissionRetrograde"
     end,
 
     select = function( self )
-        if( DIA_GetLocalFakeActuator( self._namedParams.pion ) < GetActivity() ) then
+        if( DIA_GetLocalFakeActuator( "ACT_GTIA_AssignerMissionRetrograde", self._namedParams.pion ) < GetActivity() ) then
             do
-                DIA_SetLocalFakeActuator( self._namedParams.pion, GetActivity() )
+                DIA_SetLocalFakeActuator( "ACT_GTIA_AssignerMissionRetrograde", self._namedParams.pion, GetActivity() )
                 self.bMissionAssignee = self.bMissionAssignee or false
                 --[[// fuseau pas encore assigné
-]]if( ( self._namedParams.fuseau == 0 or self._namedParams.fuseau == nil ) or self.bMissionAssignee ) then
+]]if( self._namedParams.fuseau == nil or self.bMissionAssignee ) then
                     do return end
                 end
 
@@ -588,7 +601,7 @@ elseif switch_1 == "T_Mission_Automate_INF_Freiner" then
 
     select = function( self )
         self.bMissionAssignee = self.bMissionAssignee or false
-        if( ( self._namedParams.fuseau == 0 or self._namedParams.fuseau == nil ) or self.bMissionAssignee ) then
+        if( self._namedParams.fuseau == nil or self.bMissionAssignee ) then
             do return end
         end
 

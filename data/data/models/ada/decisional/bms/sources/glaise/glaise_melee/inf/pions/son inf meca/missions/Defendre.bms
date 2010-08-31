@@ -34,6 +34,7 @@ node "MIS_Pion_INF_Defendre"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.ePhase = self.ePhase or eSeMettreEnPlace
         self.eCurrentPhase = self.eCurrentPhase or ePreparerMission
         self.eAction = self.eAction or eActionEnCours

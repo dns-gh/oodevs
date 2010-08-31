@@ -32,6 +32,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/ciecharlourd/missions/p
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//---------------------------------------------------------------------

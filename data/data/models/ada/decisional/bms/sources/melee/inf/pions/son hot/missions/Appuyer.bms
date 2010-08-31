@@ -46,6 +46,7 @@ includedFiles["sources/melee/inf/pions/son hot/missions/Appuyer.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or ePreparerMission
         self.repAmi = self.repAmi or self._namedParams.mission.uniteAAppuyer_
@@ -54,7 +55,7 @@ includedFiles["sources/melee/inf/pions/son hot/missions/Appuyer.bms"] = true
             do
                 DEC_SetMission( myself, self._namedParams.mission )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
-                if( ( self.repAmi == 0 or self.repAmi == nil ) ) then
+                if( self.repAmi == nil ) then
                     do
                         DEC_Warning( eRC_MissionImpossible )
                                                 self:SendFeedback( eActionImpossible )

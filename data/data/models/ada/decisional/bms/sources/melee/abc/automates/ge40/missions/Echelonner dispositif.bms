@@ -26,6 +26,7 @@ includedFiles["sources/melee/abc/automates/ge40/missions/Echelonner dispositif.b
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_GTIA_EchelonnerLesAppuis, 1, {} )
         Activate( self.activations.BEH_GTIA_EchelonnerDispositifSuivantEtatOperationnel, 1, {} )
         Activate( self.activations.BEH_GTIA_EchelonnerDispositifSuivantEnisDebarques, g_rRapEniDebarques, {} )
@@ -56,6 +57,7 @@ node "BEH_GTIA_EchelonnerLesAppuis"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listePionsEcl = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_Filtre_TypeAutomate_Eclairage( DEC_Automate_AutomatesSubordonnes() ) ) )
         local listePionsAppuis = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_Filtre_TypeAutomate_Appui( DEC_Automate_AutomatesSubordonnes() ) ) )
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
@@ -104,6 +106,7 @@ node "BEH_GTIA_EchelonnerDispositifSuivantDelais"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listePionsABC = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_Filtre_TypeAutomate_ABC( DEC_Automate_AutomatesSubordonnes() ) ) )
         local listePionsINF = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_Filtre_TypeAutomate_INF( DEC_Automate_AutomatesSubordonnes() ) ) )
         local rNbrePionsPE = S_Dispositif_GE_NombreDePionsPE( #( listePionsABC ) + #( listePionsINF ) )
@@ -166,6 +169,7 @@ node "BEH_GTIA_EchelonnerDispositifSuivantTerrainFerme"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listePionsABC = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_Filtre_TypeAutomate_ABC( DEC_Automate_AutomatesSubordonnes() ) ) )
         local listePionsINF = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_Filtre_TypeAutomate_INF( DEC_Automate_AutomatesSubordonnes() ) ) )
         local rNbrePionsPE = S_Dispositif_GE_NombreDePionsPE( #( listePionsABC ) + #( listePionsINF ) )
@@ -228,6 +232,7 @@ node "BEH_GTIA_EchelonnerDispositifSuivantTerrainOuvert"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listePionsABC = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_Filtre_TypeAutomate_ABC( DEC_Automate_AutomatesSubordonnes() ) ) )
         local listePionsINF = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_Filtre_TypeAutomate_INF( DEC_Automate_AutomatesSubordonnes() ) ) )
         local rNbrePionsPE = S_Dispositif_GE_NombreDePionsPE( #( listePionsABC ) + #( listePionsINF ) )
@@ -287,6 +292,7 @@ node "BEH_GTIA_EchelonnerDispositifSuivantEnisDebarques"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listePionsABC = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_Filtre_TypeAutomate_ABC( DEC_Automate_AutomatesSubordonnes() ) ) )
         local listePionsINF = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_Filtre_TypeAutomate_INF( DEC_Automate_AutomatesSubordonnes() ) ) )
         local rNbrePionsPE = S_Dispositif_GE_NombreDePionsPE( #( listePionsABC ) + #( listePionsINF ) )
@@ -346,6 +352,7 @@ node "BEH_GTIA_EchelonnerDispositifSuivantEnisEmbarques"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listePionsABC = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_Filtre_TypeAutomate_ABC( DEC_Automate_AutomatesSubordonnes() ) ) )
         local listePionsINF = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_Filtre_TypeAutomate_INF( DEC_Automate_AutomatesSubordonnes() ) ) )
         local rNbrePionsPE = S_Dispositif_GE_NombreDePionsPE( #( listePionsABC ) + #( listePionsINF ) )
@@ -405,6 +412,7 @@ node "BEH_GTIA_EchelonnerDispositifSuivantEtatOperationnel"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listePionsNop = S_Cherche_GE_AutomateNonOperationnels( DEC_Automate_AutomatesSubordonnes() )
         for _,pion in pairs( listePionsNop or {} ) do
         local _continue = true
@@ -433,9 +441,9 @@ node "ACT_GTIA_AssignerEchelonA"
     end,
 
     select = function( self )
-        if( DIA_GetLocalFakeActuator( self._namedParams.automat ) < GetActivity() ) then
+        if( DIA_GetLocalFakeActuator( "ACT_GTIA_AssignerEchelonA", self._namedParams.automat ) < GetActivity() ) then
             do
-                DIA_SetLocalFakeActuator( self._namedParams.automat, GetActivity() )
+                DIA_SetLocalFakeActuator( "ACT_GTIA_AssignerEchelonA", self._namedParams.automat, GetActivity() )
                 F_Automat_SeteEtatEchelon( self._namedParams.automat, self._namedParams.echelon )
             end
         end

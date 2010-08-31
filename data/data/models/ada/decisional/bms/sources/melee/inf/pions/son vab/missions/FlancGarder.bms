@@ -35,6 +35,7 @@ node "MIS_Pion_INF_FlancGarder"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or eReconnaitre
         self.eCurrentPhase = self.eCurrentPhase or ePreparerMission

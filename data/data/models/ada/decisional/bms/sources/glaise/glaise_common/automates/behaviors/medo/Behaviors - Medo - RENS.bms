@@ -45,6 +45,7 @@ include "Glaise/Glaise_Common/Automates/Actions/Medo/Actions - Medo - RENS.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -101,6 +102,7 @@ node "BEH_Mission_Automate_RENS_ROHUM_AssignerSExfiltrerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -149,6 +151,7 @@ node "BEH_Mission_Automate_RENS_ROHUM_AssignerGuiderA"
     end,
 
     activate = function( self )
+        local Activate = Activate
     end,
 
 --[[/*
@@ -187,6 +190,7 @@ node "BEH_Mission_Automate_RENS_ROIM_SDTI_AssignerRenseignerSur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -244,6 +248,7 @@ node "BEH_Mission_Automate_RENS_ROIM_CL289_AssignerRenseignerSur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -300,6 +305,7 @@ node "BEH_Mission_Automate_RENS_ROIM_AssignerMettreEnOeuvreA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -360,6 +366,7 @@ node "BEH_Mission_Automate_RENS_ROEM_AssignerAppuyerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -416,6 +423,7 @@ node "BEH_Mission_Automate_RENS_ROEM_AssignerRenseignerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -472,6 +480,7 @@ node "BEH_Mission_Automate_RENS_ROEM_AssignerMettreEnOeuvreA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -531,6 +540,7 @@ node "BEH_Mission_Automate_RENS_RADINT_AssignerRenseignerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -587,6 +597,7 @@ node "BEH_Mission_Automate_RENS_RADINT_AssignerMettreEnOeuvreA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do

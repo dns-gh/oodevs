@@ -35,6 +35,7 @@ includedFiles["sources/glaise/glaise_common/automates/behaviors/Behaviors - NBC.
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Si l'unité PC a connaissance d'une zone contaminée, ou si contaminée
 ]]--[[// passer en ambiance NBC
@@ -81,6 +82,7 @@ node "BEH_Ordre_Automate_RecevoirOrdreSurAlerteNBC"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Recevoir un ordre
 ]]--[[//-----------------------------------------------------------------------------
@@ -155,6 +157,7 @@ node "BEH_Ordre_Automate_ConduiteSurAlerteNBC"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// RC
 ]]--[[//-----------------------------------------------------------------------------
@@ -196,6 +199,7 @@ node "BEH_Ordre_Automate_ConduiteSurFinAlerteNBC"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// RC
 ]]--[[//-----------------------------------------------------------------------------

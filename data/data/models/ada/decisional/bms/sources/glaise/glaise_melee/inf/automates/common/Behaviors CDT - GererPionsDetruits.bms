@@ -39,6 +39,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local selPions = DEC_Automate_PionsAvecPC()
         local selPionsPE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
         for _,x_pion in pairs( selPions or {} ) do
@@ -107,6 +108,7 @@ node "BEH_Conduite_Automate_INF_SuivreCompromis"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             Activate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, self._namedParams.pPion, self._namedParams.pAAppuyer, } )
         end

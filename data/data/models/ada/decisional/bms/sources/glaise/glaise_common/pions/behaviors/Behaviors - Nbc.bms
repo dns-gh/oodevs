@@ -20,6 +20,7 @@ includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - Nbc.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Nbc_Recevoir_OrdreInopine, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion de l'ordre de conduite
 ]]--[[//-----------------------------------------------------------------------------
@@ -49,6 +50,7 @@ node "BEH_Nbc_Recevoir_OrdreInopine"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Reception d'un ordre du superieur
 ]]--[[//-----------------------------------------------------------------------------
@@ -122,6 +124,7 @@ node "BEH_Nbc_GererAlerteNiv4"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Nbc_MettreTenueProtection, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// Mettre la combi
 ]]--[[//-----------------------------------------------------------------------------

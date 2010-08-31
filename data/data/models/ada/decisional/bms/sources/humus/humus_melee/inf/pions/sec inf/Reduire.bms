@@ -36,6 +36,7 @@ includedFiles["sources/humus/humus_melee/inf/pions/sec inf/Reduire.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eDetruire
         self.eCurrentPhase = self.eCurrentPhase or ePreciserContact
         self.eAction = self.eAction or eActionEnCours
@@ -152,6 +153,7 @@ node "BEH_Mission_Pion_VAB_Reduire"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionEni = self.eActionEni or eActionEnCours
         if( ModuleBegins() ) then
             do

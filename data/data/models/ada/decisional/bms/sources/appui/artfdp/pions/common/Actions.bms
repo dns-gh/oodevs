@@ -37,7 +37,7 @@ node "ACT_Obj_Pion_ASS_RealiserObjet"
 ]]
         if( ModuleBegins() ) then
             do
-                if( ( self._namedParams.locObjet == 0 or self._namedParams.locObjet == nil ) ) then
+                if( self._namedParams.locObjet == nil ) then
                     do
                         --[[// RC_ TravauxImpossible
 ]]                        self:SendFeedback( eActionImpossible )

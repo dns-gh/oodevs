@@ -40,6 +40,7 @@ node "MIS_Pion_INF_ControlerSecteur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhaseMission = self.ePhaseMission or eSeMettreEnPlace
         self.ePhase = self.ePhase or eSurveiller
         self.eAction = self.eAction or eActionEnCours
@@ -177,6 +178,7 @@ node "BEH_Mission_Pion_VAB_ControlerSecteur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         self.ePhase = self.ePhase or eSeMettreEnPlace
         self.eAction = self.eAction or eActionEnCours
@@ -299,6 +301,7 @@ node "BEH_Eni_Pion_VAB_Controler_Traiter"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Si le pion n'est pas dans son fuseau, on n'agit pas sur les ennemis
 ]]if( not DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
             do return end

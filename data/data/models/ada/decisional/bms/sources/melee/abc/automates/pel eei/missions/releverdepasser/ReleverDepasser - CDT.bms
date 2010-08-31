@@ -35,6 +35,7 @@ includedFiles["sources/melee/abc/automates/pel eei/missions/releverdepasser/Rele
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//---------------------------------------------------------------------

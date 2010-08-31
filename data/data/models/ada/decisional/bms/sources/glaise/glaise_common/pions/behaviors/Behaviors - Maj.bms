@@ -22,6 +22,7 @@ includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - Maj.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_MAJ_EtatOperationnel, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// MAJ etat destruction
 ]]--[[//-----------------------------------------------------------------------------
@@ -52,12 +53,13 @@ node "BEH_MAJ_AgressiviteMission"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 SetStateVariable( "VE_Agressivite_Tir", self._namedParams.rPH )
                 F_Pion_SeteNiveauAction( myself, self._namedParams.eNiveauAction )
                 --[[// $$$GGR : MAJ Agressivité manoeuvre pour infanterie
-]]if( ( self._namedParams.rPH == 0 or self._namedParams.rPH == nil ) ) then
+]]if( self._namedParams.rPH == 0 ) then
                     SetStateVariable( "VE_Agressivite_Manoeuvre", 0 )
                 else
                     SetStateVariable( "VE_Agressivite_Manoeuvre", 10 / self._namedParams.rPH )
@@ -90,6 +92,7 @@ node "BEH_MAJ_EtatOperationnel"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Destruction totale --> plus aucune composante
 ]]if( S_Misc_EstDetruitPhysique() ) then
             do
@@ -131,6 +134,7 @@ node "BEH_MAJ_Pion_EnvieTenir"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 if( ModuleBegins() ) then
             SetStateVariable( "VE_Courage", 2 )
         end

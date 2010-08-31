@@ -73,6 +73,7 @@ include "Appui/Alat/Pions/Common/Behaviors/Behaviors - Ordre.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 --[[//initialisation des atributs de la patrouille ALAT
@@ -132,7 +133,7 @@ include "Appui/Alat/Pions/Common/Behaviors/Behaviors - Ordre.bms"
 ]]--[[// Contrôle d'alerte ravitaillement ( Cf. Motivations sur Temps de Vol )
 ]]--[[// ---------------------------------------------------------------------
 ]]local automate = DEC_GetAutomate( myself )
-        if( ( DEC_GetMission( automate ) == 0 or DEC_GetMission( automate ) == nil ) ) then
+        if( DEC_GetMission( automate ) == nil ) then
             do
                 Activate( self.activations.BEH_Log_Pion_ALAT_AjoutNouveauPlotsDansFuseau, 1, {} )
                 Activate( self.activations.BEH_Log_Pion_ALAT_GererPlotsRavitaillement, 1, {} )
@@ -166,6 +167,7 @@ node "BEH_Dep_Virtuel_ProgressionVers"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { self._namedParams.point, self._namedParams.eTypeProgression, self._namedParams.eTypeIti, } )
     end,
 
@@ -187,6 +189,7 @@ node "BEH_Dep_Virtuel_PreparationAction"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Dep_Pion_ALAT_Voler, 1, {} )--[[//Gestion du vol pour les hélicopteres
 ]]
                 self:SendFeedback( eActionEffectuee )

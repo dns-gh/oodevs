@@ -91,7 +91,7 @@ private:
     //@{
     void ReadIndicators( xml::xistream& xis );
     void ReadIndicator( xml::xistream& xis );
-    virtual void RegisterIn( directia::Brain& brain );
+    virtual void RegisterIn( directia::brain::Brain& brain );
     boost::shared_ptr< Variable > CreateVariable( const std::string& name, const std::string& type, const std::string& value );
     void ComputeIndicator( const std::string& name, const std::string& formula, const std::vector< boost::shared_ptr< Variable > >& variables );
     //@}

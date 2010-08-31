@@ -24,6 +24,7 @@ includedFiles["sources/melee/abc/automates/common/missions/semparerzone/Semparer
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerPEAvecSE_, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// Coordination, partielle ici, le PE se coordonne pas avec l'Ecl
 ]]--[[//----------------------------------------------------------------------------- 

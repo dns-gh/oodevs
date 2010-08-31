@@ -32,6 +32,7 @@ node "MIS_Pion_ASS_EO_AcquerirObjectifs"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or eReconnaitre
         if( ModuleBegins() ) then

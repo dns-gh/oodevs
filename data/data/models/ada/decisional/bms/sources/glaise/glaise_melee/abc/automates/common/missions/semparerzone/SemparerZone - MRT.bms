@@ -36,10 +36,11 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/sempare
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.listeSecteur = self.listeSecteur or {}
         self.rIterateurSecteur = self.rIterateurSecteur or 0
         self.nErrorCode = self.nErrorCode or nil
-        if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
+        if( #( self._namedParams.selPions ) == 0 ) then
             do return end
         end
 

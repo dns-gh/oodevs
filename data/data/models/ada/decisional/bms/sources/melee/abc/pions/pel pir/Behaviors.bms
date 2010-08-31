@@ -72,6 +72,7 @@ include "Melee/Abc/Pions/Pel PIR/Missions/Missions.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
     end,
 
 }

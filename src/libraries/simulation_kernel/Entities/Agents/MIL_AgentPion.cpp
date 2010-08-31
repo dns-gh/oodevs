@@ -363,7 +363,7 @@ void MIL_AgentPion::UpdateDecision( float duration )
     {
         MIL_Report::PostEvent( *this, MIL_Report::eReport_MissionImpossible_ );
     }
-    GetRole< DEC_Decision_ABC >().GarbageCollect();
+    //GetRole< DEC_Decision_ABC >().GarbageCollect();
 }
 
 // -----------------------------------------------------------------------------

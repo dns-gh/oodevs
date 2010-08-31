@@ -26,7 +26,7 @@ class AutomateFactory : public AutomateFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomateFactory( MIL_IDManager& idManager, DEC_DataBase& database  );
+             AutomateFactory( MIL_IDManager& idManager, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
     virtual ~AutomateFactory();
     //@}
 
@@ -51,6 +51,8 @@ private:
 private:
     //! @name Member data
     //@{
+	unsigned int gcPause_;
+    unsigned int gcMult_;
     MIL_IDManager& idManager_;
     DEC_DataBase& database_;
     //@}
@@ -64,16 +66,22 @@ void save_construct_data( Archive& archive, const AutomateFactory* factory, cons
     const MIL_IDManager* const idManager = &factory->idManager_;
     const DEC_DataBase* const database = &factory->database_;
     archive << idManager
-        << database;
+        << database
+        << factory->gcPause_
+        << factory->gcMult_;
 }
 template< typename Archive >
 void load_construct_data( Archive& archive, AutomateFactory* factory, const unsigned int /*version*/ )
 {
     MIL_IDManager* idManager;
     DEC_DataBase* database;
+    unsigned int gcPause;
+    unsigned int gcMult;
     archive >> idManager
-        >> database;
-    ::new( factory )AutomateFactory( *idManager, *database );
+        >> database
+        >> gcPause
+        >> gcMult;
+    ::new( factory )AutomateFactory( *idManager, *database, gcPause, gcMult );
 }
 
 #endif // __AutomateFactory_h_

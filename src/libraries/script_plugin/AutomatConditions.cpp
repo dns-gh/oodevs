@@ -12,7 +12,7 @@
 #include "SimpleEntityCondition.h"
 #include "AgentEvents.h"
 #include "dispatcher/Automat.h"
-#include <directia/Brain.h>
+#include <directia/brain/Brain.h>
 
 using namespace plugins::script;
 
@@ -39,10 +39,10 @@ AutomatConditions::~AutomatConditions()
 // Name: AutomatConditions::RegisterIn
 // Created: SBO 2008-08-13
 // -----------------------------------------------------------------------------
-void AutomatConditions::RegisterIn( directia::Brain& brain )
+void AutomatConditions::RegisterIn( directia::brain::Brain& brain )
 {
-    brain.RegisterObject( "events.automats", this );
-    brain.RegisterFunction( "MissionStarted", &AutomatConditions::MissionStarted );
+    brain[ "events.automats" ] = this;
+    brain.Register( "MissionStarted", &AutomatConditions::MissionStarted );
 }
 
 // -----------------------------------------------------------------------------

@@ -37,6 +37,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or eTransporter
         self.listePionsEnCoursRavitaillement = self.listePionsEnCoursRavitaillement or {}
         self.listePionsSgpt = self.listePionsSgpt or {}

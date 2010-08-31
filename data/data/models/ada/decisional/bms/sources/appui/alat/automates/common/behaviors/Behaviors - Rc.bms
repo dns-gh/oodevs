@@ -17,6 +17,7 @@ includedFiles["sources/appui/alat/automates/common/behaviors/Behaviors - Rc.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         local listeUnites = DEC_Automate_PionsAvecPC()
         for _,x in pairs( --[[// Si demande ordre de conduite d'au moins un pion
 ]]--[[// -----------------------------------------------

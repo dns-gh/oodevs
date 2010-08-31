@@ -71,8 +71,8 @@ end
 
 function S_Misc_Automate_ALAT_ListeDirectionsPourCouverturesPourSgpt( rNbDirections, direction )
     local _returnValue = {}
-    assert( ( direction ~= 0 and direction ~= nil ), "Erreur : Direction Non Valide" )
-    assert( ( rNbDirections ~= 0 and rNbDirections ~= nil ), "Erreur : Nb Directions Souhaitées = 0" )
+    assert( direction ~= nil, "Erreur : Direction Non Valide" )
+    assert( rNbDirections ~= 0, "Erreur : Nb Directions Souhaitées = 0" )
     _returnValue = {}
     local directionPerpendiculaire = DEC_Geometrie_CreerDirectionPerpendiculaire( direction, false )
     local angle = 180 / ( rNbDirections + 1 )

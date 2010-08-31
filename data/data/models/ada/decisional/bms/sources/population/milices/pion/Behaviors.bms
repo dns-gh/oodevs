@@ -138,6 +138,7 @@ node "BEH_Defaut"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( ModuleBegins() ) then
             do
                 Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, {} )--[[//ROE par defaut pour cette mission
@@ -172,7 +173,7 @@ node "BEH_Defaut"
         Activate( self.activations.BEH_Nbc, 1, {} )
         Activate( self.activations.BEH_Rens, 1, {} )--[[// Gestion de la guerre elec : Passer en silence radio
 ]]
-        if( ( DEC_GetMission( myself ) == 0 or DEC_GetMission( myself ) == nil ) ) then
+        if( DEC_GetMission( myself ) == nil ) then
             do
                 --[[// action ACT_Mot_Pion_INF_InitialisePoste();
 ]]local ksFoo = nil
@@ -201,6 +202,7 @@ node "BEH_Obs_Pion_INF_SurveillerSecteur"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ptObservation = self.ptObservation or nil
         self.eAction = self.eAction or eActionEnCours
         if( self.eAction == eActionEffectuee ) then

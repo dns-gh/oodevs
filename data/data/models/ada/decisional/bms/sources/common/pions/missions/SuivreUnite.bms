@@ -32,6 +32,7 @@ includedFiles["sources/common/pions/missions/SuivreUnite.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.rDist_Min = self.rDist_Min or S_Dist_MissionSuivre_Min()
         if( ModuleBegins() ) then
             do

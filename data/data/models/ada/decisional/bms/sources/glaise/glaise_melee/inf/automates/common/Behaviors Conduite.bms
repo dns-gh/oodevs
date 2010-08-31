@@ -54,6 +54,7 @@ include "Melee/Inf/Automates/Common/Behaviors CDT - Retrograde.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionMission = self.eActionMission or eActionEnCours
         self.bMissionTerminee = self.bMissionTerminee or false
         if( self.bMissionTerminee ) then
@@ -113,6 +114,7 @@ node "BEH_Conduite_Automate_INF_Appuyer"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Coordination par rapport a l'automate appuye
 ]]--[[//-----------------------------------------------------------------------------
@@ -149,6 +151,7 @@ node "BEH_Conduite_Automate_INF_CadreOffensif"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Gestion des pions detruits		
 ]]Activate( self.activations.BEH_Dispositif_Automate_INF_GererLesPionsDetruits, 1, { true, } )
         Activate( self.activations.BEH_Dispositif_Automate_INF_GererReleve, 1, {} )
@@ -204,6 +207,7 @@ node "BEH_Conduite_Automate_INF_CadreRetrograde"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Gestion des pions detruits		
 ]]Activate( self.activations.BEH_Dispositif_Automate_INF_GererLesPionsDetruits, 1, { true, } )
         Activate( self.activations.BEH_Dispositif_Automate_INF_GererReleve, 1, {} )
@@ -245,6 +249,7 @@ node "BEH_Conduite_Automate_INF_CadreStatique"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Gestion des pions detruits		
 ]]Activate( self.activations.BEH_Dispositif_Automate_INF_GererLesPionsDetruits, 1, { false, } )
         Activate( self.activations.BEH_Dispositif_Automate_INF_GererReleve, 1, {} )
@@ -282,6 +287,7 @@ node "BEH_CoordTir_Automate_INF_Intervention_LCAR"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eAction = self.eAction or eActionEnCours
         local ksEni = S_Pion_EniEnCours( self._namedParams.pPion )
         if( F_Pion_GeteEtatDec( self._namedParams.pPion ) == eEtatDec_Sauvegarde or self.eAction == eActionHalt ) then
@@ -354,6 +360,7 @@ node "BEH_CoordTir_Automate_INF_EvalueActivite_Eni"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( GetActivity() > 1 ) then
             self:SendFeedback( eActionHalt )
             do return end
@@ -383,15 +390,16 @@ node "BEH_Conduite_Automate_INF_Freiner_RompreContact"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.resultatCalcul = self.resultatCalcul or nil
         local selPions = S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsSansPC(), "T_Mission_Pion_INF_Freiner" )
         --[[// Init
 ]]--[[//---------------------------------------------------------------------
-]]if( ( self.resultatCalcul == 0 or self.resultatCalcul == nil ) ) then
+]]if( self.resultatCalcul == nil ) then
             self.resultatCalcul = DEC_Geometrie_StartCalculLignesAvantEtArriere( selPions )
         end
 
-        if( ( self.resultatCalcul == 0 or self.resultatCalcul == nil ) ) then
+        if( self.resultatCalcul == nil ) then
             do return end
         end
 
@@ -399,7 +407,7 @@ node "BEH_Conduite_Automate_INF_Freiner_RompreContact"
 ]]--[[// Determiner le pion de queue
 ]]--[[//-----------------------------------------------------------------------------    
 ]]local pionEnQueue = S_Coordination_PionEnQueue( self.resultatCalcul, selPions, true )
-        if( ( pionEnQueue == 0 or pionEnQueue == nil ) ) then
+        if( pionEnQueue == 0 ) then
             do return end
         end
 

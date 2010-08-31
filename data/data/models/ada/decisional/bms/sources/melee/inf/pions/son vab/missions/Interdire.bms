@@ -39,6 +39,7 @@ includedFiles["sources/melee/inf/pions/son vab/missions/Interdire.bms"] = true
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eCurrentPhase = self.eCurrentPhase or ePreparerMission
         self.ePhase = self.ePhase or eSeMettreEnPlace
         self.eAction = self.eAction or eActionEnCours

@@ -12,7 +12,7 @@
 #include "EventCondition.h"
 #include "MiscEvents.h"
 #include "tools/ElementObserver_ABC.h"
-#include <directia/Brain.h>
+#include "directia/brain/Brain.h"
 
 using namespace plugins::script;
 
@@ -39,12 +39,12 @@ SimulationConditions::~SimulationConditions()
 // Name: SimulationConditions::RegisterIn
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
-void SimulationConditions::RegisterIn( directia::Brain& brain )
+void SimulationConditions::RegisterIn( directia::brain::Brain& brain )
 {
-    brain.RegisterObject( "events.sim", this );
-    brain.RegisterFunction( "TickEnded",       &SimulationConditions::TickEnded );
-    brain.RegisterFunction( "ClientConnected", &SimulationConditions::ClientConnected );
-    brain.RegisterFunction( "ClientLeft",      &SimulationConditions::ClientLeft );
+    brain[ "events.sim" ] = this;
+    brain.Register( "TickEnded",       &SimulationConditions::TickEnded );
+    brain.Register( "ClientConnected", &SimulationConditions::ClientConnected );
+    brain.Register( "ClientLeft",      &SimulationConditions::ClientLeft );
 }
 
 // -----------------------------------------------------------------------------

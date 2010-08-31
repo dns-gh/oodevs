@@ -20,6 +20,7 @@ includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - ROE.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_ROE_Recevoir_OrdreInopine, 1, {} )--[[// pour anibas 
 ]]
     end,
@@ -49,6 +50,7 @@ node "BEH_ROE_Recevoir_OrdreInopine"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Reception d'un ordre du superieur
 ]]--[[//-----------------------------------------------------------------------------
@@ -143,6 +145,7 @@ node "BEH_ROE_GererTirInterdit"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Tir_ChangerConsigne, 1, { eEtatROE_TirInterdit, } )
     end,
 
@@ -168,6 +171,7 @@ node "BEH_ROE_GererTirRestreint"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Tir_ChangerConsigne, 1, { eEtatROE_TirSurRiposte, } )
     end,
 
@@ -193,6 +197,7 @@ node "BEH_ROE_GererTirLibre"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.ACT_Tir_ChangerConsigne, 1, { eEtatROE_TirLibre, } )
     end,
 

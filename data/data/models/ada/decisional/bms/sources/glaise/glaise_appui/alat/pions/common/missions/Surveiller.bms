@@ -50,6 +50,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or ePreparerMission
         self.objectifCourant = self.objectifCourant or DEC_Geometrie_CreerPoint()
@@ -199,7 +200,7 @@ do
                         end
                     end
 
-                    if( ( self.localisationCourante == 0 or self.localisationCourante == nil ) ) then
+                    if( self.localisationCourante == 0 ) then
                         do return end
                     end
 
@@ -306,6 +307,7 @@ node "BEH_Eni_Pion_ALAT_GererEniSurveiller"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtatProgressionTactique = self.eEtatProgressionTactique or eActionEnCours
         local pasDeConnaissanceReconnueInterressante = true
         --[[// prise à partie des ennemis dans la zone 

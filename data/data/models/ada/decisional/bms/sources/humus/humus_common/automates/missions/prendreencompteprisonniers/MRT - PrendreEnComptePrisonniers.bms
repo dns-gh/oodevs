@@ -24,6 +24,7 @@ includedFiles["sources/humus/humus_common/automates/missions/prendreencomptepris
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
         --[[//---------------------------------------------------------------------
 ]]--[[// Init

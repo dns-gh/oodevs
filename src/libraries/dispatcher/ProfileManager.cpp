@@ -11,12 +11,13 @@
 #include "ProfileManager.h"
 #include "Profile.h"
 #include "Config.h"
+#include "Client.h"
 #include "Model.h"
 #include "Automat.h"
-#include <xeumeuleu/xml.hpp>
-#include <MT/MT_Logger/MT_Logger_lib.h>
+#include <xeumeuleu/xml.h>
+#include "MT/MT_Logger/MT_Logger_lib.h"
 #include "MT_Tools/MT_Scipio_enum.h"
-#include <directia/Brain.h>
+#include "directia/brain/Brain.h"
 #include "protocol/protocol.h"
 #include "protocol/authenticationsenders.h"
 
@@ -29,9 +30,10 @@ std::map< const std::string, unsigned > ProfileManager::roles_;
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
 ProfileManager::ProfileManager( Model& model, ClientPublisher_ABC& clients, const Config& config )
-    : model_  ( model )
-    , clients_( clients )
-    , config_ ( config )
+    : model_   ( model )
+    , clients_ ( clients )
+    , config_  ( config )
+    , profiles_()
 {
     // NOTHING
 }
@@ -90,7 +92,7 @@ void ProfileManager::Reset()
         xml::xifstream xis( config_.GetProfilesFile() );
         xis >> xml::start( "profiles" )
                 >> xml::list( "profile", *this, & ProfileManager::ReadProfile )
-            >> xml::end;
+            >> xml::end();
     }
     catch( xml::exception& exception )
     {
@@ -208,10 +210,10 @@ namespace directia
 // Name: ProfileManager::RegisterIn
 // Created: SBO 2008-07-24
 // -----------------------------------------------------------------------------
-void ProfileManager::RegisterIn( directia::Brain& brain )
+void ProfileManager::RegisterIn( directia::brain::Brain& brain )
 {
-    brain.RegisterObject( "profiles", this );
-    brain.RegisterFunction( "SetAutomatRight", &ProfileManager::SetAutomatRight );
+    brain[ "profiles" ] = this;
+    brain.Register( "SetAutomatRight", &ProfileManager::SetAutomatRight );
 }
 
 // -----------------------------------------------------------------------------

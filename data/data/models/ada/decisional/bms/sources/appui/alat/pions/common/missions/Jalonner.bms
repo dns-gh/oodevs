@@ -45,6 +45,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or eJalonner
         self.pointFinFuseau = self.pointFinFuseau or nil
@@ -185,6 +186,7 @@ node "BEH_Eni_Pion_ALAT_GererEniJalonner"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtatProgressionTactique = self.eEtatProgressionTactique or eActionEnCours
         Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.pointDebutFuseau, } )
         --[[// gestion des unités reconnues
@@ -225,6 +227,7 @@ node "BEH_Eni_Pion_ALAT_JalonnerGererFeu"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( F_Pion_GeteEtatFeu( myself ) == eEtatFeu_Executer ) then
             self:SendFeedback( eActionEffectuee )
             Halt( self )

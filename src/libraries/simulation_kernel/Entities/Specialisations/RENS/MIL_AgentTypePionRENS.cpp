@@ -15,7 +15,7 @@
 #include "Decision/DEC_PerceptionFunctions.h"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
-#include <directia/Brain.h>
+#include <directia/brain/Brain.h>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionRENS constructor
@@ -49,8 +49,8 @@ const MIL_AgentTypePion* MIL_AgentTypePionRENS::Create( const std::string& strNa
 // Name: MIL_AgentTypePionRENS::RegisterFunctions
 // Created: LDC 2009-04-23
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePionRENS::RegisterFunctions( directia::Brain& brain, MIL_Agent_ABC& agent ) const
+void MIL_AgentTypePionRENS::RegisterFunctions( directia::brain::Brain& brain, MIL_Agent_ABC& agent ) const
 {
-    brain.RegisterFunction( "DEC_Perception_ActiverModeEnregistrement", boost::bind( &DEC_PerceptionFunctions::EnableRecordMode, boost::ref( agent ) ) );
-    brain.RegisterFunction( "DEC_Perception_DesactiverModeEnregistrement", boost::bind( &DEC_PerceptionFunctions::DisableRecordMode, boost::ref( agent ) ) );
+    brain[ "DEC_Perception_ActiverModeEnregistrement" ] = boost::bind( &DEC_PerceptionFunctions::EnableRecordMode, boost::ref( agent ) );
+    brain[ "DEC_Perception_DesactiverModeEnregistrement" ] = boost::bind( &DEC_PerceptionFunctions::DisableRecordMode, boost::ref( agent ) );
 }

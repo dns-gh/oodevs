@@ -31,7 +31,7 @@ include "bit.lua"
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
-                assert( ( self._namedParams.it ~= 0 and self._namedParams.it ~= nil ), "ACT_Dep_SeDeplacer it invalide" )
+                assert( self._namedParams.it ~= 0, "ACT_Dep_SeDeplacer it invalide" )
                 self.actionDeplacement = DEC_StartDeplacement( self._namedParams.it )
                 actionCallbacks[ self.actionDeplacement ] = function( arg ) self.eEtatDeplacement = arg end
 

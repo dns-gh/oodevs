@@ -13,6 +13,7 @@
 #define __MIL_Config_h_
 
 #include "MIL_Random.h"
+
 #include "tools/SessionConfig.h"
 
 #pragma warning ( push )
@@ -74,6 +75,8 @@ public:
     const bool*        GetRandomGaussian         () const;
     const double*      GetRandomDeviation        () const;
     const double*      GetRandomMean             () const;
+	unsigned int MIL_Config::ReadGCParameter_setPause() const;
+    unsigned int MIL_Config::ReadGCParameter_setStepMul() const;
     //@}
 
     //! @name Operations
@@ -112,7 +115,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const std::string, boost::crc_32_type::value_type >   T_CRCMap;
+    typedef std::map< const std::string, boost::crc_32_type::value_type > T_CRCMap;
     typedef T_CRCMap::const_iterator                                      CIT_CRCMap;
     //@}
 
@@ -153,9 +156,12 @@ private:
     bool           randomGaussian_[ MIL_Random::eContextsNbr ];
     double         randomDeviation_[ MIL_Random::eContextsNbr ];
     double         randomMean_[ MIL_Random::eContextsNbr ];
+
+	unsigned int				setpause_;
+	unsigned int				setstepmul_;
     //@}
 };
 
-#include "MIL_Config.inl"
+#   include "MIL_Config.inl"
 
 #endif // __MIL_Config_h_

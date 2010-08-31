@@ -43,7 +43,8 @@ include "Humus/Humus_Common/Automates/Actions/Medo/Actions - Medo - ALAT.bms"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -91,7 +92,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsIMEXAListe"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 --[[//repartition des pions au differentes patrouilles IMEX
@@ -103,7 +105,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsIMEXAListe"
                 local _continue = true
                     do
                         --[[//si plus de pion a traiter, ne pas donner de mission pour rien
-]]if( ( #( listeCopiePionsATraiter ) == 0 or #( listeCopiePionsATraiter ) == nil ) ) then
+]]if( #( listeCopiePionsATraiter ) == 0 ) then
                             do return end
                         end
 
@@ -166,7 +168,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsAllerSeRecompleterAListe"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions or {} ) do
@@ -205,7 +208,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterPlotsRavitaillementAListe
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions or {} ) do
@@ -244,7 +248,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsReconnaitreContourEniAListe"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions or {} ) do
@@ -284,7 +289,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsJalonnerAListe"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions or {} ) do
@@ -324,7 +330,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsFreinerAListe"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions or {} ) do
@@ -362,7 +369,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsAttaquerAListe"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions or {} ) do
@@ -403,7 +411,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsAttaquerUneForamtionAeromobileAList
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 --[[//copie de la liste des pions a héliporter
@@ -414,7 +423,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsAttaquerUneForamtionAeromobileAList
                 local _continue = true
                     do
                         --[[//si il n'y a plus d'eni a traiter, on ne donne plus de missions
-]]if( ( #( listeCopieEnisATraiter ) == 0 or #( listeCopieEnisATraiter ) == nil ) ) then
+]]if( #( listeCopieEnisATraiter ) == 0 ) then
                             do return end
                         end
 
@@ -484,12 +493,13 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 --[[// decoupage de la zone et définition des points de dislocation
 ]]local listeZones = S_Geometrie_DecoupeLocalisation( self._namedParams.zone, #( self._namedParams.listePions ) )
-                if( ( #( listeZones ) == 0 or #( listeZones ) == nil ) ) then
+                if( #( listeZones ) == 0 ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                 self:SendFeedback( eActionImpossible )
@@ -546,7 +556,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsEclairerAListe"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions or {} ) do
@@ -589,7 +600,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsReconnaitreDansLaProfondeurAListe"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -641,7 +653,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsEscorterAListe"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions or {} ) do
@@ -690,7 +703,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterAListe"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         assert( #( self._namedParams.listePions ) <= #( self._namedParams.listeUnitesAHeliporter ), "Trop de Pions Pour Transporter" )
         if( ModuleBegins() ) then
             do
@@ -702,7 +716,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterAListe"
                 local _continue = true
                     do
                         --[[//si plus de pion a traiter, ne pas donner de mission pour rien
-]]if( ( #( listeCopiePionsATraiter ) == 0 or #( listeCopiePionsATraiter ) == nil ) ) then
+]]if( #( listeCopiePionsATraiter ) == 0 ) then
                             do return end
                         end
 
@@ -774,7 +788,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsHelitransporterAListe"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         assert( #( self._namedParams.listePions ) <= #( self._namedParams.listeUnitesAHelitransporter ), "Trop de Pions Pour Transporter" )
         if( ModuleBegins() ) then
             do
@@ -786,7 +801,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsHelitransporterAListe"
                 local _continue = true
                     do
                         --[[//si plus de pion a traiter, ne pas donner de mission pour rien
-]]if( ( #( listeCopiePionsATraiter ) == 0 or #( listeCopiePionsATraiter ) == nil ) ) then
+]]if( #( listeCopiePionsATraiter ) == 0 ) then
                             do return end
                         end
 
@@ -853,7 +868,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsAppuyerDirectAuContactAListe"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions or {} ) do
@@ -898,7 +914,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsCouvrirAListe"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 local directionsCouverture = S_Misc_Automate_ALAT_ListeDirectionsPourCouverturesPourSgpt( #( self._namedParams.listePions ), self._namedParams.direction )
@@ -951,7 +968,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsFlancGarderAListe"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 local listePionsFlancGardeDroite = {}
@@ -1053,6 +1071,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionDetruireNeutraliserDansZoneA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1106,6 +1125,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionHeliporterPlotsRavitaillementA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1157,6 +1177,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionAllerSeRecompleterA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1210,6 +1231,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionIMEXA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1264,6 +1286,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionSurveillerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1317,6 +1340,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionReconnaitreContourEniA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1371,6 +1395,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionJalonnerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1425,6 +1450,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionFreinerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1479,6 +1505,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionAttaquerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1533,6 +1560,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionAttaquerUneFormationAeromobileA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1588,6 +1616,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionReconnaitreDansLaProfondeurA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1643,6 +1672,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionEscorterA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1700,6 +1730,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionHeliporterA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1756,6 +1787,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionHelitransporterA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1809,6 +1841,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionEclairerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1864,6 +1897,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionAppuyerDirectAuContactA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1920,6 +1954,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionCouvrirA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do

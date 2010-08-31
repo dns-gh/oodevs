@@ -34,7 +34,7 @@ public:
     //@{
     void Add( Registrable_ABC* r );
 
-    virtual void RegisterIn( directia::Brain& brain );
+    virtual void RegisterIn( directia::brain::Brain& brain );
     //@}
 
 private:
@@ -71,7 +71,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void RegisterIn( directia::Brain& brain )
+    virtual void RegisterIn( directia::brain::Brain& brain ) 
     {
         forward_.RegisterIn( brain );
     }

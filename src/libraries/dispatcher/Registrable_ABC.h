@@ -12,7 +12,10 @@
 
 namespace directia
 {
-    class Brain;
+    namespace brain
+    {
+        class Brain;
+    }
 }
 
 namespace dispatcher
@@ -34,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void RegisterIn( directia::Brain& brain ) = 0;
+    virtual void RegisterIn( directia::brain::Brain& brain ) = 0;
 
     virtual void UsedByDIA    () {}
     virtual void ReleasedByDIA() {}

@@ -28,7 +28,8 @@ include "Glaise/Glaise_Common/Automates/Actions/Medo/Actions - Medo - CIRCU.bms"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions or {} ) do
@@ -72,6 +73,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerReconnaitreItineraireA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -118,7 +120,8 @@ node "BEH_Medo_Automate_CIRCU_AssignerMissionsRenforcerAListe"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions or {} ) do
@@ -156,6 +159,7 @@ node "BEH_Medo_Automate_CIRCU_AssignerMissionRenforcerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -202,7 +206,8 @@ node "BEH_Medo_Automate_CIRCU_AssignerMissionsAppuyerFranchissementSurUnPointALi
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -253,6 +258,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerAppuyerFranchissementSurUnPointA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -299,7 +305,8 @@ node "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementDansZoneAListe"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -350,6 +357,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementDansZoneA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -402,7 +410,8 @@ node "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementAListe"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -453,6 +462,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -499,7 +509,8 @@ node "BEH_Mission_Automate_CIRCU_AssignerArmerPIAAListe"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -550,6 +561,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerArmerPIAA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -596,7 +608,8 @@ node "BEH_Mission_Automate_CIRCU_AssignerBloquerZoneAListe"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -647,6 +660,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerBloquerZoneA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -693,7 +707,8 @@ node "BEH_Mission_Automate_CIRCU_AssignerMettreEnOeuvreStationnementAListe"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -744,6 +759,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerMettreEnOeuvreZoneStationnementA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -790,7 +806,8 @@ node "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeAListe"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -841,6 +858,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -887,7 +905,8 @@ node "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementAListe"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -938,6 +957,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -984,7 +1004,8 @@ node "BEH_Mission_Automate_CIRCU_AssignerSurveillerAListe"
     end,
 
     activate = function( self )
-        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        local Activate = Activate
+        assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -1035,6 +1056,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerSurveillerA"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do

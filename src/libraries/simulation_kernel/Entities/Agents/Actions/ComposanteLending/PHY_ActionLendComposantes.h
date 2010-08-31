@@ -17,7 +17,7 @@
 class PHY_RolePion_Composantes;
 class PHY_ComposantePion;
 class MIL_AgentPion;
-class DEC_RolePion_Decision;
+class DEC_Decision_ABC;
 
 // =============================================================================
 // @class  PHY_ActionLendComposantes
@@ -40,7 +40,7 @@ protected:
 protected:
     //! @name Constructors/Destructor
     //@{
-             PHY_ActionLendComposantes( MIL_AgentPion&, DEC_RolePion_Decision* pAgent, unsigned int nbrToLend , T_ComposantePredicate predicate );
+             PHY_ActionLendComposantes( MIL_AgentPion&, DEC_Decision_ABC* pAgent, unsigned int nbrToLend , T_ComposantePredicate predicate );
     virtual ~PHY_ActionLendComposantes();
     //@}
 

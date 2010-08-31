@@ -26,6 +26,7 @@ includedFiles["sources/appui/alat/automates/common/missions/escorter/Escorter - 
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.listePionsSgpt = self.listePionsSgpt or DEC_Automate_PionsSansPC()
         self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePionOperationnels( self.listePionsSgpt, "AntitankHelicopterPatrol" )
         self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePionOperationnels( self.listePionsSgpt, "EscortAndCloseSupportHelicopterPatrol" )

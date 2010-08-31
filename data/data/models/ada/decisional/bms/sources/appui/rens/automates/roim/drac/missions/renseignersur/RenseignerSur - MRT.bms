@@ -22,6 +22,7 @@ includedFiles["sources/appui/rens/automates/roim/drac/missions/renseignersur/Ren
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------

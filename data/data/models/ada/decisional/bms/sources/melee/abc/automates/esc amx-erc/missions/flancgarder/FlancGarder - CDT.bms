@@ -35,6 +35,7 @@ includedFiles["sources/melee/abc/automates/esc amx-erc/missions/flancgarder/Flan
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//---------------------------------------------------------------------

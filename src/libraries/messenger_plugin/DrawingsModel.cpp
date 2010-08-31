@@ -15,11 +15,11 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Position.h"
-#include <directia/Brain.h>
+#include "directia/brain/Brain.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/bind.hpp>
-#include <xeumeuleu/xml.hpp>
+#include <xeumeuleu/xml.h>
 
 #include "protocol/protocol.h"
 #include "protocol/messengersenders.h"
@@ -79,7 +79,7 @@ void DrawingsModel::Load( const dispatcher::Config& config )
             xml::xifstream xis( filename );
             xis >> xml::start( "shapes" )
                     >> xml::list( "shape", *this, &DrawingsModel::ReadShape )
-                >> xml::end;
+                >> xml::end();
         }
     }
     catch( std::exception& )
@@ -110,7 +110,7 @@ void DrawingsModel::Save( const std::string& directory ) const
     xos << xml::start( "shapes" );
     std::for_each( elements_.begin(), elements_.end(), boost::bind( &Drawing::Serialize
                  , boost::bind( &T_Elements::value_type::second, _1 ), boost::ref( xos ) ) );
-    xos << xml::end;
+    xos << xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -196,12 +196,12 @@ namespace directia
 // Name: DrawingsModel::RegisterIn
 // Created: AGE 2008-07-09
 // -----------------------------------------------------------------------------
-void DrawingsModel::RegisterIn( directia::Brain& brain )
+void DrawingsModel::RegisterIn( directia::brain::Brain& brain )
 {
-    brain.RegisterObject( "drawings", this );
-    brain.RegisterFunction( "Create", &DrawingsModel::CreateDrawing );
-    brain.RegisterFunction( "Publish", &DrawingProxy::Publish );
-    brain.RegisterFunction( "GetCoordinates", &DrawingProxy::GetCoordinates );
+    brain[ "drawings" ] = this;
+    brain.Register( "Create", &DrawingsModel::CreateDrawing );
+    brain.Register( "Publish", &DrawingProxy::Publish );
+    brain.Register( "GetCoordinates", &DrawingProxy::GetCoordinates );
 }
 
 // -----------------------------------------------------------------------------
@@ -214,7 +214,7 @@ boost::shared_ptr< DrawingProxy > DrawingsModel::CreateDrawing( const std::strin
     std::auto_ptr< Drawing > p;
     xis >> xml::start( "shapes" )
             >> xml::list( "shape", *this, &DrawingsModel::ReadNamedShape, p, name )
-        >> xml::end;
+        >> xml::end();
     if( !p.get() )
         throw std::runtime_error( "Could not find drawing '" + name + "'" );
     return boost::shared_ptr< DrawingProxy >( new DrawingProxy( *this, p ) );
@@ -239,6 +239,6 @@ void DrawingsModel::Publish( const Drawing& drawing )
 // -----------------------------------------------------------------------------
 void DrawingsModel::ReadNamedShape( xml::xistream& xis, std::auto_ptr< Drawing >& result, const std::string& name )
 {
-    if( xis.attribute< std::string >( "name", std::string() ) == name )
+    if( xml::attribute( xis, "name", std::string() ) == name )
         result.reset( new Drawing( idManager_.NextId(), xis, converter_ ) );
 }

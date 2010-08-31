@@ -33,6 +33,7 @@ includedFiles["sources/melee/abc/pions/pel amx-erc/missions/Escorter.bms"] = tru
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or nil
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Terminaison
@@ -79,6 +80,7 @@ node "MIS_Pion_ABC_EscorterUnites"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eEtat = self.eEtat or nil
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Terminaison

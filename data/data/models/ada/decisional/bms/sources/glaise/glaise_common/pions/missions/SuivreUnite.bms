@@ -31,6 +31,7 @@ includedFiles["sources/glaise/glaise_common/pions/missions/SuivreUnite.bms"] = t
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.rDist_Max = self.rDist_Max or S_Dist_MissionSuivre_Max()
         self.rDist_Min = self.rDist_Min or S_Dist_MissionSuivre_Min()
         --[[//---------------------------------------------------------------------

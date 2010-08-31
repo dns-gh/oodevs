@@ -9,7 +9,7 @@
 
 #include "script_plugin_pch.h"
 #include "KnowledgeManipulator.h"
-#include <directia/Brain.h>
+#include "directia/brain/Brain.h"
 #include "dispatcher/AgentKnowledge.h"
 #include "dispatcher/KnowledgeGroup_ABC.h"
 #include "dispatcher/Side.h"
@@ -42,11 +42,11 @@ KnowledgeManipulator::~KnowledgeManipulator()
 // Name: KnowledgeManipulator::Registrar::RegisterIn
 // Created: AGE 2008-06-17
 // -----------------------------------------------------------------------------
-void KnowledgeManipulator::Registrar::RegisterIn( directia::Brain& brain )
+void KnowledgeManipulator::Registrar::RegisterIn( directia::brain::Brain& brain )
 {
-    brain.RegisterFunction( "GetIdentifier", &KnowledgeManipulator::GetIdentifier );
-    brain.RegisterFunction( "GetPosition",   &KnowledgeManipulator::GetPosition   );
-    brain.RegisterFunction( "GetOwnerTeam",  &KnowledgeManipulator::GetOwnerTeam  );
+    brain.Register( "GetIdentifier", &KnowledgeManipulator::GetIdentifier );
+    brain.Register( "GetPosition",   &KnowledgeManipulator::GetPosition   );
+    brain.Register( "GetOwnerTeam",  &KnowledgeManipulator::GetOwnerTeam  );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,3 +78,5 @@ std::string KnowledgeManipulator::GetOwnerTeam() const
     // $$$$ _RC_ SBO 2010-06-03: refactor !
     return std::string( static_cast< const dispatcher::KnowledgeGroup_ABC& >( knowledge_.GetOwner() ).GetTeam().GetName() );
 }
+
+

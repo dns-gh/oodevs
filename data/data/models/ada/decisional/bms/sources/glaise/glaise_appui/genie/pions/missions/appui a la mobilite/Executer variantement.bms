@@ -22,6 +22,7 @@ includedFiles["sources/glaise/glaise_appui/genie/pions/missions/appui a la mobil
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------

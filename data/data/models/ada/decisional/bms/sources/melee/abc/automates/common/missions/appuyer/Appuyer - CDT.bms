@@ -40,6 +40,7 @@ includedFiles["sources/melee/abc/automates/common/missions/appuyer/Appuyer - CDT
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[// Init
 ]]self.bResterAHauteur = self.bResterAHauteur or false
         --[[//---------------------------------------------------------------------

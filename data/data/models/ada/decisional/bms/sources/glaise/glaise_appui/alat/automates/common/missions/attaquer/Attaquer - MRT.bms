@@ -16,6 +16,7 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/attaqu
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.selPions = self.selPions or S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsSansPC() )
         self.listeHAH = self.listeHAH or S_Cherche_Automate_Filtre_TypePion( self.selPions, "PatrouilleHAH" )
         self.listeTigre = self.listeTigre or S_Cherche_Automate_Filtre_TypePion( self.selPions, "PatrouilleTigre" )

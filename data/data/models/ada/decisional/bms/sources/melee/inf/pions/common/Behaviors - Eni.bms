@@ -38,6 +38,7 @@ include "bit.lua"
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
         self.eActionFixer = self.eActionFixer or eActionEnCours
         --[[//-----------------------------------------------------------------------------

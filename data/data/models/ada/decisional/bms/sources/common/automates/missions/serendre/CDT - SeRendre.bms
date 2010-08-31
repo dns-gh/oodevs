@@ -18,6 +18,7 @@ includedFiles["sources/common/automates/missions/serendre/CDT - SeRendre.bms"] =
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------

@@ -157,7 +157,7 @@ end
 function S_Tir_EfficaceSur( repEni, rEtatInitial )
     local _returnValue = false
     _returnValue = false
-    if( ( rEtatInitial == 0 or rEtatInitial == nil ) ) then
+    if( rEtatInitial == 0 ) then
         do
             _returnValue = false
                         do return _returnValue end

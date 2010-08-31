@@ -26,6 +26,7 @@ includedFiles["sources/appui/trans/pions/missions/SeFaireTransporter.bms"] = tru
     end,
 
     activate = function( self )
+        local Activate = Activate
         self.ePhase = self.ePhase or ePreparerMission
         self.eEtat = self.eEtat or eActionEnCours
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
@@ -128,6 +129,7 @@ node "BEH_Dep_Trans_SeFaireTransporter"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DEC_Agent_EstTransporte() ) then
             Activate( self.activations.ACT_Dep_Trans_TransportEnCours, 1, {} )
         end
