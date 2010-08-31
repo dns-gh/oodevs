@@ -75,7 +75,6 @@ BOOST_AUTO_TEST_CASE( ScriptTest_CommandParsing )
 }
 
 #include <iostream>
-#include <fstream>
 
 namespace
 {
@@ -91,7 +90,6 @@ namespace
         }
         const std::string brainParam = "brain={file='" + filename + "',type='test_suite'} plugins={} cwd='" + bfs::path( filename, bfs::native ).branch_path().string() + "'";
         std::cerr << "Param = " << brainParam << std::endl;
-        std::ofstream file( ( std::string("d:/tmp/test_")+name ).c_str() );
         file << "Param = " << brainParam << std::endl;
         directia::brain::Brain brain( brainParam );
         brain[ "RunTest" ]();
