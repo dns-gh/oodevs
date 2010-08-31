@@ -22,17 +22,20 @@ using namespace dispatcher;
 // Created: AGE 2007-10-19
 // -----------------------------------------------------------------------------
 Report::Report( Model& model, const MsgsSimToClient::MsgReport& report )
-    : SimpleEntity< >( report.cr_oid().id() )
-    , id_     ( report.cr_oid().id() )
+    : SimpleEntity< >( report.id().id() )
+    , id_     ( report.id().id() )
     , emitter_( model.TaskerToId( report.cr() ) )
-    , report_ ( report.id().id() )
+    , report_ ( report.cr_oid().id() )
     , type_   ( report.type() )
     , date_   ( report.time().data() )
     , model_  ( model )
 {
-    parameters_.resize( report.parametres().elem_size() );
-    for( int i = 0; i < report.parametres().elem_size(); ++i )
-        parameters_[i] = MissionParameter_ABC::Create( report.parametres().elem( i ) );
+    if( report.has_parametres() )
+    {
+        parameters_.resize( report.parametres().elem_size() );
+        for( int i = 0; i < report.parametres().elem_size(); ++i )
+            parameters_[i] = MissionParameter_ABC::Create( report.parametres().elem( i ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -62,8 +65,8 @@ void Report::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     //!!Warning: cr and id fields have been accidently swapped in this version of protocol!
     client::Report message;
-    message().mutable_cr_oid()->set_id( id_ );
-    message().mutable_id()->set_id( report_ );
+    message().mutable_id()->set_id( id_ );
+    message().mutable_cr_oid()->set_id( report_ );
     model_.SetToTasker( *message().mutable_cr(), emitter_ );
     message().set_type( type_ );
     message().mutable_time()->set_data( date_ );

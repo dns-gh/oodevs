@@ -15,16 +15,17 @@
 #pragma warning( pop )
 #include <vector>
 
+namespace MsgsSimToClient
+{
+    class MsgReport;
+}
+
 namespace xml
 {
     class xistream;
 }
 
 class ReportFactory;
-namespace Common
-{
-    class MsgMissionParameters;
-}
 
 // =============================================================================
 /** @class  ReportTemplate
@@ -44,7 +45,7 @@ public:
     //! @name Operations
     //@{
     unsigned long GetId() const;
-    QString RenderMessage( const Common::MsgMissionParameters& asn ) const;
+    QString RenderMessage( const MsgsSimToClient::MsgReport& asn ) const;
     //@}
 
 private:

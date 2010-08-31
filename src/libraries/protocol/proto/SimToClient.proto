@@ -603,9 +603,9 @@ enum EnumReportType {
 
 message MsgReport {
     required Common.ReportId             id         = 1;
-    required Common.Tasker               cr     = 2;
-    required Common.ReportType           cr_oid       = 3;
-    required EnumReportType              type   = 4;
+    required Common.Tasker               cr         = 2;
+    required Common.ReportType           cr_oid     = 3;
+    required EnumReportType              type       = 4;
     required Common.MsgDateTime          time       = 5;
     optional Common.MsgMissionParameters parametres = 6;
 }

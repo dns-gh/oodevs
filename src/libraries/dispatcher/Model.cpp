@@ -224,7 +224,7 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
 
 
     if( wrapper.message().has_report() )
-        CreateUpdate< Report >( reports_, wrapper.message().report().cr_oid().id(), wrapper.message().report() ); 
+        CreateUpdate< Report >( reports_, wrapper.message().report().id().id(), wrapper.message().report() ); 
     if( wrapper.message().has_invalidate_report() )
         Destroy( reports_, wrapper.message().invalidate_report().id().id(), wrapper.message().invalidate_report() ); 
     if( wrapper.message().has_trace() )

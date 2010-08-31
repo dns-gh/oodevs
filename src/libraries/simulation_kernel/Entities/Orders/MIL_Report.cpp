@@ -175,7 +175,7 @@ void MIL_Report::ReadParameter( xml::xistream& xis )
 // Name: MIL_Report::DoSend
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-bool MIL_Report::DoSend( unsigned int nSenderId, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, int reportId, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& params ) const
+bool MIL_Report::DoSend( unsigned int nSenderId, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& params ) const
 {
     if( params.size() != parameters_.size() )
     {
@@ -183,14 +183,12 @@ bool MIL_Report::DoSend( unsigned int nSenderId, E_Type nType, const DEC_Knowled
         return false;
     }
     client::Report asn;
-    asn().mutable_id()->set_id( reportId );
+    asn().mutable_id()->set_id( std::numeric_limits< unsigned int >::max() - ids_.GetFreeIdentifier() ); // descending order
+    asn().mutable_cr_oid()->set_id( nID_ );
     // $$$$ _RC_ PHC 2010-07-07: Besoin de récuperer model...
-    //nSenderID
     MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *asn().mutable_cr(), nSenderId );
-    asn().mutable_cr_oid()->set_id( std::numeric_limits< unsigned int >::max() - ids_.GetFreeIdentifier() ); // descending order
     asn().set_type( MsgsSimToClient::EnumReportType( nType ) );
     NET_ASN_Tools::WriteGDH( MIL_AgentServer::GetWorkspace().GetRealTime(), *asn().mutable_time() );
-    asn().mutable_parametres();  // $$$$ FHD 2009-10-28: should be removed if field is optional in protocol
     for( unsigned int i = 0; i < parameters_.size(); ++i )
         if( !parameters_[i]->Copy( *params[ i ], *asn().mutable_parametres()->add_elem(), knowledgeResolver, false /*not optional*/ ) )
             return false; //$$$ Memory leak

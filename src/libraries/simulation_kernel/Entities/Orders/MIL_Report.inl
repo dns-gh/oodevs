@@ -34,17 +34,7 @@ const MIL_Report* MIL_Report::Find( unsigned int nID )
 template< typename T > inline
 void MIL_Report::Send( const T& sender, E_Type nType, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& diaParameters ) const
 {
-    DoSend( sender.GetID(), nType, sender.GetKnowledge(), 0, diaParameters );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Report::SendReportWithTypeAsArgument
-// Created: LDC 2009-06-08
-// -----------------------------------------------------------------------------
-template< typename T > inline
-void MIL_Report::SendReportWithTypeAsArgument( const T& sender, E_Type nType, int reportId, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& params ) const
-{
-    DoSend( sender.GetID(), nType, sender.GetKnowledge(), reportId, params );
+    DoSend( sender.GetID(), nType, sender.GetKnowledge(), diaParameters );
 }
 
 // -----------------------------------------------------------------------------

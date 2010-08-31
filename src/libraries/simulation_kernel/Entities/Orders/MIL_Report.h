@@ -421,7 +421,6 @@ public:
 
     //! @name Operations
     //@{
-    template< typename T > void SendReportWithTypeAsArgument( const T& sender, E_Type nType, int reportId, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& params ) const;
     template< typename T > void Send( const T& sender, E_Type nType, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& diaParameters ) const;
     //@}
 
@@ -448,7 +447,7 @@ private:
     template< typename T >
     static void PostEvent( const T& receiver, E_EngineReport nReport, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters );
 
-    bool DoSend( unsigned int nSenderID, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, int reportId, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& params ) const;
+    bool DoSend( unsigned int nSenderID, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& params ) const;
     //@}
 
     //! @name Types

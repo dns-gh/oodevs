@@ -50,7 +50,7 @@ void Reports::DoUpdate( const MsgsSimToClient::MsgReport& message )
 {
     // $$$$ AGE 2007-04-20: limiter le nombre de reports ?
     Report* report = reportFactory_.CreateReport( agent_, message );
-    Register( message.cr_oid().id(), *report );
+    Register( message.id().id(), *report );
     controller_.Create( *report );
 }
 

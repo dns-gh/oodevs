@@ -851,21 +851,29 @@ void AgentServerMsgMgr::OnReceiveMsgUnitCreationRequestAck( const MsgsSimToClien
     CheckAcknowledge( logger_, message.error(), "UnitCreationRequestAck" );
 }
 
+namespace
+{
+    template< typename Message, typename Model >
+    void OnReceiveMessageWithTasker( Model& model, const Message& message, const Common::Tasker& id )
+    {
+        if( id.has_unit() )
+            model.GetAgent( id.unit().id() ).Update( message );
+        else if( id.has_automat() )
+            model.GetAutomat( id.automat().id() ).Update( message );
+        else if( id.has_population() )
+            model.GetPopulation( id.population().id() ).Update( message );
+        else
+            throw std::exception( std::string( std::string( typeid( Message ).name() ) + ": unknown message source entity" ).c_str() ); 
+    }
+}
+
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgCR
 // Created: NLD 2002-09-02
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCR( const MsgsSimToClient::MsgReport& message )
 {
-    unsigned int id (0);
-    if ( message.cr().has_automat() )
-        id = message.cr().automat().id();
-    else if ( message.cr().has_unit() )
-        id = message.cr().unit().id();
-    else if ( message.cr().has_population() )
-        id = message.cr().population().id();
-    else throw ( std::exception( "MsgReport misformed" ) ); 
-    GetModel().agents_.FindAllAgent( id )->Update( message );
+    OnReceiveMessageWithTasker( GetModel().agents_, message, message.cr() );
 }
 
 // -----------------------------------------------------------------------------
@@ -874,7 +882,7 @@ void AgentServerMsgMgr::OnReceiveMsgCR( const MsgsSimToClient::MsgReport& messag
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgInvalidateReport( const MsgsSimToClient::MsgInvalidateReport& message )
 {
-    GetModel().agents_.FindAllAgent( message.id().id() )->Update( message );
+    OnReceiveMessageWithTasker( GetModel().agents_, message, message.source() );
 }
 
 // -----------------------------------------------------------------------------
@@ -883,14 +891,7 @@ void AgentServerMsgMgr::OnReceiveMsgInvalidateReport( const MsgsSimToClient::Msg
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgTrace( const MsgsSimToClient::MsgTrace& message )
 {
-    if( message.source().has_automat() )
-        GetModel().agents_.FindAllAgent( message.source().automat().id() )->Update( message );
-    if( message.source().has_unit() )
-        GetModel().agents_.FindAllAgent( message.source().unit().id() )->Update( message );
-    if( message.source().has_formation() )
-        GetModel().agents_.FindAllAgent( message.source().formation().id() )->Update( message );
-    if( message.source().has_population() )
-        GetModel().agents_.FindAllAgent( message.source().population().id() )->Update( message );
+    OnReceiveMessageWithTasker( GetModel().agents_, message, message.source() );
 }
 
 // -----------------------------------------------------------------------------
@@ -899,14 +900,7 @@ void AgentServerMsgMgr::OnReceiveMsgTrace( const MsgsSimToClient::MsgTrace& mess
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgDecisionalState( const MsgsSimToClient::MsgDecisionalState& message )
 {
-    if( message.id().has_automat() )
-        GetModel().agents_.FindAllAgent( message.id().automat().id() )->Update( message );
-    if( message.id().has_unit() )
-        GetModel().agents_.FindAllAgent( message.id().unit().id() )->Update( message );
-    if( message.id().has_formation() )
-        GetModel().agents_.FindAllAgent( message.id().formation().id() )->Update( message );
-    if( message.id().has_population() )
-        GetModel().agents_.FindAllAgent( message.id().population().id() )->Update( message );
+    OnReceiveMessageWithTasker( GetModel().agents_, message, message.id() );
 }
 
 //-----------------------------------------------------------------------------

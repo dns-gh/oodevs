@@ -106,7 +106,7 @@ QDateTime ReportFactory::GetTime( const Common::MsgDateTime& d ) const
 // -----------------------------------------------------------------------------
 Report* ReportFactory::CreateReport( const kernel::Entity_ABC& agent, const MsgsSimToClient::MsgReport& message ) const
 {
-    ReportTemplate* report = Find( message.id().id() );
+    ReportTemplate* report = Find( message.cr_oid().id() );
     if( !report )
         return 0;
     Report::E_Type type = Report::eRC;
@@ -116,18 +116,18 @@ Report* ReportFactory::CreateReport( const kernel::Entity_ABC& agent, const Msgs
         type = Report::eEvent;
     else if( message.type() == MsgsSimToClient::warning )
         type = Report::eWarning;
-    return new Report( agent, type, report->RenderMessage( message.parametres() ), GetTime( message.time() ) );
+    return new Report( agent, type, report->RenderMessage( message ), GetTime( message.time() ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ReportFactory::FormatReport
 // Created: LDC 2010-03-17
 // -----------------------------------------------------------------------------
-std::string ReportFactory::FormatReport( const MsgsSimToClient::MsgReport& asn ) const
+std::string ReportFactory::FormatReport( const MsgsSimToClient::MsgReport& message ) const
 {
-    ReportTemplate* report = Find( asn.id().id() );
+    ReportTemplate* report = Find( message.cr_oid().id() );
     if( report )
-        return report->RenderMessage( asn.parametres() ).ascii();
+        return report->RenderMessage( message ).ascii();
     return std::string();
 }
 

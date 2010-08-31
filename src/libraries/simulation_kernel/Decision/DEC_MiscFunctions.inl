@@ -24,11 +24,10 @@
 template< typename T >
 void DEC_MiscFunctions::Report( T& caller, int type, int reportId )
 {
-    const MIL_Report* pReport = MIL_Report::Find( reportId );
-    if( pReport )
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
-        std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
-        pReport->SendReportWithTypeAsArgument( caller, MIL_Report::E_Type( type ), reportId, params );
+        std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > params;
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
     }
 }
 
@@ -39,13 +38,12 @@ void DEC_MiscFunctions::Report( T& caller, int type, int reportId )
 template< typename T > 
 void DEC_MiscFunctions::ReportAgentKnowledge( T& caller, int type, int reportId, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge )
 {
-    const MIL_Report* pReport = MIL_Report::Find( reportId );
-    if( pReport )
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
-        std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
-        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam( MIL_MissionParameterFactory::Create( agentKnowledge ) );
+        std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > params;
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam( MIL_MissionParameterFactory::Create( agentKnowledge ) );
         params.push_back( missionParam );
-        pReport->SendReportWithTypeAsArgument( caller, MIL_Report::E_Type( type ), reportId, params );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
     }
 }
 
@@ -56,13 +54,12 @@ void DEC_MiscFunctions::ReportAgentKnowledge( T& caller, int type, int reportId,
 template< typename T >
 void DEC_MiscFunctions::ReportDotationType( T& caller, int type, int reportId, const PHY_DotationCategory* dotationType )
 {
-    const MIL_Report* pReport = MIL_Report::Find( reportId );
-    if( pReport )
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
-        std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
-        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam( MIL_MissionParameterFactory::Create( dotationType ) );
+        std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > params;
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam( MIL_MissionParameterFactory::Create( dotationType ) );
         params.push_back( missionParam );
-        pReport->SendReportWithTypeAsArgument( caller, MIL_Report::E_Type( type ), reportId, params );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
     }
 }
 
@@ -73,13 +70,12 @@ void DEC_MiscFunctions::ReportDotationType( T& caller, int type, int reportId, c
 template< typename T >
 void DEC_MiscFunctions::ReportEquipmentType( T& caller, int type, int reportId, const PHY_ComposanteTypePion* equipmentType )
 {
-    const MIL_Report* pReport = MIL_Report::Find( reportId );
-    if( pReport )
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
-        std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
-        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam( MIL_MissionParameterFactory::Create( equipmentType ) );
+        std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > params;
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam( MIL_MissionParameterFactory::Create( equipmentType ) );
         params.push_back( missionParam );
-        pReport->SendReportWithTypeAsArgument( caller, MIL_Report::E_Type( type ), reportId, params );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
     }
 }
 
@@ -90,13 +86,12 @@ void DEC_MiscFunctions::ReportEquipmentType( T& caller, int type, int reportId, 
 template< typename T >
 void DEC_MiscFunctions::ReportFloat( T& caller, int type, int reportId, float param )
 {
-    const MIL_Report* pReport = MIL_Report::Find( reportId );
-    if( pReport )
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
-        std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
-        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam( MIL_MissionParameterFactory::Create( param ) );
+        std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > params;
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam( MIL_MissionParameterFactory::Create( param ) );
         params.push_back( missionParam );
-        pReport->SendReportWithTypeAsArgument( caller, MIL_Report::E_Type( type ), reportId, params );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
     }
 }
 
@@ -107,15 +102,14 @@ void DEC_MiscFunctions::ReportFloat( T& caller, int type, int reportId, float pa
 template< typename T >
 void DEC_MiscFunctions::ReportFloatFloat( T& caller, int type, int reportId, float param1, float param2 )
 {
-    const MIL_Report* pReport = MIL_Report::Find( reportId );
-    if( pReport )
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
         std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
-        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam1( MIL_MissionParameterFactory::Create( param1 ) );
-        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam2( MIL_MissionParameterFactory::Create( param2 ) );
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam1( MIL_MissionParameterFactory::Create( param1 ) );
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam2( MIL_MissionParameterFactory::Create( param2 ) );
         params.push_back( missionParam1 );
         params.push_back( missionParam2 );
-        pReport->SendReportWithTypeAsArgument( caller, MIL_Report::E_Type( type ), reportId, params );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
     }
 }
 
@@ -126,13 +120,12 @@ void DEC_MiscFunctions::ReportFloatFloat( T& caller, int type, int reportId, flo
 template< typename T >
 void DEC_MiscFunctions::ReportId( T& caller, int type, int reportId, int id )
 {
-    const MIL_Report* pReport = MIL_Report::Find( reportId );
-    if( pReport )
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
-        std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
-        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam( MIL_MissionParameterFactory::Create( id ) );
+        std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > params;
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam( MIL_MissionParameterFactory::Create( id ) );
         params.push_back( missionParam );
-        pReport->SendReportWithTypeAsArgument( caller, MIL_Report::E_Type( type ), reportId, params );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
     }
 }
 
@@ -143,13 +136,12 @@ void DEC_MiscFunctions::ReportId( T& caller, int type, int reportId, int id )
 template< typename T >
 void DEC_MiscFunctions::ReportObjectKnoweldge( T& caller, int type, int reportId, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    const MIL_Report* pReport = MIL_Report::Find( reportId );
-    if( pReport )
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
-        std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
-        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam( MIL_MissionParameterFactory::Create( pKnowledge ) );
+        std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > params;
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam( MIL_MissionParameterFactory::Create( pKnowledge ) );
         params.push_back( missionParam );
-        pReport->SendReportWithTypeAsArgument( caller, MIL_Report::E_Type( type ), reportId, params );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
     }
 }
 
@@ -160,14 +152,13 @@ void DEC_MiscFunctions::ReportObjectKnoweldge( T& caller, int type, int reportId
 template< typename T >
 void DEC_MiscFunctions::ReportPion( T& caller, int type, int reportId, DEC_Decision_ABC* pion )
 {
-    const MIL_Report* pReport = MIL_Report::Find( reportId );
-    if( pReport )
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
         DEC_RolePion_Decision* pionDec = static_cast< DEC_RolePion_Decision* >( pion ); // $$$$ LDC: FIXME Is an ABC or a concrete type passed from dia?
         std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
-        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam( MIL_MissionParameterFactory::Create( pionDec ) );
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam( MIL_MissionParameterFactory::Create( pionDec ) );
         params.push_back( missionParam );
-        pReport->SendReportWithTypeAsArgument( caller, MIL_Report::E_Type( type ), reportId, params );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
     }
 }
 
@@ -178,8 +169,7 @@ void DEC_MiscFunctions::ReportPion( T& caller, int type, int reportId, DEC_Decis
 template< typename T >
 void DEC_MiscFunctions::ReportPionAutomate( T& caller, int type, int reportId, DEC_Decision_ABC* pion, DEC_Decision_ABC* automate )
 {
-    const MIL_Report* pReport = MIL_Report::Find( reportId );
-    if( pReport )
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
         std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
         DEC_RolePion_Decision* pionDec = static_cast< DEC_RolePion_Decision* >( pion ); // $$$$ LDC: FIXME Is an ABC or a concrete type passed from dia?
@@ -188,7 +178,7 @@ void DEC_MiscFunctions::ReportPionAutomate( T& caller, int type, int reportId, D
         boost::shared_ptr<MIL_MissionParameter_ABC> missionParam2( MIL_MissionParameterFactory::Create( automateDec ) );
         params.push_back( missionParam1 );
         params.push_back( missionParam2 );
-        pReport->SendReportWithTypeAsArgument( caller, MIL_Report::E_Type( type ), reportId, params );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
     }
 }
 
@@ -199,14 +189,13 @@ void DEC_MiscFunctions::ReportPionAutomate( T& caller, int type, int reportId, D
 template< typename T >
 void DEC_MiscFunctions::ReportPopulationKnowledge( T& caller, int type, int reportId, int populationKnowledge )
 {
-    const MIL_Report* pReport = MIL_Report::Find( reportId );
-    if( pReport )
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
         std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
         DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(populationKnowledge);
         boost::shared_ptr<MIL_MissionParameter_ABC> missionParam( MIL_MissionParameterFactory::Create( pKnowledge ) );
         params.push_back( missionParam );
-        pReport->SendReportWithTypeAsArgument( caller, MIL_Report::E_Type( type ), reportId, params );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
     }
 }
 
@@ -217,13 +206,12 @@ void DEC_MiscFunctions::ReportPopulationKnowledge( T& caller, int type, int repo
 template< typename T >
 void DEC_MiscFunctions::ReportTirPion( T& caller, int type, int reportId, int id )
 {
-    const MIL_Report* pReport = MIL_Report::Find( reportId );
-    if( pReport )
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
         std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
         boost::shared_ptr<MIL_MissionParameter_ABC> missionParam( MIL_MissionParameterFactory::CreateTir( id ) );
         params.push_back( missionParam );
-        pReport->SendReportWithTypeAsArgument( caller, MIL_Report::E_Type( type ), reportId, params );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
     }
 }
 
@@ -234,13 +222,12 @@ void DEC_MiscFunctions::ReportTirPion( T& caller, int type, int reportId, int id
 template< typename T >
 void DEC_MiscFunctions::ReportString( T& caller, int type, int reportId, const std::string& message )
 {
-    const MIL_Report* pReport = MIL_Report::Find( reportId );
-    if( pReport )
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
         std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
-        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam( MIL_MissionParameterFactory::Create( message ) );
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam( MIL_MissionParameterFactory::Create( message ) );
         params.push_back( missionParam );
-        pReport->SendReportWithTypeAsArgument( caller, MIL_Report::E_Type( type ), reportId, params );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
     }
 }
 
@@ -253,7 +240,6 @@ void DEC_MiscFunctions::Trace( const T& caller, const std::string& message )
 {
     client::Trace msg;
     MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *msg().mutable_source(), caller.GetID() );
-    //msg().set_oid( caller.GetID() );
     *msg().mutable_message() = message.c_str();
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -267,7 +253,6 @@ void DEC_MiscFunctions::Debug( const T& caller, const std::string& callerType, c
 {
     if( !MIL_AgentServer::GetWorkspace().GetConfig().UseDecDebug() )
         return;
-
     MT_LOG_INFO_MSG( MT_FormatString( "%s %d says : [%s]", callerType.c_str(), caller.GetID(), message.c_str() ).c_str() );
 }
 
@@ -280,7 +265,6 @@ void DEC_MiscFunctions::DebugDrawPoints(const T& caller, std::vector< boost::sha
 {
     client::DebugPoints message;
     MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *message().mutable_id(), caller.GetID() );
-    //message().set_oid( caller.GetID() );
     NET_ASN_Tools::WriteCoordinates( points, *message().mutable_coordinates() );
     message.Send( NET_Publisher_ABC::Publisher() );
     delete message().mutable_coordinates();
@@ -296,7 +280,6 @@ void DEC_MiscFunctions::DebugDrawPoint( const T& caller, const MT_Vector2D* pPoi
     assert( pPoint );
     client::DebugPoints message;
     MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *message().mutable_id(), caller.GetID() );
-    //message().set_oid( caller.GetID() );
     NET_ASN_Tools::WritePoint( *pPoint, *message().mutable_coordinates()->add_elem() );
     message.Send( NET_Publisher_ABC::Publisher() );
 }

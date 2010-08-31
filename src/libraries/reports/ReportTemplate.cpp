@@ -48,15 +48,19 @@ unsigned long ReportTemplate::GetId() const
 // Name: ReportTemplate::RenderMessage
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-QString ReportTemplate::RenderMessage( const Common::MsgMissionParameters& message ) const
+QString ReportTemplate::RenderMessage( const MsgsSimToClient::MsgReport& message ) const
 {
     QString messageStr = message_;
     unsigned int enums = 0;
-    for( int i = 0; i < message.elem_size(); ++i )
-        if( message.elem( i ).value().has_enumeration() )
-            messageStr = messageStr.arg( enumerations_[ enums++ ][ message.elem( i ).value().enumeration() ] );
-        else
-            messageStr = messageStr.arg( factory_.RenderParameter( message.elem( i ) ) );
+    if( message.has_parametres() )
+    {
+        const Common::MsgMissionParameters& parameters = message.parametres();
+        for( int i = 0; i < parameters.elem_size(); ++i )
+            if( parameters.elem( i ).value().has_enumeration() )
+                messageStr = messageStr.arg( enumerations_[ enums++ ][ parameters.elem( i ).value().enumeration() ] );
+            else
+                messageStr = messageStr.arg( factory_.RenderParameter( parameters.elem( i ) ) );
+    }
     return messageStr;
 }
 
