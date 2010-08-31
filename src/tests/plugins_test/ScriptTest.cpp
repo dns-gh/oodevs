@@ -90,7 +90,6 @@ namespace
         }
         const std::string brainParam = "brain={file='" + filename + "',type='test_suite'} plugins={} cwd='" + bfs::path( filename, bfs::native ).branch_path().string() + "'";
         std::cerr << "Param = " << brainParam << std::endl;
-        file << "Param = " << brainParam << std::endl;
         directia::brain::Brain brain( brainParam );
         brain[ "RunTest" ]();
     }
