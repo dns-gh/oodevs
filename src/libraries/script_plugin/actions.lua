@@ -105,6 +105,24 @@ function Polygon.create( name, points )
 end
 
 --------------------------------------------------------------------------------
+-- AgentList
+--------------------------------------------------------------------------------
+AgentList = {}
+AgentList.__index = AgentList
+
+function AgentList.create( name, agents )
+    local new = {}
+    setmetatable( new, AgentList )
+    new.type = "AgentList"
+    new.name = name
+    new.children = {}
+    for _, v in ipairs( agents ) do
+        new.children[#new.children + 1] = { name = name, type = "agent", value = v }
+    end
+    return new
+end
+
+--------------------------------------------------------------------------------
 -- Line
 --------------------------------------------------------------------------------
 Line = {}
