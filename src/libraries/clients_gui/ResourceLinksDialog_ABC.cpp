@@ -195,7 +195,7 @@ void ResourceLinksDialog_ABC::UpdateTables()
             widgets_[ i ].production_->setValue( node->production_ );
             widgets_[ i ].consumption_->setValue( node->consumption_ );
             widgets_[ i ].critical_->setChecked( node->critical_ );
-            widgets_[ i ].stock_->setValue( node->stock_ );
+            widgets_[ i ].stock_->setValue( node->maxStock_ );
             widgets_[ i ].table_->setNumRows( node->links_.size() );
             widgets_[ i ].table_->setColumnReadOnly( 0, true );
             for( unsigned int j = 0; j < node->links_.size(); ++j )

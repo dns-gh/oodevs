@@ -30,6 +30,7 @@ NodeElement::NodeElement()
     , receivedQuantity_   ( 0 )
     , consumptionAmount_  ( 0 )
     , consumptionCritical_( false )
+    , modifier_           ( 1. ) 
 {
     // NOTHING
 }
@@ -49,6 +50,7 @@ NodeElement::NodeElement( xml::xistream& xis, E_ResourceType resourceType )
     , receivedQuantity_   ( 0 )
     , consumptionAmount_  ( 0 )
     , consumptionCritical_( false )
+    , modifier_           ( 1. ) 
 {
     xis >> xml::list( "link", *this, &NodeElement::ReadLink );
 }
@@ -68,6 +70,7 @@ NodeElement::NodeElement( const NodeElement& from )
     , receivedQuantity_   ( from.receivedQuantity_ )
     , consumptionAmount_  ( from.consumptionAmount_ )
     , consumptionCritical_( from.consumptionCritical_ )
+    , modifier_           ( from.modifier_ ) 
 {
     for( CIT_ResourceLinks it = from.links_.begin(); it != from.links_.end(); ++it )
         links_.push_back( new ResourceLink( **it ) );
@@ -133,9 +136,9 @@ void NodeElement::UpdateImmediateStock( bool isFunctional )
 {
     if( !isActivated_ )
         return;
-    immediateStock_ = receivedQuantity_ + stockCapacity_;
+    immediateStock_ = static_cast< unsigned int >( modifier_ * receivedQuantity_ ) + stockCapacity_;
     if( isFunctional )
-        immediateStock_ += productionCapacity_;
+        immediateStock_ += static_cast< unsigned int >( modifier_ * productionCapacity_ );
     receivedQuantity_ = 0;
 }
 
@@ -147,13 +150,14 @@ void NodeElement::Consume( bool& isFunctional )
 {
     if( !isActivated_ )
         return;
-    if( consumptionAmount_ > immediateStock_ )
+    unsigned int consumption = static_cast< unsigned int >( modifier_ * consumptionAmount_ );
+    if( consumption > immediateStock_ )
     {
         immediateStock_ = 0;
         if( consumptionCritical_ )
             isFunctional = false;
     }
-    immediateStock_ -= consumptionAmount_;
+    immediateStock_ -= consumption;
 }
 
 // -----------------------------------------------------------------------------
@@ -172,7 +176,7 @@ void NodeElement::DistributeResource( bool isFunctional )
         DoDistributeResource( links );
     }
     // finally update stock
-    stockCapacity_ = std::min( immediateStock_, stockMaxCapacity_ );
+    stockCapacity_ = std::min( immediateStock_, static_cast< unsigned int >( modifier_ * stockMaxCapacity_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -243,6 +247,15 @@ void NodeElement::DoDistributeResource( T_ResourceLinks& links )
 void NodeElement::Push( int quantity )
 {
     receivedQuantity_ += isActivated_ ? quantity : 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeElement::SetModifier
+// Created: JSR 2010-08-31
+// -----------------------------------------------------------------------------
+void NodeElement::SetModifier( unsigned int modifier )
+{
+    modifier_ = 0.01 * modifier;
 }
 
 // -----------------------------------------------------------------------------

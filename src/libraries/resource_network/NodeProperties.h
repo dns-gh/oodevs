@@ -50,6 +50,7 @@ public:
     void Update( xml::xistream& xis );
     void Update();
     void Push( int quantity, E_ResourceType resourceType );
+    void SetModifier( unsigned int modifier );
     //@}
 
     //! @name Network
@@ -57,7 +58,6 @@ public:
     void Serialize( MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg ) const;
     void Update( const Common::MsgMissionParameter_Value& msg );
     //@}
-
 
 private:
     //! @name Copy/Assignment

@@ -122,10 +122,11 @@ public:
     virtual void ProcessPopulationInside ( MIL_PopulationElement_ABC& population ) = 0;
     //@}
 
-    //! @name
+    //! @name Helpers
     //@{
     template< typename T> void ProcessAgentsInside( T functor ) const;
     template< typename T, typename I > void SetAttribute( const T& attribute );
+    void ApplyStructuralState( unsigned int structuralState ) const;
     //@}
 
     //! @name Instanciate / Build / Copy object

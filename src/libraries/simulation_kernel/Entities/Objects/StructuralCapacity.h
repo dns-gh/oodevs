@@ -51,7 +51,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update( xml::xistream& xis );
+    void Update( xml::xistream& xis, const MIL_Object_ABC& object );
     template< typename Archive > void serialize( Archive& file, const unsigned int );
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
@@ -65,7 +65,6 @@ public:
     void SendState( MsgsSimToClient::MsgUrbanAttributes& message ) const;
     unsigned int GetStructuralState() const;
     const PHY_ComposanteState& ComputeComposanteState( const MIL_Object_ABC& object, const PHY_Protection& targetProtection );
-
     //@}
 
     //! @name Operations on population

@@ -50,13 +50,14 @@ public:
 
     //! @name Operations
     //@{
-    void Update( xml::xistream& xis );
+    void Update( xml::xistream& xis, const MIL_Object_ABC& object );
     void Update( const Common::MsgMissionParameter_Value& msg );
     template< typename Archive > void serialize( Archive& file, const unsigned int );
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     void RegisterNode( unsigned int id, bool urban );
     void SendState( MsgsSimToClient::MsgUrbanAttributes& message ) const;
+    void SetModifier( unsigned int modifier ) const;
     //@}
 
 private:

@@ -86,10 +86,6 @@ void MIL_Object_ABC::Unregister()
         pArmy_->UnregisterObject( *this );
 }
 
-// =============================================================================
-// INIT
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Object_ABC::Initialize
 // Created: NLD 2004-10-26
@@ -119,10 +115,6 @@ void MIL_Object_ABC::Initialize( const TER_Localisation& localisation )
         NotifyPopulationMovingInside( static_cast< MIL_PopulationFlow& >( **itPopulation ) );
     }
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Object_ABC::load
@@ -163,10 +155,6 @@ const MIL_ObjectType_ABC& MIL_Object_ABC::GetType() const
     return *pType_;
 }
 
-//=============================================================================
-// TOOLS
-//=============================================================================
-
 // ----------------------------------------------------------------------------
 // Name: MIL_Object_ABC::CanCollideWithEntity
 // Created: NLD 2003-09-02
@@ -193,10 +181,6 @@ bool MIL_Object_ABC::CanInteractWith( const MIL_PopulationElement_ABC& /*populat
 {
     return CanCollideWithEntity();
 }
-
-// =============================================================================
-// EVENTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Object_ABC::NotifyPopulationMovingInside
@@ -259,9 +243,15 @@ void MIL_Object_ABC::NotifyAgentPutOutside( MIL_Agent_ABC& agent )
     interaction_.NotifyAgentPutOutside( agent );
 }
 
-// =============================================================================
-// MAIN
-// =============================================================================
+// -----------------------------------------------------------------------------
+// Name: MIL_Object_ABC::ApplyStructuralState
+// Created: JSR 2010-08-31
+// -----------------------------------------------------------------------------
+void MIL_Object_ABC::ApplyStructuralState( unsigned int structuralState ) const
+{
+    if( const ResourceNetworkCapacity* network = Retrieve< ResourceNetworkCapacity >() )
+        network->SetModifier( structuralState );
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Object_ABC::UpdateState
@@ -282,10 +272,6 @@ void MIL_Object_ABC::ProcessEvents()
     Update( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() );
     interaction_.ProcessInteractionEvents( *this );
 }
-
-// =============================================================================
-// TOOLS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Object_ABC::UpdateLocalisation

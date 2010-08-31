@@ -110,6 +110,15 @@ void NodeProperties::Push( int quantity, E_ResourceType resourceType )
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeProperties::SetModifier
+// Created: JSR 2010-08-31
+// -----------------------------------------------------------------------------
+void NodeProperties::SetModifier( unsigned int modifier )
+{
+    Apply( boost::bind( &NodeElement::SetModifier, _1, modifier ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeProperties::Serialize
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------

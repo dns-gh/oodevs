@@ -45,8 +45,9 @@ StructuralCapacity::StructuralCapacity()
 // Created: JSR 2010-06-22
 // -----------------------------------------------------------------------------
 StructuralCapacity::StructuralCapacity( xml::xistream& xis )
+    : structuralState_( xis.attribute< unsigned int >( "value" ) )
 {
-    Update( xis );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -72,9 +73,10 @@ StructuralCapacity::~StructuralCapacity()
 // Name: StructuralCapacity::Update
 // Created: JSR 2010-06-28
 // -----------------------------------------------------------------------------
-void StructuralCapacity::Update( xml::xistream& xis )
+void StructuralCapacity::Update( xml::xistream& xis, const MIL_Object_ABC& object )
 {
     structuralState_ = xis.attribute< unsigned int >( "value" );
+    object.ApplyStructuralState( structuralState_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,6 +99,7 @@ void StructuralCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
     object.Register( static_cast< MIL_InteractiveContainer_ABC* >( this ) );
+    object.ApplyStructuralState( structuralState_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,6 +121,7 @@ void StructuralCapacity::Instanciate( MIL_Object_ABC& object ) const
             object.GetAttribute< MaterialAttribute >() = MaterialAttribute( *material );
         }
     }
+    object.ApplyStructuralState( structuralState_ );
 }
 
 namespace
@@ -166,6 +170,7 @@ void StructuralCapacity::ApplyIndirectFire( MIL_Object_ABC& object, const MT_Ell
         if ( ( 1 - MIL_Random::rand_io( MIL_Random::eFire ) ) <= delta )
             for ( IT_Agents it = agents_.begin(); it != agents_.end(); ++it )
                 ( *it )->GetRole< PHY_RoleInterface_Composantes >().ApplyUrbanObjectCrumbling( object );
+        object.ApplyStructuralState( structuralState_ );
     }
     else
         // $$$$ JSR 2010-07-23: if material attribute is not present, just destroy object?
@@ -215,6 +220,7 @@ void StructuralCapacity::ApplyDirectFire( const MIL_Object_ABC& object, const PH
             structuralState_ -= damage;
         else
             structuralState_ = 0;
+        object.ApplyStructuralState( structuralState_ );
     }
 }
 

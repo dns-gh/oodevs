@@ -11,6 +11,7 @@
 #include "ResourceNetworkCapacity.h"
 #include "MIL_Object_ABC.h"
 #include "MIL_AgentServer.h"
+#include "StructuralCapacity.h"
 #include "UrbanObjectWrapper.h"
 #include "protocol/protocol.h"
 #include "resource_network/NodeProperties.h"
@@ -63,7 +64,7 @@ ResourceNetworkCapacity::~ResourceNetworkCapacity()
 // Name: ResourceNetworkCapacity::Update
 // Created: JSR 2010-08-12
 // -----------------------------------------------------------------------------
-void ResourceNetworkCapacity::Update( xml::xistream& xis )
+void ResourceNetworkCapacity::Update( xml::xistream& xis, const MIL_Object_ABC& /*object*/ )
 {
     if( nodeProperties_ == 0 )
         throw std::exception( "RegisterResource : Node Properties not instanciated" );
@@ -104,6 +105,8 @@ void ResourceNetworkCapacity::Register( MIL_Object_ABC& object )
         RegisterNode( wrapper->GetObject().GetId(), true );
     else
         RegisterNode( object.GetID(), false );
+    if( StructuralCapacity* structural = object.Retrieve< StructuralCapacity >() )
+        SetModifier( structural->GetStructuralState() );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,6 +123,8 @@ void ResourceNetworkCapacity::Instanciate( MIL_Object_ABC& object ) const
         capacity->RegisterNode( wrapper->GetObject().GetId(), true );
     else
         capacity->RegisterNode( object.GetID(), false );
+    if( StructuralCapacity* structural = object.Retrieve< StructuralCapacity >() )
+        SetModifier( structural->GetStructuralState() );
 }
 
 // -----------------------------------------------------------------------------
@@ -142,4 +147,13 @@ void ResourceNetworkCapacity::SendState( MsgsSimToClient::MsgUrbanAttributes& me
     if( nodeProperties_ == 0 )
         throw std::exception( "RegisterResource : Node Properties not instanciated" );
     nodeProperties_->Serialize( *message.mutable_infrastructures() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkCapacity::SetModifier
+// Created: JSR 2010-08-31
+// -----------------------------------------------------------------------------
+void ResourceNetworkCapacity::SetModifier( unsigned int modifier ) const
+{
+    nodeProperties_->SetModifier( modifier );
 }

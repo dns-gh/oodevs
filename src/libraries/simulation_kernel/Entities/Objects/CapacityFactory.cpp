@@ -65,7 +65,7 @@ namespace
         {
             T* capacity = object.Retrieve< T >();
             if( capacity )
-                capacity->Update( xis );
+                capacity->Update( xis, object );
             else
                 T( xis ).Instanciate( object );
         }
