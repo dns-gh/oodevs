@@ -55,7 +55,7 @@ public:
     int GetEfficientCapacity() const;
     unsigned int GetDestination() const;
     EDestinationKind GetDestinationKind() const;
-    void SetFlow( int flow );
+    void SetFlow( unsigned int flow );
     //@}
 
     //! @name Network
@@ -75,7 +75,7 @@ private:
     unsigned int destination_;
     EDestinationKind kind_;
     int capacity_;
-    int flow_;
+    unsigned int flow_;
     //@}
 };
 

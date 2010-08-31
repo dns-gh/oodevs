@@ -76,9 +76,12 @@ void NodeProperties::Update( xml::xistream& xis )
     xis >> xml::start( "network" )
             >> xml::attribute( "name", name )
             >> xml::attribute( "type", type );
-    NodeElement& element = Get( NodeElement::ConvertToResourceType( type ) ); // should exist
+    NodeElement& element = Get( ConvertToResourceType( type ) ); // should exist
     element.Update( xis );
     xis  >> xml::end();
+    xis >> xml::optional >> xml::start( "consumption" )
+            >> xml::list( "resource", *this, &NodeProperties::ReadConsumption )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -89,23 +92,9 @@ void NodeProperties::Update()
 {
     // update intermediate stocks
     Apply( boost::bind( &NodeElement::UpdateImmediateStock, _1, isFunctional_ ) );
-    // get total consumption by resource type
-    NodeElement::T_Consumptions consumptions;
-    Apply( boost::bind( &NodeElement::AddConsumptions, _1, boost::ref( consumptions ) ) ); // TODO optimise and put in method above?
     // apply consumptions
     isFunctional_ = true;
-    for( NodeElement::CIT_Consumptions it = consumptions.begin(); it != consumptions.end(); ++it )
-    {
-        NodeElement* element = Find( it->first );
-        if( element )
-        {
-            if( !element->Consume( it->second.amount_ ) && it->second.critical_ )
-                isFunctional_ = false;
-        }
-        else
-            if( it->second.critical_ )
-                isFunctional_ = false;
-    }
+    Apply( boost::bind( &NodeElement::Consume, _1, boost::ref( isFunctional_ ) ) );
     Apply( boost::bind( &NodeElement::DistributeResource, _1, isFunctional_ ) );
 }
 
@@ -143,8 +132,23 @@ void NodeProperties::Update( const Common::MsgMissionParameter_Value& msg )
         E_ResourceType resourceType = static_cast< E_ResourceType >( node.list( 0 ).identifier() );
         NodeElement* element = Find( resourceType );
         if( element )
-            element->Update( node.list( 1 ) );
+            element->Update( node );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeProperties::ConvertToResourceType
+// Created: JSR 2010-08-27
+// -----------------------------------------------------------------------------
+E_ResourceType NodeProperties::ConvertToResourceType( const std::string& type )
+{
+    if( type == "water" )
+        return eResourceType_Water;
+    if( type == "gaz" )
+        return eResourceType_Gaz;
+    if( type == "electricity" )
+        return eResourceType_Electricity;
+    throw std::exception( std::string( "Unknown resource type: " + type ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,6 +157,17 @@ void NodeProperties::Update( const Common::MsgMissionParameter_Value& msg )
 // -----------------------------------------------------------------------------
 void NodeProperties::ReadNode( xml::xistream& xis )
 {
-    E_ResourceType type = NodeElement::ConvertToResourceType( xis.attribute< std::string >( "resource" ) );
+    E_ResourceType type = ConvertToResourceType( xis.attribute< std::string >( "resource" ) );
     Register( type, *new NodeElement( xis, type ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeProperties::ReadConsumption
+// Created: JSR 2010-08-16
+// -----------------------------------------------------------------------------
+void NodeProperties::ReadConsumption( xml::xistream& xis )
+{
+    NodeElement* element = Find( ConvertToResourceType( xis.attribute< std::string >( "type" ) ) );
+    if( element )
+        element->ReadConsumption( xis );
 }

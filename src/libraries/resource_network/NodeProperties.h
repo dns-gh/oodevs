@@ -58,6 +58,7 @@ public:
     void Update( const Common::MsgMissionParameter_Value& msg );
     //@}
 
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -67,7 +68,9 @@ private:
 private:
     //! @name Helpers
     //@{
+    static E_ResourceType ConvertToResourceType( const std::string& type );
     void ReadNode( xml::xistream& xis );
+    void ReadConsumption( xml::xistream& xis );
     //@}
 
 private:

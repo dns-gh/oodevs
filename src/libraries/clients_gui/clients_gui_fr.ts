@@ -574,6 +574,26 @@
         <source>Electricity</source>
         <translation>Electricité</translation>
     </message>
+    <message>
+        <source>Limited</source>
+        <translation>Limité</translation>
+    </message>
+    <message>
+        <source>Production:</source>
+        <translation>Production:</translation>
+    </message>
+    <message>
+        <source>Consumption:</source>
+        <translation>Consommation:</translation>
+    </message>
+    <message>
+        <source>Maximal stock:</source>
+        <translation>Stock maximal:</translation>
+    </message>
+    <message>
+        <source>Vital consumption</source>
+        <translation>Consommation vitale</translation>
+    </message>
 </context>
 <context>
     <name>R&#xe8;gle GL</name>

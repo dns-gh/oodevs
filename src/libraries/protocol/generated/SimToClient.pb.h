@@ -17790,12 +17790,12 @@ class MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link : public ::google:
   inline ::google::protobuf::int32 capacity() const;
   inline void set_capacity(::google::protobuf::int32 value);
   
-  // required int32 flow = 4;
+  // required uint32 flow = 4;
   inline bool has_flow() const;
   inline void clear_flow();
   static const int kFlowFieldNumber = 4;
-  inline ::google::protobuf::int32 flow() const;
-  inline void set_flow(::google::protobuf::int32 value);
+  inline ::google::protobuf::uint32 flow() const;
+  inline void set_flow(::google::protobuf::uint32 value);
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
@@ -17804,7 +17804,7 @@ class MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link : public ::google:
   int kind_;
   ::google::protobuf::uint32 target_id_;
   ::google::protobuf::int32 capacity_;
-  ::google::protobuf::int32 flow_;
+  ::google::protobuf::uint32 flow_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
@@ -17929,19 +17929,40 @@ class MsgUrbanAttributes_Infrastructures_ResourceNetwork : public ::google::prot
   inline bool enabled() const;
   inline void set_enabled(bool value);
   
-  // optional uint32 stock = 4;
+  // optional uint32 max_stock = 4;
+  inline bool has_max_stock() const;
+  inline void clear_max_stock();
+  static const int kMaxStockFieldNumber = 4;
+  inline ::google::protobuf::uint32 max_stock() const;
+  inline void set_max_stock(::google::protobuf::uint32 value);
+  
+  // optional uint32 stock = 5;
   inline bool has_stock() const;
   inline void clear_stock();
-  static const int kStockFieldNumber = 4;
+  static const int kStockFieldNumber = 5;
   inline ::google::protobuf::uint32 stock() const;
   inline void set_stock(::google::protobuf::uint32 value);
   
-  // optional uint32 production = 5;
+  // optional uint32 production = 6;
   inline bool has_production() const;
   inline void clear_production();
-  static const int kProductionFieldNumber = 5;
+  static const int kProductionFieldNumber = 6;
   inline ::google::protobuf::uint32 production() const;
   inline void set_production(::google::protobuf::uint32 value);
+  
+  // optional uint32 consumption = 7;
+  inline bool has_consumption() const;
+  inline void clear_consumption();
+  static const int kConsumptionFieldNumber = 7;
+  inline ::google::protobuf::uint32 consumption() const;
+  inline void set_consumption(::google::protobuf::uint32 value);
+  
+  // optional bool critical = 8;
+  inline bool has_critical() const;
+  inline void clear_critical();
+  static const int kCriticalFieldNumber = 8;
+  inline bool critical() const;
+  inline void set_critical(bool value);
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
@@ -17950,13 +17971,16 @@ class MsgUrbanAttributes_Infrastructures_ResourceNetwork : public ::google::prot
   int type_;
   ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link > link_;
   bool enabled_;
+  ::google::protobuf::uint32 max_stock_;
   ::google::protobuf::uint32 stock_;
   ::google::protobuf::uint32 production_;
+  ::google::protobuf::uint32 consumption_;
+  bool critical_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -30511,18 +30535,18 @@ inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::set_capacit
   capacity_ = value;
 }
 
-// required int32 flow = 4;
+// required uint32 flow = 4;
 inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::has_flow() const {
   return _has_bit(3);
 }
 inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::clear_flow() {
-  flow_ = 0;
+  flow_ = 0u;
   _clear_bit(3);
 }
-inline ::google::protobuf::int32 MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::flow() const {
+inline ::google::protobuf::uint32 MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::flow() const {
   return flow_;
 }
-inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::set_flow(::google::protobuf::int32 value) {
+inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::set_flow(::google::protobuf::uint32 value) {
   _set_bit(3);
   flow_ = value;
 }
@@ -30589,36 +30613,84 @@ inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::set_enabled(bool
   enabled_ = value;
 }
 
-// optional uint32 stock = 4;
-inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::has_stock() const {
+// optional uint32 max_stock = 4;
+inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::has_max_stock() const {
   return _has_bit(3);
+}
+inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::clear_max_stock() {
+  max_stock_ = 0u;
+  _clear_bit(3);
+}
+inline ::google::protobuf::uint32 MsgUrbanAttributes_Infrastructures_ResourceNetwork::max_stock() const {
+  return max_stock_;
+}
+inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::set_max_stock(::google::protobuf::uint32 value) {
+  _set_bit(3);
+  max_stock_ = value;
+}
+
+// optional uint32 stock = 5;
+inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::has_stock() const {
+  return _has_bit(4);
 }
 inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::clear_stock() {
   stock_ = 0u;
-  _clear_bit(3);
+  _clear_bit(4);
 }
 inline ::google::protobuf::uint32 MsgUrbanAttributes_Infrastructures_ResourceNetwork::stock() const {
   return stock_;
 }
 inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::set_stock(::google::protobuf::uint32 value) {
-  _set_bit(3);
+  _set_bit(4);
   stock_ = value;
 }
 
-// optional uint32 production = 5;
+// optional uint32 production = 6;
 inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::has_production() const {
-  return _has_bit(4);
+  return _has_bit(5);
 }
 inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::clear_production() {
   production_ = 0u;
-  _clear_bit(4);
+  _clear_bit(5);
 }
 inline ::google::protobuf::uint32 MsgUrbanAttributes_Infrastructures_ResourceNetwork::production() const {
   return production_;
 }
 inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::set_production(::google::protobuf::uint32 value) {
-  _set_bit(4);
+  _set_bit(5);
   production_ = value;
+}
+
+// optional uint32 consumption = 7;
+inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::has_consumption() const {
+  return _has_bit(6);
+}
+inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::clear_consumption() {
+  consumption_ = 0u;
+  _clear_bit(6);
+}
+inline ::google::protobuf::uint32 MsgUrbanAttributes_Infrastructures_ResourceNetwork::consumption() const {
+  return consumption_;
+}
+inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::set_consumption(::google::protobuf::uint32 value) {
+  _set_bit(6);
+  consumption_ = value;
+}
+
+// optional bool critical = 8;
+inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::has_critical() const {
+  return _has_bit(7);
+}
+inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::clear_critical() {
+  critical_ = false;
+  _clear_bit(7);
+}
+inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::critical() const {
+  return critical_;
+}
+inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::set_critical(bool value) {
+  _set_bit(7);
+  critical_ = value;
 }
 
 // -------------------------------------------------------------------

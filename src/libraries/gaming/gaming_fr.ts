@@ -1434,10 +1434,6 @@
         <translation>Activé</translation>
     </message>
     <message>
-        <source>Producer</source>
-        <translation>Producteur</translation>
-    </message>
-    <message>
         <source>Water</source>
         <translation>Eau</translation>
     </message>
@@ -1448,6 +1444,26 @@
     <message>
         <source>Electricity</source>
         <translation>Electricité</translation>
+    </message>
+    <message>
+        <source>Total flow</source>
+        <translation>Débit total</translation>
+    </message>
+    <message>
+        <source>Production</source>
+        <translation>Production</translation>
+    </message>
+    <message>
+        <source>Maximal stock</source>
+        <translation>Stock maximal</translation>
+    </message>
+    <message>
+        <source>Consumption</source>
+        <translation>Consommation</translation>
+    </message>
+    <message>
+        <source>Vital consumption</source>
+        <translation>Consommation vitale</translation>
     </message>
 </context>
 <context>

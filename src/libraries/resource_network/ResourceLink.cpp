@@ -76,6 +76,8 @@ void ResourceLink::SetCapacity( int capacity )
 // -----------------------------------------------------------------------------
 int ResourceLink::GetEfficientCapacity() const
 {
+    if( capacity_ == -1 )
+        return -1;
     // TODO apply structural/fonctional state
     return capacity_;
 }
@@ -102,7 +104,7 @@ ResourceLink::EDestinationKind ResourceLink::GetDestinationKind() const
 // Name: ResourceLink::SetFlow
 // Created: JSR 2010-08-26
 // -----------------------------------------------------------------------------
-void ResourceLink::SetFlow( int flow )
+void ResourceLink::SetFlow( unsigned int flow )
 {
     flow_ = flow;
 }
@@ -117,6 +119,6 @@ void ResourceLink::Serialize( MsgsSimToClient::MsgUrbanAttributes_Infrastructure
         MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_urban
         : MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_object );
     msg.set_target_id( destination_ );
-    msg.set_capacity( GetEfficientCapacity() );
+    msg.set_capacity( capacity_ );
     msg.set_flow( flow_ );
 }

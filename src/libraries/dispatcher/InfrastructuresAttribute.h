@@ -30,15 +30,16 @@ class InfrastructuresAttribute : public UrbanObjectAttribute_ABC
             int kind_;
             unsigned int target_;
             int capacity_;
-            int flow_;
+            unsigned int flow_;
         };
-        bool producer_;
-        unsigned int production_;
         unsigned int type_;
-        bool enabled_;
-        bool stockActive_;
-        unsigned int stock_;
         std::vector< Link > links_;
+        bool enabled_;
+        unsigned int maxStock_;
+        unsigned int stock_;
+        unsigned int production_;
+        unsigned int consumption_;
+        bool critical_;
     };
 
 public:

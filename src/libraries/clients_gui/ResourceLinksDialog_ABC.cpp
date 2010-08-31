@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "ResourceLinksDialog_ABC.h"
 #include "moc_ResourceLinksDialog_ABC.cpp"
+#include "SpinTableItem.h"
 #include "TerrainObjectProxy.h"
 #include "tools.h"
 #include "clients_kernel/Controllers.h"
@@ -49,26 +50,40 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QWidget* parent, Controllers& 
     , selected_( 0 )
 {
     setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
-    setMinimumSize( 400, 300 );
+    setMinimumSize( 600, 300 );
     setCaption( tools::translate( "ResourceLinksDialog", "Resource Links" ) );
     QVBoxLayout* pMainLayout = new QVBoxLayout( this );
     pMainLayout->setSpacing( 5 );
     pMainLayout->setMargin( 5 );
-
     for( int i = 0; i < eNbrResourceType; ++i )
     {
-        label_[ i ] = new QLabel( ConvertFromResourceType( static_cast< E_ResourceType >( i ) ), this );
-        table_[ i ] = new QTable( this );
-        table_[ i ]->setSelectionMode( QTable::NoSelection );
-        table_[ i ]->setNumCols( 2 );
-        table_[ i ]->horizontalHeader()->setLabel( 0, tools::translate( "ResourceLinksDialog_ABC", "Target" ) );
-        table_[ i ]->horizontalHeader()->setLabel( 1, tools::translate( "ResourceLinksDialog_ABC", "Capacity" ) );
-        //table_[ i ]->setMinimumSize( 300, 200 );
-        //table_[ i ]->setMinimumWidth( 200 );
-        pMainLayout->addWidget( label_[ i ] );
-        pMainLayout->addWidget( table_[ i ] );
+        widgets_[ i ].groupBox_ = new QGroupBox( 1, Qt::Horizontal, ConvertFromResourceType( static_cast< E_ResourceType >( i ) ), this );
+        pMainLayout->addWidget( widgets_[ i ].groupBox_ );
+        widgets_[ i ].groupBox_->setCheckable( true );
+        {
+            QHBox* box = new QHBox( widgets_[ i ].groupBox_ );
+            new QLabel( tools::translate( "ResourceLinksDialog_ABC", "Production:" ), box );
+            widgets_[ i ].production_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, box );
+        }
+        {
+            QHBox* box = new QHBox( widgets_[ i ].groupBox_ );
+            new QLabel( tools::translate( "ResourceLinksDialog_ABC", "Consumption:" ), box );
+            widgets_[ i ].consumption_  = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, box );
+        }
+        widgets_[ i ].critical_ = new QCheckBox( tools::translate( "ResourceLinksDialog_ABC", "Vital consumption" ), widgets_[ i ].groupBox_ );
+        {
+            QHBox* box = new QHBox( widgets_[ i ].groupBox_ );
+            new QLabel( tools::translate( "ResourceLinksDialog_ABC", "Maximal stock:" ), box );
+            widgets_[ i ].stock_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, box );
+        }
+        widgets_[ i ].table_ = new QTable( widgets_[ i ].groupBox_ );
+        widgets_[ i ].table_->setSelectionMode( QTable::NoSelection );
+        widgets_[ i ].table_->setNumCols( 3 );
+        widgets_[ i ].table_->horizontalHeader()->setLabel( 0, tools::translate( "ResourceLinksDialog_ABC", "Target" ) );
+        widgets_[ i ].table_->horizontalHeader()->setLabel( 1, tools::translate( "ResourceLinksDialog_ABC", "Limited" ) );
+        widgets_[ i ].table_->horizontalHeader()->setLabel( 2, tools::translate( "ResourceLinksDialog_ABC", "Capacity" ) );
+        connect( widgets_[ i ].table_, SIGNAL( valueChanged( int, int ) ), SLOT( OnValueChanged( int, int ) ) );
     }
-
     QHBoxLayout* pButtonLayout = new QHBoxLayout( pMainLayout );
     pButtonLayout->setAlignment( Qt::Right );
     QPushButton* okBtn     = new QPushButton( tools::translate( "ResourceLinksDialog_ABC", "Ok" ), this );
@@ -78,12 +93,9 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QWidget* parent, Controllers& 
     okBtn->setDefault( true );
     okBtn->setMaximumWidth( 100 );
     cancelBtn->setMaximumWidth( 100 );
-
     connect( cancelBtn, SIGNAL( clicked() ), SLOT( Reject() ) );
     connect( okBtn    , SIGNAL( clicked() ), SLOT( Validate() ) );
-
     controllers_.Register( *this );
-
     hide();
 }
 
@@ -94,6 +106,24 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QWidget* parent, Controllers& 
 ResourceLinksDialog_ABC::~ResourceLinksDialog_ABC()
 {
     controllers_.Unregister( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceLinksDialog_ABC::OnValueChanged
+// Created: JSR 2010-08-30
+// -----------------------------------------------------------------------------
+void ResourceLinksDialog_ABC::OnValueChanged( int, int )
+{
+    for( int i = 0; i < eNbrResourceType; ++i )
+    {
+        if( !widgets_[ i ].table_->isShown() )
+            continue;
+        for( int j = 0; j < widgets_[ i ].table_->numRows(); ++j )
+        {
+            bool enable = static_cast< QCheckTableItem* >( widgets_[ i ].table_->item( j, 1 ) )->isChecked();
+            widgets_[ i ].table_->item( j, 2 )->setEnabled( enable );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -158,24 +188,28 @@ void ResourceLinksDialog_ABC::UpdateTables()
     {
         E_ResourceType type = static_cast< E_ResourceType >( i );
         const ResourceNetwork_ABC::ResourceNode* node = selected_->FindResourceNode( type );
-        if( !node )
+        if( node )
         {
-            label_[ i ]->hide();
-            table_[ i ]->hide();
-        }
-        else
-        {
-            label_[ i ]->show();
-            table_[ i ]->show();
-            table_[ i ]->setNumRows( node->links_.size() );
-            table_[ i ]->setColumnReadOnly( 0, true );
+            widgets_[ i ].groupBox_->show();
+            widgets_[ i ].groupBox_->setChecked( node->isEnabled_ );
+            widgets_[ i ].production_->setValue( node->production_ );
+            widgets_[ i ].consumption_->setValue( node->consumption_ );
+            widgets_[ i ].critical_->setChecked( node->critical_ );
+            widgets_[ i ].stock_->setValue( node->stock_ );
+            widgets_[ i ].table_->setNumRows( node->links_.size() );
+            widgets_[ i ].table_->setColumnReadOnly( 0, true );
             for( unsigned int j = 0; j < node->links_.size(); ++j )
             {
-                table_[ i ]->setText( j, 0, selected_->GetLinkName( type, j ) );
-                table_[ i ]->setText( j, 1, QString::number( node->links_[ j ].capacity_ ) );
-                /*QLineEdit* edit = ( QLineEdit* )( table_[ i ]->cellWidget( j, 1 ) );
-                edit->setValidator( new QIntValidator( edit ) );*/
+                widgets_[ i ].table_->setText( j, 0, selected_->GetLinkName( type, j ) );
+                widgets_[ i ].table_->setItem( j, 1, new QCheckTableItem( widgets_[ i ].table_, ""  ) );
+                widgets_[ i ].table_->setItem( j, 2, new SpinTableItem( widgets_[ i ].table_, 0, std::numeric_limits< int >::max() ) );
+                bool limited = node->links_[ j ].capacity_ != -1;
+                widgets_[ i ].table_->item( j, 2 )->setEnabled( limited );
+                static_cast< QCheckTableItem* >( widgets_[ i ].table_->item( j, 1 ) )->setChecked( limited );
+                widgets_[ i ].table_->setText( j, 2, QString::number( limited ? node->links_[ j ].capacity_ : 0 ) );
             }
-        }        
+        }
+        else
+            widgets_[ i ].groupBox_->hide();
     }
 }

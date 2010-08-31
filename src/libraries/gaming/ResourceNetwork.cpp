@@ -98,20 +98,21 @@ void ResourceNetwork::Update( const MsgsSimToClient::MsgUrbanAttributes_Infrastr
             throw std::exception( "Bad resource type" );
         }
         ResourceNode& node = resourceNodes_[ type ];
+        unsigned int oldMaxStock = node.maxStock_;
+        unsigned int oldProduction = node.production_;
+        unsigned int oldConsumption = node.consumption_;
+        bool oldCritical = node.critical_;
+        unsigned int oldStock = node.stock_;
+        unsigned int oldFlow = node.totalFlow_;
         node.type_ = type;
         node.isEnabled_ = network.enabled();
-        node.isProducer_ = network.has_production();
-        if( node.isProducer_ )
-            node.production_ = network.production();
-        node.hasStock_ =  network.has_stock();
-        if( node.hasStock_ )
-            node.stock_ = network.stock();
-
-        const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + ConvertFromResourceType( type ) + "/";
-        if( node.hasStock_ )
-                controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Stock" ) ) );
-
+        node.production_ = network.has_production() ? network.production() : 0;
+        node.maxStock_ = network.has_max_stock() ? network.max_stock() : 0;
+        node.stock_ = network.has_stock() ? network.stock() : 0;
+        node.consumption_ = network.has_consumption() ? network.consumption() : 0;
+        node.critical_ = network.has_critical() ? network.critical() : false;
         node.links_.clear();
+        node.totalFlow_ = 0;
         for( int j = 0; j < network.link_size(); ++j )
         {
             ResourceLink link;
@@ -119,8 +120,22 @@ void ResourceNetwork::Update( const MsgsSimToClient::MsgUrbanAttributes_Infrastr
             link.id_ = network.link( j ).target_id();
             link.capacity_ = network.link( j ).capacity();
             link.flow_ = network.link( j ).flow();
+            node.totalFlow_ += link.flow_;
             node.links_.push_back( link );
         }
+        const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + ConvertFromResourceType( type ) + "/";
+        if( node.totalFlow_ != oldFlow && node.links_.size() )
+            controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Total flow" ) ) );
+        if( node.stock_ != oldStock )
+            controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Stock" ) ) );
+        if( node.maxStock_ != oldMaxStock )
+            controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Maximal stock" ) ) );
+        if( node.production_ != oldProduction )
+            controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Production" ) ) );
+        if( node.consumption_ != oldConsumption )
+            controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Consumption" ) ) );
+        if( node.critical_ != oldCritical )
+            controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Vital consumption" ) ) );
     }
 }
 
@@ -162,22 +177,21 @@ void ResourceNetwork::Draw( const Point2f&, const kernel::Viewport_ABC& viewport
                 UpdateStipple( link->flow_ );
                 if( link->urban_ )
                 {
-                    TerrainObjectProxy& proxy = urbanResolver_.Get( link->id_ );
-                    if( filter == 2 && !proxy.IsSelected() && !selected ) // Selected all
+                    TerrainObjectProxy* proxy = urbanResolver_.Find( link->id_ );
+                    if( !proxy || ( filter == 2 && !proxy->IsSelected() && !selected ) ) // Selected all
                         continue;
-                    to = proxy.Barycenter();
+                    to = proxy->Barycenter();
                 }
                 else
                     to = objectResolver_.Get( link->id_ ).Get< kernel::Positions >().GetPosition();
                 if( viewport.IsVisible( Rectangle2f( from, to ) ) )
                     tools.DrawLine( from, to );
-                    //tools.DrawCurvedArrow( from, to, 0.5f );
             }
             glDisable( GL_LINE_STIPPLE );
         }
         else
             if( filter == 0 || selected )
-                tools.DrawCircle( from, 50.0 );
+                tools.DrawCircle( from, 20.0 );
     }
     glPopAttrib();
 }
@@ -246,8 +260,11 @@ void ResourceNetwork::CreateDictionary( kernel::PropertiesDictionary& dico ) con
     {
         const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + ConvertFromResourceType( node->second.type_ ) + "/";
         dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Enabled" ), node->second.isEnabled_ );
-        dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Producer" ), node->second.isProducer_ );
-        if( node->second.hasStock_ )
-            dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Stock" ), node->second.stock_ );
+        dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Total flow" ), node->second.totalFlow_ );
+        dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Maximal stock" ), node->second.maxStock_ );
+        dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Stock" ), node->second.stock_ );
+        dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Production" ), node->second.production_ );
+        dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Consumption" ), node->second.consumption_ );
+        dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Vital consumption" ), node->second.critical_ );
     }
 }

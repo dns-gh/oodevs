@@ -23,6 +23,7 @@
 #include "gaming/Troops.h"
 #include "gaming/tools.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
+#include "clients_gui/SpinTableItem.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/DotationType.h"
@@ -36,52 +37,6 @@ using namespace kernel;
 using namespace gui;
 using namespace actions;
 using namespace parameters;
-
-class SpinTableItem : public QTableItem
-{
-public:
-    //! @name Constructors/Destructor
-    //@{
-    SpinTableItem( QTable* table, int minValue, int maxValue, int step = 1 )
-        : QTableItem( table, QTableItem::WhenCurrent )
-        , minValue_( minValue )
-        , maxValue_( maxValue )
-        , step_( step )
-    {}
-    virtual ~SpinTableItem() {}
-    //@}
-
-    //! @name Operations
-    //@{
-    QWidget* createEditor() const
-    {
-        QSpinBox* spinBox = new QSpinBox( minValue_, maxValue_, step_, table()->viewport(), "spintableitem" );
-        QObject::connect( spinBox, SIGNAL( valueChanged( int ) ), table(), SLOT( doValueChanged() ) );
-
-        if( !text().isNull() )
-            spinBox->setValue( text().toInt() );
-        else
-            spinBox->setValue( 0 );
-        return spinBox;
-    }
-
-    void setContentFromEditor( QWidget* widget )
-    {
-        if( widget->inherits( "QSpinBox" ) )
-            setText( static_cast< QSpinBox* >( widget )->text() );
-        else
-            QTableItem::setContentFromEditor( widget );
-    }
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    int minValue_;
-    int maxValue_;
-    int step_;
-    //@}
-};
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyRecompletionDialog constructor

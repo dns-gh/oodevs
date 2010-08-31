@@ -3331,12 +3331,15 @@ void protobuf_AssignDesc_SimToClient_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgUrbanAttributes_Infrastructures));
   MsgUrbanAttributes_Infrastructures_ResourceNetwork_descriptor_ = MsgUrbanAttributes_Infrastructures_descriptor_->nested_type(0);
-  static const int MsgUrbanAttributes_Infrastructures_ResourceNetwork_offsets_[5] = {
+  static const int MsgUrbanAttributes_Infrastructures_ResourceNetwork_offsets_[8] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanAttributes_Infrastructures_ResourceNetwork, type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanAttributes_Infrastructures_ResourceNetwork, link_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanAttributes_Infrastructures_ResourceNetwork, enabled_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanAttributes_Infrastructures_ResourceNetwork, max_stock_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanAttributes_Infrastructures_ResourceNetwork, stock_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanAttributes_Infrastructures_ResourceNetwork, production_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanAttributes_Infrastructures_ResourceNetwork, consumption_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanAttributes_Infrastructures_ResourceNetwork, critical_),
   };
   MsgUrbanAttributes_Infrastructures_ResourceNetwork_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -53927,7 +53930,7 @@ void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::SharedCtor() {
   kind_ = 1;
   target_id_ = 0u;
   capacity_ = 0;
-  flow_ = 0;
+  flow_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -53960,7 +53963,7 @@ void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::Clear() {
     kind_ = 1;
     target_id_ = 0u;
     capacity_ = 0;
-    flow_ = 0;
+    flow_ = 0u;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -54017,14 +54020,14 @@ bool MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::MergePartialFromCo
         break;
       }
       
-      // required int32 flow = 4;
+      // required uint32 flow = 4;
       case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           goto handle_uninterpreted;
         }
        parse_flow:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
+        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
               input, &flow_));
         _set_bit(3);
         if (input->ExpectAtEnd()) return true;
@@ -54071,9 +54074,9 @@ void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::SerializeWithCache
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->capacity(), output);
   }
   
-  // required int32 flow = 4;
+  // required uint32 flow = 4;
   if (_has_bit(3)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->flow(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->flow(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -54100,9 +54103,9 @@ void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::SerializeWithCache
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->capacity(), target);
   }
   
-  // required int32 flow = 4;
+  // required uint32 flow = 4;
   if (_has_bit(3)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->flow(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->flow(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -54136,10 +54139,10 @@ int MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::ByteSize() const {
           this->capacity());
     }
     
-    // required int32 flow = 4;
+    // required uint32 flow = 4;
     if (has_flow()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->flow());
     }
     
@@ -54229,8 +54232,11 @@ void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::Swap(MsgUrbanAttri
 const int MsgUrbanAttributes_Infrastructures_ResourceNetwork::kTypeFieldNumber;
 const int MsgUrbanAttributes_Infrastructures_ResourceNetwork::kLinkFieldNumber;
 const int MsgUrbanAttributes_Infrastructures_ResourceNetwork::kEnabledFieldNumber;
+const int MsgUrbanAttributes_Infrastructures_ResourceNetwork::kMaxStockFieldNumber;
 const int MsgUrbanAttributes_Infrastructures_ResourceNetwork::kStockFieldNumber;
 const int MsgUrbanAttributes_Infrastructures_ResourceNetwork::kProductionFieldNumber;
+const int MsgUrbanAttributes_Infrastructures_ResourceNetwork::kConsumptionFieldNumber;
+const int MsgUrbanAttributes_Infrastructures_ResourceNetwork::kCriticalFieldNumber;
 #endif  // !_MSC_VER
 
 MsgUrbanAttributes_Infrastructures_ResourceNetwork::MsgUrbanAttributes_Infrastructures_ResourceNetwork() {
@@ -54249,8 +54255,11 @@ void MsgUrbanAttributes_Infrastructures_ResourceNetwork::SharedCtor() {
   _cached_size_ = 0;
   type_ = 1;
   enabled_ = false;
+  max_stock_ = 0u;
   stock_ = 0u;
   production_ = 0u;
+  consumption_ = 0u;
+  critical_ = false;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -54282,8 +54291,11 @@ void MsgUrbanAttributes_Infrastructures_ResourceNetwork::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     type_ = 1;
     enabled_ = false;
+    max_stock_ = 0u;
     stock_ = 0u;
     production_ = 0u;
+    consumption_ = 0u;
+    critical_ = false;
   }
   link_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -54337,12 +54349,26 @@ bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::MergePartialFromCodedSt
         DO_(::google::protobuf::internal::WireFormatLite::ReadBool(
               input, &enabled_));
         _set_bit(2);
-        if (input->ExpectTag(32)) goto parse_stock;
+        if (input->ExpectTag(32)) goto parse_max_stock;
         break;
       }
       
-      // optional uint32 stock = 4;
+      // optional uint32 max_stock = 4;
       case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_max_stock:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
+              input, &max_stock_));
+        _set_bit(3);
+        if (input->ExpectTag(40)) goto parse_stock;
+        break;
+      }
+      
+      // optional uint32 stock = 5;
+      case 5: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           goto handle_uninterpreted;
@@ -54350,13 +54376,13 @@ bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::MergePartialFromCodedSt
        parse_stock:
         DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
               input, &stock_));
-        _set_bit(3);
-        if (input->ExpectTag(40)) goto parse_production;
+        _set_bit(4);
+        if (input->ExpectTag(48)) goto parse_production;
         break;
       }
       
-      // optional uint32 production = 5;
-      case 5: {
+      // optional uint32 production = 6;
+      case 6: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           goto handle_uninterpreted;
@@ -54364,7 +54390,35 @@ bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::MergePartialFromCodedSt
        parse_production:
         DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
               input, &production_));
-        _set_bit(4);
+        _set_bit(5);
+        if (input->ExpectTag(56)) goto parse_consumption;
+        break;
+      }
+      
+      // optional uint32 consumption = 7;
+      case 7: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_consumption:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
+              input, &consumption_));
+        _set_bit(6);
+        if (input->ExpectTag(64)) goto parse_critical;
+        break;
+      }
+      
+      // optional bool critical = 8;
+      case 8: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_critical:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadBool(
+              input, &critical_));
+        _set_bit(7);
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -54410,14 +54464,29 @@ void MsgUrbanAttributes_Infrastructures_ResourceNetwork::SerializeWithCachedSize
     ::google::protobuf::internal::WireFormatLite::WriteBool(3, this->enabled(), output);
   }
   
-  // optional uint32 stock = 4;
+  // optional uint32 max_stock = 4;
   if (_has_bit(3)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->stock(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->max_stock(), output);
   }
   
-  // optional uint32 production = 5;
+  // optional uint32 stock = 5;
   if (_has_bit(4)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->production(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->stock(), output);
+  }
+  
+  // optional uint32 production = 6;
+  if (_has_bit(5)) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->production(), output);
+  }
+  
+  // optional uint32 consumption = 7;
+  if (_has_bit(6)) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->consumption(), output);
+  }
+  
+  // optional bool critical = 8;
+  if (_has_bit(7)) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(8, this->critical(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -54446,14 +54515,29 @@ void MsgUrbanAttributes_Infrastructures_ResourceNetwork::SerializeWithCachedSize
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(3, this->enabled(), target);
   }
   
-  // optional uint32 stock = 4;
+  // optional uint32 max_stock = 4;
   if (_has_bit(3)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->stock(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->max_stock(), target);
   }
   
-  // optional uint32 production = 5;
+  // optional uint32 stock = 5;
   if (_has_bit(4)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->production(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->stock(), target);
+  }
+  
+  // optional uint32 production = 6;
+  if (_has_bit(5)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(6, this->production(), target);
+  }
+  
+  // optional uint32 consumption = 7;
+  if (_has_bit(6)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(7, this->consumption(), target);
+  }
+  
+  // optional bool critical = 8;
+  if (_has_bit(7)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(8, this->critical(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -54478,18 +54562,37 @@ int MsgUrbanAttributes_Infrastructures_ResourceNetwork::ByteSize() const {
       total_size += 1 + 1;
     }
     
-    // optional uint32 stock = 4;
+    // optional uint32 max_stock = 4;
+    if (has_max_stock()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->max_stock());
+    }
+    
+    // optional uint32 stock = 5;
     if (has_stock()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->stock());
     }
     
-    // optional uint32 production = 5;
+    // optional uint32 production = 6;
     if (has_production()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->production());
+    }
+    
+    // optional uint32 consumption = 7;
+    if (has_consumption()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->consumption());
+    }
+    
+    // optional bool critical = 8;
+    if (has_critical()) {
+      total_size += 1 + 1;
     }
     
   }
@@ -54533,10 +54636,19 @@ void MsgUrbanAttributes_Infrastructures_ResourceNetwork::MergeFrom(const MsgUrba
       set_enabled(from.enabled());
     }
     if (from._has_bit(3)) {
-      set_stock(from.stock());
+      set_max_stock(from.max_stock());
     }
     if (from._has_bit(4)) {
+      set_stock(from.stock());
+    }
+    if (from._has_bit(5)) {
       set_production(from.production());
+    }
+    if (from._has_bit(6)) {
+      set_consumption(from.consumption());
+    }
+    if (from._has_bit(7)) {
+      set_critical(from.critical());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -54568,8 +54680,11 @@ void MsgUrbanAttributes_Infrastructures_ResourceNetwork::Swap(MsgUrbanAttributes
     std::swap(type_, other->type_);
     link_.Swap(&other->link_);
     std::swap(enabled_, other->enabled_);
+    std::swap(max_stock_, other->max_stock_);
     std::swap(stock_, other->stock_);
     std::swap(production_, other->production_);
+    std::swap(consumption_, other->consumption_);
+    std::swap(critical_, other->critical_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

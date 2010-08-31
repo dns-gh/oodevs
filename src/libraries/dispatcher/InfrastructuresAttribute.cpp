@@ -45,12 +45,11 @@ void InfrastructuresAttribute::Update( const MsgsSimToClient::MsgUrbanAttributes
         ResourceNetwork& to = resourceMap_[ from.type() ];
         to.type_ = from.type();
         to.enabled_ = from.enabled();
-        to.producer_ = from.has_production();
-        if( to.producer_ )
-            to.production_ = from.production();
-        to.stockActive_ = from.has_stock();
-        if( to.stockActive_ )
-            to.stock_ = from.stock();
+        to.maxStock_ = from.has_max_stock() ? from.max_stock() : 0;
+        to.stock_ = from.has_stock() ? from.stock() : 0;
+        to.production_ = from.has_production() ? from.production() : 0;
+        to.consumption_ = from.has_consumption() ? from.consumption() : 0;
+        to.critical_ = from.has_critical() ? from.critical() : false;
         for( int j = 0; j < from.link_size(); ++j )
         {
             const MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link& linkFrom = from.link( j );
@@ -82,10 +81,17 @@ void InfrastructuresAttribute::Send( MsgsSimToClient::MsgUrbanAttributes& messag
             message.mutable_infrastructures()->add_resource_network();
         network->set_type( static_cast< MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType >( it->second.type_ ) );
         network->set_enabled( it->second.enabled_ );
-        if( it->second.producer_ )
-            network->set_production( it->second.production_ );
-        if( it->second.stockActive_ )
+        if( it->second.maxStock_ )
+            network->set_max_stock( it->second.maxStock_ );
+        if( it->second.stock_ )
             network->set_stock( it->second.stock_ );
+        if( it->second.production_ )
+            network->set_production( it->second.production_ );
+        if( it->second.consumption_ )
+        {
+            network->set_consumption( it->second.consumption_ );
+            network->set_critical( it->second.critical_ );
+        }
         for( std::vector< ResourceNetwork::Link >::const_iterator linkIt = it->second.links_.begin(); linkIt != it->second.links_.end(); ++linkIt )
         {
             MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link* link = network->add_link();

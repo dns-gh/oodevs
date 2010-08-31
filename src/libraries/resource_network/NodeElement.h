@@ -52,28 +52,13 @@ public:
     //@}
 
 public:
-    //! @name Types
-    //@{
-    struct Consumption
-    {
-        int amount_;
-        bool critical_;
-    };
-
-    typedef std::map< E_ResourceType, Consumption >   T_Consumptions;
-    typedef T_Consumptions::iterator                IT_Consumptions;
-    typedef T_Consumptions::const_iterator         CIT_Consumptions;
-    //@}
-
-public:
     //! @name Operations
     //@{
-    static E_ResourceType ConvertToResourceType( const std::string& type );
     void SetModel( const ResourceNetworkModel& model );
     void Update( xml::xistream& xis );
+    void ReadConsumption( xml::xistream& xis );
     void UpdateImmediateStock( bool isFunctional );
-    void AddConsumptions( T_Consumptions& consumptions ); 
-    bool Consume( int consumption );
+    void Consume( bool& isFunctional );
     void DistributeResource( bool isFunctional );
     void Push( int quantity );
     //@}
@@ -103,7 +88,6 @@ private:
     //@{
     void DoDistributeResource( T_ResourceLinks& links );
     void ReadLink( xml::xistream& xis );
-    void ReadConsumption( xml::xistream& xis );
     //@}
 
 private:
@@ -112,15 +96,14 @@ private:
     const ResourceNetworkModel* model_;
     E_ResourceType resourceType_;
     T_ResourceLinks links_;
-    T_Consumptions consumptions_;
     bool isActivated_;
-    bool isProducer_;
-    bool isStockActive_;
-    int productionCapacity_;
+    unsigned int productionCapacity_;
     unsigned int stockCapacity_;
-    int stockMaxCapacity_;
-    int immediateStock_;
-    int receivedQuantity_;
+    unsigned int stockMaxCapacity_;
+    unsigned int immediateStock_;
+    unsigned int receivedQuantity_;
+    unsigned int consumptionAmount_;
+    bool consumptionCritical_;
     //@}
 };
 

@@ -47,6 +47,7 @@ public:
 private slots:
     //! @name Slots
     //@{
+    void OnValueChanged( int i, int j );
     void Validate();
     void Reject();
     //@}
@@ -68,6 +69,20 @@ private:
     //@}
 
 protected:
+    //! @name Types
+    //@{
+    struct TResourceWidgets
+    {
+        QGroupBox* groupBox_;
+        QSpinBox* production_;
+        QSpinBox* consumption_;
+        QCheckBox* critical_;
+        QSpinBox* stock_;
+        QTable* table_;
+    };
+    //@}
+
+protected:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
@@ -75,8 +90,7 @@ protected:
     const kernel::ResourceNetwork_ABC* selected_;
     bool urban_;
     unsigned int id_;
-    QLabel* label_[ resource::eNbrResourceType ];
-    QTable* table_[ resource::eNbrResourceType ];
+    TResourceWidgets widgets_[ resource::eNbrResourceType ];
     //@}
 };
 

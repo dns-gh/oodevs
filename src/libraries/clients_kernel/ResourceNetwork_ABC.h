@@ -37,22 +37,24 @@ public:
         bool urban_;
         unsigned int id_;
         int capacity_;
-        int flow_;
+        unsigned int flow_;
     };
 
     struct ResourceNode
     {
-        bool isProducer_;
+        bool isEnabled_;
         unsigned int production_;
+        unsigned int consumption_;
+        bool critical_;
+        unsigned int maxStock_;
+        unsigned int stock_;
+        unsigned int totalFlow_;
         resource::E_ResourceType type_;
         std::vector< ResourceLink > links_;    
-        bool isEnabled_;
-        bool hasStock_;
-        unsigned int stock_;
     };
 
     typedef std::map< resource::E_ResourceType, ResourceNode > ResourceNodes;
-    typedef ResourceNodes::const_iterator        CIT_ResourceNodes;
+    typedef ResourceNodes::const_iterator                  CIT_ResourceNodes;
     //@}
 
 public:

@@ -70,17 +70,25 @@ void ResourceLinksDialog::DoValidate()
         {
             ParameterList& node = nodes->AddList( "Node" );
             node.AddIdentifier( "Resource", i );
+            node.AddQuantity( "Consumption", widgets_[ i ].consumption_->value() );
+            node.AddBool( "Critical", widgets_[ i ].critical_->isChecked() );
+            node.AddBool( "Enabled", widgets_[ i ].groupBox_->isChecked() );
+            node.AddQuantity( "Production", widgets_[ i ].production_->value() );
+            node.AddQuantity( "Stock", widgets_[ i ].stock_->value() );
             ParameterList& links = node.AddList( "Links" );
-            for( int j = 0; j < table_[ i ]->numRows(); ++j )
+            for( int j = 0; j < widgets_[ i ].table_->numRows(); ++j )
             {
-                bool ok;
-                int capacity = table_[ i ]->text( j, 1 ).toInt( &ok );
-                if( ok )
+                int capacity = -1;
+                if( static_cast< QCheckTableItem* >( widgets_[ i ].table_->item( j, 1 ) )->isChecked() )
                 {
-                    ParameterList& link = links.AddList( "Link" );
-                    link.AddIdentifier( "Link", j );
-                    link.AddQuantity( "Capacity", capacity );
+                    bool ok;
+                    int newCapacity = widgets_[ i ].table_->text( j, 2 ).toInt( &ok );
+                    if( ok )
+                        capacity = newCapacity;
                 }
+                ParameterList& link = links.AddList( "Link" );
+                link.AddIdentifier( "Link", j );
+                link.AddQuantity( "Capacity", capacity );
             }
         }        
     }
