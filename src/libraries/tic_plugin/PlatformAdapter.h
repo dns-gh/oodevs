@@ -26,7 +26,6 @@ namespace plugins
 {
 namespace tic
 {
-
 // =============================================================================
 /** @class  PlatformAdapter
     @brief  PlatformAdapter

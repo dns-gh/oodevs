@@ -16,7 +16,6 @@ namespace dispatcher
 {
     class ClientPublisher_ABC;
 
-
 // =============================================================================
 /** @class  EntityPublisher_ABC
     @brief  EntityPublisher_ABC
@@ -28,8 +27,8 @@ class EntityPublisher_ABC : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityPublisher_ABC() {};
-    virtual ~EntityPublisher_ABC() {};
+             EntityPublisher_ABC() {}
+    virtual ~EntityPublisher_ABC() {}
     //@}
 
     //! @name Operations

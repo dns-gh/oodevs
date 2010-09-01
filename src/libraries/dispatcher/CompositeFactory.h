@@ -10,14 +10,13 @@
 #ifndef __CompositeFactory_h_
 #define __CompositeFactory_h_
 
+#include "ExtensionFactory_ABC.h"
+#include "Factory_ABC.h"
 #include "tools/Extendable.h"
 #include "tools/SortedInterfaceContainer.h"
-#include "Factory_ABC.h"
-#include "ExtensionFactory_ABC.h"
 
 namespace dispatcher
 {
-
 // =============================================================================
 /** @class  CompositeFactory
     @brief  CompositeFactory

@@ -9,12 +9,10 @@
 
 #include "dispatcher_pch.h"
 #include "SimulationNetworker.h"
-
 #include "Simulation.h"
 #include "Model.h"
 #include "ClientsNetworker.h"
 #include "Config.h"
-#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/Protocol.h"
 #include <MT/MT_Logger/MT_Logger_lib.h>
 

@@ -37,7 +37,8 @@ TicPluginFactory::~TicPluginFactory()
 // -----------------------------------------------------------------------------
 std::auto_ptr< dispatcher::Plugin_ABC > TicPluginFactory::Create( const std::string& name, xml::xistream& , const dispatcher::Config& config,
                                                                   dispatcher::Model_ABC& model, const kernel::StaticModel&, dispatcher::SimulationPublisher_ABC& ,
-                                                                  dispatcher::ClientPublisher_ABC& , tools::MessageDispatcher_ABC&, dispatcher::LinkResolver_ABC&, dispatcher::CompositeRegistrable& ) const
+                                                                  dispatcher::ClientPublisher_ABC& , tools::MessageDispatcher_ABC&, dispatcher::LinkResolver_ABC&,
+                                                                  dispatcher::CompositeRegistrable& ) const
 {
     std::auto_ptr< dispatcher::Plugin_ABC > result;
     if( name == "tic" )

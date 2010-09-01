@@ -9,7 +9,6 @@
 
 #include "dispatcher_pch.h"
 #include "Order_ABC.h"
-#include "protocol/ClientPublisher_ABC.h"
 #include "MissionParameter_ABC.h"
 #include "protocol/protocol.h"
 

@@ -11,7 +11,6 @@
 #include "MeteoModel.h"
 #include "Model.h"
 #include "EntityPublisher.h"
-#include "CompositeFactory.h"
 #include "EntityPublisher.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/ModelVisitor_ABC.h"

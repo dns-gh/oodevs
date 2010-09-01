@@ -10,7 +10,6 @@
 #include "dispatcher_pch.h"
 #include "PopulationKnowledge.h"
 #include "Model.h"
-#include "CompositeFactory.h"
 #include "EntityPublisher.h"
 #include "KnowledgeGroup.h"
 #include "Population.h"

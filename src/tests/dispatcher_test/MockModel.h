@@ -45,8 +45,8 @@ MOCK_BASE_CLASS( MockModel, dispatcher::Model_ABC )
     MOCK_METHOD( PopulationFires, 0 );
     MOCK_METHOD( FireEffects, 0 );
     MOCK_METHOD( Reports, 0 );
-    
-    void SetToTasker( Common::Tasker& tasker, unsigned int id ) const
+
+    virtual void SetToTasker( Common::Tasker& tasker, unsigned int id ) const
     {
         if( Automats().Find( id ) )
             tasker.mutable_automat()->set_id( id );

@@ -10,7 +10,6 @@
 #include "dispatcher_pch.h"
 #include "Loader.h"
 #include "ReplayModel_ABC.h"
-#include "protocol/ClientPublisher_ABC.h"
 #include "MessageLoader.h"
 #include "MessageHandler_ABC.h"
 #include "protocol/protocol.h"

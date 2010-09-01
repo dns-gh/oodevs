@@ -29,8 +29,8 @@ class TicExtension_ABC : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TicExtension_ABC() {};
-    virtual ~TicExtension_ABC() {};
+             TicExtension_ABC() {}
+    virtual ~TicExtension_ABC() {}
     //@}
 
     //! @name Operations

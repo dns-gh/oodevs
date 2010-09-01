@@ -14,7 +14,6 @@
 #include "PopulationConcentration.h"
 #include "PopulationFlow.h"
 #include "PopulationOrder.h"
-#include "CompositeFactory.h"
 #include "EntityPublisher.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"

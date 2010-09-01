@@ -51,6 +51,7 @@ private:
     void AddPoint( const geometry::Point2f& from, const geometry::Point2f& to, float length, float segmentLenght );
     //@}
 
+private:
     //! @name Types
     //@{
     typedef std::vector< geometry::Point2f >    T_Points;

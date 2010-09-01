@@ -53,6 +53,7 @@ private:
     ExtensionFactory& operator=( const ExtensionFactory& ); //!< Assignment operator
     //@}
 
+private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;

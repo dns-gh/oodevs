@@ -14,7 +14,6 @@
 
 namespace dispatcher
 {
-
 // =============================================================================
 /** @class  EntityPublisher
     @brief  Entity publisher helper
@@ -27,15 +26,31 @@ class EntityPublisher : public EntityPublisher_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit EntityPublisher( const E& entity );
-    virtual ~EntityPublisher();
+    explicit EntityPublisher( const E& entity )
+        : entity_( entity )
+    {
+        // NOTHING
+    }
+    virtual ~EntityPublisher()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
     //@{
-    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const
+    {
+        entity_.SendFullUpdate( publisher );
+    }
+    virtual void SendCreation( ClientPublisher_ABC& publisher ) const
+    {
+        entity_.SendCreation( publisher );
+    }
+    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const
+    {
+        entity_.SendDestruction( publisher );
+    }
     //@}
 
 private:
@@ -51,57 +66,6 @@ private:
     const E& entity_;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: EntityPublisher constructor
-// Created: AGE 2008-06-20
-// -----------------------------------------------------------------------------
-template< typename E >
-EntityPublisher< E >::EntityPublisher( const E& entity )
-    : entity_( entity )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityPublisher destructor
-// Created: AGE 2008-06-20
-// -----------------------------------------------------------------------------
-template< typename E >
-EntityPublisher< E >::~EntityPublisher()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityPublisher::SendFullUpdate
-// Created: AGE 2008-06-20
-// -----------------------------------------------------------------------------
-template< typename E >
-void EntityPublisher< E >::SendFullUpdate( ClientPublisher_ABC& publisher ) const
-{
-    entity_.SendFullUpdate( publisher );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityPublisher::SendCreation
-// Created: AGE 2008-06-20
-// -----------------------------------------------------------------------------
-template< typename E >
-void EntityPublisher< E >::SendCreation( ClientPublisher_ABC& publisher ) const
-{
-    entity_.SendCreation( publisher );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityPublisher::SendDestruction
-// Created: AGE 2008-06-20
-// -----------------------------------------------------------------------------
-template< typename E >
-void EntityPublisher< E >::SendDestruction( ClientPublisher_ABC& publisher ) const
-{
-    entity_.SendDestruction( publisher );
-}
 
 }
 

@@ -14,7 +14,6 @@
 
 namespace dispatcher
 {
-
 // =============================================================================
 /** @class  ExtensionFactory_ABC
     @brief  Extension Factory definition

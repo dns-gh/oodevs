@@ -10,9 +10,9 @@
 #ifndef __Platform_h_
 #define __Platform_h_
 
-#include "dispatcher/SimpleEntity.h"
 #include "Movable_ABC.h"
 #include "Platform_ABC.h"
+#include "dispatcher/SimpleEntity.h"
 #include "protocol/protocol.h"
 
 namespace kernel

@@ -8,15 +8,11 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "Simulation.h"
-
-#include "protocol/ClientPublisher_ABC.h"
 #include "tools/MessageSender_ABC.h"
 #include "MessageHandler_ABC.h"
 #include "protocol/simulationsenders.h"
 #include "protocol/dispatchersenders.h"
-
 
 namespace MsgsSimToClient
 {
@@ -26,7 +22,6 @@ namespace MsgsDispatcherToSim
 {
     class MsgDispatcherToSim;
 }
-
 
 using namespace dispatcher;
 using namespace tools;

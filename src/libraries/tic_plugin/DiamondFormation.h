@@ -50,6 +50,7 @@ private:
     void AddPlatform( const geometry::Point2f& center, float baseAngle, unsigned int& level, unsigned int& platformCount );
     //@}
 
+private:
     //! @name Types
     //@{
     typedef std::vector< geometry::Point2f > T_Points;

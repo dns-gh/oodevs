@@ -34,7 +34,6 @@
 #include "UrbanKnowledge.h"
 #include "UrbanObject.h"
 #include "Visitors.h"
-#include "CompositeFactory.h"
 #include "EntityPublisher.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/clientsenders.h"

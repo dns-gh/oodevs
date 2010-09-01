@@ -11,6 +11,7 @@
 #define __Model_h_
 
 #include "MessageHandler_ABC.h"
+#include "CompositeFactory.h"
 #include "Model_ABC.h"
 
 namespace kernel
@@ -33,7 +34,6 @@ namespace tools
 
 namespace dispatcher
 {
-    class CompositeFactory;
     class FolkModel;
     class MeteoModel;
     class SimulationModel;

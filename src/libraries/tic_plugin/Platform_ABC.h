@@ -44,8 +44,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Platform_ABC() {};
-    virtual ~Platform_ABC() {};
+             Platform_ABC() {}
+    virtual ~Platform_ABC() {}
     //@}
 
     //! @name Accessors

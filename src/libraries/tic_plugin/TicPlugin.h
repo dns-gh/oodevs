@@ -29,6 +29,7 @@ namespace plugins
 namespace tic
 {
     class ExtensionFactory;
+
 // =============================================================================
 /** @class  TicPlugin
     @brief  TicPlugin
