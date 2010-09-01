@@ -130,7 +130,13 @@ void LoggerPlugin::Receive( const MsgsSimToClient::MsgSimToClient& message )
         return;
     if( message.message().has_report() )
     {
-        int id = message.message().report().id().id();
+        int id = 0;
+        if( message.message().report().cr().has_unit() )
+            id = message.message().report().cr().unit().id();
+        else if( message.message().report().cr().has_automat() )
+            id = message.message().report().cr().automat().id();
+        else if( message.message().report().cr().has_population() )
+            id = message.message().report().cr().population().id();
         kernel::Entity_ABC* entity = Find( model_, id );
         std::string messageText = factory_.FormatReport( message.message().report() );
         *file_ << factory_.GetTime( message.message().report().time() ).toString( "hh:mm:ss" ).ascii()
@@ -140,12 +146,12 @@ void LoggerPlugin::Receive( const MsgsSimToClient::MsgSimToClient& message )
     else if( message.message().has_trace() )
     {
         int id = 0;
-        if( message.message().trace().source().has_automat() )
-            id = message.message().trace().source().automat().id();
-        if( message.message().trace().source().has_population() )
-            id = message.message().trace().source().population().id();
         if( message.message().trace().source().has_unit() )
             id = message.message().trace().source().unit().id();
+        else if( message.message().trace().source().has_automat() )
+            id = message.message().trace().source().automat().id();
+        else if( message.message().trace().source().has_population() )
+            id = message.message().trace().source().population().id();
         kernel::Entity_ABC* entity = Find( model_, id );
         *file_ << date_
                << " Trace - " << ( entity ? entity->GetName() : "Unknown entity" ) << "[" << id << "] : "
