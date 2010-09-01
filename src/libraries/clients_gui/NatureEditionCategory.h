@@ -71,6 +71,7 @@ private:
     const kernel::SymbolRule* rule_;
     QLabel* label_;
     QComboBox* box_;
+    std::map< QString, std::string > internalNames_;
     QString current_;
     NatureEditionCategory* next_;
     //@}

@@ -108,6 +108,8 @@ bool ADN_App::Initialize( const std::string& inputFile, const std::string& outpu
     AddTranslator( locale, "adaptation_app" );
     AddTranslator( locale, "ENT" );
     AddTranslator( locale, "tools" );
+    AddTranslator( locale, "clients_gui" );
+    AddTranslator( locale, "clients_gui_app6" );
 
     // Initialize all the translations.
     ADN_Tr::InitTranslations();

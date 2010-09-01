@@ -3990,7 +3990,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <name>ADN_Tr</name>
     <message>
         <source>explosive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">explosif</translation>
     </message>
     <message>
         <source>grenade</source>
@@ -3998,15 +3998,15 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>anti tank</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">anti char</translation>
     </message>
     <message>
         <source>smoke</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">fumée</translation>
     </message>
     <message>
         <source>illumination shell</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">obus éclairant</translation>
     </message>
     <message>
         <source>mine</source>
@@ -4014,23 +4014,23 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>effect</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">effet</translation>
     </message>
     <message>
         <source>unknown</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">inconnu</translation>
     </message>
     <message>
         <source>forest</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">forêt</translation>
     </message>
     <message>
         <source>orchard</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">verger</translation>
     </message>
     <message>
         <source>swamp</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">marais</translation>
     </message>
     <message>
         <source>dune</source>
@@ -4038,11 +4038,11 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>urban area</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">zone urbaine</translation>
     </message>
     <message>
         <source>lake</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">lac</translation>
     </message>
     <message>
         <source>glacier</source>
@@ -4050,83 +4050,83 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>forest edge</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">lisière</translation>
     </message>
     <message>
         <source>suburb</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">banlieue</translation>
     </message>
     <message>
         <source>waterfront</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">côte</translation>
     </message>
     <message>
         <source>orchard edge</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">lisière de verger</translation>
     </message>
     <message>
         <source>swamp edge</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">bord de marais</translation>
     </message>
     <message>
         <source>dune edge</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">bord de dune</translation>
     </message>
     <message>
         <source>glacier edge</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">bord de glacier</translation>
     </message>
     <message>
         <source>country road</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">route de campagne</translation>
     </message>
     <message>
         <source>highway</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">autoroute</translation>
     </message>
     <message>
         <source>main road</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">route principale</translation>
     </message>
     <message>
         <source>secondary road</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">route secondaire</translation>
     </message>
     <message>
         <source>stream</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ruisseau</translation>
     </message>
     <message>
         <source>river</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">rivière</translation>
     </message>
     <message>
         <source>main river</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">fleuve</translation>
     </message>
     <message>
         <source>bridge</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">pont</translation>
     </message>
     <message>
         <source>cliff</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">falaise</translation>
     </message>
     <message>
         <source>railroad</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">chemin de fer</translation>
     </message>
     <message>
         <source>crossroad</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">carrefour</translation>
     </message>
     <message>
         <source>mountain</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">montagne</translation>
     </message>
     <message>
         <source>mountain edge</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">bord de montagne</translation>
     </message>
     <message>
         <source></source>
@@ -4134,19 +4134,19 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Parked, engine stopped</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">à l&apos;arrêt, moteur éteint</translation>
     </message>
     <message>
         <source>Parked, engine running</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">aà l&apos;arrêt, moteur allumé</translation>
     </message>
     <message>
         <source>Moving</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">En mouvement</translation>
     </message>
     <message>
         <source>Working</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">En travaux</translation>
     </message>
     <message>
         <source>Very sunny day</source>
@@ -4210,15 +4210,15 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>phase line</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Lima</translation>
     </message>
     <message>
         <source>Infantry</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Infanterie</translation>
     </message>
     <message>
         <source>Anti air</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Anti aérien</translation>
     </message>
     <message>
         <source>Army aviation</source>
@@ -4226,7 +4226,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Intelligence</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Renseignement</translation>
     </message>
     <message>
         <source>NBC</source>
@@ -4238,167 +4238,167 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Engineer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Génie</translation>
     </message>
     <message>
         <source>Ground artillery</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Artillerie sol sol</translation>
     </message>
     <message>
         <source>Communication</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Transmissions</translation>
     </message>
     <message>
         <source>Logistic close support</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Logistique</translation>
     </message>
     <message>
         <source>Medical system, brigade level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Chaîne Médicale, niveau brigade</translation>
     </message>
     <message>
         <source>Maintenance system, brigade level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Chaîne Maintenance, niveau brigade</translation>
     </message>
     <message>
         <source>Supply system, brigade level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Chaîne Ravitaillement, niveau brigade</translation>
     </message>
     <message>
         <source>Medical system, division level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Chaîne Médicale, niveau division</translation>
     </message>
     <message>
         <source>Maintenance system, division level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Chaîne Médicale, niveau division</translation>
     </message>
     <message>
         <source>Supply system, division level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Chaîne Ravitaillement, niveau division</translation>
     </message>
     <message>
         <source>Convoy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Convoi</translation>
     </message>
     <message>
         <source>Movement support</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Circulation</translation>
     </message>
     <message>
         <source>Refugee</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Réfugié</translation>
     </message>
     <message>
         <source>Militia</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Milice</translation>
     </message>
     <message>
         <source>Joint</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Interarme</translation>
     </message>
     <message>
         <source>Asymetric threat</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Menace asymétrique</translation>
     </message>
     <message>
         <source>Emergency management</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sécurité civile</translation>
     </message>
     <message>
         <source>Commander, Combined Arms</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Commandant, Interarmes</translation>
     </message>
     <message>
         <source>Commander, Infantry</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Commandant, Infanterie</translation>
     </message>
     <message>
         <source>Commander, Anti air</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Commandant, Anti aérien</translation>
     </message>
     <message>
         <source>Commander, Army aviation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Commandant, ALAT</translation>
     </message>
     <message>
         <source>Commander, Intelligence</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Commandant, Renseignement</translation>
     </message>
     <message>
         <source>Commander, NBC</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Commandant, NBC</translation>
     </message>
     <message>
         <source>Commander, Armor</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Commandant, ABC</translation>
     </message>
     <message>
         <source>Commander, Engineer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Commandant, Génie</translation>
     </message>
     <message>
         <source>Commander, Ground artillery</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Commandant, Artillerie sol sol</translation>
     </message>
     <message>
         <source>Commander, Communication</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Commandant, Transmissions</translation>
     </message>
     <message>
         <source>Commander, Logistic close support</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Commandant, Logistique</translation>
     </message>
     <message>
         <source>Commander, Medical system, brigade level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Commandant, Chaîne Santé, niveau brigade</translation>
     </message>
     <message>
         <source>Commander, Maintenance system, brigade level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Commandant, Chaîne Maintenance, niveau brigade</translation>
     </message>
     <message>
         <source>Commander, Supply system, brigade level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Commandant, Chaîne Ravitaillement, niveau brigade</translation>
     </message>
     <message>
         <source>Commander, Medical system, division level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Commandant, Chaîne Santé, niveau division</translation>
     </message>
     <message>
         <source>Commander, Maintenance system, division level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Commandant, Chaîne Maintenance, niveau division</translation>
     </message>
     <message>
         <source>Commander, Supply system, division level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Commandant, Chaîne Ravitaillement, niveau division</translation>
     </message>
     <message>
         <source>Commander, Movement support</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Commandant, Circulation</translation>
     </message>
     <message>
         <source>Commander, Refugee</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Commandant, Réfugiés</translation>
     </message>
     <message>
         <source>Commander, Militia</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Commandant, Milice</translation>
     </message>
     <message>
         <source>Commander, Joint</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Commandant, Interarmes</translation>
     </message>
     <message>
         <source>Commander, Asymetric threat</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Commandant, Menace asymétrique</translation>
     </message>
     <message>
         <source>Commander, Emergency management</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Commandant, sécurité civile</translation>
     </message>
     <message>
         <source>CP</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">PC</translation>
     </message>
     <message>
         <source>Logistic</source>
@@ -4406,35 +4406,35 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Other</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Autre</translation>
     </message>
     <message>
         <source>Mortar</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mortier</translation>
     </message>
     <message>
         <source>Rocket launcher</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Lance-roquette</translation>
     </message>
     <message>
         <source>Vehicle</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Véhicule</translation>
     </message>
     <message>
         <source>Dismounted infantry</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Infanterie débarquée</translation>
     </message>
     <message>
         <source>Helicopter</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hélicoptère</translation>
     </message>
     <message>
         <source>Anti air artillery</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Artillerie sol air</translation>
     </message>
     <message>
         <source>Undefined</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Indéfini</translation>
     </message>
     <message>
         <source>Slowest</source>
@@ -4466,15 +4466,15 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>equipment</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">équipement</translation>
     </message>
     <message>
         <source>human</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">humain</translation>
     </message>
     <message>
         <source>Eletronic</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Electronique</translation>
     </message>
     <message>
         <source>Mobility</source>
@@ -4494,7 +4494,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Shell</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Obus</translation>
     </message>
     <message>
         <source>Missile</source>
@@ -4502,11 +4502,11 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Air missile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Missile sol air</translation>
     </message>
     <message>
         <source>Bullet</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Balle</translation>
     </message>
     <message>
         <source>radar</source>
@@ -4514,31 +4514,31 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>listening</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">écoute</translation>
     </message>
     <message>
         <source>radar listening</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">écoute radar</translation>
     </message>
     <message>
         <source>Logistic - Fuel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Logistique - carburant</translation>
     </message>
     <message>
         <source>Logistic - Ammos</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Logistique - munitions</translation>
     </message>
     <message>
         <source>Logistic - Shells</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Logistique - obus</translation>
     </message>
     <message>
         <source>Logistic - Water/food</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Logistique - eau/nourriture</translation>
     </message>
     <message>
         <source>Logistic - Parts</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Logisituqe - pièces détachées</translation>
     </message>
     <message>
         <source>Maintenance support needed</source>
@@ -4562,11 +4562,11 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>AgentList</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liste d&apos;Agent</translation>
     </message>
     <message>
         <source>AgentListBM</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liste d&apos;AgentBM</translation>
     </message>
     <message>
         <source>Automate</source>
@@ -4578,23 +4578,23 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>AutomateList</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liste d&apos;Automate</translation>
     </message>
     <message>
         <source>AutomateListBM</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liste d&apos;AutomatBM</translation>
     </message>
     <message>
         <source>Bool</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Booléen</translation>
     </message>
     <message>
         <source>Numeric</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nombre</translation>
     </message>
     <message>
         <source>String</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Chaîne de caractères</translation>
     </message>
     <message>
         <source>Direction</source>
@@ -4606,7 +4606,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Datetime</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Date/heure</translation>
     </message>
     <message>
         <source>Enumeration</source>
@@ -4618,79 +4618,79 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>AgentKnowledge</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Connaissance Agent</translation>
     </message>
     <message>
         <source>AgentKnowledgeBM</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Connaissance Agent BM</translation>
     </message>
     <message>
         <source>AgentKnowledgeList</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liste de Connaissance Agent</translation>
     </message>
     <message>
         <source>AgentKnowledgeListBM</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liste de Connaissance Agent BM</translation>
     </message>
     <message>
         <source>ObjectKnowledge</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Connaissance Objet</translation>
     </message>
     <message>
         <source>ObjectKnowledgeBM</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Connaissance Objet BM</translation>
     </message>
     <message>
         <source>ObjectKnowledgeList</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liste de Connaissance Objet</translation>
     </message>
     <message>
         <source>ObjectKnowledgeListBM</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liste de Connaissance Objet BM</translation>
     </message>
     <message>
         <source>PopulationKnowledge</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Connaissance de Population</translation>
     </message>
     <message>
         <source>PopulationKnowledgeBM</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Connaissance de Population BM</translation>
     </message>
     <message>
         <source>GenObject</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Objet génie</translation>
     </message>
     <message>
         <source>GenObjectBM</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Objet génie BM</translation>
     </message>
     <message>
         <source>GenObjectList</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liste d&apos;Objet génie</translation>
     </message>
     <message>
         <source>GenObjectListBM</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liste d&apos;Objet génie BM</translation>
     </message>
     <message>
         <source>Objective</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Objectif</translation>
     </message>
     <message>
         <source>ObjectiveList</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liste d&apos;Objectif</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Itinéraire</translation>
     </message>
     <message>
         <source>PathBM</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Itinéraire BM</translation>
     </message>
     <message>
         <source>PathList</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liste d&apos;Itinéraire</translation>
     </message>
     <message>
         <source>Point</source>
@@ -4702,71 +4702,71 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>PointList</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liste de Point</translation>
     </message>
     <message>
         <source>PointListBM</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liste de PointBM</translation>
     </message>
     <message>
         <source>Polygon</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Polygone</translation>
     </message>
     <message>
         <source>AreaBM</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Surface BM</translation>
     </message>
     <message>
         <source>PolygonList</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liste de Polygone</translation>
     </message>
     <message>
         <source>AreaListBM</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liste de Surface BM</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Localisation</translation>
     </message>
     <message>
         <source>LocationList</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liste de Localisation</translation>
     </message>
     <message>
         <source>EquipmentType</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Type d&apos;Equipement</translation>
     </message>
     <message>
         <source>DotationType</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Type de Dotation</translation>
     </message>
     <message>
         <source>MaintenancePriorities</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Priorités de Maintenance</translation>
     </message>
     <message>
         <source>MedicalPriorities</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Priorités Médicales</translation>
     </message>
     <message>
         <source>IndirectFire</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tir indirect</translation>
     </message>
     <message>
         <source>Limit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Limite</translation>
     </message>
     <message>
         <source>PhaseLineList</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liste de lima</translation>
     </message>
     <message>
         <source>IntelligenceList</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liste de Renseignement</translation>
     </message>
     <message>
         <source>UrbanBlockBM</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bloc urbain</translation>
     </message>
     <message>
         <source>Urban block speed</source>

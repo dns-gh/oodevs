@@ -7,11 +7,10 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::NatureEditionCategory */
-
 #include "clients_gui_pch.h"
 #include "NatureEditionCategory.h"
 #include "moc_NatureEditionCategory.cpp"
+#include "Tools.h"
 #include "clients_kernel/SymbolRule.h"
 
 using namespace gui;
@@ -55,9 +54,9 @@ NatureEditionCategory::~NatureEditionCategory()
 void NatureEditionCategory::OnComboChange()
 {
     const QString current = box_->currentText();
-    if( current_ != current )
+    if( tools::translate( "models::app6", current_ ) != current )
     {
-        current_ = current;
+        current_ = internalNames_[current].c_str();
         delete next_; next_ = 0;
         rule_->Accept( *this );
         emit NatureChanged( current_ );
@@ -72,9 +71,11 @@ void NatureEditionCategory::StartCategory( const std::string& title )
 {
     if( current_.isNull() )
     {
-        label_->setText( title.c_str() );
+        label_->setText( tools::translate( "models::app6", title.c_str() ) );
         box_->clear();
-        box_->insertItem( tr( "undefined" ) );
+        box_->insertItem( tools::translate( "models::app6", "undefined" ) );
+        internalNames_.clear();
+        internalNames_[ tools::translate( "models::app6", "undefined" ) ] = "undefined";
     }
 }
 
@@ -85,7 +86,11 @@ void NatureEditionCategory::StartCategory( const std::string& title )
 void NatureEditionCategory::AddChoice( SymbolRule* rule, const std::string& name, const std::string& )
 {
     if( current_.isNull() )
-        box_->insertItem( name.c_str() );
+    {
+        QString translatedName = tools::translate( "models::app6", name.c_str() );
+        box_->insertItem( translatedName );
+        internalNames_[ translatedName ] = name;
+    }
     else if( rule && name == current_.ascii() )
     {
         next_ = new NatureEditionCategory( parentWidget(), rule );
@@ -123,7 +128,7 @@ void NatureEditionCategory::SetNature( const QString& nature )
 {
     if( nature.isEmpty() )
     {
-        Select( tr( "undefined" ) );
+        Select( tools::translate( "models::app6", "undefined" ) );
         if( next_ )
             next_->SetNature( nature );
         return;

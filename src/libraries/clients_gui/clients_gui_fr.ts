@@ -1108,13 +1108,6 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
-    <name>gui::NatureEditionCategory</name>
-    <message>
-        <source>undefined</source>
-        <translation>non défini</translation>
-    </message>
-</context>
-<context>
     <name>gui::ObjectListView</name>
     <message>
         <source>Objects</source>
