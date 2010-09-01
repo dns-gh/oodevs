@@ -215,6 +215,7 @@ SectionGroup "Exercises" s_exo
         !insertmacro OT.AddExercise "Porto - 1.9.2" "Porto" "s_exo19"
         !insertmacro OT.AddExercise "BMDrosoville" "Drosoville" "s_exo20"
         !insertmacro OT.AddExercise "tests\test1_increment1_v1stab" "Mailly" "s_exo21"
+        !insertmacro OT.AddExercise "Poseidon VA" "Poseidon" "s_exo22"
         ; Tutorials
         !insertmacro OT.AddExercise "tutorials\01 - Generalites" "Paris_Est" "s_exo4"
         !insertmacro OT.AddExercise "tutorials\02 - Jeu" "Paris_Est" "s_exo5"
@@ -234,6 +235,7 @@ SectionGroup "Exercises" s_exo
         !insertmacro OT.AddExercise "Cabourg" "Cabourg" "s_exo1"
         !insertmacro OT.AddExercise "BMDrosoville" "Drosoville" "s_exo2"
         !insertmacro OT.AddExercise "TerrainDifficile" "Malaisie" "s_exo3"
+        !insertmacro OT.AddExercise "Poseidon VA" "Poseidon" "s_exo34"
         ; Tutorials
         !insertmacro OT.AddExercise "tutorials\01 - Generalites" "Paris_Est" "s_exo4"
         !insertmacro OT.AddExercise "tutorials\02 - Jeu" "Paris_Est" "s_exo5"
@@ -295,6 +297,7 @@ SectionGroup "Terrains" s_ter
         !insertmacro OT.AddTerrain "Porto" "s_ter6"
         !insertmacro OT.AddTerrain "Drosoville" "s_ter7"
         !insertmacro OT.AddTerrain "Mailly" "s_ter8"
+        !insertmacro OT.AddTerrain "PoseidonVA" "s_ter9"        
     !else if "${APP_MODEL}" == "france"
         !insertmacro OT.AddTerrain "Nord egypt" "s_ter1"
         !insertmacro OT.AddTerrain "Paris_Est" "s_ter2"
@@ -302,6 +305,7 @@ SectionGroup "Terrains" s_ter
         !insertmacro OT.AddTerrain "Cabourg" "s_ter4"
         !insertmacro OT.AddTerrain "Drosoville" "s_ter7"
         !insertmacro OT.AddTerrain "Angers_x9" "s_ter8"
+        !insertmacro OT.AddTerrain "PoseidonVA" "s_ter9"        
     !endif
 
 SectionGroupEnd
