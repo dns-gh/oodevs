@@ -811,7 +811,7 @@
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.ObserveToward" dia-type="net.masagroup.sword.test.military.platoon.tasks.ObserveTowardAgent" id="2019" name="TEST ObserveAgent">
       <parameter dia-name="objectives" name="target" optional="false" type="AgentKnowledgeListBM"/>
-	  <parameter dia-name="positions" name="positions" optional="false" type="PointListBM"/>
+      <parameter dia-name="positions" name="positions" optional="false" type="PointListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.NeutralizeAgents" dia-type="net.masagroup.sword.test.military.platoon.tasks.NeutralizeAgents" id="2025" name="TEST NeutralizeAgents">
       <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
@@ -854,11 +854,13 @@
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Reconnoiter" dia-type="net.masagroup.sword.test.military.platoon.tasks.ReconnoiterArea" id="2042" name="TEST ReconnoiterArea">
       <parameter dia-name="objective" name="objectif" optional="false" type="AreaBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Search" dia-type="net.masagroup.sword.test.military.platoon.tasks.Search" id="2098" name="TEST SearchUrbanBlock">
-      <parameter dia-name="objective" name="objectif" optional="false" type="UrbanBlockBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Search" dia-type="net.masagroup.sword.test.military.platoon.tasks.SearchArea" id="2100" name="TEST SearchArea">
-      <parameter dia-name="objective" name="objectif" optional="false" type="AreaBM"/>
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Search" dia-type="net.masagroup.sword.test.military.platoon.tasks.Search" id="2098" name="TEST Search">
+      <parameter dia-name="objective" name="objectif" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="AreaBM"/>
+          <parameter type="UrbanBlockBM"/>
+        </choice>
+      </parameter>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Identify" dia-type="net.masagroup.sword.test.military.platoon.tasks.Identify" id="2024" name="TEST IdentifyAgent">
       <parameter dia-name="objectives" name="objectives" optional="false" type="AgentKnowledgeListBM"/>
@@ -893,14 +895,6 @@
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.ReconnoiterAdvance" dia-type="net.masagroup.sword.test.military.platoon.tasks.ReconnoiterAdvance" id="2085" name="TEST ReconnoiterAdvance">
       <parameter dia-name="objectives" name="itinéraire" optional="false" type="PointListBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.SearchAdvance" dia-type="net.masagroup.sword.test.military.platoon.tasks.SearchAdvance" id="2086" name="TEST SearchAdvance">
-      <parameter dia-name="objective" name="objectif" optional="false" type="LocationComposite">
-        <choice>
-          <parameter type="AreaBM"/>
-          <parameter type="UrbanBlockBM"/>
-        </choice>
-      </parameter>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Survey" dia-type="net.masagroup.sword.test.military.platoon.tasks.Survey" id="2087" name="TEST Survey">
       <parameter dia-name="entities" name="unite a charger" optional="false" type="AgentListBM"/>

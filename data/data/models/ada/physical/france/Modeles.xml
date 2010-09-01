@@ -130,9 +130,7 @@
         <mission name="TEST ReconnoiterArea"/>
         <mission name="TEST ReconnoiterAdvance"/>
         <mission name="TEST RemoveObstacle"/>
-        <mission name="TEST SearchUrbanBlock"/>
-        <mission name="TEST SearchArea"/>
-        <mission name="TEST SearchAdvance"/>
+        <mission name="TEST Search"/>
         <mission name="TEST Survey"/>
         <mission name="TEST StayClose"/>
         <mission name="TEST Support"/>
