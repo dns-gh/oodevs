@@ -16,16 +16,15 @@ namespace kernel
 {
     class ModelVisitor_ABC;
 }
+
 namespace MsgsSimToClient
 {
-    enum EnumReportType;
     class MsgReport;
 }
 
 namespace dispatcher
 {
-    class MissionParameter_ABC;
-    class Model;
+    class Model_ABC;
     class ClientPublisher_ABC;
 
 // =============================================================================
@@ -39,7 +38,7 @@ class Report : public SimpleEntity< >
 public:
     //! @name Constructors/Destructor
     //@{
-             Report( Model&, const MsgsSimToClient::MsgReport& report );
+             Report( Model_ABC&, const MsgsSimToClient::MsgReport& report );
     virtual ~Report();
     //@}
 
@@ -48,7 +47,6 @@ public:
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
-
     void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
@@ -59,22 +57,10 @@ private:
     Report& operator=( const Report& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    typedef std::vector< MissionParameter_ABC* >  T_Parameters;
-    typedef T_Parameters::const_iterator        CIT_Parameters;
-    //@}
-
 private:
     //! @name Member data
     //@{
-    const unsigned long                   id_;
-    const unsigned long                   emitter_;
-    const unsigned long                   report_;
-    const MsgsSimToClient::EnumReportType type_;
-    std::string                           date_;
-    T_Parameters                          parameters_;
-    Model&                                model_;
+    std::auto_ptr< MsgsSimToClient::MsgReport > message_;
     //@}
 };
 

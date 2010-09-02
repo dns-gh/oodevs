@@ -355,11 +355,11 @@ void Agent::DoUpdate( const Common::MsgUnitChangeSuperior& asnMsg )
 // Name: Agent::DoUpdate
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void Agent::DoUpdate( const Common::MsgUnitOrder& asnMsg )
+void Agent::DoUpdate( const Common::MsgUnitOrder& message )
 {
     order_.reset();
-    if( asnMsg.type().id() != 0 )
-        order_.reset( new AgentOrder( model_, *this, asnMsg ) );
+    if( message.type().id() != 0 )
+        order_.reset( new AgentOrder( message ) );
 }
 
 // -----------------------------------------------------------------------------

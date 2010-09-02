@@ -9,9 +9,9 @@
 
 #include "dispatcher_pch.h"
 #include "AgentOrder.h"
+#include "Agent_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include "Agent.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 
 using namespace dispatcher;
 
@@ -19,11 +19,11 @@ using namespace dispatcher;
 // Name: AgentOrder constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-AgentOrder::AgentOrder( Model_ABC& model, Agent& agent, const Common::MsgUnitOrder& asn )
-    : Order_ABC( model, asn.type().id(), asn.parameters() )
-    , agent_   ( agent )
+AgentOrder::AgentOrder( const Common::MsgUnitOrder& message )
+    : Order_ABC( message.type().id() )
+    , message_( message.New() )
 {
-    // NOTHING
+    message_->CopyFrom( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -39,23 +39,21 @@ AgentOrder::~AgentOrder()
 // Name: AgentOrder::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void AgentOrder::Send( ClientPublisher_ABC& publisher )
+void AgentOrder::Send( ClientPublisher_ABC& publisher ) const
 {
-    client::UnitOrder asn;
-    asn().mutable_tasker()->set_id( agent_.GetId() );
-    asn().mutable_type()->set_id( missionID_ );
-    Order_ABC::Send( *asn().mutable_parameters() );
-    asn.Send( publisher );
+    client::UnitOrder message;
+    message().CopyFrom( *message_ );
+    message.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentOrder::SendNoMission
 // Created: NLD 2007-04-25
 // -----------------------------------------------------------------------------
-void AgentOrder::SendNoMission( const Agent& agent, ClientPublisher_ABC& publisher )
+void AgentOrder::SendNoMission( const kernel::Entity_ABC& entity, ClientPublisher_ABC& publisher )
 {
-    client::UnitOrder asn;
-    asn().mutable_tasker()->set_id( agent.GetId() );
-    asn().mutable_type()->set_id( 0 );
-    asn.Send( publisher );
+    client::UnitOrder message;
+    message().mutable_tasker()->set_id( entity.GetId() );
+    message().mutable_type()->set_id( 0 );
+    message.Send( publisher );
 }

@@ -9,10 +9,9 @@
 
 #include "dispatcher_pch.h"
 #include "AutomatOrder.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include "Automat.h"
-
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 
 using namespace dispatcher;
 
@@ -20,11 +19,11 @@ using namespace dispatcher;
 // Name: AutomatOrder constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-AutomatOrder::AutomatOrder( Model_ABC& model, Automat& automat, const Common::MsgAutomatOrder& asn )
-    : Order_ABC ( model, asn.type().id(), asn.parameters() )
-    , automat_  ( automat )
+AutomatOrder::AutomatOrder( const Common::MsgAutomatOrder& message )
+    : Order_ABC( message.type().id() )
+    , message_( message.New() )
 {
-    // NOTHING
+    message_->CopyFrom( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,25 +39,21 @@ AutomatOrder::~AutomatOrder()
 // Name: AutomatOrder::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void AutomatOrder::Send( ClientPublisher_ABC& publisher )
+void AutomatOrder::Send( ClientPublisher_ABC& publisher ) const
 {
-    client::AutomatOrder asn;
-    asn().mutable_tasker()->set_id( automat_.GetId() );
-    asn().mutable_type()->set_id( missionID_ );   
-    Order_ABC::Send( *asn().mutable_parameters() );
-    asn.Send( publisher );
+    client::AutomatOrder message;
+    message().CopyFrom( *message_ );
+    message.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AutomatOrder::SendNoMission
 // Created: NLD 2007-04-25
 // -----------------------------------------------------------------------------
-// static
-void AutomatOrder::SendNoMission( const Automat& automat, ClientPublisher_ABC& publisher )
+void AutomatOrder::SendNoMission( const kernel::Entity_ABC& entity, ClientPublisher_ABC& publisher )
 {
-    client::AutomatOrder asn;
-    asn().mutable_tasker()->set_id( automat.GetId() );
-    asn().mutable_type()->set_id( 0 );
-    asn().mutable_parameters(); // $$$$ FHD 2009-10-28: should be removed if field is optional inprotocol
-    asn.Send( publisher );
+    client::AutomatOrder message;
+    message().mutable_tasker()->set_id( entity.GetId() );
+    message().mutable_type()->set_id( 0 );
+    message.Send( publisher );
 }

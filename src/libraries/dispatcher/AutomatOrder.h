@@ -12,16 +12,19 @@
 
 #include "Order_ABC.h"
 
-
 namespace Common
 {
     class MsgAutomatOrder;
 }
 
+namespace kernel
+{
+    class Entity_ABC;
+}
+
 namespace dispatcher
 {
-     class Automat;
-     class ClientPublisher_ABC;
+    class Automat_ABC;
 
 // =============================================================================
 /** @class  AutomatOrder
@@ -34,14 +37,14 @@ class AutomatOrder : public Order_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomatOrder( Model_ABC& model, Automat& automat, const Common::MsgAutomatOrder& asn );
+    explicit AutomatOrder( const Common::MsgAutomatOrder& message );
     virtual ~AutomatOrder();
     //@}
 
     //! @name Operations
     //@{
-           void Send         ( ClientPublisher_ABC& publisher );
-    static void SendNoMission( const Automat& automat, ClientPublisher_ABC& publisher );
+    virtual void Send( ClientPublisher_ABC& publisher ) const;
+    static void SendNoMission( const kernel::Entity_ABC& automat, ClientPublisher_ABC& publisher );
     //@}
 
 private:
@@ -54,7 +57,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Automat&                        automat_;
+    std::auto_ptr< Common::MsgAutomatOrder > message_;
     //@}
 };
 

@@ -274,11 +274,11 @@ void Automat::DoUpdate( const MsgsSimToClient::MsgLogSupplyQuotas& msg )
 // Name: Automat::DoUpdate
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void Automat::DoUpdate( const Common::MsgAutomatOrder& msg )
+void Automat::DoUpdate( const Common::MsgAutomatOrder& message )
 {
     order_.reset();
-    if( msg.type().id() != 0 )
-        order_.reset( new AutomatOrder( model_, *this, msg ) );
+    if( message.type().id() != 0 )
+        order_.reset( new AutomatOrder( message ) );
 }
 
 namespace

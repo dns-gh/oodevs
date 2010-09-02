@@ -10,15 +10,9 @@
 #ifndef __Order_ABC_h_
 #define __Order_ABC_h_
 
-namespace Common
-{
-    class MsgMissionParameters;
-}
-
 namespace dispatcher
 {
-    class MissionParameter_ABC;
-    class Model_ABC;
+    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  Order_ABC
@@ -31,20 +25,18 @@ class Order_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Order_ABC( Model_ABC& model, unsigned int missionID, const Common::MsgMissionParameters& parameters );
+    explicit Order_ABC( unsigned long id );
     virtual ~Order_ABC();
     //@}
 
     //! @name Accessors
     //@{
-    unsigned int GetId() const;
+    unsigned long GetId() const;
     //@}
 
-protected:
     //! @name Operations
     //@{
-    void Send     ( Common::MsgMissionParameters& asn ) const;
-    void Delete( Common::MsgMissionParameters& asn ) const;
+    virtual void Send( ClientPublisher_ABC& publisher ) const = 0;
     //@}
 
 private:
@@ -54,23 +46,10 @@ private:
     Order_ABC& operator=( const Order_ABC& ); //!< Assignment operator
     //@}
 
-    //! @name Operations
-    //@{
-    void InitializeParameters( const Common::MsgMissionParameters& parameters );
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::vector< MissionParameter_ABC* > T_Parameters;
-    typedef T_Parameters::const_iterator         CIT_Parameters;
-    //@}
-
-protected:
+private:
     //! @name Member data
     //@{
-    Model_ABC& model_;
-    unsigned int missionID_;
-    T_Parameters parameters_;
+    unsigned long id_;
     //@}
 };
 

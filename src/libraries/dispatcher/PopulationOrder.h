@@ -12,17 +12,18 @@
 
 #include "Order_ABC.h"
 
-
 namespace Common
 {
-    class MsgUnitOrder;
     class MsgPopulationOrder;
+}
+
+namespace kernel
+{
+    class Entity_ABC;
 }
 
 namespace dispatcher
 {
-    class ClientPublisher_ABC;
-    class Population;
 
 // =============================================================================
 /** @class  PopulationOrder
@@ -35,14 +36,14 @@ class PopulationOrder : public Order_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationOrder( Model_ABC& model, Population& population, const Common::MsgPopulationOrder& asn );
+    explicit PopulationOrder( const Common::MsgPopulationOrder& asn );
     virtual ~PopulationOrder();
     //@}
 
     //! @name Operations
     //@{
-           void Send         ( ClientPublisher_ABC& publisher );
-    static void SendNoMission( const Population& population, ClientPublisher_ABC& publisher );
+    virtual void Send( ClientPublisher_ABC& publisher ) const;
+    static void SendNoMission( const kernel::Entity_ABC& entity, ClientPublisher_ABC& publisher );
     //@}
 
 private:
@@ -55,7 +56,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Population& population_;
+    std::auto_ptr< Common::MsgPopulationOrder > message_;
     //@}
 };
 

@@ -144,11 +144,11 @@ void Population::DoUpdate( const MsgsSimToClient::MsgPopulationFlowDestruction& 
 // Name: Population::DoUpdate
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void Population::DoUpdate( const Common::MsgPopulationOrder& msg )
+void Population::DoUpdate( const Common::MsgPopulationOrder& message )
 {
     order_.release();
-    if( msg.type().id() != 0 )
-        order_.reset( new PopulationOrder( model_, *this, msg ) );
+    if( message.type().id() != 0 )
+        order_.reset( new PopulationOrder( message ) );
 }
 
 // -----------------------------------------------------------------------------

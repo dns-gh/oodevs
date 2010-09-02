@@ -12,18 +12,18 @@
 
 #include "Order_ABC.h"
 
-
 namespace Common
 {
     class MsgUnitOrder;
 }
 
-
+namespace kernel
+{
+    class Entity_ABC;
+}
 
 namespace dispatcher
 {
-    class ClientPublisher_ABC;
-    class Agent;
 
 // =============================================================================
 /** @class  AgentOrder
@@ -36,14 +36,14 @@ class AgentOrder : public Order_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentOrder( Model_ABC& model, Agent& agent, const Common::MsgUnitOrder& asn );
+    explicit AgentOrder( const Common::MsgUnitOrder& message );
     virtual ~AgentOrder();
     //@}
 
     //! @name Operations
     //@{
-           void Send         ( ClientPublisher_ABC& publisher );
-    static void SendNoMission( const Agent& agent, ClientPublisher_ABC& publisher );
+    virtual void Send( ClientPublisher_ABC& publisher ) const;
+    static void SendNoMission( const kernel::Entity_ABC& entity, ClientPublisher_ABC& publisher );
     //@}
 
 private:
@@ -56,7 +56,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Agent& agent_;
+    std::auto_ptr< Common::MsgUnitOrder > message_;
     //@}
 };
 

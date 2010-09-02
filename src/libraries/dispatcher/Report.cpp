@@ -9,11 +9,9 @@
 
 #include "dispatcher_pch.h"
 #include "Report.h"
-#include "Model.h"
-#include "MissionParameter_ABC.h"
-#include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientPublisher_ABC.h"
+#include "protocol/ClientSenders.h"
 
 using namespace dispatcher;
 
@@ -21,21 +19,11 @@ using namespace dispatcher;
 // Name: Report constructor
 // Created: AGE 2007-10-19
 // -----------------------------------------------------------------------------
-Report::Report( Model& model, const MsgsSimToClient::MsgReport& report )
+Report::Report( Model_ABC& /*model*/, const MsgsSimToClient::MsgReport& report )
     : SimpleEntity< >( report.id().id() )
-    , id_     ( report.id().id() )
-    , emitter_( model.TaskerToId( report.cr() ) )
-    , report_ ( report.cr_oid().id() )
-    , type_   ( report.type() )
-    , date_   ( report.time().data() )
-    , model_  ( model )
+    , message_( report.New() )
 {
-    if( report.has_parametres() )
-    {
-        parameters_.resize( report.parametres().elem_size() );
-        for( int i = 0; i < report.parametres().elem_size(); ++i )
-            parameters_[i] = MissionParameter_ABC::Create( report.parametres().elem( i ) );
-    }
+    *message_ = report;
 }
 
 // -----------------------------------------------------------------------------
@@ -44,8 +32,7 @@ Report::Report( Model& model, const MsgsSimToClient::MsgReport& report )
 // -----------------------------------------------------------------------------
 Report::~Report()
 {
-    for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
-        delete *it;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -63,15 +50,8 @@ void Report::SendFullUpdate( ClientPublisher_ABC& ) const
 // -----------------------------------------------------------------------------
 void Report::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    //!!Warning: cr and id fields have been accidently swapped in this version of protocol!
     client::Report message;
-    message().mutable_id()->set_id( id_ );
-    message().mutable_cr_oid()->set_id( report_ );
-    model_.SetToTasker( *message().mutable_cr(), emitter_ );
-    message().set_type( type_ );
-    message().mutable_time()->set_data( date_ );
-    for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
-        (**it).Send( *message().mutable_parametres()->add_elem() );
+    message() = *message_;
     message.Send( publisher );
 }
 
@@ -82,8 +62,8 @@ void Report::SendCreation( ClientPublisher_ABC& publisher ) const
 void Report::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::InvalidateReport message;
-    message().mutable_id()->set_id( emitter_ );
-    message().mutable_id()->set_id( id_ );
+    message().mutable_id()->set_id( message_->id().id() );
+    *message().mutable_source() = message_->cr();
     message.Send( publisher );
 }
 

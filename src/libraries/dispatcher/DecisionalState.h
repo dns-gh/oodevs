@@ -51,6 +51,7 @@ private:
     DecisionalState& operator=( const DecisionalState& ); //!< Assignment operator
     //@}
 
+private:
     //! @name Member data
     //@{
     std::map< std::string, std::string > decisionalInfos_;

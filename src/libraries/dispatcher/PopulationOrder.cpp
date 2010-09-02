@@ -9,10 +9,9 @@
 
 #include "dispatcher_pch.h"
 #include "PopulationOrder.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include "Population.h"
-
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 
 using namespace dispatcher;
 
@@ -20,11 +19,11 @@ using namespace dispatcher;
 // Name: PopulationOrder constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-PopulationOrder::PopulationOrder( Model_ABC& model, Population& population, const Common::MsgPopulationOrder& asn )
-    : Order_ABC  ( model, asn.type().id(), asn.parameters() )
-    , population_( population )
+PopulationOrder::PopulationOrder( const Common::MsgPopulationOrder& message )
+    : Order_ABC( message.type().id() )
+    , message_( message.New() )
 {
-    // NOTHING
+    message_->CopyFrom( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -36,32 +35,25 @@ PopulationOrder::~PopulationOrder()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PopulationOrder::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void PopulationOrder::Send( ClientPublisher_ABC& publisher )
+void PopulationOrder::Send( ClientPublisher_ABC& publisher ) const
 {
-    client::PopulationOrder asn;
-    asn().mutable_tasker()->set_id( population_.GetId() );
-    asn().mutable_type()->set_id( missionID_ );
-    Order_ABC::Send( *asn().mutable_parameters() );
-    asn.Send( publisher );
+    client::PopulationOrder message;
+    message().CopyFrom( *message_ );
+    message.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PopulationOrder::SendNoMission
 // Created: NLD 2007-04-25
 // -----------------------------------------------------------------------------
-// static
-void PopulationOrder::SendNoMission( const Population& population, ClientPublisher_ABC& publisher )
+void PopulationOrder::SendNoMission( const kernel::Entity_ABC& entity, ClientPublisher_ABC& publisher )
 {
-    client::PopulationOrder asn;
-    asn().mutable_tasker()->set_id( population.GetId() );
-    asn().mutable_type()->set_id( 0 );
-    asn.Send( publisher );
+    client::PopulationOrder message;
+    message().mutable_tasker()->set_id( entity.GetId() );
+    message().mutable_type()->set_id( 0 );
+    message.Send( publisher );
 }
