@@ -3,7 +3,46 @@
   <dotations infinite="false"/>
   <sides>
     <side id="1" name="Camp 1" type="friend">
-      <objects/>
+      <objects>
+        <object id="60" name="Bridge (continuous)" type="continuous pontoon bridge">
+          <shape type="point">
+            <points>
+              <point>31UEQ0631345036</point>
+            </points>
+          </shape>
+          <attributes>
+            <crossing-site>
+              <width>100</width>
+              <depth>10</depth>
+              <speed>4</speed>
+              <construction-needed>true</construction-needed>
+            </crossing-site>
+          </attributes>
+        </object>
+        <object id="61" name="Refugee Holding Area" type="refugees camp">
+          <shape type="polygone">
+            <points>
+              <point>31UEQ0631345026</point>
+              <point>31UEQ0631345036</point>
+              <point>31UEQ0631346030</point>
+              <point>31UEQ0631345020</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="62" name="Detainee Holding Area" type="prisoners camp">
+          <shape type="polygone">
+            <points>
+              <point>31UEQ0631345520</point>
+              <point>31UEQ0631345036</point>
+              <point>31UEQ0631345020</point>
+              <point>31UEQ0631344536</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        
+      </objects>
       <tactical>
         <formation id="6" level="x" name="Formation">
           <automat engaged="false" id="7" knowledge-group="2" name="Escadron de Chars LECLERC" type="Escadron de Chars LECLERC">

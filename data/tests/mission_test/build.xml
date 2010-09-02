@@ -58,21 +58,21 @@
 
     <target name="launch">
         <mkdir dir="${reportDir}/${timenow}"/>
-        <exec executable="bash.exe" failonerror="false">
+        <exec executable="bash.exe" failonerror="true">
             <arg line='launch.sh ${reportDir}/${timenow}'/>
         </exec>
     </target>
 
     <target name="launch-only">
         <mkdir dir="${reportDir}/${timenow}"/>
-        <exec executable="bash.exe" failonerror="false">
+        <exec executable="bash.exe" failonerror="true">
             <arg line='launch.sh ${reportDir}/${timenow} ${test}'/>
         </exec>
     </target>
 
     <target name="reports">
         <mkdir dir="${reportDir}/${timenow}"/>
-        <exec executable="bash.exe">
+        <exec executable="bash.exe" failonerror="true">
             <arg value="reports.sh"/>
             <arg value="${reportDir}/${timenow}"/>
         </exec>
