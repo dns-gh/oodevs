@@ -219,8 +219,6 @@ end
                 <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = 'DotationType', value = "78" } )</xsl:text>
             </xsl:when>
 
-
-
             <xsl:otherwise>
                 <xsl:text>    -- Missing argument</xsl:text>
                 <redirect:write append="true" file="{$reportFile}">

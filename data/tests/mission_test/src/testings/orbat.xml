@@ -45,23 +45,23 @@
       </objects>
       <tactical>
         <formation id="6" level="x" name="Formation">
-          <automat engaged="false" id="7" knowledge-group="3" name="Escadron de Chars LECLERC" type="Escadron de Chars LECLERC">
+          <automat engaged="false" id="7" knowledge-group="2" name="Escadron de Chars LECLERC" type="Escadron de Chars LECLERC">
             <unit command-post="true" id="8" name="Peloton LECLERC CDT ESC" position="31UEQ0928523861" type="Peloton LECLERC CDT ESC"/>
             <unit command-post="false" id="9" name="Section CBT INF VAB CDS OFF" position="31UEQ0928523870" type="Section CBT INF VAB CDS OFF"/>
           </automat>
-          <automat engaged="false" id="10" knowledge-group="3" name="SGTIA" type="SGTIA">
+          <automat engaged="false" id="10" knowledge-group="2" name="SGTIA" type="SGTIA">
             <unit command-post="true" id="11" name="PC SGTIA" position="31UEQ0928523961" type="PC SGTIA"/>
           </automat>
         </formation>
       </tactical>
       <communication>
-        <knowledge-group id="3" name="Groupe de connaissance" type="Standard"/>
+        <knowledge-group id="2" name="Groupe de connaissance [2]" type="Standard"/>
       </communication>
       <populations/>
       <logistic/>
     </side>
     
-    <side id="2" name="Camp 2" type="enemy">
+    <side id="3" name="Camp 2" type="enemy">
       <objects/>
       <tactical>
         <formation id="26" level="x" name="Formation">
@@ -71,14 +71,18 @@
         </formation>
       </tactical>
       <communication>
-        <knowledge-group id="4" name="Groupe de connaissance" type="Standard"/>
+        <knowledge-group id="4" name="Groupe de connaissance [4]" type="Standard"/>
       </communication>
       <populations/>
       <logistic/>
     </side>
-    
-    
-    
   </sides>
-  <diplomacies/>
+  <diplomacies>
+    <side id="1">
+      <relationship diplomacy="enemy" side="3"/>
+    </side>
+    <side id="3">
+      <relationship diplomacy="enemy" side="1"/>
+    </side>
+  </diplomacies>
 </orbat>
