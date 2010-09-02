@@ -22,11 +22,9 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 FragOrderType::FragOrderType( xml::xistream& xis )
     : OrderType( xis )
-    , isDefaultOrder_  ( false )
     , isWithoutMission_( false )
 {
-    xis >> xml::optional >> xml::attribute( "available-for-all-mission", isDefaultOrder_ )
-        >> xml::optional >> xml::attribute( "available-without-mission", isWithoutMission_ )
+    xis >> xml::optional >> xml::attribute( "available-without-mission", isWithoutMission_ )
         >> xml::optional >> xml::attribute( "dia-type", diaType_ )
         >> xml::list( "parameter", *this, &FragOrderType::ReadParameter );
     ReadDescriptions( xis );
@@ -39,15 +37,6 @@ FragOrderType::FragOrderType( xml::xistream& xis )
 FragOrderType::~FragOrderType()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: FragOrderType::IsDefaultOrder
-// Created: SBO 2007-04-23
-// -----------------------------------------------------------------------------
-bool FragOrderType::IsDefaultOrder() const
-{
-    return isDefaultOrder_;
 }
 
 // -----------------------------------------------------------------------------

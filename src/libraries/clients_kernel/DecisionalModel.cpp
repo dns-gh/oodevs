@@ -27,8 +27,11 @@ DecisionalModel::DecisionalModel( xml::xistream& xis, MissionFactory& factory, c
         >> xml::optional
             >> xml::start( "missions" )
                 >> xml::list( "mission", *this, &DecisionalModel::ReadMission, factory, missionResolver )
+            >> xml::end
+        >> xml::optional
+            >> xml::start( "fragorders" )
+                >> xml::list( "fragorder", *this, &DecisionalModel::ReadDefaultFragOrder, factory, fragOrders )
             >> xml::end;
-    RegisterDefaultFragOrders( factory, fragOrders );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,6 +72,20 @@ void DecisionalModel::ReadFragOrder( xml::xistream& xis, Mission& mission, Missi
         delete order;
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: DecisionalModel::ReadDefaultFragOrder
+// Created: HBD 2010-08-25
+// -----------------------------------------------------------------------------
+void DecisionalModel::ReadDefaultFragOrder( xml::xistream& xis, MissionFactory& factory, const tools::Resolver_ABC< FragOrderType >& fragorders )
+{
+    std::string name;
+    xis >> xml::attribute( "name", name );
+    FragOrder* order = factory.CreateFragOrder( name );
+   tools::Resolver< FragOrder >::Register( order->GetId(), *order );
+}
+
+
 // -----------------------------------------------------------------------------
 // Name: DecisionalModel::GetName
 // Created: AGE 2006-02-14
@@ -76,21 +93,6 @@ void DecisionalModel::ReadFragOrder( xml::xistream& xis, Mission& mission, Missi
 std::string DecisionalModel::GetName() const
 {
     return name_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DecisionalModel::RegisterDefaultFragOrders
-// Created: AGE 2006-04-05
-// -----------------------------------------------------------------------------
-void DecisionalModel::RegisterDefaultFragOrders( MissionFactory& factory, const tools::Resolver_ABC< FragOrderType >& fragOrders )
-{
-    tools::Iterator< const FragOrderType& > it = fragOrders.CreateIterator();
-    while( it.HasMoreElements() )
-    {
-        const FragOrderType& type = it.NextElement();
-        if( type.IsDefaultOrder() )
-            RegisterFragOrder( factory, type );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -102,4 +104,3 @@ void DecisionalModel::RegisterFragOrder( MissionFactory& factory, const FragOrde
     FragOrder* order = factory.CreateFragOrder( type.GetName() );
     tools::Resolver< FragOrder >::Register( order->GetId(), *order );
 }
-

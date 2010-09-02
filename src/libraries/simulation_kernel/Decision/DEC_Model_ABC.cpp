@@ -117,6 +117,21 @@ void DEC_Model_ABC::ReadFragOrder( xml::xistream& xis, const MIL_MissionType_ABC
     availableFragOrdersPerMission_[ &missionType ].insert( pType ) ;
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Model_ABC::ReadFragOrder
+// Created: HBD 2010-08-25
+// -----------------------------------------------------------------------------
+void DEC_Model_ABC::ReadFragOrder( xml::xistream& xis )
+{
+    std::string strOrdreConduite;
+    xis >> xml::attribute( "name", strOrdreConduite );
+    const MIL_FragOrderType* pType = MIL_FragOrderType::Find( strOrdreConduite );
+    if( !pType )
+        xis.error( "Unknown orderConduite type" );
+    availableFragOrders_.insert( pType ) ;
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Model_ABC::IsMissionAvailable
 // Created: NLD 2003-11-24
@@ -132,12 +147,22 @@ bool DEC_Model_ABC::IsMissionAvailable( const MIL_MissionType_ABC& missionType )
 // -----------------------------------------------------------------------------
 bool DEC_Model_ABC::IsFragOrderAvailableForMission( const MIL_MissionType_ABC& missionType, const MIL_FragOrderType& fragOrderType ) const
 {
-    if( fragOrderType.IsAvailableForAllMissions() )
+    if( IsFragOrderAvailable( fragOrderType ) )
         return true;
     CIT_FragOrderPerMissionMap it = availableFragOrdersPerMission_.find( &missionType );
     if( it == availableFragOrdersPerMission_.end() )
         return false;
     return it->second.find( &fragOrderType ) != it->second.end();
+}   
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Model_ABC::IsFragOrderAvailable
+// Created: HBD 2010-08-25
+// -----------------------------------------------------------------------------
+bool DEC_Model_ABC::IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const
+{
+ return availableFragOrders_.find( &fragOrderType ) !=  availableFragOrders_.end();
 }
 
 // -----------------------------------------------------------------------------

@@ -36,11 +36,13 @@ public:
 
     public:
         OrderInfos();
+        OrderInfos( ADN_Missions_Data::FragOrder* fragorder, const std::string& name );
 
         std::string GetItemName();
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
+        OrderInfos* CreateCopy();
 
     public:
         ADN_TypePtr_InVector_ABC< ADN_Missions_Data::FragOrder > fragOrder_;
@@ -109,7 +111,9 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void ReadMission( xml::xistream& input );
+        void ReadOrder( xml::xistream& input );
         void WriteArchive( const std::string& type, xml::xostream& output );
+        void AddFragOrder( ADN_Missions_Data::FragOrder* fragorder, const std::string& order );
 
     public:
         ADN_Missions_Data::T_Mission_Vector& missions_;
@@ -117,6 +121,7 @@ public:
         ADN_Type_String                     strDiaType_;
         ADN_Type_String                     strFile_;
         T_MissionInfos_Vector               vMissions_;
+        T_OrderInfos_Vector                 vFragOrders_;
     };
 
     typedef ADN_Type_Vector_ABC<ModelInfos> T_ModelInfos_Vector;

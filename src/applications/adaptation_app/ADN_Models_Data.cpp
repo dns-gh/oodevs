@@ -36,6 +36,14 @@ ADN_Models_Data::OrderInfos::OrderInfos()
     // NOTHING
 }
 
+ADN_Models_Data::OrderInfos::OrderInfos( ADN_Missions_Data::FragOrder* fragorder, const std::string& name )
+: ADN_Ref_ABC()
+, ADN_DataTreeNode_ABC()
+, fragOrder_( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders(), 0 )
+{
+    fragOrder_ = fragorder;
+    strName_ = name;
+}
 
 // -----------------------------------------------------------------------------
 // Name: OrderInfos::GetItemName
@@ -69,6 +77,18 @@ void ADN_Models_Data::OrderInfos::WriteArchive( xml::xostream& output )
     output << xml::start( "fragorder" )
             << xml::attribute( "name", fragOrder_.GetData()->strName_ )
            << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Models_Data::OrderInfos::CreateCopy
+// Created: HBD 2010-08-31
+// -----------------------------------------------------------------------------
+ADN_Models_Data::OrderInfos* ADN_Models_Data::OrderInfos::CreateCopy()
+{
+    OrderInfos* result = new OrderInfos();
+    result->fragOrder_ = fragOrder_.GetData();
+    result->strName_ = strName_.GetData();
+    return result;
 }
 
 // =============================================================================
@@ -238,6 +258,17 @@ std::string ADN_Models_Data::ModelInfos::GetNodeName()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Models_Data::AddFragOrder
+// Created: HBD 2010-09-01
+// -----------------------------------------------------------------------------
+void ADN_Models_Data::ModelInfos::AddFragOrder( ADN_Missions_Data::FragOrder* fragorder, const std::string& name )
+{
+    std::auto_ptr<OrderInfos> spNew( new OrderInfos( fragorder, name ) );
+    vFragOrders_.AddItem( spNew.release() );
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: ModelInfos::GetItemName
 // Created: AGN 2004-05-18
 // -----------------------------------------------------------------------------
@@ -262,7 +293,12 @@ ADN_Models_Data::ModelInfos* ADN_Models_Data::ModelInfos::CreateCopy()
         MissionInfos* pNewMission = (*itMission)->CreateCopy();
         pNewInfo->vMissions_.AddItem( pNewMission );
     }
-
+    pNewInfo->vFragOrders_.reserve( vFragOrders_.size() );
+    for( T_OrderInfos_Vector::iterator itOrder = vFragOrders_.begin(); itOrder != vFragOrders_.end(); ++itOrder )
+    {
+        OrderInfos* pNewOrder = (*itOrder)->CreateCopy();
+        pNewInfo->vFragOrders_.AddItem( pNewOrder );
+    }
     return pNewInfo;
 }
 
@@ -278,6 +314,17 @@ void ADN_Models_Data::ModelInfos::ReadMission( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Models_Data::ModelInfos::ReadOrder
+// Created: HBD 2010-08-31
+// -----------------------------------------------------------------------------
+void ADN_Models_Data::ModelInfos::ReadOrder( xml::xistream& input )
+{
+    std::auto_ptr<OrderInfos> spNew( new OrderInfos() );
+    spNew->ReadArchive( input );
+    vFragOrders_.AddItem( spNew.release() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ModelInfos::ReadArchive
 // Created: APE 2004-12-01
 // -----------------------------------------------------------------------------
@@ -288,7 +335,11 @@ void ADN_Models_Data::ModelInfos::ReadArchive( xml::xistream& input )
           >> xml::attribute( "file", strFile_ )
           >> xml::start( "missions" )
             >> xml::list( "mission", *this, &ADN_Models_Data::ModelInfos::ReadMission )
-          >> xml::end;
+        >> xml::end
+        >> xml::optional
+        >> xml::start( "fragorders" )
+            >> xml::list( "fragorder", *this, &ADN_Models_Data::ModelInfos::ReadOrder )
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -306,6 +357,10 @@ void ADN_Models_Data::ModelInfos::WriteArchive( const std::string& type, xml::xo
             <<  xml::attribute( "file", strFileName )
             <<  xml::start( "missions" );
     for( IT_MissionInfos_Vector it = vMissions_.begin(); it != vMissions_.end(); ++it )
+        (*it)->WriteArchive( output );
+    output << xml::end
+        << xml::start( "fragorders" );
+    for( IT_OrderInfos_Vector it = vFragOrders_.begin(); it != vFragOrders_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end
         << xml::end;

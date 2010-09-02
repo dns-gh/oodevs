@@ -75,6 +75,7 @@ private:
     //@{
     void RegisterSourcePath( xml::xistream& xis, MIL_Config& config, std::map< std::string, std::string >& paths );
     void ReadModel( xml::xistream& xis, const std::map< std::string, std::string >& strSourcePaths, const std::string& strEntityType, const T_MissionTypeNameMap& missionTypes );
+    void ReadModel( xml::xistream& xis, const std::map< std::string, std::string >& strSourcePaths, const std::string& strEntityType );
     //@}
 
 private:

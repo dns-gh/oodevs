@@ -34,6 +34,7 @@ public:
         eDiaType,
         eFile,
         eMissions,
+        eFragOrders,
         eNbrGuiElements
     };
 

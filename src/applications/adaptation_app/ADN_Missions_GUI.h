@@ -31,7 +31,6 @@ public:
         eUsageDescription,
         eParameters,
         eParameterValues,
-        eFragOrderAvailableForAllMissions,
         eFragOrderAvailableWithoutMission,
         eChoiceValues,
         eNbrGuiElements

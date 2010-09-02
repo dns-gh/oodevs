@@ -32,7 +32,7 @@ public:
     static const MIL_MissionType_ABC*  Find         ( unsigned int nID );
     static const MIL_MissionType_ABC*  Find         ( const std::string& strName );
     static const MIL_MissionType_ABC*  FindFromDiaID( const std::string& strName );
-    static const T_MissionNameMap& MissionNames();
+    static const T_MissionNameMap&     MissionNames();
     //@}
 
     //! @name Constructors/Destructor

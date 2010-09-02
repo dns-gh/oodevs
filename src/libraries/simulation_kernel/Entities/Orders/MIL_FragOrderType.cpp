@@ -113,13 +113,3 @@ bool MIL_FragOrderType::IsAvailableWithoutMission() const
 {
     return bAvailableWithoutMission_;
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_FragOrderType::IsAvailableForAllMissions
-// Created: NLD 2006-11-25
-// -----------------------------------------------------------------------------
-bool MIL_FragOrderType::IsAvailableForAllMissions() const
-{
-    return bAvailableForAllMissions_;
-}
-

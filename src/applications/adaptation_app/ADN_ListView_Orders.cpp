@@ -65,7 +65,7 @@ private:
 // Name: ADN_ListView_Orders constructor
 // Created: AGN 2003-11-27
 // -----------------------------------------------------------------------------
-ADN_ListView_Orders::ADN_ListView_Orders(QWidget * parent /*= 0*/, const char * name , WFlags f )
+ADN_ListView_Orders::ADN_ListView_Orders(QWidget * parent, const char * name , WFlags f )
 :   ADN_ListView(parent,name,f)
 {
     // add one column
@@ -129,7 +129,6 @@ void ADN_ListView_Orders::OnContextMenu( const QPoint& pt )
     else if( nMenu > 1 )
         CreateNewItem( nMenu - 2 );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Orders::Contains

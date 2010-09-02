@@ -13,6 +13,8 @@
 #include "ADN_Missions_Data.h"
 #include "ADN_Wizard_ABC.h"
 
+class ADN_FragOrder_WizardSecondPage;
+
 typedef ADN_Wizard_ABC< ADN_Missions_Data::FragOrder > ADN_Wizard_ABC_ADN_Missions_Data_FragOrder_;
 // =============================================================================
 /** @class  ADN_FragOrder_Wizard
@@ -28,12 +30,21 @@ public:
              ADN_FragOrder_Wizard( ADN_Missions_Data::T_FragOrder_Vector& fragOrders, QWidget* pParent = 0, const char* szName = 0 );
     virtual ~ADN_FragOrder_Wizard();
     //@}
-
+    
 private:
+    virtual bool ValidateAll();
+    virtual void Polish();
+
     //! @name Copy/Assignment
     //@{
     ADN_FragOrder_Wizard( const ADN_FragOrder_Wizard& );            //!< Copy constructor
     ADN_FragOrder_Wizard& operator=( const ADN_FragOrder_Wizard& ); //!< Assignment operator
+   //@}
+
+    //! @name data
+    //@{
+    std::auto_ptr< ADN_FragOrder_WizardSecondPage > secondPage_;
+    std::string name_;
     //@}
 };
 

@@ -1748,23 +1748,23 @@
     </mission>
   </populations>
   <fragorders>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_MettreTenueNBC" id="335" name="Mettre Tenue NBC"/>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_EnleverTenueNBC" id="336" name="Enlever Tenue NBC"/>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadio" id="337" name="Passer En Silence Radio Total"/>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_ArreterSilenceRadio" id="338" name="Arreter Silence Radio"/>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadar" id="339" name="Passer En Silence Radar"/>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_ArreterSilenceRadar" id="340" name="Arreter Silence Radar"/>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_RecupererTransporteurs" id="341" name="Recuperer Transporteurs"/>
-    <fragorder available-for-all-mission="true" available-without-mission="false" dia-type="Rep_OrderConduite_AttendreSePoster" id="342" name="Attendre Se Poster"/>
-    <fragorder available-for-all-mission="true" available-without-mission="false" dia-type="Rep_OrderConduite_Poursuivre" id="343" name="Poursuivre"/>
-    <fragorder available-for-all-mission="true" available-without-mission="false" dia-type="Rep_OrderConduite_Interrompre" id="344" name="Interrompre"/>
-    <fragorder available-for-all-mission="true" available-without-mission="false" dia-type="Rep_OrderConduite_ChangerAmbiance" id="345" name="Changer Ambiance">
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_MettreTenueNBC" id="335" name="Mettre Tenue NBC"/>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_EnleverTenueNBC" id="336" name="Enlever Tenue NBC"/>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadio" id="337" name="Passer En Silence Radio Total"/>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ArreterSilenceRadio" id="338" name="Arreter Silence Radio"/>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadar" id="339" name="Passer En Silence Radar"/>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ArreterSilenceRadar" id="340" name="Arreter Silence Radar"/>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_RecupererTransporteurs" id="341" name="Recuperer Transporteurs"/>
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_AttendreSePoster" id="342" name="Attendre Se Poster"/>
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Poursuivre" id="343" name="Poursuivre"/>
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Interrompre" id="344" name="Interrompre"/>
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ChangerAmbiance" id="345" name="Changer Ambiance">
       <parameter dia-name="orderConduiteChangerAmbiance_" name="Order conduite changer ambiance" optional="false" type="Enumeration">
         <value id="0" name="surete"/>
         <value id="1" name="vitesse"/>
       </parameter>
     </fragorder>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_ChangerReglesEngagement" id="346" name="Changer Regles Engagement">
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ChangerReglesEngagement" id="346" name="Changer Regles Engagement">
       <parameter dia-name="orderConduiteChangerReglesEngagement_" name="Order conduite changer regles engagement" optional="false" type="Enumeration">
         <value id="0" name="none"/>
         <value id="1" name="tir_libre"/>
@@ -1772,7 +1772,7 @@
         <value id="3" name="tir_interdit"/>
       </parameter>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_ChangerParametresRecompletementALAT" id="347" name="Changer Parametres Recompletement ALAT">
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ChangerParametresRecompletementALAT" id="347" name="Changer Parametres Recompletement ALAT">
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
         <value id="1" name="moyenne_portee"/>
@@ -1785,7 +1785,7 @@
         <value id="2" name="polyvalent"/>
       </parameter>
     </fragorder>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_ChangerReglesEngagementPopulation" id="348" name="Changer Regles Engagement Population">
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ChangerReglesEngagementPopulation" id="348" name="Changer Regles Engagement Population">
       <parameter dia-name="orderConduiteChangerReglesEngagementPopulation_" name="Order conduite changer regles engagement population" optional="false" type="Enumeration">
         <value id="0" name="none"/>
         <value id="1" name="emploi_force_interdit"/>
@@ -1794,56 +1794,56 @@
         <value id="4" name="armes_letales_autorisees"/>
       </parameter>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Deboucher" id="349" name="Deboucher"/>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Decrocher" id="350" name="Decrocher"/>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_AcquerirObjectif" id="351" name="Acquerir Objectif">
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Deboucher" id="349" name="Deboucher"/>
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Decrocher" id="350" name="Decrocher"/>
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_AcquerirObjectif" id="351" name="Acquerir Objectif">
       <parameter dia-name="orderConduiteAcquerirObjectif_" name="Order conduite acquerir objectif" optional="false" type="Location"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Brouiller" id="352" name="Brouiller"/>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_ChangerPositionDebarquement" id="353" name="Changer Position Debarquement">
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Brouiller" id="352" name="Brouiller"/>
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ChangerPositionDebarquement" id="353" name="Changer Position Debarquement">
       <parameter dia-name="orderConduiteChangerPositionDebarquement_" name="Order conduite changer position debarquement" optional="false" type="Point"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ChangerDePosition" id="354" name="Pion Changer De Position">
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ChangerDePosition" id="354" name="Pion Changer De Position">
       <parameter dia-name="orderConduitePionChangerDePosition_" name="Order conduite pion changer de position" optional="false" type="Point"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_Contourner" id="355" name="Pion Contourner"/>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_EnvoyerVehicule" id="356" name="Pion Envoyer Vehicule"/>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ActiverObstacle" id="357" name="Pion Activer Obstacle"/>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AppliquerFeux" id="358" name="Pion Appliquer Feux">
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_Contourner" id="355" name="Pion Contourner"/>
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_EnvoyerVehicule" id="356" name="Pion Envoyer Vehicule"/>
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ActiverObstacle" id="357" name="Pion Activer Obstacle"/>
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AppliquerFeux" id="358" name="Pion Appliquer Feux">
       <parameter dia-name="munitions_" name="Munitions" optional="false" type="DotationType"/>
       <parameter dia-name="nbIT_" name="Nb IT" optional="false" type="Numeric"/>
       <parameter dia-name="pointCible_" name="Cible" optional="false" type="Point"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ExecuterTir" id="359" name="Pion Executer Tir"/>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_Emettre" id="360" name="Pion Emettre"/>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_StopperEmission" id="361" name="Pion Stopper Emission"/>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_RenforcerEnVSRAM" id="362" name="Pion Renforcer En VSRAM">
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ExecuterTir" id="359" name="Pion Executer Tir"/>
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_Emettre" id="360" name="Pion Emettre"/>
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_StopperEmission" id="361" name="Pion Stopper Emission"/>
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_RenforcerEnVSRAM" id="362" name="Pion Renforcer En VSRAM">
       <parameter dia-name="pionARenforcer_" name="Pion a renforcer" optional="false" type="Agent"/>
       <parameter dia-name="nbrAmbulances_" name="Nbr ambulances" optional="false" type="Numeric"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_TransfererVSRAM" id="363" name="Pion Transferer VSRAM">
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_TransfererVSRAM" id="363" name="Pion Transferer VSRAM">
       <parameter dia-name="pionRenforce_" name="Pion renforce" optional="false" type="Agent"/>
       <parameter dia-name="pionARenforcer_" name="Pion a renforcer" optional="false" type="Agent"/>
       <parameter dia-name="nbrAmbulances_" name="Nbr ambulances" optional="false" type="Numeric"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ReprendreAuxOrdresVSRAM" id="364" name="Pion Reprendre Aux Ordres VSRAM">
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ReprendreAuxOrdresVSRAM" id="364" name="Pion Reprendre Aux Ordres VSRAM">
       <parameter dia-name="pionRenforce_" name="Pion renforce" optional="false" type="Agent"/>
       <parameter dia-name="nbrAmbulances_" name="Nbr ambulances" optional="false" type="Numeric"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_RenforcerEnRemorqueurs" id="365" name="Pion Renforcer En Remorqueurs">
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_RenforcerEnRemorqueurs" id="365" name="Pion Renforcer En Remorqueurs">
       <parameter dia-name="pionARenforcer_" name="Pion a renforcer" optional="false" type="Agent"/>
       <parameter dia-name="nbrRemorqueurs_" name="Nbr remorqueurs" optional="false" type="Numeric"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_TransfererRemorqueurs" id="366" name="Pion Transferer Remorqueurs">
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_TransfererRemorqueurs" id="366" name="Pion Transferer Remorqueurs">
       <parameter dia-name="pionRenforce_" name="Pion renforce" optional="false" type="Agent"/>
       <parameter dia-name="pionARenforcer_" name="Pion a renforcer" optional="false" type="Agent"/>
       <parameter dia-name="nbrRemorqueurs_" name="Nbr remorqueurs" optional="false" type="Numeric"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" id="367" name="Pion Reprendre Aux Ordres Remorqueurs">
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" id="367" name="Pion Reprendre Aux Ordres Remorqueurs">
       <parameter dia-name="pionRenforce_" name="Pion renforce" optional="false" type="Agent"/>
       <parameter dia-name="nbrRemorqueurs_" name="Nbr remorqueurs" optional="false" type="Numeric"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_ModifierRegimeTravailMaintenance" id="368" name="Modifier Regime Travail Maintenance">
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ModifierRegimeTravailMaintenance" id="368" name="Modifier Regime Travail Maintenance">
       <parameter dia-name="orderConduiteModifierRegimeTravailMaintenance_" name="Order conduite modifier regime travail maintenance" optional="false" type="Enumeration">
         <value id="0" name="regime_1"/>
         <value id="1" name="regime_2"/>
@@ -1851,47 +1851,47 @@
         <value id="3" name="regime_4"/>
       </parameter>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_ModifierPrioritesReparations" id="369" name="Modifier Priorites Reparations">
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ModifierPrioritesReparations" id="369" name="Modifier Priorites Reparations">
       <parameter dia-name="orderConduiteModifierPrioritesReparations_" name="Order conduite modifier priorites reparations" optional="false" type="MaintenancePriorities"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_ModifierPrioritesBlesses" id="370" name="Modifier Priorites Blesses">
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ModifierPrioritesBlesses" id="370" name="Modifier Priorites Blesses">
       <parameter dia-name="orderConduiteModifierPrioritesBlesses_" name="Order conduite modifier priorites blesses" optional="false" type="MedicalPriorities"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_ModifierPrioritesTactiquesReparations" id="371" name="Modifier Priorites Tactiques Reparations">
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ModifierPrioritesTactiquesReparations" id="371" name="Modifier Priorites Tactiques Reparations">
       <parameter dia-name="orderConduiteModifierPrioritesTactiquesReparations_" name="Order conduite modifier priorites tactiques reparations" optional="false" type="AutomateList"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_ModifierPrioritesTactiquesBlesses" id="372" name="Modifier Priorites Tactiques Blesses">
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ModifierPrioritesTactiquesBlesses" id="372" name="Modifier Priorites Tactiques Blesses">
       <parameter dia-name="orderConduiteModifierPrioritesTactiquesBlesses_" name="Order conduite modifier priorites tactiques blesses" optional="false" type="AutomateList"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Automate_RealiserVariantement" id="373" name="Automate Realiser Variantement">
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Automate_RealiserVariantement" id="373" name="Automate Realiser Variantement">
       <parameter dia-name="siteFranchissementOriginal_" name="Site franchissement original" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="siteFranchissementVariante_" name="Site franchissement variante" optional="false" type="ObjectKnowledge"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Automate_DesequiperSiteFranchissement" id="374" name="Automate Desequiper Site Franchissement">
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Automate_DesequiperSiteFranchissement" id="374" name="Automate Desequiper Site Franchissement">
       <parameter dia-name="siteFranchissement_" name="Site franchissement" optional="false" type="ObjectKnowledge"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Automate_AffecterPionAObstacle" id="375" name="Automate Affecter Pion AObstacle">
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Automate_AffecterPionAObstacle" id="375" name="Automate Affecter Pion AObstacle">
       <parameter dia-name="pion_" name="Pion" optional="false" type="Agent"/>
       <parameter dia-name="obstacle_" name="Obstacle" optional="false" type="GenObject"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Automate_ReconnaitreZoneImplantation" id="376" name="Automate Reconnaitre Zone Implantation">
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Automate_ReconnaitreZoneImplantation" id="376" name="Automate Reconnaitre Zone Implantation">
       <parameter dia-name="orderConduiteAutomateReconnaitreZoneImplantation_" name="Order conduite automate reconnaitre zone implantation" optional="false" type="Point"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement" id="377" name="Automate TC2 Gerer Materiel Avant Deplacement">
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement" id="377" name="Automate TC2 Gerer Materiel Avant Deplacement">
       <parameter dia-name="orderConduiteAutomateTc2GererMaterielAvantDeplacement_" name="Order conduite automate tc2 gerer materiel avant deplacement" optional="false" type="Enumeration">
         <value id="0" name="deborder_materiels_vers_bld"/>
         <value id="1" name="detruire_materiels_en_reparation"/>
         <value id="2" name="reparer_materiels_sur_place"/>
       </parameter>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Automate_ActiverObstacle" id="378" name="Automate Activer Obstacle">
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Automate_ActiverObstacle" id="378" name="Automate Activer Obstacle">
       <parameter dia-name="orderConduiteAutomateActiverObstacle_" name="Order conduite automate activer obstacle" optional="false" type="ObjectKnowledge"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Automate_TransfererRenforts" id="379" name="Automate Transferer Renforts">
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Automate_TransfererRenforts" id="379" name="Automate Transferer Renforts">
       <parameter dia-name="pionATransferer_" name="Pion a transferer" optional="false" type="Agent"/>
       <parameter dia-name="automateARenforcer_" name="Automate a renforcer" optional="false" type="Automate"/>
     </fragorder>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_Population_ChangerAttitude" id="380" name="Population Changer Attitude">
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Population_ChangerAttitude" id="380" name="Population Changer Attitude">
       <parameter dia-name="orderConduitePopulationChangerAttitude_" name="Order conduite population changer attitude" optional="false" type="Enumeration">
         <value id="0" name="calme"/>
         <value id="1" name="agitee"/>
@@ -1899,7 +1899,7 @@
         <value id="3" name="agressive"/>
       </parameter>
     </fragorder>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_ChangerReglesEngagement" id="381" name="Changer les règles d'engagement">
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ChangerReglesEngagement" id="381" name="Changer les règles d'engagement">
       <parameter dia-name="orderConduiteChangerReglesEngagement_" name="Ordre conduite: changer les règles d'engagement" optional="false" type="Enumeration">
         <value id="0" name="none"/>
         <value id="1" name="tir_libre"/>
@@ -1907,42 +1907,42 @@
         <value id="3" name="tir_interdit"/>
       </parameter>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="net.masagroup.sword.military.platoon.tasks.Illuminate" id="382" name="Illuminer">
+    <fragorder available-without-mission="false" dia-type="net.masagroup.sword.military.platoon.tasks.Illuminate" id="382" name="Illuminer">
       <parameter dia-name="agentKnowledge_" name="target" optional="false" type="AgentKnowledgeBM"/>
       <parameter dia-name="agent_" name="allie" optional="false" type="AgentBM"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="net.masagroup.sword.military.platoon.tasks.ApplyIndirectFire" id="383" name="ApplyFire">
+    <fragorder available-without-mission="false" dia-type="net.masagroup.sword.military.platoon.tasks.ApplyIndirectFire" id="383" name="ApplyFire">
       <parameter dia-name="munitions_" name="Ammunitions" optional="false" type="DotationType"/>
       <parameter dia-name="nbIT_" name="Shells number" optional="false" type="Numeric"/>
       <parameter dia-name="pointCible_" name="target" optional="false" type="PointBM"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="net.masagroup.sword.military.platoon.tasks.ApplyIndirectFire" id="384" name="ApplyGuidedFire">
+    <fragorder available-without-mission="false" dia-type="net.masagroup.sword.military.platoon.tasks.ApplyIndirectFire" id="384" name="ApplyGuidedFire">
       <parameter dia-name="munitions_" name="Ammunitions" optional="false" type="DotationType"/>
       <parameter dia-name="nbIT_" name="Shells number" optional="false" type="Numeric"/>
       <parameter dia-name="agentKnowledge_" name="target" optional="false" type="AgentKnowledgeBM"/>
     </fragorder>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_Pion_InterdireMunition" id="385" name="Pion Interdire Munition">
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_InterdireMunition" id="385" name="Pion Interdire Munition">
       <parameter dia-name="munitions_" name="Ammunitions" optional="false" type="DotationType"/>
     </fragorder>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_Pion_AutoriserMunition" id="386" name="Pion Autoriser Munition">
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_AutoriserMunition" id="386" name="Pion Autoriser Munition">
       <parameter dia-name="munitions_" name="Ammunitions" optional="false" type="DotationType"/>
     </fragorder>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_Pion_AutoriserToutesMunitions" id="387" name="Pion Autoriser Toutes Munitions"/>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="net.masagroup.sword.france.military.platoon.tasks.UtiliserALR" id="388" name="Utiliser ALR">
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_AutoriserToutesMunitions" id="387" name="Pion Autoriser Toutes Munitions"/>
+    <fragorder available-without-mission="false" dia-type="net.masagroup.sword.france.military.platoon.tasks.UtiliserALR" id="388" name="Utiliser ALR">
       <parameter dia-name="munitions_" name="Munitions" optional="false" type="DotationType"/>
       <parameter dia-name="nbIT_" name="Intervention Type" optional="false" type="Numeric"/>
       <parameter dia-name="pointCible_" name="Cible" optional="false" type="PointBM"/>
     </fragorder>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadioPartiel" id="389" name="Passer En Silence Radio Partiel"/>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="net.masagroup.sword.france.military.platoon.tasks.Observer" id="390" name="Pion Observer">
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadioPartiel" id="389" name="Passer En Silence Radio Partiel"/>
+    <fragorder available-without-mission="true" dia-type="net.masagroup.sword.france.military.platoon.tasks.Observer" id="390" name="Pion Observer">
       <parameter dia-name="pointCible_" name="Objectif" optional="false" type="PointBM"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AppliquerFeux" id="391" name="Appliquer les feux">
+    <fragorder available-without-mission="false" dia-type="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AppliquerFeux" id="391" name="Appliquer les feux">
       <parameter dia-name="munitions_" name="Munitions" optional="false" type="DotationType"/>
       <parameter dia-name="nbIT_" name="Intervention Type" optional="false" type="Numeric"/>
       <parameter dia-name="pointCible_" name="Cible" optional="false" type="PointBM"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AppliquerFeux" id="392" name="Appliquer les feux guidés">
+    <fragorder available-without-mission="false" dia-type="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AppliquerFeux" id="392" name="Appliquer les feux guidés">
       <parameter dia-name="munitions_" name="Munitions" optional="false" type="DotationType"/>
       <parameter dia-name="nbIT_" name="Intervention Type" optional="false" type="Numeric"/>
       <parameter dia-name="agentKnowledge_" name="Cible" optional="false" type="AgentKnowledgeBM"/>

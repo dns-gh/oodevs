@@ -33,9 +33,9 @@ public:
 
     //! @name Operations
     //@{
-    bool IsDefaultOrder   () const;
+
     bool IsMissionRequired() const;
-    bool IsAvailableFor   ( const kernel::Entity_ABC& entity ) const;
+    bool IsAvailableFor( const kernel::Entity_ABC& entity ) const;
     //@}
 
 private:
@@ -47,7 +47,6 @@ private:
 private:
     //! @name Member data
     //@{
-    bool isDefaultOrder_;
     bool isWithoutMission_;
     std::string diaType_;
     //@}

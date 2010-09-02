@@ -171,7 +171,6 @@ public:
         ADN_Type_String           strName_;
         T_MissionParameter_Vector parameters_;
         ADN_Type_String           diaType_;
-        ADN_Type_Bool             isAvailableForAllMissions_;
         ADN_Type_Bool             isAvailableWithoutMission_;
         ADN_Type_String           doctrineDescription_;
         ADN_Type_String           usageDescription_;

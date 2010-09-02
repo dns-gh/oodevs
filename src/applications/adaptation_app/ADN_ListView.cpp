@@ -194,6 +194,7 @@ void ADN_ListView::ContextMenuNew()
     setCurrentItem( FindItem( pNewObject ) );
 
     // We've used the object creator, we'll need to be given another one for next time.
+    pObjectCreator_->Polish();
     pObjectCreator_ = 0;
 }
 

@@ -21,6 +21,7 @@
 #include "ADN_ListView_Orders.h"
 #include "ADN_Project_Data.h"
 #include "ADN_GuiBuilder.h"
+#include "ADN_ListView_FragOrders.h"
 
 #include <qframe.h>
 #include <qlabel.h>
@@ -88,7 +89,7 @@ QWidget* ADN_Models_GUI::BuildPage( QVGroupBox*& pGroup, QWidget* pParent, ADN_M
     QWidget* pMainWidget = new QWidget( pParent );
 
     // Model listview
-    T_ConnectorVector vInfosConnectors( 4,(ADN_Connector_ABC*)0 );
+    T_ConnectorVector vInfosConnectors( 5,(ADN_Connector_ABC*)0 );
     ADN_ListView_Models* pListModels = new ADN_ListView_Models( eEntityType, pMainWidget);
     if( eEntityType == ADN_Models_Data::ModelInfos::eAutomat )
         pListModels->GetConnector().Connect( &data_.GetAutomataModelsInfos() );
@@ -107,13 +108,16 @@ QWidget* ADN_Models_GUI::BuildPage( QVGroupBox*& pGroup, QWidget* pParent, ADN_M
 
     // Missions
     QGroupBox* pMissionsGroup = new QHGroupBox( tr( "Missions" ), pGroup );
-
     ADN_ListView_Missions* pListMissions = new ADN_ListView_Missions( eEntityType, pListModels, pMissionsGroup );
     vInfosConnectors[eMissions] = &pListMissions->GetConnector();
 
     ADN_ListView_Orders* pListOrders = new ADN_ListView_Orders( pMissionsGroup );
     T_ConnectorVector vMissionConnector( eNbrMissionGuiElements, (ADN_Connector_ABC*)0 );
     vMissionConnector[eOrders] = &pListOrders->GetConnector();
+
+    QGroupBox* pFragOdersGroup = new QHGroupBox( tr( "FragOrders" ), pGroup );
+    ADN_ListView_Orders* pListFragOrders = new ADN_ListView_Orders( pFragOdersGroup );
+    vInfosConnectors[eFragOrders] = &pListFragOrders->GetConnector();
 
     pListMissions->SetItemConnectors( vMissionConnector );
 

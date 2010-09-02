@@ -72,6 +72,7 @@ void ADN_ListView_Models::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Models_GUI::eDiaType]->Connect( &pInfos->strDiaType_, bConnect );
     vItemConnectors_[ADN_Models_GUI::eFile]->Connect( &pInfos->strFile_, bConnect );
     vItemConnectors_[ADN_Models_GUI::eMissions]->Connect( &pInfos->vMissions_, bConnect );
+    vItemConnectors_[ADN_Models_GUI::eFragOrders]->Connect( &pInfos->vFragOrders_, bConnect );
 }
 
 

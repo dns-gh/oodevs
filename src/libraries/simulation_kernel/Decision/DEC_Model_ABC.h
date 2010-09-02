@@ -40,6 +40,7 @@ public:
     //@{
     bool IsMissionAvailable( const MIL_MissionType_ABC& missionType ) const;
     bool IsFragOrderAvailableForMission( const MIL_MissionType_ABC& missionType, const MIL_FragOrderType& fragOrderType ) const;
+    bool IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const;
     //@}
 
     //! @name Destructor
@@ -69,6 +70,7 @@ private:
     //@{
     void ReadMission( xml::xistream& xis, const std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess >& missionTypes );
     void ReadFragOrder( xml::xistream& xis, const MIL_MissionType_ABC& missionType );
+    void ReadFragOrder( xml::xistream& xis );
     //@}
 
 private:
@@ -88,6 +90,7 @@ private:
     std::string strScript_;
     std::string strIncludePath_;
     T_MissionSet availableMissions_;
+    T_FragOrderSet availableFragOrders_;
     T_FragOrderPerMissionMap availableFragOrdersPerMission_;
     //@}
 };

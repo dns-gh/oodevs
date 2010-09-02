@@ -412,7 +412,6 @@ void ADN_Missions_Data::Mission::WriteArchive( xml::xostream& output, const std:
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::FragOrder::FragOrder()
     : id_( ADN_Missions_Data::idFactory_.Create() )
-    , isAvailableForAllMissions_( false )
     , isAvailableWithoutMission_( false )
 {
     // NOTHING
@@ -424,7 +423,6 @@ ADN_Missions_Data::FragOrder::FragOrder()
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::FragOrder::FragOrder( unsigned int id )
     : id_( id )
-    , isAvailableForAllMissions_( false )
     , isAvailableWithoutMission_( false )
 {
     ADN_Missions_Data::idFactory_.Reserve( id );
@@ -477,7 +475,6 @@ void ADN_Missions_Data::FragOrder::ReadArchive( xml::xistream& input )
     std::string doctrineDesc, usageDesc;
     input >> xml::attribute( "name", strName_ )
           >> xml::attribute( "dia-type", diaType_ )
-          >> xml::optional >> xml::attribute( "available-for-all-mission", isAvailableForAllMissions_ )
           >> xml::optional >> xml::attribute( "available-without-mission", isAvailableWithoutMission_ )
           >> xml::optional >> xml::start( "descriptions" )
              >> xml::start( "doctrine" ) >> doctrineDesc >> xml::end
@@ -526,7 +523,6 @@ void ADN_Missions_Data::FragOrder::WriteArchive( xml::xostream& output )
             << xml::attribute( "name", strName_ )
             << xml::attribute( "dia-type", diaType_ )
             << xml::attribute( "id", id_ )
-            << xml::attribute( "available-for-all-mission", isAvailableForAllMissions_ )
             << xml::attribute( "available-without-mission", isAvailableWithoutMission_ );
     if( ! doctrineDescription_.GetData().empty() || ! usageDescription_.GetData().empty() )
     {

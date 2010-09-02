@@ -39,6 +39,7 @@ public:
     //! @name Operations
     //@{
     virtual ADN_Ref_ABC* CreateObject() = 0;
+    virtual void Polish() {}
     //@}
 };
 
