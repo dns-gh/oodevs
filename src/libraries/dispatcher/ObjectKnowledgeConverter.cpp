@@ -11,6 +11,9 @@
 #include "ObjectKnowledgeConverter.h"
 #include "Model_ABC.h"
 #include "ObjectKnowledge.h"
+#include "Agent_ABC.h"
+#include "Automat_ABC.h"
+#include "Team_ABC.h"
 #include "tools/Resolver.h"
 
 using namespace dispatcher;
@@ -40,23 +43,33 @@ ObjectKnowledgeConverter::~ObjectKnowledgeConverter()
 // -----------------------------------------------------------------------------
 const kernel::ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const kernel::Object_ABC& base, const kernel::Team_ABC& owner ) const
 {
-    tools::Iterator< const dispatcher::ObjectKnowledge_ABC& > it = model_.ObjectKnowledges().CreateIterator();
-    while( it.HasMoreElements() )
-    {
-        const dispatcher::ObjectKnowledge_ABC& k = it.NextElement();
-        if( & k.GetOwner() == &owner && k.GetEntity() == &base )
-            return &k;
-    }
-    return 0;
+    return Find( base, static_cast< const kernel::Entity_ABC& >( owner ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledgeConverter::Find
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-const kernel::ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const kernel::Object_ABC& /*base*/, const kernel::Entity_ABC& /*owner*/ ) const
+const kernel::ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const kernel::Object_ABC& base, const kernel::Entity_ABC& owner ) const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    const kernel::Entity_ABC* team = 0;
+    if( const dispatcher::Agent_ABC* agent = dynamic_cast< const dispatcher::Agent_ABC* >( &owner ) )
+        team = &agent->GetSuperior().GetTeam();
+    else if( const dispatcher::Automat_ABC* automat = dynamic_cast< const dispatcher::Automat_ABC* >( &owner ) )
+        team = &automat->GetTeam();
+    else
+        team = dynamic_cast< const kernel::Team_ABC* >( &owner );
+    if( team )
+    {
+        tools::Iterator< const dispatcher::ObjectKnowledge_ABC& > it = model_.ObjectKnowledges().CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const dispatcher::ObjectKnowledge_ABC& k = it.NextElement();
+            if( & k.GetOwner() == team && k.GetEntity() == &base )
+                return &k;
+        }
+    }
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
