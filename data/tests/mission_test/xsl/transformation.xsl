@@ -165,7 +165,7 @@ end
             <xsl:when test="@type = 'Bool'">
                 <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "Bool", value = "false"} )</xsl:text>
             </xsl:when>
-            <xsl:when test="(@type = 'Path')"> <!-- or (@type = 'PathBM') -->
+            <xsl:when test="(@type = 'Path')">
                 <xsl:text>    :With( Path.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>" ):AddPoint( "Destination", config.positions.destination[1] ) )</xsl:text>
             </xsl:when>
             <xsl:when test="(@type = 'Point') or (@type = 'PointBM')">
@@ -186,7 +186,7 @@ end
             <xsl:when test="@type = 'AgentList'">
                 <xsl:text>    :With( AgentList.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", { config.id.blueUnit } ) )</xsl:text>
             </xsl:when>
-            <!--xsl:when test="@type = 'ObjectKnowledge' and @name = 'Pont flottant'">
+            <xsl:when test="@type = 'ObjectKnowledge' and @name = 'Pont flottant'">
                 <xsl:text>    :With( { name = 'Pont flottant', type = 'ObjectKnowledge', value = 60 } )</xsl:text>
             </xsl:when>
             
@@ -197,11 +197,30 @@ end
             <xsl:when test="@type = 'ObjectKnowledge' and @name = 'Camp prisonniers'">
                 <xsl:text>    :With( { name = 'Camp prisonniers', type = 'ObjectKnowledge', value = 62 } )</xsl:text>
             </xsl:when>
+
+            <xsl:when test="@type = 'ObjectKnowledge' and @name = 'Installation cible'">
+                <xsl:text>    :With( { name = 'Installation cible', type = 'ObjectKnowledge', value = 60 } )</xsl:text>
+            </xsl:when>
             
+            <xsl:when test="@type = 'Automate'">
+                <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = 'Automate', value = "10" } )</xsl:text>
+            </xsl:when>
+
             <xsl:when test="@type = 'AgentKnowledge'">
-                <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = 'AgentKnowledge', value = config.id.blueUnit } )</xsl:text>
-            </xsl:when-->
-            
+                <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = 'AgentKnowledge', value = config.id.redUnit } )</xsl:text>
+            </xsl:when>
+
+            <xsl:when test="@type = 'Datetime'">
+                <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = 'Datetime', value = "20090505T173754" } )</xsl:text>
+            </xsl:when>
+
+            <!-- works ? -->
+            <xsl:when test="@type = 'DotationType'">
+                <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = 'DotationType', value = "78" } )</xsl:text>
+            </xsl:when>
+
+
+
             <xsl:otherwise>
                 <xsl:text>    -- Missing argument</xsl:text>
                 <redirect:write append="true" file="{$reportFile}">

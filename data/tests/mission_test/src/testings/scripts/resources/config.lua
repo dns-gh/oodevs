@@ -19,5 +19,6 @@ config =
     id =
     {
         blueUnit = 8
+        redUnit = 28
     },
 }

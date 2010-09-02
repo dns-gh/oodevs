@@ -8,13 +8,11 @@
     <property name="output" value="out"/>
     <property name="input" value="src"/>
     <property name="testName" value="testings"/>
-    <!--property name="data" value="../../data/models/ada/physical/scipio-1.9.2"/-->
     <property name="data" value="../../data/models/ada/physical/france"/>
     <property name="reportDir" value="./reports"/>
     <property name="reportFile" value="${reportDir}/${timenow}_generation_report.csv"/>
     <property name="exercises" value="../../exercises"/>
     <property name="simulation_app" value="../../../out/applications/simulation_app/vc80/Release/simulation_app.exe"/>
-    <property name="runDir" value="../../../run/vc80"/> <!-- not used -->
     <property name="unitPerExercise" value="25"/>
 
     <target name="clean">
@@ -31,7 +29,6 @@
             <fileset dir="${input}/${testName}" excludes=".svn"/>
         </copy>
         <xslt in="${data}/pions.xml" style="xsl/transformation.xsl" out="${reportFile}">
-        <!--xslt in="src/pions.xml" style="xsl/transformation.xsl" out="${reportFile}"-->
             <param name="output" expression="${output}/scripts"/>
             <param name="missionsPath" expression="${data}/Missions.xml"/>
             <param name="modelesPath"  expression="${data}/Modeles.xml"/>
