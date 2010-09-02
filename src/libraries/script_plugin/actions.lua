@@ -92,10 +92,10 @@ function Polygon.create()
     return Location.create( "polygon" )
 end
 
-function Polygon.create( name, points )
+function Polygon.create( name, type, points )
     local new = {}
     setmetatable( new, Polygon )
-    new.type = "Polygon"
+    new.type = type
     new.name = name
     new.children = { Location.create( "polygon" ) }
     for _,v in ipairs( points ) do
