@@ -21,8 +21,6 @@
 #include "ADN_ListView_Orders.h"
 #include "ADN_Project_Data.h"
 #include "ADN_GuiBuilder.h"
-#include "ADN_ListView_FragOrders.h"
-
 #include <qframe.h>
 #include <qlabel.h>
 #include <qlayout.h>
