@@ -12,7 +12,7 @@
   <report id="7" message="reconnaissance point"/>
   <report id="8" message="en poste face a direction dangereuse"/>
   <report id="9" message="en jalonnement"/>
-  <report id="10" message="preparation mission">
+  <report id="10" message="Préparation mission : %1 minute(s)">
     <parameter type="Numeric"/>
   </report>
   <report id="11" message="debut mission"/>
