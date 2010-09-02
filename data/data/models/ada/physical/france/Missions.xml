@@ -807,7 +807,7 @@
       <parameter dia-name="objective" name="objective" optional="false" type="AgentBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.ObserveToward" dia-type="net.masagroup.sword.test.military.platoon.tasks.ObserveToward" id="2017" name="TEST ObservePoint">
-      <parameter dia-name="objectives" name="target" optional="false" type="PointListBM"/>
+      <parameter dia-name="positions" name="target" optional="false" type="PointListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.ObserveToward" dia-type="net.masagroup.sword.test.military.platoon.tasks.ObserveTowardAgent" id="2019" name="TEST ObserveAgent">
       <parameter dia-name="objectives" name="target" optional="false" type="AgentKnowledgeListBM"/>
