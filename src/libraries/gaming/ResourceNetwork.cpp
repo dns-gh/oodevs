@@ -48,14 +48,31 @@ namespace
 // Name: ResourceNetwork constructor
 // Created: JSR 2010-08-19
 // -----------------------------------------------------------------------------
-ResourceNetwork::ResourceNetwork( kernel::Controllers& controllers, unsigned int id, bool isUrban, const tools::Resolver_ABC< TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg, kernel::PropertiesDictionary& dico )
+ResourceNetwork::ResourceNetwork( kernel::Controllers& controllers, unsigned int id, const tools::Resolver_ABC< TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg, kernel::PropertiesDictionary& dico )
     : controllers_( controllers )
     , id_( id )
-    , isUrban_( isUrban )
+    , isUrban_( true )
     , urbanResolver_( urbanResolver )
     , objectResolver_( objectResolver )
 {
-    Update( msg );
+    for( int i = 0; i < msg.resource_network_size(); ++i )
+        UpdateNetwork( 0, msg.resource_network( i ) );
+    CreateDictionary( dico );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetwork constructor
+// Created: JSR 2010-08-31
+// -----------------------------------------------------------------------------
+ResourceNetwork::ResourceNetwork( kernel::Controllers& controllers, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const Common::MsgObjectAttributeResourceNetwork& msg, kernel::PropertiesDictionary& dico )
+    : controllers_( controllers )
+    , id_( id )
+    , isUrban_( false )
+    , urbanResolver_( urbanResolver )
+    , objectResolver_( objectResolver )
+{
+    for( int i = 0; i < msg.network_size(); ++i )
+        UpdateNetwork( 0, msg.network( i ) );
     CreateDictionary( dico );
 }
 
@@ -69,77 +86,6 @@ ResourceNetwork::~ResourceNetwork()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetwork::Update
-// Created: JSR 2010-08-19
-// -----------------------------------------------------------------------------
-void ResourceNetwork::Update( const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& message )
-{
-    kernel::Entity_ABC* entity = 0;
-    if( isUrban_ )
-        entity = &urbanResolver_.Get( id_ );
-    else
-        entity = &objectResolver_.Get( id_ );
-    for( int i = 0; i < message.resource_network_size(); ++i )
-    {
-        const MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork& network = message.resource_network( i );
-        E_ResourceType type;
-        switch( network.type() )
-        {
-        case MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork::water:
-            type = eResourceType_Water;
-            break;
-        case MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork::gaz:
-            type = eResourceType_Gaz;
-            break;
-        case MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork::electricity:
-            type = eResourceType_Electricity;
-            break;
-        default:
-            throw std::exception( "Bad resource type" );
-        }
-        ResourceNode& node = resourceNodes_[ type ];
-        unsigned int oldMaxStock = node.maxStock_;
-        unsigned int oldProduction = node.production_;
-        unsigned int oldConsumption = node.consumption_;
-        bool oldCritical = node.critical_;
-        unsigned int oldStock = node.stock_;
-        unsigned int oldFlow = node.totalFlow_;
-        node.type_ = type;
-        node.isEnabled_ = network.enabled();
-        node.production_ = network.has_production() ? network.production() : 0;
-        node.maxStock_ = network.has_max_stock() ? network.max_stock() : 0;
-        node.stock_ = network.has_stock() ? network.stock() : 0;
-        node.consumption_ = network.has_consumption() ? network.consumption() : 0;
-        node.critical_ = network.has_critical() ? network.critical() : false;
-        node.links_.clear();
-        node.totalFlow_ = 0;
-        for( int j = 0; j < network.link_size(); ++j )
-        {
-            ResourceLink link;
-            link.urban_ = network.link( j ).kind() == MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::urban;
-            link.id_ = network.link( j ).target_id();
-            link.capacity_ = network.link( j ).capacity();
-            link.flow_ = network.link( j ).flow();
-            node.totalFlow_ += link.flow_;
-            node.links_.push_back( link );
-        }
-        const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + ConvertFromResourceType( type ) + "/";
-        if( node.totalFlow_ != oldFlow && node.links_.size() )
-            controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Total flow" ) ) );
-        if( node.stock_ != oldStock )
-            controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Stock" ) ) );
-        if( node.maxStock_ != oldMaxStock )
-            controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Maximal stock" ) ) );
-        if( node.production_ != oldProduction )
-            controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Production" ) ) );
-        if( node.consumption_ != oldConsumption )
-            controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Consumption" ) ) );
-        if( node.critical_ != oldCritical )
-            controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Vital consumption" ) ) );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: ResourceNetwork::Draw
 // Created: JSR 2010-08-19
 // -----------------------------------------------------------------------------
@@ -149,19 +95,10 @@ void ResourceNetwork::Draw( const Point2f&, const kernel::Viewport_ABC& viewport
     char filter = controllers_.options_.GetOption( "ResourceNetworks", 0 ).To< char >();
     if( filter == 1 )// off
         return;
-    Point2f from;
-    Point2f to;
-    bool selected = true;
-    if( isUrban_ )
-    {
-        TerrainObjectProxy& proxy = urbanResolver_.Get( id_ );
-        selected = proxy.IsSelected();
-        if( filter == 3 && !selected ) // selected outgoing
-            return;
-        from = proxy.Barycenter();
-    }
-    else
-        from = objectResolver_.Get( id_ ).Get< kernel::Positions >().GetPosition();
+    if( filter == 3 && !IsSelected() ) // selected outgoing
+        return;
+    Point2f from = isUrban_ ? urbanResolver_.Get( id_ ).Barycenter()
+        : objectResolver_.Get( id_ ).Get< kernel::Positions >().GetPosition();
 
     glPushAttrib( GL_LINE_BIT );
     glLineWidth( 3.f );
@@ -174,23 +111,25 @@ void ResourceNetwork::Draw( const Point2f&, const kernel::Viewport_ABC& viewport
             glEnable( GL_LINE_STIPPLE );
             for( std::vector< ResourceLink >::const_iterator link = node->second.links_.begin(); link != node->second.links_.end(); ++link )
             {
-                UpdateStipple( link->flow_ );
-                if( link->urban_ )
+                kernel::Entity_ABC* target = link->urban_ ? static_cast< kernel::Entity_ABC* >( urbanResolver_.Find( link->id_ ) ) : objectResolver_.Find( link->id_ );
+                if( !target )
+                    continue;
+                if( filter == 2 )  // selected all
                 {
-                    TerrainObjectProxy* proxy = urbanResolver_.Find( link->id_ );
-                    if( !proxy || ( filter == 2 && !proxy->IsSelected() && !selected ) ) // Selected all
+                    ResourceNetwork_ABC* resourceTarget = target->Retrieve< ResourceNetwork_ABC >();
+                    if( !resourceTarget || ( !IsSelected() && !resourceTarget->IsSelected() ) )
                         continue;
-                    to = proxy->Barycenter();
                 }
-                else
-                    to = objectResolver_.Get( link->id_ ).Get< kernel::Positions >().GetPosition();
+                Point2f to = link->urban_ ? urbanResolver_.Get( link->id_ ).Barycenter()
+                                          : objectResolver_.Get( link->id_ ).Get< kernel::Positions >().GetPosition();
+                UpdateStipple( link->flow_ );
                 if( viewport.IsVisible( Rectangle2f( from, to ) ) )
                     tools.DrawLine( from, to );
             }
             glDisable( GL_LINE_STIPPLE );
         }
         else
-            if( filter == 0 || selected )
+            if( filter == 0 || IsSelected() )
                 tools.DrawCircle( from, 20.0 );
     }
     glPopAttrib();
@@ -215,6 +154,99 @@ QString ResourceNetwork::GetLinkName( E_ResourceType type, unsigned int i ) cons
     if( ret.isEmpty() )
         ret = QString::number( link.id_ );
     return ret;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetwork::DoUpdate
+// Created: JSR 2010-09-01
+// -----------------------------------------------------------------------------
+void ResourceNetwork::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
+{
+    if( message.attributes().has_resource_networks() )
+    {
+        kernel::Entity_ABC* entity = objectResolver_.Find( id_ );
+        for( int i = 0; i < message.attributes().resource_networks().network_size(); ++i )
+            UpdateNetwork( entity, message.attributes().resource_networks().network( i ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetwork::DoUpdate
+// Created: JSR 2010-09-01
+// -----------------------------------------------------------------------------
+void ResourceNetwork::DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& message )
+{
+    if( message.attributes().has_infrastructures() )
+    {
+        kernel::Entity_ABC* entity = urbanResolver_.Find( id_ );
+        for( int i = 0; i < message.attributes().infrastructures().resource_network_size(); ++i )
+            UpdateNetwork( entity, message.attributes().infrastructures().resource_network( i ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetwork::UpdateNetwork
+// Created: JSR 2010-08-31
+// -----------------------------------------------------------------------------
+void ResourceNetwork::UpdateNetwork( kernel::Entity_ABC* entity, const Common::ResourceNetwork& msg )
+{
+    E_ResourceType type;
+    switch( msg.type() )
+    {
+    case Common::ResourceNetwork::water:
+        type = eResourceType_Water;
+        break;
+    case Common::ResourceNetwork::gaz:
+        type = eResourceType_Gaz;
+        break;
+    case Common::ResourceNetwork::electricity:
+        type = eResourceType_Electricity;
+        break;
+    default:
+        throw std::exception( "Bad resource type" );
+    }
+    ResourceNode& node = resourceNodes_[ type ];
+    unsigned int oldMaxStock = node.maxStock_;
+    unsigned int oldProduction = node.production_;
+    unsigned int oldConsumption = node.consumption_;
+    bool oldCritical = node.critical_;
+    unsigned int oldStock = node.stock_;
+    unsigned int oldFlow = node.totalFlow_;
+    node.type_ = type;
+    node.isEnabled_ = msg.enabled();
+    node.production_ = msg.has_production() ? msg.production() : 0;
+    node.maxStock_ = msg.has_max_stock() ? msg.max_stock() : 0;
+    node.stock_ = msg.has_stock() ? msg.stock() : 0;
+    node.consumption_ = msg.has_consumption() ? msg.consumption() : 0;
+    node.critical_ = msg.has_critical() ? msg.critical() : false;
+    node.links_.clear();
+    node.totalFlow_ = 0;
+    for( int j = 0; j < msg.link_size(); ++j )
+    {
+        ResourceLink link;
+        link.urban_ = msg.link( j ).kind() == Common::ResourceNetwork_Link::urban;
+        link.id_ = msg.link( j ).target_id();
+        link.capacity_ = msg.link( j ).capacity();
+        link.flow_ = msg.link( j ).flow();
+        node.totalFlow_ += link.flow_;
+        node.links_.push_back( link );
+    }
+    if( entity )
+    {
+        const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + ConvertFromResourceType( type ) + "/";
+        if( node.totalFlow_ != oldFlow && node.links_.size() )
+            controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Total flow" ) ) );
+        if( node.stock_ != oldStock )
+            controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Stock" ) ) );
+        if( node.maxStock_ != oldMaxStock )
+            controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Maximal stock" ) ) );
+        if( node.production_ != oldProduction )
+            controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Production" ) ) );
+        if( node.consumption_ != oldConsumption )
+            controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Consumption" ) ) );
+        if( node.critical_ != oldCritical )
+            controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Vital consumption" ) ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -246,7 +278,8 @@ void ResourceNetwork::SetColor( E_ResourceType type ) const
 void ResourceNetwork::UpdateStipple( int value ) const
 {
     long time = clock();
-    unsigned short shift = ( unsigned short ) ( ( long ) ( time * value / 256 ) % 128 ) / 8;
+    value = std::min( value, 256 );
+    unsigned short shift = ( unsigned short ) ( ( ( time * value ) >> 8 ) % 128 ) >> 3;
     glLineStipple( 1, 0x00FF << shift | 0x00FF >> ( 16-shift ) );
 }
 

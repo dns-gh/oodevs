@@ -24,11 +24,12 @@
 #include "ObstacleAttribute.h"
 #include "OccupantAttribute.h"
 #include "PopulationAttribute.h"
+#include "ResourceNetworkAttribute.h"
 #include "SupplyRouteAttribute.h"
 #include "TimeLimitedAttribute.h"
 #include "StockAttribute.h"
-#include "ImprovableCapacity.h"
 #include "BuildableCapacity.h"
+#include "ImprovableCapacity.h"
 #include "protocol/protocol.h"
 #include <boost/bind.hpp>
 
@@ -77,6 +78,14 @@ namespace
         }
     };
 
+    template<>
+    struct AddBuilder< ResourceNetworkAttribute >
+    {
+        static void Add( Object& object, xml::xistream& xis )
+        {
+            object.GetAttribute< ResourceNetworkAttribute >() = ResourceNetworkAttribute( xis, object );
+        }
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -101,6 +110,7 @@ AttributeFactory::AttributeFactory()
     Register( "stock", boost::bind( &AddBuilder< StockAttribute >::Add, _1, _2 ) );
     Register( "max-size", boost::bind( &AddBuilder< OccupantAttribute >::Add, _1, _2 ) );
     Register( "delay", boost::bind( &AddBuilder< DelayAttribute >::Add, _1, _2 ) );
+    Register( "resources", boost::bind( &AddBuilder< ResourceNetworkAttribute >::Add, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------

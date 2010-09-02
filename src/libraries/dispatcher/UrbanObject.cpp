@@ -11,6 +11,7 @@
 #include "ArchitectureAttribute.h"
 #include "ColorAttribute.h"
 #include "InfrastructuresAttribute.h"
+#include "ResourceNetworkAttribute.h"
 #include "StructureAttribute.h"
 #include "UrbanObject.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
@@ -29,6 +30,7 @@ UrbanObject::UrbanObject( Model_ABC& /*model*/, const MsgsSimToClient::MsgUrbanC
     , strName_                   ( msg.name()  )
     , localisation_              ( msg.location() )
     , hasInfrastructures_        ( false )
+    , hasResourceNetwork_        ( false )
 {
     Initialize( msg.attributes() );
     RegisterSelf( *this );
@@ -122,10 +124,18 @@ void UrbanObject::DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& msg )
     }
     if( msg.has_attributes() )
     {
-        if( msg.attributes().has_infrastructures() && !hasInfrastructures_ )
+        if( msg.attributes().has_infrastructures() )
         {
-            hasInfrastructures_ = true;
-            AddAttribute( new InfrastructuresAttribute( msg.attributes() ) );
+            if( msg.attributes().infrastructures().resource_network_size() && !hasResourceNetwork_ )
+            {
+                hasResourceNetwork_ = true;
+                AddAttribute( new ResourceNetworkAttribute( msg.attributes() ) );
+            }
+            if( hasInfrastructures_ )
+            {
+                hasInfrastructures_ = true;
+                AddAttribute( new InfrastructuresAttribute( msg.attributes() ) );
+            }
         }
         optionals_.attributesPresent = 1;
         std::for_each( attributes_.begin(), attributes_.end(),

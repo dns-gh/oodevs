@@ -1114,36 +1114,7 @@ message MsgUrbanAttributes {
     }
     message Infrastructures
     {
-        message ResourceNetwork
-        {
-            message Link
-            {
-                enum TargetKind
-                {
-                    urban  = 1;
-                    object = 2;
-                }
-                required TargetKind kind  = 1;
-                required uint32 target_id = 2;
-                required int32  capacity  = 3;
-                required uint32 flow      = 4;
-            }
-            enum ResourceType
-            {
-                water       = 1;
-                gaz         = 2;
-                electricity = 3;
-            }
-            required ResourceType type        = 1;
-            repeated Link         link        = 2;
-            required bool         enabled     = 3;
-            optional uint32       max_stock   = 4;
-            optional uint32       stock       = 5;
-            optional uint32       production  = 6;
-            optional uint32       consumption = 7;
-            optional bool         critical    = 8;
-        }
-        repeated ResourceNetwork resource_network = 1;
+        repeated Common.ResourceNetwork resource_network = 1;
     }
     message RgbaColor
     {

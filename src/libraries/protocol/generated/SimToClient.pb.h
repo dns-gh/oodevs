@@ -190,8 +190,6 @@ class MsgUrbanAttributes;
 class MsgUrbanAttributes_Architecture;
 class MsgUrbanAttributes_Structure;
 class MsgUrbanAttributes_Infrastructures;
-class MsgUrbanAttributes_Infrastructures_ResourceNetwork;
-class MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link;
 class MsgUrbanAttributes_RgbaColor;
 class MsgUrbanCreation;
 class MsgUrbanDetection;
@@ -593,43 +591,6 @@ inline bool MsgUrbanMagicActionAck_ErrorCode_Parse(
     const ::std::string& name, MsgUrbanMagicActionAck_ErrorCode* value) {
   return ::google::protobuf::internal::ParseNamedEnum<MsgUrbanMagicActionAck_ErrorCode>(
     MsgUrbanMagicActionAck_ErrorCode_descriptor(), name, value);
-}
-enum MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind {
-  MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_urban = 1,
-  MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_object = 2
-};
-bool MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_IsValid(int value);
-const MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_TargetKind_MIN = MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_urban;
-const MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_TargetKind_MAX = MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_object;
-
-const ::google::protobuf::EnumDescriptor* MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_descriptor();
-inline const ::std::string& MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_Name(MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_descriptor(), value);
-}
-inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_Parse(
-    const ::std::string& name, MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind>(
-    MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_descriptor(), name, value);
-}
-enum MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType {
-  MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_water = 1,
-  MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_gaz = 2,
-  MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_electricity = 3
-};
-bool MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_IsValid(int value);
-const MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_ResourceType_MIN = MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_water;
-const MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_ResourceType_MAX = MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_electricity;
-
-const ::google::protobuf::EnumDescriptor* MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_descriptor();
-inline const ::std::string& MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_Name(MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_descriptor(), value);
-}
-inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_Parse(
-    const ::std::string& name, MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType>(
-    MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_descriptor(), name, value);
 }
 enum KnowledgeGroupAck_ErrorCode {
   KnowledgeGroupAck_ErrorCode_no_error = 0,
@@ -17694,310 +17655,6 @@ class MsgUrbanAttributes_Structure : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link : public ::google::protobuf::Message {
- public:
-  MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link();
-  virtual ~MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link();
-  
-  MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link(const MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link& from);
-  
-  inline MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link& operator=(const MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link& default_instance();
-  void Swap(MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link& from);
-  void MergeFrom(const MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  typedef MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind TargetKind;
-  static const TargetKind urban = MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_urban;
-  static const TargetKind object = MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_object;
-  static inline bool TargetKind_IsValid(int value) {
-    return MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_IsValid(value);
-  }
-  static const TargetKind TargetKind_MIN =
-    MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_TargetKind_MIN;
-  static const TargetKind TargetKind_MAX =
-    MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_TargetKind_MAX;
-  static inline const ::google::protobuf::EnumDescriptor*
-  TargetKind_descriptor() {
-    return MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_descriptor();
-  }
-  static inline const ::std::string& TargetKind_Name(TargetKind value) {
-    return MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_Name(value);
-  }
-  static inline bool TargetKind_Parse(const ::std::string& name,
-      TargetKind* value) {
-    return MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_Parse(name, value);
-  }
-  
-  // accessors -------------------------------------------------------
-  
-  // required .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork.Link.TargetKind kind = 1;
-  inline bool has_kind() const;
-  inline void clear_kind();
-  static const int kKindFieldNumber = 1;
-  inline ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind kind() const;
-  inline void set_kind(::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind value);
-  
-  // required uint32 target_id = 2;
-  inline bool has_target_id() const;
-  inline void clear_target_id();
-  static const int kTargetIdFieldNumber = 2;
-  inline ::google::protobuf::uint32 target_id() const;
-  inline void set_target_id(::google::protobuf::uint32 value);
-  
-  // required int32 capacity = 3;
-  inline bool has_capacity() const;
-  inline void clear_capacity();
-  static const int kCapacityFieldNumber = 3;
-  inline ::google::protobuf::int32 capacity() const;
-  inline void set_capacity(::google::protobuf::int32 value);
-  
-  // required uint32 flow = 4;
-  inline bool has_flow() const;
-  inline void clear_flow();
-  static const int kFlowFieldNumber = 4;
-  inline ::google::protobuf::uint32 flow() const;
-  inline void set_flow(::google::protobuf::uint32 value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  int kind_;
-  ::google::protobuf::uint32 target_id_;
-  ::google::protobuf::int32 capacity_;
-  ::google::protobuf::uint32 flow_;
-  friend void  protobuf_AddDesc_SimToClient_2eproto();
-  friend void protobuf_AssignDesc_SimToClient_2eproto();
-  friend void protobuf_ShutdownFile_SimToClient_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgUrbanAttributes_Infrastructures_ResourceNetwork : public ::google::protobuf::Message {
- public:
-  MsgUrbanAttributes_Infrastructures_ResourceNetwork();
-  virtual ~MsgUrbanAttributes_Infrastructures_ResourceNetwork();
-  
-  MsgUrbanAttributes_Infrastructures_ResourceNetwork(const MsgUrbanAttributes_Infrastructures_ResourceNetwork& from);
-  
-  inline MsgUrbanAttributes_Infrastructures_ResourceNetwork& operator=(const MsgUrbanAttributes_Infrastructures_ResourceNetwork& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgUrbanAttributes_Infrastructures_ResourceNetwork& default_instance();
-  void Swap(MsgUrbanAttributes_Infrastructures_ResourceNetwork* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgUrbanAttributes_Infrastructures_ResourceNetwork* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgUrbanAttributes_Infrastructures_ResourceNetwork& from);
-  void MergeFrom(const MsgUrbanAttributes_Infrastructures_ResourceNetwork& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  typedef MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link Link;
-  
-  typedef MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType ResourceType;
-  static const ResourceType water = MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_water;
-  static const ResourceType gaz = MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_gaz;
-  static const ResourceType electricity = MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_electricity;
-  static inline bool ResourceType_IsValid(int value) {
-    return MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_IsValid(value);
-  }
-  static const ResourceType ResourceType_MIN =
-    MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_ResourceType_MIN;
-  static const ResourceType ResourceType_MAX =
-    MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_ResourceType_MAX;
-  static inline const ::google::protobuf::EnumDescriptor*
-  ResourceType_descriptor() {
-    return MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_descriptor();
-  }
-  static inline const ::std::string& ResourceType_Name(ResourceType value) {
-    return MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_Name(value);
-  }
-  static inline bool ResourceType_Parse(const ::std::string& name,
-      ResourceType* value) {
-    return MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_Parse(name, value);
-  }
-  
-  // accessors -------------------------------------------------------
-  
-  // required .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork.ResourceType type = 1;
-  inline bool has_type() const;
-  inline void clear_type();
-  static const int kTypeFieldNumber = 1;
-  inline ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType type() const;
-  inline void set_type(::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType value);
-  
-  // repeated .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork.Link link = 2;
-  inline int link_size() const;
-  inline void clear_link();
-  static const int kLinkFieldNumber = 2;
-  inline const ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link >& link() const;
-  inline ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link >* mutable_link();
-  inline const ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link& link(int index) const;
-  inline ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link* mutable_link(int index);
-  inline ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link* add_link();
-  
-  // required bool enabled = 3;
-  inline bool has_enabled() const;
-  inline void clear_enabled();
-  static const int kEnabledFieldNumber = 3;
-  inline bool enabled() const;
-  inline void set_enabled(bool value);
-  
-  // optional uint32 max_stock = 4;
-  inline bool has_max_stock() const;
-  inline void clear_max_stock();
-  static const int kMaxStockFieldNumber = 4;
-  inline ::google::protobuf::uint32 max_stock() const;
-  inline void set_max_stock(::google::protobuf::uint32 value);
-  
-  // optional uint32 stock = 5;
-  inline bool has_stock() const;
-  inline void clear_stock();
-  static const int kStockFieldNumber = 5;
-  inline ::google::protobuf::uint32 stock() const;
-  inline void set_stock(::google::protobuf::uint32 value);
-  
-  // optional uint32 production = 6;
-  inline bool has_production() const;
-  inline void clear_production();
-  static const int kProductionFieldNumber = 6;
-  inline ::google::protobuf::uint32 production() const;
-  inline void set_production(::google::protobuf::uint32 value);
-  
-  // optional uint32 consumption = 7;
-  inline bool has_consumption() const;
-  inline void clear_consumption();
-  static const int kConsumptionFieldNumber = 7;
-  inline ::google::protobuf::uint32 consumption() const;
-  inline void set_consumption(::google::protobuf::uint32 value);
-  
-  // optional bool critical = 8;
-  inline bool has_critical() const;
-  inline void clear_critical();
-  static const int kCriticalFieldNumber = 8;
-  inline bool critical() const;
-  inline void set_critical(bool value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  int type_;
-  ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link > link_;
-  bool enabled_;
-  ::google::protobuf::uint32 max_stock_;
-  ::google::protobuf::uint32 stock_;
-  ::google::protobuf::uint32 production_;
-  ::google::protobuf::uint32 consumption_;
-  bool critical_;
-  friend void  protobuf_AddDesc_SimToClient_2eproto();
-  friend void protobuf_AssignDesc_SimToClient_2eproto();
-  friend void protobuf_ShutdownFile_SimToClient_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgUrbanAttributes_Infrastructures_ResourceNetwork* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class MsgUrbanAttributes_Infrastructures : public ::google::protobuf::Message {
  public:
   MsgUrbanAttributes_Infrastructures();
@@ -18049,25 +17706,23 @@ class MsgUrbanAttributes_Infrastructures : public ::google::protobuf::Message {
   
   // nested types ----------------------------------------------------
   
-  typedef MsgUrbanAttributes_Infrastructures_ResourceNetwork ResourceNetwork;
-  
   // accessors -------------------------------------------------------
   
-  // repeated .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork resource_network = 1;
+  // repeated .Common.ResourceNetwork resource_network = 1;
   inline int resource_network_size() const;
   inline void clear_resource_network();
   static const int kResourceNetworkFieldNumber = 1;
-  inline const ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork >& resource_network() const;
-  inline ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork >* mutable_resource_network();
-  inline const ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork& resource_network(int index) const;
-  inline ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork* mutable_resource_network(int index);
-  inline ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork* add_resource_network();
+  inline const ::google::protobuf::RepeatedPtrField< ::Common::ResourceNetwork >& resource_network() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Common::ResourceNetwork >* mutable_resource_network();
+  inline const ::Common::ResourceNetwork& resource_network(int index) const;
+  inline ::Common::ResourceNetwork* mutable_resource_network(int index);
+  inline ::Common::ResourceNetwork* add_resource_network();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork > resource_network_;
+  ::google::protobuf::RepeatedPtrField< ::Common::ResourceNetwork > resource_network_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
@@ -30484,241 +30139,30 @@ inline void MsgUrbanAttributes_Structure::set_state(::google::protobuf::uint32 v
 
 // -------------------------------------------------------------------
 
-// MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link
-
-// required .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork.Link.TargetKind kind = 1;
-inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::has_kind() const {
-  return _has_bit(0);
-}
-inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::clear_kind() {
-  kind_ = 1;
-  _clear_bit(0);
-}
-inline ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::kind() const {
-  return static_cast< ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind >(kind_);
-}
-inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::set_kind(::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind value) {
-  GOOGLE_DCHECK(::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_IsValid(value));
-  _set_bit(0);
-  kind_ = value;
-}
-
-// required uint32 target_id = 2;
-inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::has_target_id() const {
-  return _has_bit(1);
-}
-inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::clear_target_id() {
-  target_id_ = 0u;
-  _clear_bit(1);
-}
-inline ::google::protobuf::uint32 MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::target_id() const {
-  return target_id_;
-}
-inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::set_target_id(::google::protobuf::uint32 value) {
-  _set_bit(1);
-  target_id_ = value;
-}
-
-// required int32 capacity = 3;
-inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::has_capacity() const {
-  return _has_bit(2);
-}
-inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::clear_capacity() {
-  capacity_ = 0;
-  _clear_bit(2);
-}
-inline ::google::protobuf::int32 MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::capacity() const {
-  return capacity_;
-}
-inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::set_capacity(::google::protobuf::int32 value) {
-  _set_bit(2);
-  capacity_ = value;
-}
-
-// required uint32 flow = 4;
-inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::has_flow() const {
-  return _has_bit(3);
-}
-inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::clear_flow() {
-  flow_ = 0u;
-  _clear_bit(3);
-}
-inline ::google::protobuf::uint32 MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::flow() const {
-  return flow_;
-}
-inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::set_flow(::google::protobuf::uint32 value) {
-  _set_bit(3);
-  flow_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// MsgUrbanAttributes_Infrastructures_ResourceNetwork
-
-// required .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork.ResourceType type = 1;
-inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::has_type() const {
-  return _has_bit(0);
-}
-inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::clear_type() {
-  type_ = 1;
-  _clear_bit(0);
-}
-inline ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType MsgUrbanAttributes_Infrastructures_ResourceNetwork::type() const {
-  return static_cast< ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType >(type_);
-}
-inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::set_type(::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType value) {
-  GOOGLE_DCHECK(::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_IsValid(value));
-  _set_bit(0);
-  type_ = value;
-}
-
-// repeated .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork.Link link = 2;
-inline int MsgUrbanAttributes_Infrastructures_ResourceNetwork::link_size() const {
-  return link_.size();
-}
-inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::clear_link() {
-  link_.Clear();
-}
-inline const ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link >&
-MsgUrbanAttributes_Infrastructures_ResourceNetwork::link() const {
-  return link_;
-}
-inline ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link >*
-MsgUrbanAttributes_Infrastructures_ResourceNetwork::mutable_link() {
-  return &link_;
-}
-inline const ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link& MsgUrbanAttributes_Infrastructures_ResourceNetwork::link(int index) const {
-  return link_.Get(index);
-}
-inline ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link* MsgUrbanAttributes_Infrastructures_ResourceNetwork::mutable_link(int index) {
-  return link_.Mutable(index);
-}
-inline ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link* MsgUrbanAttributes_Infrastructures_ResourceNetwork::add_link() {
-  return link_.Add();
-}
-
-// required bool enabled = 3;
-inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::has_enabled() const {
-  return _has_bit(2);
-}
-inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::clear_enabled() {
-  enabled_ = false;
-  _clear_bit(2);
-}
-inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::enabled() const {
-  return enabled_;
-}
-inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::set_enabled(bool value) {
-  _set_bit(2);
-  enabled_ = value;
-}
-
-// optional uint32 max_stock = 4;
-inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::has_max_stock() const {
-  return _has_bit(3);
-}
-inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::clear_max_stock() {
-  max_stock_ = 0u;
-  _clear_bit(3);
-}
-inline ::google::protobuf::uint32 MsgUrbanAttributes_Infrastructures_ResourceNetwork::max_stock() const {
-  return max_stock_;
-}
-inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::set_max_stock(::google::protobuf::uint32 value) {
-  _set_bit(3);
-  max_stock_ = value;
-}
-
-// optional uint32 stock = 5;
-inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::has_stock() const {
-  return _has_bit(4);
-}
-inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::clear_stock() {
-  stock_ = 0u;
-  _clear_bit(4);
-}
-inline ::google::protobuf::uint32 MsgUrbanAttributes_Infrastructures_ResourceNetwork::stock() const {
-  return stock_;
-}
-inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::set_stock(::google::protobuf::uint32 value) {
-  _set_bit(4);
-  stock_ = value;
-}
-
-// optional uint32 production = 6;
-inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::has_production() const {
-  return _has_bit(5);
-}
-inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::clear_production() {
-  production_ = 0u;
-  _clear_bit(5);
-}
-inline ::google::protobuf::uint32 MsgUrbanAttributes_Infrastructures_ResourceNetwork::production() const {
-  return production_;
-}
-inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::set_production(::google::protobuf::uint32 value) {
-  _set_bit(5);
-  production_ = value;
-}
-
-// optional uint32 consumption = 7;
-inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::has_consumption() const {
-  return _has_bit(6);
-}
-inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::clear_consumption() {
-  consumption_ = 0u;
-  _clear_bit(6);
-}
-inline ::google::protobuf::uint32 MsgUrbanAttributes_Infrastructures_ResourceNetwork::consumption() const {
-  return consumption_;
-}
-inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::set_consumption(::google::protobuf::uint32 value) {
-  _set_bit(6);
-  consumption_ = value;
-}
-
-// optional bool critical = 8;
-inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::has_critical() const {
-  return _has_bit(7);
-}
-inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::clear_critical() {
-  critical_ = false;
-  _clear_bit(7);
-}
-inline bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::critical() const {
-  return critical_;
-}
-inline void MsgUrbanAttributes_Infrastructures_ResourceNetwork::set_critical(bool value) {
-  _set_bit(7);
-  critical_ = value;
-}
-
-// -------------------------------------------------------------------
-
 // MsgUrbanAttributes_Infrastructures
 
-// repeated .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork resource_network = 1;
+// repeated .Common.ResourceNetwork resource_network = 1;
 inline int MsgUrbanAttributes_Infrastructures::resource_network_size() const {
   return resource_network_.size();
 }
 inline void MsgUrbanAttributes_Infrastructures::clear_resource_network() {
   resource_network_.Clear();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork >&
+inline const ::google::protobuf::RepeatedPtrField< ::Common::ResourceNetwork >&
 MsgUrbanAttributes_Infrastructures::resource_network() const {
   return resource_network_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork >*
+inline ::google::protobuf::RepeatedPtrField< ::Common::ResourceNetwork >*
 MsgUrbanAttributes_Infrastructures::mutable_resource_network() {
   return &resource_network_;
 }
-inline const ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork& MsgUrbanAttributes_Infrastructures::resource_network(int index) const {
+inline const ::Common::ResourceNetwork& MsgUrbanAttributes_Infrastructures::resource_network(int index) const {
   return resource_network_.Get(index);
 }
-inline ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork* MsgUrbanAttributes_Infrastructures::mutable_resource_network(int index) {
+inline ::Common::ResourceNetwork* MsgUrbanAttributes_Infrastructures::mutable_resource_network(int index) {
   return resource_network_.Mutable(index);
 }
-inline ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork* MsgUrbanAttributes_Infrastructures::add_resource_network() {
+inline ::Common::ResourceNetwork* MsgUrbanAttributes_Infrastructures::add_resource_network() {
   return resource_network_.Add();
 }
 
@@ -33847,14 +33291,6 @@ inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgUnitAttrib
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgUrbanMagicActionAck_ErrorCode>() {
   return ::MsgsSimToClient::MsgUrbanMagicActionAck_ErrorCode_descriptor();
-}
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind>() {
-  return ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_descriptor();
-}
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType>() {
-  return ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_descriptor();
 }
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::KnowledgeGroupAck_ErrorCode>() {

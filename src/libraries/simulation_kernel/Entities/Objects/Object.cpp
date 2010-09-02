@@ -445,7 +445,7 @@ void Object::SendMsgUpdate() const
         || attr.has_logistic() || attr.has_nbc() || attr.has_crossing_site()
         || attr.has_supply_route() || attr.has_toxic_cloud() || attr.has_fire()
         || attr.has_medical_treatment() || attr.has_interaction_height() || attr.has_stock()
-        || attr.has_nbc_agent() || attr.has_effect_delay() )
+        || attr.has_nbc_agent() || attr.has_effect_delay() || attr.has_resource_networks() )
         asn.Send( NET_Publisher_ABC::Publisher() );
     xAttrToUpdate_ = 0;
     if( asn().has_location() )

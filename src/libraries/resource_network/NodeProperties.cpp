@@ -130,6 +130,16 @@ void NodeProperties::Serialize( MsgsSimToClient::MsgUrbanAttributes_Infrastructu
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeProperties::Serialize
+// Created: JSR 2010-08-31
+// -----------------------------------------------------------------------------
+void NodeProperties::Serialize( Common::MsgObjectAttributeResourceNetwork& msg ) const
+{
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->Serialize( *msg.add_network() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeProperties::Update
 // Created: JSR 2010-08-26
 // -----------------------------------------------------------------------------

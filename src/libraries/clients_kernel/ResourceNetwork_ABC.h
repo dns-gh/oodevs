@@ -60,14 +60,15 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceNetwork_ABC() {}
+             ResourceNetwork_ABC() : selected_( false ) {}
     virtual ~ResourceNetwork_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& message ) = 0;
     virtual QString GetLinkName( resource::E_ResourceType type, unsigned int i ) const = 0;
+    void Select( bool selected ) { selected_ = selected; }
+    bool IsSelected() const { return selected_; }
     const ResourceNode* FindResourceNode( resource::E_ResourceType type ) const
     {
         CIT_ResourceNodes it = resourceNodes_.find( type );
@@ -88,6 +89,7 @@ protected:
     //! @name Member data
     //@{
     ResourceNodes resourceNodes_;
+    bool selected_;
     //@}
 };
 

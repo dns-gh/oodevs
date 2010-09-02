@@ -508,14 +508,6 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* MsgUrbanAttributes_Infrastructures_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgUrbanAttributes_Infrastructures_reflection_ = NULL;
-const ::google::protobuf::Descriptor* MsgUrbanAttributes_Infrastructures_ResourceNetwork_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  MsgUrbanAttributes_Infrastructures_ResourceNetwork_reflection_ = NULL;
-const ::google::protobuf::Descriptor* MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_reflection_ = NULL;
-const ::google::protobuf::EnumDescriptor* MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_descriptor_ = NULL;
-const ::google::protobuf::EnumDescriptor* MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_descriptor_ = NULL;
 const ::google::protobuf::Descriptor* MsgUrbanAttributes_RgbaColor_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgUrbanAttributes_RgbaColor_reflection_ = NULL;
@@ -3330,48 +3322,6 @@ void protobuf_AssignDesc_SimToClient_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgUrbanAttributes_Infrastructures));
-  MsgUrbanAttributes_Infrastructures_ResourceNetwork_descriptor_ = MsgUrbanAttributes_Infrastructures_descriptor_->nested_type(0);
-  static const int MsgUrbanAttributes_Infrastructures_ResourceNetwork_offsets_[8] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanAttributes_Infrastructures_ResourceNetwork, type_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanAttributes_Infrastructures_ResourceNetwork, link_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanAttributes_Infrastructures_ResourceNetwork, enabled_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanAttributes_Infrastructures_ResourceNetwork, max_stock_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanAttributes_Infrastructures_ResourceNetwork, stock_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanAttributes_Infrastructures_ResourceNetwork, production_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanAttributes_Infrastructures_ResourceNetwork, consumption_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanAttributes_Infrastructures_ResourceNetwork, critical_),
-  };
-  MsgUrbanAttributes_Infrastructures_ResourceNetwork_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      MsgUrbanAttributes_Infrastructures_ResourceNetwork_descriptor_,
-      MsgUrbanAttributes_Infrastructures_ResourceNetwork::default_instance_,
-      MsgUrbanAttributes_Infrastructures_ResourceNetwork_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanAttributes_Infrastructures_ResourceNetwork, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanAttributes_Infrastructures_ResourceNetwork, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(MsgUrbanAttributes_Infrastructures_ResourceNetwork));
-  MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_descriptor_ = MsgUrbanAttributes_Infrastructures_ResourceNetwork_descriptor_->nested_type(0);
-  static const int MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_offsets_[4] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link, kind_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link, target_id_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link, capacity_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link, flow_),
-  };
-  MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_descriptor_,
-      MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::default_instance_,
-      MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link));
-  MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_descriptor_ = MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_descriptor_->enum_type(0);
-  MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_descriptor_ = MsgUrbanAttributes_Infrastructures_ResourceNetwork_descriptor_->enum_type(0);
   MsgUrbanAttributes_RgbaColor_descriptor_ = MsgUrbanAttributes_descriptor_->nested_type(3);
   static const int MsgUrbanAttributes_RgbaColor_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanAttributes_RgbaColor, red_),
@@ -4126,10 +4076,6 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgUrbanAttributes_Infrastructures_descriptor_, &MsgUrbanAttributes_Infrastructures::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    MsgUrbanAttributes_Infrastructures_ResourceNetwork_descriptor_, &MsgUrbanAttributes_Infrastructures_ResourceNetwork::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_descriptor_, &MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgUrbanAttributes_RgbaColor_descriptor_, &MsgUrbanAttributes_RgbaColor::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgUrbanCreation_descriptor_, &MsgUrbanCreation::default_instance());
@@ -4488,10 +4434,6 @@ void protobuf_ShutdownFile_SimToClient_2eproto() {
   delete MsgUrbanAttributes_Structure_reflection_;
   delete MsgUrbanAttributes_Infrastructures::default_instance_;
   delete MsgUrbanAttributes_Infrastructures_reflection_;
-  delete MsgUrbanAttributes_Infrastructures_ResourceNetwork::default_instance_;
-  delete MsgUrbanAttributes_Infrastructures_ResourceNetwork_reflection_;
-  delete MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::default_instance_;
-  delete MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_reflection_;
   delete MsgUrbanAttributes_RgbaColor::default_instance_;
   delete MsgUrbanAttributes_RgbaColor_reflection_;
   delete MsgUrbanCreation::default_instance_;
@@ -5202,7 +5144,7 @@ void protobuf_AddDesc_SimToClient_2eproto() {
     "alid_id\020\002\022\026\n\022error_invalid_camp\020\003\022\036\n\032err"
     "or_invalid_localisation\020\004\022%\n!error_missi"
     "ng_specific_attributes\020\005\022%\n!error_invali"
-    "d_specific_attributes\020\006\"\273\t\n\022MsgUrbanAttr"
+    "d_specific_attributes\020\006\"\333\004\n\022MsgUrbanAttr"
     "ibutes\022F\n\014architecture\030\001 \001(\01320.MsgsSimTo"
     "Client.MsgUrbanAttributes.Architecture\022@"
     "\n\tstructure\030\002 \001(\0132-.MsgsSimToClient.MsgU"
@@ -5214,321 +5156,306 @@ void protobuf_AddDesc_SimToClient_2eproto() {
     "\014floor_number\030\002 \002(\005\022\022\n\nroof_shape\030\003 \002(\t\022"
     "\020\n\010material\030\004 \002(\t\022\022\n\noccupation\030\005 \002(\002\022\026\n"
     "\016trafficability\030\006 \002(\002\032\032\n\tStructure\022\r\n\005st"
-    "ate\030\001 \002(\r\032\243\005\n\017Infrastructures\022]\n\020resourc"
-    "e_network\030\001 \003(\0132C.MsgsSimToClient.MsgUrb"
-    "anAttributes.Infrastructures.ResourceNet"
-    "work\032\260\004\n\017ResourceNetwork\022^\n\004type\030\001 \002(\0162P"
-    ".MsgsSimToClient.MsgUrbanAttributes.Infr"
-    "astructures.ResourceNetwork.ResourceType"
-    "\022V\n\004link\030\002 \003(\0132H.MsgsSimToClient.MsgUrba"
-    "nAttributes.Infrastructures.ResourceNetw"
-    "ork.Link\022\017\n\007enabled\030\003 \002(\010\022\021\n\tmax_stock\030\004"
-    " \001(\r\022\r\n\005stock\030\005 \001(\r\022\022\n\nproduction\030\006 \001(\r\022"
-    "\023\n\013consumption\030\007 \001(\r\022\020\n\010critical\030\010 \001(\010\032\301"
-    "\001\n\004Link\022a\n\004kind\030\001 \002(\0162S.MsgsSimToClient."
-    "MsgUrbanAttributes.Infrastructures.Resou"
-    "rceNetwork.Link.TargetKind\022\021\n\ttarget_id\030"
-    "\002 \002(\r\022\020\n\010capacity\030\003 \002(\005\022\014\n\004flow\030\004 \002(\r\"#\n"
-    "\nTargetKind\022\t\n\005urban\020\001\022\n\n\006object\020\002\"3\n\014Re"
-    "sourceType\022\t\n\005water\020\001\022\007\n\003gaz\020\002\022\017\n\013electr"
-    "icity\020\003\032D\n\tRgbaColor\022\013\n\003red\030\001 \002(\005\022\r\n\005gre"
-    "en\030\002 \002(\005\022\014\n\004blue\030\003 \002(\005\022\r\n\005alpha\030\004 \002(\002\"\215\001"
-    "\n\020MsgUrbanCreation\022\013\n\003oid\030\001 \002(\r\022\014\n\004name\030"
-    "\002 \002(\t\022%\n\010location\030\003 \002(\0132\023.Common.MsgLoca"
-    "tion\0227\n\nattributes\030\004 \001(\0132#.MsgsSimToClie"
-    "nt.MsgUrbanAttributes\"c\n\021MsgUrbanDetecti"
-    "on\022\013\n\003oid\030\001 \002(\r\022\021\n\turban_oid\030\002 \002(\r\022.\n\nvi"
-    "sibility\030\003 \002(\0162\032.Common.EnumUnitVisibili"
-    "ty\"}\n\016MsgUrbanUpdate\022\013\n\003oid\030\001 \002(\r\022%\n\010loc"
-    "ation\030\002 \001(\0132\023.Common.MsgLocation\0227\n\nattr"
-    "ibutes\030\003 \001(\0132#.MsgsSimToClient.MsgUrbanA"
-    "ttributes\"\246\001\n\031MsgKnowledgeGroupCreation\022"
-    "$\n\002id\030\001 \002(\0132\030.Common.KnowledgeGroupId\022\036\n"
-    "\005party\030\002 \002(\0132\017.Common.PartyId\022(\n\006parent\030"
-    "\003 \001(\0132\030.Common.KnowledgeGroupId\022\014\n\004type\030"
-    "\004 \002(\t\022\013\n\003jam\030\005 \001(\010\"\250\001\n\027MsgKnowledgeGroup"
-    "Update\022$\n\002id\030\001 \002(\0132\030.Common.KnowledgeGro"
-    "upId\022\036\n\005party\030\002 \001(\0132\017.Common.PartyId\022(\n\006"
-    "parent\030\003 \001(\0132\030.Common.KnowledgeGroupId\022\017"
-    "\n\007enabled\030\004 \001(\010\022\014\n\004type\030\005 \001(\t\"\265\001\n\021Knowle"
-    "dgeGroupAck\"\237\001\n\tErrorCode\022\014\n\010no_error\020\000\022"
-    "\026\n\022error_invalid_unit\020\001\022\032\n\026error_invalid"
-    "_superior\020\002\022\026\n\022error_invalid_camp\020\003\022 \n\034e"
-    "rror_invalid_knowledgegroup\020\004\022\026\n\022error_i"
-    "nvalid_type\020\005\"\211\001\n\037MsgKnowledgeGroupMagic"
-    "ActionAck\022$\n\002id\030\001 \002(\0132\030.Common.Knowledge"
-    "GroupId\022@\n\nerror_code\030\002 \002(\0162,.MsgsSimToC"
-    "lient.KnowledgeGroupAck.ErrorCode\"\206\001\n\034Ms"
-    "gKnowledgeGroupCreationAck\022$\n\002id\030\001 \002(\0132\030"
-    ".Common.KnowledgeGroupId\022@\n\nerror_code\030\002"
-    " \002(\0162,.MsgsSimToClient.KnowledgeGroupAck"
-    ".ErrorCode\"\204\001\n\032MsgKnowledgeGroupUpdateAc"
+    "ate\030\001 \002(\r\032D\n\017Infrastructures\0221\n\020resource"
+    "_network\030\001 \003(\0132\027.Common.ResourceNetwork\032"
+    "D\n\tRgbaColor\022\013\n\003red\030\001 \002(\005\022\r\n\005green\030\002 \002(\005"
+    "\022\014\n\004blue\030\003 \002(\005\022\r\n\005alpha\030\004 \002(\002\"\215\001\n\020MsgUrb"
+    "anCreation\022\013\n\003oid\030\001 \002(\r\022\014\n\004name\030\002 \002(\t\022%\n"
+    "\010location\030\003 \002(\0132\023.Common.MsgLocation\0227\n\n"
+    "attributes\030\004 \001(\0132#.MsgsSimToClient.MsgUr"
+    "banAttributes\"c\n\021MsgUrbanDetection\022\013\n\003oi"
+    "d\030\001 \002(\r\022\021\n\turban_oid\030\002 \002(\r\022.\n\nvisibility"
+    "\030\003 \002(\0162\032.Common.EnumUnitVisibility\"}\n\016Ms"
+    "gUrbanUpdate\022\013\n\003oid\030\001 \002(\r\022%\n\010location\030\002 "
+    "\001(\0132\023.Common.MsgLocation\0227\n\nattributes\030\003"
+    " \001(\0132#.MsgsSimToClient.MsgUrbanAttribute"
+    "s\"\246\001\n\031MsgKnowledgeGroupCreation\022$\n\002id\030\001 "
+    "\002(\0132\030.Common.KnowledgeGroupId\022\036\n\005party\030\002"
+    " \002(\0132\017.Common.PartyId\022(\n\006parent\030\003 \001(\0132\030."
+    "Common.KnowledgeGroupId\022\014\n\004type\030\004 \002(\t\022\013\n"
+    "\003jam\030\005 \001(\010\"\250\001\n\027MsgKnowledgeGroupUpdate\022$"
+    "\n\002id\030\001 \002(\0132\030.Common.KnowledgeGroupId\022\036\n\005"
+    "party\030\002 \001(\0132\017.Common.PartyId\022(\n\006parent\030\003"
+    " \001(\0132\030.Common.KnowledgeGroupId\022\017\n\007enable"
+    "d\030\004 \001(\010\022\014\n\004type\030\005 \001(\t\"\265\001\n\021KnowledgeGroup"
+    "Ack\"\237\001\n\tErrorCode\022\014\n\010no_error\020\000\022\026\n\022error"
+    "_invalid_unit\020\001\022\032\n\026error_invalid_superio"
+    "r\020\002\022\026\n\022error_invalid_camp\020\003\022 \n\034error_inv"
+    "alid_knowledgegroup\020\004\022\026\n\022error_invalid_t"
+    "ype\020\005\"\211\001\n\037MsgKnowledgeGroupMagicActionAc"
     "k\022$\n\002id\030\001 \002(\0132\030.Common.KnowledgeGroupId\022"
     "@\n\nerror_code\030\002 \002(\0162,.MsgsSimToClient.Kn"
-    "owledgeGroupAck.ErrorCode\"d\n\034MsgKnowledg"
-    "eGroupDestruction\022$\n\002id\030\001 \002(\0132\030.Common.K"
-    "nowledgeGroupId\022\036\n\005party\030\002 \002(\0132\017.Common."
-    "PartyId\"\032\n\030MsgControlGlobalMeteoAck\"\031\n\027M"
-    "sgControlLocalMeteoAck\"f\n\025MsgControlGlob"
-    "alMeteo\022\035\n\002id\030\001 \002(\0132\021.Common.WeatherId\022."
-    "\n\nattributes\030\002 \002(\0132\032.Common.MsgMeteoAttr"
-    "ibutes\"\335\001\n\034MsgControlLocalMeteoCreation\022"
-    "\035\n\002id\030\001 \002(\0132\021.Common.WeatherId\0224\n\023top_le"
-    "ft_coordinate\030\002 \001(\0132\027.Common.MsgCoordLat"
-    "Long\0228\n\027bottom_right_coordinate\030\003 \001(\0132\027."
-    "Common.MsgCoordLatLong\022.\n\nattributes\030\004 \001"
-    "(\0132\032.Common.MsgMeteoAttributes\"@\n\037MsgCon"
-    "trolLocalMeteoDestruction\022\035\n\002id\030\001 \002(\0132\021."
-    "Common.WeatherId\"\257J\n\016MsgSimToClient\022\022\n\007c"
-    "ontext\030\001 \001(\005:\0010\0228\n\007message\030\002 \002(\0132\'.MsgsS"
-    "imToClient.MsgSimToClient.Content\032\316I\n\007Co"
-    "ntent\0228\n\016unit_order_ack\030\001 \001(\0132 .MsgsSimT"
-    "oClient.MsgUnitOrderAck\022>\n\021automat_order"
-    "_ack\030\002 \001(\0132#.MsgsSimToClient.MsgAutomatO"
-    "rderAck\022D\n\024population_order_ack\030\003 \001(\0132&."
-    "MsgsSimToClient.MsgPopulationOrderAck\0228\n"
-    "\016frag_order_ack\030\004 \001(\0132 .MsgsSimToClient."
-    "MsgFragOrderAck\022C\n\024set_automat_mode_ack\030"
-    "\005 \001(\0132%.MsgsSimToClient.MsgSetAutomatMod"
-    "eAck\022M\n\031unit_creation_request_ack\030\006 \001(\0132"
-    "*.MsgsSimToClient.MsgUnitCreationRequest"
-    "Ack\022<\n\020magic_action_ack\030\007 \001(\0132\".MsgsSimT"
-    "oClient.MsgMagicActionAck\022E\n\025unit_magic_"
-    "action_ack\030\010 \001(\0132&.MsgsSimToClient.MsgUn"
-    "itMagicActionAck\022I\n\027object_magic_action_"
-    "ack\030\t \001(\0132(.MsgsSimToClient.MsgObjectMag"
-    "icActionAck\022Q\n\033population_magic_action_a"
-    "ck\030\n \001(\0132,.MsgsSimToClient.MsgPopulation"
-    "MagicActionAck\022D\n\024change_diplomacy_ack\030\013"
-    " \001(\0132&.MsgsSimToClient.MsgChangeDiplomac"
-    "yAck\022^\n\"automat_change_knowledge_group_a"
-    "ck\030\014 \001(\01322.MsgsSimToClient.MsgAutomatCha"
-    "ngeKnowledgeGroupAck\022\\\n!automat_change_l"
-    "ogistic_links_ack\030\r \001(\01321.MsgsSimToClien"
-    "t.MsgAutomatChangeLogisticLinksAck\022Q\n\033au"
-    "tomat_change_superior_ack\030\016 \001(\0132,.MsgsSi"
-    "mToClient.MsgAutomatChangeSuperiorAck\022K\n"
-    "\030unit_change_superior_ack\030\017 \001(\0132).MsgsSi"
-    "mToClient.MsgUnitChangeSuperiorAck\022J\n\030lo"
-    "g_supply_push_flow_ack\030\020 \001(\0132(.MsgsSimTo"
-    "Client.MsgLogSupplyPushFlowAck\022R\n\034log_su"
-    "pply_change_quotas_ack\030\021 \001(\0132,.MsgsSimTo"
-    "Client.MsgLogSupplyChangeQuotasAck\022C\n\023co"
-    "ntrol_information\030\022 \001(\0132&.MsgsSimToClien"
-    "t.MsgControlInformation\022V\n\035control_profi"
-    "ling_information\030\023 \001(\0132/.MsgsSimToClient"
-    ".MsgControlProfilingInformation\022@\n\022contr"
-    "ol_begin_tick\030\024 \001(\0132$.MsgsSimToClient.Ms"
-    "gControlBeginTick\022<\n\020control_end_tick\030\025 "
-    "\001(\0132\".MsgsSimToClient.MsgControlEndTick\022"
-    "<\n\020control_stop_ack\030\026 \001(\0132\".MsgsSimToCli"
-    "ent.MsgControlStopAck\022>\n\021control_pause_a"
-    "ck\030\027 \001(\0132#.MsgsSimToClient.MsgControlPau"
-    "seAck\022@\n\022control_resume_ack\030\030 \001(\0132$.Msgs"
-    "SimToClient.MsgControlResumeAck\022V\n\036contr"
-    "ol_change_time_factor_ack\030\031 \001(\0132..MsgsSi"
-    "mToClient.MsgControlChangeTimeFactorAck\022"
-    "R\n\034control_date_time_change_ack\030\032 \001(\0132,."
-    "MsgsSimToClient.MsgControlDatetimeChange"
-    "Ack\022Q\n\033control_checkpoint_save_end\030\033 \001(\013"
-    "2,.MsgsSimToClient.MsgControlCheckPointS"
-    "aveEnd\0228\n\022formation_creation\030\034 \001(\0132\034.Com"
-    "mon.MsgFormationCreation\0227\n\rside_creatio"
-    "n\030\035 \001(\0132 .MsgsSimToClient.MsgTeamCreatio"
-    "n\022=\n\020automat_creation\030\036 \001(\0132#.MsgsSimToC"
-    "lient.MsgAutomatCreation\022A\n\022automat_attr"
-    "ibutes\030\037 \001(\0132%.MsgsSimToClient.MsgAutoma"
-    "tAttributes\0227\n\runit_creation\030  \001(\0132 .Msg"
-    "sSimToClient.MsgUnitCreation\022;\n\017unit_att"
-    "ributes\030! \001(\0132\".MsgsSimToClient.MsgUnitA"
-    "ttributes\0227\n\runit_pathfind\030\" \001(\0132 .MsgsS"
-    "imToClient.MsgUnitPathFind\022=\n\020unit_destr"
-    "uction\030# \001(\0132#.MsgsSimToClient.MsgUnitDe"
-    "struction\022F\n\025unit_environment_type\030$ \001(\013"
-    "2\'.MsgsSimToClient.MsgUnitEnvironmentTyp"
-    "e\0224\n\020change_diplomacy\030% \001(\0132\032.Common.Msg"
-    "ChangeDiplomacy\022;\n\024unit_change_superior\030"
-    "& \001(\0132\035.Common.MsgUnitChangeSuperior\022L\n\035"
-    "automat_change_logistic_links\030\' \001(\0132%.Co"
-    "mmon.MsgAutomatChangeLogisticLinks\022N\n\036au"
-    "tomat_change_knowledge_group\030( \001(\0132&.Com"
-    "mon.MsgAutomatChangeKnowledgeGroup\022A\n\027au"
-    "tomat_change_superior\030) \001(\0132 .Common.Msg"
-    "AutomatChangeSuperior\022J\n\027unit_knowledge_"
-    "creation\030* \001(\0132).MsgsSimToClient.MsgUnit"
-    "KnowledgeCreation\022F\n\025unit_knowledge_upda"
-    "te\030+ \001(\0132\'.MsgsSimToClient.MsgUnitKnowle"
-    "dgeUpdate\022P\n\032unit_knowledge_destruction\030"
-    ", \001(\0132,.MsgsSimToClient.MsgUnitKnowledge"
-    "Destruction\022:\n\017start_unit_fire\030- \001(\0132!.M"
-    "sgsSimToClient.MsgStartUnitFire\0228\n\016stop_"
-    "unit_fire\030. \001(\0132 .MsgsSimToClient.MsgSto"
-    "pUnitFire\022F\n\025start_population_fire\030/ \001(\013"
-    "2\'.MsgsSimToClient.MsgStartPopulationFir"
-    "e\022D\n\024stop_population_fire\0300 \001(\0132&.MsgsSi"
-    "mToClient.MsgStopPopulationFire\0220\n\texplo"
-    "sion\0301 \001(\0132\035.MsgsSimToClient.MsgExplosio"
-    "n\022>\n\021start_fire_effect\0302 \001(\0132#.MsgsSimTo"
-    "Client.MsgStartFireEffect\022<\n\020stop_fire_e"
-    "ffect\0303 \001(\0132\".MsgsSimToClient.MsgStopFir"
-    "eEffect\022*\n\006report\0304 \001(\0132\032.MsgsSimToClien"
-    "t.MsgReport\022?\n\021invalidate_report\0305 \001(\0132$"
-    ".MsgsSimToClient.MsgInvalidateReport\022(\n\005"
-    "trace\0306 \001(\0132\031.MsgsSimToClient.MsgTrace\022="
-    "\n\020decisional_state\0307 \001(\0132#.MsgsSimToClie"
-    "nt.MsgDecisionalState\0225\n\014debug_points\0308 "
-    "\001(\0132\037.MsgsSimToClient.MsgDebugPoints\022>\n\021"
-    "unit_vision_cones\0309 \001(\0132#.MsgsSimToClien"
-    "t.MsgUnitVisionCones\0229\n\016unit_detection\030:"
-    " \001(\0132!.MsgsSimToClient.MsgUnitDetection\022"
-    "=\n\020object_detection\030; \001(\0132#.MsgsSimToCli"
-    "ent.MsgObjectDetection\022`\n\"population_con"
-    "centration_detection\030< \001(\01324.MsgsSimToCl"
-    "ient.MsgPopulationConcentrationDetection"
-    "\022N\n\031population_flow_detection\030= \001(\0132+.Ms"
-    "gsSimToClient.MsgPopulationFlowDetection"
-    "\022(\n\nunit_order\030> \001(\0132\024.Common.MsgUnitOrd"
-    "er\022.\n\rautomat_order\030? \001(\0132\027.Common.MsgAu"
-    "tomatOrder\0224\n\020population_order\030@ \001(\0132\032.C"
-    "ommon.MsgPopulationOrder\022;\n\017object_creat"
-    "ion\030A \001(\0132\".MsgsSimToClient.MsgObjectCre"
-    "ation\022A\n\022object_destruction\030B \001(\0132%.Msgs"
-    "SimToClient.MsgObjectDestruction\0227\n\robje"
-    "ct_update\030C \001(\0132 .MsgsSimToClient.MsgObj"
-    "ectUpdate\022N\n\031object_knowledge_creation\030D"
-    " \001(\0132+.MsgsSimToClient.MsgObjectKnowledg"
-    "eCreation\022J\n\027object_knowledge_update\030E \001"
-    "(\0132).MsgsSimToClient.MsgObjectKnowledgeU"
-    "pdate\022T\n\034object_knowledge_destruction\030F "
-    "\001(\0132..MsgsSimToClient.MsgObjectKnowledge"
-    "Destruction\022U\n\035log_medical_handling_crea"
-    "tion\030G \001(\0132..MsgsSimToClient.MsgLogMedic"
-    "alHandlingCreation\022Q\n\033log_medical_handli"
-    "ng_update\030H \001(\0132,.MsgsSimToClient.MsgLog"
-    "MedicalHandlingUpdate\022[\n log_medical_han"
-    "dling_destruction\030I \001(\01321.MsgsSimToClien"
-    "t.MsgLogMedicalHandlingDestruction\022>\n\021lo"
-    "g_medical_state\030J \001(\0132#.MsgsSimToClient."
-    "MsgLogMedicalState\022]\n!log_maintenance_ha"
-    "ndling_creation\030K \001(\01322.MsgsSimToClient."
-    "MsgLogMaintenanceHandlingCreation\022Y\n\037log"
-    "_maintenance_handling_update\030L \001(\01320.Msg"
-    "sSimToClient.MsgLogMaintenanceHandlingUp"
-    "date\022c\n$log_maintenance_handling_destruc"
-    "tion\030M \001(\01325.MsgsSimToClient.MsgLogMaint"
-    "enanceHandlingDestruction\022F\n\025log_mainten"
-    "ance_state\030N \001(\0132\'.MsgsSimToClient.MsgLo"
-    "gMaintenanceState\022S\n\034log_supply_handling"
-    "_creation\030O \001(\0132-.MsgsSimToClient.MsgLog"
-    "SupplyHandlingCreation\022O\n\032log_supply_han"
-    "dling_update\030P \001(\0132+.MsgsSimToClient.Msg"
-    "LogSupplyHandlingUpdate\022Y\n\037log_supply_ha"
-    "ndling_destruction\030Q \001(\01320.MsgsSimToClie"
-    "nt.MsgLogSupplyHandlingDestruction\022<\n\020lo"
-    "g_supply_state\030R \001(\0132\".MsgsSimToClient.M"
-    "sgLogSupplyState\022>\n\021log_supply_quotas\030S "
-    "\001(\0132#.MsgsSimToClient.MsgLogSupplyQuotas"
-    "\022C\n\023population_creation\030T \001(\0132&.MsgsSimT"
-    "oClient.MsgPopulationCreation\022?\n\021populat"
-    "ion_update\030U \001(\0132$.MsgsSimToClient.MsgPo"
-    "pulationUpdate\022^\n!population_concentrati"
-    "on_creation\030V \001(\01323.MsgsSimToClient.MsgP"
-    "opulationConcentrationCreation\022d\n$popula"
-    "tion_concentration_destruction\030W \001(\01326.M"
-    "sgsSimToClient.MsgPopulationConcentratio"
-    "nDestruction\022Z\n\037population_concentration"
-    "_update\030X \001(\01321.MsgsSimToClient.MsgPopul"
-    "ationConcentrationUpdate\022L\n\030population_f"
-    "low_creation\030Y \001(\0132*.MsgsSimToClient.Msg"
-    "PopulationFlowCreation\022R\n\033population_flo"
-    "w_destruction\030Z \001(\0132-.MsgsSimToClient.Ms"
-    "gPopulationFlowDestruction\022H\n\026population"
-    "_flow_update\030[ \001(\0132(.MsgsSimToClient.Msg"
-    "PopulationFlowUpdate\022V\n\035population_knowl"
-    "edge_creation\030\\ \001(\0132/.MsgsSimToClient.Ms"
-    "gPopulationKnowledgeCreation\022R\n\033populati"
-    "on_knowledge_update\030] \001(\0132-.MsgsSimToCli"
-    "ent.MsgPopulationKnowledgeUpdate\022\\\n popu"
-    "lation_knowledge_destruction\030^ \001(\01322.Msg"
-    "sSimToClient.MsgPopulationKnowledgeDestr"
-    "uction\022q\n+population_concentration_knowl"
-    "edge_creation\030_ \001(\0132<.MsgsSimToClient.Ms"
-    "gPopulationConcentrationKnowledgeCreatio"
-    "n\022w\n.population_concentration_knowledge_"
-    "destruction\030` \001(\0132?.MsgsSimToClient.MsgP"
-    "opulationConcentrationKnowledgeDestructi"
-    "on\022m\n)population_concentration_knowledge"
-    "_update\030a \001(\0132:.MsgsSimToClient.MsgPopul"
-    "ationConcentrationKnowledgeUpdate\022_\n\"pop"
-    "ulation_flow_knowledge_creation\030b \001(\01323."
-    "MsgsSimToClient.MsgPopulationFlowKnowled"
-    "geCreation\022e\n%population_flow_knowledge_"
-    "destruction\030c \001(\01326.MsgsSimToClient.MsgP"
-    "opulationFlowKnowledgeDestruction\022[\n pop"
-    "ulation_flow_knowledge_update\030d \001(\01321.Ms"
-    "gsSimToClient.MsgPopulationFlowKnowledge"
-    "Update\0227\n\rfolk_creation\030e \001(\0132 .MsgsSimT"
-    "oClient.MsgFolkCreation\022>\n\021folk_graph_up"
-    "date\030f \001(\0132#.MsgsSimToClient.MsgFolkGrap"
-    "hUpdate\022K\n\030control_global_meteo_ack\030g \001("
-    "\0132).MsgsSimToClient.MsgControlGlobalMete"
-    "oAck\022I\n\027control_local_meteo_ack\030h \001(\0132(."
-    "MsgsSimToClient.MsgControlLocalMeteoAck\022"
-    "U\n\035control_checkpoint_save_begin\030i \001(\0132."
-    ".MsgsSimToClient.MsgControlCheckPointSav"
-    "eBegin\022b\n$control_checkpoint_set_frequen"
-    "cy_ack\030j \001(\01324.MsgsSimToClient.MsgContro"
-    "lCheckPointSetFrequencyAck\022X\n\037control_ch"
-    "eckpoint_save_now_ack\030k \001(\0132/.MsgsSimToC"
-    "lient.MsgControlCheckPointSaveNowAck\022Z\n "
-    "control_send_current_state_begin\030l \001(\01320"
-    ".MsgsSimToClient.MsgControlSendCurrentSt"
-    "ateBegin\022V\n\036control_send_current_state_e"
-    "nd\030m \001(\0132..MsgsSimToClient.MsgControlSen"
-    "dCurrentStateEnd\0229\n\016urban_creation\030n \001(\013"
-    "2!.MsgsSimToClient.MsgUrbanCreation\0225\n\014u"
-    "rban_update\030o \001(\0132\037.MsgsSimToClient.MsgU"
-    "rbanUpdate\022L\n\030urban_knowledge_creation\030p"
-    " \001(\0132*.MsgsSimToClient.MsgUrbanKnowledge"
-    "Creation\022H\n\026urban_knowledge_update\030q \001(\013"
-    "2(.MsgsSimToClient.MsgUrbanKnowledgeUpda"
-    "te\022R\n\033urban_knowledge_destruction\030r \001(\0132"
-    "-.MsgsSimToClient.MsgUrbanKnowledgeDestr"
-    "uction\022-\n\016stock_resource\030s \001(\0132\025.Common."
-    "StockResource\022;\n\017urban_detection\030t \001(\0132\""
-    ".MsgsSimToClient.MsgUrbanDetection\022Z\n kn"
-    "owledge_group_magic_action_ack\030u \001(\01320.M"
-    "sgsSimToClient.MsgKnowledgeGroupMagicAct"
-    "ionAck\022L\n\030knowledge_group_creation\030v \001(\013"
-    "2*.MsgsSimToClient.MsgKnowledgeGroupCrea"
-    "tion\022H\n\026knowledge_group_update\030w \001(\0132(.M"
-    "sgsSimToClient.MsgKnowledgeGroupUpdate\022S"
-    "\n\034knowledge_group_creation_ack\030x \001(\0132-.M"
-    "sgsSimToClient.MsgKnowledgeGroupCreation"
-    "Ack\022O\n\032knowledge_group_update_ack\030y \001(\0132"
-    "+.MsgsSimToClient.MsgKnowledgeGroupUpdat"
-    "eAck\022R\n\033knowledge_group_destruction\030z \001("
-    "\0132-.MsgsSimToClient.MsgKnowledgeGroupDes"
-    "truction\022R\n\034action_create_fire_order_ack"
-    "\030{ \001(\0132,.MsgsSimToClient.MsgActionCreate"
-    "FireOrderAck\022D\n\024control_global_meteo\030| \001"
-    "(\0132&.MsgsSimToClient.MsgControlGlobalMet"
-    "eo\022S\n\034control_local_meteo_creation\030} \001(\013"
-    "2-.MsgsSimToClient.MsgControlLocalMeteoC"
-    "reation\022Y\n\037control_local_meteo_destructi"
-    "on\030~ \001(\01320.MsgsSimToClient.MsgControlLoc"
-    "alMeteoDestruction*\217\002\n\033EnumLogSupplyHand"
-    "lingStatus\022\035\n\031convoi_en_attente_camions\020"
-    "\001\022\027\n\023convoi_constitution\020\002\022,\n(convoi_dep"
-    "lacement_vers_point_chargement\020\003\022\025\n\021conv"
-    "oi_chargement\020\004\022.\n*convoi_deplacement_ve"
-    "rs_point_dechargement\020\005\022\027\n\023convoi_dechar"
-    "gement\020\006\022\035\n\031convoi_deplacement_retour\020\007\022"
-    "\013\n\007termine\020\010*V\n\033EnumUnitIdentificationLe"
-    "vel\022\016\n\nidentifiee\020\000\022\014\n\010reconnue\020\001\022\014\n\010det"
-    "ectee\020\002\022\013\n\007signale\020\003*V\n\016EnumReportType\022\017"
-    "\n\013information\020\000\022\017\n\013operational\020\001\022\025\n\021exce"
-    "ptional_event\020\002\022\013\n\007warning\020\003", 39628);
+    "owledgeGroupAck.ErrorCode\"\206\001\n\034MsgKnowled"
+    "geGroupCreationAck\022$\n\002id\030\001 \002(\0132\030.Common."
+    "KnowledgeGroupId\022@\n\nerror_code\030\002 \002(\0162,.M"
+    "sgsSimToClient.KnowledgeGroupAck.ErrorCo"
+    "de\"\204\001\n\032MsgKnowledgeGroupUpdateAck\022$\n\002id\030"
+    "\001 \002(\0132\030.Common.KnowledgeGroupId\022@\n\nerror"
+    "_code\030\002 \002(\0162,.MsgsSimToClient.KnowledgeG"
+    "roupAck.ErrorCode\"d\n\034MsgKnowledgeGroupDe"
+    "struction\022$\n\002id\030\001 \002(\0132\030.Common.Knowledge"
+    "GroupId\022\036\n\005party\030\002 \002(\0132\017.Common.PartyId\""
+    "\032\n\030MsgControlGlobalMeteoAck\"\031\n\027MsgContro"
+    "lLocalMeteoAck\"f\n\025MsgControlGlobalMeteo\022"
+    "\035\n\002id\030\001 \002(\0132\021.Common.WeatherId\022.\n\nattrib"
+    "utes\030\002 \002(\0132\032.Common.MsgMeteoAttributes\"\335"
+    "\001\n\034MsgControlLocalMeteoCreation\022\035\n\002id\030\001 "
+    "\002(\0132\021.Common.WeatherId\0224\n\023top_left_coord"
+    "inate\030\002 \001(\0132\027.Common.MsgCoordLatLong\0228\n\027"
+    "bottom_right_coordinate\030\003 \001(\0132\027.Common.M"
+    "sgCoordLatLong\022.\n\nattributes\030\004 \001(\0132\032.Com"
+    "mon.MsgMeteoAttributes\"@\n\037MsgControlLoca"
+    "lMeteoDestruction\022\035\n\002id\030\001 \002(\0132\021.Common.W"
+    "eatherId\"\257J\n\016MsgSimToClient\022\022\n\007context\030\001"
+    " \001(\005:\0010\0228\n\007message\030\002 \002(\0132\'.MsgsSimToClie"
+    "nt.MsgSimToClient.Content\032\316I\n\007Content\0228\n"
+    "\016unit_order_ack\030\001 \001(\0132 .MsgsSimToClient."
+    "MsgUnitOrderAck\022>\n\021automat_order_ack\030\002 \001"
+    "(\0132#.MsgsSimToClient.MsgAutomatOrderAck\022"
+    "D\n\024population_order_ack\030\003 \001(\0132&.MsgsSimT"
+    "oClient.MsgPopulationOrderAck\0228\n\016frag_or"
+    "der_ack\030\004 \001(\0132 .MsgsSimToClient.MsgFragO"
+    "rderAck\022C\n\024set_automat_mode_ack\030\005 \001(\0132%."
+    "MsgsSimToClient.MsgSetAutomatModeAck\022M\n\031"
+    "unit_creation_request_ack\030\006 \001(\0132*.MsgsSi"
+    "mToClient.MsgUnitCreationRequestAck\022<\n\020m"
+    "agic_action_ack\030\007 \001(\0132\".MsgsSimToClient."
+    "MsgMagicActionAck\022E\n\025unit_magic_action_a"
+    "ck\030\010 \001(\0132&.MsgsSimToClient.MsgUnitMagicA"
+    "ctionAck\022I\n\027object_magic_action_ack\030\t \001("
+    "\0132(.MsgsSimToClient.MsgObjectMagicAction"
+    "Ack\022Q\n\033population_magic_action_ack\030\n \001(\013"
+    "2,.MsgsSimToClient.MsgPopulationMagicAct"
+    "ionAck\022D\n\024change_diplomacy_ack\030\013 \001(\0132&.M"
+    "sgsSimToClient.MsgChangeDiplomacyAck\022^\n\""
+    "automat_change_knowledge_group_ack\030\014 \001(\013"
+    "22.MsgsSimToClient.MsgAutomatChangeKnowl"
+    "edgeGroupAck\022\\\n!automat_change_logistic_"
+    "links_ack\030\r \001(\01321.MsgsSimToClient.MsgAut"
+    "omatChangeLogisticLinksAck\022Q\n\033automat_ch"
+    "ange_superior_ack\030\016 \001(\0132,.MsgsSimToClien"
+    "t.MsgAutomatChangeSuperiorAck\022K\n\030unit_ch"
+    "ange_superior_ack\030\017 \001(\0132).MsgsSimToClien"
+    "t.MsgUnitChangeSuperiorAck\022J\n\030log_supply"
+    "_push_flow_ack\030\020 \001(\0132(.MsgsSimToClient.M"
+    "sgLogSupplyPushFlowAck\022R\n\034log_supply_cha"
+    "nge_quotas_ack\030\021 \001(\0132,.MsgsSimToClient.M"
+    "sgLogSupplyChangeQuotasAck\022C\n\023control_in"
+    "formation\030\022 \001(\0132&.MsgsSimToClient.MsgCon"
+    "trolInformation\022V\n\035control_profiling_inf"
+    "ormation\030\023 \001(\0132/.MsgsSimToClient.MsgCont"
+    "rolProfilingInformation\022@\n\022control_begin"
+    "_tick\030\024 \001(\0132$.MsgsSimToClient.MsgControl"
+    "BeginTick\022<\n\020control_end_tick\030\025 \001(\0132\".Ms"
+    "gsSimToClient.MsgControlEndTick\022<\n\020contr"
+    "ol_stop_ack\030\026 \001(\0132\".MsgsSimToClient.MsgC"
+    "ontrolStopAck\022>\n\021control_pause_ack\030\027 \001(\013"
+    "2#.MsgsSimToClient.MsgControlPauseAck\022@\n"
+    "\022control_resume_ack\030\030 \001(\0132$.MsgsSimToCli"
+    "ent.MsgControlResumeAck\022V\n\036control_chang"
+    "e_time_factor_ack\030\031 \001(\0132..MsgsSimToClien"
+    "t.MsgControlChangeTimeFactorAck\022R\n\034contr"
+    "ol_date_time_change_ack\030\032 \001(\0132,.MsgsSimT"
+    "oClient.MsgControlDatetimeChangeAck\022Q\n\033c"
+    "ontrol_checkpoint_save_end\030\033 \001(\0132,.MsgsS"
+    "imToClient.MsgControlCheckPointSaveEnd\0228"
+    "\n\022formation_creation\030\034 \001(\0132\034.Common.MsgF"
+    "ormationCreation\0227\n\rside_creation\030\035 \001(\0132"
+    " .MsgsSimToClient.MsgTeamCreation\022=\n\020aut"
+    "omat_creation\030\036 \001(\0132#.MsgsSimToClient.Ms"
+    "gAutomatCreation\022A\n\022automat_attributes\030\037"
+    " \001(\0132%.MsgsSimToClient.MsgAutomatAttribu"
+    "tes\0227\n\runit_creation\030  \001(\0132 .MsgsSimToCl"
+    "ient.MsgUnitCreation\022;\n\017unit_attributes\030"
+    "! \001(\0132\".MsgsSimToClient.MsgUnitAttribute"
+    "s\0227\n\runit_pathfind\030\" \001(\0132 .MsgsSimToClie"
+    "nt.MsgUnitPathFind\022=\n\020unit_destruction\030#"
+    " \001(\0132#.MsgsSimToClient.MsgUnitDestructio"
+    "n\022F\n\025unit_environment_type\030$ \001(\0132\'.MsgsS"
+    "imToClient.MsgUnitEnvironmentType\0224\n\020cha"
+    "nge_diplomacy\030% \001(\0132\032.Common.MsgChangeDi"
+    "plomacy\022;\n\024unit_change_superior\030& \001(\0132\035."
+    "Common.MsgUnitChangeSuperior\022L\n\035automat_"
+    "change_logistic_links\030\' \001(\0132%.Common.Msg"
+    "AutomatChangeLogisticLinks\022N\n\036automat_ch"
+    "ange_knowledge_group\030( \001(\0132&.Common.MsgA"
+    "utomatChangeKnowledgeGroup\022A\n\027automat_ch"
+    "ange_superior\030) \001(\0132 .Common.MsgAutomatC"
+    "hangeSuperior\022J\n\027unit_knowledge_creation"
+    "\030* \001(\0132).MsgsSimToClient.MsgUnitKnowledg"
+    "eCreation\022F\n\025unit_knowledge_update\030+ \001(\013"
+    "2\'.MsgsSimToClient.MsgUnitKnowledgeUpdat"
+    "e\022P\n\032unit_knowledge_destruction\030, \001(\0132,."
+    "MsgsSimToClient.MsgUnitKnowledgeDestruct"
+    "ion\022:\n\017start_unit_fire\030- \001(\0132!.MsgsSimTo"
+    "Client.MsgStartUnitFire\0228\n\016stop_unit_fir"
+    "e\030. \001(\0132 .MsgsSimToClient.MsgStopUnitFir"
+    "e\022F\n\025start_population_fire\030/ \001(\0132\'.MsgsS"
+    "imToClient.MsgStartPopulationFire\022D\n\024sto"
+    "p_population_fire\0300 \001(\0132&.MsgsSimToClien"
+    "t.MsgStopPopulationFire\0220\n\texplosion\0301 \001"
+    "(\0132\035.MsgsSimToClient.MsgExplosion\022>\n\021sta"
+    "rt_fire_effect\0302 \001(\0132#.MsgsSimToClient.M"
+    "sgStartFireEffect\022<\n\020stop_fire_effect\0303 "
+    "\001(\0132\".MsgsSimToClient.MsgStopFireEffect\022"
+    "*\n\006report\0304 \001(\0132\032.MsgsSimToClient.MsgRep"
+    "ort\022?\n\021invalidate_report\0305 \001(\0132$.MsgsSim"
+    "ToClient.MsgInvalidateReport\022(\n\005trace\0306 "
+    "\001(\0132\031.MsgsSimToClient.MsgTrace\022=\n\020decisi"
+    "onal_state\0307 \001(\0132#.MsgsSimToClient.MsgDe"
+    "cisionalState\0225\n\014debug_points\0308 \001(\0132\037.Ms"
+    "gsSimToClient.MsgDebugPoints\022>\n\021unit_vis"
+    "ion_cones\0309 \001(\0132#.MsgsSimToClient.MsgUni"
+    "tVisionCones\0229\n\016unit_detection\030: \001(\0132!.M"
+    "sgsSimToClient.MsgUnitDetection\022=\n\020objec"
+    "t_detection\030; \001(\0132#.MsgsSimToClient.MsgO"
+    "bjectDetection\022`\n\"population_concentrati"
+    "on_detection\030< \001(\01324.MsgsSimToClient.Msg"
+    "PopulationConcentrationDetection\022N\n\031popu"
+    "lation_flow_detection\030= \001(\0132+.MsgsSimToC"
+    "lient.MsgPopulationFlowDetection\022(\n\nunit"
+    "_order\030> \001(\0132\024.Common.MsgUnitOrder\022.\n\rau"
+    "tomat_order\030? \001(\0132\027.Common.MsgAutomatOrd"
+    "er\0224\n\020population_order\030@ \001(\0132\032.Common.Ms"
+    "gPopulationOrder\022;\n\017object_creation\030A \001("
+    "\0132\".MsgsSimToClient.MsgObjectCreation\022A\n"
+    "\022object_destruction\030B \001(\0132%.MsgsSimToCli"
+    "ent.MsgObjectDestruction\0227\n\robject_updat"
+    "e\030C \001(\0132 .MsgsSimToClient.MsgObjectUpdat"
+    "e\022N\n\031object_knowledge_creation\030D \001(\0132+.M"
+    "sgsSimToClient.MsgObjectKnowledgeCreatio"
+    "n\022J\n\027object_knowledge_update\030E \001(\0132).Msg"
+    "sSimToClient.MsgObjectKnowledgeUpdate\022T\n"
+    "\034object_knowledge_destruction\030F \001(\0132..Ms"
+    "gsSimToClient.MsgObjectKnowledgeDestruct"
+    "ion\022U\n\035log_medical_handling_creation\030G \001"
+    "(\0132..MsgsSimToClient.MsgLogMedicalHandli"
+    "ngCreation\022Q\n\033log_medical_handling_updat"
+    "e\030H \001(\0132,.MsgsSimToClient.MsgLogMedicalH"
+    "andlingUpdate\022[\n log_medical_handling_de"
+    "struction\030I \001(\01321.MsgsSimToClient.MsgLog"
+    "MedicalHandlingDestruction\022>\n\021log_medica"
+    "l_state\030J \001(\0132#.MsgsSimToClient.MsgLogMe"
+    "dicalState\022]\n!log_maintenance_handling_c"
+    "reation\030K \001(\01322.MsgsSimToClient.MsgLogMa"
+    "intenanceHandlingCreation\022Y\n\037log_mainten"
+    "ance_handling_update\030L \001(\01320.MsgsSimToCl"
+    "ient.MsgLogMaintenanceHandlingUpdate\022c\n$"
+    "log_maintenance_handling_destruction\030M \001"
+    "(\01325.MsgsSimToClient.MsgLogMaintenanceHa"
+    "ndlingDestruction\022F\n\025log_maintenance_sta"
+    "te\030N \001(\0132\'.MsgsSimToClient.MsgLogMainten"
+    "anceState\022S\n\034log_supply_handling_creatio"
+    "n\030O \001(\0132-.MsgsSimToClient.MsgLogSupplyHa"
+    "ndlingCreation\022O\n\032log_supply_handling_up"
+    "date\030P \001(\0132+.MsgsSimToClient.MsgLogSuppl"
+    "yHandlingUpdate\022Y\n\037log_supply_handling_d"
+    "estruction\030Q \001(\01320.MsgsSimToClient.MsgLo"
+    "gSupplyHandlingDestruction\022<\n\020log_supply"
+    "_state\030R \001(\0132\".MsgsSimToClient.MsgLogSup"
+    "plyState\022>\n\021log_supply_quotas\030S \001(\0132#.Ms"
+    "gsSimToClient.MsgLogSupplyQuotas\022C\n\023popu"
+    "lation_creation\030T \001(\0132&.MsgsSimToClient."
+    "MsgPopulationCreation\022?\n\021population_upda"
+    "te\030U \001(\0132$.MsgsSimToClient.MsgPopulation"
+    "Update\022^\n!population_concentration_creat"
+    "ion\030V \001(\01323.MsgsSimToClient.MsgPopulatio"
+    "nConcentrationCreation\022d\n$population_con"
+    "centration_destruction\030W \001(\01326.MsgsSimTo"
+    "Client.MsgPopulationConcentrationDestruc"
+    "tion\022Z\n\037population_concentration_update\030"
+    "X \001(\01321.MsgsSimToClient.MsgPopulationCon"
+    "centrationUpdate\022L\n\030population_flow_crea"
+    "tion\030Y \001(\0132*.MsgsSimToClient.MsgPopulati"
+    "onFlowCreation\022R\n\033population_flow_destru"
+    "ction\030Z \001(\0132-.MsgsSimToClient.MsgPopulat"
+    "ionFlowDestruction\022H\n\026population_flow_up"
+    "date\030[ \001(\0132(.MsgsSimToClient.MsgPopulati"
+    "onFlowUpdate\022V\n\035population_knowledge_cre"
+    "ation\030\\ \001(\0132/.MsgsSimToClient.MsgPopulat"
+    "ionKnowledgeCreation\022R\n\033population_knowl"
+    "edge_update\030] \001(\0132-.MsgsSimToClient.MsgP"
+    "opulationKnowledgeUpdate\022\\\n population_k"
+    "nowledge_destruction\030^ \001(\01322.MsgsSimToCl"
+    "ient.MsgPopulationKnowledgeDestruction\022q"
+    "\n+population_concentration_knowledge_cre"
+    "ation\030_ \001(\0132<.MsgsSimToClient.MsgPopulat"
+    "ionConcentrationKnowledgeCreation\022w\n.pop"
+    "ulation_concentration_knowledge_destruct"
+    "ion\030` \001(\0132?.MsgsSimToClient.MsgPopulatio"
+    "nConcentrationKnowledgeDestruction\022m\n)po"
+    "pulation_concentration_knowledge_update\030"
+    "a \001(\0132:.MsgsSimToClient.MsgPopulationCon"
+    "centrationKnowledgeUpdate\022_\n\"population_"
+    "flow_knowledge_creation\030b \001(\01323.MsgsSimT"
+    "oClient.MsgPopulationFlowKnowledgeCreati"
+    "on\022e\n%population_flow_knowledge_destruct"
+    "ion\030c \001(\01326.MsgsSimToClient.MsgPopulatio"
+    "nFlowKnowledgeDestruction\022[\n population_"
+    "flow_knowledge_update\030d \001(\01321.MsgsSimToC"
+    "lient.MsgPopulationFlowKnowledgeUpdate\0227"
+    "\n\rfolk_creation\030e \001(\0132 .MsgsSimToClient."
+    "MsgFolkCreation\022>\n\021folk_graph_update\030f \001"
+    "(\0132#.MsgsSimToClient.MsgFolkGraphUpdate\022"
+    "K\n\030control_global_meteo_ack\030g \001(\0132).Msgs"
+    "SimToClient.MsgControlGlobalMeteoAck\022I\n\027"
+    "control_local_meteo_ack\030h \001(\0132(.MsgsSimT"
+    "oClient.MsgControlLocalMeteoAck\022U\n\035contr"
+    "ol_checkpoint_save_begin\030i \001(\0132..MsgsSim"
+    "ToClient.MsgControlCheckPointSaveBegin\022b"
+    "\n$control_checkpoint_set_frequency_ack\030j"
+    " \001(\01324.MsgsSimToClient.MsgControlCheckPo"
+    "intSetFrequencyAck\022X\n\037control_checkpoint"
+    "_save_now_ack\030k \001(\0132/.MsgsSimToClient.Ms"
+    "gControlCheckPointSaveNowAck\022Z\n control_"
+    "send_current_state_begin\030l \001(\01320.MsgsSim"
+    "ToClient.MsgControlSendCurrentStateBegin"
+    "\022V\n\036control_send_current_state_end\030m \001(\013"
+    "2..MsgsSimToClient.MsgControlSendCurrent"
+    "StateEnd\0229\n\016urban_creation\030n \001(\0132!.MsgsS"
+    "imToClient.MsgUrbanCreation\0225\n\014urban_upd"
+    "ate\030o \001(\0132\037.MsgsSimToClient.MsgUrbanUpda"
+    "te\022L\n\030urban_knowledge_creation\030p \001(\0132*.M"
+    "sgsSimToClient.MsgUrbanKnowledgeCreation"
+    "\022H\n\026urban_knowledge_update\030q \001(\0132(.MsgsS"
+    "imToClient.MsgUrbanKnowledgeUpdate\022R\n\033ur"
+    "ban_knowledge_destruction\030r \001(\0132-.MsgsSi"
+    "mToClient.MsgUrbanKnowledgeDestruction\022-"
+    "\n\016stock_resource\030s \001(\0132\025.Common.StockRes"
+    "ource\022;\n\017urban_detection\030t \001(\0132\".MsgsSim"
+    "ToClient.MsgUrbanDetection\022Z\n knowledge_"
+    "group_magic_action_ack\030u \001(\01320.MsgsSimTo"
+    "Client.MsgKnowledgeGroupMagicActionAck\022L"
+    "\n\030knowledge_group_creation\030v \001(\0132*.MsgsS"
+    "imToClient.MsgKnowledgeGroupCreation\022H\n\026"
+    "knowledge_group_update\030w \001(\0132(.MsgsSimTo"
+    "Client.MsgKnowledgeGroupUpdate\022S\n\034knowle"
+    "dge_group_creation_ack\030x \001(\0132-.MsgsSimTo"
+    "Client.MsgKnowledgeGroupCreationAck\022O\n\032k"
+    "nowledge_group_update_ack\030y \001(\0132+.MsgsSi"
+    "mToClient.MsgKnowledgeGroupUpdateAck\022R\n\033"
+    "knowledge_group_destruction\030z \001(\0132-.Msgs"
+    "SimToClient.MsgKnowledgeGroupDestruction"
+    "\022R\n\034action_create_fire_order_ack\030{ \001(\0132,"
+    ".MsgsSimToClient.MsgActionCreateFireOrde"
+    "rAck\022D\n\024control_global_meteo\030| \001(\0132&.Msg"
+    "sSimToClient.MsgControlGlobalMeteo\022S\n\034co"
+    "ntrol_local_meteo_creation\030} \001(\0132-.MsgsS"
+    "imToClient.MsgControlLocalMeteoCreation\022"
+    "Y\n\037control_local_meteo_destruction\030~ \001(\013"
+    "20.MsgsSimToClient.MsgControlLocalMeteoD"
+    "estruction*\217\002\n\033EnumLogSupplyHandlingStat"
+    "us\022\035\n\031convoi_en_attente_camions\020\001\022\027\n\023con"
+    "voi_constitution\020\002\022,\n(convoi_deplacement"
+    "_vers_point_chargement\020\003\022\025\n\021convoi_charg"
+    "ement\020\004\022.\n*convoi_deplacement_vers_point"
+    "_dechargement\020\005\022\027\n\023convoi_dechargement\020\006"
+    "\022\035\n\031convoi_deplacement_retour\020\007\022\013\n\007termi"
+    "ne\020\010*V\n\033EnumUnitIdentificationLevel\022\016\n\ni"
+    "dentifiee\020\000\022\014\n\010reconnue\020\001\022\014\n\010detectee\020\002\022"
+    "\013\n\007signale\020\003*V\n\016EnumReportType\022\017\n\013inform"
+    "ation\020\000\022\017\n\013operational\020\001\022\025\n\021exceptional_"
+    "event\020\002\022\013\n\007warning\020\003", 39020);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "SimToClient.proto", &protobuf_RegisterTypes);
   OrderAck::default_instance_ = new OrderAck();
@@ -5690,8 +5617,6 @@ void protobuf_AddDesc_SimToClient_2eproto() {
   MsgUrbanAttributes_Architecture::default_instance_ = new MsgUrbanAttributes_Architecture();
   MsgUrbanAttributes_Structure::default_instance_ = new MsgUrbanAttributes_Structure();
   MsgUrbanAttributes_Infrastructures::default_instance_ = new MsgUrbanAttributes_Infrastructures();
-  MsgUrbanAttributes_Infrastructures_ResourceNetwork::default_instance_ = new MsgUrbanAttributes_Infrastructures_ResourceNetwork();
-  MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::default_instance_ = new MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link();
   MsgUrbanAttributes_RgbaColor::default_instance_ = new MsgUrbanAttributes_RgbaColor();
   MsgUrbanCreation::default_instance_ = new MsgUrbanCreation();
   MsgUrbanDetection::default_instance_ = new MsgUrbanDetection();
@@ -5869,8 +5794,6 @@ void protobuf_AddDesc_SimToClient_2eproto() {
   MsgUrbanAttributes_Architecture::default_instance_->InitAsDefaultInstance();
   MsgUrbanAttributes_Structure::default_instance_->InitAsDefaultInstance();
   MsgUrbanAttributes_Infrastructures::default_instance_->InitAsDefaultInstance();
-  MsgUrbanAttributes_Infrastructures_ResourceNetwork::default_instance_->InitAsDefaultInstance();
-  MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::default_instance_->InitAsDefaultInstance();
   MsgUrbanAttributes_RgbaColor::default_instance_->InitAsDefaultInstance();
   MsgUrbanCreation::default_instance_->InitAsDefaultInstance();
   MsgUrbanDetection::default_instance_->InitAsDefaultInstance();
@@ -53865,844 +53788,6 @@ void MsgUrbanAttributes_Structure::Swap(MsgUrbanAttributes_Structure* other) {
 
 // -------------------------------------------------------------------
 
-const ::google::protobuf::EnumDescriptor* MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_descriptor_;
-}
-bool MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_IsValid(int value) {
-  switch(value) {
-    case 1:
-    case 2:
-    case 3:
-      return true;
-    default:
-      return false;
-  }
-}
-
-#ifndef _MSC_VER
-const MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType MsgUrbanAttributes_Infrastructures_ResourceNetwork::water;
-const MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType MsgUrbanAttributes_Infrastructures_ResourceNetwork::gaz;
-const MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType MsgUrbanAttributes_Infrastructures_ResourceNetwork::electricity;
-const MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType MsgUrbanAttributes_Infrastructures_ResourceNetwork::ResourceType_MIN;
-const MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType MsgUrbanAttributes_Infrastructures_ResourceNetwork::ResourceType_MAX;
-#endif  // _MSC_VER
-const ::google::protobuf::EnumDescriptor* MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_descriptor_;
-}
-bool MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_IsValid(int value) {
-  switch(value) {
-    case 1:
-    case 2:
-      return true;
-    default:
-      return false;
-  }
-}
-
-#ifndef _MSC_VER
-const MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::urban;
-const MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::object;
-const MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::TargetKind_MIN;
-const MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::TargetKind_MAX;
-#endif  // _MSC_VER
-#ifndef _MSC_VER
-const int MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::kKindFieldNumber;
-const int MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::kTargetIdFieldNumber;
-const int MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::kCapacityFieldNumber;
-const int MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::kFlowFieldNumber;
-#endif  // !_MSC_VER
-
-MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link() {
-  SharedCtor();
-}
-
-void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::InitAsDefaultInstance() {
-}
-
-MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link(const MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link& from) {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::SharedCtor() {
-  _cached_size_ = 0;
-  kind_ = 1;
-  target_id_ = 0u;
-  capacity_ = 0;
-  flow_ = 0u;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::~MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link() {
-  SharedDtor();
-}
-
-void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::SharedDtor() {
-  if (this != default_instance_) {
-  }
-}
-
-const ::google::protobuf::Descriptor* MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_descriptor_;
-}
-
-const MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link& MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_SimToClient_2eproto();  return *default_instance_;
-}
-
-MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link* MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::default_instance_ = NULL;
-
-MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link* MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::New() const {
-  return new MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link;
-}
-
-void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    kind_ = 1;
-    target_id_ = 0u;
-    capacity_ = 0;
-    flow_ = 0u;
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork.Link.TargetKind kind = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-        int value;
-        DO_(::google::protobuf::internal::WireFormatLite::ReadEnum(input, &value));
-        if (::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_IsValid(value)) {
-          set_kind(static_cast< ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind >(value));
-        } else {
-          mutable_unknown_fields()->AddVarint(1, value);
-        }
-        if (input->ExpectTag(16)) goto parse_target_id;
-        break;
-      }
-      
-      // required uint32 target_id = 2;
-      case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_target_id:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &target_id_));
-        _set_bit(1);
-        if (input->ExpectTag(24)) goto parse_capacity;
-        break;
-      }
-      
-      // required int32 capacity = 3;
-      case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_capacity:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
-              input, &capacity_));
-        _set_bit(2);
-        if (input->ExpectTag(32)) goto parse_flow;
-        break;
-      }
-      
-      // required uint32 flow = 4;
-      case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_flow:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &flow_));
-        _set_bit(3);
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-      
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
-  if (raw_buffer != NULL) {
-    MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::SerializeWithCachedSizesToArray(raw_buffer);
-    return;
-  }
-  
-  // required .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork.Link.TargetKind kind = 1;
-  if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      1, this->kind(), output);
-  }
-  
-  // required uint32 target_id = 2;
-  if (_has_bit(1)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->target_id(), output);
-  }
-  
-  // required int32 capacity = 3;
-  if (_has_bit(2)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->capacity(), output);
-  }
-  
-  // required uint32 flow = 4;
-  if (_has_bit(3)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->flow(), output);
-  }
-  
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // required .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork.Link.TargetKind kind = 1;
-  if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
-      1, this->kind(), target);
-  }
-  
-  // required uint32 target_id = 2;
-  if (_has_bit(1)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->target_id(), target);
-  }
-  
-  // required int32 capacity = 3;
-  if (_has_bit(2)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->capacity(), target);
-  }
-  
-  // required uint32 flow = 4;
-  if (_has_bit(3)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->flow(), target);
-  }
-  
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::ByteSize() const {
-  int total_size = 0;
-  
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork.Link.TargetKind kind = 1;
-    if (has_kind()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::EnumSize(this->kind());
-    }
-    
-    // required uint32 target_id = 2;
-    if (has_target_id()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->target_id());
-    }
-    
-    // required int32 capacity = 3;
-    if (has_capacity()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->capacity());
-    }
-    
-    // required uint32 flow = 4;
-    if (has_flow()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->flow());
-    }
-    
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  _cached_size_ = total_size;
-  return total_size;
-}
-
-void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::MergeFrom(const MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from._has_bit(0)) {
-      set_kind(from.kind());
-    }
-    if (from._has_bit(1)) {
-      set_target_id(from.target_id());
-    }
-    if (from._has_bit(2)) {
-      set_capacity(from.capacity());
-    }
-    if (from._has_bit(3)) {
-      set_flow(from.flow());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::CopyFrom(const MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
-  
-  return true;
-}
-
-void MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::Swap(MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link* other) {
-  if (other != this) {
-    std::swap(kind_, other->kind_);
-    std::swap(target_id_, other->target_id_);
-    std::swap(capacity_, other->capacity_);
-    std::swap(flow_, other->flow_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_descriptor_;
-  metadata.reflection = MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_reflection_;
-  return metadata;
-}
-
-
-// -------------------------------------------------------------------
-
-#ifndef _MSC_VER
-const int MsgUrbanAttributes_Infrastructures_ResourceNetwork::kTypeFieldNumber;
-const int MsgUrbanAttributes_Infrastructures_ResourceNetwork::kLinkFieldNumber;
-const int MsgUrbanAttributes_Infrastructures_ResourceNetwork::kEnabledFieldNumber;
-const int MsgUrbanAttributes_Infrastructures_ResourceNetwork::kMaxStockFieldNumber;
-const int MsgUrbanAttributes_Infrastructures_ResourceNetwork::kStockFieldNumber;
-const int MsgUrbanAttributes_Infrastructures_ResourceNetwork::kProductionFieldNumber;
-const int MsgUrbanAttributes_Infrastructures_ResourceNetwork::kConsumptionFieldNumber;
-const int MsgUrbanAttributes_Infrastructures_ResourceNetwork::kCriticalFieldNumber;
-#endif  // !_MSC_VER
-
-MsgUrbanAttributes_Infrastructures_ResourceNetwork::MsgUrbanAttributes_Infrastructures_ResourceNetwork() {
-  SharedCtor();
-}
-
-void MsgUrbanAttributes_Infrastructures_ResourceNetwork::InitAsDefaultInstance() {
-}
-
-MsgUrbanAttributes_Infrastructures_ResourceNetwork::MsgUrbanAttributes_Infrastructures_ResourceNetwork(const MsgUrbanAttributes_Infrastructures_ResourceNetwork& from) {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void MsgUrbanAttributes_Infrastructures_ResourceNetwork::SharedCtor() {
-  _cached_size_ = 0;
-  type_ = 1;
-  enabled_ = false;
-  max_stock_ = 0u;
-  stock_ = 0u;
-  production_ = 0u;
-  consumption_ = 0u;
-  critical_ = false;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-MsgUrbanAttributes_Infrastructures_ResourceNetwork::~MsgUrbanAttributes_Infrastructures_ResourceNetwork() {
-  SharedDtor();
-}
-
-void MsgUrbanAttributes_Infrastructures_ResourceNetwork::SharedDtor() {
-  if (this != default_instance_) {
-  }
-}
-
-const ::google::protobuf::Descriptor* MsgUrbanAttributes_Infrastructures_ResourceNetwork::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return MsgUrbanAttributes_Infrastructures_ResourceNetwork_descriptor_;
-}
-
-const MsgUrbanAttributes_Infrastructures_ResourceNetwork& MsgUrbanAttributes_Infrastructures_ResourceNetwork::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_SimToClient_2eproto();  return *default_instance_;
-}
-
-MsgUrbanAttributes_Infrastructures_ResourceNetwork* MsgUrbanAttributes_Infrastructures_ResourceNetwork::default_instance_ = NULL;
-
-MsgUrbanAttributes_Infrastructures_ResourceNetwork* MsgUrbanAttributes_Infrastructures_ResourceNetwork::New() const {
-  return new MsgUrbanAttributes_Infrastructures_ResourceNetwork;
-}
-
-void MsgUrbanAttributes_Infrastructures_ResourceNetwork::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    type_ = 1;
-    enabled_ = false;
-    max_stock_ = 0u;
-    stock_ = 0u;
-    production_ = 0u;
-    consumption_ = 0u;
-    critical_ = false;
-  }
-  link_.Clear();
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork.ResourceType type = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-        int value;
-        DO_(::google::protobuf::internal::WireFormatLite::ReadEnum(input, &value));
-        if (::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType_IsValid(value)) {
-          set_type(static_cast< ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_ResourceType >(value));
-        } else {
-          mutable_unknown_fields()->AddVarint(1, value);
-        }
-        if (input->ExpectTag(18)) goto parse_link;
-        break;
-      }
-      
-      // repeated .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork.Link link = 2;
-      case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_link:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-              input, add_link()));
-        if (input->ExpectTag(18)) goto parse_link;
-        if (input->ExpectTag(24)) goto parse_enabled;
-        break;
-      }
-      
-      // required bool enabled = 3;
-      case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_enabled:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadBool(
-              input, &enabled_));
-        _set_bit(2);
-        if (input->ExpectTag(32)) goto parse_max_stock;
-        break;
-      }
-      
-      // optional uint32 max_stock = 4;
-      case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_max_stock:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &max_stock_));
-        _set_bit(3);
-        if (input->ExpectTag(40)) goto parse_stock;
-        break;
-      }
-      
-      // optional uint32 stock = 5;
-      case 5: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_stock:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &stock_));
-        _set_bit(4);
-        if (input->ExpectTag(48)) goto parse_production;
-        break;
-      }
-      
-      // optional uint32 production = 6;
-      case 6: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_production:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &production_));
-        _set_bit(5);
-        if (input->ExpectTag(56)) goto parse_consumption;
-        break;
-      }
-      
-      // optional uint32 consumption = 7;
-      case 7: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_consumption:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &consumption_));
-        _set_bit(6);
-        if (input->ExpectTag(64)) goto parse_critical;
-        break;
-      }
-      
-      // optional bool critical = 8;
-      case 8: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_critical:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadBool(
-              input, &critical_));
-        _set_bit(7);
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-      
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void MsgUrbanAttributes_Infrastructures_ResourceNetwork::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
-  if (raw_buffer != NULL) {
-    MsgUrbanAttributes_Infrastructures_ResourceNetwork::SerializeWithCachedSizesToArray(raw_buffer);
-    return;
-  }
-  
-  // required .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork.ResourceType type = 1;
-  if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      1, this->type(), output);
-  }
-  
-  // repeated .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork.Link link = 2;
-  for (int i = 0; i < this->link_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      2, this->link(i), output);
-  }
-  
-  // required bool enabled = 3;
-  if (_has_bit(2)) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(3, this->enabled(), output);
-  }
-  
-  // optional uint32 max_stock = 4;
-  if (_has_bit(3)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->max_stock(), output);
-  }
-  
-  // optional uint32 stock = 5;
-  if (_has_bit(4)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->stock(), output);
-  }
-  
-  // optional uint32 production = 6;
-  if (_has_bit(5)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->production(), output);
-  }
-  
-  // optional uint32 consumption = 7;
-  if (_has_bit(6)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->consumption(), output);
-  }
-  
-  // optional bool critical = 8;
-  if (_has_bit(7)) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(8, this->critical(), output);
-  }
-  
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* MsgUrbanAttributes_Infrastructures_ResourceNetwork::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // required .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork.ResourceType type = 1;
-  if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
-      1, this->type(), target);
-  }
-  
-  // repeated .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork.Link link = 2;
-  for (int i = 0; i < this->link_size(); i++) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        2, this->link(i), target);
-  }
-  
-  // required bool enabled = 3;
-  if (_has_bit(2)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(3, this->enabled(), target);
-  }
-  
-  // optional uint32 max_stock = 4;
-  if (_has_bit(3)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->max_stock(), target);
-  }
-  
-  // optional uint32 stock = 5;
-  if (_has_bit(4)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->stock(), target);
-  }
-  
-  // optional uint32 production = 6;
-  if (_has_bit(5)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(6, this->production(), target);
-  }
-  
-  // optional uint32 consumption = 7;
-  if (_has_bit(6)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(7, this->consumption(), target);
-  }
-  
-  // optional bool critical = 8;
-  if (_has_bit(7)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(8, this->critical(), target);
-  }
-  
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int MsgUrbanAttributes_Infrastructures_ResourceNetwork::ByteSize() const {
-  int total_size = 0;
-  
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork.ResourceType type = 1;
-    if (has_type()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
-    }
-    
-    // required bool enabled = 3;
-    if (has_enabled()) {
-      total_size += 1 + 1;
-    }
-    
-    // optional uint32 max_stock = 4;
-    if (has_max_stock()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->max_stock());
-    }
-    
-    // optional uint32 stock = 5;
-    if (has_stock()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->stock());
-    }
-    
-    // optional uint32 production = 6;
-    if (has_production()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->production());
-    }
-    
-    // optional uint32 consumption = 7;
-    if (has_consumption()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->consumption());
-    }
-    
-    // optional bool critical = 8;
-    if (has_critical()) {
-      total_size += 1 + 1;
-    }
-    
-  }
-  // repeated .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork.Link link = 2;
-  total_size += 1 * this->link_size();
-  for (int i = 0; i < this->link_size(); i++) {
-    total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->link(i));
-  }
-  
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  _cached_size_ = total_size;
-  return total_size;
-}
-
-void MsgUrbanAttributes_Infrastructures_ResourceNetwork::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const MsgUrbanAttributes_Infrastructures_ResourceNetwork* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const MsgUrbanAttributes_Infrastructures_ResourceNetwork*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void MsgUrbanAttributes_Infrastructures_ResourceNetwork::MergeFrom(const MsgUrbanAttributes_Infrastructures_ResourceNetwork& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  link_.MergeFrom(from.link_);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from._has_bit(0)) {
-      set_type(from.type());
-    }
-    if (from._has_bit(2)) {
-      set_enabled(from.enabled());
-    }
-    if (from._has_bit(3)) {
-      set_max_stock(from.max_stock());
-    }
-    if (from._has_bit(4)) {
-      set_stock(from.stock());
-    }
-    if (from._has_bit(5)) {
-      set_production(from.production());
-    }
-    if (from._has_bit(6)) {
-      set_consumption(from.consumption());
-    }
-    if (from._has_bit(7)) {
-      set_critical(from.critical());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void MsgUrbanAttributes_Infrastructures_ResourceNetwork::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void MsgUrbanAttributes_Infrastructures_ResourceNetwork::CopyFrom(const MsgUrbanAttributes_Infrastructures_ResourceNetwork& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool MsgUrbanAttributes_Infrastructures_ResourceNetwork::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000005) != 0x00000005) return false;
-  
-  for (int i = 0; i < link_size(); i++) {
-    if (!this->link(i).IsInitialized()) return false;
-  }
-  return true;
-}
-
-void MsgUrbanAttributes_Infrastructures_ResourceNetwork::Swap(MsgUrbanAttributes_Infrastructures_ResourceNetwork* other) {
-  if (other != this) {
-    std::swap(type_, other->type_);
-    link_.Swap(&other->link_);
-    std::swap(enabled_, other->enabled_);
-    std::swap(max_stock_, other->max_stock_);
-    std::swap(stock_, other->stock_);
-    std::swap(production_, other->production_);
-    std::swap(consumption_, other->consumption_);
-    std::swap(critical_, other->critical_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata MsgUrbanAttributes_Infrastructures_ResourceNetwork::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MsgUrbanAttributes_Infrastructures_ResourceNetwork_descriptor_;
-  metadata.reflection = MsgUrbanAttributes_Infrastructures_ResourceNetwork_reflection_;
-  return metadata;
-}
-
-
-// -------------------------------------------------------------------
-
 #ifndef _MSC_VER
 const int MsgUrbanAttributes_Infrastructures::kResourceNetworkFieldNumber;
 #endif  // !_MSC_VER
@@ -54760,7 +53845,7 @@ bool MsgUrbanAttributes_Infrastructures::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork resource_network = 1;
+      // repeated .Common.ResourceNetwork resource_network = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -54798,7 +53883,7 @@ void MsgUrbanAttributes_Infrastructures::SerializeWithCachedSizes(
     return;
   }
   
-  // repeated .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork resource_network = 1;
+  // repeated .Common.ResourceNetwork resource_network = 1;
   for (int i = 0; i < this->resource_network_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       1, this->resource_network(i), output);
@@ -54812,7 +53897,7 @@ void MsgUrbanAttributes_Infrastructures::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgUrbanAttributes_Infrastructures::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // repeated .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork resource_network = 1;
+  // repeated .Common.ResourceNetwork resource_network = 1;
   for (int i = 0; i < this->resource_network_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
@@ -54829,7 +53914,7 @@ void MsgUrbanAttributes_Infrastructures::SerializeWithCachedSizes(
 int MsgUrbanAttributes_Infrastructures::ByteSize() const {
   int total_size = 0;
   
-  // repeated .MsgsSimToClient.MsgUrbanAttributes.Infrastructures.ResourceNetwork resource_network = 1;
+  // repeated .Common.ResourceNetwork resource_network = 1;
   total_size += 1 * this->resource_network_size();
   for (int i = 0; i < this->resource_network_size(); i++) {
     total_size +=

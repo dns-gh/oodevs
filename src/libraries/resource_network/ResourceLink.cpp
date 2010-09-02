@@ -113,11 +113,10 @@ void ResourceLink::SetFlow( unsigned int flow )
 // Name: ResourceLink::Serialize
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------
-void ResourceLink::Serialize( MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link& msg ) const
+void ResourceLink::Serialize( Common::ResourceNetwork_Link& msg ) const
 {
     msg.set_kind( kind_ == eDestinationKindUrban ? 
-        MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_urban
-        : MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link_TargetKind_object );
+        Common::ResourceNetwork_Link_TargetKind_urban : Common::ResourceNetwork_Link_TargetKind_object );
     msg.set_target_id( destination_ );
     msg.set_capacity( capacity_ );
     msg.set_flow( flow_ );

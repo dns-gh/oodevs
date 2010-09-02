@@ -23,6 +23,7 @@
 #include "SupplyRouteAttribute.h"
 #include "LogisticAttribute.h"
 #include "ToxicCloudAttribute.h"
+#include "ResourceNetworkAttribute.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/ObjectType.h"
@@ -80,6 +81,7 @@ void Object::Initialize( Model_ABC& model, const Common::MsgObjectAttributes& at
     MSG_ASN_CREATION( fire              , FireAttribute );
     MSG_ASN_CREATION( medical_treatment , MedicalTreatmentAttribute );
     MSG_ASN_CREATION( effect_delay      , DelayAttribute );
+    MSG_ASN_CREATION( resource_networks , ResourceNetworkAttribute );
 }
 
 // -----------------------------------------------------------------------------

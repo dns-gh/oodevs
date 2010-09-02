@@ -10,13 +10,17 @@
 #include "gaming_pch.h"
 #include "UrbanModel.h"
 #include "Model.h"
+#include "ObjectsModel.h"
 #include "ResourceNetwork.h"
 #include "ResourceNetworkModel.h"
+#include "StructuralStateAttribute.h"
 #include "UrbanBlockDetectionMap.h"
+#include "UrbanBlockDeserializer.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Controller.h"
-#include "gaming/UrbanBlockDeserializer.h"
+#include "clients_kernel/ObjectExtensions.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "protocol/Simulation.h"
 #include "protocol/Protocol.h"
 #include <urban/Model.h>
@@ -67,14 +71,12 @@ void UrbanModel::Create( const MsgsSimToClient::MsgUrbanCreation& message )
     urban::TerrainObject_ABC* object = urbanModel_->GetFactory().CreateUrbanObject( id, name, &footPrint );
     UrbanBlockDeserializer urbanBlockDeserializer( message );
     object->Accept( urbanBlockDeserializer );
-    gui::InfrastructureParameters infrastructure;
-    if( message.has_attributes() )
-    {
-        if( message.attributes().has_structure() )
-            infrastructure.structuralState_ = message.attributes().structure().state();
-    }
-    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controller_, *object, message.oid(), QString( message.name().c_str() ) , infrastructure );
+    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controller_, *object, message.oid(), QString( message.name().c_str() ) );
+    if( message.has_attributes() && message.attributes().has_structure() )
+        pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( controller_, pTerrainObject->Get< kernel::PropertiesDictionary >() ) );
     object->InstanciateDecoration();
+    pTerrainObject->Update( message );
+    pTerrainObject->Polish();
     controller_.Create( *pTerrainObject );
     if( !Find( id ) )
         Register( id, *pTerrainObject );
@@ -87,26 +89,21 @@ void UrbanModel::Create( const MsgsSimToClient::MsgUrbanCreation& message )
 // -----------------------------------------------------------------------------
 void UrbanModel::Update( const MsgsSimToClient::MsgUrbanUpdate& message )
 {
-    gui::InfrastructureParameters infrastructure;
-    if( message.has_attributes() )
+    // TODO à virer quand les réseaux de ressources seront dans urban et que leur création sera envoyée dans MsgUrbanCreation et pas MsgUrbanUpdate
+    if( message.has_attributes() && message.attributes().has_infrastructures() )
     {
-        if( message.attributes().has_structure() )
-            infrastructure.structuralState_ = message.attributes().structure().state();
-        if( message.attributes().has_infrastructures() )
+        if( message.attributes().infrastructures().resource_network_size() > 0 )
         {
-            // update resource network model here
-            if( message.attributes().infrastructures().resource_network_size() > 0 )
-            {
-                TerrainObjectProxy& entity = GetObject( message.oid() );
-                if( entity.Retrieve< kernel::ResourceNetwork_ABC >() )
-                    model_.resourceNetwork_.UrbanUpdate( message.oid(), message.attributes().infrastructures() );
-                else
-                    model_.resourceNetwork_.UrbanCreate( GetObject( message.oid() ), message.attributes().infrastructures() );
-            }
-            // TODO update infrastructures other than resource network
+            TerrainObjectProxy& entity = GetObject( message.oid() );
+            /*if( entity.Retrieve< kernel::ResourceNetwork_ABC >() )
+                model_.resourceNetwork_.UrbanUpdate( message.oid(), message.attributes().infrastructures() );
+            else*/
+            if( !entity.Retrieve< kernel::ResourceNetwork_ABC >() )
+                model_.resourceNetwork_.Create( GetObject( message.oid() ), message.attributes().infrastructures() );
         }
+        // TODO update infrastructures other than resource network
     }
-    GetObject( message.oid() ).Update( infrastructure );
+    GetObject( message.oid() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------

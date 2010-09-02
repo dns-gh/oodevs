@@ -13,13 +13,17 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Extension_ABC.h"
-#include "InfrastructureParameters.h"
 
 namespace kernel
 {
     class GlTools_ABC;
     class PropertiesDictionary;
     class Viewport_ABC;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgUrbanUpdate;
 }
 
 namespace urban
@@ -38,20 +42,19 @@ namespace gui
 // =============================================================================
 class TerrainObjectProxy : public kernel::Extension_ABC
                          , public kernel::EntityImplementation< kernel::Entity_ABC >
-                         , public kernel::Updatable_ABC< InfrastructureParameters >
+                         , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object,
-                                 unsigned int id, const QString& name, const InfrastructureParameters& parameters );
+             TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object, unsigned int id, const QString& name );
              TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object );
     virtual ~TerrainObjectProxy();
     //@}
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const InfrastructureParameters& infrastructure );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& msg );
     virtual QString GetName() const;
     virtual unsigned long GetId() const;
     virtual void Select( kernel::ActionController& /*controller*/ ) const {}
@@ -62,7 +65,6 @@ public:
     virtual void Draw( urban::Drawer_ABC& drawer, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual bool IsInside( const geometry::Point2f& point ) const;
     geometry::Point2f Barycenter() const;
-    bool IsSelected() const;
     //@}
 
     //! @name Helpers
@@ -75,11 +77,7 @@ private:
     //! @name Member data
     //@{
     urban::TerrainObject_ABC* object_;
-    mutable bool isSelected_;
     //@}
-
-public:
-    InfrastructureParameters infrastructure_;   // $$$$ _RC_ FDS 2010-01-15: Must be encapsulated -> private
 
 public:
     //! @name Copy/Assignment

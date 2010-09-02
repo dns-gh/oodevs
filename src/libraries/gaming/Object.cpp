@@ -14,6 +14,7 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Positions.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Units.h"

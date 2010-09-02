@@ -13,6 +13,11 @@
 #include "NodeElement.h"
 #include "tools/Resolver.h"
 
+namespace Common
+{
+    class MsgObjectAttributeResourceNetwork;
+}
+
 namespace MsgsSimToClient
 {
     class MsgUrbanAttributes_Infrastructures;
@@ -56,6 +61,7 @@ public:
     //! @name Network
     //@{
     void Serialize( MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg ) const;
+    void Serialize( Common::MsgObjectAttributeResourceNetwork& msg ) const;
     void Update( const Common::MsgMissionParameter_Value& msg );
     //@}
 

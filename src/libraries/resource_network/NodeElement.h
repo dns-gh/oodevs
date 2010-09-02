@@ -17,11 +17,7 @@
 namespace Common
 {
     class MsgMissionParameter_Value;
-}
-
-namespace MsgsSimToClient
-{
-    class MsgUrbanAttributes_Infrastructures_ResourceNetwork;
+    class ResourceNetwork;
 }
 
 namespace xml
@@ -66,7 +62,7 @@ public:
 
     //! @name Network
     //@{
-    void Serialize( MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork& msg ) const;
+    void Serialize( Common::ResourceNetwork& msg ) const;
     void Update( const Common::MsgMissionParameter_Value& msg );
     //@}
 

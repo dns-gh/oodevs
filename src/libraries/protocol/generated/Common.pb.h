@@ -148,6 +148,9 @@ class MsgObjectAttributeFire;
 class MsgObjectAttributeMedicalTreatment;
 class MsgObjectAttributeNBCType;
 class MsgObjectAttributeSealOff;
+class ResourceNetwork;
+class ResourceNetwork_Link;
+class MsgObjectAttributeResourceNetwork;
 class MsgObjectAttributes;
 class MsgNote;
 class MsgMeteoAttributes;
@@ -247,6 +250,43 @@ inline bool MsgAtlasNature_AtlasNature_Parse(
     const ::std::string& name, MsgAtlasNature_AtlasNature* value) {
   return ::google::protobuf::internal::ParseNamedEnum<MsgAtlasNature_AtlasNature>(
     MsgAtlasNature_AtlasNature_descriptor(), name, value);
+}
+enum ResourceNetwork_Link_TargetKind {
+  ResourceNetwork_Link_TargetKind_urban = 1,
+  ResourceNetwork_Link_TargetKind_object = 2
+};
+bool ResourceNetwork_Link_TargetKind_IsValid(int value);
+const ResourceNetwork_Link_TargetKind ResourceNetwork_Link_TargetKind_TargetKind_MIN = ResourceNetwork_Link_TargetKind_urban;
+const ResourceNetwork_Link_TargetKind ResourceNetwork_Link_TargetKind_TargetKind_MAX = ResourceNetwork_Link_TargetKind_object;
+
+const ::google::protobuf::EnumDescriptor* ResourceNetwork_Link_TargetKind_descriptor();
+inline const ::std::string& ResourceNetwork_Link_TargetKind_Name(ResourceNetwork_Link_TargetKind value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    ResourceNetwork_Link_TargetKind_descriptor(), value);
+}
+inline bool ResourceNetwork_Link_TargetKind_Parse(
+    const ::std::string& name, ResourceNetwork_Link_TargetKind* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<ResourceNetwork_Link_TargetKind>(
+    ResourceNetwork_Link_TargetKind_descriptor(), name, value);
+}
+enum ResourceNetwork_ResourceType {
+  ResourceNetwork_ResourceType_water = 1,
+  ResourceNetwork_ResourceType_gaz = 2,
+  ResourceNetwork_ResourceType_electricity = 3
+};
+bool ResourceNetwork_ResourceType_IsValid(int value);
+const ResourceNetwork_ResourceType ResourceNetwork_ResourceType_ResourceType_MIN = ResourceNetwork_ResourceType_water;
+const ResourceNetwork_ResourceType ResourceNetwork_ResourceType_ResourceType_MAX = ResourceNetwork_ResourceType_electricity;
+
+const ::google::protobuf::EnumDescriptor* ResourceNetwork_ResourceType_descriptor();
+inline const ::std::string& ResourceNetwork_ResourceType_Name(ResourceNetwork_ResourceType value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    ResourceNetwork_ResourceType_descriptor(), value);
+}
+inline bool ResourceNetwork_ResourceType_Parse(
+    const ::std::string& name, ResourceNetwork_ResourceType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<ResourceNetwork_ResourceType>(
+    ResourceNetwork_ResourceType_descriptor(), name, value);
 }
 enum EnumDotationFamily {
   munition = 0,
@@ -12190,6 +12230,400 @@ class MsgObjectAttributeSealOff : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class ResourceNetwork_Link : public ::google::protobuf::Message {
+ public:
+  ResourceNetwork_Link();
+  virtual ~ResourceNetwork_Link();
+  
+  ResourceNetwork_Link(const ResourceNetwork_Link& from);
+  
+  inline ResourceNetwork_Link& operator=(const ResourceNetwork_Link& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ResourceNetwork_Link& default_instance();
+  void Swap(ResourceNetwork_Link* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ResourceNetwork_Link* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ResourceNetwork_Link& from);
+  void MergeFrom(const ResourceNetwork_Link& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  typedef ResourceNetwork_Link_TargetKind TargetKind;
+  static const TargetKind urban = ResourceNetwork_Link_TargetKind_urban;
+  static const TargetKind object = ResourceNetwork_Link_TargetKind_object;
+  static inline bool TargetKind_IsValid(int value) {
+    return ResourceNetwork_Link_TargetKind_IsValid(value);
+  }
+  static const TargetKind TargetKind_MIN =
+    ResourceNetwork_Link_TargetKind_TargetKind_MIN;
+  static const TargetKind TargetKind_MAX =
+    ResourceNetwork_Link_TargetKind_TargetKind_MAX;
+  static inline const ::google::protobuf::EnumDescriptor*
+  TargetKind_descriptor() {
+    return ResourceNetwork_Link_TargetKind_descriptor();
+  }
+  static inline const ::std::string& TargetKind_Name(TargetKind value) {
+    return ResourceNetwork_Link_TargetKind_Name(value);
+  }
+  static inline bool TargetKind_Parse(const ::std::string& name,
+      TargetKind* value) {
+    return ResourceNetwork_Link_TargetKind_Parse(name, value);
+  }
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.ResourceNetwork.Link.TargetKind kind = 1;
+  inline bool has_kind() const;
+  inline void clear_kind();
+  static const int kKindFieldNumber = 1;
+  inline ::Common::ResourceNetwork_Link_TargetKind kind() const;
+  inline void set_kind(::Common::ResourceNetwork_Link_TargetKind value);
+  
+  // required uint32 target_id = 2;
+  inline bool has_target_id() const;
+  inline void clear_target_id();
+  static const int kTargetIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 target_id() const;
+  inline void set_target_id(::google::protobuf::uint32 value);
+  
+  // required int32 capacity = 3;
+  inline bool has_capacity() const;
+  inline void clear_capacity();
+  static const int kCapacityFieldNumber = 3;
+  inline ::google::protobuf::int32 capacity() const;
+  inline void set_capacity(::google::protobuf::int32 value);
+  
+  // required uint32 flow = 4;
+  inline bool has_flow() const;
+  inline void clear_flow();
+  static const int kFlowFieldNumber = 4;
+  inline ::google::protobuf::uint32 flow() const;
+  inline void set_flow(::google::protobuf::uint32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  int kind_;
+  ::google::protobuf::uint32 target_id_;
+  ::google::protobuf::int32 capacity_;
+  ::google::protobuf::uint32 flow_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ResourceNetwork_Link* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ResourceNetwork : public ::google::protobuf::Message {
+ public:
+  ResourceNetwork();
+  virtual ~ResourceNetwork();
+  
+  ResourceNetwork(const ResourceNetwork& from);
+  
+  inline ResourceNetwork& operator=(const ResourceNetwork& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ResourceNetwork& default_instance();
+  void Swap(ResourceNetwork* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ResourceNetwork* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ResourceNetwork& from);
+  void MergeFrom(const ResourceNetwork& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  typedef ResourceNetwork_Link Link;
+  
+  typedef ResourceNetwork_ResourceType ResourceType;
+  static const ResourceType water = ResourceNetwork_ResourceType_water;
+  static const ResourceType gaz = ResourceNetwork_ResourceType_gaz;
+  static const ResourceType electricity = ResourceNetwork_ResourceType_electricity;
+  static inline bool ResourceType_IsValid(int value) {
+    return ResourceNetwork_ResourceType_IsValid(value);
+  }
+  static const ResourceType ResourceType_MIN =
+    ResourceNetwork_ResourceType_ResourceType_MIN;
+  static const ResourceType ResourceType_MAX =
+    ResourceNetwork_ResourceType_ResourceType_MAX;
+  static inline const ::google::protobuf::EnumDescriptor*
+  ResourceType_descriptor() {
+    return ResourceNetwork_ResourceType_descriptor();
+  }
+  static inline const ::std::string& ResourceType_Name(ResourceType value) {
+    return ResourceNetwork_ResourceType_Name(value);
+  }
+  static inline bool ResourceType_Parse(const ::std::string& name,
+      ResourceType* value) {
+    return ResourceNetwork_ResourceType_Parse(name, value);
+  }
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.ResourceNetwork.ResourceType type = 1;
+  inline bool has_type() const;
+  inline void clear_type();
+  static const int kTypeFieldNumber = 1;
+  inline ::Common::ResourceNetwork_ResourceType type() const;
+  inline void set_type(::Common::ResourceNetwork_ResourceType value);
+  
+  // repeated .Common.ResourceNetwork.Link link = 2;
+  inline int link_size() const;
+  inline void clear_link();
+  static const int kLinkFieldNumber = 2;
+  inline const ::google::protobuf::RepeatedPtrField< ::Common::ResourceNetwork_Link >& link() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Common::ResourceNetwork_Link >* mutable_link();
+  inline const ::Common::ResourceNetwork_Link& link(int index) const;
+  inline ::Common::ResourceNetwork_Link* mutable_link(int index);
+  inline ::Common::ResourceNetwork_Link* add_link();
+  
+  // required bool enabled = 3;
+  inline bool has_enabled() const;
+  inline void clear_enabled();
+  static const int kEnabledFieldNumber = 3;
+  inline bool enabled() const;
+  inline void set_enabled(bool value);
+  
+  // optional uint32 max_stock = 4;
+  inline bool has_max_stock() const;
+  inline void clear_max_stock();
+  static const int kMaxStockFieldNumber = 4;
+  inline ::google::protobuf::uint32 max_stock() const;
+  inline void set_max_stock(::google::protobuf::uint32 value);
+  
+  // optional uint32 stock = 5;
+  inline bool has_stock() const;
+  inline void clear_stock();
+  static const int kStockFieldNumber = 5;
+  inline ::google::protobuf::uint32 stock() const;
+  inline void set_stock(::google::protobuf::uint32 value);
+  
+  // optional uint32 production = 6;
+  inline bool has_production() const;
+  inline void clear_production();
+  static const int kProductionFieldNumber = 6;
+  inline ::google::protobuf::uint32 production() const;
+  inline void set_production(::google::protobuf::uint32 value);
+  
+  // optional uint32 consumption = 7;
+  inline bool has_consumption() const;
+  inline void clear_consumption();
+  static const int kConsumptionFieldNumber = 7;
+  inline ::google::protobuf::uint32 consumption() const;
+  inline void set_consumption(::google::protobuf::uint32 value);
+  
+  // optional bool critical = 8;
+  inline bool has_critical() const;
+  inline void clear_critical();
+  static const int kCriticalFieldNumber = 8;
+  inline bool critical() const;
+  inline void set_critical(bool value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  int type_;
+  ::google::protobuf::RepeatedPtrField< ::Common::ResourceNetwork_Link > link_;
+  bool enabled_;
+  ::google::protobuf::uint32 max_stock_;
+  ::google::protobuf::uint32 stock_;
+  ::google::protobuf::uint32 production_;
+  ::google::protobuf::uint32 consumption_;
+  bool critical_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ResourceNetwork* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgObjectAttributeResourceNetwork : public ::google::protobuf::Message {
+ public:
+  MsgObjectAttributeResourceNetwork();
+  virtual ~MsgObjectAttributeResourceNetwork();
+  
+  MsgObjectAttributeResourceNetwork(const MsgObjectAttributeResourceNetwork& from);
+  
+  inline MsgObjectAttributeResourceNetwork& operator=(const MsgObjectAttributeResourceNetwork& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgObjectAttributeResourceNetwork& default_instance();
+  void Swap(MsgObjectAttributeResourceNetwork* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgObjectAttributeResourceNetwork* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgObjectAttributeResourceNetwork& from);
+  void MergeFrom(const MsgObjectAttributeResourceNetwork& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // repeated .Common.ResourceNetwork network = 1;
+  inline int network_size() const;
+  inline void clear_network();
+  static const int kNetworkFieldNumber = 1;
+  inline const ::google::protobuf::RepeatedPtrField< ::Common::ResourceNetwork >& network() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Common::ResourceNetwork >* mutable_network();
+  inline const ::Common::ResourceNetwork& network(int index) const;
+  inline ::Common::ResourceNetwork* mutable_network(int index);
+  inline ::Common::ResourceNetwork* add_network();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::RepeatedPtrField< ::Common::ResourceNetwork > network_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgObjectAttributeResourceNetwork* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class MsgObjectAttributes : public ::google::protobuf::Message {
  public:
   MsgObjectAttributes();
@@ -12362,6 +12796,13 @@ class MsgObjectAttributes : public ::google::protobuf::Message {
   inline const ::Common::MsgObjectAttributeSealOff& sealoff() const;
   inline ::Common::MsgObjectAttributeSealOff* mutable_sealoff();
   
+  // optional .Common.MsgObjectAttributeResourceNetwork resource_networks = 18;
+  inline bool has_resource_networks() const;
+  inline void clear_resource_networks();
+  static const int kResourceNetworksFieldNumber = 18;
+  inline const ::Common::MsgObjectAttributeResourceNetwork& resource_networks() const;
+  inline ::Common::MsgObjectAttributeResourceNetwork* mutable_resource_networks();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -12383,11 +12824,12 @@ class MsgObjectAttributes : public ::google::protobuf::Message {
   ::Common::MsgObjectAttributeNBCType* nbc_agent_;
   ::Common::MsgObjectAttributeEffectDelay* effect_delay_;
   ::Common::MsgObjectAttributeSealOff* sealoff_;
+  ::Common::MsgObjectAttributeResourceNetwork* resource_networks_;
   friend void  protobuf_AddDesc_Common_2eproto();
   friend void protobuf_AssignDesc_Common_2eproto();
   friend void protobuf_ShutdownFile_Common_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(17 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(18 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -17643,6 +18085,246 @@ inline void MsgObjectAttributeSealOff::set_level(::google::protobuf::int32 value
 
 // -------------------------------------------------------------------
 
+// ResourceNetwork_Link
+
+// required .Common.ResourceNetwork.Link.TargetKind kind = 1;
+inline bool ResourceNetwork_Link::has_kind() const {
+  return _has_bit(0);
+}
+inline void ResourceNetwork_Link::clear_kind() {
+  kind_ = 1;
+  _clear_bit(0);
+}
+inline ::Common::ResourceNetwork_Link_TargetKind ResourceNetwork_Link::kind() const {
+  return static_cast< ::Common::ResourceNetwork_Link_TargetKind >(kind_);
+}
+inline void ResourceNetwork_Link::set_kind(::Common::ResourceNetwork_Link_TargetKind value) {
+  GOOGLE_DCHECK(::Common::ResourceNetwork_Link_TargetKind_IsValid(value));
+  _set_bit(0);
+  kind_ = value;
+}
+
+// required uint32 target_id = 2;
+inline bool ResourceNetwork_Link::has_target_id() const {
+  return _has_bit(1);
+}
+inline void ResourceNetwork_Link::clear_target_id() {
+  target_id_ = 0u;
+  _clear_bit(1);
+}
+inline ::google::protobuf::uint32 ResourceNetwork_Link::target_id() const {
+  return target_id_;
+}
+inline void ResourceNetwork_Link::set_target_id(::google::protobuf::uint32 value) {
+  _set_bit(1);
+  target_id_ = value;
+}
+
+// required int32 capacity = 3;
+inline bool ResourceNetwork_Link::has_capacity() const {
+  return _has_bit(2);
+}
+inline void ResourceNetwork_Link::clear_capacity() {
+  capacity_ = 0;
+  _clear_bit(2);
+}
+inline ::google::protobuf::int32 ResourceNetwork_Link::capacity() const {
+  return capacity_;
+}
+inline void ResourceNetwork_Link::set_capacity(::google::protobuf::int32 value) {
+  _set_bit(2);
+  capacity_ = value;
+}
+
+// required uint32 flow = 4;
+inline bool ResourceNetwork_Link::has_flow() const {
+  return _has_bit(3);
+}
+inline void ResourceNetwork_Link::clear_flow() {
+  flow_ = 0u;
+  _clear_bit(3);
+}
+inline ::google::protobuf::uint32 ResourceNetwork_Link::flow() const {
+  return flow_;
+}
+inline void ResourceNetwork_Link::set_flow(::google::protobuf::uint32 value) {
+  _set_bit(3);
+  flow_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// ResourceNetwork
+
+// required .Common.ResourceNetwork.ResourceType type = 1;
+inline bool ResourceNetwork::has_type() const {
+  return _has_bit(0);
+}
+inline void ResourceNetwork::clear_type() {
+  type_ = 1;
+  _clear_bit(0);
+}
+inline ::Common::ResourceNetwork_ResourceType ResourceNetwork::type() const {
+  return static_cast< ::Common::ResourceNetwork_ResourceType >(type_);
+}
+inline void ResourceNetwork::set_type(::Common::ResourceNetwork_ResourceType value) {
+  GOOGLE_DCHECK(::Common::ResourceNetwork_ResourceType_IsValid(value));
+  _set_bit(0);
+  type_ = value;
+}
+
+// repeated .Common.ResourceNetwork.Link link = 2;
+inline int ResourceNetwork::link_size() const {
+  return link_.size();
+}
+inline void ResourceNetwork::clear_link() {
+  link_.Clear();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Common::ResourceNetwork_Link >&
+ResourceNetwork::link() const {
+  return link_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Common::ResourceNetwork_Link >*
+ResourceNetwork::mutable_link() {
+  return &link_;
+}
+inline const ::Common::ResourceNetwork_Link& ResourceNetwork::link(int index) const {
+  return link_.Get(index);
+}
+inline ::Common::ResourceNetwork_Link* ResourceNetwork::mutable_link(int index) {
+  return link_.Mutable(index);
+}
+inline ::Common::ResourceNetwork_Link* ResourceNetwork::add_link() {
+  return link_.Add();
+}
+
+// required bool enabled = 3;
+inline bool ResourceNetwork::has_enabled() const {
+  return _has_bit(2);
+}
+inline void ResourceNetwork::clear_enabled() {
+  enabled_ = false;
+  _clear_bit(2);
+}
+inline bool ResourceNetwork::enabled() const {
+  return enabled_;
+}
+inline void ResourceNetwork::set_enabled(bool value) {
+  _set_bit(2);
+  enabled_ = value;
+}
+
+// optional uint32 max_stock = 4;
+inline bool ResourceNetwork::has_max_stock() const {
+  return _has_bit(3);
+}
+inline void ResourceNetwork::clear_max_stock() {
+  max_stock_ = 0u;
+  _clear_bit(3);
+}
+inline ::google::protobuf::uint32 ResourceNetwork::max_stock() const {
+  return max_stock_;
+}
+inline void ResourceNetwork::set_max_stock(::google::protobuf::uint32 value) {
+  _set_bit(3);
+  max_stock_ = value;
+}
+
+// optional uint32 stock = 5;
+inline bool ResourceNetwork::has_stock() const {
+  return _has_bit(4);
+}
+inline void ResourceNetwork::clear_stock() {
+  stock_ = 0u;
+  _clear_bit(4);
+}
+inline ::google::protobuf::uint32 ResourceNetwork::stock() const {
+  return stock_;
+}
+inline void ResourceNetwork::set_stock(::google::protobuf::uint32 value) {
+  _set_bit(4);
+  stock_ = value;
+}
+
+// optional uint32 production = 6;
+inline bool ResourceNetwork::has_production() const {
+  return _has_bit(5);
+}
+inline void ResourceNetwork::clear_production() {
+  production_ = 0u;
+  _clear_bit(5);
+}
+inline ::google::protobuf::uint32 ResourceNetwork::production() const {
+  return production_;
+}
+inline void ResourceNetwork::set_production(::google::protobuf::uint32 value) {
+  _set_bit(5);
+  production_ = value;
+}
+
+// optional uint32 consumption = 7;
+inline bool ResourceNetwork::has_consumption() const {
+  return _has_bit(6);
+}
+inline void ResourceNetwork::clear_consumption() {
+  consumption_ = 0u;
+  _clear_bit(6);
+}
+inline ::google::protobuf::uint32 ResourceNetwork::consumption() const {
+  return consumption_;
+}
+inline void ResourceNetwork::set_consumption(::google::protobuf::uint32 value) {
+  _set_bit(6);
+  consumption_ = value;
+}
+
+// optional bool critical = 8;
+inline bool ResourceNetwork::has_critical() const {
+  return _has_bit(7);
+}
+inline void ResourceNetwork::clear_critical() {
+  critical_ = false;
+  _clear_bit(7);
+}
+inline bool ResourceNetwork::critical() const {
+  return critical_;
+}
+inline void ResourceNetwork::set_critical(bool value) {
+  _set_bit(7);
+  critical_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgObjectAttributeResourceNetwork
+
+// repeated .Common.ResourceNetwork network = 1;
+inline int MsgObjectAttributeResourceNetwork::network_size() const {
+  return network_.size();
+}
+inline void MsgObjectAttributeResourceNetwork::clear_network() {
+  network_.Clear();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Common::ResourceNetwork >&
+MsgObjectAttributeResourceNetwork::network() const {
+  return network_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Common::ResourceNetwork >*
+MsgObjectAttributeResourceNetwork::mutable_network() {
+  return &network_;
+}
+inline const ::Common::ResourceNetwork& MsgObjectAttributeResourceNetwork::network(int index) const {
+  return network_.Get(index);
+}
+inline ::Common::ResourceNetwork* MsgObjectAttributeResourceNetwork::mutable_network(int index) {
+  return network_.Mutable(index);
+}
+inline ::Common::ResourceNetwork* MsgObjectAttributeResourceNetwork::add_network() {
+  return network_.Add();
+}
+
+// -------------------------------------------------------------------
+
 // MsgObjectAttributes
 
 // optional .Common.MsgObjectAttributeConstruction construction = 1;
@@ -17934,6 +18616,23 @@ inline ::Common::MsgObjectAttributeSealOff* MsgObjectAttributes::mutable_sealoff
   return sealoff_;
 }
 
+// optional .Common.MsgObjectAttributeResourceNetwork resource_networks = 18;
+inline bool MsgObjectAttributes::has_resource_networks() const {
+  return _has_bit(17);
+}
+inline void MsgObjectAttributes::clear_resource_networks() {
+  if (resource_networks_ != NULL) resource_networks_->::Common::MsgObjectAttributeResourceNetwork::Clear();
+  _clear_bit(17);
+}
+inline const ::Common::MsgObjectAttributeResourceNetwork& MsgObjectAttributes::resource_networks() const {
+  return resource_networks_ != NULL ? *resource_networks_ : *default_instance_->resource_networks_;
+}
+inline ::Common::MsgObjectAttributeResourceNetwork* MsgObjectAttributes::mutable_resource_networks() {
+  _set_bit(17);
+  if (resource_networks_ == NULL) resource_networks_ = new ::Common::MsgObjectAttributeResourceNetwork;
+  return resource_networks_;
+}
+
 // -------------------------------------------------------------------
 
 // MsgNote
@@ -18220,6 +18919,14 @@ inline const EnumDescriptor* GetEnumDescriptor< ::Common::MsgLimaOrder_Function>
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::Common::MsgAtlasNature_AtlasNature>() {
   return ::Common::MsgAtlasNature_AtlasNature_descriptor();
+}
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Common::ResourceNetwork_Link_TargetKind>() {
+  return ::Common::ResourceNetwork_Link_TargetKind_descriptor();
+}
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Common::ResourceNetwork_ResourceType>() {
+  return ::Common::ResourceNetwork_ResourceType_descriptor();
 }
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< Common::EnumDotationFamily>() {

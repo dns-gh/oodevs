@@ -34,7 +34,6 @@
 #include "ObjectKnowledgeConverter.h"
 #include "ObjectKnowledgeFactory.h"
 #include "ObjectsModel.h"
-#include "ResourceNetworkFactory.h"
 #include "ResourceNetworkModel.h"
 #include "ScoreDefinitions.h"
 #include "ScoreModel.h"
@@ -84,7 +83,6 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , actionFactory_( *new actions::ActionFactory( controllers.controller_, actionParameterFactory_, *this, staticModel, simulation ) )
     , intelligenceFactory_( *new IntelligenceFactory( controllers, staticModel.coordinateConverter_, *this, staticModel.levels_, publisher ) )
     , drawingFactory_( *new DrawingFactory( controllers.controller_, staticModel.drawings_, publisher, staticModel.coordinateConverter_ ) )
-    , resourceNetworkFactory_( *new ResourceNetworkFactory( controllers_, *this ) )
     , agents_( *new AgentsModel( agentFactory_ ) )
     , objects_( *new ObjectsModel( objectFactory_ ) )
     , teams_( *new TeamsModel( teamFactory_ ) )
@@ -102,7 +100,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , scoreDefinitions_( *new ScoreDefinitions( staticModel.indicators_, staticModel.gaugeTypes_ ) )
     , scores_( *new ScoreModel( controllers, publisher, scoreDefinitions_ ) )
     , urbanObjects_( *new UrbanModel( controllers.controller_, *this, static_.detection_ ) )
-    , resourceNetwork_( *new ResourceNetworkModel( resourceNetworkFactory_ ) )
+    , resourceNetwork_( *new ResourceNetworkModel( controllers, *this ) )
     , surfaceFactory_( *new SurfaceFactory( static_.coordinateConverter_, static_.detection_, static_.types_, urbanObjects_.GetUrbanBlockMap() ) )
     , notes_( *new NotesModel( controllers.controller_ ))
     , meteo_( *new MeteoModel( static_.coordinateConverter_ ) )
@@ -137,7 +135,6 @@ Model::~Model()
     delete &teams_;
     delete &objects_;
     delete &agents_;
-    delete &resourceNetworkFactory_;
     delete &drawingFactory_;
     delete &intelligenceFactory_;
     delete &actionFactory_;
@@ -180,5 +177,4 @@ void Model::Purge()
     knowledgeGroups_.Purge();
     teams_.Purge();
     meteo_.Purge();
-    resourceNetwork_.Purge();
 }

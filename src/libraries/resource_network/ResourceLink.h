@@ -12,9 +12,9 @@
 
 #include <vector>
 
-namespace MsgsSimToClient
+namespace Common
 {
-    class MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link;
+    class ResourceNetwork_Link;
 }
 
 namespace xml
@@ -60,7 +60,7 @@ public:
 
     //! @name Network
     //@{
-    void Serialize( MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork_Link& msg ) const;
+    void Serialize( Common::ResourceNetwork_Link& msg ) const;
     //@}
 
 private:

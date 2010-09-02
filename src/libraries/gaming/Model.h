@@ -49,7 +49,6 @@ class ObjectKnowledgeFactory;
 class ObjectsModel;
 class Publisher_ABC;
 class RcEntityResolver_ABC;
-class ResourceNetworkFactory;
 class ResourceNetworkModel;
 class ScoreDefinitions;
 class ScoreModel;
@@ -112,7 +111,6 @@ public:
     actions::ActionFactory_ABC&     actionFactory_;
     IntelligenceFactory&            intelligenceFactory_;
     DrawingFactory&                 drawingFactory_;
-    ResourceNetworkFactory&         resourceNetworkFactory_;
 
     AgentsModel&          agents_;
     ObjectsModel&         objects_;

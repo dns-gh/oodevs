@@ -60,7 +60,7 @@
     </message>
     <message>
         <source>Info/StructuralState</source>
-        <translation>Info/Etat structurel</translation>
+        <translation type="obsolete">Info/Etat structurel</translation>
     </message>
     <message>
         <source>PhysicalFeatures/Architecture/Height</source>

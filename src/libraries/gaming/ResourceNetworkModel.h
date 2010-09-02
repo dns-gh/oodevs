@@ -11,30 +11,15 @@
 #define __ResourceNetworkModel_h_
 
 #include "tools/Resolver.h"
+#include "tools/SelectionObserver_ABC.h"
 
 namespace kernel
 {
+    class Controllers;
     class ResourceNetwork_ABC;
 }
 
-namespace MsgsSimToClient
-{
-    class MsgUrbanAttributes_Infrastructures;
-}
-
-class ResourceNetworkFactory;
-
-class UrbanResourceResolver : public tools::Resolver< kernel::ResourceNetwork_ABC >
-{
-public:
-    UrbanResourceResolver() : tools::Resolver< kernel::ResourceNetwork_ABC >() {}
-};
-
-class ObjectResourceResolver : public tools::Resolver< kernel::ResourceNetwork_ABC >
-{
-public:
-    ObjectResourceResolver() : tools::Resolver< kernel::ResourceNetwork_ABC >() {}
-};
+class Model;
 
 // =============================================================================
 /** @class  ResourceNetworkModel
@@ -42,21 +27,20 @@ public:
 */
 // Created: JSR 2010-08-18
 // =============================================================================
-class ResourceNetworkModel : public UrbanResourceResolver
-                           , public ObjectResourceResolver
+class ResourceNetworkModel : public tools::Observer_ABC
+                           , public tools::SelectionObserver< kernel::Entity_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ResourceNetworkModel( ResourceNetworkFactory& factory );
+             ResourceNetworkModel( kernel::Controllers& controllers, const Model& model );
     virtual ~ResourceNetworkModel();
     //@}
 
     //! @name Operations
     //@{
-    void UrbanCreate( kernel::Entity_ABC& entity, const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg );
-    void UrbanUpdate( unsigned int id, const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg );
-    void Purge();
+    template< typename T >
+    void Create( kernel::Entity_ABC& entity, const T& msg );
     //@}
 
 private:
@@ -67,10 +51,26 @@ private:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    virtual void NotifySelected( const kernel::Entity_ABC* element );
+    //@}
+
+private:
     //! @name Member data
     //@{
-    ResourceNetworkFactory& factory_;
+    kernel::Controllers& controllers_;
+    const Model& model_;
+    kernel::ResourceNetwork_ABC* selected_;
     //@}
 };
+
+template< typename T >
+void ResourceNetworkModel::Create( kernel::Entity_ABC& entity, const T& msg )
+{
+    kernel::PropertiesDictionary& dico = entity.Get< kernel::PropertiesDictionary >();
+    ResourceNetwork* element = new ResourceNetwork( controllers_, entity.GetId(), model_.urbanObjects_, model_.objects_, msg, dico );
+    entity.Attach< kernel::ResourceNetwork_ABC >( *element );
+}
 
 #endif // __ResourceNetworkModel_h_

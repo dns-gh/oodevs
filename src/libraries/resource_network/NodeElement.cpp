@@ -114,7 +114,7 @@ void NodeElement::Update( xml::xistream& xis )
         >> xml::attribute( "max-capacity", stockMaxCapacity_ )
         >> xml::end();
     xis >> xml::optional >> xml::start( "links" )
-            >> xml::list( "resource", *this, &NodeElement::ReadLink )
+            >> xml::list( "link", *this, &NodeElement::ReadLink )
         >> xml::end();
 }
 
@@ -262,20 +262,20 @@ void NodeElement::SetModifier( unsigned int modifier )
 // Name: NodeElement::Serialize
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------
-void NodeElement::Serialize( MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork& msg ) const
+void NodeElement::Serialize( Common::ResourceNetwork& msg ) const
 {
     // TODO switch à virer quand on utilisera à dictionnaire
     switch( resourceType_ )
     {
     default:
     case eResourceType_Water:
-        msg.set_type( MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork::water );
+        msg.set_type( Common::ResourceNetwork::water );
         break;
     case eResourceType_Gaz:
-        msg.set_type( MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork::gaz );
+        msg.set_type( Common::ResourceNetwork::gaz );
         break;
     case eResourceType_Electricity:
-        msg.set_type( MsgsSimToClient::MsgUrbanAttributes_Infrastructures_ResourceNetwork::electricity );
+        msg.set_type( Common::ResourceNetwork::electricity );
         break;
     }
     msg.set_enabled( isActivated_ );

@@ -27,14 +27,19 @@
 #include "SealOffAttribute.h"
 #include "Explosions.h"
 #include "Model.h"
-#include "TeamsModel.h"
 #include "AgentsModel.h"
+#include "ObjectsModel.h"
+#include "TeamsModel.h"
+#include "UrbanModel.h"
 #include "ObjectPositions.h"
+#include "ResourceNetwork.h"
+#include "ResourceNetworkModel.h"
 #include "StaticModel.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/ObjectHierarchies.h"
 #include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Team_ABC.h"
 #include "protocol/Simulation.h"
 
@@ -68,6 +73,7 @@ kernel::Object_ABC* ObjectFactory::Create( const MsgsSimToClient::MsgObjectCreat
     Object* result = new Object( message, controllers_.controller_, static_.coordinateConverter_, static_.objectTypes_ );
     result->Attach( *new Explosions( controllers_.controller_, model_.fireResultsFactory_ ) );
     result->Attach< kernel::Positions >( *new ObjectPositions( result->GetType(), static_.coordinateConverter_ ) );
+    result->Attach( *new kernel::PropertiesDictionary( controllers_.controller_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new kernel::ObjectHierarchies( *result, &model_.teams_.GetTeam( message.party().id() ) ) );
 
     Register( *result, message.attributes() );
@@ -127,4 +133,7 @@ void ObjectFactory::Register( kernel::Object_ABC& result, const Common::MsgObjec
 
     if( attributes.has_sealoff()  )
         result.Attach< kernel::SealOffAttribute_ABC >( *new SealOffAttribute( controllers_.controller_ ) );
+
+    if( attributes.has_resource_networks() )
+        model_.resourceNetwork_.Create( result, attributes.resource_networks() );
 }

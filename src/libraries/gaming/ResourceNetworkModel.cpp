@@ -10,18 +10,22 @@
 #include "gaming_pch.h"
 #include "ResourceNetworkModel.h"
 #include "ResourceNetwork.h"
-#include "ResourceNetworkFactory.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/TerrainObjectProxy.h"
+#include "clients_kernel/Object_ABC.h"
 #include "protocol/protocol.h"
+
+#pragma warning( disable : 4706 )
 
 // -----------------------------------------------------------------------------
 // Name: ResourceNetworkModel constructor
 // Created: JSR 2010-08-18
 // -----------------------------------------------------------------------------
-ResourceNetworkModel::ResourceNetworkModel( ResourceNetworkFactory& factory )
-    : factory_( factory )
+ResourceNetworkModel::ResourceNetworkModel( kernel::Controllers& controllers, const Model& model )
+    : controllers_( controllers )
+    , model_      ( model )
+    , selected_   ( 0 )
 {
-    // NOTHING
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -30,37 +34,20 @@ ResourceNetworkModel::ResourceNetworkModel( ResourceNetworkFactory& factory )
 // -----------------------------------------------------------------------------
 ResourceNetworkModel::~ResourceNetworkModel()
 {
-    Purge();
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetworkModel::UrbanCreate
-// Created: JSR 2010-08-19
+// Name: ResourceNetworkModel::Select
+// Created: JSR 2010-09-01
 // -----------------------------------------------------------------------------
-void ResourceNetworkModel::UrbanCreate( kernel::Entity_ABC& entity, const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg )
+void ResourceNetworkModel::NotifySelected( const kernel::Entity_ABC* element )
 {
-    kernel::PropertiesDictionary& dico = entity.Get< kernel::PropertiesDictionary >();
-    kernel::ResourceNetwork_ABC* element = factory_.Create( entity.GetId(), msg, true, dico );
-    entity.Attach< kernel::ResourceNetwork_ABC >( *element );
-    UrbanResourceResolver::Register( entity.GetId(), *element );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ResourceNetworkModel::UrbanUpdate
-// Created: JSR 2010-08-18
-// -----------------------------------------------------------------------------
-void ResourceNetworkModel::UrbanUpdate( unsigned int id, const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg )
-{
-    UrbanResourceResolver::Get( id ).Update( msg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ResourceNetworkModel::Purge
-// Created: JSR 2010-08-18
-// -----------------------------------------------------------------------------
-void ResourceNetworkModel::Purge()
-{
-    // Do not use DeleteAll : pointers will be deleted by the Entity to which they are attached
-    UrbanResourceResolver::Clear();
-    ObjectResourceResolver::Clear();
+    if( selected_ != 0 )
+    {
+        selected_->Select( false );
+        selected_ = 0;
+    }
+    if( element && ( selected_ = const_cast< kernel::ResourceNetwork_ABC* >( element->Retrieve< kernel::ResourceNetwork_ABC >() ) ) )
+        selected_->Select( true );
 }

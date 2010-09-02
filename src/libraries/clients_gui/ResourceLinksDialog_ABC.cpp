@@ -14,6 +14,7 @@
 #include "TerrainObjectProxy.h"
 #include "tools.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
 
@@ -156,6 +157,20 @@ void ResourceLinksDialog_ABC::NotifyContextMenu( const TerrainObjectProxy& proxy
         menu.InsertItem( "Command", tools::translate( "ResourceLinksDialog_ABC", "Resource links" ), this, SLOT( show() ) );
         urban_ = true;
         id_ = proxy.GetId();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceLinksDialog_ABC::NotifyContextMenu
+// Created: JSR 2010-09-01
+// -----------------------------------------------------------------------------
+void ResourceLinksDialog_ABC::NotifyContextMenu( const kernel::Object_ABC& object, kernel::ContextMenu& menu )
+{
+    if( profile_.CanDoMagic( object ) && ( selected_ = object.Retrieve< ResourceNetwork_ABC >() ) != 0 )
+    {
+        menu.InsertItem( "Command", tools::translate( "ResourceLinksDialog_ABC", "Resource links" ), this, SLOT( show() ) );
+        urban_ = false;
+        id_ = object.GetId();
     }
 }
 

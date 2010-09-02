@@ -22,7 +22,7 @@ using namespace kernel;
 // Name: BypassAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-BypassAttribute::BypassAttribute( kernel::Controller& controller )
+BypassAttribute::BypassAttribute( Controller& controller )
     : controller_( controller )
     , rBypassConstructionPercentage_ ( 0 )
 {
@@ -42,7 +42,7 @@ BypassAttribute::~BypassAttribute()
 // Name: BypassAttribute::Display
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void BypassAttribute::Display( kernel::Displayer_ABC& displayer ) const
+void BypassAttribute::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Information" ) )
                 .Display( tools::translate( "Object", "Bypass:" ), rBypassConstructionPercentage_ * Units::percentage );
@@ -52,7 +52,7 @@ void BypassAttribute::Display( kernel::Displayer_ABC& displayer ) const
 // Name: BypassAttribute::DisplayInSummary
 // Created: SBO 2007-05-14
 // -----------------------------------------------------------------------------
-void BypassAttribute::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
+void BypassAttribute::DisplayInSummary( Displayer_ABC& displayer ) const
 {
     Display( displayer );
 }
@@ -61,7 +61,7 @@ void BypassAttribute::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 // Name: BypassAttribute::DisplayInTooltip
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void BypassAttribute::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
+void BypassAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     Display( displayer );
 }
@@ -111,7 +111,7 @@ void BypassAttribute::UpdateData( const T& message )
 // Name: BypassAttribute::Draw
 // Created: JCR 2008-06-10
 // -----------------------------------------------------------------------------
-void BypassAttribute::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void BypassAttribute::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( viewport.IsVisible( where ) )
     {

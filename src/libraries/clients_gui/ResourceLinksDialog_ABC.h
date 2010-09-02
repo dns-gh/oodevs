@@ -16,6 +16,7 @@
 namespace kernel
 {
     class Controllers;
+    class Object_ABC;
     class Profile_ABC;
     class ResourceNetwork_ABC;
 }
@@ -34,6 +35,7 @@ class TerrainObjectProxy;
 class ResourceLinksDialog_ABC : public QDialog
                               , public tools::Observer_ABC
                               , public kernel::ContextMenuObserver_ABC< TerrainObjectProxy >
+                              , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
 {
     Q_OBJECT
 
@@ -63,6 +65,7 @@ private:
     //@{
     virtual void DoValidate() = 0;
     virtual void NotifyContextMenu( const TerrainObjectProxy& proxy, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Object_ABC& object, kernel::ContextMenu& menu );
     virtual void showEvent( QShowEvent* );
     virtual QSize sizeHint();
     void UpdateTables();

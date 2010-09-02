@@ -21,11 +21,9 @@ using namespace gui;
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
 TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object,
-                                        unsigned int id, const QString& name, const InfrastructureParameters& infrastructure )
+                                        unsigned int id, const QString& name )
     : EntityImplementation< kernel::Entity_ABC >( controller, id, name )
     , object_        ( &object )
-    , infrastructure_( infrastructure )
-    , isSelected_( false )
 {
     RegisterSelf( *this );
     CreateDictionary( controller );
@@ -38,7 +36,6 @@ TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::T
 TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object )
     : EntityImplementation< kernel::Entity_ABC >( controller, object.GetId(), QString( object.GetName().c_str() ) )
     , object_( &object )
-    , isSelected_( false )
 {
     RegisterSelf( *this );
     CreateDictionary( controller );
@@ -66,9 +63,8 @@ bool TerrainObjectProxy::operator==( const TerrainObjectProxy& object ) const
 // Name: TerrainObjectProxy::Update
 // Created: SLG 2010-06-22
 // -----------------------------------------------------------------------------
-void TerrainObjectProxy::DoUpdate( const InfrastructureParameters& infrastructure )
+void TerrainObjectProxy::DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& /*msg*/ )
 {
-    infrastructure_ = infrastructure;
     Touch();
 }
 
@@ -102,7 +98,6 @@ void TerrainObjectProxy::CreateDictionary( kernel::Controller& controller )
     EntityImplementation< kernel::Entity_ABC >::Attach( dictionary );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "Info/Identifier" ), EntityImplementation< kernel::Entity_ABC >::id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "Info/Name" ), EntityImplementation< kernel::Entity_ABC >::name_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "Info/StructuralState" ), infrastructure_.structuralState_ );
     AddDictionaryForArchitecture( dictionary );
 }
 
@@ -130,7 +125,6 @@ void TerrainObjectProxy::AddDictionaryForArchitecture( kernel::PropertiesDiction
 // -----------------------------------------------------------------------------
 void TerrainObjectProxy::SetSelected( bool selected ) const
 {
-    isSelected_ = selected;
     object_->SetSelected( selected );
 }
 
@@ -159,13 +153,4 @@ bool TerrainObjectProxy::IsInside( const geometry::Point2f& point ) const
 geometry::Point2f TerrainObjectProxy::Barycenter() const
 {
     return object_->GetFootprint()->Barycenter();
-}
-
-// -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy::IsSelected
-// Created: JSR 2010-08-20
-// -----------------------------------------------------------------------------
-bool TerrainObjectProxy::IsSelected() const
-{
-    return isSelected_;
 }

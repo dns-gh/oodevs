@@ -150,6 +150,17 @@ void ResourceNetworkCapacity::SendState( MsgsSimToClient::MsgUrbanAttributes& me
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceNetworkCapacity::SendState
+// Created: JSR 2010-08-31
+// -----------------------------------------------------------------------------
+void ResourceNetworkCapacity::SendState( Common::MsgObjectAttributes& asn ) const
+{
+    if( nodeProperties_ == 0 )
+        throw std::exception( "RegisterResource : Node Properties not instanciated" );
+    nodeProperties_->Serialize( *asn.mutable_resource_networks() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceNetworkCapacity::SetModifier
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------

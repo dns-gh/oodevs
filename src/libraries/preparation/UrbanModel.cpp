@@ -9,6 +9,7 @@
 
 #include "preparation_pch.h"
 #include "UrbanModel.h"
+#include "StructuralStateAttribute.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -87,11 +88,15 @@ void UrbanModel::Serialize( const std::string& filename ) const
     {
         xos << xml::start( "block" )
                 << xml::attribute( "id", it->second->GetId() )
-                << xml::start( "capacities" )
-                    << xml::start( "structural" )
-                        << xml::attribute( "value", it->second->infrastructure_.structuralState_ )
-                    << xml::end
-                << xml::end
+                << xml::start( "capacities" );
+        StructuralStateAttribute* attribute = static_cast< StructuralStateAttribute* >( it->second->Retrieve< kernel::StructuralStateAttribute_ABC >() );
+        if( attribute )
+        {
+            xos     << xml::start( "structural" )
+                        << xml::attribute( "value", attribute->structuralState_ )
+                    << xml::end;
+        }
+        xos     << xml::end
             << xml::end;
     }
     xos     << xml::end
@@ -137,9 +142,12 @@ void UrbanModel::ReadCapacity( const std::string& capacity, xml::xistream& xis, 
 {
     if( capacity == "structural" )
     {
+        // Temp -> utiliser la sérialization
         unsigned int value;
         xis >> xml::attribute( "value", value );
-        proxy.infrastructure_.structuralState_ = value;
+        StructuralStateAttribute* structural = static_cast< StructuralStateAttribute* >( proxy.Retrieve< kernel::StructuralStateAttribute_ABC >() );
+        if( structural )
+            structural->structuralState_ = value;
     }
 }
 
@@ -159,6 +167,7 @@ void UrbanModel::Purge()
 void UrbanModel::SendCreation( urban::TerrainObject_ABC& urbanObject )
 {
     gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controller_, urbanObject );
+    pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( 100 ) );
     controller_.Create( *pTerrainObject );
     if( !Resolver< gui::TerrainObjectProxy >::Find( urbanObject.GetId() ) )
         tools::Resolver< gui::TerrainObjectProxy >::Register( urbanObject.GetId(), *pTerrainObject );
