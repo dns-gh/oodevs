@@ -166,13 +166,13 @@ end
                 <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "Bool", value = "false"} )</xsl:text>
             </xsl:when>
             <xsl:when test="(@type = 'Path')"> <!-- or (@type = 'PathBM') -->
-                <xsl:text>    :With( Path.create( "Route" ):AddPoint( "Destination", config.positions.destination[1] ) )</xsl:text>
+                <xsl:text>    :With( Path.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>" ):AddPoint( "Destination", config.positions.destination[1] ) )</xsl:text>
             </xsl:when>
             <xsl:when test="(@type = 'Point') or (@type = 'PointBM')">
                 <xsl:text>    :With( PointLocation.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", config.positions.destination[1], "</xsl:text><xsl:value-of select="@type"/><xsl:text>" ) )</xsl:text>
             </xsl:when>
-            <xsl:when test="@type = 'Polygon'">
-                <xsl:text>    :With( Polygon.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", { config.positions.destination[1], config.positions.destination[2], config.positions.destination[3] } ) )</xsl:text>
+            <xsl:when test="@type = 'AreaBM' or @type = 'Polygon'">
+                <xsl:text>    :With( Polygon.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", "</xsl:text><xsl:value-of select="@type"/><xsl:text>", { config.positions.destination[1], config.positions.destination[2], config.positions.destination[3] } ) )</xsl:text>
             </xsl:when>
             <xsl:when test="@type = 'NatureAtlas'">
                 <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "NatureAtlas", value = "256" } )</xsl:text>
@@ -186,7 +186,22 @@ end
             <xsl:when test="@type = 'AgentList'">
                 <xsl:text>    :With( AgentList.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", { config.id.blueUnit } ) )</xsl:text>
             </xsl:when>
-
+            <!--xsl:when test="@type = 'ObjectKnowledge' and @name = 'Pont flottant'">
+                <xsl:text>    :With( { name = 'Pont flottant', type = 'ObjectKnowledge', value = 60 } )</xsl:text>
+            </xsl:when>
+            
+            <xsl:when test="@type = 'ObjectKnowledge' and @name = 'Camp refugies'">
+                <xsl:text>    :With( { name = 'Camp refugies', type = 'ObjectKnowledge', value = 61 } )</xsl:text>
+            </xsl:when>
+            
+            <xsl:when test="@type = 'ObjectKnowledge' and @name = 'Camp prisonniers'">
+                <xsl:text>    :With( { name = 'Camp prisonniers', type = 'ObjectKnowledge', value = 62 } )</xsl:text>
+            </xsl:when>
+            
+            <xsl:when test="@type = 'AgentKnowledge'">
+                <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = 'AgentKnowledge', value = config.id.blueUnit } )</xsl:text>
+            </xsl:when-->
+            
             <xsl:otherwise>
                 <xsl:text>    -- Missing argument</xsl:text>
                 <redirect:write append="true" file="{$reportFile}">
