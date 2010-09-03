@@ -10,6 +10,7 @@
 #include "Decision/DEC_Workspace.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Effects/MIL_EffectManager.h"
+#include "Entities/Objects/ResourceTools.h"
 #include "Entities/Orders/MIL_TacticalLineManager.h"
 #include "Hla/HLA_Federate.h"
 #include "Meteo/PHY_MeteoDataManager.h"
@@ -50,6 +51,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pAgentServer_         ( 0 )
     , pFederate_            ( 0 )
     , pUrbanModel_          ( new UrbanModel() )
+    , pResourceTools_       ( new ResourceTools() )
     , pResourceNetworkModel_( new resource::ResourceNetworkModel() )
     , pProcessMonitor_      ( new ProcessMonitor() )
 {

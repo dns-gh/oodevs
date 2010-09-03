@@ -28,7 +28,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( ResourceNetworkCapacity )
 // Created: JSR 2010-08-12
 // -----------------------------------------------------------------------------
 ResourceNetworkCapacity::ResourceNetworkCapacity()
-    : nodeProperties_( new NodeProperties )
+    : nodeProperties_( new NodeProperties( MIL_AgentServer::GetWorkspace().GetResourceTools() ) )
 {
     // NOTHING
 }
@@ -38,7 +38,7 @@ ResourceNetworkCapacity::ResourceNetworkCapacity()
 // Created: JSR 2010-08-12
 // -----------------------------------------------------------------------------
 ResourceNetworkCapacity::ResourceNetworkCapacity( xml::xistream& xis )
-    : nodeProperties_( new NodeProperties( xis ) )
+    : nodeProperties_( new NodeProperties( xis,  MIL_AgentServer::GetWorkspace().GetResourceTools() ) )
 {
     // NOTHING
 }

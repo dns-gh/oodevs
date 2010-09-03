@@ -17,22 +17,20 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/MagicActionType.h"
+#include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
 #include "gaming/StaticModel.h"
-#include "resource_network/Types.h"
-#include <qtable.h>
 
 using namespace actions;
 using namespace kernel;
 using namespace parameters;
-using namespace resource;
 
 // -----------------------------------------------------------------------------
 // Name: ResourceLinksDialog constructor
 // Created: JSR 2010-08-24
 // -----------------------------------------------------------------------------
 ResourceLinksDialog::ResourceLinksDialog( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile )
-    : ResourceLinksDialog_ABC( parent, controllers, profile )
+    : ResourceLinksDialog_ABC( parent, controllers, staticModel.objectTypes_, profile )
     , actionsModel_( actionsModel )
     , static_( staticModel )
     , simulation_( simulation )
@@ -62,34 +60,22 @@ void ResourceLinksDialog::DoValidate()
     action->AddParameter( *new Bool( it.NextElement(), urban_ ) );
     ParameterList* nodes = new ParameterList( it.NextElement() );
     action->AddParameter( *nodes );
-    for( int i = 0; i < eNbrResourceType; ++i )
+    for( ResourceNetwork_ABC::CIT_ResourceNodes it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
     {
-        E_ResourceType type = static_cast< E_ResourceType >( i );
-        const ResourceNetwork_ABC::ResourceNode* node = selected_->FindResourceNode( type );
-        if( node )
+        const ResourceNetwork_ABC::ResourceNode& resource = it->second;
+        ParameterList& node = nodes->AddList( "Node" );
+        node.AddIdentifier( "Resource", resource.resource_ );
+        node.AddQuantity( "Consumption", resource.consumption_ );
+        node.AddBool( "Critical", resource.critical_ );
+        node.AddBool( "Enabled", resource.isEnabled_ );
+        node.AddQuantity( "Production", resource.production_ );
+        node.AddQuantity( "Stock", resource.stock_ );
+        ParameterList& links = node.AddList( "Links" );
+        for( unsigned int i = 0; i < resource.links_.size(); ++i )
         {
-            ParameterList& node = nodes->AddList( "Node" );
-            node.AddIdentifier( "Resource", i );
-            node.AddQuantity( "Consumption", widgets_[ i ].consumption_->value() );
-            node.AddBool( "Critical", widgets_[ i ].critical_->isChecked() );
-            node.AddBool( "Enabled", widgets_[ i ].groupBox_->isChecked() );
-            node.AddQuantity( "Production", widgets_[ i ].production_->value() );
-            node.AddQuantity( "Stock", widgets_[ i ].stock_->value() );
-            ParameterList& links = node.AddList( "Links" );
-            for( int j = 0; j < widgets_[ i ].table_->numRows(); ++j )
-            {
-                int capacity = -1;
-                if( static_cast< QCheckTableItem* >( widgets_[ i ].table_->item( j, 1 ) )->isChecked() )
-                {
-                    bool ok;
-                    int newCapacity = widgets_[ i ].table_->text( j, 2 ).toInt( &ok );
-                    if( ok )
-                        capacity = newCapacity;
-                }
-                ParameterList& link = links.AddList( "Link" );
-                link.AddIdentifier( "Link", j );
-                link.AddQuantity( "Capacity", capacity );
-            }
+            ParameterList& link = links.AddList( "Link" );
+            link.AddIdentifier( "Link", i );
+            link.AddQuantity( "Capacity", resource.links_[ i ].capacity_ );
         }        
     }
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );

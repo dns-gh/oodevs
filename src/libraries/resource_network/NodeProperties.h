@@ -31,6 +31,7 @@ namespace xml
 namespace resource
 {
     class ResourceNetworkModel;
+    class ResourceTools_ABC;
 
 // =============================================================================
 /** @class  NodeProperties
@@ -38,13 +39,13 @@ namespace resource
 */
 // Created: JSR 2010-08-13
 // =============================================================================
-class NodeProperties : private tools::Resolver< NodeElement, E_ResourceType >
+class NodeProperties : private tools::Resolver< NodeElement >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             NodeProperties();
-    explicit NodeProperties( xml::xistream& xis );
+    explicit NodeProperties( const ResourceTools_ABC& tools );
+             NodeProperties( xml::xistream& xis, const ResourceTools_ABC& tools );
              NodeProperties( const NodeProperties& from );
     virtual ~NodeProperties();
     //@}
@@ -54,7 +55,7 @@ public:
     void SetModel( const ResourceNetworkModel& model );
     void Update( xml::xistream& xis );
     void Update();
-    void Push( int quantity, E_ResourceType resourceType );
+    void Push( int quantity, unsigned long resourceId );
     void SetModifier( unsigned int modifier );
     //@}
 
@@ -74,15 +75,14 @@ private:
 private:
     //! @name Helpers
     //@{
-    static E_ResourceType ConvertToResourceType( const std::string& type );
     void ReadNode( xml::xistream& xis );
-    void ReadConsumption( xml::xistream& xis );
     //@}
 
 private:
     //! @name Member data
     //@{
     bool isFunctional_;
+    const ResourceTools_ABC& tools_;
     //@}
 };
 

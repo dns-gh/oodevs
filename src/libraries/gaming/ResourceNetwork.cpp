@@ -14,6 +14,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DictionaryUpdated.h"
+#include "clients_kernel/DotationType.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Positions.h"
@@ -24,36 +25,18 @@
 
 using namespace geometry;
 using namespace gui;
-using namespace resource;
-
-namespace
-{
-    QString ConvertFromResourceType( E_ResourceType type )
-    {
-        switch( type )
-        {
-        case eResourceType_Water:
-            return tools::translate( "ResourceNetwork", "Water" );
-        case eResourceType_Gaz:
-            return tools::translate( "ResourceNetwork", "Gaz" );
-        case eResourceType_Electricity:
-            return tools::translate( "ResourceNetwork", "Electricity" );
-        default:
-            throw std::exception( "Unknown resource type" ); 
-        }
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: ResourceNetwork constructor
 // Created: JSR 2010-08-19
 // -----------------------------------------------------------------------------
-ResourceNetwork::ResourceNetwork( kernel::Controllers& controllers, unsigned int id, const tools::Resolver_ABC< TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg, kernel::PropertiesDictionary& dico )
+ResourceNetwork::ResourceNetwork( kernel::Controllers& controllers, unsigned int id, const tools::Resolver_ABC< TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg, kernel::PropertiesDictionary& dico )
     : controllers_( controllers )
-    , id_( id )
-    , isUrban_( true )
-    , urbanResolver_( urbanResolver )
-    , objectResolver_( objectResolver )
+    , id_              ( id )
+    , isUrban_         ( true )
+    , urbanResolver_   ( urbanResolver )
+    , objectResolver_  ( objectResolver )
+    , dotationResolver_( dotationResolver )
 {
     for( int i = 0; i < msg.resource_network_size(); ++i )
         UpdateNetwork( 0, msg.resource_network( i ) );
@@ -64,12 +47,13 @@ ResourceNetwork::ResourceNetwork( kernel::Controllers& controllers, unsigned int
 // Name: ResourceNetwork constructor
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
-ResourceNetwork::ResourceNetwork( kernel::Controllers& controllers, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const Common::MsgObjectAttributeResourceNetwork& msg, kernel::PropertiesDictionary& dico )
+ResourceNetwork::ResourceNetwork( kernel::Controllers& controllers, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const Common::MsgObjectAttributeResourceNetwork& msg, kernel::PropertiesDictionary& dico )
     : controllers_( controllers )
-    , id_( id )
-    , isUrban_( false )
-    , urbanResolver_( urbanResolver )
-    , objectResolver_( objectResolver )
+    , id_              ( id )
+    , isUrban_         ( false )
+    , urbanResolver_   ( urbanResolver )
+    , objectResolver_  ( objectResolver )
+    , dotationResolver_( dotationResolver )
 {
     for( int i = 0; i < msg.network_size(); ++i )
         UpdateNetwork( 0, msg.network( i ) );
@@ -105,7 +89,7 @@ void ResourceNetwork::Draw( const Point2f&, const kernel::Viewport_ABC& viewport
 
     for( CIT_ResourceNodes node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
     {
-        SetColor( node->second.type_ );
+        SetColor( node->second.resource_ );
         if( node->second.links_.size() > 0 )
         {
             glEnable( GL_LINE_STIPPLE );
@@ -139,9 +123,9 @@ void ResourceNetwork::Draw( const Point2f&, const kernel::Viewport_ABC& viewport
 // Name: ResourceNetwork::GetLinkName
 // Created: JSR 2010-08-25
 // -----------------------------------------------------------------------------
-QString ResourceNetwork::GetLinkName( E_ResourceType type, unsigned int i ) const
+QString ResourceNetwork::GetLinkName( unsigned long resource, unsigned int i ) const
 {
-    const ResourceNode* node = FindResourceNode( type );
+    const ResourceNode* node = FindResourceNode( resource );
     if( node == 0 || i >= node->links_.size() )
         return "";
     const ResourceLink& link = node->links_[ i ];
@@ -190,29 +174,15 @@ void ResourceNetwork::DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& message )
 // -----------------------------------------------------------------------------
 void ResourceNetwork::UpdateNetwork( kernel::Entity_ABC* entity, const Common::ResourceNetwork& msg )
 {
-    E_ResourceType type;
-    switch( msg.type() )
-    {
-    case Common::ResourceNetwork::water:
-        type = eResourceType_Water;
-        break;
-    case Common::ResourceNetwork::gaz:
-        type = eResourceType_Gaz;
-        break;
-    case Common::ResourceNetwork::electricity:
-        type = eResourceType_Electricity;
-        break;
-    default:
-        throw std::exception( "Bad resource type" );
-    }
-    ResourceNode& node = resourceNodes_[ type ];
+    unsigned long resource = msg.resource().id();
+    ResourceNode& node = resourceNodes_[ resource ];
     unsigned int oldMaxStock = node.maxStock_;
     unsigned int oldProduction = node.production_;
     unsigned int oldConsumption = node.consumption_;
     bool oldCritical = node.critical_;
     unsigned int oldStock = node.stock_;
     unsigned int oldFlow = node.totalFlow_;
-    node.type_ = type;
+    node.resource_ = resource;
     node.isEnabled_ = msg.enabled();
     node.production_ = msg.has_production() ? msg.production() : 0;
     node.maxStock_ = msg.has_max_stock() ? msg.max_stock() : 0;
@@ -233,7 +203,7 @@ void ResourceNetwork::UpdateNetwork( kernel::Entity_ABC* entity, const Common::R
     }
     if( entity )
     {
-        const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + ConvertFromResourceType( type ) + "/";
+        const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + dotationResolver_.Get( resource ).GetCategory().c_str() + "/";
         if( node.totalFlow_ != oldFlow && node.links_.size() )
             controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Total flow" ) ) );
         if( node.stock_ != oldStock )
@@ -253,19 +223,20 @@ void ResourceNetwork::UpdateNetwork( kernel::Entity_ABC* entity, const Common::R
 // Name: ResourceNetwork::SetColor
 // Created: JSR 2010-08-20
 // -----------------------------------------------------------------------------
-void ResourceNetwork::SetColor( E_ResourceType type ) const
+void ResourceNetwork::SetColor( unsigned long resource ) const
 {
-    // TODO régler les couleurs
-    switch( type )
+    // TODO temp régler les couleurs en fonction de la dotation (par ADN?)
+    int tmp = resource % 3;
+    switch( tmp )
     {
     default:
-    case eResourceType_Water:
+    case 0:
         glColor4f( 0.2f, 0.2f, 0.6f,  1.0f );
         break;
-    case eResourceType_Gaz:
+    case 1:
         glColor4f( 0.4f, 0.4f, 0.4f,  1.0f );
         break;
-    case eResourceType_Electricity:
+    case 2:
         glColor4f( 0.4f, 0.4f, 0.7f,  1.0f );
         break;
     }
@@ -291,7 +262,7 @@ void ResourceNetwork::CreateDictionary( kernel::PropertiesDictionary& dico ) con
 {
     for( CIT_ResourceNodes node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
     {
-        const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + ConvertFromResourceType( node->second.type_ ) + "/";
+        const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + dotationResolver_.Get( node->second.resource_ ).GetCategory().c_str() + "/";
         dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Enabled" ), node->second.isEnabled_ );
         dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Total flow" ), node->second.totalFlow_ );
         dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Maximal stock" ), node->second.maxStock_ );

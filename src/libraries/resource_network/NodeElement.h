@@ -10,7 +10,6 @@
 #ifndef __NodeElement_h_
 #define __NodeElement_h_
 
-#include "Types.h"
 #include <map>
 #include <vector>
 
@@ -42,7 +41,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              NodeElement();
-             NodeElement( xml::xistream& xis, E_ResourceType resourceType );
+             NodeElement( xml::xistream& xis, unsigned long resourceId );
              NodeElement( const NodeElement& from );
     virtual ~NodeElement();
     //@}
@@ -52,7 +51,6 @@ public:
     //@{
     void SetModel( const ResourceNetworkModel& model );
     void Update( xml::xistream& xis );
-    void ReadConsumption( xml::xistream& xis );
     void UpdateImmediateStock( bool isFunctional );
     void Consume( bool& isFunctional );
     void DistributeResource( bool isFunctional );
@@ -91,7 +89,7 @@ private:
     //! @name Member data
     //@{
     const ResourceNetworkModel* model_;
-    E_ResourceType resourceType_;
+    unsigned long resourceId_;
     T_ResourceLinks links_;
     bool isActivated_;
     unsigned int productionCapacity_;

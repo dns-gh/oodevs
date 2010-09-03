@@ -58,10 +58,10 @@ void ResourceNetworkModel::RegisterNode( NodeProperties& nodeProperties, unsigne
 // Name: ResourceNetworkModel::Push
 // Created: JSR 2010-08-16
 // -----------------------------------------------------------------------------
-void ResourceNetworkModel::Push( unsigned int id, bool urban, int quantity, E_ResourceType type ) const
+void ResourceNetworkModel::Push( unsigned int id, bool urban, int quantity, unsigned long resourceId ) const
 {
     NodeProperties* node = urban ? UrbanResolver::Find( id ) : ObjectResolver::Find( id );
     if( !node )
         throw std::exception( "Node not found" );
-    node->Push( quantity, type );
+    node->Push( quantity, resourceId );
 }

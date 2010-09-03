@@ -9,6 +9,7 @@
 
 #include "NodeProperties.h"
 #include "ResourceNetworkModel.h"
+#include "ResourceTools_ABC.h"
 #include "protocol/protocol.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -19,8 +20,9 @@ using namespace resource;
 // Name: NodeProperties constructor
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
-NodeProperties::NodeProperties()
+NodeProperties::NodeProperties( const ResourceTools_ABC& tools )
     : isFunctional_( true )
+    , tools_       ( tools )
 {
     // NOTHING
 }
@@ -29,11 +31,11 @@ NodeProperties::NodeProperties()
 // Name: NodeProperties constructor
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
-NodeProperties::NodeProperties( xml::xistream& xis )
+NodeProperties::NodeProperties( xml::xistream& xis, const ResourceTools_ABC& tools )
     : isFunctional_( true )
+    , tools_       ( tools )
 {
-    // Read from urban.xml
-    xis >> xml::list( "node", *this, &NodeProperties::ReadNode );
+    Update( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,6 +44,7 @@ NodeProperties::NodeProperties( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 NodeProperties::NodeProperties( const NodeProperties& from )
     : isFunctional_( true )
+    , tools_       ( from.tools_ )
 {
     for( CIT_Elements it = from.elements_.begin(); it != from.elements_.end(); ++it )
         Register( it->first, *new NodeElement( *it->second ) );
@@ -71,17 +74,7 @@ void NodeProperties::SetModel( const ResourceNetworkModel& model )
 // -----------------------------------------------------------------------------
 void NodeProperties::Update( xml::xistream& xis )
 {
-    std::string name; // See what to do with it
-    std::string type;
-    xis >> xml::start( "network" )
-            >> xml::attribute( "name", name )
-            >> xml::attribute( "type", type );
-    NodeElement& element = Get( ConvertToResourceType( type ) ); // should exist
-    element.Update( xis );
-    xis  >> xml::end();
-    xis >> xml::optional >> xml::start( "consumption" )
-            >> xml::list( "resource", *this, &NodeProperties::ReadConsumption )
-        >> xml::end();
+    xis >> xml::list( "node", *this, &NodeProperties::ReadNode );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,9 +95,9 @@ void NodeProperties::Update()
 // Name: NodeProperties::Push
 // Created: JSR 2010-08-16
 // -----------------------------------------------------------------------------
-void NodeProperties::Push( int quantity, E_ResourceType resourceType )
+void NodeProperties::Push( int quantity, unsigned long resourceId )
 {
-    NodeElement* element = Find( resourceType );
+    NodeElement* element = Find( resourceId );
     if( element )
         element->Push( quantity );
 }
@@ -148,26 +141,10 @@ void NodeProperties::Update( const Common::MsgMissionParameter_Value& msg )
     for( int i = 0; i< msg.list_size(); ++i )
     {
         Common::MsgMissionParameter_Value node = msg.list( i );
-        E_ResourceType resourceType = static_cast< E_ResourceType >( node.list( 0 ).identifier() );
-        NodeElement* element = Find( resourceType );
+        NodeElement* element = Find( node.list( 0 ).identifier() );
         if( element )
             element->Update( node );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: NodeProperties::ConvertToResourceType
-// Created: JSR 2010-08-27
-// -----------------------------------------------------------------------------
-E_ResourceType NodeProperties::ConvertToResourceType( const std::string& type )
-{
-    if( type == "water" )
-        return eResourceType_Water;
-    if( type == "gaz" )
-        return eResourceType_Gaz;
-    if( type == "electricity" )
-        return eResourceType_Electricity;
-    throw std::exception( std::string( "Unknown resource type: " + type ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,17 +153,10 @@ E_ResourceType NodeProperties::ConvertToResourceType( const std::string& type )
 // -----------------------------------------------------------------------------
 void NodeProperties::ReadNode( xml::xistream& xis )
 {
-    E_ResourceType type = ConvertToResourceType( xis.attribute< std::string >( "resource" ) );
-    Register( type, *new NodeElement( xis, type ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NodeProperties::ReadConsumption
-// Created: JSR 2010-08-16
-// -----------------------------------------------------------------------------
-void NodeProperties::ReadConsumption( xml::xistream& xis )
-{
-    NodeElement* element = Find( ConvertToResourceType( xis.attribute< std::string >( "type" ) ) );
+    unsigned long resourceId = tools_.GetResourceId( xis.attribute< std::string >( "resource-type" ) );
+    NodeElement* element = Find( resourceId );
     if( element )
-        element->ReadConsumption( xis );
+        element->Update( xis );
+    else
+        Register( resourceId, *new NodeElement( xis, resourceId ) );
 }

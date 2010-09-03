@@ -20,9 +20,10 @@
 // Name: ResourceNetworkModel constructor
 // Created: JSR 2010-08-18
 // -----------------------------------------------------------------------------
-ResourceNetworkModel::ResourceNetworkModel( kernel::Controllers& controllers, const Model& model )
+ResourceNetworkModel::ResourceNetworkModel( kernel::Controllers& controllers, const Model& model, const StaticModel& staticModel )
     : controllers_( controllers )
     , model_      ( model )
+    , staticModel_( staticModel )
     , selected_   ( 0 )
 {
     controllers_.Register( *this );

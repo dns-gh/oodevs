@@ -378,7 +378,6 @@ const ::google::protobuf::Descriptor* ResourceNetwork_Link_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   ResourceNetwork_Link_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* ResourceNetwork_Link_TargetKind_descriptor_ = NULL;
-const ::google::protobuf::EnumDescriptor* ResourceNetwork_ResourceType_descriptor_ = NULL;
 const ::google::protobuf::Descriptor* MsgObjectAttributeResourceNetwork_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgObjectAttributeResourceNetwork_reflection_ = NULL;
@@ -2316,7 +2315,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       sizeof(MsgObjectAttributeSealOff));
   ResourceNetwork_descriptor_ = file->message_type(116);
   static const int ResourceNetwork_offsets_[8] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ResourceNetwork, type_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ResourceNetwork, resource_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ResourceNetwork, link_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ResourceNetwork, enabled_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ResourceNetwork, max_stock_),
@@ -2355,7 +2354,6 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ResourceNetwork_Link));
   ResourceNetwork_Link_TargetKind_descriptor_ = ResourceNetwork_Link_descriptor_->enum_type(0);
-  ResourceNetwork_ResourceType_descriptor_ = ResourceNetwork_descriptor_->enum_type(0);
   MsgObjectAttributeResourceNetwork_descriptor_ = file->message_type(117);
   static const int MsgObjectAttributeResourceNetwork_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributeResourceNetwork, network_),
@@ -3241,132 +3239,130 @@ void protobuf_AddDesc_Common_2eproto() {
     "ibuteNBCType\022#\n\005agent\030\001 \002(\0132\024.Common.NBC"
     "AgentType\022\025\n\rconcentration\030\002 \002(\005\022\034\n\024sour"
     "ce_life_duration\030\003 \002(\005\"*\n\031MsgObjectAttri"
-    "buteSealOff\022\r\n\005level\030\001 \002(\005\"\254\003\n\017ResourceN"
-    "etwork\0222\n\004type\030\001 \002(\0162$.Common.ResourceNe"
-    "twork.ResourceType\022*\n\004link\030\002 \003(\0132\034.Commo"
-    "n.ResourceNetwork.Link\022\017\n\007enabled\030\003 \002(\010\022"
-    "\021\n\tmax_stock\030\004 \001(\r\022\r\n\005stock\030\005 \001(\r\022\022\n\npro"
-    "duction\030\006 \001(\r\022\023\n\013consumption\030\007 \001(\r\022\020\n\010cr"
-    "itical\030\010 \001(\010\032\225\001\n\004Link\0225\n\004kind\030\001 \002(\0162\'.Co"
-    "mmon.ResourceNetwork.Link.TargetKind\022\021\n\t"
-    "target_id\030\002 \002(\r\022\020\n\010capacity\030\003 \002(\005\022\014\n\004flo"
-    "w\030\004 \002(\r\"#\n\nTargetKind\022\t\n\005urban\020\001\022\n\n\006obje"
-    "ct\020\002\"3\n\014ResourceType\022\t\n\005water\020\001\022\007\n\003gaz\020\002"
-    "\022\017\n\013electricity\020\003\"M\n!MsgObjectAttributeR"
-    "esourceNetwork\022(\n\007network\030\001 \003(\0132\027.Common"
-    ".ResourceNetwork\"\234\010\n\023MsgObjectAttributes"
-    "\022<\n\014construction\030\001 \001(\0132&.Common.MsgObjec"
-    "tAttributeConstruction\0224\n\010obstacle\030\002 \001(\013"
-    "2\".Common.MsgObjectAttributeObstacle\022,\n\004"
-    "mine\030\003 \001(\0132\036.Common.MsgObjectAttributeMi"
-    "ne\022=\n\ractivity_time\030\004 \001(\0132&.Common.MsgOb"
-    "jectAttributeActivityTime\0220\n\006bypass\030\005 \001("
-    "\0132 .Common.MsgObjectAttributeBypass\0224\n\010l"
-    "ogistic\030\006 \001(\0132\".Common.MsgObjectAttribut"
-    "eLogistic\022*\n\003nbc\030\007 \001(\0132\035.Common.MsgObjec"
-    "tAttributeNBC\022=\n\rcrossing_site\030\010 \001(\0132&.C"
-    "ommon.MsgObjectAttributeCrossingSite\022;\n\014"
-    "supply_route\030\t \001(\0132%.Common.MsgObjectAtt"
-    "ributeSupplyRoute\0229\n\013toxic_cloud\030\n \001(\0132$"
-    ".Common.MsgObjectAttributeToxicCloud\022,\n\004"
-    "fire\030\013 \001(\0132\036.Common.MsgObjectAttributeFi"
-    "re\022E\n\021medical_treatment\030\014 \001(\0132*.Common.M"
-    "sgObjectAttributeMedicalTreatment\022G\n\022int"
-    "eraction_height\030\r \001(\0132+.Common.MsgObject"
-    "AttributeInteractionHeight\022.\n\005stock\030\016 \001("
-    "\0132\037.Common.MsgObjectAttributeStock\0224\n\tnb"
-    "c_agent\030\017 \001(\0132!.Common.MsgObjectAttribut"
-    "eNBCType\022;\n\014effect_delay\030\020 \001(\0132%.Common."
-    "MsgObjectAttributeEffectDelay\0222\n\007sealOff"
-    "\030\021 \001(\0132!.Common.MsgObjectAttributeSealOf"
-    "f\022D\n\021resource_networks\030\022 \001(\0132).Common.Ms"
-    "gObjectAttributeResourceNetwork\"L\n\007MsgNo"
-    "te\022\014\n\004name\030\001 \002(\t\022\016\n\006number\030\002 \002(\t\022\023\n\013desc"
-    "ription\030\003 \002(\t\022\016\n\006parent\030\004 \002(\r\"\342\001\n\022MsgMet"
-    "eoAttributes\022\023\n\013temperature\030\001 \002(\005\022\022\n\nwin"
-    "d_speed\030\002 \002(\005\022*\n\016wind_direction\030\003 \002(\0132\022."
-    "Common.MsgHeading\022\023\n\013cloud_floor\030\004 \002(\005\022\025"
-    "\n\rcloud_ceiling\030\005 \002(\005\022\025\n\rcloud_density\030\006"
-    " \002(\005\0224\n\rprecipitation\030\007 \002(\0162\035.Common.Enu"
-    "mPrecipitationType*m\n\022EnumDotationFamily"
-    "\022\014\n\010munition\020\000\022\r\n\tcarburant\020\001\022\014\n\010explosi"
-    "f\020\002\022\010\n\004mine\020\003\022\013\n\007barbele\020\004\022\t\n\005piece\020\005\022\n\n"
-    "\006ration\020\006*Q\n\024EnumAmmunitionFamily\022\010\n\004obu"
-    "s\020\000\022\017\n\013missile_sol\020\001\022\017\n\013missile_air\020\002\022\r\n"
-    "\tmitraille\020\003*w\n\025EnumPrecipitationType\022\030\n"
-    "\024pas_de_precipitation\020\000\022\021\n\rtempete_sable"
-    "\020\001\022\016\n\nbrouillard\020\002\022\013\n\007crachin\020\003\022\t\n\005pluie"
-    "\020\004\022\t\n\005neige\020\005*\262\002\n\020EnumLightingType\022\024\n\020jo"
-    "ur_sans_nuage_\020\000\022\025\n\021jour_peu_nuageux_\020\001\022"
-    "\035\n\031jour_moyennement_nuageux_\020\002\022\027\n\023jour_a"
-    "ssez_nuageux_\020\003\022\026\n\022jour_tres_nuageux_\020\004\022"
-    "\025\n\021nuit_pleine_lune_\020\005\022\035\n\031nuit_trois_qua"
-    "rt_de_lune_\020\006\022\023\n\017nuit_demi_lune_\020\007\022\027\n\023nu"
-    "it_quart_de_lune_\020\010\022\027\n\023nuit_nouvelle_lun"
-    "e_\020\t\022\016\n\neclairant_\020\n\022\024\n\020globalMeteoType_"
-    "\020\013*1\n\022EnumFireEffectType\022\014\n\010fumigene\020\000\022\r"
-    "\n\teclairant\020\001*1\n\025MsgStartUnitFire_type\022\n"
-    "\n\006direct\020\000\022\014\n\010indirect\020\001*\264\003\n EnumLogMain"
-    "tenanceHandlingStatus\022\033\n\027deplacement_ver"
-    "s_chaine\020\000\022$\n attente_disponibilite_remo"
-    "rqueur\020\001\022 \n\034remorqueur_deplacement_aller"
-    "\020\002\022\031\n\025remorqueur_chargement\020\003\022!\n\035remorqu"
-    "eur_deplacement_retour\020\004\022\033\n\027remorqueur_d"
-    "echargement\020\005\022\034\n\030diagnostique_maintenanc"
-    "e\020\006\0220\n,attente_prise_en_charge_par_nivea"
-    "u_superieur\020\007\022 \n\034attente_disponibilite_p"
-    "ieces\020\010\022$\n attente_disponibilite_reparat"
-    "eur\020\t\022\016\n\nreparation\020\n\022\017\n\013retour_pion\020\013\022\027"
-    "\n\023termine_maintenance\020\014*\364\005\n\034EnumLogMedic"
-    "alHandlingStatus\022*\n&attente_disponibilit"
-    "e_ambulance_releve\020\000\022&\n\"ambulance_releve"
-    "_deplacement_aller\020\001\022\037\n\033ambulance_releve"
-    "_chargement\020\002\022/\n+attente_chargement_comp"
-    "let_ambulance_releve\020\003\022\'\n#ambulance_rele"
-    "ve_deplacement_retour\020\004\022!\n\035ambulance_rel"
-    "eve_dechargement\020\005\0223\n/attente_disponibil"
-    "ite_medecin_pour_diagnostique\020\006\022\020\n\014diagn"
-    "ostique\020\007\022\031\n\025recherche_secteur_tri\020\010\022*\n&"
-    "attente_disponibilite_medecin_pour_tri\020\t"
-    "\022\007\n\003tri\020\n\022\032\n\026recherche_secteur_soin\020\013\022+\n"
-    "\'attente_disponibilite_medecin_pour_soin"
-    "\020\014\022\010\n\004soin\020\r\022\023\n\017hospitalisation\020\016\022-\n)att"
-    "ente_disponibilite_ambulance_ramassage\020\017"
-    "\022\"\n\036ambulance_ramassage_chargement\020\020\0222\n."
-    "attente_chargement_complet_ambulance_ram"
-    "assage\020\021\022)\n%ambulance_ramassage_deplacem"
-    "ent_aller\020\022\022$\n ambulance_ramassage_decha"
-    "rgement\020\023\022\013\n\007termine\020\024*_\n\022EnumUnitVisibi"
-    "lity\022\r\n\tinvisible\020\000\022\014\n\010detected\020\001\022\016\n\nrec"
-    "ognized\020\002\022\016\n\nidentified\020\003\022\014\n\010recorded\020\004*"
-    "H\n\023EnumSimulationState\022\013\n\007running\020\000\022\n\n\006p"
-    "aused\020\001\022\013\n\007stopped\020\002\022\013\n\007loading\020\003*l\n\033Enu"
-    "mMeetingEngagementStatus\022\020\n\014none_meeting"
-    "\020\000\022\020\n\014etat_esquive\020\001\022\r\n\tetat_fixe\020\002\022\032\n\026e"
-    "tat_poursuite_mission\020\003*[\n\025EnumOperation"
-    "alStatus\022\026\n\022detruit_totalement\020\000\022\030\n\024detr"
-    "uit_tactiquement\020\001\022\020\n\014operationnel\020\002*+\n\017"
-    "EnumAutomatMode\022\013\n\007embraye\020\000\022\013\n\007debraye\020"
-    "\001*K\n\026EnumPopulationAttitude\022\t\n\005calme\020\000\022\n"
-    "\n\006agitee\020\001\022\013\n\007excitee\020\002\022\r\n\tagressive\020\003*8"
-    "\n\021EnumUnitTiredness\022\n\n\006normal\020\000\022\013\n\007fatig"
-    "ue\020\001\022\n\n\006epuise\020\002*@\n\016EnumUnitMorale\022\r\n\tfa"
-    "natique\020\000\022\007\n\003bon\020\001\022\t\n\005moyen\020\002\022\013\n\007mauvais"
-    "\020\003*@\n\022EnumUnitExperience\022\013\n\007veteran\020\000\022\017\n"
-    "\013experimente\020\001\022\014\n\010conscrit\020\002*8\n\rEnumHuma"
-    "nRank\022\014\n\010officier\020\000\022\020\n\014sous_officer\020\001\022\007\n"
-    "\003mdr\020\002*X\n\rEnumDiplomacy\022\021\n\runknown_diplo"
-    "\020\000\022\020\n\014friend_diplo\020\001\022\017\n\013enemy_diplo\020\002\022\021\n"
-    "\rneutral_diplo\020\003*\210\001\n\016EnumHumanWound\022\016\n\nn"
-    "on_blesse\020\000\022\010\n\004mort\020\001\022\024\n\020blesse_urgence_"
-    "1\020\002\022\024\n\020blesse_urgence_2\020\003\022\024\n\020blesse_urge"
-    "nce_3\020\004\022\032\n\026blesse_urgence_extreme\020\005*Y\n\037E"
-    "numLogMaintenanceRegimeTravail\022\014\n\010regime"
-    "_1\020\000\022\014\n\010regime_2\020\001\022\014\n\010regime_3\020\002\022\014\n\010regi"
-    "me_4\020\003*\204\001\n\017EnumNatureLevel\022\024\n\020none_natur"
-    "elevel\020\000\022\005\n\001o\020\001\022\006\n\002oo\020\002\022\007\n\003ooo\020\003\022\005\n\001i\020\004\022"
-    "\006\n\002ii\020\005\022\007\n\003iii\020\006\022\005\n\001x\020\007\022\006\n\002xx\020\010\022\007\n\003xxx\020\t"
-    "\022\010\n\004xxxx\020\n\022\t\n\005xxxxx\020\013", 15221);
+    "buteSealOff\022\r\n\005level\030\001 \002(\005\"\353\002\n\017ResourceN"
+    "etwork\022&\n\010resource\030\001 \002(\0132\024.Common.Resour"
+    "ceType\022*\n\004link\030\002 \003(\0132\034.Common.ResourceNe"
+    "twork.Link\022\017\n\007enabled\030\003 \002(\010\022\021\n\tmax_stock"
+    "\030\004 \001(\r\022\r\n\005stock\030\005 \001(\r\022\022\n\nproduction\030\006 \001("
+    "\r\022\023\n\013consumption\030\007 \001(\r\022\020\n\010critical\030\010 \001(\010"
+    "\032\225\001\n\004Link\0225\n\004kind\030\001 \002(\0162\'.Common.Resourc"
+    "eNetwork.Link.TargetKind\022\021\n\ttarget_id\030\002 "
+    "\002(\r\022\020\n\010capacity\030\003 \002(\005\022\014\n\004flow\030\004 \002(\r\"#\n\nT"
+    "argetKind\022\t\n\005urban\020\001\022\n\n\006object\020\002\"M\n!MsgO"
+    "bjectAttributeResourceNetwork\022(\n\007network"
+    "\030\001 \003(\0132\027.Common.ResourceNetwork\"\234\010\n\023MsgO"
+    "bjectAttributes\022<\n\014construction\030\001 \001(\0132&."
+    "Common.MsgObjectAttributeConstruction\0224\n"
+    "\010obstacle\030\002 \001(\0132\".Common.MsgObjectAttrib"
+    "uteObstacle\022,\n\004mine\030\003 \001(\0132\036.Common.MsgOb"
+    "jectAttributeMine\022=\n\ractivity_time\030\004 \001(\013"
+    "2&.Common.MsgObjectAttributeActivityTime"
+    "\0220\n\006bypass\030\005 \001(\0132 .Common.MsgObjectAttri"
+    "buteBypass\0224\n\010logistic\030\006 \001(\0132\".Common.Ms"
+    "gObjectAttributeLogistic\022*\n\003nbc\030\007 \001(\0132\035."
+    "Common.MsgObjectAttributeNBC\022=\n\rcrossing"
+    "_site\030\010 \001(\0132&.Common.MsgObjectAttributeC"
+    "rossingSite\022;\n\014supply_route\030\t \001(\0132%.Comm"
+    "on.MsgObjectAttributeSupplyRoute\0229\n\013toxi"
+    "c_cloud\030\n \001(\0132$.Common.MsgObjectAttribut"
+    "eToxicCloud\022,\n\004fire\030\013 \001(\0132\036.Common.MsgOb"
+    "jectAttributeFire\022E\n\021medical_treatment\030\014"
+    " \001(\0132*.Common.MsgObjectAttributeMedicalT"
+    "reatment\022G\n\022interaction_height\030\r \001(\0132+.C"
+    "ommon.MsgObjectAttributeInteractionHeigh"
+    "t\022.\n\005stock\030\016 \001(\0132\037.Common.MsgObjectAttri"
+    "buteStock\0224\n\tnbc_agent\030\017 \001(\0132!.Common.Ms"
+    "gObjectAttributeNBCType\022;\n\014effect_delay\030"
+    "\020 \001(\0132%.Common.MsgObjectAttributeEffectD"
+    "elay\0222\n\007sealOff\030\021 \001(\0132!.Common.MsgObject"
+    "AttributeSealOff\022D\n\021resource_networks\030\022 "
+    "\001(\0132).Common.MsgObjectAttributeResourceN"
+    "etwork\"L\n\007MsgNote\022\014\n\004name\030\001 \002(\t\022\016\n\006numbe"
+    "r\030\002 \002(\t\022\023\n\013description\030\003 \002(\t\022\016\n\006parent\030\004"
+    " \002(\r\"\342\001\n\022MsgMeteoAttributes\022\023\n\013temperatu"
+    "re\030\001 \002(\005\022\022\n\nwind_speed\030\002 \002(\005\022*\n\016wind_dir"
+    "ection\030\003 \002(\0132\022.Common.MsgHeading\022\023\n\013clou"
+    "d_floor\030\004 \002(\005\022\025\n\rcloud_ceiling\030\005 \002(\005\022\025\n\r"
+    "cloud_density\030\006 \002(\005\0224\n\rprecipitation\030\007 \002"
+    "(\0162\035.Common.EnumPrecipitationType*m\n\022Enu"
+    "mDotationFamily\022\014\n\010munition\020\000\022\r\n\tcarbura"
+    "nt\020\001\022\014\n\010explosif\020\002\022\010\n\004mine\020\003\022\013\n\007barbele\020"
+    "\004\022\t\n\005piece\020\005\022\n\n\006ration\020\006*Q\n\024EnumAmmuniti"
+    "onFamily\022\010\n\004obus\020\000\022\017\n\013missile_sol\020\001\022\017\n\013m"
+    "issile_air\020\002\022\r\n\tmitraille\020\003*w\n\025EnumPreci"
+    "pitationType\022\030\n\024pas_de_precipitation\020\000\022\021"
+    "\n\rtempete_sable\020\001\022\016\n\nbrouillard\020\002\022\013\n\007cra"
+    "chin\020\003\022\t\n\005pluie\020\004\022\t\n\005neige\020\005*\262\002\n\020EnumLig"
+    "htingType\022\024\n\020jour_sans_nuage_\020\000\022\025\n\021jour_"
+    "peu_nuageux_\020\001\022\035\n\031jour_moyennement_nuage"
+    "ux_\020\002\022\027\n\023jour_assez_nuageux_\020\003\022\026\n\022jour_t"
+    "res_nuageux_\020\004\022\025\n\021nuit_pleine_lune_\020\005\022\035\n"
+    "\031nuit_trois_quart_de_lune_\020\006\022\023\n\017nuit_dem"
+    "i_lune_\020\007\022\027\n\023nuit_quart_de_lune_\020\010\022\027\n\023nu"
+    "it_nouvelle_lune_\020\t\022\016\n\neclairant_\020\n\022\024\n\020g"
+    "lobalMeteoType_\020\013*1\n\022EnumFireEffectType\022"
+    "\014\n\010fumigene\020\000\022\r\n\teclairant\020\001*1\n\025MsgStart"
+    "UnitFire_type\022\n\n\006direct\020\000\022\014\n\010indirect\020\001*"
+    "\264\003\n EnumLogMaintenanceHandlingStatus\022\033\n\027"
+    "deplacement_vers_chaine\020\000\022$\n attente_dis"
+    "ponibilite_remorqueur\020\001\022 \n\034remorqueur_de"
+    "placement_aller\020\002\022\031\n\025remorqueur_chargeme"
+    "nt\020\003\022!\n\035remorqueur_deplacement_retour\020\004\022"
+    "\033\n\027remorqueur_dechargement\020\005\022\034\n\030diagnost"
+    "ique_maintenance\020\006\0220\n,attente_prise_en_c"
+    "harge_par_niveau_superieur\020\007\022 \n\034attente_"
+    "disponibilite_pieces\020\010\022$\n attente_dispon"
+    "ibilite_reparateur\020\t\022\016\n\nreparation\020\n\022\017\n\013"
+    "retour_pion\020\013\022\027\n\023termine_maintenance\020\014*\364"
+    "\005\n\034EnumLogMedicalHandlingStatus\022*\n&atten"
+    "te_disponibilite_ambulance_releve\020\000\022&\n\"a"
+    "mbulance_releve_deplacement_aller\020\001\022\037\n\033a"
+    "mbulance_releve_chargement\020\002\022/\n+attente_"
+    "chargement_complet_ambulance_releve\020\003\022\'\n"
+    "#ambulance_releve_deplacement_retour\020\004\022!"
+    "\n\035ambulance_releve_dechargement\020\005\0223\n/att"
+    "ente_disponibilite_medecin_pour_diagnost"
+    "ique\020\006\022\020\n\014diagnostique\020\007\022\031\n\025recherche_se"
+    "cteur_tri\020\010\022*\n&attente_disponibilite_med"
+    "ecin_pour_tri\020\t\022\007\n\003tri\020\n\022\032\n\026recherche_se"
+    "cteur_soin\020\013\022+\n\'attente_disponibilite_me"
+    "decin_pour_soin\020\014\022\010\n\004soin\020\r\022\023\n\017hospitali"
+    "sation\020\016\022-\n)attente_disponibilite_ambula"
+    "nce_ramassage\020\017\022\"\n\036ambulance_ramassage_c"
+    "hargement\020\020\0222\n.attente_chargement_comple"
+    "t_ambulance_ramassage\020\021\022)\n%ambulance_ram"
+    "assage_deplacement_aller\020\022\022$\n ambulance_"
+    "ramassage_dechargement\020\023\022\013\n\007termine\020\024*_\n"
+    "\022EnumUnitVisibility\022\r\n\tinvisible\020\000\022\014\n\010de"
+    "tected\020\001\022\016\n\nrecognized\020\002\022\016\n\nidentified\020\003"
+    "\022\014\n\010recorded\020\004*H\n\023EnumSimulationState\022\013\n"
+    "\007running\020\000\022\n\n\006paused\020\001\022\013\n\007stopped\020\002\022\013\n\007l"
+    "oading\020\003*l\n\033EnumMeetingEngagementStatus\022"
+    "\020\n\014none_meeting\020\000\022\020\n\014etat_esquive\020\001\022\r\n\te"
+    "tat_fixe\020\002\022\032\n\026etat_poursuite_mission\020\003*["
+    "\n\025EnumOperationalStatus\022\026\n\022detruit_total"
+    "ement\020\000\022\030\n\024detruit_tactiquement\020\001\022\020\n\014ope"
+    "rationnel\020\002*+\n\017EnumAutomatMode\022\013\n\007embray"
+    "e\020\000\022\013\n\007debraye\020\001*K\n\026EnumPopulationAttitu"
+    "de\022\t\n\005calme\020\000\022\n\n\006agitee\020\001\022\013\n\007excitee\020\002\022\r"
+    "\n\tagressive\020\003*8\n\021EnumUnitTiredness\022\n\n\006no"
+    "rmal\020\000\022\013\n\007fatigue\020\001\022\n\n\006epuise\020\002*@\n\016EnumU"
+    "nitMorale\022\r\n\tfanatique\020\000\022\007\n\003bon\020\001\022\t\n\005moy"
+    "en\020\002\022\013\n\007mauvais\020\003*@\n\022EnumUnitExperience\022"
+    "\013\n\007veteran\020\000\022\017\n\013experimente\020\001\022\014\n\010conscri"
+    "t\020\002*8\n\rEnumHumanRank\022\014\n\010officier\020\000\022\020\n\014so"
+    "us_officer\020\001\022\007\n\003mdr\020\002*X\n\rEnumDiplomacy\022\021"
+    "\n\runknown_diplo\020\000\022\020\n\014friend_diplo\020\001\022\017\n\013e"
+    "nemy_diplo\020\002\022\021\n\rneutral_diplo\020\003*\210\001\n\016Enum"
+    "HumanWound\022\016\n\nnon_blesse\020\000\022\010\n\004mort\020\001\022\024\n\020"
+    "blesse_urgence_1\020\002\022\024\n\020blesse_urgence_2\020\003"
+    "\022\024\n\020blesse_urgence_3\020\004\022\032\n\026blesse_urgence"
+    "_extreme\020\005*Y\n\037EnumLogMaintenanceRegimeTr"
+    "avail\022\014\n\010regime_1\020\000\022\014\n\010regime_2\020\001\022\014\n\010reg"
+    "ime_3\020\002\022\014\n\010regime_4\020\003*\204\001\n\017EnumNatureLeve"
+    "l\022\024\n\020none_naturelevel\020\000\022\005\n\001o\020\001\022\006\n\002oo\020\002\022\007"
+    "\n\003ooo\020\003\022\005\n\001i\020\004\022\006\n\002ii\020\005\022\007\n\003iii\020\006\022\005\n\001x\020\007\022\006"
+    "\n\002xx\020\010\022\007\n\003xxx\020\t\022\010\n\004xxxx\020\n\022\t\n\005xxxxx\020\013", 15156);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Common.proto", &protobuf_RegisterTypes);
   AutomatId::default_instance_ = new AutomatId();
@@ -33667,28 +33663,6 @@ void MsgObjectAttributeSealOff::Swap(MsgObjectAttributeSealOff* other) {
 
 // ===================================================================
 
-const ::google::protobuf::EnumDescriptor* ResourceNetwork_ResourceType_descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return ResourceNetwork_ResourceType_descriptor_;
-}
-bool ResourceNetwork_ResourceType_IsValid(int value) {
-  switch(value) {
-    case 1:
-    case 2:
-    case 3:
-      return true;
-    default:
-      return false;
-  }
-}
-
-#ifndef _MSC_VER
-const ResourceNetwork_ResourceType ResourceNetwork::water;
-const ResourceNetwork_ResourceType ResourceNetwork::gaz;
-const ResourceNetwork_ResourceType ResourceNetwork::electricity;
-const ResourceNetwork_ResourceType ResourceNetwork::ResourceType_MIN;
-const ResourceNetwork_ResourceType ResourceNetwork::ResourceType_MAX;
-#endif  // _MSC_VER
 const ::google::protobuf::EnumDescriptor* ResourceNetwork_Link_TargetKind_descriptor() {
   protobuf_AssignDescriptorsOnce();
   return ResourceNetwork_Link_TargetKind_descriptor_;
@@ -34032,7 +34006,7 @@ void ResourceNetwork_Link::Swap(ResourceNetwork_Link* other) {
 // -------------------------------------------------------------------
 
 #ifndef _MSC_VER
-const int ResourceNetwork::kTypeFieldNumber;
+const int ResourceNetwork::kResourceFieldNumber;
 const int ResourceNetwork::kLinkFieldNumber;
 const int ResourceNetwork::kEnabledFieldNumber;
 const int ResourceNetwork::kMaxStockFieldNumber;
@@ -34047,6 +34021,7 @@ ResourceNetwork::ResourceNetwork() {
 }
 
 void ResourceNetwork::InitAsDefaultInstance() {
+  resource_ = const_cast< ::Common::ResourceType*>(&::Common::ResourceType::default_instance());
 }
 
 ResourceNetwork::ResourceNetwork(const ResourceNetwork& from) {
@@ -34056,7 +34031,7 @@ ResourceNetwork::ResourceNetwork(const ResourceNetwork& from) {
 
 void ResourceNetwork::SharedCtor() {
   _cached_size_ = 0;
-  type_ = 1;
+  resource_ = NULL;
   enabled_ = false;
   max_stock_ = 0u;
   stock_ = 0u;
@@ -34072,6 +34047,7 @@ ResourceNetwork::~ResourceNetwork() {
 
 void ResourceNetwork::SharedDtor() {
   if (this != default_instance_) {
+    delete resource_;
   }
 }
 
@@ -34092,7 +34068,9 @@ ResourceNetwork* ResourceNetwork::New() const {
 
 void ResourceNetwork::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    type_ = 1;
+    if (_has_bit(0)) {
+      if (resource_ != NULL) resource_->::Common::ResourceType::Clear();
+    }
     enabled_ = false;
     max_stock_ = 0u;
     stock_ = 0u;
@@ -34111,19 +34089,14 @@ bool ResourceNetwork::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required .Common.ResourceNetwork.ResourceType type = 1;
+      // required .Common.ResourceType resource = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-        int value;
-        DO_(::google::protobuf::internal::WireFormatLite::ReadEnum(input, &value));
-        if (::Common::ResourceNetwork_ResourceType_IsValid(value)) {
-          set_type(static_cast< ::Common::ResourceNetwork_ResourceType >(value));
-        } else {
-          mutable_unknown_fields()->AddVarint(1, value);
-        }
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_resource()));
         if (input->ExpectTag(18)) goto parse_link;
         break;
       }
@@ -34250,10 +34223,10 @@ void ResourceNetwork::SerializeWithCachedSizes(
     return;
   }
   
-  // required .Common.ResourceNetwork.ResourceType type = 1;
+  // required .Common.ResourceType resource = 1;
   if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      1, this->type(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      1, this->resource(), output);
   }
   
   // repeated .Common.ResourceNetwork.Link link = 2;
@@ -34300,10 +34273,11 @@ void ResourceNetwork::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* ResourceNetwork::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required .Common.ResourceNetwork.ResourceType type = 1;
+  // required .Common.ResourceType resource = 1;
   if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
-      1, this->type(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->resource(), target);
   }
   
   // repeated .Common.ResourceNetwork.Link link = 2;
@@ -34354,10 +34328,11 @@ int ResourceNetwork::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required .Common.ResourceNetwork.ResourceType type = 1;
-    if (has_type()) {
+    // required .Common.ResourceType resource = 1;
+    if (has_resource()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->resource());
     }
     
     // required bool enabled = 3;
@@ -34433,7 +34408,7 @@ void ResourceNetwork::MergeFrom(const ResourceNetwork& from) {
   link_.MergeFrom(from.link_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
-      set_type(from.type());
+      mutable_resource()->::Common::ResourceType::MergeFrom(from.resource());
     }
     if (from._has_bit(2)) {
       set_enabled(from.enabled());
@@ -34472,6 +34447,9 @@ void ResourceNetwork::CopyFrom(const ResourceNetwork& from) {
 bool ResourceNetwork::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000005) != 0x00000005) return false;
   
+  if (has_resource()) {
+    if (!this->resource().IsInitialized()) return false;
+  }
   for (int i = 0; i < link_size(); i++) {
     if (!this->link(i).IsInitialized()) return false;
   }
@@ -34480,7 +34458,7 @@ bool ResourceNetwork::IsInitialized() const {
 
 void ResourceNetwork::Swap(ResourceNetwork* other) {
   if (other != this) {
-    std::swap(type_, other->type_);
+    std::swap(resource_, other->resource_);
     link_.Swap(&other->link_);
     std::swap(enabled_, other->enabled_);
     std::swap(max_stock_, other->max_stock_);

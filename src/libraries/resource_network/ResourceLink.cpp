@@ -17,8 +17,8 @@ using namespace resource;
 // Name: ResourceLink constructor
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
-ResourceLink::ResourceLink( unsigned int destination, EDestinationKind kind, int capacity )
-    : destination_( destination )
+ResourceLink::ResourceLink( unsigned int target, ETargetKind kind, int capacity )
+    : target_( target )
     , kind_       ( kind )
     , capacity_   ( capacity )
     , flow_       ( 0 )
@@ -31,7 +31,7 @@ ResourceLink::ResourceLink( unsigned int destination, EDestinationKind kind, int
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
 ResourceLink::ResourceLink( const ResourceLink& from )
-    : destination_( from.destination_ )
+    : target_( from.target_ )
     , kind_       ( from.kind_ )
     , capacity_   ( from.capacity_ )
     , flow_       ( from.flow_ )
@@ -49,16 +49,16 @@ ResourceLink::~ResourceLink()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceLink::FindDestinationKind
+// Name: ResourceLink::FindTargetKind
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------
-ResourceLink::EDestinationKind ResourceLink::FindDestinationKind( const std::string& kind )
+ResourceLink::ETargetKind ResourceLink::FindTargetKind( const std::string& kind )
 {
     if( kind == "urban" )
-        return eDestinationKindUrban;
+        return eTargetKindUrban;
     if( kind == "object" )
-        return eDestinationKindObject;
-    throw std::exception( "Resource link destination not valid" );
+        return eTargetKindObject;
+    throw std::exception( "Resource link target not valid" );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,19 +83,19 @@ int ResourceLink::GetEfficientCapacity() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceLink::GetDestination
+// Name: ResourceLink::GetTarget
 // Created: JSR 2010-08-16
 // -----------------------------------------------------------------------------
-unsigned int ResourceLink::GetDestination() const
+unsigned int ResourceLink::GetTarget() const
 {
-    return destination_;
+    return target_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceLink::GetDestinationKind
+// Name: ResourceLink::GetTargetKind
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------
-ResourceLink::EDestinationKind ResourceLink::GetDestinationKind() const
+ResourceLink::ETargetKind ResourceLink::GetTargetKind() const
 {
     return kind_;
 }
@@ -115,9 +115,9 @@ void ResourceLink::SetFlow( unsigned int flow )
 // -----------------------------------------------------------------------------
 void ResourceLink::Serialize( Common::ResourceNetwork_Link& msg ) const
 {
-    msg.set_kind( kind_ == eDestinationKindUrban ? 
+    msg.set_kind( kind_ == eTargetKindUrban ? 
         Common::ResourceNetwork_Link_TargetKind_urban : Common::ResourceNetwork_Link_TargetKind_object );
-    msg.set_target_id( destination_ );
+    msg.set_target_id( target_ );
     msg.set_capacity( capacity_ );
     msg.set_flow( flow_ );
 }

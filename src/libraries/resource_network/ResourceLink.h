@@ -34,27 +34,27 @@ namespace resource
 class ResourceLink
 {
 public:
-    enum EDestinationKind
+    enum ETargetKind
     {
-        eDestinationKindUrban,
-        eDestinationKindObject
+        eTargetKindUrban,
+        eTargetKindObject
     };
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceLink( unsigned int destination, EDestinationKind kind, int capacity );
+             ResourceLink( unsigned int target, ETargetKind kind, int capacity );
              ResourceLink( const ResourceLink& from );
     virtual ~ResourceLink();
     //@}
 
     //! @name Operations
     //@{
-    static EDestinationKind FindDestinationKind( const std::string& kind );
+    static ETargetKind FindTargetKind( const std::string& kind );
     void SetCapacity( int capacity );
     int GetEfficientCapacity() const;
-    unsigned int GetDestination() const;
-    EDestinationKind GetDestinationKind() const;
+    unsigned int GetTarget() const;
+    ETargetKind GetTargetKind() const;
     void SetFlow( unsigned int flow );
     //@}
 
@@ -72,8 +72,8 @@ private:
 private:
     //! @name Member data
     //@{
-    unsigned int destination_;
-    EDestinationKind kind_;
+    unsigned int target_;
+    ETargetKind kind_;
     int capacity_;
     unsigned int flow_;
     //@}

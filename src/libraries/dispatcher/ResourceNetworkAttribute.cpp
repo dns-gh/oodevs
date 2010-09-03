@@ -90,8 +90,8 @@ void ResourceNetworkAttribute::Send( Common::MsgObjectAttributes& message ) cons
 // -----------------------------------------------------------------------------
 void ResourceNetworkAttribute::Update( const Common::ResourceNetwork& from )
 {
-    ResourceNetwork& to = resourceMap_[ from.type() ];
-    to.type_ = from.type();
+    ResourceNetwork& to = resourceMap_[ from.resource().id() ];
+    to.resource_ = from.resource().id();
     to.enabled_ = from.enabled();
     to.maxStock_ = from.has_max_stock() ? from.max_stock() : 0;
     to.stock_ = from.has_stock() ? from.stock() : 0;
@@ -120,7 +120,7 @@ void ResourceNetworkAttribute::Update( const Common::ResourceNetwork& from )
 // -----------------------------------------------------------------------------
 void ResourceNetworkAttribute::Send( Common::ResourceNetwork& message, const ResourceNetwork& network ) const
 {
-    message.set_type( static_cast< Common::ResourceNetwork_ResourceType >( network.type_ ) );
+    message.mutable_resource()->set_id( network.resource_ );
     message.set_enabled( network.enabled_ );
     if( network.maxStock_ )
         message.set_max_stock( network.maxStock_ );

@@ -21,7 +21,7 @@ using namespace resource;
 // -----------------------------------------------------------------------------
 NodeElement::NodeElement()
     : model_              ( 0 )
-    , resourceType_       ( static_cast< E_ResourceType>( -1 ) )
+    , resourceId_         ( 0 )
     , isActivated_        ( true )
     , productionCapacity_ ( 0 )
     , stockCapacity_      ( 0 )
@@ -39,11 +39,11 @@ NodeElement::NodeElement()
 // Name: NodeElement constructor
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
-NodeElement::NodeElement( xml::xistream& xis, E_ResourceType resourceType )
+NodeElement::NodeElement( xml::xistream& xis, unsigned long resourceId )
     : model_              ( 0 )
-    , resourceType_       ( resourceType )
+    , resourceId_         ( resourceId )
     , isActivated_        ( true )
-    , productionCapacity_ ( xis.attribute< unsigned int >( "production" ) )
+    , productionCapacity_ ( 0 )
     , stockCapacity_      ( 0 )
     , stockMaxCapacity_   ( 0 )
     , immediateStock_     ( 0 )
@@ -52,7 +52,7 @@ NodeElement::NodeElement( xml::xistream& xis, E_ResourceType resourceType )
     , consumptionCritical_( false )
     , modifier_           ( 1. ) 
 {
-    xis >> xml::list( "link", *this, &NodeElement::ReadLink );
+    Update( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +61,7 @@ NodeElement::NodeElement( xml::xistream& xis, E_ResourceType resourceType )
 // -----------------------------------------------------------------------------
 NodeElement::NodeElement( const NodeElement& from )
     : model_              ( 0 )
-    , resourceType_       ( from.resourceType_ )
+    , resourceId_         ( from.resourceId_ )
     , isActivated_        ( from.isActivated_ )
     , productionCapacity_ ( from.productionCapacity_ )
     , stockCapacity_      ( from.stockCapacity_ )
@@ -103,29 +103,13 @@ void NodeElement::SetModel( const ResourceNetworkModel& model )
 // -----------------------------------------------------------------------------
 void NodeElement::Update( xml::xistream& xis )
 {
-    xis >> xml::optional >> xml::start( "activation" )
-        >> xml::attribute( "enabled", isActivated_ )
-        >> xml::end();
-    xis >> xml::optional >> xml::start( "production" )
-        >> xml::attribute( "capacity", productionCapacity_ )
-        >> xml::end();
-    xis >> xml::optional >> xml::start( "stock" )
-        >> xml::attribute( "capacity", stockCapacity_ )
-        >> xml::attribute( "max-capacity", stockMaxCapacity_ )
-        >> xml::end();
-    xis >> xml::optional >> xml::start( "links" )
-            >> xml::list( "link", *this, &NodeElement::ReadLink )
-        >> xml::end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: NodeElement::ReadConsumption
-// Created: JSR 2010-08-30
-// -----------------------------------------------------------------------------
-void NodeElement::ReadConsumption( xml::xistream& xis )
-{
-    consumptionAmount_ = xis.attribute< int >( "amount" );
-    consumptionCritical_ = xis.attribute< bool >( "critical" );
+    xis >> xml::optional >> xml::attribute( "enabled", isActivated_ )
+        >> xml::optional >> xml::attribute( "production", productionCapacity_ )
+        >> xml::optional >> xml::attribute( "stock", stockMaxCapacity_ )
+        >> xml::optional >> xml::attribute( "initial-stock", stockCapacity_ )
+        >> xml::optional >> xml::attribute( "consumption", consumptionAmount_ )
+        >> xml::optional >> xml::attribute( "critical-consumption", consumptionCritical_ )
+        >> xml::list( "link", *this, &NodeElement::ReadLink );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,7 +178,7 @@ void NodeElement::DoDistributeResource( T_ResourceLinks& links )
         if( linkCapacity != -1 && linkCapacity <= distributionMean )
         {
             ( *it )->SetFlow( linkCapacity );
-            model_->Push( ( *it )->GetDestination(), ( *it )->GetDestinationKind()== ResourceLink::eDestinationKindUrban, linkCapacity, resourceType_ );
+            model_->Push( ( *it )->GetTarget(), ( *it )->GetTargetKind()== ResourceLink::eTargetKindUrban, linkCapacity, resourceId_ );
             immediateStock_ -= linkCapacity;
             updatedLinks.push_back( *it );
         }
@@ -223,7 +207,7 @@ void NodeElement::DoDistributeResource( T_ResourceLinks& links )
                 }
             }
             ( *it )->SetFlow( distributed );
-            model_->Push( ( *it )->GetDestination(), ( *it )->GetDestinationKind()== ResourceLink::eDestinationKindUrban, distributed, resourceType_ );
+            model_->Push( ( *it )->GetTarget(), ( *it )->GetTargetKind()== ResourceLink::eTargetKindUrban, distributed, resourceId_ );
         }
     }
     else
@@ -264,20 +248,7 @@ void NodeElement::SetModifier( unsigned int modifier )
 // -----------------------------------------------------------------------------
 void NodeElement::Serialize( Common::ResourceNetwork& msg ) const
 {
-    // TODO switch à virer quand on utilisera à dictionnaire
-    switch( resourceType_ )
-    {
-    default:
-    case eResourceType_Water:
-        msg.set_type( Common::ResourceNetwork::water );
-        break;
-    case eResourceType_Gaz:
-        msg.set_type( Common::ResourceNetwork::gaz );
-        break;
-    case eResourceType_Electricity:
-        msg.set_type( Common::ResourceNetwork::electricity );
-        break;
-    }
+    msg.mutable_resource()->set_id( resourceId_ );
     msg.set_enabled( isActivated_ );
     if( stockMaxCapacity_ > 0 )
     {
@@ -318,18 +289,18 @@ void NodeElement::Update( const Common::MsgMissionParameter_Value& msg )
 // -----------------------------------------------------------------------------
 void NodeElement::ReadLink( xml::xistream& xis )
 {
-    unsigned int destination = xis.attribute< unsigned int >( "destination" );
+    unsigned int target = xis.attribute< unsigned int >( "target" );
     int capacity = xis.attribute< int >( "capacity" );
-    ResourceLink::EDestinationKind kind = ResourceLink::eDestinationKindUrban;
+    ResourceLink::ETargetKind kind = ResourceLink::eTargetKindUrban;
     if( xis.has_attribute( "kind" ) )
-        kind = ResourceLink::FindDestinationKind( xis.attribute< std::string >( "kind" ) );
+        kind = ResourceLink::FindTargetKind( xis.attribute< std::string >( "kind" ) );
     for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
     {
-        if( ( *it )->GetDestination() == destination && ( *it )->GetDestinationKind() == kind )
+        if( ( *it )->GetTarget() == target && ( *it )->GetTargetKind() == kind )
         {
             ( *it )->SetCapacity( capacity );
             return;
         }
     }
-    links_.push_back( new ResourceLink( destination, kind, capacity ) );
+    links_.push_back( new ResourceLink( target, kind, capacity ) );
 }

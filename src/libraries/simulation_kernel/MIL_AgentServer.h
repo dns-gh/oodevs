@@ -20,6 +20,7 @@
 namespace resource
 {
     class ResourceNetworkModel;
+    class ResourceTools_ABC;
 }
 
 namespace xml
@@ -112,6 +113,7 @@ public:
     MT_TimerManager& GetTimerManager();
     HLA_Federate* GetHLAFederate() const;
     resource::ResourceNetworkModel& GetResourceNetworkModel() const;
+    resource::ResourceTools_ABC& GetResourceTools() const;
     E_SimState GetSimState() const;
     MIL_Config& GetConfig();
     //@}
@@ -181,7 +183,8 @@ private:
     HLA_Federate* pFederate_;
     UrbanModel* pUrbanModel_;
     resource::ResourceNetworkModel* pResourceNetworkModel_;
-    ProcessMonitor*  pProcessMonitor_;
+    resource::ResourceTools_ABC* pResourceTools_;
+    ProcessMonitor* pProcessMonitor_;
     long lastStep_;
     //@}
 

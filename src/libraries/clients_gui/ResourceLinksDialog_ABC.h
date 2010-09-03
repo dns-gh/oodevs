@@ -11,14 +11,15 @@
 #define __ResourceLinksDialog_ABC_h_
 
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "resource_network/Types.h"
+#include "clients_kernel/ResourceNetwork_ABC.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
     class Controllers;
+    class DotationType;
     class Object_ABC;
     class Profile_ABC;
-    class ResourceNetwork_ABC;
 }
 
 namespace gui
@@ -42,13 +43,19 @@ class ResourceLinksDialog_ABC : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceLinksDialog_ABC( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile );
+             ResourceLinksDialog_ABC( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const kernel::Profile_ABC& profile );
     virtual ~ResourceLinksDialog_ABC();
     //@}
 
 private slots:
     //! @name Slots
     //@{
+    void Update();
+    void OnActivationChanged( bool on );
+    void OnProductionChanged( int value );
+    void OnConsumptionChanged( int value );
+    void OnCriticalChanged( bool on );
+    void OnStockChanged( int value );
     void OnValueChanged( int i, int j );
     void Validate();
     void Reject();
@@ -68,32 +75,30 @@ private:
     virtual void NotifyContextMenu( const kernel::Object_ABC& object, kernel::ContextMenu& menu );
     virtual void showEvent( QShowEvent* );
     virtual QSize sizeHint();
-    void UpdateTables();
     //@}
 
 protected:
     //! @name Types
     //@{
-    struct TResourceWidgets
-    {
-        QGroupBox* groupBox_;
-        QSpinBox* production_;
-        QSpinBox* consumption_;
-        QCheckBox* critical_;
-        QSpinBox* stock_;
-        QTable* table_;
-    };
     //@}
 
 protected:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
     const kernel::Profile_ABC& profile_;
     const kernel::ResourceNetwork_ABC* selected_;
     bool urban_;
     unsigned int id_;
-    TResourceWidgets widgets_[ resource::eNbrResourceType ];
+    kernel::ResourceNetwork_ABC::ResourceNodes resourceNodes_;
+    QListView* dotationList_;
+    QGroupBox* groupBox_;
+    QSpinBox* production_;
+    QSpinBox* consumption_;
+    QCheckBox* critical_;
+    QSpinBox* stock_;
+    QTable* table_;
     //@}
 };
 

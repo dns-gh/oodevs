@@ -227,6 +227,17 @@ resource::ResourceNetworkModel& MIL_AgentServer::GetResourceNetworkModel() const
     return *pResourceNetworkModel_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetResourceTools
+// Created: JSR 2010-09-03
+// -----------------------------------------------------------------------------
+inline
+resource::ResourceTools_ABC& MIL_AgentServer::GetResourceTools() const
+{
+    assert( pResourceTools_ );
+    return *pResourceTools_;    
+}
+
 //-----------------------------------------------------------------------------
 // Name: MIL_AgentServer::GetWorkspace
 // Created: DFT 02-03-13

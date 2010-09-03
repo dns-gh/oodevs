@@ -39,7 +39,7 @@ class ResourceNetworkAttribute : public UrbanObjectAttribute_ABC
             int capacity_;
             unsigned int flow_;
         };
-        unsigned int type_;
+        unsigned int resource_;
         std::vector< Link > links_;
         bool enabled_;
         unsigned int maxStock_;

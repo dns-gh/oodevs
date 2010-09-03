@@ -1434,18 +1434,6 @@
         <translation>Activé</translation>
     </message>
     <message>
-        <source>Water</source>
-        <translation>Eau</translation>
-    </message>
-    <message>
-        <source>Gaz</source>
-        <translation>Gaz</translation>
-    </message>
-    <message>
-        <source>Electricity</source>
-        <translation>Electricité</translation>
-    </message>
-    <message>
         <source>Total flow</source>
         <translation>Débit total</translation>
     </message>

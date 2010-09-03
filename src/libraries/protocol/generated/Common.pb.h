@@ -269,25 +269,6 @@ inline bool ResourceNetwork_Link_TargetKind_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<ResourceNetwork_Link_TargetKind>(
     ResourceNetwork_Link_TargetKind_descriptor(), name, value);
 }
-enum ResourceNetwork_ResourceType {
-  ResourceNetwork_ResourceType_water = 1,
-  ResourceNetwork_ResourceType_gaz = 2,
-  ResourceNetwork_ResourceType_electricity = 3
-};
-bool ResourceNetwork_ResourceType_IsValid(int value);
-const ResourceNetwork_ResourceType ResourceNetwork_ResourceType_ResourceType_MIN = ResourceNetwork_ResourceType_water;
-const ResourceNetwork_ResourceType ResourceNetwork_ResourceType_ResourceType_MAX = ResourceNetwork_ResourceType_electricity;
-
-const ::google::protobuf::EnumDescriptor* ResourceNetwork_ResourceType_descriptor();
-inline const ::std::string& ResourceNetwork_ResourceType_Name(ResourceNetwork_ResourceType value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    ResourceNetwork_ResourceType_descriptor(), value);
-}
-inline bool ResourceNetwork_ResourceType_Parse(
-    const ::std::string& name, ResourceNetwork_ResourceType* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<ResourceNetwork_ResourceType>(
-    ResourceNetwork_ResourceType_descriptor(), name, value);
-}
 enum EnumDotationFamily {
   munition = 0,
   carburant = 1,
@@ -12416,37 +12397,14 @@ class ResourceNetwork : public ::google::protobuf::Message {
   
   typedef ResourceNetwork_Link Link;
   
-  typedef ResourceNetwork_ResourceType ResourceType;
-  static const ResourceType water = ResourceNetwork_ResourceType_water;
-  static const ResourceType gaz = ResourceNetwork_ResourceType_gaz;
-  static const ResourceType electricity = ResourceNetwork_ResourceType_electricity;
-  static inline bool ResourceType_IsValid(int value) {
-    return ResourceNetwork_ResourceType_IsValid(value);
-  }
-  static const ResourceType ResourceType_MIN =
-    ResourceNetwork_ResourceType_ResourceType_MIN;
-  static const ResourceType ResourceType_MAX =
-    ResourceNetwork_ResourceType_ResourceType_MAX;
-  static inline const ::google::protobuf::EnumDescriptor*
-  ResourceType_descriptor() {
-    return ResourceNetwork_ResourceType_descriptor();
-  }
-  static inline const ::std::string& ResourceType_Name(ResourceType value) {
-    return ResourceNetwork_ResourceType_Name(value);
-  }
-  static inline bool ResourceType_Parse(const ::std::string& name,
-      ResourceType* value) {
-    return ResourceNetwork_ResourceType_Parse(name, value);
-  }
-  
   // accessors -------------------------------------------------------
   
-  // required .Common.ResourceNetwork.ResourceType type = 1;
-  inline bool has_type() const;
-  inline void clear_type();
-  static const int kTypeFieldNumber = 1;
-  inline ::Common::ResourceNetwork_ResourceType type() const;
-  inline void set_type(::Common::ResourceNetwork_ResourceType value);
+  // required .Common.ResourceType resource = 1;
+  inline bool has_resource() const;
+  inline void clear_resource();
+  static const int kResourceFieldNumber = 1;
+  inline const ::Common::ResourceType& resource() const;
+  inline ::Common::ResourceType* mutable_resource();
   
   // repeated .Common.ResourceNetwork.Link link = 2;
   inline int link_size() const;
@@ -12504,7 +12462,7 @@ class ResourceNetwork : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  int type_;
+  ::Common::ResourceType* resource_;
   ::google::protobuf::RepeatedPtrField< ::Common::ResourceNetwork_Link > link_;
   bool enabled_;
   ::google::protobuf::uint32 max_stock_;
@@ -18156,21 +18114,21 @@ inline void ResourceNetwork_Link::set_flow(::google::protobuf::uint32 value) {
 
 // ResourceNetwork
 
-// required .Common.ResourceNetwork.ResourceType type = 1;
-inline bool ResourceNetwork::has_type() const {
+// required .Common.ResourceType resource = 1;
+inline bool ResourceNetwork::has_resource() const {
   return _has_bit(0);
 }
-inline void ResourceNetwork::clear_type() {
-  type_ = 1;
+inline void ResourceNetwork::clear_resource() {
+  if (resource_ != NULL) resource_->::Common::ResourceType::Clear();
   _clear_bit(0);
 }
-inline ::Common::ResourceNetwork_ResourceType ResourceNetwork::type() const {
-  return static_cast< ::Common::ResourceNetwork_ResourceType >(type_);
+inline const ::Common::ResourceType& ResourceNetwork::resource() const {
+  return resource_ != NULL ? *resource_ : *default_instance_->resource_;
 }
-inline void ResourceNetwork::set_type(::Common::ResourceNetwork_ResourceType value) {
-  GOOGLE_DCHECK(::Common::ResourceNetwork_ResourceType_IsValid(value));
+inline ::Common::ResourceType* ResourceNetwork::mutable_resource() {
   _set_bit(0);
-  type_ = value;
+  if (resource_ == NULL) resource_ = new ::Common::ResourceType;
+  return resource_;
 }
 
 // repeated .Common.ResourceNetwork.Link link = 2;
@@ -18923,10 +18881,6 @@ inline const EnumDescriptor* GetEnumDescriptor< ::Common::MsgAtlasNature_AtlasNa
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::Common::ResourceNetwork_Link_TargetKind>() {
   return ::Common::ResourceNetwork_Link_TargetKind_descriptor();
-}
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::Common::ResourceNetwork_ResourceType>() {
-  return ::Common::ResourceNetwork_ResourceType_descriptor();
 }
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< Common::EnumDotationFamily>() {

@@ -706,12 +706,7 @@ message ResourceNetwork {
         required int32  capacity  = 3;
         required uint32 flow      = 4;
     }
-    enum ResourceType {
-        water       = 1;
-        gaz         = 2;
-        electricity = 3;
-    }
-    required ResourceType type        = 1;
+    required ResourceType resource    = 1;
     repeated Link         link        = 2;
     required bool         enabled     = 3;
     optional uint32       max_stock   = 4;

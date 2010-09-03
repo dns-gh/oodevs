@@ -11,7 +11,6 @@
 #define __ResourceNetwork_ABC_h_
 
 #include "clients_kernel/Extension_ABC.h"
-#include "resource_network/Types.h"
 
 namespace MsgsSimToClient
 {
@@ -49,12 +48,12 @@ public:
         unsigned int maxStock_;
         unsigned int stock_;
         unsigned int totalFlow_;
-        resource::E_ResourceType type_;
-        std::vector< ResourceLink > links_;    
+        unsigned long resource_;
+        std::vector< ResourceLink > links_;
     };
 
-    typedef std::map< resource::E_ResourceType, ResourceNode > ResourceNodes;
-    typedef ResourceNodes::const_iterator                  CIT_ResourceNodes;
+    typedef std::map< unsigned long, ResourceNode > ResourceNodes;
+    typedef ResourceNodes::const_iterator       CIT_ResourceNodes;
     //@}
 
 public:
@@ -66,12 +65,13 @@ public:
 
     //! @name Operations
     //@{
-    virtual QString GetLinkName( resource::E_ResourceType type, unsigned int i ) const = 0;
+    virtual QString GetLinkName( unsigned long resource, unsigned int i ) const = 0;
     void Select( bool selected ) { selected_ = selected; }
     bool IsSelected() const { return selected_; }
-    const ResourceNode* FindResourceNode( resource::E_ResourceType type ) const
+    const ResourceNodes& ResourcesNodes() const { return resourceNodes_; }
+    const ResourceNode* FindResourceNode( unsigned long resource ) const
     {
-        CIT_ResourceNodes it = resourceNodes_.find( type );
+        CIT_ResourceNodes it = resourceNodes_.find( resource );
         if( it == resourceNodes_.end() )
             return 0;
         return &it->second;

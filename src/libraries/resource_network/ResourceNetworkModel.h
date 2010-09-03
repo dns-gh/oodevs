@@ -16,6 +16,7 @@
 
 namespace resource
 {
+
 class UrbanResolver : public tools::Resolver< NodeProperties >
 {
 public:
@@ -49,7 +50,7 @@ public:
     //@{
     void Update();
     void RegisterNode( NodeProperties& nodeProperties, unsigned int id, bool urban );
-    void Push( unsigned int id, bool urban, int quantity, E_ResourceType type ) const;
+    void Push( unsigned int id, bool urban, int quantity, unsigned long resourceId ) const;
     //@}
 };
 

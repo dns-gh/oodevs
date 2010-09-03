@@ -539,6 +539,10 @@
         <source>Resource Links</source>
         <translation>Liens de Ressources</translation>
     </message>
+    <message>
+        <source>Resource</source>
+        <translation>Ressource</translation>
+    </message>
 </context>
 <context>
     <name>ResourceLinksDialog_ABC</name>
@@ -561,18 +565,6 @@
     <message>
         <source>Resource links</source>
         <translation>Liens de ressources</translation>
-    </message>
-    <message>
-        <source>Water</source>
-        <translation>Eau</translation>
-    </message>
-    <message>
-        <source>Gaz</source>
-        <translation>Gaz</translation>
-    </message>
-    <message>
-        <source>Electricity</source>
-        <translation>Electricité</translation>
     </message>
     <message>
         <source>Limited</source>

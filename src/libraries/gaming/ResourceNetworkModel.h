@@ -20,6 +20,7 @@ namespace kernel
 }
 
 class Model;
+class StaticModel;
 
 // =============================================================================
 /** @class  ResourceNetworkModel
@@ -33,7 +34,7 @@ class ResourceNetworkModel : public tools::Observer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceNetworkModel( kernel::Controllers& controllers, const Model& model );
+             ResourceNetworkModel( kernel::Controllers& controllers, const Model& model, const StaticModel& staticModel );
     virtual ~ResourceNetworkModel();
     //@}
 
@@ -61,6 +62,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const Model& model_;
+    const StaticModel& staticModel_;
     kernel::ResourceNetwork_ABC* selected_;
     //@}
 };
@@ -69,7 +71,7 @@ template< typename T >
 void ResourceNetworkModel::Create( kernel::Entity_ABC& entity, const T& msg )
 {
     kernel::PropertiesDictionary& dico = entity.Get< kernel::PropertiesDictionary >();
-    ResourceNetwork* element = new ResourceNetwork( controllers_, entity.GetId(), model_.urbanObjects_, model_.objects_, msg, dico );
+    ResourceNetwork* element = new ResourceNetwork( controllers_, entity.GetId(), model_.urbanObjects_, model_.objects_, staticModel_.objectTypes_, msg, dico );
     entity.Attach< kernel::ResourceNetwork_ABC >( *element );
 }
 
