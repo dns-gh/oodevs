@@ -202,7 +202,7 @@ end
                 <xsl:text>    :With( { name = 'Installation cible', type = 'ObjectKnowledge', value = 60 } )</xsl:text>
             </xsl:when>
 
-            <xsl:when test="@type = 'ObjectKnowledge'>
+            <xsl:when test="@type = 'ObjectKnowledge'">
                 <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "</xsl:text><xsl:value-of select="@type"/><xsl:text>", value = 61 } )</xsl:text>
             </xsl:when>
 
