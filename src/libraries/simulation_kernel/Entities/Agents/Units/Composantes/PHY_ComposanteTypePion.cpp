@@ -1023,12 +1023,13 @@ const PHY_DotationConsumptions* PHY_ComposanteTypePion::GetDotationConsumptions(
 // -----------------------------------------------------------------------------
 const PHY_ConsumptionType& PHY_ComposanteTypePion::GetConsumptionMode( const MIL_ObjectType_ABC& object ) const
 {
+    const BuildableCapacity* capacity = object.GetCapacity< BuildableCapacity >();
     if( objectData_.size() <= object.GetID() )
-        return object.GetCapacity< BuildableCapacity >()->GetDefaultConsumptionMode();
+        return capacity ? capacity->GetDefaultConsumptionMode() : PHY_ConsumptionType::working_;
     const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     if( pObjectData && pObjectData->GetConsumptionMode() )
         return *pObjectData->GetConsumptionMode();
-    return object.GetCapacity< BuildableCapacity >()->GetDefaultConsumptionMode();
+    return capacity ? capacity->GetDefaultConsumptionMode() : PHY_ConsumptionType::working_;
 }
 
 // =============================================================================
