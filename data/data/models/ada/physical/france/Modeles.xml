@@ -212,10 +212,9 @@
         <mission name="TEST ReconnoiterPoint"/>
         <mission name="TEST ReconnoiterUrbanBlock"/>
         <mission name="TEST ReconnoiterArea"/>
-        <mission name="TEST ReconnoiterAdvance"/>
+        <mission name="TEST Reinforce"/>
         <mission name="TEST RemoveObstacle"/>
         <mission name="TEST Search"/>
-        <mission name="TEST Survey"/>
         <mission name="TEST StayClose"/>
         <mission name="TEST Support"/>
         <mission name="TEST ValorizeObjects"/>
