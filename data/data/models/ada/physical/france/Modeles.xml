@@ -185,6 +185,7 @@
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PlatoonTest">
       <missions>
+        <mission name="TEST Advance"/>
         <mission name="TEST AnimateObjects"/>
         <mission name="TEST BuildObjects"/>
         <mission name="TEST BypassObjects"/>
@@ -283,8 +284,6 @@
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.combat.support.engineer.roles.Engineer" file="BMPion.bms" name="net.masagroup.sword.military.platoon.combat.support.engineer.roles.Engineer">
       <missions>
-        <mission name="GEN Realiser Travaux"/>
-        <mission name="GEN OuvrirItineraire"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES Franchir"/>
@@ -294,7 +293,10 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="GEN Construire"/>
+        <mission name="GENIE ActiverObstacles"/>
+        <mission name="GENIE Construire"/>
+        <mission name="GENIE OuvrirItineraire"/>
+        <mission name="GENIE Realiser Travaux"/>
         <mission name="Animer"/>
       </missions>
       <fragorders>
