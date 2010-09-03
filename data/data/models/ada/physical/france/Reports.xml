@@ -439,6 +439,8 @@
   </report>
   <report id="304" message="Debut du bouclage de la zone"/>
   <report id="305" message="Fin du bouclage de la zone"/>
+  <report id="306" message="En appui"/>
+  <report id="307" message="En mouvement, l'appui n'est pas assuré"/>
   <report id="308" message="l'objet n'est pas contournable"/>
   <report id="3000" message="Embarquement - début"/>
   <report id="3001" message="Embarquement - interruption"/>
