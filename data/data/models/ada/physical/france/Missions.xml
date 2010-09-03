@@ -894,9 +894,6 @@
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Open" dia-type="net.masagroup.sword.test.military.platoon.tasks.Open" id="2082" name="TEST Open">
       <parameter dia-name="objectives" name="itinéraire" optional="false" type="PointListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Survey" dia-type="net.masagroup.sword.test.military.platoon.tasks.Survey" id="2087" name="TEST Survey">
-      <parameter dia-name="entities" name="unite a charger" optional="false" type="AgentListBM"/>
-    </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.WaitTransport" dia-type="net.masagroup.sword.test.military.platoon.tasks.WaitTransport" id="2088" name="TEST WaitTransport">
       <parameter dia-name="position" name="Point d'embarquement" optional="false" type="PointBM"/>
     </mission>
