@@ -807,7 +807,7 @@
       <parameter dia-name="objective" name="objective" optional="false" type="AgentBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.ObserveToward" dia-type="net.masagroup.sword.test.military.platoon.tasks.ObserveToward" id="2017" name="TEST ObservePoint">
-      <parameter dia-name="objectives" name="target" optional="false" type="AgentKnowledgeListBM"/>
+      <parameter dia-name="objectives" name="target" optional="false" type="PointListBM"/>
       <parameter dia-name="positions" name="positions" optional="false" type="PointListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.ObserveToward" dia-type="net.masagroup.sword.test.military.platoon.tasks.ObserveTowardAgent" id="2019" name="TEST ObserveAgent">
@@ -902,6 +902,10 @@
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.WaitTransport" dia-type="net.masagroup.sword.test.military.platoon.tasks.WaitTransport" id="2088" name="TEST WaitTransport">
       <parameter dia-name="position" name="Point d'embarquement" optional="false" type="PointBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Reinforce" dia-type="net.masagroup.sword.test.military.platoon.tasks.Reinforce" id="2103" name="TEST Reinforce">
+      <parameter dia-name="entities" name="unites à renforcer" optional="false" type="AgentListBM"/>
+      <parameter dia-name="positions" name="positions de renforcement" optional="false" type="PointListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.FaireMouvement" dia-type="net.masagroup.sword.france.military.platoon.tasks.FaireMouvement" id="2046" name="COMMUNES Faire Mouvement">
       <parameter dia-name="objectives" name="Itineraire" optional="false" type="PointListBM"/>
