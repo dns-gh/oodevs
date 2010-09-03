@@ -206,8 +206,10 @@ end
                 <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "</xsl:text><xsl:value-of select="@type"/><xsl:text>", value = 61 } )</xsl:text>
             </xsl:when>
 
+            <xsl:when test="@type = 'AgentKnowledgeList'">
+                <xsl:text>    :With( AgentKnowledgeList.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", "AgentKnowledgeList", { config.id.redUnit } )</xsl:text>
+            </xsl:when>
 
-            
             <xsl:when test="@type = 'Automate'">
                 <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = 'Automate', value = "10" } )</xsl:text>
             </xsl:when>
