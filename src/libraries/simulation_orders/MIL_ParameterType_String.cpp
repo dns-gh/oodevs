@@ -35,11 +35,12 @@ MIL_ParameterType_String::~MIL_ParameterType_String()
 // Name: MIL_ParameterType_String::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-bool MIL_ParameterType_String::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_String::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool bIsOptional ) const
 {
-    // Check source
     if( !from.IsOfType( *this ) )
         return false;
-    to.set_null_value( false );
-    return from.ToString( *to.mutable_value()->mutable_acharstr() );
+    to.set_null_value( !from.ToString( *to.mutable_value()->mutable_acharstr() ) );
+    if( to.null_value() )
+        to.clear_value();
+    return !to.null_value() || bIsOptional;
 }

@@ -144,9 +144,9 @@ void EngineerConstruction::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void EngineerConstruction::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    message.set_null_value( 0 );
-    message.mutable_value()->mutable_plannedwork();    // enforce initialisation of parameter to force his type
-    CommitTo( *message.mutable_value()->mutable_plannedwork() );
+    message.set_null_value( !IsSet() );
+    if( IsSet() )
+        CommitTo( *message.mutable_value()->mutable_plannedwork() );
 }
 
 // -----------------------------------------------------------------------------

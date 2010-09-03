@@ -35,11 +35,12 @@ MIL_ParameterType_PolygonList::~MIL_ParameterType_PolygonList()
 // Name: MIL_ParameterType_PolygonList::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-bool MIL_ParameterType_PolygonList::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_PolygonList::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool bIsOptional ) const
 {
-    // Check source
     if( !from.IsOfType( *this ) )
         return false;
-    to.set_null_value( false );
-    return from.ToPolygonList( *to.mutable_value()->mutable_polygonlist() );
+    to.set_null_value( !from.ToPolygonList( *to.mutable_value()->mutable_polygonlist() ) );
+    if( to.null_value() )
+        to.clear_value();
+    return !to.null_value() || bIsOptional;
 }

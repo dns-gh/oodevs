@@ -35,11 +35,12 @@ MIL_ParameterType_ObjectiveList::~MIL_ParameterType_ObjectiveList()
 // Name: MIL_ParameterType_ObjectiveList::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-bool MIL_ParameterType_ObjectiveList::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_ObjectiveList::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool bIsOptional ) const
 {
-    // Check source
     if( !from.IsOfType( *this ) )
         return false;
-    to.set_null_value( false );
-    return from.ToObjectiveList( *to.mutable_value()->mutable_missionobjectivelist() );
+    to.set_null_value( !from.ToObjectiveList( *to.mutable_value()->mutable_missionobjectivelist() ) );
+    if( to.null_value() )
+        to.clear_value();
+    return !to.null_value() || bIsOptional;
 }

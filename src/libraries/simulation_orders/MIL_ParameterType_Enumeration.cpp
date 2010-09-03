@@ -35,13 +35,12 @@ MIL_ParameterType_Enumeration::~MIL_ParameterType_Enumeration()
 // Name: MIL_ParameterType_Enumeration::Copy
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-bool MIL_ParameterType_Enumeration::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_Enumeration::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool bIsOptional ) const
 {
-    // Check source
     int id;
-    if( !from.ToId( id ) )
-        return false;
-    to.set_null_value( false );
+    to.set_null_value( !from.ToId( id ) );
     to.mutable_value()->set_enumeration( id );
-    return true;
+    if( to.null_value() )
+        to.clear_value();
+    return !to.null_value() || bIsOptional;
 }

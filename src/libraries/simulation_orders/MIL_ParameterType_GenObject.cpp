@@ -35,12 +35,12 @@ MIL_ParameterType_GenObject::~MIL_ParameterType_GenObject()
 // Name: MIL_ParameterType_GenObject::Copy
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-bool MIL_ParameterType_GenObject::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_GenObject::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool bIsOptional ) const
 {
-    // Check source
     if( !from.IsOfType( *this ) )
         return false;
-
-    to.set_null_value( false );
-    return from.ToGenObject( *to.mutable_value()->mutable_plannedwork() );
+    to.set_null_value( !from.ToGenObject( *to.mutable_value()->mutable_plannedwork() ) );
+    if( to.null_value() )
+        to.clear_value();
+    return !to.null_value() || bIsOptional;
 }

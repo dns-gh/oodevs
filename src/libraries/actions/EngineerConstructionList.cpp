@@ -89,10 +89,9 @@ namespace
 void EngineerConstructionList::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value ( !IsSet() );
-    Common::MsgPlannedWorkList* list = message.mutable_value()->mutable_plannedworklist();
     if( IsSet() )
     {
-        AsnSerializer serializer( *list );
+        AsnSerializer serializer( *message.mutable_value()->mutable_plannedworklist() );
         Accept( serializer );
     }
 }

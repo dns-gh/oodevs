@@ -239,10 +239,7 @@ namespace
     void MarkParameters( Common::MsgMissionParameters& asn )
     {
         for( int i = 0; i < asn.elem_size(); ++i )
-        {
-            asn.mutable_elem(i)->set_null_value ( 1 );
-            asn.mutable_elem(i)->mutable_value()->set_abool( 0 );
-        }
+            asn.mutable_elem( i )->set_null_value( true );
     }
 }
 
@@ -278,11 +275,7 @@ void Mission::FillEmptyParameters( Common::MsgMissionParameters& asn ) const
         {
             const std::string type = boost::algorithm::to_lower_copy( parameter.GetType() );
             if( type == "phaselinelist" )
-            {
-                static Common::MsgLimasOrder limas;
-                asnParam.set_null_value( 0 );
-                *asnParam.mutable_value()->mutable_limasorder() = limas ;
-            }
+                asnParam.set_null_value( false );
             else
                 throw std::runtime_error( "Missing parameter: " + type + " for mission " + type_.GetName() );
         }
@@ -300,29 +293,15 @@ void Mission::SerializeDummyParameters( Common::MsgMissionParameters& asn ) cons
     {
         const kernel::OrderParameter& parameter = it.NextElement();
         Common::MsgMissionParameter& asnParam = *asn.mutable_elem(i);
-        asnParam.set_null_value( parameter.IsOptional() ? 1 : 0 );
+        asnParam.set_null_value( parameter.IsOptional() );
         const std::string type = boost::algorithm::to_lower_copy( parameter.GetType() );
         if( type == "bool" )
         {
-            asnParam.set_null_value( 0 ); // $$$$ SBO 2008-05-26: FIXME: simulation bug
+            asnParam.set_null_value( false ); // $$$$ SBO 2008-05-26: FIXME: simulation bug
             asnParam.mutable_value()->set_abool( false );
         }
-        else if( type == "intelligencelist" )
-        {
-            asnParam.mutable_value()->mutable_intelligencelist()->Clear();
-        }
-        else if( type == "objectivelist" )
-        {
-            asnParam.mutable_value()->mutable_missionobjectivelist()->Clear();
-        }
-        else if( type == "genobjectlist" )
-        {
-            asnParam.mutable_value()->mutable_plannedworklist()->Clear();
-        }
         else if( type == "direction" )
-        {
-            asnParam.mutable_value()->mutable_heading()->set_heading ( 0 );
-        }
+            asnParam.mutable_value()->mutable_heading()->set_heading( 0 );
     }
 }
 

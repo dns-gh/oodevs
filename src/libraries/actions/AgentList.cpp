@@ -114,11 +114,10 @@ namespace
 // -----------------------------------------------------------------------------
 void AgentList::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    message.set_null_value ( !IsSet() );
-    Common::UnitIdList* list = message.mutable_value()->mutable_unitlist();
+    message.set_null_value( !IsSet() );
     if( IsSet() )
     {
-        AsnSerializer serializer( *list );
+        AsnSerializer serializer( *message.mutable_value()->mutable_unitlist() );
         Accept( serializer );
     }
 }

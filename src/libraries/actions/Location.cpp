@@ -107,7 +107,6 @@ void Location::Serialize( xml::xostream& xos ) const
 void Location::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value ( !IsSet() );
-    message.mutable_value()->mutable_location()->set_type( Common::MsgLocation::line );    // enforce initialisation of parameter to force his type
     if( IsSet() )
         LocationBase::CommitTo( *message.mutable_value()->mutable_location() );
 }

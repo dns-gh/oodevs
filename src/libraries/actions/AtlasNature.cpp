@@ -72,8 +72,7 @@ void AtlasNature::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void AtlasNature::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    message.set_null_value ( !IsSet() );
-    message.mutable_value()->mutable_atlasnature(); // enforce initialisation of parameter to force his type
+    message.set_null_value( !IsSet() );
     if( IsSet() )
         message.mutable_value()->mutable_atlasnature()->set_nature( GetValue().GetValue() );
 }

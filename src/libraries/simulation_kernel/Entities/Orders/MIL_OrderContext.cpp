@@ -93,38 +93,6 @@ void MIL_OrderContext::Serialize( Common::MsgMissionParameters& asn ) const
     }
 }
 
-namespace
-{
-    void CleanPhaseLines( Common::MsgMissionParameter& asn )
-    {
-        if( asn.value().has_limasorder() )
-        {
-            for( int i = 0; i < asn.value().limasorder().elem_size(); ++i )
-            {
-                asn.mutable_value()->mutable_limasorder()->mutable_elem( i )->clear_lima();
-                if( asn.value().limasorder().elem( i ).fonctions_size() > 0 )
-                    asn.mutable_value()->mutable_limasorder()->mutable_elem( i )->Clear();
-            }
-            asn.mutable_value()->mutable_limasorder()->mutable_elem()->Clear();
-        }
-        asn.mutable_value()->mutable_limasorder()->Clear();
-    }
-
-    void CleanLimit( Common::MsgMissionParameter& asn )
-    {
-        if( asn.value().has_line() )
-            asn.mutable_value()->mutable_line()->mutable_location()->mutable_coordinates()->Clear();
-        asn.mutable_value()->mutable_line()->Clear();
-    }
-
-    void CleanIntelligences( Common::MsgMissionParameter& asn )
-    {
-        if( asn.value().has_intelligencelist() )
-            asn.mutable_value()->mutable_intelligencelist()->mutable_elem()->Clear();
-        asn.mutable_value()->mutable_intelligencelist()->Clear();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderContext::Accept
 // Created: SBO 2007-11-12
@@ -141,12 +109,12 @@ void MIL_OrderContext::Accept( MIL_IntelligenceOrdersVisitor_ABC& visitor ) cons
 // -----------------------------------------------------------------------------
 void MIL_OrderContext::ReadLimits( const Common::MsgMissionParameter& limit1, const Common::MsgMissionParameter& limit2, const MT_Vector2D& orientationReference )
 {
-    if( !limit1.value().has_line() || !limit2.value().has_line() )
-        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
     if( limit1.null_value() != limit2.null_value() )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_limit );
     if( limit1.null_value() )
         return;
+    if( !limit1.value().has_line() || !limit2.value().has_line() )
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
 
     T_PointVector limit1Data, limit2Data;
     if( !NET_ASN_Tools::ReadLine( limit1.value().line(), limit1Data )
@@ -170,11 +138,13 @@ void MIL_OrderContext::ReadLimits( const Common::MsgMissionParameter& limit1, co
 // -----------------------------------------------------------------------------
 void MIL_OrderContext::ReadPhaseLines( const Common::MsgMissionParameter& asn )
 {
-    if( !asn.value().has_limasorder() )
-        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
     if( !asn.null_value() )
+    {
+        if( !asn.has_value() || !asn.value().has_limasorder() )
+            throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
         for( int i = 0; i < asn.value().limasorder().elem_size(); ++i )
             limas_.push_back( MIL_LimaOrder( asn.value().limasorder().elem(i) ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -183,10 +153,12 @@ void MIL_OrderContext::ReadPhaseLines( const Common::MsgMissionParameter& asn )
 // -----------------------------------------------------------------------------
 void MIL_OrderContext::ReadDirection( const Common::MsgMissionParameter& asn )
 {
-    if( !asn.value().has_heading() )
-        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
     if( !asn.null_value() )
+    {
+        if( !asn.has_value() || !asn.value().has_heading() )
+            throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
         dirDanger_ = weather::ReadDirection( asn.value().heading() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -195,11 +167,13 @@ void MIL_OrderContext::ReadDirection( const Common::MsgMissionParameter& asn )
 // -----------------------------------------------------------------------------
 void MIL_OrderContext::ReadIntelligences( const Common::MsgMissionParameter& asn )
 {
-    if( !asn.value().has_intelligencelist() )
-        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
     if( !asn.has_null_value() )
+    {
+        if( !asn.has_value() || !asn.value().has_intelligencelist() )
+            throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
         for( int i = 0; i < asn.value().intelligencelist().elem_size(); ++i )
             intelligences_.push_back( new MIL_IntelligenceOrder( asn.value().intelligencelist().elem(i) ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -208,8 +182,7 @@ void MIL_OrderContext::ReadIntelligences( const Common::MsgMissionParameter& asn
 // -----------------------------------------------------------------------------
 void MIL_OrderContext::WritePhaseLines( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value( 0 );
-    asn.mutable_value()->mutable_limasorder(); // force initialization of message parameter
+    asn.set_null_value( limas_.empty() );
     for( CIT_LimaVector it = limas_.begin(); it != limas_.end(); ++it )
         it->Serialize( *asn.mutable_value()->mutable_limasorder()->add_elem() );
 }
@@ -220,8 +193,9 @@ void MIL_OrderContext::WritePhaseLines( Common::MsgMissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void MIL_OrderContext::WriteLimits( Common::MsgMissionParameter& limit1, Common::MsgMissionParameter& limit2 ) const
 {
-    limit1.set_null_value( !fuseau_.GetLeftLimit() || !fuseau_.GetRightLimit() );
-    limit2.set_null_value( !fuseau_.GetLeftLimit() || !fuseau_.GetRightLimit() );
+    const bool isValid = fuseau_.GetLeftLimit() && fuseau_.GetRightLimit();
+    limit1.set_null_value( !isValid );
+    limit2.set_null_value( !isValid );
     if( !limit1.null_value() )
     {
         NET_ASN_Tools::WriteLine( fuseau_.GetLeftLimit ()->GetPoints(), *limit1.mutable_value()->mutable_line() );
@@ -235,7 +209,7 @@ void MIL_OrderContext::WriteLimits( Common::MsgMissionParameter& limit1, Common:
 // -----------------------------------------------------------------------------
 void MIL_OrderContext::WriteDirection( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value( 0 );
+    asn.set_null_value( false );
     NET_ASN_Tools::WriteDirection( dirDanger_, *asn.mutable_value()->mutable_heading() );
 }
 
@@ -245,8 +219,7 @@ void MIL_OrderContext::WriteDirection( Common::MsgMissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void MIL_OrderContext::WriteIntelligences( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value( 0 );
-    asn.mutable_value()->mutable_intelligencelist();   // force initialization of message parameter
+    asn.set_null_value( intelligences_.empty() );
     for( CIT_IntelligenceOrders it = intelligences_.begin(); it != intelligences_.end(); ++it )
         (*it)->Serialize( *asn.mutable_value()->mutable_intelligencelist()->add_elem() );
 }

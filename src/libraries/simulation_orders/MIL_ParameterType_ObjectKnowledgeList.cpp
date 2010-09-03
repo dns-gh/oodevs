@@ -35,11 +35,12 @@ MIL_ParameterType_ObjectKnowledgeList::~MIL_ParameterType_ObjectKnowledgeList()
 // Name: MIL_ParameterType_ObjectKnowledgeList::Copy
 // Created: NLD 2006-11-ObjectList
 //-----------------------------------------------------------------------------
-bool MIL_ParameterType_ObjectKnowledgeList::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_ObjectKnowledgeList::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool bIsOptional ) const
 {
-    // Check source
     if( !from.IsOfType( *this ) )
         return false;
-    to.set_null_value( false );
-    return from.ToObjectKnowledgeList( *to.mutable_value()->mutable_objectknowledgelist() );
+    to.set_null_value( !from.ToObjectKnowledgeList( *to.mutable_value()->mutable_objectknowledgelist() ) );
+    if( to.null_value() )
+        to.clear_value();
+    return !to.null_value() || bIsOptional;
 }

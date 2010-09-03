@@ -39,6 +39,6 @@ MissionParameterAgent::~MissionParameterAgent()
 // -----------------------------------------------------------------------------
 void MissionParameterAgent::Serialize( Common::MsgMissionParameter& parameter ) const
 {
-    parameter.set_null_value( 0 );
+    parameter.set_null_value( false );
     parameter.mutable_value()->mutable_unit()->set_id( agent_.GetId() );
 }

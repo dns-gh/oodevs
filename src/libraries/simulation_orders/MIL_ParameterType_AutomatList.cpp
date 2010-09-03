@@ -36,12 +36,13 @@ MIL_ParameterType_AutomatList::~MIL_ParameterType_AutomatList()
 // Name: MIL_ParameterType_AutomatList::Copy
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-bool MIL_ParameterType_AutomatList::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_AutomatList::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool bIsOptional ) const
 {
     // Check source
     if( !from.IsOfType( *this ) )
         return false;
-
-    to.set_null_value( false );
-    return from.ToAutomatList( *to.mutable_value()->mutable_automatlist() );
+    to.set_null_value( !from.ToAutomatList( *to.mutable_value()->mutable_automatlist() ) );
+    if( to.null_value() )
+        to.clear_value();
+    return !to.null_value() || bIsOptional;
 }

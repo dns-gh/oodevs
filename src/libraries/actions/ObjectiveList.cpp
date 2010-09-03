@@ -91,10 +91,9 @@ namespace
 void ObjectiveList::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
-    Common::MsgMissionObjectiveList* list = message.mutable_value()->mutable_missionobjectivelist();
     if( IsSet() )
     {
-        AsnSerializer serializer( *list );
+        AsnSerializer serializer( *message.mutable_value()->mutable_missionobjectivelist() );
         Accept( serializer );
     }
 }

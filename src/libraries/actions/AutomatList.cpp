@@ -90,10 +90,9 @@ namespace
 void AutomatList::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
-    Common::AutomatIdList* list = message.mutable_value()->mutable_automatlist();
     if( IsSet() )
     {
-        AsnSerializer serializer( *list );
+        AsnSerializer serializer( *message.mutable_value()->mutable_automatlist() );
         Accept( serializer );
     }
 }

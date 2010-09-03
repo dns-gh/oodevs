@@ -89,8 +89,7 @@ void Direction::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void Direction::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    message.set_null_value ( !IsSet() );
-    message.mutable_value()->mutable_heading();    // enforce initialisation of parameter to force his type
+    message.set_null_value( !IsSet() );
     if( IsSet() )
         message.mutable_value()->mutable_heading()->set_heading( GetValue() );
 }

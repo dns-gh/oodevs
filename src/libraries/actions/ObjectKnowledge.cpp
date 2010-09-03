@@ -99,7 +99,6 @@ void ObjectKnowledge::Accept( ParameterVisitor_ABC& visitor ) const
 void ObjectKnowledge::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
-    message.mutable_value()->mutable_objectknowledge();    // enforce initialisation of parameter to force his type
     if( IsSet() )
         CommitTo( *message.mutable_value()->mutable_objectknowledge() );
 }

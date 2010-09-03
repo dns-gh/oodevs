@@ -35,18 +35,14 @@ MIL_ParameterType_Numeric::~MIL_ParameterType_Numeric()
 // Name: MIL_ParameterType_Numeric::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-bool MIL_ParameterType_Numeric::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_Numeric::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool bIsOptional ) const
 {
-    // Check source
     if( !from.IsOfType( *this ) )
         return false;
-
-    to.set_null_value( false );
     float value;
-    if( from.ToNumeric( value ) )
-    {
-        to.mutable_value()->set_areal( value );
-        return true;
-    }
-    return false;
+    to.set_null_value( !from.ToNumeric( value ) );
+    to.mutable_value()->set_areal( value );
+    if( to.null_value() )
+        to.clear_value();
+    return !to.null_value() || bIsOptional;
 }

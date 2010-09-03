@@ -74,7 +74,6 @@ void PopulationKnowledge::Accept( ParameterVisitor_ABC& visitor ) const
 void PopulationKnowledge::CommitTo( MsgMissionParameter& message ) const
 {
     message.set_null_value ( !IsSet() );
-    message.mutable_value()->mutable_populationknowledge();    // enforce initialisation of parameter to force his type
     if( IsSet() )
         Entity< PopulationKnowledge_ABC >::CommitTo< PopulationKnowledgeId >( *message.mutable_value()->mutable_populationknowledge() );
 }

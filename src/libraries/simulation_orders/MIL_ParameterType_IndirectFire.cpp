@@ -35,17 +35,12 @@ MIL_ParameterType_IndirectFire::~MIL_ParameterType_IndirectFire()
 // Name: MIL_ParameterType_IndirectFire::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-bool MIL_ParameterType_IndirectFire::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_IndirectFire::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool bIsOptional ) const
 {
-    // Check source
     if( !from.IsOfType( *this ) )
         return false;
-    to.set_null_value( false );
-    Common::FireId fire;
-    if( from.ToIndirectFire( fire ) )
-    {
-        to.mutable_value()->mutable_tirindirect()->set_id( fire.id() );
-        return true;
-    }
-    return false;
+    to.set_null_value( !from.ToIndirectFire( *to.mutable_value()->mutable_tirindirect() ) );
+    if( to.null_value() )
+        to.clear_value();
+    return !to.null_value() || bIsOptional;
 }

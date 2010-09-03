@@ -62,7 +62,7 @@ KnowledgeGroup::~KnowledgeGroup()
 void KnowledgeGroup::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
-    if( IsSet() && GetValue())
+    if( IsSet() && GetValue() ) // $$$$ _RC_ SBO 2010-09-03: what if not ?
         message.mutable_value()->mutable_knowledgegroup()->set_id( GetValue()->GetId() );
 }
 

@@ -90,7 +90,6 @@ void Objective::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC
 void Objective::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
-    message.mutable_value()->mutable_missionobjective();    // enforce initialisation of parameter to force his type
     if( IsSet() )
         CommitTo( *message.mutable_value()->mutable_missionobjective() );
 }

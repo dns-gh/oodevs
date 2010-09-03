@@ -77,8 +77,7 @@ void DotationType::CommitTo( std::string& content ) const
 // -----------------------------------------------------------------------------
 void DotationType::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    message.set_null_value ( !IsSet() );
-    message.mutable_value()->mutable_resourcetype();    // enforce initialisation of parameter to force his type
+    message.set_null_value( !IsSet() );
     message.mutable_value()->mutable_resourcetype()->set_id( type_.GetId() );
 }
 

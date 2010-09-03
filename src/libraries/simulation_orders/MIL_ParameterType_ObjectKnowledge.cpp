@@ -41,5 +41,7 @@ bool MIL_ParameterType_ObjectKnowledge::Copy( const MIL_MissionParameter_ABC& fr
     if( !from.IsOfType( *this ) )
         return false;
     to.set_null_value( !from.ToObjectKnowledge( *to.mutable_value()->mutable_objectknowledge() ) );
+    if( to.null_value() )
+        to.clear_value();
     return !to.null_value() || bIsOptional;
 }

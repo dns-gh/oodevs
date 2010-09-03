@@ -85,10 +85,12 @@ void MaintenancePriorities::AddPriority( const EquipmentType& value )
 void MaintenancePriorities::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
-    Common::MsgLogMaintenancePriorities* list = message.mutable_value()->mutable_logmaintenancepriorities();
     if( IsSet() )
+    {
+        Common::MsgLogMaintenancePriorities* list = message.mutable_value()->mutable_logmaintenancepriorities();
         for( unsigned int i = 0; i < priorities_.size(); ++i )
             list->add_elem()->set_id( priorities_.at( i )->GetId() );
+    }
 }
 
 // -----------------------------------------------------------------------------

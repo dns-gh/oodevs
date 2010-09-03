@@ -86,10 +86,9 @@ namespace
 void LocationList::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
-    Common::MsgLocationList* list = message.mutable_value()->mutable_locationlist();
     if( IsSet() )
     {
-        ::MessageSerializer serializer( *list );
+        ::MessageSerializer serializer( *message.mutable_value()->mutable_locationlist() );
         Accept( serializer );
     }
 }

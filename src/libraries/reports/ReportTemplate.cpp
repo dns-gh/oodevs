@@ -56,10 +56,16 @@ QString ReportTemplate::RenderMessage( const MsgsSimToClient::MsgReport& message
     {
         const Common::MsgMissionParameters& parameters = message.parametres();
         for( int i = 0; i < parameters.elem_size(); ++i )
-            if( parameters.elem( i ).value().has_enumeration() )
-                messageStr = messageStr.arg( enumerations_[ enums++ ][ parameters.elem( i ).value().enumeration() ] );
-            else
-                messageStr = messageStr.arg( factory_.RenderParameter( parameters.elem( i ) ) );
+        {
+            const Common::MsgMissionParameter& parameter = parameters.elem( i );
+            if( !parameter.null_value() )
+            {
+                if( parameter.value().has_enumeration() )
+                    messageStr = messageStr.arg( enumerations_[ enums++ ][ parameter.value().enumeration() ] );
+                else
+                    messageStr = messageStr.arg( factory_.RenderParameter( parameter ) );
+            }
+        }
     }
     return messageStr;
 }

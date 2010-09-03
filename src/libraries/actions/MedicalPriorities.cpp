@@ -80,10 +80,12 @@ void MedicalPriorities::AddMedicalPriority( E_HumanWound value )
 void MedicalPriorities::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
-    Common::MsgLogMedicalPriorities* list = message.mutable_value()->mutable_logmedicalpriorities();
     if( IsSet() )
+    {
+        Common::MsgLogMedicalPriorities* list = message.mutable_value()->mutable_logmedicalpriorities();
         for( unsigned int i = 0; i < priorities_.size(); ++i )
             list->add_elem( Common::EnumHumanWound( priorities_.at( i ) ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

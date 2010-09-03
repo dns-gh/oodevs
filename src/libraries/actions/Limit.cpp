@@ -59,7 +59,6 @@ Limit::~Limit()
 void Limit::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
-    message.mutable_value()->mutable_line()->mutable_location()->set_type( Common::MsgLocation::polygon );    // enforce initialisation of parameter to force his type
     if( IsSet() )
         Location::CommitTo( *message.mutable_value()->mutable_line()->mutable_location() );
 }

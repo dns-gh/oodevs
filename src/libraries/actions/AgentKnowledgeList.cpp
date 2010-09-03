@@ -38,7 +38,7 @@ AgentKnowledgeList::AgentKnowledgeList( const OrderParameter& parameter, const C
     : Parameter< QString >( parameter )
 {
     for( int i = 0; i < message.elem_size(); ++i )
-        AddParameter( *new AgentKnowledge( OrderParameter( tools::translate( "Parameter", "Agent knowledge %1" ).arg( i + 1 ).ascii(), "agentknowledeg", false ), message.elem(i).id(), converter, owner, controller ) );
+        AddParameter( *new AgentKnowledge( OrderParameter( tools::translate( "Parameter", "Agent knowledge %1" ).arg( i + 1 ).ascii(), "agentknowledge", false ), message.elem(i).id(), converter, owner, controller ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,10 +89,9 @@ namespace
 void AgentKnowledgeList::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
-    Common::UnitKnowledgeIdList* list = message.mutable_value()->mutable_unitknowledgelist();
     if( IsSet() )
     {
-        AsnSerializer serializer( *list );
+        AsnSerializer serializer( *message.mutable_value()->mutable_unitknowledgelist() );
         Accept( serializer );
     }
 }

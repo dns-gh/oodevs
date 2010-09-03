@@ -35,13 +35,11 @@ MIL_ParameterType_Bool::~MIL_ParameterType_Bool()
 // Name: MIL_ParameterType_Bool::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-bool MIL_ParameterType_Bool::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_Bool::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool bIsOptional ) const
 {
-    // Check source
     bool value;
-    if( !from.ToBool( value ) )
-        return false;
-    to.set_null_value( false );
-    to.mutable_value()->set_abool( value );
-    return true;
+    to.set_null_value( !from.ToBool( value ) );
+    if( to.null_value() )
+        to.clear_value();
+    return !to.null_value() || bIsOptional;
 }

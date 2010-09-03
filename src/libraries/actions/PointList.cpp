@@ -62,7 +62,6 @@ PointList::~PointList()
 void PointList::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
-    message.mutable_value()->mutable_pointlist();    // enforce initialisation of parameter to force his type
     if( IsSet() )
         LocationList::CommitTo< Common::MsgPointList >( *message.mutable_value()->mutable_pointlist() );
 }

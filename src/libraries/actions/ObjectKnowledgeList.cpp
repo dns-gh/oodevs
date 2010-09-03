@@ -89,10 +89,9 @@ namespace
 void ObjectKnowledgeList::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
-    Common::ObjectKnowledgeIdList* list = message.mutable_value()->mutable_objectknowledgelist();
     if( IsSet() )
     {
-        AsnSerializer serializer( *list );
+        AsnSerializer serializer( *message.mutable_value()->mutable_objectknowledgelist() );
         Accept( serializer );
     }
 }

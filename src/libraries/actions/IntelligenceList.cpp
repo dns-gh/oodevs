@@ -92,10 +92,9 @@ namespace
 void IntelligenceList::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
-    Common::MsgIntelligenceList* list = message.mutable_value()->mutable_intelligencelist();
     if( IsSet() )
     {
-        AsnSerializer serializer( *list );
+        AsnSerializer serializer( *message.mutable_value()->mutable_intelligencelist() );
         Accept( serializer );
     }
 }

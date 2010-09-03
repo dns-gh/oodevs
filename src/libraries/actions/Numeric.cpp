@@ -62,7 +62,6 @@ void Numeric::Serialize( xml::xostream& xos ) const
 void Numeric::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
-    message.mutable_value();    // enforce initialisation of parameter to force his type
     if( IsSet() )
         message.mutable_value()->set_areal( GetValue() );
 }

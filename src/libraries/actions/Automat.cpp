@@ -82,8 +82,7 @@ Automat::~Automat()
 // -----------------------------------------------------------------------------
 void Automat::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    message.set_null_value ( !IsSet() );
-    message.mutable_value()->mutable_automat();    // enforce initialisation of parameter to force his type
+    message.set_null_value( !IsSet() );
     if( IsSet() )
         Entity< Automat_ABC >::CommitTo< Common::AutomatId >( *message.mutable_value()->mutable_automat() );
 }

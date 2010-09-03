@@ -41,5 +41,7 @@ bool MIL_ParameterType_AgentKnowledge::Copy( const MIL_MissionParameter_ABC& fro
     if( !from.IsOfType( *this ) )
         return false;
     to.set_null_value( !from.ToAgentKnowledge( *to.mutable_value()->mutable_unitknowledge() ) );
+    if( to.null_value() )
+        to.clear_value();
     return !to.null_value() || bIsOptional;
 }

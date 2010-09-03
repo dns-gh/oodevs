@@ -65,8 +65,7 @@ void Enumeration::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void Enumeration::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    message.set_null_value ( !IsSet() );
-    message.mutable_value();    // enforce initialisation of parameter to force his type
+    message.set_null_value( !IsSet() );
     if( IsSet() )
         message.mutable_value()->set_enumeration( value_.GetId() );
 }

@@ -93,7 +93,6 @@ void AgentKnowledge::Accept( ParameterVisitor_ABC& visitor ) const
 void AgentKnowledge::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
-    message.mutable_value()->mutable_unitknowledge();    // enforce initialisation of parameter to force his type
     if( IsSet() )
         Entity< AgentKnowledge_ABC >::CommitTo( boost::bind ( &Common::UnitKnowledgeId::set_id, boost::ref(*message.mutable_value()->mutable_unitknowledge()), _1 ) );
 }

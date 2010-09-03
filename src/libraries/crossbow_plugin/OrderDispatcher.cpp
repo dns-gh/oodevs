@@ -289,11 +289,11 @@ void OrderDispatcher::SetParameter( Common::MsgMissionParameter& parameter, cons
     try
     {
         const kernel::OrderParameter* param = GetParameterByName( type, name );
-        parameter.set_null_value( param ? 0 : 1 );
+        parameter.set_null_value( ! param );
         if( param )
             serializer_->Serialize( parameter, *param, parameterId, GetField< std::string >( row, "value" ) );
     }
-    catch ( std::exception& e )
+    catch( std::exception& e )
     {
         std::stringstream ssError;
         ssError << "Cannot serialize parameter : " << name << " [" << type.GetName() << "]" << std::endl << e.what();

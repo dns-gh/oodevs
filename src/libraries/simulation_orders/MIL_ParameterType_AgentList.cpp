@@ -40,6 +40,8 @@ bool MIL_ParameterType_AgentList::Copy( const MIL_MissionParameter_ABC& from, Co
     // Check source
     if( !from.IsOfType( *this ) )
         return false;
-    to.set_null_value( false );
-    return from.ToAgentList( *to.mutable_value()->mutable_unitlist() );
+    to.set_null_value( !from.ToAgentList( *to.mutable_value()->mutable_unitlist() ) );
+    if( to.null_value() )
+        to.clear_value();
+    return !to.null_value(); // || bIsOptional;
 }

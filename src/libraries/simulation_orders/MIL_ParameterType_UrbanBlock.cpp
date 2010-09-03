@@ -41,5 +41,7 @@ bool MIL_ParameterType_UrbanBlock::Copy( const MIL_MissionParameter_ABC& from, C
     if( !from.IsOfType( *this ) )
         return false;
     to.set_null_value( !from.ToUrbanBlock( *to.mutable_value()->mutable_urbanblock() ) );
+    if( to.null_value() )
+        to.clear_value();
     return !to.null_value() || bIsOptional;
 }

@@ -88,10 +88,9 @@ namespace
 void PathList::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
-    Common::MsgPathList* list = message.mutable_value()->mutable_pathlist();
     if( IsSet() )
     {
-        MessageSerializer serializer( *list );
+        MessageSerializer serializer( *message.mutable_value()->mutable_pathlist() );
         Accept( serializer );
     }
 }

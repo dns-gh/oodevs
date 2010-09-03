@@ -39,7 +39,7 @@ MissionParameterPhaseLines::~MissionParameterPhaseLines()
 // -----------------------------------------------------------------------------
 void MissionParameterPhaseLines::Serialize( Common::MsgMissionParameter& parameter ) const
 {
-    parameter.set_null_value( 0 );
+    parameter.set_null_value( false );
     unsigned int i = 0;
     for( T_PhaseLines::const_iterator it = phaseLines_.begin(); it != phaseLines_.end(); ++it, ++i )
         (*it)->Serialize( *parameter.mutable_value()->mutable_limasorder()->mutable_elem( i ) );

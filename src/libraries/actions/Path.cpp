@@ -135,9 +135,8 @@ void Path::ReadPoint( xml::xistream& xis )
 void Path::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
-    Common::MsgLocation* path = message.mutable_value()->mutable_path()->mutable_location();
     if( IsSet() )
-        CommitTo( *path );
+        CommitTo( *message.mutable_value()->mutable_path()->mutable_location() );
 }
 
 // -----------------------------------------------------------------------------

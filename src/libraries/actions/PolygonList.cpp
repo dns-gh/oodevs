@@ -62,7 +62,6 @@ PolygonList::~PolygonList()
 void PolygonList::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
-    message.mutable_value()->mutable_polygonlist();    // enforce initialisation of parameter to force his type
     if( IsSet() )
         LocationList::CommitTo< Common::MsgPolygonList >( *message.mutable_value()->mutable_polygonlist() );
 }
