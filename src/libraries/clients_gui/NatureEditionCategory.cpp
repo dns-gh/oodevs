@@ -149,12 +149,15 @@ void NatureEditionCategory::SetNature( const QString& nature )
 // -----------------------------------------------------------------------------
 void NatureEditionCategory::Select( const QString& value )
 {
+    QString translatedValue = tools::translate( "models::app6",  value );
     for( int i = 0; i < box_->count(); ++i )
-        if( value == box_->text( i ) )
+    {
+        if( translatedValue == box_->text( i ) )
         {
             box_->setCurrentItem( i );
             OnComboChange();
             return;
         }
+    }
     // throw ?
 }
