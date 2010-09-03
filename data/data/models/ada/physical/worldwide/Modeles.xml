@@ -7,6 +7,24 @@
         <mission name="move"/>
         <mission name="follow"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="LandingCraft" file="Marine\Pions\Chalands de Debarquement\model.bms" name="Landing Craft">
       <missions>
@@ -19,9 +37,45 @@
           <fragorder name="Modify Disembarking point"/>
         </mission>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="MarineCP" file="Marine\Pions\PC\model.bms" name="Marine CP">
       <missions/>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="AntitankHelicopterPatrol" file="Appui\Alat\Pions\Pat Hac\model.bms" name="Antitank Helicopter Patrol">
       <missions>
@@ -110,6 +164,24 @@
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.bms" name="Transport Helicopter Patrol">
       <missions>
@@ -168,6 +240,24 @@
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="ShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Sacp Roland Carol\model.bms" name="Short Range Surface To Air Defense Troop">
       <missions>
@@ -184,6 +274,24 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.bms" name="Very Short Range Surface To Air Defense Troop">
       <missions>
@@ -200,6 +308,24 @@
         <mission name="Air Defense Artillery (Very Short Range) - defend area (from a position)"/>
         <mission name="Air Defense Artillery (Very Short Range) - monitor"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="VeryShortRangeSurfaceToAirBatteryCP" file="Appui\ArtDsa\Pions\PC MISTRAL\model.bms" name="Very Short Range Surface To Air Battery CP">
       <missions>
@@ -213,6 +339,24 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="ShortRangeSurfaceToAirDefenseBatteryCP" file="Appui\ArtDsa\Pions\PC ROLAND CAROL\model.bms" name="Short Range Surface To Air Defense Battery CP">
       <missions>
@@ -226,6 +370,24 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="TheaterHighAltitudeAeraDefenseCP" file="Appui\ArtDsa\Pions\PC HAWK\model.bms" name="Theater High Altitude Aera Defense CP">
       <missions>
@@ -239,6 +401,24 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Son Vab\Model.bms" name="Infantry platoon">
       <missions>
@@ -286,6 +466,24 @@
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="SectionInfanterie_MILAN" file="Melee\Inf\Pions\Son Milan\Model.bms" name="MRA infantry platoon">
       <missions>
@@ -306,6 +504,24 @@
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="SectionInfanterie_HOT" file="Melee\Inf\Pions\Son Hot\Model.bms" name="LRA infantry platoon">
       <missions>
@@ -326,6 +542,24 @@
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="GroupeInfanterie_Mortier" file="Melee\Inf\Pions\Grp Mortier\Model.bms" name="Mortar support troop">
       <missions>
@@ -344,6 +578,24 @@
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\PC\Model.bms" name="Infantry company CP">
       <missions>
@@ -367,6 +619,24 @@
         <mission name="Infantry - hold"/>
         <mission name="Infantry - destroy"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="PC_ASS" file="Appui\ArtFdp\Pions\PC\model.bms" name="Battery CP">
       <missions>
@@ -380,6 +650,24 @@
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="SectionLOGTC2" file="Appui\Log\Pions\Model.bms" name="PC TC2">
       <missions>
@@ -393,6 +681,24 @@
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="SectionMaintenance" file="Appui\Log\Pions\Model.bms" name="Section Maintenance">
       <missions>
@@ -414,6 +720,24 @@
         <mission name="move"/>
         <mission name="cross"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="GroupeMaintenanceEvacuation" file="Appui\Log\Pions\Model.bms" name="Groupe Maintenance Evacuation">
       <missions>
@@ -437,6 +761,24 @@
         <mission name="adopt transportation posture"/>
         <mission name="Logistics - reinforce"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="SectionTriage" file="Appui\Log\Pions\Model.bms" name="Section Triage Modulaire">
       <missions>
@@ -456,6 +798,24 @@
         <mission name="move"/>
         <mission name="Logistics - reinforce"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="ACA" file="Appui\Log\Pions\Model.bms" name="ACA">
       <missions>
@@ -479,6 +839,24 @@
         <mission name="adopt transportation posture"/>
         <mission name="Logistics - reinforce"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="UniteSoin" file="Appui\Log\Pions\Model.bms" name="Health unit">
       <missions>
@@ -498,6 +876,24 @@
         <mission name="cross"/>
         <mission name="Logistics - reinforce"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="DecontaminationNBC" file="Appui\Log\Pions\Model.bms" name="Decontamination NBC">
       <missions>
@@ -517,6 +913,24 @@
         <mission name="adopt transportation posture"/>
         <mission name="Logistics - reinforce"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="UniteSpy" file="Appui\Log\Pions\Model.bms" name="Unite PSY">
       <missions>
@@ -536,6 +950,24 @@
         <mission name="cross"/>
         <mission name="Logistics - reinforce"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="GroupeRamassage" file="Appui\Log\Pions\Model.bms" name="Groupe Ramassage">
       <missions>
@@ -560,6 +992,24 @@
         <mission name="adopt transportation posture"/>
         <mission name="Logistics - reinforce"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="SectionLOG" file="Appui\Log\Pions\Model.bms" name="PC Log">
       <missions>
@@ -576,6 +1026,24 @@
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="PionConvoi" file="Appui\Log\Pions\Model.bms" name="Truck convoy">
       <missions>
@@ -590,6 +1058,24 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="PionTransport" file="Appui\Log\Pions\Model.bms" name="Peloton Transport">
       <missions>
@@ -608,6 +1094,24 @@
           <fragorder name="Modify Disembarking point"/>
         </mission>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="PionStock" file="Appui\Log\Pions\Model.bms" name="Pion stock">
       <missions>
@@ -621,6 +1125,24 @@
         <mission name="cross"/>
         <mission name="Logistics - reinforce"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="SectionASS_LRM" file="Appui\ArtFdp\Pions\Lanceur LRM\Model.bms" name="MLRS firing platoon">
       <missions>
@@ -642,6 +1164,24 @@
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Radar COBRA\Model.bms" name="Firefinder radar">
       <missions>
@@ -656,6 +1196,24 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="GroupeASS_RATAC" file="Appui\ArtFdp\Pions\Grp RATAC\Model.bms" name="Artillery locating radar group">
       <missions>
@@ -670,6 +1228,24 @@
         <mission name="withdraw"/>
         <mission name="cross"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="SectionASS_EO" file="Appui\ArtFdp\Pions\EO\Model.bms" name="SD">
       <missions>
@@ -684,6 +1260,24 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="SectionASS_EO" file="Appui\ArtFdp\Pions\EOP\Model.bms" name="LRSD">
       <missions>
@@ -700,6 +1294,24 @@
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="PelotonAppuiMob" file="Appui\AppuiMob\Pions\Model.bms" name="Peloton Transport Blindes">
       <missions>
@@ -716,6 +1328,24 @@
           <fragorder name="Modify Disembarking point"/>
         </mission>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="PatrouilleCirculation" file="Appui\Circulation\Pions\Model.bms" name="Patrouille Circulation">
       <missions>
@@ -739,6 +1369,24 @@
         <mission name="manage prisoners"/>
         <mission name="Engineer - reinforce"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="Refugie" file="Population\Refugies\Pions\Refugie\Model.bms" name="Refugee">
       <missions>
@@ -750,6 +1398,24 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="Milice" file="Population\Milices\Pion\Model.bms" name="Militia">
       <missions>
@@ -769,6 +1435,24 @@
         <mission name="Asymetric - attack population (in an area)"/>
         <mission name="Asymetric - report information"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="PCBIA" file="Appui\Trans\Pions\Model.bms" name="Command post">
       <missions>
@@ -776,6 +1460,24 @@
         <mission name="adopt transportation posture"/>
         <mission name="move"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="GroupeInfanterie_Commando" file="Melee\Inf\Pions\Grp Commando\Model.bms" name="Commando troop">
       <missions>
@@ -791,6 +1493,24 @@
         <mission name="follow"/>
         <mission name="Infantry - monitor"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="TheaterHighAltitudeDefenseTroop" file="Appui\ArtDsa\Pions\Samp Hawk\Model.bms" name="Theater High Altitude Defense Troop">
       <missions>
@@ -807,6 +1527,24 @@
         <mission name="Air Defense Artillery - defend area (from a position)"/>
         <mission name="Air Defense Artillery - monitor"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="PCAppuiMob" file="Appui\AppuiMob\Pions\Model.bms" name="PC Appui Mob">
       <missions>
@@ -822,6 +1560,24 @@
           <fragorder name="Modify Disembarking point"/>
         </mission>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="Terroriste" file="Population\Asymetriques\Terroriste\Pion\Model.bms" name="Terroriste">
       <missions>
@@ -833,6 +1589,24 @@
         <mission name="Asymetric - carry out a bombing (against population)"/>
         <mission name="adopt transportation posture"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.bms" name="Scout patrol">
       <missions>
@@ -861,6 +1635,24 @@
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.bms" name="Antitank patrol">
       <missions>
@@ -893,6 +1685,24 @@
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="PC_ABC" file="Melee\Abc\Pions\PC\model.bms" name="Armored squadron CP">
       <missions>
@@ -909,6 +1719,24 @@
         <mission name="prepare to (take up position)"/>
         <mission name="Armor CP To Deploy"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.bms" name="MBT platoon">
       <missions>
@@ -954,6 +1782,24 @@
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.bms" name="Light armored platoon">
       <missions>
@@ -998,6 +1844,24 @@
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.bms" name="Mobility support platoon">
       <missions>
@@ -1025,6 +1889,24 @@
         <mission name="Engineer - resume work"/>
         <mission name="Engineer - restore a route"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.bms" name="Countermobility platoon">
       <missions>
@@ -1053,6 +1935,24 @@
         <mission name="Engineer - resume work"/>
         <mission name="Engineer - restore a route"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.bms" name="Bridging troop">
       <missions>
@@ -1080,6 +1980,24 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.bms" name="Deployment support platoon">
       <missions>
@@ -1107,6 +2025,24 @@
         <mission name="Engineer - resume work"/>
         <mission name="Engineer - restore a route"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="Patrouille_RBRR_Blindee" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche blindee\Model.bms" name="LRS troop">
       <missions>
@@ -1122,11 +2058,47 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="Drone_SDTI" file="\Appui\Rens\Pions\Roim\Drone SDTI\Model.bms" name="Drone">
       <missions>
         <mission name="Imagery Intelligence (real time UAV) - report information"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="Section_SDTI_MiseEnOeuvre" file="\Appui\Rens\Pions\Roim\Son mise en oeuvre SDTI\Model.bms" name="Drones station_">
       <missions>
@@ -1140,6 +2112,24 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="Systeme_Start" file="Appui\Rens\Pions\Roem\Systeme START_\Model.bms" name="Listening station">
       <missions>
@@ -1153,6 +2143,24 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="section_Brovab" file="Appui\Rens\Pions\Roem\BROVAB\Model.bms" name="Jamming station">
       <missions>
@@ -1166,6 +2174,24 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="Systeme_Stair" file="Appui\Rens\Pions\Roem\Systeme STAIR\Model.bms" name="Radar detection station">
       <missions>
@@ -1179,6 +2205,24 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="Patrouille_RBRR_RASIT" file="\Appui\Rens\Pions\Rohum\RBRR\Pat recherche RASIT\Model.bms" name="Ground radar surveillance">
       <missions>
@@ -1193,6 +2237,24 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="Equipe_NBC_Dec" file="Appui\Nbc\Pions\Pat Dec\model.bms" name="NBC decontamination troop">
       <missions>
@@ -1208,6 +2270,24 @@
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="Patrouille_NBC_Reco" file="Appui\Nbc\Pions\Pat Reco\model.bms" name="NBC reconnaissance troop">
       <missions>
@@ -1223,6 +2303,24 @@
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="Patrouille_NBC_RE" file="Appui\Nbc\Pions\Pat RE\model.bms" name="NBC ROTA troop">
       <missions>
@@ -1237,6 +2335,24 @@
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son TRF1\Model.bms" name="Firing platoon">
       <missions>
@@ -1256,6 +2372,24 @@
           <fragorder name="Fire"/>
         </mission>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Son Reco TRF1\Model.bms" name="Field artillery reconnaissance">
       <missions>
@@ -1270,6 +2404,24 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hap\model.bms" name="Escort And Close Support Helicopter Patrol">
       <missions>
@@ -1358,6 +2510,24 @@
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="AirDefenseHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\model.bms" name="Air Defence Helicopter Patrol">
       <missions>
@@ -1430,6 +2600,24 @@
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="GeneralPurposeHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.bms" name="General Purpose Helicopter Patrol">
       <missions>
@@ -1480,6 +2668,24 @@
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="AACCP" file="Appui\Alat\Pions\Pat Hm\model.bms" name="AAC CP">
       <missions>
@@ -1512,6 +2718,24 @@
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="AirCP" file="Air\Pions\PC\model.bms" name="Air CP">
       <missions>
@@ -1522,6 +2746,24 @@
           <fragorder name="Cancel maneuver"/>
         </mission>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="HS_Police" file="Emergency\Pions\Police\Model.bms" name="HS - Police">
       <missions>
@@ -1534,6 +2776,24 @@
         <mission name="move"/>
         <mission name="park"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="HS_Medical" file="Emergency\Pions\Medical\Model.bms" name="HS - Medical">
       <missions>
@@ -1544,6 +2804,24 @@
         <mission name="move"/>
         <mission name="park"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="HS_Firefighter" file="Emergency\Pions\Firefighter\Model.bms" name="HS - Firefighter">
       <missions>
@@ -1555,6 +2833,24 @@
         <mission name="move"/>
         <mission name="park"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="HS_Safety" file="Emergency\Pions\Safety\Model.bms" name="HS - Safety">
       <missions>
@@ -1565,11 +2861,47 @@
         <mission name="move"/>
         <mission name="park"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
     <unit dia-type="HS_Disturbance" file="Emergency\Pions\Disturbance\Model.bms" name="HS - Disturbance">
       <missions>
         <mission name="Emergency - riot"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
     </unit>
   </units>
   <automats>
@@ -1577,6 +2909,21 @@
       <missions>
         <mission name="move"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="GroupeChalands" file="Marine\Automates\Groupe Chalands\Model.bms" name="Marine Squadron">
       <missions>
@@ -1589,6 +2936,21 @@
           <fragorder name="Modify Disembarking point"/>
         </mission>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="VeryShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Satcp Mistral\Model.bms" name="Very Short Range Surface To Air Battery">
       <missions>
@@ -1605,6 +2967,21 @@
         <mission name="Air Defense Artillery (Very Short Range) - monitor"/>
         <mission name="adopt transportation posture"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="ShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Sacp Roland Carol\Model.bms" name="Short Range Surface To Air Battery">
       <missions>
@@ -1621,6 +2998,21 @@
         <mission name="Air Defense Artillery - defend a route"/>
         <mission name="adopt transportation posture"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hap Mixte\model.bms" name="Attack Helicopter Squadron">
       <missions>
@@ -1702,6 +3094,21 @@
         </mission>
         <mission name="withdraw"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="TransportHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hm\model.bms" name="Transport Helicopter Squadron">
       <missions>
@@ -1741,6 +3148,21 @@
         </mission>
         <mission name="withdraw"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Cie Vab\Model.bms" name="Infantry company">
       <missions>
@@ -1776,6 +3198,21 @@
         <mission name="prepare to (take up position)"/>
         <mission name="Infantry - block"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="CompagnieInfanterie_HOT" file="Melee\Inf\Automates\Cie Hot\Model.bms" name="LRA infantry company">
       <missions>
@@ -1796,6 +3233,21 @@
         <mission name="manage prisoners"/>
         <mission name="Infantry - support (dynamic)"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="CompagnieLogTC2" file="Appui\Log\Automates\Model.bms" name="TC2">
       <missions>
@@ -1812,6 +3264,21 @@
         <mission name="follow"/>
         <mission name="move"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="CompagnieLog" file="Appui\Log\Automates\Model.bms" name="Logistic CP">
       <missions>
@@ -1820,6 +3287,21 @@
         <mission name="adopt transportation posture"/>
         <mission name="resupply"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="EscadronAppuiMob" file="Appui\AppuiMob\Automates\Model.bms" name="Escadron Transport Blindes">
       <missions>
@@ -1835,6 +3317,21 @@
           <fragorder name="Modify Disembarking point"/>
         </mission>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="PelotonCirculation" file="Appui\Circulation\Automates\Model.bms" name="Peloton Circulation">
       <missions>
@@ -1857,6 +3354,21 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat COBRA\Model.bms" name="Firefinder radar battery">
       <missions>
@@ -1870,6 +3382,21 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco COBRA\Model.bms" name="Firefinder reconnaissance battery">
       <missions>
@@ -1883,6 +3410,21 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Section RATAC\Model.bms" name="Artillery locating radar platoon">
       <missions>
@@ -1897,6 +3439,21 @@
         <mission name="manage prisoners"/>
         <mission name="cross"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\DLO\Model.bms" name="FIST">
       <missions>
@@ -1911,6 +3468,21 @@
         <mission name="manage prisoners"/>
         <mission name="Field Artillery - collect intelligence for battalion"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="Refugies" file="Population\Refugies\Automates\Refugie\Model.bms" name="Refugees">
       <missions>
@@ -1922,6 +3494,21 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="CompagnieTRANS" file="Appui\Trans\Automates\Model.bms" name="Major units CP">
       <missions>
@@ -1930,6 +3517,21 @@
         <mission name="resupply"/>
         <mission name="move"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="T_AutomateModeleDEC" file="Population\Milices\Automate\Model.bms" name="Militias">
       <missions>
@@ -1944,6 +3546,21 @@
         <mission name="manage prisoners"/>
         <mission name="Asymetric - attack populations(in an area)"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="T_AutomateModeleDEC" file="Melee\Inf\Automates\Son Commando\Model.bms" name="Commando platoon">
       <missions>
@@ -1957,6 +3574,21 @@
         <mission name="manage prisoners"/>
         <mission name="withdraw"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="TheaterHighAltitudeAeraDefenseBattery" file="Appui\ArtDsa\Automates\Sgpt Samp Hawk\Model.bms" name="Theater High Altitude Aera Defense Battery">
       <missions>
@@ -1972,12 +3604,42 @@
         <mission name="Air Defense Artillery (Long Range) - monitor"/>
         <mission name="adopt transportation posture"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="T_AutomateModeleDEC" file="Population\Asymetriques\Terroriste\Automate\Model.bms" name="Terroristes">
       <missions>
         <mission name="move"/>
         <mission name="resupply"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.bms" name="MBT squadron">
       <missions>
@@ -2016,6 +3678,21 @@
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.bms" name="Light armored squadron">
       <missions>
@@ -2053,6 +3730,21 @@
         <mission name="prepare to (take up position)"/>
         <mission name="Armor - support"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="Peloton_EEI" file="Melee\Abc\Automates\PEL EEI\model.bms" name="Scout platoon">
       <missions>
@@ -2076,6 +3768,21 @@
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.bms" name="Deployment support company">
       <missions>
@@ -2096,6 +3803,21 @@
         <mission name="Engineer - recon (an area)"/>
         <mission name="Engineer - restore routes"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.bms" name="Mobility support company">
       <missions>
@@ -2116,6 +3838,21 @@
         <mission name="Engineer - recon (an area)"/>
         <mission name="Engineer - restore routes"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.bms" name="Countermobility company">
       <missions>
@@ -2136,6 +3873,21 @@
         <mission name="Engineer - recon (an area)"/>
         <mission name="Engineer - restore routes"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.bms" name="Bridging company">
       <missions>
@@ -2156,6 +3908,21 @@
         <mission name="Engineer - recon (an area)"/>
         <mission name="Engineer - restore routes"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="Sdti" file="Appui\Rens\Automates\Roim\SDTI\Model.bms" name="Drone station">
       <missions>
@@ -2169,6 +3936,21 @@
         <mission name="manage prisoners"/>
         <mission name="resupply"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="Start_" file="Appui\Rens\Automates\Roem\Systeme START_\Model.bms" name="Listening station">
       <missions>
@@ -2179,6 +3961,21 @@
         <mission name="go through decontamination process"/>
         <mission name="resupply"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="Mrod_Elodee" file="Appui\Rens\Automates\Roem\Stations MROD_ELODEE\Model.bms" name="Jamming station">
       <missions>
@@ -2192,6 +3989,21 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="Stair" file="Appui\Rens\Automates\Roem\Systeme STAIR\Model.bms" name="Radar detection station">
       <missions>
@@ -2205,6 +4017,21 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="Cder" file="Appui\Rens\Automates\Rohum\Cder RBRR\Model.bms" name="Ground Surveillance Radar">
       <missions>
@@ -2218,6 +4045,21 @@
         <mission name="manage prisoners"/>
         <mission name="Human Intelligence - report information"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="Cder" file="Appui\Rens\Automates\Rohum\Cder RBRR\Model.bms" name="LRS units">
       <missions>
@@ -2233,6 +4075,21 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="Section_NBC_Reco" file="Appui\Nbc\Automates\Son Reco\model.bms" name="NBC reconnaissance platoon">
       <missions>
@@ -2248,6 +4105,21 @@
         <mission name="NBC - recon an area"/>
         <mission name="adopt transportation posture"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="Section_NBC_Dec" file="Appui\Nbc\Automates\Son Dec\model.bms" name="NBC decontamination platoon">
       <missions>
@@ -2263,6 +4135,21 @@
         <mission name="NBC - decontaminate an area"/>
         <mission name="adopt transportation posture"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="Section_NBC_RE" file="Appui\Nbc\Automates\Son RE\model.bms" name="NBC ROTA  platoon">
       <missions>
@@ -2276,6 +4163,21 @@
         <mission name="resupply"/>
         <mission name="NBC - recon ROTA sites"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir AUF1\Model.bms" name="Field battery">
       <missions>
@@ -2289,6 +4191,21 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco TRF1\Model.bms" name="Recconnaissance battery">
       <missions>
@@ -2302,6 +4219,21 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="HS_Police_HQ" file="Emergency\Automates\Police\Model.bms" name="HS - Police HQ">
       <missions>
@@ -2310,6 +4242,21 @@
         <mission name="move"/>
         <mission name="park"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="HS_Firefighter_HQ" file="Emergency\Automates\Firefighter\Model.bms" name="HS - Firefighter HQ">
       <missions>
@@ -2317,18 +4264,63 @@
         <mission name="move"/>
         <mission name="park"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="HS_Safety_HQ" file="Emergency\Automates\Safety\Model.bms" name="HS - Safety HQ">
       <missions>
         <mission name="move"/>
         <mission name="park"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="HS_Medical_HQ" file="Emergency\Automates\Medical\Model.bms" name="HS - Medical HQ">
       <missions>
         <mission name="move"/>
         <mission name="park"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
     <automat dia-type="GTIA" file="Melee\Abc\Automates\GE40\model.bms" name="Battalion">
       <missions>
@@ -2338,6 +4330,21 @@
         <mission name="Battalion - movement to contact"/>
         <mission name="Battalion - control"/>
       </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
   </automats>
   <populations>
@@ -2359,6 +4366,9 @@
           <fragorder name="Pause maneuver"/>
         </mission>
       </missions>
+      <fragorders>
+        <fragorder name="Population - Change attitude"/>
+      </fragorders>
     </population>
   </populations>
 </models>
