@@ -138,14 +138,18 @@ bool UrbanLayer::HandleMousePress( QMouseEvent* input, const geometry::Point2f& 
         const TerrainObjectProxy* object = (*it);
         if( object->IsInside( point ) )
         {
-            if( selectedObject_ == object && button == Qt::LeftButton )
-                break;
-            selectedObject_ = object;
-            selectedObject_->SetSelected( true );
-            controllers_.actions_.Select( *static_cast< const kernel::Entity_ABC* >( object ) );
+            bool rc = true;
+            if( selectedObject_ != object )
+            {
+                selectedObject_ = object;
+                selectedObject_->SetSelected( true );
+                controllers_.actions_.Select( *static_cast< const kernel::Entity_ABC* >( object ) );
+            }
+            else
+                rc = false;
             if( button == Qt::RightButton )
                 controllers_.actions_.ContextMenu( *object, input->globalPos() );
-            return true;
+            return rc;
         }
     }
     selectedObject_ = 0;
