@@ -297,7 +297,7 @@ SectionGroup "Terrains" s_ter
         !insertmacro OT.AddTerrain "Porto" "s_ter6"
         !insertmacro OT.AddTerrain "Drosoville" "s_ter7"
         !insertmacro OT.AddTerrain "Mailly" "s_ter8"
-        !insertmacro OT.AddTerrain "PoseidonVA" "s_ter9"        
+        !insertmacro OT.AddTerrain "PoseidonVALite" "s_ter9"        
     !else if "${APP_MODEL}" == "france"
         !insertmacro OT.AddTerrain "Nord egypt" "s_ter1"
         !insertmacro OT.AddTerrain "Paris_Est" "s_ter2"
@@ -305,7 +305,7 @@ SectionGroup "Terrains" s_ter
         !insertmacro OT.AddTerrain "Cabourg" "s_ter4"
         !insertmacro OT.AddTerrain "Drosoville" "s_ter7"
         !insertmacro OT.AddTerrain "Angers_x9" "s_ter8"
-        !insertmacro OT.AddTerrain "PoseidonVA" "s_ter9"        
+        !insertmacro OT.AddTerrain "PoseidonVALite" "s_ter9"        
     !endif
 
 SectionGroupEnd
