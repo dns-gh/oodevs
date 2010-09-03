@@ -110,10 +110,10 @@ end
 AgentList = {}
 AgentList.__index = AgentList
 
-function AgentList.create( name, agents )
+function AgentList.create( name, type, agents )
     local new = {}
     setmetatable( new, AgentList )
-    new.type = "AgentList"
+    new.type = type
     new.name = name
     new.children = {}
     for _, v in ipairs( agents ) do
@@ -121,6 +121,25 @@ function AgentList.create( name, agents )
     end
     return new
 end
+
+--------------------------------------------------------------------------------
+-- AgentKnowledgeList
+--------------------------------------------------------------------------------
+AgentKnowledgeList = {}
+AgentKnowledgeList.__index = AgentKnowledgeList
+
+function AgentKnowledgeList.create( name, type, agentKnowledges )
+    local new = {}
+    setmetatable( new, AgentKnowledgeList )
+    new.type = type
+    new.name = name
+    new.children = {}
+    for _, v in ipairs( agentKnowledges ) do
+        new.children[#new.children + 1] = { name = name, type = "agentknowledge", value = v }
+    end
+    return new
+end
+
 
 --------------------------------------------------------------------------------
 -- Line
