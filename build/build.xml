@@ -900,7 +900,7 @@
     package
     ============================================================================
     -->
-    <target name="package" description="package the installers" depends="package.defense,package.france"/>
+    <target name="package" description="package the installers" depends="package.defense,package.france,package.security"/>
 
     <!-- standard packages -->
     <target name="package.defense" description="package the standard installer: worldwide, no license">
@@ -941,7 +941,6 @@
         </nsis>
     </target>
 
-    <!-- patch package -->
     <target name="package.patch" description="create a patch installer">
         <nsis name="sword-patch" script="resources/sword-patch.nsi" license="true">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
