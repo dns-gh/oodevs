@@ -179,6 +179,11 @@ end
             <xsl:when test="@type = 'AreaBM' or @type = 'Polygon'">
                 <xsl:text>    :With( Polygon.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", "</xsl:text><xsl:value-of select="@type"/><xsl:text>", { config.positions.destination[1], config.positions.destination[2], config.positions.destination[3] } ) )</xsl:text>
             </xsl:when>
+
+            <xsl:when test="@type = 'PolygonList'">
+                <xsl:text>    :With( PolygonList.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", { config.positions.destination[1], config.positions.destination[2], config.positions.destination[3] } ) )</xsl:text>
+            </xsl:when>
+
             <xsl:when test="@type = 'NatureAtlas'">
                 <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "NatureAtlas", value = "256" } )</xsl:text>
             </xsl:when>

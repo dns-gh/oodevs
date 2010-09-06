@@ -19,7 +19,7 @@ do
         if (( `expr $currentDispatcherErrors != 0` ))
         then
             echo $dispatcherLog >> ${1}/errors_report.log
-            echo "\n" `grep Error $dispatcherLog` >> ${1}/errors_report.log
+            echo `grep Error $dispatcherLog` >> ${1}/errors_report.log
         fi
         currentSimulationErrors=`grep Error $simLog | wc -l`
         if (( `expr $currentSimulationErrors != 0` ))
