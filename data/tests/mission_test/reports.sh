@@ -11,11 +11,22 @@ for i in `seq 1 $nbfile`
 do
     dispatcherLog=../../exercises/testings/testings${i}/sessions/default/Dispatcher.log
     simLog=../../exercises/testings/testings${i}/sessions/default/Sim.log
+    messageLog=../../exercises/testings/testings${i}/sessions/default/Messages.log
 
     if [ -e $dispatcherLog ]
     then
         currentDispatcherErrors=`grep Error $dispatcherLog | wc -l`
+        if (( `expr $currentDispatcherErrors != 0` ))
+        then
+            echo $dispatcherLog >> ${1}/errors_report.log
+            echo "\n" `grep Error $dispatcherLog` >> ${1}/errors_report.log
+        fi
         currentSimulationErrors=`grep Error $simLog | wc -l`
+        if (( `expr $currentSimulationErrors != 0` ))
+        then
+            echo $simLog >> ${1}/errors_report.log
+            echo `grep Error $simLog` >> ${1}/errors_report.log
+        fi
         currentUnits=`grep -r "agent creation" $dispatcherLog | wc -l`
         currentMissions=`grep -r " : running" $dispatcherLog | wc -l`
         currentUnitsToBeCreated=`grep -r "sim:CreateUnit(" ../../exercises/testings/testings${i}/scripts | wc -l`
@@ -39,7 +50,13 @@ do
         echo $currentSimulationErrors "simulation errors" >> ${1}/execution_report.log
         echo $currentUnits "/" $currentUnitsToBeCreated "agent(s) created" >> ${1}/execution_report.log
         echo $currentMissions "/" $currentMissionsToBeLaunched "mission(s) launched" >> ${1}/execution_report.log
-        echo `grep "mission impossible" ../../exercises/testings/testings${i}/sessions/default/Messages.log | wc -l` "mission impossible" >> ${1}/execution_report.log
+        missionImpossible=`grep "mission impossible" $messageLog | wc -l`
+        echo $missionImpossible "mission impossible" >> ${1}/execution_report.log
+        if (( `expr $missionImpossible != 0` ))
+        then
+            echo $messageLog >> ${1}/errors_report.log
+            echo `grep "mission impossible" $messageLog` >> ${1}/errors_report.log
+        fi
     fi
 done
 
