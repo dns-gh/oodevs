@@ -1044,13 +1044,13 @@
       <parameter dia-name="firePositions" name="Zones de tir" optional="false" type="ObjectKnowledgeListBM"/>
       <parameter dia-name="safeguardPositions" name="Positions de sauvegarde" optional="true" type="PointListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.OuvrirItineraire" dia-type="net.masagroup.sword.france.military.platoon.tasks.OuvrirItineraire" id="2047" name="GEN OuvrirItineraire">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.OuvrirItineraire" dia-type="net.masagroup.sword.france.military.platoon.tasks.OuvrirItineraire" id="2047" name="GENIE OuvrirItineraire">
       <parameter dia-name="objectives" name="Itineraire" optional="false" type="PointListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Construire" dia-type="net.masagroup.sword.france.military.platoon.tasks.Construire" id="2076" name="GEN Construire">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Construire" dia-type="net.masagroup.sword.france.military.platoon.tasks.Construire" id="2076" name="GENIE Construire">
       <parameter dia-name="entities" name="Objets a construire" optional="false" type="GenObjectListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.military.platoon.tasks.RealizeTacticalObject" dia-type="net.masagroup.sword.military.platoon.tasks.RealizeTacticalObject" id="2036" name="GEN Realiser Travaux">
+    <mission dia-behavior="net.masagroup.sword.military.platoon.tasks.RealizeTacticalObject" dia-type="net.masagroup.sword.military.platoon.tasks.RealizeTacticalObject" id="2036" name="GENIE Realiser Travaux">
       <parameter dia-name="entities" name="Travaux a realiser" optional="false" type="GenObjectListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Animer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Animer" id="2077" name="Animer">

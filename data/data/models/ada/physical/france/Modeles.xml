@@ -293,7 +293,6 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="GENIE ActiverObstacles"/>
         <mission name="GENIE Construire"/>
         <mission name="GENIE OuvrirItineraire"/>
         <mission name="GENIE Realiser Travaux"/>
@@ -1008,6 +1007,7 @@
         <mission name="GEN Executer Variantement"/>
         <mission name="GEN Reconnaitre Site Franchissement"/>
         <mission name="GEN Reconnaitre Zone"/>
+        <mission name="GEN Activer Obstacle"/>
         <mission name="GEN Reprendre Travaux"/>
         <mission name="GEN Depolluer Zone"/>
         <mission name="GEN Realiser Camps"/>
@@ -5281,6 +5281,7 @@
         <mission name="GEN Executer Variantement"/>
         <mission name="GEN Reconnaitre Site Franchissement"/>
         <mission name="GEN Reconnaitre Zone"/>
+        <mission name="GEN Activer Obstacle"/>
         <mission name="GEN Reprendre Travaux"/>
         <mission name="GEN Depolluer Zone"/>
         <mission name="GEN Realiser Camps"/>
