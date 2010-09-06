@@ -957,7 +957,7 @@
       <parameter dia-name="position" name="Position de deploiement du tireur" optional="false" type="PointBM"/>
       <parameter dia-name="munition" name="Munitions" optional="false" type="DotationType"/>
       <parameter dia-name="interventionType" name="Intervention type" optional="false" type="Numeric"/>
-      <parameter dia-name="allie" name="Illuminateur allie" optional="true" type="AgentListBM"/>
+      <parameter dia-name="allie" name="Illuminateur allie" optional="false" type="AgentListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Surveiller" dia-type="T_Mission_Pion_SurveillerBU" id="2070" name="MELEE Surveiller un Bloc Urbain">
       <parameter dia-name="objectives" name="Objectif a surveiller" optional="false" type="UrbanBlockBM"/>
