@@ -188,9 +188,6 @@ end
             <xsl:when test="(@type = 'Agent') or (@type = 'AgentBM')">
                 <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "</xsl:text><xsl:value-of select="@type"/><xsl:text>", value = config.id.blueUnit } )</xsl:text>
             </xsl:when>
-            <xsl:when test="@type = 'AgentList'">
-                <xsl:text>    :With( AgentList.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", { config.id.blueUnit } ) )</xsl:text>
-            </xsl:when>
 
             <xsl:when test="@type = 'AgentList' or @type = 'AgentListBM'">
                 <xsl:text>    :With( AgentList.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", "</xsl:text><xsl:value-of select="@type"/><xsl:text>", { config.id.blueUnit } ) )</xsl:text>
@@ -212,7 +209,7 @@ end
                 <xsl:text>    :With( { name = 'Installation cible', type = 'ObjectKnowledge', value = 60 } )</xsl:text>
             </xsl:when>
 
-            <xsl:when test="@type = 'ObjectKnowledge'">
+            <xsl:when test="@type = 'ObjectKnowledge' or @type = 'ObjectKnowledgeBM'">
                 <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "</xsl:text><xsl:value-of select="@type"/><xsl:text>", value = 61 } )</xsl:text>
             </xsl:when>
 
