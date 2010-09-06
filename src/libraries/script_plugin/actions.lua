@@ -120,6 +120,39 @@ function PolygonList.create( name, points )
 end
 
 --------------------------------------------------------------------------------
+-- GenObject
+--------------------------------------------------------------------------------
+GenObject = {}
+GenObject.__index = GenObject
+
+function GenObject.create( name, points )
+    local new = {}
+    setmetatable( new, GenObject )
+    new.type = "obstacle"
+    new.value = "abattis"
+    new.name = name
+    new.children = {}
+    new.children[1] = { name="Obstacle type", type="obstacletype", value="0" }
+    new.children[2] = Polygon.create( "Location", "location", points )
+    return new
+end
+
+--------------------------------------------------------------------------------
+-- GenObjectList
+--------------------------------------------------------------------------------
+GenObjectList = {}
+GenObjectList.__index = GenObjectList
+
+function GenObjectList.create( name, points )
+    local new = {}
+    setmetatable( new, GenObjectList )
+    new.type = "GenObjectList"
+    new.name = name
+    new.children = { GenObject.create( "Obstacle 1", points ) }
+    return new
+end
+
+--------------------------------------------------------------------------------
 -- AgentList
 --------------------------------------------------------------------------------
 AgentList = {}
