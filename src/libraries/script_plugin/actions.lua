@@ -105,6 +105,21 @@ function Polygon.create( name, type, points )
 end
 
 --------------------------------------------------------------------------------
+-- PolygonList
+--------------------------------------------------------------------------------
+PolygonList = {}
+PolygonList.__index = PolygonList
+
+function PolygonList.create( name, points )
+    local new = {}
+    setmetatable( new, PolygonList )
+    new.type = "PolygonList"
+    new.name = name
+    new.children = { Polygon.create( "Position 1", "location", points ) }
+    return new
+end
+
+--------------------------------------------------------------------------------
 -- AgentList
 --------------------------------------------------------------------------------
 AgentList = {}
