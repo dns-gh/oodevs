@@ -41,7 +41,14 @@
           </shape>
           <attributes/>
         </object>
-        
+        <object id="63" name="Zone d'implantation canon [63]" type="gun artillery deployment area">
+          <shape type="point">
+            <points>
+              <point>31UDQ8708460947</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
       </objects>
       <tactical>
         <formation id="6" level="x" name="Formation">

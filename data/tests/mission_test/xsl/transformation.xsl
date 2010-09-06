@@ -209,6 +209,11 @@ end
                 <xsl:text>    :With( { name = 'Installation cible', type = 'ObjectKnowledge', value = 60 } )</xsl:text>
             </xsl:when>
 
+            <xsl:when test="@type = 'ObjectKnowledge' and @name = 'Zone implantation'">
+                <xsl:text>    :With( { name = 'Zone implantation', type = 'ObjectKnowledge', value = 63 } )</xsl:text>
+            </xsl:when>
+            
+            
             <xsl:when test="@type = 'ObjectKnowledge' or @type = 'ObjectKnowledgeBM'">
                 <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "</xsl:text><xsl:value-of select="@type"/><xsl:text>", value = 61 } )</xsl:text>
             </xsl:when>

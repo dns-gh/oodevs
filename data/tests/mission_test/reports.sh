@@ -5,29 +5,29 @@ totalMissions=0
 totalUnitsToBeCreated=0
 totalMissionsToBeLaunched=0
 
-nbfile=`find ../../exercises/testings -name '*Dispatcher.log' | wc -l`
+nbfile=`find ../../exercises/testings -maxdepth 1 | wc -l`
 
 for i in `seq 1 $nbfile`
 do
     dispatcherLog=../../exercises/testings/testings${i}/sessions/default/Dispatcher.log
     simLog=../../exercises/testings/testings${i}/sessions/default/Sim.log
 
-    currentDispatcherErrors=`grep Error $dispatcherLog | wc -l`
-    currentSimulationErrors=`grep Error $simLog | wc -l`
-    currentUnits=`grep -r "agent creation" $dispatcherLog | wc -l`
-    currentMissions=`grep -r " : running" $dispatcherLog | wc -l`
-    currentUnitsToBeCreated=`grep -r "sim:CreateUnit(" ../../exercises/testings/testings${i}/scripts | wc -l`
-    currentMissionsToBeLaunched=`grep -r "Mission.create(" ../../exercises/testings/testings${i}/scripts | wc -l`
-
-    totalDispatcherErrors=`expr $totalDispatcherErrors + $currentDispatcherErrors`
-    totalSimulationErrors=`expr $totalSimulationErrors + $currentSimulationErrors`
-    totalUnits=`expr $totalUnits + $currentUnits`
-    totalMissions=`expr $totalMissions + $currentMissions`
-    totalUnitsToBeCreated=`expr $totalUnitsToBeCreated + $currentUnitsToBeCreated`
-    totalMissionsToBeLaunched=`expr $totalMissionsToBeLaunched + $currentMissionsToBeLaunched`
-
-    if (( `expr $dispatcherLog != ""` ))
+    if [ -e $dispatcherLog ]
     then
+        currentDispatcherErrors=`grep Error $dispatcherLog | wc -l`
+        currentSimulationErrors=`grep Error $simLog | wc -l`
+        currentUnits=`grep -r "agent creation" $dispatcherLog | wc -l`
+        currentMissions=`grep -r " : running" $dispatcherLog | wc -l`
+        currentUnitsToBeCreated=`grep -r "sim:CreateUnit(" ../../exercises/testings/testings${i}/scripts | wc -l`
+        currentMissionsToBeLaunched=`grep -r "Mission.create(" ../../exercises/testings/testings${i}/scripts | wc -l`
+
+        totalDispatcherErrors=`expr $totalDispatcherErrors + $currentDispatcherErrors`
+        totalSimulationErrors=`expr $totalSimulationErrors + $currentSimulationErrors`
+        totalUnits=`expr $totalUnits + $currentUnits`
+        totalMissions=`expr $totalMissions + $currentMissions`
+        totalUnitsToBeCreated=`expr $totalUnitsToBeCreated + $currentUnitsToBeCreated`
+        totalMissionsToBeLaunched=`expr $totalMissionsToBeLaunched + $currentMissionsToBeLaunched`
+
         cp $dispatcherLog ${1}/Dispatcher_${i}.log
         cp ../../exercises/testings/testings$i/sessions/default/Messages.log ${1}/Messages_${i}.log
         cp $simLog ${1}/Sim_${i}.log
