@@ -631,11 +631,11 @@
         <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/libs/core/src" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core/src"/>
         <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/libs/base" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core/src"/>
         <delete>
-            <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src" includes="**/*.bmt,**/*.bmk,**/*.bmr"/>
-            <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.test/src" includes="**/*.bmt,**/*.bmk,**/*.bmr"/>
-            <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.france/src" includes="**/*.bmt,**/*.bmk,**/*.bmr"/>
-            <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.security/src" includes="**/*.bmt,**/*.bmk,**/*.bmr"/>
-            <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.worldwide/src" includes="**/*.bmt,**/*.bmk,**/*.bmr"/>
+            <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src" includes="**/*.bmt,**/*.bmk,**/*.bmr,**/*.bmq,**/*.bmsk"/>
+            <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.test/src" includes="**/*.bmt,**/*.bmk,**/*.bmr,**/*.bmq,**/*.bmsk"/>
+            <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.france/src" includes="**/*.bmt,**/*.bmk,**/*.bmr,**/*.bmq,**/*.bmsk"/>
+            <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.security/src" includes="**/*.bmt,**/*.bmk,**/*.bmr,**/*.bmq,**/*.bmsk"/>
+            <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.worldwide/src" includes="**/*.bmt,**/*.bmk,**/*.bmr,**/*.bmq,**/*.bmsk"/>
         </delete>
         <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core/src;${data.dir}/data/models/ada/decisional/directia5/models/libs/base"/>
         <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.test/src" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core/src;${data.dir}/data/models/ada/decisional/directia5/models/libs/base;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src;"/>
