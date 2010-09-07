@@ -36,7 +36,7 @@ BOOST_AUTO_TEST_CASE( PkComputerUrbanProtectionTest )
     const PHY_DotationCategory* pCategory = PHY_DotationType::FindDotationCategory( "ammo" );
 
     xml::xistringstream xisModel(
-        "<urbanObject id='3' name='School'>"
+        "<urban-object id='3' name='School'>"
         "   <footprint>"
         "       <point location='31TCM1058982147'/>"
         "       <point location='31TCM1055881170'/>"
@@ -46,11 +46,11 @@ BOOST_AUTO_TEST_CASE( PkComputerUrbanProtectionTest )
         "   <physical>"
         "       <architecture floor-number='30' height='40' material='Brique' roof-shape='flat' occupation ='0.8' trafficability='60'/>"
         "   </physical>"
-        "</urbanObject>" );
+        "</urban-object>" );
 
     MockAgent firer;
     urban::CoordinateConverter_ABC* coord = new urban::CoordinateConverter();
-    xisModel >> xml::start( "urbanObject" );
+    xisModel >> xml::start( "urban-object" );
     std::auto_ptr< urban::UrbanObject > urbanBlock;
     urbanBlock.reset( new urban::UrbanObject ( xisModel, 0, *coord ) );
     MIL_ObjectLoader loader;

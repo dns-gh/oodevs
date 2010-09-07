@@ -24,19 +24,18 @@
 
 namespace
 {
-    xml::xistringstream flux( "<urbanObject id='9' name='Blokosolo'>"
+    xml::xistringstream flux( "<urban-object id='9' name='Blokosolo'>"
                               "   <footprint>"
                               "       <point location='31TCM1272691661'/>"
                               "       <point location='31TCM1285291745'/>"
                               "       <point location='31TCM1291891650'/>"
                               "       <point location='31TCM1278691560'/>"
                               "   </footprint>"
-                              "   <urbanObjects/>"
+                              "   <urban-objects/>"
                               "   <physical>"
                               "       <architecture trafficability='2' floor-number='10' height='20' occupation='0.25' material='concrete' roof-shape='flat'/>"
                               "   </physical>"
-                              "   <roles/>"
-                              "</urbanObject>" );
+                              "</urban-object>" );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +56,7 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanTest_Update )
     MIL_EffectManager effectManager;
     FixturePion pion( effectManager );
     urban::CoordinateConverter_ABC* converter = new urban::CoordinateConverter();
-    flux >> xml::start( "urbanObject" );
+    flux >> xml::start( "urban-object" );
     const urban::TerrainObject_ABC* pBlock = new urban::UrbanObject( flux, 0, *converter );
     flux >> xml::end;
     MIL_Object_ABC* pObject = loader.CreateUrbanObject( *pBlock );

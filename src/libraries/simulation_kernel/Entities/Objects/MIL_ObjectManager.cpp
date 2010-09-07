@@ -232,8 +232,8 @@ void MIL_ObjectManager::ReadInfrastructures( xml::xistream& xis )
         xis >> xml::optional >> xml::start( "infrastructures" )
             >> xml::end();
     }
-    xis >> xml::start( "urbanObjects" )
-            >> xml::list( "urbanObject", *this, &MIL_ObjectManager::ReadInfrastructures )
+    xis >> xml::start( "urban-objects" )
+            >> xml::list( "urban-object", *this, &MIL_ObjectManager::ReadInfrastructures )
         >> xml::end();
 }
 

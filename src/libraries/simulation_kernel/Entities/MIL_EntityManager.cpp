@@ -327,8 +327,8 @@ void MIL_EntityManager::LoadInfrastructures( const MIL_Config& config )
     {
         xml::xifstream xis( fullPath.native_file_string() );
         xis >> xml::start( "urban" )
-                >> xml::start( "urbanObjects" )
-                    >> xml::list( "urbanObject", boost::bind( &MIL_ObjectManager::ReadInfrastructures, boost::ref( *pObjectManager_ ), _1 ) )
+                >> xml::start( "urban-objects" )
+                    >> xml::list( "urban-object", boost::bind( &MIL_ObjectManager::ReadInfrastructures, boost::ref( *pObjectManager_ ), _1 ) )
                 >> xml::end()
             >> xml::end();
     }
