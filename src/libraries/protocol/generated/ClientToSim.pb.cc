@@ -436,38 +436,38 @@ void protobuf_AddDesc_ClientToSim_2eproto() {
     "up\020\003\022\031\n\025change_resource_links\020\004\"5\n MsgCo"
     "ntrolCheckPointSetFrequency\022\021\n\tfrequency"
     "\030\001 \002(\005\"3\n\033MsgControlToggleVisionCones\022\024\n"
-    "\014vision_cones\030\001 \002(\010\"\340\t\n\016MsgClientToSim\022\022"
-    "\n\007context\030\001 \001(\005:\0010\0228\n\007message\030\002 \002(\0132\'.Ms"
-    "gsClientToSim.MsgClientToSim.Content\032\377\010\n"
-    "\007Content\022,\n\014control_stop\030\001 \001(\0132\026.Common."
-    "MsgControlStop\022.\n\rcontrol_pause\030\002 \001(\0132\027."
-    "Common.MsgControlPause\0220\n\016control_resume"
-    "\030\003 \001(\0132\030.Common.MsgControlResume\022F\n\032cont"
-    "rol_change_time_factor\030\004 \001(\0132\".Common.Ms"
-    "gControlChangeTimeFactor\022K\n\030control_date"
-    "_time_change\030\005 \001(\0132).MsgsClientToSim.Msg"
-    "ControlDatetimeChange\022Q\n\033control_checkpo"
-    "int_save_now\030\006 \001(\0132,.MsgsClientToSim.Msg"
-    "ControlCheckPointSaveNow\022[\n control_chec"
-    "kpoint_set_frequency\030\007 \001(\01321.MsgsClientT"
-    "oSim.MsgControlCheckPointSetFrequency\022Q\n"
-    "\033control_toggle_vision_cones\030\010 \001(\0132,.Msg"
-    "sClientToSim.MsgControlToggleVisionCones"
-    "\022(\n\nunit_order\030\t \001(\0132\024.Common.MsgUnitOrd"
-    "er\022.\n\rautomat_order\030\n \001(\0132\027.Common.MsgAu"
-    "tomatOrder\0224\n\020population_order\030\013 \001(\0132\032.C"
-    "ommon.MsgPopulationOrder\0221\n\nfrag_order\030\014"
-    " \001(\0132\035.MsgsClientToSim.MsgFragOrder\022<\n\020s"
-    "et_automat_mode\030\r \001(\0132\".MsgsClientToSim."
-    "MsgSetAutomatMode\022F\n\025unit_creation_reque"
-    "st\030\016 \001(\0132\'.MsgsClientToSim.MsgUnitCreati"
-    "onRequest\022>\n\021unit_magic_action\030\017 \001(\0132#.M"
-    "sgsClientToSim.MsgUnitMagicAction\022B\n\023obj"
-    "ect_magic_action\030\020 \001(\0132%.MsgsClientToSim"
-    ".MsgObjectMagicAction\022H\n\026knowledge_magic"
-    "_action\030\021 \001(\0132(.MsgsClientToSim.MsgKnowl"
-    "edgeMagicAction\0225\n\014magic_action\030\022 \001(\0132\037."
-    "MsgsClientToSim.MsgMagicAction", 3670);
+    "\014vision_cones\030\001 \002(\010\"\335\t\n\016MsgClientToSim\022\017"
+    "\n\007context\030\001 \001(\005\0228\n\007message\030\002 \002(\0132\'.MsgsC"
+    "lientToSim.MsgClientToSim.Content\032\377\010\n\007Co"
+    "ntent\022,\n\014control_stop\030\001 \001(\0132\026.Common.Msg"
+    "ControlStop\022.\n\rcontrol_pause\030\002 \001(\0132\027.Com"
+    "mon.MsgControlPause\0220\n\016control_resume\030\003 "
+    "\001(\0132\030.Common.MsgControlResume\022F\n\032control"
+    "_change_time_factor\030\004 \001(\0132\".Common.MsgCo"
+    "ntrolChangeTimeFactor\022K\n\030control_date_ti"
+    "me_change\030\005 \001(\0132).MsgsClientToSim.MsgCon"
+    "trolDatetimeChange\022Q\n\033control_checkpoint"
+    "_save_now\030\006 \001(\0132,.MsgsClientToSim.MsgCon"
+    "trolCheckPointSaveNow\022[\n control_checkpo"
+    "int_set_frequency\030\007 \001(\01321.MsgsClientToSi"
+    "m.MsgControlCheckPointSetFrequency\022Q\n\033co"
+    "ntrol_toggle_vision_cones\030\010 \001(\0132,.MsgsCl"
+    "ientToSim.MsgControlToggleVisionCones\022(\n"
+    "\nunit_order\030\t \001(\0132\024.Common.MsgUnitOrder\022"
+    ".\n\rautomat_order\030\n \001(\0132\027.Common.MsgAutom"
+    "atOrder\0224\n\020population_order\030\013 \001(\0132\032.Comm"
+    "on.MsgPopulationOrder\0221\n\nfrag_order\030\014 \001("
+    "\0132\035.MsgsClientToSim.MsgFragOrder\022<\n\020set_"
+    "automat_mode\030\r \001(\0132\".MsgsClientToSim.Msg"
+    "SetAutomatMode\022F\n\025unit_creation_request\030"
+    "\016 \001(\0132\'.MsgsClientToSim.MsgUnitCreationR"
+    "equest\022>\n\021unit_magic_action\030\017 \001(\0132#.Msgs"
+    "ClientToSim.MsgUnitMagicAction\022B\n\023object"
+    "_magic_action\030\020 \001(\0132%.MsgsClientToSim.Ms"
+    "gObjectMagicAction\022H\n\026knowledge_magic_ac"
+    "tion\030\021 \001(\0132(.MsgsClientToSim.MsgKnowledg"
+    "eMagicAction\0225\n\014magic_action\030\022 \001(\0132\037.Msg"
+    "sClientToSim.MsgMagicAction", 3667);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "ClientToSim.proto", &protobuf_RegisterTypes);
   MsgControlDatetimeChange::default_instance_ = new MsgControlDatetimeChange();
@@ -4639,7 +4639,7 @@ bool MsgClientToSim::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 context = 1 [default = 0];
+      // optional int32 context = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
@@ -4689,7 +4689,7 @@ void MsgClientToSim::SerializeWithCachedSizes(
     return;
   }
   
-  // optional int32 context = 1 [default = 0];
+  // optional int32 context = 1;
   if (_has_bit(0)) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->context(), output);
   }
@@ -4708,7 +4708,7 @@ void MsgClientToSim::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgClientToSim::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // optional int32 context = 1 [default = 0];
+  // optional int32 context = 1;
   if (_has_bit(0)) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->context(), target);
   }
@@ -4731,7 +4731,7 @@ int MsgClientToSim::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional int32 context = 1 [default = 0];
+    // optional int32 context = 1;
     if (has_context()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(

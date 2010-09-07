@@ -155,6 +155,6 @@ message MsgClientToSim {
        optional MsgKnowledgeMagicAction                knowledge_magic_action         = 17;
        optional MsgMagicAction                         magic_action                         = 18;
     }
-    optional int32   context = 1 [default = 0];
+    optional int32   context = 1;
     required Content message = 2;
 }

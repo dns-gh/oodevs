@@ -123,17 +123,17 @@ void protobuf_AddDesc_ClientToReplay_2eproto() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\024ClientToReplay.proto\022\022MsgsClientToRepl"
     "ay\032\014Common.proto\"$\n\024MsgControlSkipToTick"
-    "\022\014\n\004tick\030\001 \002(\005\"\223\003\n\021MsgClientToReplay\022\022\n\007"
-    "context\030\001 \001(\005:\0010\022>\n\007message\030\002 \002(\0132-.Msgs"
-    "ClientToReplay.MsgClientToReplay.Content"
-    "\032\251\002\n\007Content\022F\n\024control_skip_to_tick\030\001 \001"
-    "(\0132(.MsgsClientToReplay.MsgControlSkipTo"
-    "Tick\022F\n\032control_change_time_factor\030\002 \001(\013"
-    "2\".Common.MsgControlChangeTimeFactor\022,\n\014"
-    "control_stop\030\003 \001(\0132\026.Common.MsgControlSt"
-    "op\022.\n\rcontrol_pause\030\004 \001(\0132\027.Common.MsgCo"
-    "ntrolPause\0220\n\016control_resume\030\005 \001(\0132\030.Com"
-    "mon.MsgControlResume", 500);
+    "\022\014\n\004tick\030\001 \002(\005\"\220\003\n\021MsgClientToReplay\022\017\n\007"
+    "context\030\001 \001(\005\022>\n\007message\030\002 \002(\0132-.MsgsCli"
+    "entToReplay.MsgClientToReplay.Content\032\251\002"
+    "\n\007Content\022F\n\024control_skip_to_tick\030\001 \001(\0132"
+    "(.MsgsClientToReplay.MsgControlSkipToTic"
+    "k\022F\n\032control_change_time_factor\030\002 \001(\0132\"."
+    "Common.MsgControlChangeTimeFactor\022,\n\014con"
+    "trol_stop\030\003 \001(\0132\026.Common.MsgControlStop\022"
+    ".\n\rcontrol_pause\030\004 \001(\0132\027.Common.MsgContr"
+    "olPause\0220\n\016control_resume\030\005 \001(\0132\030.Common"
+    ".MsgControlResume", 497);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "ClientToReplay.proto", &protobuf_RegisterTypes);
   MsgControlSkipToTick::default_instance_ = new MsgControlSkipToTick();
@@ -815,7 +815,7 @@ bool MsgClientToReplay::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 context = 1 [default = 0];
+      // optional int32 context = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
@@ -865,7 +865,7 @@ void MsgClientToReplay::SerializeWithCachedSizes(
     return;
   }
   
-  // optional int32 context = 1 [default = 0];
+  // optional int32 context = 1;
   if (_has_bit(0)) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->context(), output);
   }
@@ -884,7 +884,7 @@ void MsgClientToReplay::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgClientToReplay::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // optional int32 context = 1 [default = 0];
+  // optional int32 context = 1;
   if (_has_bit(0)) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->context(), target);
   }
@@ -907,7 +907,7 @@ int MsgClientToReplay::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional int32 context = 1 [default = 0];
+    // optional int32 context = 1;
     if (has_context()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(

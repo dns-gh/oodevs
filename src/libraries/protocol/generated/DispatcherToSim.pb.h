@@ -265,7 +265,7 @@ class MsgDispatcherToSim : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // optional int32 context = 1 [default = 0];
+  // optional int32 context = 1;
   inline bool has_context() const;
   inline void clear_context();
   static const int kContextFieldNumber = 1;
@@ -356,7 +356,7 @@ inline ::MsgsDispatcherToSim::MsgCtrlClientAnnouncement* MsgDispatcherToSim_Cont
 
 // MsgDispatcherToSim
 
-// optional int32 context = 1 [default = 0];
+// optional int32 context = 1;
 inline bool MsgDispatcherToSim::has_context() const {
   return _has_bit(0);
 }

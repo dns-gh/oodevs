@@ -495,42 +495,42 @@ void protobuf_AddDesc_ClientToMessenger_2eproto() {
     "st\022\n\n\002id\030\001 \002(\r\022\014\n\004name\030\002 \001(\t\022\016\n\006number\030\003"
     " \001(\t\022\023\n\013description\030\004 \001(\t\022\016\n\006parent\030\005 \001("
     "\r\";\n\031MsgNoteDestructionRequest\022\n\n\002id\030\001 \002"
-    "(\r\022\022\n\ndelete_all\030\002 \002(\010\"\202\013\n\024MsgClientToMe"
-    "ssenger\022\022\n\007context\030\001 \001(\005:\0010\022D\n\007message\030\002"
-    " \002(\01323.MsgsClientToMessenger.MsgClientTo"
-    "Messenger.Content\032\217\n\n\007Content\022N\n\026limit_c"
-    "reation_request\030\001 \001(\0132..MsgsClientToMess"
-    "enger.MsgLimitCreationRequest\022T\n\031limit_d"
-    "estruction_request\030\002 \001(\01321.MsgsClientToM"
-    "essenger.MsgLimitDestructionRequest\022J\n\024l"
-    "imit_update_request\030\003 \001(\0132,.MsgsClientTo"
-    "Messenger.MsgLimitUpdateRequest\022L\n\025lima_"
-    "creation_request\030\004 \001(\0132-.MsgsClientToMes"
-    "senger.MsgLimaCreationRequest\022R\n\030lima_de"
-    "struction_request\030\005 \001(\01320.MsgsClientToMe"
-    "ssenger.MsgLimaDestructionRequest\022H\n\023lim"
-    "a_update_request\030\006 \001(\0132+.MsgsClientToMes"
-    "senger.MsgLimaUpdateRequest\022\\\n\035intellige"
-    "nce_creation_request\030\007 \001(\01325.MsgsClientT"
-    "oMessenger.MsgIntelligenceCreationReques"
-    "t\022X\n\033intelligence_update_request\030\010 \001(\01323"
-    ".MsgsClientToMessenger.MsgIntelligenceUp"
-    "dateRequest\022b\n intelligence_destruction_"
-    "request\030\t \001(\01328.MsgsClientToMessenger.Ms"
-    "gIntelligenceDestructionRequest\022N\n\026shape"
-    "_creation_request\030\n \001(\0132..MsgsClientToMe"
-    "ssenger.MsgShapeCreationRequest\022T\n\031shape"
-    "_destruction_request\030\013 \001(\01321.MsgsClientT"
-    "oMessenger.MsgShapeDestructionRequest\022J\n"
-    "\024shape_update_request\030\014 \001(\0132,.MsgsClient"
-    "ToMessenger.MsgShapeUpdateRequest\022,\n\014tex"
-    "t_message\030\r \001(\0132\026.Common.MsgTextMessage\022"
-    "L\n\025note_creation_request\030\016 \001(\0132-.MsgsCli"
-    "entToMessenger.MsgNoteCreationRequest\022H\n"
-    "\023note_update_request\030\017 \001(\0132+.MsgsClientT"
-    "oMessenger.MsgNoteUpdateRequest\022R\n\030note_"
-    "destruction_request\030\020 \001(\01320.MsgsClientTo"
-    "Messenger.MsgNoteDestructionRequest", 2915);
+    "(\r\022\022\n\ndelete_all\030\002 \002(\010\"\377\n\n\024MsgClientToMe"
+    "ssenger\022\017\n\007context\030\001 \001(\005\022D\n\007message\030\002 \002("
+    "\01323.MsgsClientToMessenger.MsgClientToMes"
+    "senger.Content\032\217\n\n\007Content\022N\n\026limit_crea"
+    "tion_request\030\001 \001(\0132..MsgsClientToMesseng"
+    "er.MsgLimitCreationRequest\022T\n\031limit_dest"
+    "ruction_request\030\002 \001(\01321.MsgsClientToMess"
+    "enger.MsgLimitDestructionRequest\022J\n\024limi"
+    "t_update_request\030\003 \001(\0132,.MsgsClientToMes"
+    "senger.MsgLimitUpdateRequest\022L\n\025lima_cre"
+    "ation_request\030\004 \001(\0132-.MsgsClientToMessen"
+    "ger.MsgLimaCreationRequest\022R\n\030lima_destr"
+    "uction_request\030\005 \001(\01320.MsgsClientToMesse"
+    "nger.MsgLimaDestructionRequest\022H\n\023lima_u"
+    "pdate_request\030\006 \001(\0132+.MsgsClientToMessen"
+    "ger.MsgLimaUpdateRequest\022\\\n\035intelligence"
+    "_creation_request\030\007 \001(\01325.MsgsClientToMe"
+    "ssenger.MsgIntelligenceCreationRequest\022X"
+    "\n\033intelligence_update_request\030\010 \001(\01323.Ms"
+    "gsClientToMessenger.MsgIntelligenceUpdat"
+    "eRequest\022b\n intelligence_destruction_req"
+    "uest\030\t \001(\01328.MsgsClientToMessenger.MsgIn"
+    "telligenceDestructionRequest\022N\n\026shape_cr"
+    "eation_request\030\n \001(\0132..MsgsClientToMesse"
+    "nger.MsgShapeCreationRequest\022T\n\031shape_de"
+    "struction_request\030\013 \001(\01321.MsgsClientToMe"
+    "ssenger.MsgShapeDestructionRequest\022J\n\024sh"
+    "ape_update_request\030\014 \001(\0132,.MsgsClientToM"
+    "essenger.MsgShapeUpdateRequest\022,\n\014text_m"
+    "essage\030\r \001(\0132\026.Common.MsgTextMessage\022L\n\025"
+    "note_creation_request\030\016 \001(\0132-.MsgsClient"
+    "ToMessenger.MsgNoteCreationRequest\022H\n\023no"
+    "te_update_request\030\017 \001(\0132+.MsgsClientToMe"
+    "ssenger.MsgNoteUpdateRequest\022R\n\030note_des"
+    "truction_request\030\020 \001(\01320.MsgsClientToMes"
+    "senger.MsgNoteDestructionRequest", 2912);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "ClientToMessenger.proto", &protobuf_RegisterTypes);
   MsgLimaCreationRequest::default_instance_ = new MsgLimaCreationRequest();
@@ -5618,7 +5618,7 @@ bool MsgClientToMessenger::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 context = 1 [default = 0];
+      // optional int32 context = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
@@ -5668,7 +5668,7 @@ void MsgClientToMessenger::SerializeWithCachedSizes(
     return;
   }
   
-  // optional int32 context = 1 [default = 0];
+  // optional int32 context = 1;
   if (_has_bit(0)) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->context(), output);
   }
@@ -5687,7 +5687,7 @@ void MsgClientToMessenger::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgClientToMessenger::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // optional int32 context = 1 [default = 0];
+  // optional int32 context = 1;
   if (_has_bit(0)) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->context(), target);
   }
@@ -5710,7 +5710,7 @@ int MsgClientToMessenger::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional int32 context = 1 [default = 0];
+    // optional int32 context = 1;
     if (has_context()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(

@@ -6280,7 +6280,7 @@ class MsgExercise : public ::google::protobuf::Message {
   inline void set_name(const char* value, size_t size);
   inline ::std::string* mutable_name();
   
-  // optional bool running = 2 [default = false];
+  // optional bool running = 2;
   inline bool has_running() const;
   inline void clear_running();
   static const int kRunningFieldNumber = 2;
@@ -14756,7 +14756,7 @@ inline ::std::string* MsgExercise::mutable_name() {
   return name_;
 }
 
-// optional bool running = 2 [default = false];
+// optional bool running = 2;
 inline bool MsgExercise::has_running() const {
   return _has_bit(1);
 }

@@ -119,11 +119,11 @@ void protobuf_AddDesc_ClientToAar_2eproto() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\021ClientToAar.proto\022\017MsgsClientToAar\"5\n\016"
     "MsgPlotRequest\022\022\n\nidentifier\030\001 \002(\r\022\017\n\007re"
-    "quest\030\002 \002(\t\"\240\001\n\016MsgClientToAar\022\022\n\007contex"
-    "t\030\001 \001(\005:\0010\0228\n\007message\030\002 \002(\0132\'.MsgsClient"
-    "ToAar.MsgClientToAar.Content\032@\n\007Content\022"
-    "5\n\014plot_request\030\001 \001(\0132\037.MsgsClientToAar."
-    "MsgPlotRequest", 254);
+    "quest\030\002 \002(\t\"\235\001\n\016MsgClientToAar\022\017\n\007contex"
+    "t\030\001 \001(\005\0228\n\007message\030\002 \002(\0132\'.MsgsClientToA"
+    "ar.MsgClientToAar.Content\032@\n\007Content\0225\n\014"
+    "plot_request\030\001 \001(\0132\037.MsgsClientToAar.Msg"
+    "PlotRequest", 251);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "ClientToAar.proto", &protobuf_RegisterTypes);
   MsgPlotRequest::default_instance_ = new MsgPlotRequest();
@@ -683,7 +683,7 @@ bool MsgClientToAar::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 context = 1 [default = 0];
+      // optional int32 context = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
@@ -733,7 +733,7 @@ void MsgClientToAar::SerializeWithCachedSizes(
     return;
   }
   
-  // optional int32 context = 1 [default = 0];
+  // optional int32 context = 1;
   if (_has_bit(0)) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->context(), output);
   }
@@ -752,7 +752,7 @@ void MsgClientToAar::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgClientToAar::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // optional int32 context = 1 [default = 0];
+  // optional int32 context = 1;
   if (_has_bit(0)) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->context(), target);
   }
@@ -775,7 +775,7 @@ int MsgClientToAar::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional int32 context = 1 [default = 0];
+    // optional int32 context = 1;
     if (has_context()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(

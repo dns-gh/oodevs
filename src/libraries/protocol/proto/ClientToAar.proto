@@ -18,6 +18,6 @@ message MsgClientToAar {
     message Content {
         optional MsgPlotRequest plot_request = 1;
     }
-    optional int32   context = 1 [default = 0];
+    optional int32   context = 1;
     required Content message = 2;
 }

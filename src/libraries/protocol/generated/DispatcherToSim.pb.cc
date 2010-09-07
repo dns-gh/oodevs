@@ -118,12 +118,12 @@ void protobuf_AddDesc_DispatcherToSim_2eproto() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\025DispatcherToSim.proto\022\023MsgsDispatcherT"
     "oSim\"-\n\031MsgCtrlClientAnnouncement\022\020\n\010ann"
-    "ounce\030\001 \001(\010\"\312\001\n\022MsgDispatcherToSim\022\022\n\007co"
-    "ntext\030\001 \001(\005:\0010\022@\n\007message\030\002 \002(\0132/.MsgsDi"
-    "spatcherToSim.MsgDispatcherToSim.Content"
-    "\032^\n\007Content\022S\n\033control_client_announceme"
-    "nt\030\001 \001(\0132..MsgsDispatcherToSim.MsgCtrlCl"
-    "ientAnnouncement", 296);
+    "ounce\030\001 \001(\010\"\307\001\n\022MsgDispatcherToSim\022\017\n\007co"
+    "ntext\030\001 \001(\005\022@\n\007message\030\002 \002(\0132/.MsgsDispa"
+    "tcherToSim.MsgDispatcherToSim.Content\032^\n"
+    "\007Content\022S\n\033control_client_announcement\030"
+    "\001 \001(\0132..MsgsDispatcherToSim.MsgCtrlClien"
+    "tAnnouncement", 293);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "DispatcherToSim.proto", &protobuf_RegisterTypes);
   MsgCtrlClientAnnouncement::default_instance_ = new MsgCtrlClientAnnouncement();
@@ -620,7 +620,7 @@ bool MsgDispatcherToSim::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 context = 1 [default = 0];
+      // optional int32 context = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
@@ -670,7 +670,7 @@ void MsgDispatcherToSim::SerializeWithCachedSizes(
     return;
   }
   
-  // optional int32 context = 1 [default = 0];
+  // optional int32 context = 1;
   if (_has_bit(0)) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->context(), output);
   }
@@ -689,7 +689,7 @@ void MsgDispatcherToSim::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgDispatcherToSim::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // optional int32 context = 1 [default = 0];
+  // optional int32 context = 1;
   if (_has_bit(0)) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->context(), target);
   }
@@ -712,7 +712,7 @@ int MsgDispatcherToSim::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional int32 context = 1 [default = 0];
+    // optional int32 context = 1;
     if (has_context()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(

@@ -228,17 +228,17 @@ void protobuf_AddDesc_LauncherToAdmin_2eproto() {
     "xercise\0225\n\020simulation_state\030\003 \001(\0162\033.Comm"
     "on.EnumSimulationState\"I\n\tErrorCode\022\013\n\007s"
     "uccess\020\000\022\025\n\021bad_exercise_name\020\001\022\030\n\024exerc"
-    "ise_not_running\020\002\"\212\003\n\022MsgLauncherToAdmin"
-    "\022\022\n\007context\030\001 \001(\005:\0010\022@\n\007message\030\002 \002(\0132/."
-    "MsgsLauncherToAdmin.MsgLauncherToAdmin.C"
-    "ontent\032\235\002\n\007Content\022=\n\016connection_ack\030\001 \001"
-    "(\0132%.MsgsLauncherToAdmin.MsgConnectionAc"
-    "k\022M\n\026exercise_list_response\030\002 \001(\0132-.Msgs"
-    "LauncherToAdmin.MsgExercicesListResponse"
-    "\022B\n\021control_start_ack\030\003 \001(\0132\'.MsgsLaunch"
-    "erToAdmin.MsgControlStartAck\022@\n\020control_"
-    "stop_ack\030\004 \001(\0132&.MsgsLauncherToAdmin.Msg"
-    "ControlStopAck", 1454);
+    "ise_not_running\020\002\"\207\003\n\022MsgLauncherToAdmin"
+    "\022\017\n\007context\030\001 \001(\005\022@\n\007message\030\002 \002(\0132/.Msg"
+    "sLauncherToAdmin.MsgLauncherToAdmin.Cont"
+    "ent\032\235\002\n\007Content\022=\n\016connection_ack\030\001 \001(\0132"
+    "%.MsgsLauncherToAdmin.MsgConnectionAck\022M"
+    "\n\026exercise_list_response\030\002 \001(\0132-.MsgsLau"
+    "ncherToAdmin.MsgExercicesListResponse\022B\n"
+    "\021control_start_ack\030\003 \001(\0132\'.MsgsLauncherT"
+    "oAdmin.MsgControlStartAck\022@\n\020control_sto"
+    "p_ack\030\004 \001(\0132&.MsgsLauncherToAdmin.MsgCon"
+    "trolStopAck", 1451);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "LauncherToAdmin.proto", &protobuf_RegisterTypes);
   MsgConnectionAck::default_instance_ = new MsgConnectionAck();
@@ -1916,7 +1916,7 @@ bool MsgLauncherToAdmin::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 context = 1 [default = 0];
+      // optional int32 context = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
@@ -1966,7 +1966,7 @@ void MsgLauncherToAdmin::SerializeWithCachedSizes(
     return;
   }
   
-  // optional int32 context = 1 [default = 0];
+  // optional int32 context = 1;
   if (_has_bit(0)) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->context(), output);
   }
@@ -1985,7 +1985,7 @@ void MsgLauncherToAdmin::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgLauncherToAdmin::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // optional int32 context = 1 [default = 0];
+  // optional int32 context = 1;
   if (_has_bit(0)) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->context(), target);
   }
@@ -2008,7 +2008,7 @@ int MsgLauncherToAdmin::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional int32 context = 1 [default = 0];
+    // optional int32 context = 1;
     if (has_context()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(

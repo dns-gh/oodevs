@@ -169,14 +169,14 @@ void protobuf_AddDesc_AarToClient_2eproto() {
     "MsgAarInformation\022\023\n\013information\030\001 \002(\t\"B"
     "\n\rMsgPlotResult\022\022\n\nidentifier\030\001 \002(\r\022\016\n\006v"
     "alues\030\002 \003(\002\022\r\n\005error\030\003 \002(\t\"+\n\014MsgIndicat"
-    "or\022\014\n\004name\030\001 \002(\t\022\r\n\005value\030\002 \002(\002\"\216\002\n\016MsgA"
-    "arToClient\022\022\n\007context\030\001 \001(\005:\0010\0228\n\007messag"
-    "e\030\002 \001(\0132\'.MsgsAarToClient.MsgAarToClient"
-    ".Content\032\255\001\n\007Content\022;\n\017aar_information\030"
-    "\001 \001(\0132\".MsgsAarToClient.MsgAarInformatio"
-    "n\0223\n\013plot_result\030\002 \001(\0132\036.MsgsAarToClient"
-    ".MsgPlotResult\0220\n\tindicator\030\003 \001(\0132\035.Msgs"
-    "AarToClient.MsgIndicator", 464);
+    "or\022\014\n\004name\030\001 \002(\t\022\r\n\005value\030\002 \002(\002\"\213\002\n\016MsgA"
+    "arToClient\022\017\n\007context\030\001 \001(\005\0228\n\007message\030\002"
+    " \001(\0132\'.MsgsAarToClient.MsgAarToClient.Co"
+    "ntent\032\255\001\n\007Content\022;\n\017aar_information\030\001 \001"
+    "(\0132\".MsgsAarToClient.MsgAarInformation\0223"
+    "\n\013plot_result\030\002 \001(\0132\036.MsgsAarToClient.Ms"
+    "gPlotResult\0220\n\tindicator\030\003 \001(\0132\035.MsgsAar"
+    "ToClient.MsgIndicator", 461);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "AarToClient.proto", &protobuf_RegisterTypes);
   MsgAarInformation::default_instance_ = new MsgAarInformation();
@@ -1353,7 +1353,7 @@ bool MsgAarToClient::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 context = 1 [default = 0];
+      // optional int32 context = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
@@ -1403,7 +1403,7 @@ void MsgAarToClient::SerializeWithCachedSizes(
     return;
   }
   
-  // optional int32 context = 1 [default = 0];
+  // optional int32 context = 1;
   if (_has_bit(0)) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->context(), output);
   }
@@ -1422,7 +1422,7 @@ void MsgAarToClient::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgAarToClient::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // optional int32 context = 1 [default = 0];
+  // optional int32 context = 1;
   if (_has_bit(0)) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->context(), target);
   }
@@ -1445,7 +1445,7 @@ int MsgAarToClient::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional int32 context = 1 [default = 0];
+    // optional int32 context = 1;
     if (has_context()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(

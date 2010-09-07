@@ -201,19 +201,19 @@ void protobuf_AddDesc_ClientToAuthentication_2eproto() {
     "\022\r\n\005login\030\001 \002(\t\0227\n\007profile\030\002 \002(\0132&.MsgsA"
     "uthenticationToClient.MsgProfile\"-\n\034MsgP"
     "rofileDestructionRequest\022\r\n\005login\030\001 \002(\t\""
-    "\356\003\n\031MsgClientToAuthentication\022\022\n\007context"
-    "\030\001 \001(\005:\0010\022N\n\007message\030\002 \002(\0132=.MsgsClientT"
-    "oAuthentication.MsgClientToAuthenticatio"
-    "n.Content\032\354\002\n\007Content\022T\n\026authentication_"
-    "request\030\001 \001(\01324.MsgsClientToAuthenticati"
-    "on.MsgAuthenticationRequest\022W\n\030profile_c"
-    "reation_request\030\002 \001(\01325.MsgsClientToAuth"
-    "entication.MsgProfileCreationRequest\022S\n\026"
-    "profile_update_request\030\003 \001(\01323.MsgsClien"
-    "tToAuthentication.MsgProfileUpdateReques"
-    "t\022]\n\033profile_destruction_request\030\004 \001(\01328"
-    ".MsgsClientToAuthentication.MsgProfileDe"
-    "structionRequest", 936);
+    "\353\003\n\031MsgClientToAuthentication\022\017\n\007context"
+    "\030\001 \001(\005\022N\n\007message\030\002 \002(\0132=.MsgsClientToAu"
+    "thentication.MsgClientToAuthentication.C"
+    "ontent\032\354\002\n\007Content\022T\n\026authentication_req"
+    "uest\030\001 \001(\01324.MsgsClientToAuthentication."
+    "MsgAuthenticationRequest\022W\n\030profile_crea"
+    "tion_request\030\002 \001(\01325.MsgsClientToAuthent"
+    "ication.MsgProfileCreationRequest\022S\n\026pro"
+    "file_update_request\030\003 \001(\01323.MsgsClientTo"
+    "Authentication.MsgProfileUpdateRequest\022]"
+    "\n\033profile_destruction_request\030\004 \001(\01328.Ms"
+    "gsClientToAuthentication.MsgProfileDestr"
+    "uctionRequest", 933);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "ClientToAuthentication.proto", &protobuf_RegisterTypes);
   MsgAuthenticationRequest::default_instance_ = new MsgAuthenticationRequest();
@@ -1689,7 +1689,7 @@ bool MsgClientToAuthentication::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 context = 1 [default = 0];
+      // optional int32 context = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
@@ -1739,7 +1739,7 @@ void MsgClientToAuthentication::SerializeWithCachedSizes(
     return;
   }
   
-  // optional int32 context = 1 [default = 0];
+  // optional int32 context = 1;
   if (_has_bit(0)) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->context(), output);
   }
@@ -1758,7 +1758,7 @@ void MsgClientToAuthentication::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgClientToAuthentication::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // optional int32 context = 1 [default = 0];
+  // optional int32 context = 1;
   if (_has_bit(0)) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->context(), target);
   }
@@ -1781,7 +1781,7 @@ int MsgClientToAuthentication::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional int32 context = 1 [default = 0];
+    // optional int32 context = 1;
     if (has_context()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(

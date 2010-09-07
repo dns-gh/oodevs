@@ -345,7 +345,7 @@ message MsgControlChangeTimeFactor {
 
 message MsgExercise  {
    required string  name     = 1; 
-   optional bool    running  = 2 [default = false]; 
+   optional bool    running  = 2; 
 }
 
 message MsgNetworkAddress  {

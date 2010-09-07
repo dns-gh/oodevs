@@ -162,21 +162,21 @@ void protobuf_AddDesc_ReplayToClient_2eproto() {
     "Common.EnumSimulationState\022\022\n\ntick_count"
     "\030\007 \002(\005\"b\n\027MsgControlSkipToTickAck\022\014\n\004tic"
     "k\030\001 \002(\005\0229\n\nerror_code\030\002 \002(\0162%.MsgsSimToC"
-    "lient.ControlAck.ErrorCode\"\257\004\n\021MsgReplay"
-    "ToClient\022\022\n\007context\030\001 \001(\005:\0010\022>\n\007message\030"
-    "\002 \002(\0132-.MsgsReplayToClient.MsgReplayToCl"
-    "ient.Content\032\305\003\n\007Content\022S\n\032control_repl"
-    "ay_information\030\001 \001(\0132/.MsgsReplayToClien"
-    "t.MsgControlReplayInformation\022M\n\030control"
-    "_skip_to_tick_ack\030\002 \001(\0132+.MsgsReplayToCl"
-    "ient.MsgControlSkipToTickAck\022<\n\020control_"
-    "stop_ack\030\003 \001(\0132\".MsgsSimToClient.MsgCont"
-    "rolStopAck\022>\n\021control_pause_ack\030\004 \001(\0132#."
-    "MsgsSimToClient.MsgControlPauseAck\022@\n\022co"
-    "ntrol_resume_ack\030\005 \001(\0132$.MsgsSimToClient"
-    ".MsgControlResumeAck\022V\n\036control_change_t"
-    "ime_factor_ack\030\006 \001(\0132..MsgsSimToClient.M"
-    "sgControlChangeTimeFactorAck", 988);
+    "lient.ControlAck.ErrorCode\"\254\004\n\021MsgReplay"
+    "ToClient\022\017\n\007context\030\001 \001(\005\022>\n\007message\030\002 \002"
+    "(\0132-.MsgsReplayToClient.MsgReplayToClien"
+    "t.Content\032\305\003\n\007Content\022S\n\032control_replay_"
+    "information\030\001 \001(\0132/.MsgsReplayToClient.M"
+    "sgControlReplayInformation\022M\n\030control_sk"
+    "ip_to_tick_ack\030\002 \001(\0132+.MsgsReplayToClien"
+    "t.MsgControlSkipToTickAck\022<\n\020control_sto"
+    "p_ack\030\003 \001(\0132\".MsgsSimToClient.MsgControl"
+    "StopAck\022>\n\021control_pause_ack\030\004 \001(\0132#.Msg"
+    "sSimToClient.MsgControlPauseAck\022@\n\022contr"
+    "ol_resume_ack\030\005 \001(\0132$.MsgsSimToClient.Ms"
+    "gControlResumeAck\022V\n\036control_change_time"
+    "_factor_ack\030\006 \001(\0132..MsgsSimToClient.MsgC"
+    "ontrolChangeTimeFactorAck", 985);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "ReplayToClient.proto", &protobuf_RegisterTypes);
   MsgControlReplayInformation::default_instance_ = new MsgControlReplayInformation();
@@ -1413,7 +1413,7 @@ bool MsgReplayToClient::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 context = 1 [default = 0];
+      // optional int32 context = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
@@ -1463,7 +1463,7 @@ void MsgReplayToClient::SerializeWithCachedSizes(
     return;
   }
   
-  // optional int32 context = 1 [default = 0];
+  // optional int32 context = 1;
   if (_has_bit(0)) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->context(), output);
   }
@@ -1482,7 +1482,7 @@ void MsgReplayToClient::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgReplayToClient::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // optional int32 context = 1 [default = 0];
+  // optional int32 context = 1;
   if (_has_bit(0)) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->context(), target);
   }
@@ -1505,7 +1505,7 @@ int MsgReplayToClient::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional int32 context = 1 [default = 0];
+    // optional int32 context = 1;
     if (has_context()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(

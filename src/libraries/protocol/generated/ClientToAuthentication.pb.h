@@ -595,7 +595,7 @@ class MsgClientToAuthentication : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // optional int32 context = 1 [default = 0];
+  // optional int32 context = 1;
   inline bool has_context() const;
   inline void clear_context();
   static const int kContextFieldNumber = 1;
@@ -952,7 +952,7 @@ inline ::MsgsClientToAuthentication::MsgProfileDestructionRequest* MsgClientToAu
 
 // MsgClientToAuthentication
 
-// optional int32 context = 1 [default = 0];
+// optional int32 context = 1;
 inline bool MsgClientToAuthentication::has_context() const {
   return _has_bit(0);
 }

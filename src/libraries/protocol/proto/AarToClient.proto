@@ -30,6 +30,6 @@ message MsgAarToClient {
         optional MsgPlotResult     plot_result     = 2;
         optional MsgIndicator      indicator       = 3;
     }
-    optional int32   context = 1 [default = 0];
+    optional int32   context = 1;
     optional Content message = 2;
 }

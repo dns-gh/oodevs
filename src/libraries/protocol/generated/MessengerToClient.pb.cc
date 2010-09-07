@@ -888,64 +888,64 @@ void protobuf_AddDesc_MessengerToClient_2eproto() {
     "sgNoteUpdate\022\n\n\002id\030\001 \002(\r\022\014\n\004date\030\002 \002(\t\022\014"
     "\n\004name\030\003 \001(\t\022\016\n\006number\030\004 \001(\t\022\023\n\013descript"
     "ion\030\005 \001(\t\022\016\n\006parent\030\006 \001(\r\" \n\022MsgNoteDest"
-    "ruction\022\n\n\002id\030\001 \002(\r\"\341\021\n\024MsgMessengerToCl"
-    "ient\022\022\n\007context\030\001 \001(\005:\0010\022D\n\007message\030\002 \002("
-    "\01323.MsgsMessengerToClient.MsgMessengerTo"
-    "Client.Content\032\356\020\n\007Content\022?\n\016limit_crea"
-    "tion\030\001 \001(\0132\'.MsgsMessengerToClient.MsgLi"
-    "mitCreation\022;\n\014limit_update\030\002 \001(\0132%.Msgs"
-    "MessengerToClient.MsgLimitUpdate\022E\n\021limi"
-    "t_destruction\030\003 \001(\0132*.MsgsMessengerToCli"
-    "ent.MsgLimitDestruction\022U\n\032limit_creatio"
-    "n_request_ack\030\004 \001(\01321.MsgsMessengerToCli"
-    "ent.MsgLimitCreationRequestAck\022[\n\035limit_"
-    "destruction_request_ack\030\005 \001(\01324.MsgsMess"
-    "engerToClient.MsgLimitDestructionRequest"
-    "Ack\022Q\n\030limit_update_request_ack\030\006 \001(\0132/."
-    "MsgsMessengerToClient.MsgLimitUpdateRequ"
-    "estAck\022=\n\rlima_creation\030\007 \001(\0132&.MsgsMess"
-    "engerToClient.MsgLimaCreation\0229\n\013lima_up"
-    "date\030\010 \001(\0132$.MsgsMessengerToClient.MsgLi"
-    "maUpdate\022C\n\020lima_destruction\030\t \001(\0132).Msg"
-    "sMessengerToClient.MsgLimaDestruction\022S\n"
-    "\031lima_creation_request_ack\030\n \001(\01320.MsgsM"
-    "essengerToClient.MsgLimaCreationRequestA"
-    "ck\022Y\n\034lima_destruction_request_ack\030\013 \001(\013"
-    "23.MsgsMessengerToClient.MsgLimaDestruct"
-    "ionRequestAck\022O\n\027lima_update_request_ack"
-    "\030\014 \001(\0132..MsgsMessengerToClient.MsgLimaUp"
-    "dateRequestAck\022M\n\025intelligence_creation\030"
-    "\r \001(\0132..MsgsMessengerToClient.MsgIntelli"
-    "genceCreation\022I\n\023intelligence_update\030\016 \001"
-    "(\0132,.MsgsMessengerToClient.MsgIntelligen"
-    "ceUpdate\022S\n\030intelligence_destruction\030\017 \001"
-    "(\01321.MsgsMessengerToClient.MsgIntelligen"
-    "ceDestruction\022c\n!intelligence_creation_r"
-    "equest_ack\030\020 \001(\01328.MsgsMessengerToClient"
-    ".MsgIntelligenceCreationRequestAck\022_\n\037in"
-    "telligence_update_request_ack\030\021 \001(\01326.Ms"
-    "gsMessengerToClient.MsgIntelligenceUpdat"
-    "eRequestAck\022i\n$intelligence_destruction_"
-    "request_ack\030\022 \001(\0132;.MsgsMessengerToClien"
-    "t.MsgIntelligenceDestructionRequestAck\022?"
-    "\n\016shape_creation\030\023 \001(\0132\'.MsgsMessengerTo"
-    "Client.MsgShapeCreation\022;\n\014shape_update\030"
-    "\024 \001(\0132%.MsgsMessengerToClient.MsgShapeUp"
-    "date\022E\n\021shape_destruction\030\025 \001(\0132*.MsgsMe"
-    "ssengerToClient.MsgShapeDestruction\022U\n\032s"
-    "hape_creation_request_ack\030\026 \001(\01321.MsgsMe"
-    "ssengerToClient.MsgShapeCreationRequestA"
-    "ck\022[\n\035shape_destruction_request_ack\030\027 \001("
-    "\01324.MsgsMessengerToClient.MsgShapeDestru"
-    "ctionRequestAck\022Q\n\030shape_update_request_"
-    "ack\030\030 \001(\0132/.MsgsMessengerToClient.MsgSha"
-    "peUpdateRequestAck\022,\n\014text_message\030\031 \001(\013"
-    "2\026.Common.MsgTextMessage\022=\n\rnote_creatio"
-    "n\030\032 \001(\0132&.MsgsMessengerToClient.MsgNoteC"
-    "reation\0229\n\013note_update\030\033 \001(\0132$.MsgsMesse"
-    "ngerToClient.MsgNoteUpdate\022C\n\020note_destr"
-    "uction\030\034 \001(\0132).MsgsMessengerToClient.Msg"
-    "NoteDestruction", 5455);
+    "ruction\022\n\n\002id\030\001 \002(\r\"\336\021\n\024MsgMessengerToCl"
+    "ient\022\017\n\007context\030\001 \001(\005\022D\n\007message\030\002 \002(\01323"
+    ".MsgsMessengerToClient.MsgMessengerToCli"
+    "ent.Content\032\356\020\n\007Content\022?\n\016limit_creatio"
+    "n\030\001 \001(\0132\'.MsgsMessengerToClient.MsgLimit"
+    "Creation\022;\n\014limit_update\030\002 \001(\0132%.MsgsMes"
+    "sengerToClient.MsgLimitUpdate\022E\n\021limit_d"
+    "estruction\030\003 \001(\0132*.MsgsMessengerToClient"
+    ".MsgLimitDestruction\022U\n\032limit_creation_r"
+    "equest_ack\030\004 \001(\01321.MsgsMessengerToClient"
+    ".MsgLimitCreationRequestAck\022[\n\035limit_des"
+    "truction_request_ack\030\005 \001(\01324.MsgsMesseng"
+    "erToClient.MsgLimitDestructionRequestAck"
+    "\022Q\n\030limit_update_request_ack\030\006 \001(\0132/.Msg"
+    "sMessengerToClient.MsgLimitUpdateRequest"
+    "Ack\022=\n\rlima_creation\030\007 \001(\0132&.MsgsMesseng"
+    "erToClient.MsgLimaCreation\0229\n\013lima_updat"
+    "e\030\010 \001(\0132$.MsgsMessengerToClient.MsgLimaU"
+    "pdate\022C\n\020lima_destruction\030\t \001(\0132).MsgsMe"
+    "ssengerToClient.MsgLimaDestruction\022S\n\031li"
+    "ma_creation_request_ack\030\n \001(\01320.MsgsMess"
+    "engerToClient.MsgLimaCreationRequestAck\022"
+    "Y\n\034lima_destruction_request_ack\030\013 \001(\01323."
+    "MsgsMessengerToClient.MsgLimaDestruction"
+    "RequestAck\022O\n\027lima_update_request_ack\030\014 "
+    "\001(\0132..MsgsMessengerToClient.MsgLimaUpdat"
+    "eRequestAck\022M\n\025intelligence_creation\030\r \001"
+    "(\0132..MsgsMessengerToClient.MsgIntelligen"
+    "ceCreation\022I\n\023intelligence_update\030\016 \001(\0132"
+    ",.MsgsMessengerToClient.MsgIntelligenceU"
+    "pdate\022S\n\030intelligence_destruction\030\017 \001(\0132"
+    "1.MsgsMessengerToClient.MsgIntelligenceD"
+    "estruction\022c\n!intelligence_creation_requ"
+    "est_ack\030\020 \001(\01328.MsgsMessengerToClient.Ms"
+    "gIntelligenceCreationRequestAck\022_\n\037intel"
+    "ligence_update_request_ack\030\021 \001(\01326.MsgsM"
+    "essengerToClient.MsgIntelligenceUpdateRe"
+    "questAck\022i\n$intelligence_destruction_req"
+    "uest_ack\030\022 \001(\0132;.MsgsMessengerToClient.M"
+    "sgIntelligenceDestructionRequestAck\022?\n\016s"
+    "hape_creation\030\023 \001(\0132\'.MsgsMessengerToCli"
+    "ent.MsgShapeCreation\022;\n\014shape_update\030\024 \001"
+    "(\0132%.MsgsMessengerToClient.MsgShapeUpdat"
+    "e\022E\n\021shape_destruction\030\025 \001(\0132*.MsgsMesse"
+    "ngerToClient.MsgShapeDestruction\022U\n\032shap"
+    "e_creation_request_ack\030\026 \001(\01321.MsgsMesse"
+    "ngerToClient.MsgShapeCreationRequestAck\022"
+    "[\n\035shape_destruction_request_ack\030\027 \001(\01324"
+    ".MsgsMessengerToClient.MsgShapeDestructi"
+    "onRequestAck\022Q\n\030shape_update_request_ack"
+    "\030\030 \001(\0132/.MsgsMessengerToClient.MsgShapeU"
+    "pdateRequestAck\022,\n\014text_message\030\031 \001(\0132\026."
+    "Common.MsgTextMessage\022=\n\rnote_creation\030\032"
+    " \001(\0132&.MsgsMessengerToClient.MsgNoteCrea"
+    "tion\0229\n\013note_update\030\033 \001(\0132$.MsgsMessenge"
+    "rToClient.MsgNoteUpdate\022C\n\020note_destruct"
+    "ion\030\034 \001(\0132).MsgsMessengerToClient.MsgNot"
+    "eDestruction", 5452);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "MessengerToClient.proto", &protobuf_RegisterTypes);
   TacticalLineAck::default_instance_ = new TacticalLineAck();
@@ -9927,7 +9927,7 @@ bool MsgMessengerToClient::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 context = 1 [default = 0];
+      // optional int32 context = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
@@ -9977,7 +9977,7 @@ void MsgMessengerToClient::SerializeWithCachedSizes(
     return;
   }
   
-  // optional int32 context = 1 [default = 0];
+  // optional int32 context = 1;
   if (_has_bit(0)) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->context(), output);
   }
@@ -9996,7 +9996,7 @@ void MsgMessengerToClient::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgMessengerToClient::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // optional int32 context = 1 [default = 0];
+  // optional int32 context = 1;
   if (_has_bit(0)) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->context(), target);
   }
@@ -10019,7 +10019,7 @@ int MsgMessengerToClient::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional int32 context = 1 [default = 0];
+    // optional int32 context = 1;
     if (has_context()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
