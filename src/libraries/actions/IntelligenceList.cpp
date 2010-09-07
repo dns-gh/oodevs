@@ -114,5 +114,8 @@ void IntelligenceList::Clean( Common::MsgMissionParameter& message ) const
 // -----------------------------------------------------------------------------
 bool IntelligenceList::IsSet() const
 {
-    return !elements_.empty(); // $$$$ SBO 2008-03-19: each element must be set as well...
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        if( !it->second->IsSet() )
+            return false;
+    return !elements_.empty();
 }
