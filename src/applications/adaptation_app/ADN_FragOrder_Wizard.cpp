@@ -52,6 +52,7 @@ bool ADN_FragOrder_Wizard::ValidateAll()
     if(! ADN_Wizard_ABC_ADN_Missions_Data_FragOrder_::ValidateAll() )
         return false;
     name_ = pResult_->GetItemName();
+    pResult_->isAvailableWithoutMission_ = true;
     return true;
 }
 

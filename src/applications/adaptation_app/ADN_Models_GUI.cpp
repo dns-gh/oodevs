@@ -109,12 +109,12 @@ QWidget* ADN_Models_GUI::BuildPage( QVGroupBox*& pGroup, QWidget* pParent, ADN_M
     ADN_ListView_Missions* pListMissions = new ADN_ListView_Missions( eEntityType, pListModels, pMissionsGroup );
     vInfosConnectors[eMissions] = &pListMissions->GetConnector();
 
-    ADN_ListView_Orders* pListOrders = new ADN_ListView_Orders( pMissionsGroup );
+    ADN_ListView_Orders* pListOrders = new ADN_ListView_Orders( true, pMissionsGroup );
     T_ConnectorVector vMissionConnector( eNbrMissionGuiElements, (ADN_Connector_ABC*)0 );
     vMissionConnector[eOrders] = &pListOrders->GetConnector();
 
     QGroupBox* pFragOdersGroup = new QHGroupBox( tr( "FragOrders" ), pGroup );
-    ADN_ListView_Orders* pListFragOrders = new ADN_ListView_Orders( pFragOdersGroup );
+    ADN_ListView_Orders* pListFragOrders = new ADN_ListView_Orders( false , pFragOdersGroup );
     vInfosConnectors[eFragOrders] = &pListFragOrders->GetConnector();
 
     pListMissions->SetItemConnectors( vMissionConnector );

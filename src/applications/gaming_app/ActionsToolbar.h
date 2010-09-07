@@ -78,6 +78,9 @@ private slots:
     void Purge();
     //@}
 
+signals:
+    void PlanificationModeChange();
+
 private:
     //! @name Member data
     //@{

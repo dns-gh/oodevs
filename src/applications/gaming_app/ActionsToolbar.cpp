@@ -90,7 +90,7 @@ ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, const to
 
     QToolButton* planningBtn = new gui::BooleanOptionButton( MakePixmap( "actions_designmode" ), tr( "Planning mode on/off" ), this, controllers.options_, "DesignMode" );
     planningBtn->setAutoRaise( true );
-
+    connect( planningBtn, SIGNAL( stateChanged( int ) ), this, SIGNAL( PlanificationModeChange() ) );
     purgeBtn_ = new QToolButton( this );
     purgeBtn_->setAutoRaise( true );
     purgeBtn_->setPixmap( MAKE_PIXMAP( trash2 ) );

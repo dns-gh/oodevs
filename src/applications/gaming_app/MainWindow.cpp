@@ -255,7 +255,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticM
     pInfoDockWnd_->hide();
 
      // Mission panel
-    MissionPanel* pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, *paramLayer, *glProxy_, profile, model_.actions_, model_.agentKnowledgeConverter_, model_.objectKnowledgeConverter_, simulation );
+    pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, *paramLayer, *glProxy_, profile, model_.actions_, model_.agentKnowledgeConverter_, model_.objectKnowledgeConverter_, simulation );
     moveDockWindow( pMissionPanel_, Qt::DockLeft );
     setDockEnabled( pMissionPanel_, Qt::DockTop, false );
     setAppropriate( pMissionPanel_, false );
@@ -314,6 +314,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticM
     {
         TimelinePanel* timelinePanel = new TimelinePanel( this, controllers_, model_.actions_, *scheduler, config_, *factory, profile );
         moveDockWindow( timelinePanel, Qt::DockTop );
+        connect( timelinePanel, SIGNAL( PlanificationModeChange() ), this, SLOT( OnPlanifStateChange() ) );
         timelinePanel->hide();
     }
 
@@ -452,6 +453,15 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     forward_->Register( elevation3d );
     forward_->Register( weather );
     forward_->SetDefault( defaultLayer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::OnPlanifStateChange
+// Created: HBD 2010-09-06
+// -----------------------------------------------------------------------------
+void MainWindow::OnPlanifStateChange()
+{
+  pMissionPanel_->ActivatePlanification();
 }
 
 // -----------------------------------------------------------------------------

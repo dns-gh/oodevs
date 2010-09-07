@@ -59,6 +59,7 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::
     , pMissionInterface_       ( 0 )
     , interfaceBuilder_        ( new MissionInterfaceBuilder( controllers_, layer_, knowledgeConverter, objectKnowledgeConverter, static_, simulation ) )
     , selectedEntity_          ( controllers )
+    , isPlanifMode_            ( false )
 {
     setResizeEnabled( true );
     setCaption( tr( "Mission" ) );
@@ -422,6 +423,7 @@ void MissionPanel::SetInterface( actions::gui::MissionInterface_ABC* missionInte
     else
     {
         pMissionInterface_ = missionInterface;
+        pMissionInterface_->ChangeOkValueButton( isPlanifMode_ );
         NotifyMission();
         if( pMissionInterface_->IsEmpty() )
             pMissionInterface_->OnOk();
@@ -431,6 +433,17 @@ void MissionPanel::SetInterface( actions::gui::MissionInterface_ABC* missionInte
             show();
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionPanel::ActivatePlanification
+// Created: HBD 2010-09-06
+// -----------------------------------------------------------------------------
+void MissionPanel::ActivatePlanification()
+{
+    isPlanifMode_ = !isPlanifMode_;
+    if ( pMissionInterface_ )
+        pMissionInterface_->ChangeOkValueButton( isPlanifMode_ );
 }
 
 // -----------------------------------------------------------------------------

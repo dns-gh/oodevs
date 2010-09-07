@@ -21,10 +21,11 @@
 // =============================================================================
 class ADN_ListView_FragOrderTypes : public ADN_ListView
 {
+       Q_OBJECT;
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ListView_FragOrderTypes( ADN_Missions_Data::T_FragOrder_Vector& orders, QWidget* pParent = 0, const char* szName = 0 );
+              ADN_ListView_FragOrderTypes( ADN_Missions_Data::T_FragOrder_Vector& orders, QWidget* pParent = 0, const char* szName = 0 );
     virtual ~ADN_ListView_FragOrderTypes();
     //@}
 
@@ -42,6 +43,9 @@ private:
     ADN_ListView_FragOrderTypes& operator=( const ADN_ListView_FragOrderTypes& ); //!< Assignment operator
     //@}
 
+public slots:
+    void OnToogled( bool );
+    
 private:
     //! @name Member data
     //@{

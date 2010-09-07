@@ -101,6 +101,7 @@ TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controll
     tabs_ = new TabWidget( this );
     QVBox* box = new QVBox( tabs_ );
     toolbar_ = new ActionsToolbar( box, model, config, controllers );
+    connect( toolbar_, SIGNAL(PlanificationModeChange() ),  this, SIGNAL( PlanificationModeChange()) );
     timeline_ = new TimelineWidget( box, controllers, model, scheduler, factory );
     {
         tabs_->addTab( box, tools::translate( "TimelinePanel", "Global view" ) );

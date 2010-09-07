@@ -86,6 +86,9 @@ public:
     void hideEvent( QHideEvent* pEvent );
     //@}
 
+public slots:
+        void ActivatePlanification();
+
 private slots:
     //! @name Slots
     //@{
@@ -93,7 +96,6 @@ private slots:
     void ActivateAutomatMission( int );
     void ActivateFragOrder( int );
     void ActivatePopulationMission( int );
-
     void Engage();
     void Disengage();
     //@}
@@ -138,6 +140,7 @@ private:
     actions::gui::MissionInterface_ABC* pMissionInterface_;
     MissionInterfaceBuilder* interfaceBuilder_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
+    bool isPlanifMode_;
     //@}
 };
 

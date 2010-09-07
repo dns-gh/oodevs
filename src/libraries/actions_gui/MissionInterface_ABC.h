@@ -52,6 +52,7 @@ public:
     void Draw( const kernel::GlTools_ABC& tools, kernel::Viewport_ABC& extent ) const;
     bool IsEmpty() const;
     void AddParameter( Param_ABC& parameter );
+    void ChangeOkValueButton( bool isPlanifMode );
     //@}
 
 public slots:
@@ -100,6 +101,7 @@ private:
     QVBox* mainTab_;
     QVBox* optionalTab_;
     QScrollView* sc1_;
+    QPushButton* ok_;
     //@}
 };
 

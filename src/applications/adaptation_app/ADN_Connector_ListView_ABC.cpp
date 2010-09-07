@@ -97,7 +97,7 @@ bool ADN_Connector_ListView_ABC::AddItemPrivate(void *obj,bool)
 // Name: ADN_Connector_ListView_ABC::RemItemPrivate
 // Created: AGN 2004-05-11
 // -----------------------------------------------------------------------------
-bool ADN_Connector_ListView_ABC::RemItemPrivate(void *item,bool)
+bool ADN_Connector_ListView_ABC::RemItemPrivate(void *item, bool)
 {
     if( item == 0 )
         return false;

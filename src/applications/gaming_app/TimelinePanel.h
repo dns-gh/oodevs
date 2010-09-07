@@ -61,6 +61,12 @@ public slots:
     void OnViewChanged();
     //@}
 
+signals:
+    //! @name Signal
+    //@{
+    void PlanificationModeChange();
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{

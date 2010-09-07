@@ -68,6 +68,14 @@
         <source>Change logistic links</source>
         <translation type="obsolete">Changer les liens logistiques</translation>
     </message>
+    <message>
+        <source>Load exercise definition file (exercise.xml)</source>
+        <translation type="obsolete">Charger une définition d&apos;exercice (exercise.xml)</translation>
+    </message>
+    <message>
+        <source> - Not connected</source>
+        <translation type="obsolete"> - Non connecté</translation>
+    </message>
 </context>
 <context>
     <name>AboutDialog</name>
@@ -1652,7 +1660,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <name>MainWindow</name>
     <message>
         <source> - Not connected</source>
-        <translation> - Non connecté</translation>
+        <translation type="unfinished"> - Non connecté</translation>
     </message>
     <message>
         <source>Tactical</source>
@@ -1692,31 +1700,31 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Load exercise definition file (exercise.xml)</source>
-        <translation>Charger une définition d&apos;exercice (exercise.xml)</translation>
+        <translation type="unfinished">Charger une définition d&apos;exercice (exercise.xml)</translation>
     </message>
     <message>
         <source>Logo</source>
-        <translation>Logo</translation>
+        <translation type="unfinished">Logo</translation>
     </message>
     <message>
         <source>Units</source>
-        <translation>Unités</translation>
+        <translation type="unfinished">Unités</translation>
     </message>
     <message>
         <source>Automats</source>
-        <translation>Automates</translation>
+        <translation type="unfinished">Automates</translation>
     </message>
     <message>
         <source>Elevation</source>
-        <translation>Elévation</translation>
+        <translation type="unfinished">Elévation</translation>
     </message>
     <message>
         <source>Raster</source>
-        <translation>Cartes raster</translation>
+        <translation type="unfinished">Cartes raster</translation>
     </message>
     <message>
         <source>Terrain</source>
-        <translation>Terrain</translation>
+        <translation type="unfinished">Terrain</translation>
     </message>
     <message>
         <source>Intelligences</source>
@@ -1728,11 +1736,11 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Folk</source>
-        <translation>Foule</translation>
+        <translation type="unfinished">Foule</translation>
     </message>
     <message>
         <source>Intelligence</source>
-        <translation>Renseignement</translation>
+        <translation type="unfinished">Renseignement</translation>
     </message>
     <message>
         <source>Knowledge</source>
@@ -1744,7 +1752,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Watershed</source>
-        <translation>Montée des eaux</translation>
+        <translation type="unfinished">Montée des eaux</translation>
     </message>
 </context>
 <context>
@@ -3672,6 +3680,50 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Last tick speed factor/Mean speed factor</source>
         <translation>Facteur d&apos;accélération dernier tick/moyen</translation>
+    </message>
+    <message>
+        <source>Elevation</source>
+        <translation type="obsolete">Elévation</translation>
+    </message>
+    <message>
+        <source>Raster</source>
+        <translation type="obsolete">Cartes raster</translation>
+    </message>
+    <message>
+        <source>Terrain</source>
+        <translation type="obsolete">Terrain</translation>
+    </message>
+    <message>
+        <source>Watershed</source>
+        <translation type="obsolete">Montée des eaux</translation>
+    </message>
+    <message>
+        <source>Folk</source>
+        <translation type="obsolete">Foule</translation>
+    </message>
+    <message>
+        <source>Intelligence</source>
+        <translation type="obsolete">Renseignement</translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation type="obsolete">Objets</translation>
+    </message>
+    <message>
+        <source>Populations</source>
+        <translation type="obsolete">Populations</translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation type="obsolete">Unités</translation>
+    </message>
+    <message>
+        <source>Automats</source>
+        <translation type="obsolete">Automates</translation>
+    </message>
+    <message>
+        <source>Logo</source>
+        <translation type="obsolete">Logo</translation>
     </message>
 </context>
 <context>

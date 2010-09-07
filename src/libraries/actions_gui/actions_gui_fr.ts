@@ -118,6 +118,10 @@
         <source>Help</source>
         <translation>Aide</translation>
     </message>
+    <message>
+        <source>Plann the mission</source>
+        <translation type="unfinished">Planifier la mission</translation>
+    </message>
 </context>
 <context>
     <name>ParamAgentKnowledgeList</name>

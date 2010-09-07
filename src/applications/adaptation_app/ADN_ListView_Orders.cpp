@@ -65,8 +65,9 @@ private:
 // Name: ADN_ListView_Orders constructor
 // Created: AGN 2003-11-27
 // -----------------------------------------------------------------------------
-ADN_ListView_Orders::ADN_ListView_Orders(QWidget * parent, const char * name , WFlags f )
+ADN_ListView_Orders::ADN_ListView_Orders( bool usedWithMission, QWidget * parent, const char * name , WFlags f)
 :   ADN_ListView(parent,name,f)
+, usedWithMission_ ( usedWithMission )
 {
     // add one column
     addColumn( tr( "Frag orders"));
@@ -106,13 +107,16 @@ void ADN_ListView_Orders::OnContextMenu( const QPoint& pt )
     ADN_Missions_Data::T_FragOrder_Vector& fragOrders = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders();
     for( ADN_Missions_Data::IT_FragOrder_Vector it = fragOrders.begin(); it != fragOrders.end(); ++it )
     {
-        std::string strOrderName = (*it)->strName_.GetData();
-        const int id = pTargetMenu->insertItem( strOrderName.c_str(), 2 + n );
-        const bool added = Contains( strOrderName );
-        pTargetMenu->setItemEnabled( id, !added );
-        pTargetMenu->setItemChecked( id, added );
-        bDisplayAdd |= !added;
-        ++n;
+        if ( usedWithMission_ || (*it)->isAvailableWithoutMission_.GetData() )
+        {
+            std::string strOrderName = (*it)->strName_.GetData();
+            const int id = pTargetMenu->insertItem( strOrderName.c_str(), 2 + n );
+            const bool added = Contains( strOrderName );
+            pTargetMenu->setItemEnabled( id, !added );
+            pTargetMenu->setItemChecked( id, added );
+            bDisplayAdd |= !added;
+            ++n;
+        }
     }
     if( ! bDisplayAdd && !bDisplayRem )
         return;

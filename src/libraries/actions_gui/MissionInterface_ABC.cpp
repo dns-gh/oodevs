@@ -142,15 +142,29 @@ void MissionInterface_ABC::CreateOkCancelButtons()
 {
     QHBox* box = new QHBox( this );
     box->setMargin( 5 );
-    box->setSpacing( 5 );
+    box->setSpacing( 5 );   
     box->layout()->setAlignment( Qt::AlignRight );
-    QPushButton* ok = new QPushButton( tools::translate( "MissionInterface_ABC", "Ok" ), box );
+    ok_ = new QPushButton( tools::translate( "MissionInterface_ABC", "Ok" ), box );
     QPushButton* cancel = new QPushButton( tools::translate( "MissionInterface_ABC", "Cancel" ), box );
-    ok->setDefault( true );
-    ok->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
-
-    connect( ok, SIGNAL( clicked() ), SLOT( OnOk() ) );
+    ok_->setDefault( true );
+    ok_->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
+    connect( ok_, SIGNAL( clicked() ), SLOT( OnOk() ) );
     connect( cancel, SIGNAL( clicked() ), parent(), SLOT( hide() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::ChangeOkValueButton
+// Created: HBD 2010-09-06
+// -----------------------------------------------------------------------------
+void MissionInterface_ABC::ChangeOkValueButton( bool isPlanifMode )
+{
+   if ( ok_ )
+   {
+       if ( isPlanifMode ) 
+          ok_->setText( tools::translate( "MissionInterface_ABC", "Plann the mission" ) );
+       else
+          ok_->setText( tools::translate( "MissionInterface_ABC", "Ok" ) );
+   }
 }
 
 // -----------------------------------------------------------------------------

@@ -160,7 +160,8 @@ QWidget* ADN_Missions_GUI::BuildFragOrders( QWidget* parent )
     builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Name" ), vInfosConnectors[eName] );
     builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Doctrine description" ), vInfosConnectors[eDoctrineDescription] );
     builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Usage description" ), vInfosConnectors[eUsageDescription] );
-    builder.AddField< ADN_CheckBox >( pParamHolder, tr( "Available without mission" ) , vInfosConnectors[eFragOrderAvailableWithoutMission] );
+    QCheckBox* available = builder.AddField< ADN_CheckBox >( pParamHolder, tr( "Available without mission" ) , vInfosConnectors[eFragOrderAvailableWithoutMission] );
+    connect( available, SIGNAL( toggled ( bool )  ), listFragOrders, SLOT( OnToogled( bool ) ) );
 
     QGroupBox* pParameters = new QGroupBox( 2, Qt::Horizontal, tr( "Parameters" ), pFragOrderGroup_ );
     ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table( pParameters );

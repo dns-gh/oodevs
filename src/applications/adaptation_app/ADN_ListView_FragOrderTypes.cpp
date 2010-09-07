@@ -9,10 +9,13 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_FragOrderTypes.h"
+#include "moc_ADN_ListView_FragOrderTypes.cpp"
+
 #include "ADN_Missions_Data.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Tools.h"
 #include "ADN_Missions_GUI.h"
+#include "ADN_Models_Data.h"
 #include "ADN_FragOrder_Wizard.h"
 
 #include <qpopupmenu.h>
@@ -73,4 +76,26 @@ void ADN_ListView_FragOrderTypes::OnContextMenu( const QPoint& pt )
         FillContextMenuWithDefault( popupMenu, wizard );
         popupMenu.exec( pt );
     }
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView_FragOrderTypes::OnToogled
+// Created: HBD 2010-09-06
+// -----------------------------------------------------------------------------
+void ADN_ListView_FragOrderTypes::OnToogled( bool isChecked )
+{
+    if( pCurData_ == 0 || isChecked )
+        return;
+    FragOrder* pInfos = (FragOrder*)pCurData_;
+    const std::string& name = pInfos->strName_.GetData();
+    ADN_Models_Data::T_ModelInfos_Vector& units = ADN_Workspace::GetWorkspace().GetModels().GetData().GetUnitModelsInfos();
+    ADN_Models_Data::T_ModelInfos_Vector& automata = ADN_Workspace::GetWorkspace().GetModels().GetData().GetAutomataModelsInfos();
+    ADN_Models_Data::T_ModelInfos_Vector& pops = ADN_Workspace::GetWorkspace().GetModels().GetData().GetPopulationModelsInfos();
+    for( ADN_Models_Data::IT_ModelInfos_Vector it1 = units.begin(); it1 != units.end(); ++it1 )
+        (*it1)->RemoveFragOder( name );                  
+    for( ADN_Models_Data::IT_ModelInfos_Vector it1 = automata.begin(); it1 != automata.end(); ++it1 )
+        (*it1)->RemoveFragOder( name );     
+    for( ADN_Models_Data::IT_ModelInfos_Vector it1 = pops.begin(); it1 != pops.end(); ++it1 )
+        (*it1)->RemoveFragOder( name );
 }

@@ -92,6 +92,7 @@ public slots:
     //@{
     void Open();
     void Close();
+    void OnPlanifStateChange();
     //@}
 
 private:
@@ -143,6 +144,7 @@ private:
     gui::AgentsLayer*     agents_;
     StatusBar*            pStatus_;
     bool                  connected_;
+    MissionPanel*         pMissionPanel_;
     //@}
 };
 

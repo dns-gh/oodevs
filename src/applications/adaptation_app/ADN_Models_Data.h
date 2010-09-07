@@ -114,6 +114,7 @@ public:
         void ReadOrder( xml::xistream& input );
         void WriteArchive( const std::string& type, xml::xostream& output );
         void AddFragOrder( ADN_Missions_Data::FragOrder* fragorder, const std::string& order );
+        void RemoveFragOder( const std::string& order );
 
     public:
         ADN_Missions_Data::T_Mission_Vector& missions_;
