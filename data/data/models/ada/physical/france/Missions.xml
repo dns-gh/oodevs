@@ -974,6 +974,7 @@
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Controler" dia-type="net.masagroup.sword.france.military.platoon.tasks.Controler" id="2075" name="MELEE Controler">
       <parameter dia-name="objectives" name="Zone a controler" optional="false" type="AreaBM"/>
+      <parameter dia-name="obstacles" name="Obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.stabilisation.tasks.Boucler" dia-type="net.masagroup.sword..france.military.platoon.stabilisation.tasks.Boucler" id="2102" name="MELEE Boucler">
       <parameter dia-name="objectives" name="Zones a boucler" optional="false" type="AreaListBM"/>
