@@ -867,6 +867,14 @@ Arrêt moteur allumé</translation>
         <source>Equipment - Invalid armor and/or volume</source>
         <translation>Equipement - Blindage et/ou volume invalide</translation>
     </message>
+    <message>
+        <source>Missing breakdown</source>
+        <translation type="unfinished">Panne non définie</translation>
+    </message>
+    <message>
+        <source>Equipment - Shall contain at least one breakdown for </source>
+        <translation>Equipement - Aucune panne définie pour </translation>
+    </message>
 </context>
 <context>
     <name>ADN_Composantes_Data::ConsumptionsInfos</name>

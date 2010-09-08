@@ -321,7 +321,7 @@ bool ADN_Workspace::SaveAs( const std::string& filename )
     /////////////////////////////////////
     // Save Data files in temporary folder
     try
-    {
+    {   
         // saving in temporary files activated
         dirInfos.UseTempDirectory( true );
         pProgressIndicator_->Reset( tr( "Saving project..." ) );
