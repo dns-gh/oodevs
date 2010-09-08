@@ -10,6 +10,10 @@
 #include "clients_kernel_pch.h"
 #include "OrderParameter.h"
 #include "OrderParameterValue.h"
+#pragma warning( push, 1 )
+#pragma warning( disable : 4512 )
+#include <boost/algorithm/string.hpp>
+#pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -19,13 +23,11 @@ using namespace kernel;
 // Created: SBO 2007-04-23
 // -----------------------------------------------------------------------------
 OrderParameter::OrderParameter( xml::xistream& xis )
-    : optional_( false )
+    : name_( xis.attribute< std::string >( "name" ) )
+    , type_( boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type" ) ) )
+    , optional_( xis.attribute( "optional", false ) )
 {
-    std::string name;
-    xis >> xml::attribute( "name", name_ )
-        >> xml::attribute( "type", type_ )
-        >> xml::optional >> xml::attribute( "optional", optional_ )
-        >> xml::list( "value", *this, &OrderParameter::ReadValue )
+    xis >> xml::list( "value", *this, &OrderParameter::ReadValue )
         >> xml::optional >> xml::start( "choice" )
             >> xml::list( "parameter", *this, &OrderParameter::ReadChoice )
         >> xml::end();
@@ -37,7 +39,7 @@ OrderParameter::OrderParameter( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 OrderParameter::OrderParameter( const std::string& name, const std::string& type, bool optional )
     : name_    ( name )
-    , type_    ( type )
+    , type_    ( boost::algorithm::to_lower_copy( type ) )
     , optional_( optional )
 {
     // NOTHING
@@ -109,7 +111,7 @@ void OrderParameter::ReadChoice( xml::xistream& xis )
 {
     std::string type;
     xis >> xml::attribute( "type", type );
-    choices_.push_back( type );
+    choices_.push_back( boost::algorithm::to_lower_copy( type ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -138,6 +140,6 @@ void OrderParameter::Accept( OrderParameterValueVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 void OrderParameter::Accept( ChoicesVisitor_ABC& visitor ) const
 {
-    for( std::vector<std::string>::const_iterator it = choices_.begin(); it != choices_.end(); ++it )
+    for( std::vector< std::string >::const_iterator it = choices_.begin(); it != choices_.end(); ++it )
         visitor.Visit( *it );
 }

@@ -85,7 +85,7 @@ private:
     std::string type_;
     bool optional_;
     T_OrderParameterValues values_;
-    std::vector<std::string> choices_;
+    std::vector< std::string > choices_;
     //@}
 };
 
