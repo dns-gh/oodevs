@@ -1033,8 +1033,8 @@
       <parameter dia-name="objectives" name="Itineraire" optional="false" type="PointListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Harceler" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Harceler" id="2097" name="MELEE Harceler">
-      <parameter dia-name="objective" name="Zone a harceler" optional="false" type="AreaBM"/>
-      <parameter dia-name="position" name="Position d'observation" optional="false" type="PointBM"/>
+      <parameter dia-name="harassPosition" name="Zone a harceler" optional="false" type="AreaBM"/>
+      <parameter dia-name="observationPosition" name="Position d'observation" optional="false" type="PointBM"/>
       <parameter dia-name="obstacles" name="Obstacles" optional="false" type="GenObjectListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" dia-type="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" id="2030" name="ASS Assurer la Mise En Oeuvre">
