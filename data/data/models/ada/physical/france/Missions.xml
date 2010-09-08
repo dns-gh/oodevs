@@ -908,7 +908,7 @@
       <parameter dia-name="objective" name="Unite a suivre" optional="false" type="AgentBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Stationner" dia-type="net.masagroup.sword.france.military.platoon.tasks.Stationner" id="2054" name="COMMUNES Stationner">
-      <parameter dia-name="position" name="Point de stationnement" optional="false" type="PointBM"/>
+      <parameter dia-name="position" name="Position" optional="false" type="PointBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.SeFaireDecontaminer" dia-type="net.masagroup.sword.france.military.platoon.tasks.SeFaireDecontaminer" id="2056" name="COMMUNES Se Faire Decontaminer">
       <parameter dia-name="objective" name="Site de decontamination" optional="false" type="ObjectKnowledgeBM"/>
