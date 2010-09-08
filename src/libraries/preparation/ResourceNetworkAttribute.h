@@ -10,9 +10,9 @@
 #ifndef __ResourceNetworkAttribute_h_
 #define __ResourceNetworkAttribute_h_
 
+#include "clients_kernel/Resolver2.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "tools/Resolver_ABC.h"
 
 namespace gui
 {
@@ -44,7 +44,7 @@ class ResourceNetworkAttribute : public kernel::ResourceNetwork_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::DotationType, std::string >& dotationResolver/*, kernel::PropertiesDictionary& dico*/ );
+             ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const kernel::Resolver2< kernel::DotationType >& dotationResolver/*, kernel::PropertiesDictionary& dico*/ );
     virtual ~ResourceNetworkAttribute();
     //@}
 
@@ -52,6 +52,8 @@ public:
     //@{
     virtual QString GetLinkName( unsigned long resource, unsigned int i ) const;
     virtual void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void SerializeAttributes( xml::xostream& ) const;
+    void Update( xml::xistream& xis );
     //@}
 
 private:
@@ -74,7 +76,7 @@ private:
     kernel::Controllers& controllers_;
     unsigned int id_;
     const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver_;
-    const tools::Resolver_ABC< kernel::DotationType, std::string >& dotationResolver_;
+    const kernel::Resolver2< kernel::DotationType >& dotationResolver_;
     //@}
 };
 

@@ -24,13 +24,13 @@ using namespace geometry;
 // Name: ResourceNetworkAttribute constructor
 // Created: JSR 2010-09-07
 // -----------------------------------------------------------------------------
-ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::DotationType, std::string >& dotationResolver )
+ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const kernel::Resolver2< kernel::DotationType >& dotationResolver )
     : controllers_( controllers )
     , id_( id )
     , urbanResolver_( urbanResolver )
     , dotationResolver_( dotationResolver )
 {
-    xis >> xml::list( "node", *this, &ResourceNetworkAttribute::ReadNode );
+    Update( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,6 +120,49 @@ void ResourceNetworkAttribute::Draw( const kernel::Viewport_ABC& viewport, const
                 tools.DrawCircle( from, 20.0 );
     }
     glPopAttrib();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkAttribute::SerializeAttributes
+// Created: JSR 2010-09-08
+// -----------------------------------------------------------------------------
+void ResourceNetworkAttribute::SerializeAttributes( xml::xostream& xos ) const
+{
+    xos << xml::start( "resources" );
+    for( CIT_ResourceNodes it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
+    {
+        const ResourceNetwork_ABC::ResourceNode& node = it->second;
+        kernel::DotationType* type = dotationResolver_.Find( node.resource_ );
+        if( !type )
+            throw std::runtime_error( "Bad resource Id: " + node.resource_ );
+        xos << xml::start( "node" )
+            << xml::attribute( "resource-type", type->GetCategory() )
+            << xml::attribute( "enabled", node.isEnabled_ )
+            << xml::attribute( "production", node.production_ )
+            << xml::attribute( "consumption", node.consumption_ )
+            << xml::attribute( "stock", node.maxStock_ )
+            << xml::attribute( "initial-stock", node.stock_ )
+            << xml::attribute( "critical-consumption", node.critical_ );
+            for( unsigned int i = 0; i < node.links_.size(); ++i )
+            {
+                xos << xml::start( "link" )
+                    << xml::attribute( "kind", node.links_[ i ].urban_ ? "urban-object" : "terrain-object" )
+                    << xml::attribute( "target", node.links_[ i ].id_ )
+                    << xml::attribute( "capacity", node.links_[ i ].capacity_ )
+                    << xml::end();
+                }
+        xos << xml::end();
+    }
+    xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkAttribute::Update
+// Created: JSR 2010-09-08
+// -----------------------------------------------------------------------------
+void ResourceNetworkAttribute::Update( xml::xistream& xis )
+{
+    xis >> xml::list( "node", *this, &ResourceNetworkAttribute::ReadNode );
 }
 
 // -----------------------------------------------------------------------------

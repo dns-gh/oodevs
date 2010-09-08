@@ -586,6 +586,10 @@
         <source>Vital consumption</source>
         <translation>Consommation vitale</translation>
     </message>
+    <message>
+        <source>Stock:</source>
+        <translation>Stock:</translation>
+    </message>
 </context>
 <context>
     <name>R&#xe8;gle GL</name>

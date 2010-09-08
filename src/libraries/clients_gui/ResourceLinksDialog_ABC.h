@@ -55,6 +55,7 @@ private slots:
     void OnProductionChanged( int value );
     void OnConsumptionChanged( int value );
     void OnCriticalChanged( bool on );
+    void OnMaxStockChanged( int value );
     void OnStockChanged( int value );
     void OnValueChanged( int i, int j );
     void Validate();
@@ -92,6 +93,7 @@ protected:
     QSpinBox* production_;
     QSpinBox* consumption_;
     QCheckBox* critical_;
+    QSpinBox* maxStock_;
     QSpinBox* stock_;
     QTable* table_;
     //@}

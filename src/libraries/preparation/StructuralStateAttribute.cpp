@@ -47,7 +47,16 @@ void StructuralStateAttribute::CreateDictionary( kernel::PropertiesDictionary& d
 // -----------------------------------------------------------------------------
 void StructuralStateAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::start( "structural" )
+    xos << xml::start( "structural-state" )
             << xml::attribute( "value", structuralState_ )
         << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: StructuralStateAttribute::Update
+// Created: JSR 2010-09-08
+// -----------------------------------------------------------------------------
+void StructuralStateAttribute::Update( xml::xistream& xis )
+{
+    xis >> xml::attribute( "value", structuralState_ );
 }

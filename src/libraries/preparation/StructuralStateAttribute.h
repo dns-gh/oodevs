@@ -18,6 +18,11 @@ namespace kernel
     class PropertiesDictionary;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 /** @class  StructuralStateAttribute
     @brief  StructuralStateAttribute
@@ -37,6 +42,7 @@ public:
     //! @name Operations
     //@{
     virtual void SerializeAttributes( xml::xostream& xos ) const;
+    void Update( xml::xistream& xis );
     //@}
 
 private:
@@ -51,10 +57,10 @@ private:
     void CreateDictionary( kernel::PropertiesDictionary& dico );
     //@}
 
-public:
+private:
     //! @name Member data
     //@{
-    unsigned int structuralState_;// TODO private et serialize
+    unsigned int structuralState_;
     //@}
 };
 

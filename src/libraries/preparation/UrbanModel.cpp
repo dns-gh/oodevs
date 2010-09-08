@@ -110,15 +110,8 @@ void UrbanModel::Serialize( const std::string& filename ) const
     for( Resolver< gui::TerrainObjectProxy >::CIT_Elements it = Resolver< gui::TerrainObjectProxy >::elements_.begin(); it != Resolver< gui::TerrainObjectProxy >::elements_.end(); ++it )
     {
         xos << xml::start( "urban-object" )
-                << xml::attribute( "id", it->second->GetId() );
-        // TODO appliquer serialize a toutes les capacités
-        StructuralStateAttribute* attribute = static_cast< StructuralStateAttribute* >( it->second->Retrieve< kernel::StructuralStateAttribute_ABC >() );
-        if( attribute )
-        {
-            xos     << xml::start( "structural-state" )
-                        << xml::attribute( "value", attribute->structuralState_ )
-                    << xml::end;
-        }
+            << xml::attribute( "id", it->second->GetId() );
+        it->second->Interface().Apply( & kernel::Serializable_ABC::SerializeAttributes, xos );
         xos << xml::end;
     }
     xos     << xml::end // urban-objects
@@ -160,16 +153,23 @@ void UrbanModel::ReadUrbanObject( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void UrbanModel::ReadCapacity( const std::string& capacity, xml::xistream& xis, gui::TerrainObjectProxy& proxy )
 {
-    // TODO faire ça de façon générique
+    // TODO faire ça proprement et de façon générique avec la factory d'objets quand elle sera implémentée (pour l'instant, c'est une par Team)
     if( capacity == "structural-state" )
-    {
-        // Temp -> utiliser la sérialization
-        unsigned int value;
-        xis >> xml::attribute( "value", value );
-        StructuralStateAttribute* structural = static_cast< StructuralStateAttribute* >( proxy.Retrieve< kernel::StructuralStateAttribute_ABC >() );
-        if( structural )
-            structural->structuralState_ = value;
-    }
+        UpdateCapacity< StructuralStateAttribute, kernel::StructuralStateAttribute_ABC >( xis, proxy );
+    else if( capacity == "resources" )
+        UpdateCapacity< ResourceNetworkAttribute, kernel::ResourceNetwork_ABC >( xis, proxy );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::UpdateCapacity
+// Created: JSR 2010-09-08
+// -----------------------------------------------------------------------------
+template< typename T, typename U >
+void UrbanModel::UpdateCapacity( xml::xistream& xis, gui::TerrainObjectProxy& proxy )
+{
+    T* capacity = static_cast< T* >( proxy.Retrieve< U >() );
+    if( capacity )
+        capacity->Update( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -196,6 +196,7 @@ void UrbanModel::ReadInfrastructures( xml::xistream& xis )
     gui::TerrainObjectProxy* proxy = Resolver< gui::TerrainObjectProxy >::Find( id );
     if( proxy )
     {
+    // TODO faire ça proprement et de façon générique avec la factory d'objets quand elle sera implémentée (pour l'instant, c'est une par Team)
         if( xis.has_child( "resources" ) )
         {
             xis >> xml::start( "resources" );

@@ -274,9 +274,10 @@ void NodeElement::Update( const Common::MsgMissionParameter_Value& msg )
     isActivated_ = msg.list( 3 ).abool();
     productionCapacity_ = msg.list( 4 ).quantity();
     stockMaxCapacity_ = msg.list( 5 ).quantity();
-    for( int i = 0; i < msg.list( 6 ).list_size(); ++ i )
+    stockCapacity_ = msg.list( 6 ).quantity();
+    for( int i = 0; i < msg.list( 7 ).list_size(); ++ i )
     {
-        const Common::MsgMissionParameter_Value& link = msg.list( 6 ).list( i );
+        const Common::MsgMissionParameter_Value& link = msg.list( 7 ).list( i );
         unsigned int index = link.list( 0 ).identifier();
         if( index < links_.size() )
             links_[ index ]->SetCapacity( link.list( 1 ).quantity() );

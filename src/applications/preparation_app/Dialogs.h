@@ -16,6 +16,8 @@ namespace kernel
     class Profile_ABC;
 }
 
+class StaticModel;
+
 // =============================================================================
 /** @class  Dialogs
     @brief  Dialogs
@@ -27,7 +29,7 @@ class Dialogs : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             Dialogs( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile );
+             Dialogs( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, const kernel::Profile_ABC& profile );
     virtual ~Dialogs();
     //@}
 };

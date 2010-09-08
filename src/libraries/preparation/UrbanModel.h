@@ -60,6 +60,8 @@ private:
     //@{
     void ReadUrbanObject( xml::xistream& xis );
     void ReadCapacity( const std::string& capacity, xml::xistream& xis, gui::TerrainObjectProxy& proxy );
+    template< typename T, typename U >
+    void UpdateCapacity( xml::xistream& xis, gui::TerrainObjectProxy& proxy );
     void LoadInfrastructures( const std::string& directoryPath );
     void ReadInfrastructures( xml::xistream& xis );
     //@}

@@ -138,7 +138,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     lighting_ = new LightingProxy( this );
     PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_, staticModel_.coordinateSystems_ );
-    new Dialogs( this, controllers, PreparationProfile::GetProfile() );
+    new Dialogs( this, controllers, staticModel, PreparationProfile::GetProfile() );
 
     glProxy_ = new GlProxy();
     strategy_ = new ColorStrategy( controllers, *glProxy_ );

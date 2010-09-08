@@ -55,7 +55,7 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QWidget* parent, Controllers& 
     , selected_        ( 0 )
 {
     setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
-    setMinimumSize( 600, 500 );
+    setMinimumSize( 600, 600 );
     setCaption( tools::translate( "ResourceLinksDialog", "Resource Links" ) );
     QVBoxLayout* pMainLayout = new QVBoxLayout( this );
     pMainLayout->setSpacing( 5 );
@@ -86,6 +86,12 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QWidget* parent, Controllers& 
     {
         QHBox* box = new QHBox( groupBox_ );
         new QLabel( tools::translate( "ResourceLinksDialog_ABC", "Maximal stock:" ), box );
+        maxStock_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, box );
+        connect( maxStock_, SIGNAL( valueChanged( int ) ), this, SLOT( OnMaxStockChanged( int ) ) );
+    }
+    {
+        QHBox* box = new QHBox( groupBox_ );
+        new QLabel( tools::translate( "ResourceLinksDialog_ABC", "Stock:" ), box );
         stock_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, box );
         connect( stock_, SIGNAL( valueChanged( int ) ), this, SLOT( OnStockChanged( int ) ) );
     }
@@ -134,7 +140,8 @@ void ResourceLinksDialog_ABC::Update()
     production_->setValue( node.production_ );
     consumption_->setValue( node.consumption_ );
     critical_->setChecked( node.critical_ );
-    stock_->setValue( node.maxStock_ );
+    maxStock_->setValue( node.maxStock_ );
+    stock_->setValue( node.stock_ );
     table_->setNumRows( node.links_.size() );
     table_->setColumnReadOnly( 0, true );
     for( unsigned int j = 0; j < node.links_.size(); ++j )
@@ -188,7 +195,17 @@ void ResourceLinksDialog_ABC::OnCriticalChanged( bool on )
     unsigned long id = static_cast< ResourceItem* >( dotationList_->selectedItem() )->GetId();
     resourceNodes_[ id ].critical_ = on;
 }
-    
+
+// -----------------------------------------------------------------------------
+// Name: ResourceLinksDialog_ABC::OnMaxStockChanged
+// Created: JSR 2010-09-08
+// -----------------------------------------------------------------------------
+void ResourceLinksDialog_ABC::OnMaxStockChanged( int value )
+{
+    unsigned long id = static_cast< ResourceItem* >( dotationList_->selectedItem() )->GetId();
+    resourceNodes_[ id ].maxStock_ = value;
+}
+
 // -----------------------------------------------------------------------------
 // Name: ResourceLinksDialog_ABC::OnStockChanged
 // Created: JSR 2010-09-02
@@ -224,6 +241,7 @@ void ResourceLinksDialog_ABC::Validate()
     DoValidate();
     resourceNodes_.clear();
     dotationList_->clear();
+    controllers_.controller_.Update( *selected_ );
 }
 
 // -----------------------------------------------------------------------------
