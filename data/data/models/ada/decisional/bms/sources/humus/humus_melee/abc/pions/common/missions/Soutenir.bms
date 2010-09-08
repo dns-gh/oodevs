@@ -96,7 +96,7 @@ elseif switch_1 == eSuivreUnite then
 ]]--[[// doit tenir...
 ]]--[[//-----------------------------------------------------------------------------
 ]]local mission = DEC_GetMission( self._namedParams.pionAmi )
-                    if( mission ~= 0 and mission:GetType() == "T_Mission_Pion_ABC_Barrer" ) then
+                    if( mission ~= nil and mission:GetType() == "T_Mission_Pion_ABC_Barrer" ) then
                         Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
                     end
 

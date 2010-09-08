@@ -200,7 +200,7 @@ do
                         end
                     end
 
-                    if( self.localisationCourante == 0 ) then
+                    if( self.localisationCourante == nil ) then
                         do return end
                     end
 

@@ -59,7 +59,7 @@ includedFiles["sources/glaise/glaise_appui/genie/pions/missions/appui a la contr
                 DEC_SetMission( myself, self._namedParams.mis )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
                 self.localisationObstacle = S_Obj_Localisation( self._namedParams.mis.obstacle_ )
-                if( self.localisationObstacle == 0 ) then
+                if( self.localisationObstacle == nil ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                 self:SendFeedback( eActionImpossible )

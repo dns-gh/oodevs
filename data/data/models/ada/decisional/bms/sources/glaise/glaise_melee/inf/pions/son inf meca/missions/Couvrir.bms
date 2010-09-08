@@ -45,7 +45,7 @@ node "MIS_Pion_INF_Couvrir"
                 DEC_SetMission( myself, self._namedParams.mission )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
                 --[[// mise a jour des infos sur le pion ami
-]]if( self._namedParams.mission.cible_ == 0 ) then
+]]if( self._namedParams.mission.cible_ == nil ) then
                     do
                         DEC_Warning( eRC_MissionImpossible )
                                                 self:SendFeedback( eActionImpossible )
@@ -212,7 +212,7 @@ self.done_BEH_Dep_Pion_INF_MiseEnPlace_MissionCouvrir = function( self, _, v ) s
                     Activate( self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1, { self.mission.pointCouverture_, false, } )
                     --[[// S'il est inoffensif et que l'on est deja en train de le traiter, 
 ]]--[[// ne rien faire
-]]if( self.repAmi ~= 0 and F_Pion_GeteniEnCours( self.repAmi ) ~= 0 ) then
+]]if( self.repAmi ~= nil and F_Pion_GeteniEnCours( self.repAmi ) ~= nil ) then
                         Activate( self.activations.BEH_Eni_Pion_INF_DetruitEtFixe, -1 * GetMotivation( "MOT_ManoeuvrerSurEnis" ), { F_Pion_GeteniEnCours( self.repAmi ), true, } )
                     end
 

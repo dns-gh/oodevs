@@ -412,7 +412,7 @@ node "BEH_Conduite_Automate_INF_Freiner_RompreContact"
 ]]--[[// Determiner le pion de queue
 ]]--[[//-----------------------------------------------------------------------------    
 ]]local pionEnQueue = S_Coordination_PionEnQueue( self.resultatCalcul, selPions, true )
-        if( pionEnQueue == 0 ) then
+        if( pionEnQueue == nil ) then
             do return end
         end
 

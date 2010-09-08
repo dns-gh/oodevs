@@ -261,11 +261,11 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationCanon"
             do return end
         end
 
-        if( self.locInstallation_1 == 0 ) then
+        if( self.locInstallation_1 == nil ) then
             self.eActionObj1 == eActionImpossible
         end
 
-        if( self.locInstallation_2 == 0 ) then
+        if( self.locInstallation_2 == nil ) then
             self.eActionObj2 == eActionImpossible
         end
 

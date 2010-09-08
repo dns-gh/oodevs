@@ -177,7 +177,7 @@ node "BEH_Mission_Pion_VAB_PrendrePreciserContact"
 ]]if( self.eActionPreciser == eActionImpossible or self.eActionEni == eActionImpossible ) then
             do
                 DEC_Trace( "Action impossible sur Eni" )
-                if( F_Pion_GeteniEnCours( myself ) ~= 0 ) then
+                if( F_Pion_GeteniEnCours( myself ) ~= nil ) then
                     do return end
                 end
 

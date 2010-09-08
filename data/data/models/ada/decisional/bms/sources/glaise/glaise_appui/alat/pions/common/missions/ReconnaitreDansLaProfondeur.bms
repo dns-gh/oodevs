@@ -252,7 +252,7 @@ elseif switch_1 == eReconnaitre then
                         end
                     end
 
-                    if( self.localisationCourante == 0 ) then
+                    if( self.localisationCourante == nil ) then
                         do return end
                     end
 

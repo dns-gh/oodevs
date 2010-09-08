@@ -92,7 +92,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eAnimer then
                     self.posteControle = S_Objet_Pion_ABC_ObtenirSiteSur( self._namedParams.mission.pointDeControle_ )
-                    if( self.posteControle == 0 ) then
+                    if( self.posteControle == nil ) then
                         do
                             Activate( self.activations.ACT_Pion_ABC_CreerSiteSur, 1, { self._namedParams.mission.pointDeControle_, } )
                                                         do return end

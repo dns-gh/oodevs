@@ -55,7 +55,7 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/section ac vehicule/mission
             do
                 DEC_SetMission( myself, self._namedParams.mission )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
-                if( self.repAmi == 0 ) then
+                if( self.repAmi == nil ) then
                     do
                         DEC_Warning( eRC_MissionImpossible )
                                                 self:SendFeedback( eActionImpossible )

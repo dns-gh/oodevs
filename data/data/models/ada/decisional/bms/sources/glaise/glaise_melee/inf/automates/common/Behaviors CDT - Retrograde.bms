@@ -88,7 +88,7 @@ include "bit.lua"
                         self.lstLocRgpt = self.lstLocRgpt.first
                     end
 
-                    if( eNoError ~= self.eCodeLoc and self.ptRgpt_Bary == 0 ) then
+                    if( eNoError ~= self.eCodeLoc and self.ptRgpt_Bary == nil ) then
                         self:SendFeedback( eActionImpossible )
                         Halt( self )
                         do return end

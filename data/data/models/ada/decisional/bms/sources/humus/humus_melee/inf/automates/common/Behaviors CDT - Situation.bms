@@ -172,7 +172,7 @@ node "BEH_Conduite_Automate_INF_AssignerSemparerA"
     activate = function( self )
         local Activate = Activate
                 self.ptZone = self.ptZone or S_Geometrie_BarycentreZone( self._namedParams.locZone )
-        if( self.ptZone == 0 ) then
+        if( self.ptZone == nil ) then
             self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end

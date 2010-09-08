@@ -179,7 +179,7 @@ behavior BEH_Lima_Pion_ABC_PasserSurLD()
 		//-----------------------------------------------------------------------------
 		// Condition de terminaison --> équivaut à "poursuivre"
 		//-----------------------------------------------------------------------------
-		if( DIA_GetInternalState( VE_SePoster ) == 0 )
+		if( DIA_GetInternalState( VE_SePoster ) == nil )
 			halt;
 
 		//-----------------------------------------------------------------------------
@@ -235,7 +235,7 @@ node "BEH_Lima_Pion_ABC_SePosterSurLCAR"
             end
         end
 
-        if( GetStateVariable( "VE_SePoster" ) == 0 ) then
+        if( GetStateVariable( "VE_SePoster" ) == nil ) then
             Halt( self )
             do return end
         end

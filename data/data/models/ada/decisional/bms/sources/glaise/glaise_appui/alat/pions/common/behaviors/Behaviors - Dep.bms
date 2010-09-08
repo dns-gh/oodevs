@@ -445,7 +445,7 @@ node "BEH_Dep_Pion_ALAT_RejoindreParItineraire"
         if( ModuleBegins() ) then
             do
                 assert( self._namedParams.listePoints ~= nil, "liste de points non valide" )
-                assert( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil, "liste de points vide" )
+                assert( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= 0, "liste de points vide" )
             end
 --[[// calcul de l'itineraire uniquement si en vol (pour le calcul d'évitement des objets)
 ]]        end
@@ -768,7 +768,7 @@ node "BEH_Dep_Pion_ALAT_IntercepterConnaissances"
         self.pointInterception = self.pointInterception or DEC_Geometrie_CreerPoint()
         self.eEtat = self.eEtat or eActionEnCours
         local pointBuffer = S_Misc_Pion_ALAT_PointInterception( self._namedParams.listePionsADetruire )
-        if( pointBuffer ~= 0 ) then
+        if( pointBuffer ~= nil ) then
             do
                 DEC_Copie_Point( pointBuffer, self.pointInterception )
             end
@@ -776,7 +776,7 @@ node "BEH_Dep_Pion_ALAT_IntercepterConnaissances"
 ]]        else
 do
                 pointBuffer = DEC_Geometrie_CalculerBarycentreListeConnaissancesAgents( self._namedParams.listePionsADetruire )
-                if( pointBuffer ~= 0 ) then
+                if( pointBuffer ~= nil ) then
                     DEC_Copie_Point( pointBuffer, self.pointInterception )
                 else
                     self:SendFeedback( eActionImpossible )

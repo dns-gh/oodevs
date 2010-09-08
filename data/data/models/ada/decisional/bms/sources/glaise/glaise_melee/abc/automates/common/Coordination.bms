@@ -318,7 +318,7 @@ node "BEH_CoordDep_Automate_ABC_ActiverCoordinnationSur"
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Pas de pion en queue
 ]]--[[//-----------------------------------------------------------------------------
-]]if( pionEnQueue == 0 ) then
+]]if( pionEnQueue == nil ) then
             do return end
         end
 

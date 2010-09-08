@@ -283,7 +283,7 @@ node "BEH_Obj_Pion_INF_DestructionTerrain_DansZone"
             do
                 DEC_Trace( "installation plan d'obstacle" )
                 self.ptMission = S_Geometrie_BarycentreZone( self._namedParams.locZone )
-                if( self.ptMission == 0 ) then
+                if( self.ptMission == nil ) then
                     self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
@@ -292,7 +292,7 @@ node "BEH_Obj_Pion_INF_DestructionTerrain_DansZone"
                 --[[// destruction-pont
 ]]self.eTypeObjet = eTypeObjectDestructionPont
                 self.ptObst = DEC_Geometrie_CalculerPositionObstacle( self.eTypeObjet, self.ptMission, 800 )
-                if( self.ptObst == 0 or DEC_Geometrie_PositionsEgales( self.ptObst, self.ptMission ) ) then
+                if( self.ptObst == nil or DEC_Geometrie_PositionsEgales( self.ptObst, self.ptMission ) ) then
                     do
                         --[[// destruction-route
 ]]self.eTypeObjet = eTypeObjectDestructionRoute
@@ -301,7 +301,7 @@ node "BEH_Obj_Pion_INF_DestructionTerrain_DansZone"
 --[[// Si on n'a pas trouve de position adhequate
 ]]                end
 
-                if( self.ptObst == 0 ) then
+                if( self.ptObst == nil ) then
                     self.ptObst = self.ptMission
                 end
 
@@ -503,8 +503,8 @@ node "BEH_Dep_Pion_INF_IntervenirSurObjectif"
         self.ptObj = self.ptObj or S_Geometrie_BarycentreZone( self._namedParams.zoneObj )
         if( ModuleBegins() ) then
             do
-                assert( self.ptObj ~= 0, "BEH_Dep_Pion_VAB_IntervenirSurObjectif : ptObj == 0" )
-                if( self.ptObj == 0 ) then
+                assert( self.ptObj ~= nil, "BEH_Dep_Pion_VAB_IntervenirSurObjectif : ptObj == nil" )
+                if( self.ptObj == nil ) then
                     Halt( self )
                     do return end
                 end

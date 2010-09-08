@@ -36,7 +36,7 @@ includedFiles["sources/glaise/glaise_appui/artdsa/automates/batterie asa cp/miss
         self.selPions = self.selPions or DEC_Automate_PionsSansPC()
         self.listeSectionRolandCarol = self.listeSectionRolandCarol or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "SacpRolandCarol" )
         self.listePC = self.listePC or {}
-        if( self.listePointsPourPC == 0 ) then
+        if( self.listePointsPourPC == nil ) then
             self.ePhase = eMRT_MissionImpossible
         end
 
@@ -54,7 +54,7 @@ includedFiles["sources/glaise/glaise_appui/artdsa/automates/batterie asa cp/miss
                 else
 do
                         self.listePoints = DEC_Geometrie_DecouperListePoints( self._namedParams.mission.itineraire_, #( self.listeSectionRolandCarol ) - 1 )
-                        if( self.listePoints == 0 ) then
+                        if( self.listePoints == nil ) then
                             self.ePhase = eMRT_MissionImpossible
                         end
 

@@ -46,7 +46,7 @@ include "bit.lua"
                     do
                         --[[// Erreur si position site
 ]]local localisationObjet = DEC_ConnaissanceObjet_Localisation( site )
-                        if( localisationObjet == 0 ) then
+                        if( localisationObjet == nil ) then
                             do
                                 DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                                 Halt( self )
@@ -57,7 +57,7 @@ include "bit.lua"
 ]]                        end
 
                         local ptObjet = S_Geometrie_BarycentreZone( localisationObjet )
-                        if( ptObjet == 0 ) then
+                        if( ptObjet == nil ) then
                             do
                                 DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                                 Halt( self )
@@ -74,7 +74,7 @@ include "bit.lua"
                 end
 
                 self.positionRegroupement = S_Geometrie_BarycentreZone( self._namedParams.mission.zoneRegroupement_ )
-                if( self.positionRegroupement == 0 ) then
+                if( self.positionRegroupement == nil ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                 Halt( self )
@@ -788,7 +788,7 @@ do
 ]]
         end
 
-        if( conSiteOriginal ~= 0 ) then
+        if( conSiteOriginal ~= nil ) then
             DIA_Remove( g_selConnaissanceObs, conSiteOriginal )
         end
 

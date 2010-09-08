@@ -139,7 +139,7 @@ function S_CreerItineraire_PIA( itBase, ptPIA )
     _returnValue = 0
     local ptDernier = S_Dep_PointItineraireDest( itBase )
     local rDist_Dest = DEC_Geometrie_Distance( DEC_Agent_Position(), ptDernier )
-    if( ptPIA == 0 ) then
+    if( ptPIA == nil ) then
         do return _returnValue end
     end
 

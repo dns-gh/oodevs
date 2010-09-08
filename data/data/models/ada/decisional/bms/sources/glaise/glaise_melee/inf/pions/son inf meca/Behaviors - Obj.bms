@@ -58,7 +58,7 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/son inf meca/Behaviors - Ob
         self.ptMission = self.ptMission or nil
         if( ModuleBegins() ) then
             do
-                if( self._namedParams.locMine == 0 ) then
+                if( self._namedParams.locMine == nil ) then
                     self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
@@ -66,14 +66,14 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/son inf meca/Behaviors - Ob
 
                 DEC_Trace( "  installation plan d'obstacle" )
                 self.ptMission = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self._namedParams.locMine )
-                if( self.ptMission == 0 ) then
+                if( self.ptMission == nil ) then
                     self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
                 end
 
                 self.locPtMine = S_Geometrie_INF_ChercherPositionObstacle( self.ptMission, eTypeObjectBouchonMines, S_DistanceInstallationObstacle() )
-                if( self.locPtMine == 0 ) then
+                if( self.locPtMine == nil ) then
 --[[// Pour le moment, on fait un bouchon de mines
 ]]                    self:SendFeedback( eActionEffectuee )
                     Halt( self )
@@ -125,8 +125,8 @@ node "BEH_Obj_Pion_VAB_InstallerCheckPoint"
         if( ModuleBegins() ) then
             do
                 DEC_Trace( "  installation plan d'obstacle" )
-                self.locPtCheckPoint = S_Geometrie_INF_ChercherPositionObstacle( self._namedParams.ptCheckPoint, eTypeObjectPosteControle, 0 )
-                if( self.locPtCheckPoint == 0 ) then
+                self.locPtCheckPoint = S_Geometrie_INF_ChercherPositionObstacle( self._namedParams.ptCheckPoint, eTypeObjectPosteControle, 100 )
+                if( self.locPtCheckPoint == nil ) then
                     self.locPtCheckPoint = DEC_Geometrie_ConvertirPointEnLocalisation( self._namedParams.ptCheckPoint )
                 end
 
@@ -210,7 +210,7 @@ node "BEH_Obj_Pion_VAB_NettoyerObstacle"
             do
                 --[[// le detruit
 ]]self.repObj = DEC_Connaissances_ObjetLePlusProche( eTypeObjectBouchonMines )
-                if( self.repObj == 0 ) then
+                if( self.repObj == nil ) then
                     self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end

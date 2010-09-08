@@ -263,7 +263,7 @@ node "BEH_Lima_Pion_ABC_SePosterSurLCAR"
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        if( GetStateVariable( "VE_SePoster" ) == 0 ) then
+        if( GetStateVariable( "VE_SePoster" ) == nil ) then
             Halt( self )
             do return end
         end

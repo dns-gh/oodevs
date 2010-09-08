@@ -42,7 +42,7 @@ include "bit.lua"
 
         if( self.bEsquiver ) then
             do
-                if( GetStimulus( "STIM_TenirFaceAPopulation" ) == 0 ) then
+                if( GetStimulus( "STIM_TenirFaceAPopulation" ) == nil ) then
                     Activate( self.activations.BEH_Pop_Pion_EsquiveFaceA, 1, { self._namedParams.pop, } )
                 else
                     Activate( self.activations.BEH_EsquiverLaPopulationIncontrolable, 1, { self._namedParams.pop, } )
@@ -134,7 +134,7 @@ do
                 self._namedParams.pop = domination.second
                 domination = domination.first
                 --[[//la domination doit avoir diminuée au moins de 20%
-]]if( ( domination < ( self.prevDomination - 0.2 ) ) or domination == 0 ) then
+]]if( ( domination < ( self.prevDomination - 0.2 ) ) or domination == nil ) then
                     do
                         self.prevDomination = domination
                         self.eEtatDelai = eActionEnCours
@@ -229,7 +229,7 @@ node "BEH_Pop_Pion_EsquiveFaceA"
 ]]
                 self.positionSurete = DEC_Geometrie_CalculerPositionSureteAvecPopulation( self._namedParams.pop, rDistance )
                 --[[//positionSurete = S_Dep_CalculerPositionEsquivePopulation( pop, rDistance );
-]]if( self.positionSurete ~= 0 ) then
+]]if( self.positionSurete ~= nil ) then
                     do
                         DEC_DebugAffichePoint( self.positionSurete )
                         self.itEsquive = DEC_CreerItineraire( self.positionSurete, eTypeItiRepli )
@@ -358,7 +358,7 @@ do
                         domination = DEC_ConnaissancePopulation_Domination( pop )
                         pop = domination.second
                         domination = domination.first
-                        if( domination == 0 ) then
+                        if( domination == nil ) then
                             danger = 0.1
                         end
 
@@ -457,7 +457,7 @@ elseif switch_1 == eAnimer then
                     if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.objectif ) < self._namedParams.rMax ) then
                         do
                             --[[// l'objet n'existe pas encore... on le construit
-]]if( self.posteControle == 0 ) then
+]]if( self.posteControle == nil ) then
                                 do
                                     Activate( self.activations.ACT_Pion_CreerObjetSur, 1, { self.localisation, eTypeObjectPosteControle, } )
                                                                         do return end

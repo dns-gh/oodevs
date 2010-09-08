@@ -171,7 +171,7 @@ node "BEH_Dep_Pion_INF_Freiner_Decrocher"
         --[[// Tire les fumigenes		
 ]]--[[// $$$$ JCR: Peut etre a faire ailleurs et autrement
 ]]local eniEnCours = F_Pion_GeteniEnCours( myself )
-        if( eniEnCours ~= 0 ) then
+        if( eniEnCours ~= nil ) then
             Activate( self.activations.ACT_Tir_INF_FumigeneVersEni, 1, { eniEnCours, } )
         end
 

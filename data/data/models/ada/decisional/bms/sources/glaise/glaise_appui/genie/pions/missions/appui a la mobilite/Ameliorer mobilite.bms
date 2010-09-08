@@ -44,7 +44,7 @@ include "bit.lua"
                 self.genObs:Setloc_obstacle_( self._namedParams.mission.zone_ )
                 --[[// Calcule de la position
 ]]self.ptObst = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self._namedParams.mission.zone_ )
-                if( self.ptObst == 0 ) then
+                if( self.ptObst == nil ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                 self:SendFeedback( eActionImpossible )

@@ -88,7 +88,7 @@ include "bit.lua"
         Activate( self.activations.ACT_Misc_Pion_Ambiance, 1, { eEtatAmbiance_Surete, } )
         local mission = DEC_GetMission( myself )
         Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
-        if( S_EstDetecteParEnis() or F_Pion_GeteniEnCours( myself ) ~= 0 ) then
+        if( S_EstDetecteParEnis() or F_Pion_GeteniEnCours( myself ) ~= nil ) then
             StopActivateOverride( self, self.activations.BEH_Obj_Pion_VAB_InstallerPlanObstacle, { self.locInstallation, } )
         end
 

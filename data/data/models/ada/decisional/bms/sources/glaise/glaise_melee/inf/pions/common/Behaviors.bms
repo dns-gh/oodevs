@@ -268,7 +268,7 @@ node "BEH_Misc_Pion_INF_MAJ_Mission"
 
     activate = function( self )
         local Activate = Activate
-        if( ModuleBegins() and self._namedParams.typeMission ~= 0 ) then
+        if( ModuleBegins() and self._namedParams.typeMission ~= nil ) then
             F_Pion_SetmissionPrecedente( myself, self._namedParams.typeMission:GetType() )
         end
 

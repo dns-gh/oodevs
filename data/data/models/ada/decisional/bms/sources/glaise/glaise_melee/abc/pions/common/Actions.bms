@@ -61,7 +61,7 @@ include "bit.lua"
 
     deselect = function( self )
                 F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-        if( self.actionTir ~= 0 ) then
+        if( self.actionTir ~= nil ) then
             DEC_StopAction( self.actionTir )
         end
 
@@ -74,7 +74,7 @@ include "bit.lua"
 
     destroy = function( self )
                 F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-        if( self.actionTir ~= 0 ) then
+        if( self.actionTir ~= nil ) then
             DEC_StopAction( self.actionTir )
         end
 

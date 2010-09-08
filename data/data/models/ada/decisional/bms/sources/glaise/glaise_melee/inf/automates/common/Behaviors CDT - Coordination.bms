@@ -68,7 +68,7 @@ include "bit.lua"
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Pas de pion en queue
 ]]--[[//-----------------------------------------------------------------------------
-]]if( pionEnQueue == 0 ) then
+]]if( pionEnQueue == nil ) then
             do return end
         end
 
@@ -123,7 +123,7 @@ if( self.bEnAttente and rDist_AvtLigne < self._namedParams.rDist_Min ) then
     end,
 
     destroy = function( self )
-                if( self.resultatCalcul ~= 0 ) then
+                if( self.resultatCalcul ~= nil ) then
             DEC_Geometrie_StopCalculLignesAvantEtArriere( self.resultatCalcul )
         end
 
@@ -234,7 +234,7 @@ node "BEH_CoordDep_Automate_INF_AvecAutomate_Pion"
 ]]--[[// Determiner le pion de tete
 ]]--[[//-----------------------------------------------------------------------------
 ]]local pionEnQueue_Ami = S_Coordination_PionEnQueue( self.resultatCalcul_Ami, selPionsCompagnie_Amie, true )
-        if( pionEnQueue_Ami == 0 ) then
+        if( pionEnQueue_Ami == nil ) then
             do return end
         end
 
@@ -289,7 +289,7 @@ do
     end,
 
     destroy = function( self )
-                if( self.resultatCalcul_Ami ~= 0 ) then
+                if( self.resultatCalcul_Ami ~= nil ) then
             DEC_Geometrie_StopCalculLignesAvantEtArriere( self.resultatCalcul_Ami )
         end
 
@@ -342,7 +342,7 @@ node "BEH_CoordDep_Automate_INF_Retrograde"
 ]]        end
 
         local pionEnQueue = S_Coordination_PionEnQueue( self.resultatCalcul, sPionsOperationnels, true )
-        if( pionEnQueue == 0 ) then
+        if( pionEnQueue == nil ) then
             do return end
         end
 
@@ -372,7 +372,7 @@ node "BEH_CoordDep_Automate_INF_Retrograde"
     end,
 
     destroy = function( self )
-                if( self.resultatCalcul ~= 0 ) then
+                if( self.resultatCalcul ~= nil ) then
             DEC_Geometrie_StopCalculLignesAvantEtArriere( self.resultatCalcul )
         end
 

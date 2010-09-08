@@ -58,7 +58,7 @@ node "BEH_Medo_Automate_INF_PreparerMission_Retrograde"
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
-                if( self.limaLCAR == 0 ) then
+                if( self.limaLCAR == nil ) then
                     self.limaLCAR = DEC_GetLima( eTypeLima_LI )
                 end
 
@@ -291,7 +291,7 @@ node "BEH_Medo_Automate_INF_AssignerInterdire_Lima_PourPion"
 
                 self.ptRecherche = S_Geometrie_Automate_INF_ChercherPosition_Interdire( self.ptLima, 600 )
                 self.ptInterdire = self.ptRecherche
-                if( self.ptInterdire == 0 ) then
+                if( self.ptInterdire == nil ) then
                     self.ptInterdire = self.ptLima
                 end
 
@@ -373,7 +373,7 @@ node "BEH_Medo_Automate_INF_AssignerSurveiller_Lima_PourPion"
                 --[[// Calcule une position sur la LIMA
 ]]--[[// ------------------------------------------------------------		
 ]]self.ptLima = DEC_Automate_CalculerPositionParRapportALimaPourPion( self._namedParams.lima, M_DISTANCE_AVT_LIMA_DEFENDRE_USURE(), self._namedParams.pPion )
-                self.bCalcul = ( self.ptLima ~= 0 )
+                self.bCalcul = ( self.ptLima ~= nil )
                 if( not self.bCalcul ) then
                     do
                         DEC_Trace( "Pas de position LCAR : Impossible d'assigner mission." )

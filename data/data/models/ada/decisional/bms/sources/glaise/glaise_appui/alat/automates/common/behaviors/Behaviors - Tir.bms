@@ -28,7 +28,7 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/behaviors/Behav
         local _continue = true
 do
                 local pion = x
-                if( F_Pion_GeteniEnCours( pion ) == 0 ) then
+                if( F_Pion_GeteniEnCours( pion ) == nil ) then
                     _continue = false
                 end
 

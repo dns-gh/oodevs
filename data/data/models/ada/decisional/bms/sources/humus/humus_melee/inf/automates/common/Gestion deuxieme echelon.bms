@@ -167,7 +167,7 @@ do
                 local pionEnRAS = x
                 --[[// Renvoie pion nul si pas de soutien
 ]]local pionEnSoutien = S_Dispositif_Automate_INF_ObtenirPionEnSoutienDe( pionEnRAS )
-                if( pionEnSoutien ~= 0 ) then
+                if( pionEnSoutien ~= nil ) then
                     do
                         F_Pion_SeteEtatSoutien( pionEnRAS, eEtatSoutien_aucun )
                         Activate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, pionEnSoutien, pionEnRAS, } )

@@ -220,15 +220,15 @@ node "BEH_Eni_Pion_ALAT_GererEniFreiner"
 ]]if( ModuleBegins() or F_Pion_GeteEtatFeu( myself ) == eEtatFeu_Executer ) then
             do
                 local localisation = S_Geometrie_Pion_ALAT_ZoneAvantPremierEchelonEnnemi( self.listeLocalisationsBuffer )
-                if( localisation ~= 0 ) then
+                if( localisation ~= nil ) then
                     do
                         DEC_Copie_Localisation( localisation, self.zoneCourante )
                         local pointBuffer = S_Geometrie_BarycentreZone( self.zoneCourante )
-                        if( pointBuffer ~= 0 ) then
+                        if( pointBuffer ~= nil ) then
                             do
                                 DEC_Copie_Point( pointBuffer, self.barycentreZone )
                                 self.orientationZone = DEC_Geometrie_CreerDirection( self.barycentreZone, self._namedParams.pointFinFuseau )
-                                if( self.orientationZone == 0 ) then
+                                if( self.orientationZone == nil ) then
                                     Halt( self )
                                     do return end
                                 end

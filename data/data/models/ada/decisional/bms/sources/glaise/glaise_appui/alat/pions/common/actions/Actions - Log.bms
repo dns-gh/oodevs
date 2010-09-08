@@ -19,7 +19,7 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/actions/Actions - L
         self.repPlotLogistique = self.repPlotLogistique or nil
         self.localisation = self.localisation or nil
         self.actionCreerPlot = self.actionCreerPlot or 0
-        assert( self._namedParams.point ~= 0, "ALAT : Realiser plot log position invalide" )
+        assert( self._namedParams.point ~= nil, "ALAT : Realiser plot log position invalide" )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init --> commencer à construire l'objet
 ]]--[[//-----------------------------------------------------------------------------

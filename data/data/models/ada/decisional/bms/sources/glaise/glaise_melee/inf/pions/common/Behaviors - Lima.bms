@@ -192,7 +192,7 @@ node "BEH_Lima_Pion_INF_GererLIA"
 
     activate = function( self )
         local Activate = Activate
-        if( myself.ptPIA_ ~= 0 and S_Geometrie_EstProchePosition( DEC_Agent_Position(), myself.ptPIA_, 100 ) ) then
+        if( myself.ptPIA_ ~= nil and S_Geometrie_EstProchePosition( DEC_Agent_Position(), myself.ptPIA_, 100 ) ) then
             do
                 Activate( self.activations.ACT_RC, 1, { eRC_PassageSurPIA, } )
             end

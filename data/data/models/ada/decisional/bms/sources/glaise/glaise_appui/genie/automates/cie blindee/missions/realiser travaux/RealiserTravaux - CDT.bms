@@ -316,7 +316,7 @@ node "BEH_Misc_Automate_GEN_GererFinRenforcementTravaux"
     activate = function( self )
         local Activate = Activate
         --[[// Sécurité
-]]if( self._namedParams.objetARealiser:GetpionRenforcement_() == 0 or self._namedParams.objetARealiser:Getpion_() == 0 ) then
+]]if( self._namedParams.objetARealiser:GetpionRenforcement_() == nil or self._namedParams.objetARealiser:Getpion_() == nil ) then
             do return end
         end
 

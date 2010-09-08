@@ -201,7 +201,7 @@ do
                 local pionEnRAS = x
                 --[[// Renvoie pion nul si pas de soutien
 ]]local pionEnSoutien = S_Dispositif_Automate_ABC_ObtenirPionEnSoutienDe( pionEnRAS )
-                if( pionEnSoutien ~= 0 ) then
+                if( pionEnSoutien ~= nil ) then
                     do
                         F_Pion_SeteEtatSoutien( pionEnRAS, eEtatSoutien_aucun )
                         Activate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, pionEnSoutien, pionEnRAS, } )
@@ -522,7 +522,7 @@ node "BEH_Dispositif_Automate_ABC_GererLeSEStatique_"
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion erreur
 ]]--[[//-----------------------------------------------------------------------------
-]]if( self.listePoints ~= 0 ) then
+]]if( self.listePoints ~= nil ) then
                     do
                         --[[//-----------------------------------------------------------------------------
 ]]--[[// Assignation des mission une par une au pion (pas simultanément)
@@ -659,7 +659,7 @@ node "BEH_Dispositif_Automate_ABC_GererLeSEStatiqueSurLima_"
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion erreur
 ]]--[[//-----------------------------------------------------------------------------
-]]if( self.listePoints ~= 0 ) then
+]]if( self.listePoints ~= nil ) then
                     do
                         --[[//-----------------------------------------------------------------------------
 ]]--[[// Assignation des missions une par une au pion (pas simultanément)

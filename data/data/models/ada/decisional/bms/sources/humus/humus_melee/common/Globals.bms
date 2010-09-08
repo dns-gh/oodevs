@@ -43,7 +43,7 @@ include "Humus/Humus_Melee/Abc/Automates/Common/Globals.bms"
 ]]--[[//=============================================================================
 ]]function S_Eni_Automate_EstDetruitTactique( cible )
     local _returnValue = false
-    _returnValue = DEC_ConnaissanceAgent_EtatOps( cible ) == 0
+    _returnValue = DEC_ConnaissanceAgent_EtatOps( cible ) == nil
     do return _returnValue end
 end
 
@@ -231,7 +231,7 @@ end
 	    with( x in listePions )
 	    {
 		    T_PionModeleDEC pion = x;
-		    if( DEC_GetMission(pion) != 0 && DEC_GetMission( pion ).__type_ == T_Mission_Pion_ABC_Soutenir )
+		    if( DEC_GetMission(pion) != nil && DEC_GetMission( pion ).__type_ == T_Mission_Pion_ABC_Soutenir )
             {
                 T_Mission_Pion_ABC_Soutenir mis = DEC_GetMission(pion);
                 if( mis.uniteASoutenir_ == pionSoutenu )

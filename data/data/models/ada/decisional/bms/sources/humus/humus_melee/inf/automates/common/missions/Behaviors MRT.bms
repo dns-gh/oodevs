@@ -182,7 +182,7 @@ node "BEH_Medo_Automate_ABC_AssignerMissionSemparerZoneA"
     activate = function( self )
         local Activate = Activate
                 self.ptZone = self.ptZone or S_Geometrie_BarycentreZone( self._namedParams.locZone )
-        if( self.ptZone == 0 ) then
+        if( self.ptZone == nil ) then
             do
                 if( ModuleBegins() ) then
                     do

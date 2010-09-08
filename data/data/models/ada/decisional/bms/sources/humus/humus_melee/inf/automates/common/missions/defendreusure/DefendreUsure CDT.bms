@@ -40,7 +40,7 @@ node "BEH_Conduite_Automate_INF_MenerDefenseUsure"
 do
                 local pionPE = x_pe
                 local mission = DEC_GetMission( pionPE )
-                if( ( mission ~= 0 and mission:GetType() == "T_Mission_Pion_INF_Interdire" ) and F_Pion_GeteEtatSituationEnnemi( pionPE ) == eEtatSituationEnnemi_PriseContact ) then
+                if( ( mission ~= nil and mission:GetType() == "T_Mission_Pion_INF_Interdire" ) and F_Pion_GeteEtatSituationEnnemi( pionPE ) == eEtatSituationEnnemi_PriseContact ) then
                     StartActivateOverride( self, self.activations.BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis, 1, { pionPE, } )
                 end
 
@@ -78,7 +78,7 @@ node "BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis"
                     do
                         local pionSE = x_pion
                         local mission = DEC_GetMission( pionSE )
-                        if( mission ~= 0 and ( mission:GetType() == "T_Mission_Pion_INF_SurveillerSecteur" or mission:GetType() == "T_Mission_Pion_INF_Barrer" ) ) then
+                        if( mission ~= nil and ( mission:GetType() == "T_Mission_Pion_INF_SurveillerSecteur" or mission:GetType() == "T_Mission_Pion_INF_Barrer" ) ) then
                             do
                                 local rForceAppuyer = ( 1 / ( 1 + #( F_Pion_GetselUnitesEnAppui( self._namedParams.pionEnTete ) ) ) )
                                 local rForceAppui = rForceAppuyer * S_ForceSoutien( pionSE, self._namedParams.pionEnTete )

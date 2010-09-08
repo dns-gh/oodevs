@@ -96,7 +96,7 @@ node "ACT_Misc_Automate_Gerer"
         if( ModuleBegins() ) then
             do
                 self.posteControle = S_Geometrie_ObjetPlusProche( DEC_Connaissances_ObjetsDansZone( self.localisation, S_TypeObject_ToString( eTypeObjectPosteControle ) ), self._namedParams.point )
-                if( self.posteControle == 0 ) then
+                if( self.posteControle == nil ) then
                     Activate( self.activations.ACT_Automate_CreerObjetSur, 1, { self.localisation, eTypeObjectPosteControle, } )
                 end
 
@@ -135,7 +135,7 @@ node "BEH_Automate_CreerZoneSecurisee"
             do
                 --[[// OPT MIA: faire avec DEC_Connaissances_ObjetsDansZone
 ]]self.posteControle = S_Geometrie_ObjetPlusProche( DEC_Connaissances_ObjetsDansZone( self.localisation, S_TypeObject_ToString( eTypeObjectPosteControle ) ), self._namedParams.point )
-                if( self.posteControle == 0 ) then
+                if( self.posteControle == nil ) then
                     Activate( self.activations.ACT_Automate_CreerObjetSur, 1, { self.localisation, eTypeObjectPosteControle, } )
                 end
 

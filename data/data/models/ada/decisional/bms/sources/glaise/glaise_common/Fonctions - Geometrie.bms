@@ -68,7 +68,7 @@ end
 
 function S_Geometrie_BarycentreZone( localisation )
     local _returnValue = nil
-    assert( localisation ~= 0, "Pointeur Invalide" )
+    assert( localisation ~= nil, "Pointeur Invalide" )
     local ptRetour = nil
     local returnCode = nil
     ptRetour = DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau( localisation )

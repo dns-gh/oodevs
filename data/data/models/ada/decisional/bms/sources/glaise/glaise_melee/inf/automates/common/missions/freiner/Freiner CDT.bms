@@ -179,13 +179,13 @@ node "BEH_Conduite_Automate_INF_Freiner_Assigner_AppuiPionSE"
         if( ModuleBegins() ) then
             do
                 self.pionAppui = S_Cherche_Automate_TypePion( sPions_OK, "SectionInfanterie_HOT" )
-                if( self.pionAppui == 0 ) then
+                if( self.pionAppui == nil ) then
                     self.pionAppui = S_Cherche_Automate_TypePion( sPions_OK, "SectionInfanterie_MILAN" )
                 end
 
-                --[[// if ( pionAppui == 0 )
+                --[[// if ( pionAppui == nil )
 ]]--[[// 	pionAppui = S_Cherche_Automate_TypePion( sPions_Appuis, SectionInfanterie );
-]]if( self.pionAppui == 0 ) then
+]]if( self.pionAppui == nil ) then
                     Halt( self )
                     do return end
                 end

@@ -179,7 +179,7 @@ elseif switch_1 == eEscorter then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EscorteUnite, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "** Escorte de l'unité **", } )
                     --[[// Objectif de l'unité escorté                
-]]if( self.pionConvoi:GetitMvt_() == 0 ) then
+]]if( self.pionConvoi:GetitMvt_() == nil ) then
                         do
                             Activate( self.activations.ACT_Info_Trace, 1, { "**** L'unite escorter doit avoir un objectif **** ", } )
                                                         do return end

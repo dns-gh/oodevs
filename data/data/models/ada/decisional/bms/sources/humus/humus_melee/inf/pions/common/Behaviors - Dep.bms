@@ -369,7 +369,7 @@ node "BEH_Dep_Pion_INF_PreciserMaintenirContact"
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eRetrouver then
-                    if( self.ptDest == 0 or self.eAction == eActionImpossible ) then
+                    if( self.ptDest == nil or self.eAction == eActionImpossible ) then
                         do
                             DEC_Trace( "impossible de retrouver l'ennemi" )
                                                         self:SendFeedback( eActionImpossible )

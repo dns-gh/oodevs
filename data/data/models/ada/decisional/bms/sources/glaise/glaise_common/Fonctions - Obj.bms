@@ -34,10 +34,10 @@ end
 
 function S_Obj_Position( repObjet )
     local _returnValue = nil
-    assert( repObjet ~= 0, "Pointeur Invalide" )
+    assert( repObjet ~= nil, "Pointeur Invalide" )
     local returnCode = nil
     local locObjet = DEC_ConnaissanceObjet_Localisation( repObjet )
-    assert( locObjet ~= 0, "localisation objet invalide" )
+    assert( locObjet ~= nil, "localisation objet invalide" )
     _returnValue = S_Geometrie_BarycentreZone( locObjet )
     do return _returnValue end
 end
@@ -46,7 +46,7 @@ function S_Obj_EstDansLocalisation( obj, loc )
     local _returnValue = false
     _returnValue = false
     local ptObj = S_Obj_Position( obj )
-    if( ptObj == 0 ) then
+    if( ptObj == nil ) then
         do return _returnValue end
     end
 

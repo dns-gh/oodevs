@@ -35,7 +35,7 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreZoneAListe"
 
     activate = function( self )
         local Activate = Activate
-        assert( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil, "La liste de positions ne doit pas etre vide" )
+        assert( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= 0, "La liste de positions ne doit pas etre vide" )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -79,7 +79,7 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsDefendreZoneAListe"
 
     activate = function( self )
         local Activate = Activate
-        assert( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil, "La liste de positions ne doit pas etre vide" )
+        assert( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= 0, "La liste de positions ne doit pas etre vide" )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -227,7 +227,7 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreSiteAListe"
 
     activate = function( self )
         local Activate = Activate
-        assert( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil, "La liste de positions ne doit pas etre vide" )
+        assert( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= 0, "La liste de positions ne doit pas etre vide" )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -271,7 +271,7 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsDefendreSiteAListe"
 
     activate = function( self )
         local Activate = Activate
-        assert( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil, "La liste de positions ne doit pas etre vide" )
+        assert( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= 0, "La liste de positions ne doit pas etre vide" )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -418,7 +418,7 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsSurveillerAListe"
 
     activate = function( self )
         local Activate = Activate
-        assert( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil, "La liste de positions ne doit pas etre vide" )
+        assert( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= 0, "La liste de positions ne doit pas etre vide" )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -461,7 +461,7 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsSurveillerAListe"
 
     activate = function( self )
         local Activate = Activate
-        assert( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil, "La liste de positions ne doit pas etre vide" )
+        assert( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= 0, "La liste de positions ne doit pas etre vide" )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0

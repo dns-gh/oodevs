@@ -36,7 +36,7 @@ include "bit.lua"
             do return end
         end
 
-        if( ( self.eAction_OK == eActionEffectuee ) or ( self._namedParams.rN_Pion == 0 ) ) then
+        if( ( self.eAction_OK == eActionEffectuee ) or ( self._namedParams.rN_Pion == nil ) ) then
             self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end

@@ -88,7 +88,7 @@ elseif switch_1 == eProgresser then
 elseif switch_1 == eAnimer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     self.siteDecontamination = S_Nbc_ObtenirSiteSur( self._namedParams.mission.positionSiteDecontamination_ )
-                    if( self.siteDecontamination == 0 ) then
+                    if( self.siteDecontamination == nil ) then
                         do
                             Activate( self.activations.ACT_Pion_Nbc_CreerSiteSur, 1, { self._namedParams.mission.positionSiteDecontamination_, } )
                                                         do return end

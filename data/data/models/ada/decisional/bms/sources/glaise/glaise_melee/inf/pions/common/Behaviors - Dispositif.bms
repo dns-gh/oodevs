@@ -186,7 +186,7 @@ node "BEH_Obs_Pion_INF_RecoPoint"
         self.eActionArret = self.eActionArret or eActionEnCours
         if( ModuleBegins() ) then
             do
-                if( self._namedParams.pt == 0 ) then
+                if( self._namedParams.pt == nil ) then
                     self.eAction = eActionEffectuee
                 end
 
@@ -264,7 +264,7 @@ node "BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu"
 --[[// Si on s'eloigne du point, on arrete simplement la reco
 ]]        end
 
-        if( self._namedParams.ptRecoCopie == 0 or not S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ptRecoCopie, self.rDistInit ) ) then
+        if( self._namedParams.ptRecoCopie == nil or not S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ptRecoCopie, self.rDistInit ) ) then
             do
                 --[[// Destruction de la copie    		
 ]]DEC_Trace( "BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu : halt" )

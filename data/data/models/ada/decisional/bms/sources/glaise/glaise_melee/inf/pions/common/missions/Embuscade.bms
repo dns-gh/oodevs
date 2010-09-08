@@ -55,7 +55,7 @@ include "bit.lua"
         if( ModuleBegins() ) then
             do
                 self.locEmbuscade = S_Geometrie_INF_ChercherPositionObstacle( self._namedParams.ptEmbuscade, self._namedParams.eTypeObjet, 500 )
-                if( self.locEmbuscade == 0 ) then
+                if( self.locEmbuscade == nil ) then
                     self.locEmbuscade = DEC_Geometrie_ConvertirPointEnLocalisation( self._namedParams.ptEmbuscade )
                 end
 
@@ -147,7 +147,7 @@ elseif switch_1 == eActiverObstacle then
                         end
                     end
 
-                    if( F_Pion_GeteniEnCours( myself ) ~= 0 ) then
+                    if( F_Pion_GeteniEnCours( myself ) ~= nil ) then
                         do
                             Activate( self.activations.ACT_Info_Trace, 1, { "unite eni se presente bien", } )
                             --[[// Si il est a porte de tir, on lance l'assaut    				    				

@@ -204,7 +204,7 @@ node "BEH_Dep_Pion_ASA_RejoindreParItineraire"
         if( ModuleBegins() ) then
             do
                 assert( self._namedParams.listePoints ~= nil, "liste de points non valide" )
-                assert( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil, "liste de points vide" )
+                assert( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= 0, "liste de points vide" )
                 --[[//la distance Max doit etre au moins = a la distanceMin
 ]]if( self._namedParams.distanceMax < self._namedParams.distanceMin ) then
                     self.distanceMaxEffective = self._namedParams.distanceMin

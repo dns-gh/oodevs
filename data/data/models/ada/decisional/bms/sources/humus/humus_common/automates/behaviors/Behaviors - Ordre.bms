@@ -320,7 +320,7 @@ do
 ]]--[[// BEH_Ordre_Automate_ArretSauvegardeSur(()
 ]]--[[//
 ]]--[[// Commentaires: JCR : 11/08/2005 15:37
-]]--[[// Desactive la sauvegarde pendant rTime (min) si rTime != 0
+]]--[[// Desactive la sauvegarde pendant rTime (min) si rTime != nil
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]}

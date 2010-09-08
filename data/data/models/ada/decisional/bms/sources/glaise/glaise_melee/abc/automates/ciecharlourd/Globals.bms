@@ -55,7 +55,7 @@ include "Glaise/glaise_Melee/Abc/Automates/cieCharLourd/Parameters.bms"
 do
             local pion = x
             local missionPion = DEC_GetMission( pion )
-            if( missionPion ~= 0 and missionPion:GetType() == "T_Mission_Pion_ABC_Attaquer" ) then
+            if( missionPion ~= nil and missionPion:GetType() == "T_Mission_Pion_ABC_Attaquer" ) then
                 DIA_PushBack( listePionsAttaquant, pion )
             end
 
@@ -76,7 +76,7 @@ function S_Pions_AppuiSoutien( )
 do
             local pion = x
             local missionPion = DEC_GetMission( pion )
-            if( missionPion ~= 0 and ( missionPion:GetType() == "T_Mission_Pion_ABC_Soutenir" or missionPion:GetType() == "T_Mission_Pion_ABC_Appuyer" ) ) then
+            if( missionPion ~= nil and ( missionPion:GetType() == "T_Mission_Pion_ABC_Soutenir" or missionPion:GetType() == "T_Mission_Pion_ABC_Appuyer" ) ) then
                 DIA_PushBack( listePionsEnSoutien, pion )
             end
 

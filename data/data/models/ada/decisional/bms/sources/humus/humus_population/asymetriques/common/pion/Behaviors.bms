@@ -39,7 +39,7 @@ do
                         --[[//rejoindre la population
 ]]Activate( self.activations.BEH_Eni_Pion_ASY_RejoindrePopulationDansZone, 1, { self._namedParams.zone, pop, } )
                         --[[//s'en prendre aux populations à portée
-]]if( GetStateVariable( "VE_EmploiForceInterdit" ) == 0 and DEC_UserTypeList_Contient( listePopusCollision, pop ) ) then
+]]if( GetStateVariable( "VE_EmploiForceInterdit" ) == nil and DEC_UserTypeList_Contient( listePopusCollision, pop ) ) then
                             Activate( self.activations.BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation, 1, { pop, } )
                         end
 

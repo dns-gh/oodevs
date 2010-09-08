@@ -14,8 +14,8 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/fonctions/Fonctions
 ]]--[[//si on n'a pas d'ennemi dans le fuseau, on renvoie la dernière zone
 ]]function S_Geometrie_Pion_ALAT_PositionLaMoinsDangereuse( pointA, pointB, rayon )
     local _returnValue = nil
-    assert( pointA ~= 0, "point non valide" )
-    assert( pointB ~= 0, "point non valide" )
+    assert( pointA ~= nil, "point non valide" )
+    assert( pointB ~= nil, "point non valide" )
     if( #( DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( pointB, rayon ) ) >= #( DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( pointA, rayon ) ) ) then
         _returnValue = pointA
     else

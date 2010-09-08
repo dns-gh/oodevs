@@ -258,7 +258,7 @@ node "BEH_Mission_Pion_VAB_Semparer"
 
                     Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, { M_TEMPS_PREPARATION_MISSION(), self.mission.objectif_, false, } )
 self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAction = v[1] end
-                    if( not DEC_Agent_AutomateEstEmbraye() and F_Pion_GeteniEnCours( myself ) ~= 0 ) then
+                    if( not DEC_Agent_AutomateEstEmbraye() and F_Pion_GeteniEnCours( myself ) ~= nil ) then
                         Activate( self.activations.BEH_Ordre_Pion_VAB_Semparer_Demande, 1, {} )
                     end
 
@@ -267,7 +267,7 @@ self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAc
 elseif switch_1 == eObserver then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ReconnaissanceLocalisation, } )
                     --[[// behavior BEH_MOT_Pion_INF_Debarquer();
-]]if( F_Pion_GeteniEnCours( myself ) ~= 0 ) then
+]]if( F_Pion_GeteniEnCours( myself ) ~= nil ) then
                         do
                             self.ePhase = eRejoindreAssaut
                                                         self:SendFeedback( self.ePhase )
@@ -308,7 +308,7 @@ elseif switch_1 == eObserver then
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eRejoindreAssaut then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                    if( F_Pion_GeteniEnCours( myself ) == 0 ) then
+                    if( F_Pion_GeteniEnCours( myself ) == nil ) then
                         do
                             self.eAction = eActionEnCours
                             if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.mission.objectif_, 100 ) ) then
@@ -329,7 +329,7 @@ elseif switch_1 == eRejoindre then
                         Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
                     end
 
-                    if( F_Pion_GeteniEnCours( myself ) ~= 0 ) then
+                    if( F_Pion_GeteniEnCours( myself ) ~= nil ) then
                         do
                             self.ePhase = eRejoindreAssaut
                                                         do return end
@@ -358,7 +358,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
 ]]                cases_switch_1[4] = true
 elseif switch_1 == eFouiller then
                     Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
-                    if( F_Pion_GeteniEnCours( myself ) ~= 0 ) then
+                    if( F_Pion_GeteniEnCours( myself ) ~= nil ) then
                         do
                             self.ePhase = eRejoindreAssaut
                                                         do return end

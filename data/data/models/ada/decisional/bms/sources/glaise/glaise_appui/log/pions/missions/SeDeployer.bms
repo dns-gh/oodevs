@@ -57,7 +57,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     --[[// Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     --[[// Déploiement sur place
-]]if( self._namedParams.mis.positionDeploiement_ == 0 ) then
+]]if( self._namedParams.mis.positionDeploiement_ == nil ) then
                         self.ePhaseMission = eDeployer
                     else
                         self.ePhaseMission = eProgresser

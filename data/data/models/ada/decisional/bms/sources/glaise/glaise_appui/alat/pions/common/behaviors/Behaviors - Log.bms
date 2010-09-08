@@ -45,7 +45,7 @@ include "bit.lua"
         end
 
         --[[// Si on n'a pas de TC2 ni de plot de ravitaillement attribué
-]]if( not DEC_ConnaissanceObjet_EstValide( myself.plotRavitaillementAssigne_ ) and TC2 == 0 ) then
+]]if( not DEC_ConnaissanceObjet_EstValide( myself.plotRavitaillementAssigne_ ) and TC2 == nil ) then
             do return end
         end
 
@@ -111,7 +111,7 @@ self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat =
 --[[//rejoindre le TC2 si on en a un
 ]]                    else
 do
-                            if( pionTC2 == 0 ) then
+                            if( pionTC2 == nil ) then
                                 do return end
                             end
 

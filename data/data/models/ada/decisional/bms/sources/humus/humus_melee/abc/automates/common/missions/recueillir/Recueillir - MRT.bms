@@ -43,7 +43,7 @@ includedFiles["sources/humus/humus_melee/abc/automates/common/missions/recueilli
             do
                 --[[// On recupère la LR
 ]]local LR = DEC_GetLima( eTypeLima_LR )
-                if( LR == 0 ) then
+                if( LR == nil ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
                                                 self:SendFeedback( eActionImpossible )
@@ -54,7 +54,7 @@ includedFiles["sources/humus/humus_melee/abc/automates/common/missions/recueilli
 ]]                end
 
                 self.listePositions = DEC_Geometrie_CalculerPositionsParRapportALima( LR, 10, #( self._namedParams.selPions ) )
-                if( self.listePositions == 0 ) then
+                if( self.listePositions == nil ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
                                                 self:SendFeedback( eActionImpossible )
@@ -127,7 +127,7 @@ node "BEH_Medo_Automate_ABC_Recueillir_AssignerMissionSurveillerA"
             do
                 --[[// On recupère la LR
 ]]local LIA = DEC_GetLima( eTypeLima_LIA )
-                if( LIA == 0 ) then
+                if( LIA == nil ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
                                                 self:SendFeedback( eActionImpossible )
@@ -138,7 +138,7 @@ node "BEH_Medo_Automate_ABC_Recueillir_AssignerMissionSurveillerA"
 ]]                end
 
                 self.listePositions = DEC_Geometrie_CalculerPositionsParRapportALima( LIA, 10, #( self._namedParams.selPions ) )
-                if( self.listePositions == 0 ) then
+                if( self.listePositions == nil ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
                                                 self:SendFeedback( eActionImpossible )

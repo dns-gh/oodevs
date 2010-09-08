@@ -75,7 +75,7 @@ node "BEH_Dispositif_Automate_NBC_FaireArmerSite_"
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion erreur
 ]]--[[//-----------------------------------------------------------------------------
-]]if( self.positionSite == 0 ) then
+]]if( self.positionSite == nil ) then
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { " BEH_Dispositif_Automate_NBC_FaireArmerSite: Localisation invalide", } )
                                 do return end

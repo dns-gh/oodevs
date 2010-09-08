@@ -50,7 +50,7 @@ do
                     if _continue then
                     --[[// Cherche la position la plus proche du pion disponible
 ]]local ptZone = S_Misc_Automate_ASS_ExtraitPoint_ProchePionDansFuseau( self.lstPos_Reco, x_ass )
-                    if( ptZone == 0 ) then
+                    if( ptZone == nil ) then
                         _continue = false
                     end
 
@@ -123,7 +123,7 @@ do
                 --[[// behavior BEH_Conduite_Automate_ASS_Defaut();
 ]]local pionASuivre = S_Geometrie_Automate_PionPlusProchePoint( DEC_Automate_PionPosition( x ), selPion_ASS )
                 local mission = DEC_GetMission( x_pion )
-                local bSuivre = ( mission == 0 ) or ( mission:GetType() == "T_Mission_Pion_Suivre" )
+                local bSuivre = ( mission == nil ) or ( mission:GetType() == "T_Mission_Pion_Suivre" )
                 if( bSuivre ) then
                     Activate( self.activations.BEH_Conduite_Automate_ASS_SuivreA, 1, { x_pion, pionASuivre, } )
                 end

@@ -76,7 +76,7 @@ node "BEH_Conduite_Automate_INF_AssignerMission_PC"
         self.pFoo = self.pFoo or nil
         local selPions_PE = S_ObtenirPionsDe_SansPC( eEtatEchelon_Premier, eEtatDestruction_None )
         local selPions_SE = S_ObtenirTousPionsDe_SansPC( eEtatEchelon_Second )
-        if( ModuleBegins() or self.pAppui == 0 ) then
+        if( ModuleBegins() or self.pAppui == nil ) then
             do
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
@@ -87,7 +87,7 @@ node "BEH_Conduite_Automate_INF_AssignerMission_PC"
                     self.pAppui = DIA_GetAt( selPions_PE, Floor( #( selPions_PE ) / 2 ) )
                 end
 
-                if( self.pAppui == 0 ) then
+                if( self.pAppui == nil ) then
                     do return end
                 end
 

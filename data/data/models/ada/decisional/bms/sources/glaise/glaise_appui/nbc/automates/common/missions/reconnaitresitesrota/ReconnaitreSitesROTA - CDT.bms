@@ -88,7 +88,7 @@ node "BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA"
         local _continue = true
 do
                 local siteROTA = S_Misc_ObtenirSiteProche( self.listeSitesNonReconnus, DEC_Automate_PionPosition( pion ) )
-                if( siteROTA ~= 0 ) then
+                if( siteROTA ~= nil ) then
                     do
                         Activate( self.activations.BEH_Obj_Automate_NBC_AssignerReconnaitreSiteA, 1, { pion, siteROTA, } )
                         DEC_UserTypeList_Remove( self.listeSitesNonReconnus, siteROTA )

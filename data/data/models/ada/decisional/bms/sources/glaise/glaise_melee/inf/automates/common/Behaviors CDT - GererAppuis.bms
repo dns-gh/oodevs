@@ -59,10 +59,10 @@ do
                 --[[// On donne la mission appuyer si le pion n'a pas de mission en cours
 ]]--[[// ou si le pion a la mission suivre
 ]]local mission = DEC_GetMission( pionAppui_INF )
-                if( ( mission == 0 ) or ( mission:GetType() == "T_Mission_Pion_Suivre" ) or ( mission:GetType() == "T_Mission_Pion_INF_Appuyer" ) ) then
+                if( ( mission == nil ) or ( mission:GetType() == "T_Mission_Pion_Suivre" ) or ( mission:GetType() == "T_Mission_Pion_INF_Appuyer" ) ) then
                     do
                         local pionPE = S_Cherche_Automate_INF_PionReception_Appui( x_inf, selPions_PE )
-                        if( pionPE ~= 0 ) then
+                        if( pionPE ~= nil ) then
                             do
                                 Activate( self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_CDT, x_inf, pionPE, eEtatEchelon_Second, } )
                                                                 do return end
@@ -121,10 +121,10 @@ do
                 --[[// On donne la mission appuyer si le pion n'a pas de mission en cours
 ]]--[[// ou si le pion a la mission suivre
 ]]local mission = DEC_GetMission( pionAppui_ABC )
-                if( ( mission == 0 ) or ( mission:GetType() == "T_Mission_Pion_Suivre" ) or ( mission:GetType() == "T_Mission_Pion_ABC_Soutenir" ) or ( F_Pion_GeteEtatPhaseMission( pionAppui_ABC ) == eEtatPhaseMission_FinMission ) ) then
+                if( ( mission == nil ) or ( mission:GetType() == "T_Mission_Pion_Suivre" ) or ( mission:GetType() == "T_Mission_Pion_ABC_Soutenir" ) or ( F_Pion_GeteEtatPhaseMission( pionAppui_ABC ) == eEtatPhaseMission_FinMission ) ) then
                     do
                         local pionPE = S_Cherche_Automate_INF_PionReception_Appui( pionAppui_ABC, selPions_PE )
-                        if( pionPE ~= 0 ) then
+                        if( pionPE ~= nil ) then
                             do
                                 Activate( self.activations.BEH_Mission_Automate_ABC_AssignerSoutenirA, 1, { ePhase_CDT, pionAppui_ABC, pionPE, eEtatEchelon_Second, } )
                                                                 do return end
@@ -202,7 +202,7 @@ node "BEH_Conduite_Automate_INF_GererMission_Mortier"
 do
                 local pionAppui_Mortier = x
                 local mission = DEC_GetMission( pionAppui_Mortier )
-                if( ( mission == 0 ) or ( mission:GetType() == "T_Mission_Pion_Suivre" ) or ( mission:GetType() == "T_Mission_Pion_INF_Appuyer" ) ) then
+                if( ( mission == nil ) or ( mission:GetType() == "T_Mission_Pion_Suivre" ) or ( mission:GetType() == "T_Mission_Pion_INF_Appuyer" ) ) then
                     do
                         local pion = S_Cherche_Automate_INF_PionReception_Appui( pionAppui_Mortier, selPions_Appuye )
                         if( pion ~= nil ) then

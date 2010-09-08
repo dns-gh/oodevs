@@ -62,7 +62,7 @@ include "bit.lua"
                         F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
                         --[[// unite a soutenir
 ]]--[[// mise a jour des infos sur le pion ami				
-]]if( self.tAmi == 0 ) then
+]]if( self.tAmi == nil ) then
                             do
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self:SendFeedback( eActionImpossible )

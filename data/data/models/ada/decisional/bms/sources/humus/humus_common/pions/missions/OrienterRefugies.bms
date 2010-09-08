@@ -225,7 +225,7 @@ node "BEH_Dep_Pion_AllerDebarquerRefugies"
         self.point = self.point or nil
         self.localisation = self.localisation or DEC_ConnaissanceObjet_Localisation( self._namedParams.campRefugie )
         --[[// Gestion erreur
-]]if( self.localisation == 0 ) then
+]]if( self.localisation == nil ) then
             self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
@@ -235,7 +235,7 @@ node "BEH_Dep_Pion_AllerDebarquerRefugies"
 ]]if( ModuleBegins() ) then
             do
                 self.point = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self.localisation )
-                if( self.point == 0 ) then
+                if( self.point == nil ) then
                     self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end

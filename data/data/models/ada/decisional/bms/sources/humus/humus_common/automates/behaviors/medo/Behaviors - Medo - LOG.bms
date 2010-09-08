@@ -35,7 +35,7 @@ include "Common/Automates/Actions/Medo/Actions - Medo - LOG.bms"
                 for _,pion in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
-                        if( self._namedParams.positionDeploiement == 0 ) then
+                        if( self._namedParams.positionDeploiement == nil ) then
                             pointBuffer = nil
                         else
                             pointBuffer = DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.positionDeploiement, 200 )
@@ -141,7 +141,7 @@ node "BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesAListe"
                 for _,pion in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
-                        if( self._namedParams.positionDeploiement == 0 ) then
+                        if( self._namedParams.positionDeploiement == nil ) then
                             pointBuffer = nil
                         else
                             pointBuffer = DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.positionDeploiement, 200 )
@@ -247,7 +247,7 @@ node "BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesAListe"
                 for _,pion in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
-                        if( self._namedParams.positionDeploiement == 0 ) then
+                        if( self._namedParams.positionDeploiement == nil ) then
                             pointBuffer = nil
                         else
                             pointBuffer = DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.positionDeploiement, 200 )
@@ -353,7 +353,7 @@ node "BEH_Mission_Automate_LOG_AssignerTraiterBlessesAListe"
                 for _,pion in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
-                        if( self._namedParams.positionDeploiement == 0 ) then
+                        if( self._namedParams.positionDeploiement == nil ) then
                             pointBuffer = nil
                         else
                             pointBuffer = DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.positionDeploiement, 200 )
@@ -459,7 +459,7 @@ node "BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalAListe"
                 for _,pion in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
-                        if( self._namedParams.positionDeploiement == 0 ) then
+                        if( self._namedParams.positionDeploiement == nil ) then
                             pointBuffer = nil
                         else
                             pointBuffer = DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.positionDeploiement, 200 )
@@ -565,7 +565,7 @@ node "BEH_Mission_Automate_LOG_AssignerReparerAListe"
                 for _,pion in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
-                        if( self._namedParams.positionDeploiement == 0 ) then
+                        if( self._namedParams.positionDeploiement == nil ) then
                             pointBuffer = nil
                         else
                             pointBuffer = DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.positionDeploiement, 200 )

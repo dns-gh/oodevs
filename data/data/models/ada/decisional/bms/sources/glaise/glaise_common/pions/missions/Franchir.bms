@@ -48,7 +48,7 @@ include "bit.lua"
                 DEC_Trace( "** MIS_Pion_Franchir **" )
                 --[[// Calcule de la position
 ]]local localisation = S_Obj_Localisation( self._namedParams.mis.pontFlottant_ )
-                if( localisation == 0 or not DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( localisation, self.positionSite ) ) then
+                if( localisation == nil or not DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( localisation, self.positionSite ) ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                 self:SendFeedback( eActionImpossible )

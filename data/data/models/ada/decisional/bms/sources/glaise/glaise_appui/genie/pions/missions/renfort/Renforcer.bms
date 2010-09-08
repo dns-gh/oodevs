@@ -69,7 +69,7 @@ elseif switch_1 == eRejoindrePosition then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     --[[// Progression
 ]]--[[// si mission donnée par automate apres renforcement par anibas
-]]if( DEC_Agent_AutomateEstEmbraye() or self.bRenforceAutomate or self._namedParams.mis.lieuRenforcement_ == 0 ) then
+]]if( DEC_Agent_AutomateEstEmbraye() or self.bRenforceAutomate or self._namedParams.mis.lieuRenforcement_ == nil ) then
                         Activate( self.activations.BEH_Dep_Suivre, 1, { self._namedParams.mis.unite_, 100, } )
                     else
 do

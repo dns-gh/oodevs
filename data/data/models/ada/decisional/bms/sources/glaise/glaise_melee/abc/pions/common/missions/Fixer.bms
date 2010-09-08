@@ -48,7 +48,7 @@ includedFiles["sources/glaise/glaise_melee/abc/pions/common/missions/Fixer.bms"]
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.positionEni = self.positionEni or S_Eni_Position( self._namedParams.mission.uniteAFixer_ )
         --[[// si la position de la connaissance n'est pas valide
-]]if( self.positionEni == 0 ) then
+]]if( self.positionEni == nil ) then
             Halt( self )
             do return end
         end

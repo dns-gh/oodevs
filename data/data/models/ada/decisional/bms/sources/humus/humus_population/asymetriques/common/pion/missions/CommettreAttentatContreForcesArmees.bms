@@ -128,7 +128,7 @@ elseif switch_1 == eAgirSurEni then
                     end
 
                     local pointEni = DEC_ConnaissanceAgent_Position( self._namedParams.mission.uniteCible_ )
-                    if( pointEni == 0 ) then
+                    if( pointEni == nil ) then
                         do
                             DEC_RC( eRC_MissionImpossible )
                             DEC_Trace( "connaissance non valide" )

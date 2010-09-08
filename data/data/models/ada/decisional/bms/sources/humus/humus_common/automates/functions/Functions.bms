@@ -173,7 +173,7 @@ function S_Eni_EstDansZone( ksEni, locZone )
     local eValidite = eRequeteInvalide
     local ptEni = DEC_ConnaissanceAgent_Position( ksEni, eValidite )
     _returnValue = false
-    if( eValidite == eRequeteInvalide or locZone == 0 ) then
+    if( eValidite == eRequeteInvalide or locZone == nil ) then
         do return _returnValue end
     end
 

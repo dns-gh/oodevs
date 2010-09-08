@@ -48,7 +48,7 @@ includedFiles["sources/humus/humus_melee/inf/pions/grp ac/Behaviors - Obj.bms"] 
         self.ptMission = self.ptMission or nil
         if( ModuleBegins() ) then
             do
-                if( self._namedParams.locMine == 0 ) then
+                if( self._namedParams.locMine == nil ) then
                     self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
@@ -56,14 +56,14 @@ includedFiles["sources/humus/humus_melee/inf/pions/grp ac/Behaviors - Obj.bms"] 
 
                 DEC_Trace( "  installation plan d'obstacle" )
                 self.ptMission = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self._namedParams.locMine )
-                if( self.ptMission == 0 ) then
+                if( self.ptMission == nil ) then
                     self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
                 end
 
                 self.locPtMine = S_Geometrie_INF_ChercherPositionObstacle( self.ptMission, eTypeObjectBouchonMines, S_DistanceInstallationObstacle() )
-                if( self.locPtMine == 0 ) then
+                if( self.locPtMine == nil ) then
 --[[// Pour le moment, on fait un bouchon de mines
 ]]                    self:SendFeedback( eActionEffectuee )
                     Halt( self )
@@ -115,7 +115,7 @@ node "BEH_Obj_Pion_VAB_NettoyerObstacle"
             do
                 --[[// le detruit
 ]]self.repObj = DEC_Connaissances_ObjetLePlusProche( eTypeObjectBouchonMines )
-                if( self.repObj == 0 ) then
+                if( self.repObj == nil ) then
                     self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end

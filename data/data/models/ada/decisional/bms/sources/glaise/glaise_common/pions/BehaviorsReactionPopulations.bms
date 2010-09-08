@@ -136,7 +136,7 @@ if( not DEC_UserTypeList_Contient( self.lstPopsPAPenCours, pop ) ) then
 
         local rTailleAncienneListe = #( self.lstPopsPAPenCours )
         self.lstPopsPAPenCours = lstPopsPAP
-        if( ( GetMotivation( "MOT_EsquivePopulations" ) == 0 ) and ( ( rTailleAncienneListe - ( rTailleNouvelleListe - rNouvellesPopPAP ) ) > 0 ) ) then
+        if( ( GetMotivation( "MOT_EsquivePopulations" ) == nil ) and ( ( rTailleAncienneListe - ( rTailleNouvelleListe - rNouvellesPopPAP ) ) > 0 ) ) then
             do
                 if( not DEC_Agent_AutomateEstEmbraye() ) then
                     DEC_RC( eRC_PopulationTemporairementRepoussee )

@@ -142,7 +142,7 @@ do
 
         end
 
-        if( self.pionEnQueue == 0 ) then
+        if( self.pionEnQueue == nil ) then
             do return end
         end
 

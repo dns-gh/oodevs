@@ -18,11 +18,11 @@ includedFiles["sources/glaise/glaise_common/automates/actions/Actions - Conduite
     end,
 
     select = function( self )
-        if( self._namedParams.ptRegroupement == 0 ) then
+        if( self._namedParams.ptRegroupement == nil ) then
             do return end
         end
 
-        if( F_Pion_GetobjectifEsquive( self._namedParams.pion ) == 0 ) then
+        if( F_Pion_GetobjectifEsquive( self._namedParams.pion ) == nil ) then
             F_Pion_SetobjectifEsquive( self._namedParams.pion, DEC_Geometrie_CreerPoint() )
         end
 

@@ -169,7 +169,7 @@ node "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstacle"
     activate = function( self )
         local Activate = Activate
         --[[// Sécurité
-]]if( self._namedParams.objetABrecher:GetpionRenforcement_() == 0 or self._namedParams.objetABrecher:Getpion_() == 0 ) then
+]]if( self._namedParams.objetABrecher:GetpionRenforcement_() == nil or self._namedParams.objetABrecher:Getpion_() == nil ) then
             do return end
         end
 
@@ -180,7 +180,7 @@ node "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstacle"
 ]]--[[// Cast
 ]]local section = self._namedParams.objetABrecher:Getpion_()
         --[[// Fin brechage 
-]]if( section:GetobjMisEnCours_() == 0 ) then
+]]if( section:GetobjMisEnCours_() == nil ) then
             --[[// --> REMISE A DIPSOSITION
 ]]Activate( self.activations.BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstaclePour, 1, { self._namedParams.objetABrecher:GetpionRenforcement_(), self._namedParams.objetABrecher, } )
         end

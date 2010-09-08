@@ -176,7 +176,7 @@ do
                     objetABrecher = DEC_UserTypeList_GetAt( self.listeObjetsABrecher, 0 )
                 end
 
-                if( objetABrecher ~= 0 ) then
+                if( objetABrecher ~= nil ) then
                     do
                         Activate( self.activations.BEH_Mission_Automate_Gen_AssignerContournerObjetA, 1, { pion, objetABrecher, } )
                         --[[// T_ConnaissanceObjet traité
@@ -365,7 +365,7 @@ node "BEH_Misc_Automate_GEN_GererFinRenforcementObstacle"
     activate = function( self )
         local Activate = Activate
         --[[// Sécurité
-]]if( self._namedParams.objetABrecher:GetpionRenforcement_() == 0 or self._namedParams.objetABrecher:Getpion_() == 0 ) then
+]]if( self._namedParams.objetABrecher:GetpionRenforcement_() == nil or self._namedParams.objetABrecher:Getpion_() == nil ) then
             do return end
         end
 

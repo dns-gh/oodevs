@@ -50,7 +50,7 @@ include "bit.lua"
 ]]--[[// n'est pas appuye, alors on l'appui
 ]]local selPionsPE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
         local pAAppuyer = S_Cherche_Automate_INF_PionAAppuyer( selPionsPE, self._namedParams.pPion )
-        if( pAAppuyer ~= 0 ) then
+        if( pAAppuyer ~= nil ) then
             do
                  do
                     local _continue = true
@@ -115,7 +115,7 @@ node "BEH_Conduite_Automate_INF_Reduire_Manoeuvre"
         end
 
         local pPion = S_Cherche_Automate_INF_PionMission( DEC_Automate_PionsSansPC(), "T_Mission_Pion_INF_Semparer" )
-        if( pPion == 0 ) then
+        if( pPion == nil ) then
             self:SendFeedback( eActionEnCours )
             do return end
         end
@@ -273,7 +273,7 @@ if( DEC_ConnaissanceAgent_EstValide( self._namedParams.ksEniManoeuvre ) ) then
 ]]--[[// Installation de la couverture
 ]]--[[//-----------------------------------------------------------------------------
 ]]local pionCouv = S_Cherche_Automate_TypePion( selAppui, "SectionInfanterie" )
-        if( pionCouv == 0 ) then
+        if( pionCouv == nil ) then
             self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
@@ -315,7 +315,7 @@ node "BEH_Conduite_Automate_INF_Assaut_Reduction_SurPriseContact"
         if( ModuleBegins() ) then
             do
                 local pionAppui = S_Automate_INF_UniteMission_Appuyer( self._namedParams.pPion )
-                if( pionAppui ~= 0 ) then
+                if( pionAppui ~= nil ) then
                     StartActivateOverride( self, self.activations.BEH_Conduite_Automate_INF_Assaut_Reduction, 1, { pionAppui, } )
                 else
                     StartActivateOverride( self, self.activations.BEH_Conduite_Automate_INF_Assaut_Reduction, 1, { self._namedParams.pPion, } )

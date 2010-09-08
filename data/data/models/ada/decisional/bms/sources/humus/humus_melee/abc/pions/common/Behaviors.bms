@@ -317,7 +317,7 @@ node "BEH_Ordre_SePosterPourDeboucher"
 ]]        end
 
         Activate( self.activations.ACT_Dep_PasserSurLima, 1, { eEtatLima_LD, } )
-        if( GetStateVariable( "VE_SePoster" ) == 0 ) then
+        if( GetStateVariable( "VE_SePoster" ) == nil ) then
             do
                 DEC_SetMissionLimaFlagHoraire( self._namedParams.LimaLD, true )
                 DEC_SetMissionLimaFlag( self._namedParams.LimaLD, true )

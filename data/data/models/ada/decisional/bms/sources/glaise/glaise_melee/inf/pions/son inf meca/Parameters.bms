@@ -139,7 +139,7 @@ end
     local _returnValue = 0
     _returnValue = 0
     local mission = DEC_GetMission( myself )
-    if( mission == 0 ) then
+    if( mission == nil ) then
         do return _returnValue end
     end
 

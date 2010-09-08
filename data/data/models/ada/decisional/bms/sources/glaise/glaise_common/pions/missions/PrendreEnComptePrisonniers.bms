@@ -199,7 +199,7 @@ node "BEH_Dep_Pion_AllerDebarquerPrisonniers"
         self.point = self.point or nil
         self.localisation = self.localisation or DEC_ConnaissanceObjet_Localisation( self._namedParams.campPrisonnier )
         --[[// Gestion erreur
-]]if( self.localisation == 0 ) then
+]]if( self.localisation == nil ) then
             self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end

@@ -175,7 +175,7 @@ node "BEH_MOT_GarderSesDistancesFaceA"
         self.rDeltaDistance = self.rDeltaDistance or self.rDistanceSurete - self.rDistanceEfficace
         local rCoefEsquive = 0
         --[[//si tir interdit ou tir restreint, alors, aller a la distance Surete    
-]]if( ( GetStateVariable( "VE_TirRestreint" ) == 0 ) or ( GetStateVariable( "VE_TirInterdit" ) == nil ) ) then
+]]if( ( GetStateVariable( "VE_TirRestreint" ) == nil ) or ( GetStateVariable( "VE_TirInterdit" ) == nil ) ) then
             rCoefEsquive = 1
         else
             --[[//si tir libre

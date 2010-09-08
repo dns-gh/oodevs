@@ -128,14 +128,14 @@ node "BEH_Dep_GEN_AllerReduireObstacle"
             do
                 --[[// erreur éventuelle
 ]]local loc = DEC_ConnaissanceObjet_Localisation( self._namedParams.obstacle )
-                if( loc == 0 ) then
+                if( loc == nil ) then
                     self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
                 end
 
                 self.ptObst = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( loc )
-                if( self.ptObst == 0 ) then
+                if( self.ptObst == nil ) then
                     self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end

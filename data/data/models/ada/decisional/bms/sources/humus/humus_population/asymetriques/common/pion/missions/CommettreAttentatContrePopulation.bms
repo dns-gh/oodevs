@@ -126,7 +126,7 @@ elseif switch_1 == eAgirSurEni then
                     end
 
                     local pointPopu = DEC_ConnaissancePopulation_PointPlusProche( self._namedParams.mission.populationCible_ )
-                    if( pointPopu == 0 ) then
+                    if( pointPopu == nil ) then
                         do
                             DEC_RC( eRC_MissionImpossible )
                             DEC_Trace( "connaissance non valide" )

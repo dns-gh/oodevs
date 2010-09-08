@@ -35,7 +35,7 @@ end
 
 function S_Eni_Pion_ASA_DefendreZone( ennemi, zone )
     local _returnValue = 0
-    assert( zone ~= 0, "Zone non Valide" )
+    assert( zone ~= nil, "Zone non Valide" )
     local listeAmis = DEC_Connaissances_UnitesAmiesDansZone( zone )
     local dangerosite = 0
     for _,x in pairs( listeAmis or {} ) do
@@ -59,7 +59,7 @@ end
 
 function S_Eni_Pion_ASA_DefendreSite( ennemi, zone )
     local _returnValue = 0
-    assert( zone ~= 0, "Zone non Valide" )
+    assert( zone ~= nil, "Zone non Valide" )
     local barycentreZone = S_Geometrie_BarycentreZone( zone )
     local dangerPourAgent = S_Pion_ForceDistance( myself, ennemi )
     local dangerPourZone = 2 - S_ForceRejoindre( DEC_Geometrie_Distance( S_Eni_Position( ennemi ), barycentreZone ), 0 )

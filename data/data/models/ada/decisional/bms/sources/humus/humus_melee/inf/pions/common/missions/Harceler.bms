@@ -381,7 +381,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
                                 cases_switch_1[1] = true
 elseif switch_1 == eObserver then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ReconnaissanceLocalisation, } )
-                    if( F_Pion_GeteniEnCours( myself ) ~= 0 ) then
+                    if( F_Pion_GeteniEnCours( myself ) ~= nil ) then
                         do
                             self.ePhase = eRejoindreAssaut
                                                         self:SendFeedback( self.ePhase )
@@ -425,7 +425,7 @@ self.done_BEH_Obs_Pion_INF_EnReconnaissance = function( self, _, v ) self.eActio
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eRejoindreAssaut then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                    if( F_Pion_GeteniEnCours( myself ) == 0 ) then
+                    if( F_Pion_GeteniEnCours( myself ) == nil ) then
                         do
                             self.eAction = eActionEnCours
                             if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.pointCentreLocalisation, 100 ) ) then
@@ -448,7 +448,7 @@ elseif switch_1 == eRejoindre then
                         Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
                     end
 
-                    if( F_Pion_GeteniEnCours( myself ) ~= 0 ) then
+                    if( F_Pion_GeteniEnCours( myself ) ~= nil ) then
                         do
                             self.ePhase = eRejoindreAssaut
                                                         do return end
@@ -479,7 +479,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
 ]]                cases_switch_1[4] = true
 elseif switch_1 == eFouiller then
                     Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
-                    if( F_Pion_GeteniEnCours( myself ) ~= 0 ) then
+                    if( F_Pion_GeteniEnCours( myself ) ~= nil ) then
                         do
                             Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )--[[//Peut-être embarquer avant
 ]]

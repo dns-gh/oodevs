@@ -49,7 +49,7 @@ includedFiles["sources/glaise/glaise_common/automates/missions/orienterrefugies/
 
                 local loc = DEC_ConnaissanceObjet_Localisation( self._namedParams.mission.campRefugies_ )
                 local point = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( loc )
-                if( point == 0 ) then
+                if( point == nil ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleZoneHorsFuseau, } )
                                                 Halt( self )

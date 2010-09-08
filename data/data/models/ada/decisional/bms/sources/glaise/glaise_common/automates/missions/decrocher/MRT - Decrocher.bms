@@ -101,7 +101,7 @@ node "BEH_Medo_Automate_AssignerDecrocherA"
     activate = function( self )
         local Activate = Activate
         self.ptRegroupement = self.ptRegroupement or S_Geometrie_BarycentreZone( self._namedParams.zoneRegroupement )
-        if( self.ptRegroupement == 0 ) then
+        if( self.ptRegroupement == nil ) then
             do
                 DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                 Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )

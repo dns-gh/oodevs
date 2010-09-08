@@ -167,7 +167,7 @@ elseif switch_1 == eProgresser then
 ]]--[[// GESTION ESCORTE
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Un pion veut nous escorter
-]]if( myself.pionEnEscorte_ ~= 0 ) then
+]]if( myself.pionEnEscorte_ ~= nil ) then
                         do
                             --[[// Attendre l'unité si distance supérieur à 1 km
 ]]if( not self.bAttenteEffectuee and DEC_Geometrie_Distance( DEC_Agent_Position(), myself.pionEnEscorte_:DEC_Agent_Position() ) > 1000 ) then

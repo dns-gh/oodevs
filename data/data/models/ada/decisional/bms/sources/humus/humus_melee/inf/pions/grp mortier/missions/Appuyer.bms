@@ -59,7 +59,7 @@ node "MIS_Pion_INF_Appuyer"
                         DEC_SetMission( myself, self._namedParams.mission )
                         F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
                         --[[// mise a jour des infos sur le pion ennemi
-]]if( self.repAmi == 0 ) then
+]]if( self.repAmi == nil ) then
                             do
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self:SendFeedback( eActionImpossible )

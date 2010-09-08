@@ -93,7 +93,7 @@ node "BEH_Medo_Automate_INF_PreparerMission_Manoeuvre"
                                 --[[// Determine les echelons	
 ]]rN_PE_INF = #( sUnites_INF )
                                 rN_PE = Max( #( sUnites_ABC ), rN_PE_INF - Floor( rN_PE_INF / 2 ) )
-                                if( self._namedParams.rN_Position ~= 0 ) then
+                                if( self._namedParams.rN_Position ~= nil ) then
                                     rN_PE = Min( self._namedParams.rN_Position, rN_PE )
                                 end
 
@@ -121,7 +121,7 @@ elseif switch_2 == "T_Mission_Automate_INF_Fixer"
 elseif switch_2 == "T_Mission_Automate_INF_Appuyer"
                             or switch_2 == "T_Mission_Automate_INF_Relever" then
                                 rN_PE = #( sUnites_INF ) - Floor( #( sUnites_INF ) / 2 )
-                                if( self._namedParams.rN_Position ~= 0 ) then
+                                if( self._namedParams.rN_Position ~= nil ) then
                                     rN_PE = Min( rN_PE, self._namedParams.rN_Position )
                                 end
 
@@ -137,7 +137,7 @@ elseif switch_2 == "T_Mission_Automate_INF_Soutenir"
 ]]--[[//  ? ePhase = eMRT_AffecterFuseaux;
 ]]--[[// Determine les echelons	
 ]]rN_PE = #( sUnites_HOT ) - Floor( #( sUnites_HOT ) / 3 )
-                                if( self._namedParams.rN_Position ~= 0 ) then
+                                if( self._namedParams.rN_Position ~= nil ) then
                                     rN_PE = Min( self._namedParams.rN_Position, rN_PE )
                                 end
 
@@ -514,7 +514,7 @@ node "BEH_Medo_Automate_INF_AssignerSemparer_Zone"
     activate = function( self )
         local Activate = Activate
                 self.ptZone = self.ptZone or S_Geometrie_BarycentreZone( self._namedParams.locZone )
-        if( self.ptZone == 0 ) then
+        if( self.ptZone == nil ) then
             do
                 if( ModuleBegins() ) then
                     do
