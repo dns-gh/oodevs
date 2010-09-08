@@ -33,6 +33,7 @@
 #include "UrbanModel.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/ResourceNetworkSelectionObserver.h"
 #include "clients_gui/DrawerFactory.h"
 #include "clients_gui/DrawerModel.h"
 #include "indicators/GaugeTypes.h"
@@ -66,6 +67,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , scoreFactory_( *new ScoreFactory( controllers_.controller_, staticModel.indicators_, staticModel.gaugeTypes_ ) )
     , successFactorFactory_( *new SuccessFactorFactory( controllers_, *this, staticModel.successFactorActionTypes_ ) )
     , drawingFactory_( *new gui::DrawerFactory( controllers.controller_, staticModel.drawings_ ) )
+    , resourceObserver_( *new ResourceNetworkSelectionObserver( controllers ) )
     , loaded_ ( false )
     , exercise_( *new Exercise( controllers.controller_ ) )
     , teams_( *new TeamsModel( controllers, teamFactory_ ) )
@@ -78,7 +80,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , scores_( *new ScoresModel( scoreFactory_ ) )
     , successFactors_( *new SuccessFactorsModel( successFactorFactory_ ) )
     , intelligences_( *new IntelligencesModel( controllers.controller_, staticModel.coordinateConverter_, idManager_, staticModel.levels_ ) )
-    , urban_( *new UrbanModel( controllers.controller_ ) )
+    , urban_( *new UrbanModel( controllers, staticModel ) )
     , drawings_( *new gui::DrawerModel( controllers, drawingFactory_ ) )
 {
     // NOTHING
@@ -97,6 +99,7 @@ Model::~Model()
     delete &scoreFactory_;
     delete &profiles_;
     delete &profileFactory_;
+    delete &resourceObserver_;
     delete &weather_;
     delete &limits_;
     delete &agents_;

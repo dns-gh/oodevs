@@ -15,7 +15,7 @@
 
 namespace kernel
 {
-    class Controller;
+    class Controllers;
 }
 
 namespace gui
@@ -27,6 +27,8 @@ namespace xml
 {
     class xistream;
 }
+
+class StaticModel;
 
 // =============================================================================
 /** @class  UrbanModel
@@ -40,7 +42,7 @@ class UrbanModel : public urban::Model
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UrbanModel( kernel::Controller& controller );
+    explicit UrbanModel( kernel::Controllers& controllers, const StaticModel& staticModel );
     virtual ~UrbanModel();
     //@}
 
@@ -56,8 +58,10 @@ public:
 private:
     //! @name Helpers
     //@{
-    void ReadBlock( xml::xistream& xis );
+    void ReadUrbanObject( xml::xistream& xis );
     void ReadCapacity( const std::string& capacity, xml::xistream& xis, gui::TerrainObjectProxy& proxy );
+    void LoadInfrastructures( const std::string& directoryPath );
+    void ReadInfrastructures( xml::xistream& xis );
     //@}
 
     //! @name Copy/Assignment
@@ -69,7 +73,9 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
+    kernel::Controllers& controllers_;
+    const StaticModel& static_;
+    std::string urbanStateVersion_;
     //@}
 };
 

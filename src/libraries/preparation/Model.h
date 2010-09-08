@@ -18,6 +18,7 @@ namespace kernel
     class Controllers;
     class ActionController;
     class KnowledgeGroupFactory_ABC; // LTO
+    class ResourceNetworkSelectionObserver;
 }
 
 namespace tools
@@ -104,6 +105,7 @@ private:
     ScoreFactory_ABC& scoreFactory_;
     SuccessFactorFactory_ABC& successFactorFactory_;
     gui::DrawingFactory_ABC& drawingFactory_;
+    kernel::ResourceNetworkSelectionObserver& resourceObserver_;
     QString name_;
     bool loaded_;
     //@}

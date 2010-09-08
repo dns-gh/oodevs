@@ -605,6 +605,22 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>&amp;Export...</source>
         <translation>&amp;Exporter...</translation>
     </message>
+    <message>
+        <source>Resource networks</source>
+        <translation>Réseaux de ressource</translation>
+    </message>
+    <message>
+        <source>On</source>
+        <translation>On</translation>
+    </message>
+    <message>
+        <source>Selected all</source>
+        <translation>Sélectionné tout</translation>
+    </message>
+    <message>
+        <source>Selected outgoing</source>
+        <translation>Sélectionné sortant</translation>
+    </message>
 </context>
 <context>
     <name>ModelBuilder</name>

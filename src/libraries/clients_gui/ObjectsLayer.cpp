@@ -9,6 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "ObjectsLayer.h"
+#include "clients_kernel/ResourceNetwork_ABC.h"
+#include <boost/noncopyable.hpp>
 
 using namespace kernel;
 using namespace gui;
@@ -36,8 +38,42 @@ ObjectsLayer::~ObjectsLayer()
 // Name: ObjectsLayer::ContextMenu
 // Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-void ObjectsLayer::ContextMenu( const kernel::Entity_ABC& entity, const geometry::Point2f& point, const QPoint& where )
+void ObjectsLayer::ContextMenu( const Entity_ABC& entity, const geometry::Point2f& point, const QPoint& where )
 {
-    const kernel::Object_ABC& object = static_cast< const kernel::Object_ABC& >( entity );
+    const Object_ABC& object = static_cast< const Object_ABC& >( entity );
     controllers_.actions_.ContextMenu( object, entity, point, where );
+}
+
+namespace
+{
+    struct DrawExtensionsFunctor : boost::noncopyable
+    {
+        DrawExtensionsFunctor( const Viewport_ABC& viewport, const GlTools_ABC& tools )
+            : viewport_( viewport )
+            , tools_( tools )
+        {}
+
+        void operator()( const Entity_ABC& object )
+        {
+            // dessin du réseau en dernier par dessus les objets
+            if( const ResourceNetwork_ABC* resource = object.Retrieve< ResourceNetwork_ABC >() )
+                resource->Draw( viewport_, tools_ );
+        }
+
+        const Viewport_ABC& viewport_;
+        const GlTools_ABC& tools_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectsLayer::Paint
+// Created: JSR 2010-09-06
+// -----------------------------------------------------------------------------
+void ObjectsLayer::Paint( Viewport_ABC& viewport )
+{
+    // dessin des objets
+    EntityLayer< kernel::Object_ABC >::Paint( viewport );
+    // dessin des extensions(en deux temps pour les afficher par dessus les objets)
+    DrawExtensionsFunctor functor( viewport, tools_ );
+    Apply( functor );
 }

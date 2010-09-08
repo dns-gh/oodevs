@@ -35,6 +35,7 @@ namespace kernel
 }
 
 class Model;
+class StaticModel;
 class UrbanBlockDetectionMap;
 
 // =============================================================================
@@ -49,7 +50,7 @@ class UrbanModel : public tools::Resolver< gui::TerrainObjectProxy >
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanModel( kernel::Controller& controller, const Model& model, const kernel::DetectionMap& map );
+             UrbanModel( kernel::Controller& controller, const Model& model, const StaticModel& staticModel, const kernel::DetectionMap& map );
     virtual ~UrbanModel();
     //@}
 
@@ -75,6 +76,7 @@ public:
     //@{
     kernel::Controller& controller_;
     const Model& model_;
+    const StaticModel& static_;
     std::auto_ptr< urban::Model > urbanModel_;
     const kernel::DetectionMap& map_;
     UrbanBlockDetectionMap& urbanBlockDetectionMap_;

@@ -221,24 +221,14 @@ void MIL_ObjectManager::ReadInfrastructures( xml::xistream& xis )
     unsigned int id = xis.attribute< unsigned int >( "id" );
     UrbanObjectWrapper* wrapper = FindUrbanWrapper( id );
     if( wrapper )
-    {
-        if( xis.has_child( "resources" ) )
-        {
-            xis >> xml::start( "resources" );
-                UpdateCapacity( "resources", xis, *wrapper );
-            xis >> xml::end();
-        }
-        // $$$$ JSR 2010-08-12: TODO read infrastructures
-        xis >> xml::optional >> xml::start( "infrastructures" )
-            >> xml::end();
-    }
+        xis >> xml::list( *this, &MIL_ObjectManager::UpdateCapacity, *wrapper );
     xis >> xml::start( "urban-objects" )
             >> xml::list( "urban-object", *this, &MIL_ObjectManager::ReadInfrastructures )
         >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ObjectManager::ReadBlock
+// Name: MIL_ObjectManager::ReadUrbanState
 // Created: JSR 2010-06-28
 // -----------------------------------------------------------------------------
 void MIL_ObjectManager::ReadUrbanState( xml::xistream& xis )
@@ -246,11 +236,7 @@ void MIL_ObjectManager::ReadUrbanState( xml::xistream& xis )
     unsigned int id = xis.attribute< unsigned int >( "id" );
     UrbanObjectWrapper* wrapper = FindUrbanWrapper( id );
     if( wrapper )
-    {
-        xis >> xml::optional >> xml::start( "capacities" )
-            >> xml::list( *this, &MIL_ObjectManager::UpdateCapacity, *wrapper )
-            >> xml::end;
-    }
+        xis >> xml::list( *this, &MIL_ObjectManager::UpdateCapacity, *wrapper );
 }
 
 // -----------------------------------------------------------------------------

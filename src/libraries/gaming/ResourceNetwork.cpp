@@ -73,7 +73,7 @@ ResourceNetwork::~ResourceNetwork()
 // Name: ResourceNetwork::Draw
 // Created: JSR 2010-08-19
 // -----------------------------------------------------------------------------
-void ResourceNetwork::Draw( const Point2f&, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void ResourceNetwork::Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     // TODO utiliser un enum pour les options
     char filter = controllers_.options_.GetOption( "ResourceNetworks", 0 ).To< char >();

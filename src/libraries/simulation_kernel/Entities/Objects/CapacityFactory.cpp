@@ -123,6 +123,9 @@ CapacityFactory::CapacityFactory()
     DoRegister( "attitude-modifier", boost::bind( &AddBuilder< AttitudeModifierCapacity >::Add, _1, _2 ) );
     DoRegister( "scattering", boost::bind( &AddBuilder< ScatteringCapacity >::Add, _1, _2 ) );
     DoRegister( "sealoff", boost::bind( &AddBuilder< SealOffCapacity >::Add, _1, _2 ) );
+    DoRegister( "structural-state", boost::bind( &AddBuilder< StructuralCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< StructuralCapacity >::Update, _1, _2 ) );
+    // $$$$ JSR 2010-09-08: on garde l'attribut "structural" en double emploi de "structural-state" : il est utilisé par les objets et on ne peut pas changer les xsd pour l'instant.
+    // Ca sera à supprimer quand les xml des objets seront à jour (voire avec RPD).
     DoRegister( "structural", boost::bind( &AddBuilder< StructuralCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< StructuralCapacity >::Update, _1, _2 ) );
     DoRegister( "resources", boost::bind( &AddBuilder< ResourceNetworkCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< ResourceNetworkCapacity >::Update, _1, _2 ) );
 }

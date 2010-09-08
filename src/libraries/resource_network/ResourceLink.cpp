@@ -54,9 +54,9 @@ ResourceLink::~ResourceLink()
 // -----------------------------------------------------------------------------
 ResourceLink::ETargetKind ResourceLink::FindTargetKind( const std::string& kind )
 {
-    if( kind == "urban" )
+    if( kind == "urban-object" )
         return eTargetKindUrban;
-    if( kind == "object" )
+    if( kind == "terrain-object" )
         return eTargetKindObject;
     throw std::exception( "Resource link target not valid" );
 }

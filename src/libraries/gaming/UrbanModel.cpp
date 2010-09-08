@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "UrbanModel.h"
+#include "UrbanPositions.h"
 #include "Model.h"
 #include "ObjectsModel.h"
 #include "ResourceNetwork.h"
@@ -19,6 +20,7 @@
 #include "UrbanBlockDeserializer.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_kernel/DetectionMap.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -36,9 +38,10 @@ using namespace gui;
 // Name: UrbanModel constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-UrbanModel::UrbanModel( kernel::Controller& controller, const Model& model, const kernel::DetectionMap& map )
+UrbanModel::UrbanModel( kernel::Controller& controller, const Model& model, const StaticModel& staticModel, const kernel::DetectionMap& map )
     : controller_( controller )
     , model_( model )
+    , static_( staticModel )
     , urbanModel_( new urban::Model() )
     , map_( map )
     , urbanBlockDetectionMap_( *new UrbanBlockDetectionMap( map ) )
@@ -65,21 +68,17 @@ void UrbanModel::Create( const MsgsSimToClient::MsgUrbanCreation& message )
     std::string name( message.name() );
     unsigned long id = message.oid();
     for( int i = 0; i < message.location().coordinates().elem_size(); ++i )
-    {
-        const Common::MsgCoordLatLong& location = message.location().coordinates().elem( i );
-        const geometry::Point2f point( float( location.latitude() ), float( location.longitude() ) );
-        footPrint.Add( point );
-    }
+        footPrint.Add( static_.coordinateConverter_.ConvertToXY( message.location().coordinates().elem( i ) ) );
     urban::TerrainObject_ABC* object = urbanModel_->GetFactory().CreateUrbanObject( id, name, &footPrint );
     UrbanBlockDeserializer urbanBlockDeserializer( message );
     object->Accept( urbanBlockDeserializer );
     gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controller_, *object, message.oid(), QString( message.name().c_str() ) );
     if( message.has_attributes() && message.attributes().has_structure() )
         pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( controller_, pTerrainObject->Get< kernel::PropertiesDictionary >() ) );
+    pTerrainObject->Attach< kernel::Positions >( *new UrbanPositions( *object, message.location(), static_.coordinateConverter_ ) );
     object->InstanciateDecoration();
     pTerrainObject->Update( message );
     pTerrainObject->Polish();
-    controller_.Create( *pTerrainObject );
     if( !Find( id ) )
         Register( id, *pTerrainObject );
     urbanBlockDetectionMap_.AddUrbanBlock( *object );
@@ -97,9 +96,6 @@ void UrbanModel::Update( const MsgsSimToClient::MsgUrbanUpdate& message )
         if( message.attributes().infrastructures().resource_network_size() > 0 )
         {
             TerrainObjectProxy& entity = GetObject( message.oid() );
-            /*if( entity.Retrieve< kernel::ResourceNetwork_ABC >() )
-                model_.resourceNetwork_.UrbanUpdate( message.oid(), message.attributes().infrastructures() );
-            else*/
             if( !entity.Retrieve< kernel::ResourceNetwork_ABC >() )
                 model_.resourceNetwork_.Create( GetObject( message.oid() ), message.attributes().infrastructures() );
         }

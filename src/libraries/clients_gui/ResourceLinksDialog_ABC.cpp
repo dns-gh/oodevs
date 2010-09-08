@@ -272,7 +272,7 @@ void ResourceLinksDialog_ABC::NotifyContextMenu( const kernel::Object_ABC& objec
 void ResourceLinksDialog_ABC::showEvent( QShowEvent* )
 {
     dotationList_->clear();
-    resourceNodes_ = selected_->ResourcesNodes();
+    resourceNodes_ = selected_->GetResourceNodes();
     for( ResourceNetwork_ABC::CIT_ResourceNodes it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
     {
         unsigned long id = it->second.resource_;

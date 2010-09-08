@@ -10,17 +10,13 @@
 #ifndef __ResourceNetworkModel_h_
 #define __ResourceNetworkModel_h_
 
-#include "tools/Resolver.h"
-#include "tools/SelectionObserver_ABC.h"
+class Model;
+class StaticModel;
 
 namespace kernel
 {
-    class Controllers;
-    class ResourceNetwork_ABC;
+    class ResourceNetworkSelectionObserver;
 }
-
-class Model;
-class StaticModel;
 
 // =============================================================================
 /** @class  ResourceNetworkModel
@@ -28,8 +24,7 @@ class StaticModel;
 */
 // Created: JSR 2010-08-18
 // =============================================================================
-class ResourceNetworkModel : public tools::Observer_ABC
-                           , public tools::SelectionObserver< kernel::Entity_ABC >
+class ResourceNetworkModel
 {
 public:
     //! @name Constructors/Destructor
@@ -52,18 +47,12 @@ private:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    virtual void NotifySelected( const kernel::Entity_ABC* element );
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
     const Model& model_;
     const StaticModel& staticModel_;
-    kernel::ResourceNetwork_ABC* selected_;
+    kernel::ResourceNetworkSelectionObserver& observer_;
     //@}
 };
 

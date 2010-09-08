@@ -48,7 +48,6 @@ namespace MsgsSimToClient
 class ResourceNetwork : public kernel::ResourceNetwork_ABC
                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectUpdate >
                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanUpdate >
-                      , public kernel::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -60,7 +59,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual QString GetLinkName( unsigned long resource, unsigned int i ) const;
     //@}
 

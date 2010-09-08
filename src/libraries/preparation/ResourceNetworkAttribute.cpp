@@ -1,0 +1,181 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+#include "preparation_pch.h"
+#include "ResourceNetworkAttribute.h"
+#include "clients_gui/TerrainObjectProxy.h"
+#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/DotationType.h"
+#include "clients_kernel/Options.h"
+#include "clients_kernel/Viewport_ABC.h"
+#include <boost/bind.hpp>
+#include <xeumeuleu/xml.hpp>
+
+using namespace geometry;
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkAttribute constructor
+// Created: JSR 2010-09-07
+// -----------------------------------------------------------------------------
+ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::DotationType, std::string >& dotationResolver )
+    : controllers_( controllers )
+    , id_( id )
+    , urbanResolver_( urbanResolver )
+    , dotationResolver_( dotationResolver )
+{
+    xis >> xml::list( "node", *this, &ResourceNetworkAttribute::ReadNode );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkAttribute destructor
+// Created: JSR 2010-09-07
+// -----------------------------------------------------------------------------
+ResourceNetworkAttribute::~ResourceNetworkAttribute()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkAttribute::GetLinkName
+// Created: JSR 2010-09-07
+// -----------------------------------------------------------------------------
+QString ResourceNetworkAttribute::GetLinkName( unsigned long resource, unsigned int i ) const
+{
+    const ResourceNode* node = FindResourceNode( resource );
+    if( node == 0 || i >= node->links_.size() )
+        return "";
+    const ResourceLink& link = node->links_[ i ];
+    kernel::Entity_ABC* entity = 0;
+    if( link.urban_ )
+        entity = &urbanResolver_.Get( link.id_ );
+    // TODO
+    /*else
+        entity = &objectResolver_.Get( link.id_ );*/
+    else 
+        return QString::number( link.id_ );
+    QString ret = entity->GetName();
+    if( ret.isEmpty() )
+        ret = QString::number( link.id_ );
+    return ret;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkAttribute::Draw
+// Created: JSR 2010-09-07
+// -----------------------------------------------------------------------------
+void ResourceNetworkAttribute::Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+{
+    // TODO les objets ne sont pas gérés : il y a différents objectResolver, un par Team. Refactoriser ça pour n'avoir qu'un seul résolver comme dans Gaming (faire une extension Objets, s'inspirer de Populations).
+
+    // TODO utiliser un enum pour les options
+    char filter = controllers_.options_.GetOption( "ResourceNetworks", 0 ).To< char >();
+    if( filter == 1 )// off
+        return;
+    if( filter == 3 && !IsSelected() ) // selected outgoing
+        return;
+    // TODO
+    /*Point2f from = isUrban_ ? urbanResolver_.Get( id_ ).Barycenter()
+        : objectResolver_.Get( id_ ).Get< kernel::Positions >().GetPosition();*/
+    Point2f from = urbanResolver_.Get( id_ ).Barycenter();
+
+    glPushAttrib( GL_LINE_BIT );
+    glLineWidth( 3.f );
+
+    for( CIT_ResourceNodes node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
+    {
+        SetColor( node->second.resource_ );
+        if( node->second.links_.size() > 0 )
+        {
+            for( std::vector< ResourceLink >::const_iterator link = node->second.links_.begin(); link != node->second.links_.end(); ++link )
+            {
+                // TODO
+                //kernel::Entity_ABC* target = link->urban_ ? static_cast< kernel::Entity_ABC* >( urbanResolver_.Find( link->id_ ) ) : objectResolver_.Find( link->id_ );
+                kernel::Entity_ABC* target = link->urban_ ? static_cast< kernel::Entity_ABC* >( urbanResolver_.Find( link->id_ ) ) : 0;
+                if( !target )
+                    continue;
+                if( filter == 2 )  // selected all
+                {
+                    ResourceNetwork_ABC* resourceTarget = target->Retrieve< ResourceNetwork_ABC >();
+                    if( !resourceTarget || ( !IsSelected() && !resourceTarget->IsSelected() ) )
+                        continue;
+                }
+                // TODO
+                /*Point2f to = link->urban_ ? urbanResolver_.Get( link->id_ ).Barycenter()
+                                          : objectResolver_.Get( link->id_ ).Get< kernel::Positions >().GetPosition();*/
+                Point2f to = urbanResolver_.Get( link->id_ ).Barycenter();
+                if( viewport.IsVisible( Rectangle2f( from, to ) ) )
+                    tools.DrawArrow( from, to );
+            }
+            glDisable( GL_LINE_STIPPLE );
+        }
+        else
+            if( filter == 0 || IsSelected() )
+                tools.DrawCircle( from, 20.0 );
+    }
+    glPopAttrib();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkAttribute::ReadNode
+// Created: JSR 2010-09-07
+// -----------------------------------------------------------------------------
+void ResourceNetworkAttribute::ReadNode( xml::xistream& xis )
+{
+    std::string resource = xis.attribute< std::string >( "resource-type" );
+    kernel::DotationType* type = dotationResolver_.Find( resource );
+    if( !type )
+        throw std::runtime_error( "Bad resource name: " + resource );
+    ResourceNode& node = resourceNodes_[ type->GetId() ];
+    node.resource_ = type->GetId();
+    xis >> xml::optional >> xml::attribute( "enabled", node.isEnabled_ )
+        >> xml::optional >> xml::attribute( "production", node.production_ )
+        >> xml::optional >> xml::attribute( "stock", node.maxStock_ )
+        >> xml::optional >> xml::attribute( "initial-stock", node.stock_ )
+        >> xml::optional >> xml::attribute( "consumption", node.consumption_ )
+        >> xml::optional >> xml::attribute( "critical-consumption", node.critical_ )
+        >> xml::list( "link", *this, &ResourceNetworkAttribute::ReadLink, boost::ref( node ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkAttribute::ReadLink
+// Created: JSR 2010-09-07
+// -----------------------------------------------------------------------------
+void ResourceNetworkAttribute::ReadLink( xml::xistream& xis, ResourceNode& node )
+{
+    ResourceLink link;
+    link.id_ = xis.attribute< unsigned int >( "target" );
+    link.capacity_ = xis.attribute< int >( "capacity" );
+    if( xis.has_attribute( "kind" ) )
+        link.urban_ = ( xis.attribute< std::string >( "kind" ) == "urban" );
+    node.links_.push_back( link );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkAttribute::SetColor
+// Created: JSR 2010-08-20
+// -----------------------------------------------------------------------------
+void ResourceNetworkAttribute::SetColor( unsigned long resource ) const
+{
+    // TODO temp régler les couleurs en fonction de la dotation (par ADN?)
+    int tmp = resource % 3;
+    switch( tmp )
+    {
+    default:
+    case 0:
+        glColor4f( 0.2f, 0.2f, 0.6f,  1.0f );
+        break;
+    case 1:
+        glColor4f( 0.4f, 0.4f, 0.4f,  1.0f );
+        break;
+    case 2:
+        glColor4f( 0.4f, 0.4f, 0.7f,  1.0f );
+        break;
+    }
+}

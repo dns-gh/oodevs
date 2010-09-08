@@ -10,6 +10,7 @@
 #ifndef __TerrainObjectProxy_h_
 #define __TerrainObjectProxy_h_
 
+#include "clients_kernel/Creatable.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Extension_ABC.h"
@@ -43,6 +44,7 @@ namespace gui
 class TerrainObjectProxy : public kernel::Extension_ABC
                          , public kernel::EntityImplementation< kernel::Entity_ABC >
                          , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanUpdate >
+                         , public kernel::Creatable< TerrainObjectProxy >
 {
 public:
     //! @name Constructors/Destructor
@@ -57,7 +59,7 @@ public:
     virtual void DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& msg );
     virtual QString GetName() const;
     virtual unsigned long GetId() const;
-    virtual void Select( kernel::ActionController& /*controller*/ ) const {}
+    virtual void Select( kernel::ActionController& /*controller*/ ) const;
     virtual void ContextMenu( kernel::ActionController& /*controller*/,  const QPoint& /*where*/) const {}
     virtual void Activate( kernel::ActionController& /*controller*/ ) const {}
 

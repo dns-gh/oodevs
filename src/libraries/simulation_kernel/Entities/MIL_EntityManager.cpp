@@ -348,8 +348,8 @@ void MIL_EntityManager::LoadUrbanStates( const MIL_Config& config )
 
     xml::xifstream xis( strUrbanState );
     xis >> xml::start( "urban-state" )
-            >> xml::start( "blocks" )
-                >> xml::list( "block", boost::bind( &MIL_ObjectManager::ReadUrbanState, boost::ref( *pObjectManager_ ), _1 ) )
+            >> xml::start( "urban-objects" )
+                >> xml::list( "urban-object", boost::bind( &MIL_ObjectManager::ReadUrbanState, boost::ref( *pObjectManager_ ), _1 ) )
             >> xml::end
         >> xml::end;
 }

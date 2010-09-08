@@ -12,6 +12,7 @@
 #include "ResourceNetwork.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/ResourceNetworkSelectionObserver.h"
 #include "protocol/protocol.h"
 
 #pragma warning( disable : 4706 )
@@ -24,9 +25,9 @@ ResourceNetworkModel::ResourceNetworkModel( kernel::Controllers& controllers, co
     : controllers_( controllers )
     , model_      ( model )
     , staticModel_( staticModel )
-    , selected_   ( 0 )
+    , observer_( *new kernel::ResourceNetworkSelectionObserver( controllers ) )
 {
-    controllers_.Register( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -35,20 +36,6 @@ ResourceNetworkModel::ResourceNetworkModel( kernel::Controllers& controllers, co
 // -----------------------------------------------------------------------------
 ResourceNetworkModel::~ResourceNetworkModel()
 {
-    controllers_.Unregister( *this );
+    delete &observer_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: ResourceNetworkModel::Select
-// Created: JSR 2010-09-01
-// -----------------------------------------------------------------------------
-void ResourceNetworkModel::NotifySelected( const kernel::Entity_ABC* element )
-{
-    if( selected_ != 0 )
-    {
-        selected_->Select( false );
-        selected_ = 0;
-    }
-    if( element && ( selected_ = const_cast< kernel::ResourceNetwork_ABC* >( element->Retrieve< kernel::ResourceNetwork_ABC >() ) ) )
-        selected_->Select( true );
-}

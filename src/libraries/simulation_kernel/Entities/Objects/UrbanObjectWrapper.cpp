@@ -310,15 +310,7 @@ void UrbanObjectWrapper::SendCreation() const
     client::UrbanCreation message;
     message().set_oid( object_->GetId() );
     message().set_name( object_->GetName() );
-    message().mutable_location()->set_type( Common::MsgLocation_Geometry_polygon );
-    const geometry::Polygon2f::T_Vertices& points = object_->GetFootprint()->Vertices();
-    for( geometry::Polygon2f::CIT_Vertices it = points.begin(); it != points.end(); ++it )
-    {
-        Common::MsgCoordLatLong* point = message().mutable_location()->mutable_coordinates()->add_elem();
-        point->set_latitude( it->X() );
-        point->set_longitude( it->Y() );
-
-    }
+    NET_ASN_Tools::WriteLocation( GetLocalisation(), *message().mutable_location() );
 
     const ColorRGBA* color = object_->GetColor();
     if( color != 0 )

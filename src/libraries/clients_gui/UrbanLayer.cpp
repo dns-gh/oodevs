@@ -10,37 +10,20 @@
 #include "clients_gui_pch.h"
 #include "UrbanLayer.h"
 #include "clients_gui/TerrainObjectProxy.h"
-#include "clients_gui/UrbanDrawer.h"
-#include "clients_gui/View_ABC.h"
-#include "clients_kernel/ActionController.h"
-#include "clients_kernel/Circle.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Lines.h"
-#include "clients_kernel/Location_ABC.h"
-#include "clients_kernel/Point.h"
-#include "clients_kernel/Polygon.h"
-#include "clients_kernel/Viewport_ABC.h"
-#include <boost/bind.hpp>
-#include <geometry/Types.h>
-#include <urban/Drawer_ABC.h>
-#include <urban/TerrainObject_ABC.h>
+#include "clients_kernel/ResourceNetwork_ABC.h"
+#include <boost/noncopyable.hpp>
 
 using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::UrbanLayer
 // Created: SLG 2009-03-23
 // -----------------------------------------------------------------------------
-UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools/*, ColorStrategy_ABC& strategy, View_ABC& view */)
-: controllers_   ( controllers )
-, tools_        ( tools )
-, urbanDrawer_  ( new UrbanDrawer( tools ) )
-, selectionArea_( 0 )
-, tooltiped_    ( std::numeric_limits< unsigned >::max() )
-, selectionMode_( false )
-, selectedObject_( 0 )
+UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile )
+    : EntityLayer< TerrainObjectProxy >( controllers, tools, strategy, view, profile )
+    , selectedObject_( 0 )
 {
-    controllers_.Register( *this );
+   // NOTHING;
 }
 
 // -----------------------------------------------------------------------------
@@ -49,10 +32,28 @@ UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_
 // -----------------------------------------------------------------------------
 UrbanLayer::~UrbanLayer()
 {
-    controllers_.Unregister( *this );
-    objects_.clear();
-    delete selectionArea_;
-    delete urbanDrawer_;
+    // NOTHING
+}
+
+namespace
+{
+    struct DrawExtensionsFunctor : boost::noncopyable
+    {
+        DrawExtensionsFunctor( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools )
+            : viewport_( viewport )
+            , tools_( tools )
+        {}
+
+        void operator()( const kernel::Entity_ABC& proxy )
+        {
+            // dessin du réseau en dernier par dessus les blocs
+            if( const kernel::ResourceNetwork_ABC* resource = proxy.Retrieve< kernel::ResourceNetwork_ABC >() )
+                resource->Draw( viewport_, tools_ );
+        }
+
+        const kernel::Viewport_ABC& viewport_;
+        const kernel::GlTools_ABC& tools_;
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -62,12 +63,10 @@ UrbanLayer::~UrbanLayer()
 void UrbanLayer::Paint( kernel::Viewport_ABC& viewport )
 {
     // dessin des blocs urbains
-    std::for_each( objects_.begin(), objects_.end(),
-        boost::bind( &TerrainObjectProxy::Draw, _1, boost::ref( *urbanDrawer_ ), boost::cref( viewport ), boost::cref( tools_ ) ) );
-    // dessin des extensions( en deux temps pour les afficher par dessus les blocs)
-    geometry::Point2f p;
-    std::for_each( objects_.begin(), objects_.end(),
-        boost::bind( &kernel::Entity_ABC::Draw, _1, boost::cref( p ), boost::cref( viewport ), boost::cref( tools_ ) ) );
+    EntityLayer< TerrainObjectProxy >::Paint( viewport );
+    // dessin des extensions(en deux temps pour les afficher par dessus les blocs)
+    DrawExtensionsFunctor functor( viewport, tools_ );
+    Apply( functor );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,144 +75,40 @@ void UrbanLayer::Paint( kernel::Viewport_ABC& viewport )
 // -----------------------------------------------------------------------------
 void UrbanLayer::Reset2d()
 {
-    objects_.clear();
     selectedObject_ = 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanLayer::NotifyCreated
-// Created: SLG 2009-03-23
-// -----------------------------------------------------------------------------
-void UrbanLayer::NotifyCreated( const TerrainObjectProxy& object )
-{
-    if( std::find( objects_.begin(), objects_.end(), &object ) == objects_.end() )
-        objects_.push_back( &object );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityLayer::NotifyDeleted
-// Created: SLG 2009-03-23
-// -----------------------------------------------------------------------------
-void UrbanLayer::NotifyDeleted( const TerrainObjectProxy& object )
-{
-    IT_TerrainObjects it = std::find( objects_.begin(), objects_.end(), &object );
-    if( it != objects_.end() )
-        objects_.erase( it );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityLayer::NotifyActivated
-// Created: SLG 2009-03-23
-// -----------------------------------------------------------------------------
-void UrbanLayer::NotifyActivated( const TerrainObjectProxy& /*object*/ )
-{
-    //view_.CenterOn( entity.Get< Positions >().GetPosition() );
+    EntityLayer< TerrainObjectProxy >::Reset2d();
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityLayer::NotifySelected
 // Created: SLG 2009-03-23
 // -----------------------------------------------------------------------------
-void UrbanLayer::NotifySelected( const TerrainObjectProxy* /*object*/ )
+void UrbanLayer::NotifySelected( const TerrainObjectProxy* object )
 {
-    /*IT_TerrainObjects it = std::find( *objects_.begin(), *objects_.end(), object );
-    if( it != objects_.end() )
-    selected_ = it - objects_.begin();*/
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: UrbanLayer::HandleMousePress
-// Created: SLG 2009-08-09
-// -----------------------------------------------------------------------------
-bool UrbanLayer::HandleMousePress( QMouseEvent* input, const geometry::Point2f& point )
-{
-    const int button = input->button();
-    if( !input->state() || ( button != Qt::LeftButton && button != Qt::RightButton ) )
-        return false;
     if( selectedObject_ )
         selectedObject_->SetSelected( false );
-    for( CIT_TerrainObjects it = objects_.begin(); it != objects_.end(); ++it )
-    {
-        const TerrainObjectProxy* object = (*it);
-        if( object->IsInside( point ) )
-        {
-            bool rc = true;
-            if( selectedObject_ != object )
-            {
-                selectedObject_ = object;
-                selectedObject_->SetSelected( true );
-                controllers_.actions_.Select( *static_cast< const kernel::Entity_ABC* >( object ) );
-            }
-            else
-                rc = false;
-            if( button == Qt::RightButton )
-                controllers_.actions_.ContextMenu( *object, input->globalPos() );
-            return rc;
-        }
-    }
-    selectedObject_ = 0;
-    return false;
+    selectedObject_ = object;
+    if( selectedObject_ )
+        selectedObject_->SetSelected( true );
+    EntityLayer< TerrainObjectProxy >::NotifySelected( object );
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanLayer::HandleKeyPress
-// Created: RPD 2009-10-15
+// Name: UrbanLayer::NotifyCreated
+// Created: JSR 2010-09-07
 // -----------------------------------------------------------------------------
-bool UrbanLayer::HandleKeyPress( QKeyEvent* input )
+void UrbanLayer::NotifyCreated( const TerrainObjectProxy& object )
 {
-    switch ( input->key() )
-    {
-    case Qt::Key_Delete:
-    case Qt::Key_Backspace:
-    {
-        if( selectedObject_ )
-        {
-            selectedObject_->SetSelected( false );
-            selectedObject_ = 0;
-        }
-        break;
-    }
-
-    default:
-        break;
-    }
-    return true;
+    EntityLayer< TerrainObjectProxy >::NotifyCreated( object );
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanLayer::HandleMouseMove
-// Created: SLG 2009-08-09
+// Name: UrbanLayer::NotifyDeleted
+// Created: JSR 2010-09-07
 // -----------------------------------------------------------------------------
-bool UrbanLayer::HandleMouseMove( QMouseEvent*, const geometry::Point2f& point )
+void UrbanLayer::NotifyDeleted( const TerrainObjectProxy& object )
 {
-    lastPoint_ = point;
-    if( selectionArea_ && selectionMode_ )
-    {
-        /*geometry::T_Point2fVector points = static_cast< Lines* >(selectionArea_)->GetPoints();
-        if( points.size() != 0 )
-        {
-            selectedObjects_.clear();
-            geometry::Polygon2f::T_Vertices selectionPoints;
-            selectionPoints.push_back( points[0] );
-            selectionPoints.push_back( geometry::Point2f( lastPoint_.X(), points[0].Y() ) );
-            selectionPoints.push_back( lastPoint_ );
-            selectionPoints.push_back( geometry::Point2f( points[0].X(), lastPoint_.Y() ) );
-            geometry::Polygon2f polygonSelection( selectionPoints );
-
-            for( IT_TerrainObjects it = objects_.begin(); it != objects_.end(); ++it )
-            {
-                geometry::Polygon2f::T_Vertices footPrintObject = (**it).GetFootprint()->Vertices();
-
-                for( geometry::Polygon2f::IT_Vertices itPoint = footPrintObject.begin(); itPoint != footPrintObject.end(); ++itPoint )
-                {
-                    if( polygonSelection.IsInside( *itPoint ) )
-                    {
-                        selectedObjects_.push_back( *it );
-                    }
-                }
-            }
-        }*/
-    }
-    return selectionArea_ != 0;
+    if( &object == selectedObject_ )
+        selectedObject_ = 0;
+    EntityLayer< TerrainObjectProxy >::NotifyDeleted( object );
 }

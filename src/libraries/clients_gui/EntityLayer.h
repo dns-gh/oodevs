@@ -108,7 +108,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const kernel::GlTools_ABC& tools_;
     ColorStrategy_ABC& strategy_;
     View_ABC& view_;
     T_Entities entities_;
@@ -118,6 +117,7 @@ private:
 
 protected: // $$$$ AGE 2006-05-17:
     const kernel::Profile_ABC& profile_;
+    const kernel::GlTools_ABC& tools_;
     //@}
 };
 

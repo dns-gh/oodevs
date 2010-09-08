@@ -10,11 +10,14 @@
 #include "clients_gui_pch.h"
 #include "TerrainObjectProxy.h"
 #include "Tools.h"
+#include "clients_kernel/ActionController.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include <urban/Architecture.h>
 #include <urban/TerrainObject_ABC.h>
 
 using namespace gui;
+
+#pragma warning( disable : 4355 )
 
 // -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy constructor
@@ -23,6 +26,7 @@ using namespace gui;
 TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object,
                                         unsigned int id, const QString& name )
     : EntityImplementation< kernel::Entity_ABC >( controller, id, name )
+    , Creatable< TerrainObjectProxy >( controller, this )
     , object_        ( &object )
 {
     RegisterSelf( *this );
@@ -35,6 +39,7 @@ TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::T
 // -----------------------------------------------------------------------------
 TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object )
     : EntityImplementation< kernel::Entity_ABC >( controller, object.GetId(), QString( object.GetName().c_str() ) )
+    , Creatable< TerrainObjectProxy >( controller, this )
     , object_( &object )
 {
     RegisterSelf( *this );
@@ -47,7 +52,7 @@ TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::T
 // -----------------------------------------------------------------------------
 TerrainObjectProxy::~TerrainObjectProxy()
 {
-    // NOTHING
+    Destroy();
 }
 
 // -----------------------------------------------------------------------------
@@ -86,6 +91,15 @@ unsigned long TerrainObjectProxy::GetId() const
     // $$$$ _RC_ JSR 2010-08-20: la méthode n'est "quasiment" pas appelée, mais ça peut causer des conflits d'id si on appelle
     // la méthode en tant que Entity_ABC. L'id sera sûrement le même qu'un agent ou un objet. 
     return object_->GetId();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainObjectProxy::Select
+// Created: JSR 2010-09-06
+// -----------------------------------------------------------------------------
+void TerrainObjectProxy::Select( kernel::ActionController& controller ) const
+{
+    controller.Select( *this, *(const Entity_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

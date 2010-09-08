@@ -11,6 +11,7 @@
 #include "ColorStrategy.h"
 #include "ColorModifier_ABC.h"
 #include "Drawing_ABC.h"
+#include "TerrainObjectProxy.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
@@ -221,6 +222,15 @@ void ColorStrategy::SelectColor( const Intelligence_ABC& intelligence )
 void ColorStrategy::SelectColor( const Drawing_ABC& drawing )
 {
     ApplyColor( drawing.GetColor() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::SelectColor
+// Created: JSR 2010-09-06
+// -----------------------------------------------------------------------------
+void ColorStrategy::SelectColor( const TerrainObjectProxy& proxy )
+{
+    Process( proxy );
 }
 
 // -----------------------------------------------------------------------------

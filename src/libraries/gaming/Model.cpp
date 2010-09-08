@@ -99,7 +99,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , drawings_( *new DrawingsModel( controllers, drawingFactory_ ) )
     , scoreDefinitions_( *new ScoreDefinitions( staticModel.indicators_, staticModel.gaugeTypes_ ) )
     , scores_( *new ScoreModel( controllers, publisher, scoreDefinitions_ ) )
-    , urbanObjects_( *new UrbanModel( controllers.controller_, *this, static_.detection_ ) )
+    , urbanObjects_( *new UrbanModel( controllers.controller_, *this, static_, static_.detection_ ) )
     , resourceNetwork_( *new ResourceNetworkModel( controllers, *this, static_ ) )
     , surfaceFactory_( *new SurfaceFactory( static_.coordinateConverter_, static_.detection_, static_.types_, urbanObjects_.GetUrbanBlockMap() ) )
     , notes_( *new NotesModel( controllers.controller_ ))
