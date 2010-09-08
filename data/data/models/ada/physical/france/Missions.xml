@@ -959,7 +959,7 @@
       <parameter dia-name="interventionType" name="Intervention type" optional="false" type="Numeric"/>
       <parameter dia-name="allie" name="Illuminateur allie" optional="false" type="AgentListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Surveiller" dia-type="T_Mission_Pion_SurveillerBU" id="2070" name="MELEE Surveiller un Bloc Urbain">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Surveiller" dia-type="T_Mission_Pion_SurveillerBU" id="2070" name="MELEE Surveiller">
       <parameter dia-name="objectives" name="Objectif a surveiller" optional="false" type="UrbanBlockBM"/>
       <parameter dia-name="positions" name="Positions de surveillance" optional="false" type="PointListBM"/>
     </mission>
@@ -1029,7 +1029,7 @@
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.ReconnaitreElement" dia-type="net.masagroup.sword.france.military.platoon.tasks.ReconnaitreBU" id="2099" name="MELEE Reconnaitre un Bloc Urbain">
       <parameter dia-name="objective" name="Objectif" optional="false" type="UrbanBlockBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Eclairer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Eclairer" id="2093" name="MELEE Eclairer un Itineraire">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Eclairer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Eclairer" id="2093" name="MELEE Eclairer">
       <parameter dia-name="objectives" name="Itineraire" optional="false" type="PointListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Harceler" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Harceler" id="2097" name="MELEE Harceler">
@@ -1061,7 +1061,7 @@
       <parameter dia-name="objectives" name="area" optional="false" type="AreaBM"/>
       <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.stabilisation.AnimerPosteDeControle" dia-type="net.masagroup.sword.france.military.platoon.stabilisation.AnimerPosteDeControle" id="2101" name="STABILISATION AnimerPosteDeControle">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.stabilisation.AnimerPosteDeControle" dia-type="net.masagroup.sword.france.military.platoon.stabilisation.AnimerPosteDeControle" id="2101" name="STABILISATION Animer Poste De Controle">
       <parameter dia-name="obstacles" name="Objets a animer" optional="false" type="GenObjectListBM"/>
     </mission>
   </units>

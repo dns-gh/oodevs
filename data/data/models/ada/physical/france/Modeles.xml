@@ -20,7 +20,7 @@
         <mission name="MELEE Controler"/>
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Defendre"/>
-        <mission name="MELEE Eclairer un Itineraire"/>
+        <mission name="MELEE Eclairer"/>
         <mission name="MELEE Illuminer"/>
         <mission name="MELEE Interdire"/>
         <mission name="MELEE Neutraliser"/>
@@ -30,9 +30,9 @@
         <mission name="MELEE Reconnaitre un Bloc Urbain"/>
         <mission name="MELEE S'emparer De"/>
         <mission name="MELEE Soutenir"/>
-        <mission name="MELEE Surveiller un Bloc Urbain"/>
+        <mission name="MELEE Surveiller"/>
         <mission name="MELEE Tenir"/>
-        <mission name="STABILISATION AnimerPosteDeControle"/>
+        <mission name="STABILISATION Animer Poste De Controle"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -70,11 +70,11 @@
         <mission name="MELEE Appuyer"/>
         <mission name="MELEE Boucler"/>
         <mission name="MELEE Controler"/>
-        <mission name="MELEE Eclairer un Itineraire"/>
+        <mission name="MELEE Eclairer"/>
         <mission name="MELEE Interdire"/>
         <mission name="MELEE Reconnaitre Itineraire"/>
         <mission name="MELEE Soutenir"/>
-        <mission name="MELEE Surveiller un Bloc Urbain"/>
+        <mission name="MELEE Surveiller"/>
         <mission name="MELEE S'emparer De"/>
       </missions>
       <fragorders>
@@ -117,7 +117,7 @@
         <mission name="MELEE Controler"/>
         <mission name="MELEE Defendre"/>
         <mission name="MELEE Detruire"/>
-        <mission name="MELEE Eclairer un Itineraire"/>
+        <mission name="MELEE Eclairer"/>
         <mission name="MELEE Harceler"/>
         <mission name="MELEE Interdire"/>
         <mission name="MELEE Ratisser un Bloc Urbain"/>
@@ -125,7 +125,7 @@
         <mission name="MELEE Reconnaitre Itineraire"/>
         <mission name="MELEE S'emparer De"/>
         <mission name="MELEE Tenir"/>
-        <mission name="STABILISATION AnimerPosteDeControle"/>
+        <mission name="STABILISATION Animer Poste De Controle"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
