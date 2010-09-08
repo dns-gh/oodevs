@@ -3524,7 +3524,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Maximum Progress:</source>
-        <translation type="unfinished"></translation>
+        <translation>Progrès maximum:</translation>
     </message>
 </context>
 <context>
