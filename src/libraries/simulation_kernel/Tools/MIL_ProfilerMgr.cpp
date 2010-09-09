@@ -46,17 +46,9 @@ MIL_ProfilerMgr::~MIL_ProfilerMgr()
 // Name: MIL_ProfilerMgr::NotifyTickEnd
 // Created: AML 03-05-21
 //-----------------------------------------------------------------------------
-void MIL_ProfilerMgr::NotifyTickEnd( unsigned int nTick )
+void MIL_ProfilerMgr::NotifyTickEnd( unsigned int /*nTick*/ )
 {
     tickDurationProfiler_.Stop();
-    if( !decFunctionProfilingVector_.empty() )
-    {
-        for( CIT_DecFunctionProfilingVector itData = decFunctionProfilingVector_.begin(); itData != decFunctionProfilingVector_.end(); ++itData )
-            decFunctionsFile_ << nTick << ' ' << itData->nAgentID_ << ' ' << itData->strFunction_ << ' ' << itData->rTime_ << std::endl;
-        decFunctionsFile_.flush();
-        decFunctionProfilingVector_.clear();
-        decFunctionProfilingVector_.reserve( 1000 );
-    }
 }
 
 // -----------------------------------------------------------------------------

@@ -42,8 +42,6 @@ public:
     double GetLastTickDuration();
     double GetAverageTickDuration();
 
-    template< typename T >
-    void NotifyDecFunctionCalled( const T& agent, const std::string& strFunction, MT_Float rTime );
     void NotifyDecisionUpdated( const MIL_AgentPion& pion, MT_Float rTime );
     void NotifyDecisionUpdated( const MIL_Automate& automate, MT_Float rTime );
     void NotifyDecisionUpdated( const MIL_Population& population, MT_Float rTime );
@@ -67,7 +65,6 @@ private:
     //! @name Member data
     //@{
     const bool bEnabled_;
-    T_DecFunctionProfilingVector decFunctionProfilingVector_;
     MT_Profiler tickDurationProfiler_;
     std::ofstream decFunctionsFile_;
     std::ofstream decisionUpdateFile_;

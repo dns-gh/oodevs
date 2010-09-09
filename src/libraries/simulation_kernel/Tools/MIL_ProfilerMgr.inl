@@ -42,22 +42,6 @@ double MIL_ProfilerMgr::GetAverageTickDuration()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentProfiler::NotifyDecFunctionCalled
-// Created: NLD 2004-07-15
-// -----------------------------------------------------------------------------
-template< typename T >
-void MIL_ProfilerMgr::NotifyDecFunctionCalled( const T& agent, const std::string& strFunction, MT_Float rTime )
-{
-    if( !bEnabled_ )
-        return;
-    sDecFunctionProfiling data;
-    data.nAgentID_      = agent.GetID();
-    data.strFunction_   = strFunction;
-    data.rTime_         = rTime;
-    decFunctionProfilingVector_.push_back( data );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_ProfilerMgr::IsProfilingEnabled
 // Created: NLD 2005-03-15
 // -----------------------------------------------------------------------------
