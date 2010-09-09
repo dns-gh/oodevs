@@ -1064,6 +1064,9 @@
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.stabilisation.AnimerPosteDeControle" dia-type="net.masagroup.sword.france.military.platoon.stabilisation.AnimerPosteDeControle" id="2101" name="STABILISATION Animer Poste De Controle">
       <parameter dia-name="obstacles" name="Objets a animer" optional="false" type="GenObjectListBM"/>
     </mission>
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardLima" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveTowardLima" id="2105" name="TEST MoveToWithLima">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="PointListBM"/>
+    </mission>
   </units>
   <automats>
     <context>
