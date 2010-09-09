@@ -39,6 +39,7 @@ class ADN_ListView_Composantes;
 // =============================================================================
 class ADN_Composantes_ConsumptionsTable : public ADN_Table2
 {
+    Q_OBJECT
     MT_COPYNOTALLOWED( ADN_Composantes_ConsumptionsTable )
 
 public:
@@ -51,11 +52,6 @@ public:
     //! @name Operations
     //@{
     virtual void OnContextMenu( int nRow, int nCol, const QPoint& pt );
-    //@}
-
-    //! @name Qt reimplementation.
-    //@{
-    QString tr( const char* s, const char* c = 0 ) { return qApp->translate( "ADN_Composantes_ConsumptionsTable", s, c, QApplication::DefaultCodec ); }
     //@}
 
 private:

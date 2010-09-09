@@ -18,6 +18,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Composantes_ConsumptionsTable.h"
+#include "moc_ADN_Composantes_ConsumptionsTable.cpp"
 
 #include <qpopupmenu.h>
 
