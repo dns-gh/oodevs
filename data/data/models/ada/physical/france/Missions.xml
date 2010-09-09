@@ -1011,11 +1011,14 @@
       <parameter dia-name="position" name="Position pour defendre" optional="false" type="PointBM"/>
       <parameter dia-name="obstacles" name="Obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.ContreAttaquer" dia-type="T_Mission_Pion_ContreAttaquer_Point" id="2096" name="MELEE Contre Attaquer sur un Point">
-      <parameter dia-name="objectives" name="Objectifs" optional="false" type="PointListBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.ContreAttaquer" dia-type="T_Mission_Pion_ContreAttaquer_Zone" id="2089" name="MELEE Contre Attaquer dans une Zone">
-      <parameter dia-name="objectives" name="Zones" optional="false" type="AreaListBM"/>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.ContreAttaquer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.ContreAttaquer" id="2089" name="MELEE Contre Attaquer">
+      <parameter dia-name="objective" name="Objectif a contre attaquer" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="PointBM"/>
+          <parameter type="AreaBM"/>
+          <parameter type="UrbanBlockBM"/>
+        </choice>
+      </parameter>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Neutralizer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Neutralizer" id="2090" name="MELEE Neutraliser">
       <parameter dia-name="entities" name="Cibles a neutraliser" optional="false" type="AgentKnowledgeListBM"/>
