@@ -22,7 +22,7 @@
 using namespace gui;
 using namespace kernel;
 
-namespace
+namespace gui
 {
     class ResourceItem : public QListViewItem
     {
@@ -47,26 +47,27 @@ namespace
 // Name: ResourceLinksDialog_ABC constructor
 // Created: JSR 2010-08-24
 // -----------------------------------------------------------------------------
-ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QWidget* parent, Controllers& controllers, const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const kernel::Profile_ABC& profile )
-    : QDialog          ( parent, "ResourceLinksDialog", true )
+ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controllers& controllers, const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const kernel::Profile_ABC& profile )
+    : QDockWindow      ( parent, "resource" )
     , controllers_     ( controllers )
     , dotationResolver_( dotationResolver )
     , profile_         ( profile )
     , selected_        ( 0 )
+    , selectedItem_    ( 0 )
 {
-    setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
-    setMinimumSize( 600, 600 );
-    setCaption( tools::translate( "ResourceLinksDialog", "Resource Links" ) );
-    QVBoxLayout* pMainLayout = new QVBoxLayout( this );
-    pMainLayout->setSpacing( 5 );
-    pMainLayout->setMargin( 5 );
-    QHBoxLayout* pNodeLayout = new QHBoxLayout( pMainLayout );
-    dotationList_ = new QListView( this );
+    setResizeEnabled( true );
+    setCloseMode( QDockWindow::Always );
+    setCaption( tr( "Resource Networks" ) );
+    QVBox* mainLayout = new QVBox( this );
+    setWidget( mainLayout );
+    pMainLayout_ = new QVBox( mainLayout );
+    pMainLayout_->setSpacing( 5 );
+    pMainLayout_->setMargin( 5 );
+    QHBox* pNodeBox = new QHBox( pMainLayout_ );
+    dotationList_ = new QListView( pNodeBox );
     dotationList_->addColumn( tools::translate( "ResourceLinksDialog", "Resource" ) );
     connect( dotationList_, SIGNAL( selectionChanged() ), this, SLOT( Update() ) );
-    pNodeLayout->addWidget( dotationList_ );
-    groupBox_ = new QGroupBox( 1, Qt::Horizontal, "", this );
-    pNodeLayout->addWidget( groupBox_ );
+    groupBox_ = new QGroupBox( 1, Qt::Horizontal, "", pNodeBox );
     groupBox_->setCheckable( true );
     connect( groupBox_, SIGNAL( toggled( bool ) ), this, SLOT( OnActivationChanged( bool ) ) );
     {
@@ -91,7 +92,7 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QWidget* parent, Controllers& 
     }
     {
         stockBox_ = new QHBox( groupBox_ );
-        new QLabel( tools::translate( "ResourceLinksDialog_ABC", "Stock:" ), stockBox_ );
+        new QLabel( tools::translate( "ResourceLinksDialog_ABC", "Initial stock:" ), stockBox_ );
         stock_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, stockBox_ );
         connect( stock_, SIGNAL( valueChanged( int ) ), this, SLOT( OnStockChanged( int ) ) );
         stockBox_->hide();
@@ -102,22 +103,13 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QWidget* parent, Controllers& 
     table_->horizontalHeader()->setLabel( 0, tools::translate( "ResourceLinksDialog_ABC", "Target" ) );
     table_->horizontalHeader()->setLabel( 1, tools::translate( "ResourceLinksDialog_ABC", "Limited" ) );
     table_->horizontalHeader()->setLabel( 2, tools::translate( "ResourceLinksDialog_ABC", "Capacity" ) );
+    table_->setColumnWidth( 1, 50 );
     connect( table_, SIGNAL( valueChanged( int, int ) ), SLOT( OnValueChanged( int, int ) ) );
-    {
-        QHBoxLayout* pButtonLayout = new QHBoxLayout( pMainLayout );
-        pButtonLayout->setAlignment( Qt::Right );
-        QPushButton* okBtn     = new QPushButton( tools::translate( "ResourceLinksDialog_ABC", "Ok" ), this );
-        QPushButton* cancelBtn = new QPushButton( tools::translate( "ResourceLinksDialog_ABC", "Cancel" ), this );
-        pButtonLayout->addWidget( okBtn );
-        pButtonLayout->addWidget( cancelBtn );
-        okBtn->setDefault( true );
-        okBtn->setMaximumWidth( 100 );
-        cancelBtn->setMaximumWidth( 100 );
-        connect( cancelBtn, SIGNAL( clicked() ), SLOT( Reject() ) );
-        connect( okBtn    , SIGNAL( clicked() ), SLOT( Validate() ) );
-    }
+    QPushButton* okBtn     = new QPushButton( tools::translate( "ResourceLinksDialog_ABC", "Validate" ), pMainLayout_ );
+    okBtn->setDefault( true );
+    connect( okBtn    , SIGNAL( clicked() ), SLOT( Validate() ) );
     controllers_.Register( *this );
-    hide();
+    pMainLayout_->hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -130,12 +122,61 @@ ResourceLinksDialog_ABC::~ResourceLinksDialog_ABC()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceLinksDialog_ABC::BeforeSelection
+// Created: JSR 2010-09-09
+// -----------------------------------------------------------------------------
+void ResourceLinksDialog_ABC::BeforeSelection()
+{
+    selected_ = 0;
+    pMainLayout_->hide();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceLinksDialog_ABC::AfterSelection
+// Created: JSR 2010-09-09
+// -----------------------------------------------------------------------------
+void ResourceLinksDialog_ABC::AfterSelection()
+{
+    if( selected_ )
+        Show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceLinksDialog_ABC::Select
+// Created: JSR 2010-09-09
+// -----------------------------------------------------------------------------
+void ResourceLinksDialog_ABC::Select( const TerrainObjectProxy& proxy )
+{
+    selected_ = proxy.Retrieve< ResourceNetwork_ABC >();
+    id_ = proxy.GetId();
+    urban_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceLinksDialog_ABC::Select
+// Created: JSR 2010-09-09
+// -----------------------------------------------------------------------------
+void ResourceLinksDialog_ABC::Select( const kernel::Object_ABC& object )
+{
+    selected_ = object.Retrieve< ResourceNetwork_ABC >();
+    id_ = object.GetId();
+    urban_ = false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceLinksDialog_ABC::Update
 // Created: JSR 2010-08-24
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::Update()
 {
-    unsigned long id = static_cast< ResourceItem* >( dotationList_->selectedItem() )->GetId();
+    ResourceItem* item = static_cast< ResourceItem* >( dotationList_->selectedItem() );
+    if( !item )
+    {
+        dotationList_->setSelected( selectedItem_, true );
+        return;
+    }
+    selectedItem_ = item;
+    unsigned long id = static_cast< ResourceItem* >( item )->GetId();
     ResourceNetwork_ABC::ResourceNode& node = resourceNodes_[ id ];
     groupBox_->setChecked( node.isEnabled_ );
     production_->setValue( node.production_ );
@@ -226,9 +267,13 @@ void ResourceLinksDialog_ABC::OnValueChanged( int, int )
     unsigned long id = static_cast< ResourceItem* >( dotationList_->selectedItem() )->GetId();
     for( int j = 0; j < table_->numRows(); ++j )
     {
-        bool enable = static_cast< QCheckTableItem* >( table_->item( j, 1 ) )->isChecked();
-        table_->item( j, 2 )->setEnabled( enable );
-        resourceNodes_[ id ].links_[ j ].capacity_ = enable ? table_->text( j, 2 ).toInt() : -1;
+        QCheckTableItem* item = static_cast< QCheckTableItem* >( table_->item( j, 1 ) );
+        if( item )
+        {
+            bool enable = static_cast< QCheckTableItem* >( table_->item( j, 1 ) )->isChecked();
+            table_->item( j, 2 )->setEnabled( enable );
+            resourceNodes_[ id ].links_[ j ].capacity_ = enable ? table_->text( j, 2 ).toInt() : -1;
+        }
     }
 }
 
@@ -238,74 +283,48 @@ void ResourceLinksDialog_ABC::OnValueChanged( int, int )
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::Validate()
 {
-    accept();
+    // in case spin boxes have not been validated
+    unsigned long id = static_cast< ResourceItem* >( dotationList_->selectedItem() )->GetId();
+    resourceNodes_[ id ].production_ = production_->value();
+    resourceNodes_[ id ].consumption_ = consumption_->value();
+    resourceNodes_[ id ].maxStock_ = maxStock_->value();
+    resourceNodes_[ id ].stock_ = stock_->value();
     DoValidate();
-    resourceNodes_.clear();
-    dotationList_->clear();
     controllers_.controller_.Update( *selected_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceLinksDialog_ABC::Reject
-// Created: JSR 2010-08-24
+// Name: ResourceLinksDialog_ABC::NotifyDeleted
+// Created: JSR 2010-09-09
 // -----------------------------------------------------------------------------
-void ResourceLinksDialog_ABC::Reject()
+void ResourceLinksDialog_ABC::NotifyDeleted( const kernel::Entity_ABC& element )
 {
-    reject();
-    resourceNodes_.clear();
-    dotationList_->clear();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ResourceLinksDialog_ABC::NotifyContextMenu
-// Created: JSR 2010-08-24
-// -----------------------------------------------------------------------------
-void ResourceLinksDialog_ABC::NotifyContextMenu( const TerrainObjectProxy& proxy, ContextMenu& menu )
-{
-    if( profile_.CanDoMagic( proxy ) && ( selected_ = proxy.Retrieve< ResourceNetwork_ABC >() ) != 0 )
+    if( selected_ == element.Retrieve< ResourceNetwork_ABC >() )
     {
-        menu.InsertItem( "Command", tools::translate( "ResourceLinksDialog_ABC", "Resource links" ), this, SLOT( show() ) );
-        urban_ = true;
-        id_ = proxy.GetId();
+        pMainLayout_->hide();
+        selected_ = 0;
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceLinksDialog_ABC::NotifyContextMenu
-// Created: JSR 2010-09-01
-// -----------------------------------------------------------------------------
-void ResourceLinksDialog_ABC::NotifyContextMenu( const kernel::Object_ABC& object, kernel::ContextMenu& menu )
-{
-    if( profile_.CanDoMagic( object ) && ( selected_ = object.Retrieve< ResourceNetwork_ABC >() ) != 0 )
-    {
-        menu.InsertItem( "Command", tools::translate( "ResourceLinksDialog_ABC", "Resource links" ), this, SLOT( show() ) );
-        urban_ = false;
-        id_ = object.GetId();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ResourceLinksDialog_ABC::showEvent
+// Name: ResourceLinksDialog_ABC::Show
 // Created: JSR 2010-08-24
 // -----------------------------------------------------------------------------
-void ResourceLinksDialog_ABC::showEvent( QShowEvent* )
+void ResourceLinksDialog_ABC::Show()
 {
     dotationList_->clear();
     resourceNodes_ = selected_->GetResourceNodes();
     for( ResourceNetwork_ABC::CIT_ResourceNodes it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
     {
         unsigned long id = it->second.resource_;
-        dotationList_->setSelected( new ResourceItem( dotationList_, dotationResolver_.Get( id ).GetCategory().c_str(), id ), it == resourceNodes_.begin() );
+        if( it == resourceNodes_.begin() )
+        {
+            selectedItem_ = new ResourceItem( dotationList_, dotationResolver_.Get( id ).GetCategory().c_str(), id );
+            dotationList_->setSelected( selectedItem_, true );
+        }
+        else
+            dotationList_->setSelected( new ResourceItem( dotationList_, dotationResolver_.Get( id ).GetCategory().c_str(), id ), false );
     }
     Update();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ResourceLinksDialog_ABC::sizeHint
-// Created: JSR 2010-08-24
-// -----------------------------------------------------------------------------
-QSize ResourceLinksDialog_ABC::sizeHint()
-{
-    // TODO ?
-    return QDialog::sizeHint();
+    pMainLayout_->show();
 }

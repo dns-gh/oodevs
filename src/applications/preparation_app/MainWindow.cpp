@@ -32,6 +32,7 @@
 #include "ProfileDialog.h"
 #include "ProfileWizardDialog.h"
 #include "PropertiesPanel.h"
+#include "ResourceNetworkDialog.h"
 #include "ScoreDialog.h"
 #include "SuccessFactorDialog.h"
 #include "TacticalListView.h"
@@ -208,6 +209,15 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
         pPropertiesDockWnd->setCaption( tr( "Properties" ) );
         setDockEnabled( pPropertiesDockWnd, Qt::DockTop, false );
     }
+
+    // ResourceNetwork panel
+    {
+        QDockWindow* pResourceWnd = new ResourceNetworkDialog( this, controllers, staticModel_.objectTypes_, PreparationProfile::GetProfile() );
+        moveDockWindow( pResourceWnd, Qt::DockLeft );
+        setDockEnabled( pResourceWnd, Qt::DockTop, false );
+        pResourceWnd->hide();
+    }
+
     // A few layers
     LocationsLayer* locationsLayer = new LocationsLayer( *glProxy_ );
     ParametersLayer* paramLayer = new ParametersLayer( *glProxy_, *new gui::LocationEditorToolbar( this, controllers_, staticModel_.coordinateConverter_, *glProxy_, *locationsLayer ) );

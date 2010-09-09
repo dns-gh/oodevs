@@ -536,10 +536,6 @@
 <context>
     <name>ResourceLinksDialog</name>
     <message>
-        <source>Resource Links</source>
-        <translation>Liens de Ressources</translation>
-    </message>
-    <message>
         <source>Resource</source>
         <translation>Ressource</translation>
     </message>
@@ -553,18 +549,6 @@
     <message>
         <source>Capacity</source>
         <translation>Capacité</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Resource links</source>
-        <translation>Liens de ressources</translation>
     </message>
     <message>
         <source>Limited</source>
@@ -587,8 +571,16 @@
         <translation>Consommation vitale</translation>
     </message>
     <message>
-        <source>Stock:</source>
-        <translation>Stock:</translation>
+        <source>Initial stock:</source>
+        <translation>Stock initial:</translation>
+    </message>
+    <message>
+        <source>Validate</source>
+        <translation>Valider</translation>
+    </message>
+    <message>
+        <source>Resource Networks</source>
+        <translation>Réseaux de ressource</translation>
     </message>
 </context>
 <context>

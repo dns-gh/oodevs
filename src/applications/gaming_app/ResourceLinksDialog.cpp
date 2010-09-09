@@ -29,7 +29,7 @@ using namespace parameters;
 // Name: ResourceLinksDialog constructor
 // Created: JSR 2010-08-24
 // -----------------------------------------------------------------------------
-ResourceLinksDialog::ResourceLinksDialog( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile )
+ResourceLinksDialog::ResourceLinksDialog( QMainWindow* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile )
     : ResourceLinksDialog_ABC( parent, controllers, staticModel.objectTypes_, profile )
     , actionsModel_( actionsModel )
     , static_( staticModel )

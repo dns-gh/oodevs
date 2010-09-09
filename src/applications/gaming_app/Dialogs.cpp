@@ -16,7 +16,6 @@
 #include "LogisticSupplyChangeQuotasDialog.h"
 #include "LogisticSupplyPushFlowDialog.h"
 #include "LogisticSupplyRecompletionDialog.h"
-#include "ResourceLinksDialog.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/Model.h"
 
@@ -36,7 +35,6 @@ Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const Model& model,
     new LogisticSupplyRecompletionDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new ChangeHumanFactorsDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new BriefingDialog( parent, controllers, publisher, handler, config );
-    new ResourceLinksDialog( parent, controllers, actionsModel, staticModel, simulation, profile );
 }
 
 // -----------------------------------------------------------------------------

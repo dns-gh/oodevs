@@ -15,7 +15,7 @@
 // Name: ResourceNetworkDialog constructor
 // Created: JSR 2010-09-08
 // -----------------------------------------------------------------------------
-ResourceNetworkDialog::ResourceNetworkDialog( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const kernel::Profile_ABC& profile )
+ResourceNetworkDialog::ResourceNetworkDialog( QMainWindow* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const kernel::Profile_ABC& profile )
     : gui::ResourceLinksDialog_ABC( parent, controllers, dotationResolver, profile )
 {
     stockBox_->show();

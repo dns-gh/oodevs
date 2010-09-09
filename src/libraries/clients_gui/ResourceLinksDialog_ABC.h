@@ -10,14 +10,16 @@
 #ifndef __ResourceLinksDialog_ABC_h_
 #define __ResourceLinksDialog_ABC_h_
 
-#include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver.h"
+#include "tools/SelectionObserver_ABC.h"
 
 namespace kernel
 {
     class Controllers;
     class DotationType;
+    class Entity_ABC;
     class Object_ABC;
     class Profile_ABC;
 }
@@ -26,6 +28,7 @@ namespace gui
 {
 
 class TerrainObjectProxy;
+class ResourceItem;
 
 // =============================================================================
 /** @class  ResourceLinksDialog_ABC
@@ -33,17 +36,19 @@ class TerrainObjectProxy;
 */
 // Created: JSR 2010-08-24
 // =============================================================================
-class ResourceLinksDialog_ABC : public QDialog
+class ResourceLinksDialog_ABC : public QDockWindow
                               , public tools::Observer_ABC
-                              , public kernel::ContextMenuObserver_ABC< TerrainObjectProxy >
-                              , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
+                              , public tools::SelectionObserver_ABC
+                              , public tools::SelectionObserver_Base< TerrainObjectProxy >
+                              , public tools::SelectionObserver_Base< kernel::Object_ABC >
+                              , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceLinksDialog_ABC( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const kernel::Profile_ABC& profile );
+             ResourceLinksDialog_ABC( QMainWindow* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const kernel::Profile_ABC& profile );
     virtual ~ResourceLinksDialog_ABC();
     //@}
 
@@ -59,7 +64,6 @@ private slots:
     void OnStockChanged( int value );
     void OnValueChanged( int i, int j );
     void Validate();
-    void Reject();
     //@}
 
 private:
@@ -72,10 +76,12 @@ private:
     //! @name Helpers
     //@{
     virtual void DoValidate() = 0;
-    virtual void NotifyContextMenu( const TerrainObjectProxy& proxy, kernel::ContextMenu& menu );
-    virtual void NotifyContextMenu( const kernel::Object_ABC& object, kernel::ContextMenu& menu );
-    virtual void showEvent( QShowEvent* );
-    virtual QSize sizeHint();
+    virtual void BeforeSelection();
+    virtual void AfterSelection();
+    virtual void Select( const TerrainObjectProxy& proxy );
+    virtual void Select( const kernel::Object_ABC& element );
+    virtual void NotifyDeleted( const kernel::Entity_ABC& element );
+    void Show();
     //@}
 
 protected:
@@ -85,9 +91,11 @@ protected:
     const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
     const kernel::Profile_ABC& profile_;
     const kernel::ResourceNetwork_ABC* selected_;
+    ResourceItem* selectedItem_;
     bool urban_;
     unsigned int id_;
     kernel::ResourceNetwork_ABC::ResourceNodes resourceNodes_;
+    QVBox* pMainLayout_;
     QListView* dotationList_;
     QGroupBox* groupBox_;
     QSpinBox* production_;

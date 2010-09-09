@@ -23,7 +23,7 @@ class ResourceNetworkDialog : public gui::ResourceLinksDialog_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceNetworkDialog( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const kernel::Profile_ABC& profile );
+             ResourceNetworkDialog( QMainWindow* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const kernel::Profile_ABC& profile );
     virtual ~ResourceNetworkDialog();
     //@}
 

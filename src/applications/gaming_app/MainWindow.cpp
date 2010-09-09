@@ -47,6 +47,7 @@
 #include "SimulationLighting.h"
 #include "IntelligencesLayer.h"
 #include "Properties.h"
+#include "ResourceLinksDialog.h"
 #include "LoggerProxy.h"
 #include "ChatDock.h"
 #include "CommandFacade.h"
@@ -341,6 +342,14 @@ MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticM
         setDockEnabled( messageDock, Qt::DockLeft, false );
         setDockEnabled( messageDock, Qt::DockRight, false );
         moveDockWindow( messageDock, Qt::DockTop, true, -1 );
+    }
+
+    // ResourceNetwork panel
+    {
+        QDockWindow* pResourceWnd = new ResourceLinksDialog( this, controllers, model_.actions_, staticModel, simulation, profile );
+        moveDockWindow( pResourceWnd, Qt::DockLeft );
+        setDockEnabled( pResourceWnd, Qt::DockTop, false );
+        pResourceWnd->hide();
     }
 
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/gaming.xml" ) );
