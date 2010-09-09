@@ -930,7 +930,7 @@
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Franchir" dia-type="net.masagroup.sword.france.military.platoon.tasks.Franchir" id="2071" name="COMMUNES Franchir">
       <parameter dia-name="crossingSite" name="Site de franchissement" optional="false" type="ObjectKnowledgeBM"/>
-      <parameter dia-name="objective" name="Point de destination" optional="false" type="PointBM"/>
+      <parameter dia-name="meetingPoint" name="Point de destination" optional="false" type="PointBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Reconnaitre" dia-type="net.masagroup.sword.france.military.platoon.tasks.Reconnaitre" id="2040" name="MELEE Reconnaitre Itineraire">
       <parameter dia-name="objectives" name="Destination" optional="false" type="PointListBM"/>
@@ -1720,7 +1720,7 @@
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Franchir" dia-type="net.masagroup.sword.france.military.company.tasks.Franchir" id="1010" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Franchir" name="COMMUNES Franchir">
       <parameter dia-name="crossingSite" name="Site de franchissement" optional="false" type="ObjectKnowledgeBM"/>
-      <parameter dia-name="objective" name="Destination" optional="false" type="PointBM"/>
+      <parameter dia-name="meetingPoint" name="Destination" optional="false" type="PointBM"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Controler" dia-type="net.masagroup.sword.france.military.company.tasks.Controler" id="1020" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Controler" name="MELEE Controler Secteur">
       <parameter dia-name="objectives" name="Zone a controler" optional="false" type="AreaBM"/>
