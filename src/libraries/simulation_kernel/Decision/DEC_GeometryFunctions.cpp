@@ -962,6 +962,17 @@ MT_Float DEC_GeometryFunctions::ComputeAreaSize( TER_Localisation* pLocalisation
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeAreaDiameter
+// Created: LDC 2010-09-09
+// -----------------------------------------------------------------------------
+double DEC_GeometryFunctions::ComputeAreaDiameter( TER_Localisation* pLocalisation )
+{
+    if( !pLocalisation )
+        throw std::runtime_error( "invalid localisation" );
+    return MIL_Tools::ConvertSimToMeterSquare( pLocalisation->GetLength() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeMeanDirection
 // Created: JVT 2005-01-25
 // -----------------------------------------------------------------------------

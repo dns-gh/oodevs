@@ -37,15 +37,14 @@ includedFiles["sources/appui/nbc/pions/common/missions/ReconnaitreZone.bms"] = t
         Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
-            do
-                self.ePhaseMission = eFinMission
-                self.eEtat = eActionEnCours
-                self.eEtatOrdreFinMission = eActionEnCours
-            end
+            self.ePhaseMission = eFinMission
+            self.eEtat = eActionEnCours
+            self.eEtatOrdreFinMission = eActionEnCours
+        end
 --[[//-----------------------------------------------------------------------------
 ]]--[[// Pion detruit
 ]]--[[//-----------------------------------------------------------------------------
-]]        end
+]]
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self:SendFeedback( eActionEffectuee )
@@ -55,63 +54,51 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
         --[[//-------------------------------------------------------------------------
 ]]--[[// Appuis ou soutiens
-]]--[[//-------------------------------------------------------------------------
-]]if( ModuleBegins() ) then
-            do
-                SetStateVariable( "VE_NiveauNBC", 4 )
-                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
-            end
+]]--[[//------------------------------------------------------------------------- ]]
+        if( ModuleBegins() ) then
+            SetStateVariable( "VE_NiveauNBC", 4 )
+            F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
         end
 
-         do
-            local _continue = true
+        do
             local switch_1 = self.ePhaseMission
-            local cases_switch_1 = {}
-                if switch_1 == ePreparerMission then
-                    --[[// 1) Prepa
-]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                    Activate( self.activations.ACT_Info_Trace, 1, { "Aera reconnaissance mission begining", } )
-                    self.ePhaseMission = eRejoindrePosition
-                    _continue = false
-                --[[// 2) Progression jusqu'au point à reconnaitre
-]]                cases_switch_1[1] = true
-elseif switch_1 == eRejoindrePosition then
-                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+            if switch_1 == ePreparerMission then
+                --[[// 1) Prepa ]]
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                Activate( self.activations.ACT_Info_Trace, 1, { "Aera reconnaissance mission beginning", } )
+                self.ePhaseMission = eRejoindrePosition
+                --[[// 2) Progression jusqu'au point à reconnaitre ]]
+            elseif switch_1 == eRejoindrePosition then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     --[[//-----------------------------------------------------------------------------
 ]]--[[// Progresser vers le center de la zone
-]]--[[//-----------------------------------------------------------------------------
-]]if( self.eEtat == eActionEffectuee ) then
-                        do
-                            self.eEtat = eActionEnCours
-                                                        do
-                                self.ePhaseMission = eFinMission
-                                                                do return end
+]]--[[//----------------------------------------------------------------------------- ]]
+                if( self.eEtat == eActionEffectuee ) then
+                    self.eEtat = eActionEnCours
+                    self.ePhaseMission = eProgresser
+                    do return end
+                end
 
-                            end
-
-                        end
-                    end
-
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionDansZone, eProgressionReco, eTypeItiMouvement, } )
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionDansZone, eProgressionReco, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     --[[//---------------------------------------------------------------------
 ]]--[[// Faire des mesures
 ]]--[[//---------------------------------------------------------------------
-]]--[[// Poste pour mesure donc en complète avec deplacement
-]]Activate( self.activations.BEH_Nbc_Pion_FaireDesMesures, 1.1, {} )
-                    _continue = false
-                --[[// Fin de la mission --> SUR ORDRE DU SUPERIEUR
-]]                cases_switch_1[2] = true
-elseif switch_1 == eFinMission then
-                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                    _continue = false
-                                cases_switch_1[3] = true
-
-                else
-                                end
+]]--[[// Poste pour mesure donc en complète avec deplacement ]]
+                Activate( self.activations.BEH_Nbc_Pion_FaireDesMesures, 1.1, {} )
+                --[[// Fin de la mission --> SUR ORDRE DU SUPERIEUR ]]
+            elseif switch_1 == eProgresser then
+                self.idReco = DEC_Perception_ActiverReconnaissancePoint( self.positionDansZone, DEC_Geometrie_AreaDiameter( self._namedParams.mission.zone_ ) / 2, M_POLY_MODELE_PION_VITESSE_RECO_POINT() )
+                RegisterPerception_ReconnaissancePoint_Callback( self.idReco, function () self.ePhaseMission = eFinMission end )
+                Activate( self.activations.BEH_Nbc_Pion_FaireDesMesures, 1.1, {} )
+                self.ePhaseMission = eReconnaitre
+            elseif switch_1 == eReconnaitre then
+                Activate( self.activations.BEH_Nbc_Pion_FaireDesMesures, 1.1, {} )
+            elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
             end
-
+        end
     end,
 
 }
