@@ -9,6 +9,7 @@
 
 #include "preparation_pch.h"
 #include "UrbanModel.h"
+#include "Overridable_ABC.h"
 #include "ResourceNetworkAttribute.h"
 #include "StaticModel.h"
 #include "StructuralStateAttribute.h"
@@ -109,10 +110,15 @@ void UrbanModel::Serialize( const std::string& filename ) const
             << xml::start( "urban-objects" );
     for( Resolver< gui::TerrainObjectProxy >::CIT_Elements it = Resolver< gui::TerrainObjectProxy >::elements_.begin(); it != Resolver< gui::TerrainObjectProxy >::elements_.end(); ++it )
     {
-        xos << xml::start( "urban-object" )
-            << xml::attribute( "id", it->second->GetId() );
-        it->second->Interface().Apply( & kernel::Serializable_ABC::SerializeAttributes, xos );
-        xos << xml::end;
+        bool needsUpdate = false;
+        it->second->Interface().Apply( & Overridable_ABC::SetOverriden, needsUpdate );
+        if( needsUpdate )
+        {
+            xos << xml::start( "urban-object" )
+                << xml::attribute( "id", it->second->GetId() );
+            it->second->Interface().Apply( & kernel::Serializable_ABC::SerializeAttributes, xos );
+            xos << xml::end;
+        }
     }
     xos     << xml::end // urban-objects
         << xml::end;  // urban-state

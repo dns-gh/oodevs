@@ -10,6 +10,7 @@
 #ifndef __ResourceNetworkAttribute_h_
 #define __ResourceNetworkAttribute_h_
 
+#include "Overridable_ABC.h"
 #include "clients_kernel/Resolver2.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
@@ -40,6 +41,7 @@ namespace xml
 // =============================================================================
 class ResourceNetworkAttribute : public kernel::ResourceNetwork_ABC
                                , public kernel::Serializable_ABC
+                               , public Overridable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -53,7 +55,9 @@ public:
     virtual QString GetLinkName( unsigned long resource, unsigned int i ) const;
     virtual void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void SerializeAttributes( xml::xostream& ) const;
+    virtual void SetOverriden( bool& overriden ) const;
     void Update( xml::xistream& xis );
+    void Update( const kernel::ResourceNetwork_ABC::ResourceNodes& nodes );
     //@}
 
 private:
@@ -77,6 +81,7 @@ private:
     unsigned int id_;
     const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver_;
     const kernel::Resolver2< kernel::DotationType >& dotationResolver_;
+    bool needSaving_;
     //@}
 };
 

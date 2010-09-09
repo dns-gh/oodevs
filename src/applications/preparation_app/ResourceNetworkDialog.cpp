@@ -9,6 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "ResourceNetworkDialog.h"
+#include "preparation/ResourceNetworkAttribute.h"
 
 // -----------------------------------------------------------------------------
 // Name: ResourceNetworkDialog constructor
@@ -17,7 +18,7 @@
 ResourceNetworkDialog::ResourceNetworkDialog( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const kernel::Profile_ABC& profile )
     : gui::ResourceLinksDialog_ABC( parent, controllers, dotationResolver, profile )
 {
-    // NOTHING
+    stockBox_->show();
 }
 
 // -----------------------------------------------------------------------------
@@ -35,5 +36,5 @@ ResourceNetworkDialog::~ResourceNetworkDialog()
 // -----------------------------------------------------------------------------
 void ResourceNetworkDialog::DoValidate()
 {
-    const_cast< kernel::ResourceNetwork_ABC* >( selected_ )->GetResourceNodes() = resourceNodes_;
+    static_cast< ResourceNetworkAttribute* >( const_cast< kernel::ResourceNetwork_ABC* >( selected_ ) )->Update( resourceNodes_ );
 }

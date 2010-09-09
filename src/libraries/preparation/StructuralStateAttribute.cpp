@@ -47,9 +47,22 @@ void StructuralStateAttribute::CreateDictionary( kernel::PropertiesDictionary& d
 // -----------------------------------------------------------------------------
 void StructuralStateAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::start( "structural-state" )
+    if( structuralState_ != 100 )
+    {
+        xos << xml::start( "structural-state" )
             << xml::attribute( "value", structuralState_ )
-        << xml::end;
+            << xml::end;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: StructuralStateAttribute::SetOverriden
+// Created: JSR 2010-09-09
+// -----------------------------------------------------------------------------
+void StructuralStateAttribute::SetOverriden( bool& overriden ) const
+{
+    if( structuralState_ != 100 )
+        overriden = true;
 }
 
 // -----------------------------------------------------------------------------

@@ -10,6 +10,7 @@
 #ifndef __StructuralStateAttribute_h_
 #define __StructuralStateAttribute_h_
 
+#include "Overridable_ABC.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Serializable_ABC.h"
 
@@ -31,6 +32,7 @@ namespace xml
 // =============================================================================
 class StructuralStateAttribute : public kernel::StructuralStateAttribute_ABC
                                , public kernel::Serializable_ABC
+                               , public Overridable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -42,6 +44,7 @@ public:
     //! @name Operations
     //@{
     virtual void SerializeAttributes( xml::xostream& xos ) const;
+    virtual void SetOverriden( bool& overriden ) const;
     void Update( xml::xistream& xis );
     //@}
 

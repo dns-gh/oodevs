@@ -90,10 +90,11 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QWidget* parent, Controllers& 
         connect( maxStock_, SIGNAL( valueChanged( int ) ), this, SLOT( OnMaxStockChanged( int ) ) );
     }
     {
-        QHBox* box = new QHBox( groupBox_ );
-        new QLabel( tools::translate( "ResourceLinksDialog_ABC", "Stock:" ), box );
-        stock_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, box );
+        stockBox_ = new QHBox( groupBox_ );
+        new QLabel( tools::translate( "ResourceLinksDialog_ABC", "Stock:" ), stockBox_ );
+        stock_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, stockBox_ );
         connect( stock_, SIGNAL( valueChanged( int ) ), this, SLOT( OnStockChanged( int ) ) );
+        stockBox_->hide();
     }
     table_ = new QTable( groupBox_ );
     table_->setSelectionMode( QTable::NoSelection );

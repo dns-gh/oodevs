@@ -29,8 +29,9 @@ ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& control
     , id_( id )
     , urbanResolver_( urbanResolver )
     , dotationResolver_( dotationResolver )
+    , needSaving_( false )
 {
-    Update( xis );
+    xis >> xml::list( "node", *this, &ResourceNetworkAttribute::ReadNode );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,32 +129,45 @@ void ResourceNetworkAttribute::Draw( const kernel::Viewport_ABC& viewport, const
 // -----------------------------------------------------------------------------
 void ResourceNetworkAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::start( "resources" );
-    for( CIT_ResourceNodes it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
+    if( needSaving_ )
     {
-        const ResourceNetwork_ABC::ResourceNode& node = it->second;
-        kernel::DotationType* type = dotationResolver_.Find( node.resource_ );
-        if( !type )
-            throw std::runtime_error( "Bad resource Id: " + node.resource_ );
-        xos << xml::start( "node" )
-            << xml::attribute( "resource-type", type->GetCategory() )
-            << xml::attribute( "enabled", node.isEnabled_ )
-            << xml::attribute( "production", node.production_ )
-            << xml::attribute( "consumption", node.consumption_ )
-            << xml::attribute( "stock", node.maxStock_ )
-            << xml::attribute( "initial-stock", node.stock_ )
-            << xml::attribute( "critical-consumption", node.critical_ );
-            for( unsigned int i = 0; i < node.links_.size(); ++i )
-            {
-                xos << xml::start( "link" )
-                    << xml::attribute( "kind", node.links_[ i ].urban_ ? "urban-object" : "terrain-object" )
-                    << xml::attribute( "target", node.links_[ i ].id_ )
-                    << xml::attribute( "capacity", node.links_[ i ].capacity_ )
-                    << xml::end();
-                }
-        xos << xml::end();
+        xos << xml::start( "resources" );
+        for( CIT_ResourceNodes it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
+        {
+            const ResourceNetwork_ABC::ResourceNode& node = it->second;
+            kernel::DotationType* type = dotationResolver_.Find( node.resource_ );
+            if( !type )
+                throw std::runtime_error( "Bad resource Id: " + node.resource_ );
+            xos << xml::start( "node" )
+                << xml::attribute( "resource-type", type->GetCategory() )
+                << xml::attribute( "enabled", node.isEnabled_ )
+                << xml::attribute( "production", node.production_ )
+                << xml::attribute( "consumption", node.consumption_ )
+                << xml::attribute( "stock", node.maxStock_ )
+                << xml::attribute( "initial-stock", node.stock_ )
+                << xml::attribute( "critical-consumption", node.critical_ );
+                for( unsigned int i = 0; i < node.links_.size(); ++i )
+                {
+                    xos << xml::start( "link" )
+                        << xml::attribute( "kind", node.links_[ i ].urban_ ? "urban-object" : "terrain-object" )
+                        << xml::attribute( "target", node.links_[ i ].id_ )
+                        << xml::attribute( "capacity", node.links_[ i ].capacity_ )
+                        << xml::end();
+                    }
+            xos << xml::end();
+        }
+        xos << xml::end;
     }
-    xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkAttribute::SetOverriden
+// Created: JSR 2010-09-09
+// -----------------------------------------------------------------------------
+void ResourceNetworkAttribute::SetOverriden( bool& overriden ) const
+{
+    if( needSaving_ )
+        overriden = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -163,6 +177,17 @@ void ResourceNetworkAttribute::SerializeAttributes( xml::xostream& xos ) const
 void ResourceNetworkAttribute::Update( xml::xistream& xis )
 {
     xis >> xml::list( "node", *this, &ResourceNetworkAttribute::ReadNode );
+    needSaving_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkAttribute::Update
+// Created: JSR 2010-09-09
+// -----------------------------------------------------------------------------
+void ResourceNetworkAttribute::Update( const kernel::ResourceNetwork_ABC::ResourceNodes& nodes )
+{
+    resourceNodes_ = nodes;
+    needSaving_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -195,8 +220,17 @@ void ResourceNetworkAttribute::ReadLink( xml::xistream& xis, ResourceNode& node 
     ResourceLink link;
     link.id_ = xis.attribute< unsigned int >( "target" );
     link.capacity_ = xis.attribute< int >( "capacity" );
+    link.urban_ = true;
     if( xis.has_attribute( "kind" ) )
-        link.urban_ = ( xis.attribute< std::string >( "kind" ) == "urban" );
+        link.urban_ = ( xis.attribute< std::string >( "kind" ) == "urban-object" );
+    for( unsigned int i = 0; i < node.links_.size(); ++i )
+    {
+        if( node.links_[ i ].id_ == link.id_ && node.links_[ i ].urban_ == link.urban_ )
+        {
+            node.links_[ i ].capacity_ = link.capacity_;
+            return;
+        }
+    }
     node.links_.push_back( link );
 }
 

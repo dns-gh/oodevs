@@ -70,7 +70,6 @@ void ResourceLinksDialog::DoValidate()
         node.AddBool( "Enabled", resource.isEnabled_ );
         node.AddQuantity( "Production", resource.production_ );
         node.AddQuantity( "MaxStock", resource.maxStock_ );
-        node.AddQuantity( "Stock", resource.stock_ );
         ParameterList& links = node.AddList( "Links" );
         for( unsigned int i = 0; i < resource.links_.size(); ++i )
         {

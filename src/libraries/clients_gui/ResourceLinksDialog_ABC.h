@@ -93,6 +93,7 @@ protected:
     QSpinBox* production_;
     QSpinBox* consumption_;
     QCheckBox* critical_;
+    QHBox* stockBox_;
     QSpinBox* maxStock_;
     QSpinBox* stock_;
     QTable* table_;
