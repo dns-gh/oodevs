@@ -1008,7 +1008,6 @@
           <parameter type="UrbanBlockBM"/>
         </choice>
       </parameter>
-      <parameter dia-name="position" name="Position pour defendre" optional="false" type="PointBM"/>
       <parameter dia-name="obstacles" name="Obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.ContreAttaquer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.ContreAttaquer" id="2089" name="MELEE Contre Attaquer">
