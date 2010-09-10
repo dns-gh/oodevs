@@ -255,8 +255,8 @@ void LocationEditorBox::UpdateField( const geometry::Point2f& position )
         std::string::size_type found = coordinateStr.find_first_of( ":" );
         if( found != std::string::npos )
         {
-            longitude_->setText( coordinateStr.substr( 0, found ).c_str() );
-            latitude_->setText(  coordinateStr.substr( found + 1, coordinateStr.length() - found ).c_str() );
+            latitude_->setText( coordinateStr.substr( 0, found ).c_str() );
+            longitude_->setText(  coordinateStr.substr( found + 1, coordinateStr.length() - found ).c_str() );
         }
     }
 }

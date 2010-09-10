@@ -59,7 +59,14 @@ bool LocationParsers::Parse( int parserId, QString content, geometry::Point2f& r
 {
     if( parsers_.find( parserId ) == parsers_.end() || parsers_[ parserId ]->GetNumberOfParameters() != 1 )
          throw std::runtime_error( __FUNCTION__ );
-    return parsers_[ parserId ]->Parse( content, result, hint );
+    try
+    {
+        return parsers_[ parserId ]->Parse( content, result, hint );
+    }
+    catch( ... )
+    {
+        return false;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -70,7 +77,14 @@ bool LocationParsers::Parse( int parserId, QString contentX, QString contentY, g
 {
     if( parsers_.find( parserId ) == parsers_.end() || parsers_[ parserId ]->GetNumberOfParameters() != 2 )
         throw std::runtime_error( __FUNCTION__ );
-    return parsers_[ parserId ]->Parse( contentX + ":" + contentY, result, hint );
+    try
+    {
+        return parsers_[ parserId ]->Parse( contentX + ":" + contentY, result, hint );
+    }
+    catch( ... )
+    {
+        return false;
+    }
 }
 
 // -----------------------------------------------------------------------------
