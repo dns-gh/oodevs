@@ -65,9 +65,9 @@ private:
     //@}
 
 private:
-    bool bIsEnabled_;
     T_PerceptionTickMap perceptionsBuffer_;
     T_PerceptionTickMap perceptionsUnderway_;
+    bool bIsEnabled_;
     bool wasInCity_;
 };
 

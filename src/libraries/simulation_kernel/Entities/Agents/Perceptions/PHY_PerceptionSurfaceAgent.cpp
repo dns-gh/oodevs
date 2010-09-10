@@ -206,16 +206,6 @@ const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const 
     return GetLevelWithDelay( level, &target );
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionSurfaceAgent::ComputePerception
-// Created: MGD 2009-11-25
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const PHY_RoleInterface_Perceiver& perceiver, const urban::TerrainObject_ABC& block ) const
-{
-    const PHY_PerceptionLevel& level = pSensorType_->ComputePerception( perceiver.GetPion(), block, rHeight_ );
-    return GetLevelWithDelay( level, &block );
-}
-
 // =============================================================================
 // NETWORK
 // =============================================================================

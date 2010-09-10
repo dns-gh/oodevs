@@ -342,27 +342,12 @@ void PHY_PerceptionView::Execute( const std::vector< const urban::TerrainObject_
 // Name: PHY_PerceptionView::Compute
 // Created: MGD 2009-11-20
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const urban::TerrainObject_ABC& block ) const
+const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const urban::TerrainObject_ABC& /*block*/ ) const
 {
     if( !bIsEnabled_ )
         return PHY_PerceptionLevel::notSeen_;
-
-    if( perceiver_.IsIdentified( block ) )
+    else
         return PHY_PerceptionLevel::identified_;
-
-    const PHY_PerceptionLevel* pBestLevel = &PHY_PerceptionLevel::notSeen_;
-    const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
-    for( PHY_RoleInterface_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
-    {
-        const PHY_PerceptionLevel& currentLevel = itSurface->second.ComputePerception( perceiver_, block );
-        if( currentLevel > *pBestLevel )
-        {
-            pBestLevel = &currentLevel;
-            if( pBestLevel->IsBestLevel() )
-                return *pBestLevel;
-        }
-    }
-    return *pBestLevel;
 }
 
 // -----------------------------------------------------------------------------

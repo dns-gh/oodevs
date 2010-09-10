@@ -878,6 +878,11 @@ void PHY_RolePion_Perceiver::DisableAllPerceptions()
 // OPERATIONS
 // =============================================================================
 
+namespace
+{
+    const double maxBlockPerceptionDistance = 100.; // Distance under which we consider urban blocks for perception.
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::ExecutePerceptions
 // Created: NLD 2004-08-20
@@ -902,7 +907,7 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
         std::vector< const urban::TerrainObject_ABC* > perceivableUrbanBlock;
         MIL_AgentServer::GetWorkspace().GetUrbanModel().GetModel().GetListWithinCircle( geometry::Point2f( static_cast< float >( perceiverPosition_->rX_ ),
                                                                                                            static_cast< float >( perceiverPosition_->rY_ ) ),
-                                                                                        static_cast< float >( GetMaxObjectPerceptionDistance() ),
+                                                                                        maxBlockPerceptionDistance,
                                                                                         perceivableUrbanBlock );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableUrbanBlock );
