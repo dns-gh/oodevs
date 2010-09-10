@@ -38,7 +38,7 @@ AgentKnowledgeList::AgentKnowledgeList( const OrderParameter& parameter, const C
     : Parameter< QString >( parameter )
 {
     for( int i = 0; i < message.elem_size(); ++i )
-        AddParameter( *new AgentKnowledge( OrderParameter( tools::translate( "Parameter", "Agent knowledge %1" ).arg( i + 1 ).ascii(), "agentknowledge", false ), message.elem(i).id(), converter, owner, controller ) );
+        AddParameter( *new AgentKnowledge( OrderParameter( tools::translate( "Parameter", "%1 (item %2)" ).arg( parameter.GetName().c_str() ).arg( i + 1 ).ascii(), "agentknowledge", false ), message.elem(i).id(), converter, owner, controller ) );
 }
 
 // -----------------------------------------------------------------------------

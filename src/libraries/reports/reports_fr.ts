@@ -1,16 +1,5 @@
 <!DOCTYPE TS><TS>
 <context>
-    <name>Report</name>
-    <message>
-        <source>Received</source>
-        <translation type="obsolete">Reçu</translation>
-    </message>
-    <message>
-        <source>Report</source>
-        <translation type="obsolete">Compte-rendu</translation>
-    </message>
-</context>
-<context>
     <name>ReportFactory</name>
     <message>
         <source>Unhandled report parameter type: &apos;%1&apos;.</source>

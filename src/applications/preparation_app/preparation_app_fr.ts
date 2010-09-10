@@ -1,45 +1,5 @@
 <!DOCTYPE TS><TS>
 <context>
-    <name>AboutDialog</name>
-    <message>
-        <source>About</source>
-        <translation type="obsolete">A propos</translation>
-    </message>
-    <message>
-        <source> &#xa9; 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</source>
-        <translation type="obsolete"> © 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">Fermer</translation>
-    </message>
-    <message>
-        <source> &#xa9; 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</source>
-        <comment>AboutDialog</comment>
-        <translation type="obsolete">(sp)© 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <comment>AboutDialog</comment>
-        <translation type="obsolete">A propos</translation>
-    </message>
-</context>
-<context>
-    <name>AgentResourcesPanel</name>
-    <message>
-        <source>Resources</source>
-        <translation type="obsolete">Ressources</translation>
-    </message>
-    <message>
-        <source>Dotation</source>
-        <translation type="obsolete">Dotations</translation>
-    </message>
-    <message>
-        <source>Quantity</source>
-        <translation type="obsolete">Quantité</translation>
-    </message>
-</context>
-<context>
     <name>Application</name>
     <message>
         <source>SWORD</source>
@@ -56,21 +16,6 @@
     <message>
         <source>Preparation</source>
         <translation>Preparation</translation>
-    </message>
-</context>
-<context>
-    <name>ChangeDiplomacyDialog</name>
-    <message>
-        <source>Diplomacy</source>
-        <translation type="obsolete">Diplomatie</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="obsolete">Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Annuler</translation>
     </message>
 </context>
 <context>
@@ -164,10 +109,6 @@
     <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Franch</source>
-        <translation type="obsolete">Français</translation>
     </message>
     <message>
         <source>French</source>
@@ -365,10 +306,6 @@ Merci de sélectionner un autre fichier à importer.</translation>
         <translation>Création</translation>
     </message>
     <message>
-        <source>Information</source>
-        <translation type="obsolete">Information</translation>
-    </message>
-    <message>
         <source>Terrain</source>
         <translation>Terrain</translation>
     </message>
@@ -387,14 +324,6 @@ Merci de sélectionner un autre fichier à importer.</translation>
     <message>
         <source>Load exercise definition file (exercise.xml)</source>
         <translation>Charger un fichier de définition d&apos;exercice (exercise.xml)</translation>
-    </message>
-    <message>
-        <source>Error reading xml file: </source>
-        <translation type="obsolete">Erreur au chargement du fichier xml: </translation>
-    </message>
-    <message>
-        <source>Save modifications?</source>
-        <translation type="obsolete">Enregistrer les modifications ?</translation>
     </message>
     <message>
         <source>New ORBAT</source>
@@ -460,14 +389,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>&amp;Profiles</source>
         <translation>&amp;Profils</translation>
-    </message>
-    <message>
-        <source>Logistic links</source>
-        <translation type="obsolete">Liens logistiques</translation>
-    </message>
-    <message>
-        <source>Missing logistic links</source>
-        <translation type="obsolete">Liens logistiques manquants</translation>
     </message>
     <message>
         <source>Logistic...</source>
@@ -548,10 +469,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>About</source>
         <translation>A propos</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="obsolete">&amp;Aide</translation>
     </message>
     <message>
         <source>2D</source>
@@ -767,13 +684,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
-    </message>
-</context>
-<context>
-    <name>PropertiesPanel</name>
-    <message>
-        <source>Properties</source>
-        <translation type="obsolete">Propriétés</translation>
     </message>
 </context>
 <context>
@@ -1002,10 +912,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Equipment states</source>
         <translation>Etats des équipements</translation>
-    </message>
-    <message>
-        <source>Perception level</source>
-        <translation type="obsolete">Niveau de perception</translation>
     </message>
     <message>
         <source>Perception levels</source>
@@ -1268,10 +1174,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <translation>Populations</translation>
     </message>
     <message>
-        <source>permissions</source>
-        <translation type="obsolete">Droits</translation>
-    </message>
-    <message>
         <source>Invalid profile information</source>
         <translation>Information de profil invalide</translation>
     </message>
@@ -1366,72 +1268,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Weather type:</source>
         <translation>Type de temps:</translation>
-    </message>
-</context>
-<context>
-    <name>gui</name>
-    <message>
-        <source>Population type</source>
-        <translation type="obsolete">Type de population</translation>
-    </message>
-    <message>
-        <source>Populations</source>
-        <translation type="obsolete">Populations</translation>
-    </message>
-    <message>
-        <source>Weather</source>
-        <translation type="obsolete">Météo</translation>
-    </message>
-    <message>
-        <source>Ephemerides</source>
-        <translation type="obsolete">Ephéméride</translation>
-    </message>
-    <message>
-        <source>Sunrise:</source>
-        <translation type="obsolete">Lever du soleil:</translation>
-    </message>
-    <message>
-        <source>Sunset:</source>
-        <translation type="obsolete">Coucher du soleil:</translation>
-    </message>
-    <message>
-        <source>Lighting:</source>
-        <translation type="obsolete">Eclairage:</translation>
-    </message>
-    <message>
-        <source>Global weather</source>
-        <translation type="obsolete">Météo du théatre</translation>
-    </message>
-    <message>
-        <source>Local weather</source>
-        <translation type="obsolete">Zones météo locales</translation>
-    </message>
-    <message>
-        <source>Weather parameters</source>
-        <translation type="obsolete">Paramètres météo</translation>
-    </message>
-    <message>
-        <source>Set location</source>
-        <translation type="obsolete">Définir la position</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Enregistrer</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Annuler</translation>
-    </message>
-    <message>
-        <source>Exercise date:</source>
-        <translation type="obsolete">Date de l&apos;exercice:</translation>
-    </message>
-</context>
-<context>
-    <name>kernel</name>
-    <message>
-        <source>None</source>
-        <translation type="obsolete">Aucun</translation>
     </message>
 </context>
 <context>

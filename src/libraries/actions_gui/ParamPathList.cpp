@@ -59,5 +59,5 @@ void ParamPathList::CommitTo( actions::ParameterContainer_ABC& action ) const
 // -----------------------------------------------------------------------------
 Param_ABC* ParamPathList::CreateElement()
 {
-    return new ParamPath( this, kernel::OrderParameter( tools::translate( "ParamPathList", "Route %1" ).arg( ++count_ ).ascii(), "path", false ), layer_, converter_, entity_ );
+    return new ParamPath( this, kernel::OrderParameter( tools::translate( "ListParameter", "%1 (item %2)" ).arg( GetName() ).arg( ++count_ ).ascii(), "path", false ), layer_, converter_, entity_ );
 }

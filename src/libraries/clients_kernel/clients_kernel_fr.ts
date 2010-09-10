@@ -103,42 +103,6 @@
         <translation>LD</translation>
     </message>
     <message>
-        <source>LCA</source>
-        <translation type="obsolete">Ligne de Changement d&apos;Attitude</translation>
-    </message>
-    <message>
-        <source>LC</source>
-        <translation type="obsolete">Ligne de Coordination</translation>
-    </message>
-    <message>
-        <source>LI</source>
-        <translation type="obsolete">Ligne à Interdire</translation>
-    </message>
-    <message>
-        <source>LO</source>
-        <translation type="obsolete">Ligne d&apos;Objectif</translation>
-    </message>
-    <message>
-        <source>LCAR</source>
-        <translation type="obsolete">Ligne de Coup d&apos;Arrêt</translation>
-    </message>
-    <message>
-        <source>LR</source>
-        <translation type="obsolete">Ligne de Recueil</translation>
-    </message>
-    <message>
-        <source>LDM</source>
-        <translation type="obsolete">Ligne de Début de Mission</translation>
-    </message>
-    <message>
-        <source>LFM</source>
-        <translation type="obsolete">Ligne de Fin de Mission</translation>
-    </message>
-    <message>
-        <source>LIA</source>
-        <translation type="obsolete">Ligne d&apos;Identification Accueil</translation>
-    </message>
-    <message>
         <source>Line of departure (LD)</source>
         <translation>Ligne de débouché (LD)</translation>
     </message>
@@ -404,29 +368,6 @@
     <message>
         <source>Polygon</source>
         <translation>Polygone</translation>
-    </message>
-</context>
-<context>
-    <name>MissionType</name>
-    <message>
-        <source>Limits</source>
-        <translation type="obsolete">Limites</translation>
-    </message>
-    <message>
-        <source>Limas</source>
-        <translation type="obsolete">Limas</translation>
-    </message>
-    <message>
-        <source>Dangerous Direction</source>
-        <translation type="obsolete">Direction dangereuse</translation>
-    </message>
-    <message>
-        <source>Intelligences</source>
-        <translation type="obsolete">Renseignement</translation>
-    </message>
-    <message>
-        <source>Phase lines</source>
-        <translation type="obsolete">Limas</translation>
     </message>
 </context>
 <context>

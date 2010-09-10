@@ -11,6 +11,7 @@
 #include "ListParameter.h"
 #include "moc_ListParameter.cpp"
 #include "clients_gui/ValuedListItem.h"
+#include "clients_gui/Tools.h"
 
 using namespace actions::gui;
 
@@ -77,10 +78,10 @@ void ListParameter::OnRequestPopup( QListViewItem* item, const QPoint& pos )
 {
     QPopupMenu* menu = new QPopupMenu( list_ );
     if( createEnabled_ )
-        menu->insertItem( tr( "Create" ), this, SLOT( OnCreate() ) );
+        menu->insertItem( tools::translate( "ListParameter", "Add" ), this, SLOT( OnCreate() ) );
     if( item )
-        menu->insertItem( tr( "Remove" ), this, SLOT( OnDeleteSelectedItem() ) );
-    menu->insertItem( tr( "Clear list" ), this, SLOT( OnClear() ) );
+        menu->insertItem( tools::translate( "ListParameter", "Remove" ), this, SLOT( OnDeleteSelectedItem() ) );
+    menu->insertItem( tools::translate( "ListParameter", "Clear list" ), this, SLOT( OnClear() ) );
     menu->popup( pos );
 }
 

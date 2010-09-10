@@ -58,7 +58,7 @@ void ParamMissionObjectiveList::CommitTo( actions::ParameterContainer_ABC& actio
 // -----------------------------------------------------------------------------
 Param_ABC* ParamMissionObjectiveList::CreateElement()
 {
-    return new ParamMissionObjective( kernel::OrderParameter( tools::translate( "ParamMissionObjectiveList", "Objective %1" ).arg( ++count_ ).ascii(), "objective", false ), layer_, currentDate_, converter_ );
+    return new ParamMissionObjective( kernel::OrderParameter( tools::translate( "ListParameter", "%1 (item %2)" ).arg( GetName() ).arg( ++count_ ).ascii(), "objective", false ), layer_, currentDate_, converter_ );
 }
 
 // -----------------------------------------------------------------------------

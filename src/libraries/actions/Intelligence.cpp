@@ -76,7 +76,7 @@ Intelligence::Intelligence( const OrderParameter& parameter, const CoordinateCon
     AddParameter( *new Level    ( OrderParameter( tools::translate( "Parameter", "Level" ).ascii()    , "level"    , false ), message.level(), levels ) );
     AddParameter( *new Bool     ( OrderParameter( tools::translate( "Parameter", "Mounted" ).ascii()  , "bool"     , false ), message.embarked() != 0 ) );
     AddParameter( *new Formation( OrderParameter( tools::translate( "Parameter", "Formation" ).ascii(), "formation", false ), message.formation().id(), formations, controller_ ) );
-    AddParameter( *new Point    ( OrderParameter( tools::translate( "Parameter", "Point" ).ascii()    , "point"    , false ), converter, MakePoint( converter, message.location() ) ) );
+    AddParameter( *new Point    ( OrderParameter( tools::translate( "Parameter", "Intelligence location" ).ascii(), "point"    , false ), converter, MakePoint( converter, message.location() ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,7 +172,7 @@ void Intelligence::CommitToChildren()
     AddParameter( *new Level    ( OrderParameter( tools::translate( "Parameter", "Level" ).ascii()    , "level"    , false ), entity.GetLevel() ) );
     AddParameter( *new Bool     ( OrderParameter( tools::translate( "Parameter", "Mounted" ).ascii()  , "bool"     , false ), entity.IsMounted() ) );
     AddParameter( *new Formation( OrderParameter( tools::translate( "Parameter", "Formation" ).ascii(), "formation", false ), *formation, controller_ ) );
-    AddParameter( *new Point    ( OrderParameter( tools::translate( "Parameter", "Point" ).ascii()    , "point"    , false ), converter_, position ) );
+    AddParameter( *new Point    ( OrderParameter( tools::translate( "Parameter", "Intelligence location" ).ascii(), "point"    , false ), converter_, position ) );
 }
 
 // -----------------------------------------------------------------------------

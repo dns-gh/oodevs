@@ -46,7 +46,7 @@ ObjectiveList::ObjectiveList( const OrderParameter& parameter, const CoordinateC
     : Parameter< QString >( parameter )
 {
     for( int i = 0; i < message.elem_size(); ++i )
-        AddParameter( *new Objective( OrderParameter( tools::translate( "Parameter", "Objective %1" ).arg( i + 1 ).ascii(), "objective", false ), converter, message.elem().Get(i) ) );
+        AddParameter( *new Objective( OrderParameter( tools::translate( "Parameter", "%1 (item %2)" ).arg( parameter.GetName().c_str() ).arg( i + 1 ).ascii(), "objective", false ), converter, message.elem().Get(i) ) );
 }
 
 // -----------------------------------------------------------------------------

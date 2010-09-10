@@ -49,7 +49,7 @@ ParamObjectKnowledgeList::~ParamObjectKnowledgeList()
 // -----------------------------------------------------------------------------
 void ParamObjectKnowledgeList::AddToMenu( kernel::ContextMenu& menu )
 {
-    MakeMenu( tools::translate( "ParamObjectKnowledgeList", "Add object knowledge" ), menu );
+    MakeMenu( tools::translate( "ListParameter", "%1: add item" ).arg( GetName() ), menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,7 +58,7 @@ void ParamObjectKnowledgeList::AddToMenu( kernel::ContextMenu& menu )
 // -----------------------------------------------------------------------------
 EntityParameter< kernel::ObjectKnowledge_ABC >* ParamObjectKnowledgeList::CreateElement( const kernel::ObjectKnowledge_ABC& potential )
 {
-    return new ParamObjectKnowledge( this, kernel::OrderParameter( tools::translate( "ParamObjectKnowledgeList", "Object knowledge %1" ).arg( ++count_ ).ascii(), "objectknowledge", false ), converter_, agent_, potential, controller_ );
+    return new ParamObjectKnowledge( this, kernel::OrderParameter( tools::translate( "ListParameter", "%1 (item %2)" ).arg( GetName() ).arg( ++count_ ).arg( potential.GetName() ).ascii(), "objectknowledge", false ), converter_, agent_, potential, controller_ );
 }
 
 // -----------------------------------------------------------------------------

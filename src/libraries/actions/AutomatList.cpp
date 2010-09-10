@@ -39,7 +39,7 @@ AutomatList::AutomatList( const OrderParameter& parameter, const Common::Automat
     : Parameter< QString >( parameter )
 {
     for( int i = 0; i < message.elem_size(); ++i )
-        AddParameter( *new Automat( OrderParameter( tools::translate( "Parameter", "Automat %1" ).arg( i + 1 ).ascii(), "automat", false ), message.elem(i).id(), resolver, controller ) );
+        AddParameter( *new Automat( OrderParameter( tools::translate( "Parameter", "%1 (item %2)" ).arg( parameter.GetName().c_str() ).arg( i + 1 ).ascii(), "automat", false ), message.elem(i).id(), resolver, controller ) );
 }
 
 // -----------------------------------------------------------------------------

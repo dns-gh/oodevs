@@ -50,7 +50,7 @@ IntelligenceList::IntelligenceList( const OrderParameter& parameter, const Coord
     : Parameter< QString >( parameter )
 {
     for( int i = 0; i < message.elem_size(); ++i )
-        AddParameter( *new Intelligence( OrderParameter( tools::translate( "Parameter", "Intelligence %1" ).arg( i ).ascii(), "intelligence", true ), converter, resolver, levels, message.elem(i), controller ) );
+        AddParameter( *new Intelligence( OrderParameter( tools::translate( "Parameter", "%1 (item %2)" ).arg( parameter.GetName().c_str() ).arg( i + 1 ).ascii(), "intelligence", true ), converter, resolver, levels, message.elem(i), controller ) );
 }
 
 // -----------------------------------------------------------------------------

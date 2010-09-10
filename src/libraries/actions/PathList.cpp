@@ -37,7 +37,7 @@ PathList::PathList( const OrderParameter& parameter, const CoordinateConverter_A
     : Parameter< QString >( parameter )
 {
     for( int i = 0; i < message.elem_size(); ++i )
-        AddParameter( *new Path( OrderParameter( tools::translate( "Parameter", "Route %1" ).arg( i ).ascii(), "path", false ), converter, message.elem(i).location() ) );
+        AddParameter( *new Path( OrderParameter( tools::translate( "Parameter", "%1 (item %2)" ).arg( parameter.GetName().c_str() ).arg( i + 1 ).ascii(), "path", false ), converter, message.elem(i).location() ) );
 }
 
 // -----------------------------------------------------------------------------

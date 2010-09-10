@@ -1,216 +1,5 @@
 <!DOCTYPE TS><TS>
 <context>
-    <name>Action</name>
-    <message>
-        <source>Action</source>
-        <translation type="obsolete">Action</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="obsolete">Valeur</translation>
-    </message>
-</context>
-<context>
-    <name>ActionFactory</name>
-    <message>
-        <source>Mission&apos;s entity &apos;%1&apos; not found.</source>
-        <translation type="obsolete">L&apos;entité &apos;%1&apos; n&apos;a pas été trouvée.</translation>
-    </message>
-    <message>
-        <source>Parameter mismatch: too few parameters provided.</source>
-        <translation type="obsolete">Paramètres incorrects: nombre insuffisant.</translation>
-    </message>
-    <message>
-        <source>Frag order&apos;s entity &apos;%1&apos; not found.</source>
-        <translation type="obsolete">L&apos;entité &apos;%1&apos; n&apos;a pas été trouvée.</translation>
-    </message>
-    <message>
-        <source>Parameter mismatch: too much parameters provided.</source>
-        <translation type="obsolete">Paramètres incorrects: trop de paramètres.</translation>
-    </message>
-    <message>
-        <source>Parameter mismatch in action &apos;%1&apos; (id: %2): missing parameter &apos;%3&apos;.</source>
-        <translation type="obsolete">Paramètre incorrect dans l&apos;action &apos;%1&apos; (id: %2) : paramètre manquant &apos;%3&apos;.</translation>
-    </message>
-    <message>
-        <source>Unable to find executing entity &apos;%1&apos;.</source>
-        <translation type="obsolete">Impossible de trouver l&apos;unité &apos;%1&apos;.</translation>
-    </message>
-    <message>
-        <source>Parameter mismatch in action &apos;%1&apos; (id: %2): %3.</source>
-        <translation type="obsolete">Paramètre incorrect dans l&apos;action &apos;%1&apos; (id: %2) : %3.</translation>
-    </message>
-    <message>
-        <source>too many parameters provided</source>
-        <translation type="obsolete">Trop de paramètres</translation>
-    </message>
-    <message>
-        <source>Magic action type &apos;%1&apos; unknown.</source>
-        <translation type="obsolete">L&apos;action magique de type &apos;%1&apos; est inconnue.</translation>
-    </message>
-</context>
-<context>
-    <name>ActionParameter</name>
-    <message>
-        <source>Action</source>
-        <translation type="obsolete">Action</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="obsolete">Valeur</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation type="obsolete">Position</translation>
-    </message>
-    <message>
-        <source>Location %1</source>
-        <translation type="obsolete">Position %1</translation>
-    </message>
-    <message>
-        <source>Obstacle %1</source>
-        <translation type="obsolete">Obstacle %1</translation>
-    </message>
-    <message>
-        <source>Lima %1</source>
-        <translation type="obsolete">Lima %1</translation>
-    </message>
-    <message>
-        <source>Error loading mission parameters. Found type: &apos;%1&apos; expecting: &apos;%2&apos;.</source>
-        <translation type="obsolete">Erreur lors du chargement des paramètres de mission: type &apos;%1&apos; rencontré, type &apos;%2&apos; attendu.</translation>
-    </message>
-    <message>
-        <source>TC2</source>
-        <translation type="obsolete">TC2</translation>
-    </message>
-    <message>
-        <source>Obstacle type</source>
-        <translation type="obsolete">Type d&apos;obstacle</translation>
-    </message>
-    <message>
-        <source>Density</source>
-        <translation type="obsolete">Densité</translation>
-    </message>
-    <message>
-        <source>Schedule</source>
-        <translation type="obsolete">Horaire</translation>
-    </message>
-    <message>
-        <source>Error loading mission parameters. Non-optional parameter &apos;%1&apos; is not set.</source>
-        <translation type="obsolete">Erreur lors du chargement des paramètres de mission: le paramtype &apos;%1&apos; n&apos;est pas défini.</translation>
-    </message>
-    <message>
-        <source>Agent knowledge not found.</source>
-        <translation type="obsolete">La connaissance d&apos;agent n&apos;existe pas.</translation>
-    </message>
-    <message>
-        <source>Invalid agent knowledge.</source>
-        <translation type="obsolete">Connaissance d&apos;agent non valide.</translation>
-    </message>
-    <message>
-        <source>Agent knowledge %1</source>
-        <translation type="obsolete">Connaissance %1</translation>
-    </message>
-    <message>
-        <source>Agent %1</source>
-        <translation type="obsolete">Agent %1</translation>
-    </message>
-    <message>
-        <source>Automat %1</source>
-        <translation type="obsolete">Automate %1</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="obsolete">Nom</translation>
-    </message>
-    <message>
-        <source>Nature</source>
-        <translation type="obsolete">Nature</translation>
-    </message>
-    <message>
-        <source>Karma</source>
-        <translation type="obsolete">Karma</translation>
-    </message>
-    <message>
-        <source>Level</source>
-        <translation type="obsolete">Niveau</translation>
-    </message>
-    <message>
-        <source>Mounted</source>
-        <translation type="obsolete">Embarqué</translation>
-    </message>
-    <message>
-        <source>Formation</source>
-        <translation type="obsolete">Formation</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="obsolete">Point</translation>
-    </message>
-    <message>
-        <source>Intelligence %1</source>
-        <translation type="obsolete">Renseignement %1</translation>
-    </message>
-    <message>
-        <source>Object knowledge not found.</source>
-        <translation type="obsolete">Connaissance d&apos;objet non trouvée.</translation>
-    </message>
-    <message>
-        <source>Invalid object knowledge.</source>
-        <translation type="obsolete">Connaissance d&apos;objet invalide.</translation>
-    </message>
-    <message>
-        <source>Object knowledge %1</source>
-        <translation type="obsolete">Connaissance d&apos;objet %1</translation>
-    </message>
-    <message>
-        <source>Objective %1</source>
-        <translation type="obsolete">Objectif %1</translation>
-    </message>
-    <message>
-        <source>Destination</source>
-        <translation type="obsolete">Destination</translation>
-    </message>
-    <message>
-        <source>Way point %1</source>
-        <translation type="obsolete">Point de passage %1</translation>
-    </message>
-    <message>
-        <source>Route %1</source>
-        <translation type="obsolete">Itinéraire %1</translation>
-    </message>
-    <message>
-        <source>Population knowledge not found.</source>
-        <translation type="obsolete">La connaissance de population n&apos;existe pas.</translation>
-    </message>
-    <message>
-        <source>Phase line %1</source>
-        <translation type="obsolete">Lima %1</translation>
-    </message>
-</context>
-<context>
-    <name>ActionParameterFactory</name>
-    <message>
-        <source>not set</source>
-        <translation type="obsolete">non défini</translation>
-    </message>
-    <message>
-        <source>Expecting &apos;%1&apos; found &apos;%2&apos;</source>
-        <translation type="obsolete">&apos;%2&apos; trouvé, &apos;%1&apos; attendu</translation>
-    </message>
-</context>
-<context>
-    <name>ActionParameterLimits</name>
-    <message>
-        <source>Limit 1</source>
-        <translation type="obsolete">Limite 1</translation>
-    </message>
-    <message>
-        <source>Limit 2</source>
-        <translation type="obsolete">Limite 2</translation>
-    </message>
-</context>
-<context>
     <name>Agent</name>
     <message>
         <source>Info/Identifier</source>
@@ -300,53 +89,6 @@
     </message>
 </context>
 <context>
-    <name>AtlasNature</name>
-    <message>
-        <source>Armored</source>
-        <translation type="obsolete">Blindé</translation>
-    </message>
-    <message>
-        <source>SSA</source>
-        <translation type="obsolete">ASS</translation>
-    </message>
-    <message>
-        <source>Command post</source>
-        <translation type="obsolete">Poste de commande</translation>
-    </message>
-    <message>
-        <source>Logistic</source>
-        <translation type="obsolete">Logistique</translation>
-    </message>
-    <message>
-        <source>Mortar</source>
-        <translation type="obsolete">Mortier</translation>
-    </message>
-    <message>
-        <source>Rocket launcher</source>
-        <translation type="obsolete">Lance roquettes</translation>
-    </message>
-    <message>
-        <source>Vehicle</source>
-        <translation type="obsolete">Véhicule</translation>
-    </message>
-    <message>
-        <source>Footman</source>
-        <translation type="obsolete">Infanterie</translation>
-    </message>
-    <message>
-        <source>Helicopter</source>
-        <translation type="obsolete">Hélicoptère</translation>
-    </message>
-    <message>
-        <source>Undefined</source>
-        <translation type="obsolete">Non défini</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="obsolete">Aucun</translation>
-    </message>
-</context>
-<context>
     <name>Attributes</name>
     <message>
         <source>Info/Operational state</source>
@@ -363,10 +105,6 @@
     <message>
         <source>Communications/Jammed</source>
         <translation>Communications/Brouillé</translation>
-    </message>
-    <message>
-        <source>Communications/Radio silence</source>
-        <translation type="obsolete">Communications/En silence radio</translation>
     </message>
     <message>
         <source>Decisional state/Operational state</source>
@@ -467,10 +205,6 @@
     <message>
         <source>Jammed:</source>
         <translation>Brouillé:</translation>
-    </message>
-    <message>
-        <source>Radio silence:</source>
-        <translation type="obsolete">Silence radio:</translation>
     </message>
     <message>
         <source>Decisional state</source>
@@ -582,49 +316,6 @@
     </message>
 </context>
 <context>
-    <name>E_FuncLimaType</name>
-    <message>
-        <source>LD</source>
-        <translation type="obsolete">Ligne de débouché (LD)</translation>
-    </message>
-    <message>
-        <source>LCA</source>
-        <translation type="obsolete">Ligne de changement d&apos;attitude (LCA)</translation>
-    </message>
-    <message>
-        <source>LC</source>
-        <translation type="obsolete">Ligne de coordination (LC)</translation>
-    </message>
-    <message>
-        <source>LI</source>
-        <translation type="obsolete">Ligne interdire (LI)</translation>
-    </message>
-    <message>
-        <source>LO</source>
-        <translation type="obsolete">Ligne d&apos;objectif (LO)</translation>
-    </message>
-    <message>
-        <source>LCAR</source>
-        <translation type="obsolete">Ligne de coup d&apos;arrêt (LCAR)</translation>
-    </message>
-    <message>
-        <source>LR</source>
-        <translation type="obsolete">Ligne de recueil (LR)</translation>
-    </message>
-    <message>
-        <source>LDM</source>
-        <translation type="obsolete">Ligne de début de mission (LDM)</translation>
-    </message>
-    <message>
-        <source>LFM</source>
-        <translation type="obsolete">Ligne de fin de mission (LFM)</translation>
-    </message>
-    <message>
-        <source>LIA</source>
-        <translation type="obsolete">Ligne d&apos;identification accueil (LIA)</translation>
-    </message>
-</context>
-<context>
     <name>Equipments</name>
     <message>
         <source>Equipments</source>
@@ -649,21 +340,6 @@
     <message>
         <source>Repairable</source>
         <translation>Réparable</translation>
-    </message>
-</context>
-<context>
-    <name>Fire</name>
-    <message>
-        <source>Fire</source>
-        <translation type="obsolete">Feu</translation>
-    </message>
-    <message>
-        <source>Fire class:</source>
-        <translation type="obsolete">Type de feu:</translation>
-    </message>
-    <message>
-        <source>Fire temperature:</source>
-        <translation type="obsolete">Température du feu:</translation>
     </message>
 </context>
 <context>
@@ -786,33 +462,6 @@
     <message>
         <source>Limit</source>
         <translation>Limite</translation>
-    </message>
-</context>
-<context>
-    <name>Localisation</name>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">Ellipse</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="obsolete">Point</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">Cercle</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">Ligne</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="obsolete">Polygone</translation>
-    </message>
-    <message>
-        <source>Sector</source>
-        <translation type="obsolete">Secteur</translation>
     </message>
 </context>
 <context>
@@ -1030,10 +679,6 @@
         <translation>NBC</translation>
     </message>
     <message>
-        <source>ROTA</source>
-        <translation type="obsolete">ROTA</translation>
-    </message>
-    <message>
         <source>NBC/Contaminating agents</source>
         <translation>NBC/Agents contaminants</translation>
     </message>
@@ -1062,20 +707,8 @@
         <translation>Niveau de contamination:</translation>
     </message>
     <message>
-        <source>NBC agent:</source>
-        <translation type="obsolete">Agent NBC:</translation>
-    </message>
-    <message>
-        <source>Danger level:</source>
-        <translation type="obsolete">Niveau de danger:</translation>
-    </message>
-    <message>
         <source>NBC agent(s):</source>
         <translation>Agent(s) NBC:</translation>
-    </message>
-    <message>
-        <source>NBC cloud/zone</source>
-        <translation type="obsolete">Nuage/zone NBC</translation>
     </message>
     <message>
         <source>NBC/NBC suit</source>
@@ -1152,10 +785,6 @@
         <translation>Aménagement des rives:</translation>
     </message>
     <message>
-        <source>Logistic route</source>
-        <translation type="obsolete">Itinéraire logistique</translation>
-    </message>
-    <message>
         <source>Equipped:</source>
         <translation>Equipé:</translation>
     </message>
@@ -1194,10 +823,6 @@
     <message>
         <source>Development dotation:</source>
         <translation>Dotation de valorisation:</translation>
-    </message>
-    <message>
-        <source>Details</source>
-        <translation type="obsolete">Détails</translation>
     </message>
     <message>
         <source>Associated object:</source>
@@ -1299,14 +924,6 @@
         <translation>Identifiant:</translation>
     </message>
     <message>
-        <source>Associated concentration:</source>
-        <translation type="obsolete">Concentration associée:</translation>
-    </message>
-    <message>
-        <source>Location:</source>
-        <translation type="obsolete">Position:</translation>
-    </message>
-    <message>
         <source>Alive people:</source>
         <translation>Personnes en vie:</translation>
     </message>
@@ -1335,16 +952,8 @@
         <translation>Flux</translation>
     </message>
     <message>
-        <source>Associated flow:</source>
-        <translation type="obsolete">Flux associé:</translation>
-    </message>
-    <message>
         <source>Speed:</source>
         <translation>Vitesse:</translation>
-    </message>
-    <message>
-        <source>Known chunks:</source>
-        <translation type="obsolete">Portions connues:</translation>
     </message>
     <message>
         <source>Details</source>
@@ -1369,10 +978,6 @@
 </context>
 <context>
     <name>Profile</name>
-    <message>
-        <source>login</source>
-        <translation type="obsolete">login</translation>
-    </message>
     <message>
         <source>Too many connections</source>
         <translation>Trop de connexions</translation>
@@ -1399,24 +1004,6 @@
     <message>
         <source>Reinforced by:</source>
         <translation>Est renforcé par:</translation>
-    </message>
-</context>
-<context>
-    <name>Report</name>
-    <message>
-        <source>Received</source>
-        <translation type="obsolete">Reçu</translation>
-    </message>
-    <message>
-        <source>Report</source>
-        <translation type="obsolete">Compte-rendu</translation>
-    </message>
-</context>
-<context>
-    <name>ReportFactory</name>
-    <message>
-        <source>Unhandled report parameter type: &apos;%1&apos;.</source>
-        <translation type="obsolete">Type de paramètre de rapport non géré: &apos;%1&apos;.</translation>
     </message>
 </context>
 <context>
@@ -1550,14 +1137,6 @@
     <message>
         <source>Perceived:</source>
         <translation>Perçu:</translation>
-    </message>
-    <message>
-        <source>Relevance:</source>
-        <translation type="obsolete">Pertinence:</translation>
-    </message>
-    <message>
-        <source>Level:</source>
-        <translation type="obsolete">Niveau:</translation>
     </message>
     <message>
         <source>Progress:</source>

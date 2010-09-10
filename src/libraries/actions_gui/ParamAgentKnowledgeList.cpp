@@ -47,7 +47,7 @@ ParamAgentKnowledgeList::~ParamAgentKnowledgeList()
 // -----------------------------------------------------------------------------
 void ParamAgentKnowledgeList::AddToMenu( kernel::ContextMenu& menu )
 {
-    MakeMenu( tools::translate( "ParamAgentKnowledgeList", "Add agent knowledge" ), menu );
+    MakeMenu( tools::translate( "ListParameter", "%1: add item" ).arg( GetName() ), menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,7 +56,7 @@ void ParamAgentKnowledgeList::AddToMenu( kernel::ContextMenu& menu )
 // -----------------------------------------------------------------------------
 EntityParameter< kernel::AgentKnowledge_ABC >* ParamAgentKnowledgeList::CreateElement( const kernel::AgentKnowledge_ABC& potential )
 {
-    return new ParamAgentKnowledge( this, kernel::OrderParameter( tools::translate( "ParamAgentKnowledgeList", "Agent knowledge %1" ).arg( ++count_ ).ascii(), "agentknowledge", false ), converter_, agent_, potential, controller_ );
+    return new ParamAgentKnowledge( this, kernel::OrderParameter( tools::translate( "ListParameter", "%1 (item %2)" ).arg( GetName() ).arg( ++count_ ).arg( potential.GetName() ).ascii(), "agentknowledge", false ), converter_, agent_, potential, controller_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -39,7 +39,7 @@ AgentList::AgentList( const OrderParameter& parameter, const Common::UnitIdList&
     : Parameter< QString >( parameter )
 {
     for( int i = 0; i < message.elem_size(); ++i )
-        AddParameter( *new Agent( OrderParameter( tools::translate( "Parameter", "Agent %1" ).arg( i + 1 ).ascii(), "agent", false ), message.elem(i).id(),  resolver, controller ) );
+        AddParameter( *new Agent( OrderParameter( tools::translate( "Parameter", "%1 (item %2)" ).arg( parameter.GetName().c_str() ).arg( i + 1 ).ascii(), "agent", false ), message.elem(i).id(),  resolver, controller ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -56,7 +56,7 @@ Objective::Objective( const OrderParameter& parameter, xml::xistream& xis, const
 Objective::Objective( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Common::MsgMissionObjective& message )
     : Parameter< QString >( parameter )
 {
-    AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).ascii(), "location", false ), converter, message.localisation() ) );
+    AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Objective location" ).ascii(), "location", false ), converter, message.localisation() ) );
     AddParameter( *new DateTime( OrderParameter( tools::translate( "Parameter", "Schedule" ).ascii(), "datetime", false ), message.horaire() ) );
 }
 
@@ -78,7 +78,7 @@ void Objective::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC
     std::string type;
     xis >> xml::attribute( "type", type );
     if( type == "location" )
-        AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).ascii(), "location", false ), converter, xis ) );
+        AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Objective location" ).ascii(), "location", false ), converter, xis ) );
     else if( type == "datetime" )
         AddParameter( *new DateTime( OrderParameter( tools::translate( "Parameter", "Schedule" ).ascii(), "datetime", false ), xis ) );
 }

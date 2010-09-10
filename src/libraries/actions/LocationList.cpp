@@ -35,7 +35,7 @@ LocationList::LocationList( const kernel::OrderParameter& parameter, const kerne
     : Parameter< QString >( parameter )
 {
     for( int i = 0; i < message.elem_size(); ++i )
-        AddParameter( *new Location( kernel::OrderParameter( tools::translate( "Parameter", "Location %1" ).arg( i ).ascii(), "location", false ), converter, message.elem( i ) ) );
+        AddParameter( *new Location( kernel::OrderParameter( tools::translate( "Parameter", "%1 (item %2)" ).arg( parameter.GetName().c_str() ).arg( i + 1 ).ascii(), "location", false ), converter, message.elem( i ) ) );
 }
 
 // -----------------------------------------------------------------------------

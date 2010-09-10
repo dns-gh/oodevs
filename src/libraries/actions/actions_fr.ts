@@ -2,10 +2,6 @@
 <context>
     <name>Action</name>
     <message>
-        <source>Action</source>
-        <translation type="obsolete">Action</translation>
-    </message>
-    <message>
         <source>Value</source>
         <translation>Valeur</translation>
     </message>
@@ -38,18 +34,18 @@
     </message>
     <message>
         <source>Executing target not set</source>
-        <translation type="unfinished"></translation>
+        <translation>Unité exécutante non trouvée</translation>
     </message>
 </context>
 <context>
     <name>ActionParameter</name>
     <message>
-        <source>TC2</source>
-        <translation>TC2</translation>
-    </message>
-    <message>
         <source>Density</source>
         <translation>Densité</translation>
+    </message>
+    <message>
+        <source>Obstacle tc2</source>
+        <translation>TC2 de l&apos;obstacle</translation>
     </message>
 </context>
 <context>
@@ -98,38 +94,18 @@
     </message>
     <message>
         <source>Entity &apos;%1&apos; (id: %2) received unknown mission</source>
-        <translation type="unfinished">L&apos;entité &apos;%1&apos; (id: %2) a une mission inconnue</translation>
+        <translation>L&apos;entité &apos;%1&apos; (id: %2) a une mission inconnue</translation>
     </message>
 </context>
 <context>
     <name>Parameter</name>
     <message>
-        <source>Action</source>
-        <translation type="obsolete">Action</translation>
-    </message>
-    <message>
         <source>Value</source>
         <translation>Valeur</translation>
     </message>
     <message>
-        <source>Agent knowledge not found.</source>
-        <translation type="obsolete">La connaissance d&apos;unité n&apos;existe pas.</translation>
-    </message>
-    <message>
         <source>Invalid agent knowledge.</source>
         <translation>Connaissance d&apos;unité invalide.</translation>
-    </message>
-    <message>
-        <source>Agent knowledge %1</source>
-        <translation>Connaissance %1</translation>
-    </message>
-    <message>
-        <source>Agent %1</source>
-        <translation>Unité %1</translation>
-    </message>
-    <message>
-        <source>Automat %1</source>
-        <translation>Automate %1</translation>
     </message>
     <message>
         <source>Name</source>
@@ -156,14 +132,6 @@
         <translation>Formation</translation>
     </message>
     <message>
-        <source>Point</source>
-        <translation>Point</translation>
-    </message>
-    <message>
-        <source>Intelligence %1</source>
-        <translation>Renseignement %1</translation>
-    </message>
-    <message>
         <source>Location</source>
         <translation>Position</translation>
     </message>
@@ -172,44 +140,8 @@
         <translation>Horaire</translation>
     </message>
     <message>
-        <source>Phase line %1</source>
-        <translation>Lima %1</translation>
-    </message>
-    <message>
-        <source>Location %1</source>
-        <translation>Position %1</translation>
-    </message>
-    <message>
-        <source>Object knowledge not found.</source>
-        <translation type="obsolete">La connaissance d&apos;objet n&apos;existe pas.</translation>
-    </message>
-    <message>
         <source>Invalid object knowledge.</source>
         <translation>Connaissance d&apos;objet invalide.</translation>
-    </message>
-    <message>
-        <source>Object knowledge %1</source>
-        <translation>Connaissance d&apos;objet %1</translation>
-    </message>
-    <message>
-        <source>Objective %1</source>
-        <translation>Objectif %1</translation>
-    </message>
-    <message>
-        <source>Obstacle type</source>
-        <translation type="obsolete">Type d&apos;obstacle</translation>
-    </message>
-    <message>
-        <source>TC2</source>
-        <translation type="obsolete">TC2</translation>
-    </message>
-    <message>
-        <source>Density</source>
-        <translation type="obsolete">Densité</translation>
-    </message>
-    <message>
-        <source>Obstacle %1</source>
-        <translation>Obstacle %1</translation>
     </message>
     <message>
         <source>Destination</source>
@@ -220,14 +152,6 @@
         <translation>Point de passage %1</translation>
     </message>
     <message>
-        <source>Route %1</source>
-        <translation>Itinéraire %1</translation>
-    </message>
-    <message>
-        <source>Population knowledge not found.</source>
-        <translation type="obsolete">La connaissance de population n&apos;existe pas.</translation>
-    </message>
-    <message>
         <source>Parameter</source>
         <translation>Paramètre</translation>
     </message>
@@ -235,12 +159,28 @@
         <source>Invalid population knowledge.</source>
         <translation>Connaissance de population invalide.</translation>
     </message>
+    <message>
+        <source>%1 (item %2)</source>
+        <translation>%1 (élément %2)</translation>
+    </message>
+    <message>
+        <source>Obstacle location</source>
+        <translation>Position de l&apos;obstacle</translation>
+    </message>
+    <message>
+        <source>Intelligence location</source>
+        <translation>Position du renseignement</translation>
+    </message>
+    <message>
+        <source>Objective location</source>
+        <translation>Position de l&apos;objectif</translation>
+    </message>
 </context>
 <context>
     <name>ParameterList</name>
     <message>
         <source>Parameter</source>
-        <translation type="unfinished">Paramètre</translation>
+        <translation>Paramètre</translation>
     </message>
 </context>
 </TS>

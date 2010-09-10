@@ -58,5 +58,5 @@ void ParamLocationList::CommitTo( actions::ParameterContainer_ABC& action ) cons
 // -----------------------------------------------------------------------------
 Param_ABC* ParamLocationList::CreateElement()
 {
-    return new ParamLocation( kernel::OrderParameter( tools::translate( "ParamLocationList", "Location %1" ).arg( ++count_ ).ascii(), "location", false ), layer_, converter_ );
+    return new ParamLocation( kernel::OrderParameter( tools::translate( "ListParameter", "%1 (item %2)" ).arg( GetName() ).arg( ++count_ ).ascii(), "location", false ), layer_, converter_ );
 }

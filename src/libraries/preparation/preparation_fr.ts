@@ -55,13 +55,6 @@
     </message>
 </context>
 <context>
-    <name>CampAttributes</name>
-    <message>
-        <source>Info/Camp attributes/Superior</source>
-        <translation type="obsolete">Info/Attributs de camp/Supérieur</translation>
-    </message>
-</context>
-<context>
     <name>CrossingSiteAttribute</name>
     <message>
         <source>Info/Crossing site attributes/Width</source>
@@ -81,25 +74,6 @@
     </message>
 </context>
 <context>
-    <name>CrossingSiteAttributes</name>
-    <message>
-        <source>Info/Crossing site attributes/Width</source>
-        <translation type="obsolete">Info/Attributs de site de franchissement/Largeur</translation>
-    </message>
-    <message>
-        <source>Info/Crossing site attributes/Depth</source>
-        <translation type="obsolete">Info/Attributs de site de franchissement/Profondeur</translation>
-    </message>
-    <message>
-        <source>Info/Crossing site attributes/Speed</source>
-        <translation type="obsolete">Info/Attributs de site de franchissement/Débit</translation>
-    </message>
-    <message>
-        <source>Info/Crossing site attributes/Build river banks</source>
-        <translation type="obsolete">Info/Attributs de site de franchissement/Aménagement des rives</translation>
-    </message>
-</context>
-<context>
     <name>DelayAttribute</name>
     <message>
         <source>Info/Delay parameters/Delay</source>
@@ -115,60 +89,6 @@
     <message>
         <source>Dotations/Dotations</source>
         <translation>Dotations/Dotations</translation>
-    </message>
-</context>
-<context>
-    <name>E_FuncLimaType</name>
-    <message>
-        <source>LD</source>
-        <translation type="obsolete">LD</translation>
-    </message>
-    <message>
-        <source>LCA</source>
-        <translation type="obsolete">LCA</translation>
-    </message>
-    <message>
-        <source>LC</source>
-        <translation type="obsolete">LC</translation>
-    </message>
-    <message>
-        <source>LI</source>
-        <translation type="obsolete">LI</translation>
-    </message>
-    <message>
-        <source>LO</source>
-        <translation type="obsolete">LO</translation>
-    </message>
-    <message>
-        <source>LCAR</source>
-        <translation type="obsolete">LCAR</translation>
-    </message>
-    <message>
-        <source>LR</source>
-        <translation type="obsolete">LR</translation>
-    </message>
-    <message>
-        <source>LDM</source>
-        <translation type="obsolete">LDM</translation>
-    </message>
-    <message>
-        <source>LFM</source>
-        <translation type="obsolete">LFM</translation>
-    </message>
-    <message>
-        <source>LIA</source>
-        <translation type="obsolete">LIA</translation>
-    </message>
-</context>
-<context>
-    <name>Fire</name>
-    <message>
-        <source>Fire</source>
-        <translation type="obsolete">Incendie</translation>
-    </message>
-    <message>
-        <source>Fire class:</source>
-        <translation type="obsolete">Classe d&apos;incendie :</translation>
     </message>
 </context>
 <context>
@@ -235,10 +155,6 @@
         <translation>Info/Nom</translation>
     </message>
     <message>
-        <source>Info/Type</source>
-        <translation type="obsolete">Info/Type</translation>
-    </message>
-    <message>
         <source>Knowledge group [%1]</source>
         <translation>Groupe de connaissance [%1]</translation>
     </message>
@@ -253,10 +169,6 @@
 </context>
 <context>
     <name>Lima</name>
-    <message>
-        <source>Lima</source>
-        <translation type="obsolete">Lima</translation>
-    </message>
     <message>
         <source>Phase line</source>
         <translation>Lima</translation>
@@ -281,29 +193,6 @@
     <message>
         <source>Info/Camp attributes/Superior</source>
         <translation>Info/Attributs de camp/Supérieur</translation>
-    </message>
-</context>
-<context>
-    <name>LogisticRouteAttributes</name>
-    <message>
-        <source>Info/Logistic route attributes/Flow</source>
-        <translation type="obsolete">Info/Attributs de l&apos;itinéraire logistique/Débit</translation>
-    </message>
-    <message>
-        <source>Info/Logistic route attributes/Width</source>
-        <translation type="obsolete">Info/Attributs de l&apos;itinéraire logistique/Largeur</translation>
-    </message>
-    <message>
-        <source>Info/Logistic route attributes/Length</source>
-        <translation type="obsolete">Info/Attributs de l&apos;itinéraire logistique/Longueur</translation>
-    </message>
-    <message>
-        <source>Info/Logistic route attributes/Maximum weight</source>
-        <translation type="obsolete">Info/Attributs de l&apos;itinéraire logistique/Poids maximum</translation>
-    </message>
-    <message>
-        <source>Info/Logistic route attributes/Equipped</source>
-        <translation type="obsolete">Info/Attributs de l&apos;itinéraire logistique/Equippé</translation>
     </message>
 </context>
 <context>
@@ -368,34 +257,7 @@
     </message>
 </context>
 <context>
-    <name>MineAttributes</name>
-    <message>
-        <source>Info/Mine parameters/Activity time</source>
-        <translation type="obsolete">Info/Paramètres des mines/Durée d&apos;activité</translation>
-    </message>
-    <message>
-        <source>Info/Mine parameters/Density</source>
-        <translation type="obsolete">Info/Paramètres des mines/Densité</translation>
-    </message>
-</context>
-<context>
     <name>NBC</name>
-    <message>
-        <source>NBC cloud/zone</source>
-        <translation type="obsolete">Nuage/zone NBC</translation>
-    </message>
-    <message>
-        <source>NBC agent:</source>
-        <translation type="obsolete">Agent NBC:</translation>
-    </message>
-    <message>
-        <source>ROTA</source>
-        <translation type="obsolete">ROTA</translation>
-    </message>
-    <message>
-        <source>Danger level:</source>
-        <translation type="obsolete">Niveau de danger:</translation>
-    </message>
     <message>
         <source>NBC agent(s):</source>
         <translation>Agent(s) NBC:</translation>
@@ -422,13 +284,6 @@
     <message>
         <source>Info/NBC attributes/NBC agents</source>
         <translation>Info/Atributs NBC/Agents NBC</translation>
-    </message>
-</context>
-<context>
-    <name>NBCAttributes</name>
-    <message>
-        <source>Info/NBC attributes/NBC agent</source>
-        <translation type="obsolete">Info/Attributs NBC/Agent NBC</translation>
     </message>
 </context>
 <context>
@@ -460,10 +315,6 @@
     <message>
         <source>Build river banks:</source>
         <translation>Aménagement des rives :</translation>
-    </message>
-    <message>
-        <source>Logistic route</source>
-        <translation type="obsolete">Itinéraire logistique</translation>
     </message>
     <message>
         <source>Equipped:</source>
@@ -530,10 +381,6 @@
         <translation>Contournement :</translation>
     </message>
     <message>
-        <source>Construction dotation:</source>
-        <translation type="obsolete">Dotation de construction :</translation>
-    </message>
-    <message>
         <source>Development dotation:</source>
         <translation>Dotation de valorisation :</translation>
     </message>
@@ -556,14 +403,6 @@
     <message>
         <source>Reserved obstacle activated:</source>
         <translation>Obstacle de manoeuvre activé :</translation>
-    </message>
-    <message>
-        <source>Info/Obstacle type</source>
-        <translation type="obsolete">Info/Type d&apos;obstacle</translation>
-    </message>
-    <message>
-        <source>Info/Reserved obstacle activated</source>
-        <translation type="obsolete">Info/Obstacle de manoeuvre activé</translation>
     </message>
     <message>
         <source>Info/Demolition target parameters/Obstacle type</source>
@@ -636,18 +475,6 @@
 <context>
     <name>Preparation</name>
     <message>
-        <source>friend</source>
-        <translation type="obsolete">ami</translation>
-    </message>
-    <message>
-        <source>enemy</source>
-        <translation type="obsolete">ennemi</translation>
-    </message>
-    <message>
-        <source>neutral</source>
-        <translation type="obsolete">neutre</translation>
-    </message>
-    <message>
         <source>Army %1</source>
         <translation>Camp %1</translation>
     </message>
@@ -685,17 +512,6 @@ You will not be able to give orders to these units.
         <translation>Certaines unités de l&apos;ODB ne sont &quot;en écriture&quot; pour aucun profil utilisateur.
 Vous ne pourrez pas donner d&apos;ordres à ces unités en phase de conduite.
 </translation>
-    </message>
-</context>
-<context>
-    <name>RotaAttributes</name>
-    <message>
-        <source>Info/ROTA attributes/Danger level</source>
-        <translation type="obsolete">Info/Attributs ROTA/Niveau de danger</translation>
-    </message>
-    <message>
-        <source>Info/ROTA attributes/Agents</source>
-        <translation type="obsolete">Info/Attributs ROTA/Agents</translation>
     </message>
 </context>
 <context>

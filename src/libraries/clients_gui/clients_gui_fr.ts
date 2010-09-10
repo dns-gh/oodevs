@@ -1,24 +1,5 @@
 <!DOCTYPE TS><TS>
 <context>
-    <name>AboutDialog</name>
-    <message>
-        <source>About</source>
-        <translation type="obsolete">A propos</translation>
-    </message>
-    <message>
-        <source> &#xa9; 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</source>
-        <translation type="obsolete"> © 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;br&gt;License will expire on </source>
-        <translation type="obsolete">&lt;br&gt;La licence expire le </translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">Fermer</translation>
-    </message>
-</context>
-<context>
     <name>ActivityTimePrototype_ABC</name>
     <message>
         <source>Activity time</source>
@@ -57,10 +38,6 @@
     <message>
         <source>Info/Name</source>
         <translation>Info/Nom</translation>
-    </message>
-    <message>
-        <source>Info/StructuralState</source>
-        <translation type="obsolete">Info/Etat structurel</translation>
     </message>
     <message>
         <source>PhysicalFeatures/Architecture/Height</source>
@@ -242,45 +219,6 @@
     </message>
 </context>
 <context>
-    <name>GisToolbar</name>
-    <message>
-        <source>GIS tools</source>
-        <translation type="obsolete">Outils cartographiques</translation>
-    </message>
-    <message>
-        <source>Watershed</source>
-        <translation type="obsolete">Montée des eaux</translation>
-    </message>
-    <message>
-        <source>Enable/disable watershed display</source>
-        <translation type="obsolete">Active/désactive la montée des eaux</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="obsolete">&lt;</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="obsolete">&gt;</translation>
-    </message>
-    <message>
-        <source>Display water below or above specified height</source>
-        <translation type="obsolete">Affiche l&apos;eau au dessous ou au dessus de l&apos;altitude spécifiée</translation>
-    </message>
-    <message>
-        <source>Set water height limit</source>
-        <translation type="obsolete">Défini l&apos;altitude limite de l&apos;eau</translation>
-    </message>
-    <message>
-        <source>Change watershed color</source>
-        <translation type="obsolete">Change la couleur de l&apos;eau</translation>
-    </message>
-    <message>
-        <source>Show terrain profiler tool</source>
-        <translation type="obsolete">Affiche l&apos;outil de coupe de terrain</translation>
-    </message>
-</context>
-<context>
     <name>GraphicPreferences</name>
     <message>
         <source>Colors</source>
@@ -312,10 +250,6 @@
         <translation>Propagation</translation>
     </message>
     <message>
-        <source>NBC Agent:</source>
-        <translation type="obsolete">Agent NBC:</translation>
-    </message>
-    <message>
         <source>Lookup data:</source>
         <translation>Données source:</translation>
     </message>
@@ -330,10 +264,6 @@
     <message>
         <source>Open File</source>
         <translation>Ouvrir fichier</translation>
-    </message>
-    <message>
-        <source>Input file...</source>
-        <translation type="obsolete">Fichier source...</translation>
     </message>
     <message>
         <source>Input file:</source>
@@ -585,16 +515,6 @@
 </context>
 <context>
     <name>R&#xe8;gle GL</name>
-    <message>
-        <source> %1m</source>
-        <translation type="obsolete"> %1m</translation>
-    </message>
-    <message>
-        <source>%1m
-%2&#xb0;</source>
-        <translation type="obsolete">%1m
-%2</translation>
-    </message>
     <message>
         <source>2D: %1m
 3D: %2m
@@ -1170,10 +1090,6 @@ Voulez-vous le supprimer?</translation>
         <translation>2D/Terrain</translation>
     </message>
     <message>
-        <source>General</source>
-        <translation type="obsolete">Général</translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
@@ -1237,21 +1153,6 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Display type: </source>
         <translation>Type d&apos;affichage: </translation>
-    </message>
-</context>
-<context>
-    <name>gui::UserControlPanel</name>
-    <message>
-        <source>Map dragging control</source>
-        <translation type="obsolete">Contrôle du déplacement de la carte</translation>
-    </message>
-    <message>
-        <source>Use left click</source>
-        <translation type="obsolete">Utiliser le clic gauche</translation>
-    </message>
-    <message>
-        <source>Use wheel click</source>
-        <translation type="obsolete">Utiliser le clic du milieu (molette)</translation>
     </message>
 </context>
 <context>

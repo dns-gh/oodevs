@@ -56,7 +56,7 @@ void ParamIntelligenceList::CommitTo( actions::ParameterContainer_ABC& action ) 
 // -----------------------------------------------------------------------------
 void ParamIntelligenceList::AddToMenu( kernel::ContextMenu& menu )
 {
-    MakeMenu( tools::translate( "ParamIntelligenceList", "Add intelligence" ), menu );
+    MakeMenu( tools::translate( "ListParameter", "%1: add item" ).arg( GetName() ), menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,5 +65,5 @@ void ParamIntelligenceList::AddToMenu( kernel::ContextMenu& menu )
 // -----------------------------------------------------------------------------
 EntityParameter< kernel::Intelligence_ABC >* ParamIntelligenceList::CreateElement( const kernel::Intelligence_ABC& potential )
 {
-    return new ParamIntelligence( this, kernel::OrderParameter( tools::translate( "ParamIntelligenceList", "Intelligence %1" ).arg( ++count_ ).ascii(), "intelligence", false ), converter_, potential, controller_ );
+    return new ParamIntelligence( this, kernel::OrderParameter( tools::translate( "ListParameter", "%1 (item %2)" ).arg( GetName() ).arg( ++count_ ).arg( potential.GetName() ).ascii(), "intelligence", false ), converter_, potential, controller_ );
 }

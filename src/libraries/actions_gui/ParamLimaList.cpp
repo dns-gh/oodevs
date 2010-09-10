@@ -73,7 +73,7 @@ Param_ABC* ParamLimaList::CreateElement()
 {
     if( potential_ )
     {
-        LimaParameter* lima = new LimaParameter( this, tools::translate( "ParamLimaList", "Phase line %1" ).arg( ++count_ ), converter_, currentDate_, *potential_ );
+        LimaParameter* lima = new LimaParameter( this, tools::translate( "ListParameter", "%1 (item %2)" ).arg( GetName() ).arg( ++count_ ), converter_, currentDate_, *potential_ );
         limas_[potential_] = lima;
         return lima;
     }
@@ -115,7 +115,7 @@ void ParamLimaList::NotifyContextMenu( const kernel::TacticalLine_ABC& entity, k
             int id = limaMenu->insertItem( tools::ToString( (kernel::E_FuncLimaType)i ), this, SLOT( MenuItemValidated( int ) ) );
             limaMenu->setItemParameter( id, i );
         }
-        menu.InsertItem( "Parameter", tools::translate( "ParamLimaList", "Add line as" ), limaMenu );
+        menu.InsertItem( "Parameter", tools::translate( "ParamLimaList", "%1: add item as" ).arg( GetName() ), limaMenu );
     }
 }
 

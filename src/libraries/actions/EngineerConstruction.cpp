@@ -45,7 +45,7 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
     : Parameter< std::string >( parameter )
     , type_( types.Get( message.type() ) )
 {
-    AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).ascii(), "location", false ), converter, message.position() ) );
+    AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Obstacle location" ).ascii(), "location", false ), converter, message.position() ) );
     SetValue( type_.GetName() );
     SetParameters( message, entities, controller );
 }
@@ -58,7 +58,7 @@ void EngineerConstruction::SetParameters( const Common::MsgPlannedWork& message,
 {
     if( message.tc2().id() != 0 )
     {
-        const OrderParameter param( tools::translate( "ActionParameter", "TC2" ).ascii(), "tc2", false );
+        const OrderParameter param( tools::translate( "ActionParameter", "Obstacle tc2" ).ascii(), "tc2", false );
         AddParameter( *new Automat( param, message.tc2().id(), entities, controller ) );
     }
     if( message.densite() != 0 )
@@ -112,7 +112,7 @@ void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateCo
     if( type == "obstacletype" )
         AddParameter( *new ObstacleType( xis ) );
     else if( type == "location" )
-        AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).ascii(), "location", false ), converter, xis ) );
+        AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Obstacle location" ).ascii(), "location", false ), converter, xis ) );
     else if( type == "tc2" )
         AddParameter( *new Automat( xis, entities, controller ) );
 }

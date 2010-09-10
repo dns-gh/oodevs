@@ -52,7 +52,7 @@ public:
     void Draw( const kernel::GlTools_ABC& tools, kernel::Viewport_ABC& extent ) const;
     bool IsEmpty() const;
     void AddParameter( Param_ABC& parameter );
-    void ChangeOkValueButton( bool isPlanifMode );
+    void ChangeOkValueButton( bool planningMode );
     //@}
 
 public slots:

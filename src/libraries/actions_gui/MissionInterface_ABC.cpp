@@ -156,12 +156,12 @@ void MissionInterface_ABC::CreateOkCancelButtons()
 // Name: MissionInterface_ABC::ChangeOkValueButton
 // Created: HBD 2010-09-06
 // -----------------------------------------------------------------------------
-void MissionInterface_ABC::ChangeOkValueButton( bool isPlanifMode )
+void MissionInterface_ABC::ChangeOkValueButton( bool planningMode )
 {
-   if ( ok_ )
+   if( ok_ )
    {
-       if ( isPlanifMode ) 
-          ok_->setText( tools::translate( "MissionInterface_ABC", "Plann the mission" ) );
+       if( planningMode )
+          ok_->setText( tools::translate( "MissionInterface_ABC", "Add to planning" ) );
        else
           ok_->setText( tools::translate( "MissionInterface_ABC", "Ok" ) );
    }

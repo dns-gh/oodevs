@@ -38,7 +38,7 @@ ObjectKnowledgeList::ObjectKnowledgeList( const OrderParameter& parameter, const
     : Parameter< QString >( parameter )
 {
     for( int i = 0; i < message.elem_size(); ++i )
-        AddParameter( *new ObjectKnowledge( OrderParameter( tools::translate( "Parameter", "Object knowledge %1" ).arg( i + 1 ).ascii(), "objectknowledge", false ), message.elem().Get(i).id(), converter, owner, controller ) );
+        AddParameter( *new ObjectKnowledge( OrderParameter( tools::translate( "Parameter", "%1 (item %2)" ).arg( parameter.GetName().c_str() ).arg( i + 1 ).ascii(), "objectknowledge", false ), message.elem().Get(i).id(), converter, owner, controller ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -1,25 +1,6 @@
 <!DOCTYPE TS><TS>
 <context>
-    <name></name>
-    <message>
-        <source>Ok</source>
-        <translation type="obsolete">Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Annuler</translation>
-    </message>
-    <message>
-        <source>Weather parameters</source>
-        <translation type="obsolete">Paramètres de météo</translation>
-    </message>
-</context>
-<context>
     <name>@default</name>
-    <message>
-        <source>Alarm parameters</source>
-        <translation type="obsolete">Paramètres de l&apos;alarme</translation>
-    </message>
     <message>
         <source>Ok</source>
         <translation>Ok</translation>
@@ -27,69 +8,6 @@
     <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Recover - All</source>
-        <translation type="obsolete">Recompléter - Tout</translation>
-    </message>
-    <message>
-        <source>Recover - Troops</source>
-        <translation type="obsolete">Recompléter - Troupes</translation>
-    </message>
-    <message>
-        <source>Recover - Equipments</source>
-        <translation type="obsolete">Recompléter - Composantes</translation>
-    </message>
-    <message>
-        <source>Recover - Resources</source>
-        <translation type="obsolete">Recompléter - Ressources</translation>
-    </message>
-    <message>
-        <source>Destroy - All</source>
-        <translation type="obsolete">Détruire - Entièrement</translation>
-    </message>
-    <message>
-        <source>Cancel surrender</source>
-        <translation type="obsolete">Annuler la rédition</translation>
-    </message>
-    <message>
-        <source>Surrender to</source>
-        <translation type="obsolete">Rédition</translation>
-    </message>
-    <message>
-        <source>Magic orders</source>
-        <translation type="obsolete">Actions magiques</translation>
-    </message>
-    <message>
-        <source>Partial recompletion</source>
-        <translation type="obsolete">Recomplétion partielle</translation>
-    </message>
-    <message>
-        <source>Change logistic links</source>
-        <translation type="obsolete">Changer les liens logistiques</translation>
-    </message>
-    <message>
-        <source>Load exercise definition file (exercise.xml)</source>
-        <translation type="obsolete">Charger une définition d&apos;exercice (exercise.xml)</translation>
-    </message>
-    <message>
-        <source> - Not connected</source>
-        <translation type="obsolete"> - Non connecté</translation>
-    </message>
-</context>
-<context>
-    <name>AboutDialog</name>
-    <message>
-        <source>About</source>
-        <translation type="obsolete">A propos</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">Fermer</translation>
-    </message>
-    <message>
-        <source> &#xa9; 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</source>
-        <translation type="obsolete"> © 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</translation>
     </message>
 </context>
 <context>
@@ -102,32 +20,8 @@
 <context>
     <name>ActionsListView</name>
     <message>
-        <source>Target: %1</source>
-        <translation type="obsolete">Cible: %1</translation>
-    </message>
-    <message>
-        <source>S</source>
-        <translation type="obsolete">S</translation>
-    </message>
-    <message>
-        <source>Time</source>
-        <translation type="obsolete">Temps</translation>
-    </message>
-    <message>
-        <source>Action</source>
-        <translation type="obsolete">Action</translation>
-    </message>
-    <message>
         <source>Value</source>
         <translation>Valeur</translation>
-    </message>
-    <message>
-        <source>MM-dd hh:mm</source>
-        <translation type="obsolete">MM-dd hh:mm</translation>
-    </message>
-    <message>
-        <source>MM-d hh:mm</source>
-        <translation type="obsolete">MM-d hh:mm</translation>
     </message>
     <message>
         <source>Parameter</source>
@@ -135,18 +29,7 @@
     </message>
 </context>
 <context>
-    <name>ActionsPanel</name>
-    <message>
-        <source>Actions</source>
-        <translation type="obsolete">Actions</translation>
-    </message>
-</context>
-<context>
     <name>ActionsToolbar</name>
-    <message>
-        <source>Order files (*.ord)</source>
-        <translation type="obsolete">Fichier d&apos;ordres (*.ord)</translation>
-    </message>
     <message>
         <source>Load</source>
         <translation>Charger</translation>
@@ -156,32 +39,8 @@
         <translation>Sauvegarder</translation>
     </message>
     <message>
-        <source>Error loading order file</source>
-        <translation type="obsolete">Erreur lors du chargement du fichier d&apos;ordres</translation>
-    </message>
-    <message>
-        <source>Load order file</source>
-        <translation type="obsolete">Charger un fichier d&apos;ordres</translation>
-    </message>
-    <message>
-        <source>Save orders to file</source>
-        <translation type="obsolete">Sauvegarder les ordres</translation>
-    </message>
-    <message>
-        <source>Toggle order recording on/off</source>
-        <translation type="obsolete">Activer/Désactiver l&apos;enregistrement des ordres</translation>
-    </message>
-    <message>
-        <source>Delete recorded orders</source>
-        <translation type="obsolete">Supprimer les ordres enregistrés</translation>
-    </message>
-    <message>
         <source>Actions recorder</source>
         <translation>Enregistreur d&apos;actions</translation>
-    </message>
-    <message>
-        <source>Delete recorded orders?</source>
-        <translation type="obsolete">Supprimer les ordres enregistrés ?</translation>
     </message>
     <message>
         <source>Planning mode on/off</source>
@@ -247,17 +106,6 @@
     </message>
 </context>
 <context>
-    <name>AfterActionPlot</name>
-    <message>
-        <source>Value</source>
-        <translation type="obsolete">Valeur</translation>
-    </message>
-    <message>
-        <source>Time (Tick)</source>
-        <translation type="obsolete">Temps (ticks)</translation>
-    </message>
-</context>
-<context>
     <name>AfterActionRequestList</name>
     <message>
         <source>Request</source>
@@ -266,10 +114,6 @@
     <message>
         <source>Status</source>
         <translation>Status</translation>
-    </message>
-    <message>
-        <source>Plot</source>
-        <translation type="obsolete">Courbe</translation>
     </message>
 </context>
 <context>
@@ -408,10 +252,6 @@
         <translation>SWORD</translation>
     </message>
     <message>
-        <source>sword-ot@masagroup.net</source>
-        <translation type="obsolete">support@scalped.fr</translation>
-    </message>
-    <message>
         <source>Unhandled error</source>
         <translation>Erreur irrécupérable</translation>
     </message>
@@ -455,49 +295,6 @@
     <message>
         <source>Ok</source>
         <translation>Ok</translation>
-    </message>
-</context>
-<context>
-    <name>ChangeDiplomacyDialog</name>
-    <message>
-        <source>Diplomacy</source>
-        <translation type="obsolete">Diplomatie</translation>
-    </message>
-    <message>
-        <source>Side</source>
-        <translation type="obsolete">Camp</translation>
-    </message>
-    <message>
-        <source> is </source>
-        <translation type="obsolete"> est </translation>
-    </message>
-    <message>
-        <source>unknown</source>
-        <translation type="obsolete">inconnu</translation>
-    </message>
-    <message>
-        <source>friend</source>
-        <translation type="obsolete">ami</translation>
-    </message>
-    <message>
-        <source>enemy</source>
-        <translation type="obsolete">ennemi</translation>
-    </message>
-    <message>
-        <source>neutral</source>
-        <translation type="obsolete">neutre</translation>
-    </message>
-    <message>
-        <source>with side</source>
-        <translation type="obsolete">avec le camp</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="obsolete">Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Annuler</translation>
     </message>
 </context>
 <context>
@@ -777,10 +574,6 @@ Reason: %3
 <context>
     <name>EventToolbar</name>
     <message>
-        <source>0</source>
-        <translation type="obsolete">0</translation>
-    </message>
-    <message>
         <source>Messages</source>
         <translation>Messages</translation>
     </message>
@@ -795,33 +588,6 @@ Reason: %3
     <message>
         <source>%1 pending messages</source>
         <translation>%1 message(s) en attente</translation>
-    </message>
-</context>
-<context>
-    <name>Extension</name>
-    <message>
-        <source>Logistic requests</source>
-        <translation type="obsolete">Requêtes logistiques</translation>
-    </message>
-    <message>
-        <source>Processing consigns</source>
-        <translation type="obsolete">Consignes en traitement</translation>
-    </message>
-    <message>
-        <source>Consign:</source>
-        <translation type="obsolete">Consigne:</translation>
-    </message>
-    <message>
-        <source>Instruction:</source>
-        <translation type="obsolete">Consigne:</translation>
-    </message>
-    <message>
-        <source>Consumer:</source>
-        <translation type="obsolete">Consommateur:</translation>
-    </message>
-    <message>
-        <source>Handler:</source>
-        <translation type="obsolete">Gestionnaire:</translation>
     </message>
 </context>
 <context>
@@ -903,17 +669,6 @@ Reason: %3
     <message>
         <source>any</source>
         <translation>tous</translation>
-    </message>
-</context>
-<context>
-    <name>GQ_Plot</name>
-    <message>
-        <source>Rate (B)</source>
-        <translation type="obsolete">Taux (B)</translation>
-    </message>
-    <message>
-        <source>Time (Tick)</source>
-        <translation type="obsolete">Temps (ticks)</translation>
     </message>
 </context>
 <context>
@@ -1000,10 +755,6 @@ Reason: %3
 <context>
     <name>Indicators</name>
     <message>
-        <source>Plot</source>
-        <translation type="obsolete">Courbe</translation>
-    </message>
-    <message>
         <source>Time</source>
         <translation>Temps</translation>
     </message>
@@ -1067,10 +818,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Communication: jammed</source>
         <translation>Communication: brouillée</translation>
-    </message>
-    <message>
-        <source>Communication: radio silence</source>
-        <translation type="obsolete">Communication: silence radio</translation>
     </message>
     <message>
         <source>Communication: radar enabled</source>
@@ -1149,10 +896,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
 <context>
     <name>InfoMissionsTab</name>
     <message>
-        <source>Action</source>
-        <translation type="obsolete">Action</translation>
-    </message>
-    <message>
         <source>Value</source>
         <translation>Valeur</translation>
     </message>
@@ -1164,18 +907,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
 <context>
     <name>InfoStancesWidget</name>
     <message>
-        <source>Stance: previous was: &apos;%1&apos;</source>
-        <translation type="obsolete">Posture précédente: &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Stance: next is: &apos;%1&apos;</source>
-        <translation type="obsolete">Posture suivante: &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Stance: current is: &apos;%1&apos;</source>
-        <translation type="obsolete">Posture courrante: &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>Movement</source>
         <translation>Déplacement</translation>
     </message>
@@ -1186,29 +917,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Stance &apos;%1&apos; at %2</source>
         <translation>Posture &apos;%1&apos; à %2</translation>
-    </message>
-</context>
-<context>
-    <name>InfoStatusBar</name>
-    <message>
-        <source>Morale: </source>
-        <translation type="obsolete">Morale: </translation>
-    </message>
-    <message>
-        <source>Experience: </source>
-        <translation type="obsolete">Expérience: </translation>
-    </message>
-    <message>
-        <source>Tiredness: </source>
-        <translation type="obsolete">Fatigue: </translation>
-    </message>
-    <message>
-        <source>Reinforcing unit &apos;%1&apos;.</source>
-        <translation type="obsolete">Renforce l&apos;unité &apos;%1&apos;.</translation>
-    </message>
-    <message>
-        <source>Reinforced by: </source>
-        <translation type="obsolete">Renforcé par: </translation>
     </message>
 </context>
 <context>
@@ -1287,10 +995,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Actions magiques</translation>
     </message>
     <message>
-        <source>Delete</source>
-        <translation type="obsolete">Supprimer</translation>
-    </message>
-    <message>
         <source>Desactivate</source>
         <translation>Désactiver</translation>
     </message>
@@ -1323,67 +1027,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
-    <name>LimaParameter</name>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">Ligne</translation>
-    </message>
-    <message>
-        <source>Functions</source>
-        <translation type="obsolete">Fonctions</translation>
-    </message>
-    <message>
-        <source>Set &apos;%1&apos; function</source>
-        <translation type="obsolete">Ajouter la fonction &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Schedule</source>
-        <translation type="obsolete">Horaire</translation>
-    </message>
-</context>
-<context>
-    <name>LimitParameter</name>
-    <message>
-        <source>Set %1</source>
-        <translation type="obsolete">Ajouter &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ListParameter</name>
-    <message>
-        <source>Create</source>
-        <translation type="obsolete">Créer</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="obsolete">Supprimer</translation>
-    </message>
-    <message>
-        <source>Clear list</source>
-        <translation type="obsolete">Vider la liste</translation>
-    </message>
-</context>
-<context>
     <name>LoginDialog</name>
-    <message>
-        <source>Profile parameters</source>
-        <translation type="obsolete">Paramètres des profils</translation>
-    </message>
-    <message>
-        <source>User login</source>
-        <translation type="obsolete">Profil utilisateur</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation type="obsolete">Mot de passe</translation>
-    </message>
     <message>
         <source>Ok</source>
         <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Disconnect</source>
-        <translation type="obsolete">Déconnecter</translation>
     </message>
     <message>
         <source>Password: </source>
@@ -1565,10 +1212,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Dotation</translation>
     </message>
     <message>
-        <source>Quantity</source>
-        <translation type="obsolete">Quantité</translation>
-    </message>
-    <message>
         <source>Ammo</source>
         <translation>Munition</translation>
     </message>
@@ -1685,10 +1328,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Properties</source>
         <translation>Propriétés</translation>
-    </message>
-    <message>
-        <source>Information</source>
-        <translation type="obsolete">Information</translation>
     </message>
     <message>
         <source>Log</source>
@@ -1907,14 +1546,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
 <context>
     <name>Menu</name>
     <message>
-        <source>&amp;Open exercice...</source>
-        <translation type="obsolete">&amp;Ouvrir un exercice...</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">Fermer</translation>
-    </message>
-    <message>
         <source>&amp;Quit</source>
         <translation>&amp;Quitter</translation>
     </message>
@@ -2079,10 +1710,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>A propos</translation>
     </message>
     <message>
-        <source>&amp;Help</source>
-        <translation type="obsolete">&amp;Aide</translation>
-    </message>
-    <message>
         <source>Weapon ranges</source>
         <translation>Portée des armes</translation>
     </message>
@@ -2093,10 +1720,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>&amp;?</source>
         <translation>&amp;?</translation>
-    </message>
-    <message>
-        <source>&amp;Open exercise...</source>
-        <translation type="obsolete">&amp;Ouvrir exercice...</translation>
     </message>
     <message>
         <source>&amp;Exercise</source>
@@ -2139,25 +1762,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
-    <name>MissionInterface_ABC</name>
-    <message>
-        <source>Mandatory</source>
-        <translation type="obsolete">Obligatoire</translation>
-    </message>
-    <message>
-        <source>Optional</source>
-        <translation type="obsolete">Optionnel</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="obsolete">Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Annuler</translation>
-    </message>
-</context>
-<context>
     <name>MissionPanel</name>
     <message>
         <source>Mission</source>
@@ -2186,10 +1790,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Fragmentary orders</source>
         <translation>Conduites à tenir</translation>
-    </message>
-    <message>
-        <source>Elementary acts</source>
-        <translation type="obsolete">Actes élementaires</translation>
     </message>
     <message>
         <source></source>
@@ -2304,10 +1904,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Objets connus</translation>
     </message>
     <message>
-        <source>Details</source>
-        <translation type="obsolete">Détails</translation>
-    </message>
-    <message>
         <source>Identifier:</source>
         <translation>Identifiant:</translation>
     </message>
@@ -2382,22 +1978,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>TC2:</source>
         <translation>TC2:</translation>
-    </message>
-    <message>
-        <source>NBC cloud/zone</source>
-        <translation type="obsolete">Nuage/zone NBC</translation>
-    </message>
-    <message>
-        <source>NBC agent:</source>
-        <translation type="obsolete">Agent NBC:</translation>
-    </message>
-    <message>
-        <source>ROTA</source>
-        <translation type="obsolete">ROTA</translation>
-    </message>
-    <message>
-        <source>Danger level:</source>
-        <translation type="obsolete">Niveau de danger:</translation>
     </message>
     <message>
         <source>NBC agent(s):</source>
@@ -2582,22 +2162,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>TC2:</translation>
     </message>
     <message>
-        <source>NBC cloud/zone</source>
-        <translation type="obsolete">Nuage/zone NBC</translation>
-    </message>
-    <message>
-        <source>NBC agent:</source>
-        <translation type="obsolete">Agent NBC:</translation>
-    </message>
-    <message>
-        <source>ROTA</source>
-        <translation type="obsolete">ROTA</translation>
-    </message>
-    <message>
-        <source>Danger level:</source>
-        <translation type="obsolete">Niveau de danger:</translation>
-    </message>
-    <message>
         <source>NBC agent(s):</source>
         <translation>Agent(s) NBC:</translation>
     </message>
@@ -2714,164 +2278,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
-    <name>OrderBrowser</name>
-    <message>
-        <source>Ok</source>
-        <translation type="obsolete">Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Annuler</translation>
-    </message>
-</context>
-<context>
-    <name>ParamAgentKnowledgeList</name>
-    <message>
-        <source>Add agent knowledge</source>
-        <translation type="obsolete">Ajouter la connaissance</translation>
-    </message>
-    <message>
-        <source>Agent knowledge %1</source>
-        <translation type="obsolete">Connaissance %1</translation>
-    </message>
-</context>
-<context>
-    <name>ParamAgentList</name>
-    <message>
-        <source>Add agent</source>
-        <translation type="obsolete">Ajouter l&apos;unité</translation>
-    </message>
-    <message>
-        <source>Agent %1:%2</source>
-        <translation type="obsolete">Unité %1 : %2</translation>
-    </message>
-    <message>
-        <source>Add hierarchy</source>
-        <translation type="obsolete">Ajouter la hiérarchie</translation>
-    </message>
-</context>
-<context>
-    <name>ParamAutomatList</name>
-    <message>
-        <source>Add automat</source>
-        <translation type="obsolete">Ajouter l&apos;automate</translation>
-    </message>
-    <message>
-        <source>Automat %1</source>
-        <translation type="obsolete">Automate %1</translation>
-    </message>
-</context>
-<context>
-    <name>ParamHumanWoundList</name>
-    <message>
-        <source>Add...</source>
-        <translation type="obsolete">Ajouter...</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="obsolete">Supprimer</translation>
-    </message>
-</context>
-<context>
-    <name>ParamIntelligenceList</name>
-    <message>
-        <source>Add intelligence</source>
-        <translation type="obsolete">Ajouter le renseignement</translation>
-    </message>
-    <message>
-        <source>Intelligence %1</source>
-        <translation type="obsolete">Renseignement %1</translation>
-    </message>
-</context>
-<context>
-    <name>ParamLimaList</name>
-    <message>
-        <source>Phase line %1</source>
-        <translation type="obsolete">Lima %1</translation>
-    </message>
-    <message>
-        <source>Add line as</source>
-        <translation type="obsolete">Ajouter la lima en tant que</translation>
-    </message>
-</context>
-<context>
-    <name>ParamLocationList</name>
-    <message>
-        <source>Location %1</source>
-        <translation type="obsolete">Position %1</translation>
-    </message>
-</context>
-<context>
-    <name>ParamMissionObjective</name>
-    <message>
-        <source>Location</source>
-        <translation type="obsolete">Position</translation>
-    </message>
-    <message>
-        <source>Schedule</source>
-        <translation type="obsolete">Horaire</translation>
-    </message>
-</context>
-<context>
-    <name>ParamMissionObjectiveList</name>
-    <message>
-        <source>Objective %1</source>
-        <translation type="obsolete">Objectif %1</translation>
-    </message>
-</context>
-<context>
-    <name>ParamObjectKnowledgeList</name>
-    <message>
-        <source>Add object knowledge</source>
-        <translation type="obsolete">Ajouter la connaissance d&apos;objet</translation>
-    </message>
-    <message>
-        <source>Object knowledge %1</source>
-        <translation type="obsolete">Connaissance d&apos;objet %1</translation>
-    </message>
-</context>
-<context>
-    <name>ParamObstacle</name>
-    <message>
-        <source>Type:</source>
-        <translation type="obsolete">Type:</translation>
-    </message>
-    <message>
-        <source>Obstacle type:</source>
-        <translation type="obsolete">Type d&apos;obstacle:</translation>
-    </message>
-    <message>
-        <source>Density</source>
-        <translation type="obsolete">Densité</translation>
-    </message>
-    <message>
-        <source>TC2</source>
-        <translation type="obsolete">TC2</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation type="obsolete">Position</translation>
-    </message>
-    <message>
-        <source>Obstacle type</source>
-        <translation type="obsolete">Type d&apos;obstacle</translation>
-    </message>
-</context>
-<context>
-    <name>ParamObstacleList</name>
-    <message>
-        <source>Obstacle %1</source>
-        <translation type="obsolete">Obstacle %1</translation>
-    </message>
-</context>
-<context>
-    <name>ParamPathList</name>
-    <message>
-        <source>Route %1</source>
-        <translation type="obsolete">Itinéraire %1</translation>
-    </message>
-</context>
-<context>
     <name>PopulationKnowledgePanel</name>
     <message>
         <source>Population knowledges</source>
@@ -2902,14 +2308,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Concentration</translation>
     </message>
     <message>
-        <source>Associated concentration:</source>
-        <translation type="obsolete">Concentration associée:</translation>
-    </message>
-    <message>
-        <source>Location:</source>
-        <translation type="obsolete">Position:</translation>
-    </message>
-    <message>
         <source>Alive people:</source>
         <translation>Personnes en vie:</translation>
     </message>
@@ -2934,20 +2332,12 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Flux</translation>
     </message>
     <message>
-        <source>Associated flow:</source>
-        <translation type="obsolete">Flux associé:</translation>
-    </message>
-    <message>
         <source>Heading:</source>
         <translation>Direction:</translation>
     </message>
     <message>
         <source>Speed:</source>
         <translation>Vitesse:</translation>
-    </message>
-    <message>
-        <source>Known chunks:</source>
-        <translation type="obsolete">Portions connues:</translation>
     </message>
 </context>
 <context>
@@ -3143,10 +2533,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Pause (P)</translation>
     </message>
     <message>
-        <source>Speed factor:</source>
-        <translation type="obsolete">Accélération: </translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
@@ -3201,10 +2587,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Scores</translation>
     </message>
     <message>
-        <source>Plot</source>
-        <translation type="obsolete">Courbe</translation>
-    </message>
-    <message>
         <source>View graph</source>
         <translation>Afficher le graphe</translation>
     </message>
@@ -3246,10 +2628,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>CSV (*.csv)</source>
         <translation>CSV (*.csv)</translation>
-    </message>
-    <message>
-        <source>Time</source>
-        <translation type="obsolete">Temps</translation>
     </message>
 </context>
 <context>
@@ -3499,14 +2877,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Perçu:</translation>
     </message>
     <message>
-        <source>Relevance:</source>
-        <translation type="obsolete">Pertinence:</translation>
-    </message>
-    <message>
-        <source>Level:</source>
-        <translation type="obsolete">Niveau:</translation>
-    </message>
-    <message>
         <source>Progress:</source>
         <translation>Progrès:</translation>
     </message>
@@ -3680,61 +3050,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Last tick speed factor/Mean speed factor</source>
         <translation>Facteur d&apos;accélération dernier tick/moyen</translation>
-    </message>
-    <message>
-        <source>Elevation</source>
-        <translation type="obsolete">Elévation</translation>
-    </message>
-    <message>
-        <source>Raster</source>
-        <translation type="obsolete">Cartes raster</translation>
-    </message>
-    <message>
-        <source>Terrain</source>
-        <translation type="obsolete">Terrain</translation>
-    </message>
-    <message>
-        <source>Watershed</source>
-        <translation type="obsolete">Montée des eaux</translation>
-    </message>
-    <message>
-        <source>Folk</source>
-        <translation type="obsolete">Foule</translation>
-    </message>
-    <message>
-        <source>Intelligence</source>
-        <translation type="obsolete">Renseignement</translation>
-    </message>
-    <message>
-        <source>Objects</source>
-        <translation type="obsolete">Objets</translation>
-    </message>
-    <message>
-        <source>Populations</source>
-        <translation type="obsolete">Populations</translation>
-    </message>
-    <message>
-        <source>Units</source>
-        <translation type="obsolete">Unités</translation>
-    </message>
-    <message>
-        <source>Automats</source>
-        <translation type="obsolete">Automates</translation>
-    </message>
-    <message>
-        <source>Logo</source>
-        <translation type="obsolete">Logo</translation>
-    </message>
-</context>
-<context>
-    <name>kernel</name>
-    <message>
-        <source>Resource</source>
-        <translation type="obsolete">Ressource</translation>
-    </message>
-    <message>
-        <source>Quantity</source>
-        <translation type="obsolete">Quantité</translation>
     </message>
 </context>
 <context>
