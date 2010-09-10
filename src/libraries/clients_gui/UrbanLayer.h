@@ -52,6 +52,7 @@ protected:
     virtual void NotifyCreated( const TerrainObjectProxy& object );
     virtual void NotifyDeleted( const TerrainObjectProxy& object );
     virtual void NotifySelected( const TerrainObjectProxy* object );
+    virtual bool ShouldDisplay( const kernel::Entity_ABC& );
     //@}
 
 private:

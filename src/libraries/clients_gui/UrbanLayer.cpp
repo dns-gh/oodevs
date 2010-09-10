@@ -112,3 +112,12 @@ void UrbanLayer::NotifyDeleted( const TerrainObjectProxy& object )
         selectedObject_ = 0;
     EntityLayer< TerrainObjectProxy >::NotifyDeleted( object );
 }
+
+// -----------------------------------------------------------------------------
+// Name: UrbanLayer::ShouldDisplay
+// Created: LDC 2010-09-10
+// -----------------------------------------------------------------------------
+bool UrbanLayer::ShouldDisplay( const kernel::Entity_ABC& )
+{
+    return true;
+}
