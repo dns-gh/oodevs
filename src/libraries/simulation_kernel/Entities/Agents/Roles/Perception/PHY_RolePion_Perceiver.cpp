@@ -909,8 +909,8 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
                                                                                                            static_cast< float >( perceiverPosition_->rY_ ) ),
                                                                                         maxBlockPerceptionDistance,
                                                                                         perceivableUrbanBlock );
-        for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
-            (**itPerception).Execute( perceivableUrbanBlock );
+        for( std::vector< const urban::TerrainObject_ABC* >::const_iterator itUrban = perceivableUrbanBlock.begin(); itUrban != perceivableUrbanBlock.end(); ++itUrban )
+            NotifyPerception( **itUrban, PHY_PerceptionLevel::identified_ );
 
         TER_PopulationConcentration_ABC::T_PopulationConcentrationVector perceivableConcentrations;
         TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinCircle( *perceiverPosition_, GetMaxAgentPerceptionDistance(), perceivableConcentrations );

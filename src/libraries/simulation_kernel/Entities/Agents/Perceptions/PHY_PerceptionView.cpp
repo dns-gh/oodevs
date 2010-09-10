@@ -323,34 +323,6 @@ void PHY_PerceptionView::Disable()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_PerceptionView::Execute
-// Created: MGD 2009-11-20
-// -----------------------------------------------------------------------------
-void PHY_PerceptionView::Execute( const std::vector< const urban::TerrainObject_ABC* >& perceivables )
-{
-    if( bIsEnabled_ )
-    {
-        for( std::vector< const urban::TerrainObject_ABC* >::const_iterator itBlock = perceivables.begin(); itBlock != perceivables.end(); ++itBlock )
-        {
-            const urban::TerrainObject_ABC& object = **itBlock ;
-            perceiver_.NotifyPerception( object, Compute( object ) );
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionView::Compute
-// Created: MGD 2009-11-20
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const urban::TerrainObject_ABC& /*block*/ ) const
-{
-    if( !bIsEnabled_ )
-        return PHY_PerceptionLevel::notSeen_;
-    else
-        return PHY_PerceptionLevel::identified_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_PerceptionView::FinalizePerception
 // Created: LDC 2010-05-05
 // -----------------------------------------------------------------------------
