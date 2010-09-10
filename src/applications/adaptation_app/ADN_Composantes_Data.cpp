@@ -2110,7 +2110,7 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
 
     logInfos_.WriteArchive( output );
 
-    if( ! attritionBreakdowns_.vBreakdowns_.empty() || !attritionBreakdowns_.vBreakdowns_.empty() )
+    if( ! attritionBreakdowns_.vBreakdowns_.empty() && !attritionBreakdowns_.vBreakdowns_.empty() )
     {
         output << xml::start( "breakdowns" );
         randomBreakdowns_.WriteArchive( output );
