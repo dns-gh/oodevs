@@ -208,7 +208,7 @@
         <mission name="TEST MoveToAgentKnowledgeList"/>
         <mission name="TEST MoveToObjectKnowledgeList"/>
         <mission name="TEST MoveToWithLima">
-            <fragorder name="Deboucher"/>
+          <fragorder name="Deboucher"/>
         </mission>
         <mission name="TEST NeutralizeAgents"/>
         <mission name="TEST Open"/>
