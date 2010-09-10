@@ -69,6 +69,9 @@
         <mission name="COMMUNES Suivre"/>
         <mission name="MELEE Appuyer"/>
         <mission name="MELEE Boucler"/>
+        <mission name="MELEE Contre Attaquer">
+          <fragorder name="Deboucher"/>
+        </mission>
         <mission name="MELEE Controler"/>
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Interdire"/>
@@ -114,7 +117,9 @@
         <mission name="COMMUNES Suivre"/>
         <mission name="MELEE Appuyer"/>
         <mission name="MELEE Boucler"/>
-        <mission name="MELEE Contre Attaquer"/>
+        <mission name="MELEE Contre Attaquer">
+          <fragorder name="Deboucher"/>
+        </mission>
         <mission name="MELEE Controler"/>
         <mission name="MELEE Defendre"/>
         <mission name="MELEE Detruire"/>
