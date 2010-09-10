@@ -18,6 +18,7 @@
         <mission name="MELEE Appuyer"/>
         <mission name="MELEE Boucler"/>
         <mission name="MELEE Controler"/>
+        <mission name="MELEE Couvrir"/>
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Defendre"/>
         <mission name="MELEE Eclairer"/>
@@ -73,8 +74,12 @@
           <fragorder name="Deboucher"/>
         </mission>
         <mission name="MELEE Controler"/>
+        <mission name="MELEE Couvrir"/>
         <mission name="MELEE Eclairer"/>
+        <mission name="MELEE Flanc-Garder"/>
+        <mission name="MELEE Freiner"/>
         <mission name="MELEE Interdire"/>
+        <mission name="MELEE Jalonner"/>
         <mission name="MELEE Reconnaitre Itineraire"/>
         <mission name="MELEE Reconnaitre un Bloc Urbain"/>
         <mission name="MELEE Reduire"/>

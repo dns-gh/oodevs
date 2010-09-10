@@ -835,13 +835,13 @@
       <parameter dia-name="obstacles" name="obstacles" optional="false" type="GenObjectListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Valorize" dia-type="net.masagroup.sword.test.military.platoon.tasks.Valorize" id="2035" name="TEST ValorizeObjects">
-      <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
+      <parameter dia-name="entities" name="obstacles" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Activate" dia-type="net.masagroup.sword.test.military.platoon.tasks.Activate" id="2037" name="TEST ActivateObjects">
-      <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
+      <parameter dia-name="entities" name="obstacles" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Bypass" dia-type="net.masagroup.sword.test.military.platoon.tasks.Bypass" id="2038" name="TEST BypassObjects">
-      <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
+      <parameter dia-name="entities" name="obstacles" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveObserveReconnoiter" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveObserveReconnoiter" id="2039" name="TEST MoveObserveReconnoiter">
       <parameter dia-name="objectives" name="destination" optional="false" type="PointListBM"/>
@@ -1074,6 +1074,34 @@
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Reduire" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Reduire" id="2106" name="MELEE Reduire">
       <parameter dia-name="entities" name="cibles" optional="false" type="AgentKnowledgeListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Couvrir" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Couvrir" id="2107" name="MELEE Couvrir">
+      <parameter dia-name="entities" name="Unites" optional="false" type="AgentListBM"/>
+      <parameter dia-name="positions" name="Positions" optional="false" type="PointListBM"/>
+      <parameter dia-name="objectives" name="Objectif" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="PointBM"/>
+          <parameter type="AreaBM"/>
+          <parameter type="UrbanBlockBM"/>
+        </choice>
+      </parameter>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.FlancGarder" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.FlancGarder" id="2108" name="MELEE Flanc-Garder">
+      <parameter dia-name="entities" name="Unites" optional="false" type="AgentListBM"/>
+      <parameter dia-name="positions" name="Positions" optional="false" type="PointListBM"/>
+      <parameter dia-name="objectives" name="Objectif" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="PointBM"/>
+          <parameter type="AreaBM"/>
+          <parameter type="UrbanBlockBM"/>
+        </choice>
+      </parameter>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Jalonner" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Jalonner" id="2109" name="MELEE Jalonner">
+      <parameter dia-name="positions" name="Positions" optional="false" type="PointListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Freiner" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Freiner" id="2110" name="MELEE Freiner">
+      <parameter dia-name="positions" name="Positions" optional="false" type="PointListBM"/>
     </mission>
   </units>
   <automats>
