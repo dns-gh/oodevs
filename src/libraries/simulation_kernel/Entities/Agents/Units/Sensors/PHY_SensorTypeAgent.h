@@ -102,6 +102,7 @@ private:
     MT_Float                   ComputeEnvironementFactor( PHY_RawVisionData::envBits nEnv ) const;
     MT_Float                   ComputeExtinction        ( const PHY_RawVisionDataIterator& env, MT_Float rDistanceModificator, MT_Float rInitialCoef, bool bIsAroundBU ) const;
     bool                       ComputeUrbanExtinction   ( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, MT_Float& rVisionNRJ ) const;
+    bool                       ComputeGlobalUrbanExtinction( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, MT_Float& rVisionNRJ ) const;
     const MT_Float             ComputeDistanceModificator( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
     const PHY_PerceptionLevel& InterpretExtinction     ( MT_Float rExtinction ) const;
 

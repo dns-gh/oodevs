@@ -506,11 +506,8 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
     geometry::Point2f vSourcePoint( static_cast< float >( vSource.rX_ ), static_cast< float >( vSource.rY_ ) );
     geometry::Point2f vTargetPoint( static_cast< float >( vTarget.rX_ ), static_cast< float >( vTarget.rY_ ) );
 
-    geometry::Point2f center( ( vSourcePoint.X() + vTargetPoint.X() ) * 0.5f, ( vSourcePoint.Y() + vTargetPoint.Y() ) * 0.5f );
-    float radius = vSourcePoint.Distance( vTargetPoint ) * 0.5f;
-
     std::vector< const urban::TerrainObject_ABC* > list;
-    UrbanModel::GetSingleton().GetModel().GetListWithinCircle( center, radius, list );
+    UrbanModel::GetSingleton().GetModel().GetListWithinSegment( vSourcePoint, vTargetPoint, list );
 
     if( !list.empty() )
     {
