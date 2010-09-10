@@ -1072,6 +1072,9 @@
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardLima" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveTowardLima" id="2105" name="TEST MoveToWithLima">
       <parameter dia-name="objectives" name="objectives" optional="false" type="PointListBM"/>
     </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Reduire" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Reduire" id="2106" name="MELEE Reduire">
+      <parameter dia-name="entities" name="cibles" optional="false" type="AgentKnowledgeListBM"/>
+    </mission>
   </units>
   <automats>
     <context>

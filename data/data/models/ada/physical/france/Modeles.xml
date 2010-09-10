@@ -74,6 +74,7 @@
         <mission name="MELEE Interdire"/>
         <mission name="MELEE Reconnaitre Itineraire"/>
         <mission name="MELEE Reconnaitre un Bloc Urbain"/>
+        <mission name="MELEE Reduire"/>
         <mission name="MELEE Soutenir"/>
         <mission name="MELEE Surveiller"/>
         <mission name="MELEE S'emparer De"/>
