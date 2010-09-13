@@ -507,7 +507,7 @@
     </mission>
     <mission dia-behavior="MIS_Pion_LOG_TrierEtTraiterBlesses" dia-type="T_Mission_Pion_LOG_TrierEtTraiterBlesses" id="115" name="LOG Trier Et Traiter Blesses">
       <parameter dia-name="blessuresTraitees_" name="Blessures traitees" optional="false" type="MedicalPriorities"/>
-      <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="true" type="Point"/>
+      <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_LOG_TrierBlesses" dia-type="T_Mission_Pion_LOG_TrierBlesses" id="116" name="LOG Trier Blesses">
       <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="false" type="Point"/>
@@ -974,7 +974,7 @@
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Controler" dia-type="net.masagroup.sword.france.military.platoon.tasks.Controler" id="2075" name="MELEE Controler">
       <parameter dia-name="objectives" name="Zone a controler" optional="false" type="AreaBM"/>
-      <parameter dia-name="obstacles" name="Obstacles" optional="true" type="GenObjectListBM"/>
+      <parameter dia-name="obstacles" name="Obstacles" optional="false" type="GenObjectListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.stabilisation.tasks.Boucler" dia-type="net.masagroup.sword..france.military.platoon.stabilisation.tasks.Boucler" id="2102" name="MELEE Boucler">
       <parameter dia-name="objectives" name="Zones a boucler" optional="false" type="AreaListBM"/>
