@@ -1022,6 +1022,15 @@
         </choice>
       </parameter>
     </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Attaquer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Attaquer" id="2115" name="MELEE Attaquer">
+      <parameter dia-name="objective" name="Objectif à attaquer" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="PointBM"/>
+          <parameter type="AreaBM"/>
+          <parameter type="UrbanBlockBM"/>
+        </choice>
+      </parameter>
+    </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Neutralizer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Neutralizer" id="2090" name="MELEE Neutraliser">
       <parameter dia-name="entities" name="Cibles a neutraliser" optional="false" type="AgentKnowledgeListBM"/>
     </mission>

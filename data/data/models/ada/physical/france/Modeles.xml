@@ -70,6 +70,7 @@
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="MELEE Appuyer"/>
+        <mission name="MELEE Attaquer"/>
         <mission name="MELEE Boucler"/>
         <mission name="MELEE Contre Attaquer">
           <fragorder name="Deboucher"/>
