@@ -22,6 +22,7 @@
 #include "preparation/KnowledgeGroup.h"
 #include "preparation/Automat.h"
 #include "preparation/Agent.h"
+#include "preparation/Object.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/Level.h"
 #include "clients_kernel/CommunicationHierarchies.h"
@@ -135,8 +136,6 @@ void ModelBuilder::CreateLimit( const T_PointVector& points )
     const Entity_ABC* element = selectedFormation_ ? (const Entity_ABC*)selectedFormation_ : (const Entity_ABC*)selectedAutomat_;
     if( element )
         model_.limits_.CreateLimit( points, *const_cast< kernel::Entity_ABC* >( element ) );
-//    else
-//        throw std::exception( tr( "Cannot create a limit at the selected tactical level." ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,8 +147,6 @@ void ModelBuilder::CreateLima( const T_PointVector& points )
     const Entity_ABC* element = selectedFormation_ ? (const Entity_ABC*)selectedFormation_ : (const Entity_ABC*)selectedAutomat_;
     if( element )
         model_.limits_.CreateLima( points, *const_cast< kernel::Entity_ABC* >( element ) );
-//    else
-//        throw std::exception( tr( "Cannot create a phase line at the selected tactical level." ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -162,6 +159,21 @@ void ModelBuilder::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::
     menu.InsertItem( "Command", tr( "Delete" ), this, SLOT( OnDelete() ) );
 }
 
+namespace
+{
+    bool HasHierarchy( const Entity_ABC* entity )
+    {
+        const kernel::Hierarchies* hierarchy = entity->Retrieve< kernel::TacticalHierarchies >();
+        if( !hierarchy || !hierarchy->CreateSubordinateIterator().HasMoreElements() )
+        {
+            hierarchy = entity->Retrieve< kernel::CommunicationHierarchies >();
+            if( !hierarchy || !hierarchy->CreateSubordinateIterator().HasMoreElements() )
+                return false;
+        }
+        return true;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ModelBuilder::OnDelete
 // Created: SBO 2006-09-04
@@ -170,7 +182,11 @@ void ModelBuilder::OnDelete()
 {
     if( toDelete_ )
     {
-        confirmation_->setText( tr( "Delete unit '%1' and all its subordinates?" ).arg( toDelete_->GetName() ) );
+        if( HasHierarchy( toDelete_ ) )
+            confirmation_->setText( tr( "Delete '%1' and all its subordinates?" ).arg( toDelete_->GetName() ) );
+        else
+            confirmation_->setText( tr( "Delete '%1'?" ).arg( toDelete_->GetName() ) );
+        confirmation_->adjustSize();
         confirmation_->show();
     }
 }
