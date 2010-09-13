@@ -22,6 +22,7 @@ using namespace resource;
 NodeElement::NodeElement()
     : model_              ( 0 )
     , resourceId_         ( 0 )
+    , resourceName_       ()
     , isActivated_        ( true )
     , productionCapacity_ ( 0 )
     , stockCapacity_      ( 0 )
@@ -39,9 +40,10 @@ NodeElement::NodeElement()
 // Name: NodeElement constructor
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
-NodeElement::NodeElement( xml::xistream& xis, unsigned long resourceId )
+NodeElement::NodeElement( xml::xistream& xis, unsigned long resourceId, const std::string& resourceName )
     : model_              ( 0 )
     , resourceId_         ( resourceId )
+    , resourceName_       ( resourceName )
     , isActivated_        ( true )
     , productionCapacity_ ( 0 )
     , stockCapacity_      ( 0 )
@@ -62,6 +64,7 @@ NodeElement::NodeElement( xml::xistream& xis, unsigned long resourceId )
 NodeElement::NodeElement( const NodeElement& from )
     : model_              ( 0 )
     , resourceId_         ( from.resourceId_ )
+    , resourceName_       ( from.resourceName_ )
     , isActivated_        ( from.isActivated_ )
     , productionCapacity_ ( from.productionCapacity_ )
     , stockCapacity_      ( from.stockCapacity_ )
@@ -248,7 +251,7 @@ void NodeElement::SetModifier( unsigned int modifier )
 // -----------------------------------------------------------------------------
 void NodeElement::Serialize( Common::ResourceNetwork& msg ) const
 {
-    msg.mutable_resource()->set_id( resourceId_ );
+    msg.mutable_resource()->set_name( resourceName_ );
     msg.set_enabled( isActivated_ );
     if( stockMaxCapacity_ > 0 )
     {

@@ -11,9 +11,9 @@
 #define __ResourceNetworkAttribute_h_
 
 #include "Overridable_ABC.h"
-#include "clients_kernel/Resolver2.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "tools/Resolver.h"
 
 namespace gui
 {
@@ -24,7 +24,7 @@ namespace kernel
 {
     class Controllers;
     class Displayer_ABC;
-    class DotationType;
+    class ResourceNetworkType;
     class PropertiesDictionary;
 }
 
@@ -46,13 +46,13 @@ class ResourceNetworkAttribute : public kernel::ResourceNetwork_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const kernel::Resolver2< kernel::DotationType >& dotationResolver/*, kernel::PropertiesDictionary& dico*/ );
+             ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver );
     virtual ~ResourceNetworkAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual QString GetLinkName( unsigned long resource, unsigned int i ) const;
+    virtual QString GetLinkName( const std::string& resource, unsigned int i ) const;
     virtual void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void SerializeAttributes( xml::xostream& ) const;
     virtual void SetOverriden( bool& overriden ) const;
@@ -71,7 +71,7 @@ private:
     //@{
     void ReadNode( xml::xistream& xis );
     void ReadLink( xml::xistream& xis, ResourceNode& node );
-    void SetColor( unsigned long resource ) const;
+    void SetColor( const std::string& resource ) const;
     //@}
 
 private:
@@ -80,7 +80,7 @@ private:
     kernel::Controllers& controllers_;
     unsigned int id_;
     const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver_;
-    const kernel::Resolver2< kernel::DotationType >& dotationResolver_;
+    const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver_;
     bool needSaving_;
     //@}
 };

@@ -141,7 +141,8 @@ void NodeProperties::Update( const Common::MsgMissionParameter_Value& msg )
     for( int i = 0; i< msg.list_size(); ++i )
     {
         Common::MsgMissionParameter_Value node = msg.list( i );
-        NodeElement* element = Find( node.list( 0 ).identifier() );
+        unsigned int id = tools_.GetResourceId( node.list( 0 ).acharstr() );
+        NodeElement* element = Find( id );
         if( element )
             element->Update( node );
     }
@@ -153,10 +154,11 @@ void NodeProperties::Update( const Common::MsgMissionParameter_Value& msg )
 // -----------------------------------------------------------------------------
 void NodeProperties::ReadNode( xml::xistream& xis )
 {
-    unsigned long resourceId = tools_.GetResourceId( xis.attribute< std::string >( "resource-type" ) );
+    std::string resourceName = xis.attribute< std::string >( "resource-type" );
+    unsigned long resourceId = tools_.GetResourceId( resourceName );
     NodeElement* element = Find( resourceId );
     if( element )
         element->Update( xis );
     else
-        Register( resourceId, *new NodeElement( xis, resourceId ) );
+        Register( resourceId, *new NodeElement( xis, resourceId, resourceName ) );
 }

@@ -41,7 +41,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              NodeElement();
-             NodeElement( xml::xistream& xis, unsigned long resourceId );
+             NodeElement( xml::xistream& xis, unsigned long resourceId, const std::string& resourceName );
              NodeElement( const NodeElement& from );
     virtual ~NodeElement();
     //@}
@@ -90,6 +90,7 @@ private:
     //@{
     const ResourceNetworkModel* model_;
     unsigned long resourceId_;
+    std::string resourceName_;
     T_ResourceLinks links_;
     bool isActivated_;
     unsigned int productionCapacity_;

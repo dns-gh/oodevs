@@ -69,6 +69,7 @@ message PopulationType        { required uint32 id = 1; }
 message ReportType            { required uint32 id = 1; }
 message ResourceType          { required uint32 id = 1; }
 message UnitType              { required uint32 id = 1; }
+message ResourceNetworkType   { required string name = 1; }
 
 // Helpers
 message MsgHeading {
@@ -706,14 +707,14 @@ message ResourceNetwork {
         required int32  capacity  = 3;
         required uint32 flow      = 4;
     }
-    required ResourceType resource    = 1;
-    repeated Link         link        = 2;
-    required bool         enabled     = 3;
-    optional uint32       max_stock   = 4;
-    optional uint32       stock       = 5;
-    optional uint32       production  = 6;
-    optional uint32       consumption = 7;
-    optional bool         critical    = 8;
+    required ResourceNetworkType resource    = 1;
+    repeated Link                link        = 2;
+    required bool                enabled     = 3;
+    optional uint32              max_stock   = 4;
+    optional uint32              stock       = 5;
+    optional uint32              production  = 6;
+    optional uint32              consumption = 7;
+    optional bool                critical    = 8;
 }
 
 message MsgObjectAttributeResourceNetwork {

@@ -22,27 +22,6 @@
 using namespace gui;
 using namespace kernel;
 
-namespace gui
-{
-    class ResourceItem : public QListViewItem
-    {
-    public:
-        ResourceItem( QListView * parent, QString name, unsigned long id )
-            : QListViewItem( parent, name)
-            , id_( id )
-        {}
-
-    public:
-        unsigned long GetId() const
-        {
-            return id_;
-        }
-
-    private:
-        unsigned long id_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: ResourceLinksDialog_ABC constructor
 // Created: JSR 2010-08-24
@@ -169,15 +148,15 @@ void ResourceLinksDialog_ABC::Select( const kernel::Object_ABC& object )
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::Update()
 {
-    ResourceItem* item = static_cast< ResourceItem* >( dotationList_->selectedItem() );
+    QListViewItem* item = dotationList_->selectedItem();
     if( !item )
     {
         dotationList_->setSelected( selectedItem_, true );
         return;
     }
     selectedItem_ = item;
-    unsigned long id = static_cast< ResourceItem* >( item )->GetId();
-    ResourceNetwork_ABC::ResourceNode& node = resourceNodes_[ id ];
+    std::string resource = item->text( 0 ).ascii();
+    ResourceNetwork_ABC::ResourceNode& node = resourceNodes_[ resource ];
     groupBox_->setChecked( node.isEnabled_ );
     production_->setValue( node.production_ );
     consumption_->setValue( node.consumption_ );
@@ -188,7 +167,7 @@ void ResourceLinksDialog_ABC::Update()
     table_->setColumnReadOnly( 0, true );
     for( unsigned int j = 0; j < node.links_.size(); ++j )
     {
-        table_->setText( j, 0, selected_->GetLinkName( id, j ) );
+        table_->setText( j, 0, selected_->GetLinkName( resource, j ) );
         table_->setItem( j, 1, new QCheckTableItem( table_, ""  ) );
         table_->setItem( j, 2, new SpinTableItem( table_, 0, std::numeric_limits< int >::max() ) );
         bool limited = node.links_[ j ].capacity_ != -1;
@@ -204,8 +183,7 @@ void ResourceLinksDialog_ABC::Update()
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::OnActivationChanged( bool on )
 {
-    unsigned long id = static_cast< ResourceItem* >( dotationList_->selectedItem() )->GetId();
-    resourceNodes_[ id ].isEnabled_ = on;
+    resourceNodes_[ dotationList_->selectedItem()->text( 0 ).ascii() ].isEnabled_ = on;
 }
     
 // -----------------------------------------------------------------------------
@@ -214,8 +192,7 @@ void ResourceLinksDialog_ABC::OnActivationChanged( bool on )
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::OnProductionChanged( int value )
 {
-    unsigned long id = static_cast< ResourceItem* >( dotationList_->selectedItem() )->GetId();
-    resourceNodes_[ id ].production_ = value;
+    resourceNodes_[ dotationList_->selectedItem()->text( 0 ).ascii() ].production_ = value;
 }
 
 // -----------------------------------------------------------------------------
@@ -224,8 +201,7 @@ void ResourceLinksDialog_ABC::OnProductionChanged( int value )
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::OnConsumptionChanged( int value )
 {
-    unsigned long id = static_cast< ResourceItem* >( dotationList_->selectedItem() )->GetId();
-    resourceNodes_[ id ].consumption_ = value;
+    resourceNodes_[ dotationList_->selectedItem()->text( 0 ).ascii() ].consumption_ = value;
 }
     
 // -----------------------------------------------------------------------------
@@ -234,8 +210,7 @@ void ResourceLinksDialog_ABC::OnConsumptionChanged( int value )
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::OnCriticalChanged( bool on )
 {
-    unsigned long id = static_cast< ResourceItem* >( dotationList_->selectedItem() )->GetId();
-    resourceNodes_[ id ].critical_ = on;
+    resourceNodes_[ dotationList_->selectedItem()->text( 0 ).ascii() ].critical_ = on;
 }
 
 // -----------------------------------------------------------------------------
@@ -244,8 +219,7 @@ void ResourceLinksDialog_ABC::OnCriticalChanged( bool on )
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::OnMaxStockChanged( int value )
 {
-    unsigned long id = static_cast< ResourceItem* >( dotationList_->selectedItem() )->GetId();
-    resourceNodes_[ id ].maxStock_ = value;
+    resourceNodes_[ dotationList_->selectedItem()->text( 0 ).ascii() ].maxStock_ = value;
 }
 
 // -----------------------------------------------------------------------------
@@ -254,8 +228,7 @@ void ResourceLinksDialog_ABC::OnMaxStockChanged( int value )
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::OnStockChanged( int value )
 {
-    unsigned long id = static_cast< ResourceItem* >( dotationList_->selectedItem() )->GetId();
-    resourceNodes_[ id ].stock_ = value;
+    resourceNodes_[ dotationList_->selectedItem()->text( 0 ).ascii() ].stock_ = value;
 }
 
 // -----------------------------------------------------------------------------
@@ -264,7 +237,7 @@ void ResourceLinksDialog_ABC::OnStockChanged( int value )
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::OnValueChanged( int, int )
 {
-    unsigned long id = static_cast< ResourceItem* >( dotationList_->selectedItem() )->GetId();
+    std::string resource = dotationList_->selectedItem()->text( 0 ).ascii();
     for( int j = 0; j < table_->numRows(); ++j )
     {
         QCheckTableItem* item = static_cast< QCheckTableItem* >( table_->item( j, 1 ) );
@@ -272,7 +245,7 @@ void ResourceLinksDialog_ABC::OnValueChanged( int, int )
         {
             bool enable = static_cast< QCheckTableItem* >( table_->item( j, 1 ) )->isChecked();
             table_->item( j, 2 )->setEnabled( enable );
-            resourceNodes_[ id ].links_[ j ].capacity_ = enable ? table_->text( j, 2 ).toInt() : -1;
+            resourceNodes_[ resource ].links_[ j ].capacity_ = enable ? table_->text( j, 2 ).toInt() : -1;
         }
     }
 }
@@ -284,11 +257,11 @@ void ResourceLinksDialog_ABC::OnValueChanged( int, int )
 void ResourceLinksDialog_ABC::Validate()
 {
     // in case spin boxes have not been validated
-    unsigned long id = static_cast< ResourceItem* >( dotationList_->selectedItem() )->GetId();
-    resourceNodes_[ id ].production_ = production_->value();
-    resourceNodes_[ id ].consumption_ = consumption_->value();
-    resourceNodes_[ id ].maxStock_ = maxStock_->value();
-    resourceNodes_[ id ].stock_ = stock_->value();
+    std::string resource = dotationList_->selectedItem()->text( 0 ).ascii();
+    resourceNodes_[ resource ].production_ = production_->value();
+    resourceNodes_[ resource ].consumption_ = consumption_->value();
+    resourceNodes_[ resource ].maxStock_ = maxStock_->value();
+    resourceNodes_[ resource ].stock_ = stock_->value();
     DoValidate();
     controllers_.controller_.Update( *selected_ );
 }
@@ -316,14 +289,13 @@ void ResourceLinksDialog_ABC::Show()
     resourceNodes_ = selected_->GetResourceNodes();
     for( ResourceNetwork_ABC::CIT_ResourceNodes it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
     {
-        unsigned long id = it->second.resource_;
         if( it == resourceNodes_.begin() )
         {
-            selectedItem_ = new ResourceItem( dotationList_, dotationResolver_.Get( id ).GetCategory().c_str(), id );
+            selectedItem_ = new QListViewItem( dotationList_, it->second.resource_.c_str() );
             dotationList_->setSelected( selectedItem_, true );
         }
         else
-            dotationList_->setSelected( new ResourceItem( dotationList_, dotationResolver_.Get( id ).GetCategory().c_str(), id ), false );
+            dotationList_->setSelected( new QListViewItem( dotationList_, it->second.resource_.c_str() ), false );
     }
     Update();
     pMainLayout_->show();

@@ -39,7 +39,7 @@ class ResourceNetworkAttribute : public UrbanObjectAttribute_ABC
             int capacity_;
             unsigned int flow_;
         };
-        unsigned int resource_;
+        std::string resource_;
         std::vector< Link > links_;
         bool enabled_;
         unsigned int maxStock_;
@@ -75,7 +75,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::map< unsigned int, ResourceNetwork > resourceMap_;
+    std::map< std::string, ResourceNetwork > resourceMap_;
     //@}
 };
 

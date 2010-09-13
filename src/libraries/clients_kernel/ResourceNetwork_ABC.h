@@ -58,7 +58,7 @@ public:
             , maxStock_( 0 )
             , stock_( 0 )
             , totalFlow_( 0 )
-            , resource_( 0 )
+            , resource_()
         {}
 
         bool isEnabled_;
@@ -68,11 +68,11 @@ public:
         unsigned int maxStock_;
         unsigned int stock_;
         unsigned int totalFlow_;
-        unsigned long resource_;
+        std::string resource_;
         std::vector< ResourceLink > links_;
     };
 
-    typedef std::map< unsigned long, ResourceNode > ResourceNodes;
+    typedef std::map< std::string, ResourceNode > ResourceNodes;
     typedef ResourceNodes::const_iterator       CIT_ResourceNodes;
     //@}
 
@@ -85,13 +85,13 @@ public:
 
     //! @name Operations
     //@{
-    virtual QString GetLinkName( unsigned long resource, unsigned int i ) const = 0;
+    virtual QString GetLinkName( const std::string& resource, unsigned int i ) const = 0;
     virtual void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const = 0;
     void Select( bool selected ) { selected_ = selected; }
     bool IsSelected() const { return selected_; }
     const ResourceNodes& GetResourceNodes() const { return resourceNodes_; }
     ResourceNodes& GetResourceNodes() { return resourceNodes_; }
-    const ResourceNode* FindResourceNode( unsigned long resource ) const
+    const ResourceNode* FindResourceNode( std::string resource ) const
     {
         CIT_ResourceNodes it = resourceNodes_.find( resource );
         if( it == resourceNodes_.end() )

@@ -31,4 +31,5 @@
   <missions file="Missions.xml"/>
   <object-names file="ObjectNames.xml"/>
   <urban file="Urban.xml"/>
+  <resource-networks file="ResourceNetworks.xml"/>
 </physical>

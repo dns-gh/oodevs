@@ -28,7 +28,6 @@ namespace gui
 {
 
 class TerrainObjectProxy;
-class ResourceItem;
 
 // =============================================================================
 /** @class  ResourceLinksDialog_ABC
@@ -91,7 +90,7 @@ protected:
     const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
     const kernel::Profile_ABC& profile_;
     const kernel::ResourceNetwork_ABC* selected_;
-    ResourceItem* selectedItem_;
+    QListViewItem* selectedItem_;
     bool urban_;
     unsigned int id_;
     kernel::ResourceNetwork_ABC::ResourceNodes resourceNodes_;

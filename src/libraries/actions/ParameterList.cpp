@@ -13,6 +13,7 @@
 #include "Identifier.h"
 #include "Numeric.h"
 #include "Quantity.h"
+#include "String.h"
 #include "clients_kernel/OrderParameter.h"
 
 #include "protocol/Protocol.h"
@@ -142,6 +143,15 @@ void ParameterList::AddNumeric( const std::string& name, float value )
 void ParameterList::AddQuantity( const std::string& name, int value )
 {
     AddParameter( *new Quantity( OrderParameter( name, "quantity", false ), value ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParameterList::AddString
+// Created: JSR 2010-09-10
+// -----------------------------------------------------------------------------
+void ParameterList::AddString( const std::string& name, const std::string& value )
+{
+    AddParameter( *new String( OrderParameter( name, "string", false ), value ) );
 }
 
     }

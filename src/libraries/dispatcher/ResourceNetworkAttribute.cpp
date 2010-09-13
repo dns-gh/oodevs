@@ -58,7 +58,7 @@ void ResourceNetworkAttribute::Update( const MsgsSimToClient::MsgUrbanAttributes
 // -----------------------------------------------------------------------------
 void ResourceNetworkAttribute::Send( MsgsSimToClient::MsgUrbanAttributes& message ) const
 {
-    for( std::map< unsigned int, ResourceNetwork >::const_iterator it = resourceMap_.begin(); it != resourceMap_.end(); ++it )
+    for( std::map< std::string, ResourceNetwork >::const_iterator it = resourceMap_.begin(); it != resourceMap_.end(); ++it )
         Send( *message.mutable_infrastructures()->add_resource_network(), it->second );
 }
 
@@ -80,7 +80,7 @@ void ResourceNetworkAttribute::Update( const Common::MsgObjectAttributes& messag
 // -----------------------------------------------------------------------------
 void ResourceNetworkAttribute::Send( Common::MsgObjectAttributes& message ) const
 {
-    for( std::map< unsigned int, ResourceNetwork >::const_iterator it = resourceMap_.begin(); it != resourceMap_.end(); ++it )
+    for( std::map< std::string, ResourceNetwork >::const_iterator it = resourceMap_.begin(); it != resourceMap_.end(); ++it )
         Send( *message.mutable_resource_networks()->add_network(), it->second );
 }
 
@@ -90,8 +90,8 @@ void ResourceNetworkAttribute::Send( Common::MsgObjectAttributes& message ) cons
 // -----------------------------------------------------------------------------
 void ResourceNetworkAttribute::Update( const Common::ResourceNetwork& from )
 {
-    ResourceNetwork& to = resourceMap_[ from.resource().id() ];
-    to.resource_ = from.resource().id();
+    ResourceNetwork& to = resourceMap_[ from.resource().name() ];
+    to.resource_ = from.resource().name();
     to.enabled_ = from.enabled();
     to.maxStock_ = from.has_max_stock() ? from.max_stock() : 0;
     to.stock_ = from.has_stock() ? from.stock() : 0;
@@ -120,7 +120,7 @@ void ResourceNetworkAttribute::Update( const Common::ResourceNetwork& from )
 // -----------------------------------------------------------------------------
 void ResourceNetworkAttribute::Send( Common::ResourceNetwork& message, const ResourceNetwork& network ) const
 {
-    message.mutable_resource()->set_id( network.resource_ );
+    message.mutable_resource()->set_name( network.resource_ );
     message.set_enabled( network.enabled_ );
     if( network.maxStock_ )
         message.set_max_stock( network.maxStock_ );

@@ -9,8 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "ResourceTools.h"
-#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
-#include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
+#include "PHY_ResourceNetworkType.h"
 #include "boost/lexical_cast.hpp"
 
 // -----------------------------------------------------------------------------
@@ -37,10 +36,10 @@ ResourceTools::~ResourceTools()
 // -----------------------------------------------------------------------------
 const std::string& ResourceTools::GetResourceName( unsigned long id ) const
 {
-    const PHY_DotationCategory* category = PHY_DotationType::FindDotationCategory( id );
-    if( !category )
-        throw std::runtime_error( "Bad resource Id :" + boost::lexical_cast< std::string >( id ) );
-    return category->GetName();
+    const PHY_ResourceNetworkType* resourceNetwork = PHY_ResourceNetworkType::Find( id );
+    if( !resourceNetwork )
+        throw std::runtime_error( "Bad resource network Id :" + boost::lexical_cast< std::string >( id ) );
+    return resourceNetwork->GetName();
 }
 
 // -----------------------------------------------------------------------------
@@ -49,8 +48,8 @@ const std::string& ResourceTools::GetResourceName( unsigned long id ) const
 // -----------------------------------------------------------------------------
 unsigned long ResourceTools::GetResourceId( const std::string& name ) const
 {
-    const PHY_DotationCategory* category = PHY_DotationType::FindDotationCategory( name );
-    if( !category )
+    const PHY_ResourceNetworkType* resourceNetwork = PHY_ResourceNetworkType::Find( name );
+    if( !resourceNetwork )
         throw std::runtime_error( "Bad resource name :" + name );
-    return category->GetMosID();
+    return resourceNetwork->GetId();
 }

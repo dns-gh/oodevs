@@ -17,6 +17,7 @@
 #include "MedicalTreatmentType.h"
 #include "NBCAgent.h"
 #include "ObjectType.h"
+#include "ResourceNetworkType.h"
 #include "VolumeType.h"
 #include "WeaponSystemType.h"
 #include <boost/bind.hpp>
@@ -60,7 +61,8 @@ void ObjectTypes::Load( const tools::ExerciseConfig& config )
         .Load( "nbc", boost::bind( &ObjectTypes::ReadNBC, this, _1 ) )
         .Load( "fire", boost::bind( &ObjectTypes::ReadFire, this, _1 ) )
         .Load( "medical-treatment", boost::bind( &ObjectTypes::ReadMedicalTreatment, this, _1 ) )
-        .Load( "breakdowns", boost::bind( &ObjectTypes::ReadBreakdowns, this, _1 ) );
+        .Load( "breakdowns", boost::bind( &ObjectTypes::ReadBreakdowns, this, _1 ) )
+        .Load( "resource-networks", boost::bind( &ObjectTypes::ReadResourceNetworks, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,6 +80,7 @@ void ObjectTypes::Purge()
     Resolver2< FireClass >::DeleteAll();
     Resolver2< MedicalTreatmentType >::DeleteAll();
     tools::Resolver< VolumeType >::DeleteAll();
+    tools::StringResolver< ResourceNetworkType >::DeleteAll();
     nVolumeId = 0;
 }
 
@@ -267,4 +270,23 @@ void ObjectTypes::ReadVolume( xml::xistream& xis )
 {
     VolumeType* volume = new VolumeType( xis, nVolumeId++ );
     tools::Resolver< VolumeType >::Register( volume->GetId(), *volume );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadResourceNetworks
+// Created: JSR 2010-09-10
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadResourceNetworks( xml::xistream& xis )
+{
+    xis >> xml::start( "resource-networks" ) >> xml::list( "resource-network", *this, &ObjectTypes::ReadResourceNetwork );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadResourceNetwork
+// Created: JSR 2010-09-10
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadResourceNetwork( xml::xistream& xis )
+{
+    ResourceNetworkType* type = new ResourceNetworkType( xis );
+    tools::StringResolver< ResourceNetworkType >::Register( type->GetName(), *type );
 }

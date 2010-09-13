@@ -75,6 +75,7 @@
 #include "simulation_kernel/PopulationFactory.h"
 #include "simulation_kernel/Knowledge/KnowledgeGroupFactory.h"
 #include "simulation_kernel/UrbanType.h"
+#include "simulation_kernel/PHY_ResourceNetworkType.h"
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_ProfilerMgr.h"
 #include "Tools/MIL_Tools.h"
@@ -136,6 +137,7 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     InitializeType< PHY_Protection                 >( xis, config, "protections"        );
     InitializeType< PHY_DotationNature             >( xis, config, "dotation-natures"   );
     InitializeType< PHY_DotationType               >( xis, config, "dotations"          );
+    InitializeType< PHY_ResourceNetworkType        >( xis, config, "resource-networks"  );
     InitializeType< MIL_ObjectFactory              >( xis, config, "objects"            );
     InitializeType< PHY_BreakdownType              >( xis, config, "breakdowns"         );
     InitializeType< PHY_LauncherType               >( xis, config, "launchers"          );

@@ -86,6 +86,7 @@
 #include "simulation_kernel/Knowledge/KnowledgeGroupFactory.h"
 #include "simulation_kernel/Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "simulation_kernel/Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "simulation_kernel/PHY_ResourceNetworkType.h"
 #include "simulation_kernel/UrbanModel.h"
 #include "simulation_kernel/UrbanType.h"
 #include "Tools/MIL_IDManager.h"
@@ -225,7 +226,8 @@ MIL_EntityManager::~MIL_EntityManager()
     PHY_MaintenanceResourcesAlarms::Terminate();
     PHY_MedicalResourcesAlarms    ::Terminate();
     MIL_LimaFunction              ::Terminate();
-    UrbanType                      ::Terminate();
+    UrbanType                     ::Terminate();
+    PHY_ResourceNetworkType       ::Terminate();
 
     delete pObjectManager_;
 }

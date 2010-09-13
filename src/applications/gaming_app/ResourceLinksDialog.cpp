@@ -64,7 +64,7 @@ void ResourceLinksDialog::DoValidate()
     {
         const ResourceNetwork_ABC::ResourceNode& resource = it->second;
         ParameterList& node = nodes->AddList( "Node" );
-        node.AddIdentifier( "Resource", resource.resource_ );
+        node.AddString( "Resource", resource.resource_ );
         node.AddQuantity( "Consumption", resource.consumption_ );
         node.AddBool( "Critical", resource.critical_ );
         node.AddBool( "Enabled", resource.isEnabled_ );

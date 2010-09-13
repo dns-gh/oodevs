@@ -75,6 +75,7 @@ class PopulationType;
 class ReportType;
 class ResourceType;
 class UnitType;
+class ResourceNetworkType;
 class MsgHeading;
 class MsgDateTime;
 class MsgDotationStock;
@@ -4712,6 +4713,97 @@ class UnitType : public ::google::protobuf::Message {
   
   void InitAsDefaultInstance();
   static UnitType* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ResourceNetworkType : public ::google::protobuf::Message {
+ public:
+  ResourceNetworkType();
+  virtual ~ResourceNetworkType();
+  
+  ResourceNetworkType(const ResourceNetworkType& from);
+  
+  inline ResourceNetworkType& operator=(const ResourceNetworkType& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ResourceNetworkType& default_instance();
+  void Swap(ResourceNetworkType* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ResourceNetworkType* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ResourceNetworkType& from);
+  void MergeFrom(const ResourceNetworkType& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required string name = 1;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 1;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::std::string* name_;
+  static const ::std::string _default_name_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ResourceNetworkType* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -12399,12 +12491,12 @@ class ResourceNetwork : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.ResourceType resource = 1;
+  // required .Common.ResourceNetworkType resource = 1;
   inline bool has_resource() const;
   inline void clear_resource();
   static const int kResourceFieldNumber = 1;
-  inline const ::Common::ResourceType& resource() const;
-  inline ::Common::ResourceType* mutable_resource();
+  inline const ::Common::ResourceNetworkType& resource() const;
+  inline ::Common::ResourceNetworkType* mutable_resource();
   
   // repeated .Common.ResourceNetwork.Link link = 2;
   inline int link_size() const;
@@ -12462,7 +12554,7 @@ class ResourceNetwork : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::ResourceType* resource_;
+  ::Common::ResourceNetworkType* resource_;
   ::google::protobuf::RepeatedPtrField< ::Common::ResourceNetwork_Link > link_;
   bool enabled_;
   ::google::protobuf::uint32 max_stock_;
@@ -14106,6 +14198,52 @@ inline ::google::protobuf::uint32 UnitType::id() const {
 inline void UnitType::set_id(::google::protobuf::uint32 value) {
   _set_bit(0);
   id_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// ResourceNetworkType
+
+// required string name = 1;
+inline bool ResourceNetworkType::has_name() const {
+  return _has_bit(0);
+}
+inline void ResourceNetworkType::clear_name() {
+  if (name_ != &_default_name_) {
+    name_->clear();
+  }
+  _clear_bit(0);
+}
+inline const ::std::string& ResourceNetworkType::name() const {
+  return *name_;
+}
+inline void ResourceNetworkType::set_name(const ::std::string& value) {
+  _set_bit(0);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void ResourceNetworkType::set_name(const char* value) {
+  _set_bit(0);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void ResourceNetworkType::set_name(const char* value, size_t size) {
+  _set_bit(0);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* ResourceNetworkType::mutable_name() {
+  _set_bit(0);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  return name_;
 }
 
 // -------------------------------------------------------------------
@@ -18114,20 +18252,20 @@ inline void ResourceNetwork_Link::set_flow(::google::protobuf::uint32 value) {
 
 // ResourceNetwork
 
-// required .Common.ResourceType resource = 1;
+// required .Common.ResourceNetworkType resource = 1;
 inline bool ResourceNetwork::has_resource() const {
   return _has_bit(0);
 }
 inline void ResourceNetwork::clear_resource() {
-  if (resource_ != NULL) resource_->::Common::ResourceType::Clear();
+  if (resource_ != NULL) resource_->::Common::ResourceNetworkType::Clear();
   _clear_bit(0);
 }
-inline const ::Common::ResourceType& ResourceNetwork::resource() const {
+inline const ::Common::ResourceNetworkType& ResourceNetwork::resource() const {
   return resource_ != NULL ? *resource_ : *default_instance_->resource_;
 }
-inline ::Common::ResourceType* ResourceNetwork::mutable_resource() {
+inline ::Common::ResourceNetworkType* ResourceNetwork::mutable_resource() {
   _set_bit(0);
-  if (resource_ == NULL) resource_ = new ::Common::ResourceType;
+  if (resource_ == NULL) resource_ = new ::Common::ResourceNetworkType;
   return resource_;
 }
 

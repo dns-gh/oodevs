@@ -29,6 +29,7 @@ namespace kernel
     class WeaponSystemType;
     class FireClass;
     class MedicalTreatmentType;
+    class ResourceNetworkType;
     class VolumeType;
 
 // =============================================================================
@@ -40,13 +41,14 @@ namespace kernel
 class ObjectTypes
     : public tools::StringResolver< ObjectType >
     , public Resolver2< DotationType > // $$$$ AGE 2006-04-05: pas du tout des objets...
-    , public  tools::Resolver< WeaponSystemType, std::string >
-    , public  tools::Resolver< EquipmentType >
+    , public tools::Resolver< WeaponSystemType, std::string >
+    , public tools::Resolver< EquipmentType >
     , public Resolver2< NBCAgent >
     , public Resolver2< FireClass >
     , public Resolver2< MedicalTreatmentType >
-    , public  tools::Resolver< BreakdownType >
-    , public  tools::Resolver< VolumeType >
+    , public tools::Resolver< BreakdownType >
+    , public tools::Resolver< VolumeType >
+    , public tools::StringResolver< ResourceNetworkType >
 {
 public:
     //! @name Constructors/Destructor
@@ -90,6 +92,8 @@ private:
     void ReadBreakdown( xml::xistream& xis );
     void ReadVolumes( xml::xistream& xis );
     void ReadVolume( xml::xistream& xis );
+    void ReadResourceNetworks( xml::xistream& xis );
+    void ReadResourceNetwork( xml::xistream& xis );
     //@}
 
 private:

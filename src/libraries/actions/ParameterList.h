@@ -48,6 +48,7 @@ public:
     void AddIdentifier( const std::string& name, unsigned int id );
     void AddNumeric   ( const std::string& name, float value );
     void AddQuantity  ( const std::string& name, int value );
+    void AddString    ( const std::string& name, const std::string& value );
     //@}
 
 private:

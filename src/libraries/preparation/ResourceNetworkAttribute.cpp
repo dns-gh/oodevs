@@ -12,7 +12,7 @@
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/DotationType.h"
+#include "clients_kernel/ResourceNetworkType.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include <boost/bind.hpp>
@@ -24,11 +24,11 @@ using namespace geometry;
 // Name: ResourceNetworkAttribute constructor
 // Created: JSR 2010-09-07
 // -----------------------------------------------------------------------------
-ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const kernel::Resolver2< kernel::DotationType >& dotationResolver )
+ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver )
     : controllers_( controllers )
     , id_( id )
     , urbanResolver_( urbanResolver )
-    , dotationResolver_( dotationResolver )
+    , resourceNetworkResolver_( resourceNetworkResolver )
     , needSaving_( false )
 {
     xis >> xml::list( "node", *this, &ResourceNetworkAttribute::ReadNode );
@@ -47,7 +47,7 @@ ResourceNetworkAttribute::~ResourceNetworkAttribute()
 // Name: ResourceNetworkAttribute::GetLinkName
 // Created: JSR 2010-09-07
 // -----------------------------------------------------------------------------
-QString ResourceNetworkAttribute::GetLinkName( unsigned long resource, unsigned int i ) const
+QString ResourceNetworkAttribute::GetLinkName( const std::string& resource, unsigned int i ) const
 {
     const ResourceNode* node = FindResourceNode( resource );
     if( node == 0 || i >= node->links_.size() )
@@ -135,11 +135,8 @@ void ResourceNetworkAttribute::SerializeAttributes( xml::xostream& xos ) const
         for( CIT_ResourceNodes it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
         {
             const ResourceNetwork_ABC::ResourceNode& node = it->second;
-            kernel::DotationType* type = dotationResolver_.Find( node.resource_ );
-            if( !type )
-                throw std::runtime_error( "Bad resource Id: " + node.resource_ );
             xos << xml::start( "node" )
-                << xml::attribute( "resource-type", type->GetCategory() )
+                << xml::attribute( "resource-type", node.resource_ )
                 << xml::attribute( "enabled", node.isEnabled_ )
                 << xml::attribute( "production", node.production_ )
                 << xml::attribute( "consumption", node.consumption_ )
@@ -197,11 +194,8 @@ void ResourceNetworkAttribute::Update( const kernel::ResourceNetwork_ABC::Resour
 void ResourceNetworkAttribute::ReadNode( xml::xistream& xis )
 {
     std::string resource = xis.attribute< std::string >( "resource-type" );
-    kernel::DotationType* type = dotationResolver_.Find( resource );
-    if( !type )
-        throw std::runtime_error( "Bad resource name: " + resource );
-    ResourceNode& node = resourceNodes_[ type->GetId() ];
-    node.resource_ = type->GetId();
+    ResourceNode& node = resourceNodes_[ resource ];
+    node.resource_ = resource;
     xis >> xml::optional >> xml::attribute( "enabled", node.isEnabled_ )
         >> xml::optional >> xml::attribute( "production", node.production_ )
         >> xml::optional >> xml::attribute( "stock", node.maxStock_ )
@@ -238,21 +232,9 @@ void ResourceNetworkAttribute::ReadLink( xml::xistream& xis, ResourceNode& node 
 // Name: ResourceNetworkAttribute::SetColor
 // Created: JSR 2010-08-20
 // -----------------------------------------------------------------------------
-void ResourceNetworkAttribute::SetColor( unsigned long resource ) const
+void ResourceNetworkAttribute::SetColor( const std::string& resource ) const
 {
-    // TODO temp régler les couleurs en fonction de la dotation (par ADN?)
-    int tmp = resource % 3;
-    switch( tmp )
-    {
-    default:
-    case 0:
-        glColor4f( 0.2f, 0.2f, 0.6f,  1.0f );
-        break;
-    case 1:
-        glColor4f( 0.4f, 0.4f, 0.4f,  1.0f );
-        break;
-    case 2:
-        glColor4f( 0.4f, 0.4f, 0.7f,  1.0f );
-        break;
-    }
+    float red, green, blue;
+    resourceNetworkResolver_.Get( resource ).GetColor( red, green, blue );
+    glColor3f( red, green, blue );
 }
