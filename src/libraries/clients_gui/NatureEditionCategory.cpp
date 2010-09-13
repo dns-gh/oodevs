@@ -141,6 +141,11 @@ void NatureEditionCategory::SetNature( const QString& nature )
         QString newNature = list.join( "/" );
         next_->SetNature( newNature );
     }
+    else if( next_ )
+    {
+        QString empty;
+        next_->SetNature( empty );
+    }
 }
 
 // -----------------------------------------------------------------------------
