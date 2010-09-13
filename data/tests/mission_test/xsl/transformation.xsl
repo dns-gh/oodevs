@@ -241,7 +241,7 @@ end
             </xsl:when>
 
             <xsl:when test="@type = 'AgentKnowledge' or @type = 'AgentKnowledgeBM'">
-                <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = '</xsl:text><xsl:value-of select="@type"/><xsl:text>', value = config.id.redUnit } )</xsl:text>
+                <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "</xsl:text><xsl:value-of select="@type"/><xsl:text>", value = config.id.redUnit } )</xsl:text>
             </xsl:when>
 
             <xsl:when test="@type = 'Datetime'">

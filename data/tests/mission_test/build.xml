@@ -46,7 +46,6 @@
             <arg value="deploy.sh"/>
             <arg value="${unitPerExercise}"/>
         </exec>
-        <delete dir="${exercises}/${testName}"/>
         <mkdir dir="${exercises}/${testName}"/>
         <copy todir="${exercises}/${testName}">
             <fileset dir="${output}/exercises"/>
