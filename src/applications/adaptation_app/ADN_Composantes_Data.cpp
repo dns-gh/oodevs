@@ -713,7 +713,7 @@ ADN_Composantes_Data::BreakdownGroupInfos::BreakdownGroupInfos( const std::strin
 // -----------------------------------------------------------------------------
 ADN_Composantes_Data::BreakdownGroupInfos::~BreakdownGroupInfos()
 {
-    vBreakdowns_.Reset();
+    vBreakdowns_.Delete();
 }
 
 // -----------------------------------------------------------------------------
@@ -1777,18 +1777,12 @@ ADN_Composantes_Data::ComposanteInfos::ComposanteInfos()
 //-----------------------------------------------------------------------------
 ADN_Composantes_Data::ComposanteInfos::~ComposanteInfos()
 {
-    vSpeeds_.Reset();
-    vWeapons_.Reset();
-    vActiveProtections_.Reset();
-    vSensors_.Reset();
-    vRadars_.Reset();
-    vObjects_.Reset();
-
-    for( int iTerrain=0; iTerrain < eNbrLocation; ++iTerrain )
-    {
-        SpeedInfos * pNewSpeedInfos = new SpeedInfos( (E_Location)iTerrain );
-        vSpeeds_.AddItem(pNewSpeedInfos);
-    }
+    vSpeeds_.Delete();
+    vWeapons_.Delete();
+    vActiveProtections_.Delete();
+    vSensors_.Delete();
+    vRadars_.Delete();
+    vObjects_.Delete();
 }
 
 // -----------------------------------------------------------------------------
@@ -2167,7 +2161,7 @@ void ADN_Composantes_Data::FilesNeeded(T_StringList& files) const
 void ADN_Composantes_Data::Reset()
 {
     nNextId_ = 1;
-    vComposantes_.Reset();
+    vComposantes_.Delete();
 }
 
 // -----------------------------------------------------------------------------

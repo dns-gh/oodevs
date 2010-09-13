@@ -236,6 +236,16 @@ void ADN_Type_Vector_ABC<T>::Reset()
     MT_DELETEOWNED(vTmp);
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Type_Vector_ABC::Delete
+// Created: LDC 2010-09-13
+// -----------------------------------------------------------------------------
+template <class T>
+void ADN_Type_Vector_ABC<T>::Delete()
+{
+    ADN_Type_Vector_ABC<T>& vTmp=*this;
+    MT_DELETEOWNED( vTmp );
+}
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_Vector_ABC<T>::SetDataPrivate

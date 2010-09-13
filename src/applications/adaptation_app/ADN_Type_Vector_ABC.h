@@ -37,8 +37,9 @@ public:
 
     virtual void Initialize( ADN_Connector_Vector_ABC& dest ) const;
 
-    virtual void  EndVector();
-            void  Reset();
+    virtual void EndVector();
+            void Reset();
+            void Delete();
 
     virtual std::string GetNodeName();
     void SetNodeName( const std::string& strNodeName );

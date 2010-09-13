@@ -71,8 +71,6 @@ ADN_MissionTypes_Table::ADN_MissionTypes_Table( QWidget* pParent, const char* sz
 
     // connector creation
     pConnector_=new ADN_CT_MissionTypes(*this);
-    connect( this, SIGNAL( currentChanged( int, int ) ), SLOT( OnCurrentChanged() ) );
-    connect( this, SIGNAL( selectionChanged() ), SLOT( OnCurrentChanged() ) );
 }
 
 // -----------------------------------------------------------------------------
