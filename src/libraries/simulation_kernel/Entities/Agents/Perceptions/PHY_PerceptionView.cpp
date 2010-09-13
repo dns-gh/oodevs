@@ -113,12 +113,14 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Agent_ABC& tar
     {
         CIT_PerceptionTickMap it = perceptionsUnderway_.find( &target );
         unsigned int tick = 0;
-        float roll = static_cast< float >( MIL_Random::rand_ii( MIL_Random::ePerception ) );
+        float roll = 0.f;
         if( it != perceptionsUnderway_.end() )
         {
             tick = it->second.first;
             roll = it->second.second;
         }
+        else
+            roll = static_cast< float >( MIL_Random::rand_ii( MIL_Random::ePerception ) );
         perceptionsBuffer_[ &target ] = std::pair< unsigned int, float >( tick + 1, roll );
         PHY_ZURBPerceptionComputer computer( perceiver_.GetPion(), roll, tick );
         return computer.ComputePerception( target );
@@ -367,14 +369,14 @@ void PHY_PerceptionView::TransfertPerception()
             }
         }
 
-        wasInCity_ = isInCity;
+        wasInCity_ = true;
     }
     else if( !isInCity && wasInCity_ )
     {
         const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
         for( PHY_RoleInterface_Perceiver::IT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
             itSurface->second.TransfertPerception( perceptionsUnderway_ );
-        wasInCity_ = isInCity;
+        wasInCity_ = false;
     }
 
 }

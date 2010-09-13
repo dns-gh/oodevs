@@ -542,7 +542,10 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
                         intersectionDistance = ( *intersectPoints.begin() ).Distance( *intersectPoints.rbegin() );
 
                     MT_Float rDistanceModificator = urbanBlockFactors_[ UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId() ];
-                    rDistanceModificator <= MT_Epsilon ? rVisionNRJ = -1 : rVisionNRJ = rVisionNRJ + intersectionDistance * ( 1 - 1 / rDistanceModificator );
+                    if( rDistanceModificator <= MT_Epsilon )
+                        rVisionNRJ = -1 ;
+                    else
+                        rVisionNRJ += intersectionDistance * ( 1 - 1 / rDistanceModificator );
                 }
             }
         }
