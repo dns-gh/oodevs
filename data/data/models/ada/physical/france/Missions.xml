@@ -1059,7 +1059,7 @@
     <mission dia-behavior="net.masagroup.sword.military.platoon.tasks.RealizeTacticalObject" dia-type="net.masagroup.sword.military.platoon.tasks.RealizeTacticalObject" id="2036" name="GENIE Realiser Travaux">
       <parameter dia-name="entities" name="Travaux a realiser" optional="false" type="GenObjectListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.ActiverObstacles" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.ActiverObstacles" id="2104" name="GENIE ActiverObstacles">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.ActiverObstacles" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.ActiverObstacles" id="2104" name="GENIE ActiverObstacles">
       <parameter dia-name="obstacles" name="obstacles" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.DegagerObstacles" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.DegagerObstacles" id="2112" name="GENIE Degager Obstacles">
