@@ -550,8 +550,12 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <translation>Confirmation</translation>
     </message>
     <message>
-        <source>Delete unit &apos;%1&apos; and all its subordinates?</source>
-        <translation>Supprimer l&apos;unité &quot;%1&quot; et ses subordonnés ?</translation>
+        <source>Delete &apos;%1&apos; and all its subordinates?</source>
+        <translation>Supprimer &quot;%1&quot; et ses subordonnés ?</translation>
+    </message>
+    <message>
+        <source>Delete &apos;%1&apos;?</source>
+        <translation>Supprimer &quot;%1&quot; ?</translation>
     </message>
 </context>
 <context>
