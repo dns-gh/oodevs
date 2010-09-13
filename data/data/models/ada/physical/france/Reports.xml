@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <reports xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Reports.xsd">
   <report id="0" message="ras"/>
-  <report id="1" message="en poste face a obstacle">
+  <report id="1" message="en poste face a obstacle : %1">
     <parameter type="ObjectKnowledge"/>
   </report>
   <report id="2" message="en contournement obstacle"/>
@@ -28,11 +28,11 @@
   <report id="21" message="en couverture"/>
   <report id="22" message="en eclairage"/>
   <report id="23" message="en manoeuvre ravitaillement"/>
-  <report id="24" message="sur pia">
+  <report id="24" message="sur pia : %1">
     <parameter type="Agent"/>
   </report>
   <report id="25" message="passage sur pia"/>
-  <report id="26" message="unite recueillie">
+  <report id="26" message="unite recueillie : %1">
     <parameter type="Agent"/>
   </report>
   <report id="27" message="en cours de franchissement"/>
@@ -42,22 +42,22 @@
   <report id="31" message="en esquive"/>
   <report id="32" message="prise contact"/>
   <report id="33" message="rupture contact"/>
-  <report id="34" message="precision contact">
+  <report id="34" message="precision contact : %1">
     <parameter type="AgentKnowledge"/>
   </report>
-  <report id="35" message="ennemi detruit">
+  <report id="35" message="ennemi detruit : %1">
     <parameter type="AgentKnowledge"/>
   </report>
   <report id="36" message="pris a partie par tir direct"/>
   <report id="37" message="pris sous tir artillerie"/>
-  <report id="38" message="point tenu par eni">
+  <report id="38" message="point tenu par eni : %1">
     <parameter type="AgentKnowledge"/>
   </report>
-  <report id="39" message="progression vers eni">
+  <report id="39" message="progression vers eni : %1">
     <parameter type="AgentKnowledge"/>
   </report>
   <report id="40" message="decroche"/>
-  <report id="41" message="eni sur objectif">
+  <report id="41" message="eni sur objectif : %1">
     <parameter type="AgentKnowledge"/>
   </report>
   <report id="42" message="riposte"/>
@@ -84,14 +84,14 @@
   <report id="63" message="debut liaison"/>
   <report id="64" message="fin liaison"/>
   <report id="65" message="etablissement liaison impossible"/>
-  <report id="66" message="unite trop distante">
+  <report id="66" message="unite trop distante : %1">
     <parameter type="Agent"/>
   </report>
   <report id="67" message="enregistrement donnes"/>
   <report id="68" message="exploitation donnees"/>
   <report id="69" message="extraction donnes"/>
-  <report id="70" message="releve">
-    <parameter type="Agent"/>
+  <report id="70" message="releve : %1">
+    <parameter type="AgentKnowledge"/>
   </report>
   <report id="71" message="suit unite"/>
   <report id="72" message="passe en appui"/>
@@ -124,15 +124,15 @@
   <report id="86" message="attente renforcement"/>
   <report id="87" message="debut exploitation site franchissement"/>
   <report id="88" message="fin exploitation site franchissement"/>
-  <report id="89" message="reussite renforcement">
+  <report id="89" message="reussite renforcement : %1">
     <parameter type="Agent"/>
     <parameter type="Agent"/>
   </report>
-  <report id="90" message="echec renforcement">
+  <report id="90" message="echec renforcement : %1">
     <parameter type="Agent"/>
     <parameter type="Agent"/>
   </report>
-  <report id="91" message="obstacle en attente activation">
+  <report id="91" message="obstacle en attente activation : %1">
     <parameter type="ObjectKnowledge"/>
   </report>
   <report id="92" message="debut amenagement berges"/>
@@ -140,17 +140,17 @@
   <report id="94" message="regime maintenance delai depasse"/>
   <report id="95" message="section deployee"/>
   <report id="96" message="a nouveau disponible apres reparation"/>
-  <report id="97" message="materiel retour de maintenance">
+  <report id="97" message="materiel retour de maintenance : %1">
     <parameter type="EquipmentType"/>
   </report>
-  <report id="98" message="materiel repare sur place">
+  <report id="98" message="materiel repare sur place : %1">
     <parameter type="EquipmentType"/>
   </report>
   <report id="99" message="demande ravitaillement dotations"/>
   <report id="100" message="demande ravitaillement stock"/>
   <report id="101" message="demande evacuation sanitaire"/>
   <report id="102" message="demande evacuation materiel"/>
-  <report id="103" message="allocation consentie bientot epuisee">
+  <report id="103" message="allocation consentie bientot epuisee : %1">
     <parameter type="DotationType"/>
   </report>
   <report id="104" message="depassement capacite stockage"/>
@@ -192,10 +192,10 @@
   <report id="136" message="ravitaillement termine"/>
   <report id="137" message="helicoptere en observation"/>
   <report id="138" message="perte info guidage"/>
-  <report id="139" message="transport unite pas prete">
+  <report id="139" message="transport unite pas prete : %1">
     <parameter type="Agent"/>
   </report>
-  <report id="140" message="transport unite prete">
+  <report id="140" message="transport unite prete : %1">
     <parameter type="Agent"/>
   </report>
   <report id="141" message="transport en cours"/>
@@ -278,23 +278,23 @@
   <report id="216" message="tir restreint"/>
   <report id="217" message="tir interdit"/>
   <report id="218" message="tir libre"/>
-  <report id="219" message="trace">
+  <report id="219" message="trace : %1">
     <parameter type="String"/>
   </report>
-  <report id="220" message="trace id">
+  <report id="220" message="trace id : %1">
     <parameter type="Numeric"/>
   </report>
   <report id="221" message="emploi force interdit"/>
   <report id="222" message="maintien a distance par moyens non letaux"/>
   <report id="223" message="dispersion par moyens de defense actifs"/>
   <report id="224" message="armes letales autorisees"/>
-  <report id="225" message="population detectee">
+  <report id="225" message="population detectee : %1">
     <parameter type="PopulationKnowledge"/>
   </report>
-  <report id="226" message="prise a partie par population">
+  <report id="226" message="prise a partie par population : %1">
     <parameter type="PopulationKnowledge"/>
   </report>
-  <report id="227" message="riposte contre population">
+  <report id="227" message="riposte contre population : %1">
     <parameter type="PopulationKnowledge"/>
   </report>
   <report id="228" message="population dangereuse a proximite"/>
@@ -310,7 +310,7 @@
   <report id="238" message="utilisation armes non letales face a population"/>
   <report id="239" message="utilisation moyens defense actifs face a population"/>
   <report id="240" message="utilisation armements face a population"/>
-  <report id="241" message="debut intervention face a population">
+  <report id="241" message="debut intervention face a population : %1">
     <parameter type="Enumeration">
       <value id="0" name="calme"/>
       <value id="1" name="agitee"/>
@@ -318,7 +318,7 @@
       <value id="3" name="agressive"/>
     </parameter>
   </report>
-  <report id="242" message="population victime affrontements">
+  <report id="242" message="population victime affrontements : %1">
     <parameter type="Numeric"/>
     <parameter type="Numeric"/>
   </report>
@@ -335,13 +335,13 @@
   <report id="246" message="population temporairement controlee"/>
   <report id="247" message="population temporairement repoussee"/>
   <report id="248" message="reprise des affrontements"/>
-  <report id="249" message="agression de population">
+  <report id="249" message="agression de population : %1">
     <parameter type="PopulationKnowledge"/>
   </report>
-  <report id="250" message="agression par population">
+  <report id="250" message="agression par population : %1">
     <parameter type="PopulationKnowledge"/>
   </report>
-  <report id="251" message="riposte contre agression par population">
+  <report id="251" message="riposte contre agression par population : %1">
     <parameter type="PopulationKnowledge"/>
   </report>
   <report id="252" message="attaque installation"/>
@@ -349,7 +349,7 @@
   <report id="254" message="bloquee"/>
   <report id="255" message="filtree"/>
   <report id="256" message="attentat terroriste dans population"/>
-  <report id="257" message="population victime explosion mines">
+  <report id="257" message="population victime explosion mines : %1">
     <parameter type="Numeric"/>
     <parameter type="Numeric"/>
   </report>
@@ -442,7 +442,7 @@
   <report id="306" message="En appui"/>
   <report id="307" message="En mouvement, l'appui n'est pas assuré"/>
   <report id="308" message="l'objet n'est pas contournable"/>
-  <report id="309" message="l'objet n'est pas supprimable"/>
+  <report id="309" message="Travaux impossibles : pas de capacite de destruction"/>
   <report id="3000" message="Embarquement - début"/>
   <report id="3001" message="Embarquement - interruption"/>
   <report id="3002" message="Embarquement - reprise"/>
