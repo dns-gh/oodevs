@@ -72,7 +72,6 @@ void DecisionalModel::ReadFragOrder( xml::xistream& xis, Mission& mission, Missi
         delete order;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DecisionalModel::ReadDefaultFragOrder
 // Created: HBD 2010-08-25
@@ -84,7 +83,6 @@ void DecisionalModel::ReadDefaultFragOrder( xml::xistream& xis, MissionFactory& 
     FragOrder* order = factory.CreateFragOrder( name );
    tools::Resolver< FragOrder >::Register( order->GetId(), *order );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DecisionalModel::GetName

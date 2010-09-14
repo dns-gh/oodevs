@@ -31,7 +31,6 @@ ResourceNetworkAttribute::ResourceNetworkAttribute( const Common::MsgObjectAttri
     Update( message );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ResourceNetworkAttribute destructor
 // Created: JSR 2010-08-17
@@ -40,6 +39,7 @@ ResourceNetworkAttribute::~ResourceNetworkAttribute()
 {
     // NOTHING
 }
+
 // -----------------------------------------------------------------------------
 // Name: ResourceNetworkAttribute::Update
 // Created: JSR 2010-08-17

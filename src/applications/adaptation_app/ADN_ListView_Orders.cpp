@@ -88,7 +88,6 @@ ADN_ListView_Orders::~ADN_ListView_Orders()
     delete pConnector_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Orders::OnContextMenu
 // Created: AGN 2003-11-27
@@ -161,7 +160,6 @@ void ADN_ListView_Orders::ConnectItem( bool /*bConnect*/ )
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Orders::CreateNewItem
 // Created: AGN 2003-12-04
@@ -183,7 +181,6 @@ void ADN_ListView_Orders::CreateNewItem( int n )
     pCList->AddItem( pNewInfo );
     setCurrentItem(FindItem(pNewInfo));
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Orders::RemoveCurrentItem

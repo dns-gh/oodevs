@@ -31,7 +31,7 @@ NodeElement::NodeElement()
     , receivedQuantity_   ( 0 )
     , consumptionAmount_  ( 0 )
     , consumptionCritical_( false )
-    , modifier_           ( 1. ) 
+    , modifier_           ( 1. )
 {
     // NOTHING
 }
@@ -52,7 +52,7 @@ NodeElement::NodeElement( xml::xistream& xis, unsigned long resourceId, const st
     , receivedQuantity_   ( 0 )
     , consumptionAmount_  ( 0 )
     , consumptionCritical_( false )
-    , modifier_           ( 1. ) 
+    , modifier_           ( 1. )
 {
     Update( xis );
 }
@@ -73,7 +73,7 @@ NodeElement::NodeElement( const NodeElement& from )
     , receivedQuantity_   ( from.receivedQuantity_ )
     , consumptionAmount_  ( from.consumptionAmount_ )
     , consumptionCritical_( from.consumptionCritical_ )
-    , modifier_           ( from.modifier_ ) 
+    , modifier_           ( from.modifier_ )
 {
     for( CIT_ResourceLinks it = from.links_.begin(); it != from.links_.end(); ++it )
         links_.push_back( new ResourceLink( **it ) );

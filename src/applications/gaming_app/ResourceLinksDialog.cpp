@@ -32,8 +32,8 @@ using namespace parameters;
 ResourceLinksDialog::ResourceLinksDialog( QMainWindow* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile )
     : ResourceLinksDialog_ABC( parent, controllers, staticModel.objectTypes_, profile )
     , actionsModel_( actionsModel )
-    , static_( staticModel )
-    , simulation_( simulation )
+    , static_      ( staticModel )
+    , simulation_  ( simulation )
 {
     // NOTHING
 }

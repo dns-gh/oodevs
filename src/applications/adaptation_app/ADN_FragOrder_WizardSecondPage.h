@@ -27,9 +27,10 @@ public:
                  ADN_FragOrder_WizardSecondPage( QWizard* pParent, const char* szName = 0, const char* szImageName = "adn_wizard.bmp" );
         virtual ~ADN_FragOrder_WizardSecondPage();
     //@}
-     void AddFragOrderForAll( const std::string& name );
+
     //! @name Operations
     //@{
+        void AddFragOrderForAll( const std::string& name );
     //@}
 
 private:
@@ -39,17 +40,12 @@ private:
     ADN_FragOrder_WizardSecondPage& operator=( const ADN_FragOrder_WizardSecondPage& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
     QCheckBox* addForAllUnits_;
     QCheckBox* addForAllAutomata_;
     QCheckBox* addForAllPops_;
-
     //@}
 };
 

@@ -16,6 +16,7 @@
 class ADN_FragOrder_WizardSecondPage;
 
 typedef ADN_Wizard_ABC< ADN_Missions_Data::FragOrder > ADN_Wizard_ABC_ADN_Missions_Data_FragOrder_;
+
 // =============================================================================
 /** @class  ADN_FragOrder_Wizard
     @brief  ADN_FragOrder_Wizard
@@ -32,16 +33,21 @@ public:
     //@}
     
 private:
+    //! @name Operations
+    //@{
     virtual bool ValidateAll();
     virtual void Polish();
+    //@}
 
+private:
     //! @name Copy/Assignment
     //@{
     ADN_FragOrder_Wizard( const ADN_FragOrder_Wizard& );            //!< Copy constructor
     ADN_FragOrder_Wizard& operator=( const ADN_FragOrder_Wizard& ); //!< Assignment operator
    //@}
 
-    //! @name data
+private:
+    //! @name Member data
     //@{
     std::auto_ptr< ADN_FragOrder_WizardSecondPage > secondPage_;
     std::string name_;

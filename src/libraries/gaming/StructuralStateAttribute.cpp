@@ -62,7 +62,7 @@ void StructuralStateAttribute::DoUpdate( const MsgsSimToClient::MsgUrbanCreation
 {
     UpdateData( message.attributes() );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: StructuralStateAttribute::UpdateData
 // Created: JSR 2010-09-01

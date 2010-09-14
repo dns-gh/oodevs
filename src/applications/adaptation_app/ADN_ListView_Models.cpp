@@ -10,7 +10,6 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Models.h"
-
 #include "ADN_App.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Workspace.h"
@@ -19,21 +18,19 @@
 #include "ADN_Units_Data.h"
 #include "ADN_Automata_Data.h"
 #include "ADN_Population_Data.h"
-
 #include <qheader.h>
 #include <qpopmenu.h>
 #include <qmessagebox.h>
 
 typedef ADN_Models_Data::ModelInfos ModelInfos;
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Models constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
 ADN_ListView_Models::ADN_ListView_Models( ModelInfos::E_ModelEntityType eEntityType, QWidget* pParent, const char* szName, WFlags f )
-: ADN_ListView  ( pParent, szName, f )
-, eEntityType_  ( eEntityType )
+: ADN_ListView( pParent, szName, f )
+, eEntityType_( eEntityType )
 {
     // Add one column.
     addColumn( tr( "Models" ) );
@@ -45,7 +42,6 @@ ADN_ListView_Models::ADN_ListView_Models( ModelInfos::E_ModelEntityType eEntityT
     this->SetDeletionEnabled( true );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Models destructor
 // Created: JDY 03-07-03
@@ -54,7 +50,6 @@ ADN_ListView_Models::~ADN_ListView_Models()
 {
     delete pConnector_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Models::ConnectItem
@@ -75,7 +70,6 @@ void ADN_ListView_Models::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Models_GUI::eFragOrders]->Connect( &pInfos->vFragOrders_, bConnect );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Models::OnContextMenu
 // Created: AGN 03-08-04
@@ -90,7 +84,6 @@ void ADN_ListView_Models::OnContextMenu( const QPoint& pt )
         popupMenu.exec( pt );
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Models::GetToolTipFor

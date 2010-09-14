@@ -103,6 +103,7 @@ void DEC_Model_ABC::InitializeMissionFragOrders( xml::xistream& xis, const MIL_M
 {
     xis >> xml::list( "fragorder", *this, &DEC_Model_ABC::ReadFragOrder, missionType );
 }
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Model_ABC::ReadFragOrder
 // Created: ABL 2007-07-26
@@ -116,7 +117,6 @@ void DEC_Model_ABC::ReadFragOrder( xml::xistream& xis, const MIL_MissionType_ABC
         xis.error( "Unknown orderConduite type" );
     availableFragOrdersPerMission_[ &missionType ].insert( pType ) ;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Model_ABC::ReadFragOrder
@@ -162,7 +162,7 @@ bool DEC_Model_ABC::IsFragOrderAvailableForMission( const MIL_MissionType_ABC& m
 // -----------------------------------------------------------------------------
 bool DEC_Model_ABC::IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const
 {
- return availableFragOrders_.find( &fragOrderType ) !=  availableFragOrders_.end();
+    return availableFragOrders_.find( &fragOrderType ) !=  availableFragOrders_.end();
 }
 
 // -----------------------------------------------------------------------------

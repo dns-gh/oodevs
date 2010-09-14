@@ -281,7 +281,6 @@ void ADN_Models_Data::ModelInfos::RemoveFragOder( const std::string& order )
         }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ModelInfos::GetItemName
 // Created: AGN 2004-05-18

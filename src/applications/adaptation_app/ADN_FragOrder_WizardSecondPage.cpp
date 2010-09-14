@@ -9,13 +9,9 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_FragOrder_WizardSecondPage.h"
-#include "ADN_CheckBox.h"   
+#include "ADN_CheckBox.h"
 #include "ADN_Models_Data.h"
 
-// -----------------------------------------------------------------------------
-// Name: ADN_FragOrder_WizardSecondPage constructor
-// Created: HBD 2010-09-01
-// -----------------------------------------------------------------------------
 // -----------------------------------------------------------------------------
 // Name: ADN_FragOrder_WizardSecondPage constructor
 // Created: HBD 2010-09-02
@@ -58,14 +54,14 @@ void ADN_FragOrder_WizardSecondPage::AddFragOrderForAll( const std::string& name
         ADN_Missions_Data::FragOrder* fragorder = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindFragOrder( name );
         ADN_Models_Data::T_ModelInfos_Vector& units = ADN_Workspace::GetWorkspace().GetModels().GetData().GetUnitModelsInfos();
         for( ADN_Models_Data::IT_ModelInfos_Vector it1 = units.begin(); it1 != units.end(); ++it1 )
-            (*it1)->AddFragOrder( fragorder, name );                  
+            (*it1)->AddFragOrder( fragorder, name );
     }
     if ( addForAllAutomata_->isChecked() )
     {
         ADN_Missions_Data::FragOrder* fragorder = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindFragOrder( name );
         ADN_Models_Data::T_ModelInfos_Vector& automata = ADN_Workspace::GetWorkspace().GetModels().GetData().GetAutomataModelsInfos();
         for( ADN_Models_Data::IT_ModelInfos_Vector it1 = automata.begin(); it1 != automata.end(); ++it1 )
-            (*it1)->AddFragOrder( fragorder, name );    
+            (*it1)->AddFragOrder( fragorder, name );
     }
      if ( addForAllPops_->isChecked() )
     {
