@@ -470,7 +470,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
 // -----------------------------------------------------------------------------
 void MainWindow::OnPlanifStateChange()
 {
-  pMissionPanel_->ActivatePlanification();
+    pMissionPanel_->ActivatePlanification();
 }
 
 // -----------------------------------------------------------------------------

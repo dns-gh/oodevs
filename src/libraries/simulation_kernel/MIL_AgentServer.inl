@@ -235,7 +235,7 @@ inline
 resource::ResourceTools_ABC& MIL_AgentServer::GetResourceTools() const
 {
     assert( pResourceTools_ );
-    return *pResourceTools_;    
+    return *pResourceTools_;
 }
 
 //-----------------------------------------------------------------------------

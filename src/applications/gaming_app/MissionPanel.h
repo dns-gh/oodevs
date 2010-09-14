@@ -87,7 +87,10 @@ public:
     //@}
 
 public slots:
-        void ActivatePlanification();
+    //! @name slots
+    //@{
+    void ActivatePlanification();
+    //@}
 
 private slots:
     //! @name Slots

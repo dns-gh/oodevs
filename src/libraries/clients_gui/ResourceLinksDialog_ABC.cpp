@@ -27,7 +27,7 @@ using namespace kernel;
 // Created: JSR 2010-08-24
 // -----------------------------------------------------------------------------
 ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controllers& controllers, const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const kernel::Profile_ABC& profile )
-    : QDockWindow      ( parent, "resource" )
+    : QDockWindow( parent, "resource" )
     , controllers_     ( controllers )
     , dotationResolver_( dotationResolver )
     , profile_         ( profile )
@@ -84,9 +84,9 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controlle
     table_->horizontalHeader()->setLabel( 2, tools::translate( "ResourceLinksDialog_ABC", "Capacity" ) );
     table_->setColumnWidth( 1, 50 );
     connect( table_, SIGNAL( valueChanged( int, int ) ), SLOT( OnValueChanged( int, int ) ) );
-    QPushButton* okBtn     = new QPushButton( tools::translate( "ResourceLinksDialog_ABC", "Validate" ), pMainLayout_ );
+    QPushButton* okBtn = new QPushButton( tools::translate( "ResourceLinksDialog_ABC", "Validate" ), pMainLayout_ );
     okBtn->setDefault( true );
-    connect( okBtn    , SIGNAL( clicked() ), SLOT( Validate() ) );
+    connect( okBtn, SIGNAL( clicked() ), SLOT( Validate() ) );
     controllers_.Register( *this );
     pMainLayout_->hide();
 }
@@ -185,7 +185,7 @@ void ResourceLinksDialog_ABC::OnActivationChanged( bool on )
 {
     resourceNodes_[ dotationList_->selectedItem()->text( 0 ).ascii() ].isEnabled_ = on;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ResourceLinksDialog_ABC::OnProductionChanged
 // Created: JSR 2010-09-02

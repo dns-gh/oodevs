@@ -50,24 +50,25 @@
 
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Objects_GUI constructor
+// Name: ADN_Composantes_GUI constructor
 // Created: JDY 03-06-26
 //-----------------------------------------------------------------------------
 ADN_Composantes_GUI::ADN_Composantes_GUI( ADN_Composantes_Data& data )
-: ADN_GUI_ABC( "ADN_Composantes_GUI" )
-, data_      ( data )
+    : ADN_GUI_ABC( "ADN_Composantes_GUI" )
+    , data_( data )
 {
+    // NOTHING
 }
 
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Objects_GUI destructor
+// Name: ADN_Composantes_GUI destructor
 // Created: JDY 03-06-26
 //-----------------------------------------------------------------------------
 ADN_Composantes_GUI::~ADN_Composantes_GUI()
 {
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Composantes_GUI::Build

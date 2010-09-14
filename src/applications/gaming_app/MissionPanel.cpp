@@ -442,7 +442,7 @@ void MissionPanel::SetInterface( actions::gui::MissionInterface_ABC* missionInte
 void MissionPanel::ActivatePlanification()
 {
     isPlanifMode_ = !isPlanifMode_;
-    if ( pMissionInterface_ )
+    if( pMissionInterface_ )
         pMissionInterface_->ChangeOkValueButton( isPlanifMode_ );
 }
 

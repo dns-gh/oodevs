@@ -43,7 +43,7 @@
 #include <boost/bind.hpp>
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Objects_GUI constructor
+// Name: ADN_Units_GUI constructor
 // Created: JDY 03-06-26
 //-----------------------------------------------------------------------------
 ADN_Units_GUI::ADN_Units_GUI( ADN_Units_Data& data )
@@ -54,7 +54,7 @@ ADN_Units_GUI::ADN_Units_GUI( ADN_Units_Data& data )
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Objects_GUI destructor
+// Name: ADN_Units_GUI destructor
 // Created: JDY 03-06-26
 //-----------------------------------------------------------------------------
 ADN_Units_GUI::~ADN_Units_GUI()

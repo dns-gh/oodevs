@@ -34,24 +34,24 @@
 
 #define HAL_FILTER "Script files (*.hal)"
 
-
 //-----------------------------------------------------------------------------
-// Name: ADN_Objects_GUI constructor
+// Name: ADN_Models_GUI constructor
 // Created: JDY 03-06-26
 //-----------------------------------------------------------------------------
 ADN_Models_GUI::ADN_Models_GUI( ADN_Models_Data& data )
-: ADN_GUI_ABC( "ADN_Models_GUI" )
-, data_      ( data )
+    : ADN_GUI_ABC( "ADN_Models_GUI" )
+    , data_( data )
 {
+    // NOTHING
 }
 
-
 //-----------------------------------------------------------------------------
-// Name: ADN_Objects_GUI destructor
+// Name: ADN_Models_GUI destructor
 // Created: JDY 03-06-26
 //-----------------------------------------------------------------------------
 ADN_Models_GUI::~ADN_Models_GUI()
 {
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -73,7 +73,6 @@ void ADN_Models_GUI::Build()
     QGridLayout* pMainLayout = new QGridLayout( pMainWidget_, 1, 1, 10, 10 );
     pMainLayout->addWidget( pTabWidget, 0, 0 );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Models_GUI::BuildPage
@@ -140,4 +139,3 @@ void ADN_Models_GUI::Enable( bool enable )
     pGroupAutomat_->setEnabled( enable );
     pGroupPopulation_->setEnabled( enable );
 }
-

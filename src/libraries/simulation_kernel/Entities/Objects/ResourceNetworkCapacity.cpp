@@ -38,7 +38,7 @@ ResourceNetworkCapacity::ResourceNetworkCapacity()
 // Created: JSR 2010-08-12
 // -----------------------------------------------------------------------------
 ResourceNetworkCapacity::ResourceNetworkCapacity( xml::xistream& xis )
-    : nodeProperties_( new NodeProperties( xis,  MIL_AgentServer::GetWorkspace().GetResourceTools() ) )
+    : nodeProperties_( new NodeProperties( xis, MIL_AgentServer::GetWorkspace().GetResourceTools() ) )
 {
     // NOTHING
 }
@@ -58,6 +58,7 @@ ResourceNetworkCapacity::ResourceNetworkCapacity( const ResourceNetworkCapacity&
 // -----------------------------------------------------------------------------
 ResourceNetworkCapacity::~ResourceNetworkCapacity()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

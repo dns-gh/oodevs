@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "ResourceTools.h"
 #include "PHY_ResourceNetworkType.h"
-#include "boost/lexical_cast.hpp"
+#include <boost/lexical_cast.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ResourceTools constructor
