@@ -90,6 +90,7 @@ ADN_ListView_Missions.cpp \
 ADN_ListView_Models.cpp \
 ADN_ListView_Objects.cpp \
 ADN_ListView_Orders.cpp \
+ADN_ListView_ResourceNetworks.cpp \
 ADN_ListView_Sensors.cpp \
 ADN_ListView_Units.cpp \
 ADN_ListView_Urban_Type.cpp \
@@ -127,6 +128,8 @@ ADN_Radars_GUI.cpp \
 ADN_Radars_ListView.cpp \
 ADN_RemoveElementCommand.cpp \
 ADN_RemoveElementCommand.inl \
+ADN_ResourceNetworks_GUI.cpp \
+ADN_ResourceNetworks_Wizard.cpp \
 ADN_SaveFile_Exception.cpp \
 ADN_Sensor_Wizard.cpp \
 ADN_Sensors_Data.cpp \

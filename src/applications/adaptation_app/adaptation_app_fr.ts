@@ -2253,6 +2253,13 @@ stance</source>
     </message>
 </context>
 <context>
+    <name>ADN_ListView_ResourceNetworks</name>
+    <message>
+        <source>Resource networks</source>
+        <translation>Réseaux de ressource</translation>
+    </message>
+</context>
+<context>
     <name>ADN_ListView_Sensors</name>
     <message>
         <source>Sensors</source>
@@ -3433,6 +3440,52 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     <message>
         <source>new </source>
         <translation type="unfinished">nouveau </translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ResourceNetworks_GUI</name>
+    <message>
+        <source>Resource network</source>
+        <translation>Réseau de ressource</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Dotation</source>
+        <translation>Dotation</translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation>Catégorie</translation>
+    </message>
+    <message>
+        <source>Default production</source>
+        <translation>Production par défaut</translation>
+    </message>
+    <message>
+        <source>Color</source>
+        <translation>Couleur</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ResourceNetworks_Wizard</name>
+    <message>
+        <source>New resource network creation</source>
+        <translation>Création d&apos;un nouveau réseau de ressource</translation>
+    </message>
+    <message>
+        <source>Resource networks</source>
+        <translation>Réseaux de ressource</translation>
+    </message>
+    <message>
+        <source>Creation finished</source>
+        <translation>Création terminée</translation>
+    </message>
+    <message>
+        <source>Click &quot;Done&quot; to create the new resource network.</source>
+        <translation>Cliquez sur &quot;Terminer&quot; pour créer le nouveau réseau de ressource.</translation>
     </message>
 </context>
 <context>
@@ -5527,6 +5580,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <message>
         <source>ADN - Data export</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resource networks</source>
+        <translation>Réseaux de ressource</translation>
     </message>
 </context>
 <context>

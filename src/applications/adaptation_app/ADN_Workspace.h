@@ -63,6 +63,8 @@ class ADN_Supply_Data;
 class ADN_Supply_GUI;
 class ADN_KnowledgeGroups_Data;
 class ADN_KnowledgeGroups_GUI;
+class ADN_ResourceNetworks_Data;
+class ADN_ResourceNetworks_GUI;
 enum E_OpenMode;
 
 // =============================================================================
@@ -111,6 +113,7 @@ public:
     ADN_WorkspaceElement< ADN_Health_Data, ADN_Health_GUI >& GetHealth();
     ADN_WorkspaceElement< ADN_Supply_Data, ADN_Supply_GUI>& GetSupply();
     ADN_WorkspaceElement< ADN_KnowledgeGroups_Data, ADN_KnowledgeGroups_GUI >& GetKnowledgeGroups();
+    ADN_WorkspaceElement< ADN_ResourceNetworks_Data, ADN_ResourceNetworks_GUI >& GetResourceNetworks();
 
     void SetProgressIndicator( ADN_ProgressIndicator_ABC* pProgressIndicator );
     void ResetProgressIndicator();
@@ -140,6 +143,7 @@ private:
         eSensors,
         eBreakdowns,
         eComposantes,
+        eResourceNetworks,
         eAiEngine,
         eMissions,
         eModels,
@@ -392,7 +396,7 @@ ADN_WorkspaceElement< ADN_Health_Data, ADN_Health_GUI >& ADN_Workspace::GetHealt
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_WorkspaceElement< ADN_Supply_Data, ADN_Supply_GUI>& ADN_Workspace::GetSupply
+// Name: ADN_Workspace::GetSupply
 // Created: JSR 2010-05-07
 // -----------------------------------------------------------------------------
 inline
@@ -402,13 +406,23 @@ ADN_WorkspaceElement< ADN_Supply_Data, ADN_Supply_GUI>& ADN_Workspace::GetSupply
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_WorkspaceElement< ADN_KnowledgeGroups_Data, ADN_KnowledgeGroups_GUI >& ADN_Workspace::GetKnowledgeGroups
+// Name: ADN_Workspace::GetKnowledgeGroups
 // Created: LGY 2010-08-18
 // -----------------------------------------------------------------------------
 inline
 ADN_WorkspaceElement< ADN_KnowledgeGroups_Data, ADN_KnowledgeGroups_GUI >& ADN_Workspace::GetKnowledgeGroups()
 {
     return ( ADN_WorkspaceElement< ADN_KnowledgeGroups_Data, ADN_KnowledgeGroups_GUI >& )( *elements_[ eKnowledgeGroups ] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::GetResourceNetworks
+// Created: JSR 2010-09-13
+// -----------------------------------------------------------------------------
+inline
+ADN_WorkspaceElement< ADN_ResourceNetworks_Data, ADN_ResourceNetworks_GUI >& ADN_Workspace::GetResourceNetworks()
+{
+    return ( ADN_WorkspaceElement< ADN_ResourceNetworks_Data, ADN_ResourceNetworks_GUI >& )( *elements_[ eResourceNetworks ] );
 }
 
 // -----------------------------------------------------------------------------

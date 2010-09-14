@@ -91,6 +91,8 @@ void ADN_Wizard_FirstPage_Default< T >::Initialize()
 
     if( pExistingItemsListView_->firstChild() != 0 )
         pExistingItemsListView_->setSelected( pExistingItemsListView_->firstChild(), true );
+    else
+        pCopyRadioButton_->setEnabled( false );
 
     connect( pCopyRadioButton_, SIGNAL( toggled( bool ) ), pExistingItemsListView_, SLOT( setEnabled( bool ) ) );
     pButtonGroup->setButton( 0 );

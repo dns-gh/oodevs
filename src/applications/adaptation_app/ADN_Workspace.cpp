@@ -31,6 +31,8 @@
 #include "ADN_Sensors_Data.h"
 #include "ADN_Composantes_GUI.h"
 #include "ADN_Composantes_Data.h"
+#include "ADN_ResourceNetworks_GUI.h"
+#include "ADN_ResourceNetworks_Data.h"
 #include "ADN_Units_GUI.h"
 #include "ADN_Units_Data.h"
 #include "ADN_Models_GUI.h"
@@ -123,6 +125,7 @@ ADN_Workspace::ADN_Workspace()
     elements_[eWeapons]           = new ADN_WorkspaceElement< ADN_Weapons_Data, ADN_Weapons_GUI >( tr( "Weapon systems" ) );
     elements_[eSensors]           = new ADN_WorkspaceElement< ADN_Sensors_Data, ADN_Sensors_GUI >( tr( "Sensors" ) );
     elements_[eComposantes]       = new ADN_WorkspaceElement< ADN_Composantes_Data, ADN_Composantes_GUI >( tr( "Equipments" ) );
+    elements_[eResourceNetworks]  = new ADN_WorkspaceElement< ADN_ResourceNetworks_Data, ADN_ResourceNetworks_GUI >( tr( "Resource networks" ) );
     elements_[eAiEngine]          = new ADN_WorkspaceElement< ADN_AiEngine_Data, ADN_AiEngine_GUI >( tr( "Op. indicators" ) );
     elements_[eModels]            = new ADN_WorkspaceElement< ADN_Models_Data, ADN_Models_GUI >( tr( "Doctrine models" ) );
     elements_[eUnits]             = new ADN_WorkspaceElement< ADN_Units_Data, ADN_Units_GUI >( tr( "Units" ) );
@@ -178,6 +181,7 @@ void ADN_Workspace::Build( ADN_MainWindow& mainWindow )
     mainWindow.AddPage( elements_[eSensors]->GetName(), * elements_[eSensors]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eBreakdowns]->GetName(), * elements_[eBreakdowns]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eComposantes]->GetName(), * elements_[eComposantes]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( elements_[eResourceNetworks]->GetName(), * elements_[eResourceNetworks]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eUnits]->GetName(), * elements_[eUnits]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eAutomata]->GetName(), * elements_[eAutomata]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[ePopulation]->GetName(), * elements_[ePopulation]->GetGuiABC().GetMainWidget() );
