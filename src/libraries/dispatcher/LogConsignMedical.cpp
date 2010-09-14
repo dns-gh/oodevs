@@ -74,13 +74,14 @@ void LogConsignMedical::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::LogMedicalHandlingCreation asn;
 
-    //asn().set_oid_consigne( GetId() );
+    asn().mutable_id()->set_id( GetId() );
     asn().mutable_unit()->set_id( agent_.GetId() );
     asn().set_tick_creation( nTickCreation_ );
     asn().set_rang( nRank_ );
     asn().set_blessure( nWound_ );
     asn().set_blesse_mental( bMentalDiseased_ );
     asn().set_contamine_nbc( bContaminated_ );
+
 
     asn.Send( publisher );
 }
@@ -93,7 +94,7 @@ void LogConsignMedical::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::LogMedicalHandlingUpdate asn;
 
-    asn().mutable_provider()->set_id( GetId() );
+    asn().mutable_id()->set_id( GetId() );
     asn().mutable_unit()->set_id( agent_.GetId() );
 
 //    asn.set_oid_pion_log_traitantPresent( 1 );
@@ -120,7 +121,7 @@ void LogConsignMedical::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 void LogConsignMedical::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::LogMedicalHandlingDestruction asn;
-    //asn().set_oid_consigne ( GetId());
+    asn().mutable_id()->set_id( GetId());
     asn().mutable_unit()->set_id( agent_.GetId());
     asn.Send( publisher );
 }
