@@ -102,7 +102,7 @@ includedFiles["sources/appui/rens/pions/roim/drone drac/missions/RenseignerSur.b
 ]]--[[// ----------------------------------------------------------------
 ]]--[[//                                              09/01/2008 10:24:20
 ]]--[[// ****************************************************************
-]]                    end
+]]
 
                     Activate( self.activations.ACT_Calcul_Distance_Max_Itineraire, 1, { self._namedParams.mission.ficelleDeVole_, self._namedParams.mission, } )
                     --[[// ****************************************************************

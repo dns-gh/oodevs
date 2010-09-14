@@ -29,7 +29,7 @@ using namespace hla;
 // -----------------------------------------------------------------------------
 NBCAttribute::NBCAttribute( xml::xistream& xis )
     : nForm_ ( eGas )
-    , danger_( xis.attribute< unsigned int >( "danger", 0 ) )
+    , danger_( xis.attribute< int >( "danger", 0 ) )
 {
     std::string state( "gaseous" );
     xis >> xml::optional

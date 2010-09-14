@@ -21,7 +21,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( BypassableCapacity )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 BypassableCapacity::BypassableCapacity( xml::xistream& xis )
-    : bypassSpeed_ ( xis.attribute< unsigned int >( "bypass-speed", 0 ) )
+    : bypassSpeed_ ( xis.attribute< int >( "bypass-speed", 0 ) )
 {
     // NOTHING
 }
