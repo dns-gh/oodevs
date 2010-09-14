@@ -50,6 +50,7 @@ std::vector<DEC_Decision_ABC*> DEC_MiscFunctions::GetAgentReinforcements( const 
 {
    return DEC_MiscFunctions::GetReinforcements( pAgent->GetPion() );
 }
+
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::GetReinforcements
 // Created: NLD 2004-10-01

@@ -76,7 +76,7 @@ void ResourceLinksDialog::DoValidate()
             ParameterList& link = links.AddList( "Link" );
             link.AddIdentifier( "Link", i );
             link.AddQuantity( "Capacity", resource.links_[ i ].capacity_ );
-        }        
+        }
     }
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->RegisterAndPublish( actionsModel_ );

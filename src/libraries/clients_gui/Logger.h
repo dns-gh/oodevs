@@ -61,7 +61,7 @@ signals:
     //@}
 
 private:
-    //! @name Copy constructor/assignement
+    //! @name Copy/Assignment
     //@{
     Logger( const Logger &);
     Logger& operator=( const Logger& );

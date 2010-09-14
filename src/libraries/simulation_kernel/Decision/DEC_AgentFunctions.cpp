@@ -356,9 +356,12 @@ namespace
         HasLoadableComputer()
             : bHasLoadable_( false )
         {
-
+            // NOTHING
         }
-        virtual ~HasLoadableComputer() {}
+        virtual ~HasLoadableComputer()
+        {
+            // NOTHING
+        }
         //@}
 
         //! @name Operations
@@ -379,7 +382,10 @@ namespace
         //@}
 
     private :
+        //! @name Member data
+        //@{
         bool bHasLoadable_;
+        //@}
     };
 }
 // -----------------------------------------------------------------------------
