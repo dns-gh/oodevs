@@ -294,6 +294,8 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
     //limas / Missions
     brain[ "DEC_GetRawMission" ] = &DEC_AgentFunctions::GetMission;
     brain[ "DEC_HasMission" ] = &DEC_AgentFunctions::HasMission;
+    brain[ "DEC_GetLima" ] = boost::function< unsigned int( unsigned int ) >( boost::bind( &DEC_OrdersFunctions::GetLima< MIL_Agent_ABC >, boost::ref( GetPion() ), _1 ) );
+
 
     //Calculs de positions
     brain[ "DEC_Geometrie_PionDevant" ] = &DEC_GeometryFunctions::GetFrontestPion;
