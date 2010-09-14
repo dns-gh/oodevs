@@ -78,7 +78,6 @@ void ADN_ListView_FragOrderTypes::OnContextMenu( const QPoint& pt )
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_FragOrderTypes::OnToogled
 // Created: HBD 2010-09-06

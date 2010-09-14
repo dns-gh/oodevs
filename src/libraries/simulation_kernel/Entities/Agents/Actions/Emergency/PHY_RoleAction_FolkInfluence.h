@@ -50,10 +50,6 @@ public:
     void Clean  ();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 public:
     //! @name Types
     //@{
@@ -64,11 +60,6 @@ public:
         eDeactivated    , // -> l'action est terminée
         eImpossible     , // -> l'action est impossible (cas arrivant, par exemple, quand on essaye de construire une zone d'influence dans une zone vide)
     };
-
-private:
-    //! @name Member data
-    //@{
-    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RoleAction_FolkInfluence )

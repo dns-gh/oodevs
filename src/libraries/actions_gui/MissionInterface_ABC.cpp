@@ -142,7 +142,7 @@ void MissionInterface_ABC::CreateOkCancelButtons()
 {
     QHBox* box = new QHBox( this );
     box->setMargin( 5 );
-    box->setSpacing( 5 );   
+    box->setSpacing( 5 );
     box->layout()->setAlignment( Qt::AlignRight );
     ok_ = new QPushButton( tools::translate( "MissionInterface_ABC", "Ok" ), box );
     QPushButton* cancel = new QPushButton( tools::translate( "MissionInterface_ABC", "Cancel" ), box );

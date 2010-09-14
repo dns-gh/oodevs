@@ -2111,7 +2111,7 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
         attritionBreakdowns_.WriteArchive( output );
         output << xml::end;
     }
-    else if ( ptrArmor_.GetData()->nType_.GetData()  !=  eProtectionType_Human )
+    else if( ptrArmor_.GetData()->nType_.GetData() != eProtectionType_Human )
         throw ADN_DataException( tr( "Missing breakdown" ).ascii(), tr( "Equipment - Shall contain at least one breakdown for " ).ascii() + strName_.GetData() );
     if( bMaxSlope_.GetData() )
         output << xml::attribute( "max-slope", rMaxSlope_.GetData() / 100.0 );

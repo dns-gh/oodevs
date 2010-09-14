@@ -154,5 +154,5 @@ void ParameterList::AddString( const std::string& name, const std::string& value
     AddParameter( *new String( OrderParameter( name, "string", false ), value ) );
 }
 
-    }
+}
 }

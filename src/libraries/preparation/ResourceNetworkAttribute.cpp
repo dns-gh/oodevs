@@ -150,7 +150,7 @@ void ResourceNetworkAttribute::SerializeAttributes( xml::xostream& xos ) const
                         << xml::attribute( "target", node.links_[ i ].id_ )
                         << xml::attribute( "capacity", node.links_[ i ].capacity_ )
                         << xml::end();
-                    }
+                }
             xos << xml::end();
         }
         xos << xml::end;

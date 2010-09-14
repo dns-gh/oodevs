@@ -27,10 +27,6 @@ public:
     virtual ~ResourceNetworkDialog();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{
