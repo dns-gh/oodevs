@@ -32,7 +32,7 @@ public:
 
     //! @name operations
     //@{
-    bool Wait() ;
+    virtual bool Wait() ;
     //@}
 
 private:
@@ -41,6 +41,12 @@ private:
     StartReplay( const StartReplay& );            //!< Copy constructor
     StartReplay& operator=( const StartReplay& ); //!< Assignment operator
     //@}
+
+    //! @name data
+    //@{
+    std::string portArg_;
+    //@}
+
 };
 
 }

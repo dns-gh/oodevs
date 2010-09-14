@@ -99,11 +99,14 @@ private:
     std::auto_ptr< ObjectMessageService >       messageService_;
     std::auto_ptr< Connector >                  connector_;
     std::string                                 host_;
-    bool                                        retry_;
     volatile bool                               stopped_;
     boost::thread                               thread_;
     //@}
-
+protected:
+    //! @name Member data
+    //@{
+    bool                                        retry_;
+   //@}
 };
 
 }

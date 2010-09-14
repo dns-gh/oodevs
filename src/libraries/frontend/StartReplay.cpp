@@ -14,6 +14,8 @@
 #include <boost/lexical_cast.hpp>
 #pragma warning( pop )
 
+#include "ClientReplayNetworker.h"
+
 using namespace frontend;
 
 // -----------------------------------------------------------------------------
@@ -26,8 +28,8 @@ StartReplay::StartReplay( const tools::GeneralConfig& config, const QString& exe
     AddRootDirArgument();
     AddExerciseArgument( exercise );
     AddSessionArgument ( session );
-    const std::string portArg = "--port=" + boost::lexical_cast< std::string >( port );
-    AddArgument( portArg.c_str() );
+    portArg_ = "--port=" + boost::lexical_cast< std::string >( port );
+    AddArgument( portArg_.c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,6 +47,12 @@ StartReplay::~StartReplay()
 // -----------------------------------------------------------------------------
 bool StartReplay::Wait()
 {
+    bool ready = false;
+    ClientReplayNetworker test( ready, "localhost:" + portArg_, true );
+    while ( !ready )
+    {
+        test.Update();
+    }
     return true;
 }
 

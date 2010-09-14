@@ -17,6 +17,8 @@
 #include <boost/bind.hpp>
 #pragma warning( pop )
 
+
+
 // -----------------------------------------------------------------------------
 // Name: CompositeProcessWrapper constructor
 // Created: SBO 2008-10-15
@@ -72,7 +74,7 @@ void CompositeProcessWrapper::ThreadStart()
             boost::this_thread::interruption_point();
             controller_.Update( shared_from_this() );
             boost::this_thread::interruption_point();
-        }
+         }
         if( second_.get() )
         {
             current_ = second_;
