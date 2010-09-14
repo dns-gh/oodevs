@@ -13,16 +13,17 @@
 #include <boost/shared_ptr.hpp>
 #include <vector>
 
-namespace boost {
-    namespace asio {
-        class const_buffers_1;
-        class mutable_buffers_1;
-    }
+namespace boost
+{
+namespace asio
+{
+    class const_buffers_1;
+    class mutable_buffers_1;
+}
 }
 
 namespace tools
 {
-
 // =============================================================================
 /** @class  Message
     @brief  Message
@@ -41,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    Message& operator >> ( unsigned long& n );
+    Message& operator >>( unsigned long& n );
 
     unsigned long Size() const;
     void Read ( char* data, unsigned size );

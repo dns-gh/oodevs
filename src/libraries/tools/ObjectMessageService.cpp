@@ -57,7 +57,7 @@ ObjectMessageCallback_ABC* ObjectMessageService::Retrieve( unsigned long id )
 // Name: ObjectMessageService::RegisterErrorCallback
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void ObjectMessageService::RegisterErrorCallback( const boost::function2< void, const std::string&, const std::string& >& error )
+void ObjectMessageService::RegisterErrorCallback( const T_Callback& error )
 {
     error_ = error;
 }
@@ -81,8 +81,7 @@ void ObjectMessageService::OnMessage( const std::string& endpoint, Message& mess
     unsigned long tag;
     message >> tag;
     CIT_Callbacks it = callbacks_.find( tag );
-    if( it != callbacks_.end() )
-        it->second->OnMessage( endpoint, message );
-    else
+    if( it == callbacks_.end() )
         throw std::runtime_error( "Unknown message tag " + boost::lexical_cast< std::string >( tag ) );
+    it->second->OnMessage( endpoint, message );
 }

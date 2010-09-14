@@ -13,16 +13,14 @@
 #include "dispatcher/Plugin_ABC.h"
 #include "dispatcher/Registrable_ABC.h"
 #include "dispatcher/Position.h"
-#include <boost/ptr_container/ptr_vector.hpp>
 #include "directia/tools/binders/ScriptRef.h"
-
 #include "protocol/protocol.h"
+#include <boost/ptr_container/ptr_vector.hpp>
 
 using namespace Common;
 using namespace MsgsClientToMessenger;
 using namespace MsgsSimToClient;
 using namespace MsgsAarToClient;
-
 
 namespace dispatcher
 {
@@ -64,13 +62,12 @@ namespace script
 class ScriptPlugin : public dispatcher::Plugin_ABC
                    , public dispatcher::Registrable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-             ScriptPlugin( dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, const dispatcher::Config& config, dispatcher::SimulationPublisher_ABC& publisher
-                 , tools::MessageDispatcher_ABC& dispatcher, dispatcher::ClientPublisher_ABC& clients, dispatcher::LinkResolver_ABC& resolver
-                 , dispatcher::CompositeRegistrable& registrables );
+             ScriptPlugin( dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, const dispatcher::Config& config,
+                           dispatcher::SimulationPublisher_ABC& publisher, tools::MessageDispatcher_ABC& dispatcher,
+                           dispatcher::ClientPublisher_ABC& clients, dispatcher::LinkResolver_ABC& resolver, dispatcher::CompositeRegistrable& registrables );
     virtual ~ScriptPlugin();
     //@}
 

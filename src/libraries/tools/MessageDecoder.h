@@ -14,7 +14,6 @@
 
 namespace tools
 {
-
 // =============================================================================
 /** @class  MessageDecoder
     @brief  MessageDecoder
@@ -27,12 +26,24 @@ class MessageDecoder
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MessageDecoder( Message& message );
+    explicit MessageDecoder( Message& message )
+    {
+        const unsigned long size = message.Size();
+        // $$$$ SBO 2009-10-26: Find a way to get rid of new
+        char* buffer = new char[ size ];
+        message.Read( buffer, size );
+        if( ! message_.ParseFromString( std::string( buffer, size ) ) )
+            throw std::runtime_error( __FUNCTION__ ": message deserialization failed." );
+        delete[] buffer;
+    }
     //@}
 
     //! @name Accessors
     //@{
-    operator const T&() const;
+    operator const T&() const
+    {
+        return message_;
+    }
     //@}
 
 private:
@@ -43,11 +54,12 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     T message_;
+    //@}
 };
 
 }
-
-#include "MessageDecoder.inl"
 
 #endif // __MessageDecoder_h_

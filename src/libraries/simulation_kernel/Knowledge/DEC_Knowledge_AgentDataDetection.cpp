@@ -148,7 +148,7 @@ void DEC_Knowledge_AgentDataDetection::Prepare()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_AgentDataDetection::Update
+// Name: DEC_Knowledge_AgentDataDetection::DoUpdate
 // Created: NLD 2004-11-15
 // -----------------------------------------------------------------------------
 template< typename T >

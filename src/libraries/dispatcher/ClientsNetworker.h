@@ -42,8 +42,8 @@ public:
 
     //! @name Main
     //@{
-    virtual void Send( const MsgsSimToClient::MsgSimToClient& asnMsg );
-    virtual void Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& asnMsg );
+    virtual void Send( const MsgsSimToClient::MsgSimToClient& msg );
+    virtual void Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& msg );
     virtual void Send( const MsgsReplayToClient::MsgReplayToClient& );
     virtual void Send( const MsgsAarToClient::MsgAarToClient& msg );
     virtual void Send( const MsgsMessengerToClient::MsgMessengerToClient& msg );

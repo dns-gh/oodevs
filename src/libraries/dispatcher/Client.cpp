@@ -38,18 +38,18 @@ Client::~Client()
 // Name: Client::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void Client::Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& asnMsg )
+void Client::Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& msg )
 {
-    sender_.Send( endpoint_, asnMsg );
+    sender_.Send( endpoint_, msg );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Client::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void Client::Send( const MsgsSimToClient::MsgSimToClient& asnMsg )
+void Client::Send( const MsgsSimToClient::MsgSimToClient& msg )
 {
-    sender_.Send( endpoint_, asnMsg );
+    sender_.Send( endpoint_, msg );
 }
 
 // -----------------------------------------------------------------------------

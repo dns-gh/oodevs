@@ -68,7 +68,7 @@ void RightsPlugin::Receive( const MsgsSimToClient::MsgSimToClient& message )
 // Name: RightsPlugin::NotifyClientAuthenticated
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void RightsPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC&  )
+void RightsPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& /*profile*/ )
 {
     profiles_->Send( client );
 }

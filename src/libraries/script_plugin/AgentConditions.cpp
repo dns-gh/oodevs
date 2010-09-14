@@ -100,7 +100,7 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< Condition_ABC > AgentConditions::AgentCreated
+// Name: AgentConditions::AgentCreated
 // Created: SBO 2009-08-19
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > AgentConditions::AgentCreated()
@@ -118,7 +118,7 @@ boost::shared_ptr< Condition_ABC > AgentConditions::AgentEnters( const Zone& zon
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< Condition_ABC > AgentConditions::KnowledgeEnters
+// Name: AgentConditions::KnowledgeEnters
 // Created: AGE 2008-08-01
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > AgentConditions::KnowledgeEnters( const dispatcher::Zone& zone )
@@ -127,7 +127,7 @@ boost::shared_ptr< Condition_ABC > AgentConditions::KnowledgeEnters( const dispa
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< Condition_ABC > AgentConditions::KnowledgeCreatedIn
+// Name: AgentConditions::KnowledgeCreatedIn
 // Created: AGE 2008-08-01
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > AgentConditions::KnowledgeCreatedIn( const dispatcher::Zone& zone )
@@ -136,7 +136,7 @@ boost::shared_ptr< Condition_ABC > AgentConditions::KnowledgeCreatedIn( const di
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< Condition_ABC > AgentConditions::MissionStarted
+// Name: AgentConditions::MissionStarted
 // Created: AGE 2008-06-17
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > AgentConditions::MissionStarted()
@@ -145,7 +145,7 @@ boost::shared_ptr< Condition_ABC > AgentConditions::MissionStarted()
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< Condition_ABC > AgentConditions::OperationalStateChanged
+// Name: AgentConditions::OperationalStateChanged
 // Created: AGE 2008-06-17
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > AgentConditions::OperationalStateChanged()
@@ -154,7 +154,7 @@ boost::shared_ptr< Condition_ABC > AgentConditions::OperationalStateChanged()
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< Condition_ABC > AgentConditions::ForceRatioChanged
+// Name: AgentConditions::ForceRatioChanged
 // Created: SBO 2009-09-29
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > AgentConditions::ForceRatioChanged()
@@ -163,7 +163,7 @@ boost::shared_ptr< Condition_ABC > AgentConditions::ForceRatioChanged()
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< Condition_ABC > AgentConditions::KnowledgeCreated
+// Name: AgentConditions::KnowledgeCreated
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > AgentConditions::KnowledgeCreated()
@@ -172,7 +172,7 @@ boost::shared_ptr< Condition_ABC > AgentConditions::KnowledgeCreated()
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< Condition_ABC > AgentConditions::PerceptionChanged
+// Name: AgentConditions::PerceptionChanged
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > AgentConditions::PerceptionChanged()

@@ -23,7 +23,6 @@ namespace plugins
 {
 namespace script
 {
-
 // =============================================================================
 /** @class  EventCondition
     @brief  Event condition

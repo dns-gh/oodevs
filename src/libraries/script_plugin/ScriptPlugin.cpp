@@ -33,7 +33,6 @@
 #include <MT/MT_Logger/MT_Logger_lib.h>
 #include <directia/brain/Brain.h>
 #include <boost/filesystem.hpp>
-#include <boost/bind.hpp>
 
 namespace bfs = boost::filesystem;
 using namespace plugins::script;
@@ -45,15 +44,17 @@ using namespace MsgsClientToMessenger;
 // Name: ScriptPlugin constructor
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
-ScriptPlugin::ScriptPlugin( Model_ABC& model, const kernel::StaticModel& staticModel, const Config& config, SimulationPublisher_ABC& publisher, tools::MessageDispatcher_ABC& dispatcher, ClientPublisher_ABC& clients, LinkResolver_ABC& resolver, CompositeRegistrable& registrables )
-    : model_     ( model )
-    , config_    ( config )
+ScriptPlugin::ScriptPlugin( Model_ABC& model, const kernel::StaticModel& staticModel, const Config& config,
+                            SimulationPublisher_ABC& publisher, tools::MessageDispatcher_ABC& dispatcher,
+                            ClientPublisher_ABC& clients, LinkResolver_ABC& resolver, CompositeRegistrable& registrables )
+    : model_       ( model )
+    , config_      ( config )
     , registrables_( registrables )
-    , controller_( new kernel::Controller() )
-    , converter_ ( new kernel::CoordinateConverter( config ) )
-    , factory_   ( new ExtensionFactory( *controller_, *converter_, publisher ) )
-    , time_      ( -1 )
-    , reset_     ( true )
+    , controller_  ( new kernel::Controller() )
+    , converter_   ( new kernel::CoordinateConverter( config ) )
+    , factory_     ( new ExtensionFactory( *controller_, *converter_, publisher ) )
+    , time_        ( -1 )
+    , reset_       ( true )
     , tickDuration_( 10 )
 {
     model_.RegisterFactory( *factory_ );
@@ -146,9 +147,7 @@ void ScriptPlugin::Update()
         reset_ = false;
         LoadScripts();
     }
-
     ApplyPendings();
-
     long newTime = clock();
     if( time_ > 0 )
     {
@@ -251,4 +250,3 @@ void ScriptPlugin::ApplyPendings()
     pending.swap( pending_ );
     std::for_each( pending.begin(), pending.end(), boost::apply<void>() );
 }
-

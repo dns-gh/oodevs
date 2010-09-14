@@ -12,10 +12,10 @@
 
 namespace google
 {
-    namespace protobuf
-    {
-        class Message;
-    }
+namespace protobuf
+{
+    class Message;
+}
 }
 
 bool operator==( const google::protobuf::Message& lhs, const google::protobuf::Message& rhs );

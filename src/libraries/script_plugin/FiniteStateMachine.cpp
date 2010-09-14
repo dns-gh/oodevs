@@ -21,7 +21,7 @@ using namespace plugins::script;
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
 FiniteStateMachine::FiniteStateMachine( directia::brain::Brain& brain )
-    : state_   ( "start" )
+    : state_( "start" )
 {
     brain[ "fsm" ] = this;
     brain.Register( "DeclareEvent", &FiniteStateMachine::DeclareEvent );
@@ -76,4 +76,3 @@ void FiniteStateMachine::Deactivate()
 {
     std::for_each( events_.begin(), events_.end(), boost::bind( &Event::Deactivate, _1 ) );
 }
-

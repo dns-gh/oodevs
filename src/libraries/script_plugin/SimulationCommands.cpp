@@ -13,7 +13,6 @@
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
-
 #include "protocol/simulationsenders.h"
 
 using namespace plugins::script;

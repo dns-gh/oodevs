@@ -12,7 +12,6 @@
 #include "Workspace_ABC.h"
 #include "QuerySessionData.h"
 #include "dispatcher/Config.h"
-
 #include <boost/filesystem/path.hpp>
 
 using namespace plugins;
@@ -26,7 +25,6 @@ namespace bfs = boost::filesystem;
 WorkingSession::WorkingSession( Workspace_ABC& workspace, const dispatcher::Config& config )
 {
     QuerySessionData querySession( workspace.GetDatabase( "flat" ) );
-
     LoadExercise( config, querySession );
     LoadSession( config, querySession );
 }
@@ -37,6 +35,7 @@ WorkingSession::WorkingSession( Workspace_ABC& workspace, const dispatcher::Conf
 // -----------------------------------------------------------------------------
 WorkingSession::~WorkingSession()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +63,6 @@ int WorkingSession::GetExercise() const
 void WorkingSession::LoadExercise( const dispatcher::Config& config, QuerySessionData& database )
 {
     bfs::path p( config.GetExerciseFile(), bfs::native );
-
     exercise_.first = p.parent_path().filename();
     if( ! exercise_.first.empty() )
     {

@@ -59,6 +59,7 @@ public:
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
 
     virtual const kernel::Karma& GetKarma() const;
+
     virtual void Register( dispatcher::Formation_ABC& formation );
     virtual void Remove( dispatcher::Formation_ABC& formation );
     virtual void Register( dispatcher::Population_ABC& population );

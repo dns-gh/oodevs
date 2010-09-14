@@ -29,6 +29,12 @@ namespace tools
 class ObjectMessageService : public MessageDispatcher_ABC
                            , public MessageCallback_ABC
 {
+private:
+    //! @name Types
+    //@{
+    typedef boost::function< void( const std::string&, const std::string& ) > T_Callback;
+    //@}
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -40,7 +46,7 @@ public:
     //@{
     using MessageDispatcher_ABC::RegisterMessage;
 
-    void RegisterErrorCallback( const boost::function2< void, const std::string&, const std::string& >& error );
+    void RegisterErrorCallback( const T_Callback& error );
 
     virtual ObjectMessageCallback_ABC* Retrieve( unsigned long id );
     virtual void Register( unsigned long id, std::auto_ptr< ObjectMessageCallback_ABC > callback );
@@ -55,10 +61,11 @@ private:
 
     //! @name Operations
     //@{
-    virtual void OnError  ( const std::string& endpoint, const std::string& error );
+    virtual void OnError( const std::string& endpoint, const std::string& error );
     virtual void OnMessage( const std::string& endpoint, Message& message );
     //@}
 
+private:
     //! @name Types
     //@{
     typedef std::map< unsigned int, ObjectMessageCallback_ABC* > T_Callbacks;
@@ -69,7 +76,7 @@ private:
     //! @name Member data
     //@{
     T_Callbacks callbacks_;
-    boost::function2< void, const std::string&, const std::string& > error_;
+    T_Callback error_;
     //@}
 };
 

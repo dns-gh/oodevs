@@ -52,10 +52,6 @@ void ClientsNetworker::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
         AllowConnections();
 }
 
-// =============================================================================
-// CONNECTION CALLBACKS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: ClientsNetworker::ConnectionSucceeded
 // Created: NLD 2002-07-12
@@ -96,20 +92,16 @@ void ClientsNetworker::ConnectionError( const std::string& link , const std::str
     }
 }
 
-// =============================================================================
-// SENT MESSAGES
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: ClientsNetworker::Send
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-void ClientsNetworker::Send( const MsgsSimToClient::MsgSimToClient& asnMsg )
+void ClientsNetworker::Send( const MsgsSimToClient::MsgSimToClient& msg )
 {
     try
     {
         for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
-            it->second->Send( asnMsg );
+            it->second->Send( msg );
     }
     catch( std::exception& exception )
     {
@@ -121,12 +113,12 @@ void ClientsNetworker::Send( const MsgsSimToClient::MsgSimToClient& asnMsg )
 // Name: ClientsNetworker::Send
 // Created: NLD 2007-04-24
 // -----------------------------------------------------------------------------
-void ClientsNetworker::Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& asnMsg )
+void ClientsNetworker::Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& msg )
 {
     try
     {
         for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
-            it->second->Send( asnMsg );
+            it->second->Send( msg );
     }
     catch( std::exception& exception )
     {
@@ -138,12 +130,12 @@ void ClientsNetworker::Send( const MsgsAuthenticationToClient::MsgAuthentication
 // Name: ClientsNetworker::Send
 // Created: AGE 2007-08-27
 // -----------------------------------------------------------------------------
-void ClientsNetworker::Send( const MsgsReplayToClient::MsgReplayToClient& asnMsg )
+void ClientsNetworker::Send( const MsgsReplayToClient::MsgReplayToClient& msg )
 {
     try
     {
         for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
-            it->second->Send( asnMsg );
+            it->second->Send( msg );
     }
     catch( std::exception& exception )
     {
@@ -155,13 +147,13 @@ void ClientsNetworker::Send( const MsgsReplayToClient::MsgReplayToClient& asnMsg
 // Name: ClientsNetworker::Send
 // Created: AGE 2007-09-12
 // -----------------------------------------------------------------------------
-void ClientsNetworker::Send( const MsgsAarToClient::MsgAarToClient& asnMsg )
+void ClientsNetworker::Send( const MsgsAarToClient::MsgAarToClient& msg )
 {
     try
     {
         for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
-            it->second->Send( asnMsg );
-        plugin_.Receive( asnMsg );
+            it->second->Send( msg );
+        plugin_.Receive( msg );
     }
     catch( std::exception& exception )
     {
@@ -173,12 +165,12 @@ void ClientsNetworker::Send( const MsgsAarToClient::MsgAarToClient& asnMsg )
 // Name: ClientsNetworker::Send
 // Created: RDS 2008-04-04
 // -----------------------------------------------------------------------------
-void ClientsNetworker::Send( const MsgsMessengerToClient::MsgMessengerToClient& asnMsg )
+void ClientsNetworker::Send( const MsgsMessengerToClient::MsgMessengerToClient& msg )
 {
     try
     {
         for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
-            it->second->Send( asnMsg );
+            it->second->Send( msg );
     }
     catch( std::exception& exception )
     {

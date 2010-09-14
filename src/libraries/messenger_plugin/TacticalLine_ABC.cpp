@@ -9,7 +9,7 @@
 
 #include "messenger_plugin_pch.h"
 #include "TacticalLine_ABC.h"
-#include "clients_kernel/CoordinateConverter.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::messenger;

@@ -130,7 +130,6 @@ void Side::Accept( kernel::ModelVisitor_ABC& visitor ) const
     populations_.Apply( boost::bind( &dispatcher::Population_ABC::Accept, _1, boost::ref( visitor ) ) );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Side::GetKarma
 // Created: MGD 2009-12-17
@@ -139,6 +138,7 @@ const kernel::Karma& Side::GetKarma() const
 {
     return karma_;
 }
+
 // -----------------------------------------------------------------------------
 // Name: Side::Register
 // Created: MGD 2009-12-17
@@ -147,6 +147,7 @@ void Side::Register( dispatcher::Formation_ABC& formation )
 {
     formations_.Register( formation.GetId(), formation );
 }
+
 // -----------------------------------------------------------------------------
 // Name: Side::Remove
 // Created: MGD 2009-12-17
@@ -155,6 +156,7 @@ void Side::Remove( dispatcher::Formation_ABC& formation )
 {
     formations_.Remove( formation.GetId() );
 }
+
 // -----------------------------------------------------------------------------
 // Name: Side::Register
 // Created: MGD 2009-12-17
@@ -163,6 +165,7 @@ void Side::Register( dispatcher::Population_ABC& population )
 {
     populations_.Register( population.GetId(), population );
 }
+
 // -----------------------------------------------------------------------------
 // Name: Side::Remove
 // Created: MGD 2009-12-17
@@ -171,6 +174,7 @@ void Side::Remove( dispatcher::Population_ABC& population )
 {
     populations_.Remove( population.GetId() );
 }
+
 // -----------------------------------------------------------------------------
 // Name: Side::Register
 // Created: MGD 2009-12-17
@@ -179,6 +183,7 @@ void Side::Register( dispatcher::Object_ABC& object )
 {
     objects_.Register( object.GetId(), object );
 }
+
 // -----------------------------------------------------------------------------
 // Name: Side::Remove
 // Created: MGD 2009-12-17
@@ -187,6 +192,7 @@ void Side::Remove( dispatcher::Object_ABC& object )
 {
     objects_.Remove( object.GetId() );
 }
+
 // -----------------------------------------------------------------------------
 // Name: Side::Register
 // Created: MGD 2009-12-17
@@ -195,6 +201,7 @@ void Side::Register( dispatcher::KnowledgeGroup_ABC& knGroup )
 {
     knowledgeGroups_.Register( knGroup.GetId(), knGroup );
 }
+
 // -----------------------------------------------------------------------------
 // Name: Side::Remove
 // Created: MGD 2009-12-17

@@ -217,7 +217,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Agent )
     std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "agent", input,
         bl::bind( bl::new_ptr< actions::parameters::Agent >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ) ) ) );
     CheckSet( *message );
-    BOOST_CHECK_EQUAL( 42, message->value().unit().id() );
+    BOOST_CHECK_EQUAL( 42u, message->value().unit().id() );
 }
 
 namespace
@@ -318,7 +318,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Automat )
     std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "automate", input,
         bl::bind( bl::new_ptr< actions::parameters::Automat >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ) ) ) );
     CheckSet( *message );
-    BOOST_CHECK_EQUAL( 42, message->value().automat().id() );
+    BOOST_CHECK_EQUAL( 42u, message->value().automat().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -333,7 +333,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Automat )
 //    std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "level", input,
 //        bl::bind( bl::new_ptr< actions::parameters::Level >(), bl::_1, bl::_2, bl::var( levels ) ) ) );
 //    CheckSet( *message );
-//    //BOOST_CHECK_EQUAL( 42, message->value().oid() );
+//    //BOOST_CHECK_EQUAL( 42u, message->value().oid() );
 //}
 
 // -----------------------------------------------------------------------------
@@ -350,7 +350,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Automat )
 //    std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "formation", input,
 //        bl::bind( bl::new_ptr< actions::parameters::Formation >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ) ) ) );
 //    CheckSet( *message );
-//    BOOST_CHECK_EQUAL( 42, message->value().unit().oid() );
+//    BOOST_CHECK_EQUAL( 42u, message->value().unit().oid() );
 //}
 // -----------------------------------------------------------------------------
 // Name: ParametersSerialization_DotationType
@@ -365,7 +365,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Automat )
 //    std::auto_ptr< Common::MsgMissionParameter > message( new Common::MsgMissionParameter() );
 //    parameter.CommitTo( *message );
 //    CheckSet( *message );
-//    BOOST_CHECK_EQUAL( 42, message->value().dotationtype().oid() );
+//    BOOST_CHECK_EQUAL( 42u, message->value().dotationtype().oid() );
 //}
 
 // -----------------------------------------------------------------------------

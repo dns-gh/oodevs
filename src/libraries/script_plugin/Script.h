@@ -12,10 +12,10 @@
 
 namespace directia
 {
-    namespace brain
-    {
-        class Brain;
-    }
+namespace brain
+{
+    class Brain;
+}
 }
 
 namespace dispatcher

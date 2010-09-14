@@ -55,7 +55,9 @@ class Actions : public dispatcher::Registrable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Actions( kernel::Controller& controller, const tools::ExerciseConfig& config, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& sim );
+             Actions( kernel::Controller& controller, const tools::ExerciseConfig& config,
+                      const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel,
+                      dispatcher::SimulationPublisher_ABC& sim );
     virtual ~Actions();
     //@}
 

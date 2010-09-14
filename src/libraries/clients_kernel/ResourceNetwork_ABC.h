@@ -10,7 +10,7 @@
 #ifndef __ResourceNetwork_ABC_h_
 #define __ResourceNetwork_ABC_h_
 
-#include "clients_kernel/Extension_ABC.h"
+#include "Extension_ABC.h"
 
 namespace MsgsSimToClient
 {

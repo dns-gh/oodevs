@@ -63,15 +63,15 @@ struct Actions::Publisher : public Publisher_ABC
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
 Actions::Actions( kernel::Controller& controller, const tools::ExerciseConfig& config, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& sim )
-    : entities_( new dispatcher::ModelAdapter( model ) )
-    , publisher_( new Publisher( sim ) )
-    , converter_( new kernel::CoordinateConverter( config ) )
-    , time_( new SimulationTime() )
-    , agentsKnowledges_( new dispatcher::AgentKnowledgeConverter( model ) )
+    : entities_         ( new dispatcher::ModelAdapter( model ) )
+    , publisher_        ( new Publisher( sim ) )
+    , converter_        ( new kernel::CoordinateConverter( config ) )
+    , time_             ( new SimulationTime() )
+    , agentsKnowledges_ ( new dispatcher::AgentKnowledgeConverter( model ) )
     , objectsKnowledges_( new dispatcher::ObjectKnowledgeConverter( model ) )
-    , parameters_( new actions::ActionParameterFactory( *converter_, *entities_, staticModel, *agentsKnowledges_, *objectsKnowledges_, controller ) )
-    , factory_( new actions::ActionFactory( controller, *parameters_, *entities_, staticModel, *time_ ) )
-    , file_   ( config.BuildExerciseChildFile( "scripts/resources/orders.ord" ) )
+    , parameters_       ( new actions::ActionParameterFactory( *converter_, *entities_, staticModel, *agentsKnowledges_, *objectsKnowledges_, controller ) )
+    , factory_          ( new actions::ActionFactory( controller, *parameters_, *entities_, staticModel, *time_ ) )
+    , file_             ( config.BuildExerciseChildFile( "scripts/resources/orders.ord" ) )
 {
     // NOTHING
 }

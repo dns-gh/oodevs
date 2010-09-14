@@ -87,10 +87,6 @@ void SimulationNetworker::OnReceiveMsgSimToClient( const std::string& /*linkFrom
     simulation_->OnReceive( message );
 }
 
-// =============================================================================
-// SENT MESSAGES
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: SimulationNetworker::Send
 // Created: NLD 2006-09-21

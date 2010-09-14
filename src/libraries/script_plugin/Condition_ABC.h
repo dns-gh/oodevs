@@ -12,20 +12,19 @@
 
 namespace directia
 {
-    namespace tools
-    {
-        namespace binders
-        {
-            class ScriptRef;
-        }
-    }
+namespace tools
+{
+namespace binders
+{
+    class ScriptRef;
+}
+}
 }
 
 namespace plugins
 {
 namespace script
 {
-
 // =============================================================================
 /** @class  Condition_ABC
     @brief  Condition declaration

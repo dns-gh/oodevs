@@ -9,7 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "MergingTacticalHierarchies.h"
-#include "clients_kernel/App6Symbol.h"
+#include "App6Symbol.h"
 
 using namespace kernel;
 

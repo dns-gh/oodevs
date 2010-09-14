@@ -16,10 +16,9 @@
 
 namespace tools
 {
-
 // =============================================================================
 /** @class  MessageDispatcher_ABC
-    @brief  Message dispatcher definition
+    @brief  Message dispatcher declaration
 */
 // Created: AGE 2007-05-28
 // =============================================================================
@@ -35,7 +34,17 @@ public:
     //! @name Operations
     //@{
     template< typename C, typename T >
-    void RegisterMessage( C& instance, void (C::*callback)( const std::string& link, const T& object ) );
+    void RegisterMessage( C& instance, void (C::*callback)( const std::string& link, const T& object ) )
+    {
+        const unsigned int id = MessageIdentifierFactory::GetIdentifier< T >();
+        ObjectMessageCallback< T >* composite = static_cast< ObjectMessageCallback< T >* >( Retrieve( id ) );
+        if( ! composite )
+        {
+            composite = new ObjectMessageCallback< T >();
+            Register( id, std::auto_ptr< ObjectMessageCallback_ABC >( composite ) );
+        }
+        composite->AddCallback( boost::bind( callback, &instance, _1, _2 ) );
+    }
     //@}
 
 protected:
@@ -45,23 +54,6 @@ protected:
     virtual ObjectMessageCallback_ABC* Retrieve( unsigned long id ) = 0;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: MessageDispatcher_ABC::RegisterMessage
-// Created: AGE 2007-03-07
-// -----------------------------------------------------------------------------
-template< typename C, typename T >
-void MessageDispatcher_ABC::RegisterMessage( C& instance, void (C::*callback)( const std::string& link, const T& object ) )
-{
-    const unsigned int objectClassId = MessageIdentifierFactory::GetIdentifier< T >();
-    ObjectMessageCallback< T >* composite = static_cast< ObjectMessageCallback< T >* >( Retrieve( objectClassId ) );
-    if( ! composite )
-    {
-        composite = new ObjectMessageCallback< T >();
-        Register( objectClassId, std::auto_ptr< ObjectMessageCallback_ABC >( composite ) );
-    }
-    composite->AddCallback( boost::bind( callback, &instance, _1, _2 ) );
-}
 
 }
 

@@ -63,7 +63,7 @@ boost::shared_ptr< Condition_ABC > SimulationConditions::TickEnded()
         virtual void NotifyUpdated( const events::TickEnded& ev )
         {
             Trigger( ev.tick, ev.duration );
-        };
+        }
     };
     return boost::shared_ptr< Condition_ABC >( new ClientConnected( controller_ ) );
 }

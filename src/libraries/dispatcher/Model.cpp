@@ -38,7 +38,7 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/clientsenders.h"
 #include "clients_kernel/AgentTypes.h"
-#include "clients_kernel/CoordinateConverter.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/StaticModel.h"

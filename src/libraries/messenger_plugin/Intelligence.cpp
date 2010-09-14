@@ -9,7 +9,7 @@
 
 #include "messenger_plugin_pch.h"
 #include "Intelligence.h"
-#include "clients_kernel/CoordinateConverter.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/MessengerSenders.h"
 #include <xeumeuleu/xml.hpp>

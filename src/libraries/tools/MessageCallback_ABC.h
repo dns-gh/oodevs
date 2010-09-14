@@ -16,7 +16,7 @@ namespace tools
 
 // =============================================================================
 /** @class  MessageCallback_ABC
-    @brief  MessageCallback_ABC
+    @brief  Message callback declaration
 */
 // Created: AGE 2007-09-06
 // =============================================================================
@@ -25,13 +25,13 @@ class MessageCallback_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MessageCallback_ABC() {};
-    virtual ~MessageCallback_ABC() {};
+             MessageCallback_ABC() {}
+    virtual ~MessageCallback_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void OnError  ( const std::string& endpoint, const std::string& error ) = 0;
+    virtual void OnError( const std::string& endpoint, const std::string& error ) = 0;
     virtual void OnMessage( const std::string& endpoint, Message& message ) = 0;
     //@}
 

@@ -76,12 +76,12 @@ void DecisionalModel::ReadFragOrder( xml::xistream& xis, Mission& mission, Missi
 // Name: DecisionalModel::ReadDefaultFragOrder
 // Created: HBD 2010-08-25
 // -----------------------------------------------------------------------------
-void DecisionalModel::ReadDefaultFragOrder( xml::xistream& xis, MissionFactory& factory, const tools::Resolver_ABC< FragOrderType >& fragorders )
+void DecisionalModel::ReadDefaultFragOrder( xml::xistream& xis, MissionFactory& factory, const tools::Resolver_ABC< FragOrderType >& /*fragorders*/ )
 {
     std::string name;
     xis >> xml::attribute( "name", name );
     FragOrder* order = factory.CreateFragOrder( name );
-   tools::Resolver< FragOrder >::Register( order->GetId(), *order );
+    tools::Resolver< FragOrder >::Register( order->GetId(), *order );
 }
 
 // -----------------------------------------------------------------------------

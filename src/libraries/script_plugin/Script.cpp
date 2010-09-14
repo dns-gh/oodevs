@@ -16,25 +16,23 @@
 
 using namespace plugins::script;
 
-
 namespace
 {
-
-directia::brain::Brain* CreateBrain( const std::string& file )
-{
-    std::string path( file );
-    std::size_t lookHere = 0;
-    std::size_t foundHere;
-    while( ( foundHere = path.find( "\\", lookHere ) ) != std::string::npos )
+    directia::brain::Brain* CreateBrain( const std::string& file )
     {
-        path.replace( foundHere, 1, "/" );
-        lookHere = foundHere + 1;
+        std::string path( file );
+        std::size_t lookHere = 0;
+        std::size_t foundHere;
+        while( ( foundHere = path.find( "\\", lookHere ) ) != std::string::npos )
+        {
+            path.replace( foundHere, 1, "/" );
+            lookHere = foundHere + 1;
+        }
+        foundHere = path.find_last_of( "/" );
+        std::string workingDirectory = ( foundHere == std::string::npos ) ? "." : path.substr( 0, foundHere );
+        std::string brainInit = std::string( "brain={file='" ) + path + "',type='brain'}plugins={} cwd='" + workingDirectory + "'";
+        return new directia::brain::Brain( brainInit );
     }
-    foundHere = path.find_last_of( "/" );
-    std::string workingDirectory = ( foundHere == std::string::npos ) ? "." : path.substr( 0, foundHere );
-    std::string brainInit = std::string( "brain={file='" ) + path + "',type='brain'}plugins={} cwd='" + workingDirectory + "'";
-    return new directia::brain::Brain( brainInit );
-}
 }
 
 // -----------------------------------------------------------------------------

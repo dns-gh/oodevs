@@ -25,14 +25,14 @@ using namespace tools;
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
 ServerNetworker::ServerNetworker( unsigned short port )
-    : service_( new boost::asio::io_service() )
+    : service_         ( new boost::asio::io_service() )
     , connectionBuffer_( new BufferedConnectionCallback() )
-    , messageBuffer_( new BufferedMessageCallback() )
-    , sockets_( new SocketManager( *messageBuffer_, *connectionBuffer_ ) )
-    , messageService_( new ObjectMessageService() )
-    , acceptor_( new Acceptor( *sockets_, *service_, port ) )
-    , stopped_( false )
-    , thread_( boost::bind( &ServerNetworker::Run, this ) )
+    , messageBuffer_   ( new BufferedMessageCallback() )
+    , sockets_         ( new SocketManager( *messageBuffer_, *connectionBuffer_ ) )
+    , messageService_  ( new ObjectMessageService() )
+    , acceptor_        ( new Acceptor( *sockets_, *service_, port ) )
+    , stopped_         ( false )
+    , thread_          ( boost::bind( &ServerNetworker::Run, this ) )
 {
     messageService_->RegisterErrorCallback( boost::bind( &ServerNetworker::ConnectionError, this, _1, _2 ) );
 }

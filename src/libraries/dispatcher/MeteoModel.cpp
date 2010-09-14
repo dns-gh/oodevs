@@ -26,9 +26,9 @@ using namespace dispatcher;
 // Created: HBD 2010-03-23
 // -----------------------------------------------------------------------------
 MeteoModel::MeteoModel( const tools::ExerciseConfig& config, Model& model )
-  : model_       ( model )
-  , converter_   ( new kernel::CoordinateConverter( config ) )
-  , pGlobalMeteo_( 0 )
+    : model_       ( model )
+    , converter_   ( new kernel::CoordinateConverter( config ) )
+    , pGlobalMeteo_( 0 )
 {
     weather::PHY_Precipitation::Initialize();
     weather::PHY_Lighting::Initialize();

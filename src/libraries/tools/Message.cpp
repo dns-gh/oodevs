@@ -96,8 +96,8 @@ boost::asio::const_buffers_1 Message::MakeOutputBuffer( unsigned long tag ) cons
 {
     if( ! data_ || data_->size() < 8 )
         return boost::asio::const_buffers_1( boost::asio::const_buffer() );
-    unsigned long* data = reinterpret_cast< unsigned long* >( & data_->front() );
-    *data     = htonl( data_->size() - sizeof( unsigned long ) );
+    unsigned long* data = reinterpret_cast< unsigned long* >( &data_->front() );
+    *data = htonl( data_->size() - sizeof( unsigned long ) );
     *(data+1) = htonl( tag );
     const T_Data& buffer = *data_;
     return boost::asio::buffer( buffer );
