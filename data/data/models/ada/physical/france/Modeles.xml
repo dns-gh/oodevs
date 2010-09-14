@@ -314,6 +314,7 @@
         <mission name="COMMUNES Suivre"/>
         <mission name="GENIE ActiverObstacles"/>
         <mission name="GENIE Construire"/>
+        <mission name="GENIE Contourner obstacle"/>
         <mission name="GENIE Degager Obstacles"/>
         <mission name="GENIE Depolluer zone"/>
         <mission name="GENIE OuvrirItineraire"/>

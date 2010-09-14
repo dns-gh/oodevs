@@ -1111,6 +1111,9 @@
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.DepolluerZone" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.DepolluerZone" id="2113" name="GENIE Depolluer zone">
       <parameter dia-name="objective" name="zone a depolluer" optional="false" type="AreaBM"/>
     </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.ContournerObstacles" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.ContournerObstacles" id="2114" name="GENIE Contourner obstacle">
+      <parameter dia-name="obstacles" name="obstacles a contourner" optional="false" type="ObjectKnowledgeListBM"/>
+    </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Animer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Animer" id="2077" name="Animer">
       <parameter dia-name="entities" name="Objets a animer" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
