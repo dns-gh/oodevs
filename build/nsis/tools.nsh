@@ -166,25 +166,23 @@
 
     SetOutPath "$INSTDIR\doc\en"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${DOCDIR}\en\final\Controller_User_Guide.pdf"
-    File /r /x ".svn" "${DOCDIR}\en\final\Instructor_User_Guide.pdf"
+    File /r /x ".svn" "${DOCDIR}\en\final\AuthoringTool_User_Guide.pdf"
+    File /r /x ".svn" "${DOCDIR}\en\final\Trainee_User_Guide.pdf"
     File /r /x ".svn" "${DOCDIR}\en\final\Reference_Guide.pdf"
     CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\English"
-    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\English\Controller User Guide.lnk" "$INSTDIR\doc\en\Controller_User_Guide.pdf"
-    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\English\Instructor User Guide.lnk" "$INSTDIR\doc\en\Instructor_User_Guide.pdf"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\English\Authoring Tool User Guide.lnk" "$INSTDIR\doc\en\AuthoringTool_User_Guide.pdf"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\English\Trainee User Guide.lnk" "$INSTDIR\doc\en\Trainee_User_Guide.pdf"
     CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\English\Reference Guide.lnk" "$INSTDIR\doc\en\Reference_Guide.pdf"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     
     SetOutPath "$INSTDIR\doc\fr"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r /x ".svn" "${DOCDIR}\fr\final\Guide_de_Reference.pdf"
-    File /r /x ".svn" "${DOCDIR}\fr\final\Guide_Utilisateur_Animateur.pdf"
-    File /r /x ".svn" "${DOCDIR}\fr\final\Guide_Utilisateur_Superviseur.pdf"
+    File /r /x ".svn" "${DOCDIR}\fr\final\Guide_Utilisateur_Entraine.pdf"
     File /r /x ".svn" "${DOCDIR}\fr\final\Guide_Utilisateur_Outil_Adaptation.pdf"
     CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français"
     CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français\Guide de Reference.lnk" "$INSTDIR\doc\fr\Guide_de_Reference.pdf"
-    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français\Guide Utilisateur Animateur.lnk" "$INSTDIR\doc\fr\Guide_Utilisateur_Animateur.pdf"
-    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français\Guide Utilisateur Superviseur.lnk" "$INSTDIR\doc\fr\Guide_Utilisateur_Superviseur.pdf"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français\Guide Utilisateur Entraine.lnk" "$INSTDIR\doc\fr\Guide_Utilisateur_Entraine.pdf"
     CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français\Guide Utilisateur Outil Adaptation.lnk" "$INSTDIR\doc\fr\Guide_Utilisateur_Outil_Adaptation.pdf"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
