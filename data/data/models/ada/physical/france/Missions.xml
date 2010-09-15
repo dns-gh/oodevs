@@ -1124,6 +1124,14 @@
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.stabilisation.AnimerPosteDeControle" dia-type="net.masagroup.sword.france.military.platoon.stabilisation.AnimerPosteDeControle" id="2101" name="STABILISATION Animer Poste De Controle">
       <parameter dia-name="obstacles" name="Objets a animer" optional="false" type="GenObjectListBM"/>
     </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Fixer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Fixer" id="2085" name="MELEE Fixer unite">
+      <parameter dia-name="objective" name="unite a fixer" optional="false" type="AgentKnowledgeBM"/>
+      <parameter dia-name="positions" name="postions pour fixer" optional="false" type="PointListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.recueillir" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.recueillir" id="2086" name="MELEE Recueillir">
+      <parameter dia-name="objective" name="unite alliée" optional="false" type="AgentBM"/>
+      <parameter dia-name="positions" name="postions pour recueillir" optional="false" type="PointListBM"/>
+    </mission>
   </units>
   <automats>
     <context>
