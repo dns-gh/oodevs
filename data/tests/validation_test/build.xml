@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<project name="validation_test" default="help">
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+
+    <property name="output" value="out"/>
+    <property name="input" value="src"/>
+    <property name="data" value="../../data/models/ada/physical/1.9.2"/>
+    <property name="input_exercise" value="../../exercises/Poseidon VA"/>
+    <property name="test_name" value="Poseidon VA"/>
+    <property name="target_exercise" value="../../exercises/validation_test"/>
+    <property name="sword_doc" value="../../../../doc/04-Integration_Testing"/>
+
+    <target name="clean">
+        <delete dir="${output}"/>
+    </target>
+
+    <target name="realclean" depends="clean">
+        <delete dir="${target_exercise}"/>
+    </target>
+
+    <target name="init" depends="clean">
+        <copy todir="${output}/${test_name}"><fileset dir="${input_exercise}" excludes=".svn"/></copy>
+        <copy todir="${output}/${test_name}"><fileset dir="${input}" excludes=".svn"/></copy>
+        <copy todir="${output}/orders">
+            <fileset dir="${sword_doc}">
+                <include name="**/*.ord"/>
+            </fileset>
+        </copy>
+        <exec executable="bash.exe">
+            <arg value="generate.sh"/>
+            <arg value="${output}/${test_name}/profiles.xml"/>
+        </exec>
+    </target>
+
+    <target name="generate" depends="init">
+        <foreach param="file" target="transform">
+            <path>
+                <fileset dir="${output}/orders">
+                    <include name="**/*.ord"/>
+                </fileset>
+            </path>
+        </foreach>
+    </target>
+
+    <target name="transform">
+    <basename property="filename" file="${file}" suffix=".ord"/>
+        <xslt in="${file}" style="xsl/transformation.xsl" out="${output}/${test_name}/scripts/${filename}.lua"/>
+    </target>
+    
+    <target name="deploy" depends="generate">
+        <mkdir dir="${target_exercise}/${test_name}"/>
+        <copy todir="${target_exercise}/${test_name}">
+            <fileset dir="${output}/${test_name}"/>
+        </copy>
+    </target>
+
+    <target name="help">
+        <echo>
+Main Targets :
+
+generate    Builds "${test_name}" exercise considering ord files 
+            in "${input}" directory.
+deploy      Copy the generated exercise into
+            "${target_exercise}/${test_name}"
+clean       Deletes "${output}" directory.
+realclean   Deletes "${target_exercise}" directory.
+        </echo>
+    </target>
+
+</project>
+
