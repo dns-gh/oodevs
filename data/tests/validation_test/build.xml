@@ -44,7 +44,9 @@
 
     <target name="transform">
     <basename property="filename" file="${file}" suffix=".ord"/>
-        <xslt in="${file}" style="xsl/transformation.xsl" out="${output}/${test_name}/scripts/${filename}.lua"/>
+        <xslt in="${file}" style="xsl/transformation.xsl" out="${output}/${test_name}/scripts/${filename}.lua">
+            <param name="profilename" expression="${filename}"/>
+        </xslt>
     </target>
     
     <target name="deploy" depends="generate">
