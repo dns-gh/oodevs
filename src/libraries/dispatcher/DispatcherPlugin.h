@@ -62,12 +62,19 @@ private:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef std::set< ClientPublisher_ABC* > T_Clients;
+    typedef T_Clients::const_iterator      CIT_Clients;
+    //@}
+
+private:
     //! @name Member data
     //@{
     Model& model_;
     SimulationPublisher_ABC& simulation_;
     LinkResolver_ABC& links_;
-    std::set< ClientPublisher_ABC* > clients_;
+    T_Clients clients_;
     //@}
 };
 

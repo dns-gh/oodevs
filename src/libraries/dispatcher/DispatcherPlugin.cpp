@@ -56,7 +56,7 @@ void DispatcherPlugin::Register( dispatcher::Services& services )
 // -----------------------------------------------------------------------------
 void DispatcherPlugin::Receive( const MsgsSimToClient::MsgSimToClient& message )
 {
-    for( std::set< ClientPublisher_ABC* >::const_iterator it = clients_.begin(); it != clients_.end(); ++it )
+    for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
         (*it)->Send( message );
 }
 
