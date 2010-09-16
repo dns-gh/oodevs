@@ -12,7 +12,6 @@
 #ifndef __SIM_App_h_
 #define __SIM_App_h_
 
-#include "Sim.h"
 #include "WinArguments.h"
 #include "simulation_kernel/tools/MIL_Config.h"
 #pragma warning( push )
