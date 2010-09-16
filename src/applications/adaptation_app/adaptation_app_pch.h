@@ -190,4 +190,17 @@ namespace xml
     };
 }
 
+struct MT_DeleteOwnedObject
+{
+    template< class T > 
+    void operator()( const T* ptr )
+    {
+        delete ptr;
+    }
+};
+
+// $$$$ CBX 2004-06-25: OBSOLETE - Use function mt_clear_owned_ptrs<T>( T& container ) instead
+#define MT_DELETEOWNED(cont) std::for_each( cont.begin(), cont.end(), MT_DeleteOwnedObject() )
+    //!< OBSOLETE - Delete all the object contained in a container of pointer.
+
 #endif // __ADN_APPLICATION_PCH_H_
