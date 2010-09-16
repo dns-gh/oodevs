@@ -9,7 +9,7 @@
 
 #include "actions_pch.h"
 #include "MagicAction.h"
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 #include "protocol/publisher_ABC.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Controller.h"

@@ -14,7 +14,7 @@
 
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 
 class PHY_DotationCategory;
 

@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "Dotation.h"
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 
 using namespace dispatcher;
 

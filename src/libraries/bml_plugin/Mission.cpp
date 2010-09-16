@@ -22,7 +22,7 @@
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/StaticModel.h"
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( disable : 4512 )
 #include <boost/algorithm/string.hpp>

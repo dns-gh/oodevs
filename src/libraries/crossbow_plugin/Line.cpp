@@ -10,7 +10,7 @@
 #include "crossbow_plugin_pch.h"
 #include "Line.h"
 #include "Point.h"
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 
 using namespace plugins;
 

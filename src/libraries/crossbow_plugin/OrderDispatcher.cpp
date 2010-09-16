@@ -21,7 +21,7 @@
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/Agent_ABC.h"
 #include "dispatcher/Automat_ABC.h"
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 #include "protocol/clientsenders.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/noncopyable.hpp>

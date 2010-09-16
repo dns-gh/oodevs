@@ -19,7 +19,7 @@
 #include "WorkingSession.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "protocol/clientsenders.h"
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 
 #include <boost/lexical_cast.hpp>
 

@@ -63,9 +63,16 @@ private:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef std::set< std::string >      T_Services;
+    typedef T_Services::const_iterator CIT_Services;
+    //@}
+
+private:
     //! @name Member data
     //@{
-    std::set< std::string > services_;
+    T_Services services_;
     //@}
 };
 

@@ -11,7 +11,7 @@
 #include "Simulation.h"
 #include "tools/MessageSender_ABC.h"
 #include "MessageHandler_ABC.h"
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 #include "protocol/dispatchersenders.h"
 
 namespace MsgsSimToClient

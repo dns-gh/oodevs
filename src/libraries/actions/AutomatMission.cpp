@@ -12,7 +12,7 @@
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "protocol/ServerPublisher_ABC.h"
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 
 using namespace Common;
 using namespace kernel;

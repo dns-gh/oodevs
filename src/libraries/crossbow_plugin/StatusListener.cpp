@@ -13,7 +13,7 @@
 #include "Table_ABC.h"
 #include "Row_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 
 using namespace plugins;
 using namespace plugins::crossbow;

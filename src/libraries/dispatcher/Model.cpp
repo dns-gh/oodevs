@@ -442,7 +442,6 @@ void Model::Destroy( tools::Resolver< T >& resolver, unsigned id, const M& messa
 void Model::Send( ClientPublisher_ABC& publisher ) const
 {
     client::ControlSendCurrentStateBegin().Send( publisher );
-
     simulation_->Send( publisher );
     folk_->SendCreation( publisher );
     {
@@ -453,7 +452,6 @@ void Model::Send( ClientPublisher_ABC& publisher ) const
         FullUpdateVisitor visitor( publisher );
         Accept( visitor );
     }
-
     client::ControlSendCurrentStateEnd().Send( publisher );
 }
 

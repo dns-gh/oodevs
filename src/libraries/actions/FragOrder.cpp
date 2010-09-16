@@ -13,7 +13,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/FragOrderType.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
