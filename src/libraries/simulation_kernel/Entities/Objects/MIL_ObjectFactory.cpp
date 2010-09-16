@@ -68,7 +68,7 @@ MIL_Object_ABC& MIL_ObjectFactory::BuildObject( xml::xistream& xis, MIL_Army_ABC
     else
     {
         //@TODO MGD propaguade reference
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown object" ) );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown object" );
     }
 }
 
