@@ -36,7 +36,7 @@
 #include "Visitors.h"
 #include "EntityPublisher.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/FormationLevels.h"

@@ -16,7 +16,7 @@
 #include "PHY_MedicalHumanState.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Medical.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalConsign_ABC constructor

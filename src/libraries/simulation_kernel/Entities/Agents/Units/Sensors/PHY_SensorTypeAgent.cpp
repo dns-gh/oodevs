@@ -30,7 +30,7 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Simulation_kernel/UrbanModel.h"
 #include "Simulation_kernel/UrbanType.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
 #include "tools/Resolver.h"
 
 #include "AlgorithmsFactories.h"

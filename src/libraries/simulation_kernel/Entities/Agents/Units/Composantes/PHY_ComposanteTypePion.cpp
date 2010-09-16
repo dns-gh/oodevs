@@ -36,7 +36,7 @@
 #include "Entities/Objects/MobilityCapacity.h"
 #include "PHY_ComposanteTypeObjectData.h"
 #include "protocol/protocol.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.hpp>
 

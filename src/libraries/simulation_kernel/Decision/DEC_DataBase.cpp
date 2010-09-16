@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_DataBase.h"
-#include "Tools/MIL_Config.h"
+#include "tools/MIL_Config.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 

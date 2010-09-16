@@ -14,7 +14,7 @@
 #include "Entities/Effects/MIL_Effect_Weather.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include <xeumeuleu/xml.hpp>
-#include "Tools/xmlcodecs.h"
+#include "tools/xmlcodecs.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire::Create

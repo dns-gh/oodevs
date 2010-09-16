@@ -11,7 +11,7 @@
 #define __MIL_EntityManagerStaticMethods_h_
 
 #include <xeumeuleu/xml.hpp>
-#include "Tools/MIL_Config.h"
+#include "tools/MIL_Config.h"
 
 class MIL_Time_ABC;
 

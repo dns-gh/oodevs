@@ -12,12 +12,12 @@
 #include "DEC_Agent_Path.h"
 #include "DEC_Agent_PathClass.h"
 #include "simulation_terrain/TER_World.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "UrbanModel.h"
-#include <Urban/Model.h>
+#include <urban/Model.h>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathfinderRule::InitializeFuseauData

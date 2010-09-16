@@ -20,7 +20,7 @@
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalHumanState )
 

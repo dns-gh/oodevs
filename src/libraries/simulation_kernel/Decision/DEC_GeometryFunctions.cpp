@@ -25,7 +25,7 @@
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Meteo/PHY_MeteoDataManager.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "MT_Tools/MT_Random.h"
 

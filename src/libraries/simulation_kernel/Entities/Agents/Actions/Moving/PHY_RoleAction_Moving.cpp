@@ -21,7 +21,7 @@
 #include "Decision/DEC_PathPoint.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 #include "simulation_kernel/PostureComputer_ABC.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
 #include "simulation_kernel/MaxSlopeComputer_ABC.h"

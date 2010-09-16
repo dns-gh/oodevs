@@ -13,7 +13,7 @@
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentType_ABC.h"
-#include "Hla/HLA_UpdateFunctor.h"
+#include "hla/HLA_UpdateFunctor.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/PostureComputer_ABC.h"

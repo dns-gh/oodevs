@@ -17,7 +17,7 @@
 #include "PopulationConcentrationKnowledge.h"
 #include "PopulationFlowKnowledge.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include <boost/bind.hpp>
 

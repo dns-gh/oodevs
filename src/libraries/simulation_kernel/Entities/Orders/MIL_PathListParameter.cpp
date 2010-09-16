@@ -12,7 +12,7 @@
 #include "simulation_orders/MIL_ParameterType_PathList.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/protocol.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PathListParameter constructor

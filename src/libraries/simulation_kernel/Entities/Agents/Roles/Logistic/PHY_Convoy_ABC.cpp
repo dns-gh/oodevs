@@ -18,7 +18,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Orders/MIL_PionMissionType.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.hpp>

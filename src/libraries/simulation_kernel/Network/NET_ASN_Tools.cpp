@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "NET_ASN_Tools.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"

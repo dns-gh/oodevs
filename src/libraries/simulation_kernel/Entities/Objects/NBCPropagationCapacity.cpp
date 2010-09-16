@@ -18,7 +18,7 @@
 #include "Entities/Objects/MIL_ObjectLoader.h"
 #include "Entities/Objects/CapacityFactory.h"
 
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
 
 #include <xeumeuleu/xml.h>
 

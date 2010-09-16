@@ -12,8 +12,8 @@
 
 #include "MIL.h"
 #include "MIL_KnowledgeGroupType.h"
-#include "Tools/MIL_IDManager.h"
-#include "Tools/Resolver.h"
+#include "tools/MIL_IDManager.h"
+#include "tools/Resolver.h"
 #include <boost/serialization/export.hpp>
 
 namespace xml

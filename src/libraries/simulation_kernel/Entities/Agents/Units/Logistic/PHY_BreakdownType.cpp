@@ -13,8 +13,8 @@
 #include "PHY_BreakdownType.h"
 #include "PHY_MaintenanceLevel.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
-#include "Tools/MIL_Tools.h"
-#include "Tools/xmlcodecs.h"
+#include "tools/MIL_Tools.h"
+#include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_BreakdownType::T_BreakdownMap PHY_BreakdownType::breakdowns_;

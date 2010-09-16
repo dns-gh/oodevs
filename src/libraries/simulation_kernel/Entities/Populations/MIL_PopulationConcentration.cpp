@@ -20,14 +20,14 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/PopulationAttribute.h"
-#include "Tools/MIL_IDManager.h"
+#include "tools/MIL_IDManager.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/PopulationCollisionNotificationHandler_ABC.h"
 #include "simulation_terrain/TER_World.h"
-#include "Tools/MIL_Tools.h"
-#include "Tools/MIL_IDManager.h"
+#include "tools/MIL_Tools.h"
+#include "tools/MIL_IDManager.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PopulationConcentration )

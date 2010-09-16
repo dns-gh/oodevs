@@ -18,7 +18,7 @@
 #include "Point.h"
 #include "WorkingSession.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 #include "protocol/SimulationSenders.h"
 
 #include <boost/lexical_cast.hpp>

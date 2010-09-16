@@ -15,7 +15,7 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Objects/MIL_ObjectLoader.h"
 #include "Entities/Objects/CapacityFactory.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
 #include "MIL_ObjectBuilder_ABC.h"
 #include "BurnCapacity.h"
 #include <xeumeuleu/xml.hpp>

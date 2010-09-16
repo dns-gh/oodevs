@@ -17,7 +17,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
 #include "Knowledge/DEC_KS_PopulationInteraction.h"
-#include "Hla/HLA_UpdateFunctor.h"
+#include "hla/HLA_UpdateFunctor.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
@@ -31,7 +31,7 @@
 #include "simulation_kernel/UrbanLocationComputer_ABC.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_ObjectManager.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
 
 using namespace location;
 

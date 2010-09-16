@@ -58,7 +58,7 @@
 #include "Automates/MIL_AutomateType.h"
 #include "Automates/MIL_Automate.h"
 #include "Effects/MIL_EffectManager.h"
-#include "HLA/HLA_Federate.h"
+#include "hla/HLA_Federate.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/MIL_KnowledgeGroupType.h"
 #include "MIL_Army.h"
@@ -89,9 +89,9 @@
 #include "simulation_kernel/PHY_ResourceNetworkType.h"
 #include "simulation_kernel/UrbanModel.h"
 #include "simulation_kernel/UrbanType.h"
-#include "Tools/MIL_IDManager.h"
-#include "Tools/MIL_ProfilerMgr.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_IDManager.h"
+#include "tools/MIL_ProfilerMgr.h"
+#include "tools/MIL_Tools.h"
 #include <urban/ObjectVisitor_ABC.h>
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push )

@@ -34,8 +34,8 @@
 #include "simulation_terrain/TER_World.h"
 #include <boost/assign/list_of.hpp>
 #include <xeumeuleu/xml.hpp>
-#include <Urban/Model.h>
-#include <Urban/UrbanObject.h>
+#include <urban/Model.h>
+#include <urban/UrbanObject.h>
 
 namespace
 {

@@ -10,7 +10,7 @@
 #ifndef __PopulationFactory_h_
 #define __PopulationFactory_h_
 
-#include "Tools/MIL_Config.h"
+#include "tools/MIL_Config.h"
 #include "PopulationFactory_ABC.h"
 
 class DEC_DataBase;

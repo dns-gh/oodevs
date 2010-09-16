@@ -14,7 +14,7 @@
 #include "Entities\Agents\Units\Dotations\PHY_DotationCategory.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeConstruction.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "HLA/HLA_UpdateFunctor.h"
+#include "hla/HLA_UpdateFunctor.h"
 #include <hla/AttributeIdentifier.h>
 #include "protocol/protocol.h"
 #include <xeumeuleu/xml.hpp>

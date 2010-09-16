@@ -9,12 +9,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "UrbanModel.h"
-#include "Tools/MIL_Config.h"
+#include "tools/MIL_Config.h"
 #include <MT/MT_IO/MT_FormatString.h>
-#include <Urban/Model.h>
-#include <Urban/ObjectVisitor_ABC.h>
-#include <Urban/TerrainObject_ABC.h>
-#include <Urban/WorldParameters.h>
+#include <urban/Model.h>
+#include <urban/ObjectVisitor_ABC.h>
+#include <urban/TerrainObject_ABC.h>
+#include <urban/WorldParameters.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/filesystem/path.hpp>
 

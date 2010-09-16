@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 
 #include "MedicalEquipmentAvailability.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 
 using namespace dispatcher;
 

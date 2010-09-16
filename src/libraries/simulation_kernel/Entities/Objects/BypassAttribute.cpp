@@ -12,7 +12,7 @@
 #include "Object.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeBypass.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Hla/HLA_UpdateFunctor.h"
+#include "hla/HLA_UpdateFunctor.h"
 #include "protocol/protocol.h"
 #include <hla/AttributeIdentifier.h>
 

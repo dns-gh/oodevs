@@ -14,7 +14,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
 #include "Decision/DEC_Objective.h"
 #include "Entities/Objects/TerrainHeuristicCapacity.h"
 #include "simulation_terrain/TER_Localisation.h"

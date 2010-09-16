@@ -11,7 +11,7 @@
 #define __PopulationFire_h_
 
 #include "SimpleEntity.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 
 namespace kernel
 {

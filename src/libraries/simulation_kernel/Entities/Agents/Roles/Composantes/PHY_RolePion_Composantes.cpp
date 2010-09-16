@@ -24,7 +24,7 @@
 #include "Entities/Actions/PHY_FireResults_ABC.h"
 #include "Knowledge/DEC_Knowledge_AgentComposante.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
-#include "Hla/HLA_UpdateFunctor.h"
+#include "hla/HLA_UpdateFunctor.h"
 #include "protocol/ClientSenders.h"
 #include <xeumeuleu/xml.hpp>
 

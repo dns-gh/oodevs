@@ -15,7 +15,7 @@
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "protocol/protocol.h"
 #include "simulation_terrain/TER_World.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
 #include <sys/timeb.h>
 
 MIL_Tools::converter< PHY_RawVisionData::E_VisionObject > MIL_Tools::environnementConverter_[] =

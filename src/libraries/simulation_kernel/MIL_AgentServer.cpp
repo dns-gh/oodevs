@@ -12,13 +12,13 @@
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Objects/ResourceTools.h"
 #include "Entities/Orders/MIL_TacticalLineManager.h"
-#include "Hla/HLA_Federate.h"
+#include "hla/HLA_Federate.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "resource_network/ResourceNetworkModel.h"
-#include "Tools/MIL_ProfilerMgr.h"
+#include "tools/MIL_ProfilerMgr.h"
 #include "simulation_terrain/TER_World.h"
 #include <MT/MT_IO/MT_FormatString.h>
 #include <tools/thread/Thread.h>

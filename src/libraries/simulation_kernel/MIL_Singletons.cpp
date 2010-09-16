@@ -12,7 +12,7 @@
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Effects/MIL_EffectManager.h"
-#include "Hla/HLA_Federate.h"
+#include "hla/HLA_Federate.h"
 
 namespace
 {

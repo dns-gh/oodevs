@@ -1,6 +1,6 @@
 
 #include "simulation_kernel_test_pch.h"
-#include "Tools/MIL_Config.h"
+#include "tools/MIL_Config.h"
 #include "Decision/DEC_Workspace.h"
 #include "Decision/DEC_Model.h"
 #include "Decision/DEC_MiscFunctions.h"

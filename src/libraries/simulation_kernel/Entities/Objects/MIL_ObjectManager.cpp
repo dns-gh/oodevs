@@ -18,7 +18,7 @@
 #include "MIL_ObjectLoader.h"
 #include "MIL_ObjectManipulator_ABC.h"
 #include "MIL_Singletons.h"
-#include "Hla/HLA_Federate.h"
+#include "hla/HLA_Federate.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"

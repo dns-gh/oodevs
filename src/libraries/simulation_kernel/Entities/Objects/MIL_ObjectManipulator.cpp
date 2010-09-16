@@ -38,8 +38,8 @@
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 
-#include "Tools/Iterator.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/Iterator.h"
+#include "tools/MIL_Tools.h"
 
 #include "simulation_terrain/TER_Localisation.h"
 

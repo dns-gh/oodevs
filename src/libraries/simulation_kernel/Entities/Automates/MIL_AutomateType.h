@@ -12,7 +12,7 @@
 #ifndef __MIL_AutomateType_h_
 #define __MIL_AutomateType_h_
 
-#include "Tools/MIL_Config.h"
+#include "tools/MIL_Config.h"
 #include "MIL.h"
 
 namespace xml

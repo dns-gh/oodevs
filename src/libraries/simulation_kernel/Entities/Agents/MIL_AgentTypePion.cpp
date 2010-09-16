@@ -68,7 +68,7 @@
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
 
 #include "MIL_AgentServer.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.hpp>
 

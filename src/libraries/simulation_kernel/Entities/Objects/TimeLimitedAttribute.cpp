@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "TimeLimitedAttribute.h"
 #include "Object.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
 #include "protocol/protocol.h"
 #include <xeumeuleu/xml.hpp>
 

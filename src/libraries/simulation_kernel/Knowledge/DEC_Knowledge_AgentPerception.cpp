@@ -16,7 +16,7 @@
 #include "Network/NET_AgentServer.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentPerception )
 

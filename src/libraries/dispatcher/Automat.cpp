@@ -19,7 +19,7 @@
 #include "Side.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 #include <boost/bind.hpp>
 
 using namespace dispatcher;

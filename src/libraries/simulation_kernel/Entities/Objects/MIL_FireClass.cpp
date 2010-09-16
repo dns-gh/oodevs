@@ -12,7 +12,7 @@
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
 #include <xeumeuleu/xml.hpp>

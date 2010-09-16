@@ -13,7 +13,7 @@
 #include "Automat_ABC.h"
 #include "Agent_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 #include "MaintenanceEquipmentAvailability.h"
 
 

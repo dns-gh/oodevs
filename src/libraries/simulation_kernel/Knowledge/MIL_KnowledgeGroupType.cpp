@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_KnowledgeGroupType.h"
 #include "MIL_KnowledgeGroup.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.hpp>
 

@@ -13,7 +13,7 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
-#include "Hla/HLA_UpdateFunctor.h"
+#include "hla/HLA_UpdateFunctor.h"
 #include <hla/ObjectIdentifier.h>
 
 using namespace hla;

@@ -11,7 +11,7 @@
 #include "PHY_LocalMeteo.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
 #include "meteo/PHY_Precipitation.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 1 )

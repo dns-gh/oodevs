@@ -13,7 +13,7 @@
 #include "PHY_RoleAction_Loading.h"
 #include "MIL_AgentServer.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/PostureComputer_ABC.h"

@@ -16,11 +16,11 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
 #include "Entities/Objects/MIL_ObjectLoader.h"
 #include "simulation_terrain/TER_World.h"
-#include <Urban/Model.h>
-#include <Urban/UrbanObject.h>
-#include <Urban/CoordinateConverter_ABC.h>
-#include <Urban/CoordinateConverter.h>
-#include <Urban/Drawer_ABC.h>
+#include <urban/Model.h>
+#include <urban/UrbanObject.h>
+#include <urban/CoordinateConverter_ABC.h>
+#include <urban/CoordinateConverter.h>
+#include <urban/Drawer_ABC.h>
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------

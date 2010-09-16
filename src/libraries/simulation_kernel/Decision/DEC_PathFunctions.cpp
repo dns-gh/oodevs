@@ -22,7 +22,7 @@
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
 
 // -----------------------------------------------------------------------------

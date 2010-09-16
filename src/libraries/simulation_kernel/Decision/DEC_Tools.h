@@ -15,7 +15,7 @@
 #include "MIL.h"
 
 #include "MIL_AgentServer.h"
-#include "Tools/MIL_ProfilerMgr.h"
+#include "tools/MIL_ProfilerMgr.h"
 
 namespace urban
 {

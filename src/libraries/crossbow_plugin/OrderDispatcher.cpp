@@ -22,7 +22,7 @@
 #include "dispatcher/Agent_ABC.h"
 #include "dispatcher/Automat_ABC.h"
 #include "protocol/SimulationSenders.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/noncopyable.hpp>
 

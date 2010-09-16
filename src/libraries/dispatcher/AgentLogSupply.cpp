@@ -12,7 +12,7 @@
 #include "Dotation.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 
 using namespace dispatcher;
 

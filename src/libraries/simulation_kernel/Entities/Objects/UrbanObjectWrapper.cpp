@@ -24,17 +24,17 @@
 #include "protocol/ClientSenders.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include <geometry/Types.h>
-#include <Urban/ColorRGBA.h>
-#include <Urban/PhysicalFeature_ABC.h>
-#include <Urban/Architecture.h>
+#include <urban/ColorRGBA.h>
+#include <urban/PhysicalFeature_ABC.h>
+#include <urban/Architecture.h>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/StaticModel.h>
 #include <urban/MaterialCompositionType.h>
 #include <boost/bind.hpp>
 
 // HLA
-#include "HLA/HLA_Object_ABC.h"
-#include "HLA/HLA_UpdateFunctor.h"
+#include "hla/HLA_Object_ABC.h"
+#include "hla/HLA_UpdateFunctor.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( UrbanObjectWrapper )
 

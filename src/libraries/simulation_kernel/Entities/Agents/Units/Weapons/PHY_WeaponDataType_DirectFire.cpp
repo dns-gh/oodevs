@@ -52,7 +52,7 @@
 #include "OnComponentFunctorComputerFactory_ABC.h"
 #include "OnComponentFunctor_ABC.h"
 #include "UrbanModel.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/noncopyable.hpp>
 

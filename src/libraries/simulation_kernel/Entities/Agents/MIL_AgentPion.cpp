@@ -62,9 +62,9 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "Network/NET_AsnException.h"
 #include "protocol/ClientSenders.h"
-#include "Hla/HLA_UpdateFunctor.h"
-#include "Tools/MIL_Tools.h"
-#include "Tools/MIL_IDManager.h"
+#include "hla/HLA_UpdateFunctor.h"
+#include "tools/MIL_Tools.h"
+#include "tools/MIL_IDManager.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include <xeumeuleu/xml.hpp>

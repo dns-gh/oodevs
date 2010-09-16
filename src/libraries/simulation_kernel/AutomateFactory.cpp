@@ -15,7 +15,7 @@
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "simulation_kernel/Decision/DEC_DataBase.h"
-#include "Tools/MIL_IDManager.h"
+#include "tools/MIL_IDManager.h"
 #include <boost/serialization/export.hpp>
 #include <xeumeuleu/xml.h>
 

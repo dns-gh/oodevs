@@ -17,7 +17,7 @@
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "MIL_AgentServer.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
 #include "Decision/DEC_Objective.h"
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_DynamicData.h"

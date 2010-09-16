@@ -13,7 +13,7 @@
 #define __MIL_Agent_ABC_h_
 
 #include "simulation_kernel/Entities/MIL_Entity_ABC.h"
-#include "Tools/MIL_IDManager.h"
+#include "tools/MIL_IDManager.h"
 
 class AlgorithmsFactories;
 class DEC_Decision_ABC;

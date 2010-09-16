@@ -38,7 +38,7 @@
 #include "Decision/DEC_Representations.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
 #include <xeumeuleu/xml.h>
 
 #include "protocol/ClientSenders.h"

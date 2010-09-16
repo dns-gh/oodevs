@@ -11,7 +11,7 @@
 #include "MIL_PointListParameter.h"
 #include "simulation_orders/MIL_ParameterType_PointList.h"
 #include "Network/NET_ASN_Tools.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
 #include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------

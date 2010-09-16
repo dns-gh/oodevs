@@ -26,7 +26,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/StaticModel.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 
 using namespace dispatcher;
 

@@ -11,7 +11,7 @@
 #define __MIL_AgentServer_h_
 
 #include "MIL.h"
-#include "Tools/MIL_Config.h"
+#include "tools/MIL_Config.h"
 #include "Network/NET_Simulation_ABC.h"
 #include <MT/MT_Time/MT_Timer_ABC.h>
 #include <MT/MT_Time/MT_TimerManager.h>

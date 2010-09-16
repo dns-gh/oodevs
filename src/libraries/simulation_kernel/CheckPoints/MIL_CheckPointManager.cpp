@@ -13,8 +13,8 @@
 #include "MIL_CheckPointManager.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "Tools/MIL_Tools.h"
-#include "Tools/MIL_IDManager.h"
+#include "tools/MIL_Tools.h"
+#include "tools/MIL_IDManager.h"
 #include <MT/MT_IO/MT_FormatString.h>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/convenience.hpp>

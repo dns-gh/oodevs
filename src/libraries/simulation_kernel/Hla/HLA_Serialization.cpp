@@ -14,7 +14,7 @@
 #include <hla/ObjectIdentifier.h>
 #include "simulation_terrain/TER_Localisation.h"
 #include "simulation_terrain/TER_World.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
 
 using namespace hla;
 

@@ -14,7 +14,7 @@
 #include "DEC_Path_ABC.h"
 #include "DEC_PathType.h"
 #include "DEC_PathFactory.h"
-#include "Tools/MIL_Config.h"
+#include "tools/MIL_Config.h"
 #include "simulation_terrain/TER_PathfinderThread.h"
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_World.h"

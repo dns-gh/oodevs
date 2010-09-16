@@ -13,7 +13,7 @@
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_DynamicData.h"
 #include "MIL_Object_ABC.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( AvoidanceCapacity )

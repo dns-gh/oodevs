@@ -14,8 +14,8 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
-#include "Tools/MIL_IDManager.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_IDManager.h"
+#include "tools/MIL_Tools.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/Decision/DEC_DataBase.h"
 #include <MT/MT_IO/MT_FormatString.h>

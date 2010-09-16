@@ -22,7 +22,7 @@
 #include "Entities/Specialisations/REFUGIE/MIL_AutomateTypeREFUGIE.h"
 #include "Entities/Agents/Units/Humans/MIL_AutomateTypeInjuredHuman.h"
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.hpp>
 

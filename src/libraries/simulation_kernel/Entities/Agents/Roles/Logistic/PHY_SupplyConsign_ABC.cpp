@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_SupplyConsign_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyConsign_ABC constructor
 // Created: NLD 2004-12-23

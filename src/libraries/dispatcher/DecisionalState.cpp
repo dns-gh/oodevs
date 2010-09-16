@@ -11,7 +11,7 @@
 #include "DecisionalState.h"
 #include "Model.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 
 using namespace dispatcher;
 

@@ -15,7 +15,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 
 // -----------------------------------------------------------------------------
 // Name: template< typename T > static void DEC_MiscFunctions::Report

@@ -12,7 +12,7 @@
 #ifndef __MIL_PopulationType_h_
 #define __MIL_PopulationType_h_
 
-#include "Tools/MIL_Config.h"
+#include "tools/MIL_Config.h"
 #include "MIL_PopulationPionAttritionData.h"
 
 namespace xml

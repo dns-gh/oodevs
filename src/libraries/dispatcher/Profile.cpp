@@ -18,7 +18,7 @@
 #include <MT/MT_Logger/MT_Logger_lib.h>
 #include "protocol/authenticationsenders.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 #include "protocol/SimulationSenders.h"
 #include <xeumeuleu/xml.hpp>
 #include "MT_Tools/MT_Scipio_enum.h"

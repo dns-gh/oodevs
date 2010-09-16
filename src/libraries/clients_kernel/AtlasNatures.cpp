@@ -10,7 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "AtlasNatures.h"
 #include "AtlasNature.h"
-#include "tools.h"
+#include "Tools.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;

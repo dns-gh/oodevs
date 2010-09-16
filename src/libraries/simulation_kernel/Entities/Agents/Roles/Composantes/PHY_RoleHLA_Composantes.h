@@ -21,7 +21,7 @@
 
 #include "PHY_RoleInterface_Composantes.h"
 #include "hla/Deserializer.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 #include "Decision/DEC_Decision_ABC.h"
 
 class PHY_ComposanteHLA;

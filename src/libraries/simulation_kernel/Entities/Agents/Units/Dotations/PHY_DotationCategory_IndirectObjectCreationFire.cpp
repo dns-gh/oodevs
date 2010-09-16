@@ -18,7 +18,7 @@
 #include "MIL_AgentServer.h"
 #include "MIL_Singletons.h"
 #include "simulation_terrain/TER_Localisation.h"
-#include "Tools/xmlcodecs.h"
+#include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------

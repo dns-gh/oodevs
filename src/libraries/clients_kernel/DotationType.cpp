@@ -9,8 +9,8 @@
 
 #include "clients_kernel_pch.h"
 #include "DotationType.h"
+#include "Tools.h"
 #include <xeumeuleu/xml.hpp>
-#include "tools.h"
 
 using namespace kernel;
 

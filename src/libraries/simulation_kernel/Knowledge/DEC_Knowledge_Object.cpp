@@ -30,7 +30,7 @@
 #include "DEC_Knowledge_ObjectAttributeBypass.h"
 #include "DEC_Knowledge_ObjectAttributeObstacle.h"
 #include "DEC_Knowledge_ObjectAttributeInteractionHeight.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 #include <boost/bind.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Object )

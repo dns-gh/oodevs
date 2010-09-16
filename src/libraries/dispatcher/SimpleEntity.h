@@ -12,7 +12,7 @@
 
 #include "clients_kernel/Entity_ABC.h"
 #pragma warning( push, 0 )
-#include <Qt/QString.h>
+#include <qstring.h>
 #pragma warning( pop )
 
 namespace dispatcher

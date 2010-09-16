@@ -24,11 +24,11 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Roles/hla/HLA_RoleInterface.h"
 #include "Entities/MIL_Entity_ABC.h"
-#include "Hla/HLA_Serialization.h"
-#include "Hla/HLA_DirectFire.h"
-#include "Hla/HLA_IndirectFire.h"
-#include "Hla/HLA_InteractionManager_ABC.h"
-#include "Hla/HLA_Neutralization.h"
+#include "hla/HLA_Serialization.h"
+#include "hla/HLA_DirectFire.h"
+#include "hla/HLA_IndirectFire.h"
+#include "hla/HLA_InteractionManager_ABC.h"
+#include "hla/HLA_Neutralization.h"
 #include <hla/AttributeIdentifier.h>
 
 using namespace hla;

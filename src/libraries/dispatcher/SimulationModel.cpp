@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 #include "SimulationModel.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 #include "protocol/replaysenders.h"
 
 using namespace dispatcher;

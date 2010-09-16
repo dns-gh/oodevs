@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_RapFor_ABC.h"
-#include "Tools/MIL_Tools.h"
+#include "tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 
 const MT_Float DEC_Knowledge_RapFor_ABC::rRapForBoundMin_                        = 0.2;

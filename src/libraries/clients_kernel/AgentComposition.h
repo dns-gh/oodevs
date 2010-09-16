@@ -10,7 +10,7 @@
 #ifndef __AgentComposition_h_
 #define __AgentComposition_h_
 
-#include "Tools/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace xml { class xistream; };
 

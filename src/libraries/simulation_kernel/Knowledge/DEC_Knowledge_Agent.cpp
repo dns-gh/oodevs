@@ -29,7 +29,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "Tools/MIL_IDManager.h"
+#include "tools/MIL_IDManager.h"
 #include "UrbanType.h"
 #include <urban/StaticModel.h>
 #include <urban/Architecture.h>

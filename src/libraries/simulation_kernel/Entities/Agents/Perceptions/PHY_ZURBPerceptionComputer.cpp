@@ -20,7 +20,7 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
-#include "Tools/MIL_Geometry.h"
+#include "tools/MIL_Geometry.h"
 #include "AlgorithmsFactories.h"
 #include "OnComponentComputer_ABC.h"
 #include "OnComponentFunctorComputerFactory_ABC.h"
