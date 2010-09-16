@@ -87,7 +87,8 @@ void ADN_NBC_Datas::NbcIntoxInfos::CopyFrom( NbcIntoxInfos& infos )
 // -----------------------------------------------------------------------------
 void ADN_NBC_Datas::NbcIntoxInfos::ReadEffect( xml::xistream& input )
 {
-    const std::string wound = lower( input.attribute< std::string >( "wound" ) );
+    std::string wound = input.attribute< std::string >( "wound" );
+    std::transform( wound.begin(), wound.end(), wound.begin(), std::tolower );
     ADN_Type_Double* pWound =
         wound == "nonblesse" ? &rNbAlivedHumans_ :
         wound == "u1"        ? &rNbHurtedHumans1_ :

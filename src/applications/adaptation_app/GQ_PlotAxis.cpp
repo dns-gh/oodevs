@@ -16,19 +16,14 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "adaptation_app_pch.h"
 #include "GQ_PlotAxis.h"
+#include "ADN_DataException.h"
 #include "moc_GQ_PlotAxis.cpp"
-
 #include <qpalette.h>
 #include <qfontmetrics.h>
 #include <qpainter.h>
 #include <qpoint.h>
-
 #include <cassert>
 #include <cmath>
 
@@ -263,10 +258,10 @@ void GQ_PlotAxis::SetTickMultiples( double rMultiplesBase, const std::vector< ui
         return;
 
     if( rMultiplesBase <= 1.0 )
-        throw MT_Exception( "GQ_PlotAxis", 0, "invalid tick multiples base (should be > 1)." );
+        throw ADN_DataException( "GQ_PlotAxis", "invalid tick multiples base (should be > 1)." );
 
     if( multiples.empty() )
-        throw MT_Exception( "GQ_PlotAxis", 0, "invalid tick multiples set (empty)." );
+        throw ADN_DataException( "GQ_PlotAxis", "invalid tick multiples set (empty)." );
 
     rMultiplesBase_ = rMultiplesBase;
     nMinBasePower_  = nMinBasePower;
@@ -481,7 +476,7 @@ void GQ_PlotAxis::SetAxisLength( uint nLength )
         return;
 
     if( nLength <= 1 )
-        throw MT_Exception( "GQ_PlotAxis", 0, "null axis length forbidden." );
+        throw ADN_DataException( "GQ_PlotAxis", "null axis length forbidden." );
 
     nAxisLength_ = nLength;
     Touch();

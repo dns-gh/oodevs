@@ -40,7 +40,7 @@ ADN_GraphData::ADN_GraphData( uint nUserID, GQ_Plot& plot )
 // -----------------------------------------------------------------------------
 ADN_GraphData::~ADN_GraphData()
 {
-    MT_DELETEOWNED( graphValueList_ );
+    clear_owned_ptrs( graphValueList_ );
     delete pConnector_;
 }
 

@@ -19,19 +19,15 @@
 #ifndef __GQ_Plot_h_
 #define __GQ_Plot_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "GQ_PlotAxis.h"
 #include "GQ_PlotData.h"
 #include "GQ_PlotDataBBox.h"
 #include "GQ_ValueConvertor.h"
-
 #include <qrect.h>
 #include <qpalette.h>
 #include <qpixmap.h>
 #include <qwidget.h>
+#include <map>
 
 class GQ_PlotToolTip;
 

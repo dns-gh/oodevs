@@ -48,7 +48,7 @@ ADN_TableItem_ComboBox::ADN_TableItem_ComboBox( ADN_Table *table ,void* data )
 //-----------------------------------------------------------------------------
 ADN_TableItem_ComboBox::~ADN_TableItem_ComboBox()
 {
-    MT_DELETEOWNED(vItems_);
+    clear_owned_ptrs(vItems_);
     vItems_.clear();
 }
 
@@ -162,7 +162,7 @@ void ADN_TableItem_ComboBox::removeItem ( int index )
 void ADN_TableItem_ComboBox::clear()
 {
     // clear items
-    MT_DELETEOWNED(vItems_);
+    clear_owned_ptrs(vItems_);
     vItems_.clear();
 
     // clear entries

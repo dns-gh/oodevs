@@ -95,7 +95,6 @@
 #pragma warning( pop )
 
 #include "MT_Tools/MT_Tools_Types.h"
-#include <MT/MT_Tools/MT_Tools_lib.h>
 #include <MT/MT_Logger/MT_Logger_lib.h>
 
 #include <xeumeuleu/xml.hpp>
@@ -186,6 +185,30 @@ namespace xml
         ADN_Type_ABC< T >& value_;
         //@}
     };
+}
+
+struct DeleteOwnedObject
+{
+    template< class T >
+    void operator()( const T* ptr )
+    {
+        delete ptr;
+    }
+};
+
+template< class T_Cont >
+void clear_owned_ptrs( T_Cont& container )
+{
+    std::for_each( container.begin(), container.end(), DeleteOwnedObject() );
+    container.clear();
+}
+
+inline std::string& trim( std::string& str )
+{
+    static const std::string spaces = " \t\n\r";
+    str.erase( 0, str.find_first_not_of( spaces ) );
+    str.resize( str.find_last_not_of( spaces ) + 1 );
+    return str;
 }
 
 #endif // __ADN_APPLICATION_PCH_H_

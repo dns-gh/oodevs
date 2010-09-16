@@ -13,6 +13,7 @@
 #define __ADN_Connector_ABC_h_
 
 #include "ADN_Ref_ABC.h"
+#include <vector>
 
 class ADN_Connector_Vector_ABC;
 

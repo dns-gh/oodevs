@@ -17,13 +17,12 @@
 // *****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Weapons_Data.h"
-
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_DataException.h"
-
+#include "MT_Tools/MT_FormatString.h"
 
 // -----------------------------------------------------------------------------
 // Name: PhInfos::PhInfos
@@ -45,14 +44,13 @@ ADN_Weapons_Data::PhInfos::PhInfos()
     rModifiedPerc_.SetParentNode( *this );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PhInfos::GetNodeName
 // Created: APE 2004-11-22
 // -----------------------------------------------------------------------------
 std::string ADN_Weapons_Data::PhInfos::GetNodeName()
 {
-    return std::string( "la distance de tir " ) + itostring( nDistance_.GetData() );
+    return MT_FormatString( "la distance de tir %d", nDistance_.GetData() );
 }
 
 
@@ -62,9 +60,8 @@ std::string ADN_Weapons_Data::PhInfos::GetNodeName()
 // -----------------------------------------------------------------------------
 std::string ADN_Weapons_Data::PhInfos::GetItemName()
 {
-    return std::string( "à " ) + itostring( nDistance_.GetData() ) + " mètres";
+    return MT_FormatString( "à %d mètres", nDistance_.GetData() );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PhInfos::CreateCopy

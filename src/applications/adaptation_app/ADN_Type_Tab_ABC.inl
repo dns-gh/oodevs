@@ -30,7 +30,7 @@ ADN_Type_Line_ABC<T>::ADN_Type_Line_ABC(int w)
 template <class T>
 ADN_Type_Line_ABC<T>::~ADN_Type_Line_ABC()
 {
-    mt_clear_owned_ptrs( *this );
+    clear_owned_ptrs( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,7 +69,7 @@ ADN_Type_Tab_ABC<T>::ADN_Type_Tab_ABC(int w,int h)
 template <class T>
 ADN_Type_Tab_ABC<T>::~ADN_Type_Tab_ABC()
 {
-    mt_clear_owned_ptrs( *this );
+    clear_owned_ptrs( *this );
 }
 
 

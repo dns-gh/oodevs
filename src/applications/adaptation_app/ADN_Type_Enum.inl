@@ -11,6 +11,7 @@
 
 #include "ADN_ChangeValueCommand_Enum.h"
 #include "ADN_Workspace.h"
+#include "MT_Tools/MT_FormatString.h"
 
 // =============================================================================
 // 
@@ -31,7 +32,7 @@ template <class T,int nb>
 std::string ADN_Type_Enum< T, nb >::ConvertValue( T nVal, ENT_Tr_ABC::E_Conversion nConversion )
 {
     if( converter_ == 0 )
-        return itostring( nVal );
+        return MT_FormatString( "%d", nVal );
     else
         return converter_( nVal, nConversion );
 }

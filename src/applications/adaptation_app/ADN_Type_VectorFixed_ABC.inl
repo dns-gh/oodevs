@@ -27,7 +27,7 @@ ADN_Type_VectorFixed_ABC<T,Cmp>::ADN_Type_VectorFixed_ABC( const char* szName )
 template <class T,class Cmp>
 ADN_Type_VectorFixed_ABC<T,Cmp>::~ADN_Type_VectorFixed_ABC()
 {
-    mt_clear_owned_ptrs( *this );
+    clear_owned_ptrs( *this );
 }
 
 

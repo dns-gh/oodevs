@@ -108,16 +108,12 @@ int main( uint nArgc, char** ppArgv )
         QMessageBox::critical( 0, e.GetExceptionTitle().c_str(), e.GetExceptionMessage().c_str() );
         return EXIT_FAILURE;
     }
-    catch( MT_Exception& exception )
+    catch( std::exception& exception )
     {
-        std::stringstream strMsg;
-        strMsg << "Context : " << exception.GetContext() << std::endl
-               << "Message : " << exception.GetInfo()    << std::endl;
-
         if( !outputFile.empty() )
-            MessageBox( 0, strMsg.str().c_str(), "Sword Adaptation Tool - Exception", MB_ICONERROR | MB_OK );
+            MessageBox( 0, exception.what(), "Sword Adaptation Tool - Exception", MB_ICONERROR | MB_OK );
         else
-            MT_LOG_ERROR_MSG( strMsg.str().c_str() );
+            MT_LOG_ERROR_MSG( exception.what() );
         app.quit();
         MT_LOG_UNREGISTER_LOGGER( consoleLogger );
         return EXIT_FAILURE;
