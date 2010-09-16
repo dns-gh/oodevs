@@ -20,7 +20,7 @@
 #include "resource_network/ResourceNetworkModel.h"
 #include "tools/MIL_ProfilerMgr.h"
 #include "simulation_terrain/TER_World.h"
-#include <MT/MT_IO/MT_FormatString.h>
+#include "MT_Tools/MT_FormatString.h"
 #include <tools/thread/Thread.h>
 #include <tools/win32/ProcessMonitor.h>
 #include <xeumeuleu/xml.hpp>

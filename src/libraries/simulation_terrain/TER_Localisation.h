@@ -13,7 +13,6 @@
 #define __TER_Localisation_h_
 
 #include "TER_Polygon.h"
-#include <MT/MT_IO/MT_FormatString.h>
 #include "MT_Tools/MT_Polyline.h"
 
 namespace xml

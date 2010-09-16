@@ -68,7 +68,7 @@
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include <xeumeuleu/xml.hpp>
-#include <MT/MT_IO/MT_FormatString.h>
+#include "MT_Tools/MT_FormatString.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPion )
 

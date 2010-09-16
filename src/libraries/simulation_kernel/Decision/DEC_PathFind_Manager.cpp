@@ -19,7 +19,7 @@
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_World.h"
 #include "tools/xmlcodecs.h"
-#include <MT/MT_IO/MT_FormatString.h>
+#include "MT_Tools/MT_FormatString.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------

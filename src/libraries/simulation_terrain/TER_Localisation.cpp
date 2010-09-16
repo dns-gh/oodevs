@@ -12,7 +12,7 @@
 #include "TER_World.h"
 #include "MT_Tools/MT_Circle.h"
 #include "MT_Tools/MT_ScipioException.h"
-#include <MT/MT_IO/MT_FormatString.h>
+#include "MT_Tools/MT_FormatString.h"
 #include <xeumeuleu/xml.hpp>
 
 const MT_Float TER_Localisation::rPrecision_ = 2.1242;

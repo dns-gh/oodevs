@@ -14,7 +14,7 @@
 #include "MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.hpp>
-#include <MT/MT_IO/MT_FormatString.h>
+#include "MT_Tools/MT_FormatString.h"
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 )
 #include <boost/program_options.hpp>
