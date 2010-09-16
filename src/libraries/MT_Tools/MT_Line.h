@@ -62,11 +62,6 @@ typedef const T_LineVector               CT_LineVector;
 typedef T_LineVector::iterator           IT_LineVector;
 typedef T_LineVector::const_iterator     CIT_LineVector;
 
-
-#ifndef  _DEBUG
-#   undef   INLINE
-#   define  INLINE inline
-#   include "MT_Line.inl"
-#endif  // ! _DEBUG
+#include "MT_Line.inl"
 
 #endif // __MT_Line_h_

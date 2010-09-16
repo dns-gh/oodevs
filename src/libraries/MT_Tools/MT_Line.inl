@@ -7,18 +7,17 @@
 //  Name  :  MT_Line::GetPosStart
 // Created: FBD 02-02-28
 //-----------------------------------------------------------------------------
-INLINE
+inline
 const MT_Vector2D& MT_Line::GetPosStart() const
 {
     return *pPosStart_;
 }
 
-
 //-----------------------------------------------------------------------------
 //  Name  :  MT_Line::GetPosEnd
 // Created: FBD 02-02-28
 //-----------------------------------------------------------------------------
-INLINE
+inline
 const MT_Vector2D& MT_Line::GetPosEnd() const
 {
     return *pPosEnd_;
@@ -28,7 +27,7 @@ const MT_Vector2D& MT_Line::GetPosEnd() const
 // Name: MT_Line::GetCenter
 // Created: FBD 02-12-10
 //-----------------------------------------------------------------------------
-INLINE
+inline
 MT_Vector2D MT_Line::GetCenter() const
 {
     return ( GetPosStart() + GetPosEnd() ) / 2.0;
@@ -39,7 +38,7 @@ MT_Vector2D MT_Line::GetCenter() const
 //  Name  :  MT_Line::IsInside
 // Created: FBD 02-08-21
 //-----------------------------------------------------------------------------
-INLINE
+inline
 bool MT_Line::IsInside( const MT_Vector2D& vPos, MT_Float rSize ) const
 {
     MT_Vector2D vPosNear = ClosestPointOnLine( vPos );
@@ -52,20 +51,18 @@ bool MT_Line::IsInside( const MT_Vector2D& vPos, MT_Float rSize ) const
 //  Name  :  MT_Line::IsInside
 // Created: FBD 02-08-21
 //-----------------------------------------------------------------------------
-INLINE
+inline
 bool MT_Line::IsInside( const MT_Vector2D& vPos, MT_Float rSize, MT_Vector2D& vPosNear ) const
 {
     vPosNear = ClosestPointOnLine( vPos );
     return( vPos.SquareDistance( vPosNear ) < ( rSize * rSize ) );
 }
 
-
-
 //-----------------------------------------------------------------------------
 //  Name  :  MT_Line::ClosestPointOnLine
 // Created: FBD 02-03-01
 //-----------------------------------------------------------------------------
-INLINE
+inline
 MT_Vector2D MT_Line::ClosestPointOnLine( const MT_Vector2D& vPoint ) const
 {
     const MT_Float rLenDeltaSqr = pPosStart_->SquareDistance( *pPosEnd_ );
@@ -84,8 +81,6 @@ MT_Vector2D MT_Line::ClosestPointOnLine( const MT_Vector2D& vPoint ) const
 
     return *pPosStart_ + vDelta * ( rDot / rLenDeltaSqr );
 }
-
-
 
 // -----------------------------------------------------------------------------
 // Name: MT_Line::DistancePointToLine
@@ -151,7 +146,7 @@ MT_Float MT_Line::ProjectPointOnLine( const MT_Vector2D& vPoint, MT_Vector2D& vR
 // Name: MT_Line::Magnitude
 // Created: NLD 2003-10-17
 // -----------------------------------------------------------------------------
-INLINE
+inline
 MT_Float MT_Line::Magnitude() const
 {
     return ( *pPosEnd_ - *pPosStart_ ).Magnitude();

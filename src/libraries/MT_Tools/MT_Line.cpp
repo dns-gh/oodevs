@@ -6,16 +6,6 @@
 #include "MT_Tools_pch.h"
 #include "MT_Line.h"
 
-
-#ifdef  _DEBUG
-#   undef   INLINE
-#   define  INLINE
-#   include "MT_Line.inl"
-#endif  // _DEBUG
-
-
-//MT_BOOSTPOOLING_FUNCTIONS( MT_Line )
-
 //-----------------------------------------------------------------------------
 // Name: MT_Line constructor
 // Created: FBD 02-11-18
