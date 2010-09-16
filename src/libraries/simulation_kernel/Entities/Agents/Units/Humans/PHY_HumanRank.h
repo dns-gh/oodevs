@@ -10,6 +10,8 @@
 #ifndef __PHY_HumanRank_h_
 #define __PHY_HumanRank_h_
 
+#include <map>
+
 namespace Common
 {
     enum EnumHumanRank;

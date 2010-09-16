@@ -13,6 +13,7 @@
 #define __DEC_Model_ABC_h_
 
 #include "MIL.h"
+#include <set>
 
 namespace xml
 {
