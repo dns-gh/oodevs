@@ -13,10 +13,19 @@ function Start()
     local eventTable =
     {
         {
+            events:Once(),
+            { },
+            function()
+                sim:Pause()
+            end
+        },
+    
+        {
             events.sim:ClientConnected(),
             { },
             function( client, profile )
                 if profile ~= "</xsl:text><xsl:value-of select="$profilename"/><xsl:text>" then Deactivate() return end
+                sim:Resume()
                 ResetOptions( { client = client } )
                 SetDock( { client = client, hide = docks.ALL } )
                 SetDock( { show = { "orbat" } } )
@@ -55,8 +64,7 @@ function Start()
 
         <xsl:for-each select="action">
                 <xsl:text>
-                actions:IssueOrderFromFile( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", "</xsl:text><xsl:value-of select="$profilename"/><xsl:text>" )
-            </xsl:text>
+                actions:IssueOrderFromFile( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", "</xsl:text><xsl:value-of select="$profilename"/><xsl:text>" )</xsl:text>
         </xsl:for-each>
         <xsl:text>
                 ChangeState( "initDialog" )
@@ -65,15 +73,15 @@ function Start()
         AtState( "initDialog",
             function()
                 Dialog( { id      = "init_choice",
-                          message = "Test de validation </xsl:text><xsl:value-of select="$profilename"/><xsl:text>. Voulez-vous reinitialiser l exercice ?",
-                          buttons = { "oui", "non" } } )
+                          message = "Test de validation </xsl:text><xsl:value-of select="$profilename"/><xsl:text>. Reinitialiser l'exercice",
+                          buttons = { "Reinitialisation" } } )
             end
         ),
         {
             events.client:UserChose(), {},
             function( dialog, answer )
                 if dialog == "init_choice" then
-                    if answer == "oui" then
+                    if answer == "Reinitialisation" then
                         ChangeState( "init" )
                     end
                 end
@@ -84,8 +92,16 @@ function Start()
             function()
                 -- TODO
             end
-        )
+        ),
 
+        {
+            events.sim:ClientLeft(),
+            { },
+            function( client )
+                plugin:Reset()
+            end
+        }
+        
     }
     DeclareEvents( eventTable )
 
