@@ -1,9 +1,4 @@
-<xsl:stylesheet version = '1.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
-                xmlns:lxslt="http://xml.apache.org/xslt"
-                xmlns:redirect="http://xml.apache.org/xalan/redirect"
-                extension-element-prefixes="redirect"
-                xmlns:url="http://whatever/java/java.net.URLEncoder"
-                exclude-result-prefixes="url">
+<xsl:stylesheet version = '1.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform' exclude-result-prefixes="url">
     <xsl:output method="text" encoding="iso-8859-1" media-type="text/plain" omit-xml-declaration="yes" standalone="yes" indent="no"/>
     <xsl:param name="profilename"/>
     
@@ -21,7 +16,7 @@ function Start()
             events.sim:ClientConnected(),
             { },
             function( client, profile )
-                if profile ~= "</xsl:text><xsl:value-of select="$profilename"/><xsl:text>" then return end
+                if profile ~= "</xsl:text><xsl:value-of select="$profilename"/><xsl:text>" then Deactivate() return end
                 ResetOptions( { client = client } )
                 SetDock( { client = client, hide = docks.ALL } )
                 SetDock( { show = { "orbat" } } )
@@ -39,10 +34,57 @@ function Start()
                           buttons = { "Automatique", "manuel" } } )
             end
         ),
+        
+        {
+            events.client:UserChose(), {},
+            function( dialog, answer )
+                if dialog == "selectMode_choice" then
+                    if answer == "Automatique" then
+                        ChangeState( "autoexec" )
+                    else
+                        ChangeState( "initDialog" )
+                    end
 
-        -- EXECUTION DES ACTIONS
+                end
+            end
+        },
+        
+        AtState( "autoexec",
+            function()
+        </xsl:text>
 
+        <xsl:for-each select="action">
+                <xsl:text>
+                actions:IssueOrderFromFile( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", "</xsl:text><xsl:value-of select="$profilename"/><xsl:text>" )
+            </xsl:text>
+        </xsl:for-each>
+        <xsl:text>
+                ChangeState( "initDialog" )
+            end
+        ),
+        AtState( "initDialog",
+            function()
+                Dialog( { id      = "init_choice",
+                          message = "Test de validation </xsl:text><xsl:value-of select="$profilename"/><xsl:text>. Voulez-vous reinitialiser l exercice ?",
+                          buttons = { "oui", "non" } } )
+            end
+        ),
+        {
+            events.client:UserChose(), {},
+            function( dialog, answer )
+                if dialog == "init_choice" then
+                    if answer == "oui" then
+                        ChangeState( "init" )
+                    end
+                end
+            end
+        },
         -- REINITIALISATION
+        AtState( "init",
+            function()
+                -- TODO
+            end
+        )
 
     }
     DeclareEvents( eventTable )
@@ -50,33 +92,5 @@ function Start()
 end
         </xsl:text>
     </xsl:template>
+
 </xsl:stylesheet>
-
-
-
-    <!--
-        {
-            events.client:UserChose(),
-            { },
-            function( dialog, answer )
-                if dialog == "Q1_choice" then
-                    if answer == "manuel" then
-                        ChangeState( "Q2" )
-                    else
-                        ChangeState( "Q2" )
-                    end
-
-                end
-            end
-        },
-
-        AtState( "Q2",
-            function()
-                Dialog( { id      = "Q2_choice",
-                          message = "", 
-                          buttons = { "Reinitialisation de l'exercice" } } )
-            end
-        ),
-   
--->
-

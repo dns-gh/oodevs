@@ -43,7 +43,8 @@
     </target>
 
     <target name="transform">
-    <basename property="filename" file="${file}" suffix=".ord"/>
+        <basename property="filename" file="${file}" suffix=".ord"/>
+        <copy tofile="${output}/${test_name}/scripts/resources/${filename}.ord" file="${file}"/>
         <xslt in="${file}" style="xsl/transformation.xsl" out="${output}/${test_name}/scripts/${filename}.lua">
             <param name="profilename" expression="${filename}"/>
         </xslt>
