@@ -63,7 +63,8 @@ struct Actions::Publisher : public Publisher_ABC
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
 Actions::Actions( kernel::Controller& controller, const tools::ExerciseConfig& config, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& sim )
-    : entities_         ( new dispatcher::ModelAdapter( model ) )
+    : config_           ( config )
+    , entities_         ( new dispatcher::ModelAdapter( model ) )
     , publisher_        ( new Publisher( sim ) )
     , converter_        ( new kernel::CoordinateConverter( config ) )
     , time_             ( new SimulationTime() )
@@ -71,7 +72,6 @@ Actions::Actions( kernel::Controller& controller, const tools::ExerciseConfig& c
     , objectsKnowledges_( new dispatcher::ObjectKnowledgeConverter( model ) )
     , parameters_       ( new actions::ActionParameterFactory( *converter_, *entities_, staticModel, *agentsKnowledges_, *objectsKnowledges_, controller ) )
     , factory_          ( new actions::ActionFactory( controller, *parameters_, *entities_, staticModel, *time_ ) )
-    , file_             ( config.BuildExerciseChildFile( "scripts/resources/orders.ord" ) )
 {
     // NOTHING
 }
@@ -93,19 +93,20 @@ void Actions::RegisterIn( directia::brain::Brain& brain )
 {
     brain[ "actions" ] = this;
     brain.Register( "IssueOrder", &Actions::IssueOrder );
+    brain.Register( "IssueOrderFromFile", &Actions::IssueOrderFromFile );
     brain.Register( "IssueXmlOrder", &Actions::IssueXmlOrder );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Actions::IssueOrder
-// Created: AGE 2008-07-16
+// Name: Actions::IssueOrderFromFile
+// Created: PHC 2010-09-16
 // -----------------------------------------------------------------------------
-void Actions::IssueOrder( const std::string& name )
+void Actions::IssueOrderFromFile( const std::string& name, const std::string& filename )
 {
     try
     {
         actions::ActionsModel model( *factory_, *publisher_ );
-        model.Load( file_ );
+        model.Load( config_.BuildExerciseChildFile( "scripts/resources/" + filename + ".ord" ) );
         tools::Iterator< const actions::Action_ABC& > it = model.CreateIterator();
         while( it.HasMoreElements() )
         {
@@ -118,6 +119,15 @@ void Actions::IssueOrder( const std::string& name )
     {
         MT_LOG_ERROR_MSG( "Error in script: " << e.what() )
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Actions::IssueOrder
+// Created: AGE 2008-07-16
+// -----------------------------------------------------------------------------
+void Actions::IssueOrder( const std::string& name )
+{
+    IssueOrderFromFile( name, "orders" );
 }
 
 // -----------------------------------------------------------------------------

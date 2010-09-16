@@ -55,9 +55,7 @@ class Actions : public dispatcher::Registrable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Actions( kernel::Controller& controller, const tools::ExerciseConfig& config,
-                      const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel,
-                      dispatcher::SimulationPublisher_ABC& sim );
+             Actions( kernel::Controller& controller, const tools::ExerciseConfig& config, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& sim );
     virtual ~Actions();
     //@}
 
@@ -76,6 +74,7 @@ private:
     //! @name Helpers
     //@{
     void IssueOrder( const std::string& name );
+    void IssueOrderFromFile( const std::string& name, const std::string& filename );
     void IssueXmlOrder( const std::string& name );
     //@}
 
@@ -87,6 +86,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const tools::ExerciseConfig& config_;
     std::auto_ptr< kernel::EntityResolver_ABC > entities_;
     std::auto_ptr< Publisher > publisher_;
     std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
@@ -95,7 +95,6 @@ private:
     std::auto_ptr< kernel::ObjectKnowledgeConverter_ABC > objectsKnowledges_;
     std::auto_ptr< actions::ParameterFactory_ABC > parameters_;
     std::auto_ptr< actions::ActionFactory_ABC > factory_;
-    std::string file_;
     //@}
 };
 
