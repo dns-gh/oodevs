@@ -12,9 +12,7 @@
 #ifndef __SIM_NetworkLogger_h_
 #define __SIM_NetworkLogger_h_
 
-#include "SIM.h"
-#include <MT/MT_Logger/MT_Logger_ABC.h>
-
+#include <MT/MT_Logger/MT_Logger_lib.h>
 #include <boost/asio.hpp>
 
 namespace boost
@@ -37,18 +35,16 @@ public:
     //@}
 
 private:
-
     //! @name Log methods
     //@{
-    void LogString        ( const char* strLayerName, E_LogLevel nLevel, const char* szMsg, const char* strContext, int nCode );
-    void WaitForClient    ();
+    void LogString      ( const char* strLayerName, E_LogLevel nLevel, const char* szMsg, const char* strContext, int nCode );
+    void WaitForClient  ();
     void StartConnection( boost::shared_ptr< boost::asio::ip::tcp::socket > newClientSocket, const boost::system::error_code& error );
     void StopConnection ( boost::shared_ptr< boost::asio::ip::tcp::socket > socket );
-    void AsyncWrite        ( boost::shared_ptr< boost::asio::ip::tcp::socket > socket, const boost::system::error_code& error );
+    void AsyncWrite     ( boost::shared_ptr< boost::asio::ip::tcp::socket > socket, const boost::system::error_code& error );
     //@}
 
 private:
-
     //! @name Types
     //@{
     typedef std::set < boost::shared_ptr< boost::asio::ip::tcp::socket > >  T_SocketSet ;
@@ -57,14 +53,13 @@ private:
     //@}
 
 private:
-
-    //! @name
+    //! @name Member data
     //@{
-    T_SocketSet                        sockets_;
-    boost::asio::io_service            io_service_;
-    boost::asio::ip::tcp::acceptor    acceptor_ ;
-    std::auto_ptr< boost::mutex    >    criticalSection_;
-    std::auto_ptr< boost::thread >    thread_ ;
+    T_SocketSet                    sockets_;
+    boost::asio::io_service        io_service_;
+    boost::asio::ip::tcp::acceptor acceptor_ ;
+    std::auto_ptr< boost::mutex >  criticalSection_;
+    std::auto_ptr< boost::thread > thread_ ;
     //@}
 
 };

@@ -6,22 +6,13 @@
 // Copyright (c) 2003 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: CBX 2002-08-01 $
-// $Archive: /Tools/MT/build/libraries/MT_IO/src/MT_FormatString.h $
-// $Author: Mco $
-// $Modtime: 21/10/04 11:18 $
-// $Revision: 20 $
-// $Workfile: MT_FormatString.h $
-//
-// *****************************************************************************
 
 #ifndef __MT_FormatString_h_
 #define __MT_FormatString_h_
 
 #include <string>
 #include <ostream>
-#include <cstdarg> // For arguments ellipsis
+#include <cstdarg>
 
 //=============================================================================
 /** @class  MT_FormatString
