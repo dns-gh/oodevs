@@ -10,7 +10,7 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_DialogLog.h"
-
+#include "MT_Tools/MT_FormatString.h"
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qtextview.h>
@@ -73,7 +73,7 @@ void ADN_DialogLog::show()
 
     std::string rich;
     for ( std::list<std::string>::iterator it=lMsg_.begin();it!=lMsg_.end();++it )
-        rich+=MT_FormatString(&szFormat_,(*it).c_str());
+        rich+=MT_FormatString(szFormat_.c_str(),it->c_str());
     pText_->setText(rich.c_str());
 
     QDialog::show();
