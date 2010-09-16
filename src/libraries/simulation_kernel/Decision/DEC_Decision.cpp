@@ -21,6 +21,7 @@
 #include "Decision/DEC_TelepathyFunctions.h"
 #include "Decision/DEC_Gen_Object.h"
 #include "Decision/DEC_PathPoint.h"
+#include "Decision/DEC_KnowledgeUrbanFunctions.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Orders/MIL_FragOrder.h"
@@ -100,6 +101,19 @@ void RegisterGeometryFunctions( directia::brain::Brain& brain)
     brain[ "DEC_Geometrie_AreaSize" ] = &DEC_GeometryFunctions::ComputeAreaSize;
     brain[ "DEC_Geometrie_AreaDiameter" ] = &DEC_GeometryFunctions::ComputeAreaDiameter;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::RegisterUrbanBlockFunctions
+// Created: LMT 2010-09-15
+// -----------------------------------------------------------------------------
+void RegisterUrbanBlockFunctions( directia::brain::Brain& brain )
+{
+   brain[ "DEC_ConnaissanceUrbanBlock_Barycentre" ] =
+        boost::function< boost::shared_ptr< MT_Vector2D >( boost::shared_ptr< DEC_Knowledge_Urban > ) >( boost::bind( &DEC_KnowledgeUrbanFunctions::GetCurrentBarycenter, _1 ) );
+ 
+}
+   
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterAreaFunctions
 // Created: SLI 2010-07-09
@@ -318,6 +332,7 @@ void RegisterItineraryFunctions( directia::brain::Brain& brain )
 void RegisterCommonUserFunctions( directia::brain::Brain& brain/*, unsigned int id*/ )
 {
     RegisterGeometryFunctions( brain );
+    RegisterUrbanBlockFunctions( brain );
     RegisterAreaFunctions( brain );
     RegisterTimeManagementFunctions( brain );
     RegisterParametersCopyFunctions( brain );

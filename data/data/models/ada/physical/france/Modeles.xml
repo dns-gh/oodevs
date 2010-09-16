@@ -6493,6 +6493,7 @@
         <mission name="MELEE Interdire un Bloc Urbain"/>
         <mission name="MELEE Reconnaitre un itinéraire"/>
         <mission name="MELEE Controler Secteur"/>
+        <mission name="MELEE S'emparer"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
