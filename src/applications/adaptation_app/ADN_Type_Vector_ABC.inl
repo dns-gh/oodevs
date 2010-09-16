@@ -233,7 +233,7 @@ void ADN_Type_Vector_ABC<T>::Reset()
     emit Cleared(false);
     
     // delete ptrs
-    DELETEOWNED(vTmp);
+    MT_DELETEOWNED(vTmp);
 }
 
 // -----------------------------------------------------------------------------
@@ -244,7 +244,7 @@ template <class T>
 void ADN_Type_Vector_ABC<T>::Delete()
 {
     ADN_Type_Vector_ABC<T>& vTmp=*this;
-    DELETEOWNED( vTmp );
+    MT_DELETEOWNED( vTmp );
 }
 
 //-----------------------------------------------------------------------------

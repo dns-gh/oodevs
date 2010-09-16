@@ -45,14 +45,16 @@ ADN_Weapons_Data::PhInfos::PhInfos()
     rModifiedPerc_.SetParentNode( *this );
 }
 
+
 // -----------------------------------------------------------------------------
 // Name: PhInfos::GetNodeName
 // Created: APE 2004-11-22
 // -----------------------------------------------------------------------------
 std::string ADN_Weapons_Data::PhInfos::GetNodeName()
 {
-    return MT_FormatString( "la distance de tir %d", nDistance_.GetData() );
+    return std::string( "la distance de tir " ) + itostring( nDistance_.GetData() );
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: PhInfos::GetItemName
@@ -60,8 +62,9 @@ std::string ADN_Weapons_Data::PhInfos::GetNodeName()
 // -----------------------------------------------------------------------------
 std::string ADN_Weapons_Data::PhInfos::GetItemName()
 {
-    return MT_FormatString( "à %d mètres", nDistance_.GetData() );
+    return std::string( "à " ) + itostring( nDistance_.GetData() ) + " mètres";
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: PhInfos::CreateCopy

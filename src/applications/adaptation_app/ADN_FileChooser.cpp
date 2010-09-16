@@ -109,7 +109,7 @@ ADN_FileChooser::ADN_FileChooser(QWidget *parent,const QString& filter,const cha
 //-----------------------------------------------------------------------------
 ADN_FileChooser::~ADN_FileChooser()
 {
-    DELETEOWNED(vConnectors_);
+    MT_DELETEOWNED(vConnectors_);
     vConnectors_.clear();
 }
 

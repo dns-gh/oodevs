@@ -132,7 +132,7 @@ ADN_ListViewItem::ADN_ListViewItem(ADN_ListView *parent,void* item,int ncol)
 ADN_ListViewItem::~ADN_ListViewItem()
 {
     pData_=0;
-    DELETEOWNED(vConnectors_);
+    MT_DELETEOWNED(vConnectors_);
     vConnectors_.clear();
 }
 

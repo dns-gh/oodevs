@@ -16,14 +16,19 @@
 //
 // *****************************************************************************
 
+#ifdef __GNUG__
+#   pragma implementation
+#endif
+
 #include "adaptation_app_pch.h"
 #include "GQ_PlotAxis.h"
 #include "moc_GQ_PlotAxis.cpp"
-#include "MT_Tools/MT_Exception.h"
+
 #include <qpalette.h>
 #include <qfontmetrics.h>
 #include <qpainter.h>
 #include <qpoint.h>
+
 #include <cassert>
 #include <cmath>
 

@@ -11,11 +11,11 @@
 #define __ADN_Data_ABC_h_
 
 #include <qobject.h>
-#include <list>
 
 typedef std::list<std::string>                  T_StringList;
 typedef T_StringList::iterator                  IT_StringList;
 typedef T_StringList::const_iterator            CIT_StringList;
+
 
 // =============================================================================
 /** @class  ADN_Data_ABC

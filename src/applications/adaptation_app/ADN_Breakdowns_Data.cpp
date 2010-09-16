@@ -115,7 +115,7 @@ ADN_Breakdowns_Data::BreakdownInfo::BreakdownInfo()
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::BreakdownInfo::~BreakdownInfo()
 {
-    DELETEOWNED( vRepairParts_ );
+    MT_DELETEOWNED( vRepairParts_ );
 }
 
 // -----------------------------------------------------------------------------

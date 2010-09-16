@@ -16,14 +16,20 @@
 //
 // *****************************************************************************
 
+#ifdef __GNUG__
+#   pragma implementation
+#endif
+
 #include "adaptation_app_pch.h"
 #include "GQ_Plot.h"
 #include "moc_GQ_Plot.cpp"
+
 #include "GQ_PlotToolTip.h"
-#include "MT_Tools/MT_Exception.h"
+
 #include <qpainter.h>
 #include <qpalette.h>
 #include <qstringlist.h>
+
 #include <cassert>
 
 #pragma warning( disable : 4355 )

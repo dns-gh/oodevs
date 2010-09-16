@@ -110,7 +110,7 @@ MT_Vector2D MT_Line::ClosestPointOnLine( const MT_Vector2D& vPoint ) const
  */
 // Created: NLD 2003-10-17
 // -----------------------------------------------------------------------------
-INLINE
+inline
 MT_Vector2D MT_Line::ProjectPointOnLine( const MT_Vector2D& vPoint ) const
 {
     if( *pPosEnd_ == *pPosStart_ )
