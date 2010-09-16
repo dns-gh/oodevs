@@ -14,55 +14,71 @@ function Start()
     {
         {
             events:Once(),
-            { },
+            {},
             function()
                 sim:Pause()
             end
         },
-    
+
         {
             events.sim:ClientConnected(),
-            { },
+            {},
             function( client, profile )
                 if profile ~= "</xsl:text><xsl:value-of select="$profilename"/><xsl:text>" then Deactivate() return end
-                sim:Resume()
                 ResetOptions( { client = client } )
                 SetDock( { client = client, hide = docks.ALL } )
                 SetDock( { show = { "orbat" } } )
                 SetDock( { show = { "clock" } } )
-                ChangeState( "selectMode" )
+                ChangeState( "creations" )
             end
         },
 
-        -- INITIALISATION
-        
-        AtState( "selectMode",
+        AtState( "creations",
             function()
+        </xsl:text>
+
+        <xsl:for-each select='action[@name="Unit Creation"]'>
+            <xsl:text>        sim:CreateUnit( coord:UtmPosition( "</xsl:text>
+            <xsl:value-of select=".//point/@coordinates"/>
+            <xsl:text>" ), "</xsl:text>
+            <xsl:value-of select='./parameter[@name="UnitType"]/@value'/>
+            <xsl:text>", "</xsl:text>
+            <xsl:value-of select='@target'/>
+            <xsl:text>" )</xsl:text>
+        </xsl:for-each>
+        <xsl:text>
+                sim:Resume()
+                ChangeState( "autoormandialog" )
+            end
+        ),
+
+        AtState( "autoormandialog",
+            function()
+                sim:Pause()
                 Dialog( { id      = "selectMode_choice",
                           message = "Test de validation </xsl:text><xsl:value-of select="$profilename"/><xsl:text>. Selectionnez un mode de jeu :",
                           buttons = { "Automatique", "manuel" } } )
             end
         ),
-        
+
         {
             events.client:UserChose(), {},
             function( dialog, answer )
                 if dialog == "selectMode_choice" then
                     if answer == "Automatique" then
-                        ChangeState( "autoexec" )
+                        ChangeState( "play" )
                     else
                         ChangeState( "initDialog" )
                     end
-
                 end
             end
         },
-        
-        AtState( "autoexec",
-            function()
-        </xsl:text>
 
-        <xsl:for-each select="action">
+        AtState( "play",
+            function()
+                sim:Resume()
+        </xsl:text>
+        <xsl:for-each select='action[@name!="Unit Creation"]'>
                 <xsl:text>
                 actions:IssueOrderFromFile( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", "</xsl:text><xsl:value-of select="$profilename"/><xsl:text>" )</xsl:text>
         </xsl:for-each>
@@ -77,6 +93,7 @@ function Start()
                           buttons = { "Reinitialisation" } } )
             end
         ),
+
         {
             events.client:UserChose(), {},
             function( dialog, answer )
@@ -87,10 +104,10 @@ function Start()
                 end
             end
         },
-        -- REINITIALISATION
+
         AtState( "init",
             function()
-                -- TODO
+                -- TODO REINITIALISATION
             end
         ),
 
@@ -101,7 +118,6 @@ function Start()
                 plugin:Reset()
             end
         }
-        
     }
     DeclareEvents( eventTable )
 
