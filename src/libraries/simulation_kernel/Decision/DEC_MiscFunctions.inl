@@ -16,6 +16,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "MT_Tools/MT_FormatString.h"
 
 // -----------------------------------------------------------------------------
 // Name: template< typename T > static void DEC_MiscFunctions::Report
