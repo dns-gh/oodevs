@@ -114,7 +114,7 @@ void Param_ABC::NotifyChange()
 // Name: Param_ABC::NotifyChanged
 // Created: LDC 2010-08-18
 // -----------------------------------------------------------------------------
-void Param_ABC::NotifyChanged( Param_ABC& param )
+void Param_ABC::NotifyChanged( Param_ABC& /*param*/ )
 {
     // NOTHING
 }

@@ -13,22 +13,18 @@
 #define __MT_Assert_h_
 
 #include <cassert>
-
-#include <MT/MT_Tools/MT_Tools_lib.h>
+#include <iostream>
 
 //-----------------------------------------------------------------------------
 // Name: MT_Assert
 // Created: NLD 2003-07-21
 //-----------------------------------------------------------------------------
 inline
-bool MT_Assert( const char* strExpression, const char* strFile, int nLine )
+bool MT_Assert( const char* expression, const char* file, int line )
 {
-    std::stringstream strMsg;
-
-    strMsg << "assert '"   << strExpression
-           << "' - File '" << strFile
-           << "' - Line "  << nLine;
-    std::cerr << strMsg.str() << std::endl;
+    std::cerr << "assert '" << expression
+              << "' - File '" << file
+              << "' - Line "  << line << std::endl;
     _asm int 3;
     return true;
 }

@@ -78,7 +78,7 @@ bool MT_Triangle::IsInside( const MT_Vector2D& vPos ) const
 // Name: MT_Triangle::Intersect2D
 // Created: NLD 2003-01-14
 //-----------------------------------------------------------------------------
-MT_INLINE
+inline
 bool MT_Triangle::Intersect2D( const MT_Line& line ) const
 {
     if( line.Intersect2D( MT_Line( *pPos1_, *pPos2_ ) ) )

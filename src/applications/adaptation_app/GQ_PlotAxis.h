@@ -24,12 +24,10 @@
 #endif
 
 #include "GQ_ValueConvertor.h"
-
-#include <MT/MT_Tools/MT_STL_Vector.h>
-
 #include <qfont.h>
 #include <qwidget.h>
 #include <qvaluelist.h>
+#include <vector>
 
 class QColorGroup;
 class QPainter;

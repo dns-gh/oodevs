@@ -11,6 +11,7 @@
 #define __Object_DecontaminationCapacity_h_
 
 #include "ObjectCapacity_ABC.h"
+#include <deque>
 
 namespace xml
 {

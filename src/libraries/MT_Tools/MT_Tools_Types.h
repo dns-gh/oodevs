@@ -23,6 +23,11 @@ inline  bool         MT_IsZero( MT_Float rF )    { return MT_flabs( rF ) < MT_Ep
 inline  bool         MT_IsSameSigns( MT_Float rA, MT_Float rB ) { return ( rA * rB ) >= 0.; }
 #define MT_UNUSED(x) (void)x;
 
+#define MT_COPYNOTALLOWED(cls)      \
+private:                            \
+    cls( const cls& );              \
+    cls& operator=( const cls& );    
+
 //-------------------------------------------------------------------------
 /** @name Définition de {unary/binary}_compose ( officiellement, c'est pas dans la STL ... ) */
 //-------------------------------------------------------------------------
@@ -364,6 +369,5 @@ struct sCaseInsensitiveLess
         return ( operator()( lhs.first, rhs.first ) || !operator()( rhs.first, lhs.first) &&  operator()( lhs.second,  rhs.second ) );
     }
 };
-
 
 #endif // __MT_Tools_Types_h_

@@ -19,6 +19,7 @@
 #include <boost/thread/condition.hpp>
 #pragma warning( pop )
 #include <boost/shared_ptr.hpp>
+#include <deque>
 
 class DEC_Path_ABC;
 class TER_PathFinderThread;

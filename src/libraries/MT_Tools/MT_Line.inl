@@ -128,7 +128,7 @@ MT_Vector2D MT_Line::ProjectPointOnLine( const MT_Vector2D& vPoint ) const
 // Name: MT_Line::ProjectPointOnLine
 // Created: NLD 2003-10-17
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 MT_Float MT_Line::ProjectPointOnLine( const MT_Vector2D& vPoint, MT_Vector2D& vResult ) const
 {
     if( *pPosEnd_ == *pPosStart_ )

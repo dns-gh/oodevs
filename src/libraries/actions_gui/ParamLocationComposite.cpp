@@ -32,6 +32,9 @@ namespace
             param->RegisterListener( paramcomposite_ );
         }
     private:
+        ChoiceVisitor( const ChoiceVisitor& );
+        ChoiceVisitor& operator=( const ChoiceVisitor& );
+    private:
         Param_ABC& paramcomposite_;
         std::string name_;
         std::vector<Param_ABC*>& parameters_;
