@@ -15,6 +15,7 @@
 #include "MIL.h"
 #include "Tristate.h"
 #include <boost/serialization/export.hpp>
+#include <map>
 
 class MIL_Object_ABC;
 class DEC_Knowledge_Object;

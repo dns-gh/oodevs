@@ -10,6 +10,8 @@
 #ifndef __MIL_KnowledgeGroupType_h_
 #define __MIL_KnowledgeGroupType_h_
 
+#include <map>
+
 namespace xml
 {
     class xistream;

@@ -12,6 +12,8 @@
 #ifndef __PHY_Volume_h_
 #define __PHY_Volume_h_
 
+#include <map>
+
 namespace xml
 {
     class xistream;
