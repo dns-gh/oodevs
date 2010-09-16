@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <shapes>
-  <shape name="Area1" category="Misc." color="#ffff00" template="TestPolygon" type="polygon">
+  <shape name="Area1" category="Divers" color="#ffff00" template="TestPolygon" type="polygon">
     <point x="58951.1" y="82231.7"/>
     <point x="58316.1" y="83623.8"/>
     <point x="60856.1" y="83770.3"/>
