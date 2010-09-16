@@ -3,11 +3,8 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "DEC_Workspace.h"
-
 #include "DEC_Model.h"
-
 #include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
@@ -33,8 +30,9 @@
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
-#include <xeumeuleu/xml.hpp>
 #include "tools/InputBinaryStream.h"
+#include "MT_Tools/MT_FormatString.h"
+#include <xeumeuleu/xml.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/algorithm/string.hpp>
 
