@@ -42,11 +42,10 @@ bool PreparationProfile::IsVisible( const kernel::Entity_ABC& ) const
 // Name: PreparationProfile::IsKnowledgeVisible
 // Created: HBD 2010-08-03
 // -----------------------------------------------------------------------------
-bool PreparationProfile::IsKnowledgeVisible( const kernel::Knowledge_ABC& entity ) const
+bool PreparationProfile::IsKnowledgeVisible( const kernel::Knowledge_ABC& /*entity*/ ) const
 {
     return true;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PreparationProfile::CanBeOrdered
