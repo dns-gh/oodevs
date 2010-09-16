@@ -8,10 +8,10 @@
 // $Workfile: ADN_Units_Composantes_GUI.cpp $
 //
 //*****************************************************************************
+
 #include "adaptation_app_pch.h"
 #include "ADN_Units_Composantes_GUI.h"
 #include "moc_ADN_Units_Composantes_GUI.cpp"
-
 #include "ADN_App.h"
 #include "ADN_Tools.h"
 #include "ADN_CommonGfx.h"
@@ -19,9 +19,7 @@
 #include "ADN_Units_Data.h"
 #include "ADN_Workspace.h"
 #include "ADN_TableItem_CheckItem.h"
-
-#include <MT/MT_Qt/MT_ValuedListViewItem.h>
-
+#include "MT_ValuedListViewItem.h"
 #include <qpopmenu.h>
 #include <qeventloop.h>
 

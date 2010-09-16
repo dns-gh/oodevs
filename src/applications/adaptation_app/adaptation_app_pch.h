@@ -97,7 +97,6 @@
 #include "MT_Tools/MT_Tools_Types.h"
 #include <MT/MT_Tools/MT_Tools_lib.h>
 #include <MT/MT_Logger/MT_Logger_lib.h>
-#include <MT/MT_Qt/MT_Qt_lib.h>
 
 #include <xeumeuleu/xml.hpp>
 #include "ADN_Type_ABC.h"

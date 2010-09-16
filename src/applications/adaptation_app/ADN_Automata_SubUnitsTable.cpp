@@ -19,16 +19,14 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Automata_SubUnitsTable.h"
 #include "moc_ADN_Automata_SubUnitsTable.cpp"
-
-#include <qpopupmenu.h>
-#include <qapplication.h>
-#include <qeventloop.h>
-
 #include "ADN_Automata_Data.h"
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_TableItem_Edit.h"
 #include "ADN_Validator.h"
-
+#include "MT_ValuedListViewItem.h"
+#include <qpopupmenu.h>
+#include <qapplication.h>
+#include <qeventloop.h>
 
 typedef ADN_Automata_Data::UnitInfos UnitInfos;
 
