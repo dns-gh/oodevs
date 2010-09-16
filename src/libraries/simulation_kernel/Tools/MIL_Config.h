@@ -15,6 +15,7 @@
 #include "MIL_Random.h"
 
 #include "tools/SessionConfig.h"
+#include <map>
 
 #pragma warning ( push )
 #pragma warning ( disable : 4244 4245 )
