@@ -55,12 +55,6 @@ protected:
     //@}
 };
 
-
-#ifdef MT_USE_INLINE
-#   include "MT_ValuedListViewItem.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MT_ValuedListViewItem constructor
 // Created: APE 2004-04-19
