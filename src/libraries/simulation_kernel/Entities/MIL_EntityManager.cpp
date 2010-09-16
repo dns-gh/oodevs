@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_EntityManager.h"
-
 #include "Agents/Actions/Firing/PHY_FireResults_Pion.h"
 #include "Agents/Units/Categories/PHY_NatureLevel.h"
 #include "Agents/Units/Categories/PHY_NatureAtlas.h"
@@ -92,6 +90,7 @@
 #include "tools/MIL_IDManager.h"
 #include "tools/MIL_ProfilerMgr.h"
 #include "tools/MIL_Tools.h"
+#include "MT_Tools/MT_FormatString.h"
 #include <urban/ObjectVisitor_ABC.h>
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push )
