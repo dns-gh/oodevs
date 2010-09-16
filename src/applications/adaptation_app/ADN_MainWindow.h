@@ -10,8 +10,9 @@
 #ifndef __ADN_MainWindow_h_
 #define __ADN_MainWindow_h_
 
-#include <qmainwindow.h>
 #include "ADN_Callback.h"
+#include <qmainwindow.h>
+#include <map>
 
 namespace tools
 {

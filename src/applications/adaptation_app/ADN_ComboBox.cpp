@@ -44,7 +44,7 @@ ADN_ComboBox::~ADN_ComboBox()
     disconnect(this,SIGNAL(activated(int)),this,SLOT(ItemSelected(int)));
     pCurData_=0;
 
-    MT_DELETEOWNED(vItems_);
+    DELETEOWNED(vItems_);
     vItems_.clear();
 }
 
@@ -203,7 +203,7 @@ void ADN_ComboBox::removeItem ( int index )
 void ADN_ComboBox::clear()
 {
     // clear list of items
-    MT_DELETEOWNED(vItems_);
+    DELETEOWNED(vItems_);
     vItems_.clear();
 
     // clear combo
