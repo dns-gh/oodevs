@@ -213,29 +213,8 @@ SectionGroupEnd
 ;--------------------------------
 Section "Documentation" s_doc
 
-    SetOutPath "$INSTDIR\doc"
-    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${DOCDIR}\*.pdf"
-    File /r /x ".svn" "third party"
-    CreateDirectory "$SMPROGRAMS\${APP_NAME}\Documentation"
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+    !insertmacro OT.AddDocumentation
 
-    SetOutPath "$INSTDIR\doc\en"
-    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${DOCDIR}\en\Controller_User_Guide.pdf"
-    File /r /x ".svn" "${DOCDIR}\en\Instructor_User_Guide.pdf"
-    File /r /x ".svn" "${DOCDIR}\en\Reference_Guide.pdf"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Documentation\Controller User Guide.lnk" "$INSTDIR\doc\en\Controller_User_Guide.pdf"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Documentation\Instructor User Guide.lnk" "$INSTDIR\doc\en\Instructor_User_Guide.pdf"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Documentation\Reference Guide.lnk" "$INSTDIR\doc\en\Reference_Guide.pdf"
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-    
-    SetOutPath "$INSTDIR\doc\fr"
-    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${DOCDIR}\fr\Guide Utilisateur.pdf"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Documentation\Guide Utilisateur.lnk" "$INSTDIR\doc\fr\Guide Utilisateur.pdf"
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-    
 SectionEnd
 
 SectionGroup "Shortcuts" s_sc
