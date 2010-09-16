@@ -8,6 +8,7 @@
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_Version.h"
 #include "MT_Tools/MT_CrashHandler.h"
+#include "MT_Tools/MT_FormatString.h"
 
 #include "tools/win32/FlexLm.h"
 #include <MT/MT_Logger/MT_Logger_lib.h>

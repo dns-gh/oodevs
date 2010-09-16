@@ -20,6 +20,7 @@
 #include "simulation_kernel/MIL_AgentServer.h"
 #include "simulation_kernel/MIL_Random.h"
 #include "simulation_kernel/CheckPoints/MIL_CheckPointManager.h"
+#include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Version.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_Profiler.h"
