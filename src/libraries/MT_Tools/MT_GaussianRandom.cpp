@@ -11,6 +11,7 @@
 
 #include "MT_Tools_pch.h"
 #include "MT_GaussianRandom.h"
+#include <cmath>
 
 namespace
 {

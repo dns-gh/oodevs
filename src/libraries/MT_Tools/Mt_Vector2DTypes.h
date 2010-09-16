@@ -11,6 +11,9 @@
 #define __Mt_Vector2DTypes_h_
 
 #include "Mt_Vector2D.h"
+#include <vector>
+#include <list>
+#include <set>
 
 typedef std::list< MT_Vector2D >    T_PointList;
 typedef T_PointList::iterator       IT_PointList;

@@ -13,6 +13,7 @@
 #define __MT_Random_h_
 
 #include "MT_Tools_Types.h"
+#include <vector>
 
 namespace MT_RandomConsts
 {

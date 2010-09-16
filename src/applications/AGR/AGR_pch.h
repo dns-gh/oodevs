@@ -10,16 +10,12 @@
 #ifndef __AGR_pch_h_
 #define __AGR_pch_h_
 
-#include <MT/MT_Tools/MT_Tools_lib.h>
-#include <MT/MT_Thread/MT_Thread_lib.h>
-#include <MT/MT_IO/MT_IO_lib.h>
 #include <MT/MT_Logger/MT_Logger_lib.h>
-#include <MT/MT_Time/MT_Time_lib.h>
-
 #include <xeumeuleu/xml.hpp>
-
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
+#include <vector>
+#include <set>
 
 typedef std::set< std::string >        T_String_Set;
 typedef T_String_Set::iterator        IT_String_Set;

@@ -43,6 +43,7 @@
 #include "MIL_ParameterType_String.h"
 #include "MIL_ParameterType_ObjectiveList.h"
 #include "MIL_ParameterType_UrbanBlock.h"
+#include <MT/MT_IO/MT_FormatString.h>
 
 // =============================================================================
 // FACTORY

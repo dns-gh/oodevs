@@ -10,19 +10,19 @@
 //*****************************************************************************
 
 #include "MT_Droite.h"
+#include <cmath>
 
 // -----------------------------------------------------------------------------
 //  Name  :  MT_Vector2D constructor
 // Created: FBD 02-03-01
 //-----------------------------------------------------------------------------
 inline
-MT_Vector2D::MT_Vector2D( void )
-:    rX_( 0 )
-,    rY_( 0 )
-
-{    
+MT_Vector2D::MT_Vector2D( )
+    : rX_( 0 )
+    , rY_( 0 )
+{
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 //  Name  :  MT_Vector2D constructor
@@ -30,11 +30,11 @@ MT_Vector2D::MT_Vector2D( void )
 //-----------------------------------------------------------------------------
 inline
 MT_Vector2D::MT_Vector2D( MT_Float rX, MT_Float rY )
-:    rX_( rX )
-,    rY_( rY )
+    : rX_( rX )
+    , rY_( rY )
 {
+    // NOTHING
 }
-
 
 
 //-----------------------------------------------------------------------------
@@ -43,9 +43,10 @@ MT_Vector2D::MT_Vector2D( MT_Float rX, MT_Float rY )
 //-----------------------------------------------------------------------------
 inline
 MT_Vector2D::MT_Vector2D( const MT_Vector2D& v )
-: rX_( v.rX_ )
-, rY_( v.rY_ )
+    : rX_( v.rX_ )
+    , rY_( v.rY_ )
 {
+    // NOTHING
 }
 
 
@@ -54,8 +55,9 @@ MT_Vector2D::MT_Vector2D( const MT_Vector2D& v )
 // Created: FBD 02-03-01
 //-----------------------------------------------------------------------------
 inline
-MT_Vector2D::~MT_Vector2D( void )
+MT_Vector2D::~MT_Vector2D()
 {
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -64,11 +66,10 @@ MT_Vector2D::~MT_Vector2D( void )
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
 inline
-MT_Float MT_Vector2D::SquareMagnitude( void ) const
+MT_Float MT_Vector2D::SquareMagnitude() const
 { 
     return rX_ * rX_ + rY_ * rY_; 
 }
-
 
 //-----------------------------------------------------------------------------
 //  Name  :  MT_Vector2D::Magnitude
@@ -76,11 +77,10 @@ MT_Float MT_Vector2D::SquareMagnitude( void ) const
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
 inline
-MT_Float MT_Vector2D::Magnitude( void ) const
+MT_Float MT_Vector2D::Magnitude() const
 { 
     return (MT_Float)sqrt( SquareMagnitude() );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: MT_Vector2D::SquareDistance

@@ -23,6 +23,9 @@ inline  bool         MT_IsZero( MT_Float rF )    { return MT_flabs( rF ) < MT_Ep
 inline  bool         MT_IsSameSigns( MT_Float rA, MT_Float rB ) { return ( rA * rB ) >= 0.; }
 #define MT_UNUSED(x) (void)x;
 
+typedef unsigned uint;
+typedef long long int int64;
+
 #define MT_COPYNOTALLOWED(cls)      \
 private:                            \
     cls( const cls& );              \

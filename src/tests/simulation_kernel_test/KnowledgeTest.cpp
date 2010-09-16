@@ -16,7 +16,6 @@
 #include "MockPHY_RoleInterface_Perceiver.h"
 #include "MockKnowledgeGroupFactory.h"
 #include "MockNET_Publisher_ABC.h"
-#include "MT_Tools/MT_Profiler.h"
 #include "tools/MIL_Config.h"
 
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"

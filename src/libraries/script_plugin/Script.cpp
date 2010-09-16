@@ -12,7 +12,7 @@
 #include "FiniteStateMachine.h"
 #include "dispatcher/Registrable_ABC.h"
 #include "directia/brain/Brain.h"
-#include "MT/MT_Logger/MT_Logger_lib.h"
+#include <MT/MT_Logger/MT_Logger_lib.h>
 
 using namespace plugins::script;
 

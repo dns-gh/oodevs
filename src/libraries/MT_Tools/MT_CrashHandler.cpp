@@ -10,10 +10,9 @@
 // *****************************************************************************
 
 #include "MT_Tools_pch.h"
-
 #include "MT_CrashHandler.h"
-
-#include "tools/win32/StackWalkerProxy.h"
+#include <tools/win32/StackWalkerProxy.h>
+#include <MT/MT_Logger/MT_Logger_lib.h>
 
 // -----------------------------------------------------------------------------
 // Name: MT_CrashHandler::ContinueSearch
@@ -28,7 +27,7 @@ int MT_CrashHandler::ContinueSearch( const void* exceptionInfos )
     return nResult;
 }
 
-    // -----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 // Name: MT_CrashHandler::ExecuteHandler
 // Created: NLD 2006-03-17
 // -----------------------------------------------------------------------------

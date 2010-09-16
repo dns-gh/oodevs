@@ -18,9 +18,7 @@
 
 #include "simulation_terrain_pch.h"
 #include "TER_CoordinateManager.h"
-#include <MT/MT_Logger/MT_LogDefines.h>
-#include <MT/MT_Logger/MT_LogManager.h>
-
+#include <MT/MT_Logger/MT_Logger_lib.h>
 #include <cmath>
 
 // -----------------------------------------------------------------------------

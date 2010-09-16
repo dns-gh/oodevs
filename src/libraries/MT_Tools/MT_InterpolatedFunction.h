@@ -12,12 +12,8 @@
 #ifndef __MT_InterpolatedFunction_h_
 #define __MT_InterpolatedFunction_h_
 
-//*****************************************************************************
-// Created: JVT 02-12-17
-// Last modified: JVT 03-03-11
-//*****************************************************************************
-
 #include "MT_LinearInterpolation.h"
+#include <vector>
 
 template < typename TypeIn, typename TypeOut = TypeIn, class Interpolation = MT_LinearInterpolation< TypeIn, TypeOut > >
 class MT_InterpolatedFunction

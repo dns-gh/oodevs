@@ -10,6 +10,7 @@
 #include "AGR_pch.h"
 #include "AGR_Workspace.h"
 #include "AGR_Enumeration.h"
+#include <MT/MT_IO/MT_Dir.h>
 
 #include <windows.h>
 #include <assert.h>

@@ -13,6 +13,7 @@
 #define __MT_V3D_h_
 
 #include "MT_Tools_Types.h"
+#include <vector>
 
 // Scipio types
 //=============================================================================

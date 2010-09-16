@@ -11,6 +11,7 @@
 #define __MIL_MissionParameter_ABC_h_
 
 #include <boost/shared_ptr.hpp>
+#include <vector>
 
 namespace Common
 {

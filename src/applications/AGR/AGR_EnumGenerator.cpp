@@ -11,6 +11,8 @@
 #include "AGR_EnumGenerator.h"
 #include "AGR_Workspace.h"
 #include "AGR_Enumeration.h"
+#include <MT/MT_IO/MT_Dir.h>
+#include <iostream>
 
 // -----------------------------------------------------------------------------
 // Name: AGR_EnumGenerator constructor

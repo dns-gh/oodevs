@@ -2,7 +2,10 @@
 #include "AGR_Workspace.h"
 #include "AGR_EnumGenerator.h"
 #include "MT_Tools/MT_Version.h"
+#include <MT/MT_IO/MT_DirectoryBrowser.h>
+#include <MT/MT_IO/MT_Dir.h>
 #include <windows.h>
+#include <iostream>
 
 bool CheckModifications( const std::string& strDir1, const std::string& strExt1
                        , const std::string& strDir2, const std::string& strExt2 );

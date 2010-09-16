@@ -16,8 +16,7 @@
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_Profiler.h"
 #include "simulation_kernel/Decision/DEC_PathFind_Manager.h"
-#include <MT/MT_Logger/MT_LogManager.h>
-#include <MT/MT_Logger/MT_LogDefines.h>
+#include <MT/MT_Logger/MT_Logger_lib.h>
 #include <MT/MT_IO/MT_Dir.h>
 #include <MT/MT_IO/MT_FormatString.h>
 #include <pathfind/TerrainPathfinder.h>
