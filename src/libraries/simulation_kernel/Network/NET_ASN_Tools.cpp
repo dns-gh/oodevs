@@ -204,7 +204,8 @@ bool NET_ASN_Tools::ReadPathList( const MsgPathList&   asn, T_ItinerairePtrVecto
             itineraireVector.push_back( pItineraire );
         else
         {
-            MT_DELETEOWNED( itineraireVector );
+            for( IT_ItinerairePtrVector it = itineraireVector.begin(); it != itineraireVector.end(); ++it )
+                delete *it;
             itineraireVector.clear();
             return false;
         }
