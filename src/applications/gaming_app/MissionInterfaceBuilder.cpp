@@ -80,34 +80,34 @@ MissionInterfaceBuilder::MissionInterfaceBuilder( Controllers& controllers, gui:
     builderFunctors_["agent"]               = &MissionInterfaceBuilder::BuildAgent;
     builderFunctors_["agentbm"]             = &MissionInterfaceBuilder::BuildAgent;
     builderFunctors_["agentlist"]           = &MissionInterfaceBuilder::BuildAgentList;
-    builderFunctors_["agentlistbm"]         = &MissionInterfaceBuilder::BuildAgentList;
+    builderFunctors_["agentbmlist"]         = &MissionInterfaceBuilder::BuildAgentList;
     builderFunctors_["automate"]            = &MissionInterfaceBuilder::BuildAutomat;
     builderFunctors_["automatebm"]          = &MissionInterfaceBuilder::BuildAutomat;
     builderFunctors_["automatelist"]        = &MissionInterfaceBuilder::BuildAutomatList;
-    builderFunctors_["automatelistbm"]      = &MissionInterfaceBuilder::BuildAutomatList;
+    builderFunctors_["automatebmlist"]      = &MissionInterfaceBuilder::BuildAutomatList;
     builderFunctors_["genobject"]           = &MissionInterfaceBuilder::BuildGenObject;
     builderFunctors_["genobjectbm"]         = &MissionInterfaceBuilder::BuildGenObject;
     builderFunctors_["genobjectlist"]       = &MissionInterfaceBuilder::BuildGenObjectList;
-    builderFunctors_["genobjectlistbm"]     = &MissionInterfaceBuilder::BuildGenObjectList;
+    builderFunctors_["genobjectbmlist"]     = &MissionInterfaceBuilder::BuildGenObjectList;
     builderFunctors_["objective"]           = &MissionInterfaceBuilder::BuildMissionObjective;
     builderFunctors_["objectivelist"]       = &MissionInterfaceBuilder::BuildMissionObjectiveList;
     builderFunctors_["dotationtype"]        = &MissionInterfaceBuilder::BuildDotation;
     builderFunctors_["natureatlas"]         = &MissionInterfaceBuilder::BuildAtlasNature;
 
     builderFunctors_["bool"]                = &MissionInterfaceBuilder::BuildBoolean;
-    builderFunctors_["direction"]           = &MissionInterfaceBuilder::BuildDirection;
-    builderFunctors_["directionbm"]         = &MissionInterfaceBuilder::BuildDirection;
+    builderFunctors_["heading"]           = &MissionInterfaceBuilder::BuildDirection;
+    builderFunctors_["headingbm"]         = &MissionInterfaceBuilder::BuildDirection;
     builderFunctors_["numeric"]             = &MissionInterfaceBuilder::BuildNumeric;
     builderFunctors_["datetime"]            = &MissionInterfaceBuilder::BuildParamDateTime;
 
     builderFunctors_["agentknowledge"]        = &MissionInterfaceBuilder::BuildAgentKnowledge;
     builderFunctors_["agentknowledgebm"]      = &MissionInterfaceBuilder::BuildAgentKnowledge;
     builderFunctors_["agentknowledgelist"]    = &MissionInterfaceBuilder::BuildAgentKnowledgeList;
-    builderFunctors_["agentknowledgelistbm"]  = &MissionInterfaceBuilder::BuildAgentKnowledgeList;
+    builderFunctors_["agentknowledgebmlist"]  = &MissionInterfaceBuilder::BuildAgentKnowledgeList;
     builderFunctors_["objectknowledge"]       = &MissionInterfaceBuilder::BuildObjectKnowledge;
     builderFunctors_["objectknowledgebm"]     = &MissionInterfaceBuilder::BuildObjectKnowledge;
     builderFunctors_["objectknowledgelist"]   = &MissionInterfaceBuilder::BuildObjectKnowledgeList;
-    builderFunctors_["objectknowledgelistbm"] = &MissionInterfaceBuilder::BuildObjectKnowledgeList;
+    builderFunctors_["objectknowledgebmlist"] = &MissionInterfaceBuilder::BuildObjectKnowledgeList;
     builderFunctors_["populationknowledge"]   = &MissionInterfaceBuilder::BuildPopulationKnowledge;
     builderFunctors_["populationknowledgebm"] = &MissionInterfaceBuilder::BuildPopulationKnowledge;
 
@@ -117,11 +117,11 @@ MissionInterfaceBuilder::MissionInterfaceBuilder( Controllers& controllers, gui:
     builderFunctors_["point"]               = &MissionInterfaceBuilder::BuildPoint;
     builderFunctors_["pointbm"]             = &MissionInterfaceBuilder::BuildPoint;
     builderFunctors_["pointlist"]           = &MissionInterfaceBuilder::BuildPointList;
-    builderFunctors_["pointlistbm"]         = &MissionInterfaceBuilder::BuildPointList;
+    builderFunctors_["pointbmlist"]         = &MissionInterfaceBuilder::BuildPointList;
     builderFunctors_["polygon"]             = &MissionInterfaceBuilder::BuildPolygon;
     builderFunctors_["areabm"]              = &MissionInterfaceBuilder::BuildPolygon;
     builderFunctors_["polygonlist"]         = &MissionInterfaceBuilder::BuildPolygonList;
-    builderFunctors_["arealistbm"]          = &MissionInterfaceBuilder::BuildPolygonList;
+    builderFunctors_["areabmlist"]          = &MissionInterfaceBuilder::BuildPolygonList;
     builderFunctors_["location"]            = &MissionInterfaceBuilder::BuildLocation;
     builderFunctors_["locationlist"]        = &MissionInterfaceBuilder::BuildLocationList;
 
@@ -167,7 +167,10 @@ void MissionInterfaceBuilder::Build( actions::gui::MissionInterface_ABC& mission
 // -----------------------------------------------------------------------------
 actions::gui::Param_ABC& MissionInterfaceBuilder::Build( const OrderParameter& parameter, bool isRegistered ) const
 {
-    CIT_BuilderFunctors it = builderFunctors_.find( QString( parameter.GetType().c_str() ).lower() );
+    std::string paramType = parameter.GetType().c_str();
+    if( parameter.IsList() )
+        paramType = paramType + "list";
+    CIT_BuilderFunctors it = builderFunctors_.find( QString( paramType.c_str() ).lower() );
     if( it != builderFunctors_.end() )
     {
         T_BuilderFunctor functor = it->second;

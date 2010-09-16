@@ -37,14 +37,20 @@ namespace
             ADN_TableItem_String*     itemName     = new ADN_TableItem_String    ( &tab_, obj );
             ADN_MissionParameterType* itemType     = new ADN_MissionParameterType( &tab_, obj, itemConnectors_ );
             ADN_TableItem_CheckItem*  itemOptional = new ADN_TableItem_CheckItem ( &tab_, obj );
+            ADN_TableItem_Int*        itemMin      = new ADN_TableItem_Int       ( &tab_, obj );
+            ADN_TableItem_Int*        itemMax      = new ADN_TableItem_Int       ( &tab_, obj );
 
             tab_.setItem( i, 0, itemName );
             tab_.setItem( i, 1, itemType );
             tab_.setItem( i, 2, itemOptional );
+            tab_.setItem( i, 3, itemMin );
+            tab_.setItem( i, 4, itemMax );
 
-            itemName    ->GetConnector().Connect( &param->strName_ );
-            itemType    ->GetConnector().Connect( &param->type_ );
+            itemName->GetConnector().Connect( &param->strName_ );
+            itemType->GetConnector().Connect( &param->type_ );
             itemOptional->GetConnector().Connect( &param->isOptional_ );
+            itemMin->GetConnector().Connect( &param->min_ );
+            itemMax->GetConnector().Connect( &param->max_ );
             
             static_cast< ADN_MissionParameters_Table& >( tab_ ).ResetCurrent();
         }
@@ -64,11 +70,17 @@ ADN_MissionParameters_Table::ADN_MissionParameters_Table( QWidget* parent /*= 0*
 {
     verticalHeader()->hide();
     setLeftMargin( 0 );
-    setNumCols( 3 );
+    setNumCols( 5 );
+    setColumnWidth( 1, 170 );
+    setColumnWidth( 2, 60 );
+    setColumnWidth( 3, 60 );
+    setColumnWidth( 4, 60 );
     setNumRows( 0 );
     horizontalHeader()->setLabel( 0, tr( "Name" ) );
     horizontalHeader()->setLabel( 1, tr( "Type" ) );
     horizontalHeader()->setLabel( 2, tr( "Optional" ) );
+    horizontalHeader()->setLabel( 3, tr( "Range min" ) );
+    horizontalHeader()->setLabel( 4, tr( "Range max" ) );
     pConnector_ = new ADN_CT_MissionParameters( *this, itemConnectors_ );
 
     connect( this, SIGNAL( selectionChanged() ), this, SLOT( OnSelectionChanged() ) );

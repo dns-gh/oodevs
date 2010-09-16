@@ -59,6 +59,7 @@ public:
     std::string GetName() const;
     std::string GetType() const;
     bool IsOptional() const;
+    bool IsList() const;
     const OrderParameterValue& GetValue( unsigned int id ) const;
     void AddValue( int id, const std::string& name );
     virtual void Accept( OrderParameterValueVisitor_ABC& visitor ) const;
@@ -84,6 +85,8 @@ private:
     std::string name_;
     std::string type_;
     bool optional_;
+    unsigned int minOccurs_;
+    unsigned int maxOccurs_;
     T_OrderParameterValues values_;
     std::vector< std::string > choices_;
     //@}

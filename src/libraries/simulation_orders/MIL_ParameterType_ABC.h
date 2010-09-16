@@ -33,6 +33,7 @@ public:
     //! @name Factory
     //@{
     static void Initialize();
+    static const MIL_ParameterType_ABC* Find ( const std::string& strName, const std::string& maxOccurs );
     static const MIL_ParameterType_ABC* Find ( const std::string& strName );
     //@}
 

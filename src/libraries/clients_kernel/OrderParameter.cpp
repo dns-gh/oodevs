@@ -26,11 +26,20 @@ OrderParameter::OrderParameter( xml::xistream& xis )
     : name_( xis.attribute< std::string >( "name" ) )
     , type_( boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type" ) ) )
     , optional_( xis.attribute( "optional", false ) )
+    , minOccurs_( 1 )
+    , maxOccurs_( 1 )
 {
     xis >> xml::list( "value", *this, &OrderParameter::ReadValue )
         >> xml::optional >> xml::start( "choice" )
             >> xml::list( "parameter", *this, &OrderParameter::ReadChoice )
-        >> xml::end();
+        >> xml::end()
+        >> xml::optional >> xml::attribute< unsigned int >( "min-occurs", minOccurs_ );
+    std::string maxString( "1" );
+    xis >> xml::optional >> xml::attribute< std::string >( "max-occurs", maxString );
+    if( maxString == "unbounded" )
+        maxOccurs_ = std::numeric_limits< unsigned int >::max();
+    else
+        xis >> xml::optional >> xml::attribute< unsigned int >( "max-occurs", maxOccurs_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -41,6 +50,8 @@ OrderParameter::OrderParameter( const std::string& name, const std::string& type
     : name_    ( name )
     , type_    ( boost::algorithm::to_lower_copy( type ) )
     , optional_( optional )
+    , minOccurs_( 1 )
+    , maxOccurs_( 1 )
 {
     // NOTHING
 }
@@ -142,4 +153,13 @@ void OrderParameter::Accept( ChoicesVisitor_ABC& visitor ) const
 {
     for( std::vector< std::string >::const_iterator it = choices_.begin(); it != choices_.end(); ++it )
         visitor.Visit( *it );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderParameter::IsList
+// Created: LDC 2010-09-14
+// -----------------------------------------------------------------------------
+bool OrderParameter::IsList() const
+{
+    return ( maxOccurs_ != 1 );
 }

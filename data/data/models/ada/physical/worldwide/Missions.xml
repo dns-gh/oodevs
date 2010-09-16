@@ -2,11 +2,11 @@
 <missions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Missions.xsd">
   <units>
     <context>
-      <parameter dia-name="dangerDirection_" name="Danger direction" optional="false" type="Direction"/>
-      <parameter dia-name="phaseLines_" name="Phase lines" optional="true" type="PhaseLineList"/>
+      <parameter dia-name="dangerDirection_" name="Danger direction" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Phase lines" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Boundary limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Boundary limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="intelligences_" name="Intelligences" optional="true" type="IntelligenceList"/>
+      <parameter dia-name="intelligences_" max-occurs="unbounded" min-occurs="1" name="Intelligences" optional="true" type="Intelligence"/>
     </context>
     <mission dia-behavior="MIS_Pion_SoutenirEnMesureDe" dia-type="T_Mission_Pion_SoutenirEnMesureDe" id="1" name="prepare to">
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
@@ -15,98 +15,98 @@
       <parameter dia-name="position_" name="Position" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_AllerSeRecompleter" dia-type="T_Mission_Pion_ALAT_AllerSeRecompleter" id="3" name="Army Aviation - resupply">
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_ReconnaitreDansLaProfondeur" dia-type="T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur" id="4" name="Army Aviation - recon in force">
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="pointDislocation_" name="Release point" optional="false" type="Point"/>
       <parameter dia-name="zone_" name="Area" optional="false" type="Location"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_ReconnaitreContourEnnemi" dia-type="T_Mission_Pion_ALAT_ReconnaitreContourEnnemi" id="5" name="Army Aviation - recon enemy positions">
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_DetruireNeutraliserDansZone" dia-type="T_Mission_Pion_ALAT_DetruireNeutraliserDansZone" id="6" name="Army Aviation - destroy (in a specific area)">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
       <parameter dia-name="pointDislocation_" name="Release point" optional="false" type="Point"/>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="neutraliser_" name="Targets to be neutralized" optional="false" type="Bool"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_DetruireAeromobile" dia-type="T_Mission_Pion_ALAT_DetruireAeromobile" id="7" name="Army Aviation - destroy flying enemy">
-      <parameter dia-name="uniteADetruire_" name="Enemy to destroy" optional="false" type="AgentKnowledgeList"/>
+      <parameter dia-name="uniteADetruire_" max-occurs="unbounded" min-occurs="1" name="Enemy to destroy" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Freiner" dia-type="T_Mission_Pion_ALAT_Freiner" id="8" name="Army Aviation - delay">
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Jalonner" dia-type="T_Mission_Pion_ALAT_Jalonner" id="9" name="Army Aviation - screen">
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Escorter" dia-type="T_Mission_Pion_ALAT_Escorter" id="10" name="Army Aviation - escort">
-      <parameter dia-name="unitesAEscorter_" name="Units to escort" optional="false" type="AgentList"/>
+      <parameter dia-name="unitesAEscorter_" max-occurs="unbounded" min-occurs="1" name="Units to escort" optional="false" type="Agent"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Heliporter" dia-type="T_Mission_Pion_ALAT_Heliporter" id="11" name="Army Aviation - heliport">
-      <parameter dia-name="unitesAHeliporter_" name="Units to helitransport" optional="false" type="AgentList"/>
+      <parameter dia-name="unitesAHeliporter_" max-occurs="unbounded" min-occurs="1" name="Units to helitransport" optional="false" type="Agent"/>
       <parameter dia-name="pointDebarquement_" name="Disembarking point" optional="false" type="Point"/>
       <parameter dia-name="pointEmbarquement_" name="Embarking point" optional="false" type="Point"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="avecMateriel_" name="With equipments" optional="false" type="Bool"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement" dia-type="T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement" id="12" name="Army Aviation - helitransport replenishment sites">
       <parameter dia-name="pointDebarquement_" name="Disembarking point" optional="false" type="Point"/>
       <parameter dia-name="positionRegroupement_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Helitransporter" dia-type="T_Mission_Pion_ALAT_Helitransporter" id="13" name="Army Aviation - helitransport">
-      <parameter dia-name="unitesAHelitransporter_" name="Units to helitransport" optional="false" type="AgentList"/>
+      <parameter dia-name="unitesAHelitransporter_" max-occurs="unbounded" min-occurs="1" name="Units to helitransport" optional="false" type="Agent"/>
       <parameter dia-name="pointDebarquement_" name="Disembarking point" optional="false" type="Point"/>
       <parameter dia-name="pointEmbarquement_" name="Embarking point" optional="false" type="Point"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="avecMateriel_" name="With equipments" optional="false" type="Bool"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_IMEX" dia-type="T_Mission_Pion_ALAT_IMEX" id="14" name="Army Aviation - evacuate">
-      <parameter dia-name="unitesAAppuyer_" name="Units to support" optional="false" type="AgentList"/>
+      <parameter dia-name="unitesAAppuyer_" max-occurs="unbounded" min-occurs="1" name="Units to support" optional="false" type="Agent"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Eclairer" dia-type="T_Mission_Pion_ALAT_Eclairer" id="15" name="Army Aviation - recon">
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Surveiller" dia-type="T_Mission_Pion_ALAT_Surveiller" id="16" name="Army Aviation - monitor">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_AppuyerDirectAuContact" dia-type="T_Mission_Pion_ALAT_AppuyerDirectAuContact" id="17" name="Army Aviation - support (in contact)">
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
-      <parameter dia-name="unitesAAppuyer_" name="Units to support" optional="false" type="AgentList"/>
+      <parameter dia-name="unitesAAppuyer_" max-occurs="unbounded" min-occurs="1" name="Units to support" optional="false" type="Agent"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Couvrir" dia-type="T_Mission_Pion_ALAT_Couvrir" id="18" name="Army Aviation - cover">
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
-      <parameter dia-name="unitesACouvrir_" name="Units to cover" optional="false" type="AgentList"/>
+      <parameter dia-name="unitesACouvrir_" max-occurs="unbounded" min-occurs="1" name="Units to cover" optional="false" type="Agent"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Attaquer" dia-type="T_Mission_Pion_ALAT_Attaquer" id="19" name="Army Aviation - assault">
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASA_DefendreSite" dia-type="T_Mission_Pion_ASA_DefendreSite" id="20" name="Air Defense Artillery - defend site">
       <parameter dia-name="site_" name="Site" optional="false" type="Polygon"/>
@@ -134,7 +134,7 @@
       <parameter dia-name="pointDeDeploiement_" name="Deployment point" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASA_DefendreUnites" dia-type="T_Mission_Pion_ASA_DefendreUnites" id="25" name="Air Defense Artillery - defend units">
-      <parameter dia-name="unites_" name="Units" optional="false" type="AgentList"/>
+      <parameter dia-name="unites_" max-occurs="unbounded" min-occurs="1" name="Units" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASA_MISTRAL_DefendreSite" dia-type="T_Mission_Pion_ASA_MISTRAL_DefendreSite" id="26" name="Air Defense Artillery (Very Short Range) - defend site">
       <parameter dia-name="site_" name="Site" optional="false" type="Polygon"/>
@@ -185,7 +185,7 @@
       <parameter dia-name="positionDeploiement_" name="Deployment position" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASS_AcquerirLanceursEni" dia-type="T_Mission_Pion_ASS_AcquerirLanceursEni" id="34" name="Field Artillery - collect enemy artillery intelligence">
-      <parameter dia-name="zonesAObserver_" name="Areas to observe" optional="false" type="PolygonList"/>
+      <parameter dia-name="zonesAObserver_" max-occurs="unbounded" min-occurs="1" name="Areas to observe" optional="false" type="Polygon"/>
       <parameter dia-name="zoneImplantation_" name="Deployment area" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="menanceRoem_" name="Electronic Intelligence" optional="false" type="Bool"/>
     </mission>
@@ -225,7 +225,7 @@
         <usage><![CDATA[Unit moves towards the position, installs and cover its allies by barring any enemy that could prevent the covered allies from fulfilling their missions.]]></usage>
       </descriptions>
       <parameter dia-name="position_" name="Position" optional="false" type="Point"/>
-      <parameter dia-name="unitesACouvrir_" name="Units to cover" optional="false" type="AgentList"/>
+      <parameter dia-name="unitesACouvrir_" max-occurs="unbounded" min-occurs="1" name="Units to cover" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_FlancGarder" dia-type="T_Mission_Pion_ABC_FlancGarder" id="42" name="Armor - flank-guard">
       <descriptions>
@@ -234,7 +234,7 @@ force to protect it from enemy ground observation, direct fire, and surprise att
         <usage><![CDATA[Unit moves along a designated route while coordinating with its allies.  Where necessary, it will fire upon enemies within weapons range.  After reaching its objective, the unit assumes a defensive posture.]]></usage>
       </descriptions>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
-      <parameter dia-name="unitesACouvrir_" name="Units to cover" optional="false" type="AgentList"/>
+      <parameter dia-name="unitesACouvrir_" max-occurs="unbounded" min-occurs="1" name="Units to cover" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_Reduire" dia-type="T_Mission_Pion_ABC_Reduire" id="43" name="Armor - destroy">
       <descriptions>
@@ -381,7 +381,7 @@ overwhelming force.]]></doctrine>
         <usage><![CDATA[Unit moves towards the unit to support, takes the position and will engage any unit that engages the supported units.]]></usage>
       </descriptions>
       <parameter dia-name="position_" name="Position" optional="false" type="Point"/>
-      <parameter dia-name="unitesAAppuyer_" name="Units to support" optional="false" type="AgentList"/>
+      <parameter dia-name="unitesAAppuyer_" max-occurs="unbounded" min-occurs="1" name="Units to support" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_RASIT_RenseignerSur" dia-type="T_Mission_Pion_ABC_RASIT_RenseignerSur" id="65" name="Armor - (medium range radar) To report information">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
@@ -446,14 +446,14 @@ overwhelming force.]]></doctrine>
         <doctrine><![CDATA[A tactical task where any means available are employed to break through or secure a passage through an enemy defense, obstacle, minefield, or fortification.]]></doctrine>
         <usage><![CDATA[Unit moves to the obstacle, and removes it.]]></usage>
       </descriptions>
-      <parameter dia-name="obstacles_" name="Obstacles" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="obstacles_" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_ContournerObstacles" dia-type="T_Mission_Pion_GEN_ContournerObstacles" id="74" name="Engineer - bypass">
       <descriptions>
         <doctrine><![CDATA[A tactical task that involves maneuvering around an obstacle, position, or enemy force to maintain the momentum of advance. Bypassed obstacles and enemy forces are reported to higher headquarters.]]></doctrine>
         <usage><![CDATA[Unit moves to the obstacle and bypasses it. If the obstacle cannot be bypassed, Unit will try to remove it.]]></usage>
       </descriptions>
-      <parameter dia-name="obstacles_" name="Obstacles" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="obstacles_" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_DepolluerZone" dia-type="T_Mission_Pion_GEN_DepolluerZone" id="75" name="Engineer - breach (an area)">
       <descriptions>
@@ -475,16 +475,16 @@ overwhelming force.]]></doctrine>
         <doctrine><![CDATA[TBC]]></doctrine>
         <usage><![CDATA[Unit performs the specified works, in the given order.]]></usage>
       </descriptions>
-      <parameter dia-name="travaux_" name="Work" optional="false" type="GenObjectList"/>
+      <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="GenObject"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_RealiserTravauxContreMobilite" dia-type="T_Mission_Pion_GEN_RealiserTravauxContreMobilite" id="78" name="Engineer - perform counter-mobility work">
-      <parameter dia-name="travaux_" name="Work" optional="false" type="GenObjectList"/>
+      <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="GenObject"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_RealiserTravauxAppuiDeploiement" dia-type="T_Mission_Pion_GEN_RealiserTravauxAppuiDeploiement" id="79" name="Engineer - perform deployment support work">
-      <parameter dia-name="travaux_" name="Work" optional="false" type="GenObjectList"/>
+      <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="GenObject"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_RealiserCamps" dia-type="T_Mission_Pion_GEN_RealiserCamps" id="80" name="Engineer - build camps">
-      <parameter dia-name="travaux_" name="Work" optional="false" type="GenObjectList"/>
+      <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="GenObject"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_ReprendreTravaux" dia-type="T_Mission_Pion_GEN_ReprendreTravaux" id="81" name="Engineer - resume work">
       <descriptions>
@@ -752,7 +752,7 @@ overwhelming force.]]></doctrine>
         <usage><![CDATA[Unit moves towards the unit to support, takes the position and will engage any unit that engages the supported units.]]></usage>
       </descriptions>
       <parameter dia-name="position_" name="Position" optional="false" type="Point"/>
-      <parameter dia-name="unitesAAppuyer_" name="Units to support" optional="false" type="AgentList"/>
+      <parameter dia-name="unitesAAppuyer_" max-occurs="unbounded" min-occurs="1" name="Units to support" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="MIS_Pion_LOG_SeDeployer" dia-type="T_Mission_Pion_LOG_SeDeployer" id="113" name="Logistics - deploy">
       <parameter dia-name="positionDeploiement_" name="Deployment position" optional="true" type="Point"/>
@@ -835,7 +835,7 @@ overwhelming force.]]></doctrine>
         <doctrine><![CDATA[TBC]]></doctrine>
         <usage><![CDATA[Unit infiltrates to the embarking point and waits that all units to embark are ready (they must have the "adopt transportation posture" mission and be close to the embarking point). Unit embarks units, moves to the disembarking point and disembark them. Unit will redo this process as long as all units are not transported.]]></usage>
       </descriptions>
-      <parameter dia-name="unitesATransporter_" name="Units to transport" optional="false" type="AgentList"/>
+      <parameter dia-name="unitesATransporter_" max-occurs="unbounded" min-occurs="1" name="Units to transport" optional="false" type="Agent"/>
       <parameter dia-name="pointDebarquement_" name="Disembarking point" optional="false" type="Point"/>
       <parameter dia-name="pointEmbarquement_" name="Embarking point" optional="false" type="Point"/>
       <parameter dia-name="avecMateriel_" name="With equipments" optional="false" type="Bool"/>
@@ -920,13 +920,13 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="point_" name="Point" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_Generique" dia-type="T_Mission_Pion_Generique" id="147" name="generic mission">
-      <parameter dia-name="zones_" name="Areas" optional="false" type="PolygonList"/>
-      <parameter dia-name="points_" name="Positions" optional="false" type="PointList"/>
-      <parameter dia-name="itineraires_" name="Routes" optional="false" type="PathList"/>
-      <parameter dia-name="unites_" name="Units" optional="false" type="AgentList"/>
-      <parameter dia-name="automates_" name="Commanding units" optional="false" type="AutomateList"/>
-      <parameter dia-name="connaissancesAgents_" name="Enemy intelligence" optional="false" type="AgentKnowledgeList"/>
-      <parameter dia-name="connaissancesObjets_" name="Obstacle intelligence" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="zones_" max-occurs="unbounded" min-occurs="1" name="Areas" optional="false" type="Polygon"/>
+      <parameter dia-name="points_" max-occurs="unbounded" min-occurs="1" name="Positions" optional="false" type="Point"/>
+      <parameter dia-name="itineraires_" max-occurs="unbounded" min-occurs="1" name="Routes" optional="false" type="Path"/>
+      <parameter dia-name="unites_" max-occurs="unbounded" min-occurs="1" name="Units" optional="false" type="Agent"/>
+      <parameter dia-name="automates_" max-occurs="unbounded" min-occurs="1" name="Commanding units" optional="false" type="Automate"/>
+      <parameter dia-name="connaissancesAgents_" max-occurs="unbounded" min-occurs="1" name="Enemy intelligence" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="connaissancesObjets_" max-occurs="unbounded" min-occurs="1" name="Obstacle intelligence" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_MILICE_Provoquer" dia-type="T_Mission_Pion_MILICE_Provoquer" id="148" name="Militia - provoke">
       <parameter dia-name="uniteAProvoquer_" name="Unit to provoke" optional="false" type="AgentKnowledge"/>
@@ -1038,7 +1038,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="positionDeploiement_" name="Deployment position" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_RENS_RADINT_RenseignerSur" dia-type="T_Mission_Pion_RENS_RADINT_RenseignerSur" id="163" name="Radar Intelligence - report information">
-      <parameter dia-name="zonesDeRecherche_" name="Areas to observe" optional="false" type="PolygonList"/>
+      <parameter dia-name="zonesDeRecherche_" max-occurs="unbounded" min-occurs="1" name="Areas to observe" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_RENS_RADINT_MettreEnOeuvre" dia-type="T_Mission_Pion_RENS_RADINT_MettreEnOeuvre" id="164" name="Radar Intelligence - operate">
       <parameter dia-name="positionDeploiement_" name="Deployment position" optional="false" type="Point"/>
@@ -1051,7 +1051,7 @@ overwhelming force.]]></doctrine>
     </mission>
     <mission dia-behavior="MIS_Pion_RENS_ROIM_CL289_RenseignerSur" dia-type="T_Mission_Pion_RENS_ROIM_CL289_RenseignerSur" id="167" name="Imagery Intelligence UAV - report information">
       <parameter dia-name="ficelleDeVole_" name="Route" optional="false" type="Path"/>
-      <parameter dia-name="zonesDeRecherche_" name="Areas to observe" optional="false" type="PolygonList"/>
+      <parameter dia-name="zonesDeRecherche_" max-occurs="unbounded" min-occurs="1" name="Areas to observe" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_TRANS_EtablirGererLiaison" dia-type="T_Mission_Pion_TRANS_EtablirGererLiaison" id="168" name="Communication - operate">
       <parameter dia-name="positionDeploiement_" name="Deployment position" optional="false" type="Point"/>
@@ -1118,7 +1118,7 @@ overwhelming force.]]></doctrine>
         <doctrine><![CDATA[A combatant unit(s) assigned to accompany and protect prisoners.]]></doctrine>
         <usage><![CDATA[Unit moves to the prisoners to manage and escort them to the prisoners camp. Prisoners will automatically follow Unit. Unit's movement and detection capacities are decreased when escorting units.]]></usage>
       </descriptions>
-      <parameter dia-name="unitesRendues_" name="Surrendered units" optional="false" type="AgentKnowledgeList"/>
+      <parameter dia-name="unitesRendues_" max-occurs="unbounded" min-occurs="1" name="Surrendered units" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="campPrisonniers_" name="Prisonners camp" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_OrienterRefugies" dia-type="T_Mission_Pion_OrienterRefugies" id="176" name="manage refugees">
@@ -1126,7 +1126,7 @@ overwhelming force.]]></doctrine>
         <doctrine><![CDATA[A combatant unit(s) assigned to accompany and protect refugees.]]></doctrine>
         <usage><![CDATA[Unit moves to the refugees to manage and escort them to the refugess camp. Prisoners will automatically follow Unit. Unit's movement and detection capacities are decreased when escorting units.]]></usage>
       </descriptions>
-      <parameter dia-name="refugies_" name="Refugees" optional="false" type="AgentKnowledgeList"/>
+      <parameter dia-name="refugies_" max-occurs="unbounded" min-occurs="1" name="Refugees" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="campRefugies_" name="Refugees camp" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_Emergency_OrganiseShelter" dia-type="T_Mission_Pion_Emergency_OrganiseShelter" id="177" name="Emergency - organise shelter">
@@ -1159,7 +1159,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="path_" name="Path" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_Emergency_Alert" dia-type="T_Mission_Pion_Emergency_Alert" id="400" name="Emergency - alert">
-      <parameter dia-name="zones_" name="Areas" optional="false" type="LocationList"/>
+      <parameter dia-name="zones_" max-occurs="unbounded" min-occurs="1" name="Areas" optional="false" type="Location"/>
     </mission>
     <mission dia-behavior="MIS_Pion_Emergency_Supply" dia-type="T_Mission_Pion_Emergency_Supply" id="401" name="Emergency - supply">
       <parameter dia-name="area_" name="Area" optional="false" type="Polygon"/>
@@ -1170,11 +1170,11 @@ overwhelming force.]]></doctrine>
   </units>
   <automats>
     <context>
-      <parameter dia-name="dangerDirection_" name="Danger direction" optional="false" type="Direction"/>
-      <parameter dia-name="phaseLines_" name="Phase lines" optional="true" type="PhaseLineList"/>
+      <parameter dia-name="dangerDirection_" name="Danger direction" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Phase lines" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Boundary limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Boundary limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="intelligences_" name="Intelligences" optional="true" type="IntelligenceList"/>
+      <parameter dia-name="intelligences_" max-occurs="unbounded" min-occurs="1" name="Intelligences" optional="true" type="Intelligence"/>
     </context>
     <mission cdt-dia-behavior="MIS_Automate_CDT_SoutenirEnMesureDe" dia-type="T_Mission_Automate_SoutenirEnMesureDe" id="187" mrt-dia-behavior="MIS_Automate_MRT_SoutenirEnMesureDe" name="prepare to">
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
@@ -1183,14 +1183,14 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="position_" name="Position" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="189" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="Army Aviation - resupply">
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_DetruireNeutraliserDansProfondeur" dia-type="T_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur" id="190" mrt-dia-behavior="MIS_Automate_MRT_ALAT_DetruireNeutraliserDansProfondeur" name="Army Aviation - destroy">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="pointDislocation_" name="Release point" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="neutraliser_" name="Unit to be neutralized" optional="false" type="Bool"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_DetruireNeutraliserDansZone" dia-type="T_Mission_Automate_ALAT_DetruireNeutraliserDansZone" id="191" mrt-dia-behavior="MIS_Automate_MRT_ALAT_DetruireNeutraliserDansZone" name="Army Aviation - destroy (in an area)">
@@ -1198,101 +1198,101 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="pointDislocation_" name="Release point" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="neutraliser_" name="Unit to be neutralized" optional="false" type="Bool"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_DonnerCoupArret" dia-type="T_Mission_Automate_ALAT_DonnerCoupArret" id="192" mrt-dia-behavior="MIS_Automate_MRT_ALAT_DonnerCoupArret" name="Army Aviation - block">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AttaquerFormationAeromobile" dia-type="T_Mission_Automate_ALAT_AttaquerFormationAeromobile" id="193" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AttaquerFormationAeromobile" name="Army Aviation - attack (flying enemy)">
-      <parameter dia-name="unitesAAttaquer_" name="Units to attack" optional="false" type="AgentKnowledgeList"/>
+      <parameter dia-name="unitesAAttaquer_" max-occurs="unbounded" min-occurs="1" name="Units to attack" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_RecueillirFormationAeromobile" dia-type="T_Mission_Automate_ALAT_RecueillirFormationAeromobile" id="194" mrt-dia-behavior="MIS_Automate_MRT_ALAT_RecueillirFormationAeromobile" name="Army Aviation - assist flying unit in rearward maneuver">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Heliporter" dia-type="T_Mission_Automate_ALAT_Heliporter" id="195" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Heliporter" name="Army Aviation - heliport">
-      <parameter dia-name="unitesAHeliporter_" name="Units to helitransport" optional="false" type="AgentList"/>
+      <parameter dia-name="unitesAHeliporter_" max-occurs="unbounded" min-occurs="1" name="Units to helitransport" optional="false" type="Agent"/>
       <parameter dia-name="pointDebarquement_" name="Disembarking point" optional="false" type="Point"/>
       <parameter dia-name="pointEmbarquement_" name="Embarking point" optional="false" type="Point"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="avecMateriel_" name="With equipments" optional="false" type="Bool"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Jalonner" dia-type="T_Mission_Automate_ALAT_Jalonner" id="196" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Jalonner" name="Army Aviation - screen">
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Helitransporter" dia-type="T_Mission_Automate_ALAT_Helitransporter" id="197" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Helitransporter" name="Army Aviation - helitransport">
-      <parameter dia-name="unitesAHelitransporter_" name="Units to helitransport" optional="false" type="AgentList"/>
+      <parameter dia-name="unitesAHelitransporter_" max-occurs="unbounded" min-occurs="1" name="Units to helitransport" optional="false" type="Agent"/>
       <parameter dia-name="pointDebarquement_" name="Disembarking point" optional="false" type="Point"/>
       <parameter dia-name="pointEmbarquement_" name="Embarking point" optional="false" type="Point"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="avecMateriel_" name="With equipments" optional="false" type="Bool"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Appuyer" dia-type="T_Mission_Automate_ALAT_Appuyer" id="198" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Appuyer" name="Army Aviation - support">
-      <parameter dia-name="unitesAAppuyer_" name="Units to support" optional="false" type="AgentList"/>
+      <parameter dia-name="unitesAAppuyer_" max-occurs="unbounded" min-occurs="1" name="Units to support" optional="false" type="Agent"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="pointDislocation_" name="Release point" optional="false" type="Point"/>
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Couvrir" dia-type="T_Mission_Automate_ALAT_Couvrir" id="199" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Couvrir" name="Army Aviation - cover">
-      <parameter dia-name="unitesAAppuyer_" name="Units to support" optional="false" type="AgentList"/>
+      <parameter dia-name="unitesAAppuyer_" max-occurs="unbounded" min-occurs="1" name="Units to support" optional="false" type="Agent"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Surveiller" dia-type="T_Mission_Automate_ALAT_Surveiller" id="200" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Surveiller" name="Army Aviation - monitor">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="pointLogistique_" name="Point logistique" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Reconnaitre" dia-type="T_Mission_Automate_ALAT_Reconnaitre" id="201" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Reconnaitre" name="Army Aviation - recon">
       <parameter dia-name="pointRegroupement_" name="PointRegroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Freiner" dia-type="T_Mission_Automate_ALAT_Freiner" id="202" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Freiner" name="Army Aviation - delay">
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Escorter" dia-type="T_Mission_Automate_ALAT_Escorter" id="203" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Escorter" name="Army Aviation - escort">
-      <parameter dia-name="unitesAEscorter_" name="Units to escort" optional="false" type="AgentList"/>
+      <parameter dia-name="unitesAEscorter_" max-occurs="unbounded" min-occurs="1" name="Units to escort" optional="false" type="Agent"/>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Attaquer" dia-type="T_Mission_Automate_ALAT_Attaquer" id="204" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Attaquer" name="Army Aviation - attack">
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ASA_DefendreSite" dia-type="T_Mission_Automate_ASA_DefendreSite" id="205" mrt-dia-behavior="MIS_Automate_MRT_ASA_DefendreSite" name="Air Defense Artillery - defend site">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
-      <parameter dia-name="positionsSections_" name="Deployment positions" optional="false" type="PointList"/>
+      <parameter dia-name="positionsSections_" max-occurs="unbounded" min-occurs="1" name="Deployment positions" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ASA_DefendreZone" dia-type="T_Mission_Automate_ASA_DefendreZone" id="206" mrt-dia-behavior="MIS_Automate_MRT_ASA_DefendreZone" name="Air Defense Artillery - defend area">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
-      <parameter dia-name="positionsSections_" name="Deployment positions" optional="false" type="PointList"/>
+      <parameter dia-name="positionsSections_" max-occurs="unbounded" min-occurs="1" name="Deployment positions" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ASA_DefendreUnites" dia-type="T_Mission_Automate_ASA_DefendreUnites" id="207" mrt-dia-behavior="MIS_Automate_MRT_ASA_DefendreUnites" name="Air Defense Artillery - defend units">
-      <parameter dia-name="unites_" name="Units" optional="false" type="AgentList"/>
+      <parameter dia-name="unites_" max-occurs="unbounded" min-occurs="1" name="Units" optional="false" type="Agent"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ASA_Surveiller" dia-type="T_Mission_Automate_ASA_Surveiller" id="208" mrt-dia-behavior="MIS_Automate_MRT_ASA_Surveiller" name="Air Defense Artillery - monitor">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
-      <parameter dia-name="positionsSections_" name="Deployment positions" optional="false" type="PointList"/>
+      <parameter dia-name="positionsSections_" max-occurs="unbounded" min-occurs="1" name="Deployment positions" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ASA_DefendreItineraire" dia-type="T_Mission_Automate_ASA_DefendreItineraire" id="209" mrt-dia-behavior="MIS_Automate_MRT_ASA_DefendreItineraire" name="Air Defense Artillery - defend a route">
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
@@ -1335,30 +1335,30 @@ overwhelming force.]]></doctrine>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ASA_HAWK_DefendreZone" dia-type="T_Mission_Automate_ASA_HAWK_DefendreZone" id="213" mrt-dia-behavior="MIS_Automate_MRT_ASA_HAWK_DefendreZone" name="Air Defense Artillery (Long Range) - defend area">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
-      <parameter dia-name="positionsSections_" name="Deployment positions" optional="false" type="PointList"/>
+      <parameter dia-name="positionsSections_" max-occurs="unbounded" min-occurs="1" name="Deployment positions" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ASA_HAWK_DefendreSite" dia-type="T_Mission_Automate_ASA_HAWK_DefendreSite" id="214" mrt-dia-behavior="MIS_Automate_MRT_ASA_HAWK_DefendreSite" name="Air Defense Artillery (Long Range) - defend site">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
-      <parameter dia-name="positionsSections_" name="Deployment positions" optional="false" type="PointList"/>
+      <parameter dia-name="positionsSections_" max-occurs="unbounded" min-occurs="1" name="Deployment positions" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ASA_HAWK_Surveiller" dia-type="T_Mission_Automate_ASA_HAWK_Surveiller" id="215" mrt-dia-behavior="MIS_Automate_MRT_ASA_HAWK_Surveiller" name="Air Defense Artillery (Long Range) - monitor">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
-      <parameter dia-name="positionsSections_" name="Deployment positions" optional="false" type="PointList"/>
+      <parameter dia-name="positionsSections_" max-occurs="unbounded" min-occurs="1" name="Deployment positions" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ASS_SeDeployer" dia-type="T_Mission_Automate_ASS_SeDeployer" id="216" mrt-dia-behavior="MIS_Automate_MRT_ASS_SeDeployer" name="Field Artillery - deploy">
       <parameter dia-name="zoneDeploiement_" name="Deployment area" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ASS_ReconnaitreZonesDeploiement" dia-type="T_Mission_Automate_ASS_ReconnaitreZonesDeploiement" id="217" mrt-dia-behavior="MIS_Automate_MRT_ASS_ReconnaitreZonesDeploiement" name="Field Artillery - recon deployment area">
-      <parameter dia-name="positionsAReconnaitre_" name="Positions to recon" optional="false" type="PointList"/>
+      <parameter dia-name="positionsAReconnaitre_" max-occurs="unbounded" min-occurs="1" name="Positions to recon" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ASS_AcquerirObjectifs" dia-type="T_Mission_Automate_ASS_AcquerirObjectifs" id="218" mrt-dia-behavior="MIS_Automate_MRT_ASS_AcquerirObjectifs" name="Field Artillery - collect intelligence on objectives">
-      <parameter dia-name="zonesAObserver_" name="Areas to observe" optional="false" type="PolygonList"/>
-      <parameter dia-name="positionsDeploiement_" name="Deployment positions" optional="false" type="PointList"/>
+      <parameter dia-name="zonesAObserver_" max-occurs="unbounded" min-occurs="1" name="Areas to observe" optional="false" type="Polygon"/>
+      <parameter dia-name="positionsDeploiement_" max-occurs="unbounded" min-occurs="1" name="Deployment positions" optional="false" type="Point"/>
       <parameter dia-name="categories_" name="Categories" optional="false" type="NatureAtlas"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ASS_AcquerirObjectifsDLO" dia-type="T_Mission_Automate_ASS_AcquerirObjectifsDLO" id="219" mrt-dia-behavior="MIS_Automate_MRT_ASS_AcquerirObjectifsDLO" name="Field Artillery - collect intelligence for battalion">
-      <parameter dia-name="zonesAcquisition_" name="Areas to observe" optional="false" type="LocationList"/>
-      <parameter dia-name="compagniesAAppuyer_" name="Companies to support" optional="false" type="AutomateList"/>
+      <parameter dia-name="zonesAcquisition_" max-occurs="unbounded" min-occurs="1" name="Areas to observe" optional="false" type="Location"/>
+      <parameter dia-name="compagniesAAppuyer_" max-occurs="unbounded" min-occurs="1" name="Companies to support" optional="false" type="Automate"/>
       <parameter dia-name="bMarcheRetrograde_" name="defensive mission" optional="false" type="Bool"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Appuyer" dia-type="T_Mission_Automate_ABC_Appuyer" id="220" mrt-dia-behavior="MIS_Automate_MRT_ABC_Appuyer" name="Armor - support">
@@ -1432,7 +1432,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="zoneARenseigner_" name="Area to report information on" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Fixer" dia-type="T_Mission_Automate_ABC_Fixer" id="241" mrt-dia-behavior="MIS_Automate_MRT_ABC_Fixer" name="Armor - fix">
-      <parameter dia-name="ennemis_" name="Ennemies" optional="false" type="AgentKnowledgeList"/>
+      <parameter dia-name="ennemis_" max-occurs="unbounded" min-occurs="1" name="Ennemies" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Freiner" dia-type="T_Mission_Automate_ABC_Freiner" id="242" mrt-dia-behavior="MIS_Automate_MRT_ABC_Freiner" name="Armor - delay">
       <descriptions>
@@ -1472,7 +1472,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="zoneArrivee_" name="Arrival position" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_GTIA_Attaquer" dia-type="T_Mission_Automate_ABC_GTIA_Attaquer" id="253" mrt-dia-behavior="MIS_Automate_MRT_ABC_GTIA_Attaquer" name="Battalion - attack">
-      <parameter dia-name="objectifsPrioritaires_" name="Objectives" optional="true" type="ObjectiveList"/>
+      <parameter dia-name="objectifsPrioritaires_" max-occurs="unbounded" min-occurs="1" name="Objectives" optional="true" type="Objective"/>
       <parameter dia-name="delaisCourts_" name="Short delay" optional="true" type="Bool"/>
       <parameter dia-name="sansRearticulation_" name="Without dynamic assets organization" optional="true" type="Bool"/>
     </mission>
@@ -1481,22 +1481,22 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="sansRearticulation_" name="Without dynamic assets organization" optional="true" type="Bool"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_GTIA_EffectuerRaid" dia-type="T_Mission_Automate_ABC_GTIA_EffectuerRaid" id="255" mrt-dia-behavior="MIS_Automate_MRT_ABC_GTIA_EffectuerRaid" name="Battalion - make a raid">
-      <parameter dia-name="objectifs_" name="Objectives" optional="true" type="ObjectiveList"/>
+      <parameter dia-name="objectifs_" max-occurs="unbounded" min-occurs="1" name="Objectives" optional="true" type="Objective"/>
       <parameter dia-name="delaisCourts_" name="Short delay" optional="true" type="Bool"/>
       <parameter dia-name="sansRearticulation_" name="Without dynamic assets organization" optional="true" type="Bool"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_GTIA_Controler" dia-type="T_Mission_Automate_ABC_GTIA_Controler" id="256" mrt-dia-behavior="MIS_Automate_MRT_ABC_GTIA_Controler" name="Battalion - control">
-      <parameter dia-name="travaux_" name="Engineer works" optional="true" type="GenObjectList"/>
+      <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Engineer works" optional="true" type="GenObject"/>
       <parameter dia-name="zone_" name="Aera" optional="false" type="Polygon"/>
       <parameter dia-name="delaisCourts_" name="Short delay" optional="true" type="Bool"/>
       <parameter dia-name="sansRearticulation_" name="Without dynamic assets organization" optional="true" type="Bool"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_GTIA_Freiner" dia-type="T_Mission_Automate_ABC_GTIA_Freiner" id="257" mrt-dia-behavior="MIS_Automate_MRT_ABC_GTIA_Freiner" name="Battalion - delay">
       <parameter dia-name="delaisCourts_" name="Short delay" optional="false" type="Bool"/>
-      <parameter dia-name="travaux_" name="Engineer works" optional="true" type="GenObjectList"/>
+      <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Engineer works" optional="true" type="GenObject"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_GTIA_DonnerCoupArret" dia-type="T_Mission_Automate_ABC_GTIA_DonnerCoupArret" id="258" mrt-dia-behavior="MIS_Automate_MRT_ABC_GTIA_DonnerCoupArret" name="Battalion - conduct a blocking action">
-      <parameter dia-name="travaux_" name="Engineer works" optional="true" type="GenObjectList"/>
+      <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Engineer works" optional="true" type="GenObject"/>
       <parameter dia-name="delaisCourts_" name="Short delay" optional="false" type="Bool"/>
       <parameter dia-name="sansRearticulation_" name="Without dynamic assets organization" optional="true" type="Bool"/>
       <parameter dia-name="zoneRegroupement_" name="Meeting aera" optional="false" type="Polygon"/>
@@ -1508,35 +1508,35 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_RealiserTravaux" dia-type="T_Mission_Automate_GEN_RealiserTravaux" id="261" mrt-dia-behavior="MIS_Automate_MRT_GEN_RealiserTravaux" name="Engineer - perform work">
-      <parameter dia-name="travaux_" name="Work" optional="false" type="GenObjectList"/>
+      <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="GenObject"/>
       <parameter dia-name="zoneRegroupement_" name="Meeting point" optional="false" type="Location"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_OuvrirItineraires" dia-type="T_Mission_Automate_GEN_OuvrirItineraires" id="262" mrt-dia-behavior="MIS_Automate_MRT_GEN_OuvrirItineraires" name="Engineer - open routes">
-      <parameter dia-name="itineraires_" name="Routes" optional="false" type="PathList"/>
+      <parameter dia-name="itineraires_" max-occurs="unbounded" min-occurs="1" name="Routes" optional="false" type="Path"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_RetablirItineraires" dia-type="T_Mission_Automate_GEN_RetablirItineraires" id="263" mrt-dia-behavior="MIS_Automate_MRT_GEN_RetablirItineraires" name="Engineer - restore routes">
-      <parameter dia-name="itineraires_" name="Routes" optional="false" type="PathList"/>
+      <parameter dia-name="itineraires_" max-occurs="unbounded" min-occurs="1" name="Routes" optional="false" type="Path"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_FaireFranchir" dia-type="T_Mission_Automate_GEN_FaireFranchir" id="264" mrt-dia-behavior="MIS_Automate_MRT_GEN_FaireFranchir" name="Engineer - support a crossing site">
       <descriptions>
         <usage><![CDATA[Units are dispatched to each crossing site that can be operated.]]></usage>
       </descriptions>
-      <parameter dia-name="sitesDeFranchissement_" name="Crossing sites" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="sitesDeFranchissement_" max-occurs="unbounded" min-occurs="1" name="Crossing sites" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="zoneRegroupement_" name="Meeting point" optional="false" type="Location"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_FranchirDeViveForce" dia-type="T_Mission_Automate_GEN_FranchirDeViveForce" id="265" mrt-dia-behavior="MIS_Automate_MRT_GEN_FranchirDeViveForce" name="Engineer - bypass (an area)">
-      <parameter dia-name="obstacles_" name="Obstacles" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="obstacles_" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="zoneRegroupement_" name="Meeting point" optional="false" type="Location"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_DegagerObstaclesDansZone" dia-type="T_Mission_Automate_GEN_DegagerObstaclesDansZone" id="266" mrt-dia-behavior="MIS_Automate_MRT_GEN_DegagerObstaclesDansZone" name="Engineer - breach (an area)">
-      <parameter dia-name="obstacles_" name="Obstacles" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="obstacles_" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="zoneRegroupement_" name="Meeting point" optional="false" type="Location"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_AttaquerSouplesse" dia-type="T_Mission_Automate_INF_AttaquerSouplesse" id="267" mrt-dia-behavior="MIS_Automate_MRT_INF_AttaquerSouplesse" name="Infantry - attack">
       <descriptions>
         <usage><![CDATA[Units will recon their route until the Line of Departure (LD). After crossing this line, Units will seize their different objectives.]]></usage>
       </descriptions>
-      <parameter dia-name="objectifs_" name="Objectives" optional="false" type="PointList"/>
+      <parameter dia-name="objectifs_" max-occurs="unbounded" min-occurs="1" name="Objectives" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Appuyer" dia-type="T_Mission_Automate_INF_Appuyer" id="268" mrt-dia-behavior="MIS_Automate_MRT_INF_Appuyer" name="Infantry - support">
       <parameter dia-name="compagnie_" name="Unit" optional="false" type="Automate"/>
@@ -1547,7 +1547,7 @@ overwhelming force.]]></doctrine>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Couvrir" dia-type="T_Mission_Automate_INF_Couvrir" id="270" mrt-dia-behavior="MIS_Automate_MRT_INF_Couvrir" name="Infantry - cover">
       <parameter dia-name="compagnie_" name="Unit" optional="false" type="Automate"/>
-      <parameter dia-name="objectifs_" name="Objectives" optional="false" type="PointList"/>
+      <parameter dia-name="objectifs_" max-occurs="unbounded" min-occurs="1" name="Objectives" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_DonnerCoupArret" dia-type="T_Mission_Automate_INF_DonnerCoupArret" id="271" mrt-dia-behavior="MIS_Automate_MRT_INF_DonnerCoupArret" name="Infantry - block">
       <descriptions>
@@ -1573,7 +1573,7 @@ overwhelming force.]]></doctrine>
       <descriptions>
         <usage><![CDATA[Units interdict the specified positions or the specified area, after a reconnaissance.]]></usage>
       </descriptions>
-      <parameter dia-name="pointsAInterdire_" name="Positions to deny" optional="false" type="PointList"/>
+      <parameter dia-name="pointsAInterdire_" max-occurs="unbounded" min-occurs="1" name="Positions to deny" optional="false" type="Point"/>
       <parameter dia-name="preparerTerrain_" name="Obstacle erection" optional="false" type="Bool"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_MenerDefenseUsure" dia-type="T_Mission_Automate_INF_MenerDefenseUsure" id="277" mrt-dia-behavior="MIS_Automate_MRT_INF_MenerDefenseUsure" name="Infantry - defend (wear)"/>
@@ -1582,13 +1582,13 @@ overwhelming force.]]></doctrine>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_RecueillirUnite" dia-type="T_Mission_Automate_INF_RecueillirUnite" id="280" mrt-dia-behavior="MIS_Automate_MRT_INF_RecueillirUnite" name="Infantry - assist units in their rearward maneuvers">
       <parameter dia-name="zoneDeploiement_" name="Deployment area" optional="false" type="Polygon"/>
       <parameter dia-name="compagnie_" name="Unit" optional="false" type="Automate"/>
-      <parameter dia-name="pias_" name="Checkpoints" optional="false" type="PointList"/>
+      <parameter dia-name="pias_" max-occurs="unbounded" min-occurs="1" name="Checkpoints" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Reduire" dia-type="T_Mission_Automate_INF_Reduire" id="281" mrt-dia-behavior="MIS_Automate_MRT_INF_Reduire" name="Infantry - destroy">
       <descriptions>
         <usage><![CDATA[Depending on the intensity of the resistance, Units will alternatively take contact, cover, fix and reduce enemy units.]]></usage>
       </descriptions>
-      <parameter dia-name="pointsResistance_" name="Resistance Positions" optional="false" type="PointList"/>
+      <parameter dia-name="pointsResistance_" max-occurs="unbounded" min-occurs="1" name="Resistance Positions" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Relever" dia-type="T_Mission_Automate_INF_Relever" id="282" mrt-dia-behavior="MIS_Automate_MRT_INF_Relever" name="Infantry - relieve">
       <parameter dia-name="compagnie_" name="Unit" optional="false" type="Automate"/>
@@ -1607,10 +1607,10 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="objectif_" name="Objective" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Fixer" dia-type="T_Mission_Automate_INF_Fixer" id="286" mrt-dia-behavior="MIS_Automate_MRT_INF_Fixer" name="Infantry - fix">
-      <parameter dia-name="ennemis_" name="Ennemies" optional="false" type="AgentKnowledgeList"/>
+      <parameter dia-name="ennemis_" max-occurs="unbounded" min-occurs="1" name="Ennemies" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_AttaquerEnTerrainDifficile" dia-type="T_Mission_Automate_INF_AttaquerEnTerrainDifficile" id="287" mrt-dia-behavior="MIS_Automate_MRT_INF_AttaquerEnTerrainDifficile" name="Infantry - attack (mobility limited terrain)">
-      <parameter dia-name="objectifs_" name="Objectives" optional="false" type="PointList"/>
+      <parameter dia-name="objectifs_" max-occurs="unbounded" min-occurs="1" name="Objectives" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_BarrerDirection" dia-type="T_Mission_Automate_INF_BarrerDirection" id="288" mrt-dia-behavior="MIS_Automate_MRT_INF_BarrerDirection" name="Infantry - interdict a direction">
       <parameter dia-name="position_" name="Position" optional="false" type="Polygon"/>
@@ -1650,7 +1650,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="positionDeploiement_" name="Deployment position" optional="true" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_AppuyerMouvement" dia-type="T_Mission_Automate_LOG_AppuyerMouvement" id="298" mrt-dia-behavior="MIS_Automate_MRT_LOG_AppuyerMouvement" name="Logistics - support mobility">
-      <parameter dia-name="unitesAAppuyer_" name="Units to support" optional="false" type="AgentList"/>
+      <parameter dia-name="unitesAAppuyer_" max-occurs="unbounded" min-occurs="1" name="Units to support" optional="false" type="Agent"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_ReconnaitreItineraire" dia-type="T_Mission_Automate_LOG_ReconnaitreItineraire" id="299" mrt-dia-behavior="MIS_Automate_MRT_LOG_ReconnaitreItineraire" name="Logistics - recon a route">
       <parameter dia-name="itineraireLog_" name="Logistics routes" optional="false" type="Path"/>
@@ -1702,7 +1702,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="zoneEmbarquement_" name="Embarking area" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_Transporter" dia-type="T_Mission_Automate_Transporter" id="315" mrt-dia-behavior="MIS_Automate_MRT_Transporter" name="transport">
-      <parameter dia-name="unitesATransporter_" name="Units to transport" optional="false" type="AgentList"/>
+      <parameter dia-name="unitesATransporter_" max-occurs="unbounded" min-occurs="1" name="Units to transport" optional="false" type="Agent"/>
       <parameter dia-name="pointDebarquement_" name="Disembarking point" optional="false" type="Point"/>
       <parameter dia-name="pointEmbarquement_" name="Embarking point" optional="false" type="Point"/>
       <parameter dia-name="avecMateriel_" name="With equipments" optional="false" type="Bool"/>
@@ -1714,31 +1714,31 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="zoneRavitaillement_" name="Replenishment area" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_InterdireFranchissementPopulations" dia-type="T_Mission_Automate_InterdireFranchissementPopulations" id="317" mrt-dia-behavior="MIS_Automate_MRT_InterdireFranchissementPopulations" name="deny population crossing">
-      <parameter dia-name="points_" name="Positions" optional="false" type="PointList"/>
+      <parameter dia-name="points_" max-occurs="unbounded" min-occurs="1" name="Positions" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_FiltrerPopulations" dia-type="T_Mission_Automate_FiltrerPopulations" id="318" mrt-dia-behavior="MIS_Automate_MRT_FiltrerPopulations" name="filttrate populations">
-      <parameter dia-name="points_" name="Positions" optional="false" type="PointList"/>
+      <parameter dia-name="points_" max-occurs="unbounded" min-occurs="1" name="Positions" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_CanaliserPopulations" dia-type="T_Mission_Automate_CanaliserPopulations" id="319" mrt-dia-behavior="MIS_Automate_MRT_CanaliserPopulations" name="canalize populations">
-      <parameter dia-name="zones_" name="Areas" optional="false" type="LocationList"/>
+      <parameter dia-name="zones_" max-occurs="unbounded" min-occurs="1" name="Areas" optional="false" type="Location"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ControlerPopulationsDansZone" dia-type="T_Mission_Automate_ControlerPopulationsDansZone" id="320" mrt-dia-behavior="MIS_Automate_MRT_ControlerPopulationsDansZone" name="control populations (in an area)">
-      <parameter dia-name="zones_" name="Areas" optional="false" type="PolygonList"/>
+      <parameter dia-name="zones_" max-occurs="unbounded" min-occurs="1" name="Areas" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_SecuriserZoneContrePopulations" dia-type="T_Mission_Automate_SecuriserZoneContrePopulations" id="321" mrt-dia-behavior="MIS_Automate_MRT_SecuriserZoneContrePopulations" name="secure area (against populations assault)">
-      <parameter dia-name="points_" name="Positions" optional="false" type="PointList"/>
+      <parameter dia-name="points_" max-occurs="unbounded" min-occurs="1" name="Positions" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ASY_CommettreExactionsSurPopulationDansZone" dia-type="T_Mission_Automate_ASY_CommettreExactionsSurPopulationDansZone" id="322" mrt-dia-behavior="MIS_Automate_MRT_ASY_CommettreExactionsSurPopulationDansZone" name="Asymetric - attack populations(in an area)">
-      <parameter dia-name="zones_" name="Areas" optional="false" type="PolygonList"/>
+      <parameter dia-name="zones_" max-occurs="unbounded" min-occurs="1" name="Areas" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_Generique" dia-type="T_Mission_Automate_Generique" id="323" mrt-dia-behavior="MIS_Automate_MRT_Generique" name="generic mission">
-      <parameter dia-name="zones_" name="Areas" optional="false" type="PolygonList"/>
-      <parameter dia-name="points_" name="Positions" optional="false" type="PointList"/>
-      <parameter dia-name="itineraires_" name="Routes" optional="false" type="PathList"/>
-      <parameter dia-name="unites_" name="Units" optional="false" type="AgentList"/>
-      <parameter dia-name="automates_" name="Commanding units" optional="false" type="AutomateList"/>
-      <parameter dia-name="connaissancesAgents_" name="Enemy intelligence" optional="false" type="AgentKnowledgeList"/>
-      <parameter dia-name="connaissancesObjets_" name="Obstacle intelligence" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="zones_" max-occurs="unbounded" min-occurs="1" name="Areas" optional="false" type="Polygon"/>
+      <parameter dia-name="points_" max-occurs="unbounded" min-occurs="1" name="Positions" optional="false" type="Point"/>
+      <parameter dia-name="itineraires_" max-occurs="unbounded" min-occurs="1" name="Routes" optional="false" type="Path"/>
+      <parameter dia-name="unites_" max-occurs="unbounded" min-occurs="1" name="Units" optional="false" type="Agent"/>
+      <parameter dia-name="automates_" max-occurs="unbounded" min-occurs="1" name="Commanding units" optional="false" type="Automate"/>
+      <parameter dia-name="connaissancesAgents_" max-occurs="unbounded" min-occurs="1" name="Enemy intelligence" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="connaissancesObjets_" max-occurs="unbounded" min-occurs="1" name="Obstacle intelligence" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_ReconnaitreUnAxe" dia-type="T_Mission_Automate_NBC_ReconnaitreUnAxe" id="324" mrt-dia-behavior="MIS_Automate_MRT_NBC_ReconnaitreUnAxe" name="NBC - recon an axis"/>
     <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_ReconnaitreUneZone" dia-type="T_Mission_Automate_NBC_ReconnaitreUneZone" id="325" mrt-dia-behavior="MIS_Automate_MRT_NBC_ReconnaitreUneZone" name="NBC - recon an area">
@@ -1751,7 +1751,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_ReconnaitreDesSitesROTA" dia-type="T_Mission_Automate_NBC_ReconnaitreDesSitesROTA" id="328" mrt-dia-behavior="MIS_Automate_MRT_NBC_ReconnaitreDesSitesROTA" name="NBC - recon ROTA sites">
-      <parameter dia-name="sitesROTA_" name="Sites ROTA" optional="false" type="ObjectKnowledgeList"/>
+      <parameter dia-name="sitesROTA_" max-occurs="unbounded" min-occurs="1" name="Sites ROTA" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_ROHUM_RenseignerSur" dia-type="T_Mission_Automate_RENS_ROHUM_RenseignerSur" id="329" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROHUM_RenseignerSur" name="Human Intelligence - report information">
       <parameter dia-name="zoneAObserver_" name="Area to observe" optional="false" type="Polygon"/>
@@ -1764,7 +1764,7 @@ overwhelming force.]]></doctrine>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_ROIM_CL289_RenseignerSur" dia-type="T_Mission_Automate_RENS_ROIM_CL289_RenseignerSur" id="332" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROIM_CL289_RenseignerSur" name="Imagery Intelligence (UAV) - report information">
       <parameter dia-name="ficelleDeVole_" name="Route" optional="false" type="Path"/>
-      <parameter dia-name="zonesDeRecherche_" name="Areas to observe" optional="false" type="PolygonList"/>
+      <parameter dia-name="zonesDeRecherche_" max-occurs="unbounded" min-occurs="1" name="Areas to observe" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_ROIM_SDTI_RenseignerSur" dia-type="T_Mission_Automate_RENS_ROIM_SDTI_RenseignerSur" id="333" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROIM_SDTI_RenseignerSur" name="Imagery Intelligence (real time UAV) - report information">
       <parameter dia-name="ficelleDeVole_" name="Route" optional="false" type="Path"/>
@@ -1783,11 +1783,11 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="zoneDeploiement_" name="Deployment area" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_PrendreEnComptePrisonniers" dia-type="T_Mission_Automate_PrendreEnComptePrisonniers" id="338" mrt-dia-behavior="MIS_Automate_MRT_PrendreEnComptePrisonniers" name="manage prisoners">
-      <parameter dia-name="unitesRendues_" name="Surrendered units" optional="false" type="AgentKnowledgeList"/>
+      <parameter dia-name="unitesRendues_" max-occurs="unbounded" min-occurs="1" name="Surrendered units" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="campPrisonniers_" name="Prisonners camp" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_OrienterRefugies" dia-type="T_Mission_Automate_OrienterRefugies" id="339" mrt-dia-behavior="MIS_Automate_MRT_OrienterRefugies" name="manage refugees">
-      <parameter dia-name="refugies_" name="Refugees" optional="false" type="AgentKnowledgeList"/>
+      <parameter dia-name="refugies_" max-occurs="unbounded" min-occurs="1" name="Refugees" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="campRefugies_" name="Refugees camp" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_Suivre" dia-type="T_Mission_Automate_Suivre" id="340" mrt-dia-behavior="MIS_Automate_MRT_Suivre" name="follow">
@@ -1797,7 +1797,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="area_" name="Area" optional="false" type="Location"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_Emergency_Alert" dia-type="T_Mission_Automate_Emergency_Alert" id="403" mrt-dia-behavior="MIS_Automate_MRT_Emergency_Alert" name="Emergency - alert">
-      <parameter dia-name="zones_" name="Areas" optional="false" type="LocationList"/>
+      <parameter dia-name="zones_" max-occurs="unbounded" min-occurs="1" name="Areas" optional="false" type="Location"/>
     </mission>
   </automats>
   <populations>
@@ -1922,10 +1922,10 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="orderConduiteModifierPrioritesBlesses_" name="New priorities" optional="false" type="MedicalPriorities"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ModifierPrioritesTactiquesReparations" id="381" name="Change tactical reparations priorities">
-      <parameter dia-name="orderConduiteModifierPrioritesTactiquesReparations_" name="New priorities" optional="false" type="AutomateList"/>
+      <parameter dia-name="orderConduiteModifierPrioritesTactiquesReparations_" max-occurs="unbounded" min-occurs="0" name="New priorities" optional="false" type="Automate"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ModifierPrioritesTactiquesBlesses" id="382" name="Change tactical wounded treatment priorities">
-      <parameter dia-name="orderConduiteModifierPrioritesTactiquesBlesses_" name="New priorities" optional="false" type="AutomateList"/>
+      <parameter dia-name="orderConduiteModifierPrioritesTactiquesBlesses_" max-occurs="unbounded" min-occurs="0" name="New priorities" optional="false" type="Automate"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Automate_RealiserVariantement" id="383" name="Change crossing site">
       <parameter dia-name="siteFranchissementOriginal_" name="Original crossing site" optional="false" type="ObjectKnowledge"/>

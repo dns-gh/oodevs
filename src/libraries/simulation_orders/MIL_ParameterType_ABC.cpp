@@ -88,35 +88,35 @@ void MIL_ParameterType_ABC::Initialize()
     RegisterParameterType< MIL_ParameterType_Point                 >( std::string("Point") );
     RegisterParameterType< MIL_ParameterType_Point                 >( std::string("PointBM") );
     RegisterParameterType< MIL_ParameterType_PointList             >( std::string("PointList"));
-    RegisterParameterType< MIL_ParameterType_PointList             >( std::string("PointListBM"));
+    RegisterParameterType< MIL_ParameterType_PointList             >( std::string("PointBMList"));
     RegisterParameterType< MIL_ParameterType_Polygon               >( std::string("Polygon") );
     RegisterParameterType< MIL_ParameterType_Polygon               >( std::string("AreaBM") );
     RegisterParameterType< MIL_ParameterType_PolygonList           >( std::string("PolygonList") );
-    RegisterParameterType< MIL_ParameterType_PolygonList           >( std::string("AreaListBM") );
+    RegisterParameterType< MIL_ParameterType_PolygonList           >( std::string("AreaBMList") );
     RegisterParameterType< MIL_ParameterType_Location              >();
     RegisterParameterType< MIL_ParameterType_LocationList          >();
     RegisterParameterType< MIL_ParameterType_Path                  >( std::string("Path") );
     RegisterParameterType< MIL_ParameterType_Path                  >( std::string("PathBM") );
     RegisterParameterType< MIL_ParameterType_PathList              >();
-    RegisterParameterType< MIL_ParameterType_Direction             >( std::string("Direction") );
-    RegisterParameterType< MIL_ParameterType_Direction             >( std::string("DirectionBM") );
+    RegisterParameterType< MIL_ParameterType_Direction             >( std::string("Heading") );
+    RegisterParameterType< MIL_ParameterType_Direction             >( std::string("HeadingBM") );
     RegisterParameterType< MIL_ParameterType_NatureAtlas           >();
     RegisterParameterType< MIL_ParameterType_Automat               >( std::string("Automate") );
     RegisterParameterType< MIL_ParameterType_Automat               >( std::string("AutomateBM") );
     RegisterParameterType< MIL_ParameterType_AutomatList           >( std::string("AutomateList") );
-    RegisterParameterType< MIL_ParameterType_AutomatList           >( std::string("AutomateListBM") );
+    RegisterParameterType< MIL_ParameterType_AutomatList           >( std::string("AutomateBMList") );
     RegisterParameterType< MIL_ParameterType_Agent                 >( std::string("Agent") );
     RegisterParameterType< MIL_ParameterType_Agent                 >( std::string("AgentBM") );
     RegisterParameterType< MIL_ParameterType_AgentList             >( std::string("AgentList") );
-    RegisterParameterType< MIL_ParameterType_AgentList             >( std::string("AgentListBM") );
+    RegisterParameterType< MIL_ParameterType_AgentList             >( std::string("AgentBMList") );
     RegisterParameterType< MIL_ParameterType_AgentKnowledge        >( std::string("AgentKnowledge") );
     RegisterParameterType< MIL_ParameterType_AgentKnowledge        >( std::string("AgentKnowledgeBM") );
     RegisterParameterType< MIL_ParameterType_AgentKnowledgeList    >( std::string("AgentKnowledgeList") );
-    RegisterParameterType< MIL_ParameterType_AgentKnowledgeList    >( std::string("AgentKnowledgeListBM") );
+    RegisterParameterType< MIL_ParameterType_AgentKnowledgeList    >( std::string("AgentKnowledgeBMList") );
     RegisterParameterType< MIL_ParameterType_ObjectKnowledge       >( std::string("ObjectKnowledge") );
     RegisterParameterType< MIL_ParameterType_ObjectKnowledge       >( std::string("ObjectKnowledgeBM") );
     RegisterParameterType< MIL_ParameterType_ObjectKnowledgeList   >( std::string("ObjectKnowledgeList") );
-    RegisterParameterType< MIL_ParameterType_ObjectKnowledgeList   >( std::string("ObjectKnowledgeListBM") );
+    RegisterParameterType< MIL_ParameterType_ObjectKnowledgeList   >( std::string("ObjectKnowledgeBMList") );
     RegisterParameterType< MIL_ParameterType_PopulationKnowledge   >( std::string("PopulationKnowledge") );
     RegisterParameterType< MIL_ParameterType_PopulationKnowledge   >( std::string("PopulationKnowledgeBM") );
     RegisterParameterType< MIL_ParameterType_DotationType          >();
@@ -126,7 +126,7 @@ void MIL_ParameterType_ABC::Initialize()
     RegisterParameterType< MIL_ParameterType_GenObject             >( std::string("GenObject") );
     RegisterParameterType< MIL_ParameterType_GenObject             >( std::string("GenObjectBM") );
     RegisterParameterType< MIL_ParameterType_GenObjectList         >( std::string("GenObjectList") );
-    RegisterParameterType< MIL_ParameterType_GenObjectList         >( std::string("GenObjectListBM") );
+    RegisterParameterType< MIL_ParameterType_GenObjectList         >( std::string("GenObjectBMList") );
     RegisterParameterType< MIL_ParameterType_MaintenancePriorities >();
     RegisterParameterType< MIL_ParameterType_MedicalPriorities     >();
     RegisterParameterType< MIL_ParameterType_IndirectFire          >();
@@ -161,7 +161,7 @@ MIL_ParameterType_ABC::~MIL_ParameterType_ABC()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_ABC::Find
-// Created: NLD 2006-12-06
+// Created: LDC 2010-09-14
 // -----------------------------------------------------------------------------
 const MIL_ParameterType_ABC* MIL_ParameterType_ABC::Find( const std::string& strName )
 {
@@ -169,6 +169,18 @@ const MIL_ParameterType_ABC* MIL_ParameterType_ABC::Find( const std::string& str
     if( it == parameters_.end() )
         return 0;
     return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ParameterType_ABC::Find
+// Created: NLD 2006-12-06
+// -----------------------------------------------------------------------------
+const MIL_ParameterType_ABC* MIL_ParameterType_ABC::Find( const std::string& strName, const std::string& maxOccurs )
+{
+    std::string finalName = strName;
+    if( maxOccurs != "1" )
+        finalName = finalName + "List";
+    return MIL_ParameterType_ABC::Find( finalName );
 }
 
 // -----------------------------------------------------------------------------

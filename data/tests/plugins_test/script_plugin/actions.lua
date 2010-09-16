@@ -32,11 +32,11 @@ end
 function TestActions:test_Mission_HasDefaultParameters()
     local expectation =
         "<action id=\"51\" name=\"\" target=\"42\" time=\"0\" type=\"mission\">\n" ..
-            "<parameter name=\"Danger direction\" type=\"Direction\" value=\"360\"/>\n" ..
-            "<parameter name=\"Phase lines\" type=\"PhaseLineList\"/>\n" ..
+            "<parameter name=\"Danger direction\" type=\"Heading\" value=\"360\"/>\n" ..
+            "<parameter max-occurs=\"unbounded\" min-occurs=\"1\" name=\"Phase lines\" type=\"PhaseLine\"/>\n" ..
             "<parameter name=\"Boundary limit 1\" type=\"Limit\"/>\n" ..
             "<parameter name=\"Boundary limit 2\" type=\"Limit\"/>\n" ..
-            "<parameter name=\"Intelligences\" type=\"IntelligenceList\"/>\n" ..
+            "<parameter max-occurs=\"unbounded\" min-occurs=\"1\" name=\"Intelligences\" type=\"Intelligence\"/>\n" ..
         "</action>\n";
     assertEquals( Mission.create( 42, 51 ):ToXml(), expectation )
 end
@@ -44,11 +44,11 @@ end
 function TestActions:test_Mission_WithAddsParameters()
     local expectation =
         "<action id=\"51\" name=\"\" target=\"42\" time=\"0\" type=\"mission\">\n" ..
-            "<parameter name=\"Danger direction\" type=\"Direction\" value=\"69\"/>\n" ..
-            "<parameter name=\"Phase lines\" type=\"PhaseLineList\"/>\n" ..
+            "<parameter name=\"Danger direction\" type=\"Heading\" value=\"69\"/>\n" ..
+            "<parameter max-occurs=\"unbounded\" min-occurs=\"1\" name=\"Phase lines\" type=\"PhaseLine\"/>\n" ..
             "<parameter name=\"Boundary limit 1\" type=\"Limit\"/>\n" ..
             "<parameter name=\"Boundary limit 2\" type=\"Limit\"/>\n" ..
-            "<parameter name=\"Intelligences\" type=\"IntelligenceList\"/>\n" ..
+            "<parameter max-occurs=\"unbounded\" min-occurs=\"1\" name=\"Intelligences\" type=\"Intelligence\"/>\n" ..
             "<parameter name=\"Route\" type=\"Path\">\n" ..
                 "<parameter name=\"Destination\" type=\"pathpoint\">\n" ..
                     "<location type=\"point\">\n" ..
@@ -58,7 +58,7 @@ function TestActions:test_Mission_WithAddsParameters()
             "</parameter>\n" ..
         "</action>\n";
     local order = Mission.create( 42, 51 )
-                        :With( { name = "Danger direction", type = "Direction", value = 69 } )
+                        :With( { name = "Danger direction", type = "Heading", value = 69 } )
                         :With( Path.create( "Route" ):AddPoint( "Destination", "30UYV1152545719" ) )
     assertEquals( order:ToXml(), expectation )
 end

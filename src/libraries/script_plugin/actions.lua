@@ -23,10 +23,12 @@ dofile "resources/scripts/xml.lua"
 Location = {}
 Location.__index = Location
 
-function Location.create( type )
+function Location.create( type, maxOccurs )
     local new = {}
     setmetatable( new, Location )
     new.type = type
+    new[ "min-occurs" ] = "1"
+    new[ "max-occurs" ] = maxOccurs
     new.points = {}
     return new
 end
@@ -63,7 +65,7 @@ function LocationParameter.create( name, points )
     setmetatable( new, LocationParameter )
     new.type = "Location"
     new.name = name
-    new.children = { Location.create( "polygon" ) }
+    new.children = { Location.create( "polygon", "1" ) }
     for _,v in ipairs( points ) do
         new.children[1]:AddPoint( v )
     end
@@ -77,7 +79,7 @@ Point = {}
 Point.__index = Point
 
 function Point.create( coordinates )
-    local new = Location.create( "point" )
+    local new = Location.create( "point", "1" )
     new:AddPoint( coordinates )
     return new
 end
@@ -89,7 +91,7 @@ Polygon = {}
 Polygon.__index = Polygon
 
 function Polygon.create()
-    return Location.create( "polygon" )
+    return Location.create( "polygon", "1" )
 end
 
 function Polygon.create( name, type, points )
@@ -97,7 +99,7 @@ function Polygon.create( name, type, points )
     setmetatable( new, Polygon )
     new.type = type
     new.name = name
-    new.children = { Location.create( "polygon" ) }
+    new.children = { Location.create( "polygon", "1" ) }
     for _,v in ipairs( points ) do
         new.children[1]:AddPoint( v )
     end
@@ -113,7 +115,9 @@ PolygonList.__index = PolygonList
 function PolygonList.create( name, points )
     local new = {}
     setmetatable( new, PolygonList )
-    new.type = "PolygonList"
+    new.type = "Polygon"
+    new[ "min-occurs" ] = "1"
+    new[ "max-occurs" ] = "unbounded"
     new.name = name
     new.children = { Polygon.create( "Position 1", "location", points ) }
     return new
@@ -146,7 +150,9 @@ GenObjectList.__index = GenObjectList
 function GenObjectList.create( name, points )
     local new = {}
     setmetatable( new, GenObjectList )
-    new.type = "GenObjectList"
+    new.type = "GenObject"
+    new[ "min-occurs" ] = "1"
+    new[ "max-occurs" ] = "unbounded"
     new.name = name
     new.children = { GenObject.create( "Obstacle 1", points ) }
     return new
@@ -162,6 +168,8 @@ function AgentList.create( name, type, agents )
     local new = {}
     setmetatable( new, AgentList )
     new.type = type
+    new[ "min-occurs" ] = "1"
+    new[ "max-occurs" ] = "unbounded"
     new.name = name
     new.children = {}
     for _, v in ipairs( agents ) do
@@ -180,6 +188,8 @@ function AgentKnowledgeList.create( name, type, agentKnowledges )
     local new = {}
     setmetatable( new, AgentKnowledgeList )
     new.type = type
+    new[ "min-occurs" ] = "1"
+    new[ "max-occurs" ] = "unbounded"
     new.name = name
     new.children = {}
     for _, v in ipairs( agentKnowledges ) do
@@ -196,7 +206,7 @@ Line = {}
 Line.__index = Line
 
 function Line.create()
-    return Location.create( "line" )
+    return Location.create( "line", "1" )
 end
 
 --------------------------------------------------------------------------------
@@ -206,7 +216,7 @@ PointList = {}
 PointList.__index = PointList
 
 function PointList.create()
-    return Location.create( "pointlist" )
+    return Location.create( "point", "unbounded" )
 end
 
 --------------------------------------------------------------------------------
@@ -266,19 +276,27 @@ function Order:With( t )
     for i, v in ipairs( self.parameters or {} ) do
         if v.name == t.name then
             self.parameters[i] = { name = t.name, type = t.type, value = t.value, children = t.children or {} }
+            self.parameters[i][ "min-occurs" ] = t[ "min-occurs" ]
+            self.parameters[i][ "max-occurs" ] = t[ "max-occurs" ]
             return self
         end
     end
-    self.parameters[#self.parameters + 1] = { name = t.name, type = t.type, value = t.value, children = t.children or {} }
+    local newIndex = #self.parameters + 1
+    self.parameters[newIndex] = { name = t.name, type = t.type, value = t.value, children = t.children or {} }
+    self.parameters[newIndex][ "min-occurs" ] = t[ "min-occurs" ]
+    self.parameters[newIndex][ "max-occurs" ] = t[ "max-occurs" ]
     return self
 end
 
 -- Xml serialization
 function Order:ToXml()
+    local attributesTable = { id = self.id, name = "", target = self.target, type = self.type, time = 0 }
+    attributesTable[ "min-occurs" ] = self[ "min-occurs" ]
+    attributesTable[ "max-occurs" ] = self[ "max-occurs" ]
     return xml.Serialize(
         {
             tag = "action",
-            attributes = { id = self.id, name = "", target = self.target, type = self.type, time = 0 },
+            attributes = attributesTable,
             children = Order._MakeXmlParameters( self.parameters )
         }
     )
@@ -286,9 +304,12 @@ end
 
 -- Parameter serialization tools
 function Order._MakeXmlParameter( parameter )
+    local attributesTable = { name = parameter.name, type = parameter.type, value = parameter.value }
+    attributesTable[ "min-occurs" ] = parameter[ "min-occurs" ]
+    attributesTable[ "max-occurs" ] = parameter[ "max-occurs" ]
 return {
     tag = "parameter",
-    attributes = { name = parameter.name, type = parameter.type, value = parameter.value },
+    attributes = attributesTable,
     children = Order._MakeXmlParameters( parameter.children )
 }
 end
@@ -318,12 +339,18 @@ Mission = {}
 Mission.__index = Mission
 
 function Mission.create( target, id )
+    local phaseLineParameter = { name = "Phase lines", type = "PhaseLine" }
+    phaseLineParameter[ "min-occurs" ] = "1"
+    phaseLineParameter[ "max-occurs" ] = "unbounded"
+    local intelligencesParameter = { name = "Intelligences", type = "Intelligence" }
+    intelligencesParameter[ "min-occurs" ] = "1"
+    intelligencesParameter[ "max-occurs" ] = "unbounded"
     local new = Order.create( target, id, "mission" )
-        :With( { name = "Danger direction", type = "Direction", value = 360 } )
-        :With( { name = "Phase lines",      type = "PhaseLineList" } )
+        :With( { name = "Danger direction", type = "Heading", value = 360 } )
+        :With( phaseLineParameter )
         :With( { name = "Boundary limit 1", type = "Limit" } )
         :With( { name = "Boundary limit 2", type = "Limit" } )
-        :With( { name = "Intelligences",    type = "IntelligenceList" } )
+        :With( intelligencesParameter )
     return new
 end
 

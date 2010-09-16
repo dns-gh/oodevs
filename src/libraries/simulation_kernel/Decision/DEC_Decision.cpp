@@ -760,7 +760,7 @@ void InitFunctions()
         functors[ "LocationList" ] = LocationListFunction;
         functors[ "Path" ] = PathFunction;
         functors[ "PathList" ] = PathListFunction;
-        functors[ "Direction" ] = DirectionFunction;
+        functors[ "Heading" ] = DirectionFunction;
         functors[ "NatureAtlas" ] = NatureAtlasFunction;
         functors[ "Automate" ] = AutomatFunction;
         functors[ "AutomateList" ] = AutomatListFunction;
@@ -783,23 +783,23 @@ void InitFunctions()
         functors[ "ObjectiveList" ] = ObjectiveListFunction;
 
         functorsBM[ "PointBM" ] = PointFunctionBM;
-        functorsBM[ "PointListBM" ] = PointListFunctionBM;
+        functorsBM[ "PointBMList" ] = PointListFunctionBM;
         functorsBM[ "PathBM" ] = PathFunctionBM;
         functorsBM[ "AreaBM" ] = AreaFunctionBM;
-        functorsBM[ "AreaListBM" ] = AreaListFunctionBM;
+        functorsBM[ "AreaBMList" ] = AreaListFunctionBM;
         functorsBM[ "AutomateBM" ] = AutomatFunctionBM;
-        functorsBM[ "AutomateListBM" ] = AutomatListFunctionBM;
+        functorsBM[ "AutomateBMList" ] = AutomatListFunctionBM;
         functorsBM[ "AgentBM" ] = AgentFunctionBM;
-        functorsBM[ "AgentListBM" ] = AgentListFunctionBM;
+        functorsBM[ "AgentBMList" ] = AgentListFunctionBM;
         functorsBM[ "AgentKnowledgeBM" ] = AgentKnowledgeFunctionBM;
-        functorsBM[ "AgentKnowledgeListBM" ] = AgentKnowledgeListFunctionBM;
+        functorsBM[ "AgentKnowledgeBMList" ] = AgentKnowledgeListFunctionBM;
         functorsBM[ "ObjectKnowledgeBM" ] = ObjectKnowledgeFunctionBM;
-        functorsBM[ "ObjectKnowledgeListBM" ] = ObjectKnowledgeListFunctionBM;
+        functorsBM[ "ObjectKnowledgeBMList" ] = ObjectKnowledgeListFunctionBM;
         functorsBM[ "PopulationKnowledgeBM" ] = PopulationKnowledgeFunctionBM;
         functorsBM[ "GenObjectBM" ] = GenObjectFunctionBM;
-        functorsBM[ "GenObjectListBM" ] = GenObjectListFunctionBM;
+        functorsBM[ "GenObjectBMList" ] = GenObjectListFunctionBM;
         functorsBM[ "UrbanBlockBM" ] = UrbanBlockFunctionBM;
-        functorsBM[ "DirectionBM" ] = DirectionFunctionBM;
+        functorsBM[ "HeadingBM" ] = DirectionFunctionBM;
         functorsBM[ "LocationComposite" ] = LocationCompositeFunctionBM;
     }
 }

@@ -79,6 +79,11 @@ QValidator::State ADN_IntValidator::validate( QString& input, int& nPos ) const
 // -----------------------------------------------------------------------------
 void ADN_IntValidator::fixup( QString& strInput ) const
 {
+    if( strInput == "unbounded" )
+    {
+        strInput = QString::number( std::numeric_limits< int >::max() );
+        return;
+    }
     double b = bottom();
     double t = top();
 
@@ -88,9 +93,9 @@ void ADN_IntValidator::fixup( QString& strInput ) const
         return;
 
     if( rValue > t )
-        strInput = QString::number( t );
+        strInput = QString::number( std::numeric_limits< int >::max() );
     else if( rValue < b )
-        strInput = QString::number( b );
+        strInput = QString::number( std::numeric_limits< int >::min() );
 }
 
 

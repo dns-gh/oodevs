@@ -88,8 +88,9 @@ QWidget* ADN_Missions_GUI::BuildMissions( QGroupBox*& pGroup, QWidget* parent, A
     builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Doctrine description" ), vInfosConnectors[eDoctrineDescription] );
     builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Usage description" ), vInfosConnectors[eUsageDescription] );
 
-    QGroupBox* pParameters = new QGroupBox( 3, Qt::Horizontal, tr( "Parameters" ), pGroup );
+    QHGroupBox* pParameters = new QHGroupBox( tr( "Parameters" ), pGroup );
     ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table( pParameters );
+
     vInfosConnectors[eParameters] = &paramList->GetConnector();
     QGroupBox* pEnum = new QGroupBox( 1, Qt::Horizontal, tr( "Enumeration values" ), pParameters );
     ADN_MissionParameterValues_Table* valueList = new ADN_MissionParameterValues_Table( pEnum, "" );

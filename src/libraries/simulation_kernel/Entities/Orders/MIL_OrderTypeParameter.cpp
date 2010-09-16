@@ -23,7 +23,7 @@ MIL_OrderTypeParameter::MIL_OrderTypeParameter( xml::xistream& xis )
     : bIsOptional_  ( xis.attribute< bool >( "optional", false ) )
     , strName_      ( xis.attribute< std::string >( "name" ) )
     , strDiaName_   ( xis.attribute< std::string >( "dia-name" ) )
-    , pParameter_   ( MIL_ParameterType_ABC::Find( xis.attribute< std::string >( "type" ) ) )
+    , pParameter_   ( MIL_ParameterType_ABC::Find( xis.attribute< std::string >( "type" ), xis.attribute< std::string >( "max-occurs", "1" ) ) )
 {
     if( !pParameter_ )
         xis.error( "Unknown parameter type" );
@@ -37,7 +37,7 @@ MIL_OrderTypeParameter::MIL_OrderTypeParameter( const MIL_OrderType_ABC& /*order
     : bIsOptional_  ( xis.attribute< bool >( "optional", false ) )
     , strName_      ( xis.attribute< std::string >( "name" ) )
     , strDiaName_   ( xis.attribute< std::string >( "dia-name" ) )
-    , pParameter_   ( MIL_ParameterType_ABC::Find( xis.attribute< std::string >( "type" ) ) )
+    , pParameter_   ( MIL_ParameterType_ABC::Find( xis.attribute< std::string >( "type" ), xis.attribute< std::string >( "max-occurs", "1" ) ) )
 {
     if( !pParameter_ )
         xis.error( "Unknown parameter type" );
