@@ -14,6 +14,7 @@
 #include <xeumeuleu/xml.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/convenience.hpp>
 #include <vector>
 #include <set>
 

@@ -10,15 +10,13 @@
 #ifndef __AGR_EnumGenerator_h_
 #define __AGR_EnumGenerator_h_
 
-#include "AGR_Generator_ABC.h"
-
 // =============================================================================
 /** @class  AGR_EnumGenerator
     @brief  AGR_EnumGenerator
 */
 // Created: APE 2005-02-08
 // =============================================================================
-class AGR_EnumGenerator : public AGR_Generator_ABC
+class AGR_EnumGenerator
 {
 public:
     //! @name Constructors/Destructor
@@ -29,7 +27,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Generate( const AGR_Workspace& workspace, const std::string& strOutputPath );
+    void Generate( const AGR_Workspace& workspace, const std::string& strOutputPath );
     //@}
 
 private:

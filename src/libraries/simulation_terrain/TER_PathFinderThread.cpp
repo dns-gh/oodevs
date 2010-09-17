@@ -17,12 +17,12 @@
 #include "MT_Tools/MT_Profiler.h"
 #include "simulation_kernel/Decision/DEC_PathFind_Manager.h"
 #include <MT/MT_Logger/MT_Logger_lib.h>
-#include <MT/MT_IO/MT_Dir.h>
 #include "MT_Tools/MT_FormatString.h"
 #include <pathfind/TerrainPathfinder.h>
 #include <pathfind/TerrainRule_ABC.h>
 #include <pathfind/Node.h>
 #include <pathfind/SpatialContainerTraits.h>
+#include <boost/filesystem/convenience.hpp>
 
 using namespace pathfind;
 
@@ -244,7 +244,7 @@ void TER_PathFinderThread::Dump() const
     std::stringstream str;
     str << nDump++;
     const std::string strDirectory = str.str();
-    MT_MakeDir( strDirectory );
+    boost::filesystem::create_directories( strDirectory );
     Dump( strDirectory + "/" );
 }
 

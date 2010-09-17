@@ -11,7 +11,6 @@
 #include "AGR_EnumGenerator.h"
 #include "AGR_Workspace.h"
 #include "AGR_Enumeration.h"
-#include <MT/MT_IO/MT_Dir.h>
 #include <iostream>
 
 // -----------------------------------------------------------------------------
@@ -38,9 +37,7 @@ AGR_EnumGenerator::~AGR_EnumGenerator()
 // -----------------------------------------------------------------------------
 void AGR_EnumGenerator::Generate( const AGR_Workspace& workspace, const std::string& strOutputPath )
 {
-    MT_MakeDir( strOutputPath + "/src" );
-    MT_MakeDir( strOutputPath + "/src/libraries" );
-    MT_MakeDir( strOutputPath + "/src/libraries/ENT" );
+    boost::filesystem::create_directories( strOutputPath + "/src/libraries/ENT" );
     std::cout << "Generating enums file" << std::endl;
     GenerateEnumFile( workspace, strOutputPath );
     GenerateTranslatorHeader( workspace, strOutputPath );

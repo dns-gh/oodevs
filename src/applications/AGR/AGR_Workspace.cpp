@@ -10,10 +10,7 @@
 #include "AGR_pch.h"
 #include "AGR_Workspace.h"
 #include "AGR_Enumeration.h"
-#include <MT/MT_IO/MT_Dir.h>
-
 #include <windows.h>
-#include <assert.h>
 
 // -----------------------------------------------------------------------------
 // Name: AGR_Workspace constructor
@@ -35,14 +32,10 @@ AGR_Workspace::~AGR_Workspace()
 
 // -----------------------------------------------------------------------------
 // Name: AGR_Workspace::Read
-/** @param  strFile
-*/
 // Created: AGN 2004-04-22
 // -----------------------------------------------------------------------------
 void AGR_Workspace::Read( const std::string& strFile )
 {
-    std::string strModuleName;
-    MT_ExtractBaseName( strFile, strModuleName );
     try
     {
         xml::xifstream xis( "./agr_tmp/" + strFile );
