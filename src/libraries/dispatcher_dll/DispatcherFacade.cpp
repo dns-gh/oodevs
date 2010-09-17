@@ -19,7 +19,7 @@
 #endif
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_FileLogger.h"
-#include "MT_Tools/Logger.h"
+#include "MT_Tools/MT_Logger.h"
 
 using namespace plugins;
 
