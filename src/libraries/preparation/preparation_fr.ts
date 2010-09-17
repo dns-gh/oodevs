@@ -483,10 +483,6 @@
         <translation>Modèle de communication</translation>
     </message>
     <message>
-        <source>Team &apos;%1&apos; has no knowledge group</source>
-        <translation>Le camp &apos;%1&apos; n&apos;a pas de groupe de connaissance</translation>
-    </message>
-    <message>
         <source>Unit &apos;%1&apos; in team &apos;%2&apos; has no knowledge group</source>
         <translation>L&apos;unité &apos;%1&apos; du camp &apos;%2&apos; n&apos;a pas de groupe de connaissance</translation>
     </message>

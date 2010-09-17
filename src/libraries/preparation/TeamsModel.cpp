@@ -32,8 +32,8 @@ using namespace kernel;
 // Created: SBO 2006-08-30
 // -----------------------------------------------------------------------------
 TeamsModel::TeamsModel( Controllers& controllers, TeamFactory_ABC& factory )
-    : controllers_( controllers )
-    , factory_( factory )
+    : controllers_      ( controllers )
+    , factory_          ( factory )
     , infiniteDotations_( false )
 {
     controllers_.Register( *this );
@@ -129,7 +129,7 @@ void TeamsModel::Serialize( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: tools::Iterator< const kernel::Entity_ABC& > TeamsModel::CreateEntityIterator
+// Name: TeamsModel::CreateEntityIterator
 // Created: SBO 2006-09-20
 // -----------------------------------------------------------------------------
 tools::Iterator< const Entity_ABC& > TeamsModel::CreateEntityIterator() const
@@ -204,10 +204,6 @@ bool TeamsModel::CheckValidity( ModelChecker_ABC& checker ) const
     {
         const CommunicationHierarchies& hierarchies = it->second->Get< CommunicationHierarchies >();
         tools::Iterator< const Entity_ABC& > itSub = hierarchies.CreateSubordinateIterator();
-        if( !itSub.HasMoreElements() )
-            return checker.Reject( QString( "%1:\n%2" )
-                                  .arg( tools::translate( "Preparation", "Communication model" ) )
-                                  .arg( tools::translate( "Preparation", "Team '%1' has no knowledge group" ).arg( it->second->GetName() ) ) );
         while( itSub.HasMoreElements() )
         {
             const Entity_ABC* entity = &itSub.NextElement();
