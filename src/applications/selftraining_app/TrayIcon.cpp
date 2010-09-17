@@ -1,6 +1,6 @@
 #include "selftraining_app_pch.h"
 #include "trayicon.h"
-#include "qpopupmenu.h"
+#include <qpopupmenu.h>
 #include "moc_TrayIcon.cpp"
 
 /*!

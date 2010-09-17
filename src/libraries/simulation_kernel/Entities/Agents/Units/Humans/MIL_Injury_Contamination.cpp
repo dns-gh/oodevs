@@ -183,34 +183,28 @@ namespace
     //Be careful: do not confuse contamination and poisoning!
     struct PHY_ContaminationProtectionFunctor
     {
-        PHY_ContaminationProtectionFunctor( int agentConcentration, const std::string NBCAgent, int injuryID )
+        PHY_ContaminationProtectionFunctor( int agentConcentration, const std::string& NBCAgent, int injuryID )
             : agentConcentration_( agentConcentration )
             , injuryID_          ( injuryID )
             , NBCAgent_          ( NBCAgent )
             , protectionValue_   ( 0 )
-        {
-            // NOTHING
-        }
-
+        {}
         void operator()( const PHY_ComposantePion& composantePion )
         {
             composantePion.ApplyOnHumanProtection( *this );
         }
-
         void operator()( const PHY_ComposantePion& /*composantePion*/, const PHY_HumanProtection& humanProtection )
         {
             protectionValue_ += humanProtection.ComputeProtectionValue( injuryID_, agentConcentration_, NBCAgent_ );
         }
-
         float GetProtectionValue()
         {
             return protectionValue_;
         }
-
-        int               agentConcentration_;
-        int               injuryID_;
-        const std::string NBCAgent_;
-        float             protectionValue_;
+        int agentConcentration_;
+        int injuryID_;
+        std::string NBCAgent_;
+        float protectionValue_;
     };
 }
 
