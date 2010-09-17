@@ -13,7 +13,7 @@
 #include "ENT/ENT_Enums_Gen.h"
 #include "ADN_Connector_ABC.h"
 #include "ADN_Sensors_Data.h"
-#include "QGroupBox.h"
+#include <qgroupbox.h>
 
 class ModificatorEnvironmentInfos;
 class ADN_GuiBuilder;
