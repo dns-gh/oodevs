@@ -37,8 +37,8 @@ class PHY_HumansComposante : public HumansComposante_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    PHY_HumansComposante();
-    PHY_HumansComposante( const MIL_Time_ABC& time, PHY_ComposantePion& composante, unsigned int nNbrMdr );
+             PHY_HumansComposante();
+             PHY_HumansComposante( const MIL_Time_ABC& time, PHY_ComposantePion& composante, unsigned int nNbrMdr );
     virtual ~PHY_HumansComposante();
     //@}
 

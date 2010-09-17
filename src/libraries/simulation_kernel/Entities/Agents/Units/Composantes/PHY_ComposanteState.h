@@ -28,7 +28,7 @@ public:
     static const PHY_ComposanteState maintenance_;
     static const PHY_ComposanteState prisoner_;
 
-    typedef std::vector< const PHY_ComposanteState* > T_ComposanteStateVector;
+    typedef std::vector< const PHY_ComposanteState* >   T_ComposanteStateVector;
     typedef T_ComposanteStateVector::const_iterator   CIT_ComposanteStateVector;
     //@}
 
@@ -39,7 +39,7 @@ public:
     static void                       Terminate   ();
     static const PHY_ComposanteState& Find        ( unsigned int nID );
     static const PHY_ComposanteState* Find        ( const std::string& strName );
-    static unsigned int                       GetNbrStates();
+    static unsigned int               GetNbrStates();
     static T_ComposanteStateVector&   GetStates   ();
     //@}
 
@@ -49,7 +49,7 @@ public:
           bool         IsUsable    () const;
           bool         IsDamaged   () const;
           bool         CanTransport() const;
-          unsigned int         GetID       () const;
+          unsigned int GetID       () const;
     //@}
 
     //! @name Operations

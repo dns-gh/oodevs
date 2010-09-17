@@ -11,9 +11,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_ComposantePion.h"
-
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationGroupContainer.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
@@ -39,17 +37,14 @@
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_SmokeData.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
-
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/AttritionCapacity.h"
 #include "Entities/Objects/StructuralCapacity.h"
-
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Actions/PHY_FireDamages_Agent.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "MIL_Singletons.h"
-
 #include "simulation_kernel/WeaponAvailabilityComputer_ABC.h"
 
 double  PHY_ComposantePion::rOpStateWeightHumans_ = 0.;
@@ -61,15 +56,15 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_ComposantePion )
 // Created: NLD 2004-08-12
 // -----------------------------------------------------------------------------
 PHY_ComposantePion::PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_ComposanteTypePion& type, PHY_RolePion_Composantes& role, unsigned int nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy )
-    : PHY_Composante_ABC           ( )
+    : PHY_Composante_ABC()
     , time_                        ( time )
     , pState_                      ( &PHY_ComposanteState::undamaged_ )
-    , pRole_                       ( &role              )
-    , pType_                       ( &type              )
-    , bMajor_                      ( bMajor             )
-    , bLoadable_                   ( bLoadable          )
+    , pRole_                       ( &role )
+    , pType_                       ( &type )
+    , bMajor_                      ( bMajor )
+    , bLoadable_                   ( bLoadable )
     , bCanBePartOfConvoy_          ( bCanBePartOfConvoy )
-    , bUsedForLogistic_            ( false              )
+    , bUsedForLogistic_            ( false )
     , nAutoRepairTimeStep_         ( 0 )
     , pBreakdown_                  ( 0 )
     , pMaintenanceState_           ( 0 )
@@ -80,7 +75,6 @@ PHY_ComposantePion::PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_Comp
     pType_->InstanciateWeapons( std::back_inserter( weapons_ ) );
     pType_->InstanciateSensors( std::back_inserter( sensors_ ) );
     pType_->InstanciateProtections( std::back_inserter( protections_ ) );
-
     pRole_->NotifyComposanteAdded( *this );
     assert( pHumans_->IsViable() ); //$$$ Pre-check in PHY_UnitType
 }
@@ -90,24 +84,17 @@ PHY_ComposantePion::PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_Comp
 // Created: JVT 2005-04-01
 // -----------------------------------------------------------------------------
 PHY_ComposantePion::PHY_ComposantePion()
-    : PHY_Composante_ABC           ()
-    , time_                        ( MIL_Singletons::GetTime() )
-    , pRole_                       ( 0 )
-    , pState_                      ( 0 )
-    , pType_                       ( 0 )
-    , bMajor_                      ( false )
-    , bLoadable_                   ( false )
-    , bUsedForLogistic_            ( false )
-    , bCanBePartOfConvoy_          ( false )
-    , weapons_                     ()
-    , protections_                 ()
-    , sensors_                     ()
-    , pHumans_                     ()
-    , nAutoRepairTimeStep_         ()
-    , pBreakdown_                  ()
-    , pMaintenanceState_           ( 0 )
-    , nRandomBreakdownNextTimeStep_()
-    , pRandomBreakdownState_       ( 0 )
+    : PHY_Composante_ABC()
+    , time_                 ( MIL_Singletons::GetTime() )
+    , pRole_                ( 0 )
+    , pState_               ( 0 )
+    , pType_                ( 0 )
+    , bMajor_               ( false )
+    , bLoadable_            ( false )
+    , bUsedForLogistic_     ( false )
+    , bCanBePartOfConvoy_   ( false )
+    , pMaintenanceState_    ( 0 )
+    , pRandomBreakdownState_( 0 )
 {
     // NOTHING
 }
@@ -120,25 +107,14 @@ PHY_ComposantePion::~PHY_ComposantePion()
 {
     for( CIT_WeaponVector itWeapon = weapons_.begin(); itWeapon != weapons_.end(); ++itWeapon )
         delete *itWeapon;
-    weapons_.clear();
-
     for( CIT_HumanProtectionVector itHumanProtection = protections_.begin(); itHumanProtection != protections_.end(); ++itHumanProtection )
         delete *itHumanProtection;
-    protections_.clear();
-
     for( CIT_SensorVector itSensor = sensors_.begin(); itSensor != sensors_.end(); ++itSensor )
         delete *itSensor;
-    sensors_.clear();
-
     assert( pRole_ );
     pRole_->NotifyComposanteRemoved( *this );
-
     delete pHumans_;
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::load
@@ -148,22 +124,18 @@ void PHY_ComposantePion::load( MIL_CheckPointInArchive& file, const unsigned int
 {
     file >> boost::serialization::base_object< PHY_Composante_ABC >( *this )
          >> pRole_;
-
     unsigned int nID;
     file >> nID;
     pState_ = &PHY_ComposanteState::Find( nID );
-
     Common::EquipmentType nEqID;
     int equipment_type;
     file >> equipment_type;
     nEqID.set_id( equipment_type );
     pType_ = PHY_ComposanteTypePion::Find( nEqID );
     assert( pType_ );
-
     pType_->InstanciateWeapons( std::back_inserter( weapons_ ) );
     pType_->InstanciateSensors( std::back_inserter( sensors_ ) );
     pType_->InstanciateProtections( std::back_inserter( protections_ ) );
-
     file >> const_cast< bool& >( bMajor_ )
          >> const_cast< bool& >( bLoadable_ )
          >> const_cast< bool& >( bCanBePartOfConvoy_ )
@@ -173,7 +145,6 @@ void PHY_ComposantePion::load( MIL_CheckPointInArchive& file, const unsigned int
          >> const_cast< PHY_Breakdown*& >( pBreakdown_ )
          >> pMaintenanceState_
          >> nRandomBreakdownNextTimeStep_;
-
     if( nRandomBreakdownNextTimeStep_ )
     {
         file >> nID;
@@ -204,7 +175,6 @@ void PHY_ComposantePion::save( MIL_CheckPointOutArchive& file, const unsigned in
          << pBreakdown_
          << pMaintenanceState_
          << nRandomBreakdownNextTimeStep_;
-
     if( nRandomBreakdownNextTimeStep_ )
     {
         assert( pRandomBreakdownState_ );
@@ -212,10 +182,6 @@ void PHY_ComposantePion::save( MIL_CheckPointOutArchive& file, const unsigned in
         file << id;
     }
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::TransferComposante
@@ -225,7 +191,6 @@ void PHY_ComposantePion::TransferComposante( PHY_RoleInterface_Composantes& newR
 {
     assert( pRole_ );
     assert( pHumans_ );
-
     // Annulation log maintenance
     if( pMaintenanceState_ )
     {
@@ -236,17 +201,11 @@ void PHY_ComposantePion::TransferComposante( PHY_RoleInterface_Composantes& newR
         delete pMaintenanceState_;
         pMaintenanceState_ = 0;
     }
-
     pHumans_->NotifyComposanteTransfered( *pRole_, newRole );
-
     pRole_->NotifyComposanteRemoved( *this );
     pRole_ = &newRole;
     pRole_->NotifyComposanteAdded( *this );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::ReinitializeState
@@ -256,29 +215,19 @@ void PHY_ComposantePion::TransferComposante( PHY_RoleInterface_Composantes& newR
 void PHY_ComposantePion::ReinitializeState( const PHY_ComposanteState& tmpState )
 {
     assert( pType_ );
-
     const PHY_ComposanteState* pNewState = &tmpState;
-
     if( pType_->GetProtection().IsHuman() && ( *pNewState == PHY_ComposanteState::repairableWithEvacuation_ || *pNewState == PHY_ComposanteState::repairableWithoutEvacuation_ ) )
         pNewState = &PHY_ComposanteState::undamaged_;
-
     if( *pState_ == *pNewState )
         return;
-
     const PHY_ComposanteState* pOldState = pState_;
     pState_                              = pNewState;
-
     if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
         pBreakdown_ = new PHY_Breakdown( pType_->GetRandomBreakdownType() );
     ManageEndMaintenance();
-
     assert( pRole_ );
     pRole_->NotifyComposanteChanged ( *this, *pOldState );
 }
-
-// =============================================================================
-// ACCESSORS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::GetMaxSpeed
@@ -317,7 +266,6 @@ const PHY_DotationConsumptions* PHY_ComposantePion::GetDotationConsumptions( con
 {
     assert( pState_ );
     assert( pType_ );
-
     return pState_->IsUsable() ? pType_->GetDotationConsumptions( consumptionMode ) : 0;
 }
 
@@ -331,10 +279,6 @@ const PHY_ConsumptionType& PHY_ComposantePion::GetConsumptionMode( const MIL_Obj
     return pType_->GetConsumptionMode( objectType );
 }
 
-// =============================================================================
-// FIRE / DANGEROSITY
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::ApplyFire
 // Created: NLD 2004-10-13
@@ -346,27 +290,20 @@ void PHY_ComposantePion::ApplyFire( const PHY_AttritionData& attritionData, MT_F
     assert( pType_ );
     assert( CanBeFired() );
     assert( pState_ );
-
     const PHY_ComposanteState& oldState  = *pState_;
     const PHY_ComposanteState* pNewState = &attritionData.ComputeComposanteState( urbanProtection );
-
     pRole_->WoundLoadedHumans( *this, *pNewState, fireDamages );
     ApplyHumansWounds( *pNewState, fireDamages );
-
     if( pType_->GetProtection().IsHuman() && ( *pNewState == PHY_ComposanteState::repairableWithEvacuation_ || *pNewState == PHY_ComposanteState::repairableWithoutEvacuation_ ) )
         pNewState = &PHY_ComposanteState::undamaged_;
-
     if( *pNewState < *pState_ )
     {
         pState_ = pNewState;
-
         if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
             pBreakdown_ = new PHY_Breakdown( pType_->GetAttritionBreakdownType() );
         ManageEndMaintenance();
-
         pRole_->NotifyComposanteChanged( *this, oldState );
     }
-
     fireDamages.NotifyComposanteStateChanged( *this, oldState, *pState_ );
 }
 
@@ -412,20 +349,16 @@ void PHY_ComposantePion::ApplyUrbanObjectCrumbling( const MIL_Object_ABC& object
     assert( pType_ );
     assert( CanBeFired() );
     assert( pState_ );
-
     const PHY_ComposanteState& oldState  = *pState_;
     const PHY_ComposanteState* pNewState = pState_;
     StructuralCapacity* capacity = const_cast< MIL_Object_ABC& >( object ).Retrieve< StructuralCapacity >();
     if ( capacity )
         pNewState = &capacity->ComputeComposanteState( object, pType_->GetProtection() );
-
     PHY_FireDamages_Agent fireDamages;
     pRole_->WoundLoadedHumans( *this, *pNewState, fireDamages );
     ApplyHumansWounds( *pNewState, fireDamages );
-
     if( pType_->GetProtection().IsHuman() && ( *pNewState == PHY_ComposanteState::repairableWithEvacuation_ || *pNewState == PHY_ComposanteState::repairableWithoutEvacuation_ ) )
         pNewState = &PHY_ComposanteState::undamaged_;
-
     ApplyNewComposanteState( *pNewState, oldState );
 }
 
@@ -438,11 +371,9 @@ void PHY_ComposantePion::ApplyNewComposanteState( const PHY_ComposanteState& pNe
     if( pNewState < *pState_ )
     {
         pState_ = &pNewState;
-
         if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
             pBreakdown_ = new PHY_Breakdown( pType_->GetAttritionBreakdownType() );
         ManageEndMaintenance();
-
         pRole_->NotifyComposanteChanged( *this, oldState );
     }
 }
@@ -573,7 +504,6 @@ double PHY_ComposantePion::GetMinRangeToIndirectFire( const PHY_DotationCategory
     return CanFire() ? pType_->GetMinRangeToIndirectFire( pRole_->GetPion(), dotationCategory, bCheckDotationsAvailability ) : std::numeric_limits< double >::max();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::GetMaxRangeToFire
 // Created: DDA 2010-05-03
@@ -583,10 +513,6 @@ double PHY_ComposantePion::GetMaxRangeToFire(const MIL_Agent_ABC& pion, double r
     assert( pType_ );
     return CanFire() ? pType_->GetMaxRangeToFire( pion, rWantedPH ) : std::numeric_limits< double >::max();
 }
-
-// =============================================================================
-// LOGISTIC - MEDICAL
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::HasWoundedHumansToEvacuate
@@ -608,10 +534,6 @@ void PHY_ComposantePion::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 
     pHumans_->EvacuateWoundedHumans( destinationTC2 );
 }
 
-// =============================================================================
-// LOGISTIC - MAINTENANCE
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::PreprocessRandomBreakdowns
 // Created: NLD 2005-01-06
@@ -620,7 +542,6 @@ void PHY_ComposantePion::PreprocessRandomBreakdowns( unsigned int nEndDayTimeSte
 {
     assert( !pRandomBreakdownState_ && !nRandomBreakdownNextTimeStep_ );
     assert( pType_ );
-
     if( pType_->GetProtection().CanRandomlyBreaksDownEva() )
     {
         pRandomBreakdownState_        = &PHY_ComposanteState::repairableWithEvacuation_;
@@ -647,7 +568,6 @@ void PHY_ComposantePion::ManageEndMaintenance()
             delete pBreakdown_;
             pBreakdown_ = 0;
         }
-
         if( pMaintenanceState_ )
         {
             assert( pHumans_ );
@@ -658,7 +578,6 @@ void PHY_ComposantePion::ManageEndMaintenance()
             delete pMaintenanceState_;
             pMaintenanceState_ = 0;
         }
-
         if( *pState_ == PHY_ComposanteState::repairableWithoutEvacuation_ )
         {
             assert( pType_ );
@@ -699,9 +618,7 @@ bool PHY_ComposantePion::CanBeUsed() const
 {
     if( bUsedForLogistic_ )
         return false;
-
     assert( pRole_ );
-
     // $$$$ LDC: All this should be rewritten with GetRole/RetrieveRole's but using Apply.
     const transport::PHY_RoleInterface_Transported* roleTransported = pRole_->GetPion().RetrieveRole< transport::PHY_RoleInterface_Transported >();
     if( roleTransported && roleTransported->IsTransported() )
@@ -709,14 +626,12 @@ bool PHY_ComposantePion::CanBeUsed() const
     const surrender::PHY_RoleInterface_Surrender* roleSurrendered = pRole_->GetPion().RetrieveRole< surrender::PHY_RoleInterface_Surrender >();
     if( roleSurrendered && roleSurrendered->IsSurrendered() )
         return false;
-
     if( bLoadable_ )
     {
         const transport::PHY_RoleAction_Loading* roleLoading = pRole_->GetPion().RetrieveRole< transport::PHY_RoleAction_Loading >();
         return !roleLoading || !roleLoading->IsLoaded();
     }
-    else
-        return !roleTransported || !roleTransported->HasHumanTransportersToRecover();
+    return !roleTransported || !roleTransported->HasHumanTransportersToRecover();
 }
 
 // -----------------------------------------------------------------------------
@@ -726,15 +641,12 @@ bool PHY_ComposantePion::CanBeUsed() const
 bool PHY_ComposantePion::CanBeUsedForMove() const
 {
     assert( pRole_ );
-
     const transport::PHY_RoleInterface_Transported& roleTransported = pRole_->GetPion().GetRole< transport::PHY_RoleInterface_Transported >();
     if( roleTransported.IsTransported() )
         return false;
-
     if( bLoadable_ )
         return !pRole_->GetPion().GetRole< transport::PHY_RoleAction_Loading >().IsLoaded();
-    else
-        return !roleTransported.HasHumanTransportersToRecover();
+    return !roleTransported.HasHumanTransportersToRecover();
 }
 
 // -----------------------------------------------------------------------------
@@ -745,7 +657,6 @@ bool PHY_ComposantePion::CanFire() const
 {
     assert( pState_ );
     assert( pRole_ );
-
     return !pRole_->IsNeutralized() && pState_->IsUsable() && !pState_->IsDamaged() && CanBeUsed();
 }
 
@@ -757,7 +668,6 @@ bool PHY_ComposantePion::CanFireWhenUnloaded() const
 {
     assert( pState_ );
     assert( pRole_ );
-
     return !pRole_->IsNeutralized() && pState_->IsUsable() && !pState_->IsDamaged() && bLoadable_ && !bUsedForLogistic_ && !pRole_->GetPion().GetRole< transport::PHY_RoleInterface_Transported >().IsTransported();
 }
 
@@ -774,10 +684,6 @@ void PHY_ComposantePion::Repair()
     HealAllHumans();
 }
 
-// =============================================================================
-// MAIN
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::Update
 // Created: NLD 2004-12-20
@@ -792,17 +698,14 @@ void PHY_ComposantePion::Update()
         pRole_->NotifyComposanteRepaired();
         ReinitializeState( PHY_ComposanteState::undamaged_ );
     }
-
     // Panne aléatoire
     if( pRandomBreakdownState_ && nRandomBreakdownNextTimeStep_ == time_.GetCurrentTick()  )
     {
         if( *pState_ == PHY_ComposanteState::undamaged_ )
             ReinitializeState( *pRandomBreakdownState_ );
-
         nRandomBreakdownNextTimeStep_ = 0;
-        pRandomBreakdownState_        = 0;
+        pRandomBreakdownState_ = 0;
     }
-
     // Demande maintenance
     if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pMaintenanceState_ )
     {
@@ -831,7 +734,6 @@ double PHY_ComposantePion::GetOperationalState() const
     assert( pState_ );
     if( *pState_ != PHY_ComposanteState::undamaged_ )
         return 0.;
-
     assert( pHumans_ );
     return ( 1. - rOpStateWeightHumans_ ) + rOpStateWeightHumans_ * pHumans_->GetOperationalState();
 }
@@ -961,7 +863,6 @@ unsigned int PHY_ComposantePion::Heal( Human_ABC& human ) const
 {
     assert( pType_ );
     assert( bUsedForLogistic_ );
-
     return pType_->Heal( human );
 }
 
@@ -1064,10 +965,8 @@ void PHY_ComposantePion::StopUsingForLogistic()
 unsigned int PHY_ComposantePion::GetNeutralizationTime() const
 {
     assert( pState_ );
-
     if( !pState_->IsUsable() )
         return 0;
-
     assert( pType_ );
     return pType_->GetProtection().GetNeutralizationTime();
 }
@@ -1103,7 +1002,7 @@ float PHY_ComposantePion::GetReconnoissanceMaxRange() const
     MT_Float distance = numeric_limits< MT_Float >::max();
     for( CIT_SensorVector itSensor = sensors_.begin(); itSensor != sensors_.end(); ++itSensor )
         distance = std::min( distance, (*itSensor)->GetType().GetTypeAgent()->ReconnoissanceDistance() );
-	return static_cast< float >( distance );
+    return static_cast< float >( distance );
 }
 
 // -----------------------------------------------------------------------------
@@ -1143,7 +1042,6 @@ unsigned int PHY_ComposantePion::GetMajorScore() const
 {
     if( !pState_->IsUsable() && CanBeUsed() ) //$$$ C'est de la merde
         return 0;
-
     if( IsMajor() )
     {
         if( !pState_->IsDamaged() )
@@ -1330,7 +1228,6 @@ double PHY_ComposantePion::GetConstructionTime( const MIL_ObjectType_ABC& object
 {
     if( !( CanBeUsed() && pState_->IsUsable() ) )
         return std::numeric_limits< double >::max();
-
     assert( pType_ );
     return pType_->GetConstructionTime( objectType, rSizeCoef );
 }
@@ -1343,7 +1240,6 @@ double PHY_ComposantePion::GetDestructionTime( const MIL_ObjectType_ABC& objectT
 {
     if( !( CanBeUsed() && pState_->IsUsable() ) )
         return std::numeric_limits< double >::max();
-
     assert( pType_ );
     return pType_->GetDestructionTime( objectType, rSizeCoef );
 }
@@ -1356,7 +1252,6 @@ double PHY_ComposantePion::GetMiningTime( const MIL_ObjectType_ABC& objectType )
 {
     if( !( CanBeUsed() && pState_->IsUsable() ) )
         return std::numeric_limits< double >::max();
-
     assert( pType_ );
     return pType_->GetMiningTime( objectType );
 }
@@ -1369,7 +1264,6 @@ double PHY_ComposantePion::GetDeminingTime( const MIL_ObjectType_ABC& objectType
 {
     if( !( CanBeUsed() && pState_->IsUsable() ) )
         return std::numeric_limits< double >::max();
-
     assert( pType_ );
     return pType_->GetDeminingTime( objectType );
 }
@@ -1382,7 +1276,6 @@ double PHY_ComposantePion::GetBypassTime( const MIL_ObjectType_ABC& objectType, 
 {
     if( !( CanBeUsed() && pState_->IsUsable() ) )
         return std::numeric_limits< double >::max();
-
     assert( pType_ );
     return pType_->GetBypassTime( objectType, rSizeCoef, bObjectIsMined );
 }

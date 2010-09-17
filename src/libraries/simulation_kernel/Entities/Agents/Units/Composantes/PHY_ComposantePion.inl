@@ -10,7 +10,7 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > void PHY_ComposantePion::FillFireData
+// Name: PHY_ComposantePion::FillFireData
 // Created: NLD 2006-08-07
 // -----------------------------------------------------------------------------
 template< typename T > 
@@ -21,7 +21,7 @@ inline void PHY_ComposantePion::ApplyOnWeapons( T& functor ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > void PHY_ComposantePion::FillFireData
+// Name: PHY_ComposantePion::FillFireData
 // Created: NLD 2006-08-07
 // -----------------------------------------------------------------------------
 template< typename T > 
