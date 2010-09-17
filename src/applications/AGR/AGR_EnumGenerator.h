@@ -10,6 +10,8 @@
 #ifndef __AGR_EnumGenerator_h_
 #define __AGR_EnumGenerator_h_
 
+class AGR_Workspace;
+
 // =============================================================================
 /** @class  AGR_EnumGenerator
     @brief  AGR_EnumGenerator
