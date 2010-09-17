@@ -9,7 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "Application_ABC.h"
-#include <QTranslator.h>
+#include <qtranslator.h>
 
 // -----------------------------------------------------------------------------
 // Name: Application_ABC constructor
