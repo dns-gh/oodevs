@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_App.h"
 #include "ADN_Exception_ABC.h"
+#include "MT_Tools/MT_ConsoleLogger.h"
 #include <windows.h>
 #include <commctrl.h>
 #include <qtranslator.h>
