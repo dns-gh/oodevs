@@ -84,6 +84,7 @@ private:
     unsigned int                   nIconIndex_;
     std::auto_ptr< boost::thread > guiThread_ ;
     std::auto_ptr< boost::thread > dispatcherThread_ ;
+    bool                           dispatcherOk_;
     //@}
 
 

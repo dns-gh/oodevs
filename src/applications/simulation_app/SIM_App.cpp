@@ -46,14 +46,15 @@ static int    IconResourceArray[NUM_ICON_FOR_ANIMATION] = { IDI_ICON2, IDI_ICON1
 // Created: RDS 2008-07-08
 // -----------------------------------------------------------------------------
 SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */ ,LPSTR lpCmdLine, int /* nCmdShow */, int maxConnections )
-    : pNetworkLogger_( 0 )
+    : winArguments_  ( lpCmdLine )
+    , pNetworkLogger_( 0 )
     , logger_        ( 0 )
     , maxConnections_( maxConnections )
-    , hWnd_             ( NULL )
+    , hWnd_          ( NULL )
     , hInstance_     ( hinstance )
     , pDispatcher_   ( 0 )
     , nIconIndex_    ( 0 )
-    , winArguments_  ( lpCmdLine )
+    , dispatcherOk_  ( true )
 {
     startupConfig_.Parse( winArguments_.Argc(), const_cast< char** >( winArguments_.Argv() ) );
     logger_ = new MT_FileLogger( startupConfig_.BuildSessionChildFile( "Sim.log" ).c_str(), MT_Logger_ABC::eLogLevel_All, MT_Logger_ABC::eLogLayer_All, true );
@@ -173,6 +174,7 @@ void SIM_App::RunDispatcher()
     }
     catch( std::exception& e )
     {
+        dispatcherOk_ = false;
         MT_LOG_ERROR_MSG( "The dispatcher has crashed: " << e.what() << "." );
     }
     Stop();
@@ -280,9 +282,12 @@ void SIM_App::Cleanup()
     // stop the dispatcher
     if( dispatcherThread_.get() )
     {
-        while( !pDispatcher_ )
+        while( !pDispatcher_ && dispatcherOk_ )
             ::Sleep( 0 );
-        pDispatcher_->Stop();
+        if( pDispatcher_ )
+            pDispatcher_->Stop();
+        else
+            throw std::exception( "Dispatcher crash" );
         dispatcherThread_->join();
     }
 
