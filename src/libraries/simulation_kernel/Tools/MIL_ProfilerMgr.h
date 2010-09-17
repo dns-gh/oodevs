@@ -13,6 +13,7 @@
 #define __MIL_ProfilerMgr_h_
 
 #include "MT_Tools/MT_Profiler.h"
+#include <fstream>
 
 class MIL_AgentPion;
 class MIL_Automate;

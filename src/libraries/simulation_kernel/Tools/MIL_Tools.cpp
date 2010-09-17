@@ -17,6 +17,7 @@
 #include "simulation_terrain/TER_World.h"
 #include "tools/MIL_Tools.h"
 #include <sys/timeb.h>
+#include <fstream>
 
 MIL_Tools::converter< PHY_RawVisionData::E_VisionObject > MIL_Tools::environnementConverter_[] =
 {

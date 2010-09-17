@@ -12,7 +12,9 @@
 
 #include <string>
 #include <windows.h>
+#pragma warning( push, 0 )
 #include <boost/thread.hpp>
+#pragma warning( pop )
 
 namespace dispatcher
 {

@@ -17,7 +17,7 @@
 #include "protocol/ReplaySenders.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/Simulation.h"
-#include <MT/MT_Logger/MT_Logger_lib.h>
+#include "MT_Tools/MT_Logger.h"
 
 using namespace plugins::replay;
 using namespace dispatcher;
@@ -150,12 +150,11 @@ void ReplayPlugin::ChangeTimeFactor( unsigned factor )
     if( factor )
     {
         factor_ = factor;
-        MT_Timer_ABC::Start( MT_TimeSpan( (int)( 10000 / factor ) ) );
+        MT_Timer_ABC::Start( (int)( 10000 / factor ) );
         message().set_error_code( MsgsSimToClient::ControlAck_ErrorCode_no_error);
     }
     else
         message().set_error_code( MsgsSimToClient::ControlAck_ErrorCode_error_invalid_time_factor );
-
     message().set_time_factor( factor_ );
     message.Send( clients_ );
 }

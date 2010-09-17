@@ -43,15 +43,15 @@ void MT_FormatString::Format( const char* pFormat, ... )
 void MT_FormatString::VFormat( const char* pFormat, va_list argList )
 {
     fstr_.erase();
-    if( !pFormat )
+    if( ! pFormat )
         return;
     int nLength = 1 + 8 * strlen( pFormat );
     for( int nCount = -1; nCount < 0; nLength *= 2 )
     {
-        std::vector<char> buffer( nLength );
-#ifdef _MSC_VER // Microsoft VC++ compiler
+        std::vector< char > buffer( nLength );
+#ifdef _MSC_VER
         nCount = _vsnprintf( &buffer[0], nLength - 1, pFormat, argList );
-#else // Any other platform
+#else
         nCount = vsnprintf( &buffer[0], nLength - 1, pFormat, argList );
 #endif // _MSC_VER
         if( nCount > 0 )
@@ -63,7 +63,7 @@ void MT_FormatString::VFormat( const char* pFormat, va_list argList )
 // Name: MT_FormatString::operator std::string&
 // Created: CBX 2002-09-03
 //-----------------------------------------------------------------------------
-MT_FormatString::operator const std::string& () const
+MT_FormatString::operator const std::string&() const
 {
     return fstr_;
 }

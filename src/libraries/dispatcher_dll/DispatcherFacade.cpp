@@ -17,8 +17,9 @@
 #ifdef CROSSBOW_PLUGIN
 #   include "crossbow_plugin/CrossbowPluginFactory.h"
 #endif
-
-#include <MT/MT_Logger/MT_Logger_lib.h>
+#include "MT_Tools/MT_ConsoleLogger.h"
+#include "MT_Tools/MT_FileLogger.h"
+#include "MT_Tools/Logger.h"
 
 using namespace plugins;
 

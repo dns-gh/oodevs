@@ -10,13 +10,9 @@
 //*****************************************************************************
 
 #include "simulation_app_pch.h"
-
 #include "SIM_App.h"
-#include <ctime>
-#include <signal.h>
 #include "SIM_NetworkLogger.h"
 #include "SIM_Dispatcher.h"
-
 #include "simulation_kernel/MIL_AgentServer.h"
 #include "simulation_kernel/MIL_Random.h"
 #include "simulation_kernel/CheckPoints/MIL_CheckPointManager.h"
@@ -24,12 +20,14 @@
 #include "MT_Tools/MT_Version.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_Profiler.h"
+#include "MT_Tools/MT_FileLogger.h"
 #include <xeumeuleu/xml.hpp>
-
 #include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/convenience.hpp>
+#include <ctime>
+#include <csignal>
 
 bool SIM_App::bCrashWithCoreDump_ = false;
 bool SIM_App::bUserInterrupt_     = false;
@@ -72,9 +70,9 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */ ,LPSTR lpCm
             pNetworkLogger_ = new SIM_NetworkLogger( startupConfig_.GetNetworkLoggerPort(),MT_Logger_ABC::eLogLevel_All, MT_Logger_ABC::eLogLayer_All);
             MT_LOG_REGISTER_LOGGER( *pNetworkLogger_ );
         }
-        catch( MT_Exception& exception )
+        catch( MT_ScipioException& exception )
         {
-            MT_LOG_WARNING_MSG( MT_FormatString( "Network logger (telnet) not registered - Reason : '%s'", exception.GetInfo().c_str() ) );
+            MT_LOG_WARNING_MSG( MT_FormatString( "Network logger (telnet) not registered - Reason : '%s'", exception.GetMsg().c_str() ) );
             pNetworkLogger_ = 0;
         }
     }
@@ -366,10 +364,6 @@ int SIM_App::Test()
     {
         std::cerr << Wrap( exception.GetMsg(), prefix ) << std::endl
                   << Wrap( exception.GetDescription(), prefix ) << std::endl;
-    }
-    catch( MT_Exception& exception )
-    {
-        std::cerr << Wrap( exception.GetInfo(), prefix ) << std::endl;
     }
     catch( xml::exception& exception )
     {

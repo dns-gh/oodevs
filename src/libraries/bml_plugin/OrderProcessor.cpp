@@ -12,7 +12,7 @@
 #include "Mission.h"
 #include "SerializationTools.h"
 #include <xeumeuleu/xml.hpp>
-#include <MT/MT_Logger/MT_Logger_lib.h>
+#include "MT_Tools/MT_Logger.h"
 
 using namespace plugins::bml;
 

@@ -11,15 +11,14 @@
 
 #include "MT_Tools_pch.h"
 #include "MT_ScipioException.h"
-#include <MT/MT_Logger/MT_Logger_lib.h>
+#include "MT_Tools/MT_Logger.h"
 
 //-----------------------------------------------------------------------------
 // Name: MT_ScipioException constructor
 // Created: JVT 03-02-04
 //-----------------------------------------------------------------------------
 MT_ScipioException::MT_ScipioException( const std::string& strContext, const std::string& strFile, unsigned int nLine, const std::string& strMessage, const std::string& strDescription )
-    : MT_Exception( strContext, 42, strMessage )
-    , strContext_    ( strContext )
+    : strContext_    ( strContext )
     , strFile_       ( strFile )
     , nLine_         ( nLine )
     , strMessage_    ( strMessage )
@@ -33,11 +32,10 @@ MT_ScipioException::MT_ScipioException( const std::string& strContext, const std
 // Created: JVT 03-02-04
 //-----------------------------------------------------------------------------
 MT_ScipioException::MT_ScipioException( const std::string& strContext, const std::string& strFile, unsigned int nLine, const std::string& strMessage )
-    : MT_Exception( strContext, 42, strMessage )
-    , strContext_    ( strContext )
-    , strFile_       ( strFile )
-    , nLine_         ( nLine )
-    , strMessage_    ( strMessage )
+    : strContext_( strContext )
+    , strFile_   ( strFile )
+    , nLine_     ( nLine )
+    , strMessage_( strMessage )
 {
     // NOTHING
 }
@@ -47,8 +45,7 @@ MT_ScipioException::MT_ScipioException( const std::string& strContext, const std
 // Created: JVT 03-02-04
 //-----------------------------------------------------------------------------
 MT_ScipioException::MT_ScipioException( const MT_ScipioException& rhs )
-    : MT_Exception( rhs )
-    , strContext_    ( rhs.strContext_ )
+    : strContext_    ( rhs.strContext_ )
     , strFile_       ( rhs.strFile_ )
     , nLine_         ( rhs.nLine_ )
     , strMessage_    ( rhs.strMessage_ )

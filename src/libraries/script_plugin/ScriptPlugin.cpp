@@ -30,7 +30,7 @@
 #include "dispatcher/Registrable_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "tools/MessageDispatcher_ABC.h"
-#include <MT/MT_Logger/MT_Logger_lib.h>
+#include "MT_Tools/MT_Logger.h"
 #include <directia/brain/Brain.h>
 #include <boost/filesystem.hpp>
 

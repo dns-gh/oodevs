@@ -84,16 +84,6 @@ MIL_ProfilerMgr& MIL_AgentServer::GetProfilerManager() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentServer::GetTimerManager
-// Created: NLD 2003-08-05
-// -----------------------------------------------------------------------------
-inline
-MT_TimerManager& MIL_AgentServer::GetTimerManager()
-{
-    return timerManager_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::GetHLAFederate
 // Created: AGE 2004-11-26
 // -----------------------------------------------------------------------------

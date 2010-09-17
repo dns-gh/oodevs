@@ -13,8 +13,8 @@
 #include "MIL.h"
 #include "tools/MIL_Config.h"
 #include "Network/NET_Simulation_ABC.h"
-#include <MT/MT_Time/MT_Timer_ABC.h>
-#include <MT/MT_Time/MT_TimerManager.h>
+#include "MT_Tools/MT_Timer_ABC.h"
+#include "MT_Tools/MT_TimerManager.h"
 #include "MIL_Time_ABC.h"
 
 namespace resource
@@ -46,7 +46,7 @@ class UrbanModel;
 // Created: DFT 02-02-28
 // Last modified: JVT 03-12-15
 //*****************************************************************************
-class MIL_AgentServer : public MT_Timer_ABC
+class MIL_AgentServer : private MT_Timer_ABC
                       , public NET_Simulation_ABC
                       , public MIL_Time_ABC
                       , private boost::noncopyable
@@ -110,7 +110,6 @@ public:
     PHY_MeteoDataManager& GetMeteoDataManager() const;
     MIL_ProfilerMgr& GetProfilerManager() const;
     MIL_CheckPointManager& GetCheckPointManager() const;
-    MT_TimerManager& GetTimerManager();
     HLA_Federate* GetHLAFederate() const;
     resource::ResourceNetworkModel& GetResourceNetworkModel() const;
     resource::ResourceTools_ABC& GetResourceTools() const;

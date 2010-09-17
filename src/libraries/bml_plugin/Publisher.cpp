@@ -13,7 +13,7 @@
 #include "DCSOperationsSoapBinding.nsmap"
 #include "ResponseHandler_ABC.h"
 #include "SerializationTools.h"
-#include <MT/MT_Logger/MT_Logger_lib.h>
+#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/lexical_cast.hpp>
 #include <fstream>

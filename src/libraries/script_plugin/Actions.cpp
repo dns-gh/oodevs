@@ -21,7 +21,7 @@
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/ObjectKnowledgeConverter.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
-#include <MT/MT_Logger/MT_Logger_lib.h>
+#include "MT_Tools/MT_Logger.h"
 #include "protocol/protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "tools/ExerciseConfig.h"

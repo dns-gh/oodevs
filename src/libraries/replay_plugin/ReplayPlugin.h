@@ -11,8 +11,8 @@
 #define __ReplayPlugin_h_
 
 #include "dispatcher/Plugin_ABC.h"
-#include <MT/MT_Time/MT_Timer_ABC.h>
-#include <MT/MT_Time/MT_TimerManager.h>
+#include "MT_Tools/MT_Timer_ABC.h"
+#include "MT_Tools/MT_TimerManager.h"
 
 namespace MsgsClientToReplay
 {

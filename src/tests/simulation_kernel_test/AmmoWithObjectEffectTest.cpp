@@ -41,7 +41,7 @@ namespace
 {
     PHY_Action_ABC* pExpectedAction;
     int callbackValue = -1;
-    void InitCallback( unsigned int action, int callback )
+    void InitCallback( unsigned int /*action*/, int callback )
     {
         BOOST_CHECK_EQUAL( firing::PHY_RoleAction_IndirectFiring::eRunning, callback );
     }

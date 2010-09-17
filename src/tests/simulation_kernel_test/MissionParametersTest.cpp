@@ -81,7 +81,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentKnowledgeListParameter_ToASN )
     UnitKnowledgeIdList asnOut;
     BOOST_CHECK_EQUAL( true, param.ToAgentKnowledgeList( asnOut ) );
     BOOST_CHECK_EQUAL( 1, asnOut.elem_size() );
-    BOOST_CHECK_EQUAL( 0, asnOut.elem( 0 ).id() ); // $$$$ LDC: = knowledge's id
+    BOOST_CHECK_EQUAL( 0u, asnOut.elem( 0 ).id() ); // $$$$ LDC: = knowledge's id
     asnOut.Clear();
 }
 
@@ -123,7 +123,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentListParameter_ToASN )
     UnitIdList asnOut;
     BOOST_CHECK_EQUAL( true, param.ToAgentList( asnOut ) );
     BOOST_CHECK_EQUAL( 1, asnOut.elem_size() );
-    BOOST_CHECK_EQUAL( 12, asnOut.elem(0).id() );
+    BOOST_CHECK_EQUAL( 12u, asnOut.elem(0).id() );
     asnOut.Clear();
 }
 
@@ -145,7 +145,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentParameter_ToASN )
     MIL_AgentParameter param( asnIn, entityManager );
     UnitId asnOut;
     BOOST_CHECK_EQUAL( true, param.ToAgent( asnOut ) );
-    BOOST_CHECK_EQUAL( 12, asnOut.id() );
+    BOOST_CHECK_EQUAL( 12u, asnOut.id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -163,7 +163,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AutomatParameter_ToASN )
     MIL_AutomatParameter param( asnIn, entityManager );
     AutomatId asnOut;
     BOOST_CHECK_EQUAL( true, param.ToAutomat( asnOut ) );
-    BOOST_CHECK_EQUAL( 0, asnOut.id() );
+    BOOST_CHECK_EQUAL( 0u, asnOut.id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -183,7 +183,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AutomatListParameter_ToASN )
     AutomatIdList asnOut;
     BOOST_CHECK_EQUAL( true, param.ToAutomatList( asnOut ) );
     BOOST_CHECK_EQUAL( 1, asnOut.elem_size() );
-    BOOST_CHECK_EQUAL( 0, asnOut.elem(0).id() );
+    BOOST_CHECK_EQUAL( 0u, asnOut.elem(0).id() );
     asnOut.Clear();
 }
 
@@ -795,7 +795,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_TirIndirectParameter_ToASN )
     MIL_TirIndirectParameter param( asnIn );
     FireId asnOut;
     BOOST_CHECK_EQUAL( true, param.ToIndirectFire( asnOut ) );
-    BOOST_CHECK_EQUAL( 33, asnOut.id() );
+    BOOST_CHECK_EQUAL( 33u, asnOut.id() );
 }
 
 namespace

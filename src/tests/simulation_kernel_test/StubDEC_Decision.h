@@ -27,15 +27,15 @@ public:
     virtual DEC_AutomateDecision* GetDecAutomate() const { return 0; }
     virtual std::string GetName() const { throw; }
     virtual void EndCleanStateAfterCrash() {}
-    virtual void RegisterUserFunctions( directia::brain::Brain& brain ) {}
-    virtual void RegisterSelf( directia::brain::Brain& brain ) {}
-    virtual void UpdateMeKnowledge( directia::brain::Brain& brain ) {}
+    virtual void RegisterUserFunctions( directia::brain::Brain& ) {}
+    virtual void RegisterSelf( directia::brain::Brain& ) {}
+    virtual void UpdateMeKnowledge( directia::brain::Brain& ) {}
     template< typename FunctionType >
     void RegisterFunction( const std::string& strFunctionName, FunctionType function )
     {
         DEC_Decision< T >::RegisterFunction( strFunctionName, function );
     }
-    virtual void RegisterUserArchetypeFunctions ( directia::brain::Brain& brain ) {}
+    virtual void RegisterUserArchetypeFunctions ( directia::brain::Brain& ) {}
 private:
     std::auto_ptr< DEC_Model > model_;
 };

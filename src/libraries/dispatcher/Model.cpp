@@ -42,7 +42,7 @@
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/StaticModel.h"
-#include <MT/MT_Logger/MT_Logger_lib.h>
+#include "MT_Tools/MT_Logger.h"
 #include <boost/bind.hpp>
 #pragma warning( disable : 4503 4355 )
 

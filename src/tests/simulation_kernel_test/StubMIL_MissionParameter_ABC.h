@@ -54,9 +54,9 @@ public:
     { throw; }
     virtual bool ToAgentKnowledge( Common::UnitKnowledgeId& ) const
     { throw; }
-    virtual bool ToAgentKnowledgeList( Common::UnitKnowledgeIdList& asn ) const
+    virtual bool ToAgentKnowledgeList( Common::UnitKnowledgeIdList& ) const
     { throw; }
-    virtual bool ToAgentList( Common::UnitIdList& asn ) const
+    virtual bool ToAgentList( Common::UnitIdList& ) const
     { throw; }
     virtual bool ToAutomat( Common::AutomatId& ) const
     { throw; }
@@ -90,15 +90,15 @@ public:
     { throw; }
     virtual bool ToObjectiveList( Common::MsgMissionObjectiveList& ) const
     { throw; }
-    virtual bool ToObjectKnowledge( Common::ObjectKnowledgeId& asn ) const
+    virtual bool ToObjectKnowledge( Common::ObjectKnowledgeId& ) const
     { throw; }
-    virtual bool ToObjectKnowledgeList( Common::ObjectKnowledgeIdList& asn ) const
+    virtual bool ToObjectKnowledgeList( Common::ObjectKnowledgeIdList& ) const
     { throw; }
     virtual bool ToPath( Common::MsgPath& ) const
     { throw; }
     virtual bool ToPathList( Common::MsgPathList& ) const
     { throw; }
-    virtual bool ToPopulationKnowledge( Common::PopulationKnowledgeId& asn ) const
+    virtual bool ToPopulationKnowledge( Common::PopulationKnowledgeId& ) const
     { throw; }
     virtual bool ToString( std::string& result ) const
     {

@@ -11,7 +11,7 @@
 #include "Savable_ABC.h"
 #include "dispatcher/Config.h"
 #include "tools/OutputBinaryWrapper.h"
-#include <MT/MT_Logger/MT_Logger_lib.h>
+#include "MT_Tools/MT_Logger.h"
 #pragma warning( push )
 #pragma warning( disable: 4127 )
 #include <boost/filesystem/convenience.hpp>

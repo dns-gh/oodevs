@@ -12,7 +12,7 @@
 #include "MT_Tools_pch.h"
 #include "MT_CrashHandler.h"
 #include <tools/win32/StackWalkerProxy.h>
-#include <MT/MT_Logger/MT_Logger_lib.h>
+#include "MT_Tools/MT_Logger.h"
 
 // -----------------------------------------------------------------------------
 // Name: MT_CrashHandler::ContinueSearch

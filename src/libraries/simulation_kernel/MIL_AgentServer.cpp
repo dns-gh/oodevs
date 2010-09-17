@@ -418,7 +418,7 @@ void MIL_AgentServer::Resume()
     else
     {
         nSimState_ = eSimRunning;
-        MT_Timer_ABC::Start( MT_TimeSpan( static_cast< int >( 1000 * nTimeStepDuration_ / nTimeFactor_ ) ) );
+        MT_Timer_ABC::Start( static_cast< int >( 1000 * nTimeStepDuration_ / nTimeFactor_ ) );
         MT_LOG_INFO_MSG( "Simulation resumed" );
         msg().set_error_code( MsgsSimToClient::ControlAck_ErrorCode_no_error );
     }
@@ -439,7 +439,7 @@ void MIL_AgentServer::SetTimeFactor( unsigned timeFactor )
         nTimeFactor_ = timeFactor;
         if( nSimState_ == eSimRunning )
         {
-            MT_Timer_ABC::Start( MT_TimeSpan( static_cast< int >( 1000 * nTimeStepDuration_ / nTimeFactor_ ) ) );
+            MT_Timer_ABC::Start( static_cast< int >( 1000 * nTimeStepDuration_ / nTimeFactor_ ) );
             MT_LOG_INFO_MSG( MT_FormatString( "Time factor set to %d", nTimeFactor_ ).c_str() )
         }
         msg().set_error_code( MsgsSimToClient::ControlAck_ErrorCode_no_error );

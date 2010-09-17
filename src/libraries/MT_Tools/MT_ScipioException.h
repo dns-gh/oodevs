@@ -13,12 +13,11 @@
 #define __MT_ScipioException_h_
 
 #include "MT_Tools_Types.h"
-#include <MT/MT_Tools/MT_Exception.h>
 
 //*****************************************************************************
 // Created: JVT 03-02-04
 //*****************************************************************************
-class MT_ScipioException : public MT_Exception
+class MT_ScipioException
 {
 public:
      MT_ScipioException( const std::string& strContext,

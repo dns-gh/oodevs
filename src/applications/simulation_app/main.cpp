@@ -11,7 +11,7 @@
 #include "MT_Tools/MT_FormatString.h"
 
 #include "tools/win32/FlexLm.h"
-#include <MT/MT_Logger/MT_Logger_lib.h>
+#include "MT_Tools/MT_Logger.h"
 #include <google/protobuf/message.h>
 #include <xeumeuleu/xml.hpp>
 
@@ -133,7 +133,7 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
         MT_LOG_ERROR_MSG( strMsg.str() );
         MessageBox( 0, strMsg.str().c_str(), "SWORD - Invalid input data - Please check ODB data and launch the SIM again", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );
     }
-    catch( MT_Exception& exception )
+    catch( MT_ScipioException& exception )
     {
         std::stringstream strMsg;
         strMsg << "Context : " << exception.GetContext() << std::endl

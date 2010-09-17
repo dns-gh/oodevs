@@ -15,7 +15,7 @@
 #include "Model.h"
 #include "Automat.h"
 #include <xeumeuleu/xml.h>
-#include <MT/MT_Logger/MT_Logger_lib.h>
+#include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Scipio_enum.h"
 #include "directia/brain/Brain.h"
 #include "protocol/protocol.h"

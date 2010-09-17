@@ -10,7 +10,7 @@
 #ifndef __AGR_pch_h_
 #define __AGR_pch_h_
 
-#include <MT/MT_Logger/MT_Logger_lib.h>
+#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>

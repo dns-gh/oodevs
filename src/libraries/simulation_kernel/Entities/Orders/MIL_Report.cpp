@@ -21,14 +21,6 @@ MIL_Report::T_ReportMap      MIL_Report::reports_;
 MIL_Report::T_DiaEventVector MIL_Report::diaEvents_( MIL_Report::eNbrReport );
 MT_IdentifierManager         MIL_Report::ids_;
 
-struct MIL_Report::LoadingWrapper
-{
-    void ReadReport( xml::xistream& xis )
-    {
-        MIL_Report::ReadReport( xis );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Report::Initialize
 // Created: NLD 2006-12-06
@@ -36,9 +28,8 @@ struct MIL_Report::LoadingWrapper
 void MIL_Report::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing reports types" );
-    LoadingWrapper loader;
     xis >> xml::start( "reports" )
-            >> xml::list( "report", loader, &LoadingWrapper::ReadReport )
+            >> xml::list( "report", &MIL_Report::ReadReport )
         >> xml::end;
 
     diaEvents_[ eReport_ReAvailableAfterRepairation                 ] = eRC_ANouveauDisponibleApresReparation;

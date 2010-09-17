@@ -10,7 +10,7 @@
 #ifndef __MIL_Report_h_
 #define __MIL_Report_h_
 
-#include <MT/MT_Tools/MT_IdentifierManager.h>
+#include "MT_Tools/MT_IdentifierManager.h"
 #include "MIL_MissionParameterFactory.h"
 
 namespace xml
@@ -459,6 +459,13 @@ private:
     bool DoSend( unsigned int nSenderID, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& params ) const;
     //@}
 
+    //! @name Helpers
+    //@{
+    static void ReadReport( xml::xistream& xis );
+    void ReadParameter( xml::xistream& xis );
+    //@}
+
+private:
     //! @name Types
     //@{
     typedef std::map< unsigned int, const MIL_Report* > T_ReportMap;
@@ -471,7 +478,7 @@ private:
     //@}
 
 private:
-    //! @name Data Members
+    //! @name Member data
     //@{
     unsigned int nID_;
     std::string strMessage_;
@@ -479,14 +486,6 @@ private:
     static T_ReportMap reports_;
     static T_DiaEventVector diaEvents_;
     static MT_IdentifierManager ids_;
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    struct LoadingWrapper;
-    static void ReadReport( xml::xistream& xis );
-    void ReadParameter( xml::xistream& xis );
     //@}
 };
 

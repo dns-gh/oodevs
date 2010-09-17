@@ -22,7 +22,7 @@
 
 #include <gdal/ogrsf_frmts.h>
 
-#include <MT/MT_Logger/MT_Logger_lib.h>
+#include "MT_Tools/MT_Logger.h"
 
 #undef max
 

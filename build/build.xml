@@ -332,7 +332,7 @@
     </target>
 
     <target name="application.dispatcher_app.nocrossbow" description="build Sword Dispatcher executable without crossbow" depends="application.dispatcher_dll.nocrossbow">
-        <build-app name="dispatcher_app" subsystem="console" mode="release" depends="mt,boost,terrain,flexlm"
+        <build-app name="dispatcher_app" subsystem="console" mode="release" depends="boost,terrain,flexlm"
                    libs="masalloc,tools,
                          dispatcher-${platform}-mt@{suffix},
                          lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}">
@@ -341,7 +341,7 @@
     </target>
 
     <target name="application.simulation_app.nocrossbow" description="build Sword Simulation executable without crossbow" depends="library.dispatcher,library.simulation_kernel,application.dispatcher_dll.nocrossbow">
-        <build-app name="simulation_app" depends="mt,terrain,boost,xerces,flexlm,qt"
+        <build-app name="simulation_app" depends="terrain,boost,xerces,flexlm,qt"
             libs="HLA,libFedTime,masalloc,libprotobuf,directia-${platform}-mt-4_6,library-${platform}-mt,
                   gdal_i,gdal_ogr,geodata,
                   population-${platform}-mt@{suffix},
@@ -428,7 +428,7 @@
     </target>
 
     <target name="application.dispatcher_app.crossbow" description="build Sword Dispatcher executable" depends="application.dispatcher_dll.crossbow">
-        <build-app name="dispatcher_crossbow_app" subsystem="console" mode="release" depends="mt,boost,terrain,flexlm"
+        <build-app name="dispatcher_crossbow_app" subsystem="console" mode="release" depends="boost,terrain,flexlm"
             pattern="dispatcher_crossbow_app" input="dispatcher_app"
             libs="masalloc,tools,
                   dispatcher-crossbow-${platform}-mt@{suffix},
@@ -438,7 +438,7 @@
     </target>
 
     <target name="application.simulation_app.crossbow" description="build Sword Simulation executable" depends="library.dispatcher,library.simulation_kernel,application.dispatcher_dll.crossbow">
-        <build-app name="simulation_crossbow_app" depends="mt,terrain,boost,xerces,flexlm,qt"
+        <build-app name="simulation_crossbow_app" depends="terrain,boost,xerces,flexlm,qt"
             pattern="simulation_crossbow_app" input="simulation_app"
             libs="HLA,libFedTime,masalloc,libprotobuf,directia-${platform}-mt-4_6,library-${platform}-mt,
                   gdal_i,gdal_ogr,geodata,
@@ -490,7 +490,7 @@
     </target>
 
     <target name="application.adaptation_app" description="build CSword Adaptation executable" depends="library.ENT,library.clients_gui">
-        <build-app name="adaptation_app" depends="mt,qt,xerces,boost" excludes="**/XmlResources.cpp"
+        <build-app name="adaptation_app" depends="qt,xerces,boost" excludes="**/XmlResources.cpp"
                    libs="lib${ant.project.name}_ENT-${platform}-mt
                          lib${ant.project.name}_clients_gui-${platform}-mt
                          lib${ant.project.name}_clients_kernel-${platform}-mt
@@ -578,7 +578,7 @@
     </target>
 
     <target name="application.AGR" description="build AGR executable">
-        <build-app name="AGR" subsystem="console" excludes="**/*_Skeleton.*" depends="mt,boost,xerces">
+        <build-app name="AGR" subsystem="console" excludes="**/*_Skeleton.*" depends="boost,xerces">
             <syslibset libs="user32"/>
         </build-app>
     </target>
@@ -739,7 +739,7 @@
                     <filter token="PHYSICAL" value="@{physical}"/>
                 </filterset>
             </copy>
-            <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" timeout="1200000">
+            <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
                 <arg value="--root-dir=../../data"/>
                 <arg value="--exercise=test-scripts"/>
                 <arg value="--session=test-session"/>
@@ -825,7 +825,7 @@
                    lib${ant.project.name}_resource_network-${platform}-mt@{suffix},
                    lib${ant.project.name}_meteo-${platform}-mt@{suffix},
                    lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}"
-            depends="mt,xerces,terrain,boost,qt">
+            depends="xerces,terrain,boost,qt">
             <syslibset libs="dbghelp,psapi,shell32,iphlpapi,advapi32"/>
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <linkerarg value="/STACK:15000000"/>      <!-- Because of boost serialization -->
@@ -947,7 +947,6 @@
         <update name="terrain" modules="terrain,graphics,pathfind,vmap,geodata,gdal_ogr" version="2.0"/>
         <update name="terrain" modules="urban"/>
         <update name="terrain" package="SWORD Terrain_${platform}.exe"/>
-        <update name="MT" modules="MT_Tools,MT_Memory,MT_IO,MT_Archive,MT_Patterns,MT_Profiler,MT_Time,MT_Thread,MT_Logger,MT_XmlTools,MT_Qt"/>
         <update name="qt" version="3.3.8"/>
         <update name="boost"/>
         <update name="boost" package="geometry" todir="${include.dir}"/>

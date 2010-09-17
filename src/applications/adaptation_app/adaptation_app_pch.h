@@ -95,7 +95,7 @@
 #pragma warning( pop )
 
 #include "MT_Tools/MT_Tools_Types.h"
-#include <MT/MT_Logger/MT_Logger_lib.h>
+#include "MT_Tools/MT_Logger.h"
 
 #include <xeumeuleu/xml.hpp>
 #include "ADN_Type_ABC.h"

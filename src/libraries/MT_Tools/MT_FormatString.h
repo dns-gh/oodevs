@@ -40,8 +40,7 @@ class MT_FormatString
 public:
     //! @name Constructors
     //@{
-    MT_FormatString( const std::string* pformat, ... );
-    MT_FormatString( const char*        pFormat, ... );
+    MT_FormatString( const char* pFormat, ... );
     //@}
 
     //! @name Operations
@@ -60,9 +59,13 @@ public:
     {
         return os << fstr.fstr_;
     }
+    //@}
 
 private:
+    //! @name Member data
+    //@{
     std::string fstr_;
+    //@}
 };
 
 #endif // __MT_FormatString_h_
