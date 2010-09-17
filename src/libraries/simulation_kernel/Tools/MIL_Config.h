@@ -157,9 +157,8 @@ private:
     bool           randomGaussian_[ MIL_Random::eContextsNbr ];
     double         randomDeviation_[ MIL_Random::eContextsNbr ];
     double         randomMean_[ MIL_Random::eContextsNbr ];
-
-	unsigned int				setpause_;
-	unsigned int				setstepmul_;
+    unsigned int   setpause_;
+    unsigned int   setstepmul_;
     //@}
 };
 

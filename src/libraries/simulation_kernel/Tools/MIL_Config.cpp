@@ -89,54 +89,54 @@ void MIL_Config::Parse( int argc, char** argv )
 // -----------------------------------------------------------------------------
 void MIL_Config::ReadSessionFile( const std::string& file )
 {
-	setpause_ = 100;
-	setstepmul_ = 200;
-
+    setpause_ = 100;
+    setstepmul_ = 200;
     xml::xifstream xis( file );
     xis >> xml::start( "session" )
-        >> xml::start( "config" )
-            >> xml::start( "simulation" )
-                >> xml::start( "decisional" )
-                    >> xml::attribute( "useonlybinaries", bUseOnlyDIAArchive_ )
-                >> xml::end
-                >> xml::optional
-                >> xml::start( "experimental" )
-                    >> xml::attribute( "frozenmode", bFrozenMode_ )
-                >> xml::end
-                >> xml::start( "orbat" )
-                    >> xml::attribute( "checkcomposition", bCheckAutomateComposition_ )
-                >> xml::end
-                >> xml::start( "profiling" )
-                    >> xml::attribute( "enabled", bProfilingEnabled_ )
-                >> xml::end
-                >> xml::start( "dispatcher" )
-                    >> xml::attribute( "embedded", bEmbeddedDispatcher_ )
-                >> xml::end
-                >> xml::start( "network" )
-                    >> xml::attribute( "port", networkPort_ )
-                >> xml::end
-                >> xml::start( "time" )
-                    >> xml::attribute( "step", timeStep_ )
-                    >> xml::attribute( "factor", timeFactor_ )
-                    >> xml::optional >> xml::attribute( "end-tick", endTick_ )
-                    >> xml::optional >> xml::attribute( "paused", bPausedAtStartup_ )
-                >> xml::end
-                >> xml::optional() >> xml::start( "parametresGC" )
-                    >> xml::attribute( "setpause", setpause_ )
-					>> xml::attribute( "setstepmul", setstepmul_ )
-				>> xml::end()
-                >> xml::start( "pathfinder" )
-                    >> xml::attribute( "threads", pathFinderThreads_ )
-                >> xml::end
-                >> xml::start( "hla" )
-                    >> xml::attribute( "enabled"   , bHLAEnabled_ )
-                    >> xml::attribute( "federation", hlaFederation_ )
-                    >> xml::attribute( "federate"  , hlaFederate_ )
-                >> xml::end
-                >> xml::optional
-                >> xml::start( "random" )
-                    >> xml::attribute( "seed", randomSeed_ )
-                >> xml::end;
+            >> xml::start( "config" )
+                >> xml::start( "simulation" )
+                    >> xml::start( "decisional" )
+                        >> xml::attribute( "useonlybinaries", bUseOnlyDIAArchive_ )
+                    >> xml::end
+                    >> xml::optional
+                    >> xml::start( "experimental" )
+                        >> xml::attribute( "frozenmode", bFrozenMode_ )
+                    >> xml::end
+                    >> xml::start( "orbat" )
+                        >> xml::attribute( "checkcomposition", bCheckAutomateComposition_ )
+                    >> xml::end
+                    >> xml::start( "profiling" )
+                        >> xml::attribute( "enabled", bProfilingEnabled_ )
+                    >> xml::end
+                    >> xml::start( "dispatcher" )
+                        >> xml::attribute( "embedded", bEmbeddedDispatcher_ )
+                    >> xml::end
+                    >> xml::start( "network" )
+                        >> xml::attribute( "port", networkPort_ )
+                    >> xml::end
+                    >> xml::start( "time" )
+                        >> xml::attribute( "step", timeStep_ )
+                        >> xml::attribute( "factor", timeFactor_ )
+                        >> xml::optional >> xml::attribute( "end-tick", endTick_ )
+                        >> xml::optional >> xml::attribute( "paused", bPausedAtStartup_ )
+                    >> xml::end
+                    >> xml::optional
+                    >> xml::start( "parametresGC" )
+                        >> xml::attribute( "setpause", setpause_ )
+                        >> xml::attribute( "setstepmul", setstepmul_ )
+                    >> xml::end
+                    >> xml::start( "pathfinder" )
+                        >> xml::attribute( "threads", pathFinderThreads_ )
+                    >> xml::end
+                    >> xml::start( "hla" )
+                        >> xml::attribute( "enabled"   , bHLAEnabled_ )
+                        >> xml::attribute( "federation", hlaFederation_ )
+                        >> xml::attribute( "federate"  , hlaFederate_ )
+                    >> xml::end
+                    >> xml::optional
+                    >> xml::start( "random" )
+                        >> xml::attribute( "seed", randomSeed_ )
+                    >> xml::end;
     ConfigureRandom( xis );
     ReadCheckPointConfiguration( xis );
     ReadDebugConfiguration     ( xis );
