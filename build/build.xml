@@ -967,7 +967,6 @@
         <update name="gdal" version="1.6.a"/>
         <update name="esri" version="9.2"/>
         <update name="folk"/>
-        <update name="mockpp"/>
         <update name="turtle"/>
         <update name="protobuf"/>
         <update name="vcredist" package="vcredist"/>

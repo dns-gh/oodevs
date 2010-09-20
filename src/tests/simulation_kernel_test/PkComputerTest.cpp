@@ -27,10 +27,8 @@
 // Name: PkComputerTest
 // Created: SLG 2010-04-14
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( PkComputerUrbanProtectionTest )
+BOOST_FIXTURE_TEST_CASE( PkComputerUrbanProtectionTest, TestPK )
 {
-    TestPK* test = new TestPK();
-
     TER_World::Initialize( "../../data/data/terrains/Drosoville/Terrain.xml" );
 
     const PHY_DotationCategory* pCategory = PHY_DotationType::FindDotationCategory( "ammo" );
@@ -49,10 +47,10 @@ BOOST_AUTO_TEST_CASE( PkComputerUrbanProtectionTest )
         "</urban-object>" );
 
     MockAgent firer;
-    urban::CoordinateConverter_ABC* coord = new urban::CoordinateConverter();
+    urban::CoordinateConverter coord;
     xisModel >> xml::start( "urban-object" );
     std::auto_ptr< urban::UrbanObject > urbanBlock;
-    urbanBlock.reset( new urban::UrbanObject ( xisModel, 0, *coord ) );
+    urbanBlock.reset( new urban::UrbanObject ( xisModel, 0, coord ) );
     MIL_ObjectLoader loader;
     {
         xml::xistringstream xis(
@@ -70,8 +68,6 @@ BOOST_AUTO_TEST_CASE( PkComputerUrbanProtectionTest )
     firer.RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
 
     BOOST_CHECK_CLOSE( 0.48, urbanRole->ComputeUrbanProtection( *pCategory ), 1. );
-    delete coord;
-    delete test;
 
     TER_World::DestroyWorld();
 }
