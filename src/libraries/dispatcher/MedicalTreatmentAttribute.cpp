@@ -47,7 +47,7 @@ void MedicalTreatmentAttribute::Update( const Common::MsgObjectAttributes& messa
         availableBeds_      = message.medical_treatment().available_beds();
         doctors_            = message.medical_treatment().doctors();
         availableDoctors_   = message.medical_treatment().available_doctors();
-        for( unsigned int i = 0 ; i < message.medical_treatment().type_id_size() ; i++ )
+        for( int i = 0; i < message.medical_treatment().type_id_size(); ++i )
             medicalTreatmentList_.push_back( message.medical_treatment().type_id( i ) );
     }
 }

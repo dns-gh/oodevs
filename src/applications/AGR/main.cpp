@@ -37,8 +37,7 @@ int main( int /*argc*/, char** /*argv*/ )
         }
         std::cout << "Generating XSD files from ASN files" << std::endl;
         bfs::create_directories( "agr_tmp" );
-        std::string strCommandLine( "asn2xsd.exe ../../src/libraries/game_asn/*.asn -o ./agr_tmp" );
-        int nErrorCode = system( strCommandLine.c_str() );
+        const int nErrorCode = system( "asn2xsd.exe ../../src/libraries/game_asn/*.asn -o ./agr_tmp" );
         if( nErrorCode != EXIT_SUCCESS )
         {
             std::cout << "asn2xsd.exe exited with code " << nErrorCode << "." << std::endl;

@@ -29,73 +29,60 @@ class MT_FileLogger;
 class SIM_App : private boost::noncopyable
 {
 public:
-
-    class QuitException : public std::exception
-    {
-
-    } ;
-
     //! @name Constructors/Destructor
     //@{
              SIM_App( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow, int maxConnections ); //!< win32
     virtual ~SIM_App();
     //@}
 
+    //! @name Operations
+    //@{
     int Execute();
 
     static bool CrashWithCoreDump();
+    //@}
 
 private:
-    //! @name Tools
+    //! @name Helpers
     //@{
-    void Initialize        ();
-    void Run               ();
-    void Stop              ();
-    bool Tic               ();
-    void Cleanup           ();
-    int  Test              ();
-    void CheckpointTest    ();
+    void Initialize    ();
+    void Run           ();
+    void Stop          ();
+    bool Tick           ();
+    void Cleanup       ();
+    int  Test          ();
+    void CheckpointTest();
 
-    std::string Wrap( const std::string& content, const std::string& prefix ) const;
+    void RunGUI();
+    void RunDispatcher();
+    void AnimateIcon();
+    void StartIconAnimation();
+    void StopIconAnimation();
 
+    static LRESULT CALLBACK MainWndProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
     //@}
 
 private:
     //! @name Member data
     //@{
-    MIL_Config        startupConfig_;
+    MIL_Config startupConfig_;
+    WinArguments winArguments_;
+    SIM_NetworkLogger* pNetworkLogger_;
+    MT_FileLogger* logger_;
 
-    WinArguments    winArguments_ ;
+    static bool     bCrashWithCoreDump_;
+    static bool     bUserInterrupt_;
+    SIM_Dispatcher* pDispatcher_;
+    int             maxConnections_;
 
-    SIM_NetworkLogger*                pNetworkLogger_;    //<! Error dispatchers
-    MT_FileLogger*                  logger_;
-
-    static bool                        bCrashWithCoreDump_;
-    static bool                        bUserInterrupt_;
-    SIM_Dispatcher*                    pDispatcher_;
-    int                                maxConnections_;
-    //@}
-
-    //! @name UI members
-    //@{
-    HWND                           hWnd_ ;
-    HINSTANCE                       hInstance_ ;
-    NOTIFYICONDATA                   TrayIcon_;
+    HWND                           hWnd_;
+    HINSTANCE                      hInstance_;
+    NOTIFYICONDATA                  TrayIcon_;
     unsigned int                   nIconIndex_;
-    std::auto_ptr< boost::thread > guiThread_ ;
-    std::auto_ptr< boost::thread > dispatcherThread_ ;
+    std::auto_ptr< boost::thread > guiThread_;
+    std::auto_ptr< boost::thread > dispatcherThread_;
     bool                           dispatcherOk_;
     //@}
-
-
-    void RunGUI();
-    void RunDispatcher();
-    void AnimateIcon() ;
-    void StartIconAnimation();
-    void StopIconAnimation();
-
-    static LRESULT CALLBACK    MainWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
 };
 
 #include "SIM_App.inl"

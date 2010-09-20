@@ -66,7 +66,6 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
 {
     TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" ); // $$$$ because used in asn and in destructor of action!!!
     MockNET_Publisher_ABC mockPublisher;
-
     {
         // Ordre de conduite Appliquer les feux avec munition idoine à un pion de modele SAM / Pion ASS -> "DEC_StartTirIndirectSurPosition"
         const std::string dotationName( "ammo" );
@@ -137,15 +136,13 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
         MockPHY_RoleInterface_Composantes* composanteRole = new MockPHY_RoleInterface_Composantes();
         pion.RegisterRole( *composanteRole );
         MOCK_EXPECT( composanteRole, Neutralize ).once();
-        MOCK_EXPECT( urbanRole, ComputeRatioPionInsideEllipse ).once().returns( 1. );
+        MOCK_EXPECT( urbanRole, ComputeRatioPionInsideEllipse ).once().returns( 1.f );
         MOCK_EXPECT( composanteRole, ApplyIndirectFire ).once();
         MOCK_EXPECT( mockArmy, IsAFriend ).once().returns( eTristate_False );
         UrbanModel urbanModel;
         effectManager.Update();
         entityManager.verify();
-
         PHY_IndirectFireDotationClass::Terminate();
     }
-
     TER_World::DestroyWorld();
 }

@@ -11,6 +11,7 @@
 #define __Primitive_h_
 
 #include <boost/shared_ptr.hpp>
+#include <qstring.h>
 
 namespace kernel
 {

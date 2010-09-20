@@ -37,8 +37,14 @@ public:
 
     //! @name Accessors
     //@{
-    const std::string& GetName() const;
-    const T_String_Vector& GetEnumValueSet() const;
+    const std::string& GetName() const
+    {
+        return strName_;
+    }
+    const T_String_Vector& GetEnumValueSet() const
+    {
+        return valueList_;
+    }
     //@}
 
 private:
@@ -62,25 +68,5 @@ private:
     T_String_Vector valueList_;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: AGR_Enumeration::GetName
-// Created: AGN 2004-04-26
-// -----------------------------------------------------------------------------
-inline
-const std::string& AGR_Enumeration::GetName() const
-{
-    return strName_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AGR_Enumeration::GetEnumValueSet
-// Created: AGN 2004-04-26
-// -----------------------------------------------------------------------------
-inline
-const T_String_Vector& AGR_Enumeration::GetEnumValueSet() const
-{
-    return valueList_;
-}
 
 #endif // __AGR_Enumeration_h_

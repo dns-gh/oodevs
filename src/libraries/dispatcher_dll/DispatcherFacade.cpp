@@ -28,12 +28,11 @@ using namespace plugins;
 // Created: AGE 2008-05-21
 // -----------------------------------------------------------------------------
 DispatcherFacade::DispatcherFacade( int argc, char** argv, int maxConnections )
-    : config_  ( new dispatcher::Config() )
+    : config_( new dispatcher::Config() )
 {
     MT_LOG_REGISTER_LOGGER( *new MT_ConsoleLogger() );
     config_->Parse( argc, argv );
     MT_LOG_REGISTER_LOGGER( *new MT_FileLogger( config_->BuildSessionChildFile( "Dispatcher.log" ).c_str(), MT_Logger_ABC::eLogLevel_All, MT_Logger_ABC::eLogLayer_All, true ) );
-
     try
     {
         dispatcher_.reset( new dispatcher::Dispatcher( *config_, maxConnections ) );

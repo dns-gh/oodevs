@@ -9,15 +9,12 @@
 
 #include "AGR_pch.h"
 #include "AGR_Enumeration.h"
-
 #include <boost/algorithm/string.hpp>
 #include <cstdio>
-#include <assert.h>
+#include <cassert>
 
 // -----------------------------------------------------------------------------
 // Name: AGR_Enumeration constructor
-/** @param  strName
-*/
 // Created: AGN 2004-04-26
 // -----------------------------------------------------------------------------
 AGR_Enumeration::AGR_Enumeration( const std::string& strName )
@@ -68,7 +65,6 @@ std::string AGR_Enumeration::HumanName( const std::string& strValue ) const
     {
         if( boost::is_upper()( *it ) && boost::is_lower()( *prevIt ) )
             it = strResult.insert( it, ' ' );
-
         prevIt = it;
         ++it;
     }

@@ -20,8 +20,6 @@
 #include <cassert>
 #include <fstream>
 #include <sstream>
-#include <qstring.h>
-#include <geometry/Types.h>
 
 #pragma warning ( pop )
 

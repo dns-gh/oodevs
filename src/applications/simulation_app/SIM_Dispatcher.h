@@ -12,8 +12,6 @@
 
 #include "dispatcher_dll/DispatcherFacade.h"
 
-class SIM_Config;
-
 // =============================================================================
 /** @class  SIM_Dispatcher
     @brief  SIM_Dispatcher
@@ -43,11 +41,10 @@ private:
     //@}
 
 private:
-
-    //! @name
+    //! @name Member data
     //@{
-    DispatcherFacade               dispatcher_;    //!< embedded dispatcher
-    bool                           bRunning_ ;  //!< running status
+    DispatcherFacade dispatcher_;
+    bool running_;
     //@}
 };
 

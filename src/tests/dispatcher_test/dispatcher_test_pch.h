@@ -21,8 +21,4 @@
 #include <turtle/mock.hpp>
 std::string BOOST_RESOLVE( const std::string& filename );
 
-#pragma warning( push, 0 )
-#include <qstring.h>
-#pragma warning( pop )
-
 #endif // __dispatcher_kernel_test_pch_h_

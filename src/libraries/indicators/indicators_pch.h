@@ -14,7 +14,6 @@
 #include <map>
 #include <string>
 #include <vector>
-#include <qstring.h>
 #pragma warning( pop )
 
 #endif // __indicators_pch_h_

@@ -11,10 +11,10 @@
 #define __FunctionParameter_h_
 
 #include "Element_ABC.h"
+#include <qstring.h>
 
 namespace indicators
 {
-
 // =============================================================================
 /** @class  FunctionParameter
     @brief  FunctionParameter

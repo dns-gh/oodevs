@@ -1,27 +1,22 @@
 
 #include "simulation_app_pch.h"
-#include "masalloc/masalloc.h"
-
 #include "SIM_App.h"
 #include "SIM_NetWorkLogger.h"
-
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_Version.h"
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_FormatString.h"
-
-#include "tools/win32/FlexLm.h"
 #include "MT_Tools/MT_FileLogger.h"
 #include "MT_Tools/MT_Logger.h"
+#include <tools/Win32/Win32Exception.h>
+#include <tools/win32/FlexLm.h>
+#include <masalloc/masalloc.h>
 #include <google/protobuf/message.h>
 #include <xeumeuleu/xml.hpp>
-
 #include <commctrl.h>
 #include <new.h>
 #include <dbghelp.h>
 #include <direct.h>
-
-#include "tools/Win32/Win32Exception.h"
 
 int __cdecl NoMoreMemoryHandler( unsigned int nSize )
 {
@@ -119,9 +114,6 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
         SIM_App app( hinstance, hPrevInstance, lpCmdLine, nCmdShow, maxConnections );
         MT_LOG_UNREGISTER_LOGGER( fileLogger );
         nResult = app.Execute();
-    }
-    catch( SIM_App::QuitException& )
-    {
     }
     catch( MT_ScipioException& exception )
     {

@@ -263,10 +263,10 @@ std::string AGR_EnumGenerator::CreateScriptName( const std::string strValue ) co
 // -----------------------------------------------------------------------------
 // Name: AGR_EnumGenerator::GetCoreEnumName
 /*
-    EnumMissionInfNatureObjectif    -> MissionInfNatureObjectif
+    EnumMissionInfNatureObjectif   -> MissionInfNatureObjectif
     EnumAutomatOrderFormation      -> AutomatOrderFormation
-    EnumControlErrorCode               -> CtrlErrorCode
-    MsgCtrlClientAnnouncement       -> MsgCtrlClientAnnouncement
+    EnumControlErrorCode           -> CtrlErrorCode
+    MsgCtrlClientAnnouncement      -> MsgCtrlClientAnnouncement
 */
 // Created: APE 2005-02-10
 // -----------------------------------------------------------------------------
@@ -276,6 +276,5 @@ std::string AGR_EnumGenerator::GetCoreEnumName( const std::string strEnumName ) 
         return strEnumName;
     if( strEnumName.substr( 0, 4 ) == "Enum" )
         return strEnumName.substr( 4, strEnumName.length() - 4 );
-    else
-        return strEnumName;
+    return strEnumName;
 }

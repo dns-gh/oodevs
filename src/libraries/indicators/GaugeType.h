@@ -10,6 +10,8 @@
 #ifndef __GaugeType_h_
 #define __GaugeType_h_
 
+#include <qstring.h>
+
 namespace kernel
 {
     class Displayer_ABC;
@@ -22,7 +24,6 @@ namespace xml
 
 namespace indicators
 {
-
 // =============================================================================
 /** @class  GaugeType
     @brief  GaugeType

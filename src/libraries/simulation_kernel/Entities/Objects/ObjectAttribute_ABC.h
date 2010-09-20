@@ -10,7 +10,7 @@
 #ifndef __ObjectAttribute_ABC_h_
 #define __ObjectAttribute_ABC_h_
 
-#include <HLA/Deserializer.h>
+#include <hla/Deserializer.h>
 
 namespace Common
 {

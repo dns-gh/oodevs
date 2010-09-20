@@ -28,8 +28,7 @@
 */
 // Created: APE 2005-02-09
 // =============================================================================
-class ENT_Tr
-: public ENT_Tr_ABC
+class ENT_Tr : public ENT_Tr_ABC
 {
 public:
     static void InitTranslations();

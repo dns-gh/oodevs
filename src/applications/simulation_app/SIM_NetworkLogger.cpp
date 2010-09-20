@@ -11,14 +11,11 @@
 
 #include "simulation_app_pch.h"
 #include "SIM_NetworkLogger.h"
-
 #ifdef _MSC_VER
 #   pragma warning( push, 0 )
 #endif
-
 #include <boost/bind.hpp>
 #include <boost/thread.hpp>
-
 #ifdef _MSC_VER
 #   pragma warning( pop )
 #endif
@@ -29,13 +26,11 @@
 // -----------------------------------------------------------------------------
 SIM_NetworkLogger::SIM_NetworkLogger( unsigned int nPort, unsigned int nLogLevels, unsigned int nLogLayers )
     : MT_Logger_ABC( nLogLevels, nLogLayers )
-    , sockets_   ()
-    , io_service_()
-    , acceptor_  (io_service_, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), nPort ) )
-    , criticalSection_ ( new boost::mutex )
+    , acceptor_( service_, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), nPort ) )
+    , mutex_   ( new boost::mutex() )
 {
-    WaitForClient();
-    thread_.reset( new boost::thread( boost::bind( &boost::asio::io_service::run, &io_service_ ) ) );
+    Accept();
+    thread_.reset( new boost::thread( boost::bind( &boost::asio::io_service::run, &service_ ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,53 +40,45 @@ SIM_NetworkLogger::SIM_NetworkLogger( unsigned int nPort, unsigned int nLogLevel
 SIM_NetworkLogger::~SIM_NetworkLogger()
 {
     sockets_.clear();
-    io_service_.stop();
+    service_.stop();
     thread_->join();
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: SIM_NetworkLogger::WaitForClient
+// Name: SIM_NetworkLogger::Accept
 // Created: RDS 2008-07-11
 // -----------------------------------------------------------------------------
-void SIM_NetworkLogger::WaitForClient()
+void SIM_NetworkLogger::Accept()
 {
-    boost::shared_ptr< boost::asio::ip::tcp::socket > socket( new boost::asio::ip::tcp::socket( io_service_ ) );
-    acceptor_.async_accept( *socket, boost::bind( &SIM_NetworkLogger::StartConnection, this, socket, boost::asio::placeholders::error ) );
+    T_Socket socket( new boost::asio::ip::tcp::socket( service_ ) );
+    acceptor_.async_accept( *socket, boost::bind( &SIM_NetworkLogger::OnAccept, this, socket, boost::asio::placeholders::error ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: SIM_NetworkLogger::StartConnection
+// Name: SIM_NetworkLogger::OnAccept
 // Created: RDS 2008-07-11
 // -----------------------------------------------------------------------------
-void SIM_NetworkLogger::StartConnection( boost::shared_ptr< boost::asio::ip::tcp::socket > newClientSocket, const boost::system::error_code& error )
+void SIM_NetworkLogger::OnAccept( T_Socket socket, const boost::system::error_code& error )
 {
     if( !error )
     {
-        boost::lock_guard< boost::mutex>  locker( *criticalSection_ );
-        sockets_.insert( newClientSocket ) ;
-        WaitForClient();
+        boost::lock_guard< boost::mutex > locker( *mutex_ );
+        sockets_.insert( socket ) ;
     }
+    Accept();
 }
 
 // -----------------------------------------------------------------------------
-// Name: SIM_NetworkLogger::StopConnection
-// Created: RDS 2008-07-11
-// -----------------------------------------------------------------------------
-void SIM_NetworkLogger::StopConnection( boost::shared_ptr< boost::asio::ip::tcp::socket > socket )
-{
-    boost::lock_guard< boost::mutex>  locker( *criticalSection_ );
-    sockets_.erase( socket ) ;
-}
-
-// -----------------------------------------------------------------------------
-// Name: SIM_NetworkLogger::AsyncWrite
+// Name: SIM_NetworkLogger::OnWrite
 // Created: RDS 2008-07-09
 // -----------------------------------------------------------------------------
-void SIM_NetworkLogger::AsyncWrite( boost::shared_ptr< boost::asio::ip::tcp::socket > socket, const boost::system::error_code& error )
+void SIM_NetworkLogger::OnWrite( T_Socket socket, const boost::system::error_code& error )
 {
-    if (error)
-        StopConnection( socket );
+    if( error )
+    {
+        boost::lock_guard< boost::mutex > locker( *mutex_ );
+        sockets_.erase( socket ) ;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -100,32 +87,20 @@ void SIM_NetworkLogger::AsyncWrite( boost::shared_ptr< boost::asio::ip::tcp::soc
 // -----------------------------------------------------------------------------
 void SIM_NetworkLogger::LogString( const char* strLayerName, E_LogLevel nLevel, const char* szMsg, const char* strContext, int nCode )
 {
-    boost::lock_guard< boost::mutex>  locker( *criticalSection_ );
-
-    std::stringstream strTmp;
-
-    strTmp << "[" << GetTimestampAsString() << "]";
-
-    if( strLayerName != NULL )
-        strTmp << " " << strLayerName << " -";
-
+    std::stringstream s;
+    s << "[" << GetTimestampAsString() << "]";
+    if( strLayerName )
+        s << " " << strLayerName << " -";
     if( nLevel != eLogLevel_None )
-        strTmp << " " << GetLogLevelAsString( nLevel ) << " -";
-
-    strTmp << " " << szMsg;
-
+        s << " " << GetLogLevelAsString( nLevel ) << " -";
+    s << " " << szMsg;
     if( nCode != -1 )
-        strTmp << " (" << nCode << ")";
-
-    if( strContext != NULL )
-        strTmp << " [Context: " << strContext << "]";
-
-    strTmp << "\r\n";
-
-    for ( IT_SocketSet it = sockets_.begin(); it != sockets_.end(); it++ )
-    {
-        boost::asio::async_write( **it,  boost::asio::buffer( strTmp.str().data() , strTmp.str().size() ) ,
-                                  boost::bind(&SIM_NetworkLogger::AsyncWrite, this, *it, boost::asio::placeholders::error) ) ;
-    }
+        s << " (" << nCode << ")";
+    if( strContext )
+        s << " [Context: " << strContext << "]";
+    s << std::endl;
+    boost::lock_guard< boost::mutex > locker( *mutex_ );
+    for( CIT_Sockets it = sockets_.begin(); it != sockets_.end(); ++it )
+        boost::asio::async_write( **it, boost::asio::buffer( s.str().data(), s.str().size() ),
+                                  boost::bind( &SIM_NetworkLogger::OnWrite, this, *it, boost::asio::placeholders::error ) ) ;
 }
-

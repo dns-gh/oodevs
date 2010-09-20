@@ -12,6 +12,7 @@
 
 #include "clients_kernel/Entity_ABC.h"
 #include "ParameterContainer_ABC.h"
+#include <qstring.h>
 
 namespace Common
 {

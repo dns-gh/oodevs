@@ -42,10 +42,6 @@
 #include "protocol/protocol.h"
 #include "tools/Resolver.h"
 #include <geometry/types.h>
-#pragma warning( push, 0 )
-#include <qstring.h>
-#include <qstringlist.h>
-#pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 #include <boost/lambda/bind.hpp>
 #include <boost/lambda/construct.hpp>

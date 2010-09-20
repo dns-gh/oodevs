@@ -16,10 +16,4 @@
 #include <map>
 #include <set>
 
-#pragma warning( push )
-#pragma warning( disable : 4996 4512 )
-#include <qstring.h>
-#include <qstringlist.h>
-#pragma warning( pop )
-
 #endif // __script_plugin_pch_h_

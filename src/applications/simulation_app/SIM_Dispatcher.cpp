@@ -8,11 +8,9 @@
 // *****************************************************************************
 
 #include "simulation_app_pch.h"
-
 #include "SIM_Dispatcher.h"
 #include "MT_Tools/MT_Logger.h"
-#pragma warning( push )
-#pragma warning( disable : 4512 4244 )
+#pragma warning( push, 0 )
 #include <boost/thread.hpp>
 #pragma warning( pop )
 
@@ -21,10 +19,10 @@
 // Created: NLD 2006-10-04
 // -----------------------------------------------------------------------------
 SIM_Dispatcher::SIM_Dispatcher( int argc, char** argv, int maxConnections )
-    : bRunning_  ( true )
+    : running_   ( true )
     , dispatcher_( argc, argv, maxConnections )
 {
-    // thread_.reset( new boost::thread( boost::bind( &SIM_Dispatcher::Run, this ) ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -33,12 +31,8 @@ SIM_Dispatcher::SIM_Dispatcher( int argc, char** argv, int maxConnections )
 // -----------------------------------------------------------------------------
 SIM_Dispatcher::~SIM_Dispatcher()
 {
-    Stop();
+    // NOTHING
 }
-
-// =============================================================================
-// MAIN
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: SIM_Dispatcher::Run
@@ -46,7 +40,7 @@ SIM_Dispatcher::~SIM_Dispatcher()
 // -----------------------------------------------------------------------------
 void SIM_Dispatcher::Run()
 {
-    while( bRunning_ )
+    while( running_ ) // $$$$ MCO : should be protected with a mutex
     {
         dispatcher_.Update();
         boost::this_thread::sleep( boost::posix_time::milliseconds( 25 ) ) ;
@@ -59,6 +53,5 @@ void SIM_Dispatcher::Run()
 // -----------------------------------------------------------------------------
 void SIM_Dispatcher::Stop()
 {
-    bRunning_ = false ;
+    running_ = false ; // $$$$ MCO : should be protected with a mutex
 }
-

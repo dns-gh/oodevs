@@ -7,10 +7,6 @@
 //
 // *****************************************************************************
 
-#pragma warning( push, 0 )
-#include <qstring.h>
-#pragma warning( pop )
-
 #include "ActionsLogger.h"
 #include "actions/Action_ABC.h"
 #include "actions/ActionFactory.h"

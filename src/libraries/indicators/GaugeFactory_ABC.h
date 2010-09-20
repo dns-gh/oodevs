@@ -18,7 +18,6 @@ namespace xml
 namespace indicators
 {
     class Gauge;
-    class GaugeTypes;
 
 // =============================================================================
 /** @class  GaugeFactory_ABC

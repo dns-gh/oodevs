@@ -12,6 +12,7 @@
 
 #include "GaugeFactory_ABC.h"
 #include "tools/Resolver.h"
+#include <qstring.h>
 
 namespace xml
 {

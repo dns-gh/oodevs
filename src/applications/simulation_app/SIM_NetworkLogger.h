@@ -35,31 +35,35 @@ public:
     //@}
 
 private:
-    //! @name Log methods
+    //! @name Types
     //@{
-    void LogString      ( const char* strLayerName, E_LogLevel nLevel, const char* szMsg, const char* strContext, int nCode );
-    void WaitForClient  ();
-    void StartConnection( boost::shared_ptr< boost::asio::ip::tcp::socket > newClientSocket, const boost::system::error_code& error );
-    void StopConnection ( boost::shared_ptr< boost::asio::ip::tcp::socket > socket );
-    void AsyncWrite     ( boost::shared_ptr< boost::asio::ip::tcp::socket > socket, const boost::system::error_code& error );
+    typedef boost::shared_ptr< boost::asio::ip::tcp::socket > T_Socket;
+
+    typedef std::set< T_Socket >        T_Sockets;
+    typedef T_Sockets::const_iterator CIT_Sockets;
     //@}
 
 private:
-    //! @name Types
+    //! @name Operations
     //@{
-    typedef std::set < boost::shared_ptr< boost::asio::ip::tcp::socket > >  T_SocketSet ;
-    typedef T_SocketSet::iterator                                          IT_SocketSet ;
-    typedef T_SocketSet::const_iterator                                   CIT_SocketSet ;
+    virtual void LogString( const char* strLayerName, E_LogLevel nLevel, const char* szMsg, const char* strContext, int nCode );
+    //@}
+
+    //! @name Helpers
+    //@{
+    void Accept();
+    void OnAccept( T_Socket socket, const boost::system::error_code& error );
+    void OnWrite( T_Socket socket, const boost::system::error_code& error );
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_SocketSet                    sockets_;
-    boost::asio::io_service        io_service_;
-    boost::asio::ip::tcp::acceptor acceptor_ ;
-    std::auto_ptr< boost::mutex >  criticalSection_;
-    std::auto_ptr< boost::thread > thread_ ;
+    T_Sockets                      sockets_;
+    boost::asio::io_service        service_;
+    boost::asio::ip::tcp::acceptor acceptor_;
+    std::auto_ptr< boost::mutex >  mutex_;
+    std::auto_ptr< boost::thread > thread_;
     //@}
 
 };

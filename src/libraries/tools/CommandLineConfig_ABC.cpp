@@ -49,7 +49,6 @@ void CommandLineConfig_ABC::Parse( int argc, char** argv )
 {
     po::store( po::command_line_parser( argc, argv ).options( *options_ ).allow_unregistered().run(), *values_ );
     po::notify( *values_ );
-
     if( values_->count( "help" ) )
     {
         std::stringstream ss;

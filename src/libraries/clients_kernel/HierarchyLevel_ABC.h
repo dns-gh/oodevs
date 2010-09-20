@@ -10,9 +10,10 @@
 #ifndef __HierarchyLevel_ABC_h_
 #define __HierarchyLevel_ABC_h_
 
+#include <qstring.h>
+
 namespace kernel
 {
-
 // =============================================================================
 /** @class  HierarchyLevel_ABC
     @brief  HierarchyLevel_ABC

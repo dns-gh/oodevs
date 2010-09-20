@@ -49,7 +49,6 @@ Config::~Config()
 void Config::Parse( int argc, char** argv )
 {
     tools::SessionConfig::Parse( argc, argv );
-
     int port;
     xml::xifstream xisGame( GetSessionFile() );
     xisGame >> xml::start( "session" )

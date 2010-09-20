@@ -10,7 +10,7 @@
 #ifndef __UrbanBlockDeserializer_h_
 #define __UrbanBlockDeserializer_h_
 
-#include <Urban/UrbanBlockDeserializer_ABC.h>
+#include <urban/UrbanBlockDeserializer_ABC.h>
 
 class ColorRGBA;
 
@@ -36,16 +36,17 @@ public:
 
     //! @name Operations
     //@{
-    virtual float        GetArchitectureHeight              () const;
-    virtual unsigned int GetArchitectureFloorNumber         () const;
-    virtual std::string  GetArchitectureRoofShape           () const;
-    virtual std::string  GetArchitectureMaterial            () const;
-    virtual float        GetArchitectureOccupation          () const;
-    virtual float        GetArchitectureTrafficability      () const;
-    std::auto_ptr< ColorRGBA >  GetColor                    () const;
+    virtual float        GetArchitectureHeight        () const;
+    virtual unsigned int GetArchitectureFloorNumber   () const;
+    virtual std::string  GetArchitectureRoofShape     () const;
+    virtual std::string  GetArchitectureMaterial      () const;
+    virtual float        GetArchitectureOccupation    () const;
+    virtual float        GetArchitectureTrafficability() const;
 
-    virtual bool HasColor()         const;
-    virtual bool HasArchitecture()  const;
+    virtual std::auto_ptr< ColorRGBA > GetColor() const;
+
+    virtual bool HasColor()        const;
+    virtual bool HasArchitecture() const;
     //@}
 
 private:

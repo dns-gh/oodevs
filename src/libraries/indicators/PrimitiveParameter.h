@@ -11,6 +11,7 @@
 #define __PrimitiveParameter_h_
 
 #include <boost/shared_ptr.hpp>
+#include <qstring.h>
 
 namespace xml
 {

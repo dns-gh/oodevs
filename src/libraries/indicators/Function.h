@@ -12,10 +12,10 @@
 
 #include "Element_ABC.h"
 #include <boost/shared_ptr.hpp>
+#include <qstring.h>
 
 namespace indicators
 {
-
 // =============================================================================
 /** @class  Function
     @brief  Function
