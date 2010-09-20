@@ -2,7 +2,7 @@
 <missions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Missions.xsd">
   <units>
     <context>
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type=""/>
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
@@ -1135,7 +1135,7 @@
   </units>
   <automats>
     <context>
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type=""/>
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
@@ -1722,7 +1722,7 @@
       <parameter dia-name="PolygonList_" max-occurs="unbounded" min-occurs="1" name="PolygonListParam" optional="true" type="Polygon"/>
       <parameter dia-name="Location_" name="LocationParam" optional="true" type="Location"/>
       <parameter dia-name="LocationList_" max-occurs="unbounded" min-occurs="1" name="LocationListParam" optional="true" type="Location"/>
-      <parameter dia-name="Direction_" name="DirectionParam" optional="true" type=""/>
+      <parameter dia-name="Direction_" name="DirectionParam" optional="true" type="Heading"/>
       <parameter dia-name="NatureAtlas_" name="NatureAtlasParam" optional="true" type="NatureAtlas"/>
       <parameter dia-name="Agent_" name="AgentParam" optional="true" type="Agent"/>
       <parameter dia-name="AgentList_" max-occurs="unbounded" min-occurs="1" name="AgentListParam" optional="true" type="Agent"/>
