@@ -36,10 +36,7 @@
 #include "MT_Tools/MT_Scipio_enum.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include "MT_Tools/MT_Vector3D.h"
-#include "MT_Tools/MT_Triangle.h"
 #include "MT_Tools/MT_Line.h"
-#include "MT_Tools/MT_Circle.h"
-#include "MT_Tools/MT_Ellipse.h"
 #include "MT_Tools/MT_ScipioException.h"
 
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h" // $$$$ _RC_ SLI 2010-08-11: waiting for a better solution

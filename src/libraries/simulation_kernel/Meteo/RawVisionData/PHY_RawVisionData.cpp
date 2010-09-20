@@ -13,9 +13,10 @@
 #include "PHY_RawVisionData.h"
 #include "PHY_AmmoEffect.h"
 #include "MIL_AgentServer.h"
-#include <xeumeuleu/xml.hpp>
+#include "MT_Tools/MT_Ellipse.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "tools/InputBinaryStream.h"
+#include <xeumeuleu/xml.hpp>
 
 PHY_RawVisionData::sCell PHY_RawVisionData::emptyCell_;
 const weather::PHY_Meteo* PHY_RawVisionData::sCell::pGlobalMeteo_;

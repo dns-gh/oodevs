@@ -16,6 +16,7 @@
 class PHY_ComposanteState;
 class PHY_DotationCategory;
 class PHY_Protection;
+class MT_Ellipse;
 
 namespace xml
 {

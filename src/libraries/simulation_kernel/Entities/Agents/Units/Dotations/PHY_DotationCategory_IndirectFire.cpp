@@ -25,6 +25,7 @@
 #include "Entities/MIL_Army.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "MT_Tools/MT_Ellipse.h"
+#include "MT_Tools/MT_Circle.h"
 #include "simulation_terrain/TER_Agent_ABC.h"
 #include "simulation_terrain/TER_PopulationConcentration_ABC.h"
 #include "simulation_terrain/TER_PopulationFlow_ABC.h"

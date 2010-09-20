@@ -14,6 +14,7 @@
 
 class MIL_Agent_ABC;
 class PHY_DotationCategory;
+class MT_Ellipse;
 
 // =============================================================================
 /** @class  UrbanBlockPosition_ABC

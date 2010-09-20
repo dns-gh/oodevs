@@ -18,6 +18,7 @@
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "UrbanType.h"
+#include "MT_Tools/MT_Ellipse.h"
 #include "tools/MIL_Geometry.h"
 #include "protocol/ClientSenders.h"
 #include <geometry/Types.h>

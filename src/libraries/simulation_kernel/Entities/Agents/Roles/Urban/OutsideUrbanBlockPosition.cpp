@@ -11,6 +11,7 @@
 #include "OutsideUrbanBlockPosition.h"
 #include "UrbanLocationComputer_ABC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
+#include "MT_Tools/MT_Ellipse.h"
 
 using namespace urbanLocation;
 

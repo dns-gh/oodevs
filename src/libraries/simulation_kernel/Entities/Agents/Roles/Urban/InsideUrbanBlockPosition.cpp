@@ -9,16 +9,15 @@
 
 #include "simulation_kernel_pch.h"
 #include "InsideUrbanBlockPosition.h"
-
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
-
 #include "AlgorithmsFactories.h"
 #include "UrbanLocationComputer_ABC.h"
 #include "UrbanLocationComputerFactory_ABC.h"
 #include "UrbanType.h"
 #include "UrbanModel.h"
 #include "tools/MIL_Geometry.h"
+#include "MT_Tools/MT_Ellipse.h"
 #include <urban/TerrainObject_ABC.h>
 #include <urban/Model.h>
 #include <urban/Architecture.h>
@@ -31,6 +30,7 @@
 
 namespace bg = boost::geometry;
 using namespace urbanLocation;
+
 // -----------------------------------------------------------------------------
 // Name: InsideUrbanBlockPosition constructor
 // Created: SLG 2010-04-27

@@ -15,6 +15,7 @@
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "MT_Tools/MT_Ellipse.h"
 #include "protocol/protocol.h"
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
