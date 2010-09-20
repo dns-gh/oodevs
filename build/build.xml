@@ -875,7 +875,7 @@
         <build-test name="protocol" libs="masalloc,libprotobuf,
                          lib${ant.project.name}_tools-${platform}-mt@{suffix}
                          lib${ant.project.name}_protocol-${platform}-mt@{suffix}"
-                   depends="boost,mockpp" excludes="**/*.pb.cc">
+                   depends="boost" excludes="**/*.pb.cc">
         </build-test>
     </target>
 
