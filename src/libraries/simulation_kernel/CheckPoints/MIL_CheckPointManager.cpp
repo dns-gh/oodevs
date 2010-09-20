@@ -93,15 +93,12 @@ void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_CheckPointManager::SaveCheckPointTestMode
+// Name: MIL_CheckPointManager::SaveCheckPointDirectory
 // Created: JSR 2010-03-10
 // -----------------------------------------------------------------------------
-void MIL_CheckPointManager::SaveCheckPointTestMode( const MIL_Config& config )
+void MIL_CheckPointManager::SaveCheckPointDirectory( const std::string& name, const std::string userName )
 {
-    // should only be called in test mode
-    assert( config.IsTestMode() == true && config.IsSaveCheckpointTestMode() == true );
-
-    SaveCheckPoint( config.GetCheckpointNameTestMode() );
+    SaveCheckPoint( name, userName );
 
     client::ControlCheckPointSaveNowAck asnReplyMsg;
     asnReplyMsg.Send( NET_Publisher_ABC::Publisher() );
@@ -394,10 +391,7 @@ void MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow( const MsgsClientToSim
     if( asnMsg.has_name()  )
         strCheckPointName = asnMsg.name();
 
-    SaveCheckPoint( BuildCheckPointName(), strCheckPointName );
-
-    client::ControlCheckPointSaveNowAck asnReplyMsg;
-    asnReplyMsg.Send( NET_Publisher_ABC::Publisher() );
+    SaveCheckPointDirectory( BuildCheckPointName(), strCheckPointName );
 }
 
 // -----------------------------------------------------------------------------

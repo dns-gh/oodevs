@@ -19,13 +19,15 @@ using namespace actions::gui;
 // Name: ListParameter constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-ListParameter::ListParameter( QObject* parent, const QString& name, kernel::ActionController& controller, bool optional )
+ListParameter::ListParameter( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& controller )
     : QObject       ( parent )
-    , Param_ABC     ( name )
+    , Param_ABC     ( parameter.GetName().c_str() )
     , controller_   ( controller )
     , list_         ( 0 )
     , selected_     ( 0 )
-    , optional_     ( optional )
+    , min_          ( parameter.MinOccurs() )
+    , max_          ( parameter.MaxOccurs() )
+    , optional_     ( parameter.IsOptional() )
     , createEnabled_( true )
 {
     // NOTHING
@@ -47,8 +49,14 @@ ListParameter::~ListParameter()
 // -----------------------------------------------------------------------------
 bool ListParameter::CheckValidity()
 {
-    if( !list_ || ( !optional_ && !list_->childCount() ) )
+    if( !list_ )
         return Invalid();
+    if ( !optional_ )
+    {
+        unsigned int children = list_->childCount();
+        if( min_ > children || max_ < children )
+            return Invalid();
+    }
     if( selected_ )
         if( Param_ABC* param = static_cast< const ::gui::ValuedListItem* >( selected_ )->GetValue< Param_ABC >() )
             return param->CheckValidity() ? true : Invalid();

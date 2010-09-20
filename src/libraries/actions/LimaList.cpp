@@ -122,5 +122,5 @@ void LimaList::DisplayTooltip( const kernel::Viewport_ABC& viewport, const kerne
 // -----------------------------------------------------------------------------
 bool LimaList::IsSet() const
 {
-    return !elements_.empty(); // $$$$ SBO 2008-03-19: each element must be set as well...
+    return Parameter< QString >::IsSet(); // $$$$ SBO 2008-03-19: each element must be set as well...
 }

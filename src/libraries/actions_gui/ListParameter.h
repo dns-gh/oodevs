@@ -12,6 +12,11 @@
 
 #include "Param_ABC.h"
 
+namespace kernel
+{
+    class OrderParameter;
+}
+
 namespace actions
 {
     class Parameter_ABC;
@@ -33,7 +38,7 @@ class ListParameter : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             ListParameter( QObject* parent, const QString& name, kernel::ActionController& controller, bool optional );
+             ListParameter( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& controller );
     virtual ~ListParameter();
     //@}
 
@@ -92,8 +97,10 @@ private:
     kernel::ActionController& controller_;
     QListView* list_;
     QListViewItem* selected_;
-    bool optional_;
     T_Widgets widgets_;
+    unsigned int min_;
+    unsigned int max_;
+    bool optional_;
     bool createEnabled_;
     //@}
 };

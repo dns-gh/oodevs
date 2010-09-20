@@ -18,7 +18,7 @@ using namespace actions::gui;
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
 EntityListParameterBase::EntityListParameterBase( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& controller )
-    : ListParameter( parent, parameter.GetName().c_str(), controller, parameter.IsOptional() )
+: ListParameter( parent, parameter, controller )
 {
     // NOTHING
 }

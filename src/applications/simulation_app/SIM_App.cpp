@@ -388,7 +388,7 @@ void SIM_App::CheckpointTest()
 {
     if( startupConfig_.IsSaveCheckpointTestMode() == true && startupConfig_.IsTestMode() == true )
     {
-        MIL_AgentServer::GetWorkspace().GetCheckPointManager().SaveCheckPointTestMode( startupConfig_ );
+        MIL_AgentServer::GetWorkspace().GetCheckPointManager().SaveCheckPointDirectory( startupConfig_.GetCheckpointNameTestMode() );
     }
 
     if( startupConfig_.IsDeleteCheckpointTestMode() == true && startupConfig_.IsTestMode() == true )

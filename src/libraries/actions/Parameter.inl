@@ -96,5 +96,16 @@ void Parameter< T >::Serialize( xml::xostream& xos ) const
     Parameter_ABC::Serialize( xos );
     xos << xml::attribute( "type", parameter_.GetType() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Parameter::IsSet
+// Created: LDC 2010-09-17
+// -----------------------------------------------------------------------------
+template< typename T >
+bool Parameter< T >::IsSet() const
+{
+    unsigned int nElements = elements_.size();
+    return( parameter_.MinOccurs() <= nElements && parameter_.MaxOccurs() >= nElements );
+}
     }
 }

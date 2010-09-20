@@ -248,8 +248,7 @@ private:
     std::string missionPrecedente_;
     float rTenir_;
 
-    std::string              name_;
-    DEC_AutomateDecision*    pAutomate_;
+    MIL_AgentPion& pion_;
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_RolePion_Decision )

@@ -681,12 +681,12 @@ void PHY_RolePionLOG_Maintenance::SendFullState( client::UnitAttributes& /*asnUn
     asn().mutable_id()->set_id( pion_.GetID() );
     asn().set_chaine_activee( bSystemEnabled_ );
     asn().set_regime_travail( pWorkRate_->GetAsnID() );
-    if( !priorities_.empty() )
-        for( CIT_MaintenancePriorityVector itPriority = priorities_.begin(); itPriority != priorities_.end(); ++itPriority )
-            asn().mutable_priorites()->add_elem()->set_id( (**itPriority).GetMosID().id() );
-    if( !tacticalPriorities_.empty() )
-        for( CIT_AutomateVector itPriority = tacticalPriorities_.begin(); itPriority != tacticalPriorities_.end(); ++itPriority )
-            asn().mutable_priorites_tactiques()->add_elem()->set_id( (**itPriority).GetID() );
+    asn().mutable_priorites();
+    for( CIT_MaintenancePriorityVector itPriority = priorities_.begin(); itPriority != priorities_.end(); ++itPriority )
+        asn().mutable_priorites()->add_elem()->set_id( (**itPriority).GetMosID().id() );
+    asn().mutable_priorites_tactiques();
+    for( CIT_AutomateVector itPriority = tacticalPriorities_.begin(); itPriority != tacticalPriorities_.end(); ++itPriority )
+        asn().mutable_priorites_tactiques()->add_elem()->set_id( (**itPriority).GetID() );
     {
         PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
         PHY_ComposanteUsePredicate predicate( &PHY_ComposantePion::CanHaul, &PHY_ComposanteTypePion::CanHaul );

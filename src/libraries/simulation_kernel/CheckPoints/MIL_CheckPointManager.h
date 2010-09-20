@@ -46,9 +46,9 @@ public:
 
     //! @name Main
     //@{
-    void Update                ();
-    void LoadCheckPoint        ( const MIL_Config& config );
-    void SaveCheckPointTestMode( const MIL_Config& config );
+    void Update                 ();
+    void LoadCheckPoint         ( const MIL_Config& config );
+    void SaveCheckPointDirectory( const std::string& directoryName, const std::string userName = "" );
     //@}
 
     //! @name Accessors

@@ -93,6 +93,24 @@ bool OrderParameter::IsOptional() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: OrderParameter::MinOccurs
+// Created: LDC 2010-09-17
+// -----------------------------------------------------------------------------
+unsigned int OrderParameter::MinOccurs() const
+{
+    return minOccurs_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: OrderParameter::MaxOccurs
+// Created: LDC 2010-09-17
+// -----------------------------------------------------------------------------
+unsigned int OrderParameter::MaxOccurs() const
+{
+    return maxOccurs_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: OrderParameter::GetValue
 // Created: SBO 2007-05-25
 // -----------------------------------------------------------------------------
@@ -161,5 +179,5 @@ void OrderParameter::Accept( ChoicesVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 bool OrderParameter::IsList() const
 {
-    return ( maxOccurs_ != 1 );
+    return ( maxOccurs_ != 1 || minOccurs_ != 1 );
 }

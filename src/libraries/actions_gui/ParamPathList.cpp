@@ -23,7 +23,7 @@ using namespace actions::gui;
 // Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
 ParamPathList::ParamPathList( QObject* parent, const kernel::OrderParameter& parameter, ::gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, const kernel::Entity_ABC& entity, kernel::ActionController& controller )
-    : ListParameter( parent, parameter.GetName().c_str(), controller, parameter.IsOptional() )
+    : ListParameter( parent, parameter, controller )
     , converter_( converter )
     , parameter_( parameter )
     , layer_( layer )

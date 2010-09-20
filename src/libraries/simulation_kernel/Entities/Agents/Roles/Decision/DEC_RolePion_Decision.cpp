@@ -124,13 +124,11 @@ DEC_RolePion_Decision::DEC_RolePion_Decision( MIL_AgentPion& pion, DEC_DataBase&
     , bStateHasChanged_         ( true                         )
     , pionEnEscorte_            ( 0                            )
     , rTenir_                   ( 0.f                          )
-    , pAutomate_                ( 0                            )
+    , pion_                     ( pion )
 {
     const DEC_Model_ABC& model = pion.GetType().GetModel();
     try
     {
-        name_ = pion.GetName();
-        pAutomate_ = &pion.GetAutomate().GetDecision();
         SetModel( model );
     }
     catch( std::runtime_error& e )
@@ -183,12 +181,6 @@ void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const unsigned 
     try
     {
         SetModel( model );
-        file >> name_;
-
-        DEC_AutomateDecision* pDecision;
-        file >> pDecision;
-        assert( pDecision );
-        pAutomate_ = pDecision;
     }
     catch( std::runtime_error& e )
     {
@@ -215,9 +207,7 @@ void DEC_RolePion_Decision::save( MIL_CheckPointOutArchive& file, const unsigned
          << nOperationalState_
          << nIndirectFireAvailability_
          << roe
-         << type
-         << name_
-         << pAutomate_;
+         << type;
 }
 
 // =============================================================================
@@ -1904,7 +1894,7 @@ void DEC_RolePion_Decision::NotifyOperationalStateChanged( E_OperationalState nS
 // -----------------------------------------------------------------------------
 std::string DEC_RolePion_Decision::GetName() const
 {
-    return name_;
+    return pion_.GetName();
 }
 
 // -----------------------------------------------------------------------------
@@ -1913,7 +1903,7 @@ std::string DEC_RolePion_Decision::GetName() const
 // -----------------------------------------------------------------------------
 DEC_AutomateDecision* DEC_RolePion_Decision::GetDecAutomate() const
 {
-    return pAutomate_;
+    return &pion_.GetAutomate().GetDecision();
 }
 
 // -----------------------------------------------------------------------------

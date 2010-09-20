@@ -126,5 +126,5 @@ bool AgentKnowledgeList::IsSet() const
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         if( !it->second->IsSet() )
             return false;
-    return !elements_.empty();
+    return Parameter< QString >::IsSet();
 }

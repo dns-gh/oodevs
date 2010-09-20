@@ -179,5 +179,5 @@ bool ParamEquipmentList::IsOptional() const
 // -----------------------------------------------------------------------------
 bool ParamEquipmentList::CheckValidity()
 {
-    return IsOptional() || list_->childCount() != 0;
+    return true;
 }

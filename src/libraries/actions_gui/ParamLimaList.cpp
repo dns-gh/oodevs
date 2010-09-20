@@ -24,7 +24,7 @@ using namespace actions::gui;
 // Created: SBO 2006-11-14
 // ----------------------------------------------------------------------------
 ParamLimaList::ParamLimaList( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, kernel::ActionController& actions, kernel::Controller& controller, const QDateTime& currentDate )
-    : ListParameter( parent, parameter.GetName().c_str(), actions, parameter.IsOptional() )
+    : ListParameter( parent, parameter, actions )
     , controller_ ( controller )
     , parameter_  ( parameter )
     , converter_  ( converter )

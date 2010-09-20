@@ -59,6 +59,8 @@ public:
     std::string GetName() const;
     std::string GetType() const;
     bool IsOptional() const;
+    unsigned int MinOccurs() const;
+    unsigned int MaxOccurs() const;
     bool IsList() const;
     const OrderParameterValue& GetValue( unsigned int id ) const;
     void AddValue( int id, const std::string& name );

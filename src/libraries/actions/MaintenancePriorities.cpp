@@ -136,5 +136,5 @@ void MaintenancePriorities::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 bool MaintenancePriorities::IsSet() const
 {
-    return !priorities_.empty();
+    return true;
 }

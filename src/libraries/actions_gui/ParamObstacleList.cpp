@@ -22,7 +22,7 @@ using namespace actions::gui;
 // Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
 ParamObstacleList::ParamObstacleList( QObject* parent, const kernel::OrderParameter& parameter, const kernel::ObjectTypes& objectTypes, ::gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, kernel::ActionController& actions, kernel::Controller& controller )
-    : ListParameter( parent, parameter.GetName().c_str(), actions, parameter.IsOptional() )
+    : ListParameter( parent, parameter, actions )
     , parameter_( parameter )
     , converter_( converter )
     , controller_( controller )
