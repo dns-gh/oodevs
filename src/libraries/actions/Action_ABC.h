@@ -39,7 +39,7 @@ class Publisher_ABC;
 
 namespace actions
 {
-class ActionsModel;
+    class ActionsModel;
 
 // =============================================================================
 /** @class  Action_ABC

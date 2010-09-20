@@ -58,7 +58,8 @@ namespace
     std::auto_ptr< Common::MsgMissionParameter > Serialize( const std::string& type, const std::string& xmlInput, Functor creator )
     {
         const kernel::OrderParameter definition( "test", type, false );
-        xml::xistringstream xis( xmlInput ); xis >> xml::start( "parameter" );
+        xml::xistringstream xis( xmlInput );
+        xis >> xml::start( "parameter" );
         std::auto_ptr< actions::Parameter_ABC > parameter( creator( definition, xis ) );
         std::auto_ptr< Common::MsgMissionParameter > message( new Common::MsgMissionParameter() );
         parameter->CommitTo( *message );
