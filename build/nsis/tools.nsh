@@ -63,7 +63,6 @@
 !macro OT.AddDecisionalModels DataSet
 
     Section "Decisional" s_decmod
-        SectionIn RO
         SetOutPath "${INSTDATADIR}\data\models\${DataSet}\decisional"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
         File /r /x ".svn" "${DATADIR}\data\models\${DataSet}\decisional\bms"
@@ -80,7 +79,6 @@
 !macro OT.AddDecisionalModelSources DataSet
 
     Section "Sources" s_decmodsrc
-        SectionIn RO
         SetOutPath "${INSTDATADIR}\data\models\${DataSet}\decisional"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
         File /r /x ".svn" "${DATADIR}\data\models\${DataSet}\decisional\Sources"
@@ -95,7 +93,6 @@
 !macro OT.AddPhysicalModels DataSet Localization SectionId
 
     Section "Physical - ${Localization}" ${SectionId}
-        SectionIn RO
         SetOutPath "${INSTDATADIR}\data\models\${DataSet}\physical\${Localization}"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
         File /r /x ".svn" "${DATADIR}\data\models\${DataSet}\physical\${Localization}\*"
