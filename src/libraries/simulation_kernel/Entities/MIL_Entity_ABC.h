@@ -25,7 +25,7 @@ namespace xml
 
 // =============================================================================
 /** @class  MIL_Entity_ABC
-    @brief  MIL_Entity_ABC
+    @brief  MIL Entity definition
 */
 // Created: RDS 2008-04-25
 // =============================================================================
@@ -68,7 +68,6 @@ private:
     //@{
     const std::string strName_;
     //@}
-
 };
 
 // BOOST_SERIALIZATION_ASSUME_ABSTRACT should be used for this
@@ -81,7 +80,7 @@ namespace serialization {
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Archive > void MIL_Entity_ABC::serialize
+// Name: MIL_Entity_ABC::serialize
 // Created: RDS 2008-05-09
 // -----------------------------------------------------------------------------
 template< typename Archive >

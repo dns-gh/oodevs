@@ -188,7 +188,7 @@ namespace
         {
             ++count_;
             EntityType type( "1 1 225 1" );
-            SilentEntity entity( type, (unsigned short)e.nNbrAvailable_ );
+            SilentEntity entity( type, static_cast< unsigned short >( e.nNbrAvailable_ ) );
             entity.Serialize( serializer_ );
         }
         void Commit( UpdateFunctor_ABC& functor )

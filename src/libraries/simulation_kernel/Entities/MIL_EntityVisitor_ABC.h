@@ -24,8 +24,8 @@ class MIL_EntityVisitor_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_EntityVisitor_ABC() {};
-    virtual ~MIL_EntityVisitor_ABC() {};
+             MIL_EntityVisitor_ABC() {}
+    virtual ~MIL_EntityVisitor_ABC() {}
     //@}
 
     //! @name Operations

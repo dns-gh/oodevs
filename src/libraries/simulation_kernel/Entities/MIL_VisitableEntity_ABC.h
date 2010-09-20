@@ -24,8 +24,8 @@ class MIL_VisitableEntity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_VisitableEntity_ABC() {};
-    virtual ~MIL_VisitableEntity_ABC() {};
+             MIL_VisitableEntity_ABC() {}
+    virtual ~MIL_VisitableEntity_ABC() {}
     //@}
 
     //! @name Operations

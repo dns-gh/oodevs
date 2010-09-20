@@ -230,9 +230,7 @@ void Intelligence::Write( xml::xostream& xos, const kernel::CoordinateConverter_
             << xml::attribute( "level", ResolveLevel( level_ ) )
             << xml::attribute( "karma", ResolveKarma( diplomacy_ ) )
             << xml::attribute( "nature", nature_ );
-
     WritePosition( xos, converter );
-
     xos << xml::end;
 }
 

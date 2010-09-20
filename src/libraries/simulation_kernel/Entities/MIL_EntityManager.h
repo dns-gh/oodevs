@@ -89,6 +89,7 @@ class PopulationFactory_ABC;
 class UrbanModel;
 
 class HLA_Federate;
+
 // =============================================================================
 // @class  MIL_EntityManager
 // Created: JVT 2004-08-03

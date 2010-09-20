@@ -168,17 +168,13 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
 void MIL_EntityManagerStaticMethods::InitializeSensors( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time )
 {
     MT_LOG_INFO_MSG( "Initializing sensor types" );
-
     std::string strFile;
     xis >> xml::start( "sensors" )
             >> xml::attribute( "file", strFile )
         >> xml::end;
     strFile = config.BuildPhysicalChildFile( strFile );
-
-
     xml::xifstream xisSensors( strFile );
     config.AddFileToCRC( strFile );
-
     xisSensors >> xml::start( "sensors" );
     PHY_PerceptionRecoSurveillance::Initialize( xisSensors );
     PHY_PerceptionFlyingShell     ::Initialize( xisSensors );
@@ -194,20 +190,15 @@ void MIL_EntityManagerStaticMethods::InitializeSensors( xml::xistream& xis, MIL_
 void MIL_EntityManagerStaticMethods::InitializeMedical( xml::xistream& xis, MIL_Config& config )
 {
     MT_LOG_INFO_MSG( "Initializing medical data" );
-
     std::string strFile;
     xis >> xml::start( "health" )
             >> xml::attribute( "file", strFile )
         >> xml::end;
     strFile = config.BuildPhysicalChildFile( strFile );
-
     xml::xifstream xisHealth( strFile );
-
     xisHealth >> xml::start( "health" );
     config.AddFileToCRC( strFile );
-
     PHY_HumanWound::InitializeMedicalData( xisHealth );
-
     xisHealth >> xml::end;
 }
 
@@ -222,10 +213,8 @@ void MIL_EntityManagerStaticMethods::InitializeComposantes( xml::xistream& xis, 
             >> xml::attribute( "file", strFile )
         >> xml::end;
     strFile = config.BuildPhysicalChildFile( strFile );
-
     xml::xifstream xisComponents( strFile );
     config.AddFileToCRC( strFile );
-
     PHY_ComposanteTypePion::Initialize( time, xisComponents );
 }
 
@@ -240,9 +229,7 @@ void MIL_EntityManagerStaticMethods::InitializeWeapons( xml::xistream& xis, MIL_
             >> xml::attribute( "file", strFile )
         >> xml::end;
     strFile = config.BuildPhysicalChildFile( strFile );
-
     xml::xifstream xisWeapons( strFile );
     config.AddFileToCRC( strFile );
-
     PHY_WeaponType::Initialize( time, xisWeapons, MIL_AgentServer::GetWorkspace().GetTimeStepDuration() );
 }

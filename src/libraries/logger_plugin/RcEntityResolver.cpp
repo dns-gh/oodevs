@@ -26,7 +26,7 @@ using namespace kernel;
 // Created: LDC 2010-03-18
 // -----------------------------------------------------------------------------
 RcEntityResolver::RcEntityResolver( const dispatcher::Model_ABC& model )
-: model_( model )
+    : model_( model )
 {
     // NOTHING
 }
