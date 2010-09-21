@@ -198,7 +198,7 @@ float InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_AB
 // -----------------------------------------------------------------------------
 MT_Float InsideUrbanBlockPosition::ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const
 {
-    const urban::Architecture* architecture = urbanObject_->RetrievePhysicalFeature< urban::Architecture >();
+    const urban::Architecture* architecture = urbanObject_->Retrieve< urban::Architecture >();
     if( architecture )
     {
         unsigned materialID = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId();

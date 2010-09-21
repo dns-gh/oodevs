@@ -18,7 +18,6 @@
 #include "indicators/Primitives.h"
 #include "indicators/GaugeTypes.h"
 #include "tools/ExerciseConfig.h"
-#include <urban/StaticModel.h>
 #include <urban/Model.h>
 #include "UrbanModel.h"
 
@@ -33,7 +32,6 @@ StaticModel::StaticModel( kernel::Controllers& controllers, const RcEntityResolv
     , drawings_     ( *new gui::DrawingTypes( controllers_.controller_ ) )
     , indicators_   ( *new indicators::Primitives() )
     , gaugeTypes_   ( *new indicators::GaugeTypes() )
-    , urbanTypes_   ( *new urban::StaticModel() )
 {
     // NOTHING
 }
@@ -49,7 +47,6 @@ StaticModel::~StaticModel()
     delete &drawings_;
     delete &reportFactory_;
     delete &detection_;
-    delete &urbanTypes_;
 }
 
 // -----------------------------------------------------------------------------
@@ -77,6 +74,5 @@ void StaticModel::Purge()
     indicators_.Purge();
     drawings_.Purge();
     reportFactory_.Purge();
-    //urbanTypes_.Purge(); // $$$$ _RC_ SBO 2010-05-10: Why ?
     kernel::StaticModel::Purge();
 }

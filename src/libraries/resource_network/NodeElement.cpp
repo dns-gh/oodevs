@@ -59,6 +59,29 @@ NodeElement::NodeElement( xml::xistream& xis, unsigned long resourceId, const st
 
 // -----------------------------------------------------------------------------
 // Name: NodeElement constructor
+// Created: JSR 2010-09-17
+// -----------------------------------------------------------------------------
+NodeElement::NodeElement( const urban::ResourceNetworkAttribute::ResourceNode& node, unsigned long resourceId )
+    : model_              ( 0 )
+    , resourceId_         ( resourceId )
+    , resourceName_       ( node.resource_ )
+    , isActivated_        ( node.isEnabled_ )
+    , productionCapacity_ ( node.production_ )
+    , stockCapacity_      ( 0 )
+    , stockMaxCapacity_   ( node.maxStock_ )
+    , immediateStock_     ( 0 )
+    , receivedQuantity_   ( 0 )
+    , consumptionAmount_  ( node.consumption_ )
+    , consumptionCritical_( node.critical_ )
+    , modifier_           ( 1. ) 
+{
+    for( std::vector< urban::ResourceNetworkAttribute::ResourceLink >::const_iterator it = node.links_.begin(); it != node.links_.end(); ++it )
+        links_.push_back( new ResourceLink( it->id_, ResourceLink::eTargetKindUrban, it->capacity_ ) );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: NodeElement constructor
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
 NodeElement::NodeElement( const NodeElement& from )
@@ -218,6 +241,8 @@ void NodeElement::DoDistributeResource( T_ResourceLinks& links )
         // remove already updated links from list and apply again
         {
             T_ResourceLinks newLinks;
+            std::sort( links.begin(), links.end() );
+            std::sort( updatedLinks.begin(), updatedLinks.end() );
             std::set_difference( links.begin(), links.end(), updatedLinks.begin(), updatedLinks.end(),
                 std::insert_iterator< T_ResourceLinks >( newLinks, newLinks.end() ) );
             links = newLinks;

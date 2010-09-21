@@ -34,6 +34,7 @@
 #include "simulation_terrain/TER_World.h"
 #include <boost/assign/list_of.hpp>
 #include <xeumeuleu/xml.hpp>
+#include <urban/CoordinateConverter.h>
 #include <urban/Model.h>
 #include <urban/UrbanObject.h>
 
@@ -59,16 +60,19 @@ namespace
     public:
         Fixture()
             : poly( vertices )
-            , urbanBlock( new urban::UrbanObject ( 0, "test", &poly, 0 ) )
+            , coord( new urban::CoordinateConverter() )
+            , urbanBlock( new urban::UrbanObject ( 0, "test", &poly, 0, *coord ) )
         {
             TER_World::Initialize( "../../data/data/terrains/Drosoville/Terrain.xml" );
         }
         ~Fixture()
         {
             TER_World::DestroyWorld();
+            delete coord;
         }
         geometry::Polygon2f poly;
         std::auto_ptr< urban::UrbanObject > urbanBlock;
+        urban::CoordinateConverter_ABC* coord;
     };
 }
 

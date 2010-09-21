@@ -23,6 +23,11 @@ namespace MsgsSimToClient
     class MsgUrbanAttributes_Infrastructures;
 }
 
+namespace urban
+{
+    class ResourceNetworkAttribute;
+}
+
 namespace xml
 {
     class xistream;
@@ -46,6 +51,7 @@ public:
     //@{
     explicit NodeProperties( const ResourceTools_ABC& tools );
              NodeProperties( xml::xistream& xis, const ResourceTools_ABC& tools );
+             NodeProperties( const urban::ResourceNetworkAttribute& urbanAttribute, const ResourceTools_ABC& tools );
              NodeProperties( const NodeProperties& from );
     virtual ~NodeProperties();
     //@}

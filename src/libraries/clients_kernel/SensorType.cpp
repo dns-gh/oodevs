@@ -256,7 +256,7 @@ bool SensorType::ComputeUrbanExtinction( float& rVisionNRJ, float distance, cons
     if( object )
     {
         bIsAroundBU = true;
-        const urban::Architecture* architecture = object->RetrievePhysicalFeature< urban::Architecture >();
+        const urban::Architecture* architecture = object->Retrieve< urban::Architecture >();
         if( architecture )
         {
             float rDistanceModificator = urbanBlockFactors_.find( architecture->GetMaterial() )->second;

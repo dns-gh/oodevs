@@ -24,6 +24,7 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #pragma warning( pop )
+#include <urban/ResourceNetworkAttribute.h>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/TerrainObjectVisitor_ABC.h>
 #include <xeumeuleu/xml.hpp>
@@ -87,9 +88,6 @@ bool UrbanModel::Load( const std::string& directoryPath, urban::WorldParameters&
     {
         UrbanSendingCreationVisitor visitor( *this );
         Accept( visitor );
-        const bfs::path fullPath = bfs::path( directoryPath, bfs::native ) / "urban" / "urban.xml";
-        if( bfs::exists( fullPath ) )
-            LoadInfrastructures( fullPath.native_file_string() );
     }
     return ret;
 }
@@ -179,46 +177,6 @@ void UrbanModel::UpdateCapacity( xml::xistream& xis, gui::TerrainObjectProxy& pr
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanModel::LoadInfrastructures
-// Created: JSR 2010-09-07
-// -----------------------------------------------------------------------------
-void UrbanModel::LoadInfrastructures( const std::string& directoryPath )
-{
-    xml::xifstream xis( directoryPath );
-    xis >> xml::start( "urban" )
-            >> xml::start( "urban-objects" )
-             >> xml::list( "urban-object", *this, &UrbanModel::ReadInfrastructures )
-            >> xml::end()
-        >> xml::end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanModel::ReadInfrastructures
-// Created: JSR 2010-09-07
-// -----------------------------------------------------------------------------
-void UrbanModel::ReadInfrastructures( xml::xistream& xis )
-{
-    unsigned int id = xis.attribute< unsigned int >( "id" );
-    gui::TerrainObjectProxy* proxy = Resolver< gui::TerrainObjectProxy >::Find( id );
-    if( proxy )
-    {
-    // TODO faire ça proprement et de façon générique avec la factory d'objets quand elle sera implémentée (pour l'instant, c'est une par Team)
-        if( xis.has_child( "resources" ) )
-        {
-            xis >> xml::start( "resources" );
-                proxy->Attach< kernel::ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, xis, id, *this, static_.objectTypes_ ) );
-            xis >> xml::end();
-        }
-        // $$$$ JSR 2010-08-12: TODO read infrastructures
-        xis >> xml::optional >> xml::start( "infrastructures" )
-            >> xml::end();
-    }
-    xis >> xml::start( "urban-objects" )
-            >> xml::list( "urban-object", *this, &UrbanModel::ReadInfrastructures )
-        >> xml::end();
-}
-
-// -----------------------------------------------------------------------------
 // Name: UrbanModel::Purge
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
@@ -238,7 +196,10 @@ void UrbanModel::SendCreation( urban::TerrainObject_ABC& urbanObject )
     gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_.controller_, urbanObject );
     kernel::PropertiesDictionary& dico = pTerrainObject->Get< kernel::PropertiesDictionary >();
     pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( 100, dico ) );
-    pTerrainObject->Attach< kernel::Positions >( *new UrbanPositions( urbanObject/*, static_.coordinateConverter_*/ ) );
+    pTerrainObject->Attach< kernel::Positions >( *new UrbanPositions( urbanObject ) );
+    const urban::ResourceNetworkAttribute* resource = urbanObject.Retrieve< urban::ResourceNetworkAttribute >();
+    if( resource )
+        pTerrainObject->Attach< kernel::ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, *resource, pTerrainObject->GetId(), *this, static_.objectTypes_ ) );
     pTerrainObject->Polish();
     if( !Resolver< gui::TerrainObjectProxy >::Find( urbanObject.GetId() ) )
         Resolver< gui::TerrainObjectProxy >::Register( urbanObject.GetId(), *pTerrainObject );

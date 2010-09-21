@@ -93,7 +93,7 @@ protected:
     QListViewItem* selectedItem_;
     bool urban_;
     unsigned int id_;
-    kernel::ResourceNetwork_ABC::ResourceNodes resourceNodes_;
+    kernel::ResourceNetwork_ABC::T_ResourceNodes resourceNodes_;
     QVBox* pMainLayout_;
     QListView* dotationList_;
     QGroupBox* groupBox_;

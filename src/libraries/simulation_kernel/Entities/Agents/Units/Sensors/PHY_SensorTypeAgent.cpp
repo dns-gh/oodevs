@@ -515,7 +515,7 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
         {
             const urban::TerrainObject_ABC& object = **it;
 
-            const urban::Architecture* architecture = object.RetrievePhysicalFeature< urban::Architecture >();
+            const urban::Architecture* architecture = object.Retrieve< urban::Architecture >();
 
             if( architecture == 0 && bIsAroundBU == true )
                 continue;
@@ -861,7 +861,7 @@ MT_Float PHY_SensorTypeAgent::GetFactor( const PHY_Volume& volume ) const
 // -----------------------------------------------------------------------------
 MT_Float PHY_SensorTypeAgent::GetUrbanBlockFactor( const urban::TerrainObject_ABC& block ) const
 {
-    const urban::Architecture* architecture = block.RetrievePhysicalFeature< urban::Architecture >();
+    const urban::Architecture* architecture = block.Retrieve< urban::Architecture >();
     if( architecture )
         return urbanBlockFactors_[ UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId() ];
     return 1.f;

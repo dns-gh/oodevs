@@ -12,6 +12,7 @@
 
 #include <map>
 #include <vector>
+#include <urban/ResourceNetworkAttribute.h>
 
 namespace Common
 {
@@ -42,6 +43,7 @@ public:
     //@{
              NodeElement();
              NodeElement( xml::xistream& xis, unsigned long resourceId, const std::string& resourceName );
+             NodeElement( const urban::ResourceNetworkAttribute::ResourceNode& node, unsigned long resourceId );
              NodeElement( const NodeElement& from );
     virtual ~NodeElement();
     //@}

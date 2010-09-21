@@ -213,21 +213,6 @@ void MIL_ObjectManager::UpdateCapacity( const std::string& capacity, xml::xistre
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ObjectManager::ReadInfrastructures
-// Created: JSR 2010-08-12
-// -----------------------------------------------------------------------------
-void MIL_ObjectManager::ReadInfrastructures( xml::xistream& xis )
-{
-    unsigned int id = xis.attribute< unsigned int >( "id" );
-    UrbanObjectWrapper* wrapper = FindUrbanWrapper( id );
-    if( wrapper )
-        xis >> xml::list( *this, &MIL_ObjectManager::UpdateCapacity, *wrapper );
-    xis >> xml::start( "urban-objects" )
-            >> xml::list( "urban-object", *this, &MIL_ObjectManager::ReadInfrastructures )
-        >> xml::end();
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager::ReadUrbanState
 // Created: JSR 2010-06-28
 // -----------------------------------------------------------------------------

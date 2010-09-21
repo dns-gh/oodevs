@@ -115,7 +115,7 @@ void StructuralCapacity::Instanciate( MIL_Object_ABC& object ) const
     UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( &object );
     if( wrapper )
     {
-        const urban::Architecture* architecture = wrapper->GetObject().RetrievePhysicalFeature< urban::Architecture >();
+        const urban::Architecture* architecture = wrapper->GetObject().Retrieve< urban::Architecture >();
         if( architecture )
         {
             urban::MaterialCompositionType* material = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() );

@@ -196,7 +196,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateUrbanObject( const urban::TerrainObject_
     if( it == prototypes_.end() )
         return 0;
     UrbanObjectWrapper* pObject = new UrbanObjectWrapper( *it->second, object );
-    // pObject->Finalize();
+    pObject->Finalize();
     return pObject;
 }
 

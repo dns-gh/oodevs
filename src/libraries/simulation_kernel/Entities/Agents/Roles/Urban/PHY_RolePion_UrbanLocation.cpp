@@ -280,7 +280,7 @@ void PHY_RolePion_UrbanLocation::Execute( moving::SpeedComputer_ABC& algorithm )
 {
     if( urbanObject_ )
     {
-        const urban::Architecture* architecture = urbanObject_->GetObject().RetrievePhysicalFeature< urban::Architecture >();
+        const urban::Architecture* architecture = urbanObject_->GetObject().Retrieve< urban::Architecture >();
         if( architecture )
             algorithm.AddModifier( 1. - architecture->GetOccupation() , true );
     }

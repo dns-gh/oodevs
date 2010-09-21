@@ -302,7 +302,6 @@ void MIL_EntityManager::CreateUrbanObjects( UrbanModel& urbanModel, const MIL_Co
 {
     UrbanWrapperVisitor visitor( *this );
     urbanModel.Accept( visitor );
-    LoadInfrastructures( config );
     LoadUrbanStates( config );
     NotifyPionsInsideUrbanObject();
 }
@@ -315,24 +314,6 @@ void MIL_EntityManager::CreateUrbanObject( const urban::TerrainObject_ABC& objec
 {
     assert( pObjectManager_ );
     pObjectManager_->CreateUrbanObject( object );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::LoadInfrastructures
-// Created: JSR 2010-08-12
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::LoadInfrastructures( const MIL_Config& config )
-{
-    const bfs::path fullPath = bfs::path( config.GetTerrainFile(), bfs::native ).branch_path() / "urban" / "urban.xml";
-    if( bfs::exists( fullPath ) )
-    {
-        xml::xifstream xis( fullPath.native_file_string() );
-        xis >> xml::start( "urban" )
-                >> xml::start( "urban-objects" )
-                    >> xml::list( "urban-object", boost::bind( &MIL_ObjectManager::ReadInfrastructures, boost::ref( *pObjectManager_ ), _1 ) )
-                >> xml::end()
-            >> xml::end();
-    }
 }
 
 // -----------------------------------------------------------------------------

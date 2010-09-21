@@ -650,7 +650,7 @@ const DEC_Knowledge_AgentComposante* DEC_Knowledge_Agent::GetMajorComposante() c
 // -----------------------------------------------------------------------------
 double DEC_Knowledge_Agent::GetMaterialComposantesAttritionLevel( boost::shared_ptr< DEC_Knowledge_Urban > urbanKnowledge ) const
 {
-    const urban::Architecture* architecture = urbanKnowledge->GetTerrainObjectKnown().RetrievePhysicalFeature< urban::Architecture >();
+    const urban::Architecture* architecture = urbanKnowledge->GetTerrainObjectKnown().Retrieve< urban::Architecture >();
     if( architecture )
     {
         const PHY_RolePion_Composantes& role = GetAgentKnown().GetRole< PHY_RolePion_Composantes >();

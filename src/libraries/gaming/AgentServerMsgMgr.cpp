@@ -43,6 +43,7 @@
 #include "UserProfile.h"
 #include "WeatherModel.h"
 #include "clients_gui/Drawing_ABC.h"
+#include "clients_gui/TerrainObjectProxy.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
@@ -1568,7 +1569,7 @@ void AgentServerMsgMgr::OnReceiveMsgUrbanCreation( const MsgsSimToClient::MsgUrb
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUrbanUpdate( const MsgsSimToClient::MsgUrbanUpdate& message )
 {
-    GetModel().urbanObjects_.Update( message );
+    GetModel().urbanObjects_.GetObject( message.oid() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------

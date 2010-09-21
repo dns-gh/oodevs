@@ -63,11 +63,7 @@ namespace
     {
         static void Update( MIL_Object_ABC& object, xml::xistream& xis )
         {
-            T* capacity = object.Retrieve< T >();
-            if( capacity )
-                capacity->Update( xis, object );
-            else
-                T( xis ).Instanciate( object );
+            object.Get< T >().Update( xis, object ); // should exist
         }
     };
 

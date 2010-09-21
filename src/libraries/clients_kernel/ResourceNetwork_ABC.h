@@ -72,8 +72,8 @@ public:
         std::vector< ResourceLink > links_;
     };
 
-    typedef std::map< std::string, ResourceNode > ResourceNodes;
-    typedef ResourceNodes::const_iterator       CIT_ResourceNodes;
+    typedef std::map< std::string, ResourceNode > T_ResourceNodes;
+    typedef T_ResourceNodes::const_iterator     CIT_ResourceNodes;
     //@}
 
 public:
@@ -89,8 +89,8 @@ public:
     virtual void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const = 0;
     void Select( bool selected ) { selected_ = selected; }
     bool IsSelected() const { return selected_; }
-    const ResourceNodes& GetResourceNodes() const { return resourceNodes_; }
-    ResourceNodes& GetResourceNodes() { return resourceNodes_; }
+    const T_ResourceNodes& GetResourceNodes() const { return resourceNodes_; }
+    T_ResourceNodes& GetResourceNodes() { return resourceNodes_; }
     const ResourceNode* FindResourceNode( std::string resource ) const
     {
         CIT_ResourceNodes it = resourceNodes_.find( resource );
@@ -110,7 +110,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    ResourceNodes resourceNodes_;
+    T_ResourceNodes resourceNodes_;
     bool selected_;
     //@}
 };

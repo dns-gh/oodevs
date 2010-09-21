@@ -28,6 +28,11 @@ namespace resource
     class NodeProperties;
 }
 
+namespace urban
+{
+    class ResourceNetworkAttribute;
+}
+
 namespace xml
 {
     class xistream;
@@ -46,6 +51,7 @@ public:
     //@{
              ResourceNetworkCapacity();
     explicit ResourceNetworkCapacity( xml::xistream& xis );
+    explicit ResourceNetworkCapacity( const urban::ResourceNetworkAttribute& urbanAttribute );
     virtual ~ResourceNetworkCapacity();
     //@}
 

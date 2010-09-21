@@ -45,6 +45,16 @@ ResourceNetworkCapacity::ResourceNetworkCapacity( xml::xistream& xis )
 
 // -----------------------------------------------------------------------------
 // Name: ResourceNetworkCapacity constructor
+// Created: JSR 2010-09-17
+// -----------------------------------------------------------------------------
+ResourceNetworkCapacity::ResourceNetworkCapacity( const urban::ResourceNetworkAttribute& urbanAttribute )
+    : nodeProperties_( new NodeProperties( urbanAttribute, MIL_AgentServer::GetWorkspace().GetResourceTools() ) )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkCapacity constructor
 // Created: JSR 2010-08-12
 // -----------------------------------------------------------------------------
 ResourceNetworkCapacity::ResourceNetworkCapacity( const ResourceNetworkCapacity& from )

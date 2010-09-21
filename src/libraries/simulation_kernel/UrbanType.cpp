@@ -12,6 +12,9 @@
 #include <urban/StaticModel.h>
 #include <xeumeuleu/xml.hpp>
 
+// $$$$ _RC_ JSR 2010-09-20: Classe à modifier. Elle ne sert qu'à wrapper le static model de urban pour récupérer les urban::MaterialCompositionType.
+// On devrait ne pas utiliser du tout ce static model et le relire completement.
+
 UrbanType* UrbanType::urbanType_ = 0;
 
 // -----------------------------------------------------------------------------
@@ -40,7 +43,7 @@ void UrbanType::Terminate()
 UrbanType::UrbanType( xml::xistream& xis )
     : staticModel_( new urban::StaticModel() )
 {
-    staticModel_->Load( xis );
+    staticModel_->Load( xis, "" );
 }
 
 // -----------------------------------------------------------------------------

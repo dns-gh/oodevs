@@ -16,6 +16,7 @@
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include <boost/bind.hpp>
+#include <urban/ResourceNetworkAttribute.h>
 #include <xeumeuleu/xml.hpp>
 
 using namespace geometry;
@@ -32,6 +33,38 @@ ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& control
     , needSaving_( false )
 {
     xis >> xml::list( "node", *this, &ResourceNetworkAttribute::ReadNode );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkAttribute constructor
+// Created: JSR 2010-09-20
+// -----------------------------------------------------------------------------
+ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, const urban::ResourceNetworkAttribute& network, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver )
+    : controllers_( controllers )
+    , id_( id )
+    , urbanResolver_( urbanResolver )
+    , resourceNetworkResolver_( resourceNetworkResolver )
+    , needSaving_( false )
+{
+    const urban::ResourceNetworkAttribute::T_ResourceNodes& nodes = network.GetResourceNodes();
+    for( urban::ResourceNetworkAttribute::CIT_ResourceNodes it = nodes.begin(); it != nodes.end(); ++it )
+    {
+        ResourceNode& node = resourceNodes_[ it->second.resource_ ];
+        node.resource_ = it->second.resource_;
+        node.isEnabled_ = it->second.isEnabled_;
+        node.production_ = it->second.production_;
+        node.consumption_ = it->second.consumption_;
+        node.critical_ = it->second.critical_;
+        node.maxStock_ = it->second.maxStock_;
+        for( std::vector< urban::ResourceNetworkAttribute::ResourceLink >::const_iterator itLink = it->second.links_.begin(); itLink != it->second.links_.end(); ++itLink )
+        {
+            ResourceLink link;
+            link.id_ = ( *itLink ).id_;
+            link.capacity_ = ( *itLink ).capacity_;
+            link.urban_ = true;
+            node.links_.push_back( link );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -181,7 +214,7 @@ void ResourceNetworkAttribute::Update( xml::xistream& xis )
 // Name: ResourceNetworkAttribute::Update
 // Created: JSR 2010-09-09
 // -----------------------------------------------------------------------------
-void ResourceNetworkAttribute::Update( const kernel::ResourceNetwork_ABC::ResourceNodes& nodes )
+void ResourceNetworkAttribute::Update( const kernel::ResourceNetwork_ABC::T_ResourceNodes& nodes )
 {
     resourceNodes_ = nodes;
     needSaving_ = true;

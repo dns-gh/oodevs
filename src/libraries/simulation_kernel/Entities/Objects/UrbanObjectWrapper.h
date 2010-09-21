@@ -14,6 +14,11 @@
 
 class MIL_ObjectBuilder_ABC;
 
+namespace MsgsSimToClient
+{
+    class MsgUrbanAttributes;
+}
+
 namespace urban
 {
     class TerrainObject_ABC;
@@ -93,6 +98,8 @@ public:
     virtual void SendDestruction() const;
     virtual void SendFullState() const;
     virtual void UpdateState();
+    template < typename T >
+    void SendCapacity( MsgsSimToClient::MsgUrbanAttributes& msg) const;
     //@}
 
     //! @name Accessors
@@ -108,6 +115,11 @@ protected:
     virtual void Update( unsigned int time );
     virtual void Register( ObjectAttribute_ABC* attribute );
     virtual void Register( ObjectCapacity_ABC* capacity );
+    //@}
+
+    //!@name Helpers
+    //@{
+    void InitializeAttributes();
     //@}
 
 private:

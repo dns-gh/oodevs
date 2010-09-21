@@ -81,7 +81,6 @@ public:
     MIL_Object_ABC*     CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder );
     MIL_Object_ABC*     CreateUrbanObject( const urban::TerrainObject_ABC& object );
     void                UpdateCapacity( const std::string& capacity, xml::xistream& xis, MIL_Object_ABC& object );
-    void                ReadInfrastructures( xml::xistream& xis );
     void                ReadUrbanState( xml::xistream& xis );
     UrbanObjectWrapper* FindUrbanWrapper( unsigned int nID );
     MIL_Object_ABC*     Find( unsigned int nID ) const;

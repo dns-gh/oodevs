@@ -12,11 +12,6 @@
 
 #include "clients_kernel/StaticModel.h"
 
-namespace urban
-{
-    class StaticModel;
-}
-
 namespace kernel
 {
     class AgentTypes;
@@ -81,7 +76,6 @@ public:
     gui::DrawingTypes&      drawings_;
     indicators::Primitives& indicators_;
     indicators::GaugeTypes& gaugeTypes_;
-    urban::StaticModel&     urbanTypes_;
     //@}
 
 private:

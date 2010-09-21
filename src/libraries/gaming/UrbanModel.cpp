@@ -17,7 +17,6 @@
 #include "StaticModel.h"
 #include "StructuralStateAttribute.h"
 #include "UrbanBlockDetectionMap.h"
-#include "UrbanBlockDeserializer.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
@@ -27,9 +26,10 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "protocol/Simulation.h"
 #include "protocol/Protocol.h"
+#include <urban/Architecture.h>
+#include <urban/ColorAttribute.h>
 #include <urban/Model.h>
 #include <urban/UrbanFactory.h>
-#include <urban/UrbanObjectDeserializer_ABC.h>
 #include <urban/TerrainObject_ABC.h>
 
 using namespace gui;
@@ -58,6 +58,37 @@ UrbanModel::~UrbanModel()
     Purge();
 }
 
+namespace
+{
+    void AttachExtensions( urban::TerrainObject_ABC& object, const MsgsSimToClient::MsgUrbanCreation& message )
+    {
+        if( !message.has_attributes() )
+            return;
+        if( message.attributes().has_color() )
+        {
+            const MsgsSimToClient::MsgUrbanAttributes_RgbaColor& color = message.attributes().color();
+            urban::ColorAttribute* colorAttribute = new urban::ColorAttribute( object );
+            colorAttribute->SetRed( static_cast< unsigned short >( color.red() ) );
+            colorAttribute->SetGreen( static_cast< unsigned short >( color.green() ) );
+            colorAttribute->SetBlue( static_cast< unsigned short >( color.blue() ) );
+            colorAttribute->SetAlpha( color.alpha() );
+            object.Attach( *colorAttribute );
+        }
+        if( message.attributes().has_architecture() )
+        {
+            const MsgsSimToClient::MsgUrbanAttributes_Architecture& architecture = message.attributes().architecture();
+            urban::Architecture* attribute = new urban::Architecture( object );
+            attribute->SetHeight( architecture.height() );
+            attribute->SetFloorNumber( architecture.floor_number() );
+            attribute->SetRoofShape( architecture.roof_shape() );
+            attribute->SetMaterial( architecture.material() );
+            attribute->SetOccupation( architecture.occupation() );
+            attribute->SetTrafficability( architecture.trafficability() );
+            object.Attach( *attribute );
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: UrbanModel::Create
 // Created: SLG 2009-10-205
@@ -70,11 +101,19 @@ void UrbanModel::Create( const MsgsSimToClient::MsgUrbanCreation& message )
     for( int i = 0; i < message.location().coordinates().elem_size(); ++i )
         footPrint.Add( static_.coordinateConverter_.ConvertToXY( message.location().coordinates().elem( i ) ) );
     urban::TerrainObject_ABC* object = urbanModel_->GetFactory().CreateUrbanObject( id, name, &footPrint );
-    UrbanBlockDeserializer urbanBlockDeserializer( message );
-    object->Accept( urbanBlockDeserializer );
+    AttachExtensions( *object, message );
     gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controller_, *object, message.oid(), QString( message.name().c_str() ) );
-    if( message.has_attributes() && message.attributes().has_structure() )
-        pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( controller_, pTerrainObject->Get< kernel::PropertiesDictionary >() ) );
+    if( message.has_attributes() )
+    {
+        if( message.attributes().has_structure() )
+            pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( controller_, pTerrainObject->Get< kernel::PropertiesDictionary >() ) );
+        if( message.attributes().has_infrastructures() )
+        {
+            if( message.attributes().infrastructures().resource_network_size() > 0 )
+                model_.resourceNetwork_.Create( *pTerrainObject, message.attributes().infrastructures() );
+            // TODO update infrastructures other than resource network
+        }
+    }
     pTerrainObject->Attach< kernel::Positions >( *new UrbanPositions( *object, message.location(), static_.coordinateConverter_ ) );
     object->InstanciateDecoration();
     pTerrainObject->Update( message );
@@ -82,26 +121,6 @@ void UrbanModel::Create( const MsgsSimToClient::MsgUrbanCreation& message )
     if( !Find( id ) )
         Register( id, *pTerrainObject );
     urbanBlockDetectionMap_.AddUrbanBlock( *object );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanModel::Update
-// Created: JSR 2010-06-28
-// -----------------------------------------------------------------------------
-void UrbanModel::Update( const MsgsSimToClient::MsgUrbanUpdate& message )
-{
-    // TODO à virer quand les réseaux de ressources seront dans urban et que leur création sera envoyée dans MsgUrbanCreation et pas MsgUrbanUpdate
-    if( message.has_attributes() && message.attributes().has_infrastructures() )
-    {
-        if( message.attributes().infrastructures().resource_network_size() > 0 )
-        {
-            TerrainObjectProxy& entity = GetObject( message.oid() );
-            if( !entity.Retrieve< kernel::ResourceNetwork_ABC >() )
-                model_.resourceNetwork_.Create( GetObject( message.oid() ), message.attributes().infrastructures() );
-        }
-        // TODO update infrastructures other than resource network
-    }
-    GetObject( message.oid() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------

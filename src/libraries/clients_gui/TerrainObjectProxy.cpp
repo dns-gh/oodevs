@@ -27,7 +27,7 @@ TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::T
                                         unsigned int id, const QString& name )
     : EntityImplementation< kernel::Entity_ABC >( controller, id, name )
     , Creatable< TerrainObjectProxy >( controller, this )
-    , object_        ( &object )
+    , object_( &object )
 {
     RegisterSelf( *this );
     CreateDictionary( controller );
@@ -121,7 +121,7 @@ void TerrainObjectProxy::CreateDictionary( kernel::Controller& controller )
 // -----------------------------------------------------------------------------
 void TerrainObjectProxy::AddDictionaryForArchitecture( kernel::PropertiesDictionary& dictionary )
 {
-    urban::Architecture* architecture = object_->RetrievePhysicalFeature< urban::Architecture >();
+    urban::Architecture* architecture = object_->Retrieve< urban::Architecture >();
     if( architecture )
     {
         dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/Height" )               , architecture->GetHeight() );

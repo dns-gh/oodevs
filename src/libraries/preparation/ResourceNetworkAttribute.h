@@ -28,6 +28,11 @@ namespace kernel
     class PropertiesDictionary;
 }
 
+namespace urban
+{
+    class ResourceNetworkAttribute;
+}
+
 namespace xml
 {
     class xistream;
@@ -47,6 +52,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver );
+             ResourceNetworkAttribute( kernel::Controllers& controllers, const urban::ResourceNetworkAttribute& network, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver );
     virtual ~ResourceNetworkAttribute();
     //@}
 
@@ -57,7 +63,7 @@ public:
     virtual void SerializeAttributes( xml::xostream& ) const;
     virtual void SetOverriden( bool& overriden ) const;
     void Update( xml::xistream& xis );
-    void Update( const kernel::ResourceNetwork_ABC::ResourceNodes& nodes );
+    void Update( const kernel::ResourceNetwork_ABC::T_ResourceNodes& nodes );
     //@}
 
 private:

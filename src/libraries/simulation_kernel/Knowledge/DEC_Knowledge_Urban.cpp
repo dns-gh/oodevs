@@ -408,7 +408,7 @@ bool DEC_Knowledge_Urban::IsValid() const
 // -----------------------------------------------------------------------------
 const float DEC_Knowledge_Urban::GetPathfindCost( float weight ) const
 {
-    const urban::Architecture* architecture = object_->RetrievePhysicalFeature< urban::Architecture >();
+    const urban::Architecture* architecture = object_->Retrieve< urban::Architecture >();
     if( architecture )
         return architecture->GetPathfindCost( weight );
     return 0;

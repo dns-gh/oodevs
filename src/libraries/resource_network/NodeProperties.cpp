@@ -12,6 +12,7 @@
 #include "ResourceTools_ABC.h"
 #include "protocol/protocol.h"
 #include <boost/bind.hpp>
+#include <urban/ResourceNetworkAttribute.h>
 #include <xeumeuleu/xml.hpp>
 
 using namespace resource;
@@ -36,6 +37,22 @@ NodeProperties::NodeProperties( xml::xistream& xis, const ResourceTools_ABC& too
     , tools_       ( tools )
 {
     Update( xis );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeProperties constructor
+// Created: JSR 2010-09-17
+// -----------------------------------------------------------------------------
+NodeProperties::NodeProperties( const urban::ResourceNetworkAttribute& urbanAttribute, const ResourceTools_ABC& tools )
+    : isFunctional_( true )
+    , tools_       ( tools )
+{
+    const urban::ResourceNetworkAttribute::T_ResourceNodes& nodes = urbanAttribute.GetResourceNodes();
+    for( urban::ResourceNetworkAttribute::CIT_ResourceNodes it = nodes.begin(); it != nodes.end(); ++it )
+    {
+        unsigned long resourceId = tools_.GetResourceId( it->second.resource_ );
+        Register( resourceId, *new NodeElement( it->second, resourceId ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

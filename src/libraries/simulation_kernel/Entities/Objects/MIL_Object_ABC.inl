@@ -112,6 +112,7 @@ void MIL_Object_ABC::AddCapacity( T* capacity )
     tools::Extendable< ObjectCapacity_ABC >::Attach( *capacity );
     Register( static_cast< ObjectCapacity_ABC *>( capacity ) );
 }
+
 // -----------------------------------------------------------------------------
 // Name: template< typename T> void MIL_Object_ABC::ProcessAgentsInside
 // Created: JCR 2008-08-28

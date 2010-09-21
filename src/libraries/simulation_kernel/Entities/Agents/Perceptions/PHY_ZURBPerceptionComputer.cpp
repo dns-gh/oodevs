@@ -191,16 +191,15 @@ namespace
                                 float perceiverUrbanBlockHeight = 2; //2 = SensorHeight
                                 float objectHeight = 2; //2 = SensorHeight
                                 double urbanFactor = sensorTypeAgent->GetUrbanBlockFactor( object );
-                                const urban::Architecture* architecture = object.RetrievePhysicalFeature< urban::Architecture >();
+                                const urban::Architecture* architecture = object.Retrieve< urban::Architecture >();
                                 if( perceiverUrbanBlock )
                                 {
-                                    const urban::Architecture* perceiverUrbanBlockArchitecture = perceiverUrbanBlock->GetObject().RetrievePhysicalFeature< urban::Architecture >();
+                                    const urban::Architecture* perceiverUrbanBlockArchitecture = perceiverUrbanBlock->GetObject().Retrieve< urban::Architecture >();
                                     if( perceiverUrbanBlockArchitecture )
                                         perceiverUrbanBlockHeight += perceiverUrbanBlockArchitecture->GetHeight();
                                 }
-                                const urban::Architecture* objectArchitecture = object.RetrievePhysicalFeature< urban::Architecture >();
-                                if( objectArchitecture )
-                                    objectHeight += objectArchitecture->GetHeight();
+                                if( architecture )
+                                    objectHeight += architecture->GetHeight();
                                 urbanFactor *= static_cast< double >( perceiverUrbanBlockHeight / objectHeight );
                                 if( architecture )
                                     urbanFactor = 1. + architecture->GetOccupation() * ( urbanFactor -1. ) ;

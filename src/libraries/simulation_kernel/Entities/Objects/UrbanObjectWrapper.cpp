@@ -25,8 +25,10 @@
 #include "simulation_terrain/TER_Localisation.h"
 #include <geometry/Types.h>
 #include <urban/ColorRGBA.h>
-#include <urban/PhysicalFeature_ABC.h>
 #include <urban/Architecture.h>
+#include <urban/ColorAttribute.h>
+#include <urban/GeometryAttribute.h>
+#include <urban/ResourceNetworkAttribute.h>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/StaticModel.h>
 #include <urban/MaterialCompositionType.h>
@@ -49,12 +51,7 @@ UrbanObjectWrapper::UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, co
     , manipulator_( *new MIL_ObjectManipulator( *this ) )
     , pView_( 0 )
 {
-    std::string name = object.GetName();
-    geometry::Polygon2f::T_Vertices vertices = object.GetFootprint()->Vertices();
-    std::vector< MT_Vector2D > vector;
-    for( geometry::Polygon2f::CIT_Vertices it = vertices.begin(); it != vertices.end(); ++it )
-        vector.push_back( MT_Vector2D( it->X(), it->Y() ) );
-    Initialize( TER_Localisation( TER_Localisation::ePolygon , vector ) );
+    InitializeAttributes();
     builder.Build( *this );
 }
 
@@ -78,6 +75,31 @@ UrbanObjectWrapper::UrbanObjectWrapper()
 // -----------------------------------------------------------------------------
 UrbanObjectWrapper::~UrbanObjectWrapper()
 {
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::InitializeAttributes
+// Created: JSR 2010-09-17
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::InitializeAttributes()
+{
+    // Position
+    std::vector< MT_Vector2D > vector;
+    const urban::GeometryAttribute* geometry = object_->Retrieve< urban::GeometryAttribute >();
+    if( geometry )
+    {
+        geometry::Polygon2f::T_Vertices vertices = geometry->Geometry().Vertices();
+        for( geometry::Polygon2f::CIT_Vertices it = vertices.begin(); it != vertices.end(); ++it )
+            vector.push_back( MT_Vector2D( it->X(), it->Y() ) );
+    }
+    Initialize( TER_Localisation( TER_Localisation::ePolygon , vector ) );
+    // resource network
+    const urban::ResourceNetworkAttribute* resource = object_->Retrieve< urban::ResourceNetworkAttribute >();
+    if( resource )
+    {
+        ResourceNetworkCapacity* capacity = new ResourceNetworkCapacity( *resource );
+        capacity->Register( *this );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -300,6 +322,18 @@ MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdate(
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::SendCapacity
+// Created: JSR 2010-09-17
+// -----------------------------------------------------------------------------
+template < typename T >
+void UrbanObjectWrapper::SendCapacity( MsgsSimToClient::MsgUrbanAttributes& msg) const
+{
+    const T* capacity = Retrieve< T >();
+    if( capacity )
+        capacity->SendState( msg );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper::SendCreation
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
@@ -312,7 +346,7 @@ void UrbanObjectWrapper::SendCreation() const
     message().set_name( object_->GetName() );
     NET_ASN_Tools::WriteLocation( GetLocalisation(), *message().mutable_location() );
 
-    const ColorRGBA* color = object_->GetColor();
+    const urban::ColorAttribute* color = object_->Retrieve< urban::ColorAttribute >();
     if( color != 0 )
     {
         message().mutable_attributes()->mutable_color()->set_red( color->Red() );
@@ -321,7 +355,7 @@ void UrbanObjectWrapper::SendCreation() const
         message().mutable_attributes()->mutable_color()->set_alpha( color->Alpha() );
     }
 
-    const urban::Architecture* architecture = object_->RetrievePhysicalFeature< urban::Architecture >();
+    const urban::Architecture* architecture = object_->Retrieve< urban::Architecture >();
     if( architecture != 0 )
     {
         message().mutable_attributes()->mutable_architecture()->set_height( architecture->GetHeight() );
@@ -331,10 +365,8 @@ void UrbanObjectWrapper::SendCreation() const
         message().mutable_attributes()->mutable_architecture()->set_occupation( architecture->GetOccupation() );
         message().mutable_attributes()->mutable_architecture()->set_trafficability( architecture->GetTrafficability() );
     }
-    //TODO : faire une boucle sur toutes les capacités
-    const StructuralCapacity* structural = Retrieve< StructuralCapacity >();
-    if( structural )
-        structural->SendState( *message().mutable_attributes() );
+    SendCapacity< StructuralCapacity >( *message().mutable_attributes() );
+    SendCapacity< ResourceNetworkCapacity >( *message().mutable_attributes() );
     message.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -368,12 +400,8 @@ void UrbanObjectWrapper::UpdateState()
         return;
     client::UrbanUpdate message;
     message().set_oid( object_->GetId() );
-    StructuralCapacity* structural = Retrieve< StructuralCapacity >();
-    if( structural )
-        structural->SendState( *message().mutable_attributes() );
-    ResourceNetworkCapacity* resource = Retrieve< ResourceNetworkCapacity >();
-    if( resource )
-        resource->SendState( *message().mutable_attributes() );
+    SendCapacity< StructuralCapacity >( *message().mutable_attributes() );
+    SendCapacity< ResourceNetworkCapacity >( *message().mutable_attributes() );
     message.Send( NET_Publisher_ABC::Publisher() );
 }
 
