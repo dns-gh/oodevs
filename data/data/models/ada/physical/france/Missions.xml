@@ -1939,10 +1939,10 @@
       <parameter dia-name="orderConduiteModifierPrioritesBlesses_" name="Order conduite modifier priorites blesses" optional="false" type="MedicalPriorities"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ModifierPrioritesTactiquesReparations" id="371" name="Modifier Priorites Tactiques Reparations">
-      <parameter dia-name="orderConduiteModifierPrioritesTactiquesReparations_" max-occurs="unbounded" min-occurs="1" name="Order conduite modifier priorites tactiques reparations" optional="false" type="Automate"/>
+      <parameter dia-name="orderConduiteModifierPrioritesTactiquesReparations_" max-occurs="unbounded" min-occurs="0" name="Order conduite modifier priorites tactiques reparations" optional="false" type="Automate"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ModifierPrioritesTactiquesBlesses" id="372" name="Modifier Priorites Tactiques Blesses">
-      <parameter dia-name="orderConduiteModifierPrioritesTactiquesBlesses_" max-occurs="unbounded" min-occurs="1" name="Order conduite modifier priorites tactiques blesses" optional="false" type="Automate"/>
+      <parameter dia-name="orderConduiteModifierPrioritesTactiquesBlesses_" max-occurs="unbounded" min-occurs="0" name="Order conduite modifier priorites tactiques blesses" optional="false" type="Automate"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Automate_RealiserVariantement" id="373" name="Automate Realiser Variantement">
       <parameter dia-name="siteFranchissementOriginal_" name="Site franchissement original" optional="false" type="ObjectKnowledge"/>
