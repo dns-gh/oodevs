@@ -6490,9 +6490,10 @@
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre en compte Prisonniers"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="MELEE Controler Secteur"/>
+        <mission name="MELEE Detruire"/>
         <mission name="MELEE Interdire un Bloc Urbain"/>
         <mission name="MELEE Reconnaitre un itinéraire"/>
-        <mission name="MELEE Controler Secteur"/>
         <mission name="MELEE S'emparer"/>
       </missions>
       <fragorders>
