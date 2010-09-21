@@ -1128,7 +1128,7 @@
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Objets a animer" optional="false" type="GenObjectBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Fixer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Fixer" id="2085" name="MELEE Fixer unite">
-      <parameter dia-name="objective" name="unite a fixer" optional="false" type="AgentKnowledgeBM"/>
+      <parameter dia-name="objectives" name="unites a fixer" optional="false" type="AgentKnowledgeBM"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="postions pour fixer" optional="false" type="PointBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.recueillir" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.recueillir" id="2086" name="MELEE Recueillir">
