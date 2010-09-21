@@ -74,14 +74,8 @@ void TerrainProfiler::NotifyContextMenu( const geometry::Point2f& point, kernel:
     if( !isVisible() || detection_.Extent().IsOutside( point ) )
         return;
     candidatePoint_ = point;
-    {
-        const int id = menu.InsertItem( "Helpers", tools::translate( "TerrainProfiler", "Terrain profile from here" ), this, SLOT( SetFromPosition() ) );
-        menu.SetChecked( id, !from_.IsZero() );
-    }
-    {
-        const int id = menu.InsertItem( "Helpers", tools::translate( "TerrainProfiler", "Terrain profile to here" ), this, SLOT( SetToPosition() ) );
-        menu.SetChecked( id, !to_.IsZero() );
-    }
+    menu.InsertItem( "Helpers", tools::translate( "TerrainProfiler", "Terrain profile from here" ), this, SLOT( SetFromPosition() ) );
+    menu.InsertItem( "Helpers", tools::translate( "TerrainProfiler", "Terrain profile to here" ), this, SLOT( SetToPosition() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,14 +88,8 @@ void TerrainProfiler::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel
         return;
     candidateUnitPoint_ = entity.Get< kernel::Positions >().GetPosition();
     candidateHeight_ = entity.Get< kernel::Positions >().GetHeight();
-    {
-        const int id = menu.InsertItem( "Helpers", tools::translate( "TerrainProfiler", "Terrain profile from unit" ), this, SLOT( SetFromUnitPosition() ) );
-        menu.SetChecked( id, !from_.IsZero() );
-    }
-    {
-        const int id = menu.InsertItem( "Helpers", tools::translate( "TerrainProfiler", "Terrain profile to unit" ), this, SLOT( SetToUnitPosition() ) );
-        menu.SetChecked( id, !to_.IsZero() );
-    }
+    menu.InsertItem( "Helpers", tools::translate( "TerrainProfiler", "Terrain profile from unit" ), this, SLOT( SetFromUnitPosition() ) );
+    menu.InsertItem( "Helpers", tools::translate( "TerrainProfiler", "Terrain profile to unit" ), this, SLOT( SetToUnitPosition() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,7 +99,6 @@ void TerrainProfiler::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel
 void TerrainProfiler::NotifyUpdated( const kernel::ModelLoaded& /*model*/ )
 {
     const short maxValue = detection_.MaximumElevation() + 100;
-
     height_->setRange( -maxValue, 0 );
     heightValue_->setRange( 0, maxValue );
     height_->setValue( 2 );
