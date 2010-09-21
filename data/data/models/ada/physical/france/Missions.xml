@@ -1031,7 +1031,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Neutralizer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Neutralizer" id="2090" name="MELEE Neutraliser">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Neutraliser" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Neutraliser" id="2090" name="MELEE Neutraliser">
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles a neutraliser" optional="false" type="AgentKnowledgeBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Ratisser" dia-type="net.masagroup.sword.france.military.platoon.tasks.RatisserBU" id="2091" name="MELEE Ratisser un Bloc Urbain">
@@ -1804,6 +1804,9 @@
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Detruire" dia-type="net.masagroup.sword.france.military.company.combat.tasks.Detruire" id="1025" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Detruire" name="MELEE Detruire">
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles a detruire" optional="false" type="AgentKnowledgeBM"/>
+    </mission>
+    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Neutraliser" dia-type="net.masagroup.sword.france.military.company.combat.tasks.Neutraliser" id="1026" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Neutraliser" name="MELEE Neutraliser">
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles a neutraliser" optional="false" type="AgentKnowledgeBM"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" dia-type="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" id="1023" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" name="ASS Illumination et Tir Synchronisé">
       <parameter dia-name="tireur" name="Tireur" optional="false" type="AgentBM"/>
