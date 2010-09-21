@@ -316,12 +316,13 @@
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="GENIE ActiverObstacles"/>
-        <mission name="GENIE Construire"/>
         <mission name="GENIE Contourner obstacle"/>
         <mission name="GENIE Degager Obstacles"/>
         <mission name="GENIE Depolluer zone"/>
         <mission name="GENIE OuvrirItineraire"/>
         <mission name="GENIE Realiser Travaux"/>
+        <mission name="GENIE Realiser Camps"/>
+        <mission name="GENIE Retablir Itineraire"/>
         <mission name="Animer"/>
       </missions>
       <fragorders>

@@ -1093,14 +1093,14 @@
       <parameter dia-name="firePositions" max-occurs="unbounded" min-occurs="1" name="Zones de tir" optional="false" type="ObjectKnowledgeBM"/>
       <parameter dia-name="safeguardPositions" max-occurs="unbounded" min-occurs="1" name="Positions de sauvegarde" optional="true" type="PointBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.OuvrirItineraire" dia-type="net.masagroup.sword.france.military.platoon.tasks.OuvrirItineraire" id="2047" name="GENIE OuvrirItineraire">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.OuvrirItineraire" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.OuvrirItineraire" id="2047" name="GENIE OuvrirItineraire">
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="PointBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Construire" dia-type="net.masagroup.sword.france.military.platoon.tasks.Construire" id="2076" name="GENIE Construire">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.Construire" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.Construire" id="2076" name="GENIE Realiser Travaux">
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Objets a construire" optional="false" type="GenObjectBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.military.platoon.tasks.RealizeTacticalObject" dia-type="net.masagroup.sword.military.platoon.tasks.RealizeTacticalObject" id="2036" name="GENIE Realiser Travaux">
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Travaux a realiser" optional="false" type="GenObjectBM"/>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.ConstruireCamps" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.ConstruireCamps" id="2116" name="GENIE Realiser Camps">
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Camps a construire" optional="false" type="GenObjectBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.ActiverObstacles" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.ActiverObstacles" id="2104" name="GENIE ActiverObstacles">
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="false" type="ObjectKnowledgeBM"/>
@@ -1113,6 +1113,9 @@
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.ContournerObstacles" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.ContournerObstacles" id="2114" name="GENIE Contourner obstacle">
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="obstacles a contourner" optional="false" type="ObjectKnowledgeBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.RetablirItineraire" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.RetablirItineraire" id="2117" name="GENIE Retablir Itineraire">
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="PointBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Animer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Animer" id="2077" name="Animer">
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Objets a animer" optional="false" type="ObjectKnowledgeBM"/>
