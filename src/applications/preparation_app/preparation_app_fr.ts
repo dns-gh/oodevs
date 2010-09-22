@@ -706,6 +706,93 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
 </context>
 <context>
+    <name>ScoreDef</name>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished">Total</translation>
+    </message>
+    <message>
+        <source>Operational</source>
+        <translation type="unfinished">Operationnel</translation>
+    </message>
+    <message>
+        <source>Mental</source>
+        <translation type="unfinished">Moral</translation>
+    </message>
+    <message>
+        <source>Officer</source>
+        <translation type="unfinished">Officier</translation>
+    </message>
+    <message>
+        <source>Sub officer</source>
+        <translation type="unfinished">Sous officier</translation>
+    </message>
+    <message>
+        <source>Troopers</source>
+        <translation type="unfinished">Soldat</translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation type="unfinished">Disponible</translation>
+    </message>
+    <message>
+        <source>Unavailable</source>
+        <translation type="unfinished">Indisponible</translation>
+    </message>
+    <message>
+        <source>Repairable</source>
+        <translation type="unfinished">Réparable</translation>
+    </message>
+    <message>
+        <source>Repairing</source>
+        <translation type="unfinished">En réparation</translation>
+    </message>
+    <message>
+        <source>Invisible</source>
+        <translation type="unfinished">Invisible</translation>
+    </message>
+    <message>
+        <source>Detected</source>
+        <translation type="unfinished">Détecté</translation>
+    </message>
+    <message>
+        <source>Recognized</source>
+        <translation type="unfinished">Reconnu</translation>
+    </message>
+    <message>
+        <source>Identified</source>
+        <translation type="unfinished">Identifié</translation>
+    </message>
+    <message>
+        <source>Recorded</source>
+        <translation type="unfinished">Enregistré</translation>
+    </message>
+    <message>
+        <source>Dead</source>
+        <translation type="unfinished">Mort</translation>
+    </message>
+    <message>
+        <source>Wounded</source>
+        <translation type="unfinished">Blessé</translation>
+    </message>
+    <message>
+        <source>Nbc</source>
+        <translation type="unfinished">Nbc</translation>
+    </message>
+    <message>
+        <source>In treatment</source>
+        <translation type="unfinished">En traitement</translation>
+    </message>
+    <message>
+        <source>In maintenance</source>
+        <translation type="unfinished">En maintenance</translation>
+    </message>
+    <message>
+        <source>Prisoner</source>
+        <translation type="unfinished">Prisonnier</translation>
+    </message>
+</context>
+<context>
     <name>ScoreDialog</name>
     <message>
         <source>Scores</source>

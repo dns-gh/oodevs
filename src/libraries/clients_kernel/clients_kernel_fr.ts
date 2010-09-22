@@ -332,19 +332,19 @@
     <name>Karma</name>
     <message>
         <source>Friend</source>
-        <translation>Ami</translation>
+        <translation type="unfinished">Ami</translation>
     </message>
     <message>
         <source>Enemy</source>
-        <translation>Ennemi</translation>
+        <translation type="unfinished">Ennemi</translation>
     </message>
     <message>
         <source>Neutral</source>
-        <translation>Neutre</translation>
+        <translation type="unfinished">Neutre</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation>Inconnu</translation>
+        <translation type="unfinished">Inconnu</translation>
     </message>
 </context>
 <context>

@@ -13,7 +13,7 @@
 #include "actions_gui/Param_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 
-class QButtonGroup;
+class StringQVButtonGroup;
 
 // =============================================================================
 /** @class  ParamStringEnumeration
@@ -28,7 +28,7 @@ class ParamStringEnumeration : public QObject, public actions::gui::Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamStringEnumeration( QObject* parent, const QString& title, const kernel::OrderParameter& parameter, const std::vector< std::string >& values );
+    ParamStringEnumeration( QObject* parent, const QString& title, const kernel::OrderParameter& parameter, const std::map< std::string, std::string >& values );
     virtual ~ParamStringEnumeration();
     //@}
 
@@ -42,7 +42,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnToggle( int id );
+    void OnToggle( const std::string& id );
     //@}
 
 private:
@@ -54,13 +54,14 @@ private:
 
     //! @name Helpers
     //@{
-    void AddItem( QButtonGroup* group, const std::string& name );
+    void AddItem( StringQVButtonGroup* group, const std::pair<std::string, std::string>& name );
     QString GetValue() const;
     //@}
 
     //! @name Types
     //@{
     typedef std::map< std::string, bool > T_Items;
+    typedef std::map< std::string, std::string >::const_iterator CIT_Values;
     //@}
 
 private:
@@ -68,7 +69,7 @@ private:
     //@{
     const QString title_;
     const kernel::OrderParameter parameter_;
-    const std::vector< std::string > values_;
+    const std::map< std::string, std::string > values_;
     T_Items selected_;
     //@}
 };

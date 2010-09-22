@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "ParamStringEnumeration.h"
 #include "moc_ParamStringEnumeration.cpp"
+#include "StringQVButtonGroup.h"
 #include "actions/Parameter.h"
 #include "actions/ParameterContainer_ABC.h"
 #include <boost/bind.hpp>
@@ -20,7 +21,7 @@
 // Name: ParamStringEnumeration constructor
 // Created: SBO 2009-08-05
 // -----------------------------------------------------------------------------
-ParamStringEnumeration::ParamStringEnumeration( QObject* parent, const QString& title, const kernel::OrderParameter& parameter, const std::vector< std::string >& values )
+ParamStringEnumeration::ParamStringEnumeration( QObject* parent, const QString& title, const kernel::OrderParameter& parameter, const std::map< std::string, std::string >& values )
     : QObject( parent )
     , actions::gui::Param_ABC( parameter.GetName().c_str() )
     , title_( title )
@@ -45,19 +46,19 @@ ParamStringEnumeration::~ParamStringEnumeration()
 // -----------------------------------------------------------------------------
 void ParamStringEnumeration::BuildInterface( QWidget* parent )
 {
-    QVButtonGroup* group = new QVButtonGroup( title_, parent );
+    StringQVButtonGroup* group = new StringQVButtonGroup( title_, parent );
     std::for_each( values_.begin(), values_.end(), boost::bind( &ParamStringEnumeration::AddItem, this, boost::ref( group ), _1 ) );
-    connect( group, SIGNAL( clicked( int ) ), SLOT( OnToggle( int ) ) );
+    connect( group, SIGNAL( clicked( const std::string& ) ), SLOT( OnToggle( const std::string& ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ParamStringEnumeration::OnToggle
 // Created: SBO 2009-08-05
 // -----------------------------------------------------------------------------
-void ParamStringEnumeration::OnToggle( int id )
+void ParamStringEnumeration::OnToggle( const std::string& id )
 {
-    bool& selected = selected_[ values_[ id ] ];
-    selected = !selected;
+        bool& selected = selected_[ id ];
+        selected = !selected;
 }
 
 // -----------------------------------------------------------------------------
@@ -98,10 +99,10 @@ void ParamStringEnumeration::CommitTo( actions::ParameterContainer_ABC& action )
 // Name: ParamStringEnumeration::AddItem
 // Created: SBO 2009-08-05
 // -----------------------------------------------------------------------------
-void ParamStringEnumeration::AddItem( QButtonGroup* group, const std::string& name )
+void ParamStringEnumeration::AddItem( StringQVButtonGroup* group, const std::pair<std::string, std::string>& name )
 {
-    new QCheckBox( name.c_str(), group );
-    selected_[ name ] = false;
+    group->InsertCheckbox( name.first );
+    selected_[ name.first ] = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -112,7 +113,10 @@ QString ParamStringEnumeration::GetValue() const
 {
     std::vector< std::string > result;
     BOOST_FOREACH( const T_Items::value_type& val, selected_ )
-        if( val.second )
-            result.push_back( val.first );
+    {
+        CIT_Values it = values_.find( val.first ); 
+        if( it != values_.end() && val.second )
+            result.push_back( it->second );
+    }
     return result.empty() ? "" : boost::join( result, "," ).c_str();
 }

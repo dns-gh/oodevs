@@ -531,7 +531,7 @@ void MIL_KnowledgeGroup::UnregisterKnowledgeGroup( const MIL_KnowledgeGroup& kno
     assert( it != knowledgeGroups_.end() );
     knowledgeGroups_.erase( it );
 }
-
+ 
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::RegisterAutomate
 // Created: NLD 2004-09-01

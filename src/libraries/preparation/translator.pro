@@ -38,6 +38,8 @@ SupplyStates.cpp \
 TacticalLine_ABC.cpp \
 Tc2States.cpp \
 Team.cpp \
+TeamKarmas.cpp \
 TeamsModel.cpp \
+
 
 TRANSLATIONS = preparation_fr.ts

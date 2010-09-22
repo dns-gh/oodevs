@@ -21,6 +21,7 @@
 #include "clients_kernel/OrderParameter.h"
 #include "indicators/DataTypeFactory.h"
 #include "indicators/Variable.h"
+#include "clients_kernel/Tools.h"
 #include "preparation/StaticModel.h"
 #include <boost/assign/list_of.hpp>
 #include <qvgroupbox.h>
@@ -179,24 +180,41 @@ void ScoreVariableCreationWizard::OnChangeType()
 
 namespace
 {
-    std::vector< std::string > HumanStates()
+    std::map< std::string, std::string > HumanStates()
     {
-        return boost::assign::list_of( "total" )( "operational" )( "dead" )( "wounded" )( "mental" )( "nbc" )( "in-treatment" )( "in-maintenance" );
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Total" ).ascii(), "total" )
+            ( tools::translate( "ScoreDef", "Operational" ).ascii(), "operational" )
+            ( tools::translate( "ScoreDef", "Dead" ).ascii(), "dead" )
+            ( tools::translate( "ScoreDef", "Wounded" ).ascii(), "wounded" )
+            ( tools::translate( "ScoreDef", "Mental" ).ascii(), "mental" )
+            ( tools::translate( "ScoreDef", "Nbc" ).ascii(), "nbc" )
+            ( tools::translate( "ScoreDef", "In treatment" ).ascii(), "in-treatment" )
+            ( tools::translate( "ScoreDef", "In maintenance" ).ascii(), "in-maintenance" );
     }
 
-    std::vector< std::string > HumanRanks()
+   std::map< std::string, std::string > HumanRanks()
     {
-        return boost::assign::list_of( "officer" )( "sub-officer" )( "troopers" );
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Officer" ).ascii(), "officer" )
+            ( tools::translate( "ScoreDef", "Sub officer" ).ascii(), "sub-officer" )
+            ( tools::translate( "ScoreDef", "Troopers" ).ascii(), "troopers" );
     }
 
-    std::vector< std::string > EquipmentStates()
+   std::map< std::string, std::string > EquipmentStates()
     {
-        return boost::assign::list_of( "available" )( "unavailable" )( "repairable" )( "repairing" )( "prisoner" );
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Available" ).ascii(), "available" )
+            ( tools::translate( "ScoreDef", "Unavailable" ).ascii(), "unavailable" )
+            ( tools::translate( "ScoreDef", "Repairable" ).ascii(), "repairable" )
+            ( tools::translate( "ScoreDef", "Repairing" ).ascii(), "repairing" )
+            ( tools::translate( "ScoreDef", "Prisoner" ).ascii(), "prisoner" );
     }
 
-    std::vector< std::string > PerceptionLevels()
+   std::map< std::string, std::string > PerceptionLevels()
     {
-        return boost::assign::list_of( "invisible" )( "detected" )( "recognized" )( "identified" )( "recorded" );
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Invisible" ).ascii(), "invisible" )
+            ( tools::translate( "ScoreDef", "Detected" ).ascii(), "detected" )
+            ( tools::translate( "ScoreDef", "Recognized" ).ascii(), "recognized" )
+            ( tools::translate( "ScoreDef", "Identified" ).ascii(), "identified" )
+            ( tools::translate( "ScoreDef", "Recorded" ).ascii(), "recorded" );
     }
 }
 

@@ -14,10 +14,10 @@
 
 using namespace kernel;
 
-Karma Karma::friend_ ( 1, "friend" , tools::translate( "Karma", "Friend" ) );  // f
-Karma Karma::enemy_  ( 2, "enemy"  , tools::translate( "Karma", "Enemy" ) );   // h
-Karma Karma::neutral_( 3, "neutral", tools::translate( "Karma", "Neutral" ) ); // n
-Karma Karma::unknown_( 0, "unknown", tools::translate( "Karma", "Unknown" ) ); // u
+Karma Karma::friend_ ( 1, "friend" );  // f
+Karma Karma::enemy_  ( 2, "enemy" );   // h
+Karma Karma::neutral_( 3, "neutral" ); // n
+Karma Karma::unknown_( 0, "unknown" ); // u
 
 // -----------------------------------------------------------------------------
 // Name: Karma constructor
@@ -26,7 +26,6 @@ Karma Karma::unknown_( 0, "unknown", tools::translate( "Karma", "Unknown" ) ); /
 Karma::Karma()
     : uId_( unknown_.uId_ )
     , identifier_( unknown_.identifier_ )
-    , name_( unknown_.name_ )
 {
     // NOTHING
 }
@@ -35,10 +34,9 @@ Karma::Karma()
 // Name: Karma constructor
 // Created: SBO 2007-02-26
 // -----------------------------------------------------------------------------
-Karma::Karma( const unsigned int id, const std::string& identifier, const QString& name )
+Karma::Karma( const unsigned int id, const std::string& identifier )
     : uId_( id )
     , identifier_( identifier )
-    , name_( name )
 {
     // NOTHING
 }
@@ -56,7 +54,7 @@ Karma::~Karma()
 // Name: Karma::GetId
 // Created: SBO 2007-02-26
 // -----------------------------------------------------------------------------
-std::string Karma::GetId() const
+const std::string& Karma::GetId() const
 {
     return identifier_;
 }
@@ -75,7 +73,17 @@ unsigned int Karma::GetUId() const
 // -----------------------------------------------------------------------------
 QString Karma::GetName() const
 {
-    return name_;
+    switch( uId_ )
+    {
+    case 1:
+        return tools::translate( "Karma", "Friend" );
+    case 2:
+        return tools::translate( "Karma", "Enemy" );
+    case 3:
+        return tools::translate( "Karma", "Neutral" );
+    default:
+        return tools::translate( "Karma", "Unknown" );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +105,7 @@ const Karma& Karma::operator!() const
 // -----------------------------------------------------------------------------
 bool Karma::operator<( const Karma& rhs ) const
 {
-    return identifier_ < rhs.identifier_ || ( identifier_ >= rhs.identifier_ && name_ < rhs.name_ );
+    return this->GetName().compare( rhs.GetName() ) < 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +114,7 @@ bool Karma::operator<( const Karma& rhs ) const
 // -----------------------------------------------------------------------------
 bool Karma::operator==( const Karma& rhs ) const
 {
-    return identifier_ == rhs.identifier_;
+    return uId_ == rhs.uId_;
 }
 
 // -----------------------------------------------------------------------------
@@ -131,7 +139,7 @@ const Karma& Karma::ResolveId( const std::string& id )
 const Karma& Karma::ResolveName( const QString& name )
 {
     if( name == friend_.GetName() )
-        return friend_;
+        return friend_; 
     if( name == enemy_.GetName() )
         return enemy_;
     if( name == neutral_.GetName() )
