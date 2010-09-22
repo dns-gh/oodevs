@@ -17,6 +17,7 @@
 #include "Decision/DEC_LogisticFunctions.h"
 #include "Decision/DEC_MiscFunctions.h"
 #include "Decision/DEC_ObjectFunctions.h"
+#include "Decision/DEC_OrdersFunctions.h"
 #include "Decision/DEC_PathFunctions.h"
 #include "Decision/DEC_TelepathyFunctions.h"
 #include "Decision/DEC_Gen_Object.h"
@@ -262,6 +263,7 @@ void RegisterMissionParametersFunctions( directia::brain::Brain& brain )
     brain[ "DEC_AssignMissionPointListParameter" ] = &MIL_MissionParameterFactory::SetPointListParameter;
     brain[ "DEC_AssignMissionUrbanBlockParameter" ] = &MIL_MissionParameterFactory::SetUrbanBlockParameter;
     brain[ "DEC_AssignMissionDirectionParameter" ] = &MIL_MissionParameterFactory::SetDirectionParameter;
+    brain[ "DEC_IsMissionAvailable" ] = &DEC_OrdersFunctions::IsMissionAvailable;
 
     directia::tools::binders::ScriptRef initParameterFunction = brain[ "InitTaskParameter" ];
     brain[ "DEC_FillMissionParameters" ] =

@@ -124,11 +124,11 @@
   <report id="86" message="attente renforcement"/>
   <report id="87" message="debut exploitation site franchissement"/>
   <report id="88" message="fin exploitation site franchissement"/>
-  <report id="89" message="reussite renforcement : %1">
+  <report id="89" message="reussite renforcement : %1 sur %2">
     <parameter type="Agent"/>
     <parameter type="Agent"/>
   </report>
-  <report id="90" message="echec renforcement : %1">
+  <report id="90" message="echec renforcement : %1 sur %2">
     <parameter type="Agent"/>
     <parameter type="Agent"/>
   </report>

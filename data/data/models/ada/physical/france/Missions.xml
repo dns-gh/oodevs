@@ -1823,6 +1823,10 @@
       <parameter dia-name="munition" name="Munitions" optional="false" type="DotationType"/>
       <parameter dia-name="interventionType" name="Intervention type" optional="false" type="Numeric"/>
     </mission>
+    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Harceler" dia-type="net.masagroup.sword.france.military.company.tasks.Harceler" id="1024" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Harceler" name="MELEE Harceler zone">
+      <parameter dia-name="objectives" name="Zone a harceler" optional="false" type="AreaBM"/>
+      <parameter dia-name="obstacles" name="Obstacles" optional="true" type="GenObjectListBM"/>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="MIS_Population_FaireMouvement" dia-type="T_Mission_Population_FaireMouvement" id="332" name="Faire Mouvement">

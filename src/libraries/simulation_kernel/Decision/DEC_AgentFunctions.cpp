@@ -294,7 +294,7 @@ bool DEC_AgentFunctions::CanDestroyObject( const MIL_Agent_ABC& callerAgent, boo
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::CanMineObject( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
 {
-    return objectKnowledge && objectKnowledge->IsValid() && callerAgent.GetRole< PHY_RoleAction_Objects >().CanMineWithReinforcement( objectKnowledge->GetType() );
+    return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->IsConstructed() && callerAgent.GetRole< PHY_RoleAction_Objects >().CanMineWithReinforcement( objectKnowledge->GetType() );
 }
 
 // -----------------------------------------------------------------------------

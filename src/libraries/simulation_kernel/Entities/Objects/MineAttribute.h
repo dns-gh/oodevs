@@ -81,17 +81,12 @@ public:
     MT_Float GetState() const;
     unsigned int GetCurrentDotations() const;
     unsigned int GetDotationType() const;
+    void Set( MT_Float percentage );
     //@}
 
     //! @name Copy
     //@{
     MineAttribute& operator=( const MineAttribute& ); //!< Assignment operator
-    //@}
-
-private:
-    //! @name
-    //@{
-    void Set( MT_Float percentage );
     //@}
 
 private:

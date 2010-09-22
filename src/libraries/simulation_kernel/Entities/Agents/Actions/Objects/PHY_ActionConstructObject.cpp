@@ -15,6 +15,7 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/ConstructionAttribute.h"
+#include "Entities/Objects/MineAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Decision/DEC_Tools.h"
@@ -35,6 +36,11 @@ PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, const
     {
         attribute->Set( 0. );//default construction is set to 100%
         attribute->NotifyBuildByGen();
+    }
+    MineAttribute* mineAttribute = pObject_->RetrieveAttribute< MineAttribute >();
+    if( mineAttribute )
+    {
+        mineAttribute->Set(0.);//default valorization is set to 100%
     }
     Callback( role_.GetInitialReturnCode() );
 }
