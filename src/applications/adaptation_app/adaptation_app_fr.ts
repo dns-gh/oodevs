@@ -4203,7 +4203,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Parked, engine running</source>
-        <translation type="unfinished">aà l&apos;arrêt, moteur allumé</translation>
+        <translation type="unfinished">à l&apos;arrêt, moteur allumé</translation>
     </message>
     <message>
         <source>Moving</source>
