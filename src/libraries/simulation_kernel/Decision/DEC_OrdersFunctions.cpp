@@ -174,6 +174,16 @@ std::list<MIL_Fuseau*> DEC_OrdersFunctions::SplitFuseau( MIL_Automate& callerAut
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::AssignFuseauToPionMission
+// Created: LMT 2010-09-22
+// -----------------------------------------------------------------------------
+void DEC_OrdersFunctions::AssignFuseauToPionMission( MIL_Fuseau* pFuseau,  boost::shared_ptr< MIL_Mission_ABC > pMission )
+{
+    assert( pMission && pFuseau );
+    pMission->AffectFuseau( *pFuseau );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_OrdersFunctions::AssignFuseauToAutomateMission
 // Created: NLD 2007-04-05
 // -----------------------------------------------------------------------------

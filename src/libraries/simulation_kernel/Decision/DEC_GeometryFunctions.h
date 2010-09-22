@@ -102,6 +102,7 @@ public:
     static boost::shared_ptr< MT_Vector2D > ComputeSafetyPositionWithObjective( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledgeEnnemy, MT_Float rMinMeterDistance, MT_Vector2D* pObjective );
     template< typename T > static boost::shared_ptr< MT_Vector2D > ComputeDestPoint( const T& caller );
     static boost::shared_ptr< MT_Vector2D > ComputeDestPointForPion( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion );
+    static boost::shared_ptr< MT_Vector2D > ComputeDestPointForFuseau( MIL_Fuseau& fuseau );
     template< typename T > static boost::shared_ptr< MT_Vector2D > ComputeStartPoint( const T& caller );
     template< typename T > static boost::shared_ptr< MT_Vector2D > ComputeObstaclePosition( const T& caller, MT_Vector2D* pCenter, const std::string& type, MT_Float rRadius );
     static std::vector< boost::shared_ptr< MT_Vector2D > > ComputePointsBeforeLima ( const MIL_Automate& callerAutomate, unsigned int nLimaID, MT_Float rDistBeforeLima, unsigned int nNbrPoints );

@@ -761,6 +761,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
             boost::function< void (unsigned int, bool)> ( boost::bind( &DEC_OrdersFunctions::PionSetMissionLimaScheduleFlag, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_SetMission" ] =
         boost::function< void( DEC_Decision_ABC*, boost::shared_ptr< MIL_Mission_ABC > )>( boost::bind( &DEC_AgentFunctions::SetMission, _1, _2 ) );
+    brain[ "DEC_AssignerFuseauAMissionPion_Mission" ] =
+            boost::function< void( MIL_Fuseau* ,  boost::shared_ptr< MIL_Mission_ABC > )>( boost::bind( &DEC_OrdersFunctions::AssignFuseauToPionMission , _1, _2 ) );
 
     // Etat décisionnel
     brain[ "DEC_Agent_ChangeEtatRapportDeForce" ] =

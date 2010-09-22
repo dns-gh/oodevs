@@ -68,6 +68,20 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeDestPointForPion(
     return ComputeDestPoint( pPion->GetPion() );
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeDestPointForFuseau
+// Created: LMT 2010-09-20
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeDestPointForFuseau( MIL_Fuseau& fuseau )
+{
+
+    boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D() ); //$$$$ RAM
+    fuseau.ComputeFurthestExtremityPoint( *pResult );
+    return pResult;
+
+}
+
 // =============================================================================
 // CREATION / DESTRUCTION
 // =============================================================================
