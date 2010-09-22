@@ -180,7 +180,7 @@ void ChangeHumanFactorsDialog::SendAction( const kernel::Entity_ABC& entity, Com
     action->AddParameter( *new parameters::Enumeration( it.NextElement(), ( unsigned int ) tiredness ) );
     action->AddParameter( *new parameters::Enumeration( it.NextElement(), ( unsigned int ) moral ) );
     action->AddParameter( *new parameters::Enumeration( it.NextElement(), ( unsigned int ) experience ) );
-    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( &entity, false ) );
     action->RegisterAndPublish( actionsModel_ );
 }

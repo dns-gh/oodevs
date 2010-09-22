@@ -61,5 +61,4 @@ void AgentMission::Publish( Publisher_ABC& publisher ) const
     message().mutable_type()->set_id( GetType().GetId() );
     CommitTo( *message().mutable_parameters() );
     message.Send( publisher, 0 );
-    Clean( *message().mutable_parameters() );
 }

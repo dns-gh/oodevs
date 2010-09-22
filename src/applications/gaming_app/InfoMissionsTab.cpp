@@ -11,6 +11,7 @@
 #include "InfoMissionsTab.h"
 #include "clients_kernel/Controllers.h"
 #include "actions/Action_ABC.h"
+#include "actions/ActionTiming.h"
 #include "actions/Parameter_ABC.h"
 #include "gaming/MissionParameters.h"
 #include "gaming/Tools.h"
@@ -33,6 +34,10 @@ InfoMissionsTab::InfoMissionsTab( QTabWidget* parent, kernel::Controllers& contr
     setFrameStyle( QFrame::Plain );
     AddColumn( tools::translate( "InfoMissionsTab", "Parameter" ) );
     AddColumn( tools::translate( "InfoMissionsTab", "Value" ) );
+    AddColumn( tools::translate( "InfoMissionsTab", "Time" ) );
+    setResizeMode( QListView::AllColumns );
+    setColumnAlignment( 2, Qt::AlignRight );
+    setSorting( 2, false );
     header()->hide();
     controllers_.Register( *this );
 }
@@ -54,6 +59,8 @@ InfoMissionsTab::~InfoMissionsTab()
 void InfoMissionsTab::Display( const Action_ABC& action, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item )
 {
     item->setPixmap( 0, MAKE_PIXMAP( mission ) );
+    if( const actions::ActionTiming* timing = action.Retrieve< actions::ActionTiming >() )
+        timing->Display( displayer );
     action.Display( displayer );
     DeleteTail( DisplayList( action.CreateIterator(), item ) );
 }
@@ -66,6 +73,7 @@ void InfoMissionsTab::Display( const actions::Parameter_ABC& param, kernel::Disp
 {
     item->setPixmap( 0, MAKE_PIXMAP( parameter2 ) );
     param.Display( (*sub_)( item ) );
+    item->setText( 2, "" );
     DeleteTail( DisplayList( param.CreateIterator(), item ) );
 }
 

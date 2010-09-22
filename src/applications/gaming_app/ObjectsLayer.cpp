@@ -56,7 +56,7 @@ bool ObjectsLayer::HandleKeyPress( QKeyEvent* key )
         // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "destroy_object" );
         ObjectMagicAction* action = new ObjectMagicAction( selected_, actionType, controllers_.controller_, true );
-        action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+        action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->RegisterAndPublish( actionsModel_ );
 
         return true;

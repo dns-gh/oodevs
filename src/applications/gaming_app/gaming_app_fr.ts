@@ -207,11 +207,11 @@
     <name>AgentListView</name>
     <message>
         <source>Unit Change Superior</source>
-        <translation type="unfinished">Changer de supérieur</translation>
+        <translation>Changer de supérieur</translation>
     </message>
     <message>
         <source>Change Knowledge Group</source>
-        <translation type="unfinished">Changer de groupe de connaissance</translation>
+        <translation>Changer de groupe de connaissance</translation>
     </message>
 </context>
 <context>
@@ -268,7 +268,7 @@
     <name>AutomatsLayer</name>
     <message>
         <source>Unit Creation</source>
-        <translation type="unfinished">Création d&apos;unité</translation>
+        <translation>Création d&apos;unité</translation>
     </message>
 </context>
 <context>
@@ -329,7 +329,7 @@
     </message>
     <message>
         <source>Change Human Factors</source>
-        <translation type="unfinished">Changer les facteurs humains</translation>
+        <translation>Changer les facteurs humains</translation>
     </message>
 </context>
 <context>
@@ -368,11 +368,11 @@
     </message>
     <message>
         <source>Change logistic links</source>
-        <translation type="unfinished">Changer les liens logistiques</translation>
+        <translation>Changer les liens logistiques</translation>
     </message>
     <message>
         <source>Change Logistic Links</source>
-        <translation type="unfinished"></translation>
+        <translation>Changer les Liens Logistiques</translation>
     </message>
 </context>
 <context>
@@ -622,7 +622,7 @@ Reason: %3
     </message>
     <message>
         <source>Fire order</source>
-        <translation type="unfinished">Ordre de feu</translation>
+        <translation>Ordre de feu</translation>
     </message>
 </context>
 <context>
@@ -903,6 +903,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Parameter</source>
         <translation>Paramètre</translation>
     </message>
+    <message>
+        <source>Time</source>
+        <translation>Heure</translation>
+    </message>
 </context>
 <context>
     <name>InfoStancesWidget</name>
@@ -1139,7 +1143,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Log Supply Change Quotas</source>
-        <translation type="unfinished">Changer les quotas de ravitaillement</translation>
+        <translation>Changer les quotas de ravitaillement</translation>
     </message>
 </context>
 <context>
@@ -1174,7 +1178,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Log Supply Push Flow</source>
-        <translation type="unfinished">Pousser un flux de ravitaillement</translation>
+        <translation>Pousser un flux de ravitaillement</translation>
     </message>
 </context>
 <context>
@@ -1269,41 +1273,41 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Partial Recovery</source>
-        <translation type="unfinished">Recomplétion partielle</translation>
+        <translation>Recomplétion partielle</translation>
     </message>
 </context>
 <context>
     <name>MagicAction</name>
     <message>
         <source>Recover - All</source>
-        <translation type="unfinished">Recompléter - Tout</translation>
+        <translation>Recompléter - Tout</translation>
     </message>
     <message>
         <source>Recover - Troops</source>
-        <translation type="unfinished">Recompléter - Troupes</translation>
+        <translation>Recompléter - Troupes</translation>
     </message>
     <message>
         <source>Recover - Equipments</source>
-        <translation type="unfinished">Recompléter - Composantes</translation>
+        <translation>Recompléter - Composantes</translation>
     </message>
     <message>
         <source>Recover - Resources</source>
-        <translation type="unfinished">Recompléter - Ressources</translation>
+        <translation>Recompléter - Ressources</translation>
     </message>
     <message>
         <source>Destroy - All</source>
-        <translation type="unfinished">Détruire - Entièrement</translation>
+        <translation>Détruire - Entièrement</translation>
     </message>
     <message>
         <source>Cancel - Surrender</source>
-        <translation type="unfinished">Annuler la rédition</translation>
+        <translation>Annuler la rédition</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source> - Not connected</source>
-        <translation type="unfinished"> - Non connecté</translation>
+        <translation> - Non connecté</translation>
     </message>
     <message>
         <source>Tactical</source>
@@ -1339,31 +1343,31 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Load exercise definition file (exercise.xml)</source>
-        <translation type="unfinished">Charger une définition d&apos;exercice (exercise.xml)</translation>
+        <translation>Charger une définition d&apos;exercice (exercise.xml)</translation>
     </message>
     <message>
         <source>Logo</source>
-        <translation type="unfinished">Logo</translation>
+        <translation>Logo</translation>
     </message>
     <message>
         <source>Units</source>
-        <translation type="unfinished">Unités</translation>
+        <translation>Unités</translation>
     </message>
     <message>
         <source>Automats</source>
-        <translation type="unfinished">Automates</translation>
+        <translation>Automates</translation>
     </message>
     <message>
         <source>Elevation</source>
-        <translation type="unfinished">Elévation</translation>
+        <translation>Elévation</translation>
     </message>
     <message>
         <source>Raster</source>
-        <translation type="unfinished">Cartes raster</translation>
+        <translation>Cartes raster</translation>
     </message>
     <message>
         <source>Terrain</source>
-        <translation type="unfinished">Terrain</translation>
+        <translation>Terrain</translation>
     </message>
     <message>
         <source>Intelligences</source>
@@ -1375,11 +1379,11 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Folk</source>
-        <translation type="unfinished">Foule</translation>
+        <translation>Foule</translation>
     </message>
     <message>
         <source>Intelligence</source>
-        <translation type="unfinished">Renseignement</translation>
+        <translation>Renseignement</translation>
     </message>
     <message>
         <source>Knowledge</source>
@@ -1391,7 +1395,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Watershed</source>
-        <translation type="unfinished">Montée des eaux</translation>
+        <translation>Montée des eaux</translation>
     </message>
 </context>
 <context>
@@ -2251,11 +2255,11 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Decisionnal</source>
-        <translation type="unfinished"></translation>
+        <translation>Décisionnel</translation>
     </message>
     <message>
         <source>Sealing level:</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau de bouclage:</translation>
     </message>
 </context>
 <context>
@@ -2376,19 +2380,19 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Population Total Destruction</source>
-        <translation type="unfinished">Destruction totale de la population</translation>
+        <translation>Destruction totale de la population</translation>
     </message>
     <message>
         <source>Population Kill</source>
-        <translation type="unfinished">Tuer la population</translation>
+        <translation>Tuer la population</translation>
     </message>
     <message>
         <source>Population Resurrect</source>
-        <translation type="unfinished">Ressusciter la population</translation>
+        <translation>Ressusciter la population</translation>
     </message>
     <message>
         <source>Population Change Attitude</source>
-        <translation type="unfinished">Changer l&apos;attitude de la population</translation>
+        <translation>Changer l&apos;attitude de la population</translation>
     </message>
 </context>
 <context>
@@ -2716,15 +2720,15 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <name>TacticalListView</name>
     <message>
         <source>Unit Change Superior</source>
-        <translation type="unfinished">Changer le supérieur de l&apos;unité</translation>
+        <translation>Changer le supérieur de l&apos;unité</translation>
     </message>
     <message>
         <source>Change Automat Superior</source>
-        <translation type="unfinished">Changer le supérieur de l&apos;automate</translation>
+        <translation>Changer le supérieur de l&apos;automate</translation>
     </message>
     <message>
         <source>Change Formation Superior</source>
-        <translation type="unfinished">Changer le supérieur de la formation</translation>
+        <translation>Changer le supérieur de la formation</translation>
     </message>
 </context>
 <context>
@@ -2847,15 +2851,15 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Surrender</source>
-        <translation type="unfinished">Capituler</translation>
+        <translation>Capituler</translation>
     </message>
     <message>
         <source>Destroy Component</source>
-        <translation type="unfinished">Détruite Composante</translation>
+        <translation>Détruite Composante</translation>
     </message>
     <message>
         <source>Recover Transporters</source>
-        <translation type="unfinished">Recompléter Transporteurs</translation>
+        <translation>Recompléter Transporteurs</translation>
     </message>
 </context>
 <context>

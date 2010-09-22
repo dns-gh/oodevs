@@ -76,6 +76,6 @@ void ChangeDiplomacyDialog::SetDiplomacy( const kernel::Team_ABC& team1, const k
     action->AddParameter( *new parameters::Identifier( it.NextElement(), team1.GetId() ) );
     action->AddParameter( *new parameters::Identifier( it.NextElement(), team2.GetId() ) );
     action->AddParameter( *new parameters::Enumeration( it.NextElement(), ResolveDiplomacy( diplomacy ) ) );
-    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->RegisterAndPublish( actionsModel_ );
 }

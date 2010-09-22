@@ -9582,6 +9582,13 @@ class MsgUnitOrder : public ::google::protobuf::Message {
   inline const ::Common::MsgMissionParameters& parameters() const;
   inline ::Common::MsgMissionParameters* mutable_parameters();
   
+  // optional .Common.MsgDateTime start_time = 4;
+  inline bool has_start_time() const;
+  inline void clear_start_time();
+  static const int kStartTimeFieldNumber = 4;
+  inline const ::Common::MsgDateTime& start_time() const;
+  inline ::Common::MsgDateTime* mutable_start_time();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -9589,11 +9596,12 @@ class MsgUnitOrder : public ::google::protobuf::Message {
   ::Common::UnitId* tasker_;
   ::Common::MissionType* type_;
   ::Common::MsgMissionParameters* parameters_;
+  ::Common::MsgDateTime* start_time_;
   friend void  protobuf_AddDesc_Common_2eproto();
   friend void protobuf_AssignDesc_Common_2eproto();
   friend void protobuf_ShutdownFile_Common_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -9685,6 +9693,13 @@ class MsgAutomatOrder : public ::google::protobuf::Message {
   inline const ::Common::MsgMissionParameters& parameters() const;
   inline ::Common::MsgMissionParameters* mutable_parameters();
   
+  // optional .Common.MsgDateTime start_time = 4;
+  inline bool has_start_time() const;
+  inline void clear_start_time();
+  static const int kStartTimeFieldNumber = 4;
+  inline const ::Common::MsgDateTime& start_time() const;
+  inline ::Common::MsgDateTime* mutable_start_time();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -9692,11 +9707,12 @@ class MsgAutomatOrder : public ::google::protobuf::Message {
   ::Common::AutomatId* tasker_;
   ::Common::MissionType* type_;
   ::Common::MsgMissionParameters* parameters_;
+  ::Common::MsgDateTime* start_time_;
   friend void  protobuf_AddDesc_Common_2eproto();
   friend void protobuf_AssignDesc_Common_2eproto();
   friend void protobuf_ShutdownFile_Common_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -9788,6 +9804,13 @@ class MsgPopulationOrder : public ::google::protobuf::Message {
   inline const ::Common::MsgMissionParameters& parameters() const;
   inline ::Common::MsgMissionParameters* mutable_parameters();
   
+  // optional .Common.MsgDateTime start_time = 4;
+  inline bool has_start_time() const;
+  inline void clear_start_time();
+  static const int kStartTimeFieldNumber = 4;
+  inline const ::Common::MsgDateTime& start_time() const;
+  inline ::Common::MsgDateTime* mutable_start_time();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -9795,11 +9818,12 @@ class MsgPopulationOrder : public ::google::protobuf::Message {
   ::Common::PopulationId* tasker_;
   ::Common::MissionType* type_;
   ::Common::MsgMissionParameters* parameters_;
+  ::Common::MsgDateTime* start_time_;
   friend void  protobuf_AddDesc_Common_2eproto();
   friend void protobuf_AssignDesc_Common_2eproto();
   friend void protobuf_ShutdownFile_Common_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -16818,6 +16842,23 @@ inline ::Common::MsgMissionParameters* MsgUnitOrder::mutable_parameters() {
   return parameters_;
 }
 
+// optional .Common.MsgDateTime start_time = 4;
+inline bool MsgUnitOrder::has_start_time() const {
+  return _has_bit(3);
+}
+inline void MsgUnitOrder::clear_start_time() {
+  if (start_time_ != NULL) start_time_->::Common::MsgDateTime::Clear();
+  _clear_bit(3);
+}
+inline const ::Common::MsgDateTime& MsgUnitOrder::start_time() const {
+  return start_time_ != NULL ? *start_time_ : *default_instance_->start_time_;
+}
+inline ::Common::MsgDateTime* MsgUnitOrder::mutable_start_time() {
+  _set_bit(3);
+  if (start_time_ == NULL) start_time_ = new ::Common::MsgDateTime;
+  return start_time_;
+}
+
 // -------------------------------------------------------------------
 
 // MsgAutomatOrder
@@ -16873,6 +16914,23 @@ inline ::Common::MsgMissionParameters* MsgAutomatOrder::mutable_parameters() {
   return parameters_;
 }
 
+// optional .Common.MsgDateTime start_time = 4;
+inline bool MsgAutomatOrder::has_start_time() const {
+  return _has_bit(3);
+}
+inline void MsgAutomatOrder::clear_start_time() {
+  if (start_time_ != NULL) start_time_->::Common::MsgDateTime::Clear();
+  _clear_bit(3);
+}
+inline const ::Common::MsgDateTime& MsgAutomatOrder::start_time() const {
+  return start_time_ != NULL ? *start_time_ : *default_instance_->start_time_;
+}
+inline ::Common::MsgDateTime* MsgAutomatOrder::mutable_start_time() {
+  _set_bit(3);
+  if (start_time_ == NULL) start_time_ = new ::Common::MsgDateTime;
+  return start_time_;
+}
+
 // -------------------------------------------------------------------
 
 // MsgPopulationOrder
@@ -16926,6 +16984,23 @@ inline ::Common::MsgMissionParameters* MsgPopulationOrder::mutable_parameters() 
   _set_bit(2);
   if (parameters_ == NULL) parameters_ = new ::Common::MsgMissionParameters;
   return parameters_;
+}
+
+// optional .Common.MsgDateTime start_time = 4;
+inline bool MsgPopulationOrder::has_start_time() const {
+  return _has_bit(3);
+}
+inline void MsgPopulationOrder::clear_start_time() {
+  if (start_time_ != NULL) start_time_->::Common::MsgDateTime::Clear();
+  _clear_bit(3);
+}
+inline const ::Common::MsgDateTime& MsgPopulationOrder::start_time() const {
+  return start_time_ != NULL ? *start_time_ : *default_instance_->start_time_;
+}
+inline ::Common::MsgDateTime* MsgPopulationOrder::mutable_start_time() {
+  _set_bit(3);
+  if (start_time_ == NULL) start_time_ = new ::Common::MsgDateTime;
+  return start_time_;
 }
 
 // -------------------------------------------------------------------

@@ -114,7 +114,7 @@ void FireCreationPanel::Commit()
         action->AddParameter( *new parameters::Identifier( it.NextElement(), selectedTarget_->GetId() ) );
         action->AddParameter( *new parameters::DotationType( it.NextElement(), ammunitionsBox_->GetValue(), staticModel_.objectTypes_ ) );
         action->AddParameter( *new parameters::Numeric( it.NextElement(), interventionType_->text().toFloat() ) );
-        action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_, *action ) );
+        action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( selectedReporter_, false ) );
         action->RegisterAndPublish( actionsModel_ );
     }

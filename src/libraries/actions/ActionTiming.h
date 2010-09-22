@@ -29,7 +29,6 @@ namespace kernel
 
 namespace actions
 {
-    class Action_ABC;
 
 // =============================================================================
 /** @class  ActionTiming
@@ -44,8 +43,9 @@ class ActionTiming : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionTiming( kernel::Controller& controller, const kernel::Time_ABC& simulation, const actions::Action_ABC& owner );
-             ActionTiming( xml::xistream& xis, kernel::Controller& controller, const kernel::Time_ABC& simulation, const actions::Action_ABC& owner );
+             ActionTiming( kernel::Controller& controller, const kernel::Time_ABC& simulation );
+             ActionTiming( kernel::Controller& controller, const kernel::Time_ABC& simulation, const std::string& datetime );
+             ActionTiming( xml::xistream& xis, kernel::Controller& controller, const kernel::Time_ABC& simulation );
     virtual ~ActionTiming();
     //@}
 
@@ -54,12 +54,12 @@ public:
     void ToggleEnabled();
     virtual void SerializeAttributes( xml::xostream& ) const;
     void Shift( long secs );
+    virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
     //@}
 
     //! @name Accessors
     //@{
-    const actions::Action_ABC& GetAction() const;
     bool IsEnabled() const;
     QDateTime GetTime() const;
     //@}
@@ -76,7 +76,6 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::Time_ABC& simulation_;
-    const actions::Action_ABC& owner_;
     bool enabled_;
     QDateTime time_;
     //@}

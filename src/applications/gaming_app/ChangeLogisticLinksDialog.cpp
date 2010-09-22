@@ -195,7 +195,7 @@ void ChangeLogisticLinksDialog::Validate()
         action->AddParameter( *new parameters::Identifier( it.NextElement(), GetId( *maintenanceCombo_ ) ) );
         action->AddParameter( *new parameters::Identifier( it.NextElement(), GetId( *medicalCombo_ ) ) );
         action->AddParameter( *new parameters::Identifier( it.NextElement(), GetId( *supplyCombo_ ) ) );
-        action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+        action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( selected_, false ) );
         action->RegisterAndPublish( actionsModel_ );
     }

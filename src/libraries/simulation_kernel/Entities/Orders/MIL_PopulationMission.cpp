@@ -16,6 +16,7 @@
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Entities/Populations/DEC_PopulationKnowledge.h"
+#include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 
@@ -85,6 +86,7 @@ void MIL_PopulationMission::SendNoMission( const MIL_Population& population )
     client::PopulationOrder asn;
     asn().mutable_tasker()->set_id( population.GetID() );
     asn().mutable_type()->set_id( 0 );
+    NET_ASN_Tools::WriteGDH( MIL_AgentServer::GetWorkspace().GetRealTime(), *asn().mutable_start_time() );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -98,5 +100,6 @@ void MIL_PopulationMission::Send() const
     asn().mutable_tasker()->set_id( population_.GetID() );
     asn().mutable_type()->set_id( GetType().GetID() );
     Serialize( *asn().mutable_parameters() );
+    NET_ASN_Tools::WriteGDH( MIL_AgentServer::GetWorkspace().GetRealTime(), *asn().mutable_start_time() );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }

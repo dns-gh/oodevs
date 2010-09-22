@@ -184,7 +184,7 @@ void ObjectPrototype::Commit( actions::ActionsModel& actionsModel, const kernel:
 
         ObjectPrototype_ABC::Commit();
 
-        action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation, *action ) );
+        action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation ) );
         action->RegisterAndPublish( actionsModel );
 
         ObjectPrototype_ABC::Clean();

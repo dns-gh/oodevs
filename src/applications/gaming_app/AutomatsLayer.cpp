@@ -122,7 +122,7 @@ void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kerne
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Identifier( it.NextElement(), type.GetId() ) );
     action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
-    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( selected_, false ) );
     action->RegisterAndPublish( actionsModel_ );
 }

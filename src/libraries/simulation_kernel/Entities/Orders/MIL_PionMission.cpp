@@ -16,6 +16,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Orders/MIL_MissionType_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
+#include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 
@@ -132,6 +133,7 @@ void MIL_PionMission::SendNoMission( const MIL_AgentPion& pion )
     asn().mutable_tasker()->set_id( pion.GetID() );
     asn().mutable_type()->set_id( 0 );
     asn().mutable_parameters();
+    NET_ASN_Tools::WriteGDH( MIL_AgentServer::GetWorkspace().GetRealTime(), *asn().mutable_start_time() );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -145,8 +147,8 @@ void MIL_PionMission::Send() const
     asn().mutable_tasker()->set_id( pion_.GetID() );
     asn().mutable_type()->set_id( GetType().GetID() );
     Serialize( *asn().mutable_parameters() );
+    NET_ASN_Tools::WriteGDH( MIL_AgentServer::GetWorkspace().GetRealTime(), *asn().mutable_start_time() );
     asn.Send( NET_Publisher_ABC::Publisher() );
-    //asn().Clear();
 }
 
 // -----------------------------------------------------------------------------

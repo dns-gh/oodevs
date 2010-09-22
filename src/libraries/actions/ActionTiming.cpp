@@ -21,12 +21,35 @@ using namespace actions;
 // Name: ActionTiming constructor
 // Created: SBO 2007-06-19
 // -----------------------------------------------------------------------------
-ActionTiming::ActionTiming( kernel::Controller& controller, const kernel::Time_ABC& simulation, const Action_ABC& owner )
+ActionTiming::ActionTiming( kernel::Controller& controller, const kernel::Time_ABC& simulation )
     : controller_( controller )
     , simulation_( simulation )
-    , owner_( owner )
     , enabled_( true )
     , time_( simulation_.GetDateTime() )
+{
+    // NOTHING
+}
+
+namespace
+{
+    QDateTime ReadDateTime( const std::string& datetime )
+    {
+        QString extended( datetime.c_str() );
+        extended.insert( 13, ':' ); extended.insert( 11, ':' );
+        extended.insert(  6, '-' ); extended.insert(  4, '-' );
+        return QDateTime::fromString( extended, Qt::ISODate );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionTiming constructor
+// Created: SBO 2010-09-21
+// -----------------------------------------------------------------------------
+ActionTiming::ActionTiming( kernel::Controller& controller, const kernel::Time_ABC& simulation, const std::string& datetime )
+    : controller_( controller )
+    , simulation_( simulation )
+    , enabled_( true )
+    , time_( ReadDateTime( datetime ) )
 {
     // NOTHING
 }
@@ -49,10 +72,9 @@ namespace
 // Name: ActionTiming constructor
 // Created: SBO 2007-06-28
 // -----------------------------------------------------------------------------
-ActionTiming::ActionTiming( xml::xistream& xis, kernel::Controller& controller, const kernel::Time_ABC& simulation, const Action_ABC& owner )
+ActionTiming::ActionTiming( xml::xistream& xis, kernel::Controller& controller, const kernel::Time_ABC& simulation )
     : controller_( controller )
     , simulation_( simulation )
-    , owner_( owner )
     , enabled_( true )
     , time_( ReadDateTime( xis, simulation ) )
 {
@@ -79,6 +101,15 @@ void ActionTiming::SerializeAttributes( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionTiming::Display
+// Created: SBO 2010-09-21
+// -----------------------------------------------------------------------------
+void ActionTiming::Display( kernel::Displayer_ABC& displayer ) const
+{
+    displayer.Display( tools::translate( "ActionTiming", "Time" ), time_.toString() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionTiming::DisplayInSummary
 // Created: SBO 2010-05-04
 // -----------------------------------------------------------------------------
@@ -86,15 +117,6 @@ void ActionTiming::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Display( tools::translate( "ActionTiming", "Time" ), time_.toString( Qt::ISODate ) )
              .Display( tools::translate( "ActionTiming", "Enabled" ), enabled_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionTiming::GetAction
-// Created: SBO 2007-06-28
-// -----------------------------------------------------------------------------
-const Action_ABC& ActionTiming::GetAction() const
-{
-    return owner_;
 }
 
 // -----------------------------------------------------------------------------

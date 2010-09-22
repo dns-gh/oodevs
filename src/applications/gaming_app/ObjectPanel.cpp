@@ -170,7 +170,7 @@ void ObjectPanel::OnApply()
         bypassList.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_bypass );
         bypassList.AddQuantity( "Percentage", contournement_->GetValue() );
 
-        action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+        action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->RegisterAndPublish( actionsModel_ );
     }
 }

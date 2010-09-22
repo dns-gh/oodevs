@@ -100,7 +100,7 @@ void KnowledgeGroupMagicOrdersInterface::OnToggleKnowledgeGroupActivation()
         KnowledgeGroupMagicAction* action = new KnowledgeGroupMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new parameters::Bool( it.NextElement(), ! selectedEntity_->IsActivated() ) );
-        action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+        action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( selectedEntity_, false ) );
         action->RegisterAndPublish( actionsModel_ );
     }
@@ -122,7 +122,7 @@ void KnowledgeGroupMagicOrdersInterface::OnSetType( int id )
             KnowledgeGroupMagicAction* action = new KnowledgeGroupMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
             tools::Iterator< const OrderParameter& > paramIt = actionType.CreateIterator();
             action->AddParameter( *new parameters::String( paramIt.NextElement(), it->second->GetName() ) );
-            action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+            action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
             action->Attach( *new ActionTasker( selectedEntity_, false ) );
             action->RegisterAndPublish( actionsModel_ );
         }
@@ -145,7 +145,7 @@ void KnowledgeGroupMagicOrdersInterface::OnCreateSubKnowledgeGroup()
             action->AddParameter( *new parameters::Identifier( paramIt.NextElement(), hierarchies->GetTop().GetId() ) );
             action->AddParameter( *new parameters::Identifier( paramIt.NextElement(), selectedEntity_->GetId() ) );
             action->AddParameter( *new parameters::String( paramIt.NextElement(), "Standard" ) ); // $$$$ _RC_ SBO 2010-03-04: used kernel::KnowledgeGroupTypes::GetDefault() or something
-            action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+            action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
             action->Attach( *new ActionTasker( selectedEntity_, false ) );
             action->RegisterAndPublish( actionsModel_ );
         }

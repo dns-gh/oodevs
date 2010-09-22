@@ -78,6 +78,6 @@ void ResourceLinksDialog::DoValidate()
             link.AddQuantity( "Capacity", resource.links_[ i ].capacity_ );
         }
     }
-    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->RegisterAndPublish( actionsModel_ );
 }

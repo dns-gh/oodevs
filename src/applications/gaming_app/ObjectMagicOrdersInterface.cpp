@@ -95,7 +95,7 @@ void ObjectMagicOrdersInterface::SendObjectMagic( ParameterList& attribute )
         ParameterList* attributesList = new ParameterList( it.NextElement() );
         action->AddParameter( *attributesList );
         attributesList->AddParameter( attribute );
-        action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+        action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->RegisterAndPublish( actionsModel_ );
     }
 }

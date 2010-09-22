@@ -174,7 +174,7 @@ void WeatherCreationPanel::Commit()
             action->AddParameter( *new DateTime( it.NextElement(), endTime_->dateTime() ) );
             action->AddParameter( *new Location( it.NextElement(), model_.coordinateConverter_ , *location_ ) );
         }
-        action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_, *action ) );
+        action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
         action->RegisterAndPublish( actionsModel_ );
         Reset();
     }

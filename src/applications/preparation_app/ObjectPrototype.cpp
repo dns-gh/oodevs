@@ -63,7 +63,7 @@ namespace
         std::string model( xis.attribute< std::string >( "model" ) );
         if( model == "input" )
             container.push_back( new InputPropagationPrototype( parent, object ) );
-        if( model == "fire" )
+        else if( model == "fire" )
             container.push_back( new FirePrototype( parent, resolver, object ) );
     }
 

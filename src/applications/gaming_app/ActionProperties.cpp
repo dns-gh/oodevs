@@ -64,7 +64,7 @@ void ActionProperties::NotifySelected( const actions::Action_ABC* action )
 // -----------------------------------------------------------------------------
 void ActionProperties::NotifyUpdated( const actions::ActionTiming& timing )
 {
-    if( &timing.GetAction() == selected_ )
+    if( selected_ && selected_->Retrieve< actions::ActionTiming >() == &timing )
     {
         const actions::Action_ABC* selected = selected_;
         selected_ = 0;

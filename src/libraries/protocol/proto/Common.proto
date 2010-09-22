@@ -547,18 +547,21 @@ message MsgUnitOrder {
     required UnitId               tasker     = 1;
     required MissionType          type       = 2;
     optional MsgMissionParameters parameters = 3;
+    optional MsgDateTime          start_time = 4;
 }
 
 message MsgAutomatOrder {
     required AutomatId            tasker     = 1;
     required MissionType          type       = 2;
     optional MsgMissionParameters parameters = 3;
+    optional MsgDateTime          start_time = 4;
 }
 
 message MsgPopulationOrder {
     required PopulationId         tasker     = 1;
     required MissionType          type       = 2;
     optional MsgMissionParameters parameters = 3;
+    optional MsgDateTime          start_time = 4;
 }
 
 // Messenger common types

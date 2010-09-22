@@ -156,7 +156,8 @@ void MIL_AutomateMission::SendNoMission( const MIL_Automate& automate )
     client::AutomatOrder asn;
     asn().mutable_tasker()->set_id( automate.GetID() );
     asn().mutable_type()->set_id( 0 );
-    asn().mutable_parameters(); //->set_n( 0 );
+    asn().mutable_parameters();
+    NET_ASN_Tools::WriteGDH( MIL_AgentServer::GetWorkspace().GetRealTime(), *asn().mutable_start_time() );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -170,6 +171,7 @@ void MIL_AutomateMission::Send() const
     asn().mutable_tasker()->set_id( automate_.GetID() );
     asn().mutable_type()->set_id( GetType().GetID() );
     MIL_Mission_ABC::Serialize( *asn().mutable_parameters() );
+    NET_ASN_Tools::WriteGDH( MIL_AgentServer::GetWorkspace().GetRealTime(), *asn().mutable_start_time() );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 

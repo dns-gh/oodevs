@@ -135,7 +135,7 @@ void PopulationMagicOrdersInterface::Handle( Location_ABC& location )
             UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Teleport" ), true );
             tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
             action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
-            action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+            action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
             action->Attach( *new ActionTasker( selectedEntity_, false ) );
             action->RegisterAndPublish( actionsModel_ );
         }
@@ -167,7 +167,7 @@ void PopulationMagicOrdersInterface::KillAllPopulation()
         // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "population_total_destruction" );
         UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Population Total Destruction" ), true );
-        action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+        action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( selectedEntity_, false ) );
         action->RegisterAndPublish( actionsModel_ );
     }
@@ -187,7 +187,7 @@ void PopulationMagicOrdersInterface::KillSomePopulation()
             UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Population Kill" ), true );
             tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
             action->AddParameter( *new parameters::Quantity( it.NextElement(), editor->text().toInt() ) );
-            action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+            action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
             action->Attach( *new ActionTasker( selectedEntity_, false ) );
             action->RegisterAndPublish( actionsModel_ );
         }
@@ -207,7 +207,7 @@ void PopulationMagicOrdersInterface::ResurectSomePopulation()
             UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Population Resurrect" ), true );
             tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
             action->AddParameter( *new parameters::Quantity( it.NextElement(), editor->text().toInt() ) );
-            action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+            action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
             action->Attach( *new ActionTasker( selectedEntity_, false ) );
             action->RegisterAndPublish( actionsModel_ );
         }
@@ -230,7 +230,7 @@ void PopulationMagicOrdersInterface::ChangePopulationAttitude( int index )
         // optional int32 flux
         // optional int32 concentration
         // optional bool global
-        action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+        action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( selectedEntity_, false ) );
         action->RegisterAndPublish( actionsModel_ );
     }

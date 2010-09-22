@@ -134,7 +134,7 @@ bool TacticalListView::Drop( const kernel::Agent_ABC& item, const kernel::Automa
     UnitMagicAction* action = new UnitMagicAction( item, actionType, controllers_.controller_, tr( "Unit Change Superior" ), true );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Automat( it.NextElement(), target, controllers_.controller_ ) );
-    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( &item, false ) );
     action->RegisterAndPublish( actionsModel_ );
     return true;
@@ -153,7 +153,7 @@ bool TacticalListView::Drop( const kernel::Automat_ABC& item, const kernel::Auto
     UnitMagicAction* action = new UnitMagicAction( item, actionType, controllers_.controller_, tr( "Change Automat Superior" ), true );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Automat( it.NextElement(), target, controllers_.controller_ ) );
-    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( &item, false ) );
     action->RegisterAndPublish( actionsModel_ );
     return true;
@@ -172,7 +172,7 @@ bool TacticalListView::Drop( const kernel::Automat_ABC& item, const kernel::Form
     UnitMagicAction* action = new UnitMagicAction( item, actionType, controllers_.controller_, tr( "Change Formation Superior" ), true );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Formation( it.NextElement(), target, controllers_.controller_ ) );
-    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( &item, false ) );
     action->RegisterAndPublish( actionsModel_ );
     return true;
