@@ -443,6 +443,7 @@
   <report id="307" message="En mouvement, l'appui n'est pas assuré"/>
   <report id="308" message="l'objet n'est pas contournable"/>
   <report id="309" message="Travaux impossibles : pas de capacite de destruction"/>
+  <report id="310" message="Cible non illuminée"/>
   <report id="3000" message="Embarquement - début"/>
   <report id="3001" message="Embarquement - interruption"/>
   <report id="3002" message="Embarquement - reprise"/>
