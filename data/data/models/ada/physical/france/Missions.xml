@@ -1800,7 +1800,7 @@
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles a neutraliser" optional="false" type="AgentKnowledgeBM"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Fixer" dia-type="net.masagroup.sword.france.military.company.combat.tasks.Fixer" id="1028" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Fixer" name="MELEE Fixer">
-      <parameter dia-name="objective" name="unite a fixer" optional="false" type="AgentKnowledgeBM"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles a fixer" optional="false" type="AgentKnowledgeBM"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="postions pour fixer" optional="false" type="PointBM"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" dia-type="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" id="1023" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" name="ASS Illumination et Tir Synchronisé">
