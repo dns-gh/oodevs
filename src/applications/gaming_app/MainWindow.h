@@ -93,6 +93,7 @@ public slots:
     void Open();
     void Close();
     void OnPlanifStateChange();
+    void OnNameChanged();
     //@}
 
 private:
@@ -145,6 +146,8 @@ private:
     StatusBar*            pStatus_;
     bool                  connected_;
     MissionPanel*         pMissionPanel_;
+    QString               planifName_;
+    bool                  onPlanif_;
     //@}
 };
 

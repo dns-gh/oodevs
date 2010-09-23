@@ -146,9 +146,12 @@ MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticM
     , eventStrategy_( new gui::ExclusiveEventStrategy( *forward_ ) )
     , glProxy_      ( 0 )
     , connected_    ( false )
+    , onPlanif_     ( false )
+
 {
     setIcon( MAKE_PIXMAP( csword ) );
-    setCaption( tools::translate( "Application", "SWORD" ) + tr( " - Not connected" ) );
+    planifName_ = tools::translate( "Application", "SWORD" ) + tr( " - Not connected" );
+    setCaption( planifName_ );
 
     ProfileFilter& profile = *new ProfileFilter( controllers, p ); // $$$$ AGE 2006-12-13: mem. // $$$$ _RC_ MCO 2007-01-12: auto_ptr // $$$$ AGE 2007-06-19: tégé !
 
@@ -316,6 +319,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticM
         TimelinePanel* timelinePanel = new TimelinePanel( this, controllers_, model_.actions_, *scheduler, config_, *factory, profile );
         moveDockWindow( timelinePanel, Qt::DockTop );
         connect( timelinePanel, SIGNAL( PlanificationModeChange() ), this, SLOT( OnPlanifStateChange() ) );
+        connect( timelinePanel, SIGNAL( PlanificationModeChange() ), this, SLOT( OnNameChanged() ) );
         timelinePanel->hide();
     }
 
@@ -643,6 +647,7 @@ namespace
 void MainWindow::NotifyUpdated( const Simulation& simulation )
 {
     const QString appName = tools::translate( "Application", "SWORD" );
+    const QString modePlanif =  tools::translate( "Application", " - Planning mode on" );
     if( simulation.IsConnected() )
     {
         if( !connected_ )
@@ -653,15 +658,24 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
                 if( profile_.isEmpty() )
                     profile_ = tools::translate( "LoginDialog", "Anonymous" );
             }
-            setCaption( appName + QString( " - [%1@%2][%3]" )
+            planifName_ = appName + QString( " - [%1@%2][%3]" )
                 .arg( profile_ )
                 .arg( simulation.GetSimulationHost().c_str() )
-                .arg( ExtractExerciceName( config_.GetExerciseFile() ) ) ); // $$$$ SBO 2009-12-18: Use exercise META data
+                .arg( ExtractExerciceName( config_.GetExerciseFile() ));
+            if ( onPlanif_ )
+              setCaption( planifName_ + modePlanif );
+            else
+             setCaption( planifName_ );   
+            // $$$$ SBO 2009-12-18: Use exercise META data
         }
     }
     else
     {
-        setCaption( appName + tr( " - Not connected" ) );
+        planifName_ = appName + tr( " - Not connected" ) ;
+        if ( onPlanif_ )
+            setCaption( planifName_ + modePlanif );
+        else
+            setCaption( planifName_ );
         controllers_.actions_.Select( SelectionStub() );
         connected_ = false;
         profile_ = "";
@@ -691,7 +705,7 @@ void MainWindow::NotifyUpdated( const Profile& profile )
         // $$$$ AGE 2006-10-11: exec would create a reentrance...
         QTimer::singleShot( 0, dialog, SLOT(exec()) );
     }
-    else
+        else
         profile_ = profile.GetLogin();
 }
 
@@ -705,4 +719,19 @@ std::string MainWindow::BuildRemotePath( std::string server, std::string path )
     const char drive = path.at( 0 );
     path = path.substr( 2 );
     return "\\\\" + server + "\\" + drive + '$' + path;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::OnNameChanged
+// Created: HBD 2010-09-23
+// -----------------------------------------------------------------------------
+void MainWindow::OnNameChanged()
+{
+    onPlanif_ = !onPlanif_;
+    if ( onPlanif_ )  
+        setCaption( planifName_ + tools::translate( "Application", " - Planning mode on" ) );
+    else
+        setCaption( planifName_ );
+
 }

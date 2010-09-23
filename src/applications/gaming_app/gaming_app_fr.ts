@@ -44,7 +44,7 @@
     </message>
     <message>
         <source>Planning mode on/off</source>
-        <translation>Basculer en mode Plannification</translation>
+        <translation>Basculer en mode Planification</translation>
     </message>
     <message>
         <source>Load actions file</source>
@@ -262,6 +262,10 @@
     <message>
         <source>sword@masagroup.net</source>
         <translation>sword@masagroup.net</translation>
+    </message>
+    <message>
+        <source> - Planning mode on</source>
+        <translation type="unfinished"> - Mode Planification</translation>
     </message>
 </context>
 <context>
