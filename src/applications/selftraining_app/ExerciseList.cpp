@@ -109,7 +109,7 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
         profiles_->setShown( showProfile );
 
         connect( profiles_ , SIGNAL( Select( const Profile& ) ), this, SLOT( SelectProfile( const Profile& ) ) );
-        connect( exercises_, SIGNAL( currentChanged( QListViewItem* ) ), this, SLOT( SelectExercise( QListViewItem* ) ) );
+        connect( exercises_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( SelectExercise( QListViewItem* ) ) );
     }
 
     if( showBrief || showParams )
@@ -339,7 +339,8 @@ void ExerciseList::customEvent( QCustomEvent* e )
         for( QStringList::iterator it = exercises.begin(); it != exercises.end(); ++it )
             AddExerciseEntry( *it );
         exercises_->sort();
-        exercises_->setCurrentItem( exercises_->firstChild() );
+        if( exercises_->childCount() )
+            exercises_->setSelected( exercises_->firstChild(), true );
     }
     else if( e->type() == 4243 )
     {
