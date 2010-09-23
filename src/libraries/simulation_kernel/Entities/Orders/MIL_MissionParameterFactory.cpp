@@ -26,6 +26,7 @@
 #include "MIL_DotationTypeParameter.h"
 #include "MIL_EnumerationParameter.h"
 #include "MIL_EquipmentTypeParameter.h"
+#include "MIL_ListParameter.h"
 #include "MIL_LocationParameter.h"
 #include "MIL_LocationListParameter.h"
 #include "MIL_LogMaintenancePrioritiesParameter.h"
@@ -75,94 +76,106 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( const Common::MsgMissionParameter& asn, const DEC_KnowledgeResolver_ABC& resolver )
 {
-    MIL_MissionParameter_ABC* ptr = 0;
     if( asn.null_value() )
-        ptr = new MIL_NullParameter();
-    else
     {
-        MIL_EntityManager_ABC& entityManager = MIL_AgentServer::GetWorkspace().GetEntityManager();
-        if( asn.value().has_abool() )
-            ptr = new MIL_BoolParameter( asn.value().abool() ? true : false );
-        else if( asn.value().has_areal() )
-            ptr = new MIL_RealParameter( asn.value().areal() );
-        else if( asn.value().has_enumeration() )
-            ptr = new MIL_EnumerationParameter( asn.value().enumeration() );
-        else if( asn.value().has_path() )
-            ptr = new MIL_PathParameter( asn.value().path() );
-        else if( asn.value().has_pathlist() )
-            ptr = new MIL_PathListParameter( asn.value().pathlist() );
-        else if( asn.value().has_point() )
-            ptr = new MIL_PointParameter( asn.value().point() );
-        else if( asn.value().has_pointlist() )
-            ptr = new MIL_PointListParameter( asn.value().pointlist() );
-        else if( asn.value().has_polygon() )
-            ptr = new MIL_PolygonParameter( asn.value().polygon() );
-        else if( asn.value().has_polygonlist() )
-            ptr = new MIL_PolygonListParameter( asn.value().polygonlist() );
-        else if( asn.value().has_location() )
-            ptr = new MIL_LocationParameter( asn.value().location() );
-        else if( asn.value().has_locationlist() )
-            ptr = new MIL_LocationListParameter( asn.value().locationlist() );
-        else if( asn.value().has_heading() )
-            ptr = new MIL_DirectionParameter( asn.value().heading() );
-        else if( asn.value().has_atlasnature() )
-            ptr = new MIL_AtlasNatureParameter( asn.value().atlasnature() );
-        else if( asn.value().has_unit() )
-            ptr = new MIL_AgentParameter( asn.value().unit(), entityManager );
-        else if( asn.value().has_unitlist() )
-            ptr = new MIL_AgentListParameter( asn.value().unitlist(), entityManager );
-        else if( asn.value().has_automat() )
-            ptr = new MIL_AutomatParameter( asn.value().automat(), entityManager );
-        else if( asn.value().has_automatlist() )
-            ptr = new MIL_AutomatListParameter( asn.value().automatlist(), entityManager );
-        else if( asn.value().has_unitknowledge() )
-            ptr = new MIL_AgentKnowledgeParameter( asn.value().unitknowledge(), resolver );
-        else if( asn.value().has_unitknowledgelist() )
-            ptr = new MIL_AgentKnowledgeListParameter( asn.value().unitknowledgelist(), resolver );
-        else if( asn.value().has_objectknowledge() )
-            ptr = new MIL_ObjectKnowledgeParameter( asn.value().objectknowledge(), resolver );
-        else if( asn.value().has_objectknowledgelist() )
-            ptr = new MIL_ObjectKnowledgeListParameter( asn.value().objectknowledgelist(), resolver );
-        else if( asn.value().has_populationknowledge() )
-            ptr = new MIL_PopulationKnowledgeParameter( asn.value().populationknowledge(), resolver );
-        else if( asn.value().has_plannedwork() )
-            ptr = new MIL_PlannedWorkParameter( asn.value().plannedwork(), entityManager );
-        else if( asn.value().has_plannedworklist() )
-            ptr = new MIL_PlannedWorkListParameter( asn.value().plannedworklist(), entityManager );
-        else if ( asn.value().has_resourcetype() )
-            ptr = new MIL_DotationTypeParameter( asn.value().resourcetype() );
-        else if( asn.value().has_equipmenttype() )
-            ptr = new MIL_EquipmentTypeParameter( asn.value().equipmenttype() );
-        else if( asn.value().has_tirindirect() )
-        {
-            Common::FireId msg;
-            msg.set_id( asn.value().tirindirect().id() );
-            ptr = new MIL_TirIndirectParameter( msg );
-        }
-        else if( asn.value().has_urbanblock() )
-            ptr = new MIL_UrbanBlockParameter( asn.value().urbanblock(), resolver );
-        else if( asn.value().has_datetime() )
-            ptr = new MIL_DateTimeParameter( asn.value().datetime() );
-        else if( asn.value().has_logmaintenancepriorities() )
-            ptr = new MIL_LogMaintenancePrioritiesParameter( asn.value().logmaintenancepriorities() );
-        else if( asn.value().has_logmedicalpriorities() )
-            ptr = new MIL_LogMedicalPrioritiesParameter( asn.value().logmedicalpriorities() );
-        else if( asn.value().has_acharstr() )
-            ptr = new MIL_StringParameter( asn.value().acharstr() );
-        else if( asn.value().has_missionobjective() )              // $$$$ LDC : This type doesn't seem to ever be converted to/from. Only lists of objectives exist.
-            ptr = new MIL_NullParameter();
-        else if( asn.value().has_missionobjectivelist() )
-            ptr = new MIL_MissionObjectiveListParameter( asn.value().missionobjectivelist() );
-        else if( asn.value().has_urbanblock() )
-            ptr = new MIL_UrbanBlockParameter( asn.value().urbanblock(), resolver );
-//        else if( asn.value().has_value_line() ||
-//            asn.value().has_value_limasOrder() ||
-//            asn.value().has_value_intelligenceList() )
-            // $$$$ LDC : These types are exclusively managed by the OrderContext.
-        else
-            ptr = new MIL_NullParameter();
-
+        MIL_MissionParameter_ABC* ptr = 0;
+        ptr = new MIL_NullParameter();
+        boost::shared_ptr<MIL_MissionParameter_ABC> result( ptr );
+        return result;
     }
+    else
+        return Create( asn.value(), resolver );
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create
+// Created: LDC 2010-09-22
+// -----------------------------------------------------------------------------
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( const Common::MsgMissionParameter_Value& message, const DEC_KnowledgeResolver_ABC& resolver )
+{  
+    MIL_MissionParameter_ABC* ptr = 0;
+    MIL_EntityManager_ABC& entityManager = MIL_AgentServer::GetWorkspace().GetEntityManager();
+    if( message.has_abool() )
+        ptr = new MIL_BoolParameter( message.abool() ? true : false );
+    else if( message.has_areal() )
+        ptr = new MIL_RealParameter( message.areal() );
+    else if( message.has_enumeration() )
+        ptr = new MIL_EnumerationParameter( message.enumeration() );
+    else if( message.has_path() )
+        ptr = new MIL_PathParameter( message.path() );
+    else if( message.has_pathlist() )
+        ptr = new MIL_PathListParameter( message.pathlist() );
+    else if( message.has_point() )
+        ptr = new MIL_PointParameter( message.point() );
+    else if( message.has_pointlist() )
+        ptr = new MIL_PointListParameter( message.pointlist() );
+    else if( message.has_polygon() )
+        ptr = new MIL_PolygonParameter( message.polygon() );
+    else if( message.has_polygonlist() )
+        ptr = new MIL_PolygonListParameter( message.polygonlist() );
+    else if( message.has_location() )
+        ptr = new MIL_LocationParameter( message.location() );
+    else if( message.has_locationlist() )
+        ptr = new MIL_LocationListParameter( message.locationlist() );
+    else if( message.has_heading() )
+        ptr = new MIL_DirectionParameter( message.heading() );
+    else if( message.has_atlasnature() )
+        ptr = new MIL_AtlasNatureParameter( message.atlasnature() );
+    else if( message.has_unit() )
+        ptr = new MIL_AgentParameter( message.unit(), entityManager );
+    else if( message.has_unitlist() )
+        ptr = new MIL_AgentListParameter( message.unitlist(), entityManager );
+    else if( message.has_automat() )
+        ptr = new MIL_AutomatParameter( message.automat(), entityManager );
+    else if( message.has_automatlist() )
+        ptr = new MIL_AutomatListParameter( message.automatlist(), entityManager );
+    else if( message.has_unitknowledge() )
+        ptr = new MIL_AgentKnowledgeParameter( message.unitknowledge(), resolver );
+    else if( message.has_unitknowledgelist() )
+        ptr = new MIL_AgentKnowledgeListParameter( message.unitknowledgelist(), resolver );
+    else if( message.has_objectknowledge() )
+        ptr = new MIL_ObjectKnowledgeParameter( message.objectknowledge(), resolver );
+    else if( message.has_objectknowledgelist() )
+        ptr = new MIL_ObjectKnowledgeListParameter( message.objectknowledgelist(), resolver );
+    else if( message.has_populationknowledge() )
+        ptr = new MIL_PopulationKnowledgeParameter( message.populationknowledge(), resolver );
+    else if( message.has_plannedwork() )
+        ptr = new MIL_PlannedWorkParameter( message.plannedwork(), entityManager );
+    else if( message.has_plannedworklist() )
+        ptr = new MIL_PlannedWorkListParameter( message.plannedworklist(), entityManager );
+    else if ( message.has_resourcetype() )
+        ptr = new MIL_DotationTypeParameter( message.resourcetype() );
+    else if( message.has_equipmenttype() )
+        ptr = new MIL_EquipmentTypeParameter( message.equipmenttype() );
+    else if( message.has_tirindirect() )
+    {
+        Common::FireId msg;
+        msg.set_id( message.tirindirect().id() );
+        ptr = new MIL_TirIndirectParameter( msg );
+    }
+    else if( message.has_urbanblock() )
+        ptr = new MIL_UrbanBlockParameter( message.urbanblock(), resolver );
+    else if( message.has_datetime() )
+        ptr = new MIL_DateTimeParameter( message.datetime() );
+    else if( message.has_logmaintenancepriorities() )
+        ptr = new MIL_LogMaintenancePrioritiesParameter( message.logmaintenancepriorities() );
+    else if( message.has_logmedicalpriorities() )
+        ptr = new MIL_LogMedicalPrioritiesParameter( message.logmedicalpriorities() );
+    else if( message.has_acharstr() )
+        ptr = new MIL_StringParameter( message.acharstr() );
+    else if( message.has_missionobjective() )              // $$$$ LDC : This type doesn't seem to ever be converted to/from. Only lists of objectives exist.
+        ptr = new MIL_NullParameter();
+    else if( message.has_missionobjectivelist() )
+        ptr = new MIL_MissionObjectiveListParameter( message.missionobjectivelist() );
+//        else if( message.has_value_line() ||
+//            message.has_value_limasOrder() ||
+//            message.has_value_intelligenceList() )
+        // $$$$ LDC : These types are exclusively managed by the OrderContext.
+    else if( message.list_size() > 0 ) // $$$$ LDC: Actually a list size of 0 may be a list too.
+        ptr = new MIL_ListParameter( resolver, message.list() );
+    else
+        ptr = new MIL_NullParameter();
+    
     boost::shared_ptr<MIL_MissionParameter_ABC> result( ptr );
     return result;
 }

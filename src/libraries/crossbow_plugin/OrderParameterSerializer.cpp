@@ -38,41 +38,6 @@
 using namespace plugins;
 using namespace plugins::crossbow;
 
-namespace
-{
-    void MakeTypeRegistration( OrderParameterTypeResolver& /*resolver*/ )
-    {
-//        resolver.Register( "location", T_MissionParameter_value_location )
-//                .Register( "locationlist", T_MissionParameter_value_locationList )
-//                .Register( "point", T_MissionParameter_value_point )
-//                .Register( "pointlist", T_MissionParameter_value_pointList )
-//                .Register( "polygon", T_MissionParameter_value_polygon )
-//                .Register( "polygonlist", T_MissionParameter_value_polygonList )
-//                .Register( "path", T_MissionParameter_value_path )
-//                .Register( "bool", T_MissionParameter_value_aBool )
-//                .Register( "real", T_MissionParameter_value_aReal )
-//                .Register( "enumeration", T_MissionParameter_value_enumeration )
-//                .Register( "string", T_MissionParameter_value_aCharStr )
-//
-//                .Register( "automate", T_MissionParameter_value_automat )
-//                .Register( "automatelist", T_MissionParameter_value_automatList )
-//                .Register( "agent", T_MissionParameter_value_unit )
-//                .Register( "agentlist", T_MissionParameter_value_unitList )
-//                .Register( "agentknowledge", T_MissionParameter_value_unitKnowledge )
-//                .Register( "agentknowledgelist", T_MissionParameter_value_unitKnowledgeList )
-//                .Register( "objectknowledge", T_MissionParameter_value_objectKnowledge )
-//                .Register( "objectknowledgelist", T_MissionParameter_value_objectKnowledgeList )
-//                .Register( "objective", T_MissionParameter_value_missionObjective )
-//                .Register( "objectivelist", T_MissionParameter_value_missionObjectiveList )
-//
-//                .Register( "dangerdirection", T_MissionParameter_value_heading )
-//                .Register( "direction", T_MissionParameter_value_heading )
-//                .Register( "phaselinelist", T_MissionParameter_value_limasOrder )
-//                .Register( "limit", T_MissionParameter_value_line )
-//                .Register( "intelligencelist", T_MissionParameter_value_intelligenceList );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: OrderParameterSerializer constructor
 // Created: SBO 2007-05-31
@@ -83,7 +48,7 @@ OrderParameterSerializer::OrderParameterSerializer( Workspace_ABC& workspace, co
     , database_( workspace.GetDatabase( "flat" ) )
     , types_ ( new OrderParameterTypeResolver() )
 {
-    MakeTypeRegistration( *types_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -191,7 +156,7 @@ void OrderParameterSerializer::Serialize( Common::MsgMissionParameter& message, 
         SerializeAutomat( *message.mutable_value()->mutable_automat(), value );
     else if( type == "bool" )
         message.mutable_value()->set_abool( value == "true" );
-    else if( type == "direction" )
+    else if( type == "direction" || type == "heading" )
         SerializeDirection( *message.mutable_value()->mutable_heading(), value );
     else if( type == "phaselinelist" )
         SerializePhaseLines( *message.mutable_value()->mutable_limasorder(), parameterId, value );

@@ -16,6 +16,7 @@
 #include <boost/bind.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <xeumeuleu/xml.hpp>
+#include <xeuseuleu/xsl.hpp>
 
 using namespace kernel;
 using namespace actions;
@@ -103,7 +104,12 @@ void ActionsModel::Destroy( const Action_ABC& action )
 void ActionsModel::Load( const std::string& filename, bool readonly /*= false*/ )
 {
     std::string errors;
-    xml::xifstream xis( filename );
+    
+    xsl::xstringtransform xst( "resources/ordCompatibility.xsl" );
+    xst << xml::xifstream( filename );
+    std::string updatedFile = xst.str();
+    xml::xistringstream xis( updatedFile );
+
     xis >> xml::start( "actions" )
             >> xml::list( "action", *this, &ActionsModel::ReadAction, readonly, errors )
         >> xml::end;

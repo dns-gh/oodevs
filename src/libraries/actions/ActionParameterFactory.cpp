@@ -209,7 +209,16 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
     std::string expected = boost::algorithm::to_lower_copy( parameter.GetType() );
     std::string type = boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type" ) );
     if( type != expected )
-        ThrowUnexpected( parameter, xis );
+    {
+        if( type == "phaselinelist" )
+            type = "phaseline";
+        else if( type == "direction" )
+            type = "heading";
+        else if( type == "intelligencelist" )
+            type = "intelligence";
+        if( type != expected )
+            ThrowUnexpected( parameter, xis );
+    }
     std::auto_ptr< actions::Parameter_ABC > param;
 
     bool found = DoCreateParameter( parameter, xis, entity, type, param );
@@ -277,39 +286,57 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
     else if( type == "string" )
         param.reset( new actions::parameters::String( parameter, xis ) );
     else if( type == "path" || type == "pathbm" )
-        param.reset( new actions::parameters::Path( parameter, converter_, xis ) );
+    {
+        if( !parameter.IsList() )
+            param.reset( new actions::parameters::Path( parameter, converter_, xis ) );
+        else
+            param.reset( new actions::parameters::PathList( parameter, converter_, xis ) );
+    }
     else if( type == "point" || type == "pointbm" )
-        param.reset( new actions::parameters::Point( parameter, converter_, xis ) );
+    {
+        if( !parameter.IsList() )
+            param.reset( new actions::parameters::Point( parameter, converter_, xis ) );
+        else
+            param.reset( new actions::parameters::PointList( parameter, converter_, xis ) );
+    }
     else if( type == "polygon" || type == "areabm" )
-        param.reset( new actions::parameters::Polygon( parameter, converter_, xis ) );
+    {
+        if( !parameter.IsList() )
+            param.reset( new actions::parameters::Polygon( parameter, converter_, xis ) );
+        else
+            param.reset( new actions::parameters::PolygonList( parameter, converter_, xis ) );
+    }
     else if( type == "location" )
-        param.reset( new actions::parameters::Location( parameter, converter_, xis ) );
-    else if( type == "pathlist" )
-        param.reset( new actions::parameters::PathList( parameter, converter_, xis ) );
-    else if( type == "pointlist" || type == "pointlistbm" )
-        param.reset( new actions::parameters::PointList( parameter, converter_, xis ) );
-    else if( type == "polygonlist" || type == "arealistbm" )
-        param.reset( new actions::parameters::PolygonList( parameter, converter_, xis ) );
-    else if( type == "locationlist" )
-        param.reset( new actions::parameters::LocationList( parameter, converter_, xis ) );
-    else if( type == "direction" || type == "directionbm" )
+    {
+        if( !parameter.IsList() )
+            param.reset( new actions::parameters::Location( parameter, converter_, xis ) );
+        else
+            param.reset( new actions::parameters::LocationList( parameter, converter_, xis ) );
+    }
+    else if( type == "direction" || type == "heading" || type == "headingbm" )
         param.reset( new actions::parameters::Direction( parameter, xis ) );
-    else if( type == "phaselinelist" )
+    else if( type == "phaseline" && parameter.IsList() )
         param.reset( new actions::parameters::LimaList( parameter, converter_, xis ) );
-    else if( type == "intelligencelist" )
+    else if( type == "intelligence" && parameter.IsList() )
         param.reset( new actions::parameters::IntelligenceList( parameter, converter_, xis, entities_, staticModel_.levels_, controller_ ) );
     else if( type == "limit" )
         param.reset( new actions::parameters::Limit( parameter, converter_, xis ) );
     else if( type == "enumeration" )
         param.reset( new actions::parameters::Enumeration( parameter, xis ) );
     else if( type == "agent" || type == "agentbm" )
-        param.reset( new actions::parameters::Agent( parameter, xis, entities_, controller_ ) );
+    {        
+        if( !parameter.IsList() )
+            param.reset( new actions::parameters::Agent( parameter, xis, entities_, controller_ ) );
+        else
+            param.reset( new actions::parameters::AgentList( parameter, xis, entities_, controller_ ) );
+    }
     else if( type == "automate" || type == "automatebm" )
-        param.reset( new actions::parameters::Automat( parameter, xis, entities_, controller_ ) );
-    else if( type == "agentlist" || type == "agentlistbm" )
-        param.reset( new actions::parameters::AgentList( parameter, xis, entities_, controller_ ) );
-    else if( type == "automatelist" || type == "automatelistbm" )
-        param.reset( new actions::parameters::AutomatList( parameter, xis, entities_, controller_ ) );
+    {
+        if( !parameter.IsList() )
+            param.reset( new actions::parameters::Automat( parameter, xis, entities_, controller_ ) );
+        else
+            param.reset( new actions::parameters::AutomatList( parameter, xis, entities_, controller_ ) );
+    }
     else if( type == "army" )
         param.reset( new actions::parameters::Army( parameter, xis, entities_, controller_ ) );
     else if( type == "formation" )
@@ -317,15 +344,21 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
     else if( type == "dotationtype" )
         param.reset( new actions::parameters::DotationType( parameter, xis, staticModel_.objectTypes_ ) );
     else if( type == "genobject" || type == "genobjectbm" )
-        param.reset( new actions::parameters::EngineerConstruction( parameter, converter_, staticModel_.objectTypes_, entities_, xis, controller_ ) );
-    else if( type == "genobjectlist" || type == "genobjectlistbm" )
-        param.reset( new actions::parameters::EngineerConstructionList( parameter, converter_, staticModel_.objectTypes_, entities_, xis, controller_ ) );
+    {
+        if( !parameter.IsList() )
+            param.reset( new actions::parameters::EngineerConstruction( parameter, converter_, staticModel_.objectTypes_, entities_, xis, controller_ ) );
+        else
+            param.reset( new actions::parameters::EngineerConstructionList( parameter, converter_, staticModel_.objectTypes_, entities_, xis, controller_ ) );
+    }
     else if( type == "natureatlas" )
         param.reset( new actions::parameters::AtlasNature( parameter, xis, staticModel_.atlasNatures_ ) );
     else if( type == "objective" )
-        param.reset( new actions::parameters::Objective( parameter, xis, converter_ ) );
-    else if( type == "objectivelist" )
-        param.reset( new actions::parameters::ObjectiveList( parameter, xis, converter_ ) );
+    {
+        if( !parameter.IsList() )
+            param.reset( new actions::parameters::Objective( parameter, xis, converter_ ) );
+        else
+            param.reset( new actions::parameters::ObjectiveList( parameter, xis, converter_ ) );
+    }
     else if( type == "medicalpriorities" )
         param.reset( new actions::parameters::MedicalPriorities( parameter, xis ) );
     else if( type == "maintenancepriorities" )
@@ -359,16 +392,22 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
 bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity, const std::string& type, std::auto_ptr< actions::Parameter_ABC >& param ) const
 {
     if( type == "agentknowledge" || type == "agentknowledgebm" )
-        param.reset( new actions::parameters::AgentKnowledge( parameter, xis, entities_, agentKnowledgeConverter_, entity, controller_ ) );
+    {
+        if( !parameter.IsList() )
+            param.reset( new actions::parameters::AgentKnowledge( parameter, xis, entities_, agentKnowledgeConverter_, entity, controller_ ) );
+        else
+            param.reset( new actions::parameters::AgentKnowledgeList( parameter, xis, entities_, agentKnowledgeConverter_, entity, controller_ ) );
+    }
     else if( type == "populationknowledge" || type == "populationknowledgebm" )
         param.reset( new actions::parameters::PopulationKnowledge( parameter, xis, entities_, agentKnowledgeConverter_, entity, controller_ ) );
     else if( type == "objectknowledge" || type == "objectknowledgebm" )
-        param.reset( new actions::parameters::ObjectKnowledge( parameter, xis, entities_, objectKnowledgeConverter_, entity, controller_ ) );
-    else if( type == "agentknowledgelist" || type == "agentknowledgelistbm" )
-        param.reset( new actions::parameters::AgentKnowledgeList( parameter, xis, entities_, agentKnowledgeConverter_, entity, controller_ ) );
-    else if( type == "objectknowledgelist" || type == "objectknowledgelistbm" )
-        param.reset( new actions::parameters::ObjectKnowledgeList( parameter, xis, entities_, objectKnowledgeConverter_, entity, controller_ ) );
-    else if( type == "list" )
+    {
+        if( !parameter.IsList() )
+            param.reset( new actions::parameters::ObjectKnowledge( parameter, xis, entities_, objectKnowledgeConverter_, entity, controller_ ) );
+        else
+            param.reset( new actions::parameters::ObjectKnowledgeList( parameter, xis, entities_, objectKnowledgeConverter_, entity, controller_ ) );
+    }
+    else if( type == "list" || type == "locationcomposite" )
     {
         actions::parameters::ParameterList* parameterList = new actions::parameters::ParameterList( parameter );
         param.reset( parameterList );

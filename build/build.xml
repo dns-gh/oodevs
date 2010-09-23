@@ -297,7 +297,7 @@
 
     <target name="application.dispatcher_dll.nocrossbow" description="build Sword Dispatcher dll without crossbow"
             depends="library.dispatcher,library.actions_static,library.clients_kernel,library.ENT,library.plugins.nocrossbow">
-        <build-lib name="dispatcher_dll" outtype="shared" mode="release" depends="boost,terrain,qt,xerces"
+        <build-lib name="dispatcher_dll" outtype="shared" mode="release" depends="boost,terrain,qt,xerces,xalan"
                    pattern="dispatcher-${platform}-mt@{suffix}" input="dispatcher_dll"
                    libs="HLA,libFedTime,masalloc,tools,libprotobuf,
                          directia-${platform}-mt-4_6,
@@ -340,10 +340,9 @@
     </target>
 
     <target name="application.simulation_app.nocrossbow" description="build Sword Simulation executable without crossbow" depends="library.dispatcher,library.simulation_kernel,application.dispatcher_dll.nocrossbow">
-        <build-app name="simulation_app" depends="terrain,boost,xerces,flexlm,qt"
+        <build-app name="simulation_app" depends="terrain,boost,xerces,xalan,flexlm,qt"
             libs="HLA,libFedTime,masalloc,libprotobuf,directia-${platform}-mt-4_6,library-${platform}-mt,
                   gdal_i,gdal_ogr,geodata,
-                  population-${platform}-mt@{suffix},
                   dispatcher-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix},
@@ -390,7 +389,7 @@
 
     <!-- <crossbowed-applications> -->
     <target name="application.dispatcher_dll.crossbow" description="build Sword Dispatcher dll with crossbow" depends="library.dispatcher,library.actions_static,library.clients_kernel,library.ENT,library.plugins.crossbow">
-        <build-lib name="dispatcher_crossbow_dll" outtype="shared" mode="release" depends="boost,terrain,qt,xerces"
+        <build-lib name="dispatcher_crossbow_dll" outtype="shared" mode="release" depends="boost,terrain,qt,xerces,xalan"
             pattern="dispatcher-crossbow-${platform}-mt" input="dispatcher_dll"
             libs="HLA,libFedTime,masalloc,tools,libprotobuf,gdal_i,
                   directia-${platform}-mt-4_6,
@@ -435,11 +434,10 @@
     </target>
 
     <target name="application.simulation_app.crossbow" description="build Sword Simulation executable" depends="library.dispatcher,library.simulation_kernel,application.dispatcher_dll.crossbow">
-        <build-app name="simulation_crossbow_app" depends="terrain,boost,xerces,flexlm,qt"
+        <build-app name="simulation_crossbow_app" depends="terrain,boost,xerces,xalan,flexlm,qt"
             pattern="simulation_crossbow_app" input="simulation_app"
             libs="HLA,libFedTime,masalloc,libprotobuf,directia-${platform}-mt-4_6,library-${platform}-mt,
                   gdal_i,gdal_ogr,geodata,
-                  population-${platform}-mt@{suffix},
                   dispatcher-crossbow-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix},
@@ -497,7 +495,7 @@
     </target>
 
     <target name="application.gaming_app" description="build CSword Gaming executable" depends="library.gaming">
-        <build-app name="gaming_app" depends="terrain,xerces,qt,boost,flexlm"
+        <build-app name="gaming_app" depends="terrain,xerces,xalan,qt,boost,flexlm"
                    libs="libprotobuf,svgl,zipstream,zlib1,bugtrap,shapelib,
                          lib${ant.project.name}_actions-${platform}-mt,
                          lib${ant.project.name}_actions_gui-${platform}-mt,
@@ -811,7 +809,6 @@
         <build-test name="simulation_kernel"
                    libs="HLA,libFedTime,masalloc,tools,libprotobuf,directia-${platform}-mt-4_6,library-${platform}-mt,
                    gdal_i,gdal_ogr,geodata,
-                   population-${platform}-mt@{suffix},
                    dispatcher-${platform}-mt@{suffix},
                    lib${ant.project.name}_tools-${platform}-mt@{suffix},
                    lib${ant.project.name}_clients_kernel-${platform}-mt,
@@ -966,7 +963,6 @@
         <update name="shapelib"/>
         <update name="gdal" version="1.6.a"/>
         <update name="esri" version="9.2"/>
-        <update name="folk"/>
         <update name="turtle"/>
         <update name="protobuf"/>
         <update name="vcredist" package="vcredist"/>

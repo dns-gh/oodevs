@@ -98,13 +98,14 @@ void Parameter< T >::Serialize( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Parameter::IsSet
-// Created: LDC 2010-09-17
+// Name: Parameter::IsInRange
+// Created: LDC 2010-09-21
 // -----------------------------------------------------------------------------
 template< typename T >
-bool Parameter< T >::IsSet() const
+bool Parameter< T >::IsInRange() const
 {
-    return Parameter_ABC::IsSet();
+    unsigned int nElements = elements_.size();
+    return parameter_.MinOccurs() <= nElements && parameter_.MaxOccurs() >= nElements;
 }
     }
 }

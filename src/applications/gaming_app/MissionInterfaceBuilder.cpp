@@ -10,50 +10,51 @@
 #include "gaming_app_pch.h"
 #include "MissionInterfaceBuilder.h"
 #include "actions_gui/MissionInterface_ABC.h"
+#include "actions_gui/LimitParameter.h"
 #include "actions_gui/ParamAgent.h"
 #include "actions_gui/ParamAgentList.h"
+#include "actions_gui/ParamAgentKnowledge.h"
+#include "actions_gui/ParamAgentKnowledgeList.h"
 #include "actions_gui/ParamAtlasNature.h"
 #include "actions_gui/ParamAutomat.h"
 #include "actions_gui/ParamAutomatList.h"
+#include "actions_gui/ParamBool.h"
 #include "actions_gui/ParamDateTime.h"
+#include "actions_gui/ParamDirection.h"
+#include "actions_gui/ParamDotationDType.h"
+#include "actions_gui/ParamDotationTypeList.h"
+#include "actions_gui/ParamEquipmentList.h"
+#include "actions_gui/ParamHumanWoundList.h"
+#include "actions_gui/ParamIntelligenceList.h"
+#include "actions_gui/ParamLimaList.h"
+#include "actions_gui/ParamLocation.h"
+#include "actions_gui/ParamLocationComposite.h"
+#include "actions_gui/ParamLocationCompositeList.h"
+#include "actions_gui/ParamLocationList.h"
+#include "actions_gui/ParamMissionObjective.h"
+#include "actions_gui/ParamMissionObjectiveList.h"
+#include "actions_gui/ParamNumericField.h"
+#include "actions_gui/ParamObstacle.h"
+#include "actions_gui/ParamObstacleList.h"
+#include "actions_gui/ParamObjectKnowledge.h"
+#include "actions_gui/ParamObjectKnowledgeList.h"
 #include "actions_gui/ParamPath.h"
 #include "actions_gui/ParamPathList.h"
 #include "actions_gui/ParamPoint.h"
 #include "actions_gui/ParamPolygon.h"
-#include "actions_gui/ParamBool.h"
-#include "actions_gui/ParamLocation.h"
-#include "actions_gui/ParamLocationComposite.h"
-#include "actions_gui/ParamLocationList.h"
 #include "actions_gui/ParamPointList.h"
 #include "actions_gui/ParamPolygonList.h"
-#include "actions_gui/ParamAgentKnowledge.h"
-#include "actions_gui/ParamAgentKnowledgeList.h"
 #include "actions_gui/ParamPopulationKnowledge.h"
-#include "actions_gui/ParamObjectKnowledge.h"
-#include "actions_gui/ParamObjectKnowledgeList.h"
-#include "actions_gui/ParamObstacle.h"
-#include "actions_gui/ParamObstacleList.h"
-#include "actions_gui/ParamDirection.h"
-#include "actions_gui/ParamNumericField.h"
-#include "actions_gui/ParamEquipmentList.h"
-#include "actions_gui/ParamHumanWoundList.h"
-#include "actions_gui/ParamDotationDType.h"
 #include "actions_gui/ParamUrbanBlock.h"
-#include "actions_gui/LimitParameter.h"
-#include "actions_gui/ParamLimaList.h"
-#include "actions_gui/ParamMissionObjective.h"
-#include "actions_gui/ParamMissionObjectiveList.h"
-#include "actions_gui/ParamDotationTypeList.h"
-#include "actions_gui/ParamIntelligenceList.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
-#include "clients_kernel/ObjectKnowledge_ABC.h"
-#include "clients_kernel/PopulationKnowledge_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/OrderType.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/OrderParameterValue.h"
+#include "clients_kernel/OrderType.h"
+#include "clients_kernel/PopulationKnowledge_ABC.h"
 #include "gaming/Simulation.h"
 #include "gaming/StaticModel.h"
 #include "gaming/Tools.h"
@@ -137,6 +138,7 @@ MissionInterfaceBuilder::MissionInterfaceBuilder( Controllers& controllers, gui:
 
     builderFunctors_["urbanblockbm"]            = &MissionInterfaceBuilder::BuildUrbanBlock;
     builderFunctors_["locationcomposite"]       = &MissionInterfaceBuilder::BuildLocationComposite;
+    builderFunctors_["locationcompositelist"]   = &MissionInterfaceBuilder::BuildLocationCompositeList;
 }
 
 // -----------------------------------------------------------------------------
@@ -391,6 +393,15 @@ actions::gui::Param_ABC& MissionInterfaceBuilder::BuildLocationComposite( const 
 }
 
 // -----------------------------------------------------------------------------
+// Name: MissionInterfaceBuilder::BuildLocationCompositeList
+// Created: LDC 2010-09-20
+// -----------------------------------------------------------------------------
+actions::gui::Param_ABC& MissionInterfaceBuilder::BuildLocationCompositeList( const kernel::OrderParameter& parameter ) const
+{
+    return *new actions::gui::ParamLocationCompositeList( missionInterface_, parameter, *this, controllers_.actions_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildLocationList
 // Created: SBO 2006-11-30
 // -----------------------------------------------------------------------------
@@ -522,3 +533,4 @@ actions::gui::Param_ABC& MissionInterfaceBuilder::BuildUrbanBlock( const kernel:
 {
     return *new actions::gui::ParamUrbanBlock( missionInterface_, parameter, layer_ );
 }
+

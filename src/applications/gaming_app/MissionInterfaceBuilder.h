@@ -101,8 +101,9 @@ private:
     actions::gui::Param_ABC& BuildPolygon              ( const kernel::OrderParameter& parameter ) const;
     actions::gui::Param_ABC& BuildPolygonList          ( const kernel::OrderParameter& parameter ) const;
     actions::gui::Param_ABC& BuildLocation             ( const kernel::OrderParameter& parameter ) const;
-    actions::gui::Param_ABC& BuildLocationComposite    ( const kernel::OrderParameter& parameter ) const;
     actions::gui::Param_ABC& BuildLocationList         ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC& BuildLocationComposite    ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC& BuildLocationCompositeList( const kernel::OrderParameter& parameter ) const;
     actions::gui::Param_ABC& BuildGenObject            ( const kernel::OrderParameter& parameter ) const;
     actions::gui::Param_ABC& BuildGenObjectList        ( const kernel::OrderParameter& parameter ) const;
     actions::gui::Param_ABC& BuildMissionObjective     ( const kernel::OrderParameter& parameter ) const;

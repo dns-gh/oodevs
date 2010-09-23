@@ -137,3 +137,12 @@ bool MIL_NullParameter::ToNatureAtlas( Common::MsgAtlasNature& asn ) const
 {
     return NET_ASN_Tools::CopyNatureAtlas( 0, asn );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NullParameter::MIL_ListParameter::ToList
+// Created: LDC 2010-09-21
+// -----------------------------------------------------------------------------
+bool MIL_NullParameter::ToList( std::vector< Common::MsgMissionParameter_Value >& ) const
+{
+    return true;
+}

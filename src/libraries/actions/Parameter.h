@@ -43,7 +43,7 @@ public:
     virtual void Serialize( xml::xostream& xos ) const;
     void SetValue( const T& value );
     const T& GetValue() const;
-    virtual bool IsSet() const;
+    bool IsInRange() const;
     //@}
 
 private:

@@ -15,36 +15,37 @@
 
 namespace Common
 {
-    class MsgPoint;
-    class MsgPointList;
-    class MsgPolygon;
-    class MsgPolygonList;
-    class UnitId;
-    class MsgUnitKnowledge;
-    class UnitKnowledgeIdList;
-    class UnitIdList;
     class AutomatId;
     class AutomatIdList;
-    class MsgHeading;
-    class ResourceType;
     class EquipmentType;
-    class MsgDateTime;
-    class MsgPlannedWork;
-    class MsgPlannedWorkList;
     class FireId;
+    class MsgAtlasNature;
+    class MsgDateTime;
+    class MsgHeading;
     class MsgLocation;
     class MsgLocationList;
     class MsgLogMaintenancePriorities;
     class MsgLogMedicalPriorities;
-    class MsgAtlasNature;
     class MsgMissionObjectiveList;
-    class ObjectKnowledgeId;
-    class ObjectKnowledgeIdList;
+    class MsgMissionParameter_Value;
     class MsgPath;
     class MsgPathList;
+    class MsgPlannedWork;
+    class MsgPlannedWorkList;
+    class MsgPoint;
+    class MsgPointList;
+    class MsgPolygon;
+    class MsgPolygonList;
+    class MsgUnitKnowledge;
+    class ObjectKnowledgeId;
+    class ObjectKnowledgeIdList;
     class PopulationKnowledgeId;
-    class UrbanObjectId;
+    class ResourceType;
+    class UnitId;
+    class UnitIdList;
     class UnitKnowledgeId;
+    class UnitKnowledgeIdList;
+    class UrbanObjectId;
 }
 
 namespace urban
@@ -129,6 +130,7 @@ public:
     virtual bool ToPopulationKnowledge( Common::PopulationKnowledgeId& asn ) const = 0;
     virtual bool ToString( std::string& asn ) const = 0;
     virtual bool ToUrbanBlock( Common::UrbanObjectId& ) const = 0;
+    virtual bool ToList( std::vector< Common::MsgMissionParameter_Value >& ) const = 0;
 
     //virtual bool ToString( std::string& ) const = 0;
     // The lifecycle of pointers in all functions below must be handled by MIL_MissionParameter_ABC
@@ -161,6 +163,7 @@ public:
     virtual bool ToMedicalPriorities( T_MedicalPriorityVector& ) const = 0;
     virtual bool ToObjectiveList( std::vector< boost::shared_ptr< DEC_Objective > >& ) const = 0;
     virtual bool ToUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urban >& ) const = 0;
+    virtual bool ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& ) const = 0;
 
     virtual void Append( boost::shared_ptr< TER_Localisation > pLocation ) = 0;
     virtual void Append( boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject ) = 0;

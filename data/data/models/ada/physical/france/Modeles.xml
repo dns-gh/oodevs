@@ -220,11 +220,7 @@
         <mission name="TEST MoveAlongAgentList"/>
         <mission name="TEST MoveAlongAgentKnowledgeList"/>
         <mission name="TEST MoveAlongObjectKnowledgeList"/>
-        <mission name="TEST MoveToPointList"/>
-        <mission name="TEST MoveToPolygonList"/>
-        <mission name="TEST MoveToAgentList"/>
-        <mission name="TEST MoveToAgentKnowledgeList"/>
-        <mission name="TEST MoveToObjectKnowledgeList"/>
+        <mission name="TEST MoveToCompositeLocationList"/>
         <mission name="TEST MoveToWithLima">
           <fragorder name="Deboucher"/>
         </mission>

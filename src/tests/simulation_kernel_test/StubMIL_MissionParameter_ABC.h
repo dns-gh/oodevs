@@ -163,6 +163,10 @@ public:
     { throw; }
     virtual bool ToUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urban >& ) const
     { throw; }
+    virtual bool ToList( std::vector< Common::MsgMissionParameter_Value >& ) const
+    { throw; }
+    virtual bool ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& ) const
+    { throw; }
     virtual void Append( boost::shared_ptr< TER_Localisation > pLocation )
     { throw; }
     virtual void Append( boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject )

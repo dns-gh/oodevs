@@ -9,39 +9,40 @@
 
 #include "simulation_orders_pch.h"
 #include "MIL_ParameterType_ABC.h"
-#include "MIL_ParameterType_Bool.h"
-#include "MIL_ParameterType_Enumeration.h"
-#include "MIL_ParameterType_Point.h"
-#include "MIL_ParameterType_PointList.h"
-#include "MIL_ParameterType_Polygon.h"
-#include "MIL_ParameterType_PolygonList.h"
-#include "MIL_ParameterType_Location.h"
-#include "MIL_ParameterType_LocationComposite.h"
-#include "MIL_ParameterType_LocationList.h"
-#include "MIL_ParameterType_Path.h"
-#include "MIL_ParameterType_PathList.h"
-#include "MIL_ParameterType_Direction.h"
-#include "MIL_ParameterType_NatureAtlas.h"
-#include "MIL_ParameterType_Automat.h"
-#include "MIL_ParameterType_AutomatList.h"
 #include "MIL_ParameterType_Agent.h"
 #include "MIL_ParameterType_AgentList.h"
 #include "MIL_ParameterType_AgentKnowledge.h"
 #include "MIL_ParameterType_AgentKnowledgeList.h"
-#include "MIL_ParameterType_ObjectKnowledge.h"
-#include "MIL_ParameterType_ObjectKnowledgeList.h"
-#include "MIL_ParameterType_PopulationKnowledge.h"
+#include "MIL_ParameterType_Automat.h"
+#include "MIL_ParameterType_AutomatList.h"
+#include "MIL_ParameterType_Bool.h"
+#include "MIL_ParameterType_Direction.h"
 #include "MIL_ParameterType_DotationType.h"
+#include "MIL_ParameterType_Enumeration.h"
 #include "MIL_ParameterType_EquipmentType.h"
 #include "MIL_ParameterType_GDH.h"
-#include "MIL_ParameterType_Numeric.h"
 #include "MIL_ParameterType_GenObject.h"
 #include "MIL_ParameterType_GenObjectList.h"
+#include "MIL_ParameterType_IndirectFire.h"
+#include "MIL_ParameterType_Location.h"
+#include "MIL_ParameterType_LocationComposite.h"
+#include "MIL_ParameterType_LocationCompositeList.h"
+#include "MIL_ParameterType_LocationList.h"
 #include "MIL_ParameterType_MaintenancePriorities.h"
 #include "MIL_ParameterType_MedicalPriorities.h"
-#include "MIL_ParameterType_IndirectFire.h"
-#include "MIL_ParameterType_String.h"
+#include "MIL_ParameterType_NatureAtlas.h"
+#include "MIL_ParameterType_Numeric.h"
 #include "MIL_ParameterType_ObjectiveList.h"
+#include "MIL_ParameterType_ObjectKnowledge.h"
+#include "MIL_ParameterType_ObjectKnowledgeList.h"
+#include "MIL_ParameterType_Path.h"
+#include "MIL_ParameterType_PathList.h"
+#include "MIL_ParameterType_Point.h"
+#include "MIL_ParameterType_PointList.h"
+#include "MIL_ParameterType_Polygon.h"
+#include "MIL_ParameterType_PolygonList.h"
+#include "MIL_ParameterType_PopulationKnowledge.h"
+#include "MIL_ParameterType_String.h"
 #include "MIL_ParameterType_UrbanBlock.h"
 #include "MT_Tools/MT_FormatString.h"
 
@@ -98,8 +99,9 @@ void MIL_ParameterType_ABC::Initialize()
     RegisterParameterType< MIL_ParameterType_Path                  >( std::string("Path") );
     RegisterParameterType< MIL_ParameterType_Path                  >( std::string("PathBM") );
     RegisterParameterType< MIL_ParameterType_PathList              >();
+    RegisterParameterType< MIL_ParameterType_Direction             >( std::string("Direction") );
+    RegisterParameterType< MIL_ParameterType_Direction             >( std::string("DirectionBM") );
     RegisterParameterType< MIL_ParameterType_Direction             >( std::string("Heading") );
-    RegisterParameterType< MIL_ParameterType_Direction             >( std::string("HeadingBM") );
     RegisterParameterType< MIL_ParameterType_NatureAtlas           >();
     RegisterParameterType< MIL_ParameterType_Automat               >( std::string("Automate") );
     RegisterParameterType< MIL_ParameterType_Automat               >( std::string("AutomateBM") );
@@ -134,6 +136,7 @@ void MIL_ParameterType_ABC::Initialize()
     RegisterParameterType< MIL_ParameterType_ObjectiveList         >();
     RegisterParameterType< MIL_ParameterType_UrbanBlock            >( std::string("UrbanBlockBM") );
     RegisterParameterType< MIL_ParameterType_LocationComposite     >( std::string("LocationComposite") );
+    RegisterParameterType< MIL_ParameterType_LocationCompositeList >( std::string("LocationCompositeList") );
 }
 
 // =============================================================================

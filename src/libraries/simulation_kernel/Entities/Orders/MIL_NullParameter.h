@@ -46,6 +46,7 @@ public:
     virtual bool ToObjectKnowledgeList( Common::ObjectKnowledgeIdList& asn ) const;
     virtual bool ToPathList( Common::MsgPathList& asn ) const;
     virtual bool ToNatureAtlas( Common::MsgAtlasNature& asn ) const;
+    virtual bool ToList( std::vector< Common::MsgMissionParameter_Value >& ) const;
     //@}
 
 private:

@@ -764,20 +764,8 @@
       <parameter dia-name="refugies_" max-occurs="unbounded" min-occurs="1" name="Refugies" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="campRefugies_" name="Camp refugies" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" id="2010" name="TEST MoveToAgentKnowledgeList">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="AgentKnowledgeBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroadAgentList" id="2009" name="TEST MoveToAgentList">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="AgentBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroadPointList" id="2006" name="TEST MoveToPointList">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="PointBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroadPolygonList" id="2007" name="TEST MoveToPolygonList">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="AreaBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroadObjectKnowledgeList" id="2011" name="TEST MoveToObjectKnowledgeList">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="ObjectKnowledgeBM"/>
+    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" id="2010" name="TEST MoveToCompositeLocationList">
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="LocationComposite"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveAlong" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveAlong" id="2012" name="TEST MoveAlongAgentKnowledgeList">
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="AgentKnowledgeBM"/>

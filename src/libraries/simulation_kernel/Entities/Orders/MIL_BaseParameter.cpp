@@ -588,6 +588,24 @@ bool MIL_BaseParameter::ToUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urban >& 
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_BaseParameter::ToList
+// Created: LDC 2010-09-22
+// -----------------------------------------------------------------------------
+bool MIL_BaseParameter::ToList( std::vector< Common::MsgMissionParameter_Value >& ) const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_BaseParameter::ToList
+// Created: LDC 2010-09-21
+// -----------------------------------------------------------------------------
+bool MIL_BaseParameter::ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& ) const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_BaseParameter::Append
 // Created: LDC 2009-07-31
 // -----------------------------------------------------------------------------

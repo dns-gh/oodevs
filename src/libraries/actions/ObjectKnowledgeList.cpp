@@ -126,5 +126,5 @@ bool ObjectKnowledgeList::IsSet() const
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         if( !it->second->IsSet() )
             return false;
-    return Parameter< QString >::IsSet();
+    return( Parameter< QString >::IsSet() && IsInRange() );
 }

@@ -15,6 +15,7 @@
 namespace Common
 {
     class MsgMissionParameter;
+    class MsgMissionParameter_Value;
     class MsgMissionParameters;
 }
 
@@ -54,6 +55,7 @@ public:
     //@{
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const MIL_OrderTypeParameter& type );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const Common::MsgMissionParameter& asn, const DEC_KnowledgeResolver_ABC& resolver );
+    static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const Common::MsgMissionParameter_Value& message, const DEC_KnowledgeResolver_ABC& resolver );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const PHY_DotationCategory* dotationType );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const PHY_ComposanteTypePion* equipmentType );

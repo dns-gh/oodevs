@@ -743,6 +743,30 @@ bool LocationCompositeFunctionBM( directia::brain::Brain& brain, directia::tools
         || UrbanBlockFunctionBM( brain, knowledgeCreateFunction, refMission, name, element );
 }
 
+bool LocationCompositeListFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+    std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > list;
+    if( element.ToList( list ) )
+    {
+        knowledgeCreateFunction( refMission, "beginlist", name );
+        for( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >::const_iterator it = list.begin(); it != list.end(); ++it )
+        {
+            PointFunctionBM( brain, knowledgeCreateFunction, refMission, name, **it )
+        || PathFunctionBM( brain, knowledgeCreateFunction, refMission, name, **it )
+        || AreaFunctionBM( brain, knowledgeCreateFunction, refMission, name, **it )
+        || AutomatFunctionBM( brain, knowledgeCreateFunction, refMission, name, **it )
+        || AgentFunctionBM( brain, knowledgeCreateFunction, refMission, name, **it )
+        || AgentKnowledgeFunctionBM( brain, knowledgeCreateFunction, refMission, name, **it )
+        || ObjectKnowledgeFunctionBM( brain, knowledgeCreateFunction, refMission, name, **it )
+        || PopulationKnowledgeFunctionBM( brain, knowledgeCreateFunction, refMission, name, **it )
+        || UrbanBlockFunctionBM( brain, knowledgeCreateFunction, refMission, name, **it );
+        }
+        knowledgeCreateFunction( refMission, "endlist", name );
+        return true;
+    }
+    return false;
+}
+
 std::map< std::string, T_Function > functors;
 std::map< std::string, T_FunctionBM > functorsBM;
 
@@ -763,6 +787,7 @@ void InitFunctions()
         functors[ "Path" ] = PathFunction;
         functors[ "PathList" ] = PathListFunction;
         functors[ "Heading" ] = DirectionFunction;
+        functors[ "Direction" ] = DirectionFunction;
         functors[ "NatureAtlas" ] = NatureAtlasFunction;
         functors[ "Automate" ] = AutomatFunction;
         functors[ "AutomateList" ] = AutomatListFunction;
@@ -803,6 +828,7 @@ void InitFunctions()
         functorsBM[ "UrbanBlockBM" ] = UrbanBlockFunctionBM;
         functorsBM[ "HeadingBM" ] = DirectionFunctionBM;
         functorsBM[ "LocationComposite" ] = LocationCompositeFunctionBM;
+        functorsBM[ "LocationCompositeList" ] = LocationCompositeListFunctionBM;
     }
 }
 

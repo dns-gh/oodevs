@@ -53,7 +53,12 @@ OrderParameter::OrderParameter( const std::string& name, const std::string& type
     , minOccurs_( 1 )
     , maxOccurs_( 1 )
 {
-    // NOTHING
+    choices_.push_back( "pointbm" );
+    choices_.push_back( "areabm" );
+    choices_.push_back( "urbanblockbm" );
+    choices_.push_back( "agentbm" );
+    choices_.push_back( "agentknowledgebm" );
+    choices_.push_back( "objectknowledgebm" );
 }
 
 // -----------------------------------------------------------------------------

@@ -295,7 +295,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Path )
 BOOST_AUTO_TEST_CASE( ParametersSerialization_Direction )
 {
     const std::string input( "<parameter name='test' type='direction' value='21'/>" );
-    std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "direction", input,
+    std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "heading", input,
         bl::bind( bl::new_ptr< actions::parameters::Direction >(), bl::_1, bl::_2 ) ) );
     BOOST_CHECK_EQUAL( 21, message->value().heading().heading() );
 }
