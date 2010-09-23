@@ -35,7 +35,7 @@
         <mission name="MELEE Tenir"/>
         <mission name="STABILISATION Animer Poste De Controle"/>
       </missions>
-      <fragorders> 
+      <fragorders>
         <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Mettre Tenue NBC"/>
