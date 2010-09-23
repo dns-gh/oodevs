@@ -97,7 +97,7 @@ public:
     static void F_SeteEtatLima( DEC_Decision_ABC* pAgent, int value );
     static int  F_GeteEtatDec( DEC_Decision_ABC* pAgent );
     static void F_SeteEtatDec( DEC_Decision_ABC* pAgent, int value );
-	static int  F_GeteEtatEchelon( DEC_Decision_ABC* pAgent );
+    static int  F_GeteEtatEchelon( DEC_Decision_ABC* pAgent );
     static void F_SeteEtatEchelon( DEC_Decision_ABC* pAgent, int value );
     static bool F_GetbOrdreDecrocher( DEC_Decision_ABC* pAgent );
     static void F_SetbOrdreDecrocher( DEC_Decision_ABC* pAgent, bool value );

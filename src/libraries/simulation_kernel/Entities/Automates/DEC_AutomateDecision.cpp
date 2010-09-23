@@ -357,9 +357,9 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
         boost::function< float ( DEC_FrontAndBackLinesComputer*, DEC_Decision_ABC* )> ( boost::bind( &DEC_GeometryFunctions::ComputeDistanceAutomatFromBackLine, boost::ref( GetAutomate() ), _1, _2 ) );
     brain[ "DEC_Geometrie_CalculerPointArriveePourPion" ] =
         boost::function< boost::shared_ptr< MT_Vector2D >( DEC_Decision_ABC* ) >( boost::bind( &DEC_GeometryFunctions::ComputeDestPointForPion, boost::ref( GetAutomate() ), _1 ) );
-     brain[ "DEC_Geometrie_CalculerPointArriveePourFuseau" ] =
+    brain[ "DEC_Geometrie_CalculerPointArriveePourFuseau" ] =
         boost::function< boost::shared_ptr< MT_Vector2D >( MIL_Fuseau& ) >( boost::bind( &DEC_GeometryFunctions::ComputeDestPointForFuseau, _1 ) );
-   brain[ "DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau" ] =
+    brain[ "DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau" ] =
         boost::function< boost::shared_ptr< MT_Vector2D >( const TER_Localisation* ) >( boost::bind( &DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) );
     brain[ "DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau" ] =
         boost::function< boost::shared_ptr< MT_Vector2D >( TER_Localisation* ) >( boost::bind( &DEC_GeometryFunctions::ComputeNearestUnclippedLocalisationPointInFuseau< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) );

@@ -31,10 +31,6 @@
 
 #define PRECISION 0.0000001
 
-// =============================================================================
-// TOUT POURRI
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeAgentsBarycenter
 // Created: NLD 2004-10-14
@@ -49,10 +45,8 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeAgentsBarycenter(
 
         *pResult += pKnow->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
     }
-
     if( !selection.empty() )
         *pResult = (*pResult / static_cast< MT_Float >( selection.size() ) );
-
     return pResult;
 }
 
@@ -64,10 +58,8 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeDestPointForPion(
 {
     assert( pPion );
     assert( std::find( callerAutomate.GetPions().begin(), callerAutomate.GetPions().end(), &pPion->GetPion() ) != callerAutomate.GetPions().end() );
-
     return ComputeDestPoint( pPion->GetPion() );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeDestPointForFuseau
@@ -75,16 +67,10 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeDestPointForPion(
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeDestPointForFuseau( MIL_Fuseau& fuseau )
 {
-
     boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D() ); //$$$$ RAM
     fuseau.ComputeFurthestExtremityPoint( *pResult );
     return pResult;
-
 }
-
-// =============================================================================
-// CREATION / DESTRUCTION
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::CreateLocalisation
@@ -124,7 +110,6 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CopyPoint( boost::shared
     boost::shared_ptr< MT_Vector2D > pVect( new MT_Vector2D( *point ) );
     return pVect;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::CreateDirection
@@ -169,11 +154,6 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreateOrthoDirection( MT
     return pResult;
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
-
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeDistance
 // Created: MGD 2010-02-19
@@ -182,7 +162,6 @@ float DEC_GeometryFunctions::ComputeDistance( boost::shared_ptr< MT_Vector2D > p
 {
     return (float)pos1->Distance( *pos2 );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ReverseDirection
@@ -332,11 +311,6 @@ bool DEC_GeometryFunctions::IsPointInsideLocalisation( MT_Vector2D* pPoint, TER_
     return pLocalisation->IsInside( *pPoint );
 }
 
-
-// =============================================================================
-// GEOMETRY - POINTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ConvertPointToLocalisation
 // Created: NLD 2003-08-19
@@ -373,7 +347,6 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::TranslatePosition( MT_Ve
         *res = *p1;
     else
         *res=*p1+ d*(*p2-*p1).Normalized();
-
     return res;
 }
 
@@ -388,7 +361,6 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::TranslatePositionInDirec
 
     boost::shared_ptr< MT_Vector2D > res( new MT_Vector2D() );
     *res = *p1 + d * (*p2);
-
     return res;
 }
 
@@ -406,10 +378,6 @@ bool DEC_GeometryFunctions::ComparePositions( MT_Vector2D* p1, MT_Vector2D* p2 )
 
     return( p1->Distance( *p2 ) <= rWeldValue );
 }
-
-// =============================================================================
-// CALCULS DE POSITIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeSupportPosition
@@ -608,7 +576,6 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWit
     return pResult;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeNearestFuseauEntryPoint
 // Created: NLD 2003-04-24
@@ -619,10 +586,6 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestFuseauEntr
     callerAgent.GetOrderManager().GetFuseau().ComputeEntryPoint( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), *pResult );
     return pResult;
 }
-
-// =============================================================================
-// ASA
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputePosDeploiementASAOmni
@@ -727,7 +690,6 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePo
     return result;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputePointsBeforeLima
 // Created: NLD 2004-05-25
@@ -750,10 +712,6 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePo
     }
     return result;
 }
-
-// =============================================================================
-// LIGNES AVANT / ARRIERE /MIDDLE
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeDistanceFromMiddleLine
@@ -851,7 +809,6 @@ float DEC_GeometryFunctions::ComputeDistanceAutomatFromFrontLine( DEC_FrontAndBa
     MT_Vector2D barycenter;
     if( pAutomate->GetAutomate().GetAlivePionsBarycenter( barycenter ) )
         rDist = pComputer->ComputeDistanceFromFrontLine( barycenter );
-
     return MIL_Tools::ConvertSimToMeter( rDist );
 }
 
@@ -866,7 +823,6 @@ float DEC_GeometryFunctions::ComputeDistanceFromBackLine( DEC_FrontAndBackLinesC
     MT_Float rDist = 0;
     assert( pPion );
     rDist = pComputer->ComputeDistanceFromBackLine( pPion->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() );
-
     return MIL_Tools::ConvertSimToMeter( rDist );
 }
 
@@ -899,7 +855,6 @@ bool DEC_GeometryFunctions::ClipLocalisationInFuseau( const TER_Localisation& lo
 
     if( clippedPointVector.empty() )
         return false;
-
     clippedLocalisation.Reset( clippedPointVector ); //$$$ NAZE
     return true;
 }
@@ -1071,6 +1026,7 @@ DEC_Decision_ABC* DEC_GeometryFunctions::GetFrontestPion( const std::vector< DEC
 
     return pResult;
 }
+
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeBackestAgent
 // Created: JVT 2004-12-20
@@ -1152,10 +1108,6 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointInCirc
     TER_World::GetWorld().ClipPointInsideWorld( *pRandomPosition );
     return pRandomPosition;
 }
-
-// =============================================================================
-// Interception
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::GetInterceptionPoint

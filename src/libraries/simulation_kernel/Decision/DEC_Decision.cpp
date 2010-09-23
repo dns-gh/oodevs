@@ -77,7 +77,7 @@ void RegisterGeometryFunctions( directia::brain::Brain& brain)
     brain[ "DEC_Geometrie_CreerLocalisation" ] = &DEC_GeometryFunctions::CreateLocalisation;
     brain[ "DEC_Geometrie_CreerListePoints" ] = &DEC_GeometryFunctions::CreateListPoint;
     brain[ "DEC_Geometrie_CreerPoint" ] = &DEC_GeometryFunctions::CreatePoint;
-	brain[ "DEC_Geometrie_CopiePoint" ] = &DEC_GeometryFunctions::CopyPoint;
+    brain[ "DEC_Geometrie_CopiePoint" ] = &DEC_GeometryFunctions::CopyPoint;
     brain[ "DEC_Geometrie_CreerDirection" ] = &DEC_GeometryFunctions::CreateDirection;
     brain[ "DEC_Geometrie_CreerDirectionPerpendiculaire" ] = &DEC_GeometryFunctions::CreateOrthoDirection;
     brain[ "DEC_Geometrie_InverseDirection" ] = &DEC_GeometryFunctions::ReverseDirection;
@@ -419,7 +419,7 @@ bool AreaFunctionBM( directia::brain::Brain& brain, directia::tools::binders::Sc
     if( element.ToPolygon( value ) && value.get() )
     {
         knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Area" ], name, value, false );
-	    return true;
+        return true;
     }
     return false;
 }
@@ -429,7 +429,7 @@ bool AreaListFunctionBM( directia::brain::Brain& brain, directia::tools::binders
     if( element.ToPolygonList( value ) )
     {
         knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Area" ], name, value, true );
-	    return true;
+        return true;
     }
     return false;
 }
@@ -463,7 +463,7 @@ bool PathFunctionBM( directia::brain::Brain& brain, directia::tools::binders::Sc
     if( element.ToPath( value ) && !value.empty() )
     {
         knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Point" ], name, value, true );       
-	    return true;
+        return true;
     }
     return false;
 }
@@ -477,7 +477,7 @@ bool DirectionFunctionBM( directia::brain::Brain& brain, directia::tools::binder
     if( element.ToDirection( value ) && value.get() )
     {
         knowledgeCreateFunction( refMission,  brain[ "net.masagroup.sword.military.world.Direction" ] , name, value, false );     
-	    return true;
+        return true;
     }
     return false;
 }
@@ -499,7 +499,7 @@ bool AutomatFunctionBM( directia::brain::Brain& brain, directia::tools::binders:
     if( element.ToAutomat( value ) )
     {
         knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Company" ], name, value, false );
-	    return true;
+        return true;
     }
     return false;
 }
@@ -515,7 +515,7 @@ bool AutomatListFunctionBM( directia::brain::Brain& brain, directia::tools::bind
     if( element.ToAutomatList( value ) )
     {
         knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Company" ], name, value, true );
-	    return true;
+        return true;
     }
     return false;
 }
@@ -531,7 +531,7 @@ bool AgentFunctionBM( directia::brain::Brain& brain, directia::tools::binders::S
     if( element.ToAgent( value ) )
     {
         knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.PlatoonAlly" ], name, value, false );
-	    return true;
+        return true;
     }
     return false;
 }
@@ -547,7 +547,7 @@ bool AgentListFunctionBM( directia::brain::Brain& brain, directia::tools::binder
     if( element.ToAgentList( value ) )
     {
         knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.PlatoonAlly" ], name, value, true );
-	    return true;
+        return true;
     }
     return false;
 }
@@ -563,7 +563,7 @@ bool AgentKnowledgeFunctionBM( directia::brain::Brain& brain, directia::tools::b
     if( element.ToAgentKnowledge( value ) && value.get() )
     {
         knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Platoon" ], name, value, false );
-	    return true;
+        return true;
     }
     return false;
 }
@@ -579,7 +579,7 @@ bool AgentKnowledgeListFunctionBM( directia::brain::Brain& brain, directia::tool
     if( element.ToAgentKnowledgeList( value ) )
     {
         knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Platoon" ], name, value, true );
-	    return true;
+        return true;
     }
     return false;
 }
@@ -595,7 +595,7 @@ bool ObjectKnowledgeFunctionBM( directia::brain::Brain& brain, directia::tools::
     if( element.ToObjectKnowledge( value ) && value )
     {
         knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Object" ], name, value, false );
-	    return true;
+        return true;
     }
     return false;
 }
@@ -906,7 +906,7 @@ bool CreateBrain(boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, b
                 + PLUGIN( "default_engine" );
             std::string brainInit = plugins
                 + "} cwd='" + includePath + "'";
-		    pBrain.reset( new directia::brain::Brain( brainInit ) );
+            pBrain.reset( new directia::brain::Brain( brainInit ) );
             pArchetypeBrain = pBrain;
             return true;
         }
@@ -919,7 +919,7 @@ bool CreateBrain(boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, b
             + "} cwd='" + includePath + "'";
         pArchetypeBrain.reset( new directia::brain::Brain( brainInit ) );
         brainTable[brainFile] = pArchetypeBrain;
-	    pBrain.reset( new directia::brain::Brain( *pArchetypeBrain ) );
+        pBrain.reset( new directia::brain::Brain( *pArchetypeBrain ) );
         return true;
         }
     }

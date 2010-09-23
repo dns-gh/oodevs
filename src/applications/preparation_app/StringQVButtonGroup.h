@@ -24,8 +24,6 @@ class StringQVButtonGroup : public QVButtonGroup
 {
     Q_OBJECT;
 public:
-
-
     //! @name Constructors/Destructor
     //@{
              StringQVButtonGroup( const QString& title, QWidget* parent );
@@ -38,20 +36,22 @@ public:
    //@}
 
 signals:
+    //! @name signals
+    //@{
     void clicked( const std::string& );
+    //@}
 
 public slots:
-    void OnClicked( int id );    
+    //! @name slots
+    //@{
+    void OnClicked( int id );
+    //@}
 
 private:
     //! @name Copy/Assignment
     //@{
     StringQVButtonGroup( const StringQVButtonGroup& );            //!< Copy constructor
     StringQVButtonGroup& operator=( const StringQVButtonGroup& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

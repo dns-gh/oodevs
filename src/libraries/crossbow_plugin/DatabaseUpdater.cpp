@@ -129,7 +129,7 @@ void DatabaseUpdater::Update( const MsgsSimToClient::MsgUnitCreation& msg )
     row.SetField( "parent_oid", FieldVariant( ( long ) msg.automat().id() ) );
     row.SetField( "name"      , FieldVariant( std::string( msg.nom() ) ) );
     row.SetField( "type"      , FieldVariant( ( long ) msg.type().id() ) );
-	row.SetField( "session_id", FieldVariant( session_.GetId() ) );
+    row.SetField( "session_id", FieldVariant( session_.GetId() ) );
     UpdateSymbol( row, model_.Agents(), msg.id().id() );
     row.SetGeometry( Point() );
     table->InsertRow( row );
@@ -176,15 +176,15 @@ void DatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeCreation&
 {
     std::auto_ptr< Table_ABC > table( geometryDb_.OpenTable( "KnowledgeObjects" ) );
 
-	const dispatcher::ObjectKnowledge_ABC* knowledge = model_.ObjectKnowledges().Find( msg.id().id() );
-	const kernel::Object_ABC* entity = knowledge->GetEntity();
+    const dispatcher::ObjectKnowledge_ABC* knowledge = model_.ObjectKnowledges().Find( msg.id().id() );
+    const kernel::Object_ABC* entity = knowledge->GetEntity();
     if( !entity ) // $$$$ _RC_ SBO 2010-06-10: no real object => giving up
         return;
     std::string symbol = entity->GetType().GetSymbol();
     Row_ABC& row = table->CreateRow();
     row.SetField( "public_oid", FieldVariant( (long) msg.id().id() ) );
     row.SetField( "type", FieldVariant( std::string( msg.type().id() ) ) );
-	row.SetField( "team_id", FieldVariant( (long)msg.party().id() ) );
+    row.SetField( "team_id", FieldVariant( (long)msg.party().id() ) );
     row.SetField( "session_id", FieldVariant( session_.GetId() ) );
 
     if( msg.attributes().has_construction() )
@@ -285,7 +285,7 @@ void DatabaseUpdater::Update( const MsgsSimToClient::MsgObjectCreation& msg )
     row.SetField( "public_oid", FieldVariant( (long) msg.id().id() ) );
     row.SetField( "name" , FieldVariant( std::string( msg.name() ) ) );
     row.SetField( "type" , FieldVariant( std::string( msg.type().id() ) ) );
-	row.SetField( "session_id", FieldVariant( session_.GetId() ) );
+    row.SetField( "session_id", FieldVariant( session_.GetId() ) );
     UpdateSymbol( row, model_.Objects(), msg.id().id() );
     UpdateGeometry( row, msg.location() );
     table->InsertRow( row );
@@ -346,9 +346,9 @@ void DatabaseUpdater::UpdateObjectKnowledgeGeometry( const std::string& tablenam
     if( row == NULL )
     {
         row = &table->CreateRow();
-		row->SetField( "public_oid", FieldVariant( (long) msg.id().id() ) );
-		row->SetField( "session_id", FieldVariant( session_.GetId() ) );
-	}
+        row->SetField( "public_oid", FieldVariant( (long) msg.id().id() ) );
+        row->SetField( "session_id", FieldVariant( session_.GetId() ) );
+    }
     UpdateGeometry( *row, msg.location() );
 }
 
@@ -371,7 +371,7 @@ void DatabaseUpdater::Update( const Common::MsgFormationCreation& message )
     row.SetField( "name", FieldVariant( std::string( message.name() ) ) );
     row.SetField( "type", FieldVariant( -1 ) );
     row.SetField( "engaged", FieldVariant( 0 ) );
-	row.SetField( "session_id", FieldVariant( session_.GetId() ) );
+    row.SetField( "session_id", FieldVariant( session_.GetId() ) );
     UpdateSymbol( row, model_.Formations(), message.formation().id() );
     table->InsertRow( row );
 }
@@ -392,7 +392,7 @@ void DatabaseUpdater::Update( const MsgsSimToClient::MsgAutomatCreation& message
     row.SetField( "name", FieldVariant( std::string( message.nom() ) ) );
     row.SetField( "type", FieldVariant( ( long ) message.type().id() ) );
     row.SetField( "engaged", FieldVariant( true ) );
-	row.SetField( "session_id", FieldVariant( session_.GetId() ) );
+    row.SetField( "session_id", FieldVariant( session_.GetId() ) );
     UpdateSymbol( row, model_.Automats(), ( long ) message.id().id() );
     table->InsertRow( row );
 }

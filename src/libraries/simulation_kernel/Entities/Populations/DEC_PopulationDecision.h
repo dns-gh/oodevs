@@ -51,8 +51,8 @@ public:
     void SetModel( const DEC_Model_ABC& model );
     void Clean         ();
 
-	/*
-	virtual int GeteEtatDecPrudence() const;
+    /*
+    virtual int GeteEtatDecPrudence() const;
     virtual void SeteEtatDecPrudence(int value );
     virtual int GeteEtatNbc() const;
     virtual void SeteEtatNbc(int value );
@@ -78,11 +78,11 @@ public:
     virtual void SeteEtatSoutien(int value );
     virtual int GeteEtatSituationEnnemi() const;
     virtual void SeteEtatSituationEnnemi(int value );
-	virtual int GeteTypeContact() const;
+    virtual int GeteTypeContact() const;
     virtual void SeteTypeContact(int value );
     virtual int GeteNiveauAction() const;
     virtual void SeteNiveauAction(int value );
-	*/
+    */
 
     virtual void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission );
     virtual void StopMissionBehavior ( const boost::shared_ptr< MIL_Mission_ABC > mission );
@@ -114,7 +114,7 @@ protected:
     virtual void      EndCleanStateAfterCrash      ();
 
     virtual void RegisterUserFunctions( directia::brain::Brain& brain );
-	virtual void RegisterUserArchetypeFunctions( directia::brain::Brain& brain );
+    virtual void RegisterUserArchetypeFunctions( directia::brain::Brain& brain );
     //@}
 
 private:

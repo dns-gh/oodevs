@@ -76,7 +76,7 @@ public:
     const bool*        GetRandomGaussian         () const;
     const double*      GetRandomDeviation        () const;
     const double*      GetRandomMean             () const;
-	unsigned int MIL_Config::ReadGCParameter_setPause() const;
+    unsigned int MIL_Config::ReadGCParameter_setPause() const;
     unsigned int MIL_Config::ReadGCParameter_setStepMul() const;
     //@}
 

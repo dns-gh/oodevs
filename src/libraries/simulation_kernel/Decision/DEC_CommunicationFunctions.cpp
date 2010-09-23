@@ -20,7 +20,7 @@
 // -----------------------------------------------------------------------------
 void DEC_CommunicationFunctions::Register( directia::brain::Brain& brain )
 {
-	//
+    //
     brain[ "F_Pion_GeteEtatDec" ] = &F_GeteEtatDec;
     brain[ "F_Pion_SeteEtatDec" ] = &F_SeteEtatDec;
     brain[ "F_Pion_GeteEtatDecPrudence" ] = &F_Pion_GeteEtatDecPrudence;
@@ -55,7 +55,7 @@ void DEC_CommunicationFunctions::Register( directia::brain::Brain& brain )
     brain[ "F_Pion_SeteEtatSituationEnnemi" ] = &F_Pion_SeteEtatSituationEnnemi;
     brain[ "F_Pion_GeteEtatPhaseMission" ] = &F_GeteEtatPhaseMission;
     brain[ "F_Pion_SeteEtatPhaseMission" ] = &F_SeteEtatPhaseMission;
-	//
+    //
     brain[ "F_Pion_GetbOrdreInterrompreMission" ] = &F_Pion_GetbOrdreInterrompreMission;
     brain[ "F_Pion_SetbOrdreInterrompreMission" ] = &F_Pion_SetbOrdreInterrompreMission;
     brain[ "F_Pion_GetbOrdreDecrocher" ] = &F_GetbOrdreDecrocher;
@@ -78,12 +78,12 @@ void DEC_CommunicationFunctions::Register( directia::brain::Brain& brain )
     brain[ "F_Pion_SetmissionPrecedente" ] = &F_Pion_SetmissionPrecedente;
     brain[ "F_Pion_GetrTenir" ] = &F_Pion_GetrTenir;
     brain[ "F_Pion_SetrTenir" ] = &F_Pion_SetrTenir;
-	//
+    //
     brain[ "F_Pion_GeteTypeContact" ] = &F_Pion_GeteTypeContact;
     brain[ "F_Pion_SeteTypeContact" ] = &F_Pion_SeteTypeContact;
     brain[ "F_Pion_GeteNiveauAction" ] = &F_Pion_GeteNiveauAction;
     brain[ "F_Pion_SeteNiveauAction" ] = &F_Pion_SeteNiveauAction;
-	//
+    //
     brain[ "F_Pion_GetbDefenseStatique_Mobile" ] = &F_Pion_GetbDefenseStatique_Mobile;
     brain[ "F_Pion_SetbDefenseStatique_Mobile" ] = &F_Pion_SetbDefenseStatique_Mobile;
     brain[ "F_Pion_GetselUnitesEnAppui" ] = &F_Pion_GetselUnitesEnAppui;
@@ -91,20 +91,20 @@ void DEC_CommunicationFunctions::Register( directia::brain::Brain& brain )
     brain[ "F_RemoveFromselUnitesEnAppui" ] = &F_RemoveFromselUnitesEnAppui;
     brain[ "F_Mot_EtatDesactiveSauvegarde" ] = &F_Mot_EtatDesactiveSauvegarde;
 
-	//
+    //
     brain[ "F_Automat_GeteEtatPhaseMission" ] = &F_GeteEtatPhaseMission;
     brain[ "F_Automat_SeteEtatPhaseMission" ] = &F_SeteEtatPhaseMission;
     brain[ "F_Automat_GeteEtatLima" ] = &F_GeteEtatLima;
     brain[ "F_Automat_SeteEtatLima" ] = &F_SeteEtatLima;
     brain[ "F_Automat_GeteEtatDec" ] = &F_GeteEtatDec;
     brain[ "F_Automat_SeteEtatDec" ] = &F_SeteEtatDec;
-	//
+    //
     brain[ "F_Automat_GetrDestruction" ] = &F_Automat_GetrDestruction;
     brain[ "F_Automat_SetrDestruction" ] = &F_Automat_SetrDestruction;
     //
-	brain[ "F_Automat_GeteEtatEchelon" ] = &F_GeteEtatEchelon;
+    brain[ "F_Automat_GeteEtatEchelon" ] = &F_GeteEtatEchelon;
     brain[ "F_Automat_SeteEtatEchelon" ] = &F_SeteEtatEchelon;
-	//
+    //
     brain[ "F_Automat_Getfuseau" ] = &F_Automat_Getfuseau;
     brain[ "F_Automat_Setfuseau" ] = &F_Automat_Setfuseau;
     brain[ "F_Automat_Getzone" ] = &F_Automat_Getzone;
@@ -149,7 +149,7 @@ void DEC_CommunicationFunctions::F_SeteEtatDec( DEC_Decision_ABC* pAgent, int va
 // -----------------------------------------------------------------------------
 int DEC_CommunicationFunctions::F_Pion_GeteEtatDecPrudence( DEC_Decision_ABC* pPion )
 {
-	return dynamic_cast< DEC_RolePion_Decision* >( pPion )->GeteEtatDecPrudence();
+    return dynamic_cast< DEC_RolePion_Decision* >( pPion )->GeteEtatDecPrudence();
 }
 
 // -----------------------------------------------------------------------------

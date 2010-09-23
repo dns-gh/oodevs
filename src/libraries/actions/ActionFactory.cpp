@@ -228,7 +228,7 @@ namespace
             }
             catch( ... )
             {
-            	throw TargetNotFound( message.tasker().automat().id() );
+                throw TargetNotFound( message.tasker().automat().id() );
             }
         if( message.tasker().has_population() )
             return entities.GetPopulation( message.tasker().population().id() );

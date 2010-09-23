@@ -79,7 +79,7 @@ public:
     virtual void SeteEtatLima( int value ) = 0;
     virtual int  GeteEtatDec() const = 0;
     virtual void SeteEtatDec( int value ) = 0;
-	virtual int  GeteEtatEchelon() const = 0;
+    virtual int  GeteEtatEchelon() const = 0;
     virtual void SeteEtatEchelon( int value ) = 0;
 
     virtual bool GetbOrdreDecrocher() const = 0;

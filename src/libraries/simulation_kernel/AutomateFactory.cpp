@@ -28,7 +28,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( AutomateFactory )
 AutomateFactory::AutomateFactory( MIL_IDManager& idManager, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
     : idManager_( idManager )
     , database_( database )
-	, gcPause_( gcPause )
+    , gcPause_( gcPause )
     , gcMult_( gcMult )
 {
     //NOTHING

@@ -117,11 +117,11 @@ void DEC_PopulationDecision::EndCleanStateAfterCrash()
 // -----------------------------------------------------------------------------
 void DEC_PopulationDecision::RegisterUserArchetypeFunctions ( directia::brain::Brain& brain )
 {
-	// Knowledge objects
-	brain[ "DEC_IsValidKnowledgeObject" ] = &DEC_PopulationFunctions::IsKnowledgeObjectValid;
+    // Knowledge objects
+    brain[ "DEC_IsValidKnowledgeObject" ] = &DEC_PopulationFunctions::IsKnowledgeObjectValid;
     brain[ "DEC_ObjectKnowledgesInZone" ] = &DEC_PopulationFunctions::GetObjectsInZone;
 
-	// Former szName_, mission_, automate_:
+    // Former szName_, mission_, automate_:
     brain[ "DEC_GetSzName" ] = &DEC_PopulationFunctions::GetSzName;
     brain[ "DEC_GetRawMission" ] = &DEC_PopulationFunctions::GetMission;
 }
@@ -242,152 +242,152 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
 
 int DEC_PopulationDecision::GeteEtatDecPrudence() const
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 void DEC_PopulationDecision::SeteEtatDecPrudence(int value )
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 int DEC_PopulationDecision::GeteEtatNbc() const
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 void DEC_PopulationDecision::SeteEtatNbc(int value )
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 int DEC_PopulationDecision::GeteEtatDestruction() const
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 void DEC_PopulationDecision::SeteEtatDestruction(int value )
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 int DEC_PopulationDecision::GeteEtatFeu() const
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 void DEC_PopulationDecision::SeteEtatFeu(int value )
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 int DEC_PopulationDecision::GeteEtatAmbiance() const
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 void DEC_PopulationDecision::SeteEtatAmbiance(int value )
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 int DEC_PopulationDecision::GeteEtatRadio() const
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 void DEC_PopulationDecision::SeteEtatRadio(int value )
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 int DEC_PopulationDecision::GeteEtatRadar() const
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 void DEC_PopulationDecision::SeteEtatRadar(int value )
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 int DEC_PopulationDecision::GeteEtatDeplacement() const
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 void DEC_PopulationDecision::SeteEtatDeplacement(int value )
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 int DEC_PopulationDecision::GeteEtatOrdreCoordination() const
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 void DEC_PopulationDecision::SeteEtatOrdreCoordination(int value )
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 int DEC_PopulationDecision::GeteConsigneTir() const
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 void DEC_PopulationDecision::SeteConsigneTir(int value )
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 int DEC_PopulationDecision::GeteConsigneTirPopulation() const
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 void DEC_PopulationDecision::SeteConsigneTirPopulation(int value )
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 int DEC_PopulationDecision::GeteEtatSoutien() const
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 void DEC_PopulationDecision::SeteEtatSoutien(int value )
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 int DEC_PopulationDecision::GeteEtatSituationEnnemi() const
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 void DEC_PopulationDecision::SeteEtatSituationEnnemi(int value )
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 int DEC_PopulationDecision::GeteTypeContact() const
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 void DEC_PopulationDecision::SeteTypeContact(int value )
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 int DEC_PopulationDecision::GeteNiveauAction() const
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
 void DEC_PopulationDecision::SeteNiveauAction(int value )
 {
-	throw std::runtime_error( "Invalid call of this Decision class" );
+    throw std::runtime_error( "Invalid call of this Decision class" );
 }
 */
 

@@ -118,7 +118,7 @@ protected:
     virtual void      EndCleanStateAfterCrash      ();
 
     virtual void RegisterUserFunctions( directia::brain::Brain& brain );
-	virtual void RegisterUserArchetypeFunctions( directia::brain::Brain& brain );
+    virtual void RegisterUserArchetypeFunctions( directia::brain::Brain& brain );
     //@}
 
 private:
@@ -151,7 +151,7 @@ private:
     bool                     bOrdreTenirSurLR_;
     bool                     bOrdreTenir_;
 
-	MIL_Fuseau* fuseau_;
+    MIL_Fuseau* fuseau_;
 
 private:
     static int nDIAMissionIdx_; // index de mission_ dans T_Automate

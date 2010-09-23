@@ -49,7 +49,7 @@ MIL_AutomateInjuredHuman::MIL_AutomateInjuredHuman(     const MIL_AutomateTypeIn
                                                         , uint nID, MIL_Formation& parent
                                                         , xml::xistream& xis
                                                         , DEC_DataBase& database
-														, unsigned int gcPause
+                                                        , unsigned int gcPause
                                                         , unsigned int gcMult )
     : MIL_Automate( type, nID, parent, xis, database, gcPause, gcMult )
 {
@@ -64,7 +64,7 @@ MIL_AutomateInjuredHuman::MIL_AutomateInjuredHuman(     const MIL_AutomateTypeIn
                                                         , uint nID, MIL_Automate& parent
                                                         , xml::xistream& xis
                                                         , DEC_DataBase& database
-														, unsigned int gcPause
+                                                        , unsigned int gcPause
                                                         , unsigned int gcMult )
     : MIL_Automate( type, nID, parent, xis, database, gcPause, gcMult )
 {

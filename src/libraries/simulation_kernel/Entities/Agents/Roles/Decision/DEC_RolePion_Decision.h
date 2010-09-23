@@ -78,7 +78,7 @@ public:
 
     virtual const std::string& GetDIAType() const;
 
-	virtual int GetRulesOfEngagementState() const;
+    virtual int GetRulesOfEngagementState() const;
 
     virtual int GeteEtatDec() const;
     virtual void SeteEtatDec( int value );
@@ -170,7 +170,7 @@ protected:
     virtual void EndCleanStateAfterCrash  ();
 
     virtual void RegisterUserFunctions( directia::brain::Brain& brain );
-	virtual void RegisterUserArchetypeFunctions( directia::brain::Brain& brain );
+    virtual void RegisterUserArchetypeFunctions( directia::brain::Brain& brain );
     //@}
 
 private:
@@ -201,7 +201,7 @@ private:
 
     //! @name Checkpoint
     //@{
-	//struct sStates;
+    //struct sStates;
     //@}
 
 private:
@@ -213,25 +213,25 @@ private:
           E_FireAvailability       nIndirectFireAvailability_;
     const PHY_RoePopulation*       pRoePopulation_; //$$$ à déplacer dans Role_Population ?
 
-	int eEtatEchelon_;
-	int eEtatDec_;
-	int eEtatDecPrudence_;
-	int eEtatLima_;
-	int eEtatNbc_;
-	int eEtatDestruction_;
-	int eEtatFeu_;
-	int eEtatAmbiance_;
-	int eEtatRadio_;
-	int eEtatRadar_;
-	int eEtatDeplacement_;
-	int eEtatOrdreCoordination_;
-	int eConsigneTir_;
-	int eConsigneTirPopulation_;
-	int eEtatSoutien_;
-	int eEtatSituationEnnemi_;
-	int eEtatPhaseMission_;
-	int eTypeContact_;
-	int eNiveauAction_;
+    int eEtatEchelon_;
+    int eEtatDec_;
+    int eEtatDecPrudence_;
+    int eEtatLima_;
+    int eEtatNbc_;
+    int eEtatDestruction_;
+    int eEtatFeu_;
+    int eEtatAmbiance_;
+    int eEtatRadio_;
+    int eEtatRadar_;
+    int eEtatDeplacement_;
+    int eEtatOrdreCoordination_;
+    int eConsigneTir_;
+    int eConsigneTirPopulation_;
+    int eEtatSoutien_;
+    int eEtatSituationEnnemi_;
+    int eEtatPhaseMission_;
+    int eTypeContact_;
+    int eNiveauAction_;
 
     bool bOrdreInterrompreMission_;
     bool bOrdreDecrocher_;

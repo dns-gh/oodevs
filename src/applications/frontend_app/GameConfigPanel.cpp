@@ -197,10 +197,10 @@ void GameConfigPanel::Commit( const std::string& exercise, const std::string& se
         action.SetOption( "session/config/simulation/time/@step", stepSpin_->value() );
         action.SetOption( "session/config/simulation/time/@factor", factorSpin_->value() );
 
-		//Réglage des paramètres du GC
+        //Réglage des paramètres du GC
         action.SetOption( "session/config/simulation/GarbageCollector/@setpause"  , 100 );
-		action.SetOption( "session/config/simulation/GarbageCollector/@setstepmul"  , 100 );
-		//
+        action.SetOption( "session/config/simulation/GarbageCollector/@setstepmul"  , 100 );
+        //
 
         action.SetOption( "session/config/simulation/pathfinder/@threads", pathThreads_->value() );
         action.SetOption( "session/config/simulation/hla/@enabled", false ); // $$$$ AGE 2007-10-09:

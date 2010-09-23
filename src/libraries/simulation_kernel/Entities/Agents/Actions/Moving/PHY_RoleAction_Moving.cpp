@@ -472,8 +472,8 @@ void PHY_RoleAction_Moving::NotifyCurrentPathChanged()
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Moving::SetSpeedModificator( double rFactor )
 {
-	assert( rFactor > 0 && rFactor <= 1 ); // ...l/bms/sources/Common/Pions/Actions/Actions - Dep.bms:170: in function <...l/bms/sources/Common/Pions/Actions/Actions - Dep.bms:140
-	rSpeedModificator_ = rFactor;
+    assert( rFactor > 0 && rFactor <= 1 ); // ...l/bms/sources/Common/Pions/Actions/Actions - Dep.bms:170: in function <...l/bms/sources/Common/Pions/Actions/Actions - Dep.bms:140
+    rSpeedModificator_ = rFactor;
 }
 
 // -----------------------------------------------------------------------------
@@ -482,7 +482,7 @@ void PHY_RoleAction_Moving::SetSpeedModificator( double rFactor )
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Moving::SetMaxSpeedModificator( double rFactor )
 {
-	assert( rFactor > 0 && rFactor <= 1 ); // ...l/bms/sources/Common/Pions/Actions/Actions - Dep.bms:141: in function <...l/bms/sources/Common/Pions/Actions/Actions - Dep.bms:140
+    assert( rFactor > 0 && rFactor <= 1 ); // ...l/bms/sources/Common/Pions/Actions/Actions - Dep.bms:141: in function <...l/bms/sources/Common/Pions/Actions/Actions - Dep.bms:140
     rMaxSpeedModificator_ = rFactor;
 }
 

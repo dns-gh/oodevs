@@ -150,9 +150,9 @@ protected:
     void StopMission( const std::string& strBehavior );
 
     virtual void EndCleanStateAfterCrash  () = 0;
-	void RegisterDebugFunctions( directia::brain::Brain& brain, unsigned int id );
+    void RegisterDebugFunctions( directia::brain::Brain& brain, unsigned int id );
     virtual void RegisterUserFunctions( directia::brain::Brain& brain ) = 0;
-	virtual void RegisterUserArchetypeFunctions ( directia::brain::Brain& brain ) = 0;
+    virtual void RegisterUserArchetypeFunctions ( directia::brain::Brain& brain ) = 0;
 
     template< typename FunctionType >
     void RegisterFunction( const std::string& strFunctionName, FunctionType function )
@@ -176,7 +176,7 @@ protected:
     boost::shared_ptr< MIL_Mission_ABC > pMission_;
     std::string                     diaType_;
     DEC_DataBase&                   database_;
-	unsigned int                    gcPause_;
+    unsigned int                    gcPause_;
     unsigned int                    gcMult_;
     //@}
 

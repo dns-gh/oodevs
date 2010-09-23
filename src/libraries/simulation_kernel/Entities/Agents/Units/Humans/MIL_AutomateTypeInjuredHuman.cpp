@@ -59,7 +59,7 @@ MIL_Automate& MIL_AutomateTypeInjuredHuman::InstanciateAutomate( uint nID
                                                                 , MIL_Formation& parent
                                                                 , xml::xistream& xis
                                                                 , DEC_DataBase& database
-																, unsigned int gcPause
+                                                                , unsigned int gcPause
                                                                 , unsigned int gcMult ) const
 {
     return *new MIL_AutomateInjuredHuman( *this, nID, parent, xis, database, gcPause, gcMult );
@@ -73,7 +73,7 @@ MIL_Automate& MIL_AutomateTypeInjuredHuman::InstanciateAutomate( uint nID
                                                                 , MIL_Automate& parent
                                                                 , xml::xistream& xis
                                                                 , DEC_DataBase& database
-																, unsigned int gcPause
+                                                                , unsigned int gcPause
                                                                 , unsigned int gcMult ) const
 {
     return *new MIL_AutomateInjuredHuman( *this, nID, parent, xis, database, gcPause, gcMult );

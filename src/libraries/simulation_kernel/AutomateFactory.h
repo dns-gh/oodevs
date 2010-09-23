@@ -51,7 +51,7 @@ private:
 private:
     //! @name Member data
     //@{
-	unsigned int gcPause_;
+    unsigned int gcPause_;
     unsigned int gcMult_;
     MIL_IDManager& idManager_;
     DEC_DataBase& database_;
