@@ -38,7 +38,7 @@
         <mission name="MELEE Tenir"/>
         <mission name="STABILISATION Animer Poste De Controle"/>
       </missions>
-      <fragorders>
+      <fragorders> 
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
         <fragorder name="Passer En Silence Radio Total"/>
@@ -6487,6 +6487,7 @@
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre en compte Prisonniers"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="MELEE Attaquer"/>
         <mission name="MELEE Controler Secteur"/>
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Fixer"/>
