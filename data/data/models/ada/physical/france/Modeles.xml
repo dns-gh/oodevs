@@ -4,10 +4,7 @@
     <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PlatoonINF">
       <missions>
         <mission name="COMMUNES Decrocher"/>
-        <mission name="COMMUNES Faire Mouvement">
-          <fragorder name="Illuminer"/>
-          <fragorder name="Utiliser ALR"/>
-        </mission>
+        <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
@@ -39,6 +36,8 @@
         <mission name="STABILISATION Animer Poste De Controle"/>
       </missions>
       <fragorders> 
+        <fragorder name="Illuminer"/>
+        <fragorder name="Utiliser ALR"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
         <fragorder name="Passer En Silence Radio Total"/>
