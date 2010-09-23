@@ -48,10 +48,10 @@ ParamLimaList::~ParamLimaList()
 // Name: ParamLimaList::BuildInterface
 // Created: SBO 2007-05-02
 // -----------------------------------------------------------------------------
-void ParamLimaList::BuildInterface( QWidget* parent )
+QWidget* ParamLimaList::BuildInterface( QWidget* parent )
 {
     EnableCreation( false );
-    ListParameter::BuildInterface( parent );
+    return ListParameter::BuildInterface( parent );
 }
 
 // -----------------------------------------------------------------------------

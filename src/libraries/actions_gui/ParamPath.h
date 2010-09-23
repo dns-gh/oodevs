@@ -58,7 +58,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void BuildInterface( QWidget* parent );
+    virtual QWidget* BuildInterface( QWidget* parent );
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& extent, const kernel::GlTools_ABC& tools ) const;
     virtual bool CheckValidity();
     virtual void NotifyContextMenu( const kernel::Nothing&, kernel::ContextMenu& );

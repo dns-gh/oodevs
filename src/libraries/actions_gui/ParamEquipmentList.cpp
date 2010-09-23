@@ -58,7 +58,7 @@ namespace
 // Name: ParamEquipmentList::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-void ParamEquipmentList::BuildInterface( QWidget* parent )
+QWidget* ParamEquipmentList::BuildInterface( QWidget* parent )
 {
     QHBox* hBox = new QHBox( parent );
     {
@@ -95,6 +95,7 @@ void ParamEquipmentList::BuildInterface( QWidget* parent )
         connect( upBtn, SIGNAL( clicked() ), SLOT( OnUp() ) );
         connect( downBtn, SIGNAL( clicked() ), SLOT( OnDown() ) );
     }
+    return hBox;
 }
 
 // -----------------------------------------------------------------------------

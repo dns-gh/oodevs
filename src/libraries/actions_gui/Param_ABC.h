@@ -50,7 +50,7 @@ public:
     virtual void RegisterIn( kernel::ActionController& controller );
 
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual void BuildInterface( QWidget* parent ) = 0;
+    virtual QWidget* BuildInterface( QWidget* parent ) = 0;
     virtual bool CheckValidity();
     virtual void CommitTo( actions::ParameterContainer_ABC& ) const = 0;
     //@}

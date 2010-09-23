@@ -43,7 +43,7 @@ ParamDirection::~ParamDirection()
 // Name: ParamDirection::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-void ParamDirection::BuildInterface( QWidget* parent )
+QWidget* ParamDirection::BuildInterface( QWidget* parent )
 {
     QHBox* box = new QHBox( parent ); // $$$$ SBO 2007-03-16: should be removed... but need some changes in order context interface
     new QLabel( GetName(), box );
@@ -52,6 +52,7 @@ void ParamDirection::BuildInterface( QWidget* parent )
     dial->setMaximumSize( 50, 50 );
     connect( dial, SIGNAL( valueChanged( int ) ), SLOT( OnValueChanged( int ) ) );
     dial->setValue( value_ );
+    return box;
 }
 
 // -----------------------------------------------------------------------------

@@ -43,7 +43,7 @@ ParamDotationDType::~ParamDotationDType()
 // Name: ParamDotationDType::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-void ParamDotationDType::BuildInterface( QWidget* parent )
+QWidget* ParamDotationDType::BuildInterface( QWidget* parent )
 {
     const kernel::Dotations_ABC* dotations = agent_.Retrieve< kernel::Dotations_ABC >();
     if( dotations )
@@ -60,7 +60,7 @@ void ParamDotationDType::BuildInterface( QWidget* parent )
             }
         }
     }
-    ParamComboBox< int /*Common::MsgDotationType*/ >::BuildInterface( parent );
+    return ParamComboBox< int /*Common::MsgDotationType*/ >::BuildInterface( parent );
 }
 
 // -----------------------------------------------------------------------------

@@ -36,10 +36,10 @@ EntityListParameterBase::~EntityListParameterBase()
 // Name: EntityListParameterBase::BuildInterface
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void EntityListParameterBase::BuildInterface( QWidget* parent )
+QWidget* EntityListParameterBase::BuildInterface( QWidget* parent )
 {
     EnableCreation( false );
-    ListParameter::BuildInterface( parent );
+    return ListParameter::BuildInterface( parent );
 }
 
 // -----------------------------------------------------------------------------

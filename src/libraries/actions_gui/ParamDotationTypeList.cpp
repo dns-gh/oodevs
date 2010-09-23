@@ -44,7 +44,7 @@ ParamDotationTypeList::~ParamDotationTypeList()
 // Name: ParamDotationTypeList::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-void ParamDotationTypeList::BuildInterface( QWidget* parent )
+QWidget* ParamDotationTypeList::BuildInterface( QWidget* parent )
 {
     list_ = new QListView( parent );
     list_->setRootIsDecorated( true );
@@ -64,6 +64,7 @@ void ParamDotationTypeList::BuildInterface( QWidget* parent )
     }
 
     connect( list_, SIGNAL( clicked( QListViewItem* ) ), SLOT( Clicked( QListViewItem* ) ) );
+    return list_;
 }
 
 // -----------------------------------------------------------------------------

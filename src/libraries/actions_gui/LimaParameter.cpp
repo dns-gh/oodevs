@@ -58,7 +58,7 @@ bool LimaParameter::CheckValidity()
 // Name: LimaParameter::BuildInterface
 // Created: SBO 2007-05-02
 // -----------------------------------------------------------------------------
-void LimaParameter::BuildInterface( QWidget* parent )
+QWidget* LimaParameter::BuildInterface( QWidget* parent )
 {
     QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, GetName(), parent );
     new QLabel( tools::translate( "LimaParameter", "Line" ), group );
@@ -75,6 +75,7 @@ void LimaParameter::BuildInterface( QWidget* parent )
     functions_->setFixedSize( 150, functions_->itemHeight( 0 ) * 4 );
     schedule_ = new ParamDateTime( this, tools::translate( "LimaParameter", "Schedule" ), currentDate_, true ); // $$$$ SBO 2007-05-14: optional
     schedule_->BuildInterface( group );
+    return group;
 }
 
 // -----------------------------------------------------------------------------

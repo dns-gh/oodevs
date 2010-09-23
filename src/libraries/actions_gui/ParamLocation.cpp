@@ -53,7 +53,7 @@ ParamLocation::~ParamLocation()
 // Name: ParamLocation::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-void ParamLocation::BuildInterface( QWidget* parent )
+QWidget* ParamLocation::BuildInterface( QWidget* parent )
 {
     QHBox* box = new QHBox( parent );
     box->setSpacing( 5 );
@@ -64,6 +64,7 @@ void ParamLocation::BuildInterface( QWidget* parent )
     pShapeLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
     creator_ = new ::gui::LocationCreator( box, GetName(), layer_, *this );
     SetShapeFilter( filter_.point_, filter_.line_, filter_.polygon_, filter_.circle_, filter_.rectangle_ );
+    return box;
 }
 
 // -----------------------------------------------------------------------------

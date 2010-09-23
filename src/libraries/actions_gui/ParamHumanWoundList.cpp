@@ -45,7 +45,7 @@ ParamHumanWoundList::~ParamHumanWoundList()
 // Name: ParamHumanWoundList::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-void ParamHumanWoundList::BuildInterface( QWidget* parent )
+QWidget* ParamHumanWoundList::BuildInterface( QWidget* parent )
 {
     QHBox* hBox = new QHBox( parent );
     list_ = new QListView( hBox );
@@ -66,6 +66,7 @@ void ParamHumanWoundList::BuildInterface( QWidget* parent )
     connect( upBtn, SIGNAL( clicked() ), SLOT( OnUp() ) );
     connect( downBtn, SIGNAL( clicked() ), SLOT( OnDown() ) );
     connect( list_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnContextMenu( QListViewItem*, const QPoint&, int ) ) );
+    return hBox;
 }
 
 // -----------------------------------------------------------------------------

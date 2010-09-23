@@ -46,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void BuildInterface( QWidget* parent );
+    virtual QWidget* BuildInterface( QWidget* parent );
     //@}
 
 protected:

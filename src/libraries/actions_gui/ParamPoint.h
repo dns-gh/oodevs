@@ -52,7 +52,7 @@ public:
     virtual bool CheckValidity();
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& );
-    virtual void BuildInterface( QWidget* parent );
+    virtual QWidget* BuildInterface( QWidget* parent );
     //@}
 
 private slots:

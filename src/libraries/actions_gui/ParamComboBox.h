@@ -39,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void BuildInterface( QWidget* parent );
+    virtual QWidget* BuildInterface( QWidget* parent );
     void AddItem( const QString& name, T value );
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     T GetValue() const;
@@ -99,7 +99,7 @@ ParamComboBox<T>::~ParamComboBox()
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
 template< typename T >
-void ParamComboBox<T>::BuildInterface( QWidget* parent )
+QWidget* ParamComboBox<T>::BuildInterface( QWidget* parent )
 {
     QHBox* box = new QHBox( parent );
     box->setSpacing( 5 );
@@ -109,6 +109,7 @@ void ParamComboBox<T>::BuildInterface( QWidget* parent )
     comboBox_->setSorting( true );
     for( T_Values::const_iterator it = values_.begin(); it != values_.end(); ++it )
         comboBox_->AddItem( it->first, it->second );
+    return box;
 }
 
 // -----------------------------------------------------------------------------

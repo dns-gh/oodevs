@@ -51,7 +51,7 @@ public:
     //@{
     virtual void Show();
     virtual void Hide();
-    virtual void BuildInterface( QWidget* parent );
+    virtual QWidget* BuildInterface( QWidget* parent );
     //@}
 
 private slots:

@@ -67,7 +67,7 @@ bool ListParameter::CheckValidity()
 // Name: ListParameter::BuildInterface
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-void ListParameter::BuildInterface( QWidget* parent )
+QWidget* ListParameter::BuildInterface( QWidget* parent )
 {
     QVBox* box = new QVBox( parent );
     list_ = new QListView( box );
@@ -76,6 +76,7 @@ void ListParameter::BuildInterface( QWidget* parent )
     list_->setResizeMode( QListView::LastColumn );
     connect( list_, SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChanged( QListViewItem* ) ) );
     connect( list_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
+    return box;
 }
 
 // -----------------------------------------------------------------------------

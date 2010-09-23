@@ -45,7 +45,7 @@ ParamAtlasNature::~ParamAtlasNature()
 // Name: ParamAtlasNature::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-void ParamAtlasNature::BuildInterface( QWidget* parent )
+QWidget* ParamAtlasNature::BuildInterface( QWidget* parent )
 {
     QButtonGroup* group = new QButtonGroup( 2, Qt::Horizontal, GetName(), parent );
     tools::Iterator< const kernel::AtlasNature& > it( natures_.CreateIterator() );
@@ -56,6 +56,7 @@ void ParamAtlasNature::BuildInterface( QWidget* parent )
         fields_.push_back( &nature );
     }
     connect( group, SIGNAL( clicked( int ) ), SLOT( OnClicked( int ) ) );
+    return group;
 }
 
 // -----------------------------------------------------------------------------

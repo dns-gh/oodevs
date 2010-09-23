@@ -53,7 +53,7 @@ ParamPath::~ParamPath()
 // Name: ParamPath::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-void ParamPath::BuildInterface( QWidget* parent )
+QWidget* ParamPath::BuildInterface( QWidget* parent )
 {
     QHBox* box = new QHBox( parent );
     box->setSpacing( 5 );
@@ -62,6 +62,7 @@ void ParamPath::BuildInterface( QWidget* parent )
     pPosLabel_->setMinimumWidth( 100 );
     pPosLabel_->setAlignment( Qt::AlignCenter );
     pPosLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
+    return box;
 }
 
 // -----------------------------------------------------------------------------

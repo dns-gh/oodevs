@@ -54,7 +54,7 @@ public:
     virtual void RemoveFromController();
     virtual void RegisterIn( kernel::ActionController& controller );
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& extent, const kernel::GlTools_ABC& tools ) const;
-    virtual void BuildInterface( QWidget* parent );
+    virtual QWidget* BuildInterface( QWidget* parent );
     virtual bool CheckValidity();
     virtual void Handle( kernel::Location_ABC& location );
     void SetShapeFilter( bool point, bool line, bool polygon, bool circle, bool rectangle );

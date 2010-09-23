@@ -43,7 +43,7 @@ ParamNumericField::~ParamNumericField()
 // Name: ParamNumericField::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-void ParamNumericField::BuildInterface( QWidget* parent )
+QWidget* ParamNumericField::BuildInterface( QWidget* parent )
 {
     QHBox* box = new QHBox( parent );
     box->setSpacing( 5 );
@@ -51,6 +51,7 @@ void ParamNumericField::BuildInterface( QWidget* parent )
     pLabel_->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     pEdit_ = new QLineEdit( "0", box );
     SetLimits( 0.f, 99999.f );
+    return box;
 }
 
 // -----------------------------------------------------------------------------

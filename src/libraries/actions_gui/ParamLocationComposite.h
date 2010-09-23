@@ -13,6 +13,8 @@
 #include "Param_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 
+class QWidgetStack;
+
 namespace actions
 {
     class Parameter_ABC;
@@ -43,7 +45,7 @@ public:
     virtual void RegisterIn( kernel::ActionController& controller );
 
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual void BuildInterface( QWidget* parent );
+    virtual QWidget* BuildInterface( QWidget* parent );
     virtual bool CheckValidity();
     virtual void CommitTo( actions::ParameterContainer_ABC& container ) const;
     //@}
@@ -72,6 +74,8 @@ private:
     //@{
     const kernel::OrderParameter& parameter_;
     std::vector<Param_ABC*> params_;
+    std::vector<QWidget*> widgets_;
+    QWidgetStack* stack_;
     Param_ABC* selectedParam_;
     //@}
 };

@@ -50,7 +50,7 @@ LimitParameter::~LimitParameter()
 // Name: LimitParameter::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-void LimitParameter::BuildInterface( QWidget* parent )
+QWidget* LimitParameter::BuildInterface( QWidget* parent )
 {
     QHBox* box = new QHBox( parent );
     box->setSpacing( 5 );
@@ -59,6 +59,7 @@ void LimitParameter::BuildInterface( QWidget* parent )
     entityLabel_->setMinimumWidth( 100 );
     entityLabel_->setAlignment( Qt::AlignCenter );
     entityLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
+    return box;
 }
 
 // -----------------------------------------------------------------------------

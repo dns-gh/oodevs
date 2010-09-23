@@ -49,7 +49,7 @@ ParamPoint::~ParamPoint()
 // Name: ParamPoint::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-void ParamPoint::BuildInterface( QWidget* parent )
+QWidget* ParamPoint::BuildInterface( QWidget* parent )
 {
     QHBox* box = new QHBox( parent );
     box->setSpacing( 5 );
@@ -58,6 +58,7 @@ void ParamPoint::BuildInterface( QWidget* parent )
     pPosLabel_->setMinimumWidth( 100 );
     pPosLabel_->setAlignment( Qt::AlignCenter );
     pPosLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
+    return box;
 }
 
 // -----------------------------------------------------------------------------

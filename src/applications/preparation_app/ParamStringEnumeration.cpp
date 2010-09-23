@@ -44,11 +44,12 @@ ParamStringEnumeration::~ParamStringEnumeration()
 // Name: ParamStringEnumeration::BuildInterface
 // Created: SBO 2009-08-05
 // -----------------------------------------------------------------------------
-void ParamStringEnumeration::BuildInterface( QWidget* parent )
+QWidget* ParamStringEnumeration::BuildInterface( QWidget* parent )
 {
     StringQVButtonGroup* group = new StringQVButtonGroup( title_, parent );
     std::for_each( values_.begin(), values_.end(), boost::bind( &ParamStringEnumeration::AddItem, this, boost::ref( group ), _1 ) );
     connect( group, SIGNAL( clicked( const std::string& ) ), SLOT( OnToggle( const std::string& ) ) );
+    return group;
 }
 
 // -----------------------------------------------------------------------------

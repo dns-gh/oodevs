@@ -60,7 +60,7 @@ ParamObstacle::~ParamObstacle()
 // Name: ParamObstacle::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-void ParamObstacle::BuildInterface( QWidget* parent )
+QWidget* ParamObstacle::BuildInterface( QWidget* parent )
 {
     QGroupBox* group = new QGroupBox( 1, Qt::Horizontal, GetName(), parent );
     QHBox* box = new QHBox( group );
@@ -99,6 +99,7 @@ void ParamObstacle::BuildInterface( QWidget* parent )
 
     connect( typeCombo_, SIGNAL( activated( int ) ), SLOT( OnTypeChanged() ) );
     OnTypeChanged();
+    return group;
 }
 
 // -----------------------------------------------------------------------------

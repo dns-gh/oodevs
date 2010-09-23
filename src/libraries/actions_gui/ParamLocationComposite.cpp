@@ -10,6 +10,8 @@
 #include "actions_gui_pch.h"
 #include "ParamLocationComposite.h"
 #include "InterfaceBuilder_ABC.h"
+#include <Qt/QWidgetStack.h>
+class QWidget;
 
 using namespace actions::gui;
 
@@ -97,10 +99,12 @@ void ParamLocationComposite::Draw( const geometry::Point2f& point, const kernel:
 // Name: ParamLocationComposite::BuildInterface
 // Created: LDC 2010-08-18
 // -----------------------------------------------------------------------------
-void ParamLocationComposite::BuildInterface( QWidget* parent )
+QWidget* ParamLocationComposite::BuildInterface( QWidget* parent )
 {
+    stack_ = new QWidgetStack( parent );
     for( CIT_Params it = params_.begin(); it != params_.end(); ++it )
-        (*it)->BuildInterface( parent );
+        widgets_.push_back( (*it)->BuildInterface( stack_ ) );
+    return stack_;
 }
 
 // -----------------------------------------------------------------------------
@@ -133,5 +137,15 @@ void ParamLocationComposite::CommitTo( actions::ParameterContainer_ABC& containe
 void ParamLocationComposite::NotifyChanged( Param_ABC& param )
 {
     selectedParam_ = &param;
+    std::vector<Param_ABC*>::const_iterator it = params_.begin();
+    std::vector<QWidget*>::const_iterator itWidget = widgets_.begin();
+    for( ; it != params_.end(); ++it, ++itWidget )
+    {
+        if( selectedParam_ == *it )
+        {
+            stack_->raiseWidget( *itWidget );
+            break;
+        }
+    }
 }
 

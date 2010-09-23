@@ -55,12 +55,15 @@ ParamDateTime::~ParamDateTime()
 // Name: ParamDateTime::BuildInterface
 // Created: SBO 2007-05-14
 // -----------------------------------------------------------------------------
-void ParamDateTime::BuildInterface( QWidget* parent )
+QWidget* ParamDateTime::BuildInterface( QWidget* parent )
 {
-    new QLabel( GetName(), parent );
-    QDateTimeEdit* edit = new QDateTimeEdit( parent );
+    QHBox* box = new QHBox( parent );
+    box->setSpacing( 5 );
+    new QLabel( GetName(), box );
+    QDateTimeEdit* edit = new QDateTimeEdit( box );
     edit->setDateTime( date_ );
     connect( edit, SIGNAL( valueChanged( const QDateTime& ) ), SLOT( OnChanged( const QDateTime& ) ) );
+    return box;
 }
 
 // -----------------------------------------------------------------------------

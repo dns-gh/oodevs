@@ -42,11 +42,12 @@ ParamBool::~ParamBool()
 // Name: ParamBool::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-void ParamBool::BuildInterface( QWidget* parent )
+QWidget* ParamBool::BuildInterface( QWidget* parent )
 {
     QCheckBox* checkBox = new QCheckBox( GetName(), parent );
     checkBox->setChecked( value_ );
     connect( checkBox, SIGNAL( clicked() ), SLOT( OnClicked() ) );
+    return checkBox;
 }
 
 // -----------------------------------------------------------------------------

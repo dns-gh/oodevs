@@ -51,7 +51,7 @@ ParamUrbanBlock::~ParamUrbanBlock()
 // Name: ParamUrbanBlock::BuildInterface
 // Created: MGD 2009-11-03
 // -----------------------------------------------------------------------------
-void ParamUrbanBlock::BuildInterface( QWidget* parent )
+QWidget* ParamUrbanBlock::BuildInterface( QWidget* parent )
 {
     QHBox* box = new QHBox( parent );
     box->setSpacing( 5 );
@@ -60,6 +60,7 @@ void ParamUrbanBlock::BuildInterface( QWidget* parent )
     pBlockLabel_->setMinimumWidth( 100 );
     pBlockLabel_->setAlignment( Qt::AlignCenter );
     pBlockLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
+    return box;
 }
 
 // -----------------------------------------------------------------------------

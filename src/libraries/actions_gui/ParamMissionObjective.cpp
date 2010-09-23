@@ -74,13 +74,14 @@ void ParamMissionObjective::Draw( const geometry::Point2f& point, const kernel::
 // Name: ParamMissionObjective::BuildInterface
 // Created: SBO 2007-05-14
 // -----------------------------------------------------------------------------
-void ParamMissionObjective::BuildInterface( QWidget* parent )
+QWidget* ParamMissionObjective::BuildInterface( QWidget* parent )
 {
     QGroupBox* group = new QGroupBox( 1, Qt::Horizontal, GetName(), parent );
     location_ = new ParamLocation( kernel::OrderParameter( tools::translate( "ParamMissionObjective", "Location" ).ascii(), "location", false ), layer_, converter_ );
     location_->BuildInterface( group );
     schedule_ = new ParamDateTime( group, tools::translate( "ParamMissionObjective", "Schedule" ).ascii(), currentDate_, true ); // $$$$ SBO 2007-05-14: optional?
     schedule_->BuildInterface( group );
+    return group;
 }
 
 // -----------------------------------------------------------------------------
