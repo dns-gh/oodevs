@@ -51,6 +51,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -106,6 +107,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -159,6 +161,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -193,6 +196,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -252,6 +256,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -291,6 +296,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -334,6 +340,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -369,6 +376,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -397,6 +405,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -424,6 +433,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -458,6 +468,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -489,6 +500,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -520,6 +532,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -564,6 +577,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -607,6 +621,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -649,6 +664,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -690,6 +706,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -729,6 +746,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -774,6 +792,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -815,6 +834,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -857,6 +877,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -898,6 +919,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -934,6 +956,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -970,6 +993,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -1006,6 +1030,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -1060,6 +1085,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -1096,6 +1122,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -1133,6 +1160,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -1170,6 +1198,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -1207,6 +1236,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -1244,6 +1274,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -1281,6 +1312,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -1318,6 +1350,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -1356,6 +1389,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -1394,6 +1428,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -1431,6 +1466,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -1468,6 +1504,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -1505,6 +1542,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -1544,6 +1582,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -1582,6 +1621,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -1619,6 +1659,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -1656,6 +1697,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -1693,6 +1735,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -1765,6 +1808,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -1806,6 +1850,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -1847,6 +1892,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -1887,6 +1933,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -1926,6 +1973,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -1968,6 +2016,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -2036,6 +2085,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -2108,6 +2158,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -2151,6 +2202,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -2200,6 +2252,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -2247,6 +2300,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -2284,6 +2338,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -2320,6 +2375,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -2357,6 +2413,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -2393,6 +2450,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -2431,6 +2489,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -2469,6 +2528,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -2506,6 +2566,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -2542,6 +2603,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -2582,6 +2644,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -2626,6 +2689,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -2673,6 +2737,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -2715,6 +2780,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -2761,6 +2827,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -2804,6 +2871,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -2846,6 +2914,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -2888,6 +2957,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -2936,6 +3006,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -2970,6 +3041,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3007,6 +3079,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3043,6 +3116,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3079,6 +3153,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3119,6 +3194,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3161,6 +3237,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3198,6 +3275,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3240,6 +3318,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3277,6 +3356,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3319,6 +3399,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3356,6 +3437,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3398,6 +3480,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3435,6 +3518,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3472,6 +3556,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3509,6 +3594,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3546,6 +3632,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3583,6 +3670,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3620,6 +3708,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3657,6 +3746,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3694,6 +3784,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3731,6 +3822,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3768,6 +3860,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3805,6 +3898,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3842,6 +3936,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3878,6 +3973,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3912,6 +4008,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3942,6 +4039,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -3976,6 +4074,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4002,6 +4101,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4036,6 +4136,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4062,6 +4163,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4096,6 +4198,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4132,6 +4235,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4168,6 +4272,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4205,6 +4310,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4241,6 +4347,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4278,6 +4385,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4324,6 +4432,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4358,6 +4467,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4400,6 +4510,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4437,6 +4548,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4474,6 +4586,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4511,6 +4624,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4548,6 +4662,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4585,6 +4700,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4615,6 +4731,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4643,6 +4760,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4671,6 +4789,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4699,6 +4818,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4727,6 +4847,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4765,6 +4886,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4806,6 +4928,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4841,6 +4964,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4882,6 +5006,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4923,6 +5048,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4957,6 +5083,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4995,6 +5122,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -5053,6 +5181,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -5119,6 +5248,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -5155,6 +5285,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -5200,6 +5331,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -5241,6 +5373,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -5280,6 +5413,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -5334,6 +5468,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -5370,6 +5505,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -5409,6 +5545,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -5449,6 +5586,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -5489,6 +5627,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -5528,6 +5667,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -5564,6 +5704,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -5606,6 +5747,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -5647,6 +5789,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -5684,6 +5827,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -5721,6 +5865,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -5758,6 +5903,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -5799,6 +5945,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -5837,6 +5984,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -5873,6 +6021,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -5910,6 +6059,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -5976,6 +6126,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -6017,6 +6168,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -6056,6 +6208,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -6095,6 +6248,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -6132,6 +6286,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -6169,6 +6324,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -6205,6 +6361,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -6246,6 +6403,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -6289,6 +6447,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -6327,6 +6486,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -6358,6 +6518,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -6409,6 +6570,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -6464,6 +6626,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>

@@ -2018,12 +2018,15 @@
     <fragorder available-without-mission="true" dia-type="net.masagroup.sword.france.military.platoon.tasks.Observer" id="390" name="Pion Observer">
       <parameter dia-name="pointCible_" name="Objectif" optional="false" type="PointBM"/>
     </fragorder>
-    <fragorder available-without-mission="false" dia-type="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AppliquerFeux" id="391" name="Appliquer les feux">
+    <fragorder available-without-mission="true" dia-type="net.masagroup.sword.france.military.platoon.tasks.Orienter" id="391" name="Pion Orienter Capteurs">
+      <parameter dia-name="pointCible_" name="Objectif" optional="false" type="PointBM"/>
+    </fragorder>
+    <fragorder available-without-mission="false" dia-type="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AppliquerFeux" id="392" name="Appliquer les feux">
       <parameter dia-name="munitions_" name="Munitions" optional="false" type="DotationType"/>
       <parameter dia-name="nbIT_" name="Intervention Type" optional="false" type="Numeric"/>
       <parameter dia-name="pointCible_" name="Cible" optional="false" type="PointBM"/>
     </fragorder>
-    <fragorder available-without-mission="false" dia-type="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AppliquerFeux" id="392" name="Appliquer les feux guidés">
+    <fragorder available-without-mission="false" dia-type="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AppliquerFeux" id="393" name="Appliquer les feux guidés">
       <parameter dia-name="munitions_" name="Munitions" optional="false" type="DotationType"/>
       <parameter dia-name="nbIT_" name="Intervention Type" optional="false" type="Numeric"/>
       <parameter dia-name="agentKnowledge_" name="Cible" optional="false" type="AgentKnowledgeBM"/>
