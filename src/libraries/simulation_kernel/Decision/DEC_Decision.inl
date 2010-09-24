@@ -44,9 +44,9 @@ DEC_Decision<T>::~DEC_Decision()
 
 namespace DEC_DecisionImpl
 {
-    void RegisterCommonUserFunctions( directia::brain::Brain& brain /*, unsigned int id*/ );
-    void RegisterMissionParameters( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const boost::shared_ptr< MIL_Mission_ABC > mission );
-    bool CreateBrain( boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, boost::shared_ptr< directia::brain::Brain >& pBrain, const std::string& includePath, const std::string& brainFile );
+    void RegisterCommonUserFunctions( directia::brain::Brain& brain , bool isMasalife );
+    void RegisterMissionParameters( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const boost::shared_ptr< MIL_Mission_ABC > mission, bool isMasalife );
+    bool CreateBrain( boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, boost::shared_ptr< directia::brain::Brain >& pBrain, const std::string& includePath, const std::string& brainFile, bool& isMasalife );
     void IncludeFile( directia::brain::Brain& brain, const std::string& brainFile ,const std::string& includePath,const std::string& type,const std::string& groupName );
 }
 
@@ -77,11 +77,11 @@ void DEC_Decision<T>::InitBrain( const std::string& brainFile, const std::string
     pRefs_.reset( 0 );//Must delete ScriptRef before call Brain destructor and destroy vm
     boost::shared_ptr< directia::brain::Brain > pArchetypeBrain;
 
-    bool newBrain = DEC_DecisionImpl::CreateBrain(pArchetypeBrain, pBrain_, includePath_, brainFile );
+    bool newBrain = DEC_DecisionImpl::CreateBrain( pArchetypeBrain, pBrain_, includePath_, brainFile, isMasalife_ );
 
 	if( newBrain )
 	{
-		DEC_DecisionImpl::RegisterCommonUserFunctions( *pArchetypeBrain );
+		DEC_DecisionImpl::RegisterCommonUserFunctions( *pArchetypeBrain, isMasalife_ );
 		RegisterUserArchetypeFunctions( *pArchetypeBrain );
 	}
     
@@ -279,7 +279,7 @@ void DEC_Decision<T>::ActivateOrder( const std::string& strBehavior, const boost
     // Register mission parameters in the brain...
     directia::tools::binders::ScriptRef refMission( *pBrain_ );
     refMission = pMission_;
-    DEC_DecisionImpl::RegisterMissionParameters( *pBrain_, pRefs_->initTaskParameter_, refMission, pMission_ );
+    DEC_DecisionImpl::RegisterMissionParameters( *pBrain_, pRefs_->initTaskParameter_, refMission, pMission_, isMasalife_ );
     pRefs_->startEvent_( strBehavior, refMission );
 }
 

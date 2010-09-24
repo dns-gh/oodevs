@@ -202,6 +202,7 @@ public:
     T_Mission_Vector&   GetPopulationMissions();
     FragOrder*          FindFragOrder( const std::string& strName );
     Mission*            FindMission( T_Mission_Vector& missions, const std::string& strName );
+    virtual void Load();
     //@}
 
 private:

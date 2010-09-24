@@ -768,360 +768,360 @@
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="LocationComposite"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveAlong" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveAlong" id="2012" name="TEST MoveAlongAgentKnowledgeList">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="AgentKnowledgeBM"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveAlong" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveAlongAgentList" id="2049" name="TEST MoveAlongAgentList">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="AgentBM"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveAlong" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveAlongPointList" id="2055" name="TEST MoveAlongPointList">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="PointBM"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveAlong" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveAlongPolygonList" id="2060" name="TEST MoveAlongPolygonList">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="AreaBM"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveAlong" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveAlongObjectKnowledgeList" id="2066" name="TEST MoveAlongObjectKnowledgeList">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="ObjectKnowledgeBM"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Destroy" dia-type="net.masagroup.sword.test.military.platoon.tasks.Destroy" id="2094" name="TEST DestroyAgents">
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="entities" optional="false" type="AgentKnowledgeBM"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="entities" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.ObserveAndReconnoiter" dia-type="net.masagroup.sword.test.military.platoon.tasks.ObserveAndReconnoiter" id="2014" name="TEST ObserveAndReconnoiterPoint">
-      <parameter dia-name="objectives" name="destination" optional="false" type="PathBM"/>
+      <parameter dia-name="objectives" name="destination" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.ObserveAndReconnoiter" dia-type="T_Mission_Pion_ObserveAndReconnoiterBU" id="2015" name="TEST ObserveAndReconnoiterUrbanBlock">
-      <parameter dia-name="objectives" name="destination" optional="false" type="UrbanBlockBM"/>
+      <parameter dia-name="objectives" name="destination" optional="false" type="UrbanBlock"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.StayClose" dia-type="net.masagroup.sword.test.military.platoon.tasks.StayClose" id="2016" name="TEST StayClose">
-      <parameter dia-name="objective" name="objective" optional="false" type="AgentBM"/>
+      <parameter dia-name="objective" name="objective" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.ObserveToward" dia-type="net.masagroup.sword.test.military.platoon.tasks.ObserveToward" id="2017" name="TEST ObservePoint">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="target" optional="false" type="PointBM"/>
-      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="positions" optional="false" type="PointBM"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="target" optional="false" type="Point"/>
+      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="positions" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.ObserveToward" dia-type="net.masagroup.sword.test.military.platoon.tasks.ObserveTowardAgent" id="2019" name="TEST ObserveAgent">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="target" optional="false" type="AgentKnowledgeBM"/>
-      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="positions" optional="false" type="PointBM"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="target" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="positions" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.NeutralizeAgents" dia-type="net.masagroup.sword.test.military.platoon.tasks.NeutralizeAgents" id="2025" name="TEST NeutralizeAgents">
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="entities" optional="false" type="AgentKnowledgeBM"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="entities" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveAndObserve" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveAndObserve" id="2026" name="TEST MoveAndObserve">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="PointBM"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.SeekAndDestroy" dia-type="net.masagroup.sword.test.military.platoon.tasks.SeekAndDestroy" id="2027" name="TEST SeekAndDestroy">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="PointBM"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.EngageAgents" dia-type="net.masagroup.sword.test.military.platoon.tasks.EngageAgents" id="2029" name="TEST EngageAgents">
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="entities" optional="false" type="AgentKnowledgeBM"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="entities" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.TakeCover" dia-type="net.masagroup.sword.test.military.platoon.tasks.TakeCover" id="2031" name="TEST TakeCover"/>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Flee" dia-type="net.masagroup.sword.test.military.platoon.tasks.Flee" id="2032" name="TEST Flee"/>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.SelfProtect" dia-type="net.masagroup.sword.test.military.platoon.tasks.SelfProtect" id="2033" name="TEST SelfProtect">
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="entities" optional="false" type="AgentKnowledgeBM"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="entities" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Build" dia-type="net.masagroup.sword.test.military.platoon.tasks.Build" id="2034" name="TEST BuildObjects">
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="false" type="GenObjectBM"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="false" type="GenObject"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Valorize" dia-type="net.masagroup.sword.test.military.platoon.tasks.Valorize" id="2035" name="TEST ValorizeObjects">
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="false" type="ObjectKnowledgeBM"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Activate" dia-type="net.masagroup.sword.test.military.platoon.tasks.Activate" id="2037" name="TEST ActivateObjects">
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="false" type="ObjectKnowledgeBM"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Bypass" dia-type="net.masagroup.sword.test.military.platoon.tasks.Bypass" id="2038" name="TEST BypassObjects">
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="false" type="ObjectKnowledgeBM"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveObserveReconnoiter" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveObserveReconnoiter" id="2039" name="TEST MoveObserveReconnoiter">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="destination" optional="false" type="PointBM"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="destination" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Reconnoiter" dia-type="net.masagroup.sword.test.military.platoon.tasks.Reconnoiter" id="2043" name="TEST ReconnoiterPoint">
-      <parameter dia-name="objective" name="objectif" optional="false" type="PointBM"/>
+      <parameter dia-name="objective" name="objectif" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Reconnoiter" dia-type="net.masagroup.sword.test.military.platoon.tasks.ReconnoiterUrbanBlock" id="2044" name="TEST ReconnoiterUrbanBlock">
-      <parameter dia-name="objective" name="objectif" optional="false" type="UrbanBlockBM"/>
+      <parameter dia-name="objective" name="objectif" optional="false" type="UrbanBlock"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Reconnoiter" dia-type="net.masagroup.sword.test.military.platoon.tasks.ReconnoiterArea" id="2042" name="TEST ReconnoiterArea">
-      <parameter dia-name="objective" name="objectif" optional="false" type="AreaBM"/>
+      <parameter dia-name="objective" name="objectif" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Search" dia-type="net.masagroup.sword.test.military.platoon.tasks.Search" id="2098" name="TEST Search">
       <parameter dia-name="objective" name="objectif" optional="false" type="LocationComposite">
         <choice>
-          <parameter type="AreaBM"/>
-          <parameter type="UrbanBlockBM"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanBlock"/>
         </choice>
       </parameter>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Identify" dia-type="net.masagroup.sword.test.military.platoon.tasks.Identify" id="2024" name="TEST IdentifyAgent">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="AgentKnowledgeBM"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.RemoveObstacle" dia-type="net.masagroup.sword.test.military.platoon.tasks.RemoveObstacle" id="2045" name="TEST RemoveObstacle">
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="entities" optional="false" type="ObjectKnowledgeBM"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="entities" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Animate" dia-type="T_Mission_Pion_Animate" id="2048" name="TEST AnimateObjects">
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="entities" optional="false" type="ObjectKnowledgeBM"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="entities" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Support" dia-type="net.masagroup.sword.test.military.platoon.tasks.Support" id="2051" name="TEST Support">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="AgentBM"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Advance" dia-type="net.masagroup.sword.test.military.platoon.tasks.Advance" id="2052" name="TEST Advance">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="PointBM"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.SealOff" dia-type="net.masagroup.sword.test.military.platoon.tasks.SealOff" id="2064" name="TEST Seal Off">
-      <parameter dia-name="objectives" name="objectifs" optional="false" type="AreaBM"/>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="true" type="GenObjectBM"/>
+      <parameter dia-name="objectives" name="objectifs" optional="false" type="Polygon"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="true" type="GenObject"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Control" dia-type="net.masagroup.sword.test.military.platoon.tasks.Control" id="2074" name="TEST Control">
-      <parameter dia-name="objectives" name="zone" optional="false" type="AreaBM"/>
+      <parameter dia-name="objectives" name="zone" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.GetDecon" dia-type="net.masagroup.sword.test.military.platoon.tasks.GetDecon" id="2080" name="TEST GetDecon">
-      <parameter dia-name="objective" name="site de decontamination" optional="false" type="ObjectKnowledgeBM"/>
+      <parameter dia-name="objective" name="site de decontamination" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.GuideAndLoad" dia-type="net.masagroup.sword.test.military.platoon.tasks.GuideAndLoad" id="2081" name="TEST GuideAndLoad">
-      <parameter dia-name="entity" name="unité" optional="false" type="AgentKnowledgeBM"/>
+      <parameter dia-name="entity" name="unité" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Open" dia-type="net.masagroup.sword.test.military.platoon.tasks.Open" id="2082" name="TEST Open">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="itinéraire" optional="false" type="PointBM"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="itinéraire" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.WaitTransport" dia-type="net.masagroup.sword.test.military.platoon.tasks.WaitTransport" id="2088" name="TEST WaitTransport">
-      <parameter dia-name="position" name="Point d'embarquement" optional="false" type="PointBM"/>
+      <parameter dia-name="position" name="Point d'embarquement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Reinforce" dia-type="net.masagroup.sword.test.military.platoon.tasks.Reinforce" id="2103" name="TEST Reinforce">
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="unites à renforcer" optional="false" type="AgentBM"/>
-      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="positions de renforcement" optional="false" type="PointBM"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="unites à renforcer" optional="false" type="Agent"/>
+      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="positions de renforcement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardLima" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveTowardLima" id="2106" name="TEST MoveToWithLima">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="PointBM"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.FaireMouvement" dia-type="net.masagroup.sword.france.military.platoon.tasks.FaireMouvement" id="2046" name="COMMUNES Faire Mouvement">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="PointBM"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Suivre" dia-type="net.masagroup.sword.france.military.platoon.tasks.Suivre" id="2053" name="COMMUNES Suivre">
-      <parameter dia-name="objective" name="Unite a suivre" optional="false" type="AgentBM"/>
+      <parameter dia-name="objective" name="Unite a suivre" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Stationner" dia-type="net.masagroup.sword.france.military.platoon.tasks.Stationner" id="2054" name="COMMUNES Stationner">
-      <parameter dia-name="position" name="Position" optional="false" type="PointBM"/>
+      <parameter dia-name="position" name="Position" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.SeFaireDecontaminer" dia-type="net.masagroup.sword.france.military.platoon.tasks.SeFaireDecontaminer" id="2056" name="COMMUNES Se Faire Decontaminer">
-      <parameter dia-name="objective" name="Site de decontamination" optional="false" type="ObjectKnowledgeBM"/>
-      <parameter dia-name="destination" name="Destination" optional="false" type="PointBM"/>
+      <parameter dia-name="objective" name="Site de decontamination" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="destination" name="Destination" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.SeFaireTransporter" dia-type="net.masagroup.sword.france.military.platoon.tasks.SeFaireTransporter" id="2057" name="COMMUNES Se Faire Transporter">
-      <parameter dia-name="position" name="Point d'embarquement" optional="false" type="PointBM"/>
+      <parameter dia-name="position" name="Point d'embarquement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.OrienterRefugies" dia-type="net.masagroup.sword.france.military.platoon.tasks.OrienterRefugies" id="2058" name="COMMUNES Orienter Refugies">
-      <parameter dia-name="people" name="Refugies" optional="false" type="AgentKnowledgeBM"/>
-      <parameter dia-name="camp" name="Camp de refugies" optional="false" type="ObjectKnowledgeBM"/>
+      <parameter dia-name="people" name="Refugies" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="camp" name="Camp de refugies" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Decrocher" dia-type="net.masagroup.sword.france.military.platoon.tasks.Decrocher" id="2059" name="COMMUNES Decrocher">
-      <parameter dia-name="position" name="Point de regroupement" optional="false" type="PointBM"/>
+      <parameter dia-name="position" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.PrendreEnComptePrisonniers" dia-type="net.masagroup.sword.france.military.platoon.tasks.PrendreEnComptePrisonniers" id="2063" name="COMMUNES Prendre En Compte Prisonniers">
-      <parameter dia-name="people" name="Prisonniers" optional="false" type="AgentKnowledgeBM"/>
-      <parameter dia-name="camp" name="Camp de prisonniers" optional="false" type="ObjectKnowledgeBM"/>
+      <parameter dia-name="people" name="Prisonniers" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="camp" name="Camp de prisonniers" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Franchir" dia-type="net.masagroup.sword.france.military.platoon.tasks.Franchir" id="2071" name="COMMUNES Franchir">
-      <parameter dia-name="crossingSite" name="Site de franchissement" optional="false" type="ObjectKnowledgeBM"/>
-      <parameter dia-name="meetingPoint" name="Point de destination" optional="false" type="PointBM"/>
+      <parameter dia-name="crossingSite" name="Site de franchissement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="meetingPoint" name="Point de destination" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Reconnaitre" dia-type="net.masagroup.sword.france.military.platoon.tasks.Reconnaitre" id="2040" name="MELEE Reconnaitre Itineraire">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Destination" optional="false" type="PointBM"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Destination" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Appuyer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Appuyer" id="2062" name="MELEE Appuyer">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Unites a appuyer" optional="false" type="AgentBM"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Unites a appuyer" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Detruire" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Detruire" id="2013" name="MELEE Detruire">
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles a detruire" optional="false" type="AgentKnowledgeBM"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles a detruire" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Appuyer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Soutenir" id="2095" name="MELEE Soutenir">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Unites a soutenir" optional="false" type="AgentBM"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Unites a soutenir" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Illuminer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Illuminer" id="2065" name="MELEE Illuminer">
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cible" optional="false" type="AgentKnowledgeBM"/>
-      <parameter dia-name="allies" max-occurs="unbounded" min-occurs="1" name="Tireur allie" optional="false" type="AgentBM"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cible" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="allies" max-occurs="unbounded" min-occurs="1" name="Tireur allie" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.military.platoon.terrorism.tasks.Ambush" dia-type="net.masagroup.sword.military.platoon.terrorism.tasks.Ambush" id="2067" name="Embuscade">
-      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions de tir" optional="false" type="PointBM"/>
-      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="PointBM"/>
+      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions de tir" optional="false" type="Point"/>
+      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.CoordinationIlluminationEtTirIndirect" dia-type="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.CoordinationIlluminationEtTirIndirect" id="2068" name="ASS Coordonner le Tir et l'Ilumination">
-      <parameter dia-name="objective" name="Cible" optional="false" type="AgentKnowledgeBM"/>
-      <parameter dia-name="position" name="Position de deploiement du tireur" optional="false" type="PointBM"/>
+      <parameter dia-name="objective" name="Cible" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="position" name="Position de deploiement du tireur" optional="false" type="Point"/>
       <parameter dia-name="munition" name="Munitions" optional="false" type="DotationType"/>
       <parameter dia-name="interventionType" name="Intervention type" optional="false" type="Numeric"/>
-      <parameter dia-name="allie" max-occurs="unbounded" min-occurs="1" name="Illuminateur allie" optional="false" type="AgentBM"/>
+      <parameter dia-name="allie" max-occurs="unbounded" min-occurs="1" name="Illuminateur allie" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Surveiller" dia-type="T_Mission_Pion_SurveillerBU" id="2070" name="MELEE Surveiller">
-      <parameter dia-name="objectives" name="Objectif a surveiller" optional="false" type="UrbanBlockBM"/>
-      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions de surveillance" optional="false" type="PointBM"/>
+      <parameter dia-name="objectives" name="Objectif a surveiller" optional="false" type="UrbanBlock"/>
+      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions de surveillance" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Semparer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Semparer" id="2072" name="MELEE S'emparer De">
       <parameter dia-name="objective" name="Objectif a prendre" optional="false" type="LocationComposite">
         <choice>
-          <parameter type="PointBM"/>
-          <parameter type="AreaBM"/>
-          <parameter type="UrbanBlockBM"/>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanBlock"/>
         </choice>
       </parameter>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Controler" dia-type="net.masagroup.sword.france.military.platoon.tasks.Controler" id="2075" name="MELEE Controler">
-      <parameter dia-name="objectives" name="Zone a controler" optional="false" type="AreaBM"/>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="GenObjectBM"/>
+      <parameter dia-name="objectives" name="Zone a controler" optional="false" type="Polygon"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="GenObject"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.stabilisation.tasks.Boucler" dia-type="net.masagroup.sword..france.military.platoon.stabilisation.tasks.Boucler" id="2102" name="MELEE Boucler">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Zones a boucler" optional="false" type="AreaBM"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Zones a boucler" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Tenir" dia-type="net.masagroup.sword.france.military.platoon.tasks.Tenir" id="2079" name="MELEE Tenir">
       <parameter dia-name="objective" name="Objectif a tenir" optional="false" type="LocationComposite">
         <choice>
-          <parameter type="PointBM"/>
-          <parameter type="AreaBM"/>
-          <parameter type="UrbanBlockBM"/>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanBlock"/>
         </choice>
       </parameter>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="true" type="GenObjectBM"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="true" type="GenObject"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Interdire" dia-type="net.masagroup.sword.france.military.platoon.tasks.Interdire" id="2083" name="MELEE Interdire">
       <parameter dia-name="objectives" name="Objectif a interdire" optional="false" type="LocationComposite">
         <choice>
-          <parameter type="PointBM"/>
-          <parameter type="AreaBM"/>
-          <parameter type="UrbanBlockBM"/>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanBlock"/>
         </choice>
       </parameter>
-      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions d'interdiction" optional="false" type="PointBM"/>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="GenObjectBM"/>
+      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions d'interdiction" optional="false" type="Point"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="GenObject"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Defendre" dia-type="net.masagroup.sword.france.military.platoon.tasks.Defendre" id="2084" name="MELEE Defendre">
       <parameter dia-name="objective" name="Objectif a defendre" optional="false" type="LocationComposite">
         <choice>
-          <parameter type="PointBM"/>
-          <parameter type="AreaBM"/>
-          <parameter type="UrbanBlockBM"/>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanBlock"/>
         </choice>
       </parameter>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="GenObjectBM"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="GenObject"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.ContreAttaquer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.ContreAttaquer" id="2089" name="MELEE Contre Attaquer">
       <parameter dia-name="objective" name="Objectif a contre attaquer" optional="false" type="LocationComposite">
         <choice>
-          <parameter type="PointBM"/>
-          <parameter type="AreaBM"/>
-          <parameter type="UrbanBlockBM"/>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanBlock"/>
         </choice>
       </parameter>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Attaquer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Attaquer" id="2115" name="MELEE Attaquer">
       <parameter dia-name="objective" name="Objectif à attaquer" optional="false" type="LocationComposite">
         <choice>
-          <parameter type="PointBM"/>
-          <parameter type="AreaBM"/>
-          <parameter type="UrbanBlockBM"/>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanBlock"/>
         </choice>
       </parameter>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Neutraliser" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Neutraliser" id="2090" name="MELEE Neutraliser">
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles a neutraliser" optional="false" type="AgentKnowledgeBM"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles a neutraliser" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Ratisser" dia-type="net.masagroup.sword.france.military.platoon.tasks.RatisserBU" id="2091" name="MELEE Ratisser un Bloc Urbain">
-      <parameter dia-name="objective" name="Objectif a ratisser" optional="false" type="UrbanBlockBM"/>
+      <parameter dia-name="objective" name="Objectif a ratisser" optional="false" type="UrbanBlock"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Ratisser" dia-type="net.masagroup.sword.france.military.platoon.tasks.Ratisser" id="2092" name="MELEE Ratisser une Zone">
-      <parameter dia-name="objective" name="Objectif a ratisser" optional="false" type="AreaBM"/>
+      <parameter dia-name="objective" name="Objectif a ratisser" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.ReconnaitreElement" dia-type="net.masagroup.sword.france.military.platoon.tasks.ReconnaitreBU" id="2099" name="MELEE Reconnaitre un Bloc Urbain">
-      <parameter dia-name="objective" name="Objectif" optional="false" type="UrbanBlockBM"/>
+      <parameter dia-name="objective" name="Objectif" optional="false" type="UrbanBlock"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Eclairer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Eclairer" id="2093" name="MELEE Eclairer">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="PointBM"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Harceler" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Harceler" id="2097" name="MELEE Harceler">
-      <parameter dia-name="harassPosition" name="Zone a harceler" optional="false" type="AreaBM"/>
-      <parameter dia-name="observationPosition" name="Position d'observation" optional="false" type="PointBM"/>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="false" type="GenObjectBM"/>
+      <parameter dia-name="harassPosition" name="Zone a harceler" optional="false" type="Polygon"/>
+      <parameter dia-name="observationPosition" name="Position d'observation" optional="false" type="Point"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="false" type="GenObject"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Relever" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Relever" id="2105" name="MELEE Relever">
-      <parameter dia-name="objective" name="unite a relever" optional="false" type="AgentBM"/>
+      <parameter dia-name="objective" name="unite a relever" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Reduire" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Reduire" id="2107" name="MELEE Reduire">
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="cibles" optional="false" type="AgentKnowledgeBM"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="cibles" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Couvrir" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Couvrir" id="2108" name="MELEE Couvrir">
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Unites" optional="false" type="AgentBM"/>
-      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions" optional="false" type="PointBM"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Unites" optional="false" type="Agent"/>
+      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions" optional="false" type="Point"/>
       <parameter dia-name="objectives" name="Objectif" optional="false" type="LocationComposite">
         <choice>
-          <parameter type="PointBM"/>
-          <parameter type="AreaBM"/>
-          <parameter type="UrbanBlockBM"/>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanBlock"/>
         </choice>
       </parameter>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.FlancGarder" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.FlancGarder" id="2109" name="MELEE Flanc-Garder">
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Unites" optional="false" type="AgentBM"/>
-      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions" optional="false" type="PointBM"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Unites" optional="false" type="Agent"/>
+      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions" optional="false" type="Point"/>
       <parameter dia-name="objectives" name="Objectif" optional="false" type="LocationComposite">
         <choice>
-          <parameter type="PointBM"/>
-          <parameter type="AreaBM"/>
-          <parameter type="UrbanBlockBM"/>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanBlock"/>
         </choice>
       </parameter>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Jalonner" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Jalonner" id="2110" name="MELEE Jalonner">
-      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions" optional="false" type="PointBM"/>
+      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Freiner" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Freiner" id="2111" name="MELEE Freiner">
-      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions" optional="false" type="PointBM"/>
+      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" dia-type="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" id="2030" name="ASS Assurer la Mise En Oeuvre">
-      <parameter dia-name="firePositions" max-occurs="unbounded" min-occurs="1" name="Positions de tir" optional="false" type="PointBM"/>
-      <parameter dia-name="safeguardPositions" max-occurs="unbounded" min-occurs="1" name="Positions de sauvegarde" optional="true" type="PointBM"/>
+      <parameter dia-name="firePositions" max-occurs="unbounded" min-occurs="1" name="Positions de tir" optional="false" type="Point"/>
+      <parameter dia-name="safeguardPositions" max-occurs="unbounded" min-occurs="1" name="Positions de sauvegarde" optional="true" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" dia-type="T_Mission_Pion_MiseEnOeuvre" id="2061" name="ASS Deploy">
-      <parameter dia-name="firePositions" max-occurs="unbounded" min-occurs="1" name="Zones de tir" optional="false" type="ObjectKnowledgeBM"/>
-      <parameter dia-name="safeguardPositions" max-occurs="unbounded" min-occurs="1" name="Positions de sauvegarde" optional="true" type="PointBM"/>
+      <parameter dia-name="firePositions" max-occurs="unbounded" min-occurs="1" name="Zones de tir" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="safeguardPositions" max-occurs="unbounded" min-occurs="1" name="Positions de sauvegarde" optional="true" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.OuvrirItineraire" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.OuvrirItineraire" id="2047" name="GENIE OuvrirItineraire">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="PointBM"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.Construire" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.Construire" id="2076" name="GENIE Realiser Travaux">
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Objets a construire" optional="false" type="GenObjectBM"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Objets a construire" optional="false" type="GenObject"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.ConstruireCamps" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.ConstruireCamps" id="2116" name="GENIE Realiser Camps">
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Camps a construire" optional="false" type="GenObjectBM"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Camps a construire" optional="false" type="GenObject"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.ActiverObstacles" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.ActiverObstacles" id="2104" name="GENIE ActiverObstacles">
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="false" type="ObjectKnowledgeBM"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.DegagerObstacles" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.DegagerObstacles" id="2112" name="GENIE Degager Obstacles">
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="obstacles a degager" optional="false" type="ObjectKnowledgeBM"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="obstacles a degager" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.DepolluerZone" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.DepolluerZone" id="2113" name="GENIE Depolluer zone">
-      <parameter dia-name="objective" name="zone a depolluer" optional="false" type="AreaBM"/>
+      <parameter dia-name="objective" name="zone a depolluer" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.ContournerObstacles" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.ContournerObstacles" id="2114" name="GENIE Contourner obstacle">
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="obstacles a contourner" optional="false" type="ObjectKnowledgeBM"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="obstacles a contourner" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.RetablirItineraire" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.RetablirItineraire" id="2117" name="GENIE Retablir Itineraire">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="PointBM"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Animer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Animer" id="2077" name="Animer">
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Objets a animer" optional="false" type="ObjectKnowledgeBM"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Objets a animer" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.military.platoon.stabilisation.tasks.ControlArea" dia-type="net.masagroup.sword.military.platoon.stabilisation.tasks.ControlArea" id="2078" name="ControlArea">
-      <parameter dia-name="objectives" name="area" optional="false" type="AreaBM"/>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="true" type="GenObjectBM"/>
+      <parameter dia-name="objectives" name="area" optional="false" type="Polygon"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="true" type="GenObject"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.stabilisation.AnimerPosteDeControle" dia-type="net.masagroup.sword.france.military.platoon.stabilisation.AnimerPosteDeControle" id="2101" name="STABILISATION Animer Poste De Controle">
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Objets a animer" optional="false" type="GenObjectBM"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Objets a animer" optional="false" type="GenObject"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Fixer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Fixer" id="2085" name="MELEE Fixer unite">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="unites a fixer" optional="false" type="AgentKnowledgeBM"/>
-      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="postions pour fixer" optional="false" type="PointBM"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="unites a fixer" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="postions pour fixer" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.recueillir" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.recueillir" id="2086" name="MELEE Recueillir">
-      <parameter dia-name="objective" name="unite alliée" optional="false" type="AgentBM"/>
-      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="postions pour recueillir" optional="false" type="PointBM"/>
+      <parameter dia-name="objective" name="unite alliée" optional="false" type="Agent"/>
+      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="postions pour recueillir" optional="false" type="Point"/>
     </mission>
   </units>
   <automats>
@@ -1731,89 +1731,89 @@
       <parameter dia-name="ObjectiveList_" max-occurs="unbounded" min-occurs="1" name="ObjectiveListParam" optional="true" type="Objective"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.FaireMouvement" dia-type="net.masagroup.sword.france.military.company.tasks.FaireMouvement" id="1003" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.FaireMouvement" name="COMMUNES FaireMouvement">
-      <parameter dia-name="objectives" name="Itineraire" optional="false" type="PathBM"/>
+      <parameter dia-name="objectives" name="Itineraire" optional="false" type="Path"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Decrocher" dia-type="net.masagroup.sword.france.military.company.tasks.Decrocher" id="1011" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Decrocher" name="COMMUNES Decrocher">
-      <parameter dia-name="objectives" name="Point de regroupement" optional="false" type="PointBM"/>
+      <parameter dia-name="objectives" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Suivre" dia-type="net.masagroup.sword.france.military.company.tasks.Suivre" id="1012" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Suivre" name="COMMUNES Suivre">
-      <parameter dia-name="objective" name="Unite a suivre" optional="false" type="AgentBM"/>
+      <parameter dia-name="objective" name="Unite a suivre" optional="false" type="Agent"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Stationner" dia-type="net.masagroup.sword.france.military.company.tasks.Stationner" id="1013" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Stationner" name="COMMUNES Stationner">
-      <parameter dia-name="objectives" name="Point de stationnement" optional="false" type="PointBM"/>
+      <parameter dia-name="objectives" name="Point de stationnement" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.OrienterRefugies" dia-type="net.masagroup.sword.france.military.company.tasks.OrienterRefugies" id="1014" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.OrienterRefugies" name="COMMUNES Orienter Refugies">
-      <parameter dia-name="people" name="Refugies" optional="false" type="AgentKnowledgeBM"/>
-      <parameter dia-name="camp" name="Camp de refugies" optional="false" type="ObjectKnowledgeBM"/>
+      <parameter dia-name="people" name="Refugies" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="camp" name="Camp de refugies" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.PrendreEnComptePrisonniers" dia-type="net.masagroup.sword.france.military.company.tasks.PrendreEnComptePrisonniers" id="1015" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.PrendreEnComptePrisonniers" name="COMMUNES Prendre en compte Prisonniers">
-      <parameter dia-name="people" name="Prisonniers" optional="false" type="AgentKnowledgeBM"/>
-      <parameter dia-name="camp" name="Camp de prisonniers" optional="false" type="ObjectKnowledgeBM"/>
+      <parameter dia-name="people" name="Prisonniers" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="camp" name="Camp de prisonniers" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeFaireDecontaminer" dia-type="net.masagroup.sword.france.military.company.tasks.SeFaireDecontaminer" id="1016" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeFaireDecontaminer" name="COMMUNES Se Faire Decontaminer">
-      <parameter dia-name="objective" name="Site de decontamination" optional="false" type="ObjectKnowledgeBM"/>
-      <parameter dia-name="destination" name="Destination" optional="false" type="PointBM"/>
+      <parameter dia-name="objective" name="Site de decontamination" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="destination" name="Destination" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Interdire" dia-type="net.masagroup.sword.france.military.company.tasks.Interdire" id="1017" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Interdire" name="MELEE Interdire un Bloc Urbain">
-      <parameter dia-name="objectives" name="Objectif a interdire" optional="false" type="UrbanBlockBM"/>
-      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions d'interdiction" optional="false" type="PointBM"/>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="GenObjectBM"/>
+      <parameter dia-name="objectives" name="Objectif a interdire" optional="false" type="UrbanBlock"/>
+      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions d'interdiction" optional="false" type="Point"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="GenObject"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Reconnaitre" dia-type="net.masagroup.sword.france.military.company.tasks.Reconnaitre" id="1019" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Reconnaitre" name="MELEE Reconnaitre un itinéraire">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Destination" optional="false" type="PointBM"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Destination" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.tasks.commun.automat.StationnerBM" dia-type="T_Mission_Automate_StationnerBM" id="1005" mrt-dia-behavior="net.masagroup.sword.france.military.tasks.commun.automat.StationnerBM" name="StationnerBM">
-      <parameter dia-name="position" name="Point de stationnement" optional="false" type="PointBM"/>
+      <parameter dia-name="position" name="Point de stationnement" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeFaireTransporter" dia-type="net.masagroup.sword.france.military.company.tasks.SeFaireTransporter" id="1018" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeFaireTransporter" name="COMMUNES Se Faire Transporter">
-      <parameter dia-name="objectives" name="Point d'embarquement" optional="false" type="PointBM"/>
+      <parameter dia-name="objectives" name="Point d'embarquement" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.SeDeployer" dia-type="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.SeDeployer" id="1008" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.SeDeployer" name="ASS SeDeployer">
-      <parameter dia-name="area" name="Zone de deploiement" optional="false" type="AreaBM"/>
+      <parameter dia-name="area" name="Zone de deploiement" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeRecompleter" dia-type="net.masagroup.sword.france.military.company.tasks.SeRecompleter" id="1021" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeRecompleter" name="COMMUNES Se Recompleter">
-      <parameter dia-name="objectives" name="Zone" optional="false" type="AreaBM"/>
+      <parameter dia-name="objectives" name="Zone" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.military.company.combat.support.artillery.tasks.Deploy" dia-type="T_Mission_Automate_Deploy" id="1022" mrt-dia-behavior="net.masagroup.sword.military.company.combat.support.artillery.tasks.Deploy" name="Deploy">
-      <parameter dia-name="deploymentArea" name="Zone de deploiement" optional="false" type="AreaBM"/>
+      <parameter dia-name="deploymentArea" name="Zone de deploiement" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Franchir" dia-type="net.masagroup.sword.france.military.company.tasks.Franchir" id="1010" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Franchir" name="COMMUNES Franchir">
-      <parameter dia-name="crossingSite" name="Site de franchissement" optional="false" type="ObjectKnowledgeBM"/>
-      <parameter dia-name="meetingPoint" name="Destination" optional="false" type="PointBM"/>
+      <parameter dia-name="crossingSite" name="Site de franchissement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="meetingPoint" name="Destination" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Controler" dia-type="net.masagroup.sword.france.military.company.tasks.Controler" id="1020" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Controler" name="MELEE Controler Secteur">
-      <parameter dia-name="objectives" name="Zone a controler" optional="false" type="AreaBM"/>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="GenObjectBM"/>
+      <parameter dia-name="objectives" name="Zone a controler" optional="false" type="Polygon"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="GenObject"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.SEmparer" dia-type="net.masagroup.sword.france.military.company.combat.tasks.SEmparer" id="1024" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.SEmparer" name="MELEE S'emparer">
       <parameter dia-name="objective" name="Objectif a s'emparer" optional="false" type="LocationComposite">
         <choice>
-          <parameter type="AreaBM"/>
-          <parameter type="UrbanBlockBM"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanBlock"/>
         </choice>
       </parameter>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Detruire" dia-type="net.masagroup.sword.france.military.company.combat.tasks.Detruire" id="1025" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Detruire" name="MELEE Detruire">
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles a detruire" optional="false" type="AgentKnowledgeBM"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles a detruire" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Neutraliser" dia-type="net.masagroup.sword.france.military.company.combat.tasks.Neutraliser" id="1026" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Neutraliser" name="MELEE Neutraliser">
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles a neutraliser" optional="false" type="AgentKnowledgeBM"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles a neutraliser" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Fixer" dia-type="net.masagroup.sword.france.military.company.combat.tasks.Fixer" id="1028" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Fixer" name="MELEE Fixer">
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles a fixer" optional="false" type="AgentKnowledgeBM"/>
-      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="postions pour fixer" optional="false" type="PointBM"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles a fixer" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="postions pour fixer" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" dia-type="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" id="1023" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" name="ASS Illumination et Tir Synchronisé">
-      <parameter dia-name="tireur" name="Tireur" optional="false" type="AgentBM"/>
-      <parameter dia-name="allie" max-occurs="unbounded" min-occurs="1" name="Illuminateur allie" optional="false" type="AgentBM"/>
-      <parameter dia-name="objective" name="Cible" optional="false" type="AgentKnowledgeBM"/>
-      <parameter dia-name="position" name="Position de deploiement tireur" optional="false" type="PointBM"/>
+      <parameter dia-name="tireur" name="Tireur" optional="false" type="Agent"/>
+      <parameter dia-name="allie" max-occurs="unbounded" min-occurs="1" name="Illuminateur allie" optional="false" type="Agent"/>
+      <parameter dia-name="objective" name="Cible" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="position" name="Position de deploiement tireur" optional="false" type="Point"/>
       <parameter dia-name="munition" name="Munitions" optional="false" type="DotationType"/>
       <parameter dia-name="interventionType" name="Intervention type" optional="false" type="Numeric"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Harceler" dia-type="net.masagroup.sword.france.military.company.tasks.Harceler" id="1029" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Harceler" name="MELEE Harceler zone">
-      <parameter dia-name="objectives" name="Zone a harceler" optional="false" type="AreaBM"/>
-      <parameter dia-name="obstacles" name="Obstacles" optional="true" type="GenObjectBM"/>
+      <parameter dia-name="objectives" name="Zone a harceler" optional="false" type="Polygon"/>
+      <parameter dia-name="obstacles" name="Obstacles" optional="true" type="GenObject"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Attaquer" dia-type="net.masagroup.sword.france.military.company.combat.tasks.Attaquer" id="1030" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Attaquer" name="MELEE Attaquer"/>
   </automats>
@@ -1989,18 +1989,18 @@
       </parameter>
     </fragorder>
     <fragorder available-without-mission="true" dia-type="net.masagroup.sword.military.platoon.tasks.Illuminate" id="382" name="Illuminer">
-      <parameter dia-name="agentKnowledge_" name="target" optional="false" type="AgentKnowledgeBM"/>
-      <parameter dia-name="agent_" name="allie" optional="false" type="AgentBM"/>
+      <parameter dia-name="agentKnowledge_" name="target" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="agent_" name="allie" optional="false" type="Agent"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="net.masagroup.sword.military.platoon.tasks.ApplyIndirectFire" id="383" name="ApplyFire">
       <parameter dia-name="munitions_" name="Ammunitions" optional="false" type="DotationType"/>
       <parameter dia-name="nbIT_" name="Shells number" optional="false" type="Numeric"/>
-      <parameter dia-name="pointCible_" name="target" optional="false" type="PointBM"/>
+      <parameter dia-name="pointCible_" name="target" optional="false" type="Point"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="net.masagroup.sword.military.platoon.tasks.ApplyIndirectFire" id="384" name="ApplyGuidedFire">
       <parameter dia-name="munitions_" name="Ammunitions" optional="false" type="DotationType"/>
       <parameter dia-name="nbIT_" name="Shells number" optional="false" type="Numeric"/>
-      <parameter dia-name="agentKnowledge_" name="target" optional="false" type="AgentKnowledgeBM"/>
+      <parameter dia-name="agentKnowledge_" name="target" optional="false" type="AgentKnowledge"/>
     </fragorder>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_InterdireMunition" id="385" name="Pion Interdire Munition">
       <parameter dia-name="munitions_" name="Ammunitions" optional="false" type="DotationType"/>
@@ -2012,24 +2012,24 @@
     <fragorder available-without-mission="true" dia-type="net.masagroup.sword.france.military.platoon.tasks.UtiliserALR" id="388" name="Utiliser ALR">
       <parameter dia-name="munitions_" name="Munitions" optional="false" type="DotationType"/>
       <parameter dia-name="nbIT_" name="Intervention Type" optional="false" type="Numeric"/>
-      <parameter dia-name="pointCible_" name="Cible" optional="false" type="PointBM"/>
+      <parameter dia-name="pointCible_" name="Cible" optional="false" type="Point"/>
     </fragorder>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadioPartiel" id="389" name="Passer En Silence Radio Partiel"/>
     <fragorder available-without-mission="true" dia-type="net.masagroup.sword.france.military.platoon.tasks.Observer" id="390" name="Pion Observer">
-      <parameter dia-name="pointCible_" name="Objectif" optional="false" type="PointBM"/>
+      <parameter dia-name="pointCible_" name="Objectif" optional="false" type="Point"/>
     </fragorder>
     <fragorder available-without-mission="true" dia-type="net.masagroup.sword.france.military.platoon.tasks.Orienter" id="391" name="Pion Orienter Capteurs">
-      <parameter dia-name="pointCible_" name="Objectif" optional="false" type="PointBM"/>
+      <parameter dia-name="pointCible_" name="Objectif" optional="false" type="Point"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AppliquerFeux" id="392" name="Appliquer les feux">
       <parameter dia-name="munitions_" name="Munitions" optional="false" type="DotationType"/>
       <parameter dia-name="nbIT_" name="Intervention Type" optional="false" type="Numeric"/>
-      <parameter dia-name="pointCible_" name="Cible" optional="false" type="PointBM"/>
+      <parameter dia-name="pointCible_" name="Cible" optional="false" type="Point"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AppliquerFeux" id="393" name="Appliquer les feux guidés">
       <parameter dia-name="munitions_" name="Munitions" optional="false" type="DotationType"/>
       <parameter dia-name="nbIT_" name="Intervention Type" optional="false" type="Numeric"/>
-      <parameter dia-name="agentKnowledge_" name="Cible" optional="false" type="AgentKnowledgeBM"/>
+      <parameter dia-name="agentKnowledge_" name="Cible" optional="false" type="AgentKnowledge"/>
     </fragorder>
   </fragorders>
 </missions>

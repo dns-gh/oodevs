@@ -17,6 +17,7 @@
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_AiEngine_Data.h"
 #include "ADN_Tr.h"
+#include <xeuseuleu/xsl.hpp>
 
 IdentifierFactory ADN_Missions_Data::idFactory_;
 
@@ -173,15 +174,15 @@ void ADN_Missions_Data::MissionParameter::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::MissionParameter::FillChoices()
 {
-    choices_.AddItem( new MissionType( "PointBM" ) );
-    choices_.AddItem( new MissionType( "PathBM" ) );
-    choices_.AddItem( new MissionType( "AreaBM" ) );
-    choices_.AddItem( new MissionType( "AutomatBM" ) );
-    choices_.AddItem( new MissionType( "AgentBM" ) );
-    choices_.AddItem( new MissionType( "AgentKnowledgeBM" ) );
-    choices_.AddItem( new MissionType( "ObjectKnowledgeBM" ) );
-    choices_.AddItem( new MissionType( "PopulationKnowledgeBM" ) );
-    choices_.AddItem( new MissionType( "UrbanBlockBM" ) );
+    choices_.AddItem( new MissionType( "Point" ) );
+    choices_.AddItem( new MissionType( "Path" ) );
+    choices_.AddItem( new MissionType( "Polygon" ) );
+    choices_.AddItem( new MissionType( "Automate" ) );
+    choices_.AddItem( new MissionType( "Agent" ) );
+    choices_.AddItem( new MissionType( "AgentKnowledge" ) );
+    choices_.AddItem( new MissionType( "ObjectKnowledge" ) );
+    choices_.AddItem( new MissionType( "PopulationKnowledge" ) );
+    choices_.AddItem( new MissionType( "UrbanBlock" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -600,6 +601,27 @@ void ADN_Missions_Data::Reset()
     automatMissions_.Reset();
     populationMissions_.Reset();
     fragOrders_.Reset();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::Load
+// Created: LDC 2010-09-24
+// -----------------------------------------------------------------------------
+void ADN_Missions_Data::Load()
+{
+    T_StringList fileList;
+    FilesNeeded( fileList );
+    if( ! fileList.empty() )
+    {
+        const std::string strFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + fileList.front();
+        
+        xsl::xstringtransform xst( "resources/ordCompatibility.xsl" );
+        xst << xml::xifstream( strFile );
+        std::string updatedFile = xst.str();
+        xml::xistringstream input( updatedFile );
+
+        ReadArchive( input );
+    }
 }
 
 // -----------------------------------------------------------------------------

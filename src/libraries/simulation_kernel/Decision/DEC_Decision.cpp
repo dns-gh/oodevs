@@ -242,7 +242,7 @@ void RegisterTypeFunctions( directia::brain::Brain& brain )
 // Name: DEC_Decision::RegisterMissionParametersFunctions
 // Created: SLI 2010-07-09
 // -----------------------------------------------------------------------------
-void RegisterMissionParametersFunctions( directia::brain::Brain& brain )
+void RegisterMissionParametersFunctions( directia::brain::Brain& brain, bool isMasalife )
 {
     brain[ "DEC_AssignMissionPionParameter" ] = &MIL_MissionParameterFactory::SetPawnParameter;
     brain[ "DEC_AssignMissionAutomatParameter" ] = &MIL_MissionParameterFactory::SetAutomatParameter;
@@ -267,19 +267,17 @@ void RegisterMissionParametersFunctions( directia::brain::Brain& brain )
 
     directia::tools::binders::ScriptRef initParameterFunction = brain[ "InitTaskParameter" ];
     brain[ "DEC_FillMissionParameters" ] =
-        boost::function< void( const directia::tools::binders::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref(brain), initParameterFunction, _1 , _2 ) );
+        boost::function< void( const directia::tools::binders::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref(brain), initParameterFunction, _1 , _2, isMasalife ) );
 }
 // -----------------------------------------------------------------------------
-// Name: DEC_Decision::RegisterDebugFunctions
+// Name: DEC_Decision::RegisterReportFunctions
 // Created: SLI 2010-07-09
 // -----------------------------------------------------------------------------
-void RegisterDebugFunctions( directia::brain::Brain& brain, unsigned int id )
+void RegisterReportFunctions( directia::brain::Brain& brain )
 {
     brain[ "DEC_PointToString" ] = &DEC_DIAFunctions::PointToString;
     brain[ "DEC_DirectionToString" ] =  &DEC_DIAFunctions::DirectionToString ;
     brain[ "DEC_ItineraireToString" ] = &DEC_DIAFunctions::PathToString ;
-    brain[ "BreakForDebug" ] =
-        boost::function< void( const std::string& ) >( boost::bind( &DEC_DIAFunctions::BreakForDebug, id ,_1 ) ) ;
 }
 
 // -----------------------------------------------------------------------------
@@ -331,7 +329,7 @@ void RegisterItineraryFunctions( directia::brain::Brain& brain )
 // Name: DEC_Decision::RegisterCommonUserFunctions
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-void RegisterCommonUserFunctions( directia::brain::Brain& brain/*, unsigned int id*/ )
+void RegisterCommonUserFunctions( directia::brain::Brain& brain, bool isMasalife )
 {
     RegisterGeometryFunctions( brain );
     RegisterUrbanBlockFunctions( brain );
@@ -345,8 +343,8 @@ void RegisterCommonUserFunctions( directia::brain::Brain& brain/*, unsigned int 
     RegisterObjectivesFunctions( brain );
     RegisterSpecificPointsFunctions( brain );
     RegisterTypeFunctions( brain );
-    RegisterMissionParametersFunctions( brain );
-    //RegisterDebugFunctions( brain, id );
+    RegisterMissionParametersFunctions( brain, isMasalife );
+    RegisterReportFunctions( brain );
     RegisterTelepathyFunctions( brain );
     RegisterItineraryFunctions( brain );
     DEC_TelepathyFunctions::Register( brain );
@@ -362,11 +360,21 @@ void BoolFunction( const directia::tools::binders::ScriptRef& refMission, const 
     if( element.ToBool( value ) )
         refMission[ name ] = value;
 }
+bool BoolFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+    BoolFunction( refMission, name, element );
+    return true;
+}
 void EnumerationFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     int value;
     if( element.ToId( value ) )
         refMission[ name ] = value;
+}
+bool EnumerationFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+    EnumerationFunction( refMission, name, element );
+    return true;
 }
 void PointFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -486,6 +494,11 @@ void NatureAtlasFunction( const directia::tools::binders::ScriptRef& refMission,
     int value = 0;
     if( element.ToNatureAtlas( value ) )
         refMission[ name ] = value;
+}
+bool NatureAtlasFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+    NatureAtlasFunction( refMission, name, element );
+    return true;
 }
 void AutomatFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -661,11 +674,21 @@ void GDHFunction( const directia::tools::binders::ScriptRef& refMission, const s
     if( element.ToGDH( value ) )
         refMission[ name ] = value;
 }
+bool GDHFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+    GDHFunction( refMission, name, element );
+    return true;
+}
 void NumericFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     float value = 0;
     if( element.ToNumeric( value ) )
         refMission[ name ] = value;
+}
+bool NumericFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+    NumericFunction( refMission, name, element );
+    return true;
 }
 void GenObjectFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -724,6 +747,11 @@ void StringFunction( const directia::tools::binders::ScriptRef& refMission, cons
     if( element.ToString( value ) )
         refMission[ name ] = value;
 }
+bool StringFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+    StringFunction( refMission, name, element );
+    return true;
+}
 void ObjectiveListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< DEC_Objective > > value;
@@ -778,6 +806,7 @@ void InitFunctions()
         functors[ "string" ] = StringFunction;
         functors[ "enumeration" ] = EnumerationFunction;
         functors[ "datetime" ] = GDHFunction;
+        functors[ "GDH" ] = GDHFunction;
         functors[ "Point" ] = PointFunction;
         functors[ "PointList" ] = PointListFunction;
         functors[ "Polygon" ] = PolygonFunction;
@@ -800,7 +829,6 @@ void InitFunctions()
         functors[ "PopulationKnowledge" ] = PopulationKnowledgeFunction;
         functors[ "DotationType" ] = DotationTypeFunction;
         functors[ "EquipmentType" ] = EquipmentTypeFunction;
-        functors[ "GDH" ] = GDHFunction;
         functors[ "Numeric" ] = NumericFunction;
         functors[ "GenObject" ] = GenObjectFunction;
         functors[ "GenObjectList" ] = GenObjectListFunction;
@@ -809,24 +837,31 @@ void InitFunctions()
         functors[ "IndirectFire" ] = IndirectFireFunction;
         functors[ "ObjectiveList" ] = ObjectiveListFunction;
 
-        functorsBM[ "PointBM" ] = PointFunctionBM;
-        functorsBM[ "PointBMList" ] = PointListFunctionBM;
-        functorsBM[ "PathBM" ] = PathFunctionBM;
-        functorsBM[ "AreaBM" ] = AreaFunctionBM;
-        functorsBM[ "AreaBMList" ] = AreaListFunctionBM;
-        functorsBM[ "AutomateBM" ] = AutomatFunctionBM;
-        functorsBM[ "AutomateBMList" ] = AutomatListFunctionBM;
-        functorsBM[ "AgentBM" ] = AgentFunctionBM;
-        functorsBM[ "AgentBMList" ] = AgentListFunctionBM;
-        functorsBM[ "AgentKnowledgeBM" ] = AgentKnowledgeFunctionBM;
-        functorsBM[ "AgentKnowledgeBMList" ] = AgentKnowledgeListFunctionBM;
-        functorsBM[ "ObjectKnowledgeBM" ] = ObjectKnowledgeFunctionBM;
-        functorsBM[ "ObjectKnowledgeBMList" ] = ObjectKnowledgeListFunctionBM;
-        functorsBM[ "PopulationKnowledgeBM" ] = PopulationKnowledgeFunctionBM;
-        functorsBM[ "GenObjectBM" ] = GenObjectFunctionBM;
-        functorsBM[ "GenObjectBMList" ] = GenObjectListFunctionBM;
-        functorsBM[ "UrbanBlockBM" ] = UrbanBlockFunctionBM;
-        functorsBM[ "HeadingBM" ] = DirectionFunctionBM;
+        functorsBM[ "bool" ] = BoolFunctionBM;
+        functorsBM[ "string" ] = StringFunctionBM;
+        functorsBM[ "enumeration" ] = EnumerationFunctionBM;
+        functorsBM[ "datetime" ] = GDHFunctionBM;
+        functorsBM[ "GDH" ] = GDHFunctionBM;
+        functorsBM[ "NatureAtlas" ] = NatureAtlasFunctionBM;
+        functorsBM[ "Numeric" ] = NumericFunctionBM;
+        functorsBM[ "Point" ] = PointFunctionBM;
+        functorsBM[ "PointList" ] = PointListFunctionBM;
+        functorsBM[ "Polygon" ] = AreaFunctionBM;
+        functorsBM[ "PolygonList" ] = AreaListFunctionBM;
+        functorsBM[ "Path" ] = PathFunctionBM;
+        functorsBM[ "Heading" ] = DirectionFunctionBM;
+        functorsBM[ "Automate" ] = AutomatFunctionBM;
+        functorsBM[ "AutomateList" ] = AutomatListFunctionBM;
+        functorsBM[ "Agent" ] = AgentFunctionBM;
+        functorsBM[ "AgentList" ] = AgentListFunctionBM;
+        functorsBM[ "AgentKnowledge" ] = AgentKnowledgeFunctionBM;
+        functorsBM[ "AgentKnowledgeList" ] = AgentKnowledgeListFunctionBM;
+        functorsBM[ "ObjectKnowledge" ] = ObjectKnowledgeFunctionBM;
+        functorsBM[ "ObjectKnowledgeList" ] = ObjectKnowledgeListFunctionBM;
+        functorsBM[ "PopulationKnowledge" ] = PopulationKnowledgeFunctionBM;
+        functorsBM[ "GenObject" ] = GenObjectFunctionBM;
+        functorsBM[ "GenObjectList" ] = GenObjectListFunctionBM;
+        functorsBM[ "UrbanBlock" ] = UrbanBlockFunctionBM;
         functorsBM[ "LocationComposite" ] = LocationCompositeFunctionBM;
         functorsBM[ "LocationCompositeList" ] = LocationCompositeListFunctionBM;
     }
@@ -843,13 +878,32 @@ public:
     {}
     virtual ~RegisterMissionParameterVisitor()
     {}
-
     virtual void Accept( const std::string& dianame, const MIL_ParameterType_ABC& type, MIL_MissionParameter_ABC& element )
     {
         std::map< std::string, T_Function >::iterator itFind = functors.find( type.GetName() );
         if( itFind != functors.end() )
             functors[ type.GetName() ]( refMission_, dianame, element );
-        else if( !!knowledgeCreateFunction_ )
+    }
+
+private:
+     directia::brain::Brain& brain_;
+     const directia::tools::binders::ScriptRef& refMission_;
+     directia::tools::binders::ScriptRef& knowledgeCreateFunction_;
+};
+
+class RegisterMissionParameterBMVisitor : public MIL_MissionParameterVisitor_ABC
+{
+public:
+    RegisterMissionParameterBMVisitor( directia::brain::Brain& brain, const directia::tools::binders::ScriptRef& refMission, directia::tools::binders::ScriptRef& knowledgeCreateFunction ) 
+        : brain_( brain )
+        , refMission_( refMission )
+        , knowledgeCreateFunction_( knowledgeCreateFunction )
+    {}
+    virtual ~RegisterMissionParameterBMVisitor()
+    {}
+    virtual void Accept( const std::string& dianame, const MIL_ParameterType_ABC& type, MIL_MissionParameter_ABC& element )
+    {
+        if( !!knowledgeCreateFunction_ )
             functorsBM[ type.GetName() ]( brain_, knowledgeCreateFunction_, refMission_, dianame, element );
     }
 
@@ -863,11 +917,19 @@ private:
 // Name: RegisterMissionParameters
 // Created: LDC 2009-05-04
 // -----------------------------------------------------------------------------
-void RegisterMissionParameters( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const boost::shared_ptr< MIL_Mission_ABC > mission )
+void RegisterMissionParameters( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const boost::shared_ptr< MIL_Mission_ABC > mission, bool isMasalife )
 {
     InitFunctions();
-    RegisterMissionParameterVisitor visitor( brain, refMission, knowledgeCreateFunction );
-    mission->Visit( visitor );
+    if( isMasalife )
+    {
+        RegisterMissionParameterBMVisitor visitor( brain, refMission, knowledgeCreateFunction );
+        mission->Visit( visitor );
+    }
+    else
+    {
+        RegisterMissionParameterVisitor visitor( brain, refMission, knowledgeCreateFunction );
+        mission->Visit( visitor );
+    }
 }
 
 #ifndef PLATFORM
@@ -889,9 +951,10 @@ namespace
     std::map< std::string, boost::shared_ptr< directia::brain::Brain > > brainTable;
 }
 
-bool CreateBrain(boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, boost::shared_ptr< directia::brain::Brain >& pBrain, const std::string& includePath, const std::string& brainFile )
+bool CreateBrain(boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, boost::shared_ptr< directia::brain::Brain >& pBrain, const std::string& includePath, const std::string& brainFile, bool& isMasalife )
 {
     pArchetypeBrain = brainTable[brainFile];
+    isMasalife = false;
 
     if( !pArchetypeBrain.get() )
     {
@@ -908,6 +971,7 @@ bool CreateBrain(boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, b
                 + "} cwd='" + includePath + "'";
             pBrain.reset( new directia::brain::Brain( brainInit ) );
             pArchetypeBrain = pBrain;
+            isMasalife = true;
             return true;
         }
         else

@@ -4622,16 +4622,8 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>AgentBM</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Automate</source>
         <translation type="unfinished">Automate</translation>
-    </message>
-    <message>
-        <source>AutomateBM</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Bool</source>
@@ -4662,32 +4654,16 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation type="unfinished">Connaissance Agent</translation>
     </message>
     <message>
-        <source>AgentKnowledgeBM</source>
-        <translation type="unfinished">Connaissance Agent BM</translation>
-    </message>
-    <message>
         <source>ObjectKnowledge</source>
         <translation type="unfinished">Connaissance Objet</translation>
-    </message>
-    <message>
-        <source>ObjectKnowledgeBM</source>
-        <translation type="unfinished">Connaissance Objet BM</translation>
     </message>
     <message>
         <source>PopulationKnowledge</source>
         <translation type="unfinished">Connaissance de Population</translation>
     </message>
     <message>
-        <source>PopulationKnowledgeBM</source>
-        <translation type="unfinished">Connaissance de Population BM</translation>
-    </message>
-    <message>
         <source>GenObject</source>
         <translation type="unfinished">Objet génie</translation>
-    </message>
-    <message>
-        <source>GenObjectBM</source>
-        <translation type="unfinished">Objet génie BM</translation>
     </message>
     <message>
         <source>Objective</source>
@@ -4698,24 +4674,12 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation type="unfinished">Itinéraire</translation>
     </message>
     <message>
-        <source>PathBM</source>
-        <translation type="unfinished">Itinéraire BM</translation>
-    </message>
-    <message>
         <source>Point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PointBM</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Polygon</source>
         <translation type="unfinished">Polygone</translation>
-    </message>
-    <message>
-        <source>AreaBM</source>
-        <translation type="unfinished">Surface BM</translation>
     </message>
     <message>
         <source>Location</source>
@@ -4746,7 +4710,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation type="unfinished">Limite</translation>
     </message>
     <message>
-        <source>UrbanBlockBM</source>
+        <source>UrbanBlock</source>
         <translation type="unfinished">Bloc urbain</translation>
     </message>
     <message>
@@ -4787,10 +4751,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Heading</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>HeadingBM</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

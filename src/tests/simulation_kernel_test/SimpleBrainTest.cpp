@@ -119,8 +119,9 @@ protected:
         brain[ "DEC_TestMissionCalled" ] = mock::make_function( NotifyMissionCallFromScript );
         brain[ "DEC_GetRawMission" ] = &GetRawMission;
         directia::tools::binders::ScriptRef initFunction = brain[ "InitTaskParameter" ];
+        bool isMasalife = false;
         brain[ "DEC_FillMissionParameters" ] =
-            boost::function< void( const directia::tools::binders::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref( brain ), boost::ref( initFunction ), _1 , _2 ) );
+            boost::function< void( const directia::tools::binders::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref( brain ), boost::ref( initFunction ), _1 , _2, isMasalife ) );
         if( pOther_ )
             brain[ "other" ] = pOther_;
     }

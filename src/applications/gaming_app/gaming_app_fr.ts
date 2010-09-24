@@ -18,6 +18,13 @@
     </message>
 </context>
 <context>
+    <name>ActionTiming</name>
+    <message>
+        <source>Time</source>
+        <translation type="unfinished">Temps</translation>
+    </message>
+</context>
+<context>
     <name>ActionsListView</name>
     <message>
         <source>Value</source>
@@ -906,10 +913,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Parameter</source>
         <translation>Paramètre</translation>
-    </message>
-    <message>
-        <source>Time</source>
-        <translation>Heure</translation>
     </message>
 </context>
 <context>
