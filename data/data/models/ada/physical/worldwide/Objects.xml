@@ -235,19 +235,19 @@
     <bridging/>
     <workable max-animator="0"/>
   </object>
-  <object geometry="point" name="firing post" symbol="G*FPAP----****X" type="firing post">
+  <object geometry="point" name="Firing post" symbol="G*FPAP----****X" type="firing post">
     <protection geniePrepared="true" max-size="1"/>
   </object>
-  <object geometry="point" name="gun artillery deployment area" symbol="G*FPAP----****X" type="gun artillery deployment area">
+  <object geometry="point" name="Gun artillery deployment area" symbol="G*FPAP----****X" type="gun artillery deployment area">
     <protection geniePrepared="false" max-size="1"/>
   </object>
-  <object geometry="point" name="cobra deployment area" symbol="G*FPAP----****X" type="cobra deployment area">
+  <object geometry="point" name="Cobra deployment area" symbol="G*FPAP----****X" type="cobra deployment area">
     <protection geniePrepared="false" max-size="1"/>
   </object>
-  <object geometry="point" name="mrls deployment area" symbol="G*FPAP----****X" type="mrls deployment area">
+  <object geometry="point" name="Mrls deployment area" symbol="G*FPAP----****X" type="mrls deployment area">
     <protection geniePrepared="false" max-size="1"/>
   </object>
-  <object geometry="point" name="mortar deployment area" symbol="G*FPAP----****X" type="mortar deployment area">
+  <object geometry="point" name="Mortar deployment area" symbol="G*FPAP----****X" type="mortar deployment area">
     <protection geniePrepared="false" max-size="1"/>
   </object>
   <object geometry="point" name="Rearm, Refuel and Resupply Point (R3P)" symbol="G*SPPR----****X" type="logistic support area">
@@ -256,7 +256,7 @@
   <object geometry="polygon" name="Landing Zone" symbol="G*GPGAL---****X" type="landing area"/>
   <object geometry="polygon" name="Airfield Zone" symbol="G*GPGAZ---****X" type="trail"/>
   <object geometry="polygon" name="Platform" symbol="G*PLATFORM*****" type="platform"/>
-  <object geometry="polygon" name="mobility enhanced area" symbol="G*MPSP----****X" type="mobility enhanced area"/>
+  <object geometry="polygon" name="Mobility enhanced area" symbol="G*MPSP----****X" type="mobility enhanced area"/>
   <object geometry="polygon" name="Landing Zone (helicopter)" symbol="G*GPGAL---****X" type="landing area (helicopter)"/>
   <object geometry="polygon" name="Forward Arming and Refueling Point (FARP)" symbol="G*SPAR----****X" type="logistic area"/>
   <object geometry="polygon" name="Detainee Holding Area" symbol="G*SPAD----****X" type="prisoners camp">
@@ -292,7 +292,10 @@
     <interaction-height height="6000"/>
   </object>
   <object geometry="polygon" name="General obstacle zone" symbol="G*MPOGZ---****X" type="movement forbidden area">
+    <avoidable distance="500"/>
+    <bypassable bypass-speed="5"/>
     <interaction-height height="6000"/>
+    <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
   </object>
   <object geometry="point" name="Installation" symbol="S*GPI-----*****" type="installation"/>

@@ -3342,6 +3342,54 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
+        <object detection-distance="10000" type="fire">
+          <population-modifier density="2" modifier="0.5"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
+        <object detection-distance="1000" type="barricade">
+          <population-modifier density="2" modifier="0.5"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
+        <object detection-distance="1000" type="crossing site">
+          <population-modifier density="2" modifier="0.5"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
+        <object detection-distance="1000" type="movement forbidden area">
+          <population-modifier density="2" modifier="0.5"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Radar RASIT">
