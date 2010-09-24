@@ -7,6 +7,14 @@
         <translation>non défini</translation>
     </message>
     <message>
+        <source>type</source>
+        <translation>type</translation>
+    </message>
+    <message>
+        <source>agent</source>
+        <translation>agent</translation>
+    </message>
+    <message>
         <source>category</source>
         <translation>catégorie</translation>
     </message>
