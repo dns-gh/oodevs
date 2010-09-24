@@ -1028,7 +1028,7 @@
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Ratisser" dia-type="net.masagroup.sword.france.military.platoon.tasks.Ratisser" id="2092" name="MELEE Ratisser une Zone">
       <parameter dia-name="objective" name="Objectif a ratisser" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.ReconnaitreElement" dia-type="net.masagroup.sword.france.military.platoon.tasks.ReconnaitreBU" id="2099" name="MELEE Reconnaitre un Bloc Urbain">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.ReconnaitreElement" dia-type="net.masagroup.sword.france.military.platoon.tasks.ReconnaitreElement" id="2099" name="MELEE Reconnaitre un Bloc Urbain">
       <parameter dia-name="objective" name="Objectif" optional="false" type="UrbanBlock"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Eclairer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Eclairer" id="2093" name="MELEE Eclairer">
