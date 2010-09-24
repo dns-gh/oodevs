@@ -35,7 +35,7 @@ namespace
 // Created: AGE 2007-07-02
 // -----------------------------------------------------------------------------
 Gradient::Gradient( xml::xistream& xis )
-    : usedRatio_( 1 )
+    : usedRatio_  ( 1 )
     , textureSize_( 0 )
 {
     std::string name;
@@ -49,8 +49,8 @@ Gradient::Gradient( xml::xistream& xis )
 // Created: SBO 2008-08-18
 // -----------------------------------------------------------------------------
 Gradient::Gradient( const QString& name, const QString& colors )
-    : name_( name )
-    , usedRatio_( 1 )
+    : name_       ( name )
+    , usedRatio_  ( 1 )
     , textureSize_( 0 )
 {
     LoadValues( colors );
@@ -61,8 +61,8 @@ Gradient::Gradient( const QString& name, const QString& colors )
 // Created: AGE 2007-07-03
 // -----------------------------------------------------------------------------
 Gradient::Gradient()
-    : name_( "" )
-    , usedRatio_( 1 )
+    : name_       ( "" )
+    , usedRatio_  ( 1 )
     , textureSize_( 0 )
 {
     // NOTHING

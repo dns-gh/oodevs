@@ -49,6 +49,8 @@ public:
     virtual void Save( const std::string& name, const kernel::FourStateOption& value );
     virtual void Save( const std::string& name, const QString& value );
 
+    virtual bool Remove( const std::string& name );
+
     virtual int Load( const std::string& name, int defaultValue );
     virtual bool Load( const std::string& name, bool defaultValue );
     virtual float Load( const std::string& name, float defaultValue );

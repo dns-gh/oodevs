@@ -55,6 +55,8 @@ public:
     virtual void Save( const std::string& name, const FourStateOption& value ) = 0;
     virtual void Save( const std::string& name, const QString& value ) = 0;
 
+    virtual bool Remove( const std::string& name ) = 0;
+
     template< typename T >
     void Save( const std::string& , const T& )
     {

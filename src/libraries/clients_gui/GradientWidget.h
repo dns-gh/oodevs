@@ -97,10 +97,9 @@ private:
     GradientPreferences& preferences_;
     GradientButton* gradientEditor_;
     ColorButton* color_;
-
-    QComboBox*  presetCombo_;
+    QComboBox* presetCombo_;
     T_Gradients presets_;
-    Gradient*   currentPreset_;
+    Gradient* currentPreset_;
     //@}
 };
 

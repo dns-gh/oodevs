@@ -30,7 +30,7 @@ using namespace gui;
 GradientWidget::GradientWidget( QWidget* parent, GradientPreferences& preferences, kernel::Controllers& controllers )
     : QVBox( parent )
     , controllers_( controllers )
-    , options_( controllers_.options_ )
+    , options_    ( controllers_.options_ )
     , preferences_( preferences )
 {
     setMaximumHeight( 80 );
@@ -51,15 +51,15 @@ GradientWidget::GradientWidget( QWidget* parent, GradientPreferences& preference
     box->layout()->setAlignment( Qt::AlignCenter );
     box->setMaximumHeight( 50 );
     gradientEditor_ = new GradientButton( box );
-    color_          = new ColorButton( box );
+    color_ = new ColorButton( box );
     color_->setMaximumHeight( 30 );
 
     connect( gradientEditor_, SIGNAL( SelectionChanged( const QColor& ) ), SLOT( OnSelectionChanged( const QColor& ) ) );
     connect( gradientEditor_, SIGNAL( GradientChanged( const Gradient& ) ), SLOT( OnGradientEdited( const Gradient& ) ) );
-    connect( color_   , SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChanged( const QColor& ) ) );
+    connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChanged( const QColor& ) ) );
 
     connect( presetCombo_, SIGNAL( activated( int ) ), SLOT( OnPresetChanged() ) );
-    connect( copyPreset  , SIGNAL( clicked() ), SLOT( OnPresetCopied() ) );
+    connect( copyPreset, SIGNAL( clicked() ), SLOT( OnPresetCopied() ) );
     connect( removePreset, SIGNAL( clicked() ), SLOT( OnPresetDeleted() ) );
 
     controllers_.Register( *this );
@@ -152,9 +152,10 @@ void GradientWidget::OnPresetDeleted()
         return;
     if( Gradient* current = CurrentPreset() )
     {
-        const int position = presetCombo_->currentItem();
-        presetCombo_->removeItem( position );
+        presetCombo_->removeItem( presetCombo_->currentItem() );
+        options_.Remove( std::string( "Gradients/" ) + current->GetName().ascii() );
         presets_.erase( std::find( presets_.begin(), presets_.end(), current ) );
+        preferences_.Commit( presets_ );
         delete current;
         presetCombo_->setCurrentItem( 0 );
         OnPresetChanged();
@@ -168,7 +169,7 @@ void GradientWidget::OnPresetDeleted()
 Gradient* GradientWidget::CurrentPreset() const
 {
     const int current = presetCombo_->currentItem();
-    if( current < 0 || current > int( presets_.size() ) - 1 )
+    if( current < 0 || current > static_cast< int >( presets_.size() ) - 1 )
         return 0;
     return presets_.at( current );
 }

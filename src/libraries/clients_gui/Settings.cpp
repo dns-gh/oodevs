@@ -163,6 +163,15 @@ void Settings::Save( const std::string& name, const QString& value )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Settings::Remove
+// Created: LGY 2010-09-23
+// -----------------------------------------------------------------------------
+bool Settings::Remove( const std::string& name )
+{
+    return removeEntry( ( "/" + AddType( name, stringPrefix ) ).c_str() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Settings::Load
 // Created: AGE 2006-04-19
 // -----------------------------------------------------------------------------

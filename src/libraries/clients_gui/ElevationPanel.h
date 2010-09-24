@@ -82,14 +82,16 @@ private:
     kernel::Options& options_;
     Elevation2dLayer& layer_;
     GradientPreferences& preferences_;
-
     QGroupBox* hsBox_;
     CheckBox* fitColorGradienttoViewPort_;
     QDial* hsDial_;
     QSlider* hillShadeStrength_;
-    bool enableHs_, previousEnableHs_;
-    int  directionHs_, previousDirectionHs_;
-    float strengthHs_, previousStrengthHs_;
+    bool enableHs_;
+    bool previousEnableHs_;
+    int directionHs_;
+    int previousDirectionHs_;
+    float strengthHs_;
+    float previousStrengthHs_;
     GradientWidget* gradient_;
     //@}
 };

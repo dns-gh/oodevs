@@ -17,6 +17,7 @@
 #include "Settings_ABC.h"
 #include <algorithm>
 #include <qstringlist.h>
+#include <boost/foreach.hpp>
 
 using namespace kernel;
 
@@ -142,11 +143,34 @@ void Options::CreateOption( Settings_ABC& settings, const std::string& name, cha
 }
 
 // -----------------------------------------------------------------------------
+// Name: Options::Remove
+// Created: LGY 2010-09-24
+// -----------------------------------------------------------------------------
+void Options::Remove( const std::string& name )
+{
+    removed_.push_back( name );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Options::Save
 // Created: AGE 2006-04-19
 // -----------------------------------------------------------------------------
 void Options::Save( Settings_ABC& settings )
 {
+    Clear( settings );
     for( CIT_Options it = options_.begin(); it != options_.end(); ++it )
         it->second.Save( settings, it->first );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Options::Clear
+// Created: LGY 2010-09-24
+// -----------------------------------------------------------------------------
+void Options::Clear( Settings_ABC& settings )
+{
+    BOOST_FOREACH( const std::string& name, removed_ )
+    {
+        options_.erase( name );
+        settings.Remove( name );
+    }
 }

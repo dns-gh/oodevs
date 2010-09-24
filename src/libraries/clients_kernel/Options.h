@@ -41,11 +41,13 @@ public:
 
     //! @name Operations
     //@{
-    void Register  ( tools::Observer_ABC& observer );
+    void Register( tools::Observer_ABC& observer );
     void Unregister( tools::Observer_ABC& observer );
 
     void Change( const std::string& name, const OptionVariant& value );
     const OptionVariant& GetOption( const std::string& name, const OptionVariant& defaultValue );
+
+    void Remove( const std::string& name );
 
     void Load( Settings_ABC& settings, const std::string& path = "" );
     void Save( Settings_ABC& settings );
@@ -65,12 +67,15 @@ private:
 
     typedef std::map< std::string, OptionVariant > T_Options;
     typedef T_Options::const_iterator            CIT_Options;
+
+    typedef std::vector< std::string > T_Removed;
     //@}
 
     //! @name Helpers
     //@{
     template< typename T >
     void Load( Settings_ABC& settings, const std::string& name, T defaultValue );
+    void Clear( Settings_ABC& settings );
     void CreateOption( Settings_ABC& settings, const std::string& name, char type );
     //@}
 
@@ -78,7 +83,8 @@ private:
     //! @name Member data
     //@{
     T_Observers observers_;
-    T_Options   options_;
+    T_Options options_;
+    T_Removed removed_;
     //@}
 };
 

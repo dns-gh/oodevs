@@ -29,16 +29,16 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel::Controllers& controllers )
     : PreferencePanel_ABC( parent, "ElevationPanel" )
-    , controllers_( controllers )
-    , options_( controllers.options_ )
-    , layer_( layer )
-    , preferences_( *new GradientPreferences( controllers_.options_ ) )
-    , enableHs_( true )
-    , previousEnableHs_( true )
-    , directionHs_( 315 )
+    , controllers_        ( controllers )
+    , options_            ( controllers.options_ )
+    , layer_              ( layer )
+    , preferences_        ( *new GradientPreferences( controllers_.options_ ) )
+    , enableHs_           ( true )
+    , previousEnableHs_   ( true )
+    , directionHs_        ( 315 )
     , previousDirectionHs_( 315 )
-    , strengthHs_( 1 )
-    , previousStrengthHs_( 1 )
+    , strengthHs_         ( 1 )
+    , previousStrengthHs_ ( 1 )
 {
     {
         QGroupBox* box = new QGroupBox( 1, Qt::Horizontal, tr( "Elevation colors" ), this );
@@ -110,9 +110,13 @@ void ElevationPanel::Reset()
 {
     fitColorGradienttoViewPort_->Revert();
     gradient_->Reset();
-    enableHs_    = previousEnableHs_;    hsBox_->setChecked( enableHs_ );
-    directionHs_ = previousDirectionHs_; hsDial_->setValue( directionHs_ );
-    strengthHs_  = previousStrengthHs_;  hillShadeStrength_->setValue( int( strengthHs_ ) ); OnEnableHillshade( enableHs_ );
+    enableHs_ = previousEnableHs_;
+    hsBox_->setChecked( enableHs_ );
+    directionHs_ = previousDirectionHs_;
+    hsDial_->setValue( directionHs_ );
+    strengthHs_ = previousStrengthHs_;
+    hillShadeStrength_->setValue( static_cast< int >( strengthHs_ ) );
+    OnEnableHillshade( enableHs_ );
 }
 
 // -----------------------------------------------------------------------------
