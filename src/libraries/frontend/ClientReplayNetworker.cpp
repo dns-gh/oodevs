@@ -15,8 +15,8 @@
 // Created: HBD 2010-09-13
 // -----------------------------------------------------------------------------
 ClientReplayNetworker::ClientReplayNetworker( bool& ready, const std::string& host /*= ""*/, bool retry /*= false*/ )
-: ClientNetworker( host, retry )
-, ready_( ready )
+    : ClientNetworker( host, retry )
+    , ready_( ready )
 {
     // NOTHING 
  }
