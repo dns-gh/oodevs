@@ -90,30 +90,40 @@ void TerrainProfile::UpdateVision( const geometry::Point2f& from, const geometry
     vision_->ClearData();
     VisionLine line( detection_, from, to, height );
     float yMax = -1, xMax = 0, x = 0;
-    geometry::Point2f viewer;
+    geometry::Point2f viewer, previous, current, maxpt;
+    bool first;
     while( ! line.IsDone() )
     {
         line.Increment();
         const float value = line.Elevation() + ( x == 0 ? height : 0 );
+        current = geometry::Point2f( x, value );
         if( x == 0 )
         {
             viewer = geometry::Point2f( 0, value );
             vision_->AddPoint( 0, value );
             yMax = value - height;
+            maxpt = geometry::Point2f( xMax, yMax );
         }
         else
         {
-            const geometry::Vector2f view2max    ( viewer, geometry::Point2f( xMax, yMax ) );
-            const geometry::Vector2f view2current( viewer, geometry::Point2f( x, value ) );
+            const geometry::Vector2f view2max    ( viewer, maxpt );
+            const geometry::Vector2f view2current( viewer, current );
             if( view2max.CrossProduct( view2current ) >= 0 )
             {
+                geometry::Point2f intersectpoint;
+                const geometry::Line2f linemax    ( viewer, maxpt );
+                const geometry::Line2f linecurrent( previous, current );
+                if( linemax.Intersect( linecurrent, intersectpoint )
+                    && ( intersectpoint.X() > previous.X() && intersectpoint.X() < x ) ) 
+                    vision_->AddPoint( intersectpoint.X() /1000.f, intersectpoint.Y() );
+
                 vision_->AddPoint( x / 1000.f, value );
-                xMax = x;
-                yMax = value;
+                maxpt.Set( x, value );
             }
             else
                 vision_->AddPoint( x / 1000.f, -1.f );
         }
+        previous = geometry::Point2f( x, value );
         x += line.Length();
     }
 }
