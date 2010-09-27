@@ -19,6 +19,7 @@
 #include "Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Roles/Posture/PHY_RolePion_Posture.h"
 #include "Roles/Location/PHY_RolePion_Location.h"
+#include "Roles/Protection/PHY_RolePion_ActiveProtection.h"
 #include "Roles/Reinforcement/PHY_RolePion_Reinforcement.h"
 #include "Roles/NBC/PHY_RolePion_NBC.h"
 #include "Roles/Communications/PHY_RolePion_Communications.h"
@@ -183,6 +184,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
     LoadRole< dotation::PHY_RolePion_Dotations >( file, *this );
     LoadRole< human::PHY_RolePion_Humans >( file, *this );
     LoadRole< PHY_RolePion_Composantes >( file, *this );
+    LoadRole< PHY_RolePion_ActiveProtection >( file, *this );
     LoadRole< PHY_RolePion_Perceiver >( file, *this ).Initialization( GetRole< PHY_RoleInterface_Location >().GetPosition(), GetRole< PHY_RoleInterface_Location >().GetDirection() );
     LoadRole< nbc::PHY_RolePion_NBC >( file, *this );
     LoadRole< PHY_RolePion_Communications >( file, *this );
@@ -230,6 +232,7 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
     SaveRole< dotation::PHY_RolePion_Dotations >( *this, file );
     SaveRole< human::PHY_RolePion_Humans     >( *this, file );
     SaveRole< PHY_RolePion_Composantes       >( *this, file );
+    SaveRole< PHY_RolePion_ActiveProtection  >( *this, file );
     SaveRole< PHY_RolePion_Perceiver         >( *this, file );
     SaveRole< nbc::PHY_RolePion_NBC          >( *this, file );
     SaveRole< PHY_RolePion_Communications    >( *this, file );
