@@ -184,7 +184,7 @@
     </message>
     <message>
         <source>vertical short takeoff and landing</source>
-        <translation>decollage et poser vertical/court</translation>
+        <translation>décollage et poser vertical/court</translation>
     </message>
     <message>
         <source>engineer</source>
@@ -288,7 +288,7 @@
     </message>
     <message>
         <source>horse</source>
-        <translation>(u.S. - cavalry)</translation>
+        <translation>(u.s. - cavalry)</translation>
     </message>
     <message>
         <source>long range surveillance</source>
@@ -496,7 +496,7 @@
     </message>
     <message>
         <source>security police</source>
-        <translation>security police</translation>
+        <translation>police (sécurité)</translation>
     </message>
     <message>
         <source>shore patrol</source>
@@ -624,15 +624,15 @@
     </message>
     <message>
         <source>communication configured package</source>
-        <translation>communication configured package</translation>
+        <translation>paquetage de communication configuré</translation>
     </message>
     <message>
         <source>large communication configured package</source>
-        <translation>large communication configured package</translation>
+        <translation>grand paquetage de communication configuré</translation>
     </message>
     <message>
         <source>electronic ranging</source>
-        <translation>electronic ranging</translation>
+        <translation>ranging electronique</translation>
     </message>
     <message>
         <source>forward communications</source>
@@ -640,7 +640,7 @@
     </message>
     <message>
         <source>multiple subscriber element</source>
-        <translation>multiple subscriber element</translation>
+        <translation>element souscripteur multiple</translation>
     </message>
     <message>
         <source>large extension node</source>
@@ -716,7 +716,7 @@
     </message>
     <message>
         <source>fire suppression</source>
-        <translation>&quot;extinction du feu</translation>
+        <translation>extinction du feu</translation>
     </message>
     <message>
         <source>law enforcement</source>
