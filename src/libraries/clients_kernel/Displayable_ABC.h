@@ -16,7 +16,7 @@ namespace kernel
 
 // =============================================================================
 /** @class  Displayable_ABC
-    @brief  Displayable_ABC
+    @brief  Displayable definition
 */
 // Created: AGE 2006-08-24
 // =============================================================================
@@ -25,16 +25,16 @@ class Displayable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Displayable_ABC() {};
-    virtual ~Displayable_ABC() {};
+             Displayable_ABC() {}
+    virtual ~Displayable_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Display         ( Displayer_ABC& ) const {};
-    virtual void DisplayInList   ( Displayer_ABC& ) const {};
-    virtual void DisplayInTooltip( Displayer_ABC& ) const {};
-    virtual void DisplayInSummary( Displayer_ABC& ) const {};
+    virtual void Display         ( Displayer_ABC& ) const {}
+    virtual void DisplayInList   ( Displayer_ABC& ) const {}
+    virtual void DisplayInTooltip( Displayer_ABC& ) const {}
+    virtual void DisplayInSummary( Displayer_ABC& ) const {}
     //@}
 };
 

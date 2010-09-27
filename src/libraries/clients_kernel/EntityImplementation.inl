@@ -20,8 +20,8 @@ namespace kernel
 template< typename I >
 EntityImplementation< I >::EntityImplementation( Controller& controller, unsigned long id, const QString& name )
     : controller_( controller )
-    , id_( id )
-    , name_( name )
+    , id_        ( id )
+    , name_      ( name )
 {
     // NOTHING
 }

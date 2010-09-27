@@ -26,7 +26,6 @@ namespace kernel
     class PropertiesDictionary;
 }
 
-
 #include <boost/function.hpp>
 
 class ObjectAttributeFactory_ABC
@@ -34,11 +33,11 @@ class ObjectAttributeFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-            ObjectAttributeFactory_ABC() {}
+             ObjectAttributeFactory_ABC() {}
     virtual ~ObjectAttributeFactory_ABC() {}
     //@}
 
-    //! @name Registrer
+    //! @name Register
     //@{
     virtual void Create( const std::string& attribute, tools::SortedInterfaceContainer< kernel::Extension_ABC >& result, kernel::PropertiesDictionary& dico, xml::xistream& xis ) = 0;
     //@}

@@ -55,7 +55,7 @@ struct NumberFormatter
     template< typename T >
     void operator()( const T& value, Displayer_ABC& displayer ) const
     {
-        displayer.AddToDisplay( QString::number(value ) );
+        displayer.AddToDisplay( QString::number( value ) );
     }
 };
 

@@ -24,8 +24,8 @@ class Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Extension_ABC() {};
-    virtual ~Extension_ABC() {};
+             Extension_ABC() {}
+    virtual ~Extension_ABC() {}
     //@}
 };
 

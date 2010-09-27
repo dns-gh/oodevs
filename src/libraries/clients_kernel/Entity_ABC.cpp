@@ -71,7 +71,7 @@ void Entity_ABC::Draw( const geometry::Point2f& where, const Viewport_ABC& viewp
 }
 
 // -----------------------------------------------------------------------------
-// Name: SortedInterfaceContainer< Extension_ABC >& Entity_ABC::Interface
+// Name: Entity_ABC::Interface
 // Created: AGE 2006-05-02
 // -----------------------------------------------------------------------------
 tools::SortedInterfaceContainer< Extension_ABC >& Entity_ABC::Interface() const
@@ -90,4 +90,3 @@ void Entity_ABC::CheckUpdate( const type_info& /*type*/ )
                             + " could be updated with message type " + type );
     */
 }
-
