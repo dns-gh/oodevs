@@ -54,6 +54,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pResourceTools_       ( new ResourceTools() )
     , pResourceNetworkModel_( new resource::ResourceNetworkModel() )
     , pProcessMonitor_      ( new ProcessMonitor() )
+    , lastStep_             ( clock() )
 {
     assert( !pTheAgentServer_ );
     pTheAgentServer_ = this;
