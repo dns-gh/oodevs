@@ -448,6 +448,10 @@
         <source>Info/Demolition target parameters/Activation time</source>
         <translation>Info/Attributs de destruction/Délai avant activation</translation>
     </message>
+    <message>
+        <source>Object type:</source>
+        <translation>Type d&apos;objet :</translation>
+    </message>
 </context>
 <context>
     <name>Population</name>
