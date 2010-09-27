@@ -18,36 +18,6 @@
     </message>
 </context>
 <context>
-    <name>ADN_ActiveProtections_Data::ActiveProtectionsInfos</name>
-    <message>
-        <source>Active Protection</source>
-        <translation>Protection active</translation>
-    </message>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Active protection &apos;%1&apos; - Invalid ammunition type &apos;%2&apos;</source>
-        <translation>Protection active &apos;%1&apos; - Type de munition invalide &apos;%2&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons</name>
-    <message>
-        <source>Active Protection weapons</source>
-        <translation>Armes de protection active</translation>
-    </message>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid amunition &apos;%1/%2&apos;</source>
-        <translation>Equipement - Munition invalide &apos;%1/%2&apos;</translation>
-    </message>
-</context>
-<context>
     <name>ADN_ActiveProtections_GUI</name>
     <message>
         <source>Active Protection</source>
@@ -129,33 +99,6 @@
     <message>
         <source>Add new </source>
         <translation>Ajouter nouveau </translation>
-    </message>
-</context>
-<context>
-    <name>ADN_AiEngine_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Op. Indicators - Thread management - Invalid relevance effect value(must be &gt;=0 and &lt;= 100)</source>
-        <translation>Facteurs Op. - Gestion de la menace - La valeur d&apos;effet de la pertinence doit être &gt;= 0 et &lt;= 100</translation>
-    </message>
-    <message>
-        <source>Op. Indicators - Thread management - Invalid operational state effect value (must be &gt;=0 and &lt;= 100)</source>
-        <translation>Facteurs Op. - Gestion de la menace - La valeur d&apos;effet du statut opérationnel doit être &gt;= 0 et &lt;= 100</translation>
-    </message>
-    <message>
-        <source>Op. Indicators - Thread management - Invalid neutralization state effect value (must be &gt;=0 and &lt;= 100)</source>
-        <translation>Facteurs Op. - Gestion de la menace - La valeur d&apos;effet de la neutralisation doit être &gt;= 0 et &lt;= 100</translation>
-    </message>
-    <message>
-        <source>Op. Indicators - Op. state computation - Invalid equipment weight sum (must be &gt;=0 and &lt;= 1)</source>
-        <translation>Facteurs Op. - Calcul du statut opérationnel - La somme des poids des equipements doit être &gt;=0 et &lt;=1</translation>
-    </message>
-    <message>
-        <source>Op. Indicators - Op. state computation - Invalid crew state weight (must be &gt;=0 and &lt;= 1)</source>
-        <translation>Facteurs Op. - Calcul du statut opérationnel - Le poids de l&apos;équipage doit être &gt;=0 et &lt;=1</translation>
     </message>
 </context>
 <context>
@@ -320,28 +263,6 @@ Arrêt moteur allumé</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Automata_Data::AutomatonInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Automat - Invalid doctrine model &apos;%1&apos;</source>
-        <translation>Automate - Modèle invalide &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Automata_Data::UnitInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Automat - Invalid unit type &apos;%1&apos;</source>
-        <translation>Automate - Modèle invalide &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Automata_GUI</name>
     <message>
         <source>Automata</source>
@@ -496,32 +417,6 @@ Arrêt moteur allumé</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Breakdowns_Data::BreakdownInfo</name>
-    <message>
-        <source>New breakdown</source>
-        <translation>Nouvelle panne</translation>
-    </message>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Breakdowns - Invalid breakdown type &apos;%1&apos;</source>
-        <translation>Pannes - Type de panne invalide &apos;%1&apos; </translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Breakdowns_Data::RepairPartInfo</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Breakdowns - Invalid part &apos;%1&apos;</source>
-        <translation>Pannes - Pièce invalide &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Breakdowns_GUI</name>
     <message>
         <source>Breakdown</source>
@@ -599,41 +494,6 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Dead %</source>
         <translation>Mort %</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Categories_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated volume type name &apos;%1&apos;</source>
-        <translation>Catégories - Type de volume déjà existant &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated resource nature type name &apos;%1&apos;</source>
-        <translation>Catégories - Nature de ressource déjà existante &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated volume type names</source>
-        <translation>Catégories - Deux types de volume ont le même nom</translation>
-    </message>
-    <message>
-        <source>Categories - Invalid volume type name</source>
-        <translation>Catégories - Type de volume invalide</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated armor type names</source>
-        <translation>Catégories - Deux types de blindage ont le même nom</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated resource nature names</source>
-        <translation>Catégories - Deux natures de ressource ont le même nom</translation>
-    </message>
-    <message>
-        <source>Categories - Invalid resource nature</source>
-        <translation>Catégories - Nature de ressource invalide</translation>
     </message>
 </context>
 <context>
@@ -811,128 +671,6 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Remove consumption</source>
         <translation>Enlever cette consommation</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Composantes_Data::ActiveProtectionsInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid active protection type &apos;%1&apos;</source>
-        <translation>Equipement - Protection active de type &apos;%1&apos; invalide</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Composantes_Data::BreakdownGroupInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid breakdown data : sum != 100</source>
-        <translation>Equipement - La somme des probabilités de panne doit être égale à 100%</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Composantes_Data::BreakdownInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid breakdown type &apos;%1&apos;</source>
-        <translation>Equipement - Type de panne invalide &apos;%1&apos; </translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Composantes_Data::CategoryInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
-        <translation>Equipement - Type de ressource invalide &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Composantes_Data::ComposanteInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid armor and/or volume</source>
-        <translation>Equipement - Blindage et/ou volume invalide</translation>
-    </message>
-    <message>
-        <source>Missing breakdown</source>
-        <translation type="unfinished">Panne non définie</translation>
-    </message>
-    <message>
-        <source>Equipment - Shall contain at least one breakdown for </source>
-        <translation>Equipement - Aucune panne définie pour </translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Composantes_Data::ConsumptionsInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid activty &apos;%1&apos;</source>
-        <translation>Equipement - Activité invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
-        <translation>Equipement - Type de ressource invalide &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Composantes_Data::LogSupplyInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
-        <translation>Equipement - Nature de ressource invalide &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Composantes_Data::ObjectInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid object type &apos;%1&apos;</source>
-        <translation>Equipement - Type d&apos;objet invalide &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Composantes_Data::RadarInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid radar type &apos;%1&apos;</source>
-        <translation>Equipement - Type de radar invalide &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Composantes_Data::WeaponInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid weapon system &apos;%1/%2&apos;</source>
-        <translation>Catégories - Système d&apos;armes invalide &apos;%1/%2&apos;</translation>
     </message>
 </context>
 <context>
@@ -1561,17 +1299,6 @@ Arrêt moteur allumé</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Equipement_Data::CategoryInfo</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
-        <translation>Equipement - Nature de ressource invalide &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Equipement_Data::IndirectAmmoInfos</name>
     <message>
         <source>Invalid data</source>
@@ -1831,17 +1558,6 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Default assignation</source>
         <translation>Assignation par défaut</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Health_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Logistic medical system - Invalid wound type &apos;%1&apos;</source>
-        <translation>Chaîne médicale - Type de blessure invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -2598,28 +2314,6 @@ du tireur</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Models_Data::MissionInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Doctrine models - Invalid mission &apos;%1&apos;</source>
-        <translation>Modèles - Mission invalide &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Models_Data::OrderInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Doctrine models - Invalid frag order &apos;%1&apos;</source>
-        <translation>Modèles - Ordre de conduite invalide &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Models_GUI</name>
     <message>
         <source>Unit models</source>
@@ -2656,25 +2350,6 @@ du tireur</translation>
     <message>
         <source>FragOrders</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_NBC_Datas::NbcIntoxInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>NBC - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
-        <translation>NBC - La blessure &apos;%1&apos; ne peut être &lt;0 ou &gt;1</translation>
-    </message>
-    <message>
-        <source>NBC - Invalid wound type &apos;%1&apos;</source>
-        <translation>NBC - Type de blessure invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>NBC - Agent &apos;%1&apos; - Poisoning effect data sum &lt; 100</source>
-        <translation>NBC - Agent &apos;%1&apos; - La somme des effets d&apos;empoisonnement est &lt;100</translation>
     </message>
 </context>
 <context>
@@ -3151,21 +2826,6 @@ Assurez vous que le fichier existe.</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Population_Data::PopulationInfos</name>
-    <message>
-        <source>Population types - Invalid behavior model &apos;%1&apos;</source>
-        <translation>Populations - Modèle invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Population types - Invalid population attitude &apos;%1&apos;</source>
-        <translation>Populations - Attitude invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Population types - Invalid population &apos;rules of engagment&apos; &apos;%1&apos;</source>
-        <translation>Populations - ROE invalide &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Population_FireEffectRoe_GUI</name>
     <message>
         <source>ROE</source>
@@ -3323,32 +2983,6 @@ Assurez vous que le fichier existe.</translation>
     <message>
         <source>Click &quot;Done&quot; to create the new population.</source>
         <translation>Cliquez sur &quot;Terminer&quot; pour créer la nouvelle population.</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Radars_Data::DetectTimes</name>
-    <message>
-        <source>Sensors - Invalid level &apos;%1&apos;</source>
-        <translation>Capteurs - Niveau invalide &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Radars_Data::RadarInfos</name>
-    <message>
-        <source>New special sensor</source>
-        <translation>Création d&apos;un nouveau capteur spécial</translation>
-    </message>
-    <message>
-        <source>Sensors - Invalid radar type &apos;%1&apos;</source>
-        <translation>Capteurs - Type de radar invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Sensors - Invalid activity &apos;%1&apos;</source>
-        <translation>Capteurs - Activité invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -3529,40 +3163,6 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     <message>
         <source>Click &quot;Done&quot; to create the new sensor.</source>
         <translation>Cliquez sur &quot;Terminer&quot; pour créer le nouveau capteur.</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Sensors_Data::SensorInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Sensors - Invalid unit volume &apos;%1&apos;</source>
-        <translation>Capteurs - Volume invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Sensors - Invalid weather &apos;%1&apos;</source>
-        <translation>Capteurs - Météo invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Sensors - Invalid stance &apos;%1&apos;</source>
-        <translation>Capteurs - Posture invalide &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Sensors_Data::TargetInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Sensors - Invalid stance &apos;%1&apos;</source>
-        <translation>Capteurs - Posture invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Sensors - Invalid object &apos;%1&apos;</source>
-        <translation>Capteurs - Objet invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -3900,29 +3500,6 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     <message>
         <source>Click here to select</source>
         <translation>Cliquer ici pour sélectionner</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Supply_Data::SupplyDataInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Logistic supply system - Invalid unit &apos;%1&apos;</source>
-        <translation>Chaîne ravitaillement - Pion invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Logistic supply system - Invalid mission &apos;%1&apos;</source>
-        <translation>Chaîne ravitaillement - Mission invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Logistic supply systems - Convoy unit type not defined</source>
-        <translation>Chaîne ravitaillement - Type de convoi invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Logistic supply system - Invalid unit type for convoy units</source>
-        <translation>Chaîne ravitaillement - Type de convoi invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -4813,59 +4390,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
 </context>
 <context>
-    <name>ADN_Units_Data::ComposanteInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Unit types - Invalid equipment &apos;%1&apos;</source>
-        <translation>Type de pion - équipement &quot;%1&quot; invalide</translation>
-    </message>
-    <message>
-        <source>Unit has no crew in equipment &apos;%1&apos;</source>
-        <translation>Le pion n&apos;a pas d&apos;équipage dans l&apos;équipement &quot;%1&quot;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Units_Data::StockLogThresholdInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Unit types - Invalid resource &apos;%1&apos;</source>
-        <translation>Type de pion - ressource &quot;%1&quot; invalide</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Units_Data::UnitInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Unit types - Invalid stance &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit types - Invalid unit type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit types - Invalid doctrine model &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit types - Invalid hierarchical level &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit types - Invalid &apos;Atlas&apos; attribute &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ADN_Units_GUI</name>
     <message>
         <source>Unit</source>
@@ -5010,29 +4534,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
 </context>
 <context>
-    <name>ADN_Urban_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Material - Duplicated volume type names</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Facade - Duplicated material type name &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Facade - Invalid volume type name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>RoofShape - Invalid volume type name</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ADN_Urban_GUI</name>
     <message>
         <source>Materials</source>
@@ -5102,25 +4603,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>New weapon creation</source>
         <translation>Création d&apos;une nouvelle arme</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Weapons_Data::WeaponInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid launcher type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid ammunition type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Weapon %1 - Indirect fire - max range &lt; min range</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5489,10 +4971,255 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
 </context>
 <context>
+    <name>ActiveProtections_Data</name>
+    <message>
+        <source>Active Protection weapons</source>
+        <translation type="unfinished">Armes de protection active</translation>
+    </message>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid amunition &apos;%1/%2&apos;</source>
+        <translation type="unfinished">Equipement - Munition invalide &apos;%1/%2&apos;</translation>
+    </message>
+    <message>
+        <source>Active protection &apos;%1&apos; - Invalid ammunition type &apos;%2&apos;</source>
+        <translation type="unfinished">Protection active &apos;%1&apos; - Type de munition invalide &apos;%2&apos;</translation>
+    </message>
+    <message>
+        <source>Active Protection</source>
+        <translation type="unfinished">Protection active</translation>
+    </message>
+</context>
+<context>
+    <name>AiEngine_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Op. Indicators - Thread management - Invalid relevance effect value(must be &gt;=0 and &lt;= 100)</source>
+        <translation type="unfinished">Facteurs Op. - Gestion de la menace - La valeur d&apos;effet de la pertinence doit être &gt;= 0 et &lt;= 100</translation>
+    </message>
+    <message>
+        <source>Op. Indicators - Thread management - Invalid operational state effect value (must be &gt;=0 and &lt;= 100)</source>
+        <translation type="unfinished">Facteurs Op. - Gestion de la menace - La valeur d&apos;effet du statut opérationnel doit être &gt;= 0 et &lt;= 100</translation>
+    </message>
+    <message>
+        <source>Op. Indicators - Thread management - Invalid neutralization state effect value (must be &gt;=0 and &lt;= 100)</source>
+        <translation type="unfinished">Facteurs Op. - Gestion de la menace - La valeur d&apos;effet de la neutralisation doit être &gt;= 0 et &lt;= 100</translation>
+    </message>
+    <message>
+        <source>Op. Indicators - Op. state computation - Invalid equipment weight sum (must be &gt;=0 and &lt;= 1)</source>
+        <translation type="unfinished">Facteurs Op. - Calcul du statut opérationnel - La somme des poids des equipements doit être &gt;=0 et &lt;=1</translation>
+    </message>
+    <message>
+        <source>Op. Indicators - Op. state computation - Invalid crew state weight (must be &gt;=0 and &lt;= 1)</source>
+        <translation type="unfinished">Facteurs Op. - Calcul du statut opérationnel - Le poids de l&apos;équipage doit être &gt;=0 et &lt;=1</translation>
+    </message>
+</context>
+<context>
     <name>Application</name>
     <message>
         <source>SWORD</source>
         <translation>SWORD</translation>
+    </message>
+</context>
+<context>
+    <name>Automata_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Automat - Invalid unit type &apos;%1&apos;</source>
+        <translation type="unfinished">Automate - Modèle invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Automat - Invalid doctrine model &apos;%1&apos;</source>
+        <translation type="unfinished">Automate - Modèle invalide &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>Breakdown_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Breakdowns - Invalid part &apos;%1&apos;</source>
+        <translation type="unfinished">Pannes - Pièce invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>New breakdown</source>
+        <translation type="unfinished">Nouvelle panne</translation>
+    </message>
+    <message>
+        <source>Breakdowns - Invalid breakdown type &apos;%1&apos;</source>
+        <translation type="unfinished">Pannes - Type de panne invalide &apos;%1&apos; </translation>
+    </message>
+</context>
+<context>
+    <name>Categories_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Categories - Duplicated volume type name &apos;%1&apos;</source>
+        <translation type="unfinished">Catégories - Type de volume déjà existant &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Categories - Duplicated resource nature type name &apos;%1&apos;</source>
+        <translation type="unfinished">Catégories - Nature de ressource déjà existante &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Categories - Duplicated volume type names</source>
+        <translation type="unfinished">Catégories - Deux types de volume ont le même nom</translation>
+    </message>
+    <message>
+        <source>Categories - Invalid volume type name</source>
+        <translation type="unfinished">Catégories - Type de volume invalide</translation>
+    </message>
+    <message>
+        <source>Categories - Duplicated armor type names</source>
+        <translation type="unfinished">Catégories - Deux types de blindage ont le même nom</translation>
+    </message>
+    <message>
+        <source>Categories - Duplicated resource nature names</source>
+        <translation type="unfinished">Catégories - Deux natures de ressource ont le même nom</translation>
+    </message>
+    <message>
+        <source>Categories - Invalid resource nature</source>
+        <translation type="unfinished">Catégories - Nature de ressource invalide</translation>
+    </message>
+</context>
+<context>
+    <name>Composante_Data</name>
+    <message>
+        <source>Missing breakdown</source>
+        <translation type="unfinished">Panne non définie</translation>
+    </message>
+    <message>
+        <source>Equipment - Shall contain at least one breakdown for </source>
+        <translation type="unfinished">Equipement - Aucune panne définie pour </translation>
+    </message>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
+        <translation type="unfinished">Equipement - Nature de ressource invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid breakdown type &apos;%1&apos;</source>
+        <translation type="unfinished">Equipement - Type de panne invalide &apos;%1&apos; </translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid breakdown data : sum != 100</source>
+        <translation type="unfinished">Equipement - La somme des probabilités de panne doit être égale à 100%</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid radar type &apos;%1&apos;</source>
+        <translation type="unfinished">Equipement - Type de radar invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid weapon system &apos;%1/%2&apos;</source>
+        <translation type="unfinished">Catégories - Système d&apos;armes invalide &apos;%1/%2&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid active protection type &apos;%1&apos;</source>
+        <translation type="unfinished">Equipement - Protection active de type &apos;%1&apos; invalide</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid object type &apos;%1&apos;</source>
+        <translation type="unfinished">Equipement - Type d&apos;objet invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid activty &apos;%1&apos;</source>
+        <translation type="unfinished">Equipement - Activité invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid armor and/or volume</source>
+        <translation type="unfinished">Equipement - Blindage et/ou volume invalide</translation>
+    </message>
+</context>
+<context>
+    <name>Equipment_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
+        <translation type="unfinished">Equipement - Nature de ressource invalide &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>Health_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Logistic medical system - Invalid wound type &apos;%1&apos;</source>
+        <translation type="unfinished">Chaîne médicale - Type de blessure invalide &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>Models_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Doctrine models - Invalid frag order &apos;%1&apos;</source>
+        <translation type="unfinished">Modèles - Ordre de conduite invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Doctrine models - Invalid mission &apos;%1&apos;</source>
+        <translation type="unfinished">Modèles - Mission invalide &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>NBC_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Donnée invalide</translation>
+    </message>
+    <message>
+        <source>NBC - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
+        <translation type="unfinished">NBC - La blessure &apos;%1&apos; ne peut être &lt;0 ou &gt;1</translation>
+    </message>
+    <message>
+        <source>NBC - Invalid wound type &apos;%1&apos;</source>
+        <translation type="unfinished">NBC - Type de blessure invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>NBC - Agent &apos;%1&apos; - Poisoning effect data sum &lt; 100</source>
+        <translation type="unfinished">NBC - Agent &apos;%1&apos; - La somme des effets d&apos;empoisonnement est &lt;100</translation>
+    </message>
+</context>
+<context>
+    <name>Population_Data</name>
+    <message>
+        <source>Population types - Invalid behavior model &apos;%1&apos;</source>
+        <translation type="unfinished">Populations - Modèle invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Population types - Invalid population attitude &apos;%1&apos;</source>
+        <translation type="unfinished">Populations - Attitude invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Population types - Invalid population &apos;rules of engagment&apos; &apos;%1&apos;</source>
+        <translation type="unfinished">Populations - ROE invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -5516,6 +5243,156 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>s</source>
         <comment>ADN_Rich_ListViewItem</comment>
         <translation>s</translation>
+    </message>
+</context>
+<context>
+    <name>Radars_Data</name>
+    <message>
+        <source>Sensors - Invalid level &apos;%1&apos;</source>
+        <translation type="unfinished">Capteurs - Niveau invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>New special sensor</source>
+        <translation type="unfinished">Création d&apos;un nouveau capteur spécial</translation>
+    </message>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Sensors - Invalid radar type &apos;%1&apos;</source>
+        <translation type="unfinished">Capteurs - Type de radar invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Sensors - Invalid activity &apos;%1&apos;</source>
+        <translation type="unfinished">Capteurs - Activité invalide &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>Sensor_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Sensors - Invalid stance &apos;%1&apos;</source>
+        <translation type="unfinished">Capteurs - Posture invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Sensors - Invalid object &apos;%1&apos;</source>
+        <translation type="unfinished">Capteurs - Objet invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Sensors - Invalid unit volume &apos;%1&apos;</source>
+        <translation type="unfinished">Capteurs - Volume invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Sensors - Invalid weather &apos;%1&apos;</source>
+        <translation type="unfinished">Capteurs - Météo invalide &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>Supply_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Logistic supply system - Invalid unit &apos;%1&apos;</source>
+        <translation type="unfinished">Chaîne ravitaillement - Pion invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Logistic supply system - Invalid mission &apos;%1&apos;</source>
+        <translation type="unfinished">Chaîne ravitaillement - Mission invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Logistic supply systems - Convoy unit type not defined</source>
+        <translation type="unfinished">Chaîne ravitaillement - Type de convoi invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Logistic supply system - Invalid unit type for convoy units</source>
+        <translation type="unfinished">Chaîne ravitaillement - Type de convoi invalide &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>Units_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Unit types - Invalid equipment &apos;%1&apos;</source>
+        <translation type="unfinished">Type de pion - équipement &quot;%1&quot; invalide</translation>
+    </message>
+    <message>
+        <source>Unit has no crew in equipment &apos;%1&apos;</source>
+        <translation type="unfinished">Le pion n&apos;a pas d&apos;équipage dans l&apos;équipement &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <source>Unit types - Invalid resource &apos;%1&apos;</source>
+        <translation type="unfinished">Type de pion - ressource &quot;%1&quot; invalide</translation>
+    </message>
+    <message>
+        <source>Unit types - Invalid stance &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit types - Invalid unit type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit types - Invalid doctrine model &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit types - Invalid hierarchical level &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit types - Invalid &apos;Atlas&apos; attribute &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Urban_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Facade - Duplicated material type name &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Material - Duplicated volume type names</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Facade - Invalid volume type name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RoofShape - Invalid volume type name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Weapons_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid launcher type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid ammunition type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weapon %1 - Indirect fire - max range &lt; min range</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -123,4 +123,11 @@ public:
     //@}
 };
 
+
+namespace tools
+{
+    QString translate( const char* context, const char* what );
+}
+
+
 #endif // __ADN_Tr_h_

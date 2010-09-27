@@ -16,6 +16,7 @@
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_Tools.h"
+#include "ADN_Tr.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_AiEngine_Data constructor
@@ -80,13 +81,13 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
             >> xml::end;
 
     if( rPertinenceMaxDecrease_.GetData() < 0.0 || rPertinenceMaxDecrease_.GetData() > 100.0 )
-        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Op. Indicators - Thread management - Invalid relevance effect value(must be >=0 and <= 100)" ).ascii() );
+        throw ADN_DataException( tools::translate( "AiEngine_Data",  "Invalid data" ).ascii(), tools::translate( "AiEngine_Data", "Op. Indicators - Thread management - Invalid relevance effect value(must be >=0 and <= 100)" ).ascii() );
 
     if( rOperationalStateMaxDecrease_.GetData() < 0.0 || rOperationalStateMaxDecrease_.GetData() > 100.0 )
-        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Op. Indicators - Thread management - Invalid operational state effect value (must be >=0 and <= 100)" ).ascii() );
+        throw ADN_DataException( tools::translate( "AiEngine_Data","Invalid data" ).ascii(), tools::translate( "AiEngine_Data", "Op. Indicators - Thread management - Invalid operational state effect value (must be >=0 and <= 100)" ).ascii() );
 
     if( rNeutralizedStateMaxDecrease_.GetData() < 0.0 || rNeutralizedStateMaxDecrease_.GetData() > 100.0 )
-        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Op. Indicators - Thread management - Invalid neutralization state effect value (must be >=0 and <= 100)" ).ascii() );
+        throw ADN_DataException( tools::translate( "AiEngine_Data", "Invalid data" ).ascii(), tools::translate( "AiEngine_Data", "Op. Indicators - Thread management - Invalid neutralization state effect value (must be >=0 and <= 100)" ).ascii() );
 
     input >> xml::start( "operational-state-weights" )
             >> xml::attribute( "component", rMinorEquipmentWeight_ )
@@ -95,16 +96,16 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
           >> xml::end;
 
     if( rMinorEquipmentWeight_.GetData() < 0.0 || rMinorEquipmentWeight_.GetData() > 1.0 )
-        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Op. Indicators - Op. state computation - Invalid equipment weight sum (must be >=0 and <= 1)" ).ascii() );
+        throw ADN_DataException( tools::translate( "AiEngine_Data", "Invalid data" ).ascii(), tools::translate( "AiEngine_Data", "Op. Indicators - Op. state computation - Invalid equipment weight sum (must be >=0 and <= 1)" ).ascii() );
 
     if( rMajorEquipmentWeight_.GetData() < 0.0 || rMajorEquipmentWeight_.GetData() > 1.0 )
-        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Op. Indicators - Op. state computation - Invalid equipment weight sum (must be >=0 and <= 1)" ).ascii() );
+        throw ADN_DataException( tools::translate( "AiEngine_Data", "Invalid data" ).ascii(), tools::translate( "AiEngine_Data", "Op. Indicators - Op. state computation - Invalid equipment weight sum (must be >=0 and <= 1)" ).ascii() );
 
     if( rMinorEquipmentWeight_.GetData() + rMajorEquipmentWeight_.GetData() != 1.0 )
-        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Op. Indicators - Op. state computation - Invalid equipment weight sum (must be >=0 and <= 1)" ).ascii() );
+        throw ADN_DataException( tools::translate( "AiEngine_Data", "Invalid data" ).ascii(), tools::translate( "AiEngine_Data", "Op. Indicators - Op. state computation - Invalid equipment weight sum (must be >=0 and <= 1)" ).ascii() );
 
     if( rHumanWeight_.GetData() < 0.0 || rHumanWeight_.GetData() > 1.0 )
-        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Op. Indicators - Op. state computation - Invalid crew state weight (must be >=0 and <= 1)" ).ascii() );
+        throw ADN_DataException( tools::translate( "AiEngine_Data", "Invalid data" ).ascii(), tools::translate( "AiEngine_Data", "Op. Indicators - Op. state computation - Invalid crew state weight (must be >=0 and <= 1)" ).ascii() );
 
     input >> xml::start( "force-ratio" )
             >> xml::attribute( "default-feedback-time", rDefaultFeedbackTime_ )

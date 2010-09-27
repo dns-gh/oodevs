@@ -848,7 +848,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Detection::ReadAcquisitionTime( xml::xi
         detectTime_ = time;
     }
     else
-        throw ADN_DataException( "Invalid data", tr( "Objects - Invalid level '%1'" ).arg( level.c_str() ).ascii() );
+        throw ADN_DataException( "Invalid data", tools::translate( "Object_Data", "Objects - Invalid level '%1'" ).arg( level.c_str() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -967,7 +967,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier::ReadArchive( xml::xis
     input >> xml::attribute( "attitude", strAttitude );
     attitude_ = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
     if( attitude_ == (E_PopulationAttitude)-1 )
-        throw ADN_DataException( "Invalid data", tr( "Population types - Invalid population attitude '%1'" ).arg( strAttitude.c_str() ).ascii() );
+        throw ADN_DataException( "Invalid data", tools::translate( "Object_Data", "Population types - Invalid population attitude '%1'" ).arg( strAttitude.c_str() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------

@@ -129,7 +129,7 @@ void ADN_Equipement_Data::CategoryInfo::ReadArchive( xml::xistream& input )
           >> xml::attribute( "nature", strNature );
     ADN_Categories_Data::DotationNatureInfos* pNature = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindDotationNature( strNature );
     if( !pNature )
-        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid resource nature '%1'" ).arg( strNature.c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "Equipment_Data", "Invalid data" ).ascii(), tools::translate( "Equipment_Data", "Equipment - Invalid resource nature '%1'" ).arg( strNature.c_str() ).ascii() );
     ptrDotationNature_ = pNature;
 }
 

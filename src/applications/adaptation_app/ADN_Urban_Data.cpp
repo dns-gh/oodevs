@@ -306,7 +306,7 @@ void ADN_Urban_Data::ReadFacade( xml::xistream& input )
     const std::string strName = xml::attribute< std::string >( input, "name" );
     T_UrbanInfos_Vector::const_iterator it = std::find_if( vFacades_.begin(), vFacades_.end(), ADN_String_Cmp( strName ) );
     if( it != vFacades_.end() )
-        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Facade - Duplicated material type name '%1'" ).arg( strName.c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).ascii(), tools::translate( "Urban_Data", "Facade - Duplicated material type name '%1'" ).arg( strName.c_str() ).ascii() );
 
     UrbanInfos* pNewFacade = new UrbanInfos( strName );
     pNewFacade->SetDataName( "le nom du type de facade" );
@@ -321,13 +321,13 @@ void ADN_Urban_Data::WriteFacades( xml::xostream& output ) const
 {
     // Check the sizes data for duplicates.
     if( HasDuplicates( vFacades_, StringExtractor() ) )
-        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Material - Duplicated volume type names" ).ascii() );
+        throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).ascii(), tools::translate( "Urban_Data", "Material - Duplicated volume type names" ).ascii() );
 
     output << xml::start( "facade-types" );
     for( T_UrbanInfos_Vector::const_iterator itFacade = vFacades_.begin(); itFacade != vFacades_.end(); ++itFacade )
     {
         if( ( *itFacade )->GetData().empty() )
-            throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Facade - Invalid volume type name" ).ascii() );
+            throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).ascii(), tools::translate( "Urban_Data", "Facade - Invalid volume type name" ).ascii() );
 
         std::string strData = ( *itFacade )->GetData();
         output << xml::start( "facade-type" )
@@ -357,7 +357,7 @@ void ADN_Urban_Data::ReadRoofShape( xml::xistream& input )
     std::string strName = input.attribute< std::string >( "name" );
     T_UrbanInfos_Vector::iterator foundRoofShape = std::find_if( vRoofShapes_.begin(), vRoofShapes_.end(), ADN_String_Cmp( strName ) );
     if( foundRoofShape != vRoofShapes_.end() )
-        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Facade - Duplicated material type name '%1'" ).arg( strName.c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).ascii(), tools::translate( "Urban_Data", "Facade - Duplicated material type name '%1'" ).arg( strName.c_str() ).ascii() );
 
     UrbanInfos* pNewRoofShape = new UrbanInfos(strName);
     pNewRoofShape->SetDataName( "le nom du type de facade" );
@@ -372,13 +372,13 @@ void ADN_Urban_Data::WriteRoofShapes( xml::xostream& output ) const
 {
     // Check the sizes data for duplicates.
     if( HasDuplicates( vRoofShapes_, StringExtractor() ) )
-        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Material - Duplicated volume type names" ).ascii() );
+        throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).ascii(), tools::translate( "Urban_Data", "Material - Duplicated volume type names" ).ascii() );
 
     output << xml::start( "roof-shape-types" );
     for( T_UrbanInfos_Vector::const_iterator itRoofShape = vRoofShapes_.begin(); itRoofShape != vRoofShapes_.end(); ++itRoofShape )
     {
         if( (*itRoofShape)->GetData().empty() )
-            throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "RoofShape - Invalid volume type name" ).ascii() );
+            throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).ascii(), tools::translate( "Urban_Data", "RoofShape - Invalid volume type name" ).ascii() );
         std::string strData = ( *itRoofShape )->GetData();
         output << xml::start( "roof-shape-type" )
             << xml::attribute( "name", trim( strData ) )

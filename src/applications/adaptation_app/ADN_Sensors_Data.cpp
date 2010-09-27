@@ -537,7 +537,7 @@ void ADN_Sensors_Data::TargetInfos::ReadPosture( xml::xistream& input )
             vModifStance_.at( i )->ReadArchive( input );
             return;
         }
-    throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Sensors - Invalid stance '%1'" ).arg( type.c_str() ).ascii() );
+    throw ADN_DataException( tools::translate( "Sensor_Data", "Invalid data" ).ascii(), tools::translate( "Sensor_Data", "Sensors - Invalid stance '%1'" ).arg( type.c_str() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -550,7 +550,7 @@ void ADN_Sensors_Data::TargetInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "type", strType );
     ADN_Objects_Data::ObjectInfos* pObject = ADN_Workspace::GetWorkspace().GetObjects().GetData().FindObject( strType );
     if( !pObject )
-        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Sensors - Invalid object '%1'" ).arg( strType.c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "Sensor_Data", "Invalid data" ).ascii(),tools::translate( "Sensor_Data", "Sensors - Invalid object '%1'" ).arg( strType.c_str() ).ascii() );
     ptrObject_ = pObject;
     strName_ = ptrObject_.GetData()->strName_.GetData();
 
@@ -894,7 +894,7 @@ void ADN_Sensors_Data::SensorInfos::ReadSize( xml::xistream& input )
     if( it != vModifSizes_.end() )
         (*it)->ReadArchive( input );
     else
-    throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Sensors - Invalid unit volume '%1'" ).arg( type.c_str() ).ascii() );
+    throw ADN_DataException( tools::translate( "Sensor_Data", "Invalid data" ).ascii(), tools::translate( "Sensor_Data", "Sensors - Invalid unit volume '%1'" ).arg( type.c_str() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -911,7 +911,7 @@ void ADN_Sensors_Data::SensorInfos::ReadPrecipitation( xml::xistream& input )
             return;
 
     }
-    throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Sensors - Invalid weather '%1'" ).arg( type.c_str() ).ascii() );
+    throw ADN_DataException( tools::translate( "Sensor_Data", "Invalid data" ).ascii(),tools::translate( "Sensor_Data", "Sensors - Invalid weather '%1'" ).arg( type.c_str() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -938,7 +938,7 @@ void ADN_Sensors_Data::SensorInfos::ReadSourcePosture( xml::xistream& input )
             vModifStance_.at( i )->ReadArchive( input );
             return;
         }
-    throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Sensors - Invalid stance '%1'" ).arg( type.c_str() ).ascii() );
+    throw ADN_DataException( tools::translate( "Sensor_Data", "Invalid data" ).ascii(), tools::translate( "Sensor_Data", "Sensors - Invalid stance '%1'" ).arg( type.c_str() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -954,7 +954,7 @@ void ADN_Sensors_Data::SensorInfos::ReadTargetPosture( xml::xistream& input )
             vModifTargetStance_.at( i )->ReadArchive( input );
             return;
         }
-    throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Sensors - Invalid stance '%1'" ).arg( type.c_str() ).ascii() );
+    throw ADN_DataException( tools::translate( "Sensor_Data", "Invalid data" ).ascii(), tools::translate( "Sensor_Data", "Sensors - Invalid stance '%1'" ).arg( type.c_str() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -979,7 +979,7 @@ void ADN_Sensors_Data::SensorInfos::ReadUrbanBlockMaterial( xml::xistream& input
     if( it != vModifUrbanBlocks_.end() )
         (*it)->ReadArchive( input );
     else
-        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Sensors - Invalid unit volume '%1'" ).arg( type.c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "Sensor_Data", "Invalid data" ).ascii(), tools::translate( "Sensor_Data", "Sensors - Invalid unit volume '%1'" ).arg( type.c_str() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------

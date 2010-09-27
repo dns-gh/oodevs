@@ -15,6 +15,7 @@
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_Tools.h"
+#include "ADN_Tr.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ActiveProtections_Data constructor
@@ -116,7 +117,7 @@ void ADN_ActiveProtections_Data::WriteArchive( xml::xostream& xos )
 ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::ActiveProtectionsInfosWeapons()
     : ADN_Ref_ABC()
     , ADN_DataTreeNode_ABC()
-    , strName_    ( tr( "Active Protection weapons" ).ascii() )
+    , strName_    ( tools::translate( "ActiveProtections_Data", "Active Protection weapons" ).ascii() )
     , ptrWeapon_  ( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_, 0 )
     , coefficient_( 0 )
 {
@@ -134,7 +135,7 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::ReadArchive( xml
         >> xml::attribute( "coefficient", coefficient_ );
     ADN_Equipement_Data::CategoryInfo* pWeapon = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( "munition", strAmmunition );
     if( !pWeapon )
-        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid amunition '%1/%2'" ).arg( strAmmunition.c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "ActiveProtections_Data",  "Invalid data" ).ascii(), tools::translate( "ActiveProtections_Data",  "Equipment - Invalid amunition '%1/%2'" ).arg( strAmmunition.c_str() ).ascii() );
     ptrWeapon_ = (ADN_Equipement_Data::AmmoCategoryInfo*)pWeapon;
     strName_ = pWeapon->strName_.GetData();
 }
@@ -167,7 +168,7 @@ std::string ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::GetItemNa
 ADN_ActiveProtections_Data::ActiveProtectionsInfos::ActiveProtectionsInfos()
     : ADN_Ref_ABC()
     , ADN_DataTreeNode_ABC()
-    , strName_      ( tr( "Active Protection" ).ascii() )
+    , strName_      ( tools::translate( "ActiveProtections_Data", "Active Protection" ).ascii() )
     , coefficient_  ( 0 )
     , hardKill_     ( false )
     , usage_        ( 0 )
@@ -227,7 +228,7 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadArchive( xml::xistr
         >> xml::list( "weapon", *this, &ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadWeapon );
     ADN_Equipement_Data::CategoryInfo* pAmmo = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( "munition", strAmmunition );
     if( !pAmmo )
-        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Active protection '%1' - Invalid ammunition type '%2'" ).arg( strName_.GetData().c_str() ,strAmmunition.c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "ActiveProtections_Data",  "Invalid data" ).ascii(), tools::translate( "ActiveProtections_Data",  "Active protection '%1' - Invalid ammunition type '%2'" ).arg( strName_.GetData().c_str() ,strAmmunition.c_str() ).ascii() );
     ptrAmmunition_ = (ADN_Equipement_Data::AmmoCategoryInfo*)pAmmo;
 }
 

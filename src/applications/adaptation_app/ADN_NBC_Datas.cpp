@@ -15,6 +15,7 @@
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_Tools.h"
+#include "ADN_Tr.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_NBC_Datas::NbcIntoxInfos
@@ -101,10 +102,10 @@ void ADN_NBC_Datas::NbcIntoxInfos::ReadEffect( xml::xistream& input )
     {
         *pWound = input.attribute< double >( "percentage" ) * 100.;
         if( pWound->GetData() < 0. || pWound->GetData() > 100. )
-            throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "NBC - Wound '%1' data < 0 or > 1" ).arg( wound.c_str() ).ascii() );
+            throw ADN_DataException( tools::translate( "NBC_Data", "Invalid data" ).ascii(), tools::translate( "NBC_Data", "NBC - Wound '%1' data < 0 or > 1" ).arg( wound.c_str() ).ascii() );
     }
     else
-        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "NBC - Invalid wound type '%1'" ).arg( wound.c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "NBC_Data", "Invalid data" ).ascii(),tools::translate( "NBC_Data", "NBC - Invalid wound type '%1'" ).arg( wound.c_str() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +119,7 @@ void ADN_NBC_Datas::NbcIntoxInfos::ReadArchive( xml::xistream& input )
     {
         input >> xml::list( "effect", *this, &ADN_NBC_Datas::NbcIntoxInfos::ReadEffect );
         if( rNbAlivedHumans_.GetData() + rNbHurtedHumans1_.GetData() + rNbHurtedHumans2_.GetData() + rNbHurtedHumans3_.GetData() + rNbHurtedHumansE_.GetData() + rNbDeadHumans_.GetData() != 100.0 )
-            throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "NBC - Agent '%1' - Poisoning effect data sum < 100" ).arg( GetParentNode()->GetNodeName().c_str() ).ascii() );
+            throw ADN_DataException( tools::translate( "NBC_Data", "Invalid data" ).ascii(), tools::translate( "NBC_Data","NBC - Agent '%1' - Poisoning effect data sum < 100" ).arg( GetParentNode()->GetNodeName().c_str() ).ascii() );
     }
     input >> xml::optional >> xml::attribute( "contamination", bContaminationPresent_ );
 }
@@ -145,7 +146,7 @@ void ADN_NBC_Datas::NbcIntoxInfos::WriteContent( xml::xostream& output )
     if( bIntoxPresent_.GetData() )
     {
         if( rNbAlivedHumans_.GetData() + rNbHurtedHumans1_.GetData() + rNbHurtedHumans2_.GetData() + rNbHurtedHumans3_.GetData() + rNbHurtedHumansE_.GetData() + rNbDeadHumans_.GetData() != 100.0 )
-            throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "NBC - Agent '%1' - Poisoning effect data sum < 100" ).arg( GetParentNode()->GetNodeName().c_str() ).ascii() );
+            throw ADN_DataException( tools::translate( "NBC_Data","Invalid data" ).ascii(), tools::translate( "NBC_Data", "NBC - Agent '%1' - Poisoning effect data sum < 100" ).arg( GetParentNode()->GetNodeName().c_str() ).ascii() );
         output << xml::attribute( "intoxication", "true" )
                << xml::start( "effect" )
                 << xml::attribute( "wound", "nonblesse" )

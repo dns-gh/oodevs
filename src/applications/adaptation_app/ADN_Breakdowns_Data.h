@@ -22,6 +22,7 @@
 #include "ADN_Data_ABC.h"
 #include "ADN_Types.h"
 #include "ADN_Equipement_Data.h"
+#include "ADN_Tr.h"
 
 class xml::xistream;
 

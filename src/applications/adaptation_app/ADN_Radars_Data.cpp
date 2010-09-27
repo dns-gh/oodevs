@@ -89,7 +89,7 @@ void ADN_Radars_Data::DetectTimes::ReadAcquisitionTime( xml::xistream& input, bo
         detectTime_ = time;
     }
     else
-        throw ADN_DataException( "Invalid data", tr( "Sensors - Invalid level '%1'" ).arg( level.c_str() ).ascii() );
+        throw ADN_DataException( "Invalid data", tools::translate( "Radars_Data", "Sensors - Invalid level '%1'" ).arg( level.c_str() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,7 +123,7 @@ void ADN_Radars_Data::DetectTimes::WriteArchive( xml::xostream& output, bool bHq
 ADN_Radars_Data::RadarInfos::RadarInfos()
     : ADN_Ref_ABC()
     , ADN_DataTreeNode_ABC()
-    , strName_                  ( tr( "New special sensor" ).ascii() )
+    , strName_                  (  tools::translate( "Radars_Data", "New special sensor" ).ascii() )
     , rRange_                  ( 0 )
     , bHasMaxHeight_           ( false )
     , rMaxHeight_              ( 0 )
@@ -208,7 +208,7 @@ void ADN_Radars_Data::RadarInfos::ReadArchive( xml::xistream& input )
           >> xml::attribute( "type", type );
     nType_ = ADN_Tr::ConvertToRadarType( type );
     if( nType_ == E_RadarType(-1 ) )
-        throw ADN_DataException( "Invalid data", tr( "Sensors - Invalid radar type '%1'" ).arg( type.c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "Radars_Data", "Invalid data").ascii(),  tools::translate( "Radars_Data", "Sensors - Invalid radar type '%1'" ).arg( type.c_str() ).ascii() );
 
     input >> xml::attribute( "action-range", rRange_ )
           >> xml::optional >> xml::attribute( "min-height", rMinHeight_ )
@@ -242,7 +242,7 @@ void ADN_Radars_Data::RadarInfos::ReadDetectableActivity( xml::xistream& input )
           >> xml::optional >> xml::attribute( "value", value );
     unsigned n = (unsigned)ADN_Tr::ConvertToConsumptionType( consumption );
     if( n == unsigned( -1 ) )
-        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Sensors - Invalid activity '%1'" ).arg( consumption.c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "Radars_Data", "Invalid data" ).ascii(), tools::translate( "Radars_Data", "Sensors - Invalid activity '%1'" ).arg( consumption.c_str() ).ascii() );
     detectableActivities_[n] = value;
     bHasDetectableActivities_ = bHasDetectableActivities_.GetData() || value;
 }

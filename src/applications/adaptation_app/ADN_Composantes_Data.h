@@ -24,7 +24,7 @@
 #include "ADN_Weapons_Data.h"
 #include "ADN_ActiveProtections_Data.h"
 #include "ADN_Breakdowns_Data.h"
-
+#include "ADN_Tr.h"
 
 
 // =============================================================================
@@ -36,6 +36,7 @@
 class ADN_Composantes_Data : public ADN_Data_ABC
 {
     MT_COPYNOTALLOWED( ADN_Composantes_Data )
+
 
 public:
     //*****************************************************************************
