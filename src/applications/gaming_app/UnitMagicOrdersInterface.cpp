@@ -191,16 +191,16 @@ namespace
             switch( id_ )
             {
             case MsgsClientToSim::MsgUnitMagicAction_Type_recover_all:
-                name = tools::translate( "MagicAction", "Recover - All" );
                 strType = "recover_all";
+                name = tools::translate( "MagicAction", "Recover - All" );
                 break;
             case MsgsClientToSim::MsgUnitMagicAction_Type_recover_troops:
                 strType = "recover_troops";
                 name = tools::translate( "MagicAction", "Recover - Troops" );
                 break;
             case MsgsClientToSim::MsgUnitMagicAction_Type_recover_equipments:
-                strType = tools::translate( "MagicAction", "Recover - Equipments" ); 
-                name = "recover_equipments";
+                strType = "recover_equipments";
+                name = tools::translate( "MagicAction", "Recover - Equipments" ); 
                 break;
             case MsgsClientToSim::MsgUnitMagicAction_Type_recover_resources:
                 strType = "recover_resources";
