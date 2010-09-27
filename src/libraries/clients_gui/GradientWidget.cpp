@@ -17,9 +17,11 @@
 #include "Gradient.h"
 #include "GradientPreferences.h"
 #include "resources.h"
+#include "PresetDialog.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
+#include <boost/bind.hpp>
 
 using namespace gui;
 
@@ -42,6 +44,11 @@ GradientWidget::GradientWidget( QWidget* parent, GradientPreferences& preference
     copyPreset->setTextLabel( tr( "Copy preset" ) );
     copyPreset->setFixedSize( 22, 22 );
 
+    QToolButton* renamePreset = new QToolButton( box );
+    renamePreset->setPixmap( MAKE_PIXMAP( pen_cursor ) );
+    renamePreset->setTextLabel( tr( "Rename preset" ) );
+    renamePreset->setFixedSize( 22, 22 );
+
     QToolButton* removePreset = new QToolButton( box );
     removePreset->setPixmap( MAKE_PIXMAP( trash ) );
     removePreset->setTextLabel( tr( "Delete preset" ) );
@@ -60,6 +67,7 @@ GradientWidget::GradientWidget( QWidget* parent, GradientPreferences& preference
 
     connect( presetCombo_, SIGNAL( activated( int ) ), SLOT( OnPresetChanged() ) );
     connect( copyPreset, SIGNAL( clicked() ), SLOT( OnPresetCopied() ) );
+    connect( renamePreset, SIGNAL( clicked() ), SLOT( OnPresetRenamed() ) );
     connect( removePreset, SIGNAL( clicked() ), SLOT( OnPresetDeleted() ) );
 
     controllers_.Register( *this );
@@ -139,6 +147,30 @@ void GradientWidget::OnPresetCopied()
         gradient->SetName( newName );
         presetCombo_->insertItem( newName );
         presets_.push_back( gradient );
+    }
+}
+
+namespace
+{
+    void Update( Gradient* gradient, std::vector< std::string >& presets )
+    {
+        presets.push_back( gradient->GetName().ascii() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: GradientWidget::OnPresetRenamed
+// Created: LGY 2010-09-24
+// -----------------------------------------------------------------------------
+void GradientWidget::OnPresetRenamed()
+{
+    if( Gradient* current = CurrentPreset() )
+    {
+        std::vector< std::string > presets;
+        std::for_each( presets_.begin(), presets_.end(), boost::bind( ::Update, _1, boost::ref( presets ) ) );
+        PresetDialog* pDialog = new PresetDialog( this, *current, options_, presets );
+        pDialog->exec();
+        Commit();
     }
 }
 

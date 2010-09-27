@@ -777,6 +777,37 @@ Please check access permissions or write protection.</source>
         <source>Delete preset</source>
         <translation>Supprimer le dégradé</translation>
     </message>
+    <message>
+        <source>Rename preset</source>
+        <translation>Renommer le dégradé</translation>
+    </message>
+</context>
+<context>
+    <name>gui::PresetDialog</name>
+    <message>
+        <source>Remane preset</source>
+        <translation>Renommer le dégradé</translation>
+    </message>
+    <message>
+        <source>New Name:</source>
+        <translation>Nouveau nom :</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Attention</translation>
+    </message>
+    <message>
+        <source>Preset name is empty.</source>
+        <translation>Le nom du dégradé est vide.</translation>
+    </message>
+    <message>
+        <source>Preset name already exists.</source>
+        <translation>Le nom du dégradé existe déjà.</translation>
+    </message>
 </context>
 <context>
     <name>gui::HierarchyListView_ABC</name>

@@ -49,6 +49,7 @@ PopulationListView.cpp \
 PopulationPanel.cpp \
 PreferencesDialog.cpp \
 PreferencesList.cpp \
+PresetDialog.cpp \
 PropertiesPanel.cpp \
 ResourceLinksDialog_ABC.cpp\
 StatusBar.cpp \

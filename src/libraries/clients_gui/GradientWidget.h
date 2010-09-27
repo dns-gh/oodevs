@@ -67,6 +67,7 @@ private slots:
 
     void OnPresetChanged();
     void OnPresetCopied();
+    void OnPresetRenamed();
     void OnPresetDeleted();
     //@}
 
@@ -99,7 +100,6 @@ private:
     ColorButton* color_;
     QComboBox* presetCombo_;
     T_Gradients presets_;
-    Gradient* currentPreset_;
     //@}
 };
 
