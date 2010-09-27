@@ -1,0 +1,1561 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="47" name="Armor - control" target="19" time="2010-08-19T18:11:31" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU2631849801"/>
+        <point coordinates="30UXU2750149735"/>
+        <point coordinates="30UXU2775148895"/>
+        <point coordinates="30UXU2634948954"/>
+        <point coordinates="30UXU2631849801"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="41" name="Armor - cover" target="19" time="2010-08-19T18:25:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Position" type="point">
+      <location type="point">
+        <point coordinates="30UXU2649750930"/>
+      </location>
+    </parameter>
+    <parameter name="Units to cover" type="agent">
+      <parameter name="Units to cover (item 1)" type="agent" value="20"/>
+    </parameter>
+  </action>
+  <action id="59" name="Armor - delay" target="19" time="2010-08-19T18:52:01" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline">
+      <parameter name="Phase lines (item 1)" type="lima" value="LCAR">
+        <parameter name="Location" type="location">
+          <location type="line">
+            <point coordinates="30UXU2542549468"/>
+            <point coordinates="30UXU2779649909"/>
+          </location>
+        </parameter>
+        <parameter name="Schedule" type="datetime" value="20100819T183451"/>
+      </parameter>
+    </parameter>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU2686449137"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="60" name="Armor - escort" target="19" time="2010-08-19T19:03:41" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to escort" type="agent" value="20"/>
+  </action>
+  <action id="61" name="Armor - escort units" target="19" time="2010-08-19T19:26:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Units to escort" type="automate" value="122"/>
+  </action>
+  <action id="49" name="Armor - interdict" target="19" time="2010-08-19T19:34:01" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Deployment area" type="point">
+      <location type="point">
+        <point coordinates="30UXU2644750473"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="48" name="Armor - monitor" target="19" time="2010-08-19T19:44:41" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Position" type="point">
+      <location type="point">
+        <point coordinates="30UXU2669049307"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="58" name="Armor - open a route" target="19" time="2010-08-19T19:53:01" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU2670451314"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="52" name="Armor - recon" target="19" time="2010-08-19T20:03:31" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU2676748794"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="51" name="Armor - recon in force" target="19" time="2010-08-19T20:14:01" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Position to recon" type="point">
+      <location type="point">
+        <point coordinates="30UXU2694351064"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="39" name="Armor - recon in force (an axis)" target="19" time="2010-08-19T20:28:11" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU2690748885"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="46" name="Armor - report information" target="19" time="2010-08-19T20:35:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Observation area" type="point">
+      <location type="point">
+        <point coordinates="30UXU2678751403"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="53" name="Armor - screen" target="19" time="2010-08-19T20:52:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU2684249083"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="55" name="Armor - seize" target="19" time="2010-08-19T21:03:11" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Area to seize" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU2642351934"/>
+        <point coordinates="30UXU2731551909"/>
+        <point coordinates="30UXU2769850862"/>
+        <point coordinates="30UXU2724750617"/>
+        <point coordinates="30UXU2631950841"/>
+        <point coordinates="30UXU2642351934"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="44" name="Armor - support" target="19" time="2010-08-19T21:15:31" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to support" type="agent" value="20"/>
+  </action>
+  <action id="40" name="Armor - support (dynamic)" target="19" time="2010-08-19T21:26:31" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to support" type="agent" value="20"/>
+  </action>
+  <action id="40" name="Armor - support (dynamic)" target="19" time="2010-08-19T21:34:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to support" type="agent" value="21"/>
+  </action>
+  <action id="64" name="Armor - support (from a position)" target="19" time="2010-08-19T21:44:01" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Position" type="point">
+      <location type="point">
+        <point coordinates="30UXU2810850648"/>
+      </location>
+    </parameter>
+    <parameter name="Units to support" type="agent">
+      <parameter name="Units to support (item 1)" type="agent" value="20"/>
+    </parameter>
+  </action>
+  <action id="38" name="Armor CP To Deploy" target="20" time="2010-08-19T22:00:41" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+  </action>
+  <action id="86" name="Infantry - destroy" target="25" time="2010-08-19T22:10:01" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to destroy" type="agentknowledge" value="134"/>
+  </action>
+  <action id="90" name="Infantry - monitor" target="25" time="2010-08-19T22:18:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Deployment area" type="point">
+      <location type="point">
+        <point coordinates="30UXU3563051429"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="86" name="Infantry - destroy" target="45" time="2010-08-19T22:26:31" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to destroy" type="agentknowledge" value="134"/>
+  </action>
+  <action id="97" name="Infantry - hold" target="45" time="2010-08-19T22:33:11" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Point to defend" type="point">
+      <location type="point">
+        <point coordinates="30UXU1966245685"/>
+      </location>
+    </parameter>
+    <parameter name="Obstacle erection" type="bool" value="true"/>
+  </action>
+  <action id="98" name="Infantry - ambush" target="46" time="2010-08-19T22:36:01" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Ambush position" type="point">
+      <location type="point">
+        <point coordinates="30UXU2482047290"/>
+      </location>
+    </parameter>
+    <parameter name="Meeting point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2437947737"/>
+      </location>
+    </parameter>
+    <parameter name="Enemy" type="agentknowledge" value="134"/>
+    <parameter name="Obstacle type" type="enumeration" value="4"/>
+  </action>
+  <action id="89" name="Infantry - control" target="46" time="2010-08-19T22:48:11" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU2389246755"/>
+        <point coordinates="30UXU2474146824"/>
+        <point coordinates="30UXU2477946305"/>
+        <point coordinates="30UXU2395146198"/>
+        <point coordinates="30UXU2389246755"/>
+      </location>
+    </parameter>
+    <parameter name="Obstacle erection" type="bool" value="true"/>
+  </action>
+  <action id="85" name="Infantry - cover" target="46" time="2010-08-19T23:09:01" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Cover position" type="point">
+      <location type="point">
+        <point coordinates="30UXU2437947513"/>
+      </location>
+    </parameter>
+    <parameter name="Target" type="agent" value="45"/>
+  </action>
+  <action id="100" name="Infantry - delay" target="46" time="2010-08-19T23:23:11" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU2424445973"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="86" name="Infantry - destroy" target="46" time="2010-08-19T23:35:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to destroy" type="agentknowledge" value="134"/>
+  </action>
+  <action id="104" name="Infantry - destroy (intervene)" target="46" time="2010-08-19T23:45:41" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Objective" type="point">
+      <location type="point">
+        <point coordinates="30UXU2004744382"/>
+      </location>
+    </parameter>
+    <parameter name="Meeting point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2068844244"/>
+      </location>
+    </parameter>
+    <parameter name="Timing" type="datetime" value="20100820T004451"/>
+    <parameter name="Destruction type" type="enumeration" value="2"/>
+  </action>
+  <action id="recover_all" name="" target="134" time="2010-08-19T23:51:51" type="magicunit"/>
+  <action id="105" name="Infantry - escort" target="46" time="2010-08-20T00:12:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to escort" type="agent" value="68"/>
+  </action>
+  <action id="105" name="Infantry - escort" target="46" time="2010-08-20T00:25:01" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to escort" type="agent" value="45"/>
+  </action>
+  <action id="133" name="move" target="46" time="2010-08-20T00:38:01" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU1976346163"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="105" name="Infantry - escort" target="46" time="2010-08-20T00:44:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to escort" type="agent" value="45"/>
+  </action>
+  <action id="88" name="Infantry - fix" target="46" time="2010-08-20T00:55:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Enemy" type="agentknowledge" value="134"/>
+  </action>
+  <action id="101" name="Infantry - flank-guard" target="46" time="2010-08-20T01:01:41" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU2174146297"/>
+        </location>
+      </parameter>
+    </parameter>
+    <parameter name="Unit a flancgarder" type="agent" value="45"/>
+  </action>
+  <action id="103" name="Infantry - harass" target="46" time="2010-08-20T01:13:11" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU2161646854"/>
+        <point coordinates="30UXU2260046764"/>
+        <point coordinates="30UXU2251746179"/>
+        <point coordinates="30UXU2206346038"/>
+        <point coordinates="30UXU2150746413"/>
+        <point coordinates="30UXU2161646854"/>
+      </location>
+    </parameter>
+    <parameter name="Meeting point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2084045827"/>
+      </location>
+    </parameter>
+    <parameter name="Destruction type" type="enumeration" value="2"/>
+  </action>
+  <action id="97" name="Infantry - hold" target="46" time="2010-08-20T01:36:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Point to defend" type="point">
+      <location type="point">
+        <point coordinates="30UXU2170746087"/>
+      </location>
+    </parameter>
+    <parameter name="Obstacle erection" type="bool" value="true"/>
+  </action>
+  <action id="94" name="Infantry - interdict" target="46" time="2010-08-20T01:45:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Position to deny" type="point">
+      <location type="point">
+        <point coordinates="30UXU2111845629"/>
+      </location>
+    </parameter>
+    <parameter name="Obstacle erection" type="bool" value="true"/>
+  </action>
+  <action id="90" name="Infantry - monitor" target="46" time="2010-08-20T01:54:01" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Deployment area" type="point">
+      <location type="point">
+        <point coordinates="30UXU2240146957"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="96" name="Infantry - movement to contact" target="46" time="2010-08-20T02:09:11" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Enemy" type="agentknowledge" value="134"/>
+  </action>
+  <action id="102" name="Infantry - operate a checkpoint" target="46" time="2010-08-20T02:22:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Deployment point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2029944307"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="93" name="Infantry - recon" target="46" time="2010-08-20T03:02:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU2003243973"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="92" name="Infantry - recon in force" target="46" time="2010-08-20T03:12:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU2015844208"/>
+        </location>
+      </parameter>
+    </parameter>
+    <parameter name="Position to recon" type="point">
+      <location type="point">
+        <point coordinates="30UXU2018444223"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="84" name="Infantry - recon in force (an axis)" target="46" time="2010-08-20T03:15:41" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU2015444210"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="84" name="Infantry - recon in force (an axis)" target="46" time="2010-08-20T03:29:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU2003544087"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="teleport" name="" target="46" time="2010-08-20T03:34:01" type="magicunit">
+    <parameter name="Location" type="point">
+      <location type="point">
+        <point coordinates="30UXU1893242001"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="84" name="Infantry - recon in force (an axis)" target="46" time="2010-08-20T03:38:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU1998043517"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="teleport" name="" target="46" time="2010-08-20T03:48:21" type="magicunit">
+    <parameter name="Location" type="point">
+      <location type="point">
+        <point coordinates="30UXU1885542023"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="84" name="Infantry - recon in force (an axis)" target="46" time="2010-08-20T03:59:31" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit">
+      <location type="line">
+        <point coordinates="30UXU1811041946"/>
+        <point coordinates="30UXU1944944167"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="limit">
+      <location type="line">
+        <point coordinates="30UXU1942141437"/>
+        <point coordinates="30UXU2046744052"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU1993843958"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="95" name="Infantry - seize" target="46" time="2010-08-20T04:04:31" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Objective" type="point">
+      <location type="point">
+        <point coordinates="30UXU1970343102"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="87" name="Infantry - support" target="46" time="2010-08-20T04:14:31" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to support" type="agent" value="45"/>
+  </action>
+  <action id="recover_all" name="" target="134" time="2010-08-20T00:02:41" type="magicunit"/>
+  <action id="50" name="Armor - attack" target="49" time="2010-08-20T04:47:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Assault route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3443647701"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="47" name="Armor - control" target="49" time="2010-08-20T05:11:11" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU3400747976"/>
+        <point coordinates="30UXU3439447982"/>
+        <point coordinates="30UXU3447947639"/>
+        <point coordinates="30UXU3438347577"/>
+        <point coordinates="30UXU3413447613"/>
+        <point coordinates="30UXU3400747976"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="recover_all" name="Recover - All" target="49" time="2010-08-20T05:22:31" type="magicunit"/>
+  <action id="41" name="Armor - cover" target="49" time="2010-08-20T05:23:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Position" type="point">
+      <location type="point">
+        <point coordinates="30UXU3378749005"/>
+      </location>
+    </parameter>
+    <parameter name="Units to cover" type="agent">
+      <parameter name="Units to cover (item 1)" type="agent" value="52"/>
+    </parameter>
+  </action>
+  <action id="59" name="Armor - delay" target="49" time="2010-08-20T05:42:41" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3417848469"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="43" name="Armor - destroy" target="49" time="2010-08-20T05:49:31" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to reduce" type="agentknowledge" value="160"/>
+  </action>
+  <action id="43" name="Armor - destroy" target="49" time="2010-08-20T05:55:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to reduce" type="agentknowledge" value="160"/>
+  </action>
+  <action id="teleport" name="Teleport" target="49" time="2010-08-20T06:02:41" type="magicunit">
+    <parameter name="Location" type="point">
+      <location type="point">
+        <point coordinates="30UXU3404848298"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="43" name="Armor - destroy" target="49" time="2010-08-20T06:03:41" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to reduce" type="agentknowledge" value="160"/>
+  </action>
+  <action id="change_human_factors" name="Change Human Factors" target="49" time="2010-08-20T06:57:21" type="magicunit">
+    <parameter name="Tiredness" type="enumeration" value="0"/>
+    <parameter name="Morale" type="enumeration" value="0"/>
+    <parameter name="Experience" type="enumeration" value="0"/>
+  </action>
+  <action id="43" name="Armor - destroy" target="49" time="2010-08-20T07:05:01" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to reduce" type="agentknowledge" value="164"/>
+  </action>
+  <action id="60" name="Armor - escort" target="49" time="2010-08-20T07:10:31" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to escort" type="agent" value="52"/>
+  </action>
+  <action id="recover_all" name="Recover - All" target="52" time="2010-08-20T07:18:31" type="magicunit"/>
+  <action id="133" name="move" target="52" time="2010-08-20T07:23:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3369349180"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="61" name="Armor - escort units" target="49" time="2010-08-20T07:34:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Units to escort" type="automate" value="89"/>
+  </action>
+  <action id="45" name="Armor - fix" target="49" time="2010-08-20T07:37:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to fix" type="agentknowledge" value="160"/>
+  </action>
+  <action id="42" name="Armor - flank-guard" target="49" time="2010-08-20T07:46:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3358549007"/>
+        </location>
+      </parameter>
+    </parameter>
+    <parameter name="Units to cover" type="agent">
+      <parameter name="Units to cover (item 1)" type="agent" value="52"/>
+    </parameter>
+  </action>
+  <action id="49" name="Armor - interdict" target="49" time="2010-08-20T07:55:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Deployment area" type="point">
+      <location type="point">
+        <point coordinates="30UXU3417848765"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="48" name="Armor - monitor" target="49" time="2010-08-20T08:04:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Position" type="point">
+      <location type="point">
+        <point coordinates="30UXU3388448607"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="58" name="Armor - open a route" target="49" time="2010-08-20T08:11:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3474549168"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="51" name="Armor - recon in force" target="49" time="2010-08-20T08:20:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Position to recon" type="point">
+      <location type="point">
+        <point coordinates="30UXU3390848829"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="39" name="Armor - recon in force (an axis)" target="49" time="2010-08-20T08:40:11" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3417348449"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="56" name="Armor - relieve" target="49" time="2010-08-20T08:46:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to relieve" type="agent" value="52"/>
+  </action>
+  <action id="46" name="Armor - report information" target="49" time="2010-08-20T09:02:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Observation area" type="point">
+      <location type="point">
+        <point coordinates="30UXU3411548935"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="53" name="Armor - screen" target="49" time="2010-08-20T09:14:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3398448442"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="55" name="Armor - seize" target="49" time="2010-08-20T09:23:11" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Area to seize" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU3441349110"/>
+        <point coordinates="30UXU3487349148"/>
+        <point coordinates="30UXU3487748922"/>
+        <point coordinates="30UXU3452548852"/>
+        <point coordinates="30UXU3437948924"/>
+        <point coordinates="30UXU3441349110"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="44" name="Armor - support" target="49" time="2010-08-20T09:30:41" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to support" type="agent" value="52"/>
+  </action>
+  <action id="40" name="Armor - support (dynamic)" target="49" time="2010-08-20T09:36:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to support" type="agent" value="52"/>
+  </action>
+  <action id="133" name="move" target="49" time="2010-08-20T09:43:11" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3391548538"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="40" name="Armor - support (dynamic)" target="49" time="2010-08-20T09:48:41" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to support" type="agent" value="52"/>
+  </action>
+  <action id="64" name="Armor - support (from a position)" target="49" time="2010-08-20T09:59:11" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Position" type="point">
+      <location type="point">
+        <point coordinates="30UXU3403748464"/>
+      </location>
+    </parameter>
+    <parameter name="Units to support" type="agent">
+      <parameter name="Units to support (item 1)" type="agent" value="52"/>
+    </parameter>
+  </action>
+  <action id="91" name="Infantry - bar" target="51" time="2010-08-20T10:15:31" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Position to bar" type="point">
+      <location type="point">
+        <point coordinates="30UXU3527448673"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="recover_all" name="Recover - All" target="51" time="2010-08-20T10:41:11" type="magicunit"/>
+  <action id="90" name="Infantry - monitor" target="51" time="2010-08-20T10:44:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Deployment area" type="point">
+      <location type="point">
+        <point coordinates="30UXU3462649172"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="87" name="Infantry - support" target="51" time="2010-08-20T10:54:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to support" type="agent" value="49"/>
+  </action>
+  <action id="recover_all" name="Recover - All" target="51" time="2010-08-20T11:07:21" type="magicunit"/>
+  <action id="158" name="Human Intelligence - exfiltrate" target="52" time="2010-08-20T11:09:11" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Meeting point" type="point">
+      <location type="point">
+        <point coordinates="30UXU3452749187"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="159" name="Human Intelligence - guide" target="52" time="2010-08-20T11:20:11" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit" type="agent" value="49"/>
+  </action>
+  <action id="157" name="Human Intelligence - report information" target="52" time="2010-08-20T11:28:01" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Area to observe" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU3392448981"/>
+        <point coordinates="30UXU3474748872"/>
+        <point coordinates="30UXU3473248217"/>
+        <point coordinates="30UXU3442248044"/>
+        <point coordinates="30UXU3372448127"/>
+        <point coordinates="30UXU3392448981"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="50" name="Armor - attack" target="55" time="2010-08-20T11:49:11" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Assault route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3734647066"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="47" name="Armor - control" target="55" time="2010-08-20T12:05:41" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU3684748152"/>
+        <point coordinates="30UXU3758648001"/>
+        <point coordinates="30UXU3767047598"/>
+        <point coordinates="30UXU3707547607"/>
+        <point coordinates="30UXU3678647665"/>
+        <point coordinates="30UXU3684748152"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="41" name="Armor - cover" target="55" time="2010-08-20T12:15:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Position" type="point">
+      <location type="point">
+        <point coordinates="30UXU3439448538"/>
+      </location>
+    </parameter>
+    <parameter name="Units to cover" type="agent">
+      <parameter name="Units to cover (item 1)" type="agent" value="51"/>
+    </parameter>
+  </action>
+  <action id="59" name="Armor - delay" target="55" time="2010-08-20T12:28:11" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3578347441"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="teleport" name="Teleport" target="55" time="2010-08-20T12:32:51" type="magicunit">
+    <parameter name="Location" type="point">
+      <location type="point">
+        <point coordinates="30UXU3585948601"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="59" name="Armor - delay" target="55" time="2010-08-20T12:33:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3649147309"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="recover_all" name="Recover - All" target="160" time="2010-08-20T12:37:31" type="magicunit"/>
+  <action id="recover_all" name="Recover - All" target="161" time="2010-08-20T12:37:31" type="magicunit"/>
+  <action id="recover_all" name="Recover - All" target="162" time="2010-08-20T12:37:31" type="magicunit"/>
+  <action id="recover_all" name="Recover - All" target="163" time="2010-08-20T12:37:31" type="magicunit"/>
+  <action id="recover_all" name="Recover - All" target="164" time="2010-08-20T12:37:31" type="magicunit"/>
+  <action id="43" name="Armor - destroy" target="55" time="2010-08-20T12:40:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to reduce" type="agentknowledge" value="160"/>
+  </action>
+  <action id="60" name="Armor - escort" target="55" time="2010-08-20T12:54:31" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to escort" type="agent" value="77"/>
+  </action>
+  <action id="61" name="Armor - escort units" target="55" time="2010-08-20T13:08:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Units to escort" type="automate" value="122"/>
+  </action>
+  <action id="45" name="Armor - fix" target="55" time="2010-08-20T13:11:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to fix" type="agentknowledge" value="163"/>
+  </action>
+  <action id="42" name="Armor - flank-guard" target="55" time="2010-08-20T13:16:11" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3265145524"/>
+        </location>
+      </parameter>
+    </parameter>
+    <parameter name="Units to cover" type="agent">
+      <parameter name="Units to cover (item 1)" type="agent" value="74"/>
+    </parameter>
+  </action>
+  <action id="49" name="Armor - interdict" target="55" time="2010-08-20T13:22:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Deployment area" type="point">
+      <location type="point">
+        <point coordinates="30UXU3383844755"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="48" name="Armor - monitor" target="55" time="2010-08-20T13:28:01" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Position" type="point">
+      <location type="point">
+        <point coordinates="30UXU3241846499"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="58" name="Armor - open a route" target="55" time="2010-08-20T13:34:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3299347627"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="52" name="Armor - recon" target="55" time="2010-08-20T13:40:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3467244195"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="51" name="Armor - recon in force" target="55" time="2010-08-20T13:46:11" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Position to recon" type="point">
+      <location type="point">
+        <point coordinates="30UXU3615345527"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="39" name="Armor - recon in force (an axis)" target="55" time="2010-08-20T13:52:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3752447839"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="56" name="Armor - relieve" target="55" time="2010-08-20T13:58:41" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to relieve" type="agent" value="51"/>
+  </action>
+  <action id="56" name="Armor - relieve" target="55" time="2010-08-20T14:08:41" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to relieve" type="agent" value="49"/>
+  </action>
+  <action id="46" name="Armor - report information" target="55" time="2010-08-20T14:16:31" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Observation area" type="point">
+      <location type="point">
+        <point coordinates="30UXU3610047982"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="53" name="Armor - screen" target="55" time="2010-08-20T14:22:01" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3227045839"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="55" name="Armor - seize" target="55" time="2010-08-20T14:30:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Area to seize" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU3646547699"/>
+        <point coordinates="30UXU3678147494"/>
+        <point coordinates="30UXU3684047109"/>
+        <point coordinates="30UXU3671747048"/>
+        <point coordinates="30UXU3645147129"/>
+        <point coordinates="30UXU3614747323"/>
+        <point coordinates="30UXU3611247356"/>
+        <point coordinates="30UXU3606747651"/>
+        <point coordinates="30UXU3646547699"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="44" name="Armor - support" target="55" time="2010-08-20T14:35:41" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to support" type="agent" value="52"/>
+  </action>
+  <action id="133" name="move" target="55" time="2010-08-20T14:40:41" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3635947479"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="40" name="Armor - support (dynamic)" target="55" time="2010-08-20T14:48:11" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to support" type="agent" value="49"/>
+  </action>
+  <action id="64" name="Armor - support (from a position)" target="55" time="2010-08-20T14:57:11" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Position" type="point">
+      <location type="point">
+        <point coordinates="30UXU3636547627"/>
+      </location>
+    </parameter>
+    <parameter name="Units to support" type="agent">
+      <parameter name="Units to support (item 1)" type="agent" value="51"/>
+    </parameter>
+  </action>
+  <action id="47" name="Armor - control" target="74" time="2010-08-20T15:11:01" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU3249046766"/>
+        <point coordinates="30UXU3349146870"/>
+        <point coordinates="30UXU3359546224"/>
+        <point coordinates="30UXU3286445902"/>
+        <point coordinates="30UXU3244646092"/>
+        <point coordinates="30UXU3249046766"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="41" name="Armor - cover" target="74" time="2010-08-20T15:18:41" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Position" type="point">
+      <location type="point">
+        <point coordinates="30UXU3249047062"/>
+      </location>
+    </parameter>
+    <parameter name="Units to cover" type="agent">
+      <parameter name="Units to cover (item 1)" type="agent" value="51"/>
+    </parameter>
+  </action>
+  <action id="60" name="Armor - escort" target="74" time="2010-08-20T15:24:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Unit to escort" type="agent" value="51"/>
+  </action>
+  <action id="61" name="Armor - escort units" target="74" time="2010-08-20T15:30:41" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Units to escort" type="automate" value="122"/>
+  </action>
+  <action id="42" name="Armor - flank-guard" target="74" time="2010-08-20T15:47:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3365345566"/>
+        </location>
+      </parameter>
+    </parameter>
+    <parameter name="Units to cover" type="agent">
+      <parameter name="Units to cover (item 1)" type="agent" value="51"/>
+    </parameter>
+  </action>
+  <action id="recover_all" name="Recover - All" target="74" time="2010-08-20T15:53:11" type="magicunit"/>
+  <action id="42" name="Armor - flank-guard" target="74" time="2010-08-20T15:56:21" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3368345681"/>
+        </location>
+      </parameter>
+    </parameter>
+    <parameter name="Units to cover" type="agent">
+      <parameter name="Units to cover (item 1)" type="agent" value="51"/>
+    </parameter>
+  </action>
+  <action id="48" name="Armor - monitor" target="74" time="2010-08-20T16:02:01" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Position" type="point">
+      <location type="point">
+        <point coordinates="30UXU3385646906"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="58" name="Armor - open a route" target="74" time="2010-08-20T16:10:41" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3380044352"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="52" name="Armor - recon" target="74" time="2010-08-20T16:17:31" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3263147272"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="51" name="Armor - recon in force" target="74" time="2010-08-20T16:22:41" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Position to recon" type="point">
+      <location type="point">
+        <point coordinates="30UXU3332146215"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="39" name="Armor - recon in force (an axis)" target="74" time="2010-08-20T16:27:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3378244522"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="46" name="Armor - report information" target="74" time="2010-08-20T16:32:51" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Observation area" type="point">
+      <location type="point">
+        <point coordinates="30UXU3255347212"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="53" name="Armor - screen" target="74" time="2010-08-20T16:38:41" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3367244712"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="55" name="Armor - seize" target="74" time="2010-08-20T16:45:31" type="mission">
+    <parameter name="Danger direction" type="heading" value="360"/>
+    <parameter name="Phase lines" type="phaseline"/>
+    <parameter name="Boundary limit 1" type="limit"/>
+    <parameter name="Boundary limit 2" type="limit"/>
+    <parameter name="Intelligences" type="intelligence"/>
+    <parameter name="Area to seize" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU3274045841"/>
+        <point coordinates="30UXU3346645992"/>
+        <point coordinates="30UXU3370745329"/>
+        <point coordinates="30UXU3302845167"/>
+        <point coordinates="30UXU3238145349"/>
+        <point coordinates="30UXU3274045841"/>
+      </location>
+    </parameter>
+  </action>
+</actions>

@@ -72,6 +72,85 @@
           </shape>
           <attributes/>
         </object>
+        <object id="165" name="Abatis [165]" type="abattis">
+          <shape type="polygone">
+            <points>
+              <point>30UXU3153652973</point>
+              <point>30UXU3209853062</point>
+              <point>30UXU3219752613</point>
+              <point>30UXU3160852523</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="false" type="reserved">
+              <activation-time value="0"/>
+            </obstacle>
+          </attributes>
+        </object>
+        <object id="170" name="Crossing Site [170]" type="crossing site">
+          <shape type="ligne">
+            <points>
+              <point>30UXU3250753075</point>
+              <point>30UXU3336053726</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="171" name="Abatis [171]" type="abattis">
+          <shape type="polygone">
+            <points>
+              <point>30UXU3962953210</point>
+              <point>30UXU4040253278</point>
+              <point>30UXU4028952701</point>
+              <point>30UXU3945952738</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="false" type="reserved">
+              <activation-time value="0"/>
+            </obstacle>
+          </attributes>
+        </object>
+        <object id="172" name="Abatis [172]" type="abattis">
+          <shape type="polygone">
+            <points>
+              <point>30UXU3789753081</point>
+              <point>30UXU3856453092</point>
+              <point>30UXU3862452548</point>
+              <point>30UXU3825052548</point>
+              <point>30UXU3807152701</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="false" type="reserved">
+              <activation-time value="0"/>
+            </obstacle>
+          </attributes>
+        </object>
+        <object id="173" name="Abatis [173]" type="abattis">
+          <shape type="polygone">
+            <points>
+              <point>30UXU3560952799</point>
+              <point>30UXU3601052800</point>
+              <point>30UXU3601152400</point>
+              <point>30UXU3582752314</point>
+              <point>30UXU3542352406</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="false" type="reserved">
+              <activation-time value="0"/>
+            </obstacle>
+          </attributes>
+        </object>
+        <object id="189" name="mrls deployment area [189]" type="mrls deployment area">
+          <shape type="point">
+            <points>
+              <point>30UXU4564754004</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
       </objects>
       <tactical>
         <formation id="3" level="xxxx" name="Pion">
@@ -128,10 +207,10 @@
             <unit command-post="true" id="95" name="AAC CP" position="30UXU2317942363" type="AAC CP"/>
           </automat>
           <automat engaged="false" id="105" knowledge-group="6" name="Genie [105]" type="Countermobility company">
-            <unit command-post="false" id="23" name="Bridging troop" position="30UXU3262850471" type="Bridging troop"/>
-            <unit command-post="false" id="28" name="Deployment support platoon" position="30UXU3934851095" type="Deployment support platoon"/>
-            <unit command-post="false" id="58" name="Mobility support platoon" position="30UXU4166950087" type="Mobility support platoon"/>
-            <unit command-post="true" id="106" name="Countermobility platoon" position="30UXU2578441952" type="Countermobility platoon"/>
+            <unit command-post="false" id="23" name="Bridging troop" position="30UXU3248051047" type="Bridging troop"/>
+            <unit command-post="false" id="28" name="Deployment support platoon" position="30UXU3591951922" type="Deployment support platoon"/>
+            <unit command-post="false" id="58" name="Mobility support platoon" position="30UXU3652051636" type="Mobility support platoon"/>
+            <unit command-post="true" id="106" name="Countermobility platoon" position="30UXU3845251236" type="Countermobility platoon"/>
           </automat>
           <automat engaged="false" id="109" knowledge-group="6" name="HS [109]" type="HS - Fire_Suppression_HQ">
             <unit command-post="false" id="42" name="HS - Firefighter (HS - Fire_Suppression)" position="30UXU1759246733" type="HS - Fire_Suppression"/>
@@ -158,7 +237,7 @@
             <unit command-post="false" id="73" name="Refugee" position="30UXU3139445182" type="Refugee"/>
             <unit command-post="false" id="81" name="Terrorist" position="30UXU4553746676" type="Terrorist"/>
           </automat>
-          <automat engaged="true" id="122" knowledge-group="6" name="Rens [122]" type="Ground suveillance radar">
+          <automat engaged="false" id="122" knowledge-group="6" name="Rens [122]" type="Ground suveillance radar">
             <unit command-post="false" id="33" name="Firefinder radar" position="30UXU4692753723" type="Firefinder radar"/>
             <unit command-post="false" id="47" name="Jamming station" position="30UXU2678647984" type="Jamming station"/>
             <unit command-post="false" id="50" name="Listening Station" position="30UXU3154548598" type="Listening Station"/>
@@ -179,11 +258,231 @@
       </logistic>
     </side>
     <side id="126" name="Rouge" type="enemy">
-      <objects/>
+      <objects>
+        <object id="169" name="Bridge (continuous) [169]" type="continuous pontoon bridge">
+          <shape type="point">
+            <points>
+              <point>30UXU3255250999</point>
+            </points>
+          </shape>
+          <attributes>
+            <crossing-site>
+              <width>1</width>
+              <depth>1</depth>
+              <speed>0</speed>
+              <construction-needed>false</construction-needed>
+            </crossing-site>
+          </attributes>
+        </object>
+        <object id="174" name="Mine Cluster [174]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3839550768</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="175" name="Mine Cluster [175]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3693650835</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="176" name="Mine Cluster [176]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3589451197</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="177" name="Mine Cluster [177]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3535351737</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="178" name="Mine Cluster [178]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3916650889</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="179" name="Mine Cluster [179]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3975951830</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="180" name="Bridge (continuous) [180]" type="continuous pontoon bridge">
+          <shape type="point">
+            <points>
+              <point>30UXU3194853771</point>
+            </points>
+          </shape>
+          <attributes>
+            <crossing-site>
+              <width>1</width>
+              <depth>1</depth>
+              <speed>0</speed>
+              <construction-needed>false</construction-needed>
+            </crossing-site>
+          </attributes>
+        </object>
+        <object id="181" name="Mine Cluster [181]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3594350010</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="182" name="Mine Cluster [182]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3701550198</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="183" name="Mine Cluster [183]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3779950375</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="184" name="Mine Cluster [184]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3495750134</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="185" name="Mine Cluster [185]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3411650348</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="186" name="Mine Cluster [186]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3847550282</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="187" name="Mine Cluster [187]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3877449963</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="188" name="Mine Cluster [188]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30UXU3609949260</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+      </objects>
       <tactical>
         <formation id="127" level="x" name="Formation [127]">
           <automat engaged="false" id="132" knowledge-group="133" name="Attack Helicopter squadron [132]" type="Attack Helicopter squadron">
             <unit command-post="true" id="134" name="AAC CP" position="30UXU2069743884" type="AAC CP"/>
+          </automat>
+          <automat engaged="true" id="159" knowledge-group="133" name="MBT squadron [159]" type="MBT squadron">
+            <unit command-post="true" id="160" name="Armored squadron CP" position="30UXU3468648288" type="Armored squadron CP"/>
+            <unit command-post="false" id="161" name="MBT platoon" position="30UXU3520547807" type="MBT platoon"/>
+            <unit command-post="false" id="162" name="MBT platoon" position="30UXU3472247290" type="MBT platoon"/>
+            <unit command-post="false" id="163" name="MBT platoon" position="30UXU3420447771" type="MBT platoon"/>
+            <unit command-post="false" id="164" name="MBT platoon" position="30UXU3518648306" type="MBT platoon"/>
           </automat>
         </formation>
       </tactical>
