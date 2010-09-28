@@ -769,10 +769,10 @@
         <choice>
           <parameter type="Point"/>
           <parameter type="Polygon"/>
-          <parameter type="UrbanBlock"/>
           <parameter type="Agent"/>
           <parameter type="AgentKnowledge"/>
           <parameter type="ObjectKnowledge"/>
+          <parameter type="UrbanBlock"/>
         </choice>
       </parameter>
     </mission>
