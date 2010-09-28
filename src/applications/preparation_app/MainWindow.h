@@ -41,6 +41,7 @@ namespace gui
     class PreferencesDialog;
     class TerrainLayer;
     class Layer_ABC;
+    class ElevationResolver_ABC;
 }
 
 class AgentsLayer;
@@ -125,22 +126,19 @@ private:
     Model& model_;
     ModelBuilder* modelBuilder_;
     tools::ExerciseConfig& config_;
-
-    std::auto_ptr< gui::CircularEventStrategy >  forward_;
+    std::auto_ptr< gui::CircularEventStrategy > forward_;
     std::auto_ptr< gui::ExclusiveEventStrategy > eventStrategy_;
-
-    gui::GlProxy*       glProxy_;
+    std::auto_ptr< gui::ElevationResolver_ABC > pRevolver_;
+    gui::GlProxy* glProxy_;
     gui::ColorStrategy* strategy_;
     gui::LightingProxy* lighting_;
-
     gui::GlSelector* selector_;
-
-    gui::OptionsPanel*    pOptionsPanel_;
+    gui::OptionsPanel* pOptionsPanel_;
     gui::ParametersLayer* parameters_;
-    Menu*                 menu_;
-    FileToolbar*          fileToolBar_;
-    bool                  loading_;
-    bool                  needsSaving_;
+    Menu* menu_;
+    FileToolbar* fileToolBar_;
+    bool loading_;
+    bool needsSaving_;
     //@}
 };
 

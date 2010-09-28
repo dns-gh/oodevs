@@ -24,15 +24,19 @@ namespace
     public:
         GradientCanvas( QWidget* parent, const std::vector< GradientItem* >& colors )
             : QCanvas( parent )
-            , colors_( colors )
-            , topMargin_( 5 )
+            , colors_      ( colors )
+            , topMargin_   ( 5 )
+            , bottomMargin_( 40 )
         {
             setBackgroundColor( parent->backgroundColor() );
-            resize( 140, 30 );
+            resize( 140, 50 );
             retune( 140, 1 );
 //            setUpdatePeriod( 50 );
         }
-        virtual ~GradientCanvas() {}
+        virtual ~GradientCanvas()
+        {
+            // NOTHING
+        }
 
         virtual void drawBackground( QPainter& painter, const QRect& )
         {
@@ -43,6 +47,8 @@ namespace
             const float xStep = float( area.width() ) / 100;
             QRect current( area );
             current.setTop( current.top() + topMargin_ );
+            current.setBottom( current.bottom() - bottomMargin_ );
+            painter.drawLine( 0, current.bottom() + 5, current.right(), current.bottom() + 5 );
             for( unsigned int i = 0; i < colors_.size() - 1; ++i )
             {
                 current.setLeft ( area.left() + int( colors_.at( i )->GetPercentage() * xStep ) );
@@ -67,9 +73,9 @@ namespace
             const int range = item2->GetPercentage() - item1->GetPercentage();
             if( range < 1 )
                 return;
-            const int rStep = ( item2->GetColor().red()   - item1->GetColor().red()   ) / range;
+            const int rStep = ( item2->GetColor().red() - item1->GetColor().red() ) / range;
             const int gStep = ( item2->GetColor().green() - item1->GetColor().green() ) / range;
-            const int bStep = ( item2->GetColor().blue()  - item1->GetColor().blue()  ) / range;
+            const int bStep = ( item2->GetColor().blue() - item1->GetColor().blue() ) / range;
             const float xStep = float( rect.width() ) / range;
 
             QColor color( item1->GetColor() );
@@ -90,8 +96,12 @@ namespace
         //@}
 
     private:
+        //! @name Member data
+        //@{
         const T_Colors& colors_;
         unsigned short topMargin_;
+        unsigned short bottomMargin_;
+        //@}
     };
 
     struct sComparator
@@ -108,13 +118,14 @@ namespace
 // Name: GradientButton constructor
 // Created: SBO 2007-07-02
 // -----------------------------------------------------------------------------
-GradientButton::GradientButton( QWidget* parent )
+GradientButton::GradientButton( QWidget* parent, const ElevationResolver_ABC& resolver )
     : QCanvasView( new GradientCanvas( parent, colors_ ), parent )
+    , resolver_( resolver )
     , selected_( 0 )
 {
     setFrameStyle( QFrame::Raised | QFrame::Box );
 
-    setFixedHeight( 50 );
+    setFixedHeight( 80 );
     setHScrollBarMode( QScrollView::AlwaysOff );
     setVScrollBarMode( QScrollView::AlwaysOff );
 
@@ -297,7 +308,7 @@ void GradientButton::Update()
 // -----------------------------------------------------------------------------
 GradientItem* GradientButton::AddItem( unsigned int percentage, const QColor& color )
 {
-    GradientItem* item = new GradientItem( canvas(), unsigned short( percentage ), color );
+    GradientItem* item = new GradientItem( canvas(), resolver_, unsigned short( percentage ), color );
     colors_.push_back( item );
     std::sort( colors_.begin(), colors_.end(), sComparator() );
     return item;

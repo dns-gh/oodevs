@@ -14,7 +14,7 @@
 
 namespace gui
 {
-
+    class ElevationResolver_ABC;
 // =============================================================================
 /** @class  GradientItem
     @brief  GradientItem
@@ -26,7 +26,8 @@ class GradientItem : public QCanvasLine
 public:
     //! @name Constructors/Destructor
     //@{
-             GradientItem( QCanvas* canvas, unsigned short percentage, const QColor& color );
+             GradientItem( QCanvas* canvas, const ElevationResolver_ABC& resolver,
+                           unsigned short percentage, const QColor& color );
     virtual ~GradientItem();
     //@}
 
@@ -50,12 +51,14 @@ private:
     //! @name Helpers
     //@{
     void UpdatePosition();
+    unsigned short GetX();
     //@}
 
 private:
     //! @name Member data
     //@{
     unsigned short percentage_;
+    const ElevationResolver_ABC& resolver_;
     QColor color_;
     //@}
 };

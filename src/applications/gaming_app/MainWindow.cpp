@@ -119,6 +119,7 @@
 #include "clients_gui/WatershedLayer.h"
 #include "clients_gui/TerrainPicker.h"
 #include "clients_gui/TerrainProfilerLayer.h"
+#include "clients_gui/ElevationResolver.h"
 #include "tools/SessionConfig.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push )
@@ -144,6 +145,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticM
     , config_       ( config )
     , forward_      ( new gui::CircularEventStrategy() )
     , eventStrategy_( new gui::ExclusiveEventStrategy( *forward_ ) )
+    , pResolver_    ( new gui::ElevationResolver( staticModel_.detection_ ) )
     , glProxy_      ( 0 )
     , connected_    ( false )
     , onPlanif_     ( false )
@@ -158,7 +160,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticM
     Publisher_ABC& publisher = network_.GetMessageMgr();
 
     lighting_ = new SimulationLighting( controllers, this );
-    PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateSystems_ );
+    PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateSystems_, *pResolver_ );
     new Dialogs( this, controllers, model_, staticModel, publisher, model_.actions_, simulation, profile, network.GetCommands(), config );
     new VisionConesToggler( controllers, publisher, this );
 

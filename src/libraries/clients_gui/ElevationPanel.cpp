@@ -27,11 +27,12 @@ using namespace gui;
 // Name: ElevationPanel constructor
 // Created: AGE 2007-01-17
 // -----------------------------------------------------------------------------
-ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel::Controllers& controllers )
+ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel::Controllers& controllers,
+                                const ElevationResolver_ABC& resolver )
     : PreferencePanel_ABC( parent, "ElevationPanel" )
+    , layer_              ( layer )
     , controllers_        ( controllers )
     , options_            ( controllers.options_ )
-    , layer_              ( layer )
     , preferences_        ( *new GradientPreferences( controllers_.options_ ) )
     , enableHs_           ( true )
     , previousEnableHs_   ( true )
@@ -47,7 +48,7 @@ ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel
         fitColorGradienttoViewPort_ = new CheckBox( tr( "Fit color gradient to viewport" ), hBox );
         fitColorGradienttoViewPort_->setChecked( true );
 
-        gradient_ = new GradientWidget( new QGroupBox( 1, Qt::Horizontal, tr( "Gradient map" ), box ), preferences_, controllers );
+        gradient_ = new GradientWidget( new QGroupBox( 1, Qt::Horizontal, tr( "Gradient map" ), box ), preferences_, controllers, resolver );
 
         connect( fitColorGradienttoViewPort_, SIGNAL( toggled( bool ) ), SLOT( OnEnableVariableGradient( bool ) ) );
         connect( gradient_, SIGNAL( GradientChanged( const Gradient& ) ), SLOT( OnGradientChanged( const Gradient& ) ) );

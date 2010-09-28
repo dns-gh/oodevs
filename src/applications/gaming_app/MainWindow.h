@@ -43,6 +43,7 @@ namespace gui
     class TerrainLayer;
     class Layer_ABC;
     class Picker;
+    class ElevationResolver_ABC;
 }
 
 class Services;
@@ -131,21 +132,19 @@ private:
     Network& network_;
     QString profile_;
     tools::SessionConfig& config_;
-
     std::auto_ptr< gui::CircularEventStrategy >  forward_;
     std::auto_ptr< gui::ExclusiveEventStrategy > eventStrategy_;
-    gui::GlProxy*                glProxy_;
-    gui::ColorStrategy*          strategy_;
-    gui::LightingProxy*          lighting_;
-
+    std::auto_ptr< gui::ElevationResolver_ABC > pResolver_;
+    gui::GlProxy* glProxy_;
+    gui::ColorStrategy* strategy_;
+    gui::LightingProxy* lighting_;
     gui::GlSelector* selector_;
-
-    gui::OptionsPanel*    pOptionsPanel_;
+    gui::OptionsPanel* pOptionsPanel_;
     gui::ParametersLayer* parameters_;
-    gui::AgentsLayer*     agents_;
-    StatusBar*            pStatus_;
-    bool                  connected_;
-    MissionPanel*         pMissionPanel_;
+    gui::AgentsLayer* agents_;
+    StatusBar* pStatus_;
+    bool connected_;
+    MissionPanel* pMissionPanel_;
     QString               planifName_;
     bool                  onPlanif_;
     //@}

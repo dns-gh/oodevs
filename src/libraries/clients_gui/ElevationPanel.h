@@ -27,7 +27,7 @@ namespace gui
     class GradientPreferences;
     class GradientWidget;
     class CheckBox;
-
+    class ElevationResolver_ABC;
 // =============================================================================
 /** @class  ElevationPanel
     @brief  ElevationPanel
@@ -43,7 +43,8 @@ class ElevationPanel : public PreferencePanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel::Controllers& controllers );
+             ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel::Controllers& controllers,
+                             const ElevationResolver_ABC& resolver );
     virtual ~ElevationPanel();
     //@}
 

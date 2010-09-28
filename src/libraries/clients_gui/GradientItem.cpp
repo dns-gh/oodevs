@@ -9,7 +9,9 @@
 
 #include "clients_gui_pch.h"
 #include "GradientItem.h"
+#include "ElevationResolver_ABC.h"
 #include <qpainter.h>
+#include <boost/lexical_cast.hpp>
 
 using namespace gui;
 
@@ -17,10 +19,12 @@ using namespace gui;
 // Name: GradientItem constructor
 // Created: SBO 2007-07-02
 // -----------------------------------------------------------------------------
-GradientItem::GradientItem( QCanvas* canvas, unsigned short percentage, const QColor& color )
+GradientItem::GradientItem( QCanvas* canvas, const ElevationResolver_ABC& resolver,
+                            unsigned short percentage, const QColor& color )
     : QCanvasLine( canvas )
+    , resolver_  ( resolver )
     , percentage_( percentage )
-    , color_( color )
+    , color_     ( color )
 {
     UpdatePosition();
     show();
@@ -73,6 +77,15 @@ void GradientItem::SetPercentage( unsigned short percentage )
 }
 
 // -----------------------------------------------------------------------------
+// Name: GradientItem::GetX
+// Created: LGY 2010-09-27
+// -----------------------------------------------------------------------------
+unsigned short GradientItem::GetX()
+{
+    return unsigned short( 0.01f * float( percentage_ ) * float( canvas()->rect().width() ) );;
+}
+
+// -----------------------------------------------------------------------------
 // Name: GradientItem::draw
 // Created: SBO 2007-07-02
 // -----------------------------------------------------------------------------
@@ -85,6 +98,10 @@ void GradientItem::draw( QPainter& painter )
         setPen( QColor( Qt::black ) );
     QCanvasLine::draw( painter );
     painter.fillRect( startPoint().x() - 3, startPoint().y(), 7, 7, pen().color() );
+    QFont font( "Normal", 8, QFont::Light );
+    painter.setFont( font );
+    const unsigned int elevation = static_cast< unsigned int >( resolver_.Compute( percentage_ ) );
+    painter.drawText( GetX(), canvas()->rect().height() - 20, boost::lexical_cast< std::string >( elevation ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,6 +119,6 @@ QPointArray GradientItem::areaPoints() const
 // -----------------------------------------------------------------------------
 void GradientItem::UpdatePosition()
 {
-    const unsigned short x = unsigned short( 0.01f * float( percentage_ ) * float( canvas()->rect().width() ) );
-    setPoints( x, 0, x, canvas()->rect().height() );
+    const unsigned short x = GetX();
+    setPoints( x, 0, x, canvas()->rect().height() - 30 );
 }

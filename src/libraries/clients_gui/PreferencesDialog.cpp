@@ -31,9 +31,11 @@ using namespace gui;
 // Name: PreferencesDialog constructor
 // Created: SBO 2006-05-03
 // -----------------------------------------------------------------------------
-PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers, LightingProxy& lighting, kernel::CoordinateSystems& coordSystems )
+PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers, LightingProxy& lighting, kernel::CoordinateSystems& coordSystems,
+                                      const ElevationResolver_ABC& resolver )
     : QDialog( parent, "PreferencesDialog" )
-    , controllers_( controllers )
+    , controllers_      ( controllers )
+    , resolver_         ( resolver )
     , pGraphicPrefPanel_( 0 )
 {
     setCaption( tr( "Preferences" ) );
@@ -185,6 +187,6 @@ void PreferencesDialog::AddLayer( const QString& name, gui::Layer_ABC& layer )
 // -----------------------------------------------------------------------------
 void PreferencesDialog::AddLayer( const QString& name, gui::Elevation2dLayer& layer )
 {
-    AddPage( tr( "2D/Elevation" ), *new ElevationPanel( this, layer, controllers_ ) );
+    AddPage( tr( "2D/Elevation" ), *new ElevationPanel( this, layer, controllers_, resolver_ ) );
     layersPanel_->AddLayer( name, layer );
 }

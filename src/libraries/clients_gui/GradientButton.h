@@ -16,7 +16,7 @@ namespace gui
 {
     class Gradient;
     class GradientItem;
-
+    class ElevationResolver_ABC;
 // =============================================================================
 /** @class  GradientButton
     @brief  GradientButton
@@ -30,7 +30,7 @@ class GradientButton : public QCanvasView
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit GradientButton( QWidget* parent );
+             GradientButton( QWidget* parent, const ElevationResolver_ABC& resolver );
     virtual ~GradientButton();
     //@}
 
@@ -77,6 +77,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const ElevationResolver_ABC& resolver_;
     T_Colors colors_;
     GradientItem* selected_;
     //@}

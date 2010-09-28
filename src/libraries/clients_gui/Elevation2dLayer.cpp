@@ -12,13 +12,13 @@
 #include "clients_kernel/GLTools_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DetectionMap.h"
+#include "ElevationExtrema.h"
+#include "Gradient.h"
 #include <graphics/ElevationTextureSet.h>
 #include <graphics/FixedElevationTextureSet.h>
 #include <graphics/ElevationShader.h>
 #include <graphics/extensions.h>
 #include <graphics/Visitor2d.h>
-#include "ElevationExtrema.h"
-#include "Gradient.h"
 
 using namespace kernel;
 using namespace gui;

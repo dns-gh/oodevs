@@ -84,6 +84,7 @@
 #include "clients_gui/resources.h"
 #include "clients_gui/WatershedLayer.h"
 #include "clients_gui/resources.h"
+#include "clients_gui/ElevationResolver.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -130,6 +131,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     , config_       ( config )
     , forward_      ( new CircularEventStrategy() )
     , eventStrategy_( new ExclusiveEventStrategy( *forward_ ) )
+    , pRevolver_    ( new ElevationResolver( staticModel_.detection_ ) )
     , glProxy_      ( 0 )
     , menu_         ( 0 )
     , fileToolBar_  ( 0 )
@@ -138,7 +140,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setIcon( MAKE_PIXMAP( csword ) );
 
     lighting_ = new LightingProxy( this );
-    PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_, staticModel_.coordinateSystems_ );
+    PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_, staticModel_.coordinateSystems_, *pRevolver_ );
     new Dialogs( this, controllers, staticModel, PreparationProfile::GetProfile() );
 
     glProxy_ = new GlProxy();

@@ -29,13 +29,14 @@ using namespace gui;
 // Name: GradientWidget constructor
 // Created: SBO 2007-07-02
 // -----------------------------------------------------------------------------
-GradientWidget::GradientWidget( QWidget* parent, GradientPreferences& preferences, kernel::Controllers& controllers )
+GradientWidget::GradientWidget( QWidget* parent, GradientPreferences& preferences, kernel::Controllers& controllers,
+                                const ElevationResolver_ABC& resolver )
     : QVBox( parent )
     , controllers_( controllers )
     , options_    ( controllers_.options_ )
     , preferences_( preferences )
 {
-    setMaximumHeight( 80 );
+    setMaximumHeight( 150 );
     QHBox* box = new QHBox( this );
     presetCombo_ = new QComboBox( box );
 
@@ -56,8 +57,8 @@ GradientWidget::GradientWidget( QWidget* parent, GradientPreferences& preference
 
     box = new QHBox( this );
     box->layout()->setAlignment( Qt::AlignCenter );
-    box->setMaximumHeight( 50 );
-    gradientEditor_ = new GradientButton( box );
+    box->setMaximumHeight( 100 );
+    gradientEditor_ = new GradientButton( box, resolver );
     color_ = new ColorButton( box );
     color_->setMaximumHeight( 30 );
 
