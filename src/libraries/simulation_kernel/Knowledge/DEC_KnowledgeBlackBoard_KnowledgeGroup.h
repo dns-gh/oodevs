@@ -19,7 +19,7 @@
 namespace Common
 {
     class ObjectKnowledgeId;
-    class PopulationKnowledgeId;
+    class CrowdKnowledgeId;
     class UnitKnowledgeId;
     class UrbanObjectKnowledgeId;
 }
@@ -93,7 +93,7 @@ public:
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( unsigned int nID ) const;
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( MIL_Object_ABC& object ) const;
 
-    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const Common::PopulationKnowledgeId& asn ) const;
+    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const Common::CrowdKnowledgeId& asn ) const;
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( unsigned int nID ) const;
 
     virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( const Common::UrbanObjectKnowledgeId& asn ) const;

@@ -28,7 +28,7 @@ const QString Object::typeName_ = "object";
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
 Object::Object( const MsgsSimToClient::MsgObjectCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver )
-    : EntityImplementation< Object_ABC >( controller, message.id().id(), QString( message.name().c_str() ) )
+    : EntityImplementation< Object_ABC >( controller, message.object().id(), QString( message.name().c_str() ) )
     , converter_        ( converter )
     , type_             ( typeResolver.Get( message.type().id() ) )
     , nTypeLocalisation_( message.location().type() )
@@ -36,7 +36,7 @@ Object::Object( const MsgsSimToClient::MsgObjectCreation& message, Controller& c
     , valorization_     ( 0 )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.id().id() );
+        name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.object().id() );
     RegisterSelf( *this );
     if( message.attributes().has_obstacle()  )
     {

@@ -49,18 +49,18 @@ void FiresModel::Purge()
 // -----------------------------------------------------------------------------
 void FiresModel::AddFire( const MsgsSimToClient::MsgStartUnitFire& message )
 {
-    if( ! Find( message.id().id() ) )
-        Register( message.id().id(), agents_.Get( message.firing_unit().id() ) );
+    if( ! Find( message.fire().id() ) )
+        Register( message.fire().id(), agents_.Get( message.firing_unit().id() ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: FiresModel::AddFire
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-void FiresModel::AddFire( const MsgsSimToClient::MsgStartPopulationFire& message )
+void FiresModel::AddFire( const MsgsSimToClient::MsgStartCrowdFire& message )
 {
-    if( ! Find( message.id().id() ) )
-        Register( message.id().id(), populations_.Get( message.firing_population().id() ) );
+    if( ! Find( message.fire().id() ) )
+        Register( message.fire().id(), populations_.Get( message.firing_crowd().id() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,16 +69,16 @@ void FiresModel::AddFire( const MsgsSimToClient::MsgStartPopulationFire& message
 // -----------------------------------------------------------------------------
 Entity_ABC* FiresModel::FindFirer( const MsgsSimToClient::MsgStopUnitFire& message )
 {
-    return Find( message.id().id() );
+    return Find( message.fire().id() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: FiresModel::FindFirer
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-Entity_ABC* FiresModel::FindFirer( const MsgsSimToClient::MsgStopPopulationFire& message )
+Entity_ABC* FiresModel::FindFirer( const MsgsSimToClient::MsgStopCrowdFire& message )
 {
-    return Find( message.id().id() );
+    return Find( message.fire().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,14 +87,14 @@ Entity_ABC* FiresModel::FindFirer( const MsgsSimToClient::MsgStopPopulationFire&
 // -----------------------------------------------------------------------------
 void FiresModel::RemoveFire( const MsgsSimToClient::MsgStopUnitFire& message )
 {
-    Remove( message.id().id() );
+    Remove( message.fire().id() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: FiresModel::RemoveFire
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-void FiresModel::RemoveFire( const MsgsSimToClient::MsgStopPopulationFire& message )
+void FiresModel::RemoveFire( const MsgsSimToClient::MsgStopCrowdFire& message )
 {
-    Remove( message.id().id() );
+    Remove( message.fire().id() );
 }

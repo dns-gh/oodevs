@@ -23,6 +23,8 @@
 #include <google/protobuf/extension_set.h>
 #include <google/protobuf/generated_message_reflection.h>
 #include "Common.pb.h"
+#include "SimToClient.pb.h"
+#include "AuthenticationToClient.pb.h"
 #include "Version.pb.h"
 
 namespace MsgsLauncherToAdmin {
@@ -34,8 +36,10 @@ void protobuf_ShutdownFile_LauncherToAdmin_2eproto();
 
 class MsgConnectionAck;
 class MsgExercicesListResponse;
+class MsgConnectedProfileList;
 class MsgControlStartAck;
 class MsgControlStopAck;
+class MsgSimulationComponentState;
 class MsgLauncherToAdmin;
 class MsgLauncherToAdmin_Content;
 
@@ -77,14 +81,51 @@ inline bool MsgExercicesListResponse_ErrorCode_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<MsgExercicesListResponse_ErrorCode>(
     MsgExercicesListResponse_ErrorCode_descriptor(), name, value);
 }
+enum MsgConnectedProfileList_ErrorCode {
+  MsgConnectedProfileList_ErrorCode_success = 0,
+  MsgConnectedProfileList_ErrorCode_failure = 1
+};
+bool MsgConnectedProfileList_ErrorCode_IsValid(int value);
+const MsgConnectedProfileList_ErrorCode MsgConnectedProfileList_ErrorCode_ErrorCode_MIN = MsgConnectedProfileList_ErrorCode_success;
+const MsgConnectedProfileList_ErrorCode MsgConnectedProfileList_ErrorCode_ErrorCode_MAX = MsgConnectedProfileList_ErrorCode_failure;
+
+const ::google::protobuf::EnumDescriptor* MsgConnectedProfileList_ErrorCode_descriptor();
+inline const ::std::string& MsgConnectedProfileList_ErrorCode_Name(MsgConnectedProfileList_ErrorCode value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    MsgConnectedProfileList_ErrorCode_descriptor(), value);
+}
+inline bool MsgConnectedProfileList_ErrorCode_Parse(
+    const ::std::string& name, MsgConnectedProfileList_ErrorCode* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<MsgConnectedProfileList_ErrorCode>(
+    MsgConnectedProfileList_ErrorCode_descriptor(), name, value);
+}
+enum MsgConnectedProfileList_Context {
+  MsgConnectedProfileList_Context_spontaneous = 0,
+  MsgConnectedProfileList_Context_upon_request = 1
+};
+bool MsgConnectedProfileList_Context_IsValid(int value);
+const MsgConnectedProfileList_Context MsgConnectedProfileList_Context_Context_MIN = MsgConnectedProfileList_Context_spontaneous;
+const MsgConnectedProfileList_Context MsgConnectedProfileList_Context_Context_MAX = MsgConnectedProfileList_Context_upon_request;
+
+const ::google::protobuf::EnumDescriptor* MsgConnectedProfileList_Context_descriptor();
+inline const ::std::string& MsgConnectedProfileList_Context_Name(MsgConnectedProfileList_Context value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    MsgConnectedProfileList_Context_descriptor(), value);
+}
+inline bool MsgConnectedProfileList_Context_Parse(
+    const ::std::string& name, MsgConnectedProfileList_Context* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<MsgConnectedProfileList_Context>(
+    MsgConnectedProfileList_Context_descriptor(), name, value);
+}
 enum MsgControlStartAck_ErrorCode {
   MsgControlStartAck_ErrorCode_success = 0,
   MsgControlStartAck_ErrorCode_bad_exercise_name = 1,
-  MsgControlStartAck_ErrorCode_exercise_already_running = 2
+  MsgControlStartAck_ErrorCode_exercise_already_running = 2,
+  MsgControlStartAck_ErrorCode_invalid_checkpoint = 3
 };
 bool MsgControlStartAck_ErrorCode_IsValid(int value);
 const MsgControlStartAck_ErrorCode MsgControlStartAck_ErrorCode_ErrorCode_MIN = MsgControlStartAck_ErrorCode_success;
-const MsgControlStartAck_ErrorCode MsgControlStartAck_ErrorCode_ErrorCode_MAX = MsgControlStartAck_ErrorCode_exercise_already_running;
+const MsgControlStartAck_ErrorCode MsgControlStartAck_ErrorCode_ErrorCode_MAX = MsgControlStartAck_ErrorCode_invalid_checkpoint;
 
 const ::google::protobuf::EnumDescriptor* MsgControlStartAck_ErrorCode_descriptor();
 inline const ::std::string& MsgControlStartAck_ErrorCode_Name(MsgControlStartAck_ErrorCode value) {
@@ -372,6 +413,156 @@ class MsgExercicesListResponse : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class MsgConnectedProfileList : public ::google::protobuf::Message {
+ public:
+  MsgConnectedProfileList();
+  virtual ~MsgConnectedProfileList();
+  
+  MsgConnectedProfileList(const MsgConnectedProfileList& from);
+  
+  inline MsgConnectedProfileList& operator=(const MsgConnectedProfileList& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgConnectedProfileList& default_instance();
+  void Swap(MsgConnectedProfileList* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgConnectedProfileList* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgConnectedProfileList& from);
+  void MergeFrom(const MsgConnectedProfileList& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  typedef MsgConnectedProfileList_ErrorCode ErrorCode;
+  static const ErrorCode success = MsgConnectedProfileList_ErrorCode_success;
+  static const ErrorCode failure = MsgConnectedProfileList_ErrorCode_failure;
+  static inline bool ErrorCode_IsValid(int value) {
+    return MsgConnectedProfileList_ErrorCode_IsValid(value);
+  }
+  static const ErrorCode ErrorCode_MIN =
+    MsgConnectedProfileList_ErrorCode_ErrorCode_MIN;
+  static const ErrorCode ErrorCode_MAX =
+    MsgConnectedProfileList_ErrorCode_ErrorCode_MAX;
+  static inline const ::google::protobuf::EnumDescriptor*
+  ErrorCode_descriptor() {
+    return MsgConnectedProfileList_ErrorCode_descriptor();
+  }
+  static inline const ::std::string& ErrorCode_Name(ErrorCode value) {
+    return MsgConnectedProfileList_ErrorCode_Name(value);
+  }
+  static inline bool ErrorCode_Parse(const ::std::string& name,
+      ErrorCode* value) {
+    return MsgConnectedProfileList_ErrorCode_Parse(name, value);
+  }
+  
+  typedef MsgConnectedProfileList_Context Context;
+  static const Context spontaneous = MsgConnectedProfileList_Context_spontaneous;
+  static const Context upon_request = MsgConnectedProfileList_Context_upon_request;
+  static inline bool Context_IsValid(int value) {
+    return MsgConnectedProfileList_Context_IsValid(value);
+  }
+  static const Context Context_MIN =
+    MsgConnectedProfileList_Context_Context_MIN;
+  static const Context Context_MAX =
+    MsgConnectedProfileList_Context_Context_MAX;
+  static inline const ::google::protobuf::EnumDescriptor*
+  Context_descriptor() {
+    return MsgConnectedProfileList_Context_descriptor();
+  }
+  static inline const ::std::string& Context_Name(Context value) {
+    return MsgConnectedProfileList_Context_Name(value);
+  }
+  static inline bool Context_Parse(const ::std::string& name,
+      Context* value) {
+    return MsgConnectedProfileList_Context_Parse(name, value);
+  }
+  
+  // accessors -------------------------------------------------------
+  
+  // required .MsgsLauncherToAdmin.MsgConnectedProfileList.ErrorCode error_code = 1;
+  inline bool has_error_code() const;
+  inline void clear_error_code();
+  static const int kErrorCodeFieldNumber = 1;
+  inline ::MsgsLauncherToAdmin::MsgConnectedProfileList_ErrorCode error_code() const;
+  inline void set_error_code(::MsgsLauncherToAdmin::MsgConnectedProfileList_ErrorCode value);
+  
+  // required .MsgsLauncherToAdmin.MsgConnectedProfileList.Context context = 2;
+  inline bool has_context() const;
+  inline void clear_context();
+  static const int kContextFieldNumber = 2;
+  inline ::MsgsLauncherToAdmin::MsgConnectedProfileList_Context context() const;
+  inline void set_context(::MsgsLauncherToAdmin::MsgConnectedProfileList_Context value);
+  
+  // repeated .MsgsAuthenticationToClient.MsgProfile exercise = 3;
+  inline int exercise_size() const;
+  inline void clear_exercise();
+  static const int kExerciseFieldNumber = 3;
+  inline const ::google::protobuf::RepeatedPtrField< ::MsgsAuthenticationToClient::MsgProfile >& exercise() const;
+  inline ::google::protobuf::RepeatedPtrField< ::MsgsAuthenticationToClient::MsgProfile >* mutable_exercise();
+  inline const ::MsgsAuthenticationToClient::MsgProfile& exercise(int index) const;
+  inline ::MsgsAuthenticationToClient::MsgProfile* mutable_exercise(int index);
+  inline ::MsgsAuthenticationToClient::MsgProfile* add_exercise();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  int error_code_;
+  int context_;
+  ::google::protobuf::RepeatedPtrField< ::MsgsAuthenticationToClient::MsgProfile > exercise_;
+  friend void  protobuf_AddDesc_LauncherToAdmin_2eproto();
+  friend void protobuf_AssignDesc_LauncherToAdmin_2eproto();
+  friend void protobuf_ShutdownFile_LauncherToAdmin_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgConnectedProfileList* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class MsgControlStartAck : public ::google::protobuf::Message {
  public:
   MsgControlStartAck();
@@ -427,6 +618,7 @@ class MsgControlStartAck : public ::google::protobuf::Message {
   static const ErrorCode success = MsgControlStartAck_ErrorCode_success;
   static const ErrorCode bad_exercise_name = MsgControlStartAck_ErrorCode_bad_exercise_name;
   static const ErrorCode exercise_already_running = MsgControlStartAck_ErrorCode_exercise_already_running;
+  static const ErrorCode invalid_checkpoint = MsgControlStartAck_ErrorCode_invalid_checkpoint;
   static inline bool ErrorCode_IsValid(int value) {
     return MsgControlStartAck_ErrorCode_IsValid(value);
   }
@@ -616,6 +808,101 @@ class MsgControlStopAck : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class MsgSimulationComponentState : public ::google::protobuf::Message {
+ public:
+  MsgSimulationComponentState();
+  virtual ~MsgSimulationComponentState();
+  
+  MsgSimulationComponentState(const MsgSimulationComponentState& from);
+  
+  inline MsgSimulationComponentState& operator=(const MsgSimulationComponentState& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgSimulationComponentState& default_instance();
+  void Swap(MsgSimulationComponentState* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgSimulationComponentState* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgSimulationComponentState& from);
+  void MergeFrom(const MsgSimulationComponentState& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.EnumSimulationState simulation_state = 1;
+  inline bool has_simulation_state() const;
+  inline void clear_simulation_state();
+  static const int kSimulationStateFieldNumber = 1;
+  inline Common::EnumSimulationState simulation_state() const;
+  inline void set_simulation_state(Common::EnumSimulationState value);
+  
+  // optional .Common.EnumDispatcherState dispatcher_state = 2;
+  inline bool has_dispatcher_state() const;
+  inline void clear_dispatcher_state();
+  static const int kDispatcherStateFieldNumber = 2;
+  inline Common::EnumDispatcherState dispatcher_state() const;
+  inline void set_dispatcher_state(Common::EnumDispatcherState value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  int simulation_state_;
+  int dispatcher_state_;
+  friend void  protobuf_AddDesc_LauncherToAdmin_2eproto();
+  friend void protobuf_AssignDesc_LauncherToAdmin_2eproto();
+  friend void protobuf_ShutdownFile_LauncherToAdmin_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgSimulationComponentState* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class MsgLauncherToAdmin_Content : public ::google::protobuf::Message {
  public:
   MsgLauncherToAdmin_Content();
@@ -697,6 +984,111 @@ class MsgLauncherToAdmin_Content : public ::google::protobuf::Message {
   inline const ::MsgsLauncherToAdmin::MsgControlStopAck& control_stop_ack() const;
   inline ::MsgsLauncherToAdmin::MsgControlStopAck* mutable_control_stop_ack();
   
+  // optional .MsgsSimToClient.MsgControlCheckPointSetFrequencyAck control_checkpoint_set_frequency_ack = 5;
+  inline bool has_control_checkpoint_set_frequency_ack() const;
+  inline void clear_control_checkpoint_set_frequency_ack();
+  static const int kControlCheckpointSetFrequencyAckFieldNumber = 5;
+  inline const ::MsgsSimToClient::MsgControlCheckPointSetFrequencyAck& control_checkpoint_set_frequency_ack() const;
+  inline ::MsgsSimToClient::MsgControlCheckPointSetFrequencyAck* mutable_control_checkpoint_set_frequency_ack();
+  
+  // optional .Common.MsgUnitChangeSuperior unit_change_superior = 6;
+  inline bool has_unit_change_superior() const;
+  inline void clear_unit_change_superior();
+  static const int kUnitChangeSuperiorFieldNumber = 6;
+  inline const ::Common::MsgUnitChangeSuperior& unit_change_superior() const;
+  inline ::Common::MsgUnitChangeSuperior* mutable_unit_change_superior();
+  
+  // optional .Common.MsgAutomatChangeSuperior automat_change_superior = 7;
+  inline bool has_automat_change_superior() const;
+  inline void clear_automat_change_superior();
+  static const int kAutomatChangeSuperiorFieldNumber = 7;
+  inline const ::Common::MsgAutomatChangeSuperior& automat_change_superior() const;
+  inline ::Common::MsgAutomatChangeSuperior* mutable_automat_change_superior();
+  
+  // optional .MsgsSimToClient.MsgUnitCreation unit_creation = 8;
+  inline bool has_unit_creation() const;
+  inline void clear_unit_creation();
+  static const int kUnitCreationFieldNumber = 8;
+  inline const ::MsgsSimToClient::MsgUnitCreation& unit_creation() const;
+  inline ::MsgsSimToClient::MsgUnitCreation* mutable_unit_creation();
+  
+  // optional .MsgsSimToClient.MsgAutomatCreation automat_creation = 9;
+  inline bool has_automat_creation() const;
+  inline void clear_automat_creation();
+  static const int kAutomatCreationFieldNumber = 9;
+  inline const ::MsgsSimToClient::MsgAutomatCreation& automat_creation() const;
+  inline ::MsgsSimToClient::MsgAutomatCreation* mutable_automat_creation();
+  
+  // optional .MsgsLauncherToAdmin.MsgConnectedProfileList connected_profile_list = 10;
+  inline bool has_connected_profile_list() const;
+  inline void clear_connected_profile_list();
+  static const int kConnectedProfileListFieldNumber = 10;
+  inline const ::MsgsLauncherToAdmin::MsgConnectedProfileList& connected_profile_list() const;
+  inline ::MsgsLauncherToAdmin::MsgConnectedProfileList* mutable_connected_profile_list();
+  
+  // optional .MsgsAuthenticationToClient.MsgProfileDescriptionList profiles_description = 11;
+  inline bool has_profiles_description() const;
+  inline void clear_profiles_description();
+  static const int kProfilesDescriptionFieldNumber = 11;
+  inline const ::MsgsAuthenticationToClient::MsgProfileDescriptionList& profiles_description() const;
+  inline ::MsgsAuthenticationToClient::MsgProfileDescriptionList* mutable_profiles_description();
+  
+  // optional .MsgsAuthenticationToClient.MsgProfileCreation profile_creation = 12;
+  inline bool has_profile_creation() const;
+  inline void clear_profile_creation();
+  static const int kProfileCreationFieldNumber = 12;
+  inline const ::MsgsAuthenticationToClient::MsgProfileCreation& profile_creation() const;
+  inline ::MsgsAuthenticationToClient::MsgProfileCreation* mutable_profile_creation();
+  
+  // optional .MsgsAuthenticationToClient.MsgProfileUpdate profile_update = 13;
+  inline bool has_profile_update() const;
+  inline void clear_profile_update();
+  static const int kProfileUpdateFieldNumber = 13;
+  inline const ::MsgsAuthenticationToClient::MsgProfileUpdate& profile_update() const;
+  inline ::MsgsAuthenticationToClient::MsgProfileUpdate* mutable_profile_update();
+  
+  // optional .MsgsAuthenticationToClient.MsgProfileDestruction profile_destruction = 14;
+  inline bool has_profile_destruction() const;
+  inline void clear_profile_destruction();
+  static const int kProfileDestructionFieldNumber = 14;
+  inline const ::MsgsAuthenticationToClient::MsgProfileDestruction& profile_destruction() const;
+  inline ::MsgsAuthenticationToClient::MsgProfileDestruction* mutable_profile_destruction();
+  
+  // optional .MsgsLauncherToAdmin.MsgSimulationComponentState simulation_component_state = 15;
+  inline bool has_simulation_component_state() const;
+  inline void clear_simulation_component_state();
+  static const int kSimulationComponentStateFieldNumber = 15;
+  inline const ::MsgsLauncherToAdmin::MsgSimulationComponentState& simulation_component_state() const;
+  inline ::MsgsLauncherToAdmin::MsgSimulationComponentState* mutable_simulation_component_state();
+  
+  // optional .MsgsSimToClient.MsgControlCheckPointSaveNowAck control_checkpoint_save_now_ack = 16;
+  inline bool has_control_checkpoint_save_now_ack() const;
+  inline void clear_control_checkpoint_save_now_ack();
+  static const int kControlCheckpointSaveNowAckFieldNumber = 16;
+  inline const ::MsgsSimToClient::MsgControlCheckPointSaveNowAck& control_checkpoint_save_now_ack() const;
+  inline ::MsgsSimToClient::MsgControlCheckPointSaveNowAck* mutable_control_checkpoint_save_now_ack();
+  
+  // optional .MsgsSimToClient.MsgControlCheckPointListAck control_checkpoint_list_ack = 17;
+  inline bool has_control_checkpoint_list_ack() const;
+  inline void clear_control_checkpoint_list_ack();
+  static const int kControlCheckpointListAckFieldNumber = 17;
+  inline const ::MsgsSimToClient::MsgControlCheckPointListAck& control_checkpoint_list_ack() const;
+  inline ::MsgsSimToClient::MsgControlCheckPointListAck* mutable_control_checkpoint_list_ack();
+  
+  // optional .MsgsSimToClient.MsgControlCheckPointList control_checkpoint_list = 18;
+  inline bool has_control_checkpoint_list() const;
+  inline void clear_control_checkpoint_list();
+  static const int kControlCheckpointListFieldNumber = 18;
+  inline const ::MsgsSimToClient::MsgControlCheckPointList& control_checkpoint_list() const;
+  inline ::MsgsSimToClient::MsgControlCheckPointList* mutable_control_checkpoint_list();
+  
+  // optional .MsgsSimToClient.MsgControlCheckPointDeleteAck control_checkpoint_delete_ack = 19;
+  inline bool has_control_checkpoint_delete_ack() const;
+  inline void clear_control_checkpoint_delete_ack();
+  static const int kControlCheckpointDeleteAckFieldNumber = 19;
+  inline const ::MsgsSimToClient::MsgControlCheckPointDeleteAck& control_checkpoint_delete_ack() const;
+  inline ::MsgsSimToClient::MsgControlCheckPointDeleteAck* mutable_control_checkpoint_delete_ack();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -705,11 +1097,26 @@ class MsgLauncherToAdmin_Content : public ::google::protobuf::Message {
   ::MsgsLauncherToAdmin::MsgExercicesListResponse* exercise_list_response_;
   ::MsgsLauncherToAdmin::MsgControlStartAck* control_start_ack_;
   ::MsgsLauncherToAdmin::MsgControlStopAck* control_stop_ack_;
+  ::MsgsSimToClient::MsgControlCheckPointSetFrequencyAck* control_checkpoint_set_frequency_ack_;
+  ::Common::MsgUnitChangeSuperior* unit_change_superior_;
+  ::Common::MsgAutomatChangeSuperior* automat_change_superior_;
+  ::MsgsSimToClient::MsgUnitCreation* unit_creation_;
+  ::MsgsSimToClient::MsgAutomatCreation* automat_creation_;
+  ::MsgsLauncherToAdmin::MsgConnectedProfileList* connected_profile_list_;
+  ::MsgsAuthenticationToClient::MsgProfileDescriptionList* profiles_description_;
+  ::MsgsAuthenticationToClient::MsgProfileCreation* profile_creation_;
+  ::MsgsAuthenticationToClient::MsgProfileUpdate* profile_update_;
+  ::MsgsAuthenticationToClient::MsgProfileDestruction* profile_destruction_;
+  ::MsgsLauncherToAdmin::MsgSimulationComponentState* simulation_component_state_;
+  ::MsgsSimToClient::MsgControlCheckPointSaveNowAck* control_checkpoint_save_now_ack_;
+  ::MsgsSimToClient::MsgControlCheckPointListAck* control_checkpoint_list_ack_;
+  ::MsgsSimToClient::MsgControlCheckPointList* control_checkpoint_list_;
+  ::MsgsSimToClient::MsgControlCheckPointDeleteAck* control_checkpoint_delete_ack_;
   friend void  protobuf_AddDesc_LauncherToAdmin_2eproto();
   friend void protobuf_AssignDesc_LauncherToAdmin_2eproto();
   friend void protobuf_ShutdownFile_LauncherToAdmin_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(19 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -947,6 +1354,69 @@ inline ::Common::MsgExercise* MsgExercicesListResponse::add_exercise() {
 
 // -------------------------------------------------------------------
 
+// MsgConnectedProfileList
+
+// required .MsgsLauncherToAdmin.MsgConnectedProfileList.ErrorCode error_code = 1;
+inline bool MsgConnectedProfileList::has_error_code() const {
+  return _has_bit(0);
+}
+inline void MsgConnectedProfileList::clear_error_code() {
+  error_code_ = 0;
+  _clear_bit(0);
+}
+inline ::MsgsLauncherToAdmin::MsgConnectedProfileList_ErrorCode MsgConnectedProfileList::error_code() const {
+  return static_cast< ::MsgsLauncherToAdmin::MsgConnectedProfileList_ErrorCode >(error_code_);
+}
+inline void MsgConnectedProfileList::set_error_code(::MsgsLauncherToAdmin::MsgConnectedProfileList_ErrorCode value) {
+  GOOGLE_DCHECK(::MsgsLauncherToAdmin::MsgConnectedProfileList_ErrorCode_IsValid(value));
+  _set_bit(0);
+  error_code_ = value;
+}
+
+// required .MsgsLauncherToAdmin.MsgConnectedProfileList.Context context = 2;
+inline bool MsgConnectedProfileList::has_context() const {
+  return _has_bit(1);
+}
+inline void MsgConnectedProfileList::clear_context() {
+  context_ = 0;
+  _clear_bit(1);
+}
+inline ::MsgsLauncherToAdmin::MsgConnectedProfileList_Context MsgConnectedProfileList::context() const {
+  return static_cast< ::MsgsLauncherToAdmin::MsgConnectedProfileList_Context >(context_);
+}
+inline void MsgConnectedProfileList::set_context(::MsgsLauncherToAdmin::MsgConnectedProfileList_Context value) {
+  GOOGLE_DCHECK(::MsgsLauncherToAdmin::MsgConnectedProfileList_Context_IsValid(value));
+  _set_bit(1);
+  context_ = value;
+}
+
+// repeated .MsgsAuthenticationToClient.MsgProfile exercise = 3;
+inline int MsgConnectedProfileList::exercise_size() const {
+  return exercise_.size();
+}
+inline void MsgConnectedProfileList::clear_exercise() {
+  exercise_.Clear();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::MsgsAuthenticationToClient::MsgProfile >&
+MsgConnectedProfileList::exercise() const {
+  return exercise_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::MsgsAuthenticationToClient::MsgProfile >*
+MsgConnectedProfileList::mutable_exercise() {
+  return &exercise_;
+}
+inline const ::MsgsAuthenticationToClient::MsgProfile& MsgConnectedProfileList::exercise(int index) const {
+  return exercise_.Get(index);
+}
+inline ::MsgsAuthenticationToClient::MsgProfile* MsgConnectedProfileList::mutable_exercise(int index) {
+  return exercise_.Mutable(index);
+}
+inline ::MsgsAuthenticationToClient::MsgProfile* MsgConnectedProfileList::add_exercise() {
+  return exercise_.Add();
+}
+
+// -------------------------------------------------------------------
+
 // MsgControlStartAck
 
 // required .MsgsLauncherToAdmin.MsgControlStartAck.ErrorCode error_code = 1;
@@ -1040,6 +1510,44 @@ inline void MsgControlStopAck::set_simulation_state(Common::EnumSimulationState 
 
 // -------------------------------------------------------------------
 
+// MsgSimulationComponentState
+
+// required .Common.EnumSimulationState simulation_state = 1;
+inline bool MsgSimulationComponentState::has_simulation_state() const {
+  return _has_bit(0);
+}
+inline void MsgSimulationComponentState::clear_simulation_state() {
+  simulation_state_ = 0;
+  _clear_bit(0);
+}
+inline Common::EnumSimulationState MsgSimulationComponentState::simulation_state() const {
+  return static_cast< Common::EnumSimulationState >(simulation_state_);
+}
+inline void MsgSimulationComponentState::set_simulation_state(Common::EnumSimulationState value) {
+  GOOGLE_DCHECK(Common::EnumSimulationState_IsValid(value));
+  _set_bit(0);
+  simulation_state_ = value;
+}
+
+// optional .Common.EnumDispatcherState dispatcher_state = 2;
+inline bool MsgSimulationComponentState::has_dispatcher_state() const {
+  return _has_bit(1);
+}
+inline void MsgSimulationComponentState::clear_dispatcher_state() {
+  dispatcher_state_ = 0;
+  _clear_bit(1);
+}
+inline Common::EnumDispatcherState MsgSimulationComponentState::dispatcher_state() const {
+  return static_cast< Common::EnumDispatcherState >(dispatcher_state_);
+}
+inline void MsgSimulationComponentState::set_dispatcher_state(Common::EnumDispatcherState value) {
+  GOOGLE_DCHECK(Common::EnumDispatcherState_IsValid(value));
+  _set_bit(1);
+  dispatcher_state_ = value;
+}
+
+// -------------------------------------------------------------------
+
 // MsgLauncherToAdmin_Content
 
 // optional .MsgsLauncherToAdmin.MsgConnectionAck connection_ack = 1;
@@ -1110,6 +1618,261 @@ inline ::MsgsLauncherToAdmin::MsgControlStopAck* MsgLauncherToAdmin_Content::mut
   return control_stop_ack_;
 }
 
+// optional .MsgsSimToClient.MsgControlCheckPointSetFrequencyAck control_checkpoint_set_frequency_ack = 5;
+inline bool MsgLauncherToAdmin_Content::has_control_checkpoint_set_frequency_ack() const {
+  return _has_bit(4);
+}
+inline void MsgLauncherToAdmin_Content::clear_control_checkpoint_set_frequency_ack() {
+  if (control_checkpoint_set_frequency_ack_ != NULL) control_checkpoint_set_frequency_ack_->::MsgsSimToClient::MsgControlCheckPointSetFrequencyAck::Clear();
+  _clear_bit(4);
+}
+inline const ::MsgsSimToClient::MsgControlCheckPointSetFrequencyAck& MsgLauncherToAdmin_Content::control_checkpoint_set_frequency_ack() const {
+  return control_checkpoint_set_frequency_ack_ != NULL ? *control_checkpoint_set_frequency_ack_ : *default_instance_->control_checkpoint_set_frequency_ack_;
+}
+inline ::MsgsSimToClient::MsgControlCheckPointSetFrequencyAck* MsgLauncherToAdmin_Content::mutable_control_checkpoint_set_frequency_ack() {
+  _set_bit(4);
+  if (control_checkpoint_set_frequency_ack_ == NULL) control_checkpoint_set_frequency_ack_ = new ::MsgsSimToClient::MsgControlCheckPointSetFrequencyAck;
+  return control_checkpoint_set_frequency_ack_;
+}
+
+// optional .Common.MsgUnitChangeSuperior unit_change_superior = 6;
+inline bool MsgLauncherToAdmin_Content::has_unit_change_superior() const {
+  return _has_bit(5);
+}
+inline void MsgLauncherToAdmin_Content::clear_unit_change_superior() {
+  if (unit_change_superior_ != NULL) unit_change_superior_->::Common::MsgUnitChangeSuperior::Clear();
+  _clear_bit(5);
+}
+inline const ::Common::MsgUnitChangeSuperior& MsgLauncherToAdmin_Content::unit_change_superior() const {
+  return unit_change_superior_ != NULL ? *unit_change_superior_ : *default_instance_->unit_change_superior_;
+}
+inline ::Common::MsgUnitChangeSuperior* MsgLauncherToAdmin_Content::mutable_unit_change_superior() {
+  _set_bit(5);
+  if (unit_change_superior_ == NULL) unit_change_superior_ = new ::Common::MsgUnitChangeSuperior;
+  return unit_change_superior_;
+}
+
+// optional .Common.MsgAutomatChangeSuperior automat_change_superior = 7;
+inline bool MsgLauncherToAdmin_Content::has_automat_change_superior() const {
+  return _has_bit(6);
+}
+inline void MsgLauncherToAdmin_Content::clear_automat_change_superior() {
+  if (automat_change_superior_ != NULL) automat_change_superior_->::Common::MsgAutomatChangeSuperior::Clear();
+  _clear_bit(6);
+}
+inline const ::Common::MsgAutomatChangeSuperior& MsgLauncherToAdmin_Content::automat_change_superior() const {
+  return automat_change_superior_ != NULL ? *automat_change_superior_ : *default_instance_->automat_change_superior_;
+}
+inline ::Common::MsgAutomatChangeSuperior* MsgLauncherToAdmin_Content::mutable_automat_change_superior() {
+  _set_bit(6);
+  if (automat_change_superior_ == NULL) automat_change_superior_ = new ::Common::MsgAutomatChangeSuperior;
+  return automat_change_superior_;
+}
+
+// optional .MsgsSimToClient.MsgUnitCreation unit_creation = 8;
+inline bool MsgLauncherToAdmin_Content::has_unit_creation() const {
+  return _has_bit(7);
+}
+inline void MsgLauncherToAdmin_Content::clear_unit_creation() {
+  if (unit_creation_ != NULL) unit_creation_->::MsgsSimToClient::MsgUnitCreation::Clear();
+  _clear_bit(7);
+}
+inline const ::MsgsSimToClient::MsgUnitCreation& MsgLauncherToAdmin_Content::unit_creation() const {
+  return unit_creation_ != NULL ? *unit_creation_ : *default_instance_->unit_creation_;
+}
+inline ::MsgsSimToClient::MsgUnitCreation* MsgLauncherToAdmin_Content::mutable_unit_creation() {
+  _set_bit(7);
+  if (unit_creation_ == NULL) unit_creation_ = new ::MsgsSimToClient::MsgUnitCreation;
+  return unit_creation_;
+}
+
+// optional .MsgsSimToClient.MsgAutomatCreation automat_creation = 9;
+inline bool MsgLauncherToAdmin_Content::has_automat_creation() const {
+  return _has_bit(8);
+}
+inline void MsgLauncherToAdmin_Content::clear_automat_creation() {
+  if (automat_creation_ != NULL) automat_creation_->::MsgsSimToClient::MsgAutomatCreation::Clear();
+  _clear_bit(8);
+}
+inline const ::MsgsSimToClient::MsgAutomatCreation& MsgLauncherToAdmin_Content::automat_creation() const {
+  return automat_creation_ != NULL ? *automat_creation_ : *default_instance_->automat_creation_;
+}
+inline ::MsgsSimToClient::MsgAutomatCreation* MsgLauncherToAdmin_Content::mutable_automat_creation() {
+  _set_bit(8);
+  if (automat_creation_ == NULL) automat_creation_ = new ::MsgsSimToClient::MsgAutomatCreation;
+  return automat_creation_;
+}
+
+// optional .MsgsLauncherToAdmin.MsgConnectedProfileList connected_profile_list = 10;
+inline bool MsgLauncherToAdmin_Content::has_connected_profile_list() const {
+  return _has_bit(9);
+}
+inline void MsgLauncherToAdmin_Content::clear_connected_profile_list() {
+  if (connected_profile_list_ != NULL) connected_profile_list_->::MsgsLauncherToAdmin::MsgConnectedProfileList::Clear();
+  _clear_bit(9);
+}
+inline const ::MsgsLauncherToAdmin::MsgConnectedProfileList& MsgLauncherToAdmin_Content::connected_profile_list() const {
+  return connected_profile_list_ != NULL ? *connected_profile_list_ : *default_instance_->connected_profile_list_;
+}
+inline ::MsgsLauncherToAdmin::MsgConnectedProfileList* MsgLauncherToAdmin_Content::mutable_connected_profile_list() {
+  _set_bit(9);
+  if (connected_profile_list_ == NULL) connected_profile_list_ = new ::MsgsLauncherToAdmin::MsgConnectedProfileList;
+  return connected_profile_list_;
+}
+
+// optional .MsgsAuthenticationToClient.MsgProfileDescriptionList profiles_description = 11;
+inline bool MsgLauncherToAdmin_Content::has_profiles_description() const {
+  return _has_bit(10);
+}
+inline void MsgLauncherToAdmin_Content::clear_profiles_description() {
+  if (profiles_description_ != NULL) profiles_description_->::MsgsAuthenticationToClient::MsgProfileDescriptionList::Clear();
+  _clear_bit(10);
+}
+inline const ::MsgsAuthenticationToClient::MsgProfileDescriptionList& MsgLauncherToAdmin_Content::profiles_description() const {
+  return profiles_description_ != NULL ? *profiles_description_ : *default_instance_->profiles_description_;
+}
+inline ::MsgsAuthenticationToClient::MsgProfileDescriptionList* MsgLauncherToAdmin_Content::mutable_profiles_description() {
+  _set_bit(10);
+  if (profiles_description_ == NULL) profiles_description_ = new ::MsgsAuthenticationToClient::MsgProfileDescriptionList;
+  return profiles_description_;
+}
+
+// optional .MsgsAuthenticationToClient.MsgProfileCreation profile_creation = 12;
+inline bool MsgLauncherToAdmin_Content::has_profile_creation() const {
+  return _has_bit(11);
+}
+inline void MsgLauncherToAdmin_Content::clear_profile_creation() {
+  if (profile_creation_ != NULL) profile_creation_->::MsgsAuthenticationToClient::MsgProfileCreation::Clear();
+  _clear_bit(11);
+}
+inline const ::MsgsAuthenticationToClient::MsgProfileCreation& MsgLauncherToAdmin_Content::profile_creation() const {
+  return profile_creation_ != NULL ? *profile_creation_ : *default_instance_->profile_creation_;
+}
+inline ::MsgsAuthenticationToClient::MsgProfileCreation* MsgLauncherToAdmin_Content::mutable_profile_creation() {
+  _set_bit(11);
+  if (profile_creation_ == NULL) profile_creation_ = new ::MsgsAuthenticationToClient::MsgProfileCreation;
+  return profile_creation_;
+}
+
+// optional .MsgsAuthenticationToClient.MsgProfileUpdate profile_update = 13;
+inline bool MsgLauncherToAdmin_Content::has_profile_update() const {
+  return _has_bit(12);
+}
+inline void MsgLauncherToAdmin_Content::clear_profile_update() {
+  if (profile_update_ != NULL) profile_update_->::MsgsAuthenticationToClient::MsgProfileUpdate::Clear();
+  _clear_bit(12);
+}
+inline const ::MsgsAuthenticationToClient::MsgProfileUpdate& MsgLauncherToAdmin_Content::profile_update() const {
+  return profile_update_ != NULL ? *profile_update_ : *default_instance_->profile_update_;
+}
+inline ::MsgsAuthenticationToClient::MsgProfileUpdate* MsgLauncherToAdmin_Content::mutable_profile_update() {
+  _set_bit(12);
+  if (profile_update_ == NULL) profile_update_ = new ::MsgsAuthenticationToClient::MsgProfileUpdate;
+  return profile_update_;
+}
+
+// optional .MsgsAuthenticationToClient.MsgProfileDestruction profile_destruction = 14;
+inline bool MsgLauncherToAdmin_Content::has_profile_destruction() const {
+  return _has_bit(13);
+}
+inline void MsgLauncherToAdmin_Content::clear_profile_destruction() {
+  if (profile_destruction_ != NULL) profile_destruction_->::MsgsAuthenticationToClient::MsgProfileDestruction::Clear();
+  _clear_bit(13);
+}
+inline const ::MsgsAuthenticationToClient::MsgProfileDestruction& MsgLauncherToAdmin_Content::profile_destruction() const {
+  return profile_destruction_ != NULL ? *profile_destruction_ : *default_instance_->profile_destruction_;
+}
+inline ::MsgsAuthenticationToClient::MsgProfileDestruction* MsgLauncherToAdmin_Content::mutable_profile_destruction() {
+  _set_bit(13);
+  if (profile_destruction_ == NULL) profile_destruction_ = new ::MsgsAuthenticationToClient::MsgProfileDestruction;
+  return profile_destruction_;
+}
+
+// optional .MsgsLauncherToAdmin.MsgSimulationComponentState simulation_component_state = 15;
+inline bool MsgLauncherToAdmin_Content::has_simulation_component_state() const {
+  return _has_bit(14);
+}
+inline void MsgLauncherToAdmin_Content::clear_simulation_component_state() {
+  if (simulation_component_state_ != NULL) simulation_component_state_->::MsgsLauncherToAdmin::MsgSimulationComponentState::Clear();
+  _clear_bit(14);
+}
+inline const ::MsgsLauncherToAdmin::MsgSimulationComponentState& MsgLauncherToAdmin_Content::simulation_component_state() const {
+  return simulation_component_state_ != NULL ? *simulation_component_state_ : *default_instance_->simulation_component_state_;
+}
+inline ::MsgsLauncherToAdmin::MsgSimulationComponentState* MsgLauncherToAdmin_Content::mutable_simulation_component_state() {
+  _set_bit(14);
+  if (simulation_component_state_ == NULL) simulation_component_state_ = new ::MsgsLauncherToAdmin::MsgSimulationComponentState;
+  return simulation_component_state_;
+}
+
+// optional .MsgsSimToClient.MsgControlCheckPointSaveNowAck control_checkpoint_save_now_ack = 16;
+inline bool MsgLauncherToAdmin_Content::has_control_checkpoint_save_now_ack() const {
+  return _has_bit(15);
+}
+inline void MsgLauncherToAdmin_Content::clear_control_checkpoint_save_now_ack() {
+  if (control_checkpoint_save_now_ack_ != NULL) control_checkpoint_save_now_ack_->::MsgsSimToClient::MsgControlCheckPointSaveNowAck::Clear();
+  _clear_bit(15);
+}
+inline const ::MsgsSimToClient::MsgControlCheckPointSaveNowAck& MsgLauncherToAdmin_Content::control_checkpoint_save_now_ack() const {
+  return control_checkpoint_save_now_ack_ != NULL ? *control_checkpoint_save_now_ack_ : *default_instance_->control_checkpoint_save_now_ack_;
+}
+inline ::MsgsSimToClient::MsgControlCheckPointSaveNowAck* MsgLauncherToAdmin_Content::mutable_control_checkpoint_save_now_ack() {
+  _set_bit(15);
+  if (control_checkpoint_save_now_ack_ == NULL) control_checkpoint_save_now_ack_ = new ::MsgsSimToClient::MsgControlCheckPointSaveNowAck;
+  return control_checkpoint_save_now_ack_;
+}
+
+// optional .MsgsSimToClient.MsgControlCheckPointListAck control_checkpoint_list_ack = 17;
+inline bool MsgLauncherToAdmin_Content::has_control_checkpoint_list_ack() const {
+  return _has_bit(16);
+}
+inline void MsgLauncherToAdmin_Content::clear_control_checkpoint_list_ack() {
+  if (control_checkpoint_list_ack_ != NULL) control_checkpoint_list_ack_->::MsgsSimToClient::MsgControlCheckPointListAck::Clear();
+  _clear_bit(16);
+}
+inline const ::MsgsSimToClient::MsgControlCheckPointListAck& MsgLauncherToAdmin_Content::control_checkpoint_list_ack() const {
+  return control_checkpoint_list_ack_ != NULL ? *control_checkpoint_list_ack_ : *default_instance_->control_checkpoint_list_ack_;
+}
+inline ::MsgsSimToClient::MsgControlCheckPointListAck* MsgLauncherToAdmin_Content::mutable_control_checkpoint_list_ack() {
+  _set_bit(16);
+  if (control_checkpoint_list_ack_ == NULL) control_checkpoint_list_ack_ = new ::MsgsSimToClient::MsgControlCheckPointListAck;
+  return control_checkpoint_list_ack_;
+}
+
+// optional .MsgsSimToClient.MsgControlCheckPointList control_checkpoint_list = 18;
+inline bool MsgLauncherToAdmin_Content::has_control_checkpoint_list() const {
+  return _has_bit(17);
+}
+inline void MsgLauncherToAdmin_Content::clear_control_checkpoint_list() {
+  if (control_checkpoint_list_ != NULL) control_checkpoint_list_->::MsgsSimToClient::MsgControlCheckPointList::Clear();
+  _clear_bit(17);
+}
+inline const ::MsgsSimToClient::MsgControlCheckPointList& MsgLauncherToAdmin_Content::control_checkpoint_list() const {
+  return control_checkpoint_list_ != NULL ? *control_checkpoint_list_ : *default_instance_->control_checkpoint_list_;
+}
+inline ::MsgsSimToClient::MsgControlCheckPointList* MsgLauncherToAdmin_Content::mutable_control_checkpoint_list() {
+  _set_bit(17);
+  if (control_checkpoint_list_ == NULL) control_checkpoint_list_ = new ::MsgsSimToClient::MsgControlCheckPointList;
+  return control_checkpoint_list_;
+}
+
+// optional .MsgsSimToClient.MsgControlCheckPointDeleteAck control_checkpoint_delete_ack = 19;
+inline bool MsgLauncherToAdmin_Content::has_control_checkpoint_delete_ack() const {
+  return _has_bit(18);
+}
+inline void MsgLauncherToAdmin_Content::clear_control_checkpoint_delete_ack() {
+  if (control_checkpoint_delete_ack_ != NULL) control_checkpoint_delete_ack_->::MsgsSimToClient::MsgControlCheckPointDeleteAck::Clear();
+  _clear_bit(18);
+}
+inline const ::MsgsSimToClient::MsgControlCheckPointDeleteAck& MsgLauncherToAdmin_Content::control_checkpoint_delete_ack() const {
+  return control_checkpoint_delete_ack_ != NULL ? *control_checkpoint_delete_ack_ : *default_instance_->control_checkpoint_delete_ack_;
+}
+inline ::MsgsSimToClient::MsgControlCheckPointDeleteAck* MsgLauncherToAdmin_Content::mutable_control_checkpoint_delete_ack() {
+  _set_bit(18);
+  if (control_checkpoint_delete_ack_ == NULL) control_checkpoint_delete_ack_ = new ::MsgsSimToClient::MsgControlCheckPointDeleteAck;
+  return control_checkpoint_delete_ack_;
+}
+
 // -------------------------------------------------------------------
 
 // MsgLauncherToAdmin
@@ -1161,6 +1924,14 @@ inline const EnumDescriptor* GetEnumDescriptor< ::MsgsLauncherToAdmin::MsgConnec
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::MsgsLauncherToAdmin::MsgExercicesListResponse_ErrorCode>() {
   return ::MsgsLauncherToAdmin::MsgExercicesListResponse_ErrorCode_descriptor();
+}
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::MsgsLauncherToAdmin::MsgConnectedProfileList_ErrorCode>() {
+  return ::MsgsLauncherToAdmin::MsgConnectedProfileList_ErrorCode_descriptor();
+}
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::MsgsLauncherToAdmin::MsgConnectedProfileList_Context>() {
+  return ::MsgsLauncherToAdmin::MsgConnectedProfileList_Context_descriptor();
 }
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::MsgsLauncherToAdmin::MsgControlStartAck_ErrorCode>() {

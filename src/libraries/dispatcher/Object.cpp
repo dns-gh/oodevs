@@ -37,9 +37,8 @@ using namespace dispatcher;
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
 Object::Object( Model_ABC& model, const MsgsSimToClient::MsgObjectCreation& msg, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types )
-    : dispatcher::Object_ABC( msg.id().id(), QString( msg.name().c_str() ) )
+    : dispatcher::Object_ABC( msg.object().id(), QString( msg.name().c_str() ) )
     , type_                 ( types.Get( msg.type().id() ) )
-    , strName_              ( msg.name()  )
     , localisation_         ( msg.location() )
     , side_                 ( model.Sides().Get( msg.party().id() ) )
 {
@@ -66,7 +65,7 @@ Object::~Object()
 // Name: Object::Initialize
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void Object::Initialize( Model_ABC& model, const Common::MsgObjectAttributes& attributes )
+void Object::Initialize( Model_ABC& model, const Common::ObjectAttributes& attributes )
 {
     MSG_ASN_CREATION( construction      , ConstructionAttribute );
     MSG_ASN_CREATION( obstacle          , ObstacleAttribute );
@@ -115,9 +114,9 @@ void Object::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& msg )
 void Object::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::ObjectCreation asn;
-    asn().mutable_id()->set_id( GetId() );
+    asn().mutable_object()->set_id( GetId() );
     asn().mutable_type()->set_id( type_.GetType().c_str() );
-    asn().set_name( strName_.c_str() );
+    asn().set_name( GetName() );
     asn().mutable_party()->set_id( side_.GetId() );
     localisation_.Send( *asn().mutable_location() );
     std::for_each( attributes_.begin(), attributes_.end(),
@@ -132,7 +131,7 @@ void Object::SendCreation( ClientPublisher_ABC& publisher ) const
 void Object::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::ObjectUpdate asn;
-    asn().mutable_id()->set_id( GetId() );
+    asn().mutable_object()->set_id( GetId() );
     if( optionals_.localisationPresent )
         localisation_.Send( *asn().mutable_location() );
     std::for_each( attributes_.begin(), attributes_.end(),
@@ -147,7 +146,7 @@ void Object::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 void Object::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::ObjectDestruction destruction;
-    destruction().mutable_id()->set_id( GetId() );
+    destruction().mutable_object()->set_id( GetId() );
     destruction.Send( publisher );
 }
 

@@ -38,8 +38,8 @@ namespace
 // Name: Team constructor
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
-Team::Team( const MsgsSimToClient::MsgTeamCreation& message, Controller& controller )
-    : EntityImplementation< Team_ABC >( controller, message.id().id(), QString( message.nom().c_str() ) )
+Team::Team( const MsgsSimToClient::MsgPartyCreation& message, Controller& controller )
+    : EntityImplementation< Team_ABC >( controller, message.party().id(), QString( message.name().c_str() ) )
     , karma_( MakeKarma( message.type() ) )
 {
     CreateDictionary( controller );

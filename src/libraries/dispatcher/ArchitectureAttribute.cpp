@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: ArchitectureAttribute constructor
 // Created: SLG 2009-12-04
 // -----------------------------------------------------------------------------
-ArchitectureAttribute::ArchitectureAttribute( const MsgsSimToClient::MsgUrbanAttributes& message )
+ArchitectureAttribute::ArchitectureAttribute( const MsgsSimToClient::UrbanAttributes& message )
     : height_ ( 0. )
     , floorNumber_     ( 0 )
     , basementLevelNumber_ ( 0 )
@@ -42,7 +42,7 @@ ArchitectureAttribute::~ArchitectureAttribute()
 // Name: ArchitectureAttribute::Update
 // Created: SLG 2009-12-04
 // -----------------------------------------------------------------------------
-void ArchitectureAttribute::Update( const MsgsSimToClient::MsgUrbanAttributes& message )
+void ArchitectureAttribute::Update( const MsgsSimToClient::UrbanAttributes& message )
 {
     if( message.has_architecture() )
     {
@@ -65,7 +65,7 @@ void ArchitectureAttribute::Update( const MsgsSimToClient::MsgUrbanAttributes& m
 // Name: ArchitectureAttribute::Send
 // Created: SLG 2009-12-04
 // -----------------------------------------------------------------------------
-void ArchitectureAttribute::Send( MsgsSimToClient::MsgUrbanAttributes& message ) const
+void ArchitectureAttribute::Send( MsgsSimToClient::UrbanAttributes& message ) const
 {
     message.mutable_architecture()->set_height( height_ );
     message.mutable_architecture()->set_floor_number( floorNumber_ );

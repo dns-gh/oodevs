@@ -57,14 +57,14 @@ bool SimulationDispatcher::IsNotDestruction( const MsgsSimToClient::MsgSimToClie
         wrapper.message().has_log_medical_handling_destruction() ||
         wrapper.message().has_log_maintenance_handling_destruction() ||
         wrapper.message().has_log_supply_handling_destruction() ||
-        wrapper.message().has_population_concentration_destruction() ||
-        wrapper.message().has_population_flow_destruction() ||
-        wrapper.message().has_population_knowledge_destruction() ||
-        wrapper.message().has_population_concentration_knowledge_destruction() ||
-        wrapper.message().has_population_flow_knowledge_destruction() ||
+        wrapper.message().has_crowd_concentration_destruction() ||
+        wrapper.message().has_crowd_flow_destruction() ||
+        wrapper.message().has_crowd_knowledge_destruction() ||
+        wrapper.message().has_crowd_concentration_knowledge_destruction() ||
+        wrapper.message().has_crowd_flow_knowledge_destruction() ||
         wrapper.message().has_stop_fire_effect() ||
         wrapper.message().has_stop_unit_fire() ||
-        wrapper.message().has_stop_population_fire() ||
+        wrapper.message().has_stop_crowd_fire() ||
         wrapper.message().has_invalidate_report() )
         return false;
     return true;

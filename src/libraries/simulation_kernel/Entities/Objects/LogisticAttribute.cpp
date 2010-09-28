@@ -116,7 +116,7 @@ void LogisticAttribute::Register( MIL_Object_ABC& object ) const
 // Name: LogisticAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void LogisticAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
+void LogisticAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 {
     asn.mutable_logistic()->mutable_tc2()->set_id( pTC2_->GetID() );
 }
@@ -125,7 +125,7 @@ void LogisticAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 // Name: LogisticAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void LogisticAttribute::SendUpdate( Common::MsgObjectAttributes& /*asn*/ ) const
+void LogisticAttribute::SendUpdate( Common::ObjectAttributes& /*asn*/ ) const
 {
     // NOTHING
 }

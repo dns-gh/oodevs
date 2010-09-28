@@ -19,7 +19,7 @@ using namespace dispatcher;
 // Name: PopulationOrder constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-PopulationOrder::PopulationOrder( const Common::MsgPopulationOrder& message )
+PopulationOrder::PopulationOrder( const Common::MsgCrowdOrder& message )
     : Order_ABC( message.type().id() )
     , message_( message.New() )
 {
@@ -41,7 +41,7 @@ PopulationOrder::~PopulationOrder()
 // -----------------------------------------------------------------------------
 void PopulationOrder::Send( ClientPublisher_ABC& publisher ) const
 {
-    client::PopulationOrder message;
+    client::CrowdOrder message;
     message().CopyFrom( *message_ );
     message.Send( publisher );
 }
@@ -52,7 +52,7 @@ void PopulationOrder::Send( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void PopulationOrder::SendNoMission( const kernel::Entity_ABC& entity, ClientPublisher_ABC& publisher )
 {
-    client::PopulationOrder message;
+    client::CrowdOrder message;
     message().mutable_tasker()->set_id( entity.GetId() );
     message().mutable_type()->set_id( 0 );
     message.Send( publisher );

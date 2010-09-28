@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: SealOffAttribute constructor
 // Created: MGD 2010-08-12
 // -----------------------------------------------------------------------------
-SealOffAttribute::SealOffAttribute( const Common::MsgObjectAttributes& asnMsg )
+SealOffAttribute::SealOffAttribute( const Common::ObjectAttributes& asnMsg )
     : nSealOffLevel_( asnMsg.bypass().percentage() )
 {
     // NOTHING
@@ -36,7 +36,7 @@ SealOffAttribute::~SealOffAttribute()
 // Name: SealOffAttribute::Update
 // Created: MGD 2010-08-12
 // -----------------------------------------------------------------------------
-void SealOffAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
+void SealOffAttribute::Update( const Common::ObjectAttributes& asnMsg )
 {
     if( asnMsg.has_bypass()  )
         nSealOffLevel_ = asnMsg.bypass().percentage();
@@ -46,7 +46,7 @@ void SealOffAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 // Name: SealOffAttribute::Send
 // Created: MGD 2010-08-12
 // -----------------------------------------------------------------------------
-void SealOffAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
+void SealOffAttribute::Send( Common::ObjectAttributes& asnMsg ) const
 {
     asnMsg.mutable_bypass()->set_percentage( nSealOffLevel_ );
 }

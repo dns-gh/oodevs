@@ -14,7 +14,6 @@
 #include "Time_ABC.h"
 #include "protocol/protocol.h"
 
-using namespace Common;
 using namespace plugins::dis;
 using namespace plugins::hla;
 
@@ -59,12 +58,12 @@ void FireManager::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
 // Name: FireManager::ReceiveFire
 // Created: AGE 2008-04-08
 // -----------------------------------------------------------------------------
-void FireManager::ReceiveFire( const MsgsSimToClient::MsgStartUnitFire& fire )
+void FireManager::ReceiveFire( const MsgsSimToClient::MsgStartUnitFire& message )
 {
-    if( fire.target().has_position() )
+    if( message.target().has_position() )
     {
-        activeFires_[ fire.id().id() ] = fire.target().position();
-        CreateFire( fire.target().position() );
+        activeFires_[ message.fire().id() ] = message.target().position();
+        CreateFire( message.target().position() );
     }
 }
 
@@ -72,11 +71,11 @@ void FireManager::ReceiveFire( const MsgsSimToClient::MsgStartUnitFire& fire )
 // Name: FireManager::UpdateFireEffect
 // Created: AGE 2008-05-05
 // -----------------------------------------------------------------------------
-void FireManager::UpdateFireEffect( const MsgsSimToClient::MsgStartFireEffect& fire )
+void FireManager::UpdateFireEffect( const MsgsSimToClient::MsgStartFireEffect& message )
 {
     DetonationPDU pdu( EntityIdentifier( 1, 1, 1 ), time_.GetTime(), exercise_ );
-    pdu.SetBurst( 1, 1, fire.type() == fumigene ? BurstDescriptor::smoke : BurstDescriptor::illumination );
-    pdu.SetPosition( fire.location().coordinates().elem(0).latitude(), fire.location().coordinates().elem(0).longitude(), 0 );  // $$$$ AGE 2008-05-05: altitude
+    pdu.SetBurst( 1, 1, message.type() == Common::smoke ? BurstDescriptor::smoke : BurstDescriptor::illumination );
+    pdu.SetPosition( message.location().coordinates().elem(0).latitude(), message.location().coordinates().elem(0).longitude(), 0 );  // $$$$ AGE 2008-05-05: altitude
     network_.Send( pdu );
 }
 
@@ -84,13 +83,13 @@ void FireManager::UpdateFireEffect( const MsgsSimToClient::MsgStartFireEffect& f
 // Name: FireManager::ReceiveFire
 // Created: AGE 2008-04-08
 // -----------------------------------------------------------------------------
-void FireManager::ReceiveFire( const MsgsSimToClient::MsgStopUnitFire& fire )
+void FireManager::ReceiveFire( const MsgsSimToClient::MsgStopUnitFire& message )
 {
     DetonationPDU pdu( EntityIdentifier( 1, 1, 1 ), time_.GetTime(), exercise_ );
-    pdu.SetPosition( activeFires_[ fire.id().id() ].latitude(), activeFires_[ fire.id().id() ].longitude(), 0 );  // $$$$ AGE 2008-05-05: altitude
+    pdu.SetPosition( activeFires_[ message.fire().id() ].latitude(), activeFires_[ message.fire().id() ].longitude(), 0 );  // $$$$ AGE 2008-05-05: altitude
     network_.Send( pdu );
 
-    activeFires_.erase( fire.id().id() );
+    activeFires_.erase( message.fire().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +105,7 @@ void FireManager::UpdateDetonations()
 // Name: FireManager::CreateFire
 // Created: AGE 2008-04-08
 // -----------------------------------------------------------------------------
-void FireManager::CreateFire( const MsgCoordLatLong& /*position*/ )
+void FireManager::CreateFire( const Common::MsgCoordLatLong& /*position*/ )
 {
     // $$$$ AGE 2008-05-05:  ?
 }

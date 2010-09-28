@@ -22,7 +22,7 @@ using namespace dispatcher;
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
 LogConsignMaintenance::LogConsignMaintenance( const Model& model, const MsgsSimToClient::MsgLogMaintenanceHandlingCreation& msg )
-    : SimpleEntity< >   ( msg.id().id() )
+    : SimpleEntity< >   ( msg.request().id() )
     , model_            ( model )
     , agent_            ( model.Agents().Get( msg.unit().id() ) )
     , nTickCreation_    ( msg.tick_creation() )
@@ -65,7 +65,7 @@ void LogConsignMaintenance::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::LogMaintenanceHandlingCreation message;
 
-    message().mutable_id()->set_id( GetId() );
+    message().mutable_request()->set_id( GetId() );
     message().mutable_unit()->set_id( agent_.GetId() );
     message().set_tick_creation ( nTickCreation_ );
 
@@ -83,7 +83,7 @@ void LogConsignMaintenance::SendFullUpdate( ClientPublisher_ABC& publisher ) con
 {
     client::LogMaintenanceHandlingUpdate message;
 
-    message().mutable_id()->set_id( GetId() );
+    message().mutable_request()->set_id( GetId() );
     message().mutable_unit()->set_id( agent_.GetId() );
     message().mutable_provider()->set_id( pTreatingAgent_ ? pTreatingAgent_->GetId() : 0 );
     message().set_etat( nState_ );
@@ -99,7 +99,7 @@ void LogConsignMaintenance::SendFullUpdate( ClientPublisher_ABC& publisher ) con
 void LogConsignMaintenance::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::LogMaintenanceHandlingDestruction message;
-    message().mutable_id()->set_id( GetId() );
+    message().mutable_request()->set_id( GetId() );
     message().mutable_unit()->set_id( agent_.GetId() );
     message.Send( publisher );
 }

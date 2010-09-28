@@ -58,5 +58,4 @@ void AutomatMission::Publish( Publisher_ABC& publisher ) const
     message().mutable_type()->set_id( GetType().GetId());
     CommitTo( *message().mutable_parameters() );
     message.Send( publisher );
-    Clean( *message().mutable_parameters() );
 }

@@ -16,7 +16,7 @@
 
 namespace Common
 {
-    class MsgObjectAttributes;
+    class ObjectAttributes;
 }
 
 namespace MsgsSimToClient
@@ -78,10 +78,10 @@ private:
     //! @name Helpers
     //@{
     template< typename T >
-    void CreateOrUpdate( const Common::MsgObjectAttributes& message );
+    void CreateOrUpdate( const Common::ObjectAttributes& message );
     template< typename T >
-    void CreateOrUpdate( const Common::MsgObjectAttributes& message, const Model_ABC& model );
-    void Initialize( const Model_ABC& model, const Common::MsgObjectAttributes& message );
+    void CreateOrUpdate( const Common::ObjectAttributes& message, const Model_ABC& model );
+    void Initialize( const Model_ABC& model, const Common::ObjectAttributes& message );
     void AddAttribute( ObjectAttribute_ABC* attribute );
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInList( kernel::Displayer_ABC& displayer ) const;

@@ -40,7 +40,7 @@ bool MIL_ParameterType_PopulationKnowledge::Copy( const MIL_MissionParameter_ABC
     // Check source
     if( !from.IsOfType( *this ) )
         return false;
-    to.set_null_value( !from.ToPopulationKnowledge( *to.mutable_value()->mutable_populationknowledge() ) );
+    to.set_null_value( !from.ToPopulationKnowledge( *to.mutable_value()->mutable_crowdknowledge() ) );
     if( to.null_value() )
         to.clear_value();
     return !to.null_value() || bIsOptional;

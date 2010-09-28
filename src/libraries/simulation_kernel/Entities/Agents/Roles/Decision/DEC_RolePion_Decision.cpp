@@ -1066,7 +1066,7 @@ void DEC_RolePion_Decision::SendFullState( client::UnitAttributes& msg ) const
     msg().set_etat_operationnel             ( Common::EnumOperationalStatus( nOperationalState_ ) );
     msg().set_disponibilite_au_tir_indirect ( MsgsSimToClient::MsgUnitAttributes_FireAvailability( nIndirectFireAvailability_ ) );
     msg().set_roe                           ( MsgsSimToClient::RulesOfEngagement_Value( nRulesOfEngagementState_ ) );
-    msg().set_roe_population                ( pRoePopulation_->GetAsnID() );
+    msg().set_roe_crowd                     ( pRoePopulation_->GetAsnID() );
 }
 
 // -----------------------------------------------------------------------------

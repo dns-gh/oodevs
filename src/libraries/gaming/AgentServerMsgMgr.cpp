@@ -197,7 +197,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitDestruction( const MsgsSimToClient::MsgU
 void AgentServerMsgMgr::OnReceiveMsgUnitVisionCones( const MsgsSimToClient::MsgUnitVisionCones& message )
 {
     if( !simulation_.IsPaused() )
-        GetModel().agents_.GetAgent( message.id().id() ).Update( message );
+        GetModel().agents_.GetAgent( message.unit().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -219,21 +219,21 @@ void AgentServerMsgMgr::OnReceiveMsgObjectInterVisibility( const MsgsSimToClient
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationInterVisibility
+// Name: AgentServerMsgMgr::OnReceiveMsgCrowdConcentrationInterVisibility
 // Created: AGE 2007-07-05
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationInterVisibility( const MsgsSimToClient::MsgPopulationConcentrationDetection& message )
+void AgentServerMsgMgr::OnReceiveMsgCrowdConcentrationInterVisibility( const MsgsSimToClient::MsgCrowdConcentrationDetection& message )
 {
-    GetModel().agents_.GetAgent( message.id().id() ).Update( message );
+    GetModel().agents_.GetAgent( message.observer().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility
+// Name: AgentServerMsgMgr::OnReceiveMsgCrowdFlowInterVisibility
 // Created: AGE 2007-07-05
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility( const MsgsSimToClient::MsgPopulationFlowDetection& message )
+void AgentServerMsgMgr::OnReceiveMsgCrowdFlowInterVisibility( const MsgsSimToClient::MsgCrowdFlowDetection& message )
 {
-    GetModel().agents_.GetAgent( message.id().id() ).Update( message );
+    GetModel().agents_.GetAgent( message.observer().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -242,14 +242,14 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility( const MsgsSim
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints( const MsgsSimToClient::MsgDebugPoints& message )
 {
-    if( message.id().has_automat() )
-        GetModel().agents_.FindAllAgent( message.id().automat().id() )->Update( message );
-    if( message.id().has_unit() )
-        GetModel().agents_.FindAllAgent( message.id().unit().id() )->Update( message );
-    if( message.id().has_formation() )
-        GetModel().agents_.FindAllAgent( message.id().formation().id() )->Update( message );
-    if( message.id().has_population() )
-        GetModel().agents_.FindAllAgent( message.id().population().id() )->Update( message );
+    if( message.source().has_automat() )
+        GetModel().agents_.FindAllAgent( message.source().automat().id() )->Update( message );
+    if( message.source().has_unit() )
+        GetModel().agents_.FindAllAgent( message.source().unit().id() )->Update( message );
+    if( message.source().has_formation() )
+        GetModel().agents_.FindAllAgent( message.source().formation().id() )->Update( message );
+    if( message.source().has_crowd() )
+        GetModel().agents_.FindAllAgent( message.source().crowd().id() )->Update( message );
 }
 
 //-----------------------------------------------------------------------------
@@ -411,7 +411,7 @@ void AgentServerMsgMgr::OnReceiveMsgProfileUpdateRequestAck( const MsgsAuthentic
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitAttributes( const MsgsSimToClient::MsgUnitAttributes& message )
 {
-    GetModel().agents_.GetAgent( message.id().id() ).Update( message );
+    GetModel().agents_.GetAgent( message.unit().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -420,7 +420,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitAttributes( const MsgsSimToClient::MsgUn
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgAutomatAttributes( const MsgsSimToClient::MsgAutomatAttributes& message )
 {
-    GetModel().agents_.GetAutomat( message.id().id() ).Update( message );
+    GetModel().agents_.GetAutomat( message.automat().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -438,7 +438,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceHandlingCreation( const MsgsSi
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceHandlingDestruction( const MsgsSimToClient::MsgLogMaintenanceHandlingDestruction& message )
 {
-    GetModel().logistics_.DeleteMaintenanceConsign( message.id().id() );
+    GetModel().logistics_.DeleteMaintenanceConsign( message.request().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -447,7 +447,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceHandlingDestruction( const Msg
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceHandlingUpdate( const MsgsSimToClient::MsgLogMaintenanceHandlingUpdate& message )
 {
-    GetModel().logistics_.GetMaintenanceConsign( message.id().id() ).Update( message );
+    GetModel().logistics_.GetMaintenanceConsign( message.request().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -456,7 +456,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceHandlingUpdate( const MsgsSimT
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceState( const MsgsSimToClient::MsgLogMaintenanceState& message )
 {
-    GetModel().agents_.GetAgent( message.id().id() ).Update( message );
+    GetModel().agents_.GetAgent( message.unit().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -474,7 +474,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogMedicalHandlingCreation( const MsgsSimToC
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogMedicalHandlingDestruction( const MsgsSimToClient::MsgLogMedicalHandlingDestruction& message )
 {
-    GetModel().logistics_.DeleteMedicalConsign( message.id().id() );
+    GetModel().logistics_.DeleteMedicalConsign( message.request().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -483,7 +483,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogMedicalHandlingDestruction( const MsgsSim
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogMedicalHandlingUpdate( const MsgsSimToClient::MsgLogMedicalHandlingUpdate& message )
 {
-    GetModel().logistics_.GetMedicalConsign( message.id().id() ).Update( message );
+    GetModel().logistics_.GetMedicalConsign( message.request().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -492,7 +492,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogMedicalHandlingUpdate( const MsgsSimToCli
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogMedicalState( const MsgsSimToClient::MsgLogMedicalState& message )
 {
-    GetModel().agents_.GetAgent( message.id().id() ).Update( message );
+    GetModel().agents_.GetAgent( message.unit().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -510,7 +510,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogSupplyHandlingCreation( const MsgsSimToCl
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogSupplyHandlingDestruction( const MsgsSimToClient::MsgLogSupplyHandlingDestruction& message )
 {
-    GetModel().logistics_.DeleteSupplyConsign( message.id().id() );
+    GetModel().logistics_.DeleteSupplyConsign( message.request().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -519,7 +519,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogSupplyHandlingDestruction( const MsgsSimT
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogSupplyHandlingUpdate( const MsgsSimToClient::MsgLogSupplyHandlingUpdate& message )
 {
-    GetModel().logistics_.GetSupplyConsign( message.id().id() ).Update( message );
+    GetModel().logistics_.GetSupplyConsign( message.request().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -528,7 +528,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogSupplyHandlingUpdate( const MsgsSimToClie
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogSupplyState( const MsgsSimToClient::MsgLogSupplyState&  message )
 {
-    GetModel().agents_.GetAgent( message.id().id() ).Update( message );
+    GetModel().agents_.GetAgent( message.unit().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -537,7 +537,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogSupplyState( const MsgsSimToClient::MsgLo
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogSupplyQuotas( const MsgsSimToClient::MsgLogSupplyQuotas& message )
 {
-    GetModel().agents_.GetAutomat( message.id().id() ).Update( message );
+    GetModel().agents_.GetAutomat( message.automat().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -564,7 +564,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogSupplyPushFlowAck( const MsgsSimToClient:
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitPathFind( const MsgsSimToClient::MsgUnitPathFind& message )
 {
-    GetModel().agents_.GetAgent( message.id().id() ).Update( message );
+    GetModel().agents_.GetAgent( message.unit().id() ).Update( message );
 }
 
 //-----------------------------------------------------------------------------
@@ -627,14 +627,14 @@ void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupCreation( const MsgsSimToClien
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupDestruction( const MsgsSimToClient::MsgKnowledgeGroupDestruction& message )
 {
-    GetModel().knowledgeGroups_.Delete( message.id().id() );
+    GetModel().knowledgeGroups_.Delete( message.knowledge_group().id() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgTeamCreation
+// Name: AgentServerMsgMgr::OnReceiveMsgPartyCreation
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgTeamCreation( const MsgsSimToClient::MsgTeamCreation& message )
+void AgentServerMsgMgr::OnReceiveMsgPartyCreation( const MsgsSimToClient::MsgPartyCreation& message )
 {
     GetModel().teams_.CreateTeam( message );
 }
@@ -643,7 +643,7 @@ void AgentServerMsgMgr::OnReceiveMsgTeamCreation( const MsgsSimToClient::MsgTeam
 // Name: AgentServerMsgMgr::OnReceiveMsgFormationCreation
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgFormationCreation( const Common::MsgFormationCreation& message )
+void AgentServerMsgMgr::OnReceiveMsgFormationCreation( const MsgsSimToClient::MsgFormationCreation& message )
 {
     GetModel().teams_.CreateFormation( message );
 }
@@ -861,8 +861,8 @@ namespace
             model.GetAgent( id.unit().id() ).Update( message );
         else if( id.has_automat() )
             model.GetAutomat( id.automat().id() ).Update( message );
-        else if( id.has_population() )
-            model.GetPopulation( id.population().id() ).Update( message );
+        else if( id.has_crowd() )
+            model.GetPopulation( id.crowd().id() ).Update( message );
         else
             throw std::exception( std::string( std::string( typeid( Message ).name() ) + ": unknown message source entity" ).c_str() ); 
     }
@@ -874,7 +874,7 @@ namespace
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCR( const MsgsSimToClient::MsgReport& message )
 {
-    OnReceiveMessageWithTasker( GetModel().agents_, message, message.cr() );
+    OnReceiveMessageWithTasker( GetModel().agents_, message, message.source() );
 }
 
 // -----------------------------------------------------------------------------
@@ -901,7 +901,7 @@ void AgentServerMsgMgr::OnReceiveMsgTrace( const MsgsSimToClient::MsgTrace& mess
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgDecisionalState( const MsgsSimToClient::MsgDecisionalState& message )
 {
-    OnReceiveMessageWithTasker( GetModel().agents_, message, message.id() );
+    OnReceiveMessageWithTasker( GetModel().agents_, message, message.source() );
 }
 
 //-----------------------------------------------------------------------------
@@ -1056,82 +1056,82 @@ void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeDestruction( const MsgsSimToC
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeCreation
+// Name: AgentServerMsgMgr::OnReceiveMsgCrowdKnowledgeCreation
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeCreation( const MsgsSimToClient::MsgPopulationKnowledgeCreation& message )
+void AgentServerMsgMgr::OnReceiveMsgCrowdKnowledgeCreation( const MsgsSimToClient::MsgCrowdKnowledgeCreation& message )
 {
     GetModel().knowledgeGroups_.Get( message.knowledge_group().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeUpdate
+// Name: AgentServerMsgMgr::OnReceiveMsgCrowdKnowledgeUpdate
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeUpdate( const MsgsSimToClient::MsgPopulationKnowledgeUpdate& message )
+void AgentServerMsgMgr::OnReceiveMsgCrowdKnowledgeUpdate( const MsgsSimToClient::MsgCrowdKnowledgeUpdate& message )
 {
     GetModel().knowledgeGroups_.Get( message.knowledge_group().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeDestruction
+// Name: AgentServerMsgMgr::OnReceiveMsgCrowdKnowledgeDestruction
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeDestruction( const MsgsSimToClient::MsgPopulationKnowledgeDestruction& message )
+void AgentServerMsgMgr::OnReceiveMsgCrowdKnowledgeDestruction( const MsgsSimToClient::MsgCrowdKnowledgeDestruction& message )
 {
     GetModel().knowledgeGroups_.Get( message.knowledge_group().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeCreation
+// Name: AgentServerMsgMgr::OnReceiveMsgCrowdConcentrationKnowledgeCreation
 // Created: SBO 2005-10-14
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeCreation( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation& message )
+void AgentServerMsgMgr::OnReceiveMsgCrowdConcentrationKnowledgeCreation( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation& message )
 {
     GetModel().knowledgeGroups_.Get( message.knowledge_group().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeUpdate
+// Name: AgentServerMsgMgr::OnReceiveMsgCrowdConcentrationKnowledgeUpdate
 // Created: SBO 2005-10-14
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeUpdate( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate& message )
+void AgentServerMsgMgr::OnReceiveMsgCrowdConcentrationKnowledgeUpdate( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate& message )
 {
     GetModel().knowledgeGroups_.Get( message.knowledge_group().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeDestruction
+// Name: AgentServerMsgMgr::OnReceiveMsgCrowdConcentrationKnowledgeDestruction
 // Created: SBO 2005-10-14
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeDestruction( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeDestruction& message )
+void AgentServerMsgMgr::OnReceiveMsgCrowdConcentrationKnowledgeDestruction( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeDestruction& message )
 {
     GetModel().knowledgeGroups_.Get( message.knowledge_group().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeCreation
+// Name: AgentServerMsgMgr::OnReceiveMsgCrowdFlowKnowledgeCreation
 // Created: SBO 2005-10-14
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeCreation( const MsgsSimToClient::MsgPopulationFlowKnowledgeCreation& message )
+void AgentServerMsgMgr::OnReceiveMsgCrowdFlowKnowledgeCreation( const MsgsSimToClient::MsgCrowdFlowKnowledgeCreation& message )
 {
     GetModel().knowledgeGroups_.Get( message.knowledge_group().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeUpdate
+// Name: AgentServerMsgMgr::OnReceiveMsgCrowdFlowKnowledgeUpdate
 // Created: SBO 2005-10-14
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeUpdate( const MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate& message )
+void AgentServerMsgMgr::OnReceiveMsgCrowdFlowKnowledgeUpdate( const MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate& message )
 {
     GetModel().knowledgeGroups_.Get( message.knowledge_group().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeDestruction
+// Name: AgentServerMsgMgr::OnReceiveMsgCrowdFlowKnowledgeDestruction
 // Created: SBO 2005-10-14
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeDestruction( const MsgsSimToClient::MsgPopulationFlowKnowledgeDestruction& message )
+void AgentServerMsgMgr::OnReceiveMsgCrowdFlowKnowledgeDestruction( const MsgsSimToClient::MsgCrowdFlowKnowledgeDestruction& message )
 {
     GetModel().knowledgeGroups_.Get( message.knowledge_group().id() ).Update( message );
 }
@@ -1151,7 +1151,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectCreation( const MsgsSimToClient::MsgOb
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
 {
-    GetModel().objects_.GetObject( message.id().id() ).Update( message );
+    GetModel().objects_.GetObject( message.object().id() ).Update( message );
 }
 
 //-----------------------------------------------------------------------------
@@ -1160,7 +1160,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectUpdate( const MsgsSimToClient::MsgObje
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectDestruction( const MsgsSimToClient::MsgObjectDestruction& message )
 {
-    GetModel().objects_.DeleteObject( message.id().id() );
+    GetModel().objects_.DeleteObject( message.object().id() );
 }
 
 //-----------------------------------------------------------------------------
@@ -1210,25 +1210,25 @@ void AgentServerMsgMgr::OnReceiveMsgStopFireEffect( const MsgsSimToClient::MsgSt
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgExplosion( const MsgsSimToClient::MsgExplosion& message )
 {
-    GetModel().objects_.GetObject( message.id().id() ).Update( message );
+    GetModel().objects_.GetObject( message.object().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgStartPopulationFire
+// Name: AgentServerMsgMgr::OnReceiveMsgStartCrowdFire
 // Created: SBO 2005-12-05
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgStartPopulationFire( const MsgsSimToClient::MsgStartPopulationFire& message )
+void AgentServerMsgMgr::OnReceiveMsgStartCrowdFire( const MsgsSimToClient::MsgStartCrowdFire& message )
 {
-    Population_ABC& src = GetModel().agents_.GetPopulation( message.firing_population().id() );
+    Population_ABC& src = GetModel().agents_.GetPopulation( message.firing_crowd().id() );
     src.Update( message );
     GetModel().fires_.AddFire( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgStopPopulationFire
+// Name: AgentServerMsgMgr::OnReceiveMsgStopCrowdFire
 // Created: SBO 2005-12-05
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgStopPopulationFire( const MsgsSimToClient::MsgStopPopulationFire& message )
+void AgentServerMsgMgr::OnReceiveMsgStopCrowdFire( const MsgsSimToClient::MsgStopCrowdFire& message )
 {
     Entity_ABC* src = GetModel().fires_.FindFirer( message );
     if( src )
@@ -1246,100 +1246,100 @@ void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacy( const Common::MsgChangeDipl
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnMsgPopulationCreation
+// Name: AgentServerMsgMgr::OnMsgCrowdCreation
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnMsgPopulationCreation( const MsgsSimToClient::MsgPopulationCreation& message )
+void AgentServerMsgMgr::OnMsgCrowdCreation( const MsgsSimToClient::MsgCrowdCreation& message )
 {
     GetModel().agents_.CreatePopulation( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnMsgPopulationUpdate
+// Name: AgentServerMsgMgr::OnMsgCrowdUpdate
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnMsgPopulationUpdate( const MsgsSimToClient::MsgPopulationUpdate& message )
+void AgentServerMsgMgr::OnMsgCrowdUpdate( const MsgsSimToClient::MsgCrowdUpdate& message )
 {
-    GetModel().agents_.GetPopulation( message.id().id() ).Update( message );
+    GetModel().agents_.GetPopulation( message.crowd().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnMsgPopulationConcentrationCreation
+// Name: AgentServerMsgMgr::OnMsgCrowdConcentrationCreation
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnMsgPopulationConcentrationCreation( const MsgsSimToClient::MsgPopulationConcentrationCreation& message )
+void AgentServerMsgMgr::OnMsgCrowdConcentrationCreation( const MsgsSimToClient::MsgCrowdConcentrationCreation& message )
 {
-    GetModel().agents_.GetPopulation( message.population().id() ).Update( message );
+    GetModel().agents_.GetPopulation( message.crowd().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnMsgPopulationConcentrationDestruction
+// Name: AgentServerMsgMgr::OnMsgCrowdConcentrationDestruction
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnMsgPopulationConcentrationDestruction( const MsgsSimToClient::MsgPopulationConcentrationDestruction& message )
+void AgentServerMsgMgr::OnMsgCrowdConcentrationDestruction( const MsgsSimToClient::MsgCrowdConcentrationDestruction& message )
 {
-    GetModel().agents_.GetPopulation( message.population().id() ).Update( message );
+    GetModel().agents_.GetPopulation( message.crowd().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnMsgPopulationConcentrationUpdate
+// Name: AgentServerMsgMgr::OnMsgCrowdConcentrationUpdate
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnMsgPopulationConcentrationUpdate( const MsgsSimToClient::MsgPopulationConcentrationUpdate& message )
+void AgentServerMsgMgr::OnMsgCrowdConcentrationUpdate( const MsgsSimToClient::MsgCrowdConcentrationUpdate& message )
 {
-    GetModel().agents_.GetPopulation( message.population().id() ).Update( message );
+    GetModel().agents_.GetPopulation( message.crowd().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnMsgPopulationFlowCreation
+// Name: AgentServerMsgMgr::OnMsgCrowdFlowCreation
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnMsgPopulationFlowCreation( const MsgsSimToClient::MsgPopulationFlowCreation& message )
+void AgentServerMsgMgr::OnMsgCrowdFlowCreation( const MsgsSimToClient::MsgCrowdFlowCreation& message )
 {
-    GetModel().agents_.GetPopulation( message.population().id() ).Update( message );
+    GetModel().agents_.GetPopulation( message.crowd().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnMsgPopulationFlowDestruction
+// Name: AgentServerMsgMgr::OnMsgCrowdFlowDestruction
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnMsgPopulationFlowDestruction  ( const MsgsSimToClient::MsgPopulationFlowDestruction& message )
+void AgentServerMsgMgr::OnMsgCrowdFlowDestruction  ( const MsgsSimToClient::MsgCrowdFlowDestruction& message )
 {
-    GetModel().agents_.GetPopulation( message.population().id() ).Update( message );
+    GetModel().agents_.GetPopulation( message.crowd().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnMsgPopulationFlowUpdate
+// Name: AgentServerMsgMgr::OnMsgCrowdFlowUpdate
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnMsgPopulationFlowUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate& message )
+void AgentServerMsgMgr::OnMsgCrowdFlowUpdate( const MsgsSimToClient::MsgCrowdFlowUpdate& message )
 {
-    GetModel().agents_.GetPopulation( message.population().id() ).Update( message );
+    GetModel().agents_.GetPopulation( message.crowd().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck
+// Name: AgentServerMsgMgr::OnReceiveMsgCrowdMagicActionAck
 // Created: SBO 2005-11-02
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck( const MsgsSimToClient::MsgPopulationMagicActionAck& message, unsigned long )
+void AgentServerMsgMgr::OnReceiveMsgCrowdMagicActionAck( const MsgsSimToClient::MsgCrowdMagicActionAck& message, unsigned long )
 {
     CheckAcknowledge( logger_, message, "PopulationMagicActionAck" );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPopulationOrderAck
+// Name: AgentServerMsgMgr::OnReceiveMsgCrowdOrderAck
 // Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationOrderAck( const MsgsSimToClient::MsgPopulationOrderAck& message, unsigned long )
+void AgentServerMsgMgr::OnReceiveMsgCrowdOrderAck( const MsgsSimToClient::MsgCrowdOrderAck& message, unsigned long )
 {
     CheckAcknowledge( logger_, message, "PopulationOrderAck" );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPopulationOrder
+// Name: AgentServerMsgMgr::OnReceiveMsgCrowdOrder
 // Created: AGE 2007-02-16
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationOrder( const Common::MsgPopulationOrder& message )
+void AgentServerMsgMgr::OnReceiveMsgCrowdOrder( const Common::MsgCrowdOrder& message )
 {
     GetModel().agents_.GetPopulation( message.tasker().id() ).Update( message );
 }
@@ -1569,7 +1569,7 @@ void AgentServerMsgMgr::OnReceiveMsgUrbanCreation( const MsgsSimToClient::MsgUrb
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUrbanUpdate( const MsgsSimToClient::MsgUrbanUpdate& message )
 {
-    GetModel().urbanObjects_.GetObject( message.oid() ).Update( message );
+    GetModel().urbanObjects_.GetObject( message.urban_object().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1578,7 +1578,7 @@ void AgentServerMsgMgr::OnReceiveMsgUrbanUpdate( const MsgsSimToClient::MsgUrban
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUrbanDetection( const MsgsSimToClient::MsgUrbanDetection& message )
 {
-    GetModel().agents_.GetAgent( message.oid() ).Update( message );
+    GetModel().agents_.GetAgent( message.urban_object().id() ).Update( message );
 }
 
 // LTO begin
@@ -1606,7 +1606,7 @@ void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupUpdateAck( const MsgsSimToClie
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message )
 {
-    GetModel().knowledgeGroups_.Get( message.id().id() ).Update( message );
+    GetModel().knowledgeGroups_.Get( message.knowledge_group().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1672,67 +1672,67 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& from, const 
     if( host_.empty() )
         return;
     if( wrapper.message().has_automat_order_ack() )
-        OnReceiveMsgAutomatOrderAck                    ( wrapper.message().automat_order_ack() , wrapper.context() );
+        OnReceiveMsgAutomatOrderAck( wrapper.message().automat_order_ack() , wrapper.context() );
     else if( wrapper.message().has_unit_order_ack() )
-        OnReceiveMsgUnitOrderAck                       ( wrapper.message().unit_order_ack() , wrapper.context() );
+        OnReceiveMsgUnitOrderAck( wrapper.message().unit_order_ack() , wrapper.context() );
     else if( wrapper.message().has_frag_order_ack() )
-        OnReceiveMsgFragOrderAck                       ( wrapper.message().frag_order_ack() , wrapper.context() );
+        OnReceiveMsgFragOrderAck( wrapper.message().frag_order_ack() , wrapper.context() );
     else if( wrapper.message().has_unit_magic_action_ack() )
-        OnReceiveMsgUnitMagicActionAck                 ( wrapper.message().unit_magic_action_ack() , wrapper.context() );
+        OnReceiveMsgUnitMagicActionAck( wrapper.message().unit_magic_action_ack() , wrapper.context() );
     else if( wrapper.message().has_unit_creation_request_ack() )
-        OnReceiveMsgUnitCreationRequestAck             (  wrapper.message().unit_creation_request_ack() );
+        OnReceiveMsgUnitCreationRequestAck(  wrapper.message().unit_creation_request_ack() );
     else if( wrapper.message().has_set_automat_mode_ack() )
-        OnReceiveMsgSetAutomatModeAck                  ( wrapper.message().set_automat_mode_ack() , wrapper.context() );
+        OnReceiveMsgSetAutomatModeAck( wrapper.message().set_automat_mode_ack() , wrapper.context() );
     else if( wrapper.message().has_unit_change_superior_ack() )
-        OnReceiveMsgUnitChangeSuperiorAck              (  wrapper.message().unit_change_superior_ack() , wrapper.context() );
+        OnReceiveMsgUnitChangeSuperiorAck( wrapper.message().unit_change_superior_ack() , wrapper.context() );
     else if( wrapper.message().has_change_diplomacy_ack() )
-        OnReceiveMsgChangeDiplomacyAck                 ( wrapper.message().change_diplomacy_ack() , wrapper.context() );
+        OnReceiveMsgChangeDiplomacyAck( wrapper.message().change_diplomacy_ack() , wrapper.context() );
     else if( wrapper.message().has_automat_change_knowledge_group_ack() )
-        OnReceiveMsgAutomatChangeKnowledgeGroupAck     (  wrapper.message().automat_change_knowledge_group_ack() , wrapper.context() );
+        OnReceiveMsgAutomatChangeKnowledgeGroupAck( wrapper.message().automat_change_knowledge_group_ack() , wrapper.context() );
     else if( wrapper.message().has_object_magic_action_ack() )
-        OnReceiveMsgObjectMagicActionAck               ( wrapper.message().object_magic_action_ack() , wrapper.context() );
+        OnReceiveMsgObjectMagicActionAck( wrapper.message().object_magic_action_ack() , wrapper.context() );
     else if( wrapper.message().has_magic_action_ack() )
-        OnReceiveMsgMagicActionAck                     ( wrapper.message().magic_action_ack(), wrapper.context() );
+        OnReceiveMsgMagicActionAck( wrapper.message().magic_action_ack(), wrapper.context() );
     else if( wrapper.message().has_automat_change_logistic_links_ack() )
-        OnReceiveMsgAutomatChangeLogisticLinksAck      (  wrapper.message().automat_change_logistic_links_ack() , wrapper.context() );
+        OnReceiveMsgAutomatChangeLogisticLinksAck( wrapper.message().automat_change_logistic_links_ack() , wrapper.context() );
     else if( wrapper.message().has_automat_change_logistic_links() )
-        OnReceiveMsgAutomatChangeLogisticLinks         ( wrapper.message().automat_change_logistic_links() );
+        OnReceiveMsgAutomatChangeLogisticLinks( wrapper.message().automat_change_logistic_links() );
     else if( wrapper.message().has_automat_change_superior_ack() )
-        OnReceiveMsgAutomatChangeSuperiorAck           (  wrapper.message().automat_change_superior_ack() , wrapper.context() );
+        OnReceiveMsgAutomatChangeSuperiorAck( wrapper.message().automat_change_superior_ack() , wrapper.context() );
     else if( wrapper.message().has_log_supply_push_flow_ack() )
-        OnReceiveMsgLogSupplyPushFlowAck               (  wrapper.message().log_supply_push_flow_ack() , wrapper.context() );
+        OnReceiveMsgLogSupplyPushFlowAck( wrapper.message().log_supply_push_flow_ack() , wrapper.context() );
     else if( wrapper.message().has_log_supply_change_quotas_ack() )
-        OnReceiveMsgLogRavitaillementChangeQuotaAck    (  wrapper.message().log_supply_change_quotas_ack() , wrapper.context() );
-    else if( wrapper.message().has_population_magic_action_ack() )
-        OnReceiveMsgPopulationMagicActionAck           ( wrapper.message().population_magic_action_ack() , wrapper.context() );
-    else if( wrapper.message().has_population_order_ack() )
-        OnReceiveMsgPopulationOrderAck                 ( wrapper.message().population_order_ack() , wrapper.context() );
+        OnReceiveMsgLogRavitaillementChangeQuotaAck(  wrapper.message().log_supply_change_quotas_ack() , wrapper.context() );
+    else if( wrapper.message().has_crowd_magic_action_ack() )
+        OnReceiveMsgCrowdMagicActionAck( wrapper.message().crowd_magic_action_ack() , wrapper.context() );
+    else if( wrapper.message().has_crowd_order_ack() )
+        OnReceiveMsgCrowdOrderAck( wrapper.message().crowd_order_ack() , wrapper.context() );
     else if( wrapper.message().has_control_information() )
-        OnReceiveMsgControlInformation           ( wrapper.message().control_information() );
+        OnReceiveMsgControlInformation( wrapper.message().control_information() );
     else if( wrapper.message().has_control_profiling_information() )
-        OnReceiveMsgProfilingValues              ( wrapper.message().control_profiling_information() );
+        OnReceiveMsgProfilingValues( wrapper.message().control_profiling_information() );
     else if( wrapper.message().has_control_begin_tick() )
-        OnReceiveMsgControlBeginTick             ( wrapper.message().control_begin_tick() );
+        OnReceiveMsgControlBeginTick( wrapper.message().control_begin_tick() );
     else if( wrapper.message().has_control_end_tick() )
-        OnReceiveMsgControlEndTick               ( wrapper.message().control_end_tick() );
+        OnReceiveMsgControlEndTick( wrapper.message().control_end_tick() );
     //if( wrapper.message().has_control_stop_ack() )
 
     else if( wrapper.message().has_control_pause_ack() )
-        OnReceiveMsgControlPauseAck              ( wrapper.message().control_pause_ack() );
+        OnReceiveMsgControlPauseAck( wrapper.message().control_pause_ack() );
     else if( wrapper.message().has_control_resume_ack() )
-        OnReceiveMsgControlResumeAck             ( wrapper.message().control_resume_ack() );
+        OnReceiveMsgControlResumeAck( wrapper.message().control_resume_ack() );
     else if( wrapper.message().has_control_change_time_factor_ack() )
-        OnReceiveMsgControlChangeTimeFactorAck   ( wrapper.message().control_change_time_factor_ack() );
+        OnReceiveMsgControlChangeTimeFactorAck( wrapper.message().control_change_time_factor_ack() );
     else if( wrapper.message().has_control_date_time_change_ack() )
-        OnReceiveMsgControlDatetimeChangeAck     ( wrapper.message().control_date_time_change_ack() );
-    else if( wrapper.message().has_control_global_meteo_ack() )
-        OnReceiveMsgControlMeteoGlobalAck        ();
-    else if( wrapper.message().has_control_local_meteo_ack() )
-        OnReceiveMsgControlMeteoLocalAck         ();
+        OnReceiveMsgControlDatetimeChangeAck( wrapper.message().control_date_time_change_ack() );
+    else if( wrapper.message().has_control_global_weather_ack() )
+        OnReceiveMsgControlMeteoGlobalAck();
+    else if( wrapper.message().has_control_local_weather_ack() )
+        OnReceiveMsgControlMeteoLocalAck();
     else if( wrapper.message().has_control_checkpoint_save_begin() )
-        OnReceiveMsgCheckPointSaveBegin       ();
+        OnReceiveMsgCheckPointSaveBegin();
     else if( wrapper.message().has_control_checkpoint_save_end() )
-        OnReceiveMsgCheckPointSaveEnd         ();
+        OnReceiveMsgCheckPointSaveEnd();
     else if( wrapper.message().has_control_checkpoint_set_frequency_ack() )
         OnReceiveMsgCheckPointSetFrequencyAck ();
     else if( wrapper.message().has_control_checkpoint_save_now_ack() )
@@ -1745,8 +1745,8 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& from, const 
         OnReceiveMsgKnowledgeGroupCreation( wrapper.message().knowledge_group_creation() );
     else if( wrapper.message().has_knowledge_group_destruction() )
         OnReceiveMsgKnowledgeGroupDestruction( wrapper.message().knowledge_group_destruction() );
-    else if( wrapper.message().has_side_creation() )
-        OnReceiveMsgTeamCreation              ( wrapper.message().side_creation() );
+    else if( wrapper.message().has_party_creation() )
+        OnReceiveMsgPartyCreation              ( wrapper.message().party_creation() );
     else if( wrapper.message().has_formation_creation() )
         OnReceiveMsgFormationCreation         ( wrapper.message().formation_creation() );
     else if( wrapper.message().has_unit_knowledge_creation() )
@@ -1767,18 +1767,18 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& from, const 
         OnReceiveMsgUnitInterVisibility       ( wrapper.message().unit_detection() );
     else if( wrapper.message().has_object_detection() )
         OnReceiveMsgObjectInterVisibility     ( wrapper.message().object_detection() );
-    else if( wrapper.message().has_population_concentration_detection() )
-        OnReceiveMsgPopulationConcentrationInterVisibility( wrapper.message().population_concentration_detection() );
-    else if( wrapper.message().has_population_flow_detection() )
-        OnReceiveMsgPopulationFlowInterVisibility( wrapper.message().population_flow_detection());
+    else if( wrapper.message().has_crowd_concentration_detection() )
+        OnReceiveMsgCrowdConcentrationInterVisibility( wrapper.message().crowd_concentration_detection() );
+    else if( wrapper.message().has_crowd_flow_detection() )
+        OnReceiveMsgCrowdFlowInterVisibility( wrapper.message().crowd_flow_detection());
     else if( wrapper.message().has_start_unit_fire() )
         OnReceiveMsgStartUnitFire             ( wrapper.message().start_unit_fire() );
     else if( wrapper.message().has_stop_unit_fire() )
         OnReceiveMsgStopUnitFire              ( wrapper.message().stop_unit_fire() );
-    else if( wrapper.message().has_start_population_fire() )
-        OnReceiveMsgStartPopulationFire       ( wrapper.message().start_population_fire() );
-    else if( wrapper.message().has_stop_population_fire() )
-        OnReceiveMsgStopPopulationFire        ( wrapper.message().stop_population_fire() );
+    else if( wrapper.message().has_start_crowd_fire() )
+        OnReceiveMsgStartCrowdFire       ( wrapper.message().start_crowd_fire() );
+    else if( wrapper.message().has_stop_crowd_fire() )
+        OnReceiveMsgStopCrowdFire        ( wrapper.message().stop_crowd_fire() );
     else if( wrapper.message().has_explosion() )
         OnReceiveMsgExplosion                 ( wrapper.message().explosion() );
     else if( wrapper.message().has_report() )
@@ -1799,8 +1799,8 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& from, const 
         OnReceiveMsgUnitOrder                 ( wrapper.message().unit_order() );
     else if( wrapper.message().has_automat_order() )
         OnReceiveMsgAutomatOrder              ( wrapper.message().automat_order() );
-    else if( wrapper.message().has_population_order() )
-        OnReceiveMsgPopulationOrder           ( wrapper.message().population_order() );
+    else if( wrapper.message().has_crowd_order() )
+        OnReceiveMsgCrowdOrder           ( wrapper.message().crowd_order() );
     else if( wrapper.message().has_object_creation() )
         OnReceiveMsgObjectCreation            ( wrapper.message().object_creation() );
     else if( wrapper.message().has_object_update() )
@@ -1853,22 +1853,22 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& from, const 
         OnReceiveMsgLogMedicalHandlingUpdate     ( wrapper.message().log_medical_handling_update() );
     else if( wrapper.message().has_log_medical_state() )
         OnReceiveMsgLogMedicalState              ( wrapper.message().log_medical_state() );
-    else if( wrapper.message().has_population_creation() )
-        OnMsgPopulationCreation                ( wrapper.message().population_creation() );
-    else if( wrapper.message().has_population_update() )
-        OnMsgPopulationUpdate                  ( wrapper.message().population_update() );
-    else if( wrapper.message().has_population_concentration_creation() )
-        OnMsgPopulationConcentrationCreation   ( wrapper.message().population_concentration_creation() );
-    else if( wrapper.message().has_population_concentration_destruction() )
-        OnMsgPopulationConcentrationDestruction( wrapper.message().population_concentration_destruction() );
-    else if( wrapper.message().has_population_concentration_update() )
-        OnMsgPopulationConcentrationUpdate     ( wrapper.message().population_concentration_update() );
-    else if( wrapper.message().has_population_flow_creation() )
-        OnMsgPopulationFlowCreation            ( wrapper.message().population_flow_creation() );
-    else if( wrapper.message().has_population_flow_destruction() )
-        OnMsgPopulationFlowDestruction         ( wrapper.message().population_flow_destruction() );
-    else if( wrapper.message().has_population_flow_update() )
-        OnMsgPopulationFlowUpdate              ( wrapper.message().population_flow_update() );
+    else if( wrapper.message().has_crowd_creation() )
+        OnMsgCrowdCreation                ( wrapper.message().crowd_creation() );
+    else if( wrapper.message().has_crowd_update() )
+        OnMsgCrowdUpdate                  ( wrapper.message().crowd_update() );
+    else if( wrapper.message().has_crowd_concentration_creation() )
+        OnMsgCrowdConcentrationCreation   ( wrapper.message().crowd_concentration_creation() );
+    else if( wrapper.message().has_crowd_concentration_destruction() )
+        OnMsgCrowdConcentrationDestruction( wrapper.message().crowd_concentration_destruction() );
+    else if( wrapper.message().has_crowd_concentration_update() )
+        OnMsgCrowdConcentrationUpdate     ( wrapper.message().crowd_concentration_update() );
+    else if( wrapper.message().has_crowd_flow_creation() )
+        OnMsgCrowdFlowCreation            ( wrapper.message().crowd_flow_creation() );
+    else if( wrapper.message().has_crowd_flow_destruction() )
+        OnMsgCrowdFlowDestruction         ( wrapper.message().crowd_flow_destruction() );
+    else if( wrapper.message().has_crowd_flow_update() )
+        OnMsgCrowdFlowUpdate              ( wrapper.message().crowd_flow_update() );
 
     else
         OnReceiveMsgSimToClient2( from, wrapper );
@@ -1881,24 +1881,24 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& from, const 
 void AgentServerMsgMgr::OnReceiveMsgSimToClient2( const std::string&, const MsgsSimToClient::MsgSimToClient&                        wrapper )
 {
     // break in two parts to prevent "fatal error C1061: compiler limit : blocks nested too deeply"
-    if( wrapper.message().has_population_knowledge_creation() )
-        OnReceiveMsgPopulationKnowledgeCreation                ( wrapper.message().population_knowledge_creation() );
-    else if( wrapper.message().has_population_knowledge_update() )
-        OnReceiveMsgPopulationKnowledgeUpdate                  ( wrapper.message().population_knowledge_update() );
-    else if( wrapper.message().has_population_knowledge_destruction() )
-        OnReceiveMsgPopulationKnowledgeDestruction             ( wrapper.message().population_knowledge_destruction() );
-    else if( wrapper.message().has_population_concentration_knowledge_creation() )
-        OnReceiveMsgPopulationConcentrationKnowledgeCreation   ( wrapper.message().population_concentration_knowledge_creation() );
-    else if( wrapper.message().has_population_concentration_knowledge_update() )
-        OnReceiveMsgPopulationConcentrationKnowledgeUpdate     ( wrapper.message().population_concentration_knowledge_update() );
-    else if( wrapper.message().has_population_concentration_knowledge_destruction() )
-        OnReceiveMsgPopulationConcentrationKnowledgeDestruction( wrapper.message().population_concentration_knowledge_destruction() );
-    else if( wrapper.message().has_population_flow_knowledge_creation() )
-        OnReceiveMsgPopulationFlowKnowledgeCreation            ( wrapper.message().population_flow_knowledge_creation() );
-    else if( wrapper.message().has_population_flow_knowledge_update() )
-        OnReceiveMsgPopulationFlowKnowledgeUpdate              ( wrapper.message().population_flow_knowledge_update() );
-    else if( wrapper.message().has_population_flow_knowledge_destruction() )
-        OnReceiveMsgPopulationFlowKnowledgeDestruction         ( wrapper.message().population_flow_knowledge_destruction() );
+    if( wrapper.message().has_crowd_knowledge_creation() )
+        OnReceiveMsgCrowdKnowledgeCreation                ( wrapper.message().crowd_knowledge_creation() );
+    else if( wrapper.message().has_crowd_knowledge_update() )
+        OnReceiveMsgCrowdKnowledgeUpdate                  ( wrapper.message().crowd_knowledge_update() );
+    else if( wrapper.message().has_crowd_knowledge_destruction() )
+        OnReceiveMsgCrowdKnowledgeDestruction             ( wrapper.message().crowd_knowledge_destruction() );
+    else if( wrapper.message().has_crowd_concentration_knowledge_creation() )
+        OnReceiveMsgCrowdConcentrationKnowledgeCreation   ( wrapper.message().crowd_concentration_knowledge_creation() );
+    else if( wrapper.message().has_crowd_concentration_knowledge_update() )
+        OnReceiveMsgCrowdConcentrationKnowledgeUpdate     ( wrapper.message().crowd_concentration_knowledge_update() );
+    else if( wrapper.message().has_crowd_concentration_knowledge_destruction() )
+        OnReceiveMsgCrowdConcentrationKnowledgeDestruction( wrapper.message().crowd_concentration_knowledge_destruction() );
+    else if( wrapper.message().has_crowd_flow_knowledge_creation() )
+        OnReceiveMsgCrowdFlowKnowledgeCreation            ( wrapper.message().crowd_flow_knowledge_creation() );
+    else if( wrapper.message().has_crowd_flow_knowledge_update() )
+        OnReceiveMsgCrowdFlowKnowledgeUpdate              ( wrapper.message().crowd_flow_knowledge_update() );
+    else if( wrapper.message().has_crowd_flow_knowledge_destruction() )
+        OnReceiveMsgCrowdFlowKnowledgeDestruction         ( wrapper.message().crowd_flow_knowledge_destruction() );
     else if( wrapper.message().has_unit_environment_type() )
         ;     // $$$$ AGE 2007-07-06: break;
     else if( wrapper.message().has_folk_creation() )
@@ -1927,12 +1927,12 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient2( const std::string&, const Msgs
         OnReceiveMsgKnowledgeGroupCreationAck( wrapper.message().knowledge_group_creation_ack(), wrapper.context() );
     else if( wrapper.message().has_action_create_fire_order_ack() )
         OnReceiveMsgActionCreateFireOrderAck( wrapper.message().action_create_fire_order_ack(), wrapper.context() );
-    else if( wrapper.message().has_control_global_meteo() )
-        OnReceiveMsgControlMeteoGlobal        ( wrapper.message().control_global_meteo() );
-    else if( wrapper.message().has_control_local_meteo_creation() )
-        OnReceiveMsgControlMeteoLocalCreation ( wrapper.message().control_local_meteo_creation() );
-    else if( wrapper.message().has_control_local_meteo_destruction() )
-        OnReceiveMsgControlMeteoLocalDestruction( wrapper.message().control_local_meteo_destruction() );
+    else if( wrapper.message().has_control_global_weather() )
+        OnReceiveMsgControlMeteoGlobal        ( wrapper.message().control_global_weather() );
+    else if( wrapper.message().has_control_local_weather_creation() )
+        OnReceiveMsgControlMeteoLocalCreation ( wrapper.message().control_local_weather_creation() );
+    else if( wrapper.message().has_control_local_weather_destruction() )
+        OnReceiveMsgControlMeteoLocalDestruction( wrapper.message().control_local_weather_destruction() );
     else
         UnhandledMessage( &wrapper.message() );
 }
@@ -2119,7 +2119,7 @@ Profile& AgentServerMsgMgr::GetProfile() const
 // Name: AgentServerMsgMgr::OnReceiveMsgControlMeteoGlobal
 // Created: HBD 2010-03-16
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgControlMeteoGlobal( const MsgsSimToClient::MsgControlGlobalMeteo& message )
+void AgentServerMsgMgr::OnReceiveMsgControlMeteoGlobal( const MsgsSimToClient::MsgControlGlobalWeather& message )
 {
     GetModel().meteo_.OnReceiveMsgGlobalMeteo( message );
 }
@@ -2128,7 +2128,7 @@ void AgentServerMsgMgr::OnReceiveMsgControlMeteoGlobal( const MsgsSimToClient::M
 // Name: AgentServerMsgMgr::OnReceiveMsgControlMeteoLocal
 // Created: HBD 2010-03-16
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgControlMeteoLocalCreation( const MsgsSimToClient::MsgControlLocalMeteoCreation& message )
+void AgentServerMsgMgr::OnReceiveMsgControlMeteoLocalCreation( const MsgsSimToClient::MsgControlLocalWeatherCreation& message )
 {
     GetModel().meteo_.OnReceiveMsgLocalMeteoCreation( message );
 }
@@ -2137,7 +2137,7 @@ void AgentServerMsgMgr::OnReceiveMsgControlMeteoLocalCreation( const MsgsSimToCl
 // Name: AgentServerMsgMgr::OnReceiveMsgControlMeteoLocalDestruction
 // Created: HBD 2010-04-02
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgControlMeteoLocalDestruction( const MsgsSimToClient::MsgControlLocalMeteoDestruction& message )
+void AgentServerMsgMgr::OnReceiveMsgControlMeteoLocalDestruction( const MsgsSimToClient::MsgControlLocalWeatherDestruction& message )
 {
     GetModel().meteo_.OnReceiveMsgLocalMeteoDestruction( message );
 }

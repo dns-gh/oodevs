@@ -21,9 +21,9 @@ using namespace kernel;
 // Name: PopulationFlow constructor
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-PopulationFlow::PopulationFlow( const MsgsSimToClient::MsgPopulationFlowCreation& message, const CoordinateConverter_ABC& converter )
+PopulationFlow::PopulationFlow( const MsgsSimToClient::MsgCrowdFlowCreation& message, const CoordinateConverter_ABC& converter )
     : converter_ ( converter )
-    , nID_       ( message.id().id() )
+    , nID_       ( message.flow().id() )
     , itineraire_( )
     , flow_      ( 2, geometry::Point2f( 0, 0 ) )
     , nDirection_( 0 )
@@ -67,7 +67,7 @@ unsigned long PopulationFlow::GetId() const
 // Name: PopulationFlow::DoUpdate
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-void PopulationFlow::DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate& message )
+void PopulationFlow::DoUpdate( const MsgsSimToClient::MsgCrowdFlowUpdate& message )
 {
     if( message.has_attitude()  )
         attitude_ = (E_PopulationAttitude)message.attitude();
@@ -85,13 +85,13 @@ void PopulationFlow::DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate& m
         for( int i = 0; i < message.itineraire().location().coordinates().elem_size(); ++i )
             itineraire_.push_back( converter_.ConvertToXY( message.itineraire().location().coordinates().elem(i) ) );
     }
-    if( message.has_flux()  )
+    if( message.has_parts()  )
     {
-        flow_.clear(); flow_.reserve( message.flux().location().coordinates().elem_size() );
+        flow_.clear(); flow_.reserve( message.parts().location().coordinates().elem_size() );
         boundingBox_ = Rectangle2f();
-        for( int i = 0; i < message.flux().location().coordinates().elem_size(); ++i )
+        for( int i = 0; i < message.parts().location().coordinates().elem_size(); ++i )
         {
-            flow_.push_back( converter_.ConvertToXY( message.flux().location().coordinates().elem(i) ) );
+            flow_.push_back( converter_.ConvertToXY( message.parts().location().coordinates().elem(i) ) );
             boundingBox_.Incorporate( flow_.back() );
         }
 

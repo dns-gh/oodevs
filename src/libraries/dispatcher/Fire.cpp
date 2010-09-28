@@ -20,12 +20,12 @@ using namespace dispatcher;
 // Created: AGE 2007-04-18
 // -----------------------------------------------------------------------------
 Fire::Fire( Model& , const MsgsSimToClient::MsgStartUnitFire& msg )
-    : SimpleEntity< >  ( msg.id().id() )
+    : SimpleEntity< >  ( msg.fire().id() )
     , type_            ( msg.type() )
     , oid_cible_       ( 0 )
     , population_cible_( 0 )
 {
-    oid_tir_.set_id( msg.id().id() );
+    oid_tir_.set_id( msg.fire().id() );
     tireur_.set_id( msg.firing_unit().id() );
     munition_.set_id( msg.ammunition().id() );
 
@@ -33,8 +33,8 @@ Fire::Fire( Model& , const MsgsSimToClient::MsgStartUnitFire& msg )
         positionCible_ = msg.target().position();
     else if( msg.target().has_unit() )
         oid_cible_ = msg.target().unit().id();
-    else if( msg.target().has_population() )
-        population_cible_ = msg.target().population().id();
+    else if( msg.target().has_crowd() )
+        population_cible_ = msg.target().crowd().id();
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +62,7 @@ void Fire::SendFullUpdate( ClientPublisher_ABC& ) const
 void Fire::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::StartUnitFire asn;
-    asn().mutable_id()->set_id( oid_tir_.id() );
+    asn().mutable_fire()->set_id( oid_tir_.id() );
     asn().mutable_firing_unit()->set_id( tireur_.id() );
     asn().set_type( type_ );
     asn().mutable_ammunition()->set_id( munition_.id() );
@@ -78,7 +78,7 @@ void Fire::SendCreation( ClientPublisher_ABC& publisher ) const
         if( oid_cible_ )
             asn().mutable_target()->mutable_unit()->set_id( oid_cible_ );
         if( population_cible_ )
-            asn().mutable_target()->mutable_population()->set_id( population_cible_ );
+            asn().mutable_target()->mutable_crowd()->set_id( population_cible_ );
     }
     asn.Send( publisher );
 }
@@ -90,8 +90,8 @@ void Fire::SendCreation( ClientPublisher_ABC& publisher ) const
 void Fire::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::StopUnitFire asn;
-    asn().mutable_id()->set_id( oid_tir_.id() );
-    asn().mutable_units_damages(); //->set_n(0);
+    asn().mutable_fire()->set_id( oid_tir_.id() );
+    asn().mutable_units_damages();
     asn.Send( publisher );
 }
 

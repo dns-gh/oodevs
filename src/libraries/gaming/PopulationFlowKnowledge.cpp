@@ -52,11 +52,11 @@ PopulationFlowKnowledge::FlowPart::FlowPart( const MsgsSimToClient::MsgFlowPart&
 // Name: PopulationFlowKnowledge::PopulationFlowKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-PopulationFlowKnowledge::PopulationFlowKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population_ABC& popu, const MsgsSimToClient::MsgPopulationFlowKnowledgeCreation& message )
+PopulationFlowKnowledge::PopulationFlowKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population_ABC& popu, const MsgsSimToClient::MsgCrowdFlowKnowledgeCreation& message )
     : controller_( controller )
     , converter_ ( converter )
     , popu_      ( popu )
-    , nID_       ( message.id().id() )
+    , nID_       ( message.knowledge().id() )
     , pFlow_     ( 0 )
 {
     pFlow_ = popu_.FindFlow( message.flow().id() );
@@ -76,7 +76,7 @@ PopulationFlowKnowledge::~PopulationFlowKnowledge()
 // Name: PopulationFlowKnowledge::DoUpdate
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationFlowKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate& message )
+void PopulationFlowKnowledge::DoUpdate( const MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate& message )
 {
     if( message.has_attitude()  )
         eAttitude_ = ( E_PopulationAttitude )message.attitude();

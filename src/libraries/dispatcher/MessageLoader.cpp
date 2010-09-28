@@ -196,8 +196,8 @@ void MessageLoader::LoadSimToClientMessage( unsigned char*& input, MessageHandle
                 message.mutable_message()->mutable_unit_order()->clear_type();
             else if( message.message().has_automat_order() )
                 message.mutable_message()->mutable_automat_order()->clear_type();
-            else if( message.message().has_population_order() )
-                message.mutable_message()->mutable_population_order()->clear_type();
+            else if( message.message().has_crowd_order() )
+                message.mutable_message()->mutable_crowd_order()->clear_type();
         }
     }
 

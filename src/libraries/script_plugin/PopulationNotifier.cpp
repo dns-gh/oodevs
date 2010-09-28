@@ -41,8 +41,8 @@ PopulationNotifier::~PopulationNotifier()
 // Name: PopulationNotifier::DoUpdate
 // Created: SBO 2008-11-18
 // -----------------------------------------------------------------------------
-void PopulationNotifier::DoUpdate( const MsgPopulationFlowUpdate& message )
+void PopulationNotifier::DoUpdate( const MsgCrowdFlowUpdate& message )
 {
-    if( static_cast< unsigned int >( message.population().id() ) == population_.GetId() && message.has_flux() )
+    if( static_cast< unsigned int >( message.crowd().id() ) == population_.GetId() && message.has_parts() )
         controller_.Update( events::PopulationMoved( population_ ) );
 }

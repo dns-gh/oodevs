@@ -83,7 +83,7 @@ void DEC_Knowledge_ObjectAttributeInputToxicCloud::UpdateOnCollision( const DEC_
 // Name: DEC_Knowledge_ObjectAttributeInputToxicCloud::Send
 // Created: JCR 2008-08-18
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeInputToxicCloud::Send( Common::MsgObjectAttributes& /*asnMsg*/ ) const
+void DEC_Knowledge_ObjectAttributeInputToxicCloud::Send( Common::ObjectAttributes& /*asnMsg*/ ) const
 {
     // NOTHING
 }

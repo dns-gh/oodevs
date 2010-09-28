@@ -401,7 +401,7 @@ void DEC_Knowledge_Agent::SendChangedState()
         return;
     assert( pKnowledgeGroup_ );
     client::UnitKnowledgeUpdate asnMsg;
-    asnMsg().mutable_id()->set_id( nID_ );
+    asnMsg().mutable_knowledge()->set_id( nID_ );
     asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
     if( bRelevanceUpdated_ )
     {
@@ -439,7 +439,7 @@ void DEC_Knowledge_Agent::SendFullState()
 {
     assert( pKnowledgeGroup_ );
     client::UnitKnowledgeUpdate asnMsg;
-    asnMsg().mutable_id()->set_id( nID_ );
+    asnMsg().mutable_knowledge()->set_id( nID_ );
     asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
     asnMsg().set_pertinence( static_cast< int >( rRelevance_ * 100. ) );
     rLastRelevanceSent_ = rRelevance_;
@@ -507,7 +507,7 @@ void DEC_Knowledge_Agent::SendMsgCreation() const
     assert( pKnowledgeGroup_ );
     assert( pAgentKnown_ );
     client::UnitKnowledgeCreation asnMsg;
-    asnMsg().mutable_id()->set_id( nID_ );
+    asnMsg().mutable_knowledge()->set_id( nID_ );
     asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
     asnMsg().mutable_unit()->set_id( pAgentKnown_->GetID() );    
     asnMsg().mutable_type()->set_id( pAgentKnown_->GetType().GetID() );
@@ -523,7 +523,7 @@ void DEC_Knowledge_Agent::SendMsgDestruction() const
     if( pKnowledgeGroup_ )
     {
         client::UnitKnowledgeDestruction asnMsg;
-        asnMsg().mutable_id()->set_id( nID_ );
+        asnMsg().mutable_knowledge()->set_id( nID_ );
         asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }

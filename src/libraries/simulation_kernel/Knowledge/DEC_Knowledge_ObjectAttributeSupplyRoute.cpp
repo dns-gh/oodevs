@@ -133,7 +133,7 @@ void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateOnCollision( const DEC_Know
 // Name: DEC_Knowledge_ObjectAttributeSupplyRoute::Send
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeSupplyRoute::Send( Common::MsgObjectAttributes& asn ) const
+void DEC_Knowledge_ObjectAttributeSupplyRoute::Send( Common::ObjectAttributes& asn ) const
 {
     asn.mutable_supply_route()->set_equipped( bEquipped_ );
     asn.mutable_supply_route()->set_max_weight( static_cast< int >( rWeightSupported_ ) );

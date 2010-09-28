@@ -2178,15 +2178,15 @@ class MsgShapeUpdate : public ::google::protobuf::Message {
   inline void set_color(const char* value, size_t size);
   inline ::std::string* mutable_color();
   
-  // optional string template_ = 4;
-  inline bool has_template_() const;
-  inline void clear_template_();
-  static const int kTemplateFieldNumber = 4;
-  inline const ::std::string& template_() const;
-  inline void set_template_(const ::std::string& value);
-  inline void set_template_(const char* value);
-  inline void set_template_(const char* value, size_t size);
-  inline ::std::string* mutable_template_();
+  // optional string pattern = 4;
+  inline bool has_pattern() const;
+  inline void clear_pattern();
+  static const int kPatternFieldNumber = 4;
+  inline const ::std::string& pattern() const;
+  inline void set_pattern(const ::std::string& value);
+  inline void set_pattern(const char* value);
+  inline void set_pattern(const char* value, size_t size);
+  inline ::std::string* mutable_pattern();
   
   // optional .Common.MsgCoordLatLongList points = 5;
   inline bool has_points() const;
@@ -2204,8 +2204,8 @@ class MsgShapeUpdate : public ::google::protobuf::Message {
   static const ::std::string _default_category_;
   ::std::string* color_;
   static const ::std::string _default_color_;
-  ::std::string* template__;
-  static const ::std::string _default_template__;
+  ::std::string* pattern_;
+  static const ::std::string _default_pattern_;
   ::Common::MsgCoordLatLongList* points_;
   friend void  protobuf_AddDesc_MessengerToClient_2eproto();
   friend void protobuf_AssignDesc_MessengerToClient_2eproto();
@@ -4202,46 +4202,46 @@ inline ::std::string* MsgShapeUpdate::mutable_color() {
   return color_;
 }
 
-// optional string template_ = 4;
-inline bool MsgShapeUpdate::has_template_() const {
+// optional string pattern = 4;
+inline bool MsgShapeUpdate::has_pattern() const {
   return _has_bit(3);
 }
-inline void MsgShapeUpdate::clear_template_() {
-  if (template__ != &_default_template__) {
-    template__->clear();
+inline void MsgShapeUpdate::clear_pattern() {
+  if (pattern_ != &_default_pattern_) {
+    pattern_->clear();
   }
   _clear_bit(3);
 }
-inline const ::std::string& MsgShapeUpdate::template_() const {
-  return *template__;
+inline const ::std::string& MsgShapeUpdate::pattern() const {
+  return *pattern_;
 }
-inline void MsgShapeUpdate::set_template_(const ::std::string& value) {
+inline void MsgShapeUpdate::set_pattern(const ::std::string& value) {
   _set_bit(3);
-  if (template__ == &_default_template__) {
-    template__ = new ::std::string;
+  if (pattern_ == &_default_pattern_) {
+    pattern_ = new ::std::string;
   }
-  template__->assign(value);
+  pattern_->assign(value);
 }
-inline void MsgShapeUpdate::set_template_(const char* value) {
+inline void MsgShapeUpdate::set_pattern(const char* value) {
   _set_bit(3);
-  if (template__ == &_default_template__) {
-    template__ = new ::std::string;
+  if (pattern_ == &_default_pattern_) {
+    pattern_ = new ::std::string;
   }
-  template__->assign(value);
+  pattern_->assign(value);
 }
-inline void MsgShapeUpdate::set_template_(const char* value, size_t size) {
+inline void MsgShapeUpdate::set_pattern(const char* value, size_t size) {
   _set_bit(3);
-  if (template__ == &_default_template__) {
-    template__ = new ::std::string;
+  if (pattern_ == &_default_pattern_) {
+    pattern_ = new ::std::string;
   }
-  template__->assign(reinterpret_cast<const char*>(value), size);
+  pattern_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* MsgShapeUpdate::mutable_template_() {
+inline ::std::string* MsgShapeUpdate::mutable_pattern() {
   _set_bit(3);
-  if (template__ == &_default_template__) {
-    template__ = new ::std::string;
+  if (pattern_ == &_default_pattern_) {
+    pattern_ = new ::std::string;
   }
-  return template__;
+  return pattern_;
 }
 
 // optional .Common.MsgCoordLatLongList points = 5;

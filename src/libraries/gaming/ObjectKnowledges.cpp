@@ -46,8 +46,8 @@ ObjectKnowledges::~ObjectKnowledges()
 // -----------------------------------------------------------------------------
 void ObjectKnowledges::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeCreation& message )
 {
-    if( ! Find( message.id().id() ) )
-        Register( message.id().id(), * factory_.Create( *owner_, message ) );
+    if( ! Find( message.knowledge().id() ) )
+        Register( message.knowledge().id(), * factory_.Create( *owner_, message ) );
     controller_.Update( *this );
 }
 
@@ -57,8 +57,8 @@ void ObjectKnowledges::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeCreati
 // -----------------------------------------------------------------------------
 void ObjectKnowledges::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
-    factory_.Register( Get( message.id().id() ), message.attributes() );
-    Get( message.id().id() ).Update( message );
+    factory_.Register( Get( message.knowledge().id() ), message.attributes() );
+    Get( message.knowledge().id() ).Update( message );
     controller_.Update( *this );
 }
 
@@ -68,7 +68,7 @@ void ObjectKnowledges::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate
 // -----------------------------------------------------------------------------
 void ObjectKnowledges::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeDestruction& message )
 {
-    delete Find( message.id().id() );
-    Remove( message.id().id() );
+    delete Find( message.knowledge().id() );
+    Remove( message.knowledge().id() );
     controller_.Update( *this );
 }

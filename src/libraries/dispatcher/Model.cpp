@@ -121,12 +121,12 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
 {
     if( wrapper.message().has_unit_order_ack() ||
         wrapper.message().has_automat_order_ack() ||
-        wrapper.message().has_population_order_ack() ||
+        wrapper.message().has_crowd_order_ack() ||
         wrapper.message().has_frag_order_ack() ||
         wrapper.message().has_set_automat_mode_ack() ||
         wrapper.message().has_unit_magic_action_ack() ||
         wrapper.message().has_object_magic_action_ack() ||
-        wrapper.message().has_population_magic_action_ack() )
+        wrapper.message().has_crowd_magic_action_ack() )
         { // NOTHING
         }
     if( wrapper.message().has_change_diplomacy_ack() )
@@ -166,8 +166,8 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
     if( wrapper.message().has_control_change_time_factor_ack() )
         simulation_->Update( wrapper.message().control_change_time_factor_ack() );
     if( wrapper.message().has_control_date_time_change_ack() ||
-        wrapper.message().has_control_global_meteo_ack() ||
-        wrapper.message().has_control_local_meteo_ack() ||
+        wrapper.message().has_control_global_weather_ack() ||
+        wrapper.message().has_control_local_weather_ack() ||
         wrapper.message().has_control_checkpoint_save_begin() ||
         wrapper.message().has_control_checkpoint_save_end() ||
         wrapper.message().has_control_checkpoint_set_frequency_ack() ||
@@ -178,54 +178,54 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
         }
 
     if( wrapper.message().has_unit_knowledge_creation() )
-        CreateUpdate< AgentKnowledge >( agentKnowledges_, wrapper.message().unit_knowledge_creation() );
+        CreateUpdate< AgentKnowledge >( agentKnowledges_, wrapper.message().unit_knowledge_creation().knowledge().id(), wrapper.message().unit_knowledge_creation() );
     if( wrapper.message().has_unit_knowledge_update() )
-        agentKnowledges_.Get( wrapper.message().unit_knowledge_update().id().id() ).Update( wrapper.message().unit_knowledge_update() ); 
+        agentKnowledges_.Get( wrapper.message().unit_knowledge_update().knowledge().id() ).Update( wrapper.message().unit_knowledge_update() ); 
     if( wrapper.message().has_unit_knowledge_destruction() )
-        Destroy( agentKnowledges_, wrapper.message().unit_knowledge_destruction().id().id(), wrapper.message().unit_knowledge_destruction() ); 
-    if( wrapper.message().has_side_creation() )
-        CreateUpdate< Side >( sides_, wrapper.message().side_creation() );
+        Destroy( agentKnowledges_, wrapper.message().unit_knowledge_destruction().knowledge().id(), wrapper.message().unit_knowledge_destruction() ); 
+    if( wrapper.message().has_party_creation() )
+        CreateUpdate< Side >( sides_, wrapper.message().party_creation().party().id(), wrapper.message().party_creation() );
     if( wrapper.message().has_knowledge_group_creation() )
-        CreateUpdate< KnowledgeGroup >( knowledgeGroups_, wrapper.message().knowledge_group_creation() );
+        CreateUpdate< KnowledgeGroup >( knowledgeGroups_, wrapper.message().knowledge_group_creation().knowledge_group().id(), wrapper.message().knowledge_group_creation() );
     if( wrapper.message().has_knowledge_group_destruction() )
-        Destroy( knowledgeGroups_, wrapper.message().knowledge_group_destruction().id().id(), wrapper.message().knowledge_group_destruction() );
+        Destroy( knowledgeGroups_, wrapper.message().knowledge_group_destruction().knowledge_group().id(), wrapper.message().knowledge_group_destruction() );
     if( wrapper.message().has_knowledge_group_update() )
-        knowledgeGroups_.Get( wrapper.message().knowledge_group_update().id().id() ).Update( wrapper.message().knowledge_group_update() );
+        knowledgeGroups_.Get( wrapper.message().knowledge_group_update().knowledge_group().id() ).Update( wrapper.message().knowledge_group_update() );
     if( wrapper.message().has_formation_creation() )
         CreateUpdate< Formation >( formations_, wrapper.message().formation_creation().formation().id(), wrapper.message().formation_creation(), staticModel_.levels_ ); 
     if( wrapper.message().has_unit_creation() )
-        CreateUpdate< Agent >( agents_, wrapper.message().unit_creation().id().id(), wrapper.message().unit_creation(), staticModel_.types_ ); 
+        CreateUpdate< Agent >( agents_, wrapper.message().unit_creation().unit().id(), wrapper.message().unit_creation(), staticModel_.types_ ); 
     if( wrapper.message().has_unit_environment_type() )
-        agents_.Get( wrapper.message().unit_environment_type().id().id() ).Update( wrapper.message().unit_environment_type() ); 
+        agents_.Get( wrapper.message().unit_environment_type().unit().id() ).Update( wrapper.message().unit_environment_type() ); 
     if( wrapper.message().has_unit_destruction() )
-        Destroy( agents_, wrapper.message().unit_destruction().id().id(), wrapper.message().unit_destruction() ); 
+        Destroy( agents_, wrapper.message().unit_destruction().unit().id(), wrapper.message().unit_destruction() ); 
     if( wrapper.message().has_automat_creation() )
-        CreateUpdate< Automat >( automats_, wrapper.message().automat_creation() );
+        CreateUpdate< Automat >( automats_, wrapper.message().automat_creation().automat().id(), wrapper.message().automat_creation() );
     if( wrapper.message().has_unit_attributes() )
-        agents_.Get( wrapper.message().unit_attributes().id().id() ).Update( wrapper.message().unit_attributes() ); 
+        agents_.Get( wrapper.message().unit_attributes().unit().id() ).Update( wrapper.message().unit_attributes() ); 
     if( wrapper.message().has_automat_attributes() )
-        automats_.Get( wrapper.message().automat_attributes().id().id() ).Update( wrapper.message().automat_attributes()  ); 
+        automats_.Get( wrapper.message().automat_attributes().automat().id() ).Update( wrapper.message().automat_attributes()  ); 
     if( wrapper.message().has_unit_pathfind() )
-        agents_.Get( wrapper.message().unit_pathfind().id().id() ).Update( wrapper.message().unit_pathfind() ); 
+        agents_.Get( wrapper.message().unit_pathfind().unit().id() ).Update( wrapper.message().unit_pathfind() ); 
     if( wrapper.message().has_start_unit_fire() )
     {
-        CreateUpdate< Fire >( fires_, wrapper.message().start_unit_fire().id().id(), wrapper.message().start_unit_fire() );
+        CreateUpdate< Fire >( fires_, wrapper.message().start_unit_fire().fire().id(), wrapper.message().start_unit_fire() );
         agents_.Get( wrapper.message().start_unit_fire().firing_unit().id() ).Update( wrapper.message().start_unit_fire() ); 
     }
     if( wrapper.message().has_stop_unit_fire() )
-        Destroy( fires_, wrapper.message().stop_unit_fire().id().id(), wrapper.message().stop_unit_fire() ); 
-    if( wrapper.message().has_start_population_fire() )
-        CreateUpdate< PopulationFire >( populationFires_, wrapper.message().start_population_fire().id().id(), wrapper.message().start_population_fire() ); 
-    if( wrapper.message().has_stop_population_fire() )
-        Destroy( populationFires_, wrapper.message().stop_population_fire().id().id(), wrapper.message().stop_population_fire() ); 
+        Destroy( fires_, wrapper.message().stop_unit_fire().fire().id(), wrapper.message().stop_unit_fire() ); 
+    if( wrapper.message().has_start_crowd_fire() )
+        CreateUpdate< PopulationFire >( populationFires_, wrapper.message().start_crowd_fire().fire().id(), wrapper.message().start_crowd_fire() ); 
+    if( wrapper.message().has_stop_crowd_fire() )
+        Destroy( populationFires_, wrapper.message().stop_crowd_fire().fire().id(), wrapper.message().stop_crowd_fire() );
     if( wrapper.message().has_explosion() )
     {} // $$$$ merge
 
 
     if( wrapper.message().has_report() )
-        CreateUpdate< Report >( reports_, wrapper.message().report().id().id(), wrapper.message().report() ); 
+        CreateUpdate< Report >( reports_, wrapper.message().report().report().id(), wrapper.message().report() ); 
     if( wrapper.message().has_invalidate_report() )
-        Destroy( reports_, wrapper.message().invalidate_report().id().id(), wrapper.message().invalidate_report() ); 
+        Destroy( reports_, wrapper.message().invalidate_report().report().id(), wrapper.message().invalidate_report() ); 
     if( wrapper.message().has_trace() )
 
           // $$$$ AGE 2007-04-18: Evenements, modèle client => rien, ou remanier
@@ -234,117 +234,117 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
     if( wrapper.message().has_object_detection() )
         agents_.Get( wrapper.message().object_detection().observer().id() ).Update( wrapper.message().object_detection() ); 
     if( wrapper.message().has_decisional_state() )
-        UpdateAnyAgent( TaskerToId( wrapper.message().decisional_state().id() ), wrapper.message().decisional_state() ); 
+        UpdateAnyAgent( TaskerToId( wrapper.message().decisional_state().source() ), wrapper.message().decisional_state() ); 
     if( wrapper.message().has_start_fire_effect() )
-        CreateUpdate< FireEffect >( fireEffects_, wrapper.message().start_fire_effect().id().id(), wrapper.message().start_fire_effect() ); 
+        CreateUpdate< FireEffect >( fireEffects_, wrapper.message().start_fire_effect().fire_effect().id(), wrapper.message().start_fire_effect() ); 
     if( wrapper.message().has_stop_fire_effect() )
-        Destroy( fireEffects_, wrapper.message().stop_fire_effect().id().id(), wrapper.message().stop_fire_effect() ); 
+        Destroy( fireEffects_, wrapper.message().stop_fire_effect().fire_effect().id(), wrapper.message().stop_fire_effect() ); 
     if( wrapper.message().has_unit_order() )
         agents_.Get( wrapper.message().unit_order().tasker().id() ).Update( wrapper.message().unit_order() ); 
     if( wrapper.message().has_automat_order() )
         automats_.Get( wrapper.message().automat_order().tasker().id() ).Update( wrapper.message().automat_order() ); 
-    if( wrapper.message().has_population_order() )
-        populations_.Get( wrapper.message().population_order().tasker().id() ).Update( wrapper.message().population_order() ); 
+    if( wrapper.message().has_crowd_order() )
+        populations_.Get( wrapper.message().crowd_order().tasker().id() ).Update( wrapper.message().crowd_order() ); 
 
     if( wrapper.message().has_object_creation() )
-        CreateUpdate< Object >( objects_, wrapper.message().object_creation().id().id(), wrapper.message().object_creation(), staticModel_.objectTypes_ ); 
+        CreateUpdate< Object >( objects_, wrapper.message().object_creation().object().id(), wrapper.message().object_creation(), staticModel_.objectTypes_ ); 
     if( wrapper.message().has_object_update() )
-        objects_.Get( wrapper.message().object_update().id().id() ).Update( wrapper.message().object_update() ); 
+        objects_.Get( wrapper.message().object_update().object().id() ).Update( wrapper.message().object_update() ); 
     if( wrapper.message().has_object_destruction() )
-        Destroy( objects_, wrapper.message().object_destruction().id().id(), wrapper.message().object_destruction() ); 
+        Destroy( objects_, wrapper.message().object_destruction().object().id(), wrapper.message().object_destruction() ); 
     if( wrapper.message().has_object_knowledge_creation() )
-        CreateUpdate< ObjectKnowledge >( objectKnowledges_, wrapper.message().object_knowledge_creation().id().id(), wrapper.message().object_knowledge_creation() ); 
+        CreateUpdate< ObjectKnowledge >( objectKnowledges_, wrapper.message().object_knowledge_creation().knowledge().id(), wrapper.message().object_knowledge_creation() ); 
     if( wrapper.message().has_object_knowledge_update() )
-        objectKnowledges_.Get( wrapper.message().object_knowledge_update().id().id() ).Update( wrapper.message().object_knowledge_update() ); 
+        objectKnowledges_.Get( wrapper.message().object_knowledge_update().knowledge().id() ).Update( wrapper.message().object_knowledge_update() ); 
     if( wrapper.message().has_object_knowledge_destruction() )
-        Destroy( objectKnowledges_, wrapper.message().object_knowledge_destruction().id().id(), wrapper.message().object_knowledge_destruction() ); 
+        Destroy( objectKnowledges_, wrapper.message().object_knowledge_destruction().knowledge().id(), wrapper.message().object_knowledge_destruction() ); 
 
     if( wrapper.message().has_log_maintenance_handling_creation() )
-        CreateUpdate< LogConsignMaintenance >( logConsignsMaintenance_, wrapper.message().log_maintenance_handling_creation().id().id(), wrapper.message().log_maintenance_handling_creation() ); 
+        CreateUpdate< LogConsignMaintenance >( logConsignsMaintenance_, wrapper.message().log_maintenance_handling_creation().request().id(), wrapper.message().log_maintenance_handling_creation() ); 
     if( wrapper.message().has_log_maintenance_handling_destruction() )
-        Destroy( logConsignsMaintenance_, wrapper.message().log_maintenance_handling_destruction().id().id(), wrapper.message().log_maintenance_handling_destruction() ); 
+        Destroy( logConsignsMaintenance_, wrapper.message().log_maintenance_handling_destruction().request().id(), wrapper.message().log_maintenance_handling_destruction() ); 
     if( wrapper.message().has_log_maintenance_handling_update() )
-        logConsignsMaintenance_.Get( wrapper.message().log_maintenance_handling_update().id().id() ).Update( wrapper.message().log_maintenance_handling_update() ); 
+        logConsignsMaintenance_.Get( wrapper.message().log_maintenance_handling_update().request().id() ).Update( wrapper.message().log_maintenance_handling_update() ); 
     if( wrapper.message().has_log_maintenance_state() )
-        agents_.Get( wrapper.message().log_maintenance_state().id().id() ).Update( wrapper.message().log_maintenance_state() ); 
+        agents_.Get( wrapper.message().log_maintenance_state().unit().id() ).Update( wrapper.message().log_maintenance_state() ); 
 
     if( wrapper.message().has_log_supply_handling_creation() )
-        CreateUpdate< LogConsignSupply >( logConsignsSupply_, wrapper.message().log_supply_handling_creation().id().id(), wrapper.message().log_supply_handling_creation() ); 
+        CreateUpdate< LogConsignSupply >( logConsignsSupply_, wrapper.message().log_supply_handling_creation().request().id(), wrapper.message().log_supply_handling_creation() ); 
     if( wrapper.message().has_log_supply_handling_destruction() )
-        Destroy( logConsignsSupply_, wrapper.message().log_supply_handling_destruction().id().id(), wrapper.message().log_supply_handling_destruction() );
+        Destroy( logConsignsSupply_, wrapper.message().log_supply_handling_destruction().request().id(), wrapper.message().log_supply_handling_destruction() );
     if( wrapper.message().has_log_supply_handling_update() )
-        logConsignsSupply_.Get( wrapper.message().log_supply_handling_update().id().id() ).Update( wrapper.message().log_supply_handling_update() ); 
+        logConsignsSupply_.Get( wrapper.message().log_supply_handling_update().request().id() ).Update( wrapper.message().log_supply_handling_update() ); 
     if( wrapper.message().has_log_supply_state() )
-        agents_.Get( wrapper.message().log_supply_state().id().id() ).Update( wrapper.message().log_supply_state() ); 
+        agents_.Get( wrapper.message().log_supply_state().unit().id() ).Update( wrapper.message().log_supply_state() ); 
     if( wrapper.message().has_log_supply_quotas() )
-        automats_.Get( wrapper.message().log_supply_quotas().id().id() ).Update( wrapper.message().log_supply_quotas() ); 
+        automats_.Get( wrapper.message().log_supply_quotas().automat().id() ).Update( wrapper.message().log_supply_quotas() ); 
 
     if( wrapper.message().has_log_medical_handling_creation() )
-        CreateUpdate< LogConsignMedical >( logConsignsMedical_, wrapper.message().log_medical_handling_creation().id().id(),  wrapper.message().log_medical_handling_creation() ); 
+        CreateUpdate< LogConsignMedical >( logConsignsMedical_, wrapper.message().log_medical_handling_creation().request().id(),  wrapper.message().log_medical_handling_creation() ); 
     if( wrapper.message().has_log_medical_handling_destruction() )
-        Destroy( logConsignsMedical_, wrapper.message().log_medical_handling_destruction().id().id(), wrapper.message().log_medical_handling_destruction() );
+        Destroy( logConsignsMedical_, wrapper.message().log_medical_handling_destruction().request().id(), wrapper.message().log_medical_handling_destruction() );
     if( wrapper.message().has_log_medical_handling_update() )
-        logConsignsMedical_.Get( wrapper.message().log_medical_handling_update().id().id() ).Update( wrapper.message().log_medical_handling_update() ); 
+        logConsignsMedical_.Get( wrapper.message().log_medical_handling_update().request().id() ).Update( wrapper.message().log_medical_handling_update() ); 
     if( wrapper.message().has_log_medical_state() )
-        agents_.Get( wrapper.message().log_medical_state().id().id() ).Update( wrapper.message().log_medical_state() ); 
+        agents_.Get( wrapper.message().log_medical_state().unit().id() ).Update( wrapper.message().log_medical_state() ); 
 
-    if( wrapper.message().has_population_creation() )
-        CreateUpdate< Population >( populations_, wrapper.message().population_creation() );
-    if( wrapper.message().has_population_update() )
-        populations_.Get( wrapper.message().population_update().id().id() ).Update( wrapper.message().population_update() ); 
-    if( wrapper.message().has_population_concentration_creation() )
-        populations_.Get( wrapper.message().population_concentration_creation().population().id() ).Update( wrapper.message().population_concentration_creation() ); 
-    if( wrapper.message().has_population_concentration_destruction() )
-        populations_.Get( wrapper.message().population_concentration_destruction().population().id() ).Update( wrapper.message().population_concentration_destruction() ); 
-    if( wrapper.message().has_population_concentration_update() )
-        populations_.Get( wrapper.message().population_concentration_update().population().id() ).Update( wrapper.message().population_concentration_update() ); 
-    if( wrapper.message().has_population_flow_creation() )
-        populations_.Get( wrapper.message().population_flow_creation().population().id() ).Update( wrapper.message().population_flow_creation() ); 
-    if( wrapper.message().has_population_flow_destruction() )
-        populations_.Get( wrapper.message().population_flow_destruction().population().id() ).Update( wrapper.message().population_flow_destruction() ); 
-    if( wrapper.message().has_population_flow_update() )
-        populations_.Get( wrapper.message().population_flow_update().population().id() ).Update( wrapper.message().population_flow_update() ); 
+    if( wrapper.message().has_crowd_creation() )
+        CreateUpdate< Population >( populations_, wrapper.message().crowd_creation().crowd().id(), wrapper.message().crowd_creation() );
+    if( wrapper.message().has_crowd_update() )
+        populations_.Get( wrapper.message().crowd_update().crowd().id() ).Update( wrapper.message().crowd_update() ); 
+    if( wrapper.message().has_crowd_concentration_creation() )
+        populations_.Get( wrapper.message().crowd_concentration_creation().crowd().id() ).Update( wrapper.message().crowd_concentration_creation() ); 
+    if( wrapper.message().has_crowd_concentration_destruction() )
+        populations_.Get( wrapper.message().crowd_concentration_destruction().crowd().id() ).Update( wrapper.message().crowd_concentration_destruction() ); 
+    if( wrapper.message().has_crowd_concentration_update() )
+        populations_.Get( wrapper.message().crowd_concentration_update().crowd().id() ).Update( wrapper.message().crowd_concentration_update() ); 
+    if( wrapper.message().has_crowd_flow_creation() )
+        populations_.Get( wrapper.message().crowd_flow_creation().crowd().id() ).Update( wrapper.message().crowd_flow_creation() ); 
+    if( wrapper.message().has_crowd_flow_destruction() )
+        populations_.Get( wrapper.message().crowd_flow_destruction().crowd().id() ).Update( wrapper.message().crowd_flow_destruction() ); 
+    if( wrapper.message().has_crowd_flow_update() )
+        populations_.Get( wrapper.message().crowd_flow_update().crowd().id() ).Update( wrapper.message().crowd_flow_update() ); 
 
-    if( wrapper.message().has_population_knowledge_creation() )
-        CreateUpdate< PopulationKnowledge >( populationKnowledges_, wrapper.message().population_knowledge_creation().id().id(), wrapper.message().population_knowledge_creation() ); 
-    if( wrapper.message().has_population_knowledge_update() )
-        populationKnowledges_.Get( wrapper.message().population_knowledge_update().id().id() ).Update( wrapper.message().population_knowledge_update() ); 
-    if( wrapper.message().has_population_knowledge_destruction() )
-        Destroy( populationKnowledges_, wrapper.message().population_knowledge_destruction().id().id(), wrapper.message().population_knowledge_destruction() ); 
-    if( wrapper.message().has_population_concentration_knowledge_creation() )
-        populationKnowledges_.Get( wrapper.message().population_concentration_knowledge_creation().population().id() ).Update( wrapper.message().population_concentration_knowledge_creation() ); 
-    if( wrapper.message().has_population_concentration_knowledge_update() )
-        populationKnowledges_.Get( wrapper.message().population_concentration_knowledge_update().population().id() ).Update( wrapper.message().population_concentration_knowledge_update() ); 
-    if( wrapper.message().has_population_concentration_knowledge_destruction() )
-        populationKnowledges_.Get( wrapper.message().population_concentration_knowledge_destruction().population().id() ).Update( wrapper.message().population_concentration_knowledge_destruction() ); 
-    if( wrapper.message().has_population_flow_knowledge_creation() )
-        populationKnowledges_.Get( wrapper.message().population_flow_knowledge_creation().population().id() ).Update( wrapper.message().population_flow_knowledge_creation() ); 
-    if( wrapper.message().has_population_flow_knowledge_update() )
-        populationKnowledges_.Get( wrapper.message().population_flow_knowledge_update().population().id() ).Update( wrapper.message().population_flow_knowledge_update() ); 
-    if( wrapper.message().has_population_flow_knowledge_destruction() )
-        populationKnowledges_.Get( wrapper.message().population_flow_knowledge_destruction().population().id() ).Update( wrapper.message().population_flow_knowledge_destruction() ); 
+    if( wrapper.message().has_crowd_knowledge_creation() )
+        CreateUpdate< PopulationKnowledge >( populationKnowledges_, wrapper.message().crowd_knowledge_creation().knowledge().id(), wrapper.message().crowd_knowledge_creation() );
+    if( wrapper.message().has_crowd_knowledge_update() )
+        populationKnowledges_.Get( wrapper.message().crowd_knowledge_update().knowledge().id() ).Update( wrapper.message().crowd_knowledge_update() );
+    if( wrapper.message().has_crowd_knowledge_destruction() )
+        Destroy( populationKnowledges_, wrapper.message().crowd_knowledge_destruction().knowledge().id(), wrapper.message().crowd_knowledge_destruction() ); 
+    if( wrapper.message().has_crowd_concentration_knowledge_creation() )
+        populationKnowledges_.Get( wrapper.message().crowd_concentration_knowledge_creation().crowd().id() ).Update( wrapper.message().crowd_concentration_knowledge_creation() ); 
+    if( wrapper.message().has_crowd_concentration_knowledge_update() )
+        populationKnowledges_.Get( wrapper.message().crowd_concentration_knowledge_update().crowd().id() ).Update( wrapper.message().crowd_concentration_knowledge_update() ); 
+    if( wrapper.message().has_crowd_concentration_knowledge_destruction() )
+        populationKnowledges_.Get( wrapper.message().crowd_concentration_knowledge_destruction().crowd().id() ).Update( wrapper.message().crowd_concentration_knowledge_destruction() ); 
+    if( wrapper.message().has_crowd_flow_knowledge_creation() )
+        populationKnowledges_.Get( wrapper.message().crowd_flow_knowledge_creation().crowd().id() ).Update( wrapper.message().crowd_flow_knowledge_creation() ); 
+    if( wrapper.message().has_crowd_flow_knowledge_update() )
+        populationKnowledges_.Get( wrapper.message().crowd_flow_knowledge_update().crowd().id() ).Update( wrapper.message().crowd_flow_knowledge_update() ); 
+    if( wrapper.message().has_crowd_flow_knowledge_destruction() )
+        populationKnowledges_.Get( wrapper.message().crowd_flow_knowledge_destruction().crowd().id() ).Update( wrapper.message().crowd_flow_knowledge_destruction() ); 
     if( wrapper.message().has_folk_creation() )
         folk_->Update( wrapper.message().folk_creation() );
 
     if( wrapper.message().has_urban_creation() )
-        CreateUpdate2< UrbanObject >( urbanBlocks_, wrapper.message().urban_creation() );
+        CreateUpdate< UrbanObject >( urbanBlocks_, wrapper.message().urban_creation().urban_object().id(), wrapper.message().urban_creation() );
     if( wrapper.message().has_urban_update() )
-        urbanBlocks_.Get( wrapper.message().urban_update().oid() ).Update( wrapper.message().urban_update() );
+        urbanBlocks_.Get( wrapper.message().urban_update().urban_object().id() ).Update( wrapper.message().urban_update() );
 
     if( wrapper.message().has_urban_knowledge_creation() )
-        CreateUpdate< UrbanKnowledge >( urbanKnowledges_, wrapper.message().urban_knowledge_creation() );
+        CreateUpdate< UrbanKnowledge >( urbanKnowledges_, wrapper.message().urban_knowledge_creation().knowledge().id(), wrapper.message().urban_knowledge_creation() );
     if( wrapper.message().has_urban_knowledge_update() )
-        urbanKnowledges_.Get( wrapper.message().urban_knowledge_update().id().id() ).Update( wrapper.message().urban_knowledge_update() ); 
+        urbanKnowledges_.Get( wrapper.message().urban_knowledge_update().knowledge().id() ).Update( wrapper.message().urban_knowledge_update() ); 
     if( wrapper.message().has_urban_knowledge_destruction() )
-        Destroy( urbanKnowledges_, wrapper.message().urban_knowledge_destruction().id().id(), wrapper.message().urban_knowledge_destruction() );
-    if( wrapper.message().has_control_global_meteo() )
-        meteoModel_->OnReceiveMsgGlobalMeteo( wrapper.message().control_global_meteo() );
-    if( wrapper.message().has_control_local_meteo_creation() )
-        meteoModel_->OnReceiveMsgLocalMeteoCreation( wrapper.message().control_local_meteo_creation() );
-    if( wrapper.message().has_control_local_meteo_destruction() )
-        meteoModel_->OnReceiveMsgLocalMeteoDestruction( wrapper.message().control_local_meteo_destruction() );
+        Destroy( urbanKnowledges_, wrapper.message().urban_knowledge_destruction().knowledge().id(), wrapper.message().urban_knowledge_destruction() );
+    if( wrapper.message().has_control_global_weather() )
+        meteoModel_->OnReceiveMsgGlobalMeteo( wrapper.message().control_global_weather() );
+    if( wrapper.message().has_control_local_weather_creation() )
+        meteoModel_->OnReceiveMsgLocalMeteoCreation( wrapper.message().control_local_weather_creation() );
+    if( wrapper.message().has_control_local_weather_destruction() )
+        meteoModel_->OnReceiveMsgLocalMeteoDestruction( wrapper.message().control_local_weather_destruction() );
     if( wrapper.message().has_urban_creation() )
-        CreateUpdate2< UrbanObject >( urbanBlocks_, wrapper.message().urban_creation() );
+        CreateUpdate< UrbanObject >( urbanBlocks_, wrapper.message().urban_creation().urban_object().id(), wrapper.message().urban_creation() );
 //        default:
 //            assert( false );//@TODO restore an exception, some messages aren't linked
 //    }
@@ -525,7 +525,7 @@ void Model::SetToTasker( Common::Tasker& tasker, unsigned int id ) const
     else if( formations_.Find( id ) )
         tasker.mutable_formation()->set_id( id );
     else if( populations_.Find( id ) )
-        tasker.mutable_population()->set_id( id );
+        tasker.mutable_crowd()->set_id( id );
     else if( agents_.Find( id ) )
         tasker.mutable_unit()->set_id( id );
     else
@@ -542,8 +542,8 @@ unsigned int Model::TaskerToId( const Common::Tasker& tasker ) const
         return tasker.unit().id();
     if( tasker.has_automat() )
         return tasker.automat().id();
-    if( tasker.has_population() )
-        return tasker.population().id();
+    if( tasker.has_crowd() )
+        return tasker.crowd().id();
     if( tasker.has_formation() )
         return tasker.formation().id();
     throw std::runtime_error( __FUNCTION__ " Misformed tasker in protocol message" );

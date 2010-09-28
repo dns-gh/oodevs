@@ -24,8 +24,8 @@ using namespace dispatcher;
 // Name: PopulationFlowKnowledge constructor
 // Created: NLD 2006-10-03
 // -----------------------------------------------------------------------------
-PopulationFlowKnowledge::PopulationFlowKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const MsgsSimToClient::MsgPopulationFlowKnowledgeCreation& msg )
-    : SimpleEntity< >     ( msg.id().id() )
+PopulationFlowKnowledge::PopulationFlowKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const MsgsSimToClient::MsgCrowdFlowKnowledgeCreation& msg )
+    : SimpleEntity< >     ( msg.knowledge().id() )
     , populationKnowledge_( populationKnowledge )
     , pFlow_              ( msg.flow().id() == 0 ? 0 : &populationKnowledge_.GetEntity()->GetFlow( msg.flow().id() ) )
     , nDirection_         ( 0 )
@@ -58,7 +58,7 @@ PopulationFlowKnowledge::~PopulationFlowKnowledge()
 // Name: PopulationFlowKnowledge::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationFlowKnowledge::Update( const MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate& msg )
+void PopulationFlowKnowledge::Update( const MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate& msg )
 {
     if( msg.has_flow()  )
         pFlow_ = msg.flow().id() == 0 ? 0 : &populationKnowledge_.GetEntity()->GetFlow( msg.flow().id() );
@@ -107,9 +107,9 @@ void PopulationFlowKnowledge::Update( const MsgsSimToClient::MsgPopulationFlowKn
 // -----------------------------------------------------------------------------
 void PopulationFlowKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    client::PopulationFlowKnowledgeCreation asn;
-    asn().mutable_id()->set_id( GetId() );
-    asn().mutable_population()->set_id( populationKnowledge_.GetId() );
+    client::CrowdFlowKnowledgeCreation asn;
+    asn().mutable_knowledge()->set_id( GetId() );
+    asn().mutable_crowd()->set_id( populationKnowledge_.GetId() );
     asn().mutable_flow()->set_id( pFlow_ ? pFlow_->GetId() : 0 );
     asn().mutable_knowledge_group()->set_id( populationKnowledge_.GetOwner().GetId() );
     asn.Send( publisher );
@@ -121,10 +121,10 @@ void PopulationFlowKnowledge::SendCreation( ClientPublisher_ABC& publisher ) con
 // -----------------------------------------------------------------------------
 void PopulationFlowKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
-    client::PopulationFlowKnowledgeUpdate asn;
+    client::CrowdFlowKnowledgeUpdate asn;
 
-    asn().mutable_id()->set_id( GetId() );
-    asn().mutable_population()->set_id( populationKnowledge_.GetId() );
+    asn().mutable_knowledge()->set_id( GetId() );
+    asn().mutable_crowd()->set_id( populationKnowledge_.GetId() );
     asn().mutable_knowledge_group()->set_id( populationKnowledge_.GetOwner().GetId() );
 
     asn().mutable_flow()->set_id( pFlow_ ? pFlow_->GetId() : 0 );
@@ -159,9 +159,9 @@ void PopulationFlowKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) c
 // -----------------------------------------------------------------------------
 void PopulationFlowKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    client::PopulationFlowKnowledgeDestruction asn;
-    asn().mutable_id()->set_id( GetId() );
-    asn().mutable_population()->set_id( populationKnowledge_.GetId() );
+    client::CrowdFlowKnowledgeDestruction asn;
+    asn().mutable_knowledge()->set_id( GetId() );
+    asn().mutable_crowd()->set_id( populationKnowledge_.GetId() );
     asn().mutable_knowledge_group()->set_id( populationKnowledge_.GetOwner().GetId() );
     asn.Send( publisher );
 }

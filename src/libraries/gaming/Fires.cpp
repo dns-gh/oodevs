@@ -45,10 +45,10 @@ Fires::~Fires()
 template< typename T >
 void Fires::CreateFire( const T& message )
 {
-    if( ! Find( message.id().id() ) )
+    if( ! Find( message.fire().id() ) )
     {
         Fire_ABC* fire = factory_.CreateFire( message );
-        Register( message.id().id(), *fire );
+        Register( message.fire().id(), *fire );
         controller_.Update( *this );
     }
 }
@@ -60,10 +60,10 @@ void Fires::CreateFire( const T& message )
 template< typename T >
 void Fires::DestroyFire( const T& message )
 {
-    Fire_ABC* fire = Find( message.id().id() );
+    Fire_ABC* fire = Find( message.fire().id() );
     if( fire )
     {
-        Remove( message.id().id() );
+        Remove( message.fire().id() );
         delete fire;
         controller_.Update( *this );
     }
@@ -91,7 +91,7 @@ void Fires::DoUpdate( const MsgsSimToClient::MsgStopUnitFire& message )
 // Name: Fires::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Fires::DoUpdate( const MsgsSimToClient::MsgStartPopulationFire& message )
+void Fires::DoUpdate( const MsgsSimToClient::MsgStartCrowdFire& message )
 {
     CreateFire( message );
 }
@@ -100,7 +100,7 @@ void Fires::DoUpdate( const MsgsSimToClient::MsgStartPopulationFire& message )
 // Name: Fires::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Fires::DoUpdate( const MsgsSimToClient::MsgStopPopulationFire& message )
+void Fires::DoUpdate( const MsgsSimToClient::MsgStopCrowdFire& message )
 {
     DestroyFire( message );
 }

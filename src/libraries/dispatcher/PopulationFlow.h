@@ -15,13 +15,13 @@
 
 namespace Common
 {
-    enum EnumPopulationAttitude;
+    enum EnumCrowdAttitude;
 }
 
 namespace MsgsSimToClient
 {
-    class MsgPopulationFlowCreation;
-    class MsgPopulationFlowUpdate;
+    class MsgCrowdFlowCreation;
+    class MsgCrowdFlowUpdate;
 }
 
 namespace dispatcher
@@ -36,18 +36,18 @@ namespace dispatcher
 // =============================================================================
 class PopulationFlow : public dispatcher::PopulationFlow_ABC
                      , public kernel::Extension_ABC
-                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowUpdate >
+                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdFlowUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFlow( const Population& population, const MsgsSimToClient::MsgPopulationFlowCreation& msg );
+             PopulationFlow( const Population& population, const MsgsSimToClient::MsgCrowdFlowCreation& msg );
     virtual ~PopulationFlow();
     //@}
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate& msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdFlowUpdate& msg );
 
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
@@ -81,7 +81,7 @@ private:
     unsigned int                 nSpeed_;
     unsigned long                nNbrAliveHumans_;
     unsigned long                nNbrDeadHumans_;
-    Common::EnumPopulationAttitude nAttitude_;
+    Common::EnumCrowdAttitude    nAttitude_;
     //@}
 };
 

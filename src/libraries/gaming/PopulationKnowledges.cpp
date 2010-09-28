@@ -46,7 +46,7 @@ PopulationKnowledges::~PopulationKnowledges()
 template< typename T >
 void PopulationKnowledges::UpdatePopulation( const T& message )
 {
-    if( PopulationKnowledge_ABC* k = Find( message.population().id() ) )
+    if( PopulationKnowledge_ABC* k = Find( message.knowledge().id() ) )
     {
         k->Update( message );
         controller_.Update( *this );
@@ -57,12 +57,12 @@ void PopulationKnowledges::UpdatePopulation( const T& message )
 // Name: PopulationKnowledges::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgPopulationKnowledgeCreation& message )
+void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgCrowdKnowledgeCreation& message )
 {
-    if( ! Find( message.id().id() ) )
+    if( ! Find( message.knowledge().id() ) )
     {
         PopulationKnowledge_ABC* knowledge = factory_.CreatePopulationKnowledge( owner_, message );
-        Register( message.id().id(), *knowledge );
+        Register( message.knowledge().id(), *knowledge );
         controller_.Update( *this );
     }
 }
@@ -71,9 +71,9 @@ void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgPopulationKnowled
 // Name: PopulationKnowledges::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgPopulationKnowledgeUpdate& message )
+void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgCrowdKnowledgeUpdate& message )
 {
-    if( PopulationKnowledge_ABC* k = Find( message.id().id() ) )
+    if( PopulationKnowledge_ABC* k = Find( message.knowledge().id() ) )
     {
         k->Update( message );
         controller_.Update( *this );
@@ -84,10 +84,10 @@ void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgPopulationKnowled
 // Name: PopulationKnowledges::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgPopulationKnowledgeDestruction& message )
+void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgCrowdKnowledgeDestruction& message )
 {
-    delete Find( message.id().id() );
-    Remove( message.id().id() );
+    delete Find( message.knowledge().id() );
+    Remove( message.knowledge().id() );
     controller_.Update( *this );
 }
 
@@ -95,7 +95,7 @@ void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgPopulationKnowled
 // Name: PopulationKnowledges::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation& message )
+void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation& message )
 {
     UpdatePopulation( message );
 }
@@ -104,7 +104,7 @@ void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgPopulationConcent
 // Name: PopulationKnowledges::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate& message )
+void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate& message )
 {
     UpdatePopulation( message );
 }
@@ -113,7 +113,7 @@ void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgPopulationConcent
 // Name: PopulationKnowledges::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeDestruction& message )
+void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeDestruction& message )
 {
     UpdatePopulation( message );
 }
@@ -122,7 +122,7 @@ void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgPopulationConcent
 // Name: PopulationKnowledges::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgPopulationFlowKnowledgeCreation& message )
+void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgCrowdFlowKnowledgeCreation& message )
 {
     UpdatePopulation( message );
 }
@@ -131,7 +131,7 @@ void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgPopulationFlowKno
 // Name: PopulationKnowledges::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate& message )
+void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate& message )
 {
     UpdatePopulation( message );
 }
@@ -140,7 +140,7 @@ void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgPopulationFlowKno
 // Name: PopulationKnowledges::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgPopulationFlowKnowledgeDestruction& message )
+void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgCrowdFlowKnowledgeDestruction& message )
 {
     UpdatePopulation( message );
 }

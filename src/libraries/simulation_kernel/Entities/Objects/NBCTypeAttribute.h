@@ -31,7 +31,7 @@ public:
     //@{
              NBCTypeAttribute();
     explicit NBCTypeAttribute( xml::xistream& xis );
-    explicit NBCTypeAttribute( const Common::MsgObjectAttributes& asn );
+    explicit NBCTypeAttribute( const Common::ObjectAttributes& asn );
     virtual ~NBCTypeAttribute();
     //@}
 
@@ -47,8 +47,8 @@ public:
     //@{
     void Instanciate( DEC_Knowledge_Object& object ) const;
     void Register( MIL_Object_ABC& object ) const;
-    void SendFullState( Common::MsgObjectAttributes& asn ) const;
-    void SendUpdate( Common::MsgObjectAttributes& asn ) const;
+    void SendFullState( Common::ObjectAttributes& asn ) const;
+    void SendUpdate( Common::ObjectAttributes& asn ) const;
     void WriteODB( xml::xostream& xos ) const;
     //@}
 

@@ -333,9 +333,9 @@ bool DEC_Knowledge_PopulationFlow::Clean()
 void DEC_Knowledge_PopulationFlow::SendFullState() const
 {
     assert( pPopulationKnowledge_ );
-    client::PopulationFlowKnowledgeUpdate asnMsg;
-    asnMsg().mutable_id()->set_id( nID_ );
-    asnMsg().mutable_population()->set_id( pPopulationKnowledge_->GetID() );
+    client::CrowdFlowKnowledgeUpdate asnMsg;
+    asnMsg().mutable_knowledge()->set_id( nID_ );
+    asnMsg().mutable_crowd()->set_id( pPopulationKnowledge_->GetID() );
     asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
     asnMsg().set_est_percu( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
     asnMsg().mutable_flow()->set_id( pFlowKnown_ ? pFlowKnown_->GetID() : 0 );
@@ -372,9 +372,9 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
     assert( pCurrentPerceptionLevel_ );
     if( *pPreviousPerceptionLevel_ == *pCurrentPerceptionLevel_ && !bHumansUpdated_ && !bAttitudeUpdated_ && !bRealFlowUpdated_ && !bFlowPartsUpdated_ && !bDirectionUpdated_ && !bSpeedUpdated_ )
         return;
-    client::PopulationFlowKnowledgeUpdate asnMsg;
-    asnMsg().mutable_id()->set_id( nID_ );
-    asnMsg().mutable_population()->set_id( pPopulationKnowledge_->GetID() );
+    client::CrowdFlowKnowledgeUpdate asnMsg;
+    asnMsg().mutable_knowledge()->set_id( nID_ );
+    asnMsg().mutable_crowd()->set_id( pPopulationKnowledge_->GetID() );
     asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
     if( *pPreviousPerceptionLevel_ != *pCurrentPerceptionLevel_ )
         asnMsg().set_est_percu( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
@@ -423,9 +423,9 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
 void DEC_Knowledge_PopulationFlow::SendMsgCreation() const
 {
     assert( pPopulationKnowledge_ );
-    client::PopulationFlowKnowledgeCreation asnMsg;
-    asnMsg().mutable_id()->set_id( nID_ );
-    asnMsg().mutable_population()->set_id( pPopulationKnowledge_->GetID() );
+    client::CrowdFlowKnowledgeCreation asnMsg;
+    asnMsg().mutable_knowledge()->set_id( nID_ );
+    asnMsg().mutable_crowd()->set_id( pPopulationKnowledge_->GetID() );
     asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
     asnMsg().mutable_flow()->set_id( pFlowKnown_ ? pFlowKnown_->GetID() : 0 );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
@@ -438,9 +438,9 @@ void DEC_Knowledge_PopulationFlow::SendMsgCreation() const
 void DEC_Knowledge_PopulationFlow::SendMsgDestruction() const
 {
     assert( pPopulationKnowledge_ );
-    client::PopulationFlowKnowledgeDestruction asnMsg;
-    asnMsg().mutable_id()->set_id( nID_ );
-    asnMsg().mutable_population()->set_id( pPopulationKnowledge_->GetID() );
+    client::CrowdFlowKnowledgeDestruction asnMsg;
+    asnMsg().mutable_knowledge()->set_id( nID_ );
+    asnMsg().mutable_crowd()->set_id( pPopulationKnowledge_->GetID() );
     asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }

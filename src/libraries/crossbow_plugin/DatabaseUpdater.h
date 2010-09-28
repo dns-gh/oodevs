@@ -12,11 +12,6 @@
 
 #include "DatabaseUpdater_ABC.h"
 
-namespace Common
-{
-    class MsgFormationCreation;
-}
-
 namespace MsgsMessengerToClient
 {
     class MsgLimitCreation;
@@ -25,6 +20,7 @@ namespace MsgsMessengerToClient
 
 namespace MsgsSimToClient
 {
+    class MsgFormationCreation;
     class MsgUnitCreation;
     class MsgUnitKnowledgeCreation;
     class MsgLimaCreation;
@@ -81,7 +77,7 @@ public:
     void Update( const MsgsMessengerToClient::MsgLimaCreation& msg );
     void Update( const MsgsSimToClient::MsgObjectCreation& msg );
     void Update( const MsgsSimToClient::MsgReport& msg );
-    void Update( const Common::MsgFormationCreation& message );
+    void Update( const MsgsSimToClient::MsgFormationCreation& message );
     void Update( const MsgsSimToClient::MsgAutomatCreation& message );
     void Update( const MsgsSimToClient::MsgObjectKnowledgeCreation& msg );
 

@@ -40,7 +40,7 @@ namespace Common
     class MsgPointList;
     class MsgPolygon;
     class MsgPolygonList;
-    class PopulationKnowledgeId;
+    class CrowdKnowledgeId;
     class UnitId;
     class UnitKnowledgeId;
     class UnitKnowledgeIdList;
@@ -145,7 +145,7 @@ public:
     static DEC_Decision_ABC*            ReadAgent              ( const Common::UnitId&               asn );
     static DEC_Decision_ABC*            ReadAutomate           ( const Common::UnitId&               asn );
     static boost::shared_ptr< DEC_Knowledge_Agent > ReadAgentKnowledge     ( const Common::UnitKnowledgeId&      asn, const DEC_KnowledgeResolver_ABC& resolver );
-    static DEC_Knowledge_Population*    ReadPopulationKnowledge( const Common::PopulationKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver );
+    static DEC_Knowledge_Population*    ReadPopulationKnowledge( const Common::CrowdKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver );
 
     static boost::shared_ptr< DEC_Knowledge_Object > ReadObjectKnowledge    ( const Common::ObjectKnowledgeId&     asn, const DEC_KnowledgeResolver_ABC& resolver );
     static bool                         ReadObjectKnowledgeList( const Common::ObjectKnowledgeIdList& asn, T_KnowledgeObjectDiaIDVector& knowledgeList, const DEC_KnowledgeResolver_ABC& resolver );

@@ -149,7 +149,7 @@ void Profile::Update( const MsgsAuthenticationToClient::MsgProfile& profile )
         password_ = profile.password();
     else
         password_ = "";
-    supervision_ = profile.superviseur() != 0;
+    supervision_ = profile.supervisor();
 
     if( profile.has_read_only_camps()  )
         ReadList( profile.read_only_camps(), readTeams_ );
@@ -161,10 +161,10 @@ void Profile::Update( const MsgsAuthenticationToClient::MsgProfile& profile )
     if( profile.has_read_write_automates()  )
         ReadList( profile.read_write_automates(), writeAutomats_ );
 
-    if( profile.has_read_only_populations()  )
-        ReadList( profile.read_only_populations(), readPopulations_ );
-    if( profile.has_read_write_populations()  )
-        ReadList( profile.read_write_populations(), writePopulations_ );
+    if( profile.has_read_only_crowds()  )
+        ReadList( profile.read_only_crowds(), readPopulations_ );
+    if( profile.has_read_write_crowds()  )
+        ReadList( profile.read_write_crowds(), writePopulations_ );
 
     if( profile.has_read_only_formations()  )
         ReadList( profile.read_only_formations(), readFormations_ );

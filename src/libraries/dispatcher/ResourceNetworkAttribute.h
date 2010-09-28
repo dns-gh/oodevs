@@ -52,17 +52,17 @@ class ResourceNetworkAttribute : public UrbanObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ResourceNetworkAttribute( const MsgsSimToClient::MsgUrbanAttributes& message );
-    explicit ResourceNetworkAttribute( const Common::MsgObjectAttributes& message );
+    explicit ResourceNetworkAttribute( const MsgsSimToClient::UrbanAttributes& message );
+    explicit ResourceNetworkAttribute( const Common::ObjectAttributes& message );
     virtual ~ResourceNetworkAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const MsgsSimToClient::MsgUrbanAttributes& message );
-    virtual void Send  (       MsgsSimToClient::MsgUrbanAttributes& message ) const;
-    virtual void Update( const Common::MsgObjectAttributes& message );
-    virtual void Send  (       Common::MsgObjectAttributes& message ) const;
+    virtual void Update( const MsgsSimToClient::UrbanAttributes& message );
+    virtual void Send  (       MsgsSimToClient::UrbanAttributes& message ) const;
+    virtual void Update( const Common::ObjectAttributes& message );
+    virtual void Send  (       Common::ObjectAttributes& message ) const;
     //@}
 
 private:

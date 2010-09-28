@@ -9,6 +9,7 @@
 
 #include "MeteoData.h"
 #include "MeteoModel_ABC.h"
+#include "PHY_Lighting.h"
 #include "PHY_Precipitation.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
@@ -19,7 +20,7 @@ using namespace weather;
 // Name: MeteoData constructor
 // Created: HBD 2010-03-26
 // -----------------------------------------------------------------------------
-MeteoData::MeteoData( unsigned int id, const geometry::Point2f& upLeft, const geometry::Point2f& downRight, const Common::MsgMeteoAttributes& attributes, MeteoModel_ABC& model, kernel::CoordinateConverter_ABC& converter )
+MeteoData::MeteoData( unsigned int id, const geometry::Point2f& upLeft, const geometry::Point2f& downRight, const Common::MsgWeatherAttributes& attributes, MeteoModel_ABC& model, kernel::CoordinateConverter_ABC& converter )
     : PHY_Meteo( id, attributes, &model )
     , converter_( converter )
     , rect_     ( upLeft.X(), downRight.Y(), downRight.X(), upLeft.Y() )
@@ -51,9 +52,9 @@ bool MeteoData::IsInside( const geometry::Point2f& point ) const
 // -----------------------------------------------------------------------------
 void MeteoData::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
 {
-    client::ControlLocalMeteoCreation msg;
-    Common::MsgMeteoAttributes* att = msg().mutable_attributes();
-    msg().mutable_id()->set_id( id_ );
+    client::ControlLocalWeatherCreation msg;
+    Common::MsgWeatherAttributes* att = msg().mutable_attributes();
+    msg().mutable_weather()->set_id( id_ );
     att->set_wind_speed( static_cast< int >( wind_.rWindSpeed_ / conversionFactor_ ) );
     att->mutable_wind_direction()->set_heading( 0 );
     att->set_cloud_floor (nPlancherCouvertureNuageuse_ );
@@ -61,7 +62,7 @@ void MeteoData::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
     att->set_cloud_density( static_cast< int >( rDensiteCouvertureNuageuse_ ) );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( 0 );
-    //att->set_lighting( Common::globalMeteoType_ );
+    att->set_lighting( pLighting_->GetAsnID() );
 
     geometry::Point2f downRight( rect_.Right(), rect_.Bottom() );
     geometry::Point2d latlong = converter_.ConvertToGeo( downRight );
@@ -81,7 +82,7 @@ void MeteoData::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void MeteoData::SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) const
 {
-    client::ControlLocalMeteoDestruction msg;
-    msg().mutable_id()->set_id( id_ );
+    client::ControlLocalWeatherDestruction msg;
+    msg().mutable_weather()->set_id( id_ );
     msg.Send( publisher );
 }

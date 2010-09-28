@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: ToxicCloudAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-ToxicCloudAttribute::ToxicCloudAttribute( const Common::MsgObjectAttributes& message )
+ToxicCloudAttribute::ToxicCloudAttribute( const Common::ObjectAttributes& message )
 {
     Update( message );
 }
@@ -35,7 +35,7 @@ ToxicCloudAttribute::~ToxicCloudAttribute()
 // Name: ToxicCloudAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void ToxicCloudAttribute::Update( const Common::MsgObjectAttributes& message )
+void ToxicCloudAttribute::Update( const Common::ObjectAttributes& message )
 {
     if( message.has_toxic_cloud() )
     {
@@ -49,7 +49,7 @@ void ToxicCloudAttribute::Update( const Common::MsgObjectAttributes& message )
 // Name: ToxicCloudAttribute::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void ToxicCloudAttribute::Send( Common::MsgObjectAttributes& message ) const
+void ToxicCloudAttribute::Send( Common::ObjectAttributes& message ) const
 {
     for( int i = 0; i < quantities_.elem_size(); ++i )
         *message.mutable_toxic_cloud()->mutable_quantities()->add_elem() = quantities_.elem( i );

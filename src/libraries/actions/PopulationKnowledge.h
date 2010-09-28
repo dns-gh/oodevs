@@ -16,7 +16,7 @@
 
 namespace Common
 {
-    class PopulationKnowledgeId;
+    class CrowdKnowledgeId;
 }
 
 namespace kernel
@@ -51,7 +51,7 @@ public:
     //@{
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     virtual void CommitTo( Common::MsgMissionParameter& asn ) const;
-    void CommitTo( Common::PopulationKnowledgeId& asn ) const;
+    void CommitTo( Common::CrowdKnowledgeId& asn ) const;
     //@}
 
 private:

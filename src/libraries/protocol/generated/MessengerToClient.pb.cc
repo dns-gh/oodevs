@@ -455,7 +455,7 @@ void protobuf_AssignDesc_MessengerToClient_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShapeUpdate, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShapeUpdate, category_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShapeUpdate, color_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShapeUpdate, template__),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShapeUpdate, pattern_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShapeUpdate, points_),
   };
   MsgShapeUpdate_reflection_ =
@@ -868,84 +868,84 @@ void protobuf_AddDesc_MessengerToClient_2eproto() {
     "ent.IntelligenceRequestAck.ErrorCode\"R\n\020"
     "MsgShapeCreation\022\035\n\002id\030\001 \002(\0132\021.Common.Dr"
     "awingId\022\037\n\005shape\030\002 \002(\0132\020.Common.MsgShape"
-    "\"\220\001\n\016MsgShapeUpdate\022\035\n\002id\030\001 \002(\0132\021.Common"
+    "\"\216\001\n\016MsgShapeUpdate\022\035\n\002id\030\001 \002(\0132\021.Common"
     ".DrawingId\022\020\n\010category\030\002 \001(\t\022\r\n\005color\030\003 "
-    "\001(\t\022\021\n\ttemplate_\030\004 \001(\t\022+\n\006points\030\005 \001(\0132\033"
-    ".Common.MsgCoordLatLongList\"4\n\023MsgShapeD"
-    "estruction\022\035\n\002id\030\001 \002(\0132\021.Common.DrawingI"
-    "d\"_\n\017ShapeRequestAck\"L\n\tErrorCode\022\014\n\010no_"
-    "error\020\000\022\025\n\021error_invalid_oid\020\001\022\032\n\026error_"
-    "invalid_geometry\020\002\"b\n\032MsgShapeCreationRe"
-    "questAck\022D\n\nerror_code\030\001 \002(\01620.MsgsMesse"
-    "ngerToClient.ShapeRequestAck.ErrorCode\"`"
-    "\n\030MsgShapeUpdateRequestAck\022D\n\nerror_code"
-    "\030\001 \001(\01620.MsgsMessengerToClient.ShapeRequ"
-    "estAck.ErrorCode\"e\n\035MsgShapeDestructionR"
-    "equestAck\022D\n\nerror_code\030\001 \002(\01620.MsgsMess"
-    "engerToClient.ShapeRequestAck.ErrorCode\""
-    "J\n\017MsgNoteCreation\022\n\n\002id\030\001 \002(\r\022\035\n\004note\030\002"
-    " \002(\0132\017.Common.MsgNote\022\014\n\004date\030\003 \002(\t\"l\n\rM"
-    "sgNoteUpdate\022\n\n\002id\030\001 \002(\r\022\014\n\004date\030\002 \002(\t\022\014"
-    "\n\004name\030\003 \001(\t\022\016\n\006number\030\004 \001(\t\022\023\n\013descript"
-    "ion\030\005 \001(\t\022\016\n\006parent\030\006 \001(\r\" \n\022MsgNoteDest"
-    "ruction\022\n\n\002id\030\001 \002(\r\"\336\021\n\024MsgMessengerToCl"
-    "ient\022\017\n\007context\030\001 \001(\005\022D\n\007message\030\002 \002(\01323"
-    ".MsgsMessengerToClient.MsgMessengerToCli"
-    "ent.Content\032\356\020\n\007Content\022?\n\016limit_creatio"
-    "n\030\001 \001(\0132\'.MsgsMessengerToClient.MsgLimit"
-    "Creation\022;\n\014limit_update\030\002 \001(\0132%.MsgsMes"
-    "sengerToClient.MsgLimitUpdate\022E\n\021limit_d"
-    "estruction\030\003 \001(\0132*.MsgsMessengerToClient"
-    ".MsgLimitDestruction\022U\n\032limit_creation_r"
-    "equest_ack\030\004 \001(\01321.MsgsMessengerToClient"
-    ".MsgLimitCreationRequestAck\022[\n\035limit_des"
-    "truction_request_ack\030\005 \001(\01324.MsgsMesseng"
-    "erToClient.MsgLimitDestructionRequestAck"
-    "\022Q\n\030limit_update_request_ack\030\006 \001(\0132/.Msg"
-    "sMessengerToClient.MsgLimitUpdateRequest"
-    "Ack\022=\n\rlima_creation\030\007 \001(\0132&.MsgsMesseng"
-    "erToClient.MsgLimaCreation\0229\n\013lima_updat"
-    "e\030\010 \001(\0132$.MsgsMessengerToClient.MsgLimaU"
-    "pdate\022C\n\020lima_destruction\030\t \001(\0132).MsgsMe"
-    "ssengerToClient.MsgLimaDestruction\022S\n\031li"
-    "ma_creation_request_ack\030\n \001(\01320.MsgsMess"
-    "engerToClient.MsgLimaCreationRequestAck\022"
-    "Y\n\034lima_destruction_request_ack\030\013 \001(\01323."
-    "MsgsMessengerToClient.MsgLimaDestruction"
-    "RequestAck\022O\n\027lima_update_request_ack\030\014 "
-    "\001(\0132..MsgsMessengerToClient.MsgLimaUpdat"
-    "eRequestAck\022M\n\025intelligence_creation\030\r \001"
-    "(\0132..MsgsMessengerToClient.MsgIntelligen"
-    "ceCreation\022I\n\023intelligence_update\030\016 \001(\0132"
-    ",.MsgsMessengerToClient.MsgIntelligenceU"
-    "pdate\022S\n\030intelligence_destruction\030\017 \001(\0132"
-    "1.MsgsMessengerToClient.MsgIntelligenceD"
-    "estruction\022c\n!intelligence_creation_requ"
-    "est_ack\030\020 \001(\01328.MsgsMessengerToClient.Ms"
-    "gIntelligenceCreationRequestAck\022_\n\037intel"
-    "ligence_update_request_ack\030\021 \001(\01326.MsgsM"
-    "essengerToClient.MsgIntelligenceUpdateRe"
-    "questAck\022i\n$intelligence_destruction_req"
-    "uest_ack\030\022 \001(\0132;.MsgsMessengerToClient.M"
-    "sgIntelligenceDestructionRequestAck\022?\n\016s"
-    "hape_creation\030\023 \001(\0132\'.MsgsMessengerToCli"
-    "ent.MsgShapeCreation\022;\n\014shape_update\030\024 \001"
-    "(\0132%.MsgsMessengerToClient.MsgShapeUpdat"
-    "e\022E\n\021shape_destruction\030\025 \001(\0132*.MsgsMesse"
-    "ngerToClient.MsgShapeDestruction\022U\n\032shap"
-    "e_creation_request_ack\030\026 \001(\01321.MsgsMesse"
-    "ngerToClient.MsgShapeCreationRequestAck\022"
-    "[\n\035shape_destruction_request_ack\030\027 \001(\01324"
-    ".MsgsMessengerToClient.MsgShapeDestructi"
-    "onRequestAck\022Q\n\030shape_update_request_ack"
-    "\030\030 \001(\0132/.MsgsMessengerToClient.MsgShapeU"
-    "pdateRequestAck\022,\n\014text_message\030\031 \001(\0132\026."
-    "Common.MsgTextMessage\022=\n\rnote_creation\030\032"
-    " \001(\0132&.MsgsMessengerToClient.MsgNoteCrea"
-    "tion\0229\n\013note_update\030\033 \001(\0132$.MsgsMessenge"
-    "rToClient.MsgNoteUpdate\022C\n\020note_destruct"
-    "ion\030\034 \001(\0132).MsgsMessengerToClient.MsgNot"
-    "eDestruction", 5452);
+    "\001(\t\022\017\n\007pattern\030\004 \001(\t\022+\n\006points\030\005 \001(\0132\033.C"
+    "ommon.MsgCoordLatLongList\"4\n\023MsgShapeDes"
+    "truction\022\035\n\002id\030\001 \002(\0132\021.Common.DrawingId\""
+    "_\n\017ShapeRequestAck\"L\n\tErrorCode\022\014\n\010no_er"
+    "ror\020\000\022\025\n\021error_invalid_oid\020\001\022\032\n\026error_in"
+    "valid_geometry\020\002\"b\n\032MsgShapeCreationRequ"
+    "estAck\022D\n\nerror_code\030\001 \002(\01620.MsgsMesseng"
+    "erToClient.ShapeRequestAck.ErrorCode\"`\n\030"
+    "MsgShapeUpdateRequestAck\022D\n\nerror_code\030\001"
+    " \001(\01620.MsgsMessengerToClient.ShapeReques"
+    "tAck.ErrorCode\"e\n\035MsgShapeDestructionReq"
+    "uestAck\022D\n\nerror_code\030\001 \002(\01620.MsgsMessen"
+    "gerToClient.ShapeRequestAck.ErrorCode\"J\n"
+    "\017MsgNoteCreation\022\n\n\002id\030\001 \002(\r\022\035\n\004note\030\002 \002"
+    "(\0132\017.Common.MsgNote\022\014\n\004date\030\003 \002(\t\"l\n\rMsg"
+    "NoteUpdate\022\n\n\002id\030\001 \002(\r\022\014\n\004date\030\002 \002(\t\022\014\n\004"
+    "name\030\003 \001(\t\022\016\n\006number\030\004 \001(\t\022\023\n\013descriptio"
+    "n\030\005 \001(\t\022\016\n\006parent\030\006 \001(\r\" \n\022MsgNoteDestru"
+    "ction\022\n\n\002id\030\001 \002(\r\"\336\021\n\024MsgMessengerToClie"
+    "nt\022\017\n\007context\030\001 \001(\005\022D\n\007message\030\002 \002(\01323.M"
+    "sgsMessengerToClient.MsgMessengerToClien"
+    "t.Content\032\356\020\n\007Content\022?\n\016limit_creation\030"
+    "\001 \001(\0132\'.MsgsMessengerToClient.MsgLimitCr"
+    "eation\022;\n\014limit_update\030\002 \001(\0132%.MsgsMesse"
+    "ngerToClient.MsgLimitUpdate\022E\n\021limit_des"
+    "truction\030\003 \001(\0132*.MsgsMessengerToClient.M"
+    "sgLimitDestruction\022U\n\032limit_creation_req"
+    "uest_ack\030\004 \001(\01321.MsgsMessengerToClient.M"
+    "sgLimitCreationRequestAck\022[\n\035limit_destr"
+    "uction_request_ack\030\005 \001(\01324.MsgsMessenger"
+    "ToClient.MsgLimitDestructionRequestAck\022Q"
+    "\n\030limit_update_request_ack\030\006 \001(\0132/.MsgsM"
+    "essengerToClient.MsgLimitUpdateRequestAc"
+    "k\022=\n\rlima_creation\030\007 \001(\0132&.MsgsMessenger"
+    "ToClient.MsgLimaCreation\0229\n\013lima_update\030"
+    "\010 \001(\0132$.MsgsMessengerToClient.MsgLimaUpd"
+    "ate\022C\n\020lima_destruction\030\t \001(\0132).MsgsMess"
+    "engerToClient.MsgLimaDestruction\022S\n\031lima"
+    "_creation_request_ack\030\n \001(\01320.MsgsMessen"
+    "gerToClient.MsgLimaCreationRequestAck\022Y\n"
+    "\034lima_destruction_request_ack\030\013 \001(\01323.Ms"
+    "gsMessengerToClient.MsgLimaDestructionRe"
+    "questAck\022O\n\027lima_update_request_ack\030\014 \001("
+    "\0132..MsgsMessengerToClient.MsgLimaUpdateR"
+    "equestAck\022M\n\025intelligence_creation\030\r \001(\013"
+    "2..MsgsMessengerToClient.MsgIntelligence"
+    "Creation\022I\n\023intelligence_update\030\016 \001(\0132,."
+    "MsgsMessengerToClient.MsgIntelligenceUpd"
+    "ate\022S\n\030intelligence_destruction\030\017 \001(\01321."
+    "MsgsMessengerToClient.MsgIntelligenceDes"
+    "truction\022c\n!intelligence_creation_reques"
+    "t_ack\030\020 \001(\01328.MsgsMessengerToClient.MsgI"
+    "ntelligenceCreationRequestAck\022_\n\037intelli"
+    "gence_update_request_ack\030\021 \001(\01326.MsgsMes"
+    "sengerToClient.MsgIntelligenceUpdateRequ"
+    "estAck\022i\n$intelligence_destruction_reque"
+    "st_ack\030\022 \001(\0132;.MsgsMessengerToClient.Msg"
+    "IntelligenceDestructionRequestAck\022?\n\016sha"
+    "pe_creation\030\023 \001(\0132\'.MsgsMessengerToClien"
+    "t.MsgShapeCreation\022;\n\014shape_update\030\024 \001(\013"
+    "2%.MsgsMessengerToClient.MsgShapeUpdate\022"
+    "E\n\021shape_destruction\030\025 \001(\0132*.MsgsMesseng"
+    "erToClient.MsgShapeDestruction\022U\n\032shape_"
+    "creation_request_ack\030\026 \001(\01321.MsgsMesseng"
+    "erToClient.MsgShapeCreationRequestAck\022[\n"
+    "\035shape_destruction_request_ack\030\027 \001(\01324.M"
+    "sgsMessengerToClient.MsgShapeDestruction"
+    "RequestAck\022Q\n\030shape_update_request_ack\030\030"
+    " \001(\0132/.MsgsMessengerToClient.MsgShapeUpd"
+    "ateRequestAck\022,\n\014text_message\030\031 \001(\0132\026.Co"
+    "mmon.MsgTextMessage\022=\n\rnote_creation\030\032 \001"
+    "(\0132&.MsgsMessengerToClient.MsgNoteCreati"
+    "on\0229\n\013note_update\030\033 \001(\0132$.MsgsMessengerT"
+    "oClient.MsgNoteUpdate\022C\n\020note_destructio"
+    "n\030\034 \001(\0132).MsgsMessengerToClient.MsgNoteD"
+    "estruction", 5450);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "MessengerToClient.proto", &protobuf_RegisterTypes);
   TacticalLineAck::default_instance_ = new TacticalLineAck();
@@ -5976,12 +5976,12 @@ void MsgShapeCreation::Swap(MsgShapeCreation* other) {
 
 const ::std::string MsgShapeUpdate::_default_category_;
 const ::std::string MsgShapeUpdate::_default_color_;
-const ::std::string MsgShapeUpdate::_default_template__;
+const ::std::string MsgShapeUpdate::_default_pattern_;
 #ifndef _MSC_VER
 const int MsgShapeUpdate::kIdFieldNumber;
 const int MsgShapeUpdate::kCategoryFieldNumber;
 const int MsgShapeUpdate::kColorFieldNumber;
-const int MsgShapeUpdate::kTemplateFieldNumber;
+const int MsgShapeUpdate::kPatternFieldNumber;
 const int MsgShapeUpdate::kPointsFieldNumber;
 #endif  // !_MSC_VER
 
@@ -6004,7 +6004,7 @@ void MsgShapeUpdate::SharedCtor() {
   id_ = NULL;
   category_ = const_cast< ::std::string*>(&_default_category_);
   color_ = const_cast< ::std::string*>(&_default_color_);
-  template__ = const_cast< ::std::string*>(&_default_template__);
+  pattern_ = const_cast< ::std::string*>(&_default_pattern_);
   points_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -6020,8 +6020,8 @@ void MsgShapeUpdate::SharedDtor() {
   if (color_ != &_default_color_) {
     delete color_;
   }
-  if (template__ != &_default_template__) {
-    delete template__;
+  if (pattern_ != &_default_pattern_) {
+    delete pattern_;
   }
   if (this != default_instance_) {
     delete id_;
@@ -6060,8 +6060,8 @@ void MsgShapeUpdate::Clear() {
       }
     }
     if (_has_bit(3)) {
-      if (template__ != &_default_template__) {
-        template__->clear();
+      if (pattern_ != &_default_pattern_) {
+        pattern_->clear();
       }
     }
     if (_has_bit(4)) {
@@ -6118,21 +6118,21 @@ bool MsgShapeUpdate::MergePartialFromCodedStream(
         ::google::protobuf::internal::WireFormat::VerifyUTF8String(
           this->color().data(), this->color().length(),
           ::google::protobuf::internal::WireFormat::PARSE);
-        if (input->ExpectTag(34)) goto parse_template_;
+        if (input->ExpectTag(34)) goto parse_pattern;
         break;
       }
       
-      // optional string template_ = 4;
+      // optional string pattern = 4;
       case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-       parse_template_:
+       parse_pattern:
         DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-              input, this->mutable_template_()));
+              input, this->mutable_pattern()));
         ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-          this->template_().data(), this->template_().length(),
+          this->pattern().data(), this->pattern().length(),
           ::google::protobuf::internal::WireFormat::PARSE);
         if (input->ExpectTag(42)) goto parse_points;
         break;
@@ -6199,13 +6199,13 @@ void MsgShapeUpdate::SerializeWithCachedSizes(
       3, this->color(), output);
   }
   
-  // optional string template_ = 4;
+  // optional string pattern = 4;
   if (_has_bit(3)) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->template_().data(), this->template_().length(),
+      this->pattern().data(), this->pattern().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      4, this->template_(), output);
+      4, this->pattern(), output);
   }
   
   // optional .Common.MsgCoordLatLongList points = 5;
@@ -6249,14 +6249,14 @@ void MsgShapeUpdate::SerializeWithCachedSizes(
         3, this->color(), target);
   }
   
-  // optional string template_ = 4;
+  // optional string pattern = 4;
   if (_has_bit(3)) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->template_().data(), this->template_().length(),
+      this->pattern().data(), this->pattern().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        4, this->template_(), target);
+        4, this->pattern(), target);
   }
   
   // optional .Common.MsgCoordLatLongList points = 5;
@@ -6298,11 +6298,11 @@ int MsgShapeUpdate::ByteSize() const {
           this->color());
     }
     
-    // optional string template_ = 4;
-    if (has_template_()) {
+    // optional string pattern = 4;
+    if (has_pattern()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->template_());
+          this->pattern());
     }
     
     // optional .Common.MsgCoordLatLongList points = 5;
@@ -6347,7 +6347,7 @@ void MsgShapeUpdate::MergeFrom(const MsgShapeUpdate& from) {
       set_color(from.color());
     }
     if (from._has_bit(3)) {
-      set_template_(from.template_());
+      set_pattern(from.pattern());
     }
     if (from._has_bit(4)) {
       mutable_points()->::Common::MsgCoordLatLongList::MergeFrom(from.points());
@@ -6385,7 +6385,7 @@ void MsgShapeUpdate::Swap(MsgShapeUpdate* other) {
     std::swap(id_, other->id_);
     std::swap(category_, other->category_);
     std::swap(color_, other->color_);
-    std::swap(template__, other->template__);
+    std::swap(pattern_, other->pattern_);
     std::swap(points_, other->points_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);

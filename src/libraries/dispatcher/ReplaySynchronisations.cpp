@@ -102,28 +102,28 @@ void ReplaySynchronisations::DoUpdate()
 
 DO_UPDATE( MsgsSimToClient::MsgUnitCreation );
 DO_UPDATE( MsgsSimToClient::MsgAutomatCreation );
-DO_UPDATE( Common::MsgFormationCreation );
+DO_UPDATE( MsgsSimToClient::MsgFormationCreation );
 DO_UPDATE( MsgsSimToClient::MsgKnowledgeGroupCreation );
 DO_UPDATE( MsgsSimToClient::MsgReport );
-DO_UPDATE( MsgsSimToClient::MsgTeamCreation );
+DO_UPDATE( MsgsSimToClient::MsgPartyCreation );
 DO_UPDATE( MsgsSimToClient::MsgObjectCreation );
 DO_UPDATE( MsgsMessengerToClient::MsgLimaCreation );
 DO_UPDATE( MsgsMessengerToClient::MsgLimitCreation );
-DO_UPDATE( MsgsSimToClient::MsgPopulationCreation );
-DO_UPDATE( MsgsSimToClient::MsgPopulationConcentrationCreation );
-DO_UPDATE( MsgsSimToClient::MsgPopulationFlowCreation );
+DO_UPDATE( MsgsSimToClient::MsgCrowdCreation );
+DO_UPDATE( MsgsSimToClient::MsgCrowdConcentrationCreation );
+DO_UPDATE( MsgsSimToClient::MsgCrowdFlowCreation );
 DO_UPDATE( Common::MsgIntelligenceCreation );
 DO_UPDATE( MsgsSimToClient::MsgUnitKnowledgeCreation );
 DO_UPDATE( MsgsSimToClient::MsgObjectKnowledgeCreation );
-DO_UPDATE( MsgsSimToClient::MsgPopulationKnowledgeCreation );
-DO_UPDATE( MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation );
-DO_UPDATE( MsgsSimToClient::MsgPopulationFlowKnowledgeCreation );
+DO_UPDATE( MsgsSimToClient::MsgCrowdKnowledgeCreation );
+DO_UPDATE( MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation );
+DO_UPDATE( MsgsSimToClient::MsgCrowdFlowKnowledgeCreation );
 DO_UPDATE( MsgsSimToClient::MsgLogMaintenanceHandlingCreation );
 DO_UPDATE( MsgsSimToClient::MsgLogMedicalHandlingCreation );
 DO_UPDATE( MsgsSimToClient::MsgLogSupplyHandlingCreation );
 DO_UPDATE( MsgsSimToClient::MsgStartUnitFire );
 DO_UPDATE( MsgsSimToClient::MsgStartFireEffect );
-DO_UPDATE( MsgsSimToClient::MsgStartPopulationFire );
+DO_UPDATE( MsgsSimToClient::MsgStartCrowdFire );
 DO_UPDATE( MsgsSimToClient::MsgUrbanCreation );
 DO_UPDATE( MsgsSimToClient::MsgUrbanKnowledgeCreation );
 

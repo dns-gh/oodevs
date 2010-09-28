@@ -52,7 +52,7 @@ public:
 
     //! @name ASN Network update
     //@{
-    virtual void SendFullState( Common::MsgObjectAttributes& asn ) const; //<! Send update to asn client
+    virtual void SendFullState( Common::ObjectAttributes& asn ) const; //<! Send update to asn client
     //@}
 
     //! @name ODB

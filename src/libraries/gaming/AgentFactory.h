@@ -44,7 +44,7 @@ public:
     //@{
     virtual kernel::Automat_ABC*    Create( const MsgsSimToClient::MsgAutomatCreation& message );
     virtual kernel::Agent_ABC*      Create( const MsgsSimToClient::MsgUnitCreation& message );
-    virtual kernel::Population_ABC* Create( const MsgsSimToClient::MsgPopulationCreation& message );
+    virtual kernel::Population_ABC* Create( const MsgsSimToClient::MsgCrowdCreation& message );
     //@}
 
 private:

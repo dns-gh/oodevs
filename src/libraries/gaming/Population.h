@@ -40,13 +40,13 @@ class PopulationFlow;
 // Created: HME 2005-09-29
 // =============================================================================
 class Population : public kernel::EntityImplementation< kernel::Population_ABC >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowCreation > // $$$$ AGE 2006-03-13: dégager dans des extensions ?
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowUpdate >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowDestruction >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationUpdate >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationCreation >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationUpdate >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationDestruction >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdFlowCreation > // $$$$ AGE 2006-03-13: dégager dans des extensions ?
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdFlowUpdate >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdFlowDestruction >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdUpdate >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdConcentrationCreation >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdConcentrationUpdate >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdConcentrationDestruction >
                  , public kernel::Drawable_ABC
                  , public kernel::Positions
                  , public tools::Observer_ABC
@@ -55,7 +55,7 @@ class Population : public kernel::EntityImplementation< kernel::Population_ABC >
 public:
     //! @name Constructor/Destructor
     //@{
-             Population( const MsgsSimToClient::MsgPopulationCreation& message, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter,
+             Population( const MsgsSimToClient::MsgCrowdCreation& message, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter,
                          const tools::Resolver_ABC< kernel::PopulationType >& typeResolver );
     virtual ~Population();
     //@}
@@ -93,13 +93,13 @@ private:
     unsigned int ComputeLivingHumans() const;
     unsigned int ComputeDeadHumans() const;
 
-    void DoUpdate( const MsgsSimToClient::MsgPopulationFlowCreation&             message );
-    void DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate&               message );
-    void DoUpdate( const MsgsSimToClient::MsgPopulationFlowDestruction&          message );
-    void DoUpdate( const MsgsSimToClient::MsgPopulationUpdate&                   message );
-    void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationCreation&    message );
-    void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationUpdate&      message );
-    void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationDestruction& message );
+    void DoUpdate( const MsgsSimToClient::MsgCrowdFlowCreation&             message );
+    void DoUpdate( const MsgsSimToClient::MsgCrowdFlowUpdate&               message );
+    void DoUpdate( const MsgsSimToClient::MsgCrowdFlowDestruction&          message );
+    void DoUpdate( const MsgsSimToClient::MsgCrowdUpdate&                   message );
+    void DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationCreation&    message );
+    void DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationUpdate&      message );
+    void DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationDestruction& message );
 
     void ComputeCenter();
 

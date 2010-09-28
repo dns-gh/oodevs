@@ -42,7 +42,7 @@ void MIL_PopulationAttitude::Terminate()
 // Name: MIL_PopulationAttitude constructor
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-MIL_PopulationAttitude::MIL_PopulationAttitude( const std::string& strName, E_Attitude nAttitude, Common::EnumPopulationAttitude nAsnID )
+MIL_PopulationAttitude::MIL_PopulationAttitude( const std::string& strName, E_Attitude nAttitude, Common::EnumCrowdAttitude nAsnID )
     : strName_  ( strName   )
     , nAttitude_( nAttitude )
     , nAsnID_   ( nAsnID    )
@@ -82,7 +82,7 @@ const MIL_PopulationAttitude* MIL_PopulationAttitude::Find( const std::string& s
 // Name: MIL_PopulationAttitude::Find
 // Created: NLD 2005-08-16
 // -----------------------------------------------------------------------------
-const MIL_PopulationAttitude* MIL_PopulationAttitude::Find( Common::EnumPopulationAttitude nAsnID )
+const MIL_PopulationAttitude* MIL_PopulationAttitude::Find( Common::EnumCrowdAttitude nAsnID )
 {
     CIT_AttitudeMap it = std::find_if( attitudes_.begin(), attitudes_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nAsnID ), std::compose1( std::mem_fun( &MIL_PopulationAttitude::GetAsnID ), std::select2nd< T_AttitudeMap::value_type >() ) ) );
     return it == attitudes_.end() ? 0 : it->second;
@@ -111,7 +111,7 @@ const std::string& MIL_PopulationAttitude::GetName() const
 // Name: MIL_PopulationAttitude::GetAsnID
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
-Common::EnumPopulationAttitude MIL_PopulationAttitude::GetAsnID() const
+Common::EnumCrowdAttitude MIL_PopulationAttitude::GetAsnID() const
 {
     return nAsnID_;
 }

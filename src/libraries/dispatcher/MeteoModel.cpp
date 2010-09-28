@@ -57,13 +57,13 @@ const weather::PHY_Lighting& MeteoModel::GetLighting() const
 // Name: MeteoModel::OnReceiveMsgGlobalMeteo
 // Created: HBD 2010-03-23
 // -----------------------------------------------------------------------------
-void MeteoModel::OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGlobalMeteo& msg )
+void MeteoModel::OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGlobalWeather& msg )
 {
     if( pGlobalMeteo_ )
         pGlobalMeteo_->Update( msg.attributes() );
     else
     {
-        pGlobalMeteo_ = new weather::PHY_Meteo( msg.id().id(), msg.attributes(), this );
+        pGlobalMeteo_ = new weather::PHY_Meteo( msg.weather().id(), msg.attributes(), this );
         model_.AddExtensions( *pGlobalMeteo_ );
     }
  }
@@ -72,7 +72,7 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGloba
 // Name: MeteoModel::OnReceiveMsgLocalMeteo
 // Created: HBD 2010-03-23
 // -----------------------------------------------------------------------------
-void MeteoModel::OnReceiveMsgLocalMeteoCreation( const MsgsSimToClient::MsgControlLocalMeteoCreation& msg )
+void MeteoModel::OnReceiveMsgLocalMeteoCreation( const MsgsSimToClient::MsgControlLocalWeatherCreation& msg )
 {
     const geometry::Point2d topLeft( msg.top_left_coordinate().longitude(), msg.top_left_coordinate().latitude() );
     const geometry::Point2f vUpLeft = converter_->ConvertFromGeo( topLeft );
@@ -80,7 +80,7 @@ void MeteoModel::OnReceiveMsgLocalMeteoCreation( const MsgsSimToClient::MsgContr
     const geometry::Point2f vDownRight = converter_->ConvertFromGeo( bottomRight );
     if( msg.has_attributes() )
     {
-        weather::MeteoData* weather = new weather::MeteoData( msg.id().id(), vUpLeft, vDownRight, msg.attributes(), *this, *converter_ );
+        weather::MeteoData* weather = new weather::MeteoData( msg.weather().id(), vUpLeft, vDownRight, msg.attributes(), *this, *converter_ );
         model_.AddExtensions( *weather );
         RegisterMeteo( *weather );
     }
@@ -91,10 +91,10 @@ void MeteoModel::OnReceiveMsgLocalMeteoCreation( const MsgsSimToClient::MsgContr
 // Name: MeteoModel::OnReceiveMsgLocalMeteoDestruction
 // Created: HBD 2010-04-02
 // -----------------------------------------------------------------------------
-void MeteoModel::OnReceiveMsgLocalMeteoDestruction( const MsgsSimToClient::MsgControlLocalMeteoDestruction& message )
+void MeteoModel::OnReceiveMsgLocalMeteoDestruction( const MsgsSimToClient::MsgControlLocalWeatherDestruction& message )
 {
     for( T_MeteoList::iterator it = meteos_.begin(); it != meteos_.end(); ++it )
-        if( (*it)->GetId() == message.id().id() )
+        if( (*it)->GetId() == message.weather().id() )
         {
             weather::PHY_Meteo* meteo = *it;
             ++it;

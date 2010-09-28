@@ -45,7 +45,7 @@ namespace
         void createObjectKnowledge()
         {
             MsgsSimToClient::MsgObjectKnowledgeCreation& message = *expected.mutable_message()->mutable_object_knowledge_creation();
-            message.mutable_id()->set_id( 1 );
+            message.mutable_knowledge()->set_id( 1 );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_object()->set_id( object.GetId() );
             message.mutable_type()->set_id( "mines" );
@@ -90,7 +90,7 @@ BOOST_FIXTURE_TEST_CASE( ObjectKnowledge_CanBeDestroyedWithoutAttributes, Fixtur
 {
     createObjectKnowledge();
     MsgsSimToClient::MsgObjectKnowledgeDestruction& message = *expected.mutable_message()->mutable_object_knowledge_destruction();
-    message.mutable_id()->set_id( 1 );
+    message.mutable_knowledge()->set_id( 1 );
     message.mutable_party()->set_id( side.GetId() );
     // network serialization
     MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
@@ -107,7 +107,7 @@ BOOST_FIXTURE_TEST_CASE( ObjectKnowledge_CanBeUpdatedWithoutAttributes, Fixture 
     createObjectKnowledge();
     {
         MsgsSimToClient::MsgObjectKnowledgeUpdate& message = *expected.mutable_message()->mutable_object_knowledge_update();
-        message.mutable_id()->set_id( 1 );
+        message.mutable_knowledge()->set_id( 1 );
         message.mutable_object()->set_id( 0 );
         message.mutable_attributes();
         message.set_relevance( 99 );
@@ -127,7 +127,7 @@ BOOST_FIXTURE_TEST_CASE( ObjectKnowledge_CanBeUpdatedWithoutAttributes, Fixture 
     {
         expected.mutable_message()->Clear();
         MsgsSimToClient::MsgObjectKnowledgeCreation& message = *expected.mutable_message()->mutable_object_knowledge_creation();
-        message.mutable_id()->set_id( 1 );
+        message.mutable_knowledge()->set_id( 1 );
         message.mutable_party()->set_id( side.GetId() );
         message.mutable_object()->set_id( 0 );
         message.mutable_type()->set_id( "mines" );

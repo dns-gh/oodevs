@@ -63,7 +63,7 @@ WeatherWidget::~WeatherWidget()
 // Name: WeatherWidget::Commit
 // Created: SLG 2010-03-25
 // -----------------------------------------------------------------------------
-void WeatherWidget::Commit( Common::MsgMeteoAttributes& att ) const
+void WeatherWidget::Commit( Common::MsgWeatherAttributes& att ) const
 {
     att.mutable_wind_direction()->set_heading( windDirection_->value() );
     att.set_wind_speed( windSpeed_->value() );

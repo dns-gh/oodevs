@@ -311,7 +311,7 @@ bool MIL_BaseParameter::ToPathList( Common::MsgPathList& ) const
 // Name: MIL_BaseParameter::ToPopulationKnowledge
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToPopulationKnowledge( Common::PopulationKnowledgeId& ) const
+bool MIL_BaseParameter::ToPopulationKnowledge( Common::CrowdKnowledgeId& ) const
 {
     return false;
 }

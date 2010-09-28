@@ -14,9 +14,9 @@
 
 namespace MsgsSimToClient
 {
-    class MsgControlGlobalMeteo;
-    class MsgControlLocalMeteoCreation;
-    class MsgControlLocalMeteoDestruction;
+    class MsgControlGlobalWeather;
+    class MsgControlLocalWeatherCreation;
+    class MsgControlLocalWeatherDestruction;
 }
 
 namespace weather
@@ -39,9 +39,9 @@ public:
     //! @name Operations
     //@{
     virtual const PHY_Lighting& GetLighting() const = 0;
-    virtual void OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGlobalMeteo& message ) = 0;
-    virtual void OnReceiveMsgLocalMeteoCreation( const MsgsSimToClient::MsgControlLocalMeteoCreation& message ) = 0;
-    virtual void OnReceiveMsgLocalMeteoDestruction( const MsgsSimToClient::MsgControlLocalMeteoDestruction& message ) = 0;
+    virtual void OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGlobalWeather& message ) = 0;
+    virtual void OnReceiveMsgLocalMeteoCreation( const MsgsSimToClient::MsgControlLocalWeatherCreation& message ) = 0;
+    virtual void OnReceiveMsgLocalMeteoDestruction( const MsgsSimToClient::MsgControlLocalWeatherDestruction& message ) = 0;
     //@}
 
 protected:

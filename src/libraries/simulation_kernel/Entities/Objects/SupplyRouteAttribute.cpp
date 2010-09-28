@@ -151,7 +151,7 @@ void SupplyRouteAttribute::Register( MIL_Object_ABC& object ) const
 // Name: SupplyRouteAttribute::SendFullState
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void SupplyRouteAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
+void SupplyRouteAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 {
     asn.mutable_supply_route()->set_max_weight( (int)rWeightSupported_ );
     asn.mutable_supply_route()->set_width( (int)rWidth_ );
@@ -164,7 +164,7 @@ void SupplyRouteAttribute::SendFullState( Common::MsgObjectAttributes& asn ) con
 // Name: SupplyRouteAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void SupplyRouteAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
+void SupplyRouteAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
     if( NeedUpdate() )
     {

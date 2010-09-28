@@ -102,7 +102,7 @@ void SealOffAttribute::UpdateData( const T& message )
 {
     if( message.has_bypass()  )
     {
-        rSealOffLevel_ = static_cast< float >( message.sealoff().level() );
+        rSealOffLevel_ = static_cast< float >( message.seal_off().level() );
         controller_.Update( *(SealOffAttribute_ABC*)this );
     }
 }

@@ -42,7 +42,7 @@ public:
     virtual void UpdateOnPerceptionLevel( const PHY_PerceptionLevel& currentPerceptionLevel );
     virtual void UpdateOnPerception( const DEC_Knowledge_ObjectPerception& perception );
     virtual void UpdateOnCollision( const DEC_Knowledge_ObjectCollision& collision );
-    virtual void Send( Common::MsgObjectAttributes& asnMsg ) const;
+    virtual void Send( Common::ObjectAttributes& asnMsg ) const;
     //@}
 
 private:

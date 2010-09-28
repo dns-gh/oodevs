@@ -516,7 +516,7 @@ void DEC_Knowledge_Object::UpdateOnNetwork()
         return;
 
     client::ObjectKnowledgeUpdate asn;
-    asn().mutable_id()->set_id( nID_ );
+    asn().mutable_knowledge()->set_id( nID_ );
     assert( pArmyKnowing_ );
     asn().mutable_party()->set_id( pArmyKnowing_->GetID() );
     if( pGroupKnowing_ )
@@ -538,7 +538,7 @@ void DEC_Knowledge_Object::UpdateOnNetwork()
 void DEC_Knowledge_Object::SendMsgCreation() const
 {
     client::ObjectKnowledgeCreation asn;
-    asn().mutable_id()->set_id( nID_ );
+    asn().mutable_knowledge()->set_id( nID_ );
     asn().mutable_object()->set_id( pObjectKnown_ ? pObjectKnown_->GetID() : 0 );
     assert( pArmyKnowing_ );
     asn().mutable_party()->set_id( pArmyKnowing_->GetID() );
@@ -560,7 +560,7 @@ void DEC_Knowledge_Object::SendMsgCreation() const
 void DEC_Knowledge_Object::SendMsgDestruction() const
 {
     client::ObjectKnowledgeDestruction asn;
-    asn().mutable_id()->set_id( nID_ );
+    asn().mutable_knowledge()->set_id( nID_ );
     assert( pArmyKnowing_ );
     asn().mutable_party()->set_id( pArmyKnowing_->GetID() );
     asn.Send( NET_Publisher_ABC::Publisher() );

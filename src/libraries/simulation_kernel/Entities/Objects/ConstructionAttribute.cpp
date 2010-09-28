@@ -53,7 +53,7 @@ ConstructionAttribute::ConstructionAttribute( const PHY_DotationCategory& dotati
 // Name: ConstructionAttribute constructor
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
-ConstructionAttribute::ConstructionAttribute( const PHY_DotationCategory& dotation, const Common::MsgObjectAttributes& asn )
+ConstructionAttribute::ConstructionAttribute( const PHY_DotationCategory& dotation, const Common::ObjectAttributes& asn )
     : nFullNbrDotation_       ( asn.construction().dotation_nbr() )
     , nCurrentNbrDotation_    ( asn.construction().dotation_nbr() )
     , rConstructionPercentage_( 1. )
@@ -164,7 +164,7 @@ void ConstructionAttribute::WriteODB( xml::xostream& xos ) const
 // Name: ConstructionAttribute::SendFullState
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
+void ConstructionAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 {
     if( dotation_ )
     {
@@ -178,7 +178,7 @@ void ConstructionAttribute::SendFullState( Common::MsgObjectAttributes& asn ) co
 // Name: ConstructionAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
+void ConstructionAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnCreation ) | NeedUpdate( eOnUpdate ) )
     {

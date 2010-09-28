@@ -196,7 +196,7 @@ void PHY_SupplyDotationState::SendMsgCreation() const
     assert( pSuppliedAutomate_ );
 
     client::LogSupplyHandlingCreation asn;
-    asn().mutable_id()->set_id( nID_ );
+    asn().mutable_request()->set_id( nID_ );
     asn().mutable_consumer()->set_id( pSuppliedAutomate_->GetID() );
     asn().set_tick_creation( nCreationTick_ );
 
@@ -220,7 +220,7 @@ void PHY_SupplyDotationState::SendFullState() const
     assert( pSuppliedAutomate_ );
     SendMsgCreation();
     client::LogSupplyHandlingUpdate asn;
-    asn().mutable_id()->set_id( nID_ );
+    asn().mutable_request()->set_id( nID_ );
     asn().mutable_consumer()->set_id( pSuppliedAutomate_->GetID() );
     if( pConsign_ )
         pConsign_->SendFullState( asn );
@@ -239,7 +239,7 @@ void PHY_SupplyDotationState::SendChangedState() const
         return;
     assert( pSuppliedAutomate_ );
     client::LogSupplyHandlingUpdate asn;
-    asn().mutable_id()->set_id(nID_ );
+    asn().mutable_request()->set_id(nID_ );
     asn().mutable_consumer()->set_id( pSuppliedAutomate_->GetID() );
     if( bConsignChanged_ || ( pConsign_ && pConsign_->HasChanged() ) )
     {
@@ -262,7 +262,7 @@ void PHY_SupplyDotationState::SendMsgDestruction() const
 {
     assert( pSuppliedAutomate_ );
     client::LogSupplyHandlingDestruction asn;
-    asn().mutable_id()->set_id( nID_ );
+    asn().mutable_request()->set_id( nID_ );
     asn().mutable_consumer()->set_id( pSuppliedAutomate_->GetID() );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }

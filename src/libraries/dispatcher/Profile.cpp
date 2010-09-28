@@ -67,7 +67,7 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const MsgsCl
     , clients_     ( clients )
     , strLogin_    ( message.profile().login() )
     , strPassword_ ( message.profile().has_password()  ? message.profile().password() : "" )
-    , bSupervision_( message.profile().superviseur() != 0 )
+    , bSupervision_( message.profile().supervisor() )
     , role_        ( message.profile().has_role()   ? static_cast< E_ScipioRole > ( message.profile().role() ) : eRoleUndefined )
 {
     ReadRights( message.profile() );
@@ -162,16 +162,16 @@ void Profile::ReadRights( const MsgsAuthenticationToClient::MsgProfile& message 
         SetRights( message.read_only_camps(), readOnlySides_, model_.Sides() );
     if( message.has_read_only_formations()  )
         SetRights( message.read_only_formations(), readOnlyFormations_, model_.Formations() );
-    if( message.has_read_only_populations()  )
-        SetRights( message.read_only_populations(), readOnlyPopulations_, model_.Populations() );
+    if( message.has_read_only_crowds()  )
+        SetRights( message.read_only_crowds(), readOnlyPopulations_, model_.Populations() );
     if( message.has_read_write_automates()  )
         SetRights( message.read_write_automates(), readWriteAutomats_, model_.Automats() );
     if( message.has_read_write_camps()  )
         SetRights( message.read_write_camps(), readWriteSides_, model_.Sides() );
     if( message.has_read_write_formations()  )
         SetRights( message.read_write_formations(), readWriteFormations_, model_.Formations() );
-    if( message.has_read_write_populations()  )
-        SetRights( message.read_write_populations(), readWritePopulations_, model_.Populations() );
+    if( message.has_read_write_crowds()  )
+        SetRights( message.read_write_crowds(), readWritePopulations_, model_.Populations() );
 }
 
 // -----------------------------------------------------------------------------
@@ -210,7 +210,7 @@ bool Profile::CheckRights( const MsgsClientToSim::MsgClientToSim& wrapper ) cons
         return true;
     if( message.has_automat_order() )
         return true;
-    if( message.has_population_order() )
+    if( message.has_crowd_order() )
         return true;
     if( message.has_frag_order() )
         return true;
@@ -226,10 +226,10 @@ bool Profile::CheckRights( const MsgsClientToSim::MsgClientToSim& wrapper ) cons
     }
     if( message.has_magic_action() )
     {
-        if( message.magic_action().type()== MsgsClientToSim::MsgMagicAction::global_meteo
-            || message.magic_action().type()== MsgsClientToSim::MsgMagicAction::local_meteo
+        if( message.magic_action().type()== MsgsClientToSim::MsgMagicAction::global_weather
+            || message.magic_action().type()== MsgsClientToSim::MsgMagicAction::local_weather
             || message.magic_action().type()== MsgsClientToSim::MsgMagicAction::create_knowledge_group
-            || message.magic_action().type()== MsgsClientToSim::MsgMagicAction::change_resource_links )
+            || message.magic_action().type()== MsgsClientToSim::MsgMagicAction::change_resource_network_properties )
             return bSupervision_;
         return true;
     }
@@ -296,7 +296,7 @@ namespace
 void Profile::Send( MsgsAuthenticationToClient::MsgProfile& message ) const
 {
     message.set_login( strLogin_ );
-    message.set_superviseur( bSupervision_ );
+    message.set_supervisor( bSupervision_ );
     if( role_ != eRoleUndefined )
         message.set_role( static_cast< MsgsAuthenticationToClient::Role >( role_ ) );
 
@@ -306,8 +306,8 @@ void Profile::Send( MsgsAuthenticationToClient::MsgProfile& message ) const
     Serialize( *message.mutable_read_write_camps(), readWriteSides_ );
     Serialize( *message.mutable_read_only_formations(), readOnlyFormations_ );
     Serialize( *message.mutable_read_write_formations(), readWriteFormations_ );
-    Serialize( *message.mutable_read_only_populations(), readOnlyPopulations_ );
-    Serialize( *message.mutable_read_write_populations(), readWritePopulations_ );
+    Serialize( *message.mutable_read_only_crowds(), readOnlyPopulations_ );
+    Serialize( *message.mutable_read_write_crowds(), readWritePopulations_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -342,7 +342,7 @@ void Profile::Update( const MsgsClientToAuthentication::MsgProfileUpdateRequest&
     strLogin_ = message.profile().login();
     if( message.profile().has_password()  )
         strPassword_ = message.profile().password();
-    bSupervision_ = message.profile().superviseur() != 0;
+    bSupervision_ = message.profile().supervisor() != 0;
     ReadRights( message.profile() );
 
     authentication::ProfileUpdate updatemessage;

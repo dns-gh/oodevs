@@ -381,7 +381,7 @@ void Object::SendCreation() const
     if( pView_ && pView_->HideObject() )
         return;
     client::ObjectCreation asn;
-    asn().mutable_id()->set_id( GetID() );
+    asn().mutable_object()->set_id( GetID() );
     asn().set_name( name_ );
     asn().mutable_type()->set_id( GetType().GetName() );
     asn().mutable_party()->set_id( GetArmy()->GetID() );
@@ -400,7 +400,7 @@ void Object::SendDestruction() const
     if( pView_ && pView_->HideObject() )
         return;
     client::ObjectDestruction asn;
-    asn().mutable_id()->set_id( GetID() );
+    asn().mutable_object()->set_id( GetID() );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -434,12 +434,12 @@ void Object::SendMsgUpdate() const
     if( pView_ && pView_->HideObject() )
         return;
     client::ObjectUpdate asn;
-    asn().mutable_id()->set_id( id_ );
+    asn().mutable_object()->set_id( id_ );
     std::for_each( attributes_.begin(), attributes_.end(),
                    boost::bind( &ObjectAttribute_ABC::SendUpdate, _1, boost::ref( *asn().mutable_attributes() ) ) );
     if( xAttrToUpdate_ & eAttrUpdate_Localisation )
         NET_ASN_Tools::WriteLocation( GetLocalisation(), *asn().mutable_location() );
-    Common::MsgObjectAttributes& attr = *asn().mutable_attributes();
+    Common::ObjectAttributes& attr = *asn().mutable_attributes();
     if( asn().has_location() || attr.has_construction() || attr.has_obstacle()
         || attr.has_mine() || attr.has_activity_time() || attr.has_bypass()
         || attr.has_logistic() || attr.has_nbc() || attr.has_crossing_site()

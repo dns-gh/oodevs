@@ -62,7 +62,7 @@ void DecisionalState::Send( unsigned id, ClientPublisher_ABC& publisher ) const
     for( std::map< std::string, std::string >::const_iterator it = decisionalInfos_.begin(); it != decisionalInfos_.end(); ++it )
     {
         client::DecisionalState message;
-        model_.SetToTasker( *message().mutable_id(), id );
+        model_.SetToTasker( *message().mutable_source(), id );
         message().set_key( it->first.c_str() );
         message().set_value( it->second.c_str() );
         message.Send( publisher );

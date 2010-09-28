@@ -52,10 +52,10 @@ void AgentsModel::Purge()
 // -----------------------------------------------------------------------------
 void AgentsModel::CreateAutomat( const MsgsSimToClient::MsgAutomatCreation& message )
 {
-    if( !Resolver< Automat_ABC >::Find( message.id().id() ) )
+    if( !Resolver< Automat_ABC >::Find( message.automat().id() ) )
     {
         Automat_ABC* pAgent = agentFactory_.Create( message );
-        tools::Resolver< Automat_ABC >::Register( message.id().id(), *pAgent );
+        tools::Resolver< Automat_ABC >::Register( message.automat().id(), *pAgent );
     }
 }
 
@@ -83,10 +83,10 @@ kernel::Automat_ABC* AgentsModel::FindAutomat( unsigned long id )
 // -----------------------------------------------------------------------------
 void AgentsModel::CreateAgent( const MsgsSimToClient::MsgUnitCreation& message )
 {
-    if( !Resolver< Agent_ABC >::Find( message.id().id() ) )
+    if( !Resolver< Agent_ABC >::Find( message.unit().id() ) )
     {
         Agent_ABC* pAgent = agentFactory_.Create( message );
-        tools::Resolver< Agent_ABC >::Register( message.id().id(), *pAgent );
+        tools::Resolver< Agent_ABC >::Register( message.unit().id(), *pAgent );
     }
 }
 
@@ -114,8 +114,8 @@ Agent_ABC* AgentsModel::FindAgent( unsigned long id ) const
 // -----------------------------------------------------------------------------
 void AgentsModel::DestroyAgent( const MsgsSimToClient::MsgUnitDestruction& msg )
 {
-    delete tools::Resolver< Agent_ABC >::Find( msg.id().id() );
-    tools::Resolver< Agent_ABC >::Remove( msg.id().id() );
+    delete tools::Resolver< Agent_ABC >::Find( msg.unit().id() );
+    tools::Resolver< Agent_ABC >::Remove( msg.unit().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,12 +137,12 @@ Entity_ABC* AgentsModel::FindAllAgent( unsigned long id ) const
 // Name: AgentsModel::CreatePopulation
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void AgentsModel::CreatePopulation( const MsgsSimToClient::MsgPopulationCreation& message )
+void AgentsModel::CreatePopulation( const MsgsSimToClient::MsgCrowdCreation& message )
 {
-    if( !Resolver< Population_ABC >::Find( message.id().id() ) )
+    if( !Resolver< Population_ABC >::Find( message.crowd().id() ) )
     {
         Population_ABC* popu = agentFactory_.Create( message );
-        tools::Resolver< Population_ABC >::Register( message.id().id(), *popu );
+        tools::Resolver< Population_ABC >::Register( message.crowd().id(), *popu );
     }
 }
 

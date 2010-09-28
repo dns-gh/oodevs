@@ -564,7 +564,7 @@ void MIL_AgentPion::SendCreation() const
     assert( pType_ );
 
     client::UnitCreation asnMsg;
-    asnMsg().mutable_id()->set_id( GetID() );
+    asnMsg().mutable_unit()->set_id( GetID() );
     asnMsg().mutable_type()->set_id( pType_->GetID() );
     asnMsg().set_nom         ( GetName().c_str() ); // !! pointeur sur const char*
     asnMsg().mutable_automat()->set_id( GetAutomate().GetID() );
@@ -655,10 +655,10 @@ void MIL_AgentPion::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgUni
     if( pAutomate_->IsEngaged() )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_automate_embraye );
 
-    if( !asn.has_parametres() || asn.parametres().elem_size() != 1)
+    if( !asn.has_parameters() || asn.parameters().elem_size() != 1)
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
 
-    const Common::MsgMissionParameter& parametre = asn.parametres().elem( 0 );
+    const Common::MsgMissionParameter& parametre = asn.parameters().elem( 0 );
     if( !parametre.has_value() || !parametre.value().has_point() )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
 
@@ -884,10 +884,10 @@ void MIL_AgentPion::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgUnitM
         OnReceiveMsgDestroyAll();
         break;
     case MsgsClientToSim::MsgUnitMagicAction_Type_change_human_factors:
-        OnReceiveMsgChangeHumanFactors( msg.parametres() );
+        OnReceiveMsgChangeHumanFactors( msg.parameters() );
         break;
     case MsgsClientToSim::MsgUnitMagicAction_Type_partial_recovery:
-        OnReceiveMsgResupply( msg.parametres() );
+        OnReceiveMsgResupply( msg.parameters() );
         break;
     default:
         assert( false );
@@ -924,12 +924,12 @@ void MIL_AgentPion::OnReceiveMagicCancelSurrender()
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveMsgChangeSuperior( const MIL_EntityManager& manager, const MsgsClientToSim::MsgUnitMagicAction& msg )
 {
-    MIL_Automate* pNewAutomate = manager.FindAutomate( msg.parametres().elem( 0 ).value().automat().id() );
+    MIL_Automate* pNewAutomate = manager.FindAutomate( msg.parameters().elem( 0 ).value().automat().id() );
     if( !pNewAutomate )
-        throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate );
+        throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck::ErrorCode >( MsgsSimToClient::HierarchyModificationAck::error_invalid_automate );
 
     if( pNewAutomate->GetArmy() != GetArmy() )
-        throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_teams_mismatched );
+        throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck::ErrorCode >( MsgsSimToClient::HierarchyModificationAck::error_parties_mismatched );
 
     pAutomate_->UnregisterPion( *this );
     pAutomate_ = pNewAutomate;

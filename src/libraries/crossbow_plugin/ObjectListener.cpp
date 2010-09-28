@@ -113,19 +113,19 @@ void ObjectListener::SendCreation( const Row_ABC& row )
     message().set_type( MsgsClientToSim::MsgObjectMagicAction_Type_create );
 
     // type
-    message().mutable_parametres()->add_elem()->mutable_value()->set_acharstr( GetType( boost::get< std::string >( row.GetField( "Info" ) ) ).c_str() );
+    message().mutable_parameters()->add_elem()->mutable_value()->set_acharstr( GetType( boost::get< std::string >( row.GetField( "Info" ) ) ).c_str() );
 
     // location
-    row.GetGeometry().Serialize( *message().mutable_parametres()->add_elem()->mutable_value()->mutable_location() );
+    row.GetGeometry().Serialize( *message().mutable_parameters()->add_elem()->mutable_value()->mutable_location() );
 
     // name
-    message().mutable_parametres()->add_elem()->mutable_value()->set_acharstr( "" );
+    message().mutable_parameters()->add_elem()->mutable_value()->set_acharstr( "" );
 
     // team
-    message().mutable_parametres()->add_elem()->mutable_value()->mutable_party()->set_id( 1 ); // $$$$ SBO 2007-09-23: Hard coded !!
+    message().mutable_parameters()->add_elem()->mutable_value()->mutable_party()->set_id( 1 ); // $$$$ SBO 2007-09-23: Hard coded !!
 
     // list (unused but must be created)
-    message().mutable_parametres()->add_elem();
+    message().mutable_parameters()->add_elem();
 
     message.Send( publisher_ );
 }

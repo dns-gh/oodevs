@@ -97,18 +97,18 @@ void PHY_MeteoDataManager::ReadPatchLocal( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_MeteoDataManager::OnReceiveMsgMeteo( const MsgsClientToSim::MsgMagicAction& asnMsg )
 {
-    if( asnMsg.type() == MsgsClientToSim::MsgMagicAction_Type_global_meteo )
+    if( asnMsg.type() == MsgsClientToSim::MsgMagicAction::global_weather )
     {
         assert( pGlobalMeteo_ );
-        pGlobalMeteo_->Update( asnMsg.parametres() );
-        client::ControlGlobalMeteoAck asnReplyMsg;
+        pGlobalMeteo_->Update( asnMsg.parameters() );
+        client::ControlGlobalWeatherAck asnReplyMsg;
         asnReplyMsg.Send( NET_Publisher_ABC::Publisher() );
     }
-    else if( asnMsg.type() == MsgsClientToSim::MsgMagicAction_Type_local_meteo )
+    else if( asnMsg.type() == MsgsClientToSim::MsgMagicAction::local_weather )
     {
-        weather::PHY_Meteo* meteo = new PHY_LocalMeteo( idManager_.GetFreeId(), asnMsg.parametres(), this );
+        weather::PHY_Meteo* meteo = new PHY_LocalMeteo( idManager_.GetFreeId(), asnMsg.parameters(), this );
         RegisterMeteo( *meteo );
-        client::ControlLocalMeteoAck replyMsg;
+        client::ControlLocalWeatherAck replyMsg;
         replyMsg.Send( NET_Publisher_ABC::Publisher() );
     }
 }

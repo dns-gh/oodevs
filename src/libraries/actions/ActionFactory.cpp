@@ -205,7 +205,7 @@ actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgAutomatOrder&
 // Name: ActionFactory::CreateAction
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgPopulationOrder& message ) const
+actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgCrowdOrder& message ) const
 {
     const kernel::MissionType& mission = missions_.Get( message.type().id() );
     const kernel::Entity_ABC& tasker = entities_.GetPopulation( message.tasker().id() );
@@ -230,8 +230,8 @@ namespace
             {
                 throw TargetNotFound( message.tasker().automat().id() );
             }
-        if( message.tasker().has_population() )
-            return entities.GetPopulation( message.tasker().population().id() );
+        if( message.tasker().has_crowd() )
+            return entities.GetPopulation( message.tasker().crowd().id() );
         if( message.tasker().has_unit() )
             return entities.GetAgent( message.tasker().unit().id() );
         throw TargetNotFound();
@@ -250,7 +250,7 @@ actions::Action_ABC* ActionFactory::CreateAction( const MsgsClientToSim::MsgFrag
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     action->Attach( *new ActionTasker( &tasker ) );
     action->Polish();
-    AddParameters( *action, order, message.parametres() );
+    AddParameters( *action, order, message.parameters() );
     return action.release();
 }
 

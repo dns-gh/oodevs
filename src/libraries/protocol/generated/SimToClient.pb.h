@@ -34,7 +34,7 @@ void protobuf_ShutdownFile_SimToClient_2eproto();
 class OrderAck;
 class MsgUnitOrderAck;
 class MsgAutomatOrderAck;
-class MsgPopulationOrderAck;
+class MsgCrowdOrderAck;
 class MsgFragOrderAck;
 class MsgSetAutomatModeAck;
 class UnitActionAck;
@@ -42,7 +42,7 @@ class MsgUnitCreationRequestAck;
 class MsgMagicActionAck;
 class MsgUnitMagicActionAck;
 class MsgObjectMagicActionAck;
-class MsgPopulationMagicActionAck;
+class MsgCrowdMagicActionAck;
 class MsgChangeDiplomacyAck;
 class HierarchyModificationAck;
 class MsgAutomatChangeKnowledgeGroupAck;
@@ -62,8 +62,8 @@ class MsgControlChangeTimeFactorAck;
 class MsgControlStopAck;
 class MsgControlPauseAck;
 class MsgControlResumeAck;
-class MsgTeamCreation;
-class MsgAutomatCreation_oid_parent;
+class MsgPartyCreation;
+class MsgFormationCreation;
 class MsgAutomatCreation;
 class RulesOfEngagement;
 class ForceRatio;
@@ -91,7 +91,7 @@ class AutomatPerception;
 class SeqOfAutomatPerception;
 class MsgUnitKnowledgeUpdate;
 class MsgUnitKnowledgeDestruction;
-class MsgStartUnitFire_target;
+class UnitFireTarget;
 class MsgStartUnitFire;
 class UnitHumanFireDamage;
 class SeqOfUnitHumanFireDamage;
@@ -99,11 +99,11 @@ class MsgUnitEquipmentFireDamage;
 class SeqOfUnitEquipmentFireDamage;
 class MsgUnitFireDamages;
 class MsgUnitsFireDamages;
-class MsgPopulationFireDamages;
-class MsgPopulationsFireDamages;
+class MsgCrowdFireDamages;
+class MsgCrowdsFireDamages;
 class MsgStopUnitFire;
-class MsgStartPopulationFire;
-class MsgStopPopulationFire;
+class MsgStartCrowdFire;
+class MsgStopCrowdFire;
 class MsgExplosion;
 class MsgStartFireEffect;
 class MsgStopFireEffect;
@@ -118,8 +118,8 @@ class SeqOfVisionCone;
 class MsgUnitVisionCones;
 class MsgUnitDetection;
 class MsgObjectDetection;
-class MsgPopulationConcentrationDetection;
-class MsgPopulationFlowDetection;
+class MsgCrowdConcentrationDetection;
+class MsgCrowdFlowDetection;
 class MsgObjectCreation;
 class MsgObjectDestruction;
 class MsgObjectUpdate;
@@ -150,25 +150,25 @@ class MsgLogSupplyEquimentAvailability;
 class SeqOfLogSupplyEquimentAvailability;
 class MsgLogSupplyState;
 class MsgLogSupplyQuotas;
-class MsgPopulationCreation;
-class MsgPopulationUpdate;
-class MsgPopulationConcentrationCreation;
-class MsgPopulationConcentrationDestruction;
-class MsgPopulationConcentrationUpdate;
-class MsgPopulationFlowCreation;
-class MsgPopulationFlowDestruction;
-class MsgPopulationFlowUpdate;
-class MsgPopulationKnowledgeCreation;
-class MsgPopulationKnowledgeUpdate;
-class MsgPopulationKnowledgeDestruction;
-class MsgPopulationConcentrationKnowledgeCreation;
-class MsgPopulationConcentrationKnowledgeUpdate;
-class MsgPopulationConcentrationKnowledgeDestruction;
-class MsgPopulationFlowKnowledgeCreation;
+class MsgCrowdCreation;
+class MsgCrowdUpdate;
+class MsgCrowdConcentrationCreation;
+class MsgCrowdConcentrationDestruction;
+class MsgCrowdConcentrationUpdate;
+class MsgCrowdFlowCreation;
+class MsgCrowdFlowDestruction;
+class MsgCrowdFlowUpdate;
+class MsgCrowdKnowledgeCreation;
+class MsgCrowdKnowledgeUpdate;
+class MsgCrowdKnowledgeDestruction;
+class MsgCrowdConcentrationKnowledgeCreation;
+class MsgCrowdConcentrationKnowledgeUpdate;
+class MsgCrowdConcentrationKnowledgeDestruction;
+class MsgCrowdFlowKnowledgeCreation;
 class MsgFlowPart;
 class SeqOfFlowPart;
-class MsgPopulationFlowKnowledgeUpdate;
-class MsgPopulationFlowKnowledgeDestruction;
+class MsgCrowdFlowKnowledgeUpdate;
+class MsgCrowdFlowKnowledgeDestruction;
 class MsgFolkCreation_profiles;
 class MsgFolkCreation_activities;
 class MsgFolkCreation;
@@ -179,6 +179,9 @@ class MsgControlCheckPointSaveNowAck;
 class MsgControlCheckPointSaveBegin;
 class MsgControlCheckPointSaveBeginAck;
 class MsgControlCheckPointSaveEnd;
+class MsgControlCheckPointListAck;
+class MsgControlCheckPointList;
+class MsgControlCheckPointDeleteAck;
 class MsgControlSendCurrentStateBegin;
 class MsgControlSendCurrentStateEnd;
 class MagicActionCreateUrban;
@@ -186,11 +189,11 @@ class MagicActionUpdateUrban;
 class MagicActionDestroyUrban;
 class MsgUrbanMagicAction;
 class MsgUrbanMagicActionAck;
-class MsgUrbanAttributes;
-class MsgUrbanAttributes_Architecture;
-class MsgUrbanAttributes_Structure;
-class MsgUrbanAttributes_Infrastructures;
-class MsgUrbanAttributes_RgbaColor;
+class UrbanAttributes;
+class UrbanAttributes_Architecture;
+class UrbanAttributes_Structure;
+class UrbanAttributes_Infrastructures;
+class UrbanAttributes_RgbaColor;
 class MsgUrbanCreation;
 class MsgUrbanDetection;
 class MsgUrbanUpdate;
@@ -201,11 +204,11 @@ class MsgKnowledgeGroupMagicActionAck;
 class MsgKnowledgeGroupCreationAck;
 class MsgKnowledgeGroupUpdateAck;
 class MsgKnowledgeGroupDestruction;
-class MsgControlGlobalMeteoAck;
-class MsgControlLocalMeteoAck;
-class MsgControlGlobalMeteo;
-class MsgControlLocalMeteoCreation;
-class MsgControlLocalMeteoDestruction;
+class MsgControlGlobalWeatherAck;
+class MsgControlLocalWeatherAck;
+class MsgControlGlobalWeather;
+class MsgControlLocalWeatherCreation;
+class MsgControlLocalWeatherDestruction;
 class MsgSimToClient;
 class MsgSimToClient_Content;
 
@@ -319,24 +322,24 @@ inline bool MsgObjectMagicActionAck_ErrorCode_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<MsgObjectMagicActionAck_ErrorCode>(
     MsgObjectMagicActionAck_ErrorCode_descriptor(), name, value);
 }
-enum MsgPopulationMagicActionAck_ErrorCode {
-  MsgPopulationMagicActionAck_ErrorCode_no_error = 0,
-  MsgPopulationMagicActionAck_ErrorCode_error_invalid_unit = 1,
-  MsgPopulationMagicActionAck_ErrorCode_error_invalid_attribute = 2
+enum MsgCrowdMagicActionAck_ErrorCode {
+  MsgCrowdMagicActionAck_ErrorCode_no_error = 0,
+  MsgCrowdMagicActionAck_ErrorCode_error_invalid_unit = 1,
+  MsgCrowdMagicActionAck_ErrorCode_error_invalid_attribute = 2
 };
-bool MsgPopulationMagicActionAck_ErrorCode_IsValid(int value);
-const MsgPopulationMagicActionAck_ErrorCode MsgPopulationMagicActionAck_ErrorCode_ErrorCode_MIN = MsgPopulationMagicActionAck_ErrorCode_no_error;
-const MsgPopulationMagicActionAck_ErrorCode MsgPopulationMagicActionAck_ErrorCode_ErrorCode_MAX = MsgPopulationMagicActionAck_ErrorCode_error_invalid_attribute;
+bool MsgCrowdMagicActionAck_ErrorCode_IsValid(int value);
+const MsgCrowdMagicActionAck_ErrorCode MsgCrowdMagicActionAck_ErrorCode_ErrorCode_MIN = MsgCrowdMagicActionAck_ErrorCode_no_error;
+const MsgCrowdMagicActionAck_ErrorCode MsgCrowdMagicActionAck_ErrorCode_ErrorCode_MAX = MsgCrowdMagicActionAck_ErrorCode_error_invalid_attribute;
 
-const ::google::protobuf::EnumDescriptor* MsgPopulationMagicActionAck_ErrorCode_descriptor();
-inline const ::std::string& MsgPopulationMagicActionAck_ErrorCode_Name(MsgPopulationMagicActionAck_ErrorCode value) {
+const ::google::protobuf::EnumDescriptor* MsgCrowdMagicActionAck_ErrorCode_descriptor();
+inline const ::std::string& MsgCrowdMagicActionAck_ErrorCode_Name(MsgCrowdMagicActionAck_ErrorCode value) {
   return ::google::protobuf::internal::NameOfEnum(
-    MsgPopulationMagicActionAck_ErrorCode_descriptor(), value);
+    MsgCrowdMagicActionAck_ErrorCode_descriptor(), value);
 }
-inline bool MsgPopulationMagicActionAck_ErrorCode_Parse(
-    const ::std::string& name, MsgPopulationMagicActionAck_ErrorCode* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<MsgPopulationMagicActionAck_ErrorCode>(
-    MsgPopulationMagicActionAck_ErrorCode_descriptor(), name, value);
+inline bool MsgCrowdMagicActionAck_ErrorCode_Parse(
+    const ::std::string& name, MsgCrowdMagicActionAck_ErrorCode* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<MsgCrowdMagicActionAck_ErrorCode>(
+    MsgCrowdMagicActionAck_ErrorCode_descriptor(), name, value);
 }
 enum MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode {
   MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode_no_error_diplomacy = 0,
@@ -366,13 +369,13 @@ enum HierarchyModificationAck_ErrorCode {
   HierarchyModificationAck_ErrorCode_error_invalid_automate_sante = 6,
   HierarchyModificationAck_ErrorCode_error_invalid_automate_supply = 7,
   HierarchyModificationAck_ErrorCode_error_unit_surrendered_hierarchy = 8,
-  HierarchyModificationAck_ErrorCode_error_invalid_team_hierarchy = 9,
+  HierarchyModificationAck_ErrorCode_error_invalid_party_hierarchy = 9,
   HierarchyModificationAck_ErrorCode_error_invalid_knowledge_group = 10,
-  HierarchyModificationAck_ErrorCode_error_teams_mismatched = 11
+  HierarchyModificationAck_ErrorCode_error_parties_mismatched = 11
 };
 bool HierarchyModificationAck_ErrorCode_IsValid(int value);
 const HierarchyModificationAck_ErrorCode HierarchyModificationAck_ErrorCode_ErrorCode_MIN = HierarchyModificationAck_ErrorCode_no_error_hierarchy;
-const HierarchyModificationAck_ErrorCode HierarchyModificationAck_ErrorCode_ErrorCode_MAX = HierarchyModificationAck_ErrorCode_error_teams_mismatched;
+const HierarchyModificationAck_ErrorCode HierarchyModificationAck_ErrorCode_ErrorCode_MAX = HierarchyModificationAck_ErrorCode_error_parties_mismatched;
 
 const ::google::protobuf::EnumDescriptor* HierarchyModificationAck_ErrorCode_descriptor();
 inline const ::std::string& HierarchyModificationAck_ErrorCode_Name(HierarchyModificationAck_ErrorCode value) {
@@ -548,26 +551,26 @@ inline bool MsgUnitAttributes_FireAvailability_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<MsgUnitAttributes_FireAvailability>(
     MsgUnitAttributes_FireAvailability_descriptor(), name, value);
 }
-enum MsgUnitAttributes_PopulationRoe {
-  MsgUnitAttributes_PopulationRoe_none = 0,
-  MsgUnitAttributes_PopulationRoe_emploi_force_interdit = 1,
-  MsgUnitAttributes_PopulationRoe_maintien_a_distance_par_moyens_non_letaux = 2,
-  MsgUnitAttributes_PopulationRoe_dispersion_par_moyens_de_defense_actifs = 3,
-  MsgUnitAttributes_PopulationRoe_armes_letales_autorisees = 4
+enum MsgUnitAttributes_CrowdRoe {
+  MsgUnitAttributes_CrowdRoe_none = 0,
+  MsgUnitAttributes_CrowdRoe_emploi_force_interdit = 1,
+  MsgUnitAttributes_CrowdRoe_maintien_a_distance_par_moyens_non_letaux = 2,
+  MsgUnitAttributes_CrowdRoe_dispersion_par_moyens_de_defense_actifs = 3,
+  MsgUnitAttributes_CrowdRoe_armes_letales_autorisees = 4
 };
-bool MsgUnitAttributes_PopulationRoe_IsValid(int value);
-const MsgUnitAttributes_PopulationRoe MsgUnitAttributes_PopulationRoe_PopulationRoe_MIN = MsgUnitAttributes_PopulationRoe_none;
-const MsgUnitAttributes_PopulationRoe MsgUnitAttributes_PopulationRoe_PopulationRoe_MAX = MsgUnitAttributes_PopulationRoe_armes_letales_autorisees;
+bool MsgUnitAttributes_CrowdRoe_IsValid(int value);
+const MsgUnitAttributes_CrowdRoe MsgUnitAttributes_CrowdRoe_CrowdRoe_MIN = MsgUnitAttributes_CrowdRoe_none;
+const MsgUnitAttributes_CrowdRoe MsgUnitAttributes_CrowdRoe_CrowdRoe_MAX = MsgUnitAttributes_CrowdRoe_armes_letales_autorisees;
 
-const ::google::protobuf::EnumDescriptor* MsgUnitAttributes_PopulationRoe_descriptor();
-inline const ::std::string& MsgUnitAttributes_PopulationRoe_Name(MsgUnitAttributes_PopulationRoe value) {
+const ::google::protobuf::EnumDescriptor* MsgUnitAttributes_CrowdRoe_descriptor();
+inline const ::std::string& MsgUnitAttributes_CrowdRoe_Name(MsgUnitAttributes_CrowdRoe value) {
   return ::google::protobuf::internal::NameOfEnum(
-    MsgUnitAttributes_PopulationRoe_descriptor(), value);
+    MsgUnitAttributes_CrowdRoe_descriptor(), value);
 }
-inline bool MsgUnitAttributes_PopulationRoe_Parse(
-    const ::std::string& name, MsgUnitAttributes_PopulationRoe* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<MsgUnitAttributes_PopulationRoe>(
-    MsgUnitAttributes_PopulationRoe_descriptor(), name, value);
+inline bool MsgUnitAttributes_CrowdRoe_Parse(
+    const ::std::string& name, MsgUnitAttributes_CrowdRoe* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<MsgUnitAttributes_CrowdRoe>(
+    MsgUnitAttributes_CrowdRoe_descriptor(), name, value);
 }
 enum MsgUrbanMagicActionAck_ErrorCode {
   MsgUrbanMagicActionAck_ErrorCode_no_error = 0,
@@ -982,14 +985,14 @@ class MsgAutomatOrderAck : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgPopulationOrderAck : public ::google::protobuf::Message {
+class MsgCrowdOrderAck : public ::google::protobuf::Message {
  public:
-  MsgPopulationOrderAck();
-  virtual ~MsgPopulationOrderAck();
+  MsgCrowdOrderAck();
+  virtual ~MsgCrowdOrderAck();
   
-  MsgPopulationOrderAck(const MsgPopulationOrderAck& from);
+  MsgCrowdOrderAck(const MsgCrowdOrderAck& from);
   
-  inline MsgPopulationOrderAck& operator=(const MsgPopulationOrderAck& from) {
+  inline MsgCrowdOrderAck& operator=(const MsgCrowdOrderAck& from) {
     CopyFrom(from);
     return *this;
   }
@@ -1003,16 +1006,16 @@ class MsgPopulationOrderAck : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgPopulationOrderAck& default_instance();
-  void Swap(MsgPopulationOrderAck* other);
+  static const MsgCrowdOrderAck& default_instance();
+  void Swap(MsgCrowdOrderAck* other);
   
   // implements Message ----------------------------------------------
   
-  MsgPopulationOrderAck* New() const;
+  MsgCrowdOrderAck* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgPopulationOrderAck& from);
-  void MergeFrom(const MsgPopulationOrderAck& from);
+  void CopyFrom(const MsgCrowdOrderAck& from);
+  void MergeFrom(const MsgCrowdOrderAck& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -1035,12 +1038,12 @@ class MsgPopulationOrderAck : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.PopulationId tasker = 1;
+  // required .Common.CrowdId tasker = 1;
   inline bool has_tasker() const;
   inline void clear_tasker();
   static const int kTaskerFieldNumber = 1;
-  inline const ::Common::PopulationId& tasker() const;
-  inline ::Common::PopulationId* mutable_tasker();
+  inline const ::Common::CrowdId& tasker() const;
+  inline ::Common::CrowdId* mutable_tasker();
   
   // required .MsgsSimToClient.OrderAck.ErrorCode error_code = 2;
   inline bool has_error_code() const;
@@ -1053,7 +1056,7 @@ class MsgPopulationOrderAck : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::PopulationId* tasker_;
+  ::Common::CrowdId* tasker_;
   int error_code_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -1073,7 +1076,7 @@ class MsgPopulationOrderAck : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgPopulationOrderAck* default_instance_;
+  static MsgCrowdOrderAck* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -1248,12 +1251,12 @@ class MsgSetAutomatModeAck : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.AutomatId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::AutomatId& id() const;
-  inline ::Common::AutomatId* mutable_id();
+  // required .Common.AutomatId automat = 1;
+  inline bool has_automat() const;
+  inline void clear_automat();
+  static const int kAutomatFieldNumber = 1;
+  inline const ::Common::AutomatId& automat() const;
+  inline ::Common::AutomatId* mutable_automat();
   
   // required .MsgsSimToClient.MsgSetAutomatModeAck.ErrorCode error_code = 2;
   inline bool has_error_code() const;
@@ -1266,7 +1269,7 @@ class MsgSetAutomatModeAck : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::AutomatId* id_;
+  ::Common::AutomatId* automat_;
   int error_code_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -1643,12 +1646,12 @@ class MsgUnitMagicActionAck : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.UnitId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::UnitId& id() const;
-  inline ::Common::UnitId* mutable_id();
+  // required .Common.UnitId unit = 1;
+  inline bool has_unit() const;
+  inline void clear_unit();
+  static const int kUnitFieldNumber = 1;
+  inline const ::Common::UnitId& unit() const;
+  inline ::Common::UnitId* mutable_unit();
   
   // required .MsgsSimToClient.UnitActionAck.ErrorCode error_code = 2;
   inline bool has_error_code() const;
@@ -1661,7 +1664,7 @@ class MsgUnitMagicActionAck : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::UnitId* id_;
+  ::Common::UnitId* unit_;
   int error_code_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -1799,14 +1802,14 @@ class MsgObjectMagicActionAck : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgPopulationMagicActionAck : public ::google::protobuf::Message {
+class MsgCrowdMagicActionAck : public ::google::protobuf::Message {
  public:
-  MsgPopulationMagicActionAck();
-  virtual ~MsgPopulationMagicActionAck();
+  MsgCrowdMagicActionAck();
+  virtual ~MsgCrowdMagicActionAck();
   
-  MsgPopulationMagicActionAck(const MsgPopulationMagicActionAck& from);
+  MsgCrowdMagicActionAck(const MsgCrowdMagicActionAck& from);
   
-  inline MsgPopulationMagicActionAck& operator=(const MsgPopulationMagicActionAck& from) {
+  inline MsgCrowdMagicActionAck& operator=(const MsgCrowdMagicActionAck& from) {
     CopyFrom(from);
     return *this;
   }
@@ -1820,16 +1823,16 @@ class MsgPopulationMagicActionAck : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgPopulationMagicActionAck& default_instance();
-  void Swap(MsgPopulationMagicActionAck* other);
+  static const MsgCrowdMagicActionAck& default_instance();
+  void Swap(MsgCrowdMagicActionAck* other);
   
   // implements Message ----------------------------------------------
   
-  MsgPopulationMagicActionAck* New() const;
+  MsgCrowdMagicActionAck* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgPopulationMagicActionAck& from);
-  void MergeFrom(const MsgPopulationMagicActionAck& from);
+  void CopyFrom(const MsgCrowdMagicActionAck& from);
+  void MergeFrom(const MsgCrowdMagicActionAck& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -1850,50 +1853,50 @@ class MsgPopulationMagicActionAck : public ::google::protobuf::Message {
   
   // nested types ----------------------------------------------------
   
-  typedef MsgPopulationMagicActionAck_ErrorCode ErrorCode;
-  static const ErrorCode no_error = MsgPopulationMagicActionAck_ErrorCode_no_error;
-  static const ErrorCode error_invalid_unit = MsgPopulationMagicActionAck_ErrorCode_error_invalid_unit;
-  static const ErrorCode error_invalid_attribute = MsgPopulationMagicActionAck_ErrorCode_error_invalid_attribute;
+  typedef MsgCrowdMagicActionAck_ErrorCode ErrorCode;
+  static const ErrorCode no_error = MsgCrowdMagicActionAck_ErrorCode_no_error;
+  static const ErrorCode error_invalid_unit = MsgCrowdMagicActionAck_ErrorCode_error_invalid_unit;
+  static const ErrorCode error_invalid_attribute = MsgCrowdMagicActionAck_ErrorCode_error_invalid_attribute;
   static inline bool ErrorCode_IsValid(int value) {
-    return MsgPopulationMagicActionAck_ErrorCode_IsValid(value);
+    return MsgCrowdMagicActionAck_ErrorCode_IsValid(value);
   }
   static const ErrorCode ErrorCode_MIN =
-    MsgPopulationMagicActionAck_ErrorCode_ErrorCode_MIN;
+    MsgCrowdMagicActionAck_ErrorCode_ErrorCode_MIN;
   static const ErrorCode ErrorCode_MAX =
-    MsgPopulationMagicActionAck_ErrorCode_ErrorCode_MAX;
+    MsgCrowdMagicActionAck_ErrorCode_ErrorCode_MAX;
   static inline const ::google::protobuf::EnumDescriptor*
   ErrorCode_descriptor() {
-    return MsgPopulationMagicActionAck_ErrorCode_descriptor();
+    return MsgCrowdMagicActionAck_ErrorCode_descriptor();
   }
   static inline const ::std::string& ErrorCode_Name(ErrorCode value) {
-    return MsgPopulationMagicActionAck_ErrorCode_Name(value);
+    return MsgCrowdMagicActionAck_ErrorCode_Name(value);
   }
   static inline bool ErrorCode_Parse(const ::std::string& name,
       ErrorCode* value) {
-    return MsgPopulationMagicActionAck_ErrorCode_Parse(name, value);
+    return MsgCrowdMagicActionAck_ErrorCode_Parse(name, value);
   }
   
   // accessors -------------------------------------------------------
   
-  // required .Common.PopulationId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::PopulationId& id() const;
-  inline ::Common::PopulationId* mutable_id();
+  // required .Common.CrowdId crowd = 1;
+  inline bool has_crowd() const;
+  inline void clear_crowd();
+  static const int kCrowdFieldNumber = 1;
+  inline const ::Common::CrowdId& crowd() const;
+  inline ::Common::CrowdId* mutable_crowd();
   
-  // required .MsgsSimToClient.MsgPopulationMagicActionAck.ErrorCode error_code = 2;
+  // required .MsgsSimToClient.MsgCrowdMagicActionAck.ErrorCode error_code = 2;
   inline bool has_error_code() const;
   inline void clear_error_code();
   static const int kErrorCodeFieldNumber = 2;
-  inline ::MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode error_code() const;
-  inline void set_error_code(::MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode value);
+  inline ::MsgsSimToClient::MsgCrowdMagicActionAck_ErrorCode error_code() const;
+  inline void set_error_code(::MsgsSimToClient::MsgCrowdMagicActionAck_ErrorCode value);
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::PopulationId* id_;
+  ::Common::CrowdId* crowd_;
   int error_code_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -1913,7 +1916,7 @@ class MsgPopulationMagicActionAck : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgPopulationMagicActionAck* default_instance_;
+  static MsgCrowdMagicActionAck* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -2111,9 +2114,9 @@ class HierarchyModificationAck : public ::google::protobuf::Message {
   static const ErrorCode error_invalid_automate_sante = HierarchyModificationAck_ErrorCode_error_invalid_automate_sante;
   static const ErrorCode error_invalid_automate_supply = HierarchyModificationAck_ErrorCode_error_invalid_automate_supply;
   static const ErrorCode error_unit_surrendered_hierarchy = HierarchyModificationAck_ErrorCode_error_unit_surrendered_hierarchy;
-  static const ErrorCode error_invalid_team_hierarchy = HierarchyModificationAck_ErrorCode_error_invalid_team_hierarchy;
+  static const ErrorCode error_invalid_party_hierarchy = HierarchyModificationAck_ErrorCode_error_invalid_party_hierarchy;
   static const ErrorCode error_invalid_knowledge_group = HierarchyModificationAck_ErrorCode_error_invalid_knowledge_group;
-  static const ErrorCode error_teams_mismatched = HierarchyModificationAck_ErrorCode_error_teams_mismatched;
+  static const ErrorCode error_parties_mismatched = HierarchyModificationAck_ErrorCode_error_parties_mismatched;
   static inline bool ErrorCode_IsValid(int value) {
     return HierarchyModificationAck_ErrorCode_IsValid(value);
   }
@@ -3874,14 +3877,14 @@ class MsgControlResumeAck : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgTeamCreation : public ::google::protobuf::Message {
+class MsgPartyCreation : public ::google::protobuf::Message {
  public:
-  MsgTeamCreation();
-  virtual ~MsgTeamCreation();
+  MsgPartyCreation();
+  virtual ~MsgPartyCreation();
   
-  MsgTeamCreation(const MsgTeamCreation& from);
+  MsgPartyCreation(const MsgPartyCreation& from);
   
-  inline MsgTeamCreation& operator=(const MsgTeamCreation& from) {
+  inline MsgPartyCreation& operator=(const MsgPartyCreation& from) {
     CopyFrom(from);
     return *this;
   }
@@ -3895,16 +3898,16 @@ class MsgTeamCreation : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgTeamCreation& default_instance();
-  void Swap(MsgTeamCreation* other);
+  static const MsgPartyCreation& default_instance();
+  void Swap(MsgPartyCreation* other);
   
   // implements Message ----------------------------------------------
   
-  MsgTeamCreation* New() const;
+  MsgPartyCreation* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgTeamCreation& from);
-  void MergeFrom(const MsgTeamCreation& from);
+  void CopyFrom(const MsgPartyCreation& from);
+  void MergeFrom(const MsgPartyCreation& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -3927,22 +3930,22 @@ class MsgTeamCreation : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.PartyId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::PartyId& id() const;
-  inline ::Common::PartyId* mutable_id();
+  // required .Common.PartyId party = 1;
+  inline bool has_party() const;
+  inline void clear_party();
+  static const int kPartyFieldNumber = 1;
+  inline const ::Common::PartyId& party() const;
+  inline ::Common::PartyId* mutable_party();
   
-  // required string nom = 2;
-  inline bool has_nom() const;
-  inline void clear_nom();
-  static const int kNomFieldNumber = 2;
-  inline const ::std::string& nom() const;
-  inline void set_nom(const ::std::string& value);
-  inline void set_nom(const char* value);
-  inline void set_nom(const char* value, size_t size);
-  inline ::std::string* mutable_nom();
+  // required string name = 2;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 2;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
   
   // required .Common.EnumDiplomacy type = 3;
   inline bool has_type() const;
@@ -3955,9 +3958,9 @@ class MsgTeamCreation : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::PartyId* id_;
-  ::std::string* nom_;
-  static const ::std::string _default_nom_;
+  ::Common::PartyId* party_;
+  ::std::string* name_;
+  static const ::std::string _default_name_;
   int type_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -3977,18 +3980,18 @@ class MsgTeamCreation : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgTeamCreation* default_instance_;
+  static MsgPartyCreation* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgAutomatCreation_oid_parent : public ::google::protobuf::Message {
+class MsgFormationCreation : public ::google::protobuf::Message {
  public:
-  MsgAutomatCreation_oid_parent();
-  virtual ~MsgAutomatCreation_oid_parent();
+  MsgFormationCreation();
+  virtual ~MsgFormationCreation();
   
-  MsgAutomatCreation_oid_parent(const MsgAutomatCreation_oid_parent& from);
+  MsgFormationCreation(const MsgFormationCreation& from);
   
-  inline MsgAutomatCreation_oid_parent& operator=(const MsgAutomatCreation_oid_parent& from) {
+  inline MsgFormationCreation& operator=(const MsgFormationCreation& from) {
     CopyFrom(from);
     return *this;
   }
@@ -4002,16 +4005,16 @@ class MsgAutomatCreation_oid_parent : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgAutomatCreation_oid_parent& default_instance();
-  void Swap(MsgAutomatCreation_oid_parent* other);
+  static const MsgFormationCreation& default_instance();
+  void Swap(MsgFormationCreation* other);
   
   // implements Message ----------------------------------------------
   
-  MsgAutomatCreation_oid_parent* New() const;
+  MsgFormationCreation* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgAutomatCreation_oid_parent& from);
-  void MergeFrom(const MsgAutomatCreation_oid_parent& from);
+  void CopyFrom(const MsgFormationCreation& from);
+  void MergeFrom(const MsgFormationCreation& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -4034,31 +4037,59 @@ class MsgAutomatCreation_oid_parent : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // optional .Common.FormationId formation = 1;
+  // required .Common.FormationId formation = 1;
   inline bool has_formation() const;
   inline void clear_formation();
   static const int kFormationFieldNumber = 1;
   inline const ::Common::FormationId& formation() const;
   inline ::Common::FormationId* mutable_formation();
   
-  // optional .Common.AutomatId automat = 2;
-  inline bool has_automat() const;
-  inline void clear_automat();
-  static const int kAutomatFieldNumber = 2;
-  inline const ::Common::AutomatId& automat() const;
-  inline ::Common::AutomatId* mutable_automat();
+  // required .Common.PartyId party = 2;
+  inline bool has_party() const;
+  inline void clear_party();
+  static const int kPartyFieldNumber = 2;
+  inline const ::Common::PartyId& party() const;
+  inline ::Common::PartyId* mutable_party();
+  
+  // optional .Common.FormationId parent = 3;
+  inline bool has_parent() const;
+  inline void clear_parent();
+  static const int kParentFieldNumber = 3;
+  inline const ::Common::FormationId& parent() const;
+  inline ::Common::FormationId* mutable_parent();
+  
+  // required .Common.EnumNatureLevel level = 4;
+  inline bool has_level() const;
+  inline void clear_level();
+  static const int kLevelFieldNumber = 4;
+  inline Common::EnumNatureLevel level() const;
+  inline void set_level(Common::EnumNatureLevel value);
+  
+  // required string name = 5;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 5;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
   ::Common::FormationId* formation_;
-  ::Common::AutomatId* automat_;
+  ::Common::PartyId* party_;
+  ::Common::FormationId* parent_;
+  int level_;
+  ::std::string* name_;
+  static const ::std::string _default_name_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -4072,7 +4103,7 @@ class MsgAutomatCreation_oid_parent : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgAutomatCreation_oid_parent* default_instance_;
+  static MsgFormationCreation* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -4129,21 +4160,21 @@ class MsgAutomatCreation : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // optional .Common.AutomatId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::AutomatId& id() const;
-  inline ::Common::AutomatId* mutable_id();
+  // required .Common.AutomatId automat = 1;
+  inline bool has_automat() const;
+  inline void clear_automat();
+  static const int kAutomatFieldNumber = 1;
+  inline const ::Common::AutomatId& automat() const;
+  inline ::Common::AutomatId* mutable_automat();
   
-  // optional .Common.AutomatType type = 2;
+  // required .Common.AutomatType type = 2;
   inline bool has_type() const;
   inline void clear_type();
   static const int kTypeFieldNumber = 2;
   inline const ::Common::AutomatType& type() const;
   inline ::Common::AutomatType* mutable_type();
   
-  // optional string nom = 3;
+  // required string nom = 3;
   inline bool has_nom() const;
   inline void clear_nom();
   static const int kNomFieldNumber = 3;
@@ -4153,14 +4184,14 @@ class MsgAutomatCreation : public ::google::protobuf::Message {
   inline void set_nom(const char* value, size_t size);
   inline ::std::string* mutable_nom();
   
-  // optional .MsgsSimToClient.MsgAutomatCreation_oid_parent oid_parent = 4;
-  inline bool has_oid_parent() const;
-  inline void clear_oid_parent();
-  static const int kOidParentFieldNumber = 4;
-  inline const ::MsgsSimToClient::MsgAutomatCreation_oid_parent& oid_parent() const;
-  inline ::MsgsSimToClient::MsgAutomatCreation_oid_parent* mutable_oid_parent();
+  // required .Common.ParentEntity parent = 4;
+  inline bool has_parent() const;
+  inline void clear_parent();
+  static const int kParentFieldNumber = 4;
+  inline const ::Common::ParentEntity& parent() const;
+  inline ::Common::ParentEntity* mutable_parent();
   
-  // optional .Common.PartyId party = 5;
+  // required .Common.PartyId party = 5;
   inline bool has_party() const;
   inline void clear_party();
   static const int kPartyFieldNumber = 5;
@@ -4178,11 +4209,11 @@ class MsgAutomatCreation : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::AutomatId* id_;
+  ::Common::AutomatId* automat_;
   ::Common::AutomatType* type_;
   ::std::string* nom_;
   static const ::std::string _default_nom_;
-  ::MsgsSimToClient::MsgAutomatCreation_oid_parent* oid_parent_;
+  ::Common::ParentEntity* parent_;
   ::Common::PartyId* party_;
   ::Common::KnowledgeGroupId* knowledge_group_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
@@ -4466,12 +4497,12 @@ class MsgAutomatAttributes : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.AutomatId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::AutomatId& id() const;
-  inline ::Common::AutomatId* mutable_id();
+  // required .Common.AutomatId automat = 1;
+  inline bool has_automat() const;
+  inline void clear_automat();
+  static const int kAutomatFieldNumber = 1;
+  inline const ::Common::AutomatId& automat() const;
+  inline ::Common::AutomatId* mutable_automat();
   
   // optional .Common.EnumAutomatMode etat_automate = 2;
   inline bool has_etat_automate() const;
@@ -4512,7 +4543,7 @@ class MsgAutomatAttributes : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::AutomatId* id_;
+  ::Common::AutomatId* automat_;
   int etat_automate_;
   int rapport_de_force_;
   int combat_de_rencontre_;
@@ -4593,12 +4624,12 @@ class MsgUnitCreation : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.UnitId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::UnitId& id() const;
-  inline ::Common::UnitId* mutable_id();
+  // required .Common.UnitId unit = 1;
+  inline bool has_unit() const;
+  inline void clear_unit();
+  static const int kUnitFieldNumber = 1;
+  inline const ::Common::UnitId& unit() const;
+  inline ::Common::UnitId* mutable_unit();
   
   // required .Common.UnitType type = 2;
   inline bool has_type() const;
@@ -4635,7 +4666,7 @@ class MsgUnitCreation : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::UnitId* id_;
+  ::Common::UnitId* unit_;
   ::Common::UnitType* type_;
   ::std::string* nom_;
   static const ::std::string _default_nom_;
@@ -5940,7 +5971,7 @@ class Communication : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // optional bool jammed = 1 [default = false];
+  // optional bool jammed = 1;
   inline bool has_jammed() const;
   inline void clear_jammed();
   static const int kJammedFieldNumber = 1;
@@ -6083,39 +6114,39 @@ class MsgUnitAttributes : public ::google::protobuf::Message {
     return MsgUnitAttributes_FireAvailability_Parse(name, value);
   }
   
-  typedef MsgUnitAttributes_PopulationRoe PopulationRoe;
-  static const PopulationRoe none = MsgUnitAttributes_PopulationRoe_none;
-  static const PopulationRoe emploi_force_interdit = MsgUnitAttributes_PopulationRoe_emploi_force_interdit;
-  static const PopulationRoe maintien_a_distance_par_moyens_non_letaux = MsgUnitAttributes_PopulationRoe_maintien_a_distance_par_moyens_non_letaux;
-  static const PopulationRoe dispersion_par_moyens_de_defense_actifs = MsgUnitAttributes_PopulationRoe_dispersion_par_moyens_de_defense_actifs;
-  static const PopulationRoe armes_letales_autorisees = MsgUnitAttributes_PopulationRoe_armes_letales_autorisees;
-  static inline bool PopulationRoe_IsValid(int value) {
-    return MsgUnitAttributes_PopulationRoe_IsValid(value);
+  typedef MsgUnitAttributes_CrowdRoe CrowdRoe;
+  static const CrowdRoe none = MsgUnitAttributes_CrowdRoe_none;
+  static const CrowdRoe emploi_force_interdit = MsgUnitAttributes_CrowdRoe_emploi_force_interdit;
+  static const CrowdRoe maintien_a_distance_par_moyens_non_letaux = MsgUnitAttributes_CrowdRoe_maintien_a_distance_par_moyens_non_letaux;
+  static const CrowdRoe dispersion_par_moyens_de_defense_actifs = MsgUnitAttributes_CrowdRoe_dispersion_par_moyens_de_defense_actifs;
+  static const CrowdRoe armes_letales_autorisees = MsgUnitAttributes_CrowdRoe_armes_letales_autorisees;
+  static inline bool CrowdRoe_IsValid(int value) {
+    return MsgUnitAttributes_CrowdRoe_IsValid(value);
   }
-  static const PopulationRoe PopulationRoe_MIN =
-    MsgUnitAttributes_PopulationRoe_PopulationRoe_MIN;
-  static const PopulationRoe PopulationRoe_MAX =
-    MsgUnitAttributes_PopulationRoe_PopulationRoe_MAX;
+  static const CrowdRoe CrowdRoe_MIN =
+    MsgUnitAttributes_CrowdRoe_CrowdRoe_MIN;
+  static const CrowdRoe CrowdRoe_MAX =
+    MsgUnitAttributes_CrowdRoe_CrowdRoe_MAX;
   static inline const ::google::protobuf::EnumDescriptor*
-  PopulationRoe_descriptor() {
-    return MsgUnitAttributes_PopulationRoe_descriptor();
+  CrowdRoe_descriptor() {
+    return MsgUnitAttributes_CrowdRoe_descriptor();
   }
-  static inline const ::std::string& PopulationRoe_Name(PopulationRoe value) {
-    return MsgUnitAttributes_PopulationRoe_Name(value);
+  static inline const ::std::string& CrowdRoe_Name(CrowdRoe value) {
+    return MsgUnitAttributes_CrowdRoe_Name(value);
   }
-  static inline bool PopulationRoe_Parse(const ::std::string& name,
-      PopulationRoe* value) {
-    return MsgUnitAttributes_PopulationRoe_Parse(name, value);
+  static inline bool CrowdRoe_Parse(const ::std::string& name,
+      CrowdRoe* value) {
+    return MsgUnitAttributes_CrowdRoe_Parse(name, value);
   }
   
   // accessors -------------------------------------------------------
   
-  // required .Common.UnitId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::UnitId& id() const;
-  inline ::Common::UnitId* mutable_id();
+  // required .Common.UnitId unit = 1;
+  inline bool has_unit() const;
+  inline void clear_unit();
+  static const int kUnitFieldNumber = 1;
+  inline const ::Common::UnitId& unit() const;
+  inline ::Common::UnitId* mutable_unit();
   
   // optional .MsgsSimToClient.HumanDotations dotation_eff_personnel = 2;
   inline bool has_dotation_eff_personnel() const;
@@ -6166,28 +6197,28 @@ class MsgUnitAttributes : public ::google::protobuf::Message {
   inline const ::Common::MsgHeading& direction() const;
   inline ::Common::MsgHeading* mutable_direction();
   
-  // optional int32 hauteur = 9 [default = 0];
+  // optional int32 hauteur = 9;
   inline bool has_hauteur() const;
   inline void clear_hauteur();
   static const int kHauteurFieldNumber = 9;
   inline ::google::protobuf::int32 hauteur() const;
   inline void set_hauteur(::google::protobuf::int32 value);
   
-  // optional int32 altitude = 10 [default = 0];
+  // optional int32 altitude = 10;
   inline bool has_altitude() const;
   inline void clear_altitude();
   static const int kAltitudeFieldNumber = 10;
   inline ::google::protobuf::int32 altitude() const;
   inline void set_altitude(::google::protobuf::int32 value);
   
-  // optional int32 vitesse = 11 [default = 0];
+  // optional int32 vitesse = 11;
   inline bool has_vitesse() const;
   inline void clear_vitesse();
   static const int kVitesseFieldNumber = 11;
   inline ::google::protobuf::int32 vitesse() const;
   inline void set_vitesse(::google::protobuf::int32 value);
   
-  // optional int32 etat_operationnel_brut = 12 [default = 0];
+  // optional int32 etat_operationnel_brut = 12;
   inline bool has_etat_operationnel_brut() const;
   inline void clear_etat_operationnel_brut();
   static const int kEtatOperationnelBrutFieldNumber = 12;
@@ -6208,35 +6239,35 @@ class MsgUnitAttributes : public ::google::protobuf::Message {
   inline const ::Common::UnitId& reinforced_unit() const;
   inline ::Common::UnitId* mutable_reinforced_unit();
   
-  // optional bool mort = 15 [default = false];
+  // optional bool mort = 15;
   inline bool has_mort() const;
   inline void clear_mort();
   static const int kMortFieldNumber = 15;
   inline bool mort() const;
   inline void set_mort(bool value);
   
-  // optional bool neutralise = 16 [default = false];
+  // optional bool neutralise = 16;
   inline bool has_neutralise() const;
   inline void clear_neutralise();
   static const int kNeutraliseFieldNumber = 16;
   inline bool neutralise() const;
   inline void set_neutralise(bool value);
   
-  // optional bool mode_furtif_actif = 17 [default = false];
+  // optional bool mode_furtif_actif = 17;
   inline bool has_mode_furtif_actif() const;
   inline void clear_mode_furtif_actif();
   static const int kModeFurtifActifFieldNumber = 17;
   inline bool mode_furtif_actif() const;
   inline void set_mode_furtif_actif(bool value);
   
-  // optional bool embarque = 18 [default = false];
+  // optional bool embarque = 18;
   inline bool has_embarque() const;
   inline void clear_embarque();
   static const int kEmbarqueFieldNumber = 18;
   inline bool embarque() const;
   inline void set_embarque(bool value);
   
-  // optional bool transporteurs_disponibles = 19 [default = false];
+  // optional bool transporteurs_disponibles = 19;
   inline bool has_transporteurs_disponibles() const;
   inline void clear_transporteurs_disponibles();
   static const int kTransporteursDisponiblesFieldNumber = 19;
@@ -6257,21 +6288,21 @@ class MsgUnitAttributes : public ::google::protobuf::Message {
   inline ::MsgsSimToClient::MsgUnitAttributes_Posture posture_new() const;
   inline void set_posture_new(::MsgsSimToClient::MsgUnitAttributes_Posture value);
   
-  // optional int32 posture_pourcentage = 22 [default = 0];
+  // optional int32 posture_pourcentage = 22;
   inline bool has_posture_pourcentage() const;
   inline void clear_posture_pourcentage();
   static const int kPosturePourcentageFieldNumber = 22;
   inline ::google::protobuf::int32 posture_pourcentage() const;
   inline void set_posture_pourcentage(::google::protobuf::int32 value);
   
-  // optional int32 etat_installation = 23 [default = 0];
+  // optional int32 etat_installation = 23;
   inline bool has_etat_installation() const;
   inline void clear_etat_installation();
   static const int kEtatInstallationFieldNumber = 23;
   inline ::google::protobuf::int32 etat_installation() const;
   inline void set_etat_installation(::google::protobuf::int32 value);
   
-  // optional bool en_tenue_de_protection_nbc = 24 [default = false];
+  // optional bool en_tenue_de_protection_nbc = 24;
   inline bool has_en_tenue_de_protection_nbc() const;
   inline void clear_en_tenue_de_protection_nbc();
   static const int kEnTenueDeProtectionNbcFieldNumber = 24;
@@ -6299,21 +6330,21 @@ class MsgUnitAttributes : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::Communication& communications() const;
   inline ::MsgsSimToClient::Communication* mutable_communications();
   
-  // optional bool radio_emitter_disabled = 28 [default = true];
+  // optional bool radio_emitter_disabled = 28;
   inline bool has_radio_emitter_disabled() const;
   inline void clear_radio_emitter_disabled();
   static const int kRadioEmitterDisabledFieldNumber = 28;
   inline bool radio_emitter_disabled() const;
   inline void set_radio_emitter_disabled(bool value);
   
-  // optional bool radio_receiver_disabled = 29 [default = true];
+  // optional bool radio_receiver_disabled = 29;
   inline bool has_radio_receiver_disabled() const;
   inline void clear_radio_receiver_disabled();
   static const int kRadioReceiverDisabledFieldNumber = 29;
   inline bool radio_receiver_disabled() const;
   inline void set_radio_receiver_disabled(bool value);
   
-  // optional bool radar_actif = 30 [default = false];
+  // optional bool radar_actif = 30;
   inline bool has_radar_actif() const;
   inline void clear_radar_actif();
   static const int kRadarActifFieldNumber = 30;
@@ -6369,12 +6400,12 @@ class MsgUnitAttributes : public ::google::protobuf::Message {
   inline ::MsgsSimToClient::RulesOfEngagement_Value roe() const;
   inline void set_roe(::MsgsSimToClient::RulesOfEngagement_Value value);
   
-  // optional .MsgsSimToClient.MsgUnitAttributes.PopulationRoe roe_population = 38;
-  inline bool has_roe_population() const;
-  inline void clear_roe_population();
-  static const int kRoePopulationFieldNumber = 38;
-  inline ::MsgsSimToClient::MsgUnitAttributes_PopulationRoe roe_population() const;
-  inline void set_roe_population(::MsgsSimToClient::MsgUnitAttributes_PopulationRoe value);
+  // optional .MsgsSimToClient.MsgUnitAttributes.CrowdRoe roe_crowd = 38;
+  inline bool has_roe_crowd() const;
+  inline void clear_roe_crowd();
+  static const int kRoeCrowdFieldNumber = 38;
+  inline ::MsgsSimToClient::MsgUnitAttributes_CrowdRoe roe_crowd() const;
+  inline void set_roe_crowd(::MsgsSimToClient::MsgUnitAttributes_CrowdRoe value);
   
   // optional .Common.EnumUnitTiredness fatigue = 39;
   inline bool has_fatigue() const;
@@ -6404,14 +6435,14 @@ class MsgUnitAttributes : public ::google::protobuf::Message {
   inline const ::Common::UnitId& surrendered_unit() const;
   inline ::Common::UnitId* mutable_surrendered_unit();
   
-  // optional bool prisonnier = 43 [default = false];
+  // optional bool prisonnier = 43;
   inline bool has_prisonnier() const;
   inline void clear_prisonnier();
   static const int kPrisonnierFieldNumber = 43;
   inline bool prisonnier() const;
   inline void set_prisonnier(bool value);
   
-  // optional bool refugie_pris_en_compte = 44 [default = false];
+  // optional bool refugie_pris_en_compte = 44;
   inline bool has_refugie_pris_en_compte() const;
   inline void clear_refugie_pris_en_compte();
   static const int kRefugiePrisEnCompteFieldNumber = 44;
@@ -6422,7 +6453,7 @@ class MsgUnitAttributes : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::UnitId* id_;
+  ::Common::UnitId* unit_;
   ::MsgsSimToClient::HumanDotations* dotation_eff_personnel_;
   ::MsgsSimToClient::EquipmentDotations* dotation_eff_materiel_;
   ::MsgsSimToClient::ResourceDotations* dotation_eff_ressource_;
@@ -6459,7 +6490,7 @@ class MsgUnitAttributes : public ::google::protobuf::Message {
   int etat_operationnel_;
   int disponibilite_au_tir_indirect_;
   int roe_;
-  int roe_population_;
+  int roe_crowd_;
   int fatigue_;
   int moral_;
   int experience_;
@@ -6541,12 +6572,12 @@ class MsgUnitPathFind : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.UnitId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::UnitId& id() const;
-  inline ::Common::UnitId* mutable_id();
+  // required .Common.UnitId unit = 1;
+  inline bool has_unit() const;
+  inline void clear_unit();
+  static const int kUnitFieldNumber = 1;
+  inline const ::Common::UnitId& unit() const;
+  inline ::Common::UnitId* mutable_unit();
   
   // required .Common.MsgPath itineraire = 2;
   inline bool has_itineraire() const;
@@ -6559,7 +6590,7 @@ class MsgUnitPathFind : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::UnitId* id_;
+  ::Common::UnitId* unit_;
   ::Common::MsgPath* itineraire_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -6636,18 +6667,18 @@ class MsgUnitDestruction : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.UnitId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::UnitId& id() const;
-  inline ::Common::UnitId* mutable_id();
+  // required .Common.UnitId unit = 1;
+  inline bool has_unit() const;
+  inline void clear_unit();
+  static const int kUnitFieldNumber = 1;
+  inline const ::Common::UnitId& unit() const;
+  inline ::Common::UnitId* mutable_unit();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::UnitId* id_;
+  ::Common::UnitId* unit_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
@@ -6723,12 +6754,12 @@ class MsgUnitEnvironmentType : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.UnitId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::UnitId& id() const;
-  inline ::Common::UnitId* mutable_id();
+  // required .Common.UnitId unit = 1;
+  inline bool has_unit() const;
+  inline void clear_unit();
+  static const int kUnitFieldNumber = 1;
+  inline const ::Common::UnitId& unit() const;
+  inline ::Common::UnitId* mutable_unit();
   
   // required int32 area = 2;
   inline bool has_area() const;
@@ -6762,7 +6793,7 @@ class MsgUnitEnvironmentType : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::UnitId* id_;
+  ::Common::UnitId* unit_;
   ::google::protobuf::int32 area_;
   ::google::protobuf::int32 left_;
   ::google::protobuf::int32 right_;
@@ -6842,12 +6873,12 @@ class MsgUnitKnowledgeCreation : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.UnitKnowledgeId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::UnitKnowledgeId& id() const;
-  inline ::Common::UnitKnowledgeId* mutable_id();
+  // required .Common.UnitKnowledgeId knowledge = 1;
+  inline bool has_knowledge() const;
+  inline void clear_knowledge();
+  static const int kKnowledgeFieldNumber = 1;
+  inline const ::Common::UnitKnowledgeId& knowledge() const;
+  inline ::Common::UnitKnowledgeId* mutable_knowledge();
   
   // required .Common.KnowledgeGroupId knowledge_group = 2;
   inline bool has_knowledge_group() const;
@@ -6874,7 +6905,7 @@ class MsgUnitKnowledgeCreation : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::UnitKnowledgeId* id_;
+  ::Common::UnitKnowledgeId* knowledge_;
   ::Common::KnowledgeGroupId* knowledge_group_;
   ::Common::UnitId* unit_;
   ::Common::UnitType* type_;
@@ -7138,12 +7169,12 @@ class MsgUnitKnowledgeUpdate : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.UnitKnowledgeId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::UnitKnowledgeId& id() const;
-  inline ::Common::UnitKnowledgeId* mutable_id();
+  // required .Common.UnitKnowledgeId knowledge = 1;
+  inline bool has_knowledge() const;
+  inline void clear_knowledge();
+  static const int kKnowledgeFieldNumber = 1;
+  inline const ::Common::UnitKnowledgeId& knowledge() const;
+  inline ::Common::UnitKnowledgeId* mutable_knowledge();
   
   // required .Common.KnowledgeGroupId knowledge_group = 2;
   inline bool has_knowledge_group() const;
@@ -7152,7 +7183,7 @@ class MsgUnitKnowledgeUpdate : public ::google::protobuf::Message {
   inline const ::Common::KnowledgeGroupId& knowledge_group() const;
   inline ::Common::KnowledgeGroupId* mutable_knowledge_group();
   
-  // optional int32 pertinence = 3 [default = 0];
+  // optional int32 pertinence = 3;
   inline bool has_pertinence() const;
   inline void clear_pertinence();
   static const int kPertinenceFieldNumber = 3;
@@ -7173,14 +7204,14 @@ class MsgUnitKnowledgeUpdate : public ::google::protobuf::Message {
   inline MsgsSimToClient::EnumUnitIdentificationLevel max_identification_level() const;
   inline void set_max_identification_level(MsgsSimToClient::EnumUnitIdentificationLevel value);
   
-  // optional int32 etat_op = 6 [default = 0];
+  // optional int32 etat_op = 6;
   inline bool has_etat_op() const;
   inline void clear_etat_op();
   static const int kEtatOpFieldNumber = 6;
   inline ::google::protobuf::int32 etat_op() const;
   inline void set_etat_op(::google::protobuf::int32 value);
   
-  // optional bool mort = 7 [default = false];
+  // optional bool mort = 7;
   inline bool has_mort() const;
   inline void clear_mort();
   static const int kMortFieldNumber = 7;
@@ -7201,7 +7232,7 @@ class MsgUnitKnowledgeUpdate : public ::google::protobuf::Message {
   inline const ::Common::MsgHeading& direction() const;
   inline ::Common::MsgHeading* mutable_direction();
   
-  // optional int32 speed = 10 [default = 0];
+  // optional int32 speed = 10;
   inline bool has_speed() const;
   inline void clear_speed();
   static const int kSpeedFieldNumber = 10;
@@ -7215,7 +7246,7 @@ class MsgUnitKnowledgeUpdate : public ::google::protobuf::Message {
   inline const ::Common::PartyId& party() const;
   inline ::Common::PartyId* mutable_party();
   
-  // optional bool nature_pc = 12 [default = false];
+  // optional bool nature_pc = 12;
   inline bool has_nature_pc() const;
   inline void clear_nature_pc();
   static const int kNaturePcFieldNumber = 12;
@@ -7236,14 +7267,14 @@ class MsgUnitKnowledgeUpdate : public ::google::protobuf::Message {
   inline const ::Common::UnitId& surrendered_unit() const;
   inline ::Common::UnitId* mutable_surrendered_unit();
   
-  // optional bool prisonnier = 15 [default = false];
+  // optional bool prisonnier = 15;
   inline bool has_prisonnier() const;
   inline void clear_prisonnier();
   static const int kPrisonnierFieldNumber = 15;
   inline bool prisonnier() const;
   inline void set_prisonnier(bool value);
   
-  // optional bool refugie_pris_en_compte = 16 [default = false];
+  // optional bool refugie_pris_en_compte = 16;
   inline bool has_refugie_pris_en_compte() const;
   inline void clear_refugie_pris_en_compte();
   static const int kRefugiePrisEnCompteFieldNumber = 16;
@@ -7254,7 +7285,7 @@ class MsgUnitKnowledgeUpdate : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::UnitKnowledgeId* id_;
+  ::Common::UnitKnowledgeId* knowledge_;
   ::Common::KnowledgeGroupId* knowledge_group_;
   ::google::protobuf::int32 pertinence_;
   int identification_level_;
@@ -7345,12 +7376,12 @@ class MsgUnitKnowledgeDestruction : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.UnitKnowledgeId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::UnitKnowledgeId& id() const;
-  inline ::Common::UnitKnowledgeId* mutable_id();
+  // required .Common.UnitKnowledgeId knowledge = 1;
+  inline bool has_knowledge() const;
+  inline void clear_knowledge();
+  static const int kKnowledgeFieldNumber = 1;
+  inline const ::Common::UnitKnowledgeId& knowledge() const;
+  inline ::Common::UnitKnowledgeId* mutable_knowledge();
   
   // required .Common.KnowledgeGroupId knowledge_group = 2;
   inline bool has_knowledge_group() const;
@@ -7363,7 +7394,7 @@ class MsgUnitKnowledgeDestruction : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::UnitKnowledgeId* id_;
+  ::Common::UnitKnowledgeId* knowledge_;
   ::Common::KnowledgeGroupId* knowledge_group_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -7387,14 +7418,14 @@ class MsgUnitKnowledgeDestruction : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgStartUnitFire_target : public ::google::protobuf::Message {
+class UnitFireTarget : public ::google::protobuf::Message {
  public:
-  MsgStartUnitFire_target();
-  virtual ~MsgStartUnitFire_target();
+  UnitFireTarget();
+  virtual ~UnitFireTarget();
   
-  MsgStartUnitFire_target(const MsgStartUnitFire_target& from);
+  UnitFireTarget(const UnitFireTarget& from);
   
-  inline MsgStartUnitFire_target& operator=(const MsgStartUnitFire_target& from) {
+  inline UnitFireTarget& operator=(const UnitFireTarget& from) {
     CopyFrom(from);
     return *this;
   }
@@ -7408,16 +7439,16 @@ class MsgStartUnitFire_target : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgStartUnitFire_target& default_instance();
-  void Swap(MsgStartUnitFire_target* other);
+  static const UnitFireTarget& default_instance();
+  void Swap(UnitFireTarget* other);
   
   // implements Message ----------------------------------------------
   
-  MsgStartUnitFire_target* New() const;
+  UnitFireTarget* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgStartUnitFire_target& from);
-  void MergeFrom(const MsgStartUnitFire_target& from);
+  void CopyFrom(const UnitFireTarget& from);
+  void MergeFrom(const UnitFireTarget& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -7447,12 +7478,12 @@ class MsgStartUnitFire_target : public ::google::protobuf::Message {
   inline const ::Common::UnitId& unit() const;
   inline ::Common::UnitId* mutable_unit();
   
-  // optional .Common.PopulationId population = 2;
-  inline bool has_population() const;
-  inline void clear_population();
-  static const int kPopulationFieldNumber = 2;
-  inline const ::Common::PopulationId& population() const;
-  inline ::Common::PopulationId* mutable_population();
+  // optional .Common.CrowdId crowd = 2;
+  inline bool has_crowd() const;
+  inline void clear_crowd();
+  static const int kCrowdFieldNumber = 2;
+  inline const ::Common::CrowdId& crowd() const;
+  inline ::Common::CrowdId* mutable_crowd();
   
   // optional .Common.MsgCoordLatLong position = 3;
   inline bool has_position() const;
@@ -7466,7 +7497,7 @@ class MsgStartUnitFire_target : public ::google::protobuf::Message {
   mutable int _cached_size_;
   
   ::Common::UnitId* unit_;
-  ::Common::PopulationId* population_;
+  ::Common::CrowdId* crowd_;
   ::Common::MsgCoordLatLong* position_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -7486,7 +7517,7 @@ class MsgStartUnitFire_target : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgStartUnitFire_target* default_instance_;
+  static UnitFireTarget* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -7543,12 +7574,12 @@ class MsgStartUnitFire : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.FireId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::FireId& id() const;
-  inline ::Common::FireId* mutable_id();
+  // required .Common.FireId fire = 1;
+  inline bool has_fire() const;
+  inline void clear_fire();
+  static const int kFireFieldNumber = 1;
+  inline const ::Common::FireId& fire() const;
+  inline ::Common::FireId* mutable_fire();
   
   // required .Common.UnitId firing_unit = 2;
   inline bool has_firing_unit() const;
@@ -7557,19 +7588,19 @@ class MsgStartUnitFire : public ::google::protobuf::Message {
   inline const ::Common::UnitId& firing_unit() const;
   inline ::Common::UnitId* mutable_firing_unit();
   
-  // required .MsgsSimToClient.MsgStartUnitFire_target target = 3;
+  // required .MsgsSimToClient.UnitFireTarget target = 3;
   inline bool has_target() const;
   inline void clear_target();
   static const int kTargetFieldNumber = 3;
-  inline const ::MsgsSimToClient::MsgStartUnitFire_target& target() const;
-  inline ::MsgsSimToClient::MsgStartUnitFire_target* mutable_target();
+  inline const ::MsgsSimToClient::UnitFireTarget& target() const;
+  inline ::MsgsSimToClient::UnitFireTarget* mutable_target();
   
-  // required .Common.MsgStartUnitFire_type type = 4;
+  // required .Common.UnitFireType type = 4;
   inline bool has_type() const;
   inline void clear_type();
   static const int kTypeFieldNumber = 4;
-  inline Common::MsgStartUnitFire_type type() const;
-  inline void set_type(Common::MsgStartUnitFire_type value);
+  inline Common::UnitFireType type() const;
+  inline void set_type(Common::UnitFireType value);
   
   // optional .Common.ResourceType ammunition = 5;
   inline bool has_ammunition() const;
@@ -7582,9 +7613,9 @@ class MsgStartUnitFire : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::FireId* id_;
+  ::Common::FireId* fire_;
   ::Common::UnitId* firing_unit_;
-  ::MsgsSimToClient::MsgStartUnitFire_target* target_;
+  ::MsgsSimToClient::UnitFireTarget* target_;
   int type_;
   ::Common::ResourceType* ammunition_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
@@ -8228,14 +8259,14 @@ class MsgUnitsFireDamages : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgPopulationFireDamages : public ::google::protobuf::Message {
+class MsgCrowdFireDamages : public ::google::protobuf::Message {
  public:
-  MsgPopulationFireDamages();
-  virtual ~MsgPopulationFireDamages();
+  MsgCrowdFireDamages();
+  virtual ~MsgCrowdFireDamages();
   
-  MsgPopulationFireDamages(const MsgPopulationFireDamages& from);
+  MsgCrowdFireDamages(const MsgCrowdFireDamages& from);
   
-  inline MsgPopulationFireDamages& operator=(const MsgPopulationFireDamages& from) {
+  inline MsgCrowdFireDamages& operator=(const MsgCrowdFireDamages& from) {
     CopyFrom(from);
     return *this;
   }
@@ -8249,16 +8280,16 @@ class MsgPopulationFireDamages : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgPopulationFireDamages& default_instance();
-  void Swap(MsgPopulationFireDamages* other);
+  static const MsgCrowdFireDamages& default_instance();
+  void Swap(MsgCrowdFireDamages* other);
   
   // implements Message ----------------------------------------------
   
-  MsgPopulationFireDamages* New() const;
+  MsgCrowdFireDamages* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgPopulationFireDamages& from);
-  void MergeFrom(const MsgPopulationFireDamages& from);
+  void CopyFrom(const MsgCrowdFireDamages& from);
+  void MergeFrom(const MsgCrowdFireDamages& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -8281,12 +8312,12 @@ class MsgPopulationFireDamages : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.PopulationId target = 1;
+  // required .Common.CrowdId target = 1;
   inline bool has_target() const;
   inline void clear_target();
   static const int kTargetFieldNumber = 1;
-  inline const ::Common::PopulationId& target() const;
-  inline ::Common::PopulationId* mutable_target();
+  inline const ::Common::CrowdId& target() const;
+  inline ::Common::CrowdId* mutable_target();
   
   // required int32 dead_nbr = 2;
   inline bool has_dead_nbr() const;
@@ -8299,7 +8330,7 @@ class MsgPopulationFireDamages : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::PopulationId* target_;
+  ::Common::CrowdId* target_;
   ::google::protobuf::int32 dead_nbr_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -8319,18 +8350,18 @@ class MsgPopulationFireDamages : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgPopulationFireDamages* default_instance_;
+  static MsgCrowdFireDamages* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgPopulationsFireDamages : public ::google::protobuf::Message {
+class MsgCrowdsFireDamages : public ::google::protobuf::Message {
  public:
-  MsgPopulationsFireDamages();
-  virtual ~MsgPopulationsFireDamages();
+  MsgCrowdsFireDamages();
+  virtual ~MsgCrowdsFireDamages();
   
-  MsgPopulationsFireDamages(const MsgPopulationsFireDamages& from);
+  MsgCrowdsFireDamages(const MsgCrowdsFireDamages& from);
   
-  inline MsgPopulationsFireDamages& operator=(const MsgPopulationsFireDamages& from) {
+  inline MsgCrowdsFireDamages& operator=(const MsgCrowdsFireDamages& from) {
     CopyFrom(from);
     return *this;
   }
@@ -8344,16 +8375,16 @@ class MsgPopulationsFireDamages : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgPopulationsFireDamages& default_instance();
-  void Swap(MsgPopulationsFireDamages* other);
+  static const MsgCrowdsFireDamages& default_instance();
+  void Swap(MsgCrowdsFireDamages* other);
   
   // implements Message ----------------------------------------------
   
-  MsgPopulationsFireDamages* New() const;
+  MsgCrowdsFireDamages* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgPopulationsFireDamages& from);
-  void MergeFrom(const MsgPopulationsFireDamages& from);
+  void CopyFrom(const MsgCrowdsFireDamages& from);
+  void MergeFrom(const MsgCrowdsFireDamages& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -8376,21 +8407,21 @@ class MsgPopulationsFireDamages : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // repeated .MsgsSimToClient.MsgPopulationFireDamages elem = 1;
+  // repeated .MsgsSimToClient.MsgCrowdFireDamages elem = 1;
   inline int elem_size() const;
   inline void clear_elem();
   static const int kElemFieldNumber = 1;
-  inline const ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgPopulationFireDamages >& elem() const;
-  inline ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgPopulationFireDamages >* mutable_elem();
-  inline const ::MsgsSimToClient::MsgPopulationFireDamages& elem(int index) const;
-  inline ::MsgsSimToClient::MsgPopulationFireDamages* mutable_elem(int index);
-  inline ::MsgsSimToClient::MsgPopulationFireDamages* add_elem();
+  inline const ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgCrowdFireDamages >& elem() const;
+  inline ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgCrowdFireDamages >* mutable_elem();
+  inline const ::MsgsSimToClient::MsgCrowdFireDamages& elem(int index) const;
+  inline ::MsgsSimToClient::MsgCrowdFireDamages* mutable_elem(int index);
+  inline ::MsgsSimToClient::MsgCrowdFireDamages* add_elem();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgPopulationFireDamages > elem_;
+  ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgCrowdFireDamages > elem_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
@@ -8409,7 +8440,7 @@ class MsgPopulationsFireDamages : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgPopulationsFireDamages* default_instance_;
+  static MsgCrowdsFireDamages* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -8466,12 +8497,12 @@ class MsgStopUnitFire : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.FireId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::FireId& id() const;
-  inline ::Common::FireId* mutable_id();
+  // required .Common.FireId fire = 1;
+  inline bool has_fire() const;
+  inline void clear_fire();
+  static const int kFireFieldNumber = 1;
+  inline const ::Common::FireId& fire() const;
+  inline ::Common::FireId* mutable_fire();
   
   // optional .MsgsSimToClient.MsgUnitsFireDamages units_damages = 2;
   inline bool has_units_damages() const;
@@ -8480,20 +8511,20 @@ class MsgStopUnitFire : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::MsgUnitsFireDamages& units_damages() const;
   inline ::MsgsSimToClient::MsgUnitsFireDamages* mutable_units_damages();
   
-  // optional .MsgsSimToClient.MsgPopulationsFireDamages populations_damages = 3;
-  inline bool has_populations_damages() const;
-  inline void clear_populations_damages();
-  static const int kPopulationsDamagesFieldNumber = 3;
-  inline const ::MsgsSimToClient::MsgPopulationsFireDamages& populations_damages() const;
-  inline ::MsgsSimToClient::MsgPopulationsFireDamages* mutable_populations_damages();
+  // optional .MsgsSimToClient.MsgCrowdsFireDamages crowds_damages = 3;
+  inline bool has_crowds_damages() const;
+  inline void clear_crowds_damages();
+  static const int kCrowdsDamagesFieldNumber = 3;
+  inline const ::MsgsSimToClient::MsgCrowdsFireDamages& crowds_damages() const;
+  inline ::MsgsSimToClient::MsgCrowdsFireDamages* mutable_crowds_damages();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::FireId* id_;
+  ::Common::FireId* fire_;
   ::MsgsSimToClient::MsgUnitsFireDamages* units_damages_;
-  ::MsgsSimToClient::MsgPopulationsFireDamages* populations_damages_;
+  ::MsgsSimToClient::MsgCrowdsFireDamages* crowds_damages_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
@@ -8516,14 +8547,14 @@ class MsgStopUnitFire : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgStartPopulationFire : public ::google::protobuf::Message {
+class MsgStartCrowdFire : public ::google::protobuf::Message {
  public:
-  MsgStartPopulationFire();
-  virtual ~MsgStartPopulationFire();
+  MsgStartCrowdFire();
+  virtual ~MsgStartCrowdFire();
   
-  MsgStartPopulationFire(const MsgStartPopulationFire& from);
+  MsgStartCrowdFire(const MsgStartCrowdFire& from);
   
-  inline MsgStartPopulationFire& operator=(const MsgStartPopulationFire& from) {
+  inline MsgStartCrowdFire& operator=(const MsgStartCrowdFire& from) {
     CopyFrom(from);
     return *this;
   }
@@ -8537,16 +8568,16 @@ class MsgStartPopulationFire : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgStartPopulationFire& default_instance();
-  void Swap(MsgStartPopulationFire* other);
+  static const MsgStartCrowdFire& default_instance();
+  void Swap(MsgStartCrowdFire* other);
   
   // implements Message ----------------------------------------------
   
-  MsgStartPopulationFire* New() const;
+  MsgStartCrowdFire* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgStartPopulationFire& from);
-  void MergeFrom(const MsgStartPopulationFire& from);
+  void CopyFrom(const MsgStartCrowdFire& from);
+  void MergeFrom(const MsgStartCrowdFire& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -8569,26 +8600,26 @@ class MsgStartPopulationFire : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.FireId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::FireId& id() const;
-  inline ::Common::FireId* mutable_id();
+  // required .Common.FireId fire = 1;
+  inline bool has_fire() const;
+  inline void clear_fire();
+  static const int kFireFieldNumber = 1;
+  inline const ::Common::FireId& fire() const;
+  inline ::Common::FireId* mutable_fire();
   
-  // required .Common.PopulationId firing_population = 2;
-  inline bool has_firing_population() const;
-  inline void clear_firing_population();
-  static const int kFiringPopulationFieldNumber = 2;
-  inline const ::Common::PopulationId& firing_population() const;
-  inline ::Common::PopulationId* mutable_firing_population();
+  // required .Common.CrowdId firing_crowd = 2;
+  inline bool has_firing_crowd() const;
+  inline void clear_firing_crowd();
+  static const int kFiringCrowdFieldNumber = 2;
+  inline const ::Common::CrowdId& firing_crowd() const;
+  inline ::Common::CrowdId* mutable_firing_crowd();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::FireId* id_;
-  ::Common::PopulationId* firing_population_;
+  ::Common::FireId* fire_;
+  ::Common::CrowdId* firing_crowd_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
@@ -8607,18 +8638,18 @@ class MsgStartPopulationFire : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgStartPopulationFire* default_instance_;
+  static MsgStartCrowdFire* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgStopPopulationFire : public ::google::protobuf::Message {
+class MsgStopCrowdFire : public ::google::protobuf::Message {
  public:
-  MsgStopPopulationFire();
-  virtual ~MsgStopPopulationFire();
+  MsgStopCrowdFire();
+  virtual ~MsgStopCrowdFire();
   
-  MsgStopPopulationFire(const MsgStopPopulationFire& from);
+  MsgStopCrowdFire(const MsgStopCrowdFire& from);
   
-  inline MsgStopPopulationFire& operator=(const MsgStopPopulationFire& from) {
+  inline MsgStopCrowdFire& operator=(const MsgStopCrowdFire& from) {
     CopyFrom(from);
     return *this;
   }
@@ -8632,16 +8663,16 @@ class MsgStopPopulationFire : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgStopPopulationFire& default_instance();
-  void Swap(MsgStopPopulationFire* other);
+  static const MsgStopCrowdFire& default_instance();
+  void Swap(MsgStopCrowdFire* other);
   
   // implements Message ----------------------------------------------
   
-  MsgStopPopulationFire* New() const;
+  MsgStopCrowdFire* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgStopPopulationFire& from);
-  void MergeFrom(const MsgStopPopulationFire& from);
+  void CopyFrom(const MsgStopCrowdFire& from);
+  void MergeFrom(const MsgStopCrowdFire& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -8664,12 +8695,12 @@ class MsgStopPopulationFire : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.FireId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::FireId& id() const;
-  inline ::Common::FireId* mutable_id();
+  // required .Common.FireId fire = 1;
+  inline bool has_fire() const;
+  inline void clear_fire();
+  static const int kFireFieldNumber = 1;
+  inline const ::Common::FireId& fire() const;
+  inline ::Common::FireId* mutable_fire();
   
   // required .MsgsSimToClient.MsgUnitsFireDamages units_damages = 2;
   inline bool has_units_damages() const;
@@ -8682,7 +8713,7 @@ class MsgStopPopulationFire : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::FireId* id_;
+  ::Common::FireId* fire_;
   ::MsgsSimToClient::MsgUnitsFireDamages* units_damages_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -8702,7 +8733,7 @@ class MsgStopPopulationFire : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgStopPopulationFire* default_instance_;
+  static MsgStopCrowdFire* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -8759,12 +8790,12 @@ class MsgExplosion : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.ObjectId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::ObjectId& id() const;
-  inline ::Common::ObjectId* mutable_id();
+  // required .Common.ObjectId object = 1;
+  inline bool has_object() const;
+  inline void clear_object();
+  static const int kObjectFieldNumber = 1;
+  inline const ::Common::ObjectId& object() const;
+  inline ::Common::ObjectId* mutable_object();
   
   // optional .MsgsSimToClient.MsgUnitsFireDamages units_damages = 2;
   inline bool has_units_damages() const;
@@ -8773,20 +8804,20 @@ class MsgExplosion : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::MsgUnitsFireDamages& units_damages() const;
   inline ::MsgsSimToClient::MsgUnitsFireDamages* mutable_units_damages();
   
-  // optional .MsgsSimToClient.MsgPopulationsFireDamages populations_damages = 3;
-  inline bool has_populations_damages() const;
-  inline void clear_populations_damages();
-  static const int kPopulationsDamagesFieldNumber = 3;
-  inline const ::MsgsSimToClient::MsgPopulationsFireDamages& populations_damages() const;
-  inline ::MsgsSimToClient::MsgPopulationsFireDamages* mutable_populations_damages();
+  // optional .MsgsSimToClient.MsgCrowdsFireDamages crowds_damages = 3;
+  inline bool has_crowds_damages() const;
+  inline void clear_crowds_damages();
+  static const int kCrowdsDamagesFieldNumber = 3;
+  inline const ::MsgsSimToClient::MsgCrowdsFireDamages& crowds_damages() const;
+  inline ::MsgsSimToClient::MsgCrowdsFireDamages* mutable_crowds_damages();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::ObjectId* id_;
+  ::Common::ObjectId* object_;
   ::MsgsSimToClient::MsgUnitsFireDamages* units_damages_;
-  ::MsgsSimToClient::MsgPopulationsFireDamages* populations_damages_;
+  ::MsgsSimToClient::MsgCrowdsFireDamages* crowds_damages_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
@@ -8862,12 +8893,12 @@ class MsgStartFireEffect : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.FireEffectId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::FireEffectId& id() const;
-  inline ::Common::FireEffectId* mutable_id();
+  // required .Common.FireEffectId fire_effect = 1;
+  inline bool has_fire_effect() const;
+  inline void clear_fire_effect();
+  static const int kFireEffectFieldNumber = 1;
+  inline const ::Common::FireEffectId& fire_effect() const;
+  inline ::Common::FireEffectId* mutable_fire_effect();
   
   // required .Common.MsgLocation location = 2;
   inline bool has_location() const;
@@ -8887,7 +8918,7 @@ class MsgStartFireEffect : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::FireEffectId* id_;
+  ::Common::FireEffectId* fire_effect_;
   ::Common::MsgLocation* location_;
   int type_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
@@ -8965,18 +8996,18 @@ class MsgStopFireEffect : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.FireEffectId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::FireEffectId& id() const;
-  inline ::Common::FireEffectId* mutable_id();
+  // required .Common.FireEffectId fire_effect = 1;
+  inline bool has_fire_effect() const;
+  inline void clear_fire_effect();
+  static const int kFireEffectFieldNumber = 1;
+  inline const ::Common::FireEffectId& fire_effect() const;
+  inline ::Common::FireEffectId* mutable_fire_effect();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::FireEffectId* id_;
+  ::Common::FireEffectId* fire_effect_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
@@ -9052,33 +9083,33 @@ class MsgReport : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.ReportId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::ReportId& id() const;
-  inline ::Common::ReportId* mutable_id();
+  // required .Common.ReportId report = 1;
+  inline bool has_report() const;
+  inline void clear_report();
+  static const int kReportFieldNumber = 1;
+  inline const ::Common::ReportId& report() const;
+  inline ::Common::ReportId* mutable_report();
   
-  // required .Common.Tasker cr = 2;
-  inline bool has_cr() const;
-  inline void clear_cr();
-  static const int kCrFieldNumber = 2;
-  inline const ::Common::Tasker& cr() const;
-  inline ::Common::Tasker* mutable_cr();
+  // required .Common.Tasker source = 2;
+  inline bool has_source() const;
+  inline void clear_source();
+  static const int kSourceFieldNumber = 2;
+  inline const ::Common::Tasker& source() const;
+  inline ::Common::Tasker* mutable_source();
   
-  // required .Common.ReportType cr_oid = 3;
-  inline bool has_cr_oid() const;
-  inline void clear_cr_oid();
-  static const int kCrOidFieldNumber = 3;
-  inline const ::Common::ReportType& cr_oid() const;
-  inline ::Common::ReportType* mutable_cr_oid();
-  
-  // required .MsgsSimToClient.EnumReportType type = 4;
+  // required .Common.ReportType type = 3;
   inline bool has_type() const;
   inline void clear_type();
-  static const int kTypeFieldNumber = 4;
-  inline MsgsSimToClient::EnumReportType type() const;
-  inline void set_type(MsgsSimToClient::EnumReportType value);
+  static const int kTypeFieldNumber = 3;
+  inline const ::Common::ReportType& type() const;
+  inline ::Common::ReportType* mutable_type();
+  
+  // required .MsgsSimToClient.EnumReportType category = 4;
+  inline bool has_category() const;
+  inline void clear_category();
+  static const int kCategoryFieldNumber = 4;
+  inline MsgsSimToClient::EnumReportType category() const;
+  inline void set_category(MsgsSimToClient::EnumReportType value);
   
   // required .Common.MsgDateTime time = 5;
   inline bool has_time() const;
@@ -9087,23 +9118,23 @@ class MsgReport : public ::google::protobuf::Message {
   inline const ::Common::MsgDateTime& time() const;
   inline ::Common::MsgDateTime* mutable_time();
   
-  // optional .Common.MsgMissionParameters parametres = 6;
-  inline bool has_parametres() const;
-  inline void clear_parametres();
-  static const int kParametresFieldNumber = 6;
-  inline const ::Common::MsgMissionParameters& parametres() const;
-  inline ::Common::MsgMissionParameters* mutable_parametres();
+  // optional .Common.MsgMissionParameters parameters = 6;
+  inline bool has_parameters() const;
+  inline void clear_parameters();
+  static const int kParametersFieldNumber = 6;
+  inline const ::Common::MsgMissionParameters& parameters() const;
+  inline ::Common::MsgMissionParameters* mutable_parameters();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::ReportId* id_;
-  ::Common::Tasker* cr_;
-  ::Common::ReportType* cr_oid_;
-  int type_;
+  ::Common::ReportId* report_;
+  ::Common::Tasker* source_;
+  ::Common::ReportType* type_;
+  int category_;
   ::Common::MsgDateTime* time_;
-  ::Common::MsgMissionParameters* parametres_;
+  ::Common::MsgMissionParameters* parameters_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
@@ -9179,12 +9210,12 @@ class MsgInvalidateReport : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.ReportId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::ReportId& id() const;
-  inline ::Common::ReportId* mutable_id();
+  // required .Common.ReportId report = 1;
+  inline bool has_report() const;
+  inline void clear_report();
+  static const int kReportFieldNumber = 1;
+  inline const ::Common::ReportId& report() const;
+  inline ::Common::ReportId* mutable_report();
   
   // required .Common.Tasker source = 2;
   inline bool has_source() const;
@@ -9197,7 +9228,7 @@ class MsgInvalidateReport : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::ReportId* id_;
+  ::Common::ReportId* report_;
   ::Common::Tasker* source_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -9373,12 +9404,12 @@ class MsgDecisionalState : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.Tasker id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::Tasker& id() const;
-  inline ::Common::Tasker* mutable_id();
+  // required .Common.Tasker source = 1;
+  inline bool has_source() const;
+  inline void clear_source();
+  static const int kSourceFieldNumber = 1;
+  inline const ::Common::Tasker& source() const;
+  inline ::Common::Tasker* mutable_source();
   
   // required string key = 2;
   inline bool has_key() const;
@@ -9404,7 +9435,7 @@ class MsgDecisionalState : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::Tasker* id_;
+  ::Common::Tasker* source_;
   ::std::string* key_;
   static const ::std::string _default_key_;
   ::std::string* value_;
@@ -9484,12 +9515,12 @@ class MsgDebugPoints : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.Tasker id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::Tasker& id() const;
-  inline ::Common::Tasker* mutable_id();
+  // required .Common.Tasker source = 1;
+  inline bool has_source() const;
+  inline void clear_source();
+  static const int kSourceFieldNumber = 1;
+  inline const ::Common::Tasker& source() const;
+  inline ::Common::Tasker* mutable_source();
   
   // required .Common.MsgCoordLatLongList coordinates = 2;
   inline bool has_coordinates() const;
@@ -9502,7 +9533,7 @@ class MsgDebugPoints : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::Tasker* id_;
+  ::Common::Tasker* source_;
   ::Common::MsgCoordLatLongList* coordinates_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -9874,12 +9905,12 @@ class MsgUnitVisionCones : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.UnitId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::UnitId& id() const;
-  inline ::Common::UnitId* mutable_id();
+  // required .Common.UnitId unit = 1;
+  inline bool has_unit() const;
+  inline void clear_unit();
+  static const int kUnitFieldNumber = 1;
+  inline const ::Common::UnitId& unit() const;
+  inline ::Common::UnitId* mutable_unit();
   
   // required .MsgsSimToClient.SeqOfVisionCone cones = 2;
   inline bool has_cones() const;
@@ -9899,7 +9930,7 @@ class MsgUnitVisionCones : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::UnitId* id_;
+  ::Common::UnitId* unit_;
   ::MsgsSimToClient::SeqOfVisionCone* cones_;
   float elongation_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
@@ -10138,14 +10169,14 @@ class MsgObjectDetection : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgPopulationConcentrationDetection : public ::google::protobuf::Message {
+class MsgCrowdConcentrationDetection : public ::google::protobuf::Message {
  public:
-  MsgPopulationConcentrationDetection();
-  virtual ~MsgPopulationConcentrationDetection();
+  MsgCrowdConcentrationDetection();
+  virtual ~MsgCrowdConcentrationDetection();
   
-  MsgPopulationConcentrationDetection(const MsgPopulationConcentrationDetection& from);
+  MsgCrowdConcentrationDetection(const MsgCrowdConcentrationDetection& from);
   
-  inline MsgPopulationConcentrationDetection& operator=(const MsgPopulationConcentrationDetection& from) {
+  inline MsgCrowdConcentrationDetection& operator=(const MsgCrowdConcentrationDetection& from) {
     CopyFrom(from);
     return *this;
   }
@@ -10159,16 +10190,16 @@ class MsgPopulationConcentrationDetection : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgPopulationConcentrationDetection& default_instance();
-  void Swap(MsgPopulationConcentrationDetection* other);
+  static const MsgCrowdConcentrationDetection& default_instance();
+  void Swap(MsgCrowdConcentrationDetection* other);
   
   // implements Message ----------------------------------------------
   
-  MsgPopulationConcentrationDetection* New() const;
+  MsgCrowdConcentrationDetection* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgPopulationConcentrationDetection& from);
-  void MergeFrom(const MsgPopulationConcentrationDetection& from);
+  void CopyFrom(const MsgCrowdConcentrationDetection& from);
+  void MergeFrom(const MsgCrowdConcentrationDetection& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -10191,26 +10222,26 @@ class MsgPopulationConcentrationDetection : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.UnitId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::UnitId& id() const;
-  inline ::Common::UnitId* mutable_id();
+  // required .Common.UnitId observer = 1;
+  inline bool has_observer() const;
+  inline void clear_observer();
+  static const int kObserverFieldNumber = 1;
+  inline const ::Common::UnitId& observer() const;
+  inline ::Common::UnitId* mutable_observer();
   
-  // required .Common.PopulationId detected_population = 2;
-  inline bool has_detected_population() const;
-  inline void clear_detected_population();
-  static const int kDetectedPopulationFieldNumber = 2;
-  inline const ::Common::PopulationId& detected_population() const;
-  inline ::Common::PopulationId* mutable_detected_population();
+  // required .Common.CrowdId detected_crowd = 2;
+  inline bool has_detected_crowd() const;
+  inline void clear_detected_crowd();
+  static const int kDetectedCrowdFieldNumber = 2;
+  inline const ::Common::CrowdId& detected_crowd() const;
+  inline ::Common::CrowdId* mutable_detected_crowd();
   
-  // required .Common.PopulationConcentrationId detected_concentration = 3;
+  // required .Common.CrowdConcentrationId detected_concentration = 3;
   inline bool has_detected_concentration() const;
   inline void clear_detected_concentration();
   static const int kDetectedConcentrationFieldNumber = 3;
-  inline const ::Common::PopulationConcentrationId& detected_concentration() const;
-  inline ::Common::PopulationConcentrationId* mutable_detected_concentration();
+  inline const ::Common::CrowdConcentrationId& detected_concentration() const;
+  inline ::Common::CrowdConcentrationId* mutable_detected_concentration();
   
   // required .Common.EnumUnitVisibility visibility = 4;
   inline bool has_visibility() const;
@@ -10223,9 +10254,9 @@ class MsgPopulationConcentrationDetection : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::UnitId* id_;
-  ::Common::PopulationId* detected_population_;
-  ::Common::PopulationConcentrationId* detected_concentration_;
+  ::Common::UnitId* observer_;
+  ::Common::CrowdId* detected_crowd_;
+  ::Common::CrowdConcentrationId* detected_concentration_;
   int visibility_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -10245,18 +10276,18 @@ class MsgPopulationConcentrationDetection : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgPopulationConcentrationDetection* default_instance_;
+  static MsgCrowdConcentrationDetection* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgPopulationFlowDetection : public ::google::protobuf::Message {
+class MsgCrowdFlowDetection : public ::google::protobuf::Message {
  public:
-  MsgPopulationFlowDetection();
-  virtual ~MsgPopulationFlowDetection();
+  MsgCrowdFlowDetection();
+  virtual ~MsgCrowdFlowDetection();
   
-  MsgPopulationFlowDetection(const MsgPopulationFlowDetection& from);
+  MsgCrowdFlowDetection(const MsgCrowdFlowDetection& from);
   
-  inline MsgPopulationFlowDetection& operator=(const MsgPopulationFlowDetection& from) {
+  inline MsgCrowdFlowDetection& operator=(const MsgCrowdFlowDetection& from) {
     CopyFrom(from);
     return *this;
   }
@@ -10270,16 +10301,16 @@ class MsgPopulationFlowDetection : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgPopulationFlowDetection& default_instance();
-  void Swap(MsgPopulationFlowDetection* other);
+  static const MsgCrowdFlowDetection& default_instance();
+  void Swap(MsgCrowdFlowDetection* other);
   
   // implements Message ----------------------------------------------
   
-  MsgPopulationFlowDetection* New() const;
+  MsgCrowdFlowDetection* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgPopulationFlowDetection& from);
-  void MergeFrom(const MsgPopulationFlowDetection& from);
+  void CopyFrom(const MsgCrowdFlowDetection& from);
+  void MergeFrom(const MsgCrowdFlowDetection& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -10302,26 +10333,26 @@ class MsgPopulationFlowDetection : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.UnitId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::UnitId& id() const;
-  inline ::Common::UnitId* mutable_id();
+  // required .Common.UnitId observer = 1;
+  inline bool has_observer() const;
+  inline void clear_observer();
+  static const int kObserverFieldNumber = 1;
+  inline const ::Common::UnitId& observer() const;
+  inline ::Common::UnitId* mutable_observer();
   
-  // required .Common.PopulationId detected_population = 2;
-  inline bool has_detected_population() const;
-  inline void clear_detected_population();
-  static const int kDetectedPopulationFieldNumber = 2;
-  inline const ::Common::PopulationId& detected_population() const;
-  inline ::Common::PopulationId* mutable_detected_population();
+  // required .Common.CrowdId detected_crowd = 2;
+  inline bool has_detected_crowd() const;
+  inline void clear_detected_crowd();
+  static const int kDetectedCrowdFieldNumber = 2;
+  inline const ::Common::CrowdId& detected_crowd() const;
+  inline ::Common::CrowdId* mutable_detected_crowd();
   
-  // required .Common.PopulationFlowId detected_flow = 3;
+  // required .Common.CrowdFlowId detected_flow = 3;
   inline bool has_detected_flow() const;
   inline void clear_detected_flow();
   static const int kDetectedFlowFieldNumber = 3;
-  inline const ::Common::PopulationFlowId& detected_flow() const;
-  inline ::Common::PopulationFlowId* mutable_detected_flow();
+  inline const ::Common::CrowdFlowId& detected_flow() const;
+  inline ::Common::CrowdFlowId* mutable_detected_flow();
   
   // required .Common.MsgPath visible_flow = 4;
   inline bool has_visible_flow() const;
@@ -10334,9 +10365,9 @@ class MsgPopulationFlowDetection : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::UnitId* id_;
-  ::Common::PopulationId* detected_population_;
-  ::Common::PopulationFlowId* detected_flow_;
+  ::Common::UnitId* observer_;
+  ::Common::CrowdId* detected_crowd_;
+  ::Common::CrowdFlowId* detected_flow_;
   ::Common::MsgPath* visible_flow_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -10356,7 +10387,7 @@ class MsgPopulationFlowDetection : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgPopulationFlowDetection* default_instance_;
+  static MsgCrowdFlowDetection* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -10413,12 +10444,12 @@ class MsgObjectCreation : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.ObjectId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::ObjectId& id() const;
-  inline ::Common::ObjectId* mutable_id();
+  // required .Common.ObjectId object = 1;
+  inline bool has_object() const;
+  inline void clear_object();
+  static const int kObjectFieldNumber = 1;
+  inline const ::Common::ObjectId& object() const;
+  inline ::Common::ObjectId* mutable_object();
   
   // required .Common.ObjectType type = 2;
   inline bool has_type() const;
@@ -10451,24 +10482,24 @@ class MsgObjectCreation : public ::google::protobuf::Message {
   inline const ::Common::MsgLocation& location() const;
   inline ::Common::MsgLocation* mutable_location();
   
-  // required .Common.MsgObjectAttributes attributes = 6;
+  // required .Common.ObjectAttributes attributes = 6;
   inline bool has_attributes() const;
   inline void clear_attributes();
   static const int kAttributesFieldNumber = 6;
-  inline const ::Common::MsgObjectAttributes& attributes() const;
-  inline ::Common::MsgObjectAttributes* mutable_attributes();
+  inline const ::Common::ObjectAttributes& attributes() const;
+  inline ::Common::ObjectAttributes* mutable_attributes();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::ObjectId* id_;
+  ::Common::ObjectId* object_;
   ::Common::ObjectType* type_;
   ::std::string* name_;
   static const ::std::string _default_name_;
   ::Common::PartyId* party_;
   ::Common::MsgLocation* location_;
-  ::Common::MsgObjectAttributes* attributes_;
+  ::Common::ObjectAttributes* attributes_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
@@ -10544,18 +10575,18 @@ class MsgObjectDestruction : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.ObjectId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::ObjectId& id() const;
-  inline ::Common::ObjectId* mutable_id();
+  // required .Common.ObjectId object = 1;
+  inline bool has_object() const;
+  inline void clear_object();
+  static const int kObjectFieldNumber = 1;
+  inline const ::Common::ObjectId& object() const;
+  inline ::Common::ObjectId* mutable_object();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::ObjectId* id_;
+  ::Common::ObjectId* object_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
@@ -10631,12 +10662,12 @@ class MsgObjectUpdate : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.ObjectId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::ObjectId& id() const;
-  inline ::Common::ObjectId* mutable_id();
+  // required .Common.ObjectId object = 1;
+  inline bool has_object() const;
+  inline void clear_object();
+  static const int kObjectFieldNumber = 1;
+  inline const ::Common::ObjectId& object() const;
+  inline ::Common::ObjectId* mutable_object();
   
   // optional .Common.MsgLocation location = 2;
   inline bool has_location() const;
@@ -10645,20 +10676,20 @@ class MsgObjectUpdate : public ::google::protobuf::Message {
   inline const ::Common::MsgLocation& location() const;
   inline ::Common::MsgLocation* mutable_location();
   
-  // required .Common.MsgObjectAttributes attributes = 3;
+  // required .Common.ObjectAttributes attributes = 3;
   inline bool has_attributes() const;
   inline void clear_attributes();
   static const int kAttributesFieldNumber = 3;
-  inline const ::Common::MsgObjectAttributes& attributes() const;
-  inline ::Common::MsgObjectAttributes* mutable_attributes();
+  inline const ::Common::ObjectAttributes& attributes() const;
+  inline ::Common::ObjectAttributes* mutable_attributes();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::ObjectId* id_;
+  ::Common::ObjectId* object_;
   ::Common::MsgLocation* location_;
-  ::Common::MsgObjectAttributes* attributes_;
+  ::Common::ObjectAttributes* attributes_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
@@ -10734,12 +10765,12 @@ class MsgObjectKnowledgeCreation : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.ObjectKnowledgeId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::ObjectKnowledgeId& id() const;
-  inline ::Common::ObjectKnowledgeId* mutable_id();
+  // required .Common.ObjectKnowledgeId knowledge = 1;
+  inline bool has_knowledge() const;
+  inline void clear_knowledge();
+  static const int kKnowledgeFieldNumber = 1;
+  inline const ::Common::ObjectKnowledgeId& knowledge() const;
+  inline ::Common::ObjectKnowledgeId* mutable_knowledge();
   
   // required .Common.PartyId party = 2;
   inline bool has_party() const;
@@ -10762,12 +10793,12 @@ class MsgObjectKnowledgeCreation : public ::google::protobuf::Message {
   inline const ::Common::ObjectType& type() const;
   inline ::Common::ObjectType* mutable_type();
   
-  // required .Common.MsgObjectAttributes attributes = 5;
+  // required .Common.ObjectAttributes attributes = 5;
   inline bool has_attributes() const;
   inline void clear_attributes();
   static const int kAttributesFieldNumber = 5;
-  inline const ::Common::MsgObjectAttributes& attributes() const;
-  inline ::Common::MsgObjectAttributes* mutable_attributes();
+  inline const ::Common::ObjectAttributes& attributes() const;
+  inline ::Common::ObjectAttributes* mutable_attributes();
   
   // optional .Common.KnowledgeGroupId knowledge_group = 6;
   inline bool has_knowledge_group() const;
@@ -10780,11 +10811,11 @@ class MsgObjectKnowledgeCreation : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::ObjectKnowledgeId* id_;
+  ::Common::ObjectKnowledgeId* knowledge_;
   ::Common::PartyId* party_;
   ::Common::ObjectId* object_;
   ::Common::ObjectType* type_;
-  ::Common::MsgObjectAttributes* attributes_;
+  ::Common::ObjectAttributes* attributes_;
   ::Common::KnowledgeGroupId* knowledge_group_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -10861,12 +10892,12 @@ class MsgObjectKnowledgeUpdate : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.ObjectKnowledgeId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::ObjectKnowledgeId& id() const;
-  inline ::Common::ObjectKnowledgeId* mutable_id();
+  // required .Common.ObjectKnowledgeId knowledge = 1;
+  inline bool has_knowledge() const;
+  inline void clear_knowledge();
+  static const int kKnowledgeFieldNumber = 1;
+  inline const ::Common::ObjectKnowledgeId& knowledge() const;
+  inline ::Common::ObjectKnowledgeId* mutable_knowledge();
   
   // required .Common.PartyId party = 2;
   inline bool has_party() const;
@@ -10882,7 +10913,7 @@ class MsgObjectKnowledgeUpdate : public ::google::protobuf::Message {
   inline const ::Common::ObjectId& object() const;
   inline ::Common::ObjectId* mutable_object();
   
-  // optional int32 relevance = 4 [default = 0];
+  // optional int32 relevance = 4;
   inline bool has_relevance() const;
   inline void clear_relevance();
   static const int kRelevanceFieldNumber = 4;
@@ -10896,14 +10927,14 @@ class MsgObjectKnowledgeUpdate : public ::google::protobuf::Message {
   inline const ::Common::MsgLocation& location() const;
   inline ::Common::MsgLocation* mutable_location();
   
-  // optional .Common.MsgObjectAttributes attributes = 6;
+  // optional .Common.ObjectAttributes attributes = 6;
   inline bool has_attributes() const;
   inline void clear_attributes();
   static const int kAttributesFieldNumber = 6;
-  inline const ::Common::MsgObjectAttributes& attributes() const;
-  inline ::Common::MsgObjectAttributes* mutable_attributes();
+  inline const ::Common::ObjectAttributes& attributes() const;
+  inline ::Common::ObjectAttributes* mutable_attributes();
   
-  // optional bool perceived = 7 [default = false];
+  // optional bool perceived = 7;
   inline bool has_perceived() const;
   inline void clear_perceived();
   static const int kPerceivedFieldNumber = 7;
@@ -10928,12 +10959,12 @@ class MsgObjectKnowledgeUpdate : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::ObjectKnowledgeId* id_;
+  ::Common::ObjectKnowledgeId* knowledge_;
   ::Common::PartyId* party_;
   ::Common::ObjectId* object_;
   ::google::protobuf::int32 relevance_;
   ::Common::MsgLocation* location_;
-  ::Common::MsgObjectAttributes* attributes_;
+  ::Common::ObjectAttributes* attributes_;
   bool perceived_;
   ::Common::AutomatIdList* perceiving_automats_;
   ::Common::KnowledgeGroupId* knowledge_group_;
@@ -11012,12 +11043,12 @@ class MsgObjectKnowledgeDestruction : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.ObjectKnowledgeId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::ObjectKnowledgeId& id() const;
-  inline ::Common::ObjectKnowledgeId* mutable_id();
+  // required .Common.ObjectKnowledgeId knowledge = 1;
+  inline bool has_knowledge() const;
+  inline void clear_knowledge();
+  static const int kKnowledgeFieldNumber = 1;
+  inline const ::Common::ObjectKnowledgeId& knowledge() const;
+  inline ::Common::ObjectKnowledgeId* mutable_knowledge();
   
   // required .Common.PartyId party = 2;
   inline bool has_party() const;
@@ -11030,7 +11061,7 @@ class MsgObjectKnowledgeDestruction : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::ObjectKnowledgeId* id_;
+  ::Common::ObjectKnowledgeId* knowledge_;
   ::Common::PartyId* party_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -11107,12 +11138,12 @@ class MsgUrbanKnowledgeCreation : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.UrbanObjectKnowledgeId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::UrbanObjectKnowledgeId& id() const;
-  inline ::Common::UrbanObjectKnowledgeId* mutable_id();
+  // required .Common.UrbanObjectKnowledgeId knowledge = 1;
+  inline bool has_knowledge() const;
+  inline void clear_knowledge();
+  static const int kKnowledgeFieldNumber = 1;
+  inline const ::Common::UrbanObjectKnowledgeId& knowledge() const;
+  inline ::Common::UrbanObjectKnowledgeId* mutable_knowledge();
   
   // required .Common.PartyId party = 2;
   inline bool has_party() const;
@@ -11132,7 +11163,7 @@ class MsgUrbanKnowledgeCreation : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::UrbanObjectKnowledgeId* id_;
+  ::Common::UrbanObjectKnowledgeId* knowledge_;
   ::Common::PartyId* party_;
   ::Common::UrbanObjectId* urban_block_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
@@ -11210,12 +11241,12 @@ class MsgUrbanKnowledgeUpdate : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.UrbanObjectKnowledgeId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::UrbanObjectKnowledgeId& id() const;
-  inline ::Common::UrbanObjectKnowledgeId* mutable_id();
+  // required .Common.UrbanObjectKnowledgeId knowledge = 1;
+  inline bool has_knowledge() const;
+  inline void clear_knowledge();
+  static const int kKnowledgeFieldNumber = 1;
+  inline const ::Common::UrbanObjectKnowledgeId& knowledge() const;
+  inline ::Common::UrbanObjectKnowledgeId* mutable_knowledge();
   
   // required .Common.PartyId party = 2;
   inline bool has_party() const;
@@ -11263,7 +11294,7 @@ class MsgUrbanKnowledgeUpdate : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::UrbanObjectKnowledgeId* id_;
+  ::Common::UrbanObjectKnowledgeId* knowledge_;
   ::Common::PartyId* party_;
   ::Common::UrbanObjectId* urban_block_;
   ::google::protobuf::int32 progress_;
@@ -11345,12 +11376,12 @@ class MsgUrbanKnowledgeDestruction : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.UrbanObjectKnowledgeId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::UrbanObjectKnowledgeId& id() const;
-  inline ::Common::UrbanObjectKnowledgeId* mutable_id();
+  // required .Common.UrbanObjectKnowledgeId knowledge = 1;
+  inline bool has_knowledge() const;
+  inline void clear_knowledge();
+  static const int kKnowledgeFieldNumber = 1;
+  inline const ::Common::UrbanObjectKnowledgeId& knowledge() const;
+  inline ::Common::UrbanObjectKnowledgeId* mutable_knowledge();
   
   // required .Common.PartyId party = 2;
   inline bool has_party() const;
@@ -11363,7 +11394,7 @@ class MsgUrbanKnowledgeDestruction : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::UrbanObjectKnowledgeId* id_;
+  ::Common::UrbanObjectKnowledgeId* knowledge_;
   ::Common::PartyId* party_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -11440,12 +11471,12 @@ class MsgLogMedicalHandlingCreation : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.MedicalRequestId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::MedicalRequestId& id() const;
-  inline ::Common::MedicalRequestId* mutable_id();
+  // required .Common.MedicalRequestId request = 1;
+  inline bool has_request() const;
+  inline void clear_request();
+  static const int kRequestFieldNumber = 1;
+  inline const ::Common::MedicalRequestId& request() const;
+  inline ::Common::MedicalRequestId* mutable_request();
   
   // required .Common.UnitId unit = 2;
   inline bool has_unit() const;
@@ -11475,14 +11506,14 @@ class MsgLogMedicalHandlingCreation : public ::google::protobuf::Message {
   inline Common::EnumHumanWound blessure() const;
   inline void set_blessure(Common::EnumHumanWound value);
   
-  // optional bool blesse_mental = 6 [default = false];
+  // optional bool blesse_mental = 6;
   inline bool has_blesse_mental() const;
   inline void clear_blesse_mental();
   static const int kBlesseMentalFieldNumber = 6;
   inline bool blesse_mental() const;
   inline void set_blesse_mental(bool value);
   
-  // optional bool contamine_nbc = 7 [default = false];
+  // optional bool contamine_nbc = 7;
   inline bool has_contamine_nbc() const;
   inline void clear_contamine_nbc();
   static const int kContamineNbcFieldNumber = 7;
@@ -11493,7 +11524,7 @@ class MsgLogMedicalHandlingCreation : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::MedicalRequestId* id_;
+  ::Common::MedicalRequestId* request_;
   ::Common::UnitId* unit_;
   ::google::protobuf::int32 tick_creation_;
   int rang_;
@@ -11575,12 +11606,12 @@ class MsgLogMedicalHandlingUpdate : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.MedicalRequestId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::MedicalRequestId& id() const;
-  inline ::Common::MedicalRequestId* mutable_id();
+  // required .Common.MedicalRequestId request = 1;
+  inline bool has_request() const;
+  inline void clear_request();
+  static const int kRequestFieldNumber = 1;
+  inline const ::Common::MedicalRequestId& request() const;
+  inline ::Common::MedicalRequestId* mutable_request();
   
   // required .Common.UnitId unit = 2;
   inline bool has_unit() const;
@@ -11603,14 +11634,14 @@ class MsgLogMedicalHandlingUpdate : public ::google::protobuf::Message {
   inline Common::EnumHumanWound blessure() const;
   inline void set_blessure(Common::EnumHumanWound value);
   
-  // optional bool blesse_mental = 5 [default = false];
+  // optional bool blesse_mental = 5;
   inline bool has_blesse_mental() const;
   inline void clear_blesse_mental();
   static const int kBlesseMentalFieldNumber = 5;
   inline bool blesse_mental() const;
   inline void set_blesse_mental(bool value);
   
-  // optional bool contamine_nbc = 6 [default = false];
+  // optional bool contamine_nbc = 6;
   inline bool has_contamine_nbc() const;
   inline void clear_contamine_nbc();
   static const int kContamineNbcFieldNumber = 6;
@@ -11624,7 +11655,7 @@ class MsgLogMedicalHandlingUpdate : public ::google::protobuf::Message {
   inline Common::EnumLogMedicalHandlingStatus etat() const;
   inline void set_etat(Common::EnumLogMedicalHandlingStatus value);
   
-  // optional bool diagnostique_effectue = 8 [default = false];
+  // optional bool diagnostique_effectue = 8;
   inline bool has_diagnostique_effectue() const;
   inline void clear_diagnostique_effectue();
   static const int kDiagnostiqueEffectueFieldNumber = 8;
@@ -11635,7 +11666,7 @@ class MsgLogMedicalHandlingUpdate : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::MedicalRequestId* id_;
+  ::Common::MedicalRequestId* request_;
   ::Common::UnitId* unit_;
   ::Common::UnitId* provider_;
   int blessure_;
@@ -11718,12 +11749,12 @@ class MsgLogMedicalHandlingDestruction : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.MedicalRequestId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::MedicalRequestId& id() const;
-  inline ::Common::MedicalRequestId* mutable_id();
+  // required .Common.MedicalRequestId request = 1;
+  inline bool has_request() const;
+  inline void clear_request();
+  static const int kRequestFieldNumber = 1;
+  inline const ::Common::MedicalRequestId& request() const;
+  inline ::Common::MedicalRequestId* mutable_request();
   
   // required .Common.UnitId unit = 2;
   inline bool has_unit() const;
@@ -11736,7 +11767,7 @@ class MsgLogMedicalHandlingDestruction : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::MedicalRequestId* id_;
+  ::Common::MedicalRequestId* request_;
   ::Common::UnitId* unit_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -11813,12 +11844,12 @@ class MsgLogMedicalEquipmentAvailability : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required int32 type_equipement = 1;
-  inline bool has_type_equipement() const;
-  inline void clear_type_equipement();
-  static const int kTypeEquipementFieldNumber = 1;
-  inline ::google::protobuf::int32 type_equipement() const;
-  inline void set_type_equipement(::google::protobuf::int32 value);
+  // required .Common.EquipmentType equipment_type = 1;
+  inline bool has_equipment_type() const;
+  inline void clear_equipment_type();
+  static const int kEquipmentTypeFieldNumber = 1;
+  inline const ::Common::EquipmentType& equipment_type() const;
+  inline ::Common::EquipmentType* mutable_equipment_type();
   
   // required int32 nbr_total = 2;
   inline bool has_nbr_total() const;
@@ -11841,14 +11872,14 @@ class MsgLogMedicalEquipmentAvailability : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 nbr_au_travail() const;
   inline void set_nbr_au_travail(::google::protobuf::int32 value);
   
-  // optional int32 nbr_pretes = 5 [default = 0];
+  // optional int32 nbr_pretes = 5;
   inline bool has_nbr_pretes() const;
   inline void clear_nbr_pretes();
   static const int kNbrPretesFieldNumber = 5;
   inline ::google::protobuf::int32 nbr_pretes() const;
   inline void set_nbr_pretes(::google::protobuf::int32 value);
   
-  // optional int32 nbr_au_repos = 6 [default = 0];
+  // optional int32 nbr_au_repos = 6;
   inline bool has_nbr_au_repos() const;
   inline void clear_nbr_au_repos();
   static const int kNbrAuReposFieldNumber = 6;
@@ -11859,7 +11890,7 @@ class MsgLogMedicalEquipmentAvailability : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::int32 type_equipement_;
+  ::Common::EquipmentType* equipment_type_;
   ::google::protobuf::int32 nbr_total_;
   ::google::protobuf::int32 nbr_disponibles_;
   ::google::protobuf::int32 nbr_au_travail_;
@@ -12030,14 +12061,14 @@ class MsgLogMedicalState : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.UnitId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::UnitId& id() const;
-  inline ::Common::UnitId* mutable_id();
+  // required .Common.UnitId unit = 1;
+  inline bool has_unit() const;
+  inline void clear_unit();
+  static const int kUnitFieldNumber = 1;
+  inline const ::Common::UnitId& unit() const;
+  inline ::Common::UnitId* mutable_unit();
   
-  // optional bool chaine_activee = 2 [default = false];
+  // optional bool chaine_activee = 2;
   inline bool has_chaine_activee() const;
   inline void clear_chaine_activee();
   static const int kChaineActiveeFieldNumber = 2;
@@ -12083,7 +12114,7 @@ class MsgLogMedicalState : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::UnitId* id_;
+  ::Common::UnitId* unit_;
   bool chaine_activee_;
   ::Common::MsgLogMedicalPriorities* priorites_;
   ::Common::AutomatIdList* tactical_priorities_;
@@ -12165,12 +12196,12 @@ class MsgLogMaintenanceHandlingCreation : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.MaintenanceRequestId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::MaintenanceRequestId& id() const;
-  inline ::Common::MaintenanceRequestId* mutable_id();
+  // required .Common.MaintenanceRequestId request = 1;
+  inline bool has_request() const;
+  inline void clear_request();
+  static const int kRequestFieldNumber = 1;
+  inline const ::Common::MaintenanceRequestId& request() const;
+  inline ::Common::MaintenanceRequestId* mutable_request();
   
   // required .Common.UnitId unit = 2;
   inline bool has_unit() const;
@@ -12204,7 +12235,7 @@ class MsgLogMaintenanceHandlingCreation : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::MaintenanceRequestId* id_;
+  ::Common::MaintenanceRequestId* request_;
   ::Common::UnitId* unit_;
   ::google::protobuf::int32 tick_creation_;
   ::Common::EquipmentType* equipement_;
@@ -12284,12 +12315,12 @@ class MsgLogMaintenanceHandlingUpdate : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.MaintenanceRequestId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::MaintenanceRequestId& id() const;
-  inline ::Common::MaintenanceRequestId* mutable_id();
+  // required .Common.MaintenanceRequestId request = 1;
+  inline bool has_request() const;
+  inline void clear_request();
+  static const int kRequestFieldNumber = 1;
+  inline const ::Common::MaintenanceRequestId& request() const;
+  inline ::Common::MaintenanceRequestId* mutable_request();
   
   // required .Common.UnitId unit = 2;
   inline bool has_unit() const;
@@ -12312,7 +12343,7 @@ class MsgLogMaintenanceHandlingUpdate : public ::google::protobuf::Message {
   inline Common::EnumLogMaintenanceHandlingStatus etat() const;
   inline void set_etat(Common::EnumLogMaintenanceHandlingStatus value);
   
-  // optional bool diagnostique_effectue = 5 [default = false];
+  // optional bool diagnostique_effectue = 5;
   inline bool has_diagnostique_effectue() const;
   inline void clear_diagnostique_effectue();
   static const int kDiagnostiqueEffectueFieldNumber = 5;
@@ -12323,7 +12354,7 @@ class MsgLogMaintenanceHandlingUpdate : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::MaintenanceRequestId* id_;
+  ::Common::MaintenanceRequestId* request_;
   ::Common::UnitId* unit_;
   ::Common::UnitId* provider_;
   int etat_;
@@ -12403,12 +12434,12 @@ class MsgLogMaintenanceHandlingDestruction : public ::google::protobuf::Message 
   
   // accessors -------------------------------------------------------
   
-  // required .Common.MaintenanceRequestId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::MaintenanceRequestId& id() const;
-  inline ::Common::MaintenanceRequestId* mutable_id();
+  // required .Common.MaintenanceRequestId request = 1;
+  inline bool has_request() const;
+  inline void clear_request();
+  static const int kRequestFieldNumber = 1;
+  inline const ::Common::MaintenanceRequestId& request() const;
+  inline ::Common::MaintenanceRequestId* mutable_request();
   
   // required .Common.UnitId unit = 2;
   inline bool has_unit() const;
@@ -12421,7 +12452,7 @@ class MsgLogMaintenanceHandlingDestruction : public ::google::protobuf::Message 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::MaintenanceRequestId* id_;
+  ::Common::MaintenanceRequestId* request_;
   ::Common::UnitId* unit_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -12498,12 +12529,12 @@ class MsgLogMaintenanceEquipmentAvailability : public ::google::protobuf::Messag
   
   // accessors -------------------------------------------------------
   
-  // required int32 type_equipement = 1;
-  inline bool has_type_equipement() const;
-  inline void clear_type_equipement();
-  static const int kTypeEquipementFieldNumber = 1;
-  inline ::google::protobuf::int32 type_equipement() const;
-  inline void set_type_equipement(::google::protobuf::int32 value);
+  // required .Common.EquipmentType equipment_type = 1;
+  inline bool has_equipment_type() const;
+  inline void clear_equipment_type();
+  static const int kEquipmentTypeFieldNumber = 1;
+  inline const ::Common::EquipmentType& equipment_type() const;
+  inline ::Common::EquipmentType* mutable_equipment_type();
   
   // required int32 nbr_total = 2;
   inline bool has_nbr_total() const;
@@ -12526,7 +12557,7 @@ class MsgLogMaintenanceEquipmentAvailability : public ::google::protobuf::Messag
   inline ::google::protobuf::int32 nbr_au_travail() const;
   inline void set_nbr_au_travail(::google::protobuf::int32 value);
   
-  // optional int32 nbr_pretes = 5 [default = 0];
+  // optional int32 nbr_pretes = 5;
   inline bool has_nbr_pretes() const;
   inline void clear_nbr_pretes();
   static const int kNbrPretesFieldNumber = 5;
@@ -12544,7 +12575,7 @@ class MsgLogMaintenanceEquipmentAvailability : public ::google::protobuf::Messag
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::int32 type_equipement_;
+  ::Common::EquipmentType* equipment_type_;
   ::google::protobuf::int32 nbr_total_;
   ::google::protobuf::int32 nbr_disponibles_;
   ::google::protobuf::int32 nbr_au_travail_;
@@ -12715,12 +12746,12 @@ class MsgLogMaintenanceState : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.UnitId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::UnitId& id() const;
-  inline ::Common::UnitId* mutable_id();
+  // required .Common.UnitId unit = 1;
+  inline bool has_unit() const;
+  inline void clear_unit();
+  static const int kUnitFieldNumber = 1;
+  inline const ::Common::UnitId& unit() const;
+  inline ::Common::UnitId* mutable_unit();
   
   // optional bool chaine_activee = 2;
   inline bool has_chaine_activee() const;
@@ -12768,7 +12799,7 @@ class MsgLogMaintenanceState : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::UnitId* id_;
+  ::Common::UnitId* unit_;
   bool chaine_activee_;
   int regime_travail_;
   ::Common::MsgLogMaintenancePriorities* priorites_;
@@ -12850,12 +12881,12 @@ class MsgLogSupplyHandlingCreation : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // optional .Common.SupplyRequestId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::SupplyRequestId& id() const;
-  inline ::Common::SupplyRequestId* mutable_id();
+  // optional .Common.SupplyRequestId request = 1;
+  inline bool has_request() const;
+  inline void clear_request();
+  static const int kRequestFieldNumber = 1;
+  inline const ::Common::SupplyRequestId& request() const;
+  inline ::Common::SupplyRequestId* mutable_request();
   
   // optional .Common.AutomatId consumer = 2;
   inline bool has_consumer() const;
@@ -12882,7 +12913,7 @@ class MsgLogSupplyHandlingCreation : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::SupplyRequestId* id_;
+  ::Common::SupplyRequestId* request_;
   ::Common::AutomatId* consumer_;
   ::google::protobuf::int32 tick_creation_;
   ::MsgsSimToClient::SeqOfDotationQuery* dotations_;
@@ -13162,12 +13193,12 @@ class MsgLogSupplyHandlingUpdate : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // optional .Common.SupplyRequestId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::SupplyRequestId& id() const;
-  inline ::Common::SupplyRequestId* mutable_id();
+  // optional .Common.SupplyRequestId request = 1;
+  inline bool has_request() const;
+  inline void clear_request();
+  static const int kRequestFieldNumber = 1;
+  inline const ::Common::SupplyRequestId& request() const;
+  inline ::Common::SupplyRequestId* mutable_request();
   
   // optional .Common.AutomatId consumer = 2;
   inline bool has_consumer() const;
@@ -13215,7 +13246,7 @@ class MsgLogSupplyHandlingUpdate : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::SupplyRequestId* id_;
+  ::Common::SupplyRequestId* request_;
   ::Common::AutomatId* consumer_;
   ::Common::AutomatId* supplier_;
   ::Common::AutomatId* convoy_provider_;
@@ -13297,12 +13328,12 @@ class MsgLogSupplyHandlingDestruction : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.SupplyRequestId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::SupplyRequestId& id() const;
-  inline ::Common::SupplyRequestId* mutable_id();
+  // required .Common.SupplyRequestId request = 1;
+  inline bool has_request() const;
+  inline void clear_request();
+  static const int kRequestFieldNumber = 1;
+  inline const ::Common::SupplyRequestId& request() const;
+  inline ::Common::SupplyRequestId* mutable_request();
   
   // required .Common.AutomatId consumer = 2;
   inline bool has_consumer() const;
@@ -13315,7 +13346,7 @@ class MsgLogSupplyHandlingDestruction : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::SupplyRequestId* id_;
+  ::Common::SupplyRequestId* request_;
   ::Common::AutomatId* consumer_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -13420,7 +13451,7 @@ class MsgLogSupplyEquimentAvailability : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 nbr_au_travail() const;
   inline void set_nbr_au_travail(::google::protobuf::int32 value);
   
-  // optional int32 nbr_pretes = 5 [default = 0];
+  // optional int32 nbr_pretes = 5;
   inline bool has_nbr_pretes() const;
   inline void clear_nbr_pretes();
   static const int kNbrPretesFieldNumber = 5;
@@ -13609,12 +13640,12 @@ class MsgLogSupplyState : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // optional .Common.UnitId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::UnitId& id() const;
-  inline ::Common::UnitId* mutable_id();
+  // optional .Common.UnitId unit = 1;
+  inline bool has_unit() const;
+  inline void clear_unit();
+  static const int kUnitFieldNumber = 1;
+  inline const ::Common::UnitId& unit() const;
+  inline ::Common::UnitId* mutable_unit();
   
   // optional bool chaine_activee = 2;
   inline bool has_chaine_activee() const;
@@ -13641,7 +13672,7 @@ class MsgLogSupplyState : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::UnitId* id_;
+  ::Common::UnitId* unit_;
   bool chaine_activee_;
   ::Common::SeqOfDotationStock* stocks_;
   ::MsgsSimToClient::SeqOfLogSupplyEquimentAvailability* disponibilites_transporteurs_convois_;
@@ -13720,12 +13751,12 @@ class MsgLogSupplyQuotas : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.AutomatId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::AutomatId& id() const;
-  inline ::Common::AutomatId* mutable_id();
+  // required .Common.AutomatId automat = 1;
+  inline bool has_automat() const;
+  inline void clear_automat();
+  static const int kAutomatFieldNumber = 1;
+  inline const ::Common::AutomatId& automat() const;
+  inline ::Common::AutomatId* mutable_automat();
   
   // required .Common.SeqOfDotationQuota quotas = 2;
   inline bool has_quotas() const;
@@ -13738,7 +13769,7 @@ class MsgLogSupplyQuotas : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::AutomatId* id_;
+  ::Common::AutomatId* automat_;
   ::Common::SeqOfDotationQuota* quotas_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -13762,14 +13793,14 @@ class MsgLogSupplyQuotas : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgPopulationCreation : public ::google::protobuf::Message {
+class MsgCrowdCreation : public ::google::protobuf::Message {
  public:
-  MsgPopulationCreation();
-  virtual ~MsgPopulationCreation();
+  MsgCrowdCreation();
+  virtual ~MsgCrowdCreation();
   
-  MsgPopulationCreation(const MsgPopulationCreation& from);
+  MsgCrowdCreation(const MsgCrowdCreation& from);
   
-  inline MsgPopulationCreation& operator=(const MsgPopulationCreation& from) {
+  inline MsgCrowdCreation& operator=(const MsgCrowdCreation& from) {
     CopyFrom(from);
     return *this;
   }
@@ -13783,16 +13814,16 @@ class MsgPopulationCreation : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgPopulationCreation& default_instance();
-  void Swap(MsgPopulationCreation* other);
+  static const MsgCrowdCreation& default_instance();
+  void Swap(MsgCrowdCreation* other);
   
   // implements Message ----------------------------------------------
   
-  MsgPopulationCreation* New() const;
+  MsgCrowdCreation* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgPopulationCreation& from);
-  void MergeFrom(const MsgPopulationCreation& from);
+  void CopyFrom(const MsgCrowdCreation& from);
+  void MergeFrom(const MsgCrowdCreation& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -13815,19 +13846,19 @@ class MsgPopulationCreation : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.PopulationId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::PopulationId& id() const;
-  inline ::Common::PopulationId* mutable_id();
+  // required .Common.CrowdId crowd = 1;
+  inline bool has_crowd() const;
+  inline void clear_crowd();
+  static const int kCrowdFieldNumber = 1;
+  inline const ::Common::CrowdId& crowd() const;
+  inline ::Common::CrowdId* mutable_crowd();
   
-  // required .Common.PopulationType type = 2;
+  // required .Common.CrowdType type = 2;
   inline bool has_type() const;
   inline void clear_type();
   static const int kTypeFieldNumber = 2;
-  inline const ::Common::PopulationType& type() const;
-  inline ::Common::PopulationType* mutable_type();
+  inline const ::Common::CrowdType& type() const;
+  inline ::Common::CrowdType* mutable_type();
   
   // optional string nom = 3;
   inline bool has_nom() const;
@@ -13850,8 +13881,8 @@ class MsgPopulationCreation : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::PopulationId* id_;
-  ::Common::PopulationType* type_;
+  ::Common::CrowdId* crowd_;
+  ::Common::CrowdType* type_;
   ::std::string* nom_;
   static const ::std::string _default_nom_;
   ::Common::PartyId* party_;
@@ -13873,18 +13904,18 @@ class MsgPopulationCreation : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgPopulationCreation* default_instance_;
+  static MsgCrowdCreation* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgPopulationUpdate : public ::google::protobuf::Message {
+class MsgCrowdUpdate : public ::google::protobuf::Message {
  public:
-  MsgPopulationUpdate();
-  virtual ~MsgPopulationUpdate();
+  MsgCrowdUpdate();
+  virtual ~MsgCrowdUpdate();
   
-  MsgPopulationUpdate(const MsgPopulationUpdate& from);
+  MsgCrowdUpdate(const MsgCrowdUpdate& from);
   
-  inline MsgPopulationUpdate& operator=(const MsgPopulationUpdate& from) {
+  inline MsgCrowdUpdate& operator=(const MsgCrowdUpdate& from) {
     CopyFrom(from);
     return *this;
   }
@@ -13898,16 +13929,16 @@ class MsgPopulationUpdate : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgPopulationUpdate& default_instance();
-  void Swap(MsgPopulationUpdate* other);
+  static const MsgCrowdUpdate& default_instance();
+  void Swap(MsgCrowdUpdate* other);
   
   // implements Message ----------------------------------------------
   
-  MsgPopulationUpdate* New() const;
+  MsgCrowdUpdate* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgPopulationUpdate& from);
-  void MergeFrom(const MsgPopulationUpdate& from);
+  void CopyFrom(const MsgCrowdUpdate& from);
+  void MergeFrom(const MsgCrowdUpdate& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -13930,14 +13961,14 @@ class MsgPopulationUpdate : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.PopulationId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::PopulationId& id() const;
-  inline ::Common::PopulationId* mutable_id();
+  // required .Common.CrowdId crowd = 1;
+  inline bool has_crowd() const;
+  inline void clear_crowd();
+  static const int kCrowdFieldNumber = 1;
+  inline const ::Common::CrowdId& crowd() const;
+  inline ::Common::CrowdId* mutable_crowd();
   
-  // optional int32 etat_domination = 2 [default = 0];
+  // optional int32 etat_domination = 2;
   inline bool has_etat_domination() const;
   inline void clear_etat_domination();
   static const int kEtatDominationFieldNumber = 2;
@@ -13948,7 +13979,7 @@ class MsgPopulationUpdate : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::PopulationId* id_;
+  ::Common::CrowdId* crowd_;
   ::google::protobuf::int32 etat_domination_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -13968,18 +13999,18 @@ class MsgPopulationUpdate : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgPopulationUpdate* default_instance_;
+  static MsgCrowdUpdate* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgPopulationConcentrationCreation : public ::google::protobuf::Message {
+class MsgCrowdConcentrationCreation : public ::google::protobuf::Message {
  public:
-  MsgPopulationConcentrationCreation();
-  virtual ~MsgPopulationConcentrationCreation();
+  MsgCrowdConcentrationCreation();
+  virtual ~MsgCrowdConcentrationCreation();
   
-  MsgPopulationConcentrationCreation(const MsgPopulationConcentrationCreation& from);
+  MsgCrowdConcentrationCreation(const MsgCrowdConcentrationCreation& from);
   
-  inline MsgPopulationConcentrationCreation& operator=(const MsgPopulationConcentrationCreation& from) {
+  inline MsgCrowdConcentrationCreation& operator=(const MsgCrowdConcentrationCreation& from) {
     CopyFrom(from);
     return *this;
   }
@@ -13993,16 +14024,16 @@ class MsgPopulationConcentrationCreation : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgPopulationConcentrationCreation& default_instance();
-  void Swap(MsgPopulationConcentrationCreation* other);
+  static const MsgCrowdConcentrationCreation& default_instance();
+  void Swap(MsgCrowdConcentrationCreation* other);
   
   // implements Message ----------------------------------------------
   
-  MsgPopulationConcentrationCreation* New() const;
+  MsgCrowdConcentrationCreation* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgPopulationConcentrationCreation& from);
-  void MergeFrom(const MsgPopulationConcentrationCreation& from);
+  void CopyFrom(const MsgCrowdConcentrationCreation& from);
+  void MergeFrom(const MsgCrowdConcentrationCreation& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -14025,19 +14056,19 @@ class MsgPopulationConcentrationCreation : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.PopulationConcentrationId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::PopulationConcentrationId& id() const;
-  inline ::Common::PopulationConcentrationId* mutable_id();
+  // required .Common.CrowdConcentrationId concentration = 1;
+  inline bool has_concentration() const;
+  inline void clear_concentration();
+  static const int kConcentrationFieldNumber = 1;
+  inline const ::Common::CrowdConcentrationId& concentration() const;
+  inline ::Common::CrowdConcentrationId* mutable_concentration();
   
-  // required .Common.PopulationId population = 2;
-  inline bool has_population() const;
-  inline void clear_population();
-  static const int kPopulationFieldNumber = 2;
-  inline const ::Common::PopulationId& population() const;
-  inline ::Common::PopulationId* mutable_population();
+  // required .Common.CrowdId crowd = 2;
+  inline bool has_crowd() const;
+  inline void clear_crowd();
+  static const int kCrowdFieldNumber = 2;
+  inline const ::Common::CrowdId& crowd() const;
+  inline ::Common::CrowdId* mutable_crowd();
   
   // required .Common.MsgCoordLatLong position = 3;
   inline bool has_position() const;
@@ -14050,8 +14081,8 @@ class MsgPopulationConcentrationCreation : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::PopulationConcentrationId* id_;
-  ::Common::PopulationId* population_;
+  ::Common::CrowdConcentrationId* concentration_;
+  ::Common::CrowdId* crowd_;
   ::Common::MsgCoordLatLong* position_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -14071,18 +14102,18 @@ class MsgPopulationConcentrationCreation : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgPopulationConcentrationCreation* default_instance_;
+  static MsgCrowdConcentrationCreation* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgPopulationConcentrationDestruction : public ::google::protobuf::Message {
+class MsgCrowdConcentrationDestruction : public ::google::protobuf::Message {
  public:
-  MsgPopulationConcentrationDestruction();
-  virtual ~MsgPopulationConcentrationDestruction();
+  MsgCrowdConcentrationDestruction();
+  virtual ~MsgCrowdConcentrationDestruction();
   
-  MsgPopulationConcentrationDestruction(const MsgPopulationConcentrationDestruction& from);
+  MsgCrowdConcentrationDestruction(const MsgCrowdConcentrationDestruction& from);
   
-  inline MsgPopulationConcentrationDestruction& operator=(const MsgPopulationConcentrationDestruction& from) {
+  inline MsgCrowdConcentrationDestruction& operator=(const MsgCrowdConcentrationDestruction& from) {
     CopyFrom(from);
     return *this;
   }
@@ -14096,16 +14127,16 @@ class MsgPopulationConcentrationDestruction : public ::google::protobuf::Message
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgPopulationConcentrationDestruction& default_instance();
-  void Swap(MsgPopulationConcentrationDestruction* other);
+  static const MsgCrowdConcentrationDestruction& default_instance();
+  void Swap(MsgCrowdConcentrationDestruction* other);
   
   // implements Message ----------------------------------------------
   
-  MsgPopulationConcentrationDestruction* New() const;
+  MsgCrowdConcentrationDestruction* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgPopulationConcentrationDestruction& from);
-  void MergeFrom(const MsgPopulationConcentrationDestruction& from);
+  void CopyFrom(const MsgCrowdConcentrationDestruction& from);
+  void MergeFrom(const MsgCrowdConcentrationDestruction& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -14128,26 +14159,26 @@ class MsgPopulationConcentrationDestruction : public ::google::protobuf::Message
   
   // accessors -------------------------------------------------------
   
-  // required .Common.PopulationConcentrationId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::PopulationConcentrationId& id() const;
-  inline ::Common::PopulationConcentrationId* mutable_id();
+  // required .Common.CrowdConcentrationId concentration = 1;
+  inline bool has_concentration() const;
+  inline void clear_concentration();
+  static const int kConcentrationFieldNumber = 1;
+  inline const ::Common::CrowdConcentrationId& concentration() const;
+  inline ::Common::CrowdConcentrationId* mutable_concentration();
   
-  // required .Common.PopulationId population = 2;
-  inline bool has_population() const;
-  inline void clear_population();
-  static const int kPopulationFieldNumber = 2;
-  inline const ::Common::PopulationId& population() const;
-  inline ::Common::PopulationId* mutable_population();
+  // required .Common.CrowdId crowd = 2;
+  inline bool has_crowd() const;
+  inline void clear_crowd();
+  static const int kCrowdFieldNumber = 2;
+  inline const ::Common::CrowdId& crowd() const;
+  inline ::Common::CrowdId* mutable_crowd();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::PopulationConcentrationId* id_;
-  ::Common::PopulationId* population_;
+  ::Common::CrowdConcentrationId* concentration_;
+  ::Common::CrowdId* crowd_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
@@ -14166,18 +14197,18 @@ class MsgPopulationConcentrationDestruction : public ::google::protobuf::Message
   }
   
   void InitAsDefaultInstance();
-  static MsgPopulationConcentrationDestruction* default_instance_;
+  static MsgCrowdConcentrationDestruction* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgPopulationConcentrationUpdate : public ::google::protobuf::Message {
+class MsgCrowdConcentrationUpdate : public ::google::protobuf::Message {
  public:
-  MsgPopulationConcentrationUpdate();
-  virtual ~MsgPopulationConcentrationUpdate();
+  MsgCrowdConcentrationUpdate();
+  virtual ~MsgCrowdConcentrationUpdate();
   
-  MsgPopulationConcentrationUpdate(const MsgPopulationConcentrationUpdate& from);
+  MsgCrowdConcentrationUpdate(const MsgCrowdConcentrationUpdate& from);
   
-  inline MsgPopulationConcentrationUpdate& operator=(const MsgPopulationConcentrationUpdate& from) {
+  inline MsgCrowdConcentrationUpdate& operator=(const MsgCrowdConcentrationUpdate& from) {
     CopyFrom(from);
     return *this;
   }
@@ -14191,16 +14222,16 @@ class MsgPopulationConcentrationUpdate : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgPopulationConcentrationUpdate& default_instance();
-  void Swap(MsgPopulationConcentrationUpdate* other);
+  static const MsgCrowdConcentrationUpdate& default_instance();
+  void Swap(MsgCrowdConcentrationUpdate* other);
   
   // implements Message ----------------------------------------------
   
-  MsgPopulationConcentrationUpdate* New() const;
+  MsgCrowdConcentrationUpdate* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgPopulationConcentrationUpdate& from);
-  void MergeFrom(const MsgPopulationConcentrationUpdate& from);
+  void CopyFrom(const MsgCrowdConcentrationUpdate& from);
+  void MergeFrom(const MsgCrowdConcentrationUpdate& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -14223,47 +14254,47 @@ class MsgPopulationConcentrationUpdate : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.PopulationConcentrationId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::PopulationConcentrationId& id() const;
-  inline ::Common::PopulationConcentrationId* mutable_id();
+  // required .Common.CrowdConcentrationId concentration = 1;
+  inline bool has_concentration() const;
+  inline void clear_concentration();
+  static const int kConcentrationFieldNumber = 1;
+  inline const ::Common::CrowdConcentrationId& concentration() const;
+  inline ::Common::CrowdConcentrationId* mutable_concentration();
   
-  // required .Common.PopulationId population = 2;
-  inline bool has_population() const;
-  inline void clear_population();
-  static const int kPopulationFieldNumber = 2;
-  inline const ::Common::PopulationId& population() const;
-  inline ::Common::PopulationId* mutable_population();
+  // required .Common.CrowdId crowd = 2;
+  inline bool has_crowd() const;
+  inline void clear_crowd();
+  static const int kCrowdFieldNumber = 2;
+  inline const ::Common::CrowdId& crowd() const;
+  inline ::Common::CrowdId* mutable_crowd();
   
-  // optional int32 nb_humains_vivants = 3 [default = 0];
+  // optional int32 nb_humains_vivants = 3;
   inline bool has_nb_humains_vivants() const;
   inline void clear_nb_humains_vivants();
   static const int kNbHumainsVivantsFieldNumber = 3;
   inline ::google::protobuf::int32 nb_humains_vivants() const;
   inline void set_nb_humains_vivants(::google::protobuf::int32 value);
   
-  // optional int32 nb_humains_morts = 4 [default = 0];
+  // optional int32 nb_humains_morts = 4;
   inline bool has_nb_humains_morts() const;
   inline void clear_nb_humains_morts();
   static const int kNbHumainsMortsFieldNumber = 4;
   inline ::google::protobuf::int32 nb_humains_morts() const;
   inline void set_nb_humains_morts(::google::protobuf::int32 value);
   
-  // optional .Common.EnumPopulationAttitude attitude = 5;
+  // optional .Common.EnumCrowdAttitude attitude = 5;
   inline bool has_attitude() const;
   inline void clear_attitude();
   static const int kAttitudeFieldNumber = 5;
-  inline Common::EnumPopulationAttitude attitude() const;
-  inline void set_attitude(Common::EnumPopulationAttitude value);
+  inline Common::EnumCrowdAttitude attitude() const;
+  inline void set_attitude(Common::EnumCrowdAttitude value);
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::PopulationConcentrationId* id_;
-  ::Common::PopulationId* population_;
+  ::Common::CrowdConcentrationId* concentration_;
+  ::Common::CrowdId* crowd_;
   ::google::protobuf::int32 nb_humains_vivants_;
   ::google::protobuf::int32 nb_humains_morts_;
   int attitude_;
@@ -14285,18 +14316,18 @@ class MsgPopulationConcentrationUpdate : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgPopulationConcentrationUpdate* default_instance_;
+  static MsgCrowdConcentrationUpdate* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgPopulationFlowCreation : public ::google::protobuf::Message {
+class MsgCrowdFlowCreation : public ::google::protobuf::Message {
  public:
-  MsgPopulationFlowCreation();
-  virtual ~MsgPopulationFlowCreation();
+  MsgCrowdFlowCreation();
+  virtual ~MsgCrowdFlowCreation();
   
-  MsgPopulationFlowCreation(const MsgPopulationFlowCreation& from);
+  MsgCrowdFlowCreation(const MsgCrowdFlowCreation& from);
   
-  inline MsgPopulationFlowCreation& operator=(const MsgPopulationFlowCreation& from) {
+  inline MsgCrowdFlowCreation& operator=(const MsgCrowdFlowCreation& from) {
     CopyFrom(from);
     return *this;
   }
@@ -14310,16 +14341,16 @@ class MsgPopulationFlowCreation : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgPopulationFlowCreation& default_instance();
-  void Swap(MsgPopulationFlowCreation* other);
+  static const MsgCrowdFlowCreation& default_instance();
+  void Swap(MsgCrowdFlowCreation* other);
   
   // implements Message ----------------------------------------------
   
-  MsgPopulationFlowCreation* New() const;
+  MsgCrowdFlowCreation* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgPopulationFlowCreation& from);
-  void MergeFrom(const MsgPopulationFlowCreation& from);
+  void CopyFrom(const MsgCrowdFlowCreation& from);
+  void MergeFrom(const MsgCrowdFlowCreation& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -14342,26 +14373,26 @@ class MsgPopulationFlowCreation : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.PopulationFlowId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::PopulationFlowId& id() const;
-  inline ::Common::PopulationFlowId* mutable_id();
+  // required .Common.CrowdFlowId flow = 1;
+  inline bool has_flow() const;
+  inline void clear_flow();
+  static const int kFlowFieldNumber = 1;
+  inline const ::Common::CrowdFlowId& flow() const;
+  inline ::Common::CrowdFlowId* mutable_flow();
   
-  // required .Common.PopulationId population = 2;
-  inline bool has_population() const;
-  inline void clear_population();
-  static const int kPopulationFieldNumber = 2;
-  inline const ::Common::PopulationId& population() const;
-  inline ::Common::PopulationId* mutable_population();
+  // required .Common.CrowdId crowd = 2;
+  inline bool has_crowd() const;
+  inline void clear_crowd();
+  static const int kCrowdFieldNumber = 2;
+  inline const ::Common::CrowdId& crowd() const;
+  inline ::Common::CrowdId* mutable_crowd();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::PopulationFlowId* id_;
-  ::Common::PopulationId* population_;
+  ::Common::CrowdFlowId* flow_;
+  ::Common::CrowdId* crowd_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
@@ -14380,18 +14411,18 @@ class MsgPopulationFlowCreation : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgPopulationFlowCreation* default_instance_;
+  static MsgCrowdFlowCreation* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgPopulationFlowDestruction : public ::google::protobuf::Message {
+class MsgCrowdFlowDestruction : public ::google::protobuf::Message {
  public:
-  MsgPopulationFlowDestruction();
-  virtual ~MsgPopulationFlowDestruction();
+  MsgCrowdFlowDestruction();
+  virtual ~MsgCrowdFlowDestruction();
   
-  MsgPopulationFlowDestruction(const MsgPopulationFlowDestruction& from);
+  MsgCrowdFlowDestruction(const MsgCrowdFlowDestruction& from);
   
-  inline MsgPopulationFlowDestruction& operator=(const MsgPopulationFlowDestruction& from) {
+  inline MsgCrowdFlowDestruction& operator=(const MsgCrowdFlowDestruction& from) {
     CopyFrom(from);
     return *this;
   }
@@ -14405,16 +14436,16 @@ class MsgPopulationFlowDestruction : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgPopulationFlowDestruction& default_instance();
-  void Swap(MsgPopulationFlowDestruction* other);
+  static const MsgCrowdFlowDestruction& default_instance();
+  void Swap(MsgCrowdFlowDestruction* other);
   
   // implements Message ----------------------------------------------
   
-  MsgPopulationFlowDestruction* New() const;
+  MsgCrowdFlowDestruction* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgPopulationFlowDestruction& from);
-  void MergeFrom(const MsgPopulationFlowDestruction& from);
+  void CopyFrom(const MsgCrowdFlowDestruction& from);
+  void MergeFrom(const MsgCrowdFlowDestruction& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -14437,26 +14468,26 @@ class MsgPopulationFlowDestruction : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.PopulationFlowId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::PopulationFlowId& id() const;
-  inline ::Common::PopulationFlowId* mutable_id();
+  // required .Common.CrowdFlowId flow = 1;
+  inline bool has_flow() const;
+  inline void clear_flow();
+  static const int kFlowFieldNumber = 1;
+  inline const ::Common::CrowdFlowId& flow() const;
+  inline ::Common::CrowdFlowId* mutable_flow();
   
-  // required .Common.PopulationId population = 2;
-  inline bool has_population() const;
-  inline void clear_population();
-  static const int kPopulationFieldNumber = 2;
-  inline const ::Common::PopulationId& population() const;
-  inline ::Common::PopulationId* mutable_population();
+  // required .Common.CrowdId crowd = 2;
+  inline bool has_crowd() const;
+  inline void clear_crowd();
+  static const int kCrowdFieldNumber = 2;
+  inline const ::Common::CrowdId& crowd() const;
+  inline ::Common::CrowdId* mutable_crowd();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::PopulationFlowId* id_;
-  ::Common::PopulationId* population_;
+  ::Common::CrowdFlowId* flow_;
+  ::Common::CrowdId* crowd_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
@@ -14475,18 +14506,18 @@ class MsgPopulationFlowDestruction : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgPopulationFlowDestruction* default_instance_;
+  static MsgCrowdFlowDestruction* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgPopulationFlowUpdate : public ::google::protobuf::Message {
+class MsgCrowdFlowUpdate : public ::google::protobuf::Message {
  public:
-  MsgPopulationFlowUpdate();
-  virtual ~MsgPopulationFlowUpdate();
+  MsgCrowdFlowUpdate();
+  virtual ~MsgCrowdFlowUpdate();
   
-  MsgPopulationFlowUpdate(const MsgPopulationFlowUpdate& from);
+  MsgCrowdFlowUpdate(const MsgCrowdFlowUpdate& from);
   
-  inline MsgPopulationFlowUpdate& operator=(const MsgPopulationFlowUpdate& from) {
+  inline MsgCrowdFlowUpdate& operator=(const MsgCrowdFlowUpdate& from) {
     CopyFrom(from);
     return *this;
   }
@@ -14500,16 +14531,16 @@ class MsgPopulationFlowUpdate : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgPopulationFlowUpdate& default_instance();
-  void Swap(MsgPopulationFlowUpdate* other);
+  static const MsgCrowdFlowUpdate& default_instance();
+  void Swap(MsgCrowdFlowUpdate* other);
   
   // implements Message ----------------------------------------------
   
-  MsgPopulationFlowUpdate* New() const;
+  MsgCrowdFlowUpdate* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgPopulationFlowUpdate& from);
-  void MergeFrom(const MsgPopulationFlowUpdate& from);
+  void CopyFrom(const MsgCrowdFlowUpdate& from);
+  void MergeFrom(const MsgCrowdFlowUpdate& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -14532,19 +14563,19 @@ class MsgPopulationFlowUpdate : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.PopulationFlowId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::PopulationFlowId& id() const;
-  inline ::Common::PopulationFlowId* mutable_id();
+  // required .Common.CrowdFlowId flow = 1;
+  inline bool has_flow() const;
+  inline void clear_flow();
+  static const int kFlowFieldNumber = 1;
+  inline const ::Common::CrowdFlowId& flow() const;
+  inline ::Common::CrowdFlowId* mutable_flow();
   
-  // required .Common.PopulationId population = 2;
-  inline bool has_population() const;
-  inline void clear_population();
-  static const int kPopulationFieldNumber = 2;
-  inline const ::Common::PopulationId& population() const;
-  inline ::Common::PopulationId* mutable_population();
+  // required .Common.CrowdId crowd = 2;
+  inline bool has_crowd() const;
+  inline void clear_crowd();
+  static const int kCrowdFieldNumber = 2;
+  inline const ::Common::CrowdId& crowd() const;
+  inline ::Common::CrowdId* mutable_crowd();
   
   // optional .Common.MsgPath itineraire = 3;
   inline bool has_itineraire() const;
@@ -14553,12 +14584,12 @@ class MsgPopulationFlowUpdate : public ::google::protobuf::Message {
   inline const ::Common::MsgPath& itineraire() const;
   inline ::Common::MsgPath* mutable_itineraire();
   
-  // optional .Common.MsgPath flux = 4;
-  inline bool has_flux() const;
-  inline void clear_flux();
-  static const int kFluxFieldNumber = 4;
-  inline const ::Common::MsgPath& flux() const;
-  inline ::Common::MsgPath* mutable_flux();
+  // optional .Common.MsgPath parts = 4;
+  inline bool has_parts() const;
+  inline void clear_parts();
+  static const int kPartsFieldNumber = 4;
+  inline const ::Common::MsgPath& parts() const;
+  inline ::Common::MsgPath* mutable_parts();
   
   // optional .Common.MsgHeading direction = 5;
   inline bool has_direction() const;
@@ -14567,42 +14598,42 @@ class MsgPopulationFlowUpdate : public ::google::protobuf::Message {
   inline const ::Common::MsgHeading& direction() const;
   inline ::Common::MsgHeading* mutable_direction();
   
-  // optional int32 vitesse = 6 [default = 0];
+  // optional int32 vitesse = 6;
   inline bool has_vitesse() const;
   inline void clear_vitesse();
   static const int kVitesseFieldNumber = 6;
   inline ::google::protobuf::int32 vitesse() const;
   inline void set_vitesse(::google::protobuf::int32 value);
   
-  // optional int32 nb_humains_vivants = 7 [default = 0];
+  // optional int32 nb_humains_vivants = 7;
   inline bool has_nb_humains_vivants() const;
   inline void clear_nb_humains_vivants();
   static const int kNbHumainsVivantsFieldNumber = 7;
   inline ::google::protobuf::int32 nb_humains_vivants() const;
   inline void set_nb_humains_vivants(::google::protobuf::int32 value);
   
-  // optional int32 nb_humains_morts = 8 [default = 0];
+  // optional int32 nb_humains_morts = 8;
   inline bool has_nb_humains_morts() const;
   inline void clear_nb_humains_morts();
   static const int kNbHumainsMortsFieldNumber = 8;
   inline ::google::protobuf::int32 nb_humains_morts() const;
   inline void set_nb_humains_morts(::google::protobuf::int32 value);
   
-  // optional .Common.EnumPopulationAttitude attitude = 9;
+  // optional .Common.EnumCrowdAttitude attitude = 9;
   inline bool has_attitude() const;
   inline void clear_attitude();
   static const int kAttitudeFieldNumber = 9;
-  inline Common::EnumPopulationAttitude attitude() const;
-  inline void set_attitude(Common::EnumPopulationAttitude value);
+  inline Common::EnumCrowdAttitude attitude() const;
+  inline void set_attitude(Common::EnumCrowdAttitude value);
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::PopulationFlowId* id_;
-  ::Common::PopulationId* population_;
+  ::Common::CrowdFlowId* flow_;
+  ::Common::CrowdId* crowd_;
   ::Common::MsgPath* itineraire_;
-  ::Common::MsgPath* flux_;
+  ::Common::MsgPath* parts_;
   ::Common::MsgHeading* direction_;
   ::google::protobuf::int32 vitesse_;
   ::google::protobuf::int32 nb_humains_vivants_;
@@ -14626,18 +14657,18 @@ class MsgPopulationFlowUpdate : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgPopulationFlowUpdate* default_instance_;
+  static MsgCrowdFlowUpdate* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgPopulationKnowledgeCreation : public ::google::protobuf::Message {
+class MsgCrowdKnowledgeCreation : public ::google::protobuf::Message {
  public:
-  MsgPopulationKnowledgeCreation();
-  virtual ~MsgPopulationKnowledgeCreation();
+  MsgCrowdKnowledgeCreation();
+  virtual ~MsgCrowdKnowledgeCreation();
   
-  MsgPopulationKnowledgeCreation(const MsgPopulationKnowledgeCreation& from);
+  MsgCrowdKnowledgeCreation(const MsgCrowdKnowledgeCreation& from);
   
-  inline MsgPopulationKnowledgeCreation& operator=(const MsgPopulationKnowledgeCreation& from) {
+  inline MsgCrowdKnowledgeCreation& operator=(const MsgCrowdKnowledgeCreation& from) {
     CopyFrom(from);
     return *this;
   }
@@ -14651,16 +14682,16 @@ class MsgPopulationKnowledgeCreation : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgPopulationKnowledgeCreation& default_instance();
-  void Swap(MsgPopulationKnowledgeCreation* other);
+  static const MsgCrowdKnowledgeCreation& default_instance();
+  void Swap(MsgCrowdKnowledgeCreation* other);
   
   // implements Message ----------------------------------------------
   
-  MsgPopulationKnowledgeCreation* New() const;
+  MsgCrowdKnowledgeCreation* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgPopulationKnowledgeCreation& from);
-  void MergeFrom(const MsgPopulationKnowledgeCreation& from);
+  void CopyFrom(const MsgCrowdKnowledgeCreation& from);
+  void MergeFrom(const MsgCrowdKnowledgeCreation& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -14683,12 +14714,12 @@ class MsgPopulationKnowledgeCreation : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.PopulationKnowledgeId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::PopulationKnowledgeId& id() const;
-  inline ::Common::PopulationKnowledgeId* mutable_id();
+  // required .Common.CrowdKnowledgeId knowledge = 1;
+  inline bool has_knowledge() const;
+  inline void clear_knowledge();
+  static const int kKnowledgeFieldNumber = 1;
+  inline const ::Common::CrowdKnowledgeId& knowledge() const;
+  inline ::Common::CrowdKnowledgeId* mutable_knowledge();
   
   // required .Common.KnowledgeGroupId knowledge_group = 2;
   inline bool has_knowledge_group() const;
@@ -14697,12 +14728,12 @@ class MsgPopulationKnowledgeCreation : public ::google::protobuf::Message {
   inline const ::Common::KnowledgeGroupId& knowledge_group() const;
   inline ::Common::KnowledgeGroupId* mutable_knowledge_group();
   
-  // optional .Common.PopulationId population = 3;
-  inline bool has_population() const;
-  inline void clear_population();
-  static const int kPopulationFieldNumber = 3;
-  inline const ::Common::PopulationId& population() const;
-  inline ::Common::PopulationId* mutable_population();
+  // optional .Common.CrowdId crowd = 3;
+  inline bool has_crowd() const;
+  inline void clear_crowd();
+  static const int kCrowdFieldNumber = 3;
+  inline const ::Common::CrowdId& crowd() const;
+  inline ::Common::CrowdId* mutable_crowd();
   
   // optional .Common.PartyId party = 4;
   inline bool has_party() const;
@@ -14715,9 +14746,9 @@ class MsgPopulationKnowledgeCreation : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::PopulationKnowledgeId* id_;
+  ::Common::CrowdKnowledgeId* knowledge_;
   ::Common::KnowledgeGroupId* knowledge_group_;
-  ::Common::PopulationId* population_;
+  ::Common::CrowdId* crowd_;
   ::Common::PartyId* party_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -14737,18 +14768,18 @@ class MsgPopulationKnowledgeCreation : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgPopulationKnowledgeCreation* default_instance_;
+  static MsgCrowdKnowledgeCreation* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgPopulationKnowledgeUpdate : public ::google::protobuf::Message {
+class MsgCrowdKnowledgeUpdate : public ::google::protobuf::Message {
  public:
-  MsgPopulationKnowledgeUpdate();
-  virtual ~MsgPopulationKnowledgeUpdate();
+  MsgCrowdKnowledgeUpdate();
+  virtual ~MsgCrowdKnowledgeUpdate();
   
-  MsgPopulationKnowledgeUpdate(const MsgPopulationKnowledgeUpdate& from);
+  MsgCrowdKnowledgeUpdate(const MsgCrowdKnowledgeUpdate& from);
   
-  inline MsgPopulationKnowledgeUpdate& operator=(const MsgPopulationKnowledgeUpdate& from) {
+  inline MsgCrowdKnowledgeUpdate& operator=(const MsgCrowdKnowledgeUpdate& from) {
     CopyFrom(from);
     return *this;
   }
@@ -14762,16 +14793,16 @@ class MsgPopulationKnowledgeUpdate : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgPopulationKnowledgeUpdate& default_instance();
-  void Swap(MsgPopulationKnowledgeUpdate* other);
+  static const MsgCrowdKnowledgeUpdate& default_instance();
+  void Swap(MsgCrowdKnowledgeUpdate* other);
   
   // implements Message ----------------------------------------------
   
-  MsgPopulationKnowledgeUpdate* New() const;
+  MsgCrowdKnowledgeUpdate* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgPopulationKnowledgeUpdate& from);
-  void MergeFrom(const MsgPopulationKnowledgeUpdate& from);
+  void CopyFrom(const MsgCrowdKnowledgeUpdate& from);
+  void MergeFrom(const MsgCrowdKnowledgeUpdate& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -14794,12 +14825,12 @@ class MsgPopulationKnowledgeUpdate : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.PopulationKnowledgeId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::PopulationKnowledgeId& id() const;
-  inline ::Common::PopulationKnowledgeId* mutable_id();
+  // required .Common.CrowdKnowledgeId knowledge = 1;
+  inline bool has_knowledge() const;
+  inline void clear_knowledge();
+  static const int kKnowledgeFieldNumber = 1;
+  inline const ::Common::CrowdKnowledgeId& knowledge() const;
+  inline ::Common::CrowdKnowledgeId* mutable_knowledge();
   
   // required .Common.KnowledgeGroupId knowledge_group = 2;
   inline bool has_knowledge_group() const;
@@ -14808,7 +14839,7 @@ class MsgPopulationKnowledgeUpdate : public ::google::protobuf::Message {
   inline const ::Common::KnowledgeGroupId& knowledge_group() const;
   inline ::Common::KnowledgeGroupId* mutable_knowledge_group();
   
-  // optional int32 etat_domination = 3 [default = 0];
+  // optional int32 etat_domination = 3;
   inline bool has_etat_domination() const;
   inline void clear_etat_domination();
   static const int kEtatDominationFieldNumber = 3;
@@ -14819,7 +14850,7 @@ class MsgPopulationKnowledgeUpdate : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::PopulationKnowledgeId* id_;
+  ::Common::CrowdKnowledgeId* knowledge_;
   ::Common::KnowledgeGroupId* knowledge_group_;
   ::google::protobuf::int32 etat_domination_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
@@ -14840,18 +14871,18 @@ class MsgPopulationKnowledgeUpdate : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgPopulationKnowledgeUpdate* default_instance_;
+  static MsgCrowdKnowledgeUpdate* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgPopulationKnowledgeDestruction : public ::google::protobuf::Message {
+class MsgCrowdKnowledgeDestruction : public ::google::protobuf::Message {
  public:
-  MsgPopulationKnowledgeDestruction();
-  virtual ~MsgPopulationKnowledgeDestruction();
+  MsgCrowdKnowledgeDestruction();
+  virtual ~MsgCrowdKnowledgeDestruction();
   
-  MsgPopulationKnowledgeDestruction(const MsgPopulationKnowledgeDestruction& from);
+  MsgCrowdKnowledgeDestruction(const MsgCrowdKnowledgeDestruction& from);
   
-  inline MsgPopulationKnowledgeDestruction& operator=(const MsgPopulationKnowledgeDestruction& from) {
+  inline MsgCrowdKnowledgeDestruction& operator=(const MsgCrowdKnowledgeDestruction& from) {
     CopyFrom(from);
     return *this;
   }
@@ -14865,16 +14896,16 @@ class MsgPopulationKnowledgeDestruction : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgPopulationKnowledgeDestruction& default_instance();
-  void Swap(MsgPopulationKnowledgeDestruction* other);
+  static const MsgCrowdKnowledgeDestruction& default_instance();
+  void Swap(MsgCrowdKnowledgeDestruction* other);
   
   // implements Message ----------------------------------------------
   
-  MsgPopulationKnowledgeDestruction* New() const;
+  MsgCrowdKnowledgeDestruction* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgPopulationKnowledgeDestruction& from);
-  void MergeFrom(const MsgPopulationKnowledgeDestruction& from);
+  void CopyFrom(const MsgCrowdKnowledgeDestruction& from);
+  void MergeFrom(const MsgCrowdKnowledgeDestruction& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -14897,12 +14928,12 @@ class MsgPopulationKnowledgeDestruction : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.PopulationKnowledgeId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::PopulationKnowledgeId& id() const;
-  inline ::Common::PopulationKnowledgeId* mutable_id();
+  // required .Common.CrowdKnowledgeId knowledge = 1;
+  inline bool has_knowledge() const;
+  inline void clear_knowledge();
+  static const int kKnowledgeFieldNumber = 1;
+  inline const ::Common::CrowdKnowledgeId& knowledge() const;
+  inline ::Common::CrowdKnowledgeId* mutable_knowledge();
   
   // required .Common.KnowledgeGroupId knowledge_group = 2;
   inline bool has_knowledge_group() const;
@@ -14915,7 +14946,7 @@ class MsgPopulationKnowledgeDestruction : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::PopulationKnowledgeId* id_;
+  ::Common::CrowdKnowledgeId* knowledge_;
   ::Common::KnowledgeGroupId* knowledge_group_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -14935,18 +14966,18 @@ class MsgPopulationKnowledgeDestruction : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgPopulationKnowledgeDestruction* default_instance_;
+  static MsgCrowdKnowledgeDestruction* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgPopulationConcentrationKnowledgeCreation : public ::google::protobuf::Message {
+class MsgCrowdConcentrationKnowledgeCreation : public ::google::protobuf::Message {
  public:
-  MsgPopulationConcentrationKnowledgeCreation();
-  virtual ~MsgPopulationConcentrationKnowledgeCreation();
+  MsgCrowdConcentrationKnowledgeCreation();
+  virtual ~MsgCrowdConcentrationKnowledgeCreation();
   
-  MsgPopulationConcentrationKnowledgeCreation(const MsgPopulationConcentrationKnowledgeCreation& from);
+  MsgCrowdConcentrationKnowledgeCreation(const MsgCrowdConcentrationKnowledgeCreation& from);
   
-  inline MsgPopulationConcentrationKnowledgeCreation& operator=(const MsgPopulationConcentrationKnowledgeCreation& from) {
+  inline MsgCrowdConcentrationKnowledgeCreation& operator=(const MsgCrowdConcentrationKnowledgeCreation& from) {
     CopyFrom(from);
     return *this;
   }
@@ -14960,16 +14991,16 @@ class MsgPopulationConcentrationKnowledgeCreation : public ::google::protobuf::M
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgPopulationConcentrationKnowledgeCreation& default_instance();
-  void Swap(MsgPopulationConcentrationKnowledgeCreation* other);
+  static const MsgCrowdConcentrationKnowledgeCreation& default_instance();
+  void Swap(MsgCrowdConcentrationKnowledgeCreation* other);
   
   // implements Message ----------------------------------------------
   
-  MsgPopulationConcentrationKnowledgeCreation* New() const;
+  MsgCrowdConcentrationKnowledgeCreation* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgPopulationConcentrationKnowledgeCreation& from);
-  void MergeFrom(const MsgPopulationConcentrationKnowledgeCreation& from);
+  void CopyFrom(const MsgCrowdConcentrationKnowledgeCreation& from);
+  void MergeFrom(const MsgCrowdConcentrationKnowledgeCreation& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -14992,19 +15023,19 @@ class MsgPopulationConcentrationKnowledgeCreation : public ::google::protobuf::M
   
   // accessors -------------------------------------------------------
   
-  // required .Common.PopulationConcentrationKnowledgeId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::PopulationConcentrationKnowledgeId& id() const;
-  inline ::Common::PopulationConcentrationKnowledgeId* mutable_id();
+  // required .Common.CrowdConcentrationKnowledgeId knowledge = 1;
+  inline bool has_knowledge() const;
+  inline void clear_knowledge();
+  static const int kKnowledgeFieldNumber = 1;
+  inline const ::Common::CrowdConcentrationKnowledgeId& knowledge() const;
+  inline ::Common::CrowdConcentrationKnowledgeId* mutable_knowledge();
   
-  // required .Common.PopulationKnowledgeId population = 2;
-  inline bool has_population() const;
-  inline void clear_population();
-  static const int kPopulationFieldNumber = 2;
-  inline const ::Common::PopulationKnowledgeId& population() const;
-  inline ::Common::PopulationKnowledgeId* mutable_population();
+  // required .Common.CrowdKnowledgeId crowd = 2;
+  inline bool has_crowd() const;
+  inline void clear_crowd();
+  static const int kCrowdFieldNumber = 2;
+  inline const ::Common::CrowdKnowledgeId& crowd() const;
+  inline ::Common::CrowdKnowledgeId* mutable_crowd();
   
   // required .Common.KnowledgeGroupId knowledge_group = 3;
   inline bool has_knowledge_group() const;
@@ -15013,12 +15044,12 @@ class MsgPopulationConcentrationKnowledgeCreation : public ::google::protobuf::M
   inline const ::Common::KnowledgeGroupId& knowledge_group() const;
   inline ::Common::KnowledgeGroupId* mutable_knowledge_group();
   
-  // required .Common.PopulationConcentrationId concentration = 4;
+  // required .Common.CrowdConcentrationId concentration = 4;
   inline bool has_concentration() const;
   inline void clear_concentration();
   static const int kConcentrationFieldNumber = 4;
-  inline const ::Common::PopulationConcentrationId& concentration() const;
-  inline ::Common::PopulationConcentrationId* mutable_concentration();
+  inline const ::Common::CrowdConcentrationId& concentration() const;
+  inline ::Common::CrowdConcentrationId* mutable_concentration();
   
   // optional .Common.MsgCoordLatLong position = 5;
   inline bool has_position() const;
@@ -15031,10 +15062,10 @@ class MsgPopulationConcentrationKnowledgeCreation : public ::google::protobuf::M
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::PopulationConcentrationKnowledgeId* id_;
-  ::Common::PopulationKnowledgeId* population_;
+  ::Common::CrowdConcentrationKnowledgeId* knowledge_;
+  ::Common::CrowdKnowledgeId* crowd_;
   ::Common::KnowledgeGroupId* knowledge_group_;
-  ::Common::PopulationConcentrationId* concentration_;
+  ::Common::CrowdConcentrationId* concentration_;
   ::Common::MsgCoordLatLong* position_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -15054,18 +15085,18 @@ class MsgPopulationConcentrationKnowledgeCreation : public ::google::protobuf::M
   }
   
   void InitAsDefaultInstance();
-  static MsgPopulationConcentrationKnowledgeCreation* default_instance_;
+  static MsgCrowdConcentrationKnowledgeCreation* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgPopulationConcentrationKnowledgeUpdate : public ::google::protobuf::Message {
+class MsgCrowdConcentrationKnowledgeUpdate : public ::google::protobuf::Message {
  public:
-  MsgPopulationConcentrationKnowledgeUpdate();
-  virtual ~MsgPopulationConcentrationKnowledgeUpdate();
+  MsgCrowdConcentrationKnowledgeUpdate();
+  virtual ~MsgCrowdConcentrationKnowledgeUpdate();
   
-  MsgPopulationConcentrationKnowledgeUpdate(const MsgPopulationConcentrationKnowledgeUpdate& from);
+  MsgCrowdConcentrationKnowledgeUpdate(const MsgCrowdConcentrationKnowledgeUpdate& from);
   
-  inline MsgPopulationConcentrationKnowledgeUpdate& operator=(const MsgPopulationConcentrationKnowledgeUpdate& from) {
+  inline MsgCrowdConcentrationKnowledgeUpdate& operator=(const MsgCrowdConcentrationKnowledgeUpdate& from) {
     CopyFrom(from);
     return *this;
   }
@@ -15079,16 +15110,16 @@ class MsgPopulationConcentrationKnowledgeUpdate : public ::google::protobuf::Mes
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgPopulationConcentrationKnowledgeUpdate& default_instance();
-  void Swap(MsgPopulationConcentrationKnowledgeUpdate* other);
+  static const MsgCrowdConcentrationKnowledgeUpdate& default_instance();
+  void Swap(MsgCrowdConcentrationKnowledgeUpdate* other);
   
   // implements Message ----------------------------------------------
   
-  MsgPopulationConcentrationKnowledgeUpdate* New() const;
+  MsgCrowdConcentrationKnowledgeUpdate* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgPopulationConcentrationKnowledgeUpdate& from);
-  void MergeFrom(const MsgPopulationConcentrationKnowledgeUpdate& from);
+  void CopyFrom(const MsgCrowdConcentrationKnowledgeUpdate& from);
+  void MergeFrom(const MsgCrowdConcentrationKnowledgeUpdate& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -15111,19 +15142,19 @@ class MsgPopulationConcentrationKnowledgeUpdate : public ::google::protobuf::Mes
   
   // accessors -------------------------------------------------------
   
-  // required .Common.PopulationConcentrationKnowledgeId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::PopulationConcentrationKnowledgeId& id() const;
-  inline ::Common::PopulationConcentrationKnowledgeId* mutable_id();
+  // required .Common.CrowdConcentrationKnowledgeId knowledge = 1;
+  inline bool has_knowledge() const;
+  inline void clear_knowledge();
+  static const int kKnowledgeFieldNumber = 1;
+  inline const ::Common::CrowdConcentrationKnowledgeId& knowledge() const;
+  inline ::Common::CrowdConcentrationKnowledgeId* mutable_knowledge();
   
-  // required .Common.PopulationKnowledgeId population = 2;
-  inline bool has_population() const;
-  inline void clear_population();
-  static const int kPopulationFieldNumber = 2;
-  inline const ::Common::PopulationKnowledgeId& population() const;
-  inline ::Common::PopulationKnowledgeId* mutable_population();
+  // required .Common.CrowdKnowledgeId crowd = 2;
+  inline bool has_crowd() const;
+  inline void clear_crowd();
+  static const int kCrowdFieldNumber = 2;
+  inline const ::Common::CrowdKnowledgeId& crowd() const;
+  inline ::Common::CrowdKnowledgeId* mutable_crowd();
   
   // required .Common.KnowledgeGroupId knowledge_group = 3;
   inline bool has_knowledge_group() const;
@@ -15132,12 +15163,12 @@ class MsgPopulationConcentrationKnowledgeUpdate : public ::google::protobuf::Mes
   inline const ::Common::KnowledgeGroupId& knowledge_group() const;
   inline ::Common::KnowledgeGroupId* mutable_knowledge_group();
   
-  // optional .Common.PopulationConcentrationId concentration = 4;
+  // optional .Common.CrowdConcentrationId concentration = 4;
   inline bool has_concentration() const;
   inline void clear_concentration();
   static const int kConcentrationFieldNumber = 4;
-  inline const ::Common::PopulationConcentrationId& concentration() const;
-  inline ::Common::PopulationConcentrationId* mutable_concentration();
+  inline const ::Common::CrowdConcentrationId& concentration() const;
+  inline ::Common::CrowdConcentrationId* mutable_concentration();
   
   // optional int32 nb_humains_vivants = 5;
   inline bool has_nb_humains_vivants() const;
@@ -15153,12 +15184,12 @@ class MsgPopulationConcentrationKnowledgeUpdate : public ::google::protobuf::Mes
   inline ::google::protobuf::int32 nb_humains_morts() const;
   inline void set_nb_humains_morts(::google::protobuf::int32 value);
   
-  // optional .Common.EnumPopulationAttitude attitude = 7;
+  // optional .Common.EnumCrowdAttitude attitude = 7;
   inline bool has_attitude() const;
   inline void clear_attitude();
   static const int kAttitudeFieldNumber = 7;
-  inline Common::EnumPopulationAttitude attitude() const;
-  inline void set_attitude(Common::EnumPopulationAttitude value);
+  inline Common::EnumCrowdAttitude attitude() const;
+  inline void set_attitude(Common::EnumCrowdAttitude value);
   
   // optional int32 pertinence = 8;
   inline bool has_pertinence() const;
@@ -15178,10 +15209,10 @@ class MsgPopulationConcentrationKnowledgeUpdate : public ::google::protobuf::Mes
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::PopulationConcentrationKnowledgeId* id_;
-  ::Common::PopulationKnowledgeId* population_;
+  ::Common::CrowdConcentrationKnowledgeId* knowledge_;
+  ::Common::CrowdKnowledgeId* crowd_;
   ::Common::KnowledgeGroupId* knowledge_group_;
-  ::Common::PopulationConcentrationId* concentration_;
+  ::Common::CrowdConcentrationId* concentration_;
   ::google::protobuf::int32 nb_humains_vivants_;
   ::google::protobuf::int32 nb_humains_morts_;
   int attitude_;
@@ -15205,18 +15236,18 @@ class MsgPopulationConcentrationKnowledgeUpdate : public ::google::protobuf::Mes
   }
   
   void InitAsDefaultInstance();
-  static MsgPopulationConcentrationKnowledgeUpdate* default_instance_;
+  static MsgCrowdConcentrationKnowledgeUpdate* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgPopulationConcentrationKnowledgeDestruction : public ::google::protobuf::Message {
+class MsgCrowdConcentrationKnowledgeDestruction : public ::google::protobuf::Message {
  public:
-  MsgPopulationConcentrationKnowledgeDestruction();
-  virtual ~MsgPopulationConcentrationKnowledgeDestruction();
+  MsgCrowdConcentrationKnowledgeDestruction();
+  virtual ~MsgCrowdConcentrationKnowledgeDestruction();
   
-  MsgPopulationConcentrationKnowledgeDestruction(const MsgPopulationConcentrationKnowledgeDestruction& from);
+  MsgCrowdConcentrationKnowledgeDestruction(const MsgCrowdConcentrationKnowledgeDestruction& from);
   
-  inline MsgPopulationConcentrationKnowledgeDestruction& operator=(const MsgPopulationConcentrationKnowledgeDestruction& from) {
+  inline MsgCrowdConcentrationKnowledgeDestruction& operator=(const MsgCrowdConcentrationKnowledgeDestruction& from) {
     CopyFrom(from);
     return *this;
   }
@@ -15230,16 +15261,16 @@ class MsgPopulationConcentrationKnowledgeDestruction : public ::google::protobuf
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgPopulationConcentrationKnowledgeDestruction& default_instance();
-  void Swap(MsgPopulationConcentrationKnowledgeDestruction* other);
+  static const MsgCrowdConcentrationKnowledgeDestruction& default_instance();
+  void Swap(MsgCrowdConcentrationKnowledgeDestruction* other);
   
   // implements Message ----------------------------------------------
   
-  MsgPopulationConcentrationKnowledgeDestruction* New() const;
+  MsgCrowdConcentrationKnowledgeDestruction* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgPopulationConcentrationKnowledgeDestruction& from);
-  void MergeFrom(const MsgPopulationConcentrationKnowledgeDestruction& from);
+  void CopyFrom(const MsgCrowdConcentrationKnowledgeDestruction& from);
+  void MergeFrom(const MsgCrowdConcentrationKnowledgeDestruction& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -15262,19 +15293,19 @@ class MsgPopulationConcentrationKnowledgeDestruction : public ::google::protobuf
   
   // accessors -------------------------------------------------------
   
-  // required .Common.PopulationConcentrationKnowledgeId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::PopulationConcentrationKnowledgeId& id() const;
-  inline ::Common::PopulationConcentrationKnowledgeId* mutable_id();
+  // required .Common.CrowdConcentrationKnowledgeId knowledge = 1;
+  inline bool has_knowledge() const;
+  inline void clear_knowledge();
+  static const int kKnowledgeFieldNumber = 1;
+  inline const ::Common::CrowdConcentrationKnowledgeId& knowledge() const;
+  inline ::Common::CrowdConcentrationKnowledgeId* mutable_knowledge();
   
-  // required .Common.PopulationKnowledgeId population = 2;
-  inline bool has_population() const;
-  inline void clear_population();
-  static const int kPopulationFieldNumber = 2;
-  inline const ::Common::PopulationKnowledgeId& population() const;
-  inline ::Common::PopulationKnowledgeId* mutable_population();
+  // required .Common.CrowdKnowledgeId crowd = 2;
+  inline bool has_crowd() const;
+  inline void clear_crowd();
+  static const int kCrowdFieldNumber = 2;
+  inline const ::Common::CrowdKnowledgeId& crowd() const;
+  inline ::Common::CrowdKnowledgeId* mutable_crowd();
   
   // required .Common.KnowledgeGroupId knowledge_group = 3;
   inline bool has_knowledge_group() const;
@@ -15287,8 +15318,8 @@ class MsgPopulationConcentrationKnowledgeDestruction : public ::google::protobuf
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::PopulationConcentrationKnowledgeId* id_;
-  ::Common::PopulationKnowledgeId* population_;
+  ::Common::CrowdConcentrationKnowledgeId* knowledge_;
+  ::Common::CrowdKnowledgeId* crowd_;
   ::Common::KnowledgeGroupId* knowledge_group_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -15308,18 +15339,18 @@ class MsgPopulationConcentrationKnowledgeDestruction : public ::google::protobuf
   }
   
   void InitAsDefaultInstance();
-  static MsgPopulationConcentrationKnowledgeDestruction* default_instance_;
+  static MsgCrowdConcentrationKnowledgeDestruction* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgPopulationFlowKnowledgeCreation : public ::google::protobuf::Message {
+class MsgCrowdFlowKnowledgeCreation : public ::google::protobuf::Message {
  public:
-  MsgPopulationFlowKnowledgeCreation();
-  virtual ~MsgPopulationFlowKnowledgeCreation();
+  MsgCrowdFlowKnowledgeCreation();
+  virtual ~MsgCrowdFlowKnowledgeCreation();
   
-  MsgPopulationFlowKnowledgeCreation(const MsgPopulationFlowKnowledgeCreation& from);
+  MsgCrowdFlowKnowledgeCreation(const MsgCrowdFlowKnowledgeCreation& from);
   
-  inline MsgPopulationFlowKnowledgeCreation& operator=(const MsgPopulationFlowKnowledgeCreation& from) {
+  inline MsgCrowdFlowKnowledgeCreation& operator=(const MsgCrowdFlowKnowledgeCreation& from) {
     CopyFrom(from);
     return *this;
   }
@@ -15333,16 +15364,16 @@ class MsgPopulationFlowKnowledgeCreation : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgPopulationFlowKnowledgeCreation& default_instance();
-  void Swap(MsgPopulationFlowKnowledgeCreation* other);
+  static const MsgCrowdFlowKnowledgeCreation& default_instance();
+  void Swap(MsgCrowdFlowKnowledgeCreation* other);
   
   // implements Message ----------------------------------------------
   
-  MsgPopulationFlowKnowledgeCreation* New() const;
+  MsgCrowdFlowKnowledgeCreation* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgPopulationFlowKnowledgeCreation& from);
-  void MergeFrom(const MsgPopulationFlowKnowledgeCreation& from);
+  void CopyFrom(const MsgCrowdFlowKnowledgeCreation& from);
+  void MergeFrom(const MsgCrowdFlowKnowledgeCreation& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -15365,19 +15396,19 @@ class MsgPopulationFlowKnowledgeCreation : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.PopulationFlowKnowledgeId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::PopulationFlowKnowledgeId& id() const;
-  inline ::Common::PopulationFlowKnowledgeId* mutable_id();
+  // required .Common.CrowdFlowKnowledgeId knowledge = 1;
+  inline bool has_knowledge() const;
+  inline void clear_knowledge();
+  static const int kKnowledgeFieldNumber = 1;
+  inline const ::Common::CrowdFlowKnowledgeId& knowledge() const;
+  inline ::Common::CrowdFlowKnowledgeId* mutable_knowledge();
   
-  // required .Common.PopulationKnowledgeId population = 2;
-  inline bool has_population() const;
-  inline void clear_population();
-  static const int kPopulationFieldNumber = 2;
-  inline const ::Common::PopulationKnowledgeId& population() const;
-  inline ::Common::PopulationKnowledgeId* mutable_population();
+  // required .Common.CrowdKnowledgeId crowd = 2;
+  inline bool has_crowd() const;
+  inline void clear_crowd();
+  static const int kCrowdFieldNumber = 2;
+  inline const ::Common::CrowdKnowledgeId& crowd() const;
+  inline ::Common::CrowdKnowledgeId* mutable_crowd();
   
   // required .Common.KnowledgeGroupId knowledge_group = 3;
   inline bool has_knowledge_group() const;
@@ -15386,21 +15417,21 @@ class MsgPopulationFlowKnowledgeCreation : public ::google::protobuf::Message {
   inline const ::Common::KnowledgeGroupId& knowledge_group() const;
   inline ::Common::KnowledgeGroupId* mutable_knowledge_group();
   
-  // required .Common.PopulationFlowId flow = 4;
+  // required .Common.CrowdFlowId flow = 4;
   inline bool has_flow() const;
   inline void clear_flow();
   static const int kFlowFieldNumber = 4;
-  inline const ::Common::PopulationFlowId& flow() const;
-  inline ::Common::PopulationFlowId* mutable_flow();
+  inline const ::Common::CrowdFlowId& flow() const;
+  inline ::Common::CrowdFlowId* mutable_flow();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::PopulationFlowKnowledgeId* id_;
-  ::Common::PopulationKnowledgeId* population_;
+  ::Common::CrowdFlowKnowledgeId* knowledge_;
+  ::Common::CrowdKnowledgeId* crowd_;
   ::Common::KnowledgeGroupId* knowledge_group_;
-  ::Common::PopulationFlowId* flow_;
+  ::Common::CrowdFlowId* flow_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
@@ -15419,7 +15450,7 @@ class MsgPopulationFlowKnowledgeCreation : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgPopulationFlowKnowledgeCreation* default_instance_;
+  static MsgCrowdFlowKnowledgeCreation* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -15608,14 +15639,14 @@ class SeqOfFlowPart : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgPopulationFlowKnowledgeUpdate : public ::google::protobuf::Message {
+class MsgCrowdFlowKnowledgeUpdate : public ::google::protobuf::Message {
  public:
-  MsgPopulationFlowKnowledgeUpdate();
-  virtual ~MsgPopulationFlowKnowledgeUpdate();
+  MsgCrowdFlowKnowledgeUpdate();
+  virtual ~MsgCrowdFlowKnowledgeUpdate();
   
-  MsgPopulationFlowKnowledgeUpdate(const MsgPopulationFlowKnowledgeUpdate& from);
+  MsgCrowdFlowKnowledgeUpdate(const MsgCrowdFlowKnowledgeUpdate& from);
   
-  inline MsgPopulationFlowKnowledgeUpdate& operator=(const MsgPopulationFlowKnowledgeUpdate& from) {
+  inline MsgCrowdFlowKnowledgeUpdate& operator=(const MsgCrowdFlowKnowledgeUpdate& from) {
     CopyFrom(from);
     return *this;
   }
@@ -15629,16 +15660,16 @@ class MsgPopulationFlowKnowledgeUpdate : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgPopulationFlowKnowledgeUpdate& default_instance();
-  void Swap(MsgPopulationFlowKnowledgeUpdate* other);
+  static const MsgCrowdFlowKnowledgeUpdate& default_instance();
+  void Swap(MsgCrowdFlowKnowledgeUpdate* other);
   
   // implements Message ----------------------------------------------
   
-  MsgPopulationFlowKnowledgeUpdate* New() const;
+  MsgCrowdFlowKnowledgeUpdate* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgPopulationFlowKnowledgeUpdate& from);
-  void MergeFrom(const MsgPopulationFlowKnowledgeUpdate& from);
+  void CopyFrom(const MsgCrowdFlowKnowledgeUpdate& from);
+  void MergeFrom(const MsgCrowdFlowKnowledgeUpdate& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -15661,19 +15692,19 @@ class MsgPopulationFlowKnowledgeUpdate : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.PopulationFlowKnowledgeId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::PopulationFlowKnowledgeId& id() const;
-  inline ::Common::PopulationFlowKnowledgeId* mutable_id();
+  // required .Common.CrowdFlowKnowledgeId knowledge = 1;
+  inline bool has_knowledge() const;
+  inline void clear_knowledge();
+  static const int kKnowledgeFieldNumber = 1;
+  inline const ::Common::CrowdFlowKnowledgeId& knowledge() const;
+  inline ::Common::CrowdFlowKnowledgeId* mutable_knowledge();
   
-  // required .Common.PopulationKnowledgeId population = 2;
-  inline bool has_population() const;
-  inline void clear_population();
-  static const int kPopulationFieldNumber = 2;
-  inline const ::Common::PopulationKnowledgeId& population() const;
-  inline ::Common::PopulationKnowledgeId* mutable_population();
+  // required .Common.CrowdKnowledgeId crowd = 2;
+  inline bool has_crowd() const;
+  inline void clear_crowd();
+  static const int kCrowdFieldNumber = 2;
+  inline const ::Common::CrowdKnowledgeId& crowd() const;
+  inline ::Common::CrowdKnowledgeId* mutable_crowd();
   
   // required .Common.KnowledgeGroupId knowledge_group = 3;
   inline bool has_knowledge_group() const;
@@ -15682,12 +15713,12 @@ class MsgPopulationFlowKnowledgeUpdate : public ::google::protobuf::Message {
   inline const ::Common::KnowledgeGroupId& knowledge_group() const;
   inline ::Common::KnowledgeGroupId* mutable_knowledge_group();
   
-  // optional .Common.PopulationFlowId flow = 4;
+  // optional .Common.CrowdFlowId flow = 4;
   inline bool has_flow() const;
   inline void clear_flow();
   static const int kFlowFieldNumber = 4;
-  inline const ::Common::PopulationFlowId& flow() const;
-  inline ::Common::PopulationFlowId* mutable_flow();
+  inline const ::Common::CrowdFlowId& flow() const;
+  inline ::Common::CrowdFlowId* mutable_flow();
   
   // optional .MsgsSimToClient.SeqOfFlowPart portions_flux = 5;
   inline bool has_portions_flux() const;
@@ -15724,12 +15755,12 @@ class MsgPopulationFlowKnowledgeUpdate : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 nb_humains_morts() const;
   inline void set_nb_humains_morts(::google::protobuf::int32 value);
   
-  // optional .Common.EnumPopulationAttitude attitude = 10;
+  // optional .Common.EnumCrowdAttitude attitude = 10;
   inline bool has_attitude() const;
   inline void clear_attitude();
   static const int kAttitudeFieldNumber = 10;
-  inline Common::EnumPopulationAttitude attitude() const;
-  inline void set_attitude(Common::EnumPopulationAttitude value);
+  inline Common::EnumCrowdAttitude attitude() const;
+  inline void set_attitude(Common::EnumCrowdAttitude value);
   
   // optional bool est_percu = 11;
   inline bool has_est_percu() const;
@@ -15742,10 +15773,10 @@ class MsgPopulationFlowKnowledgeUpdate : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::PopulationFlowKnowledgeId* id_;
-  ::Common::PopulationKnowledgeId* population_;
+  ::Common::CrowdFlowKnowledgeId* knowledge_;
+  ::Common::CrowdKnowledgeId* crowd_;
   ::Common::KnowledgeGroupId* knowledge_group_;
-  ::Common::PopulationFlowId* flow_;
+  ::Common::CrowdFlowId* flow_;
   ::MsgsSimToClient::SeqOfFlowPart* portions_flux_;
   ::Common::MsgHeading* direction_;
   ::google::protobuf::int32 vitesse_;
@@ -15771,18 +15802,18 @@ class MsgPopulationFlowKnowledgeUpdate : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgPopulationFlowKnowledgeUpdate* default_instance_;
+  static MsgCrowdFlowKnowledgeUpdate* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgPopulationFlowKnowledgeDestruction : public ::google::protobuf::Message {
+class MsgCrowdFlowKnowledgeDestruction : public ::google::protobuf::Message {
  public:
-  MsgPopulationFlowKnowledgeDestruction();
-  virtual ~MsgPopulationFlowKnowledgeDestruction();
+  MsgCrowdFlowKnowledgeDestruction();
+  virtual ~MsgCrowdFlowKnowledgeDestruction();
   
-  MsgPopulationFlowKnowledgeDestruction(const MsgPopulationFlowKnowledgeDestruction& from);
+  MsgCrowdFlowKnowledgeDestruction(const MsgCrowdFlowKnowledgeDestruction& from);
   
-  inline MsgPopulationFlowKnowledgeDestruction& operator=(const MsgPopulationFlowKnowledgeDestruction& from) {
+  inline MsgCrowdFlowKnowledgeDestruction& operator=(const MsgCrowdFlowKnowledgeDestruction& from) {
     CopyFrom(from);
     return *this;
   }
@@ -15796,16 +15827,16 @@ class MsgPopulationFlowKnowledgeDestruction : public ::google::protobuf::Message
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgPopulationFlowKnowledgeDestruction& default_instance();
-  void Swap(MsgPopulationFlowKnowledgeDestruction* other);
+  static const MsgCrowdFlowKnowledgeDestruction& default_instance();
+  void Swap(MsgCrowdFlowKnowledgeDestruction* other);
   
   // implements Message ----------------------------------------------
   
-  MsgPopulationFlowKnowledgeDestruction* New() const;
+  MsgCrowdFlowKnowledgeDestruction* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgPopulationFlowKnowledgeDestruction& from);
-  void MergeFrom(const MsgPopulationFlowKnowledgeDestruction& from);
+  void CopyFrom(const MsgCrowdFlowKnowledgeDestruction& from);
+  void MergeFrom(const MsgCrowdFlowKnowledgeDestruction& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -15828,19 +15859,19 @@ class MsgPopulationFlowKnowledgeDestruction : public ::google::protobuf::Message
   
   // accessors -------------------------------------------------------
   
-  // required .Common.PopulationFlowKnowledgeId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::PopulationFlowKnowledgeId& id() const;
-  inline ::Common::PopulationFlowKnowledgeId* mutable_id();
+  // required .Common.CrowdFlowKnowledgeId knowledge = 1;
+  inline bool has_knowledge() const;
+  inline void clear_knowledge();
+  static const int kKnowledgeFieldNumber = 1;
+  inline const ::Common::CrowdFlowKnowledgeId& knowledge() const;
+  inline ::Common::CrowdFlowKnowledgeId* mutable_knowledge();
   
-  // required .Common.PopulationKnowledgeId population = 2;
-  inline bool has_population() const;
-  inline void clear_population();
-  static const int kPopulationFieldNumber = 2;
-  inline const ::Common::PopulationKnowledgeId& population() const;
-  inline ::Common::PopulationKnowledgeId* mutable_population();
+  // required .Common.CrowdKnowledgeId crowd = 2;
+  inline bool has_crowd() const;
+  inline void clear_crowd();
+  static const int kCrowdFieldNumber = 2;
+  inline const ::Common::CrowdKnowledgeId& crowd() const;
+  inline ::Common::CrowdKnowledgeId* mutable_crowd();
   
   // required .Common.KnowledgeGroupId knowledge_group = 3;
   inline bool has_knowledge_group() const;
@@ -15853,8 +15884,8 @@ class MsgPopulationFlowKnowledgeDestruction : public ::google::protobuf::Message
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::PopulationFlowKnowledgeId* id_;
-  ::Common::PopulationKnowledgeId* population_;
+  ::Common::CrowdFlowKnowledgeId* knowledge_;
+  ::Common::CrowdKnowledgeId* crowd_;
   ::Common::KnowledgeGroupId* knowledge_group_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -15874,7 +15905,7 @@ class MsgPopulationFlowKnowledgeDestruction : public ::google::protobuf::Message
   }
   
   void InitAsDefaultInstance();
-  static MsgPopulationFlowKnowledgeDestruction* default_instance_;
+  static MsgCrowdFlowKnowledgeDestruction* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -16234,38 +16265,38 @@ class MsgFolkGraphEdgeUpdate : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required int32 oid = 1;
-  inline bool has_oid() const;
-  inline void clear_oid();
-  static const int kOidFieldNumber = 1;
-  inline ::google::protobuf::int32 oid() const;
-  inline void set_oid(::google::protobuf::int32 value);
+  // required int32 folk = 1;
+  inline bool has_folk() const;
+  inline void clear_folk();
+  static const int kFolkFieldNumber = 1;
+  inline ::google::protobuf::int32 folk() const;
+  inline void set_folk(::google::protobuf::int32 value);
   
-  // required int32 shp_oid = 2;
-  inline bool has_shp_oid() const;
-  inline void clear_shp_oid();
-  static const int kShpOidFieldNumber = 2;
-  inline ::google::protobuf::int32 shp_oid() const;
-  inline void set_shp_oid(::google::protobuf::int32 value);
+  // required int32 shape_id = 2;
+  inline bool has_shape_id() const;
+  inline void clear_shape_id();
+  static const int kShapeIdFieldNumber = 2;
+  inline ::google::protobuf::int32 shape_id() const;
+  inline void set_shape_id(::google::protobuf::int32 value);
   
-  // repeated int32 population_occupation = 3;
-  inline int population_occupation_size() const;
-  inline void clear_population_occupation();
-  static const int kPopulationOccupationFieldNumber = 3;
-  inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >& population_occupation() const
+  // repeated int32 crowd_occupation = 3;
+  inline int crowd_occupation_size() const;
+  inline void clear_crowd_occupation();
+  static const int kCrowdOccupationFieldNumber = 3;
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >& crowd_occupation() const
       ;
-  inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >* mutable_population_occupation();
-  inline ::google::protobuf::int32 population_occupation(int index) const;
-  inline void set_population_occupation(int index, ::google::protobuf::int32 value);
-  inline void add_population_occupation(::google::protobuf::int32 value);
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >* mutable_crowd_occupation();
+  inline ::google::protobuf::int32 crowd_occupation(int index) const;
+  inline void set_crowd_occupation(int index, ::google::protobuf::int32 value);
+  inline void add_crowd_occupation(::google::protobuf::int32 value);
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::int32 oid_;
-  ::google::protobuf::int32 shp_oid_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > population_occupation_;
+  ::google::protobuf::int32 folk_;
+  ::google::protobuf::int32 shape_id_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > crowd_occupation_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
@@ -16782,6 +16813,260 @@ class MsgControlCheckPointSaveEnd : public ::google::protobuf::Message {
   
   void InitAsDefaultInstance();
   static MsgControlCheckPointSaveEnd* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgControlCheckPointListAck : public ::google::protobuf::Message {
+ public:
+  MsgControlCheckPointListAck();
+  virtual ~MsgControlCheckPointListAck();
+  
+  MsgControlCheckPointListAck(const MsgControlCheckPointListAck& from);
+  
+  inline MsgControlCheckPointListAck& operator=(const MsgControlCheckPointListAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgControlCheckPointListAck& default_instance();
+  void Swap(MsgControlCheckPointListAck* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgControlCheckPointListAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgControlCheckPointListAck& from);
+  void MergeFrom(const MsgControlCheckPointListAck& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  friend void  protobuf_AddDesc_SimToClient_2eproto();
+  friend void protobuf_AssignDesc_SimToClient_2eproto();
+  friend void protobuf_ShutdownFile_SimToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[1];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgControlCheckPointListAck* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgControlCheckPointList : public ::google::protobuf::Message {
+ public:
+  MsgControlCheckPointList();
+  virtual ~MsgControlCheckPointList();
+  
+  MsgControlCheckPointList(const MsgControlCheckPointList& from);
+  
+  inline MsgControlCheckPointList& operator=(const MsgControlCheckPointList& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgControlCheckPointList& default_instance();
+  void Swap(MsgControlCheckPointList* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgControlCheckPointList* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgControlCheckPointList& from);
+  void MergeFrom(const MsgControlCheckPointList& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // repeated string checkpoint = 1;
+  inline int checkpoint_size() const;
+  inline void clear_checkpoint();
+  static const int kCheckpointFieldNumber = 1;
+  inline const ::google::protobuf::RepeatedPtrField< ::std::string>& checkpoint() const;
+  inline ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_checkpoint();
+  inline const ::std::string& checkpoint(int index) const;
+  inline ::std::string* mutable_checkpoint(int index);
+  inline void set_checkpoint(int index, const ::std::string& value);
+  inline void set_checkpoint(int index, const char* value);
+  inline void set_checkpoint(int index, const char* value, size_t size);
+  inline ::std::string* add_checkpoint();
+  inline void add_checkpoint(const ::std::string& value);
+  inline void add_checkpoint(const char* value);
+  inline void add_checkpoint(const char* value, size_t size);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::RepeatedPtrField< ::std::string> checkpoint_;
+  friend void  protobuf_AddDesc_SimToClient_2eproto();
+  friend void protobuf_AssignDesc_SimToClient_2eproto();
+  friend void protobuf_ShutdownFile_SimToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgControlCheckPointList* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgControlCheckPointDeleteAck : public ::google::protobuf::Message {
+ public:
+  MsgControlCheckPointDeleteAck();
+  virtual ~MsgControlCheckPointDeleteAck();
+  
+  MsgControlCheckPointDeleteAck(const MsgControlCheckPointDeleteAck& from);
+  
+  inline MsgControlCheckPointDeleteAck& operator=(const MsgControlCheckPointDeleteAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgControlCheckPointDeleteAck& default_instance();
+  void Swap(MsgControlCheckPointDeleteAck* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgControlCheckPointDeleteAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgControlCheckPointDeleteAck& from);
+  void MergeFrom(const MsgControlCheckPointDeleteAck& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  friend void  protobuf_AddDesc_SimToClient_2eproto();
+  friend void protobuf_AssignDesc_SimToClient_2eproto();
+  friend void protobuf_ShutdownFile_SimToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[1];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgControlCheckPointDeleteAck* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -17433,14 +17718,14 @@ class MsgUrbanMagicActionAck : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgUrbanAttributes_Architecture : public ::google::protobuf::Message {
+class UrbanAttributes_Architecture : public ::google::protobuf::Message {
  public:
-  MsgUrbanAttributes_Architecture();
-  virtual ~MsgUrbanAttributes_Architecture();
+  UrbanAttributes_Architecture();
+  virtual ~UrbanAttributes_Architecture();
   
-  MsgUrbanAttributes_Architecture(const MsgUrbanAttributes_Architecture& from);
+  UrbanAttributes_Architecture(const UrbanAttributes_Architecture& from);
   
-  inline MsgUrbanAttributes_Architecture& operator=(const MsgUrbanAttributes_Architecture& from) {
+  inline UrbanAttributes_Architecture& operator=(const UrbanAttributes_Architecture& from) {
     CopyFrom(from);
     return *this;
   }
@@ -17454,16 +17739,16 @@ class MsgUrbanAttributes_Architecture : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgUrbanAttributes_Architecture& default_instance();
-  void Swap(MsgUrbanAttributes_Architecture* other);
+  static const UrbanAttributes_Architecture& default_instance();
+  void Swap(UrbanAttributes_Architecture* other);
   
   // implements Message ----------------------------------------------
   
-  MsgUrbanAttributes_Architecture* New() const;
+  UrbanAttributes_Architecture* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgUrbanAttributes_Architecture& from);
-  void MergeFrom(const MsgUrbanAttributes_Architecture& from);
+  void CopyFrom(const UrbanAttributes_Architecture& from);
+  void MergeFrom(const UrbanAttributes_Architecture& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -17564,18 +17849,18 @@ class MsgUrbanAttributes_Architecture : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgUrbanAttributes_Architecture* default_instance_;
+  static UrbanAttributes_Architecture* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgUrbanAttributes_Structure : public ::google::protobuf::Message {
+class UrbanAttributes_Structure : public ::google::protobuf::Message {
  public:
-  MsgUrbanAttributes_Structure();
-  virtual ~MsgUrbanAttributes_Structure();
+  UrbanAttributes_Structure();
+  virtual ~UrbanAttributes_Structure();
   
-  MsgUrbanAttributes_Structure(const MsgUrbanAttributes_Structure& from);
+  UrbanAttributes_Structure(const UrbanAttributes_Structure& from);
   
-  inline MsgUrbanAttributes_Structure& operator=(const MsgUrbanAttributes_Structure& from) {
+  inline UrbanAttributes_Structure& operator=(const UrbanAttributes_Structure& from) {
     CopyFrom(from);
     return *this;
   }
@@ -17589,16 +17874,16 @@ class MsgUrbanAttributes_Structure : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgUrbanAttributes_Structure& default_instance();
-  void Swap(MsgUrbanAttributes_Structure* other);
+  static const UrbanAttributes_Structure& default_instance();
+  void Swap(UrbanAttributes_Structure* other);
   
   // implements Message ----------------------------------------------
   
-  MsgUrbanAttributes_Structure* New() const;
+  UrbanAttributes_Structure* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgUrbanAttributes_Structure& from);
-  void MergeFrom(const MsgUrbanAttributes_Structure& from);
+  void CopyFrom(const UrbanAttributes_Structure& from);
+  void MergeFrom(const UrbanAttributes_Structure& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -17651,18 +17936,18 @@ class MsgUrbanAttributes_Structure : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgUrbanAttributes_Structure* default_instance_;
+  static UrbanAttributes_Structure* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgUrbanAttributes_Infrastructures : public ::google::protobuf::Message {
+class UrbanAttributes_Infrastructures : public ::google::protobuf::Message {
  public:
-  MsgUrbanAttributes_Infrastructures();
-  virtual ~MsgUrbanAttributes_Infrastructures();
+  UrbanAttributes_Infrastructures();
+  virtual ~UrbanAttributes_Infrastructures();
   
-  MsgUrbanAttributes_Infrastructures(const MsgUrbanAttributes_Infrastructures& from);
+  UrbanAttributes_Infrastructures(const UrbanAttributes_Infrastructures& from);
   
-  inline MsgUrbanAttributes_Infrastructures& operator=(const MsgUrbanAttributes_Infrastructures& from) {
+  inline UrbanAttributes_Infrastructures& operator=(const UrbanAttributes_Infrastructures& from) {
     CopyFrom(from);
     return *this;
   }
@@ -17676,16 +17961,16 @@ class MsgUrbanAttributes_Infrastructures : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgUrbanAttributes_Infrastructures& default_instance();
-  void Swap(MsgUrbanAttributes_Infrastructures* other);
+  static const UrbanAttributes_Infrastructures& default_instance();
+  void Swap(UrbanAttributes_Infrastructures* other);
   
   // implements Message ----------------------------------------------
   
-  MsgUrbanAttributes_Infrastructures* New() const;
+  UrbanAttributes_Infrastructures* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgUrbanAttributes_Infrastructures& from);
-  void MergeFrom(const MsgUrbanAttributes_Infrastructures& from);
+  void CopyFrom(const UrbanAttributes_Infrastructures& from);
+  void MergeFrom(const UrbanAttributes_Infrastructures& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -17741,18 +18026,18 @@ class MsgUrbanAttributes_Infrastructures : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgUrbanAttributes_Infrastructures* default_instance_;
+  static UrbanAttributes_Infrastructures* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgUrbanAttributes_RgbaColor : public ::google::protobuf::Message {
+class UrbanAttributes_RgbaColor : public ::google::protobuf::Message {
  public:
-  MsgUrbanAttributes_RgbaColor();
-  virtual ~MsgUrbanAttributes_RgbaColor();
+  UrbanAttributes_RgbaColor();
+  virtual ~UrbanAttributes_RgbaColor();
   
-  MsgUrbanAttributes_RgbaColor(const MsgUrbanAttributes_RgbaColor& from);
+  UrbanAttributes_RgbaColor(const UrbanAttributes_RgbaColor& from);
   
-  inline MsgUrbanAttributes_RgbaColor& operator=(const MsgUrbanAttributes_RgbaColor& from) {
+  inline UrbanAttributes_RgbaColor& operator=(const UrbanAttributes_RgbaColor& from) {
     CopyFrom(from);
     return *this;
   }
@@ -17766,16 +18051,16 @@ class MsgUrbanAttributes_RgbaColor : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgUrbanAttributes_RgbaColor& default_instance();
-  void Swap(MsgUrbanAttributes_RgbaColor* other);
+  static const UrbanAttributes_RgbaColor& default_instance();
+  void Swap(UrbanAttributes_RgbaColor* other);
   
   // implements Message ----------------------------------------------
   
-  MsgUrbanAttributes_RgbaColor* New() const;
+  UrbanAttributes_RgbaColor* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgUrbanAttributes_RgbaColor& from);
-  void MergeFrom(const MsgUrbanAttributes_RgbaColor& from);
+  void CopyFrom(const UrbanAttributes_RgbaColor& from);
+  void MergeFrom(const UrbanAttributes_RgbaColor& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -17852,18 +18137,18 @@ class MsgUrbanAttributes_RgbaColor : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgUrbanAttributes_RgbaColor* default_instance_;
+  static UrbanAttributes_RgbaColor* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgUrbanAttributes : public ::google::protobuf::Message {
+class UrbanAttributes : public ::google::protobuf::Message {
  public:
-  MsgUrbanAttributes();
-  virtual ~MsgUrbanAttributes();
+  UrbanAttributes();
+  virtual ~UrbanAttributes();
   
-  MsgUrbanAttributes(const MsgUrbanAttributes& from);
+  UrbanAttributes(const UrbanAttributes& from);
   
-  inline MsgUrbanAttributes& operator=(const MsgUrbanAttributes& from) {
+  inline UrbanAttributes& operator=(const UrbanAttributes& from) {
     CopyFrom(from);
     return *this;
   }
@@ -17877,16 +18162,16 @@ class MsgUrbanAttributes : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgUrbanAttributes& default_instance();
-  void Swap(MsgUrbanAttributes* other);
+  static const UrbanAttributes& default_instance();
+  void Swap(UrbanAttributes* other);
   
   // implements Message ----------------------------------------------
   
-  MsgUrbanAttributes* New() const;
+  UrbanAttributes* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgUrbanAttributes& from);
-  void MergeFrom(const MsgUrbanAttributes& from);
+  void CopyFrom(const UrbanAttributes& from);
+  void MergeFrom(const UrbanAttributes& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -17907,49 +18192,49 @@ class MsgUrbanAttributes : public ::google::protobuf::Message {
   
   // nested types ----------------------------------------------------
   
-  typedef MsgUrbanAttributes_Architecture Architecture;
-  typedef MsgUrbanAttributes_Structure Structure;
-  typedef MsgUrbanAttributes_Infrastructures Infrastructures;
-  typedef MsgUrbanAttributes_RgbaColor RgbaColor;
+  typedef UrbanAttributes_Architecture Architecture;
+  typedef UrbanAttributes_Structure Structure;
+  typedef UrbanAttributes_Infrastructures Infrastructures;
+  typedef UrbanAttributes_RgbaColor RgbaColor;
   
   // accessors -------------------------------------------------------
   
-  // optional .MsgsSimToClient.MsgUrbanAttributes.Architecture architecture = 1;
+  // optional .MsgsSimToClient.UrbanAttributes.Architecture architecture = 1;
   inline bool has_architecture() const;
   inline void clear_architecture();
   static const int kArchitectureFieldNumber = 1;
-  inline const ::MsgsSimToClient::MsgUrbanAttributes_Architecture& architecture() const;
-  inline ::MsgsSimToClient::MsgUrbanAttributes_Architecture* mutable_architecture();
+  inline const ::MsgsSimToClient::UrbanAttributes_Architecture& architecture() const;
+  inline ::MsgsSimToClient::UrbanAttributes_Architecture* mutable_architecture();
   
-  // optional .MsgsSimToClient.MsgUrbanAttributes.Structure structure = 2;
+  // optional .MsgsSimToClient.UrbanAttributes.Structure structure = 2;
   inline bool has_structure() const;
   inline void clear_structure();
   static const int kStructureFieldNumber = 2;
-  inline const ::MsgsSimToClient::MsgUrbanAttributes_Structure& structure() const;
-  inline ::MsgsSimToClient::MsgUrbanAttributes_Structure* mutable_structure();
+  inline const ::MsgsSimToClient::UrbanAttributes_Structure& structure() const;
+  inline ::MsgsSimToClient::UrbanAttributes_Structure* mutable_structure();
   
-  // optional .MsgsSimToClient.MsgUrbanAttributes.RgbaColor color = 3;
+  // optional .MsgsSimToClient.UrbanAttributes.RgbaColor color = 3;
   inline bool has_color() const;
   inline void clear_color();
   static const int kColorFieldNumber = 3;
-  inline const ::MsgsSimToClient::MsgUrbanAttributes_RgbaColor& color() const;
-  inline ::MsgsSimToClient::MsgUrbanAttributes_RgbaColor* mutable_color();
+  inline const ::MsgsSimToClient::UrbanAttributes_RgbaColor& color() const;
+  inline ::MsgsSimToClient::UrbanAttributes_RgbaColor* mutable_color();
   
-  // optional .MsgsSimToClient.MsgUrbanAttributes.Infrastructures infrastructures = 4;
+  // optional .MsgsSimToClient.UrbanAttributes.Infrastructures infrastructures = 4;
   inline bool has_infrastructures() const;
   inline void clear_infrastructures();
   static const int kInfrastructuresFieldNumber = 4;
-  inline const ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures& infrastructures() const;
-  inline ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures* mutable_infrastructures();
+  inline const ::MsgsSimToClient::UrbanAttributes_Infrastructures& infrastructures() const;
+  inline ::MsgsSimToClient::UrbanAttributes_Infrastructures* mutable_infrastructures();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::MsgsSimToClient::MsgUrbanAttributes_Architecture* architecture_;
-  ::MsgsSimToClient::MsgUrbanAttributes_Structure* structure_;
-  ::MsgsSimToClient::MsgUrbanAttributes_RgbaColor* color_;
-  ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures* infrastructures_;
+  ::MsgsSimToClient::UrbanAttributes_Architecture* architecture_;
+  ::MsgsSimToClient::UrbanAttributes_Structure* structure_;
+  ::MsgsSimToClient::UrbanAttributes_RgbaColor* color_;
+  ::MsgsSimToClient::UrbanAttributes_Infrastructures* infrastructures_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
@@ -17968,7 +18253,7 @@ class MsgUrbanAttributes : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgUrbanAttributes* default_instance_;
+  static UrbanAttributes* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -18025,12 +18310,12 @@ class MsgUrbanCreation : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required uint32 oid = 1;
-  inline bool has_oid() const;
-  inline void clear_oid();
-  static const int kOidFieldNumber = 1;
-  inline ::google::protobuf::uint32 oid() const;
-  inline void set_oid(::google::protobuf::uint32 value);
+  // required .Common.UrbanObjectId urban_object = 1;
+  inline bool has_urban_object() const;
+  inline void clear_urban_object();
+  static const int kUrbanObjectFieldNumber = 1;
+  inline const ::Common::UrbanObjectId& urban_object() const;
+  inline ::Common::UrbanObjectId* mutable_urban_object();
   
   // required string name = 2;
   inline bool has_name() const;
@@ -18049,27 +18334,35 @@ class MsgUrbanCreation : public ::google::protobuf::Message {
   inline const ::Common::MsgLocation& location() const;
   inline ::Common::MsgLocation* mutable_location();
   
-  // optional .MsgsSimToClient.MsgUrbanAttributes attributes = 4;
+  // optional .MsgsSimToClient.UrbanAttributes attributes = 4;
   inline bool has_attributes() const;
   inline void clear_attributes();
   static const int kAttributesFieldNumber = 4;
-  inline const ::MsgsSimToClient::MsgUrbanAttributes& attributes() const;
-  inline ::MsgsSimToClient::MsgUrbanAttributes* mutable_attributes();
+  inline const ::MsgsSimToClient::UrbanAttributes& attributes() const;
+  inline ::MsgsSimToClient::UrbanAttributes* mutable_attributes();
+  
+  // optional .Common.UrbanObjectId parent = 5;
+  inline bool has_parent() const;
+  inline void clear_parent();
+  static const int kParentFieldNumber = 5;
+  inline const ::Common::UrbanObjectId& parent() const;
+  inline ::Common::UrbanObjectId* mutable_parent();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::uint32 oid_;
+  ::Common::UrbanObjectId* urban_object_;
   ::std::string* name_;
   static const ::std::string _default_name_;
   ::Common::MsgLocation* location_;
-  ::MsgsSimToClient::MsgUrbanAttributes* attributes_;
+  ::MsgsSimToClient::UrbanAttributes* attributes_;
+  ::Common::UrbanObjectId* parent_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -18140,19 +18433,19 @@ class MsgUrbanDetection : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required uint32 oid = 1;
-  inline bool has_oid() const;
-  inline void clear_oid();
-  static const int kOidFieldNumber = 1;
-  inline ::google::protobuf::uint32 oid() const;
-  inline void set_oid(::google::protobuf::uint32 value);
+  // required .Common.UnitId observer = 1;
+  inline bool has_observer() const;
+  inline void clear_observer();
+  static const int kObserverFieldNumber = 1;
+  inline const ::Common::UnitId& observer() const;
+  inline ::Common::UnitId* mutable_observer();
   
-  // required uint32 urban_oid = 2;
-  inline bool has_urban_oid() const;
-  inline void clear_urban_oid();
-  static const int kUrbanOidFieldNumber = 2;
-  inline ::google::protobuf::uint32 urban_oid() const;
-  inline void set_urban_oid(::google::protobuf::uint32 value);
+  // required .Common.UrbanObjectId urban_object = 2;
+  inline bool has_urban_object() const;
+  inline void clear_urban_object();
+  static const int kUrbanObjectFieldNumber = 2;
+  inline const ::Common::UrbanObjectId& urban_object() const;
+  inline ::Common::UrbanObjectId* mutable_urban_object();
   
   // required .Common.EnumUnitVisibility visibility = 3;
   inline bool has_visibility() const;
@@ -18165,8 +18458,8 @@ class MsgUrbanDetection : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::uint32 oid_;
-  ::google::protobuf::uint32 urban_oid_;
+  ::Common::UnitId* observer_;
+  ::Common::UrbanObjectId* urban_object_;
   int visibility_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -18243,12 +18536,12 @@ class MsgUrbanUpdate : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required uint32 oid = 1;
-  inline bool has_oid() const;
-  inline void clear_oid();
-  static const int kOidFieldNumber = 1;
-  inline ::google::protobuf::uint32 oid() const;
-  inline void set_oid(::google::protobuf::uint32 value);
+  // required .Common.UrbanObjectId urban_object = 1;
+  inline bool has_urban_object() const;
+  inline void clear_urban_object();
+  static const int kUrbanObjectFieldNumber = 1;
+  inline const ::Common::UrbanObjectId& urban_object() const;
+  inline ::Common::UrbanObjectId* mutable_urban_object();
   
   // optional .Common.MsgLocation location = 2;
   inline bool has_location() const;
@@ -18257,20 +18550,20 @@ class MsgUrbanUpdate : public ::google::protobuf::Message {
   inline const ::Common::MsgLocation& location() const;
   inline ::Common::MsgLocation* mutable_location();
   
-  // optional .MsgsSimToClient.MsgUrbanAttributes attributes = 3;
+  // optional .MsgsSimToClient.UrbanAttributes attributes = 3;
   inline bool has_attributes() const;
   inline void clear_attributes();
   static const int kAttributesFieldNumber = 3;
-  inline const ::MsgsSimToClient::MsgUrbanAttributes& attributes() const;
-  inline ::MsgsSimToClient::MsgUrbanAttributes* mutable_attributes();
+  inline const ::MsgsSimToClient::UrbanAttributes& attributes() const;
+  inline ::MsgsSimToClient::UrbanAttributes* mutable_attributes();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::uint32 oid_;
+  ::Common::UrbanObjectId* urban_object_;
   ::Common::MsgLocation* location_;
-  ::MsgsSimToClient::MsgUrbanAttributes* attributes_;
+  ::MsgsSimToClient::UrbanAttributes* attributes_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
@@ -18346,12 +18639,12 @@ class MsgKnowledgeGroupCreation : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.KnowledgeGroupId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::KnowledgeGroupId& id() const;
-  inline ::Common::KnowledgeGroupId* mutable_id();
+  // required .Common.KnowledgeGroupId knowledge_group = 1;
+  inline bool has_knowledge_group() const;
+  inline void clear_knowledge_group();
+  static const int kKnowledgeGroupFieldNumber = 1;
+  inline const ::Common::KnowledgeGroupId& knowledge_group() const;
+  inline ::Common::KnowledgeGroupId* mutable_knowledge_group();
   
   // required .Common.PartyId party = 2;
   inline bool has_party() const;
@@ -18388,7 +18681,7 @@ class MsgKnowledgeGroupCreation : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::KnowledgeGroupId* id_;
+  ::Common::KnowledgeGroupId* knowledge_group_;
   ::Common::PartyId* party_;
   ::Common::KnowledgeGroupId* parent_;
   ::std::string* type_;
@@ -18469,12 +18762,12 @@ class MsgKnowledgeGroupUpdate : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.KnowledgeGroupId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::KnowledgeGroupId& id() const;
-  inline ::Common::KnowledgeGroupId* mutable_id();
+  // required .Common.KnowledgeGroupId knowledge_group = 1;
+  inline bool has_knowledge_group() const;
+  inline void clear_knowledge_group();
+  static const int kKnowledgeGroupFieldNumber = 1;
+  inline const ::Common::KnowledgeGroupId& knowledge_group() const;
+  inline ::Common::KnowledgeGroupId* mutable_knowledge_group();
   
   // optional .Common.PartyId party = 2;
   inline bool has_party() const;
@@ -18511,7 +18804,7 @@ class MsgKnowledgeGroupUpdate : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::KnowledgeGroupId* id_;
+  ::Common::KnowledgeGroupId* knowledge_group_;
   ::Common::PartyId* party_;
   ::Common::KnowledgeGroupId* parent_;
   bool enabled_;
@@ -18697,12 +18990,12 @@ class MsgKnowledgeGroupMagicActionAck : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.KnowledgeGroupId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::KnowledgeGroupId& id() const;
-  inline ::Common::KnowledgeGroupId* mutable_id();
+  // required .Common.KnowledgeGroupId knowledge_group = 1;
+  inline bool has_knowledge_group() const;
+  inline void clear_knowledge_group();
+  static const int kKnowledgeGroupFieldNumber = 1;
+  inline const ::Common::KnowledgeGroupId& knowledge_group() const;
+  inline ::Common::KnowledgeGroupId* mutable_knowledge_group();
   
   // required .MsgsSimToClient.KnowledgeGroupAck.ErrorCode error_code = 2;
   inline bool has_error_code() const;
@@ -18715,7 +19008,7 @@ class MsgKnowledgeGroupMagicActionAck : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::KnowledgeGroupId* id_;
+  ::Common::KnowledgeGroupId* knowledge_group_;
   int error_code_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -18792,12 +19085,12 @@ class MsgKnowledgeGroupCreationAck : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.KnowledgeGroupId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::KnowledgeGroupId& id() const;
-  inline ::Common::KnowledgeGroupId* mutable_id();
+  // required .Common.KnowledgeGroupId knowledge_group = 1;
+  inline bool has_knowledge_group() const;
+  inline void clear_knowledge_group();
+  static const int kKnowledgeGroupFieldNumber = 1;
+  inline const ::Common::KnowledgeGroupId& knowledge_group() const;
+  inline ::Common::KnowledgeGroupId* mutable_knowledge_group();
   
   // required .MsgsSimToClient.KnowledgeGroupAck.ErrorCode error_code = 2;
   inline bool has_error_code() const;
@@ -18810,7 +19103,7 @@ class MsgKnowledgeGroupCreationAck : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::KnowledgeGroupId* id_;
+  ::Common::KnowledgeGroupId* knowledge_group_;
   int error_code_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -18887,12 +19180,12 @@ class MsgKnowledgeGroupUpdateAck : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.KnowledgeGroupId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::KnowledgeGroupId& id() const;
-  inline ::Common::KnowledgeGroupId* mutable_id();
+  // required .Common.KnowledgeGroupId knowledge_group = 1;
+  inline bool has_knowledge_group() const;
+  inline void clear_knowledge_group();
+  static const int kKnowledgeGroupFieldNumber = 1;
+  inline const ::Common::KnowledgeGroupId& knowledge_group() const;
+  inline ::Common::KnowledgeGroupId* mutable_knowledge_group();
   
   // required .MsgsSimToClient.KnowledgeGroupAck.ErrorCode error_code = 2;
   inline bool has_error_code() const;
@@ -18905,7 +19198,7 @@ class MsgKnowledgeGroupUpdateAck : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::KnowledgeGroupId* id_;
+  ::Common::KnowledgeGroupId* knowledge_group_;
   int error_code_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -18982,12 +19275,12 @@ class MsgKnowledgeGroupDestruction : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.KnowledgeGroupId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::KnowledgeGroupId& id() const;
-  inline ::Common::KnowledgeGroupId* mutable_id();
+  // required .Common.KnowledgeGroupId knowledge_group = 1;
+  inline bool has_knowledge_group() const;
+  inline void clear_knowledge_group();
+  static const int kKnowledgeGroupFieldNumber = 1;
+  inline const ::Common::KnowledgeGroupId& knowledge_group() const;
+  inline ::Common::KnowledgeGroupId* mutable_knowledge_group();
   
   // required .Common.PartyId party = 2;
   inline bool has_party() const;
@@ -19000,7 +19293,7 @@ class MsgKnowledgeGroupDestruction : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::KnowledgeGroupId* id_;
+  ::Common::KnowledgeGroupId* knowledge_group_;
   ::Common::PartyId* party_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -19024,14 +19317,14 @@ class MsgKnowledgeGroupDestruction : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgControlGlobalMeteoAck : public ::google::protobuf::Message {
+class MsgControlGlobalWeatherAck : public ::google::protobuf::Message {
  public:
-  MsgControlGlobalMeteoAck();
-  virtual ~MsgControlGlobalMeteoAck();
+  MsgControlGlobalWeatherAck();
+  virtual ~MsgControlGlobalWeatherAck();
   
-  MsgControlGlobalMeteoAck(const MsgControlGlobalMeteoAck& from);
+  MsgControlGlobalWeatherAck(const MsgControlGlobalWeatherAck& from);
   
-  inline MsgControlGlobalMeteoAck& operator=(const MsgControlGlobalMeteoAck& from) {
+  inline MsgControlGlobalWeatherAck& operator=(const MsgControlGlobalWeatherAck& from) {
     CopyFrom(from);
     return *this;
   }
@@ -19045,16 +19338,16 @@ class MsgControlGlobalMeteoAck : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgControlGlobalMeteoAck& default_instance();
-  void Swap(MsgControlGlobalMeteoAck* other);
+  static const MsgControlGlobalWeatherAck& default_instance();
+  void Swap(MsgControlGlobalWeatherAck* other);
   
   // implements Message ----------------------------------------------
   
-  MsgControlGlobalMeteoAck* New() const;
+  MsgControlGlobalWeatherAck* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgControlGlobalMeteoAck& from);
-  void MergeFrom(const MsgControlGlobalMeteoAck& from);
+  void CopyFrom(const MsgControlGlobalWeatherAck& from);
+  void MergeFrom(const MsgControlGlobalWeatherAck& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -19099,18 +19392,18 @@ class MsgControlGlobalMeteoAck : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgControlGlobalMeteoAck* default_instance_;
+  static MsgControlGlobalWeatherAck* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgControlLocalMeteoAck : public ::google::protobuf::Message {
+class MsgControlLocalWeatherAck : public ::google::protobuf::Message {
  public:
-  MsgControlLocalMeteoAck();
-  virtual ~MsgControlLocalMeteoAck();
+  MsgControlLocalWeatherAck();
+  virtual ~MsgControlLocalWeatherAck();
   
-  MsgControlLocalMeteoAck(const MsgControlLocalMeteoAck& from);
+  MsgControlLocalWeatherAck(const MsgControlLocalWeatherAck& from);
   
-  inline MsgControlLocalMeteoAck& operator=(const MsgControlLocalMeteoAck& from) {
+  inline MsgControlLocalWeatherAck& operator=(const MsgControlLocalWeatherAck& from) {
     CopyFrom(from);
     return *this;
   }
@@ -19124,16 +19417,16 @@ class MsgControlLocalMeteoAck : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgControlLocalMeteoAck& default_instance();
-  void Swap(MsgControlLocalMeteoAck* other);
+  static const MsgControlLocalWeatherAck& default_instance();
+  void Swap(MsgControlLocalWeatherAck* other);
   
   // implements Message ----------------------------------------------
   
-  MsgControlLocalMeteoAck* New() const;
+  MsgControlLocalWeatherAck* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgControlLocalMeteoAck& from);
-  void MergeFrom(const MsgControlLocalMeteoAck& from);
+  void CopyFrom(const MsgControlLocalWeatherAck& from);
+  void MergeFrom(const MsgControlLocalWeatherAck& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -19178,18 +19471,18 @@ class MsgControlLocalMeteoAck : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgControlLocalMeteoAck* default_instance_;
+  static MsgControlLocalWeatherAck* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgControlGlobalMeteo : public ::google::protobuf::Message {
+class MsgControlGlobalWeather : public ::google::protobuf::Message {
  public:
-  MsgControlGlobalMeteo();
-  virtual ~MsgControlGlobalMeteo();
+  MsgControlGlobalWeather();
+  virtual ~MsgControlGlobalWeather();
   
-  MsgControlGlobalMeteo(const MsgControlGlobalMeteo& from);
+  MsgControlGlobalWeather(const MsgControlGlobalWeather& from);
   
-  inline MsgControlGlobalMeteo& operator=(const MsgControlGlobalMeteo& from) {
+  inline MsgControlGlobalWeather& operator=(const MsgControlGlobalWeather& from) {
     CopyFrom(from);
     return *this;
   }
@@ -19203,16 +19496,16 @@ class MsgControlGlobalMeteo : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgControlGlobalMeteo& default_instance();
-  void Swap(MsgControlGlobalMeteo* other);
+  static const MsgControlGlobalWeather& default_instance();
+  void Swap(MsgControlGlobalWeather* other);
   
   // implements Message ----------------------------------------------
   
-  MsgControlGlobalMeteo* New() const;
+  MsgControlGlobalWeather* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgControlGlobalMeteo& from);
-  void MergeFrom(const MsgControlGlobalMeteo& from);
+  void CopyFrom(const MsgControlGlobalWeather& from);
+  void MergeFrom(const MsgControlGlobalWeather& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -19235,26 +19528,26 @@ class MsgControlGlobalMeteo : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.WeatherId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::WeatherId& id() const;
-  inline ::Common::WeatherId* mutable_id();
+  // required .Common.WeatherId weather = 1;
+  inline bool has_weather() const;
+  inline void clear_weather();
+  static const int kWeatherFieldNumber = 1;
+  inline const ::Common::WeatherId& weather() const;
+  inline ::Common::WeatherId* mutable_weather();
   
-  // required .Common.MsgMeteoAttributes attributes = 2;
+  // required .Common.MsgWeatherAttributes attributes = 2;
   inline bool has_attributes() const;
   inline void clear_attributes();
   static const int kAttributesFieldNumber = 2;
-  inline const ::Common::MsgMeteoAttributes& attributes() const;
-  inline ::Common::MsgMeteoAttributes* mutable_attributes();
+  inline const ::Common::MsgWeatherAttributes& attributes() const;
+  inline ::Common::MsgWeatherAttributes* mutable_attributes();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::WeatherId* id_;
-  ::Common::MsgMeteoAttributes* attributes_;
+  ::Common::WeatherId* weather_;
+  ::Common::MsgWeatherAttributes* attributes_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
@@ -19273,18 +19566,18 @@ class MsgControlGlobalMeteo : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgControlGlobalMeteo* default_instance_;
+  static MsgControlGlobalWeather* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgControlLocalMeteoCreation : public ::google::protobuf::Message {
+class MsgControlLocalWeatherCreation : public ::google::protobuf::Message {
  public:
-  MsgControlLocalMeteoCreation();
-  virtual ~MsgControlLocalMeteoCreation();
+  MsgControlLocalWeatherCreation();
+  virtual ~MsgControlLocalWeatherCreation();
   
-  MsgControlLocalMeteoCreation(const MsgControlLocalMeteoCreation& from);
+  MsgControlLocalWeatherCreation(const MsgControlLocalWeatherCreation& from);
   
-  inline MsgControlLocalMeteoCreation& operator=(const MsgControlLocalMeteoCreation& from) {
+  inline MsgControlLocalWeatherCreation& operator=(const MsgControlLocalWeatherCreation& from) {
     CopyFrom(from);
     return *this;
   }
@@ -19298,16 +19591,16 @@ class MsgControlLocalMeteoCreation : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgControlLocalMeteoCreation& default_instance();
-  void Swap(MsgControlLocalMeteoCreation* other);
+  static const MsgControlLocalWeatherCreation& default_instance();
+  void Swap(MsgControlLocalWeatherCreation* other);
   
   // implements Message ----------------------------------------------
   
-  MsgControlLocalMeteoCreation* New() const;
+  MsgControlLocalWeatherCreation* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgControlLocalMeteoCreation& from);
-  void MergeFrom(const MsgControlLocalMeteoCreation& from);
+  void CopyFrom(const MsgControlLocalWeatherCreation& from);
+  void MergeFrom(const MsgControlLocalWeatherCreation& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -19330,12 +19623,12 @@ class MsgControlLocalMeteoCreation : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.WeatherId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::WeatherId& id() const;
-  inline ::Common::WeatherId* mutable_id();
+  // required .Common.WeatherId weather = 1;
+  inline bool has_weather() const;
+  inline void clear_weather();
+  static const int kWeatherFieldNumber = 1;
+  inline const ::Common::WeatherId& weather() const;
+  inline ::Common::WeatherId* mutable_weather();
   
   // optional .Common.MsgCoordLatLong top_left_coordinate = 2;
   inline bool has_top_left_coordinate() const;
@@ -19351,21 +19644,21 @@ class MsgControlLocalMeteoCreation : public ::google::protobuf::Message {
   inline const ::Common::MsgCoordLatLong& bottom_right_coordinate() const;
   inline ::Common::MsgCoordLatLong* mutable_bottom_right_coordinate();
   
-  // optional .Common.MsgMeteoAttributes attributes = 4;
+  // optional .Common.MsgWeatherAttributes attributes = 4;
   inline bool has_attributes() const;
   inline void clear_attributes();
   static const int kAttributesFieldNumber = 4;
-  inline const ::Common::MsgMeteoAttributes& attributes() const;
-  inline ::Common::MsgMeteoAttributes* mutable_attributes();
+  inline const ::Common::MsgWeatherAttributes& attributes() const;
+  inline ::Common::MsgWeatherAttributes* mutable_attributes();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::WeatherId* id_;
+  ::Common::WeatherId* weather_;
   ::Common::MsgCoordLatLong* top_left_coordinate_;
   ::Common::MsgCoordLatLong* bottom_right_coordinate_;
-  ::Common::MsgMeteoAttributes* attributes_;
+  ::Common::MsgWeatherAttributes* attributes_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
@@ -19384,18 +19677,18 @@ class MsgControlLocalMeteoCreation : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgControlLocalMeteoCreation* default_instance_;
+  static MsgControlLocalWeatherCreation* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgControlLocalMeteoDestruction : public ::google::protobuf::Message {
+class MsgControlLocalWeatherDestruction : public ::google::protobuf::Message {
  public:
-  MsgControlLocalMeteoDestruction();
-  virtual ~MsgControlLocalMeteoDestruction();
+  MsgControlLocalWeatherDestruction();
+  virtual ~MsgControlLocalWeatherDestruction();
   
-  MsgControlLocalMeteoDestruction(const MsgControlLocalMeteoDestruction& from);
+  MsgControlLocalWeatherDestruction(const MsgControlLocalWeatherDestruction& from);
   
-  inline MsgControlLocalMeteoDestruction& operator=(const MsgControlLocalMeteoDestruction& from) {
+  inline MsgControlLocalWeatherDestruction& operator=(const MsgControlLocalWeatherDestruction& from) {
     CopyFrom(from);
     return *this;
   }
@@ -19409,16 +19702,16 @@ class MsgControlLocalMeteoDestruction : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgControlLocalMeteoDestruction& default_instance();
-  void Swap(MsgControlLocalMeteoDestruction* other);
+  static const MsgControlLocalWeatherDestruction& default_instance();
+  void Swap(MsgControlLocalWeatherDestruction* other);
   
   // implements Message ----------------------------------------------
   
-  MsgControlLocalMeteoDestruction* New() const;
+  MsgControlLocalWeatherDestruction* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgControlLocalMeteoDestruction& from);
-  void MergeFrom(const MsgControlLocalMeteoDestruction& from);
+  void CopyFrom(const MsgControlLocalWeatherDestruction& from);
+  void MergeFrom(const MsgControlLocalWeatherDestruction& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -19441,18 +19734,18 @@ class MsgControlLocalMeteoDestruction : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.WeatherId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::WeatherId& id() const;
-  inline ::Common::WeatherId* mutable_id();
+  // required .Common.WeatherId weather = 1;
+  inline bool has_weather() const;
+  inline void clear_weather();
+  static const int kWeatherFieldNumber = 1;
+  inline const ::Common::WeatherId& weather() const;
+  inline ::Common::WeatherId* mutable_weather();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::WeatherId* id_;
+  ::Common::WeatherId* weather_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
@@ -19471,7 +19764,7 @@ class MsgControlLocalMeteoDestruction : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgControlLocalMeteoDestruction* default_instance_;
+  static MsgControlLocalWeatherDestruction* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -19542,12 +19835,12 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::MsgAutomatOrderAck& automat_order_ack() const;
   inline ::MsgsSimToClient::MsgAutomatOrderAck* mutable_automat_order_ack();
   
-  // optional .MsgsSimToClient.MsgPopulationOrderAck population_order_ack = 3;
-  inline bool has_population_order_ack() const;
-  inline void clear_population_order_ack();
-  static const int kPopulationOrderAckFieldNumber = 3;
-  inline const ::MsgsSimToClient::MsgPopulationOrderAck& population_order_ack() const;
-  inline ::MsgsSimToClient::MsgPopulationOrderAck* mutable_population_order_ack();
+  // optional .MsgsSimToClient.MsgCrowdOrderAck crowd_order_ack = 3;
+  inline bool has_crowd_order_ack() const;
+  inline void clear_crowd_order_ack();
+  static const int kCrowdOrderAckFieldNumber = 3;
+  inline const ::MsgsSimToClient::MsgCrowdOrderAck& crowd_order_ack() const;
+  inline ::MsgsSimToClient::MsgCrowdOrderAck* mutable_crowd_order_ack();
   
   // optional .MsgsSimToClient.MsgFragOrderAck frag_order_ack = 4;
   inline bool has_frag_order_ack() const;
@@ -19591,12 +19884,12 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::MsgObjectMagicActionAck& object_magic_action_ack() const;
   inline ::MsgsSimToClient::MsgObjectMagicActionAck* mutable_object_magic_action_ack();
   
-  // optional .MsgsSimToClient.MsgPopulationMagicActionAck population_magic_action_ack = 10;
-  inline bool has_population_magic_action_ack() const;
-  inline void clear_population_magic_action_ack();
-  static const int kPopulationMagicActionAckFieldNumber = 10;
-  inline const ::MsgsSimToClient::MsgPopulationMagicActionAck& population_magic_action_ack() const;
-  inline ::MsgsSimToClient::MsgPopulationMagicActionAck* mutable_population_magic_action_ack();
+  // optional .MsgsSimToClient.MsgCrowdMagicActionAck crowd_magic_action_ack = 10;
+  inline bool has_crowd_magic_action_ack() const;
+  inline void clear_crowd_magic_action_ack();
+  static const int kCrowdMagicActionAckFieldNumber = 10;
+  inline const ::MsgsSimToClient::MsgCrowdMagicActionAck& crowd_magic_action_ack() const;
+  inline ::MsgsSimToClient::MsgCrowdMagicActionAck* mutable_crowd_magic_action_ack();
   
   // optional .MsgsSimToClient.MsgChangeDiplomacyAck change_diplomacy_ack = 11;
   inline bool has_change_diplomacy_ack() const;
@@ -19717,19 +20010,19 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::MsgControlCheckPointSaveEnd& control_checkpoint_save_end() const;
   inline ::MsgsSimToClient::MsgControlCheckPointSaveEnd* mutable_control_checkpoint_save_end();
   
-  // optional .Common.MsgFormationCreation formation_creation = 28;
+  // optional .MsgsSimToClient.MsgFormationCreation formation_creation = 28;
   inline bool has_formation_creation() const;
   inline void clear_formation_creation();
   static const int kFormationCreationFieldNumber = 28;
-  inline const ::Common::MsgFormationCreation& formation_creation() const;
-  inline ::Common::MsgFormationCreation* mutable_formation_creation();
+  inline const ::MsgsSimToClient::MsgFormationCreation& formation_creation() const;
+  inline ::MsgsSimToClient::MsgFormationCreation* mutable_formation_creation();
   
-  // optional .MsgsSimToClient.MsgTeamCreation side_creation = 29;
-  inline bool has_side_creation() const;
-  inline void clear_side_creation();
-  static const int kSideCreationFieldNumber = 29;
-  inline const ::MsgsSimToClient::MsgTeamCreation& side_creation() const;
-  inline ::MsgsSimToClient::MsgTeamCreation* mutable_side_creation();
+  // optional .MsgsSimToClient.MsgPartyCreation party_creation = 29;
+  inline bool has_party_creation() const;
+  inline void clear_party_creation();
+  static const int kPartyCreationFieldNumber = 29;
+  inline const ::MsgsSimToClient::MsgPartyCreation& party_creation() const;
+  inline ::MsgsSimToClient::MsgPartyCreation* mutable_party_creation();
   
   // optional .MsgsSimToClient.MsgAutomatCreation automat_creation = 30;
   inline bool has_automat_creation() const;
@@ -19850,19 +20143,19 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::MsgStopUnitFire& stop_unit_fire() const;
   inline ::MsgsSimToClient::MsgStopUnitFire* mutable_stop_unit_fire();
   
-  // optional .MsgsSimToClient.MsgStartPopulationFire start_population_fire = 47;
-  inline bool has_start_population_fire() const;
-  inline void clear_start_population_fire();
-  static const int kStartPopulationFireFieldNumber = 47;
-  inline const ::MsgsSimToClient::MsgStartPopulationFire& start_population_fire() const;
-  inline ::MsgsSimToClient::MsgStartPopulationFire* mutable_start_population_fire();
+  // optional .MsgsSimToClient.MsgStartCrowdFire start_crowd_fire = 47;
+  inline bool has_start_crowd_fire() const;
+  inline void clear_start_crowd_fire();
+  static const int kStartCrowdFireFieldNumber = 47;
+  inline const ::MsgsSimToClient::MsgStartCrowdFire& start_crowd_fire() const;
+  inline ::MsgsSimToClient::MsgStartCrowdFire* mutable_start_crowd_fire();
   
-  // optional .MsgsSimToClient.MsgStopPopulationFire stop_population_fire = 48;
-  inline bool has_stop_population_fire() const;
-  inline void clear_stop_population_fire();
-  static const int kStopPopulationFireFieldNumber = 48;
-  inline const ::MsgsSimToClient::MsgStopPopulationFire& stop_population_fire() const;
-  inline ::MsgsSimToClient::MsgStopPopulationFire* mutable_stop_population_fire();
+  // optional .MsgsSimToClient.MsgStopCrowdFire stop_crowd_fire = 48;
+  inline bool has_stop_crowd_fire() const;
+  inline void clear_stop_crowd_fire();
+  static const int kStopCrowdFireFieldNumber = 48;
+  inline const ::MsgsSimToClient::MsgStopCrowdFire& stop_crowd_fire() const;
+  inline ::MsgsSimToClient::MsgStopCrowdFire* mutable_stop_crowd_fire();
   
   // optional .MsgsSimToClient.MsgExplosion explosion = 49;
   inline bool has_explosion() const;
@@ -19941,19 +20234,19 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::MsgObjectDetection& object_detection() const;
   inline ::MsgsSimToClient::MsgObjectDetection* mutable_object_detection();
   
-  // optional .MsgsSimToClient.MsgPopulationConcentrationDetection population_concentration_detection = 60;
-  inline bool has_population_concentration_detection() const;
-  inline void clear_population_concentration_detection();
-  static const int kPopulationConcentrationDetectionFieldNumber = 60;
-  inline const ::MsgsSimToClient::MsgPopulationConcentrationDetection& population_concentration_detection() const;
-  inline ::MsgsSimToClient::MsgPopulationConcentrationDetection* mutable_population_concentration_detection();
+  // optional .MsgsSimToClient.MsgCrowdConcentrationDetection crowd_concentration_detection = 60;
+  inline bool has_crowd_concentration_detection() const;
+  inline void clear_crowd_concentration_detection();
+  static const int kCrowdConcentrationDetectionFieldNumber = 60;
+  inline const ::MsgsSimToClient::MsgCrowdConcentrationDetection& crowd_concentration_detection() const;
+  inline ::MsgsSimToClient::MsgCrowdConcentrationDetection* mutable_crowd_concentration_detection();
   
-  // optional .MsgsSimToClient.MsgPopulationFlowDetection population_flow_detection = 61;
-  inline bool has_population_flow_detection() const;
-  inline void clear_population_flow_detection();
-  static const int kPopulationFlowDetectionFieldNumber = 61;
-  inline const ::MsgsSimToClient::MsgPopulationFlowDetection& population_flow_detection() const;
-  inline ::MsgsSimToClient::MsgPopulationFlowDetection* mutable_population_flow_detection();
+  // optional .MsgsSimToClient.MsgCrowdFlowDetection crowd_flow_detection = 61;
+  inline bool has_crowd_flow_detection() const;
+  inline void clear_crowd_flow_detection();
+  static const int kCrowdFlowDetectionFieldNumber = 61;
+  inline const ::MsgsSimToClient::MsgCrowdFlowDetection& crowd_flow_detection() const;
+  inline ::MsgsSimToClient::MsgCrowdFlowDetection* mutable_crowd_flow_detection();
   
   // optional .Common.MsgUnitOrder unit_order = 62;
   inline bool has_unit_order() const;
@@ -19969,12 +20262,12 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   inline const ::Common::MsgAutomatOrder& automat_order() const;
   inline ::Common::MsgAutomatOrder* mutable_automat_order();
   
-  // optional .Common.MsgPopulationOrder population_order = 64;
-  inline bool has_population_order() const;
-  inline void clear_population_order();
-  static const int kPopulationOrderFieldNumber = 64;
-  inline const ::Common::MsgPopulationOrder& population_order() const;
-  inline ::Common::MsgPopulationOrder* mutable_population_order();
+  // optional .Common.MsgCrowdOrder crowd_order = 64;
+  inline bool has_crowd_order() const;
+  inline void clear_crowd_order();
+  static const int kCrowdOrderFieldNumber = 64;
+  inline const ::Common::MsgCrowdOrder& crowd_order() const;
+  inline ::Common::MsgCrowdOrder* mutable_crowd_order();
   
   // optional .MsgsSimToClient.MsgObjectCreation object_creation = 65;
   inline bool has_object_creation() const;
@@ -20109,124 +20402,124 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::MsgLogSupplyQuotas& log_supply_quotas() const;
   inline ::MsgsSimToClient::MsgLogSupplyQuotas* mutable_log_supply_quotas();
   
-  // optional .MsgsSimToClient.MsgPopulationCreation population_creation = 84;
-  inline bool has_population_creation() const;
-  inline void clear_population_creation();
-  static const int kPopulationCreationFieldNumber = 84;
-  inline const ::MsgsSimToClient::MsgPopulationCreation& population_creation() const;
-  inline ::MsgsSimToClient::MsgPopulationCreation* mutable_population_creation();
+  // optional .MsgsSimToClient.MsgCrowdCreation crowd_creation = 84;
+  inline bool has_crowd_creation() const;
+  inline void clear_crowd_creation();
+  static const int kCrowdCreationFieldNumber = 84;
+  inline const ::MsgsSimToClient::MsgCrowdCreation& crowd_creation() const;
+  inline ::MsgsSimToClient::MsgCrowdCreation* mutable_crowd_creation();
   
-  // optional .MsgsSimToClient.MsgPopulationUpdate population_update = 85;
-  inline bool has_population_update() const;
-  inline void clear_population_update();
-  static const int kPopulationUpdateFieldNumber = 85;
-  inline const ::MsgsSimToClient::MsgPopulationUpdate& population_update() const;
-  inline ::MsgsSimToClient::MsgPopulationUpdate* mutable_population_update();
+  // optional .MsgsSimToClient.MsgCrowdUpdate crowd_update = 85;
+  inline bool has_crowd_update() const;
+  inline void clear_crowd_update();
+  static const int kCrowdUpdateFieldNumber = 85;
+  inline const ::MsgsSimToClient::MsgCrowdUpdate& crowd_update() const;
+  inline ::MsgsSimToClient::MsgCrowdUpdate* mutable_crowd_update();
   
-  // optional .MsgsSimToClient.MsgPopulationConcentrationCreation population_concentration_creation = 86;
-  inline bool has_population_concentration_creation() const;
-  inline void clear_population_concentration_creation();
-  static const int kPopulationConcentrationCreationFieldNumber = 86;
-  inline const ::MsgsSimToClient::MsgPopulationConcentrationCreation& population_concentration_creation() const;
-  inline ::MsgsSimToClient::MsgPopulationConcentrationCreation* mutable_population_concentration_creation();
+  // optional .MsgsSimToClient.MsgCrowdConcentrationCreation crowd_concentration_creation = 86;
+  inline bool has_crowd_concentration_creation() const;
+  inline void clear_crowd_concentration_creation();
+  static const int kCrowdConcentrationCreationFieldNumber = 86;
+  inline const ::MsgsSimToClient::MsgCrowdConcentrationCreation& crowd_concentration_creation() const;
+  inline ::MsgsSimToClient::MsgCrowdConcentrationCreation* mutable_crowd_concentration_creation();
   
-  // optional .MsgsSimToClient.MsgPopulationConcentrationDestruction population_concentration_destruction = 87;
-  inline bool has_population_concentration_destruction() const;
-  inline void clear_population_concentration_destruction();
-  static const int kPopulationConcentrationDestructionFieldNumber = 87;
-  inline const ::MsgsSimToClient::MsgPopulationConcentrationDestruction& population_concentration_destruction() const;
-  inline ::MsgsSimToClient::MsgPopulationConcentrationDestruction* mutable_population_concentration_destruction();
+  // optional .MsgsSimToClient.MsgCrowdConcentrationDestruction crowd_concentration_destruction = 87;
+  inline bool has_crowd_concentration_destruction() const;
+  inline void clear_crowd_concentration_destruction();
+  static const int kCrowdConcentrationDestructionFieldNumber = 87;
+  inline const ::MsgsSimToClient::MsgCrowdConcentrationDestruction& crowd_concentration_destruction() const;
+  inline ::MsgsSimToClient::MsgCrowdConcentrationDestruction* mutable_crowd_concentration_destruction();
   
-  // optional .MsgsSimToClient.MsgPopulationConcentrationUpdate population_concentration_update = 88;
-  inline bool has_population_concentration_update() const;
-  inline void clear_population_concentration_update();
-  static const int kPopulationConcentrationUpdateFieldNumber = 88;
-  inline const ::MsgsSimToClient::MsgPopulationConcentrationUpdate& population_concentration_update() const;
-  inline ::MsgsSimToClient::MsgPopulationConcentrationUpdate* mutable_population_concentration_update();
+  // optional .MsgsSimToClient.MsgCrowdConcentrationUpdate crowd_concentration_update = 88;
+  inline bool has_crowd_concentration_update() const;
+  inline void clear_crowd_concentration_update();
+  static const int kCrowdConcentrationUpdateFieldNumber = 88;
+  inline const ::MsgsSimToClient::MsgCrowdConcentrationUpdate& crowd_concentration_update() const;
+  inline ::MsgsSimToClient::MsgCrowdConcentrationUpdate* mutable_crowd_concentration_update();
   
-  // optional .MsgsSimToClient.MsgPopulationFlowCreation population_flow_creation = 89;
-  inline bool has_population_flow_creation() const;
-  inline void clear_population_flow_creation();
-  static const int kPopulationFlowCreationFieldNumber = 89;
-  inline const ::MsgsSimToClient::MsgPopulationFlowCreation& population_flow_creation() const;
-  inline ::MsgsSimToClient::MsgPopulationFlowCreation* mutable_population_flow_creation();
+  // optional .MsgsSimToClient.MsgCrowdFlowCreation crowd_flow_creation = 89;
+  inline bool has_crowd_flow_creation() const;
+  inline void clear_crowd_flow_creation();
+  static const int kCrowdFlowCreationFieldNumber = 89;
+  inline const ::MsgsSimToClient::MsgCrowdFlowCreation& crowd_flow_creation() const;
+  inline ::MsgsSimToClient::MsgCrowdFlowCreation* mutable_crowd_flow_creation();
   
-  // optional .MsgsSimToClient.MsgPopulationFlowDestruction population_flow_destruction = 90;
-  inline bool has_population_flow_destruction() const;
-  inline void clear_population_flow_destruction();
-  static const int kPopulationFlowDestructionFieldNumber = 90;
-  inline const ::MsgsSimToClient::MsgPopulationFlowDestruction& population_flow_destruction() const;
-  inline ::MsgsSimToClient::MsgPopulationFlowDestruction* mutable_population_flow_destruction();
+  // optional .MsgsSimToClient.MsgCrowdFlowDestruction crowd_flow_destruction = 90;
+  inline bool has_crowd_flow_destruction() const;
+  inline void clear_crowd_flow_destruction();
+  static const int kCrowdFlowDestructionFieldNumber = 90;
+  inline const ::MsgsSimToClient::MsgCrowdFlowDestruction& crowd_flow_destruction() const;
+  inline ::MsgsSimToClient::MsgCrowdFlowDestruction* mutable_crowd_flow_destruction();
   
-  // optional .MsgsSimToClient.MsgPopulationFlowUpdate population_flow_update = 91;
-  inline bool has_population_flow_update() const;
-  inline void clear_population_flow_update();
-  static const int kPopulationFlowUpdateFieldNumber = 91;
-  inline const ::MsgsSimToClient::MsgPopulationFlowUpdate& population_flow_update() const;
-  inline ::MsgsSimToClient::MsgPopulationFlowUpdate* mutable_population_flow_update();
+  // optional .MsgsSimToClient.MsgCrowdFlowUpdate crowd_flow_update = 91;
+  inline bool has_crowd_flow_update() const;
+  inline void clear_crowd_flow_update();
+  static const int kCrowdFlowUpdateFieldNumber = 91;
+  inline const ::MsgsSimToClient::MsgCrowdFlowUpdate& crowd_flow_update() const;
+  inline ::MsgsSimToClient::MsgCrowdFlowUpdate* mutable_crowd_flow_update();
   
-  // optional .MsgsSimToClient.MsgPopulationKnowledgeCreation population_knowledge_creation = 92;
-  inline bool has_population_knowledge_creation() const;
-  inline void clear_population_knowledge_creation();
-  static const int kPopulationKnowledgeCreationFieldNumber = 92;
-  inline const ::MsgsSimToClient::MsgPopulationKnowledgeCreation& population_knowledge_creation() const;
-  inline ::MsgsSimToClient::MsgPopulationKnowledgeCreation* mutable_population_knowledge_creation();
+  // optional .MsgsSimToClient.MsgCrowdKnowledgeCreation crowd_knowledge_creation = 92;
+  inline bool has_crowd_knowledge_creation() const;
+  inline void clear_crowd_knowledge_creation();
+  static const int kCrowdKnowledgeCreationFieldNumber = 92;
+  inline const ::MsgsSimToClient::MsgCrowdKnowledgeCreation& crowd_knowledge_creation() const;
+  inline ::MsgsSimToClient::MsgCrowdKnowledgeCreation* mutable_crowd_knowledge_creation();
   
-  // optional .MsgsSimToClient.MsgPopulationKnowledgeUpdate population_knowledge_update = 93;
-  inline bool has_population_knowledge_update() const;
-  inline void clear_population_knowledge_update();
-  static const int kPopulationKnowledgeUpdateFieldNumber = 93;
-  inline const ::MsgsSimToClient::MsgPopulationKnowledgeUpdate& population_knowledge_update() const;
-  inline ::MsgsSimToClient::MsgPopulationKnowledgeUpdate* mutable_population_knowledge_update();
+  // optional .MsgsSimToClient.MsgCrowdKnowledgeUpdate crowd_knowledge_update = 93;
+  inline bool has_crowd_knowledge_update() const;
+  inline void clear_crowd_knowledge_update();
+  static const int kCrowdKnowledgeUpdateFieldNumber = 93;
+  inline const ::MsgsSimToClient::MsgCrowdKnowledgeUpdate& crowd_knowledge_update() const;
+  inline ::MsgsSimToClient::MsgCrowdKnowledgeUpdate* mutable_crowd_knowledge_update();
   
-  // optional .MsgsSimToClient.MsgPopulationKnowledgeDestruction population_knowledge_destruction = 94;
-  inline bool has_population_knowledge_destruction() const;
-  inline void clear_population_knowledge_destruction();
-  static const int kPopulationKnowledgeDestructionFieldNumber = 94;
-  inline const ::MsgsSimToClient::MsgPopulationKnowledgeDestruction& population_knowledge_destruction() const;
-  inline ::MsgsSimToClient::MsgPopulationKnowledgeDestruction* mutable_population_knowledge_destruction();
+  // optional .MsgsSimToClient.MsgCrowdKnowledgeDestruction crowd_knowledge_destruction = 94;
+  inline bool has_crowd_knowledge_destruction() const;
+  inline void clear_crowd_knowledge_destruction();
+  static const int kCrowdKnowledgeDestructionFieldNumber = 94;
+  inline const ::MsgsSimToClient::MsgCrowdKnowledgeDestruction& crowd_knowledge_destruction() const;
+  inline ::MsgsSimToClient::MsgCrowdKnowledgeDestruction* mutable_crowd_knowledge_destruction();
   
-  // optional .MsgsSimToClient.MsgPopulationConcentrationKnowledgeCreation population_concentration_knowledge_creation = 95;
-  inline bool has_population_concentration_knowledge_creation() const;
-  inline void clear_population_concentration_knowledge_creation();
-  static const int kPopulationConcentrationKnowledgeCreationFieldNumber = 95;
-  inline const ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation& population_concentration_knowledge_creation() const;
-  inline ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation* mutable_population_concentration_knowledge_creation();
+  // optional .MsgsSimToClient.MsgCrowdConcentrationKnowledgeCreation crowd_concentration_knowledge_creation = 95;
+  inline bool has_crowd_concentration_knowledge_creation() const;
+  inline void clear_crowd_concentration_knowledge_creation();
+  static const int kCrowdConcentrationKnowledgeCreationFieldNumber = 95;
+  inline const ::MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation& crowd_concentration_knowledge_creation() const;
+  inline ::MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation* mutable_crowd_concentration_knowledge_creation();
   
-  // optional .MsgsSimToClient.MsgPopulationConcentrationKnowledgeDestruction population_concentration_knowledge_destruction = 96;
-  inline bool has_population_concentration_knowledge_destruction() const;
-  inline void clear_population_concentration_knowledge_destruction();
-  static const int kPopulationConcentrationKnowledgeDestructionFieldNumber = 96;
-  inline const ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeDestruction& population_concentration_knowledge_destruction() const;
-  inline ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeDestruction* mutable_population_concentration_knowledge_destruction();
+  // optional .MsgsSimToClient.MsgCrowdConcentrationKnowledgeDestruction crowd_concentration_knowledge_destruction = 96;
+  inline bool has_crowd_concentration_knowledge_destruction() const;
+  inline void clear_crowd_concentration_knowledge_destruction();
+  static const int kCrowdConcentrationKnowledgeDestructionFieldNumber = 96;
+  inline const ::MsgsSimToClient::MsgCrowdConcentrationKnowledgeDestruction& crowd_concentration_knowledge_destruction() const;
+  inline ::MsgsSimToClient::MsgCrowdConcentrationKnowledgeDestruction* mutable_crowd_concentration_knowledge_destruction();
   
-  // optional .MsgsSimToClient.MsgPopulationConcentrationKnowledgeUpdate population_concentration_knowledge_update = 97;
-  inline bool has_population_concentration_knowledge_update() const;
-  inline void clear_population_concentration_knowledge_update();
-  static const int kPopulationConcentrationKnowledgeUpdateFieldNumber = 97;
-  inline const ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate& population_concentration_knowledge_update() const;
-  inline ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate* mutable_population_concentration_knowledge_update();
+  // optional .MsgsSimToClient.MsgCrowdConcentrationKnowledgeUpdate crowd_concentration_knowledge_update = 97;
+  inline bool has_crowd_concentration_knowledge_update() const;
+  inline void clear_crowd_concentration_knowledge_update();
+  static const int kCrowdConcentrationKnowledgeUpdateFieldNumber = 97;
+  inline const ::MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate& crowd_concentration_knowledge_update() const;
+  inline ::MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate* mutable_crowd_concentration_knowledge_update();
   
-  // optional .MsgsSimToClient.MsgPopulationFlowKnowledgeCreation population_flow_knowledge_creation = 98;
-  inline bool has_population_flow_knowledge_creation() const;
-  inline void clear_population_flow_knowledge_creation();
-  static const int kPopulationFlowKnowledgeCreationFieldNumber = 98;
-  inline const ::MsgsSimToClient::MsgPopulationFlowKnowledgeCreation& population_flow_knowledge_creation() const;
-  inline ::MsgsSimToClient::MsgPopulationFlowKnowledgeCreation* mutable_population_flow_knowledge_creation();
+  // optional .MsgsSimToClient.MsgCrowdFlowKnowledgeCreation crowd_flow_knowledge_creation = 98;
+  inline bool has_crowd_flow_knowledge_creation() const;
+  inline void clear_crowd_flow_knowledge_creation();
+  static const int kCrowdFlowKnowledgeCreationFieldNumber = 98;
+  inline const ::MsgsSimToClient::MsgCrowdFlowKnowledgeCreation& crowd_flow_knowledge_creation() const;
+  inline ::MsgsSimToClient::MsgCrowdFlowKnowledgeCreation* mutable_crowd_flow_knowledge_creation();
   
-  // optional .MsgsSimToClient.MsgPopulationFlowKnowledgeDestruction population_flow_knowledge_destruction = 99;
-  inline bool has_population_flow_knowledge_destruction() const;
-  inline void clear_population_flow_knowledge_destruction();
-  static const int kPopulationFlowKnowledgeDestructionFieldNumber = 99;
-  inline const ::MsgsSimToClient::MsgPopulationFlowKnowledgeDestruction& population_flow_knowledge_destruction() const;
-  inline ::MsgsSimToClient::MsgPopulationFlowKnowledgeDestruction* mutable_population_flow_knowledge_destruction();
+  // optional .MsgsSimToClient.MsgCrowdFlowKnowledgeDestruction crowd_flow_knowledge_destruction = 99;
+  inline bool has_crowd_flow_knowledge_destruction() const;
+  inline void clear_crowd_flow_knowledge_destruction();
+  static const int kCrowdFlowKnowledgeDestructionFieldNumber = 99;
+  inline const ::MsgsSimToClient::MsgCrowdFlowKnowledgeDestruction& crowd_flow_knowledge_destruction() const;
+  inline ::MsgsSimToClient::MsgCrowdFlowKnowledgeDestruction* mutable_crowd_flow_knowledge_destruction();
   
-  // optional .MsgsSimToClient.MsgPopulationFlowKnowledgeUpdate population_flow_knowledge_update = 100;
-  inline bool has_population_flow_knowledge_update() const;
-  inline void clear_population_flow_knowledge_update();
-  static const int kPopulationFlowKnowledgeUpdateFieldNumber = 100;
-  inline const ::MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate& population_flow_knowledge_update() const;
-  inline ::MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate* mutable_population_flow_knowledge_update();
+  // optional .MsgsSimToClient.MsgCrowdFlowKnowledgeUpdate crowd_flow_knowledge_update = 100;
+  inline bool has_crowd_flow_knowledge_update() const;
+  inline void clear_crowd_flow_knowledge_update();
+  static const int kCrowdFlowKnowledgeUpdateFieldNumber = 100;
+  inline const ::MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate& crowd_flow_knowledge_update() const;
+  inline ::MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate* mutable_crowd_flow_knowledge_update();
   
   // optional .MsgsSimToClient.MsgFolkCreation folk_creation = 101;
   inline bool has_folk_creation() const;
@@ -20242,19 +20535,19 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::MsgFolkGraphUpdate& folk_graph_update() const;
   inline ::MsgsSimToClient::MsgFolkGraphUpdate* mutable_folk_graph_update();
   
-  // optional .MsgsSimToClient.MsgControlGlobalMeteoAck control_global_meteo_ack = 103;
-  inline bool has_control_global_meteo_ack() const;
-  inline void clear_control_global_meteo_ack();
-  static const int kControlGlobalMeteoAckFieldNumber = 103;
-  inline const ::MsgsSimToClient::MsgControlGlobalMeteoAck& control_global_meteo_ack() const;
-  inline ::MsgsSimToClient::MsgControlGlobalMeteoAck* mutable_control_global_meteo_ack();
+  // optional .MsgsSimToClient.MsgControlGlobalWeatherAck control_global_weather_ack = 103;
+  inline bool has_control_global_weather_ack() const;
+  inline void clear_control_global_weather_ack();
+  static const int kControlGlobalWeatherAckFieldNumber = 103;
+  inline const ::MsgsSimToClient::MsgControlGlobalWeatherAck& control_global_weather_ack() const;
+  inline ::MsgsSimToClient::MsgControlGlobalWeatherAck* mutable_control_global_weather_ack();
   
-  // optional .MsgsSimToClient.MsgControlLocalMeteoAck control_local_meteo_ack = 104;
-  inline bool has_control_local_meteo_ack() const;
-  inline void clear_control_local_meteo_ack();
-  static const int kControlLocalMeteoAckFieldNumber = 104;
-  inline const ::MsgsSimToClient::MsgControlLocalMeteoAck& control_local_meteo_ack() const;
-  inline ::MsgsSimToClient::MsgControlLocalMeteoAck* mutable_control_local_meteo_ack();
+  // optional .MsgsSimToClient.MsgControlLocalWeatherAck control_local_weather_ack = 104;
+  inline bool has_control_local_weather_ack() const;
+  inline void clear_control_local_weather_ack();
+  static const int kControlLocalWeatherAckFieldNumber = 104;
+  inline const ::MsgsSimToClient::MsgControlLocalWeatherAck& control_local_weather_ack() const;
+  inline ::MsgsSimToClient::MsgControlLocalWeatherAck* mutable_control_local_weather_ack();
   
   // optional .MsgsSimToClient.MsgControlCheckPointSaveBegin control_checkpoint_save_begin = 105;
   inline bool has_control_checkpoint_save_begin() const;
@@ -20389,26 +20682,26 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::MsgActionCreateFireOrderAck& action_create_fire_order_ack() const;
   inline ::MsgsSimToClient::MsgActionCreateFireOrderAck* mutable_action_create_fire_order_ack();
   
-  // optional .MsgsSimToClient.MsgControlGlobalMeteo control_global_meteo = 124;
-  inline bool has_control_global_meteo() const;
-  inline void clear_control_global_meteo();
-  static const int kControlGlobalMeteoFieldNumber = 124;
-  inline const ::MsgsSimToClient::MsgControlGlobalMeteo& control_global_meteo() const;
-  inline ::MsgsSimToClient::MsgControlGlobalMeteo* mutable_control_global_meteo();
+  // optional .MsgsSimToClient.MsgControlGlobalWeather control_global_weather = 124;
+  inline bool has_control_global_weather() const;
+  inline void clear_control_global_weather();
+  static const int kControlGlobalWeatherFieldNumber = 124;
+  inline const ::MsgsSimToClient::MsgControlGlobalWeather& control_global_weather() const;
+  inline ::MsgsSimToClient::MsgControlGlobalWeather* mutable_control_global_weather();
   
-  // optional .MsgsSimToClient.MsgControlLocalMeteoCreation control_local_meteo_creation = 125;
-  inline bool has_control_local_meteo_creation() const;
-  inline void clear_control_local_meteo_creation();
-  static const int kControlLocalMeteoCreationFieldNumber = 125;
-  inline const ::MsgsSimToClient::MsgControlLocalMeteoCreation& control_local_meteo_creation() const;
-  inline ::MsgsSimToClient::MsgControlLocalMeteoCreation* mutable_control_local_meteo_creation();
+  // optional .MsgsSimToClient.MsgControlLocalWeatherCreation control_local_weather_creation = 125;
+  inline bool has_control_local_weather_creation() const;
+  inline void clear_control_local_weather_creation();
+  static const int kControlLocalWeatherCreationFieldNumber = 125;
+  inline const ::MsgsSimToClient::MsgControlLocalWeatherCreation& control_local_weather_creation() const;
+  inline ::MsgsSimToClient::MsgControlLocalWeatherCreation* mutable_control_local_weather_creation();
   
-  // optional .MsgsSimToClient.MsgControlLocalMeteoDestruction control_local_meteo_destruction = 126;
-  inline bool has_control_local_meteo_destruction() const;
-  inline void clear_control_local_meteo_destruction();
-  static const int kControlLocalMeteoDestructionFieldNumber = 126;
-  inline const ::MsgsSimToClient::MsgControlLocalMeteoDestruction& control_local_meteo_destruction() const;
-  inline ::MsgsSimToClient::MsgControlLocalMeteoDestruction* mutable_control_local_meteo_destruction();
+  // optional .MsgsSimToClient.MsgControlLocalWeatherDestruction control_local_weather_destruction = 126;
+  inline bool has_control_local_weather_destruction() const;
+  inline void clear_control_local_weather_destruction();
+  static const int kControlLocalWeatherDestructionFieldNumber = 126;
+  inline const ::MsgsSimToClient::MsgControlLocalWeatherDestruction& control_local_weather_destruction() const;
+  inline ::MsgsSimToClient::MsgControlLocalWeatherDestruction* mutable_control_local_weather_destruction();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
@@ -20416,14 +20709,14 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   
   ::MsgsSimToClient::MsgUnitOrderAck* unit_order_ack_;
   ::MsgsSimToClient::MsgAutomatOrderAck* automat_order_ack_;
-  ::MsgsSimToClient::MsgPopulationOrderAck* population_order_ack_;
+  ::MsgsSimToClient::MsgCrowdOrderAck* crowd_order_ack_;
   ::MsgsSimToClient::MsgFragOrderAck* frag_order_ack_;
   ::MsgsSimToClient::MsgSetAutomatModeAck* set_automat_mode_ack_;
   ::MsgsSimToClient::MsgUnitCreationRequestAck* unit_creation_request_ack_;
   ::MsgsSimToClient::MsgMagicActionAck* magic_action_ack_;
   ::MsgsSimToClient::MsgUnitMagicActionAck* unit_magic_action_ack_;
   ::MsgsSimToClient::MsgObjectMagicActionAck* object_magic_action_ack_;
-  ::MsgsSimToClient::MsgPopulationMagicActionAck* population_magic_action_ack_;
+  ::MsgsSimToClient::MsgCrowdMagicActionAck* crowd_magic_action_ack_;
   ::MsgsSimToClient::MsgChangeDiplomacyAck* change_diplomacy_ack_;
   ::MsgsSimToClient::MsgAutomatChangeKnowledgeGroupAck* automat_change_knowledge_group_ack_;
   ::MsgsSimToClient::MsgAutomatChangeLogisticLinksAck* automat_change_logistic_links_ack_;
@@ -20441,8 +20734,8 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   ::MsgsSimToClient::MsgControlChangeTimeFactorAck* control_change_time_factor_ack_;
   ::MsgsSimToClient::MsgControlDatetimeChangeAck* control_date_time_change_ack_;
   ::MsgsSimToClient::MsgControlCheckPointSaveEnd* control_checkpoint_save_end_;
-  ::Common::MsgFormationCreation* formation_creation_;
-  ::MsgsSimToClient::MsgTeamCreation* side_creation_;
+  ::MsgsSimToClient::MsgFormationCreation* formation_creation_;
+  ::MsgsSimToClient::MsgPartyCreation* party_creation_;
   ::MsgsSimToClient::MsgAutomatCreation* automat_creation_;
   ::MsgsSimToClient::MsgAutomatAttributes* automat_attributes_;
   ::MsgsSimToClient::MsgUnitCreation* unit_creation_;
@@ -20460,8 +20753,8 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   ::MsgsSimToClient::MsgUnitKnowledgeDestruction* unit_knowledge_destruction_;
   ::MsgsSimToClient::MsgStartUnitFire* start_unit_fire_;
   ::MsgsSimToClient::MsgStopUnitFire* stop_unit_fire_;
-  ::MsgsSimToClient::MsgStartPopulationFire* start_population_fire_;
-  ::MsgsSimToClient::MsgStopPopulationFire* stop_population_fire_;
+  ::MsgsSimToClient::MsgStartCrowdFire* start_crowd_fire_;
+  ::MsgsSimToClient::MsgStopCrowdFire* stop_crowd_fire_;
   ::MsgsSimToClient::MsgExplosion* explosion_;
   ::MsgsSimToClient::MsgStartFireEffect* start_fire_effect_;
   ::MsgsSimToClient::MsgStopFireEffect* stop_fire_effect_;
@@ -20473,11 +20766,11 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   ::MsgsSimToClient::MsgUnitVisionCones* unit_vision_cones_;
   ::MsgsSimToClient::MsgUnitDetection* unit_detection_;
   ::MsgsSimToClient::MsgObjectDetection* object_detection_;
-  ::MsgsSimToClient::MsgPopulationConcentrationDetection* population_concentration_detection_;
-  ::MsgsSimToClient::MsgPopulationFlowDetection* population_flow_detection_;
+  ::MsgsSimToClient::MsgCrowdConcentrationDetection* crowd_concentration_detection_;
+  ::MsgsSimToClient::MsgCrowdFlowDetection* crowd_flow_detection_;
   ::Common::MsgUnitOrder* unit_order_;
   ::Common::MsgAutomatOrder* automat_order_;
-  ::Common::MsgPopulationOrder* population_order_;
+  ::Common::MsgCrowdOrder* crowd_order_;
   ::MsgsSimToClient::MsgObjectCreation* object_creation_;
   ::MsgsSimToClient::MsgObjectDestruction* object_destruction_;
   ::MsgsSimToClient::MsgObjectUpdate* object_update_;
@@ -20497,27 +20790,27 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   ::MsgsSimToClient::MsgLogSupplyHandlingDestruction* log_supply_handling_destruction_;
   ::MsgsSimToClient::MsgLogSupplyState* log_supply_state_;
   ::MsgsSimToClient::MsgLogSupplyQuotas* log_supply_quotas_;
-  ::MsgsSimToClient::MsgPopulationCreation* population_creation_;
-  ::MsgsSimToClient::MsgPopulationUpdate* population_update_;
-  ::MsgsSimToClient::MsgPopulationConcentrationCreation* population_concentration_creation_;
-  ::MsgsSimToClient::MsgPopulationConcentrationDestruction* population_concentration_destruction_;
-  ::MsgsSimToClient::MsgPopulationConcentrationUpdate* population_concentration_update_;
-  ::MsgsSimToClient::MsgPopulationFlowCreation* population_flow_creation_;
-  ::MsgsSimToClient::MsgPopulationFlowDestruction* population_flow_destruction_;
-  ::MsgsSimToClient::MsgPopulationFlowUpdate* population_flow_update_;
-  ::MsgsSimToClient::MsgPopulationKnowledgeCreation* population_knowledge_creation_;
-  ::MsgsSimToClient::MsgPopulationKnowledgeUpdate* population_knowledge_update_;
-  ::MsgsSimToClient::MsgPopulationKnowledgeDestruction* population_knowledge_destruction_;
-  ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation* population_concentration_knowledge_creation_;
-  ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeDestruction* population_concentration_knowledge_destruction_;
-  ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate* population_concentration_knowledge_update_;
-  ::MsgsSimToClient::MsgPopulationFlowKnowledgeCreation* population_flow_knowledge_creation_;
-  ::MsgsSimToClient::MsgPopulationFlowKnowledgeDestruction* population_flow_knowledge_destruction_;
-  ::MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate* population_flow_knowledge_update_;
+  ::MsgsSimToClient::MsgCrowdCreation* crowd_creation_;
+  ::MsgsSimToClient::MsgCrowdUpdate* crowd_update_;
+  ::MsgsSimToClient::MsgCrowdConcentrationCreation* crowd_concentration_creation_;
+  ::MsgsSimToClient::MsgCrowdConcentrationDestruction* crowd_concentration_destruction_;
+  ::MsgsSimToClient::MsgCrowdConcentrationUpdate* crowd_concentration_update_;
+  ::MsgsSimToClient::MsgCrowdFlowCreation* crowd_flow_creation_;
+  ::MsgsSimToClient::MsgCrowdFlowDestruction* crowd_flow_destruction_;
+  ::MsgsSimToClient::MsgCrowdFlowUpdate* crowd_flow_update_;
+  ::MsgsSimToClient::MsgCrowdKnowledgeCreation* crowd_knowledge_creation_;
+  ::MsgsSimToClient::MsgCrowdKnowledgeUpdate* crowd_knowledge_update_;
+  ::MsgsSimToClient::MsgCrowdKnowledgeDestruction* crowd_knowledge_destruction_;
+  ::MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation* crowd_concentration_knowledge_creation_;
+  ::MsgsSimToClient::MsgCrowdConcentrationKnowledgeDestruction* crowd_concentration_knowledge_destruction_;
+  ::MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate* crowd_concentration_knowledge_update_;
+  ::MsgsSimToClient::MsgCrowdFlowKnowledgeCreation* crowd_flow_knowledge_creation_;
+  ::MsgsSimToClient::MsgCrowdFlowKnowledgeDestruction* crowd_flow_knowledge_destruction_;
+  ::MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate* crowd_flow_knowledge_update_;
   ::MsgsSimToClient::MsgFolkCreation* folk_creation_;
   ::MsgsSimToClient::MsgFolkGraphUpdate* folk_graph_update_;
-  ::MsgsSimToClient::MsgControlGlobalMeteoAck* control_global_meteo_ack_;
-  ::MsgsSimToClient::MsgControlLocalMeteoAck* control_local_meteo_ack_;
+  ::MsgsSimToClient::MsgControlGlobalWeatherAck* control_global_weather_ack_;
+  ::MsgsSimToClient::MsgControlLocalWeatherAck* control_local_weather_ack_;
   ::MsgsSimToClient::MsgControlCheckPointSaveBegin* control_checkpoint_save_begin_;
   ::MsgsSimToClient::MsgControlCheckPointSetFrequencyAck* control_checkpoint_set_frequency_ack_;
   ::MsgsSimToClient::MsgControlCheckPointSaveNowAck* control_checkpoint_save_now_ack_;
@@ -20537,9 +20830,9 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   ::MsgsSimToClient::MsgKnowledgeGroupUpdateAck* knowledge_group_update_ack_;
   ::MsgsSimToClient::MsgKnowledgeGroupDestruction* knowledge_group_destruction_;
   ::MsgsSimToClient::MsgActionCreateFireOrderAck* action_create_fire_order_ack_;
-  ::MsgsSimToClient::MsgControlGlobalMeteo* control_global_meteo_;
-  ::MsgsSimToClient::MsgControlLocalMeteoCreation* control_local_meteo_creation_;
-  ::MsgsSimToClient::MsgControlLocalMeteoDestruction* control_local_meteo_destruction_;
+  ::MsgsSimToClient::MsgControlGlobalWeather* control_global_weather_;
+  ::MsgsSimToClient::MsgControlLocalWeatherCreation* control_local_weather_creation_;
+  ::MsgsSimToClient::MsgControlLocalWeatherDestruction* control_local_weather_destruction_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
@@ -20745,37 +21038,37 @@ inline void MsgAutomatOrderAck::set_error_code(::MsgsSimToClient::OrderAck_Error
 
 // -------------------------------------------------------------------
 
-// MsgPopulationOrderAck
+// MsgCrowdOrderAck
 
-// required .Common.PopulationId tasker = 1;
-inline bool MsgPopulationOrderAck::has_tasker() const {
+// required .Common.CrowdId tasker = 1;
+inline bool MsgCrowdOrderAck::has_tasker() const {
   return _has_bit(0);
 }
-inline void MsgPopulationOrderAck::clear_tasker() {
-  if (tasker_ != NULL) tasker_->::Common::PopulationId::Clear();
+inline void MsgCrowdOrderAck::clear_tasker() {
+  if (tasker_ != NULL) tasker_->::Common::CrowdId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::PopulationId& MsgPopulationOrderAck::tasker() const {
+inline const ::Common::CrowdId& MsgCrowdOrderAck::tasker() const {
   return tasker_ != NULL ? *tasker_ : *default_instance_->tasker_;
 }
-inline ::Common::PopulationId* MsgPopulationOrderAck::mutable_tasker() {
+inline ::Common::CrowdId* MsgCrowdOrderAck::mutable_tasker() {
   _set_bit(0);
-  if (tasker_ == NULL) tasker_ = new ::Common::PopulationId;
+  if (tasker_ == NULL) tasker_ = new ::Common::CrowdId;
   return tasker_;
 }
 
 // required .MsgsSimToClient.OrderAck.ErrorCode error_code = 2;
-inline bool MsgPopulationOrderAck::has_error_code() const {
+inline bool MsgCrowdOrderAck::has_error_code() const {
   return _has_bit(1);
 }
-inline void MsgPopulationOrderAck::clear_error_code() {
+inline void MsgCrowdOrderAck::clear_error_code() {
   error_code_ = 0;
   _clear_bit(1);
 }
-inline ::MsgsSimToClient::OrderAck_ErrorCode MsgPopulationOrderAck::error_code() const {
+inline ::MsgsSimToClient::OrderAck_ErrorCode MsgCrowdOrderAck::error_code() const {
   return static_cast< ::MsgsSimToClient::OrderAck_ErrorCode >(error_code_);
 }
-inline void MsgPopulationOrderAck::set_error_code(::MsgsSimToClient::OrderAck_ErrorCode value) {
+inline void MsgCrowdOrderAck::set_error_code(::MsgsSimToClient::OrderAck_ErrorCode value) {
   GOOGLE_DCHECK(::MsgsSimToClient::OrderAck_ErrorCode_IsValid(value));
   _set_bit(1);
   error_code_ = value;
@@ -20823,21 +21116,21 @@ inline void MsgFragOrderAck::set_error_code(::MsgsSimToClient::OrderAck_ErrorCod
 
 // MsgSetAutomatModeAck
 
-// required .Common.AutomatId id = 1;
-inline bool MsgSetAutomatModeAck::has_id() const {
+// required .Common.AutomatId automat = 1;
+inline bool MsgSetAutomatModeAck::has_automat() const {
   return _has_bit(0);
 }
-inline void MsgSetAutomatModeAck::clear_id() {
-  if (id_ != NULL) id_->::Common::AutomatId::Clear();
+inline void MsgSetAutomatModeAck::clear_automat() {
+  if (automat_ != NULL) automat_->::Common::AutomatId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::AutomatId& MsgSetAutomatModeAck::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::AutomatId& MsgSetAutomatModeAck::automat() const {
+  return automat_ != NULL ? *automat_ : *default_instance_->automat_;
 }
-inline ::Common::AutomatId* MsgSetAutomatModeAck::mutable_id() {
+inline ::Common::AutomatId* MsgSetAutomatModeAck::mutable_automat() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::AutomatId;
-  return id_;
+  if (automat_ == NULL) automat_ = new ::Common::AutomatId;
+  return automat_;
 }
 
 // required .MsgsSimToClient.MsgSetAutomatModeAck.ErrorCode error_code = 2;
@@ -20907,21 +21200,21 @@ inline void MsgMagicActionAck::set_error_code(::MsgsSimToClient::MsgMagicActionA
 
 // MsgUnitMagicActionAck
 
-// required .Common.UnitId id = 1;
-inline bool MsgUnitMagicActionAck::has_id() const {
+// required .Common.UnitId unit = 1;
+inline bool MsgUnitMagicActionAck::has_unit() const {
   return _has_bit(0);
 }
-inline void MsgUnitMagicActionAck::clear_id() {
-  if (id_ != NULL) id_->::Common::UnitId::Clear();
+inline void MsgUnitMagicActionAck::clear_unit() {
+  if (unit_ != NULL) unit_->::Common::UnitId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::UnitId& MsgUnitMagicActionAck::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::UnitId& MsgUnitMagicActionAck::unit() const {
+  return unit_ != NULL ? *unit_ : *default_instance_->unit_;
 }
-inline ::Common::UnitId* MsgUnitMagicActionAck::mutable_id() {
+inline ::Common::UnitId* MsgUnitMagicActionAck::mutable_unit() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::UnitId;
-  return id_;
+  if (unit_ == NULL) unit_ = new ::Common::UnitId;
+  return unit_;
 }
 
 // required .MsgsSimToClient.UnitActionAck.ErrorCode error_code = 2;
@@ -20964,38 +21257,38 @@ inline void MsgObjectMagicActionAck::set_error_code(::MsgsSimToClient::MsgObject
 
 // -------------------------------------------------------------------
 
-// MsgPopulationMagicActionAck
+// MsgCrowdMagicActionAck
 
-// required .Common.PopulationId id = 1;
-inline bool MsgPopulationMagicActionAck::has_id() const {
+// required .Common.CrowdId crowd = 1;
+inline bool MsgCrowdMagicActionAck::has_crowd() const {
   return _has_bit(0);
 }
-inline void MsgPopulationMagicActionAck::clear_id() {
-  if (id_ != NULL) id_->::Common::PopulationId::Clear();
+inline void MsgCrowdMagicActionAck::clear_crowd() {
+  if (crowd_ != NULL) crowd_->::Common::CrowdId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::PopulationId& MsgPopulationMagicActionAck::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::CrowdId& MsgCrowdMagicActionAck::crowd() const {
+  return crowd_ != NULL ? *crowd_ : *default_instance_->crowd_;
 }
-inline ::Common::PopulationId* MsgPopulationMagicActionAck::mutable_id() {
+inline ::Common::CrowdId* MsgCrowdMagicActionAck::mutable_crowd() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::PopulationId;
-  return id_;
+  if (crowd_ == NULL) crowd_ = new ::Common::CrowdId;
+  return crowd_;
 }
 
-// required .MsgsSimToClient.MsgPopulationMagicActionAck.ErrorCode error_code = 2;
-inline bool MsgPopulationMagicActionAck::has_error_code() const {
+// required .MsgsSimToClient.MsgCrowdMagicActionAck.ErrorCode error_code = 2;
+inline bool MsgCrowdMagicActionAck::has_error_code() const {
   return _has_bit(1);
 }
-inline void MsgPopulationMagicActionAck::clear_error_code() {
+inline void MsgCrowdMagicActionAck::clear_error_code() {
   error_code_ = 0;
   _clear_bit(1);
 }
-inline ::MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode MsgPopulationMagicActionAck::error_code() const {
-  return static_cast< ::MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode >(error_code_);
+inline ::MsgsSimToClient::MsgCrowdMagicActionAck_ErrorCode MsgCrowdMagicActionAck::error_code() const {
+  return static_cast< ::MsgsSimToClient::MsgCrowdMagicActionAck_ErrorCode >(error_code_);
 }
-inline void MsgPopulationMagicActionAck::set_error_code(::MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode value) {
-  GOOGLE_DCHECK(::MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode_IsValid(value));
+inline void MsgCrowdMagicActionAck::set_error_code(::MsgsSimToClient::MsgCrowdMagicActionAck_ErrorCode value) {
+  GOOGLE_DCHECK(::MsgsSimToClient::MsgCrowdMagicActionAck_ErrorCode_IsValid(value));
   _set_bit(1);
   error_code_ = value;
 }
@@ -21706,79 +21999,79 @@ inline void MsgControlResumeAck::set_error_code(::MsgsSimToClient::ControlAck_Er
 
 // -------------------------------------------------------------------
 
-// MsgTeamCreation
+// MsgPartyCreation
 
-// required .Common.PartyId id = 1;
-inline bool MsgTeamCreation::has_id() const {
+// required .Common.PartyId party = 1;
+inline bool MsgPartyCreation::has_party() const {
   return _has_bit(0);
 }
-inline void MsgTeamCreation::clear_id() {
-  if (id_ != NULL) id_->::Common::PartyId::Clear();
+inline void MsgPartyCreation::clear_party() {
+  if (party_ != NULL) party_->::Common::PartyId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::PartyId& MsgTeamCreation::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::PartyId& MsgPartyCreation::party() const {
+  return party_ != NULL ? *party_ : *default_instance_->party_;
 }
-inline ::Common::PartyId* MsgTeamCreation::mutable_id() {
+inline ::Common::PartyId* MsgPartyCreation::mutable_party() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::PartyId;
-  return id_;
+  if (party_ == NULL) party_ = new ::Common::PartyId;
+  return party_;
 }
 
-// required string nom = 2;
-inline bool MsgTeamCreation::has_nom() const {
+// required string name = 2;
+inline bool MsgPartyCreation::has_name() const {
   return _has_bit(1);
 }
-inline void MsgTeamCreation::clear_nom() {
-  if (nom_ != &_default_nom_) {
-    nom_->clear();
+inline void MsgPartyCreation::clear_name() {
+  if (name_ != &_default_name_) {
+    name_->clear();
   }
   _clear_bit(1);
 }
-inline const ::std::string& MsgTeamCreation::nom() const {
-  return *nom_;
+inline const ::std::string& MsgPartyCreation::name() const {
+  return *name_;
 }
-inline void MsgTeamCreation::set_nom(const ::std::string& value) {
+inline void MsgPartyCreation::set_name(const ::std::string& value) {
   _set_bit(1);
-  if (nom_ == &_default_nom_) {
-    nom_ = new ::std::string;
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
   }
-  nom_->assign(value);
+  name_->assign(value);
 }
-inline void MsgTeamCreation::set_nom(const char* value) {
+inline void MsgPartyCreation::set_name(const char* value) {
   _set_bit(1);
-  if (nom_ == &_default_nom_) {
-    nom_ = new ::std::string;
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
   }
-  nom_->assign(value);
+  name_->assign(value);
 }
-inline void MsgTeamCreation::set_nom(const char* value, size_t size) {
+inline void MsgPartyCreation::set_name(const char* value, size_t size) {
   _set_bit(1);
-  if (nom_ == &_default_nom_) {
-    nom_ = new ::std::string;
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
   }
-  nom_->assign(reinterpret_cast<const char*>(value), size);
+  name_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* MsgTeamCreation::mutable_nom() {
+inline ::std::string* MsgPartyCreation::mutable_name() {
   _set_bit(1);
-  if (nom_ == &_default_nom_) {
-    nom_ = new ::std::string;
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
   }
-  return nom_;
+  return name_;
 }
 
 // required .Common.EnumDiplomacy type = 3;
-inline bool MsgTeamCreation::has_type() const {
+inline bool MsgPartyCreation::has_type() const {
   return _has_bit(2);
 }
-inline void MsgTeamCreation::clear_type() {
+inline void MsgPartyCreation::clear_type() {
   type_ = 0;
   _clear_bit(2);
 }
-inline Common::EnumDiplomacy MsgTeamCreation::type() const {
+inline Common::EnumDiplomacy MsgPartyCreation::type() const {
   return static_cast< Common::EnumDiplomacy >(type_);
 }
-inline void MsgTeamCreation::set_type(Common::EnumDiplomacy value) {
+inline void MsgPartyCreation::set_type(Common::EnumDiplomacy value) {
   GOOGLE_DCHECK(Common::EnumDiplomacy_IsValid(value));
   _set_bit(2);
   type_ = value;
@@ -21786,64 +22079,140 @@ inline void MsgTeamCreation::set_type(Common::EnumDiplomacy value) {
 
 // -------------------------------------------------------------------
 
-// MsgAutomatCreation_oid_parent
+// MsgFormationCreation
 
-// optional .Common.FormationId formation = 1;
-inline bool MsgAutomatCreation_oid_parent::has_formation() const {
+// required .Common.FormationId formation = 1;
+inline bool MsgFormationCreation::has_formation() const {
   return _has_bit(0);
 }
-inline void MsgAutomatCreation_oid_parent::clear_formation() {
+inline void MsgFormationCreation::clear_formation() {
   if (formation_ != NULL) formation_->::Common::FormationId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::FormationId& MsgAutomatCreation_oid_parent::formation() const {
+inline const ::Common::FormationId& MsgFormationCreation::formation() const {
   return formation_ != NULL ? *formation_ : *default_instance_->formation_;
 }
-inline ::Common::FormationId* MsgAutomatCreation_oid_parent::mutable_formation() {
+inline ::Common::FormationId* MsgFormationCreation::mutable_formation() {
   _set_bit(0);
   if (formation_ == NULL) formation_ = new ::Common::FormationId;
   return formation_;
 }
 
-// optional .Common.AutomatId automat = 2;
-inline bool MsgAutomatCreation_oid_parent::has_automat() const {
+// required .Common.PartyId party = 2;
+inline bool MsgFormationCreation::has_party() const {
   return _has_bit(1);
 }
-inline void MsgAutomatCreation_oid_parent::clear_automat() {
-  if (automat_ != NULL) automat_->::Common::AutomatId::Clear();
+inline void MsgFormationCreation::clear_party() {
+  if (party_ != NULL) party_->::Common::PartyId::Clear();
   _clear_bit(1);
 }
-inline const ::Common::AutomatId& MsgAutomatCreation_oid_parent::automat() const {
-  return automat_ != NULL ? *automat_ : *default_instance_->automat_;
+inline const ::Common::PartyId& MsgFormationCreation::party() const {
+  return party_ != NULL ? *party_ : *default_instance_->party_;
 }
-inline ::Common::AutomatId* MsgAutomatCreation_oid_parent::mutable_automat() {
+inline ::Common::PartyId* MsgFormationCreation::mutable_party() {
   _set_bit(1);
-  if (automat_ == NULL) automat_ = new ::Common::AutomatId;
-  return automat_;
+  if (party_ == NULL) party_ = new ::Common::PartyId;
+  return party_;
+}
+
+// optional .Common.FormationId parent = 3;
+inline bool MsgFormationCreation::has_parent() const {
+  return _has_bit(2);
+}
+inline void MsgFormationCreation::clear_parent() {
+  if (parent_ != NULL) parent_->::Common::FormationId::Clear();
+  _clear_bit(2);
+}
+inline const ::Common::FormationId& MsgFormationCreation::parent() const {
+  return parent_ != NULL ? *parent_ : *default_instance_->parent_;
+}
+inline ::Common::FormationId* MsgFormationCreation::mutable_parent() {
+  _set_bit(2);
+  if (parent_ == NULL) parent_ = new ::Common::FormationId;
+  return parent_;
+}
+
+// required .Common.EnumNatureLevel level = 4;
+inline bool MsgFormationCreation::has_level() const {
+  return _has_bit(3);
+}
+inline void MsgFormationCreation::clear_level() {
+  level_ = 0;
+  _clear_bit(3);
+}
+inline Common::EnumNatureLevel MsgFormationCreation::level() const {
+  return static_cast< Common::EnumNatureLevel >(level_);
+}
+inline void MsgFormationCreation::set_level(Common::EnumNatureLevel value) {
+  GOOGLE_DCHECK(Common::EnumNatureLevel_IsValid(value));
+  _set_bit(3);
+  level_ = value;
+}
+
+// required string name = 5;
+inline bool MsgFormationCreation::has_name() const {
+  return _has_bit(4);
+}
+inline void MsgFormationCreation::clear_name() {
+  if (name_ != &_default_name_) {
+    name_->clear();
+  }
+  _clear_bit(4);
+}
+inline const ::std::string& MsgFormationCreation::name() const {
+  return *name_;
+}
+inline void MsgFormationCreation::set_name(const ::std::string& value) {
+  _set_bit(4);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void MsgFormationCreation::set_name(const char* value) {
+  _set_bit(4);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void MsgFormationCreation::set_name(const char* value, size_t size) {
+  _set_bit(4);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgFormationCreation::mutable_name() {
+  _set_bit(4);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  return name_;
 }
 
 // -------------------------------------------------------------------
 
 // MsgAutomatCreation
 
-// optional .Common.AutomatId id = 1;
-inline bool MsgAutomatCreation::has_id() const {
+// required .Common.AutomatId automat = 1;
+inline bool MsgAutomatCreation::has_automat() const {
   return _has_bit(0);
 }
-inline void MsgAutomatCreation::clear_id() {
-  if (id_ != NULL) id_->::Common::AutomatId::Clear();
+inline void MsgAutomatCreation::clear_automat() {
+  if (automat_ != NULL) automat_->::Common::AutomatId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::AutomatId& MsgAutomatCreation::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::AutomatId& MsgAutomatCreation::automat() const {
+  return automat_ != NULL ? *automat_ : *default_instance_->automat_;
 }
-inline ::Common::AutomatId* MsgAutomatCreation::mutable_id() {
+inline ::Common::AutomatId* MsgAutomatCreation::mutable_automat() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::AutomatId;
-  return id_;
+  if (automat_ == NULL) automat_ = new ::Common::AutomatId;
+  return automat_;
 }
 
-// optional .Common.AutomatType type = 2;
+// required .Common.AutomatType type = 2;
 inline bool MsgAutomatCreation::has_type() const {
   return _has_bit(1);
 }
@@ -21860,7 +22229,7 @@ inline ::Common::AutomatType* MsgAutomatCreation::mutable_type() {
   return type_;
 }
 
-// optional string nom = 3;
+// required string nom = 3;
 inline bool MsgAutomatCreation::has_nom() const {
   return _has_bit(2);
 }
@@ -21902,24 +22271,24 @@ inline ::std::string* MsgAutomatCreation::mutable_nom() {
   return nom_;
 }
 
-// optional .MsgsSimToClient.MsgAutomatCreation_oid_parent oid_parent = 4;
-inline bool MsgAutomatCreation::has_oid_parent() const {
+// required .Common.ParentEntity parent = 4;
+inline bool MsgAutomatCreation::has_parent() const {
   return _has_bit(3);
 }
-inline void MsgAutomatCreation::clear_oid_parent() {
-  if (oid_parent_ != NULL) oid_parent_->::MsgsSimToClient::MsgAutomatCreation_oid_parent::Clear();
+inline void MsgAutomatCreation::clear_parent() {
+  if (parent_ != NULL) parent_->::Common::ParentEntity::Clear();
   _clear_bit(3);
 }
-inline const ::MsgsSimToClient::MsgAutomatCreation_oid_parent& MsgAutomatCreation::oid_parent() const {
-  return oid_parent_ != NULL ? *oid_parent_ : *default_instance_->oid_parent_;
+inline const ::Common::ParentEntity& MsgAutomatCreation::parent() const {
+  return parent_ != NULL ? *parent_ : *default_instance_->parent_;
 }
-inline ::MsgsSimToClient::MsgAutomatCreation_oid_parent* MsgAutomatCreation::mutable_oid_parent() {
+inline ::Common::ParentEntity* MsgAutomatCreation::mutable_parent() {
   _set_bit(3);
-  if (oid_parent_ == NULL) oid_parent_ = new ::MsgsSimToClient::MsgAutomatCreation_oid_parent;
-  return oid_parent_;
+  if (parent_ == NULL) parent_ = new ::Common::ParentEntity;
+  return parent_;
 }
 
-// optional .Common.PartyId party = 5;
+// required .Common.PartyId party = 5;
 inline bool MsgAutomatCreation::has_party() const {
   return _has_bit(4);
 }
@@ -21965,21 +22334,21 @@ inline ::Common::KnowledgeGroupId* MsgAutomatCreation::mutable_knowledge_group()
 
 // MsgAutomatAttributes
 
-// required .Common.AutomatId id = 1;
-inline bool MsgAutomatAttributes::has_id() const {
+// required .Common.AutomatId automat = 1;
+inline bool MsgAutomatAttributes::has_automat() const {
   return _has_bit(0);
 }
-inline void MsgAutomatAttributes::clear_id() {
-  if (id_ != NULL) id_->::Common::AutomatId::Clear();
+inline void MsgAutomatAttributes::clear_automat() {
+  if (automat_ != NULL) automat_->::Common::AutomatId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::AutomatId& MsgAutomatAttributes::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::AutomatId& MsgAutomatAttributes::automat() const {
+  return automat_ != NULL ? *automat_ : *default_instance_->automat_;
 }
-inline ::Common::AutomatId* MsgAutomatAttributes::mutable_id() {
+inline ::Common::AutomatId* MsgAutomatAttributes::mutable_automat() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::AutomatId;
-  return id_;
+  if (automat_ == NULL) automat_ = new ::Common::AutomatId;
+  return automat_;
 }
 
 // optional .Common.EnumAutomatMode etat_automate = 2;
@@ -22071,21 +22440,21 @@ inline void MsgAutomatAttributes::set_roe(::MsgsSimToClient::RulesOfEngagement_V
 
 // MsgUnitCreation
 
-// required .Common.UnitId id = 1;
-inline bool MsgUnitCreation::has_id() const {
+// required .Common.UnitId unit = 1;
+inline bool MsgUnitCreation::has_unit() const {
   return _has_bit(0);
 }
-inline void MsgUnitCreation::clear_id() {
-  if (id_ != NULL) id_->::Common::UnitId::Clear();
+inline void MsgUnitCreation::clear_unit() {
+  if (unit_ != NULL) unit_->::Common::UnitId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::UnitId& MsgUnitCreation::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::UnitId& MsgUnitCreation::unit() const {
+  return unit_ != NULL ? *unit_ : *default_instance_->unit_;
 }
-inline ::Common::UnitId* MsgUnitCreation::mutable_id() {
+inline ::Common::UnitId* MsgUnitCreation::mutable_unit() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::UnitId;
-  return id_;
+  if (unit_ == NULL) unit_ = new ::Common::UnitId;
+  return unit_;
 }
 
 // required .Common.UnitType type = 2;
@@ -22789,7 +23158,7 @@ inline ::Common::NBCAgentType* NBCAgents::add_elem() {
 
 // Communication
 
-// optional bool jammed = 1 [default = false];
+// optional bool jammed = 1;
 inline bool Communication::has_jammed() const {
   return _has_bit(0);
 }
@@ -22826,21 +23195,21 @@ inline ::Common::KnowledgeGroupId* Communication::mutable_knowledge_group() {
 
 // MsgUnitAttributes
 
-// required .Common.UnitId id = 1;
-inline bool MsgUnitAttributes::has_id() const {
+// required .Common.UnitId unit = 1;
+inline bool MsgUnitAttributes::has_unit() const {
   return _has_bit(0);
 }
-inline void MsgUnitAttributes::clear_id() {
-  if (id_ != NULL) id_->::Common::UnitId::Clear();
+inline void MsgUnitAttributes::clear_unit() {
+  if (unit_ != NULL) unit_->::Common::UnitId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::UnitId& MsgUnitAttributes::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::UnitId& MsgUnitAttributes::unit() const {
+  return unit_ != NULL ? *unit_ : *default_instance_->unit_;
 }
-inline ::Common::UnitId* MsgUnitAttributes::mutable_id() {
+inline ::Common::UnitId* MsgUnitAttributes::mutable_unit() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::UnitId;
-  return id_;
+  if (unit_ == NULL) unit_ = new ::Common::UnitId;
+  return unit_;
 }
 
 // optional .MsgsSimToClient.HumanDotations dotation_eff_personnel = 2;
@@ -22962,7 +23331,7 @@ inline ::Common::MsgHeading* MsgUnitAttributes::mutable_direction() {
   return direction_;
 }
 
-// optional int32 hauteur = 9 [default = 0];
+// optional int32 hauteur = 9;
 inline bool MsgUnitAttributes::has_hauteur() const {
   return _has_bit(8);
 }
@@ -22978,7 +23347,7 @@ inline void MsgUnitAttributes::set_hauteur(::google::protobuf::int32 value) {
   hauteur_ = value;
 }
 
-// optional int32 altitude = 10 [default = 0];
+// optional int32 altitude = 10;
 inline bool MsgUnitAttributes::has_altitude() const {
   return _has_bit(9);
 }
@@ -22994,7 +23363,7 @@ inline void MsgUnitAttributes::set_altitude(::google::protobuf::int32 value) {
   altitude_ = value;
 }
 
-// optional int32 vitesse = 11 [default = 0];
+// optional int32 vitesse = 11;
 inline bool MsgUnitAttributes::has_vitesse() const {
   return _has_bit(10);
 }
@@ -23010,7 +23379,7 @@ inline void MsgUnitAttributes::set_vitesse(::google::protobuf::int32 value) {
   vitesse_ = value;
 }
 
-// optional int32 etat_operationnel_brut = 12 [default = 0];
+// optional int32 etat_operationnel_brut = 12;
 inline bool MsgUnitAttributes::has_etat_operationnel_brut() const {
   return _has_bit(11);
 }
@@ -23060,7 +23429,7 @@ inline ::Common::UnitId* MsgUnitAttributes::mutable_reinforced_unit() {
   return reinforced_unit_;
 }
 
-// optional bool mort = 15 [default = false];
+// optional bool mort = 15;
 inline bool MsgUnitAttributes::has_mort() const {
   return _has_bit(14);
 }
@@ -23076,7 +23445,7 @@ inline void MsgUnitAttributes::set_mort(bool value) {
   mort_ = value;
 }
 
-// optional bool neutralise = 16 [default = false];
+// optional bool neutralise = 16;
 inline bool MsgUnitAttributes::has_neutralise() const {
   return _has_bit(15);
 }
@@ -23092,7 +23461,7 @@ inline void MsgUnitAttributes::set_neutralise(bool value) {
   neutralise_ = value;
 }
 
-// optional bool mode_furtif_actif = 17 [default = false];
+// optional bool mode_furtif_actif = 17;
 inline bool MsgUnitAttributes::has_mode_furtif_actif() const {
   return _has_bit(16);
 }
@@ -23108,7 +23477,7 @@ inline void MsgUnitAttributes::set_mode_furtif_actif(bool value) {
   mode_furtif_actif_ = value;
 }
 
-// optional bool embarque = 18 [default = false];
+// optional bool embarque = 18;
 inline bool MsgUnitAttributes::has_embarque() const {
   return _has_bit(17);
 }
@@ -23124,7 +23493,7 @@ inline void MsgUnitAttributes::set_embarque(bool value) {
   embarque_ = value;
 }
 
-// optional bool transporteurs_disponibles = 19 [default = false];
+// optional bool transporteurs_disponibles = 19;
 inline bool MsgUnitAttributes::has_transporteurs_disponibles() const {
   return _has_bit(18);
 }
@@ -23174,7 +23543,7 @@ inline void MsgUnitAttributes::set_posture_new(::MsgsSimToClient::MsgUnitAttribu
   posture_new_ = value;
 }
 
-// optional int32 posture_pourcentage = 22 [default = 0];
+// optional int32 posture_pourcentage = 22;
 inline bool MsgUnitAttributes::has_posture_pourcentage() const {
   return _has_bit(21);
 }
@@ -23190,7 +23559,7 @@ inline void MsgUnitAttributes::set_posture_pourcentage(::google::protobuf::int32
   posture_pourcentage_ = value;
 }
 
-// optional int32 etat_installation = 23 [default = 0];
+// optional int32 etat_installation = 23;
 inline bool MsgUnitAttributes::has_etat_installation() const {
   return _has_bit(22);
 }
@@ -23206,7 +23575,7 @@ inline void MsgUnitAttributes::set_etat_installation(::google::protobuf::int32 v
   etat_installation_ = value;
 }
 
-// optional bool en_tenue_de_protection_nbc = 24 [default = false];
+// optional bool en_tenue_de_protection_nbc = 24;
 inline bool MsgUnitAttributes::has_en_tenue_de_protection_nbc() const {
   return _has_bit(23);
 }
@@ -23273,12 +23642,12 @@ inline ::MsgsSimToClient::Communication* MsgUnitAttributes::mutable_communicatio
   return communications_;
 }
 
-// optional bool radio_emitter_disabled = 28 [default = true];
+// optional bool radio_emitter_disabled = 28;
 inline bool MsgUnitAttributes::has_radio_emitter_disabled() const {
   return _has_bit(27);
 }
 inline void MsgUnitAttributes::clear_radio_emitter_disabled() {
-  radio_emitter_disabled_ = true;
+  radio_emitter_disabled_ = false;
   _clear_bit(27);
 }
 inline bool MsgUnitAttributes::radio_emitter_disabled() const {
@@ -23289,12 +23658,12 @@ inline void MsgUnitAttributes::set_radio_emitter_disabled(bool value) {
   radio_emitter_disabled_ = value;
 }
 
-// optional bool radio_receiver_disabled = 29 [default = true];
+// optional bool radio_receiver_disabled = 29;
 inline bool MsgUnitAttributes::has_radio_receiver_disabled() const {
   return _has_bit(28);
 }
 inline void MsgUnitAttributes::clear_radio_receiver_disabled() {
-  radio_receiver_disabled_ = true;
+  radio_receiver_disabled_ = false;
   _clear_bit(28);
 }
 inline bool MsgUnitAttributes::radio_receiver_disabled() const {
@@ -23305,7 +23674,7 @@ inline void MsgUnitAttributes::set_radio_receiver_disabled(bool value) {
   radio_receiver_disabled_ = value;
 }
 
-// optional bool radar_actif = 30 [default = false];
+// optional bool radar_actif = 30;
 inline bool MsgUnitAttributes::has_radar_actif() const {
   return _has_bit(29);
 }
@@ -23440,21 +23809,21 @@ inline void MsgUnitAttributes::set_roe(::MsgsSimToClient::RulesOfEngagement_Valu
   roe_ = value;
 }
 
-// optional .MsgsSimToClient.MsgUnitAttributes.PopulationRoe roe_population = 38;
-inline bool MsgUnitAttributes::has_roe_population() const {
+// optional .MsgsSimToClient.MsgUnitAttributes.CrowdRoe roe_crowd = 38;
+inline bool MsgUnitAttributes::has_roe_crowd() const {
   return _has_bit(37);
 }
-inline void MsgUnitAttributes::clear_roe_population() {
-  roe_population_ = 0;
+inline void MsgUnitAttributes::clear_roe_crowd() {
+  roe_crowd_ = 0;
   _clear_bit(37);
 }
-inline ::MsgsSimToClient::MsgUnitAttributes_PopulationRoe MsgUnitAttributes::roe_population() const {
-  return static_cast< ::MsgsSimToClient::MsgUnitAttributes_PopulationRoe >(roe_population_);
+inline ::MsgsSimToClient::MsgUnitAttributes_CrowdRoe MsgUnitAttributes::roe_crowd() const {
+  return static_cast< ::MsgsSimToClient::MsgUnitAttributes_CrowdRoe >(roe_crowd_);
 }
-inline void MsgUnitAttributes::set_roe_population(::MsgsSimToClient::MsgUnitAttributes_PopulationRoe value) {
-  GOOGLE_DCHECK(::MsgsSimToClient::MsgUnitAttributes_PopulationRoe_IsValid(value));
+inline void MsgUnitAttributes::set_roe_crowd(::MsgsSimToClient::MsgUnitAttributes_CrowdRoe value) {
+  GOOGLE_DCHECK(::MsgsSimToClient::MsgUnitAttributes_CrowdRoe_IsValid(value));
   _set_bit(37);
-  roe_population_ = value;
+  roe_crowd_ = value;
 }
 
 // optional .Common.EnumUnitTiredness fatigue = 39;
@@ -23525,7 +23894,7 @@ inline ::Common::UnitId* MsgUnitAttributes::mutable_surrendered_unit() {
   return surrendered_unit_;
 }
 
-// optional bool prisonnier = 43 [default = false];
+// optional bool prisonnier = 43;
 inline bool MsgUnitAttributes::has_prisonnier() const {
   return _has_bit(42);
 }
@@ -23541,7 +23910,7 @@ inline void MsgUnitAttributes::set_prisonnier(bool value) {
   prisonnier_ = value;
 }
 
-// optional bool refugie_pris_en_compte = 44 [default = false];
+// optional bool refugie_pris_en_compte = 44;
 inline bool MsgUnitAttributes::has_refugie_pris_en_compte() const {
   return _has_bit(43);
 }
@@ -23561,21 +23930,21 @@ inline void MsgUnitAttributes::set_refugie_pris_en_compte(bool value) {
 
 // MsgUnitPathFind
 
-// required .Common.UnitId id = 1;
-inline bool MsgUnitPathFind::has_id() const {
+// required .Common.UnitId unit = 1;
+inline bool MsgUnitPathFind::has_unit() const {
   return _has_bit(0);
 }
-inline void MsgUnitPathFind::clear_id() {
-  if (id_ != NULL) id_->::Common::UnitId::Clear();
+inline void MsgUnitPathFind::clear_unit() {
+  if (unit_ != NULL) unit_->::Common::UnitId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::UnitId& MsgUnitPathFind::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::UnitId& MsgUnitPathFind::unit() const {
+  return unit_ != NULL ? *unit_ : *default_instance_->unit_;
 }
-inline ::Common::UnitId* MsgUnitPathFind::mutable_id() {
+inline ::Common::UnitId* MsgUnitPathFind::mutable_unit() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::UnitId;
-  return id_;
+  if (unit_ == NULL) unit_ = new ::Common::UnitId;
+  return unit_;
 }
 
 // required .Common.MsgPath itineraire = 2;
@@ -23599,42 +23968,42 @@ inline ::Common::MsgPath* MsgUnitPathFind::mutable_itineraire() {
 
 // MsgUnitDestruction
 
-// required .Common.UnitId id = 1;
-inline bool MsgUnitDestruction::has_id() const {
+// required .Common.UnitId unit = 1;
+inline bool MsgUnitDestruction::has_unit() const {
   return _has_bit(0);
 }
-inline void MsgUnitDestruction::clear_id() {
-  if (id_ != NULL) id_->::Common::UnitId::Clear();
+inline void MsgUnitDestruction::clear_unit() {
+  if (unit_ != NULL) unit_->::Common::UnitId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::UnitId& MsgUnitDestruction::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::UnitId& MsgUnitDestruction::unit() const {
+  return unit_ != NULL ? *unit_ : *default_instance_->unit_;
 }
-inline ::Common::UnitId* MsgUnitDestruction::mutable_id() {
+inline ::Common::UnitId* MsgUnitDestruction::mutable_unit() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::UnitId;
-  return id_;
+  if (unit_ == NULL) unit_ = new ::Common::UnitId;
+  return unit_;
 }
 
 // -------------------------------------------------------------------
 
 // MsgUnitEnvironmentType
 
-// required .Common.UnitId id = 1;
-inline bool MsgUnitEnvironmentType::has_id() const {
+// required .Common.UnitId unit = 1;
+inline bool MsgUnitEnvironmentType::has_unit() const {
   return _has_bit(0);
 }
-inline void MsgUnitEnvironmentType::clear_id() {
-  if (id_ != NULL) id_->::Common::UnitId::Clear();
+inline void MsgUnitEnvironmentType::clear_unit() {
+  if (unit_ != NULL) unit_->::Common::UnitId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::UnitId& MsgUnitEnvironmentType::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::UnitId& MsgUnitEnvironmentType::unit() const {
+  return unit_ != NULL ? *unit_ : *default_instance_->unit_;
 }
-inline ::Common::UnitId* MsgUnitEnvironmentType::mutable_id() {
+inline ::Common::UnitId* MsgUnitEnvironmentType::mutable_unit() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::UnitId;
-  return id_;
+  if (unit_ == NULL) unit_ = new ::Common::UnitId;
+  return unit_;
 }
 
 // required int32 area = 2;
@@ -23705,21 +24074,21 @@ inline void MsgUnitEnvironmentType::set_linear(::google::protobuf::int32 value) 
 
 // MsgUnitKnowledgeCreation
 
-// required .Common.UnitKnowledgeId id = 1;
-inline bool MsgUnitKnowledgeCreation::has_id() const {
+// required .Common.UnitKnowledgeId knowledge = 1;
+inline bool MsgUnitKnowledgeCreation::has_knowledge() const {
   return _has_bit(0);
 }
-inline void MsgUnitKnowledgeCreation::clear_id() {
-  if (id_ != NULL) id_->::Common::UnitKnowledgeId::Clear();
+inline void MsgUnitKnowledgeCreation::clear_knowledge() {
+  if (knowledge_ != NULL) knowledge_->::Common::UnitKnowledgeId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::UnitKnowledgeId& MsgUnitKnowledgeCreation::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::UnitKnowledgeId& MsgUnitKnowledgeCreation::knowledge() const {
+  return knowledge_ != NULL ? *knowledge_ : *default_instance_->knowledge_;
 }
-inline ::Common::UnitKnowledgeId* MsgUnitKnowledgeCreation::mutable_id() {
+inline ::Common::UnitKnowledgeId* MsgUnitKnowledgeCreation::mutable_knowledge() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::UnitKnowledgeId;
-  return id_;
+  if (knowledge_ == NULL) knowledge_ = new ::Common::UnitKnowledgeId;
+  return knowledge_;
 }
 
 // required .Common.KnowledgeGroupId knowledge_group = 2;
@@ -23844,21 +24213,21 @@ inline ::MsgsSimToClient::AutomatPerception* SeqOfAutomatPerception::add_elem() 
 
 // MsgUnitKnowledgeUpdate
 
-// required .Common.UnitKnowledgeId id = 1;
-inline bool MsgUnitKnowledgeUpdate::has_id() const {
+// required .Common.UnitKnowledgeId knowledge = 1;
+inline bool MsgUnitKnowledgeUpdate::has_knowledge() const {
   return _has_bit(0);
 }
-inline void MsgUnitKnowledgeUpdate::clear_id() {
-  if (id_ != NULL) id_->::Common::UnitKnowledgeId::Clear();
+inline void MsgUnitKnowledgeUpdate::clear_knowledge() {
+  if (knowledge_ != NULL) knowledge_->::Common::UnitKnowledgeId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::UnitKnowledgeId& MsgUnitKnowledgeUpdate::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::UnitKnowledgeId& MsgUnitKnowledgeUpdate::knowledge() const {
+  return knowledge_ != NULL ? *knowledge_ : *default_instance_->knowledge_;
 }
-inline ::Common::UnitKnowledgeId* MsgUnitKnowledgeUpdate::mutable_id() {
+inline ::Common::UnitKnowledgeId* MsgUnitKnowledgeUpdate::mutable_knowledge() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::UnitKnowledgeId;
-  return id_;
+  if (knowledge_ == NULL) knowledge_ = new ::Common::UnitKnowledgeId;
+  return knowledge_;
 }
 
 // required .Common.KnowledgeGroupId knowledge_group = 2;
@@ -23878,7 +24247,7 @@ inline ::Common::KnowledgeGroupId* MsgUnitKnowledgeUpdate::mutable_knowledge_gro
   return knowledge_group_;
 }
 
-// optional int32 pertinence = 3 [default = 0];
+// optional int32 pertinence = 3;
 inline bool MsgUnitKnowledgeUpdate::has_pertinence() const {
   return _has_bit(2);
 }
@@ -23928,7 +24297,7 @@ inline void MsgUnitKnowledgeUpdate::set_max_identification_level(MsgsSimToClient
   max_identification_level_ = value;
 }
 
-// optional int32 etat_op = 6 [default = 0];
+// optional int32 etat_op = 6;
 inline bool MsgUnitKnowledgeUpdate::has_etat_op() const {
   return _has_bit(5);
 }
@@ -23944,7 +24313,7 @@ inline void MsgUnitKnowledgeUpdate::set_etat_op(::google::protobuf::int32 value)
   etat_op_ = value;
 }
 
-// optional bool mort = 7 [default = false];
+// optional bool mort = 7;
 inline bool MsgUnitKnowledgeUpdate::has_mort() const {
   return _has_bit(6);
 }
@@ -23994,7 +24363,7 @@ inline ::Common::MsgHeading* MsgUnitKnowledgeUpdate::mutable_direction() {
   return direction_;
 }
 
-// optional int32 speed = 10 [default = 0];
+// optional int32 speed = 10;
 inline bool MsgUnitKnowledgeUpdate::has_speed() const {
   return _has_bit(9);
 }
@@ -24027,7 +24396,7 @@ inline ::Common::PartyId* MsgUnitKnowledgeUpdate::mutable_party() {
   return party_;
 }
 
-// optional bool nature_pc = 12 [default = false];
+// optional bool nature_pc = 12;
 inline bool MsgUnitKnowledgeUpdate::has_nature_pc() const {
   return _has_bit(11);
 }
@@ -24077,7 +24446,7 @@ inline ::Common::UnitId* MsgUnitKnowledgeUpdate::mutable_surrendered_unit() {
   return surrendered_unit_;
 }
 
-// optional bool prisonnier = 15 [default = false];
+// optional bool prisonnier = 15;
 inline bool MsgUnitKnowledgeUpdate::has_prisonnier() const {
   return _has_bit(14);
 }
@@ -24093,7 +24462,7 @@ inline void MsgUnitKnowledgeUpdate::set_prisonnier(bool value) {
   prisonnier_ = value;
 }
 
-// optional bool refugie_pris_en_compte = 16 [default = false];
+// optional bool refugie_pris_en_compte = 16;
 inline bool MsgUnitKnowledgeUpdate::has_refugie_pris_en_compte() const {
   return _has_bit(15);
 }
@@ -24113,21 +24482,21 @@ inline void MsgUnitKnowledgeUpdate::set_refugie_pris_en_compte(bool value) {
 
 // MsgUnitKnowledgeDestruction
 
-// required .Common.UnitKnowledgeId id = 1;
-inline bool MsgUnitKnowledgeDestruction::has_id() const {
+// required .Common.UnitKnowledgeId knowledge = 1;
+inline bool MsgUnitKnowledgeDestruction::has_knowledge() const {
   return _has_bit(0);
 }
-inline void MsgUnitKnowledgeDestruction::clear_id() {
-  if (id_ != NULL) id_->::Common::UnitKnowledgeId::Clear();
+inline void MsgUnitKnowledgeDestruction::clear_knowledge() {
+  if (knowledge_ != NULL) knowledge_->::Common::UnitKnowledgeId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::UnitKnowledgeId& MsgUnitKnowledgeDestruction::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::UnitKnowledgeId& MsgUnitKnowledgeDestruction::knowledge() const {
+  return knowledge_ != NULL ? *knowledge_ : *default_instance_->knowledge_;
 }
-inline ::Common::UnitKnowledgeId* MsgUnitKnowledgeDestruction::mutable_id() {
+inline ::Common::UnitKnowledgeId* MsgUnitKnowledgeDestruction::mutable_knowledge() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::UnitKnowledgeId;
-  return id_;
+  if (knowledge_ == NULL) knowledge_ = new ::Common::UnitKnowledgeId;
+  return knowledge_;
 }
 
 // required .Common.KnowledgeGroupId knowledge_group = 2;
@@ -24149,54 +24518,54 @@ inline ::Common::KnowledgeGroupId* MsgUnitKnowledgeDestruction::mutable_knowledg
 
 // -------------------------------------------------------------------
 
-// MsgStartUnitFire_target
+// UnitFireTarget
 
 // optional .Common.UnitId unit = 1;
-inline bool MsgStartUnitFire_target::has_unit() const {
+inline bool UnitFireTarget::has_unit() const {
   return _has_bit(0);
 }
-inline void MsgStartUnitFire_target::clear_unit() {
+inline void UnitFireTarget::clear_unit() {
   if (unit_ != NULL) unit_->::Common::UnitId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::UnitId& MsgStartUnitFire_target::unit() const {
+inline const ::Common::UnitId& UnitFireTarget::unit() const {
   return unit_ != NULL ? *unit_ : *default_instance_->unit_;
 }
-inline ::Common::UnitId* MsgStartUnitFire_target::mutable_unit() {
+inline ::Common::UnitId* UnitFireTarget::mutable_unit() {
   _set_bit(0);
   if (unit_ == NULL) unit_ = new ::Common::UnitId;
   return unit_;
 }
 
-// optional .Common.PopulationId population = 2;
-inline bool MsgStartUnitFire_target::has_population() const {
+// optional .Common.CrowdId crowd = 2;
+inline bool UnitFireTarget::has_crowd() const {
   return _has_bit(1);
 }
-inline void MsgStartUnitFire_target::clear_population() {
-  if (population_ != NULL) population_->::Common::PopulationId::Clear();
+inline void UnitFireTarget::clear_crowd() {
+  if (crowd_ != NULL) crowd_->::Common::CrowdId::Clear();
   _clear_bit(1);
 }
-inline const ::Common::PopulationId& MsgStartUnitFire_target::population() const {
-  return population_ != NULL ? *population_ : *default_instance_->population_;
+inline const ::Common::CrowdId& UnitFireTarget::crowd() const {
+  return crowd_ != NULL ? *crowd_ : *default_instance_->crowd_;
 }
-inline ::Common::PopulationId* MsgStartUnitFire_target::mutable_population() {
+inline ::Common::CrowdId* UnitFireTarget::mutable_crowd() {
   _set_bit(1);
-  if (population_ == NULL) population_ = new ::Common::PopulationId;
-  return population_;
+  if (crowd_ == NULL) crowd_ = new ::Common::CrowdId;
+  return crowd_;
 }
 
 // optional .Common.MsgCoordLatLong position = 3;
-inline bool MsgStartUnitFire_target::has_position() const {
+inline bool UnitFireTarget::has_position() const {
   return _has_bit(2);
 }
-inline void MsgStartUnitFire_target::clear_position() {
+inline void UnitFireTarget::clear_position() {
   if (position_ != NULL) position_->::Common::MsgCoordLatLong::Clear();
   _clear_bit(2);
 }
-inline const ::Common::MsgCoordLatLong& MsgStartUnitFire_target::position() const {
+inline const ::Common::MsgCoordLatLong& UnitFireTarget::position() const {
   return position_ != NULL ? *position_ : *default_instance_->position_;
 }
-inline ::Common::MsgCoordLatLong* MsgStartUnitFire_target::mutable_position() {
+inline ::Common::MsgCoordLatLong* UnitFireTarget::mutable_position() {
   _set_bit(2);
   if (position_ == NULL) position_ = new ::Common::MsgCoordLatLong;
   return position_;
@@ -24206,21 +24575,21 @@ inline ::Common::MsgCoordLatLong* MsgStartUnitFire_target::mutable_position() {
 
 // MsgStartUnitFire
 
-// required .Common.FireId id = 1;
-inline bool MsgStartUnitFire::has_id() const {
+// required .Common.FireId fire = 1;
+inline bool MsgStartUnitFire::has_fire() const {
   return _has_bit(0);
 }
-inline void MsgStartUnitFire::clear_id() {
-  if (id_ != NULL) id_->::Common::FireId::Clear();
+inline void MsgStartUnitFire::clear_fire() {
+  if (fire_ != NULL) fire_->::Common::FireId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::FireId& MsgStartUnitFire::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::FireId& MsgStartUnitFire::fire() const {
+  return fire_ != NULL ? *fire_ : *default_instance_->fire_;
 }
-inline ::Common::FireId* MsgStartUnitFire::mutable_id() {
+inline ::Common::FireId* MsgStartUnitFire::mutable_fire() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::FireId;
-  return id_;
+  if (fire_ == NULL) fire_ = new ::Common::FireId;
+  return fire_;
 }
 
 // required .Common.UnitId firing_unit = 2;
@@ -24240,24 +24609,24 @@ inline ::Common::UnitId* MsgStartUnitFire::mutable_firing_unit() {
   return firing_unit_;
 }
 
-// required .MsgsSimToClient.MsgStartUnitFire_target target = 3;
+// required .MsgsSimToClient.UnitFireTarget target = 3;
 inline bool MsgStartUnitFire::has_target() const {
   return _has_bit(2);
 }
 inline void MsgStartUnitFire::clear_target() {
-  if (target_ != NULL) target_->::MsgsSimToClient::MsgStartUnitFire_target::Clear();
+  if (target_ != NULL) target_->::MsgsSimToClient::UnitFireTarget::Clear();
   _clear_bit(2);
 }
-inline const ::MsgsSimToClient::MsgStartUnitFire_target& MsgStartUnitFire::target() const {
+inline const ::MsgsSimToClient::UnitFireTarget& MsgStartUnitFire::target() const {
   return target_ != NULL ? *target_ : *default_instance_->target_;
 }
-inline ::MsgsSimToClient::MsgStartUnitFire_target* MsgStartUnitFire::mutable_target() {
+inline ::MsgsSimToClient::UnitFireTarget* MsgStartUnitFire::mutable_target() {
   _set_bit(2);
-  if (target_ == NULL) target_ = new ::MsgsSimToClient::MsgStartUnitFire_target;
+  if (target_ == NULL) target_ = new ::MsgsSimToClient::UnitFireTarget;
   return target_;
 }
 
-// required .Common.MsgStartUnitFire_type type = 4;
+// required .Common.UnitFireType type = 4;
 inline bool MsgStartUnitFire::has_type() const {
   return _has_bit(3);
 }
@@ -24265,11 +24634,11 @@ inline void MsgStartUnitFire::clear_type() {
   type_ = 0;
   _clear_bit(3);
 }
-inline Common::MsgStartUnitFire_type MsgStartUnitFire::type() const {
-  return static_cast< Common::MsgStartUnitFire_type >(type_);
+inline Common::UnitFireType MsgStartUnitFire::type() const {
+  return static_cast< Common::UnitFireType >(type_);
 }
-inline void MsgStartUnitFire::set_type(Common::MsgStartUnitFire_type value) {
-  GOOGLE_DCHECK(Common::MsgStartUnitFire_type_IsValid(value));
+inline void MsgStartUnitFire::set_type(Common::UnitFireType value) {
+  GOOGLE_DCHECK(Common::UnitFireType_IsValid(value));
   _set_bit(3);
   type_ = value;
 }
@@ -24621,67 +24990,67 @@ inline ::MsgsSimToClient::MsgUnitFireDamages* MsgUnitsFireDamages::add_elem() {
 
 // -------------------------------------------------------------------
 
-// MsgPopulationFireDamages
+// MsgCrowdFireDamages
 
-// required .Common.PopulationId target = 1;
-inline bool MsgPopulationFireDamages::has_target() const {
+// required .Common.CrowdId target = 1;
+inline bool MsgCrowdFireDamages::has_target() const {
   return _has_bit(0);
 }
-inline void MsgPopulationFireDamages::clear_target() {
-  if (target_ != NULL) target_->::Common::PopulationId::Clear();
+inline void MsgCrowdFireDamages::clear_target() {
+  if (target_ != NULL) target_->::Common::CrowdId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::PopulationId& MsgPopulationFireDamages::target() const {
+inline const ::Common::CrowdId& MsgCrowdFireDamages::target() const {
   return target_ != NULL ? *target_ : *default_instance_->target_;
 }
-inline ::Common::PopulationId* MsgPopulationFireDamages::mutable_target() {
+inline ::Common::CrowdId* MsgCrowdFireDamages::mutable_target() {
   _set_bit(0);
-  if (target_ == NULL) target_ = new ::Common::PopulationId;
+  if (target_ == NULL) target_ = new ::Common::CrowdId;
   return target_;
 }
 
 // required int32 dead_nbr = 2;
-inline bool MsgPopulationFireDamages::has_dead_nbr() const {
+inline bool MsgCrowdFireDamages::has_dead_nbr() const {
   return _has_bit(1);
 }
-inline void MsgPopulationFireDamages::clear_dead_nbr() {
+inline void MsgCrowdFireDamages::clear_dead_nbr() {
   dead_nbr_ = 0;
   _clear_bit(1);
 }
-inline ::google::protobuf::int32 MsgPopulationFireDamages::dead_nbr() const {
+inline ::google::protobuf::int32 MsgCrowdFireDamages::dead_nbr() const {
   return dead_nbr_;
 }
-inline void MsgPopulationFireDamages::set_dead_nbr(::google::protobuf::int32 value) {
+inline void MsgCrowdFireDamages::set_dead_nbr(::google::protobuf::int32 value) {
   _set_bit(1);
   dead_nbr_ = value;
 }
 
 // -------------------------------------------------------------------
 
-// MsgPopulationsFireDamages
+// MsgCrowdsFireDamages
 
-// repeated .MsgsSimToClient.MsgPopulationFireDamages elem = 1;
-inline int MsgPopulationsFireDamages::elem_size() const {
+// repeated .MsgsSimToClient.MsgCrowdFireDamages elem = 1;
+inline int MsgCrowdsFireDamages::elem_size() const {
   return elem_.size();
 }
-inline void MsgPopulationsFireDamages::clear_elem() {
+inline void MsgCrowdsFireDamages::clear_elem() {
   elem_.Clear();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgPopulationFireDamages >&
-MsgPopulationsFireDamages::elem() const {
+inline const ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgCrowdFireDamages >&
+MsgCrowdsFireDamages::elem() const {
   return elem_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgPopulationFireDamages >*
-MsgPopulationsFireDamages::mutable_elem() {
+inline ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgCrowdFireDamages >*
+MsgCrowdsFireDamages::mutable_elem() {
   return &elem_;
 }
-inline const ::MsgsSimToClient::MsgPopulationFireDamages& MsgPopulationsFireDamages::elem(int index) const {
+inline const ::MsgsSimToClient::MsgCrowdFireDamages& MsgCrowdsFireDamages::elem(int index) const {
   return elem_.Get(index);
 }
-inline ::MsgsSimToClient::MsgPopulationFireDamages* MsgPopulationsFireDamages::mutable_elem(int index) {
+inline ::MsgsSimToClient::MsgCrowdFireDamages* MsgCrowdsFireDamages::mutable_elem(int index) {
   return elem_.Mutable(index);
 }
-inline ::MsgsSimToClient::MsgPopulationFireDamages* MsgPopulationsFireDamages::add_elem() {
+inline ::MsgsSimToClient::MsgCrowdFireDamages* MsgCrowdsFireDamages::add_elem() {
   return elem_.Add();
 }
 
@@ -24689,21 +25058,21 @@ inline ::MsgsSimToClient::MsgPopulationFireDamages* MsgPopulationsFireDamages::a
 
 // MsgStopUnitFire
 
-// required .Common.FireId id = 1;
-inline bool MsgStopUnitFire::has_id() const {
+// required .Common.FireId fire = 1;
+inline bool MsgStopUnitFire::has_fire() const {
   return _has_bit(0);
 }
-inline void MsgStopUnitFire::clear_id() {
-  if (id_ != NULL) id_->::Common::FireId::Clear();
+inline void MsgStopUnitFire::clear_fire() {
+  if (fire_ != NULL) fire_->::Common::FireId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::FireId& MsgStopUnitFire::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::FireId& MsgStopUnitFire::fire() const {
+  return fire_ != NULL ? *fire_ : *default_instance_->fire_;
 }
-inline ::Common::FireId* MsgStopUnitFire::mutable_id() {
+inline ::Common::FireId* MsgStopUnitFire::mutable_fire() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::FireId;
-  return id_;
+  if (fire_ == NULL) fire_ = new ::Common::FireId;
+  return fire_;
 }
 
 // optional .MsgsSimToClient.MsgUnitsFireDamages units_damages = 2;
@@ -24723,94 +25092,94 @@ inline ::MsgsSimToClient::MsgUnitsFireDamages* MsgStopUnitFire::mutable_units_da
   return units_damages_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationsFireDamages populations_damages = 3;
-inline bool MsgStopUnitFire::has_populations_damages() const {
+// optional .MsgsSimToClient.MsgCrowdsFireDamages crowds_damages = 3;
+inline bool MsgStopUnitFire::has_crowds_damages() const {
   return _has_bit(2);
 }
-inline void MsgStopUnitFire::clear_populations_damages() {
-  if (populations_damages_ != NULL) populations_damages_->::MsgsSimToClient::MsgPopulationsFireDamages::Clear();
+inline void MsgStopUnitFire::clear_crowds_damages() {
+  if (crowds_damages_ != NULL) crowds_damages_->::MsgsSimToClient::MsgCrowdsFireDamages::Clear();
   _clear_bit(2);
 }
-inline const ::MsgsSimToClient::MsgPopulationsFireDamages& MsgStopUnitFire::populations_damages() const {
-  return populations_damages_ != NULL ? *populations_damages_ : *default_instance_->populations_damages_;
+inline const ::MsgsSimToClient::MsgCrowdsFireDamages& MsgStopUnitFire::crowds_damages() const {
+  return crowds_damages_ != NULL ? *crowds_damages_ : *default_instance_->crowds_damages_;
 }
-inline ::MsgsSimToClient::MsgPopulationsFireDamages* MsgStopUnitFire::mutable_populations_damages() {
+inline ::MsgsSimToClient::MsgCrowdsFireDamages* MsgStopUnitFire::mutable_crowds_damages() {
   _set_bit(2);
-  if (populations_damages_ == NULL) populations_damages_ = new ::MsgsSimToClient::MsgPopulationsFireDamages;
-  return populations_damages_;
+  if (crowds_damages_ == NULL) crowds_damages_ = new ::MsgsSimToClient::MsgCrowdsFireDamages;
+  return crowds_damages_;
 }
 
 // -------------------------------------------------------------------
 
-// MsgStartPopulationFire
+// MsgStartCrowdFire
 
-// required .Common.FireId id = 1;
-inline bool MsgStartPopulationFire::has_id() const {
+// required .Common.FireId fire = 1;
+inline bool MsgStartCrowdFire::has_fire() const {
   return _has_bit(0);
 }
-inline void MsgStartPopulationFire::clear_id() {
-  if (id_ != NULL) id_->::Common::FireId::Clear();
+inline void MsgStartCrowdFire::clear_fire() {
+  if (fire_ != NULL) fire_->::Common::FireId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::FireId& MsgStartPopulationFire::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::FireId& MsgStartCrowdFire::fire() const {
+  return fire_ != NULL ? *fire_ : *default_instance_->fire_;
 }
-inline ::Common::FireId* MsgStartPopulationFire::mutable_id() {
+inline ::Common::FireId* MsgStartCrowdFire::mutable_fire() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::FireId;
-  return id_;
+  if (fire_ == NULL) fire_ = new ::Common::FireId;
+  return fire_;
 }
 
-// required .Common.PopulationId firing_population = 2;
-inline bool MsgStartPopulationFire::has_firing_population() const {
+// required .Common.CrowdId firing_crowd = 2;
+inline bool MsgStartCrowdFire::has_firing_crowd() const {
   return _has_bit(1);
 }
-inline void MsgStartPopulationFire::clear_firing_population() {
-  if (firing_population_ != NULL) firing_population_->::Common::PopulationId::Clear();
+inline void MsgStartCrowdFire::clear_firing_crowd() {
+  if (firing_crowd_ != NULL) firing_crowd_->::Common::CrowdId::Clear();
   _clear_bit(1);
 }
-inline const ::Common::PopulationId& MsgStartPopulationFire::firing_population() const {
-  return firing_population_ != NULL ? *firing_population_ : *default_instance_->firing_population_;
+inline const ::Common::CrowdId& MsgStartCrowdFire::firing_crowd() const {
+  return firing_crowd_ != NULL ? *firing_crowd_ : *default_instance_->firing_crowd_;
 }
-inline ::Common::PopulationId* MsgStartPopulationFire::mutable_firing_population() {
+inline ::Common::CrowdId* MsgStartCrowdFire::mutable_firing_crowd() {
   _set_bit(1);
-  if (firing_population_ == NULL) firing_population_ = new ::Common::PopulationId;
-  return firing_population_;
+  if (firing_crowd_ == NULL) firing_crowd_ = new ::Common::CrowdId;
+  return firing_crowd_;
 }
 
 // -------------------------------------------------------------------
 
-// MsgStopPopulationFire
+// MsgStopCrowdFire
 
-// required .Common.FireId id = 1;
-inline bool MsgStopPopulationFire::has_id() const {
+// required .Common.FireId fire = 1;
+inline bool MsgStopCrowdFire::has_fire() const {
   return _has_bit(0);
 }
-inline void MsgStopPopulationFire::clear_id() {
-  if (id_ != NULL) id_->::Common::FireId::Clear();
+inline void MsgStopCrowdFire::clear_fire() {
+  if (fire_ != NULL) fire_->::Common::FireId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::FireId& MsgStopPopulationFire::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::FireId& MsgStopCrowdFire::fire() const {
+  return fire_ != NULL ? *fire_ : *default_instance_->fire_;
 }
-inline ::Common::FireId* MsgStopPopulationFire::mutable_id() {
+inline ::Common::FireId* MsgStopCrowdFire::mutable_fire() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::FireId;
-  return id_;
+  if (fire_ == NULL) fire_ = new ::Common::FireId;
+  return fire_;
 }
 
 // required .MsgsSimToClient.MsgUnitsFireDamages units_damages = 2;
-inline bool MsgStopPopulationFire::has_units_damages() const {
+inline bool MsgStopCrowdFire::has_units_damages() const {
   return _has_bit(1);
 }
-inline void MsgStopPopulationFire::clear_units_damages() {
+inline void MsgStopCrowdFire::clear_units_damages() {
   if (units_damages_ != NULL) units_damages_->::MsgsSimToClient::MsgUnitsFireDamages::Clear();
   _clear_bit(1);
 }
-inline const ::MsgsSimToClient::MsgUnitsFireDamages& MsgStopPopulationFire::units_damages() const {
+inline const ::MsgsSimToClient::MsgUnitsFireDamages& MsgStopCrowdFire::units_damages() const {
   return units_damages_ != NULL ? *units_damages_ : *default_instance_->units_damages_;
 }
-inline ::MsgsSimToClient::MsgUnitsFireDamages* MsgStopPopulationFire::mutable_units_damages() {
+inline ::MsgsSimToClient::MsgUnitsFireDamages* MsgStopCrowdFire::mutable_units_damages() {
   _set_bit(1);
   if (units_damages_ == NULL) units_damages_ = new ::MsgsSimToClient::MsgUnitsFireDamages;
   return units_damages_;
@@ -24820,21 +25189,21 @@ inline ::MsgsSimToClient::MsgUnitsFireDamages* MsgStopPopulationFire::mutable_un
 
 // MsgExplosion
 
-// required .Common.ObjectId id = 1;
-inline bool MsgExplosion::has_id() const {
+// required .Common.ObjectId object = 1;
+inline bool MsgExplosion::has_object() const {
   return _has_bit(0);
 }
-inline void MsgExplosion::clear_id() {
-  if (id_ != NULL) id_->::Common::ObjectId::Clear();
+inline void MsgExplosion::clear_object() {
+  if (object_ != NULL) object_->::Common::ObjectId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::ObjectId& MsgExplosion::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::ObjectId& MsgExplosion::object() const {
+  return object_ != NULL ? *object_ : *default_instance_->object_;
 }
-inline ::Common::ObjectId* MsgExplosion::mutable_id() {
+inline ::Common::ObjectId* MsgExplosion::mutable_object() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::ObjectId;
-  return id_;
+  if (object_ == NULL) object_ = new ::Common::ObjectId;
+  return object_;
 }
 
 // optional .MsgsSimToClient.MsgUnitsFireDamages units_damages = 2;
@@ -24854,42 +25223,42 @@ inline ::MsgsSimToClient::MsgUnitsFireDamages* MsgExplosion::mutable_units_damag
   return units_damages_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationsFireDamages populations_damages = 3;
-inline bool MsgExplosion::has_populations_damages() const {
+// optional .MsgsSimToClient.MsgCrowdsFireDamages crowds_damages = 3;
+inline bool MsgExplosion::has_crowds_damages() const {
   return _has_bit(2);
 }
-inline void MsgExplosion::clear_populations_damages() {
-  if (populations_damages_ != NULL) populations_damages_->::MsgsSimToClient::MsgPopulationsFireDamages::Clear();
+inline void MsgExplosion::clear_crowds_damages() {
+  if (crowds_damages_ != NULL) crowds_damages_->::MsgsSimToClient::MsgCrowdsFireDamages::Clear();
   _clear_bit(2);
 }
-inline const ::MsgsSimToClient::MsgPopulationsFireDamages& MsgExplosion::populations_damages() const {
-  return populations_damages_ != NULL ? *populations_damages_ : *default_instance_->populations_damages_;
+inline const ::MsgsSimToClient::MsgCrowdsFireDamages& MsgExplosion::crowds_damages() const {
+  return crowds_damages_ != NULL ? *crowds_damages_ : *default_instance_->crowds_damages_;
 }
-inline ::MsgsSimToClient::MsgPopulationsFireDamages* MsgExplosion::mutable_populations_damages() {
+inline ::MsgsSimToClient::MsgCrowdsFireDamages* MsgExplosion::mutable_crowds_damages() {
   _set_bit(2);
-  if (populations_damages_ == NULL) populations_damages_ = new ::MsgsSimToClient::MsgPopulationsFireDamages;
-  return populations_damages_;
+  if (crowds_damages_ == NULL) crowds_damages_ = new ::MsgsSimToClient::MsgCrowdsFireDamages;
+  return crowds_damages_;
 }
 
 // -------------------------------------------------------------------
 
 // MsgStartFireEffect
 
-// required .Common.FireEffectId id = 1;
-inline bool MsgStartFireEffect::has_id() const {
+// required .Common.FireEffectId fire_effect = 1;
+inline bool MsgStartFireEffect::has_fire_effect() const {
   return _has_bit(0);
 }
-inline void MsgStartFireEffect::clear_id() {
-  if (id_ != NULL) id_->::Common::FireEffectId::Clear();
+inline void MsgStartFireEffect::clear_fire_effect() {
+  if (fire_effect_ != NULL) fire_effect_->::Common::FireEffectId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::FireEffectId& MsgStartFireEffect::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::FireEffectId& MsgStartFireEffect::fire_effect() const {
+  return fire_effect_ != NULL ? *fire_effect_ : *default_instance_->fire_effect_;
 }
-inline ::Common::FireEffectId* MsgStartFireEffect::mutable_id() {
+inline ::Common::FireEffectId* MsgStartFireEffect::mutable_fire_effect() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::FireEffectId;
-  return id_;
+  if (fire_effect_ == NULL) fire_effect_ = new ::Common::FireEffectId;
+  return fire_effect_;
 }
 
 // required .Common.MsgLocation location = 2;
@@ -24930,93 +25299,93 @@ inline void MsgStartFireEffect::set_type(Common::EnumFireEffectType value) {
 
 // MsgStopFireEffect
 
-// required .Common.FireEffectId id = 1;
-inline bool MsgStopFireEffect::has_id() const {
+// required .Common.FireEffectId fire_effect = 1;
+inline bool MsgStopFireEffect::has_fire_effect() const {
   return _has_bit(0);
 }
-inline void MsgStopFireEffect::clear_id() {
-  if (id_ != NULL) id_->::Common::FireEffectId::Clear();
+inline void MsgStopFireEffect::clear_fire_effect() {
+  if (fire_effect_ != NULL) fire_effect_->::Common::FireEffectId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::FireEffectId& MsgStopFireEffect::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::FireEffectId& MsgStopFireEffect::fire_effect() const {
+  return fire_effect_ != NULL ? *fire_effect_ : *default_instance_->fire_effect_;
 }
-inline ::Common::FireEffectId* MsgStopFireEffect::mutable_id() {
+inline ::Common::FireEffectId* MsgStopFireEffect::mutable_fire_effect() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::FireEffectId;
-  return id_;
+  if (fire_effect_ == NULL) fire_effect_ = new ::Common::FireEffectId;
+  return fire_effect_;
 }
 
 // -------------------------------------------------------------------
 
 // MsgReport
 
-// required .Common.ReportId id = 1;
-inline bool MsgReport::has_id() const {
+// required .Common.ReportId report = 1;
+inline bool MsgReport::has_report() const {
   return _has_bit(0);
 }
-inline void MsgReport::clear_id() {
-  if (id_ != NULL) id_->::Common::ReportId::Clear();
+inline void MsgReport::clear_report() {
+  if (report_ != NULL) report_->::Common::ReportId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::ReportId& MsgReport::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::ReportId& MsgReport::report() const {
+  return report_ != NULL ? *report_ : *default_instance_->report_;
 }
-inline ::Common::ReportId* MsgReport::mutable_id() {
+inline ::Common::ReportId* MsgReport::mutable_report() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::ReportId;
-  return id_;
+  if (report_ == NULL) report_ = new ::Common::ReportId;
+  return report_;
 }
 
-// required .Common.Tasker cr = 2;
-inline bool MsgReport::has_cr() const {
+// required .Common.Tasker source = 2;
+inline bool MsgReport::has_source() const {
   return _has_bit(1);
 }
-inline void MsgReport::clear_cr() {
-  if (cr_ != NULL) cr_->::Common::Tasker::Clear();
+inline void MsgReport::clear_source() {
+  if (source_ != NULL) source_->::Common::Tasker::Clear();
   _clear_bit(1);
 }
-inline const ::Common::Tasker& MsgReport::cr() const {
-  return cr_ != NULL ? *cr_ : *default_instance_->cr_;
+inline const ::Common::Tasker& MsgReport::source() const {
+  return source_ != NULL ? *source_ : *default_instance_->source_;
 }
-inline ::Common::Tasker* MsgReport::mutable_cr() {
+inline ::Common::Tasker* MsgReport::mutable_source() {
   _set_bit(1);
-  if (cr_ == NULL) cr_ = new ::Common::Tasker;
-  return cr_;
+  if (source_ == NULL) source_ = new ::Common::Tasker;
+  return source_;
 }
 
-// required .Common.ReportType cr_oid = 3;
-inline bool MsgReport::has_cr_oid() const {
+// required .Common.ReportType type = 3;
+inline bool MsgReport::has_type() const {
   return _has_bit(2);
 }
-inline void MsgReport::clear_cr_oid() {
-  if (cr_oid_ != NULL) cr_oid_->::Common::ReportType::Clear();
+inline void MsgReport::clear_type() {
+  if (type_ != NULL) type_->::Common::ReportType::Clear();
   _clear_bit(2);
 }
-inline const ::Common::ReportType& MsgReport::cr_oid() const {
-  return cr_oid_ != NULL ? *cr_oid_ : *default_instance_->cr_oid_;
+inline const ::Common::ReportType& MsgReport::type() const {
+  return type_ != NULL ? *type_ : *default_instance_->type_;
 }
-inline ::Common::ReportType* MsgReport::mutable_cr_oid() {
+inline ::Common::ReportType* MsgReport::mutable_type() {
   _set_bit(2);
-  if (cr_oid_ == NULL) cr_oid_ = new ::Common::ReportType;
-  return cr_oid_;
+  if (type_ == NULL) type_ = new ::Common::ReportType;
+  return type_;
 }
 
-// required .MsgsSimToClient.EnumReportType type = 4;
-inline bool MsgReport::has_type() const {
+// required .MsgsSimToClient.EnumReportType category = 4;
+inline bool MsgReport::has_category() const {
   return _has_bit(3);
 }
-inline void MsgReport::clear_type() {
-  type_ = 0;
+inline void MsgReport::clear_category() {
+  category_ = 0;
   _clear_bit(3);
 }
-inline MsgsSimToClient::EnumReportType MsgReport::type() const {
-  return static_cast< MsgsSimToClient::EnumReportType >(type_);
+inline MsgsSimToClient::EnumReportType MsgReport::category() const {
+  return static_cast< MsgsSimToClient::EnumReportType >(category_);
 }
-inline void MsgReport::set_type(MsgsSimToClient::EnumReportType value) {
+inline void MsgReport::set_category(MsgsSimToClient::EnumReportType value) {
   GOOGLE_DCHECK(MsgsSimToClient::EnumReportType_IsValid(value));
   _set_bit(3);
-  type_ = value;
+  category_ = value;
 }
 
 // required .Common.MsgDateTime time = 5;
@@ -25036,42 +25405,42 @@ inline ::Common::MsgDateTime* MsgReport::mutable_time() {
   return time_;
 }
 
-// optional .Common.MsgMissionParameters parametres = 6;
-inline bool MsgReport::has_parametres() const {
+// optional .Common.MsgMissionParameters parameters = 6;
+inline bool MsgReport::has_parameters() const {
   return _has_bit(5);
 }
-inline void MsgReport::clear_parametres() {
-  if (parametres_ != NULL) parametres_->::Common::MsgMissionParameters::Clear();
+inline void MsgReport::clear_parameters() {
+  if (parameters_ != NULL) parameters_->::Common::MsgMissionParameters::Clear();
   _clear_bit(5);
 }
-inline const ::Common::MsgMissionParameters& MsgReport::parametres() const {
-  return parametres_ != NULL ? *parametres_ : *default_instance_->parametres_;
+inline const ::Common::MsgMissionParameters& MsgReport::parameters() const {
+  return parameters_ != NULL ? *parameters_ : *default_instance_->parameters_;
 }
-inline ::Common::MsgMissionParameters* MsgReport::mutable_parametres() {
+inline ::Common::MsgMissionParameters* MsgReport::mutable_parameters() {
   _set_bit(5);
-  if (parametres_ == NULL) parametres_ = new ::Common::MsgMissionParameters;
-  return parametres_;
+  if (parameters_ == NULL) parameters_ = new ::Common::MsgMissionParameters;
+  return parameters_;
 }
 
 // -------------------------------------------------------------------
 
 // MsgInvalidateReport
 
-// required .Common.ReportId id = 1;
-inline bool MsgInvalidateReport::has_id() const {
+// required .Common.ReportId report = 1;
+inline bool MsgInvalidateReport::has_report() const {
   return _has_bit(0);
 }
-inline void MsgInvalidateReport::clear_id() {
-  if (id_ != NULL) id_->::Common::ReportId::Clear();
+inline void MsgInvalidateReport::clear_report() {
+  if (report_ != NULL) report_->::Common::ReportId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::ReportId& MsgInvalidateReport::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::ReportId& MsgInvalidateReport::report() const {
+  return report_ != NULL ? *report_ : *default_instance_->report_;
 }
-inline ::Common::ReportId* MsgInvalidateReport::mutable_id() {
+inline ::Common::ReportId* MsgInvalidateReport::mutable_report() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::ReportId;
-  return id_;
+  if (report_ == NULL) report_ = new ::Common::ReportId;
+  return report_;
 }
 
 // required .Common.Tasker source = 2;
@@ -25158,21 +25527,21 @@ inline ::std::string* MsgTrace::mutable_message() {
 
 // MsgDecisionalState
 
-// required .Common.Tasker id = 1;
-inline bool MsgDecisionalState::has_id() const {
+// required .Common.Tasker source = 1;
+inline bool MsgDecisionalState::has_source() const {
   return _has_bit(0);
 }
-inline void MsgDecisionalState::clear_id() {
-  if (id_ != NULL) id_->::Common::Tasker::Clear();
+inline void MsgDecisionalState::clear_source() {
+  if (source_ != NULL) source_->::Common::Tasker::Clear();
   _clear_bit(0);
 }
-inline const ::Common::Tasker& MsgDecisionalState::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::Tasker& MsgDecisionalState::source() const {
+  return source_ != NULL ? *source_ : *default_instance_->source_;
 }
-inline ::Common::Tasker* MsgDecisionalState::mutable_id() {
+inline ::Common::Tasker* MsgDecisionalState::mutable_source() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::Tasker;
-  return id_;
+  if (source_ == NULL) source_ = new ::Common::Tasker;
+  return source_;
 }
 
 // required string key = 2;
@@ -25263,21 +25632,21 @@ inline ::std::string* MsgDecisionalState::mutable_value() {
 
 // MsgDebugPoints
 
-// required .Common.Tasker id = 1;
-inline bool MsgDebugPoints::has_id() const {
+// required .Common.Tasker source = 1;
+inline bool MsgDebugPoints::has_source() const {
   return _has_bit(0);
 }
-inline void MsgDebugPoints::clear_id() {
-  if (id_ != NULL) id_->::Common::Tasker::Clear();
+inline void MsgDebugPoints::clear_source() {
+  if (source_ != NULL) source_->::Common::Tasker::Clear();
   _clear_bit(0);
 }
-inline const ::Common::Tasker& MsgDebugPoints::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::Tasker& MsgDebugPoints::source() const {
+  return source_ != NULL ? *source_ : *default_instance_->source_;
 }
-inline ::Common::Tasker* MsgDebugPoints::mutable_id() {
+inline ::Common::Tasker* MsgDebugPoints::mutable_source() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::Tasker;
-  return id_;
+  if (source_ == NULL) source_ = new ::Common::Tasker;
+  return source_;
 }
 
 // required .Common.MsgCoordLatLongList coordinates = 2;
@@ -25455,21 +25824,21 @@ inline ::MsgsSimToClient::MsgVisionCone* SeqOfVisionCone::add_elem() {
 
 // MsgUnitVisionCones
 
-// required .Common.UnitId id = 1;
-inline bool MsgUnitVisionCones::has_id() const {
+// required .Common.UnitId unit = 1;
+inline bool MsgUnitVisionCones::has_unit() const {
   return _has_bit(0);
 }
-inline void MsgUnitVisionCones::clear_id() {
-  if (id_ != NULL) id_->::Common::UnitId::Clear();
+inline void MsgUnitVisionCones::clear_unit() {
+  if (unit_ != NULL) unit_->::Common::UnitId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::UnitId& MsgUnitVisionCones::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::UnitId& MsgUnitVisionCones::unit() const {
+  return unit_ != NULL ? *unit_ : *default_instance_->unit_;
 }
-inline ::Common::UnitId* MsgUnitVisionCones::mutable_id() {
+inline ::Common::UnitId* MsgUnitVisionCones::mutable_unit() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::UnitId;
-  return id_;
+  if (unit_ == NULL) unit_ = new ::Common::UnitId;
+  return unit_;
 }
 
 // required .MsgsSimToClient.SeqOfVisionCone cones = 2;
@@ -25634,71 +26003,71 @@ inline void MsgObjectDetection::set_visibility(Common::EnumUnitVisibility value)
 
 // -------------------------------------------------------------------
 
-// MsgPopulationConcentrationDetection
+// MsgCrowdConcentrationDetection
 
-// required .Common.UnitId id = 1;
-inline bool MsgPopulationConcentrationDetection::has_id() const {
+// required .Common.UnitId observer = 1;
+inline bool MsgCrowdConcentrationDetection::has_observer() const {
   return _has_bit(0);
 }
-inline void MsgPopulationConcentrationDetection::clear_id() {
-  if (id_ != NULL) id_->::Common::UnitId::Clear();
+inline void MsgCrowdConcentrationDetection::clear_observer() {
+  if (observer_ != NULL) observer_->::Common::UnitId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::UnitId& MsgPopulationConcentrationDetection::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::UnitId& MsgCrowdConcentrationDetection::observer() const {
+  return observer_ != NULL ? *observer_ : *default_instance_->observer_;
 }
-inline ::Common::UnitId* MsgPopulationConcentrationDetection::mutable_id() {
+inline ::Common::UnitId* MsgCrowdConcentrationDetection::mutable_observer() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::UnitId;
-  return id_;
+  if (observer_ == NULL) observer_ = new ::Common::UnitId;
+  return observer_;
 }
 
-// required .Common.PopulationId detected_population = 2;
-inline bool MsgPopulationConcentrationDetection::has_detected_population() const {
+// required .Common.CrowdId detected_crowd = 2;
+inline bool MsgCrowdConcentrationDetection::has_detected_crowd() const {
   return _has_bit(1);
 }
-inline void MsgPopulationConcentrationDetection::clear_detected_population() {
-  if (detected_population_ != NULL) detected_population_->::Common::PopulationId::Clear();
+inline void MsgCrowdConcentrationDetection::clear_detected_crowd() {
+  if (detected_crowd_ != NULL) detected_crowd_->::Common::CrowdId::Clear();
   _clear_bit(1);
 }
-inline const ::Common::PopulationId& MsgPopulationConcentrationDetection::detected_population() const {
-  return detected_population_ != NULL ? *detected_population_ : *default_instance_->detected_population_;
+inline const ::Common::CrowdId& MsgCrowdConcentrationDetection::detected_crowd() const {
+  return detected_crowd_ != NULL ? *detected_crowd_ : *default_instance_->detected_crowd_;
 }
-inline ::Common::PopulationId* MsgPopulationConcentrationDetection::mutable_detected_population() {
+inline ::Common::CrowdId* MsgCrowdConcentrationDetection::mutable_detected_crowd() {
   _set_bit(1);
-  if (detected_population_ == NULL) detected_population_ = new ::Common::PopulationId;
-  return detected_population_;
+  if (detected_crowd_ == NULL) detected_crowd_ = new ::Common::CrowdId;
+  return detected_crowd_;
 }
 
-// required .Common.PopulationConcentrationId detected_concentration = 3;
-inline bool MsgPopulationConcentrationDetection::has_detected_concentration() const {
+// required .Common.CrowdConcentrationId detected_concentration = 3;
+inline bool MsgCrowdConcentrationDetection::has_detected_concentration() const {
   return _has_bit(2);
 }
-inline void MsgPopulationConcentrationDetection::clear_detected_concentration() {
-  if (detected_concentration_ != NULL) detected_concentration_->::Common::PopulationConcentrationId::Clear();
+inline void MsgCrowdConcentrationDetection::clear_detected_concentration() {
+  if (detected_concentration_ != NULL) detected_concentration_->::Common::CrowdConcentrationId::Clear();
   _clear_bit(2);
 }
-inline const ::Common::PopulationConcentrationId& MsgPopulationConcentrationDetection::detected_concentration() const {
+inline const ::Common::CrowdConcentrationId& MsgCrowdConcentrationDetection::detected_concentration() const {
   return detected_concentration_ != NULL ? *detected_concentration_ : *default_instance_->detected_concentration_;
 }
-inline ::Common::PopulationConcentrationId* MsgPopulationConcentrationDetection::mutable_detected_concentration() {
+inline ::Common::CrowdConcentrationId* MsgCrowdConcentrationDetection::mutable_detected_concentration() {
   _set_bit(2);
-  if (detected_concentration_ == NULL) detected_concentration_ = new ::Common::PopulationConcentrationId;
+  if (detected_concentration_ == NULL) detected_concentration_ = new ::Common::CrowdConcentrationId;
   return detected_concentration_;
 }
 
 // required .Common.EnumUnitVisibility visibility = 4;
-inline bool MsgPopulationConcentrationDetection::has_visibility() const {
+inline bool MsgCrowdConcentrationDetection::has_visibility() const {
   return _has_bit(3);
 }
-inline void MsgPopulationConcentrationDetection::clear_visibility() {
+inline void MsgCrowdConcentrationDetection::clear_visibility() {
   visibility_ = 0;
   _clear_bit(3);
 }
-inline Common::EnumUnitVisibility MsgPopulationConcentrationDetection::visibility() const {
+inline Common::EnumUnitVisibility MsgCrowdConcentrationDetection::visibility() const {
   return static_cast< Common::EnumUnitVisibility >(visibility_);
 }
-inline void MsgPopulationConcentrationDetection::set_visibility(Common::EnumUnitVisibility value) {
+inline void MsgCrowdConcentrationDetection::set_visibility(Common::EnumUnitVisibility value) {
   GOOGLE_DCHECK(Common::EnumUnitVisibility_IsValid(value));
   _set_bit(3);
   visibility_ = value;
@@ -25706,71 +26075,71 @@ inline void MsgPopulationConcentrationDetection::set_visibility(Common::EnumUnit
 
 // -------------------------------------------------------------------
 
-// MsgPopulationFlowDetection
+// MsgCrowdFlowDetection
 
-// required .Common.UnitId id = 1;
-inline bool MsgPopulationFlowDetection::has_id() const {
+// required .Common.UnitId observer = 1;
+inline bool MsgCrowdFlowDetection::has_observer() const {
   return _has_bit(0);
 }
-inline void MsgPopulationFlowDetection::clear_id() {
-  if (id_ != NULL) id_->::Common::UnitId::Clear();
+inline void MsgCrowdFlowDetection::clear_observer() {
+  if (observer_ != NULL) observer_->::Common::UnitId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::UnitId& MsgPopulationFlowDetection::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::UnitId& MsgCrowdFlowDetection::observer() const {
+  return observer_ != NULL ? *observer_ : *default_instance_->observer_;
 }
-inline ::Common::UnitId* MsgPopulationFlowDetection::mutable_id() {
+inline ::Common::UnitId* MsgCrowdFlowDetection::mutable_observer() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::UnitId;
-  return id_;
+  if (observer_ == NULL) observer_ = new ::Common::UnitId;
+  return observer_;
 }
 
-// required .Common.PopulationId detected_population = 2;
-inline bool MsgPopulationFlowDetection::has_detected_population() const {
+// required .Common.CrowdId detected_crowd = 2;
+inline bool MsgCrowdFlowDetection::has_detected_crowd() const {
   return _has_bit(1);
 }
-inline void MsgPopulationFlowDetection::clear_detected_population() {
-  if (detected_population_ != NULL) detected_population_->::Common::PopulationId::Clear();
+inline void MsgCrowdFlowDetection::clear_detected_crowd() {
+  if (detected_crowd_ != NULL) detected_crowd_->::Common::CrowdId::Clear();
   _clear_bit(1);
 }
-inline const ::Common::PopulationId& MsgPopulationFlowDetection::detected_population() const {
-  return detected_population_ != NULL ? *detected_population_ : *default_instance_->detected_population_;
+inline const ::Common::CrowdId& MsgCrowdFlowDetection::detected_crowd() const {
+  return detected_crowd_ != NULL ? *detected_crowd_ : *default_instance_->detected_crowd_;
 }
-inline ::Common::PopulationId* MsgPopulationFlowDetection::mutable_detected_population() {
+inline ::Common::CrowdId* MsgCrowdFlowDetection::mutable_detected_crowd() {
   _set_bit(1);
-  if (detected_population_ == NULL) detected_population_ = new ::Common::PopulationId;
-  return detected_population_;
+  if (detected_crowd_ == NULL) detected_crowd_ = new ::Common::CrowdId;
+  return detected_crowd_;
 }
 
-// required .Common.PopulationFlowId detected_flow = 3;
-inline bool MsgPopulationFlowDetection::has_detected_flow() const {
+// required .Common.CrowdFlowId detected_flow = 3;
+inline bool MsgCrowdFlowDetection::has_detected_flow() const {
   return _has_bit(2);
 }
-inline void MsgPopulationFlowDetection::clear_detected_flow() {
-  if (detected_flow_ != NULL) detected_flow_->::Common::PopulationFlowId::Clear();
+inline void MsgCrowdFlowDetection::clear_detected_flow() {
+  if (detected_flow_ != NULL) detected_flow_->::Common::CrowdFlowId::Clear();
   _clear_bit(2);
 }
-inline const ::Common::PopulationFlowId& MsgPopulationFlowDetection::detected_flow() const {
+inline const ::Common::CrowdFlowId& MsgCrowdFlowDetection::detected_flow() const {
   return detected_flow_ != NULL ? *detected_flow_ : *default_instance_->detected_flow_;
 }
-inline ::Common::PopulationFlowId* MsgPopulationFlowDetection::mutable_detected_flow() {
+inline ::Common::CrowdFlowId* MsgCrowdFlowDetection::mutable_detected_flow() {
   _set_bit(2);
-  if (detected_flow_ == NULL) detected_flow_ = new ::Common::PopulationFlowId;
+  if (detected_flow_ == NULL) detected_flow_ = new ::Common::CrowdFlowId;
   return detected_flow_;
 }
 
 // required .Common.MsgPath visible_flow = 4;
-inline bool MsgPopulationFlowDetection::has_visible_flow() const {
+inline bool MsgCrowdFlowDetection::has_visible_flow() const {
   return _has_bit(3);
 }
-inline void MsgPopulationFlowDetection::clear_visible_flow() {
+inline void MsgCrowdFlowDetection::clear_visible_flow() {
   if (visible_flow_ != NULL) visible_flow_->::Common::MsgPath::Clear();
   _clear_bit(3);
 }
-inline const ::Common::MsgPath& MsgPopulationFlowDetection::visible_flow() const {
+inline const ::Common::MsgPath& MsgCrowdFlowDetection::visible_flow() const {
   return visible_flow_ != NULL ? *visible_flow_ : *default_instance_->visible_flow_;
 }
-inline ::Common::MsgPath* MsgPopulationFlowDetection::mutable_visible_flow() {
+inline ::Common::MsgPath* MsgCrowdFlowDetection::mutable_visible_flow() {
   _set_bit(3);
   if (visible_flow_ == NULL) visible_flow_ = new ::Common::MsgPath;
   return visible_flow_;
@@ -25780,21 +26149,21 @@ inline ::Common::MsgPath* MsgPopulationFlowDetection::mutable_visible_flow() {
 
 // MsgObjectCreation
 
-// required .Common.ObjectId id = 1;
-inline bool MsgObjectCreation::has_id() const {
+// required .Common.ObjectId object = 1;
+inline bool MsgObjectCreation::has_object() const {
   return _has_bit(0);
 }
-inline void MsgObjectCreation::clear_id() {
-  if (id_ != NULL) id_->::Common::ObjectId::Clear();
+inline void MsgObjectCreation::clear_object() {
+  if (object_ != NULL) object_->::Common::ObjectId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::ObjectId& MsgObjectCreation::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::ObjectId& MsgObjectCreation::object() const {
+  return object_ != NULL ? *object_ : *default_instance_->object_;
 }
-inline ::Common::ObjectId* MsgObjectCreation::mutable_id() {
+inline ::Common::ObjectId* MsgObjectCreation::mutable_object() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::ObjectId;
-  return id_;
+  if (object_ == NULL) object_ = new ::Common::ObjectId;
+  return object_;
 }
 
 // required .Common.ObjectType type = 2;
@@ -25890,20 +26259,20 @@ inline ::Common::MsgLocation* MsgObjectCreation::mutable_location() {
   return location_;
 }
 
-// required .Common.MsgObjectAttributes attributes = 6;
+// required .Common.ObjectAttributes attributes = 6;
 inline bool MsgObjectCreation::has_attributes() const {
   return _has_bit(5);
 }
 inline void MsgObjectCreation::clear_attributes() {
-  if (attributes_ != NULL) attributes_->::Common::MsgObjectAttributes::Clear();
+  if (attributes_ != NULL) attributes_->::Common::ObjectAttributes::Clear();
   _clear_bit(5);
 }
-inline const ::Common::MsgObjectAttributes& MsgObjectCreation::attributes() const {
+inline const ::Common::ObjectAttributes& MsgObjectCreation::attributes() const {
   return attributes_ != NULL ? *attributes_ : *default_instance_->attributes_;
 }
-inline ::Common::MsgObjectAttributes* MsgObjectCreation::mutable_attributes() {
+inline ::Common::ObjectAttributes* MsgObjectCreation::mutable_attributes() {
   _set_bit(5);
-  if (attributes_ == NULL) attributes_ = new ::Common::MsgObjectAttributes;
+  if (attributes_ == NULL) attributes_ = new ::Common::ObjectAttributes;
   return attributes_;
 }
 
@@ -25911,42 +26280,42 @@ inline ::Common::MsgObjectAttributes* MsgObjectCreation::mutable_attributes() {
 
 // MsgObjectDestruction
 
-// required .Common.ObjectId id = 1;
-inline bool MsgObjectDestruction::has_id() const {
+// required .Common.ObjectId object = 1;
+inline bool MsgObjectDestruction::has_object() const {
   return _has_bit(0);
 }
-inline void MsgObjectDestruction::clear_id() {
-  if (id_ != NULL) id_->::Common::ObjectId::Clear();
+inline void MsgObjectDestruction::clear_object() {
+  if (object_ != NULL) object_->::Common::ObjectId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::ObjectId& MsgObjectDestruction::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::ObjectId& MsgObjectDestruction::object() const {
+  return object_ != NULL ? *object_ : *default_instance_->object_;
 }
-inline ::Common::ObjectId* MsgObjectDestruction::mutable_id() {
+inline ::Common::ObjectId* MsgObjectDestruction::mutable_object() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::ObjectId;
-  return id_;
+  if (object_ == NULL) object_ = new ::Common::ObjectId;
+  return object_;
 }
 
 // -------------------------------------------------------------------
 
 // MsgObjectUpdate
 
-// required .Common.ObjectId id = 1;
-inline bool MsgObjectUpdate::has_id() const {
+// required .Common.ObjectId object = 1;
+inline bool MsgObjectUpdate::has_object() const {
   return _has_bit(0);
 }
-inline void MsgObjectUpdate::clear_id() {
-  if (id_ != NULL) id_->::Common::ObjectId::Clear();
+inline void MsgObjectUpdate::clear_object() {
+  if (object_ != NULL) object_->::Common::ObjectId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::ObjectId& MsgObjectUpdate::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::ObjectId& MsgObjectUpdate::object() const {
+  return object_ != NULL ? *object_ : *default_instance_->object_;
 }
-inline ::Common::ObjectId* MsgObjectUpdate::mutable_id() {
+inline ::Common::ObjectId* MsgObjectUpdate::mutable_object() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::ObjectId;
-  return id_;
+  if (object_ == NULL) object_ = new ::Common::ObjectId;
+  return object_;
 }
 
 // optional .Common.MsgLocation location = 2;
@@ -25966,20 +26335,20 @@ inline ::Common::MsgLocation* MsgObjectUpdate::mutable_location() {
   return location_;
 }
 
-// required .Common.MsgObjectAttributes attributes = 3;
+// required .Common.ObjectAttributes attributes = 3;
 inline bool MsgObjectUpdate::has_attributes() const {
   return _has_bit(2);
 }
 inline void MsgObjectUpdate::clear_attributes() {
-  if (attributes_ != NULL) attributes_->::Common::MsgObjectAttributes::Clear();
+  if (attributes_ != NULL) attributes_->::Common::ObjectAttributes::Clear();
   _clear_bit(2);
 }
-inline const ::Common::MsgObjectAttributes& MsgObjectUpdate::attributes() const {
+inline const ::Common::ObjectAttributes& MsgObjectUpdate::attributes() const {
   return attributes_ != NULL ? *attributes_ : *default_instance_->attributes_;
 }
-inline ::Common::MsgObjectAttributes* MsgObjectUpdate::mutable_attributes() {
+inline ::Common::ObjectAttributes* MsgObjectUpdate::mutable_attributes() {
   _set_bit(2);
-  if (attributes_ == NULL) attributes_ = new ::Common::MsgObjectAttributes;
+  if (attributes_ == NULL) attributes_ = new ::Common::ObjectAttributes;
   return attributes_;
 }
 
@@ -25987,21 +26356,21 @@ inline ::Common::MsgObjectAttributes* MsgObjectUpdate::mutable_attributes() {
 
 // MsgObjectKnowledgeCreation
 
-// required .Common.ObjectKnowledgeId id = 1;
-inline bool MsgObjectKnowledgeCreation::has_id() const {
+// required .Common.ObjectKnowledgeId knowledge = 1;
+inline bool MsgObjectKnowledgeCreation::has_knowledge() const {
   return _has_bit(0);
 }
-inline void MsgObjectKnowledgeCreation::clear_id() {
-  if (id_ != NULL) id_->::Common::ObjectKnowledgeId::Clear();
+inline void MsgObjectKnowledgeCreation::clear_knowledge() {
+  if (knowledge_ != NULL) knowledge_->::Common::ObjectKnowledgeId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::ObjectKnowledgeId& MsgObjectKnowledgeCreation::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::ObjectKnowledgeId& MsgObjectKnowledgeCreation::knowledge() const {
+  return knowledge_ != NULL ? *knowledge_ : *default_instance_->knowledge_;
 }
-inline ::Common::ObjectKnowledgeId* MsgObjectKnowledgeCreation::mutable_id() {
+inline ::Common::ObjectKnowledgeId* MsgObjectKnowledgeCreation::mutable_knowledge() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::ObjectKnowledgeId;
-  return id_;
+  if (knowledge_ == NULL) knowledge_ = new ::Common::ObjectKnowledgeId;
+  return knowledge_;
 }
 
 // required .Common.PartyId party = 2;
@@ -26055,20 +26424,20 @@ inline ::Common::ObjectType* MsgObjectKnowledgeCreation::mutable_type() {
   return type_;
 }
 
-// required .Common.MsgObjectAttributes attributes = 5;
+// required .Common.ObjectAttributes attributes = 5;
 inline bool MsgObjectKnowledgeCreation::has_attributes() const {
   return _has_bit(4);
 }
 inline void MsgObjectKnowledgeCreation::clear_attributes() {
-  if (attributes_ != NULL) attributes_->::Common::MsgObjectAttributes::Clear();
+  if (attributes_ != NULL) attributes_->::Common::ObjectAttributes::Clear();
   _clear_bit(4);
 }
-inline const ::Common::MsgObjectAttributes& MsgObjectKnowledgeCreation::attributes() const {
+inline const ::Common::ObjectAttributes& MsgObjectKnowledgeCreation::attributes() const {
   return attributes_ != NULL ? *attributes_ : *default_instance_->attributes_;
 }
-inline ::Common::MsgObjectAttributes* MsgObjectKnowledgeCreation::mutable_attributes() {
+inline ::Common::ObjectAttributes* MsgObjectKnowledgeCreation::mutable_attributes() {
   _set_bit(4);
-  if (attributes_ == NULL) attributes_ = new ::Common::MsgObjectAttributes;
+  if (attributes_ == NULL) attributes_ = new ::Common::ObjectAttributes;
   return attributes_;
 }
 
@@ -26093,21 +26462,21 @@ inline ::Common::KnowledgeGroupId* MsgObjectKnowledgeCreation::mutable_knowledge
 
 // MsgObjectKnowledgeUpdate
 
-// required .Common.ObjectKnowledgeId id = 1;
-inline bool MsgObjectKnowledgeUpdate::has_id() const {
+// required .Common.ObjectKnowledgeId knowledge = 1;
+inline bool MsgObjectKnowledgeUpdate::has_knowledge() const {
   return _has_bit(0);
 }
-inline void MsgObjectKnowledgeUpdate::clear_id() {
-  if (id_ != NULL) id_->::Common::ObjectKnowledgeId::Clear();
+inline void MsgObjectKnowledgeUpdate::clear_knowledge() {
+  if (knowledge_ != NULL) knowledge_->::Common::ObjectKnowledgeId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::ObjectKnowledgeId& MsgObjectKnowledgeUpdate::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::ObjectKnowledgeId& MsgObjectKnowledgeUpdate::knowledge() const {
+  return knowledge_ != NULL ? *knowledge_ : *default_instance_->knowledge_;
 }
-inline ::Common::ObjectKnowledgeId* MsgObjectKnowledgeUpdate::mutable_id() {
+inline ::Common::ObjectKnowledgeId* MsgObjectKnowledgeUpdate::mutable_knowledge() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::ObjectKnowledgeId;
-  return id_;
+  if (knowledge_ == NULL) knowledge_ = new ::Common::ObjectKnowledgeId;
+  return knowledge_;
 }
 
 // required .Common.PartyId party = 2;
@@ -26144,7 +26513,7 @@ inline ::Common::ObjectId* MsgObjectKnowledgeUpdate::mutable_object() {
   return object_;
 }
 
-// optional int32 relevance = 4 [default = 0];
+// optional int32 relevance = 4;
 inline bool MsgObjectKnowledgeUpdate::has_relevance() const {
   return _has_bit(3);
 }
@@ -26177,24 +26546,24 @@ inline ::Common::MsgLocation* MsgObjectKnowledgeUpdate::mutable_location() {
   return location_;
 }
 
-// optional .Common.MsgObjectAttributes attributes = 6;
+// optional .Common.ObjectAttributes attributes = 6;
 inline bool MsgObjectKnowledgeUpdate::has_attributes() const {
   return _has_bit(5);
 }
 inline void MsgObjectKnowledgeUpdate::clear_attributes() {
-  if (attributes_ != NULL) attributes_->::Common::MsgObjectAttributes::Clear();
+  if (attributes_ != NULL) attributes_->::Common::ObjectAttributes::Clear();
   _clear_bit(5);
 }
-inline const ::Common::MsgObjectAttributes& MsgObjectKnowledgeUpdate::attributes() const {
+inline const ::Common::ObjectAttributes& MsgObjectKnowledgeUpdate::attributes() const {
   return attributes_ != NULL ? *attributes_ : *default_instance_->attributes_;
 }
-inline ::Common::MsgObjectAttributes* MsgObjectKnowledgeUpdate::mutable_attributes() {
+inline ::Common::ObjectAttributes* MsgObjectKnowledgeUpdate::mutable_attributes() {
   _set_bit(5);
-  if (attributes_ == NULL) attributes_ = new ::Common::MsgObjectAttributes;
+  if (attributes_ == NULL) attributes_ = new ::Common::ObjectAttributes;
   return attributes_;
 }
 
-// optional bool perceived = 7 [default = false];
+// optional bool perceived = 7;
 inline bool MsgObjectKnowledgeUpdate::has_perceived() const {
   return _has_bit(6);
 }
@@ -26248,21 +26617,21 @@ inline ::Common::KnowledgeGroupId* MsgObjectKnowledgeUpdate::mutable_knowledge_g
 
 // MsgObjectKnowledgeDestruction
 
-// required .Common.ObjectKnowledgeId id = 1;
-inline bool MsgObjectKnowledgeDestruction::has_id() const {
+// required .Common.ObjectKnowledgeId knowledge = 1;
+inline bool MsgObjectKnowledgeDestruction::has_knowledge() const {
   return _has_bit(0);
 }
-inline void MsgObjectKnowledgeDestruction::clear_id() {
-  if (id_ != NULL) id_->::Common::ObjectKnowledgeId::Clear();
+inline void MsgObjectKnowledgeDestruction::clear_knowledge() {
+  if (knowledge_ != NULL) knowledge_->::Common::ObjectKnowledgeId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::ObjectKnowledgeId& MsgObjectKnowledgeDestruction::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::ObjectKnowledgeId& MsgObjectKnowledgeDestruction::knowledge() const {
+  return knowledge_ != NULL ? *knowledge_ : *default_instance_->knowledge_;
 }
-inline ::Common::ObjectKnowledgeId* MsgObjectKnowledgeDestruction::mutable_id() {
+inline ::Common::ObjectKnowledgeId* MsgObjectKnowledgeDestruction::mutable_knowledge() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::ObjectKnowledgeId;
-  return id_;
+  if (knowledge_ == NULL) knowledge_ = new ::Common::ObjectKnowledgeId;
+  return knowledge_;
 }
 
 // required .Common.PartyId party = 2;
@@ -26286,21 +26655,21 @@ inline ::Common::PartyId* MsgObjectKnowledgeDestruction::mutable_party() {
 
 // MsgUrbanKnowledgeCreation
 
-// required .Common.UrbanObjectKnowledgeId id = 1;
-inline bool MsgUrbanKnowledgeCreation::has_id() const {
+// required .Common.UrbanObjectKnowledgeId knowledge = 1;
+inline bool MsgUrbanKnowledgeCreation::has_knowledge() const {
   return _has_bit(0);
 }
-inline void MsgUrbanKnowledgeCreation::clear_id() {
-  if (id_ != NULL) id_->::Common::UrbanObjectKnowledgeId::Clear();
+inline void MsgUrbanKnowledgeCreation::clear_knowledge() {
+  if (knowledge_ != NULL) knowledge_->::Common::UrbanObjectKnowledgeId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::UrbanObjectKnowledgeId& MsgUrbanKnowledgeCreation::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::UrbanObjectKnowledgeId& MsgUrbanKnowledgeCreation::knowledge() const {
+  return knowledge_ != NULL ? *knowledge_ : *default_instance_->knowledge_;
 }
-inline ::Common::UrbanObjectKnowledgeId* MsgUrbanKnowledgeCreation::mutable_id() {
+inline ::Common::UrbanObjectKnowledgeId* MsgUrbanKnowledgeCreation::mutable_knowledge() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::UrbanObjectKnowledgeId;
-  return id_;
+  if (knowledge_ == NULL) knowledge_ = new ::Common::UrbanObjectKnowledgeId;
+  return knowledge_;
 }
 
 // required .Common.PartyId party = 2;
@@ -26341,21 +26710,21 @@ inline ::Common::UrbanObjectId* MsgUrbanKnowledgeCreation::mutable_urban_block()
 
 // MsgUrbanKnowledgeUpdate
 
-// required .Common.UrbanObjectKnowledgeId id = 1;
-inline bool MsgUrbanKnowledgeUpdate::has_id() const {
+// required .Common.UrbanObjectKnowledgeId knowledge = 1;
+inline bool MsgUrbanKnowledgeUpdate::has_knowledge() const {
   return _has_bit(0);
 }
-inline void MsgUrbanKnowledgeUpdate::clear_id() {
-  if (id_ != NULL) id_->::Common::UrbanObjectKnowledgeId::Clear();
+inline void MsgUrbanKnowledgeUpdate::clear_knowledge() {
+  if (knowledge_ != NULL) knowledge_->::Common::UrbanObjectKnowledgeId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::UrbanObjectKnowledgeId& MsgUrbanKnowledgeUpdate::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::UrbanObjectKnowledgeId& MsgUrbanKnowledgeUpdate::knowledge() const {
+  return knowledge_ != NULL ? *knowledge_ : *default_instance_->knowledge_;
 }
-inline ::Common::UrbanObjectKnowledgeId* MsgUrbanKnowledgeUpdate::mutable_id() {
+inline ::Common::UrbanObjectKnowledgeId* MsgUrbanKnowledgeUpdate::mutable_knowledge() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::UrbanObjectKnowledgeId;
-  return id_;
+  if (knowledge_ == NULL) knowledge_ = new ::Common::UrbanObjectKnowledgeId;
+  return knowledge_;
 }
 
 // required .Common.PartyId party = 2;
@@ -26461,21 +26830,21 @@ inline ::Common::AutomatIdList* MsgUrbanKnowledgeUpdate::mutable_automat_percept
 
 // MsgUrbanKnowledgeDestruction
 
-// required .Common.UrbanObjectKnowledgeId id = 1;
-inline bool MsgUrbanKnowledgeDestruction::has_id() const {
+// required .Common.UrbanObjectKnowledgeId knowledge = 1;
+inline bool MsgUrbanKnowledgeDestruction::has_knowledge() const {
   return _has_bit(0);
 }
-inline void MsgUrbanKnowledgeDestruction::clear_id() {
-  if (id_ != NULL) id_->::Common::UrbanObjectKnowledgeId::Clear();
+inline void MsgUrbanKnowledgeDestruction::clear_knowledge() {
+  if (knowledge_ != NULL) knowledge_->::Common::UrbanObjectKnowledgeId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::UrbanObjectKnowledgeId& MsgUrbanKnowledgeDestruction::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::UrbanObjectKnowledgeId& MsgUrbanKnowledgeDestruction::knowledge() const {
+  return knowledge_ != NULL ? *knowledge_ : *default_instance_->knowledge_;
 }
-inline ::Common::UrbanObjectKnowledgeId* MsgUrbanKnowledgeDestruction::mutable_id() {
+inline ::Common::UrbanObjectKnowledgeId* MsgUrbanKnowledgeDestruction::mutable_knowledge() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::UrbanObjectKnowledgeId;
-  return id_;
+  if (knowledge_ == NULL) knowledge_ = new ::Common::UrbanObjectKnowledgeId;
+  return knowledge_;
 }
 
 // required .Common.PartyId party = 2;
@@ -26499,21 +26868,21 @@ inline ::Common::PartyId* MsgUrbanKnowledgeDestruction::mutable_party() {
 
 // MsgLogMedicalHandlingCreation
 
-// required .Common.MedicalRequestId id = 1;
-inline bool MsgLogMedicalHandlingCreation::has_id() const {
+// required .Common.MedicalRequestId request = 1;
+inline bool MsgLogMedicalHandlingCreation::has_request() const {
   return _has_bit(0);
 }
-inline void MsgLogMedicalHandlingCreation::clear_id() {
-  if (id_ != NULL) id_->::Common::MedicalRequestId::Clear();
+inline void MsgLogMedicalHandlingCreation::clear_request() {
+  if (request_ != NULL) request_->::Common::MedicalRequestId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::MedicalRequestId& MsgLogMedicalHandlingCreation::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::MedicalRequestId& MsgLogMedicalHandlingCreation::request() const {
+  return request_ != NULL ? *request_ : *default_instance_->request_;
 }
-inline ::Common::MedicalRequestId* MsgLogMedicalHandlingCreation::mutable_id() {
+inline ::Common::MedicalRequestId* MsgLogMedicalHandlingCreation::mutable_request() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::MedicalRequestId;
-  return id_;
+  if (request_ == NULL) request_ = new ::Common::MedicalRequestId;
+  return request_;
 }
 
 // required .Common.UnitId unit = 2;
@@ -26583,7 +26952,7 @@ inline void MsgLogMedicalHandlingCreation::set_blessure(Common::EnumHumanWound v
   blessure_ = value;
 }
 
-// optional bool blesse_mental = 6 [default = false];
+// optional bool blesse_mental = 6;
 inline bool MsgLogMedicalHandlingCreation::has_blesse_mental() const {
   return _has_bit(5);
 }
@@ -26599,7 +26968,7 @@ inline void MsgLogMedicalHandlingCreation::set_blesse_mental(bool value) {
   blesse_mental_ = value;
 }
 
-// optional bool contamine_nbc = 7 [default = false];
+// optional bool contamine_nbc = 7;
 inline bool MsgLogMedicalHandlingCreation::has_contamine_nbc() const {
   return _has_bit(6);
 }
@@ -26619,21 +26988,21 @@ inline void MsgLogMedicalHandlingCreation::set_contamine_nbc(bool value) {
 
 // MsgLogMedicalHandlingUpdate
 
-// required .Common.MedicalRequestId id = 1;
-inline bool MsgLogMedicalHandlingUpdate::has_id() const {
+// required .Common.MedicalRequestId request = 1;
+inline bool MsgLogMedicalHandlingUpdate::has_request() const {
   return _has_bit(0);
 }
-inline void MsgLogMedicalHandlingUpdate::clear_id() {
-  if (id_ != NULL) id_->::Common::MedicalRequestId::Clear();
+inline void MsgLogMedicalHandlingUpdate::clear_request() {
+  if (request_ != NULL) request_->::Common::MedicalRequestId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::MedicalRequestId& MsgLogMedicalHandlingUpdate::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::MedicalRequestId& MsgLogMedicalHandlingUpdate::request() const {
+  return request_ != NULL ? *request_ : *default_instance_->request_;
 }
-inline ::Common::MedicalRequestId* MsgLogMedicalHandlingUpdate::mutable_id() {
+inline ::Common::MedicalRequestId* MsgLogMedicalHandlingUpdate::mutable_request() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::MedicalRequestId;
-  return id_;
+  if (request_ == NULL) request_ = new ::Common::MedicalRequestId;
+  return request_;
 }
 
 // required .Common.UnitId unit = 2;
@@ -26687,7 +27056,7 @@ inline void MsgLogMedicalHandlingUpdate::set_blessure(Common::EnumHumanWound val
   blessure_ = value;
 }
 
-// optional bool blesse_mental = 5 [default = false];
+// optional bool blesse_mental = 5;
 inline bool MsgLogMedicalHandlingUpdate::has_blesse_mental() const {
   return _has_bit(4);
 }
@@ -26703,7 +27072,7 @@ inline void MsgLogMedicalHandlingUpdate::set_blesse_mental(bool value) {
   blesse_mental_ = value;
 }
 
-// optional bool contamine_nbc = 6 [default = false];
+// optional bool contamine_nbc = 6;
 inline bool MsgLogMedicalHandlingUpdate::has_contamine_nbc() const {
   return _has_bit(5);
 }
@@ -26736,7 +27105,7 @@ inline void MsgLogMedicalHandlingUpdate::set_etat(Common::EnumLogMedicalHandling
   etat_ = value;
 }
 
-// optional bool diagnostique_effectue = 8 [default = false];
+// optional bool diagnostique_effectue = 8;
 inline bool MsgLogMedicalHandlingUpdate::has_diagnostique_effectue() const {
   return _has_bit(7);
 }
@@ -26756,21 +27125,21 @@ inline void MsgLogMedicalHandlingUpdate::set_diagnostique_effectue(bool value) {
 
 // MsgLogMedicalHandlingDestruction
 
-// required .Common.MedicalRequestId id = 1;
-inline bool MsgLogMedicalHandlingDestruction::has_id() const {
+// required .Common.MedicalRequestId request = 1;
+inline bool MsgLogMedicalHandlingDestruction::has_request() const {
   return _has_bit(0);
 }
-inline void MsgLogMedicalHandlingDestruction::clear_id() {
-  if (id_ != NULL) id_->::Common::MedicalRequestId::Clear();
+inline void MsgLogMedicalHandlingDestruction::clear_request() {
+  if (request_ != NULL) request_->::Common::MedicalRequestId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::MedicalRequestId& MsgLogMedicalHandlingDestruction::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::MedicalRequestId& MsgLogMedicalHandlingDestruction::request() const {
+  return request_ != NULL ? *request_ : *default_instance_->request_;
 }
-inline ::Common::MedicalRequestId* MsgLogMedicalHandlingDestruction::mutable_id() {
+inline ::Common::MedicalRequestId* MsgLogMedicalHandlingDestruction::mutable_request() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::MedicalRequestId;
-  return id_;
+  if (request_ == NULL) request_ = new ::Common::MedicalRequestId;
+  return request_;
 }
 
 // required .Common.UnitId unit = 2;
@@ -26794,20 +27163,21 @@ inline ::Common::UnitId* MsgLogMedicalHandlingDestruction::mutable_unit() {
 
 // MsgLogMedicalEquipmentAvailability
 
-// required int32 type_equipement = 1;
-inline bool MsgLogMedicalEquipmentAvailability::has_type_equipement() const {
+// required .Common.EquipmentType equipment_type = 1;
+inline bool MsgLogMedicalEquipmentAvailability::has_equipment_type() const {
   return _has_bit(0);
 }
-inline void MsgLogMedicalEquipmentAvailability::clear_type_equipement() {
-  type_equipement_ = 0;
+inline void MsgLogMedicalEquipmentAvailability::clear_equipment_type() {
+  if (equipment_type_ != NULL) equipment_type_->::Common::EquipmentType::Clear();
   _clear_bit(0);
 }
-inline ::google::protobuf::int32 MsgLogMedicalEquipmentAvailability::type_equipement() const {
-  return type_equipement_;
+inline const ::Common::EquipmentType& MsgLogMedicalEquipmentAvailability::equipment_type() const {
+  return equipment_type_ != NULL ? *equipment_type_ : *default_instance_->equipment_type_;
 }
-inline void MsgLogMedicalEquipmentAvailability::set_type_equipement(::google::protobuf::int32 value) {
+inline ::Common::EquipmentType* MsgLogMedicalEquipmentAvailability::mutable_equipment_type() {
   _set_bit(0);
-  type_equipement_ = value;
+  if (equipment_type_ == NULL) equipment_type_ = new ::Common::EquipmentType;
+  return equipment_type_;
 }
 
 // required int32 nbr_total = 2;
@@ -26858,7 +27228,7 @@ inline void MsgLogMedicalEquipmentAvailability::set_nbr_au_travail(::google::pro
   nbr_au_travail_ = value;
 }
 
-// optional int32 nbr_pretes = 5 [default = 0];
+// optional int32 nbr_pretes = 5;
 inline bool MsgLogMedicalEquipmentAvailability::has_nbr_pretes() const {
   return _has_bit(4);
 }
@@ -26874,7 +27244,7 @@ inline void MsgLogMedicalEquipmentAvailability::set_nbr_pretes(::google::protobu
   nbr_pretes_ = value;
 }
 
-// optional int32 nbr_au_repos = 6 [default = 0];
+// optional int32 nbr_au_repos = 6;
 inline bool MsgLogMedicalEquipmentAvailability::has_nbr_au_repos() const {
   return _has_bit(5);
 }
@@ -26923,24 +27293,24 @@ inline ::MsgsSimToClient::MsgLogMedicalEquipmentAvailability* SeqOfLogMedicalEqu
 
 // MsgLogMedicalState
 
-// required .Common.UnitId id = 1;
-inline bool MsgLogMedicalState::has_id() const {
+// required .Common.UnitId unit = 1;
+inline bool MsgLogMedicalState::has_unit() const {
   return _has_bit(0);
 }
-inline void MsgLogMedicalState::clear_id() {
-  if (id_ != NULL) id_->::Common::UnitId::Clear();
+inline void MsgLogMedicalState::clear_unit() {
+  if (unit_ != NULL) unit_->::Common::UnitId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::UnitId& MsgLogMedicalState::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::UnitId& MsgLogMedicalState::unit() const {
+  return unit_ != NULL ? *unit_ : *default_instance_->unit_;
 }
-inline ::Common::UnitId* MsgLogMedicalState::mutable_id() {
+inline ::Common::UnitId* MsgLogMedicalState::mutable_unit() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::UnitId;
-  return id_;
+  if (unit_ == NULL) unit_ = new ::Common::UnitId;
+  return unit_;
 }
 
-// optional bool chaine_activee = 2 [default = false];
+// optional bool chaine_activee = 2;
 inline bool MsgLogMedicalState::has_chaine_activee() const {
   return _has_bit(1);
 }
@@ -27045,21 +27415,21 @@ inline ::MsgsSimToClient::SeqOfLogMedicalEquipmentAvailability* MsgLogMedicalSta
 
 // MsgLogMaintenanceHandlingCreation
 
-// required .Common.MaintenanceRequestId id = 1;
-inline bool MsgLogMaintenanceHandlingCreation::has_id() const {
+// required .Common.MaintenanceRequestId request = 1;
+inline bool MsgLogMaintenanceHandlingCreation::has_request() const {
   return _has_bit(0);
 }
-inline void MsgLogMaintenanceHandlingCreation::clear_id() {
-  if (id_ != NULL) id_->::Common::MaintenanceRequestId::Clear();
+inline void MsgLogMaintenanceHandlingCreation::clear_request() {
+  if (request_ != NULL) request_->::Common::MaintenanceRequestId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::MaintenanceRequestId& MsgLogMaintenanceHandlingCreation::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::MaintenanceRequestId& MsgLogMaintenanceHandlingCreation::request() const {
+  return request_ != NULL ? *request_ : *default_instance_->request_;
 }
-inline ::Common::MaintenanceRequestId* MsgLogMaintenanceHandlingCreation::mutable_id() {
+inline ::Common::MaintenanceRequestId* MsgLogMaintenanceHandlingCreation::mutable_request() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::MaintenanceRequestId;
-  return id_;
+  if (request_ == NULL) request_ = new ::Common::MaintenanceRequestId;
+  return request_;
 }
 
 // required .Common.UnitId unit = 2;
@@ -27133,21 +27503,21 @@ inline ::Common::BreakdownType* MsgLogMaintenanceHandlingCreation::mutable_break
 
 // MsgLogMaintenanceHandlingUpdate
 
-// required .Common.MaintenanceRequestId id = 1;
-inline bool MsgLogMaintenanceHandlingUpdate::has_id() const {
+// required .Common.MaintenanceRequestId request = 1;
+inline bool MsgLogMaintenanceHandlingUpdate::has_request() const {
   return _has_bit(0);
 }
-inline void MsgLogMaintenanceHandlingUpdate::clear_id() {
-  if (id_ != NULL) id_->::Common::MaintenanceRequestId::Clear();
+inline void MsgLogMaintenanceHandlingUpdate::clear_request() {
+  if (request_ != NULL) request_->::Common::MaintenanceRequestId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::MaintenanceRequestId& MsgLogMaintenanceHandlingUpdate::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::MaintenanceRequestId& MsgLogMaintenanceHandlingUpdate::request() const {
+  return request_ != NULL ? *request_ : *default_instance_->request_;
 }
-inline ::Common::MaintenanceRequestId* MsgLogMaintenanceHandlingUpdate::mutable_id() {
+inline ::Common::MaintenanceRequestId* MsgLogMaintenanceHandlingUpdate::mutable_request() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::MaintenanceRequestId;
-  return id_;
+  if (request_ == NULL) request_ = new ::Common::MaintenanceRequestId;
+  return request_;
 }
 
 // required .Common.UnitId unit = 2;
@@ -27201,7 +27571,7 @@ inline void MsgLogMaintenanceHandlingUpdate::set_etat(Common::EnumLogMaintenance
   etat_ = value;
 }
 
-// optional bool diagnostique_effectue = 5 [default = false];
+// optional bool diagnostique_effectue = 5;
 inline bool MsgLogMaintenanceHandlingUpdate::has_diagnostique_effectue() const {
   return _has_bit(4);
 }
@@ -27221,21 +27591,21 @@ inline void MsgLogMaintenanceHandlingUpdate::set_diagnostique_effectue(bool valu
 
 // MsgLogMaintenanceHandlingDestruction
 
-// required .Common.MaintenanceRequestId id = 1;
-inline bool MsgLogMaintenanceHandlingDestruction::has_id() const {
+// required .Common.MaintenanceRequestId request = 1;
+inline bool MsgLogMaintenanceHandlingDestruction::has_request() const {
   return _has_bit(0);
 }
-inline void MsgLogMaintenanceHandlingDestruction::clear_id() {
-  if (id_ != NULL) id_->::Common::MaintenanceRequestId::Clear();
+inline void MsgLogMaintenanceHandlingDestruction::clear_request() {
+  if (request_ != NULL) request_->::Common::MaintenanceRequestId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::MaintenanceRequestId& MsgLogMaintenanceHandlingDestruction::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::MaintenanceRequestId& MsgLogMaintenanceHandlingDestruction::request() const {
+  return request_ != NULL ? *request_ : *default_instance_->request_;
 }
-inline ::Common::MaintenanceRequestId* MsgLogMaintenanceHandlingDestruction::mutable_id() {
+inline ::Common::MaintenanceRequestId* MsgLogMaintenanceHandlingDestruction::mutable_request() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::MaintenanceRequestId;
-  return id_;
+  if (request_ == NULL) request_ = new ::Common::MaintenanceRequestId;
+  return request_;
 }
 
 // required .Common.UnitId unit = 2;
@@ -27259,20 +27629,21 @@ inline ::Common::UnitId* MsgLogMaintenanceHandlingDestruction::mutable_unit() {
 
 // MsgLogMaintenanceEquipmentAvailability
 
-// required int32 type_equipement = 1;
-inline bool MsgLogMaintenanceEquipmentAvailability::has_type_equipement() const {
+// required .Common.EquipmentType equipment_type = 1;
+inline bool MsgLogMaintenanceEquipmentAvailability::has_equipment_type() const {
   return _has_bit(0);
 }
-inline void MsgLogMaintenanceEquipmentAvailability::clear_type_equipement() {
-  type_equipement_ = 0;
+inline void MsgLogMaintenanceEquipmentAvailability::clear_equipment_type() {
+  if (equipment_type_ != NULL) equipment_type_->::Common::EquipmentType::Clear();
   _clear_bit(0);
 }
-inline ::google::protobuf::int32 MsgLogMaintenanceEquipmentAvailability::type_equipement() const {
-  return type_equipement_;
+inline const ::Common::EquipmentType& MsgLogMaintenanceEquipmentAvailability::equipment_type() const {
+  return equipment_type_ != NULL ? *equipment_type_ : *default_instance_->equipment_type_;
 }
-inline void MsgLogMaintenanceEquipmentAvailability::set_type_equipement(::google::protobuf::int32 value) {
+inline ::Common::EquipmentType* MsgLogMaintenanceEquipmentAvailability::mutable_equipment_type() {
   _set_bit(0);
-  type_equipement_ = value;
+  if (equipment_type_ == NULL) equipment_type_ = new ::Common::EquipmentType;
+  return equipment_type_;
 }
 
 // required int32 nbr_total = 2;
@@ -27323,7 +27694,7 @@ inline void MsgLogMaintenanceEquipmentAvailability::set_nbr_au_travail(::google:
   nbr_au_travail_ = value;
 }
 
-// optional int32 nbr_pretes = 5 [default = 0];
+// optional int32 nbr_pretes = 5;
 inline bool MsgLogMaintenanceEquipmentAvailability::has_nbr_pretes() const {
   return _has_bit(4);
 }
@@ -27388,21 +27759,21 @@ inline ::MsgsSimToClient::MsgLogMaintenanceEquipmentAvailability* SeqOfLogMainte
 
 // MsgLogMaintenanceState
 
-// required .Common.UnitId id = 1;
-inline bool MsgLogMaintenanceState::has_id() const {
+// required .Common.UnitId unit = 1;
+inline bool MsgLogMaintenanceState::has_unit() const {
   return _has_bit(0);
 }
-inline void MsgLogMaintenanceState::clear_id() {
-  if (id_ != NULL) id_->::Common::UnitId::Clear();
+inline void MsgLogMaintenanceState::clear_unit() {
+  if (unit_ != NULL) unit_->::Common::UnitId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::UnitId& MsgLogMaintenanceState::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::UnitId& MsgLogMaintenanceState::unit() const {
+  return unit_ != NULL ? *unit_ : *default_instance_->unit_;
 }
-inline ::Common::UnitId* MsgLogMaintenanceState::mutable_id() {
+inline ::Common::UnitId* MsgLogMaintenanceState::mutable_unit() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::UnitId;
-  return id_;
+  if (unit_ == NULL) unit_ = new ::Common::UnitId;
+  return unit_;
 }
 
 // optional bool chaine_activee = 2;
@@ -27510,21 +27881,21 @@ inline ::MsgsSimToClient::SeqOfLogMaintenanceEquipmentAvailability* MsgLogMainte
 
 // MsgLogSupplyHandlingCreation
 
-// optional .Common.SupplyRequestId id = 1;
-inline bool MsgLogSupplyHandlingCreation::has_id() const {
+// optional .Common.SupplyRequestId request = 1;
+inline bool MsgLogSupplyHandlingCreation::has_request() const {
   return _has_bit(0);
 }
-inline void MsgLogSupplyHandlingCreation::clear_id() {
-  if (id_ != NULL) id_->::Common::SupplyRequestId::Clear();
+inline void MsgLogSupplyHandlingCreation::clear_request() {
+  if (request_ != NULL) request_->::Common::SupplyRequestId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::SupplyRequestId& MsgLogSupplyHandlingCreation::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::SupplyRequestId& MsgLogSupplyHandlingCreation::request() const {
+  return request_ != NULL ? *request_ : *default_instance_->request_;
 }
-inline ::Common::SupplyRequestId* MsgLogSupplyHandlingCreation::mutable_id() {
+inline ::Common::SupplyRequestId* MsgLogSupplyHandlingCreation::mutable_request() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::SupplyRequestId;
-  return id_;
+  if (request_ == NULL) request_ = new ::Common::SupplyRequestId;
+  return request_;
 }
 
 // optional .Common.AutomatId consumer = 2;
@@ -27679,21 +28050,21 @@ inline ::MsgsSimToClient::MsgDotationQuery* SeqOfDotationQuery::add_elem() {
 
 // MsgLogSupplyHandlingUpdate
 
-// optional .Common.SupplyRequestId id = 1;
-inline bool MsgLogSupplyHandlingUpdate::has_id() const {
+// optional .Common.SupplyRequestId request = 1;
+inline bool MsgLogSupplyHandlingUpdate::has_request() const {
   return _has_bit(0);
 }
-inline void MsgLogSupplyHandlingUpdate::clear_id() {
-  if (id_ != NULL) id_->::Common::SupplyRequestId::Clear();
+inline void MsgLogSupplyHandlingUpdate::clear_request() {
+  if (request_ != NULL) request_->::Common::SupplyRequestId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::SupplyRequestId& MsgLogSupplyHandlingUpdate::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::SupplyRequestId& MsgLogSupplyHandlingUpdate::request() const {
+  return request_ != NULL ? *request_ : *default_instance_->request_;
 }
-inline ::Common::SupplyRequestId* MsgLogSupplyHandlingUpdate::mutable_id() {
+inline ::Common::SupplyRequestId* MsgLogSupplyHandlingUpdate::mutable_request() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::SupplyRequestId;
-  return id_;
+  if (request_ == NULL) request_ = new ::Common::SupplyRequestId;
+  return request_;
 }
 
 // optional .Common.AutomatId consumer = 2;
@@ -27802,21 +28173,21 @@ inline ::MsgsSimToClient::SeqOfDotationQuery* MsgLogSupplyHandlingUpdate::mutabl
 
 // MsgLogSupplyHandlingDestruction
 
-// required .Common.SupplyRequestId id = 1;
-inline bool MsgLogSupplyHandlingDestruction::has_id() const {
+// required .Common.SupplyRequestId request = 1;
+inline bool MsgLogSupplyHandlingDestruction::has_request() const {
   return _has_bit(0);
 }
-inline void MsgLogSupplyHandlingDestruction::clear_id() {
-  if (id_ != NULL) id_->::Common::SupplyRequestId::Clear();
+inline void MsgLogSupplyHandlingDestruction::clear_request() {
+  if (request_ != NULL) request_->::Common::SupplyRequestId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::SupplyRequestId& MsgLogSupplyHandlingDestruction::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::SupplyRequestId& MsgLogSupplyHandlingDestruction::request() const {
+  return request_ != NULL ? *request_ : *default_instance_->request_;
 }
-inline ::Common::SupplyRequestId* MsgLogSupplyHandlingDestruction::mutable_id() {
+inline ::Common::SupplyRequestId* MsgLogSupplyHandlingDestruction::mutable_request() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::SupplyRequestId;
-  return id_;
+  if (request_ == NULL) request_ = new ::Common::SupplyRequestId;
+  return request_;
 }
 
 // required .Common.AutomatId consumer = 2;
@@ -27905,7 +28276,7 @@ inline void MsgLogSupplyEquimentAvailability::set_nbr_au_travail(::google::proto
   nbr_au_travail_ = value;
 }
 
-// optional int32 nbr_pretes = 5 [default = 0];
+// optional int32 nbr_pretes = 5;
 inline bool MsgLogSupplyEquimentAvailability::has_nbr_pretes() const {
   return _has_bit(4);
 }
@@ -27970,21 +28341,21 @@ inline ::MsgsSimToClient::MsgLogSupplyEquimentAvailability* SeqOfLogSupplyEquime
 
 // MsgLogSupplyState
 
-// optional .Common.UnitId id = 1;
-inline bool MsgLogSupplyState::has_id() const {
+// optional .Common.UnitId unit = 1;
+inline bool MsgLogSupplyState::has_unit() const {
   return _has_bit(0);
 }
-inline void MsgLogSupplyState::clear_id() {
-  if (id_ != NULL) id_->::Common::UnitId::Clear();
+inline void MsgLogSupplyState::clear_unit() {
+  if (unit_ != NULL) unit_->::Common::UnitId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::UnitId& MsgLogSupplyState::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::UnitId& MsgLogSupplyState::unit() const {
+  return unit_ != NULL ? *unit_ : *default_instance_->unit_;
 }
-inline ::Common::UnitId* MsgLogSupplyState::mutable_id() {
+inline ::Common::UnitId* MsgLogSupplyState::mutable_unit() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::UnitId;
-  return id_;
+  if (unit_ == NULL) unit_ = new ::Common::UnitId;
+  return unit_;
 }
 
 // optional bool chaine_activee = 2;
@@ -28041,21 +28412,21 @@ inline ::MsgsSimToClient::SeqOfLogSupplyEquimentAvailability* MsgLogSupplyState:
 
 // MsgLogSupplyQuotas
 
-// required .Common.AutomatId id = 1;
-inline bool MsgLogSupplyQuotas::has_id() const {
+// required .Common.AutomatId automat = 1;
+inline bool MsgLogSupplyQuotas::has_automat() const {
   return _has_bit(0);
 }
-inline void MsgLogSupplyQuotas::clear_id() {
-  if (id_ != NULL) id_->::Common::AutomatId::Clear();
+inline void MsgLogSupplyQuotas::clear_automat() {
+  if (automat_ != NULL) automat_->::Common::AutomatId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::AutomatId& MsgLogSupplyQuotas::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::AutomatId& MsgLogSupplyQuotas::automat() const {
+  return automat_ != NULL ? *automat_ : *default_instance_->automat_;
 }
-inline ::Common::AutomatId* MsgLogSupplyQuotas::mutable_id() {
+inline ::Common::AutomatId* MsgLogSupplyQuotas::mutable_automat() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::AutomatId;
-  return id_;
+  if (automat_ == NULL) automat_ = new ::Common::AutomatId;
+  return automat_;
 }
 
 // required .Common.SeqOfDotationQuota quotas = 2;
@@ -28077,77 +28448,77 @@ inline ::Common::SeqOfDotationQuota* MsgLogSupplyQuotas::mutable_quotas() {
 
 // -------------------------------------------------------------------
 
-// MsgPopulationCreation
+// MsgCrowdCreation
 
-// required .Common.PopulationId id = 1;
-inline bool MsgPopulationCreation::has_id() const {
+// required .Common.CrowdId crowd = 1;
+inline bool MsgCrowdCreation::has_crowd() const {
   return _has_bit(0);
 }
-inline void MsgPopulationCreation::clear_id() {
-  if (id_ != NULL) id_->::Common::PopulationId::Clear();
+inline void MsgCrowdCreation::clear_crowd() {
+  if (crowd_ != NULL) crowd_->::Common::CrowdId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::PopulationId& MsgPopulationCreation::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::CrowdId& MsgCrowdCreation::crowd() const {
+  return crowd_ != NULL ? *crowd_ : *default_instance_->crowd_;
 }
-inline ::Common::PopulationId* MsgPopulationCreation::mutable_id() {
+inline ::Common::CrowdId* MsgCrowdCreation::mutable_crowd() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::PopulationId;
-  return id_;
+  if (crowd_ == NULL) crowd_ = new ::Common::CrowdId;
+  return crowd_;
 }
 
-// required .Common.PopulationType type = 2;
-inline bool MsgPopulationCreation::has_type() const {
+// required .Common.CrowdType type = 2;
+inline bool MsgCrowdCreation::has_type() const {
   return _has_bit(1);
 }
-inline void MsgPopulationCreation::clear_type() {
-  if (type_ != NULL) type_->::Common::PopulationType::Clear();
+inline void MsgCrowdCreation::clear_type() {
+  if (type_ != NULL) type_->::Common::CrowdType::Clear();
   _clear_bit(1);
 }
-inline const ::Common::PopulationType& MsgPopulationCreation::type() const {
+inline const ::Common::CrowdType& MsgCrowdCreation::type() const {
   return type_ != NULL ? *type_ : *default_instance_->type_;
 }
-inline ::Common::PopulationType* MsgPopulationCreation::mutable_type() {
+inline ::Common::CrowdType* MsgCrowdCreation::mutable_type() {
   _set_bit(1);
-  if (type_ == NULL) type_ = new ::Common::PopulationType;
+  if (type_ == NULL) type_ = new ::Common::CrowdType;
   return type_;
 }
 
 // optional string nom = 3;
-inline bool MsgPopulationCreation::has_nom() const {
+inline bool MsgCrowdCreation::has_nom() const {
   return _has_bit(2);
 }
-inline void MsgPopulationCreation::clear_nom() {
+inline void MsgCrowdCreation::clear_nom() {
   if (nom_ != &_default_nom_) {
     nom_->clear();
   }
   _clear_bit(2);
 }
-inline const ::std::string& MsgPopulationCreation::nom() const {
+inline const ::std::string& MsgCrowdCreation::nom() const {
   return *nom_;
 }
-inline void MsgPopulationCreation::set_nom(const ::std::string& value) {
+inline void MsgCrowdCreation::set_nom(const ::std::string& value) {
   _set_bit(2);
   if (nom_ == &_default_nom_) {
     nom_ = new ::std::string;
   }
   nom_->assign(value);
 }
-inline void MsgPopulationCreation::set_nom(const char* value) {
+inline void MsgCrowdCreation::set_nom(const char* value) {
   _set_bit(2);
   if (nom_ == &_default_nom_) {
     nom_ = new ::std::string;
   }
   nom_->assign(value);
 }
-inline void MsgPopulationCreation::set_nom(const char* value, size_t size) {
+inline void MsgCrowdCreation::set_nom(const char* value, size_t size) {
   _set_bit(2);
   if (nom_ == &_default_nom_) {
     nom_ = new ::std::string;
   }
   nom_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* MsgPopulationCreation::mutable_nom() {
+inline ::std::string* MsgCrowdCreation::mutable_nom() {
   _set_bit(2);
   if (nom_ == &_default_nom_) {
     nom_ = new ::std::string;
@@ -28156,17 +28527,17 @@ inline ::std::string* MsgPopulationCreation::mutable_nom() {
 }
 
 // required .Common.PartyId party = 4;
-inline bool MsgPopulationCreation::has_party() const {
+inline bool MsgCrowdCreation::has_party() const {
   return _has_bit(3);
 }
-inline void MsgPopulationCreation::clear_party() {
+inline void MsgCrowdCreation::clear_party() {
   if (party_ != NULL) party_->::Common::PartyId::Clear();
   _clear_bit(3);
 }
-inline const ::Common::PartyId& MsgPopulationCreation::party() const {
+inline const ::Common::PartyId& MsgCrowdCreation::party() const {
   return party_ != NULL ? *party_ : *default_instance_->party_;
 }
-inline ::Common::PartyId* MsgPopulationCreation::mutable_party() {
+inline ::Common::PartyId* MsgCrowdCreation::mutable_party() {
   _set_bit(3);
   if (party_ == NULL) party_ = new ::Common::PartyId;
   return party_;
@@ -28174,91 +28545,91 @@ inline ::Common::PartyId* MsgPopulationCreation::mutable_party() {
 
 // -------------------------------------------------------------------
 
-// MsgPopulationUpdate
+// MsgCrowdUpdate
 
-// required .Common.PopulationId id = 1;
-inline bool MsgPopulationUpdate::has_id() const {
+// required .Common.CrowdId crowd = 1;
+inline bool MsgCrowdUpdate::has_crowd() const {
   return _has_bit(0);
 }
-inline void MsgPopulationUpdate::clear_id() {
-  if (id_ != NULL) id_->::Common::PopulationId::Clear();
+inline void MsgCrowdUpdate::clear_crowd() {
+  if (crowd_ != NULL) crowd_->::Common::CrowdId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::PopulationId& MsgPopulationUpdate::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::CrowdId& MsgCrowdUpdate::crowd() const {
+  return crowd_ != NULL ? *crowd_ : *default_instance_->crowd_;
 }
-inline ::Common::PopulationId* MsgPopulationUpdate::mutable_id() {
+inline ::Common::CrowdId* MsgCrowdUpdate::mutable_crowd() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::PopulationId;
-  return id_;
+  if (crowd_ == NULL) crowd_ = new ::Common::CrowdId;
+  return crowd_;
 }
 
-// optional int32 etat_domination = 2 [default = 0];
-inline bool MsgPopulationUpdate::has_etat_domination() const {
+// optional int32 etat_domination = 2;
+inline bool MsgCrowdUpdate::has_etat_domination() const {
   return _has_bit(1);
 }
-inline void MsgPopulationUpdate::clear_etat_domination() {
+inline void MsgCrowdUpdate::clear_etat_domination() {
   etat_domination_ = 0;
   _clear_bit(1);
 }
-inline ::google::protobuf::int32 MsgPopulationUpdate::etat_domination() const {
+inline ::google::protobuf::int32 MsgCrowdUpdate::etat_domination() const {
   return etat_domination_;
 }
-inline void MsgPopulationUpdate::set_etat_domination(::google::protobuf::int32 value) {
+inline void MsgCrowdUpdate::set_etat_domination(::google::protobuf::int32 value) {
   _set_bit(1);
   etat_domination_ = value;
 }
 
 // -------------------------------------------------------------------
 
-// MsgPopulationConcentrationCreation
+// MsgCrowdConcentrationCreation
 
-// required .Common.PopulationConcentrationId id = 1;
-inline bool MsgPopulationConcentrationCreation::has_id() const {
+// required .Common.CrowdConcentrationId concentration = 1;
+inline bool MsgCrowdConcentrationCreation::has_concentration() const {
   return _has_bit(0);
 }
-inline void MsgPopulationConcentrationCreation::clear_id() {
-  if (id_ != NULL) id_->::Common::PopulationConcentrationId::Clear();
+inline void MsgCrowdConcentrationCreation::clear_concentration() {
+  if (concentration_ != NULL) concentration_->::Common::CrowdConcentrationId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::PopulationConcentrationId& MsgPopulationConcentrationCreation::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::CrowdConcentrationId& MsgCrowdConcentrationCreation::concentration() const {
+  return concentration_ != NULL ? *concentration_ : *default_instance_->concentration_;
 }
-inline ::Common::PopulationConcentrationId* MsgPopulationConcentrationCreation::mutable_id() {
+inline ::Common::CrowdConcentrationId* MsgCrowdConcentrationCreation::mutable_concentration() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::PopulationConcentrationId;
-  return id_;
+  if (concentration_ == NULL) concentration_ = new ::Common::CrowdConcentrationId;
+  return concentration_;
 }
 
-// required .Common.PopulationId population = 2;
-inline bool MsgPopulationConcentrationCreation::has_population() const {
+// required .Common.CrowdId crowd = 2;
+inline bool MsgCrowdConcentrationCreation::has_crowd() const {
   return _has_bit(1);
 }
-inline void MsgPopulationConcentrationCreation::clear_population() {
-  if (population_ != NULL) population_->::Common::PopulationId::Clear();
+inline void MsgCrowdConcentrationCreation::clear_crowd() {
+  if (crowd_ != NULL) crowd_->::Common::CrowdId::Clear();
   _clear_bit(1);
 }
-inline const ::Common::PopulationId& MsgPopulationConcentrationCreation::population() const {
-  return population_ != NULL ? *population_ : *default_instance_->population_;
+inline const ::Common::CrowdId& MsgCrowdConcentrationCreation::crowd() const {
+  return crowd_ != NULL ? *crowd_ : *default_instance_->crowd_;
 }
-inline ::Common::PopulationId* MsgPopulationConcentrationCreation::mutable_population() {
+inline ::Common::CrowdId* MsgCrowdConcentrationCreation::mutable_crowd() {
   _set_bit(1);
-  if (population_ == NULL) population_ = new ::Common::PopulationId;
-  return population_;
+  if (crowd_ == NULL) crowd_ = new ::Common::CrowdId;
+  return crowd_;
 }
 
 // required .Common.MsgCoordLatLong position = 3;
-inline bool MsgPopulationConcentrationCreation::has_position() const {
+inline bool MsgCrowdConcentrationCreation::has_position() const {
   return _has_bit(2);
 }
-inline void MsgPopulationConcentrationCreation::clear_position() {
+inline void MsgCrowdConcentrationCreation::clear_position() {
   if (position_ != NULL) position_->::Common::MsgCoordLatLong::Clear();
   _clear_bit(2);
 }
-inline const ::Common::MsgCoordLatLong& MsgPopulationConcentrationCreation::position() const {
+inline const ::Common::MsgCoordLatLong& MsgCrowdConcentrationCreation::position() const {
   return position_ != NULL ? *position_ : *default_instance_->position_;
 }
-inline ::Common::MsgCoordLatLong* MsgPopulationConcentrationCreation::mutable_position() {
+inline ::Common::MsgCoordLatLong* MsgCrowdConcentrationCreation::mutable_position() {
   _set_bit(2);
   if (position_ == NULL) position_ = new ::Common::MsgCoordLatLong;
   return position_;
@@ -28266,426 +28637,426 @@ inline ::Common::MsgCoordLatLong* MsgPopulationConcentrationCreation::mutable_po
 
 // -------------------------------------------------------------------
 
-// MsgPopulationConcentrationDestruction
+// MsgCrowdConcentrationDestruction
 
-// required .Common.PopulationConcentrationId id = 1;
-inline bool MsgPopulationConcentrationDestruction::has_id() const {
+// required .Common.CrowdConcentrationId concentration = 1;
+inline bool MsgCrowdConcentrationDestruction::has_concentration() const {
   return _has_bit(0);
 }
-inline void MsgPopulationConcentrationDestruction::clear_id() {
-  if (id_ != NULL) id_->::Common::PopulationConcentrationId::Clear();
+inline void MsgCrowdConcentrationDestruction::clear_concentration() {
+  if (concentration_ != NULL) concentration_->::Common::CrowdConcentrationId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::PopulationConcentrationId& MsgPopulationConcentrationDestruction::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::CrowdConcentrationId& MsgCrowdConcentrationDestruction::concentration() const {
+  return concentration_ != NULL ? *concentration_ : *default_instance_->concentration_;
 }
-inline ::Common::PopulationConcentrationId* MsgPopulationConcentrationDestruction::mutable_id() {
+inline ::Common::CrowdConcentrationId* MsgCrowdConcentrationDestruction::mutable_concentration() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::PopulationConcentrationId;
-  return id_;
+  if (concentration_ == NULL) concentration_ = new ::Common::CrowdConcentrationId;
+  return concentration_;
 }
 
-// required .Common.PopulationId population = 2;
-inline bool MsgPopulationConcentrationDestruction::has_population() const {
+// required .Common.CrowdId crowd = 2;
+inline bool MsgCrowdConcentrationDestruction::has_crowd() const {
   return _has_bit(1);
 }
-inline void MsgPopulationConcentrationDestruction::clear_population() {
-  if (population_ != NULL) population_->::Common::PopulationId::Clear();
+inline void MsgCrowdConcentrationDestruction::clear_crowd() {
+  if (crowd_ != NULL) crowd_->::Common::CrowdId::Clear();
   _clear_bit(1);
 }
-inline const ::Common::PopulationId& MsgPopulationConcentrationDestruction::population() const {
-  return population_ != NULL ? *population_ : *default_instance_->population_;
+inline const ::Common::CrowdId& MsgCrowdConcentrationDestruction::crowd() const {
+  return crowd_ != NULL ? *crowd_ : *default_instance_->crowd_;
 }
-inline ::Common::PopulationId* MsgPopulationConcentrationDestruction::mutable_population() {
+inline ::Common::CrowdId* MsgCrowdConcentrationDestruction::mutable_crowd() {
   _set_bit(1);
-  if (population_ == NULL) population_ = new ::Common::PopulationId;
-  return population_;
+  if (crowd_ == NULL) crowd_ = new ::Common::CrowdId;
+  return crowd_;
 }
 
 // -------------------------------------------------------------------
 
-// MsgPopulationConcentrationUpdate
+// MsgCrowdConcentrationUpdate
 
-// required .Common.PopulationConcentrationId id = 1;
-inline bool MsgPopulationConcentrationUpdate::has_id() const {
+// required .Common.CrowdConcentrationId concentration = 1;
+inline bool MsgCrowdConcentrationUpdate::has_concentration() const {
   return _has_bit(0);
 }
-inline void MsgPopulationConcentrationUpdate::clear_id() {
-  if (id_ != NULL) id_->::Common::PopulationConcentrationId::Clear();
+inline void MsgCrowdConcentrationUpdate::clear_concentration() {
+  if (concentration_ != NULL) concentration_->::Common::CrowdConcentrationId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::PopulationConcentrationId& MsgPopulationConcentrationUpdate::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::CrowdConcentrationId& MsgCrowdConcentrationUpdate::concentration() const {
+  return concentration_ != NULL ? *concentration_ : *default_instance_->concentration_;
 }
-inline ::Common::PopulationConcentrationId* MsgPopulationConcentrationUpdate::mutable_id() {
+inline ::Common::CrowdConcentrationId* MsgCrowdConcentrationUpdate::mutable_concentration() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::PopulationConcentrationId;
-  return id_;
+  if (concentration_ == NULL) concentration_ = new ::Common::CrowdConcentrationId;
+  return concentration_;
 }
 
-// required .Common.PopulationId population = 2;
-inline bool MsgPopulationConcentrationUpdate::has_population() const {
+// required .Common.CrowdId crowd = 2;
+inline bool MsgCrowdConcentrationUpdate::has_crowd() const {
   return _has_bit(1);
 }
-inline void MsgPopulationConcentrationUpdate::clear_population() {
-  if (population_ != NULL) population_->::Common::PopulationId::Clear();
+inline void MsgCrowdConcentrationUpdate::clear_crowd() {
+  if (crowd_ != NULL) crowd_->::Common::CrowdId::Clear();
   _clear_bit(1);
 }
-inline const ::Common::PopulationId& MsgPopulationConcentrationUpdate::population() const {
-  return population_ != NULL ? *population_ : *default_instance_->population_;
+inline const ::Common::CrowdId& MsgCrowdConcentrationUpdate::crowd() const {
+  return crowd_ != NULL ? *crowd_ : *default_instance_->crowd_;
 }
-inline ::Common::PopulationId* MsgPopulationConcentrationUpdate::mutable_population() {
+inline ::Common::CrowdId* MsgCrowdConcentrationUpdate::mutable_crowd() {
   _set_bit(1);
-  if (population_ == NULL) population_ = new ::Common::PopulationId;
-  return population_;
+  if (crowd_ == NULL) crowd_ = new ::Common::CrowdId;
+  return crowd_;
 }
 
-// optional int32 nb_humains_vivants = 3 [default = 0];
-inline bool MsgPopulationConcentrationUpdate::has_nb_humains_vivants() const {
+// optional int32 nb_humains_vivants = 3;
+inline bool MsgCrowdConcentrationUpdate::has_nb_humains_vivants() const {
   return _has_bit(2);
 }
-inline void MsgPopulationConcentrationUpdate::clear_nb_humains_vivants() {
+inline void MsgCrowdConcentrationUpdate::clear_nb_humains_vivants() {
   nb_humains_vivants_ = 0;
   _clear_bit(2);
 }
-inline ::google::protobuf::int32 MsgPopulationConcentrationUpdate::nb_humains_vivants() const {
+inline ::google::protobuf::int32 MsgCrowdConcentrationUpdate::nb_humains_vivants() const {
   return nb_humains_vivants_;
 }
-inline void MsgPopulationConcentrationUpdate::set_nb_humains_vivants(::google::protobuf::int32 value) {
+inline void MsgCrowdConcentrationUpdate::set_nb_humains_vivants(::google::protobuf::int32 value) {
   _set_bit(2);
   nb_humains_vivants_ = value;
 }
 
-// optional int32 nb_humains_morts = 4 [default = 0];
-inline bool MsgPopulationConcentrationUpdate::has_nb_humains_morts() const {
+// optional int32 nb_humains_morts = 4;
+inline bool MsgCrowdConcentrationUpdate::has_nb_humains_morts() const {
   return _has_bit(3);
 }
-inline void MsgPopulationConcentrationUpdate::clear_nb_humains_morts() {
+inline void MsgCrowdConcentrationUpdate::clear_nb_humains_morts() {
   nb_humains_morts_ = 0;
   _clear_bit(3);
 }
-inline ::google::protobuf::int32 MsgPopulationConcentrationUpdate::nb_humains_morts() const {
+inline ::google::protobuf::int32 MsgCrowdConcentrationUpdate::nb_humains_morts() const {
   return nb_humains_morts_;
 }
-inline void MsgPopulationConcentrationUpdate::set_nb_humains_morts(::google::protobuf::int32 value) {
+inline void MsgCrowdConcentrationUpdate::set_nb_humains_morts(::google::protobuf::int32 value) {
   _set_bit(3);
   nb_humains_morts_ = value;
 }
 
-// optional .Common.EnumPopulationAttitude attitude = 5;
-inline bool MsgPopulationConcentrationUpdate::has_attitude() const {
+// optional .Common.EnumCrowdAttitude attitude = 5;
+inline bool MsgCrowdConcentrationUpdate::has_attitude() const {
   return _has_bit(4);
 }
-inline void MsgPopulationConcentrationUpdate::clear_attitude() {
+inline void MsgCrowdConcentrationUpdate::clear_attitude() {
   attitude_ = 0;
   _clear_bit(4);
 }
-inline Common::EnumPopulationAttitude MsgPopulationConcentrationUpdate::attitude() const {
-  return static_cast< Common::EnumPopulationAttitude >(attitude_);
+inline Common::EnumCrowdAttitude MsgCrowdConcentrationUpdate::attitude() const {
+  return static_cast< Common::EnumCrowdAttitude >(attitude_);
 }
-inline void MsgPopulationConcentrationUpdate::set_attitude(Common::EnumPopulationAttitude value) {
-  GOOGLE_DCHECK(Common::EnumPopulationAttitude_IsValid(value));
+inline void MsgCrowdConcentrationUpdate::set_attitude(Common::EnumCrowdAttitude value) {
+  GOOGLE_DCHECK(Common::EnumCrowdAttitude_IsValid(value));
   _set_bit(4);
   attitude_ = value;
 }
 
 // -------------------------------------------------------------------
 
-// MsgPopulationFlowCreation
+// MsgCrowdFlowCreation
 
-// required .Common.PopulationFlowId id = 1;
-inline bool MsgPopulationFlowCreation::has_id() const {
+// required .Common.CrowdFlowId flow = 1;
+inline bool MsgCrowdFlowCreation::has_flow() const {
   return _has_bit(0);
 }
-inline void MsgPopulationFlowCreation::clear_id() {
-  if (id_ != NULL) id_->::Common::PopulationFlowId::Clear();
+inline void MsgCrowdFlowCreation::clear_flow() {
+  if (flow_ != NULL) flow_->::Common::CrowdFlowId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::PopulationFlowId& MsgPopulationFlowCreation::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::CrowdFlowId& MsgCrowdFlowCreation::flow() const {
+  return flow_ != NULL ? *flow_ : *default_instance_->flow_;
 }
-inline ::Common::PopulationFlowId* MsgPopulationFlowCreation::mutable_id() {
+inline ::Common::CrowdFlowId* MsgCrowdFlowCreation::mutable_flow() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::PopulationFlowId;
-  return id_;
+  if (flow_ == NULL) flow_ = new ::Common::CrowdFlowId;
+  return flow_;
 }
 
-// required .Common.PopulationId population = 2;
-inline bool MsgPopulationFlowCreation::has_population() const {
+// required .Common.CrowdId crowd = 2;
+inline bool MsgCrowdFlowCreation::has_crowd() const {
   return _has_bit(1);
 }
-inline void MsgPopulationFlowCreation::clear_population() {
-  if (population_ != NULL) population_->::Common::PopulationId::Clear();
+inline void MsgCrowdFlowCreation::clear_crowd() {
+  if (crowd_ != NULL) crowd_->::Common::CrowdId::Clear();
   _clear_bit(1);
 }
-inline const ::Common::PopulationId& MsgPopulationFlowCreation::population() const {
-  return population_ != NULL ? *population_ : *default_instance_->population_;
+inline const ::Common::CrowdId& MsgCrowdFlowCreation::crowd() const {
+  return crowd_ != NULL ? *crowd_ : *default_instance_->crowd_;
 }
-inline ::Common::PopulationId* MsgPopulationFlowCreation::mutable_population() {
+inline ::Common::CrowdId* MsgCrowdFlowCreation::mutable_crowd() {
   _set_bit(1);
-  if (population_ == NULL) population_ = new ::Common::PopulationId;
-  return population_;
+  if (crowd_ == NULL) crowd_ = new ::Common::CrowdId;
+  return crowd_;
 }
 
 // -------------------------------------------------------------------
 
-// MsgPopulationFlowDestruction
+// MsgCrowdFlowDestruction
 
-// required .Common.PopulationFlowId id = 1;
-inline bool MsgPopulationFlowDestruction::has_id() const {
+// required .Common.CrowdFlowId flow = 1;
+inline bool MsgCrowdFlowDestruction::has_flow() const {
   return _has_bit(0);
 }
-inline void MsgPopulationFlowDestruction::clear_id() {
-  if (id_ != NULL) id_->::Common::PopulationFlowId::Clear();
+inline void MsgCrowdFlowDestruction::clear_flow() {
+  if (flow_ != NULL) flow_->::Common::CrowdFlowId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::PopulationFlowId& MsgPopulationFlowDestruction::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::CrowdFlowId& MsgCrowdFlowDestruction::flow() const {
+  return flow_ != NULL ? *flow_ : *default_instance_->flow_;
 }
-inline ::Common::PopulationFlowId* MsgPopulationFlowDestruction::mutable_id() {
+inline ::Common::CrowdFlowId* MsgCrowdFlowDestruction::mutable_flow() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::PopulationFlowId;
-  return id_;
+  if (flow_ == NULL) flow_ = new ::Common::CrowdFlowId;
+  return flow_;
 }
 
-// required .Common.PopulationId population = 2;
-inline bool MsgPopulationFlowDestruction::has_population() const {
+// required .Common.CrowdId crowd = 2;
+inline bool MsgCrowdFlowDestruction::has_crowd() const {
   return _has_bit(1);
 }
-inline void MsgPopulationFlowDestruction::clear_population() {
-  if (population_ != NULL) population_->::Common::PopulationId::Clear();
+inline void MsgCrowdFlowDestruction::clear_crowd() {
+  if (crowd_ != NULL) crowd_->::Common::CrowdId::Clear();
   _clear_bit(1);
 }
-inline const ::Common::PopulationId& MsgPopulationFlowDestruction::population() const {
-  return population_ != NULL ? *population_ : *default_instance_->population_;
+inline const ::Common::CrowdId& MsgCrowdFlowDestruction::crowd() const {
+  return crowd_ != NULL ? *crowd_ : *default_instance_->crowd_;
 }
-inline ::Common::PopulationId* MsgPopulationFlowDestruction::mutable_population() {
+inline ::Common::CrowdId* MsgCrowdFlowDestruction::mutable_crowd() {
   _set_bit(1);
-  if (population_ == NULL) population_ = new ::Common::PopulationId;
-  return population_;
+  if (crowd_ == NULL) crowd_ = new ::Common::CrowdId;
+  return crowd_;
 }
 
 // -------------------------------------------------------------------
 
-// MsgPopulationFlowUpdate
+// MsgCrowdFlowUpdate
 
-// required .Common.PopulationFlowId id = 1;
-inline bool MsgPopulationFlowUpdate::has_id() const {
+// required .Common.CrowdFlowId flow = 1;
+inline bool MsgCrowdFlowUpdate::has_flow() const {
   return _has_bit(0);
 }
-inline void MsgPopulationFlowUpdate::clear_id() {
-  if (id_ != NULL) id_->::Common::PopulationFlowId::Clear();
+inline void MsgCrowdFlowUpdate::clear_flow() {
+  if (flow_ != NULL) flow_->::Common::CrowdFlowId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::PopulationFlowId& MsgPopulationFlowUpdate::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::CrowdFlowId& MsgCrowdFlowUpdate::flow() const {
+  return flow_ != NULL ? *flow_ : *default_instance_->flow_;
 }
-inline ::Common::PopulationFlowId* MsgPopulationFlowUpdate::mutable_id() {
+inline ::Common::CrowdFlowId* MsgCrowdFlowUpdate::mutable_flow() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::PopulationFlowId;
-  return id_;
+  if (flow_ == NULL) flow_ = new ::Common::CrowdFlowId;
+  return flow_;
 }
 
-// required .Common.PopulationId population = 2;
-inline bool MsgPopulationFlowUpdate::has_population() const {
+// required .Common.CrowdId crowd = 2;
+inline bool MsgCrowdFlowUpdate::has_crowd() const {
   return _has_bit(1);
 }
-inline void MsgPopulationFlowUpdate::clear_population() {
-  if (population_ != NULL) population_->::Common::PopulationId::Clear();
+inline void MsgCrowdFlowUpdate::clear_crowd() {
+  if (crowd_ != NULL) crowd_->::Common::CrowdId::Clear();
   _clear_bit(1);
 }
-inline const ::Common::PopulationId& MsgPopulationFlowUpdate::population() const {
-  return population_ != NULL ? *population_ : *default_instance_->population_;
+inline const ::Common::CrowdId& MsgCrowdFlowUpdate::crowd() const {
+  return crowd_ != NULL ? *crowd_ : *default_instance_->crowd_;
 }
-inline ::Common::PopulationId* MsgPopulationFlowUpdate::mutable_population() {
+inline ::Common::CrowdId* MsgCrowdFlowUpdate::mutable_crowd() {
   _set_bit(1);
-  if (population_ == NULL) population_ = new ::Common::PopulationId;
-  return population_;
+  if (crowd_ == NULL) crowd_ = new ::Common::CrowdId;
+  return crowd_;
 }
 
 // optional .Common.MsgPath itineraire = 3;
-inline bool MsgPopulationFlowUpdate::has_itineraire() const {
+inline bool MsgCrowdFlowUpdate::has_itineraire() const {
   return _has_bit(2);
 }
-inline void MsgPopulationFlowUpdate::clear_itineraire() {
+inline void MsgCrowdFlowUpdate::clear_itineraire() {
   if (itineraire_ != NULL) itineraire_->::Common::MsgPath::Clear();
   _clear_bit(2);
 }
-inline const ::Common::MsgPath& MsgPopulationFlowUpdate::itineraire() const {
+inline const ::Common::MsgPath& MsgCrowdFlowUpdate::itineraire() const {
   return itineraire_ != NULL ? *itineraire_ : *default_instance_->itineraire_;
 }
-inline ::Common::MsgPath* MsgPopulationFlowUpdate::mutable_itineraire() {
+inline ::Common::MsgPath* MsgCrowdFlowUpdate::mutable_itineraire() {
   _set_bit(2);
   if (itineraire_ == NULL) itineraire_ = new ::Common::MsgPath;
   return itineraire_;
 }
 
-// optional .Common.MsgPath flux = 4;
-inline bool MsgPopulationFlowUpdate::has_flux() const {
+// optional .Common.MsgPath parts = 4;
+inline bool MsgCrowdFlowUpdate::has_parts() const {
   return _has_bit(3);
 }
-inline void MsgPopulationFlowUpdate::clear_flux() {
-  if (flux_ != NULL) flux_->::Common::MsgPath::Clear();
+inline void MsgCrowdFlowUpdate::clear_parts() {
+  if (parts_ != NULL) parts_->::Common::MsgPath::Clear();
   _clear_bit(3);
 }
-inline const ::Common::MsgPath& MsgPopulationFlowUpdate::flux() const {
-  return flux_ != NULL ? *flux_ : *default_instance_->flux_;
+inline const ::Common::MsgPath& MsgCrowdFlowUpdate::parts() const {
+  return parts_ != NULL ? *parts_ : *default_instance_->parts_;
 }
-inline ::Common::MsgPath* MsgPopulationFlowUpdate::mutable_flux() {
+inline ::Common::MsgPath* MsgCrowdFlowUpdate::mutable_parts() {
   _set_bit(3);
-  if (flux_ == NULL) flux_ = new ::Common::MsgPath;
-  return flux_;
+  if (parts_ == NULL) parts_ = new ::Common::MsgPath;
+  return parts_;
 }
 
 // optional .Common.MsgHeading direction = 5;
-inline bool MsgPopulationFlowUpdate::has_direction() const {
+inline bool MsgCrowdFlowUpdate::has_direction() const {
   return _has_bit(4);
 }
-inline void MsgPopulationFlowUpdate::clear_direction() {
+inline void MsgCrowdFlowUpdate::clear_direction() {
   if (direction_ != NULL) direction_->::Common::MsgHeading::Clear();
   _clear_bit(4);
 }
-inline const ::Common::MsgHeading& MsgPopulationFlowUpdate::direction() const {
+inline const ::Common::MsgHeading& MsgCrowdFlowUpdate::direction() const {
   return direction_ != NULL ? *direction_ : *default_instance_->direction_;
 }
-inline ::Common::MsgHeading* MsgPopulationFlowUpdate::mutable_direction() {
+inline ::Common::MsgHeading* MsgCrowdFlowUpdate::mutable_direction() {
   _set_bit(4);
   if (direction_ == NULL) direction_ = new ::Common::MsgHeading;
   return direction_;
 }
 
-// optional int32 vitesse = 6 [default = 0];
-inline bool MsgPopulationFlowUpdate::has_vitesse() const {
+// optional int32 vitesse = 6;
+inline bool MsgCrowdFlowUpdate::has_vitesse() const {
   return _has_bit(5);
 }
-inline void MsgPopulationFlowUpdate::clear_vitesse() {
+inline void MsgCrowdFlowUpdate::clear_vitesse() {
   vitesse_ = 0;
   _clear_bit(5);
 }
-inline ::google::protobuf::int32 MsgPopulationFlowUpdate::vitesse() const {
+inline ::google::protobuf::int32 MsgCrowdFlowUpdate::vitesse() const {
   return vitesse_;
 }
-inline void MsgPopulationFlowUpdate::set_vitesse(::google::protobuf::int32 value) {
+inline void MsgCrowdFlowUpdate::set_vitesse(::google::protobuf::int32 value) {
   _set_bit(5);
   vitesse_ = value;
 }
 
-// optional int32 nb_humains_vivants = 7 [default = 0];
-inline bool MsgPopulationFlowUpdate::has_nb_humains_vivants() const {
+// optional int32 nb_humains_vivants = 7;
+inline bool MsgCrowdFlowUpdate::has_nb_humains_vivants() const {
   return _has_bit(6);
 }
-inline void MsgPopulationFlowUpdate::clear_nb_humains_vivants() {
+inline void MsgCrowdFlowUpdate::clear_nb_humains_vivants() {
   nb_humains_vivants_ = 0;
   _clear_bit(6);
 }
-inline ::google::protobuf::int32 MsgPopulationFlowUpdate::nb_humains_vivants() const {
+inline ::google::protobuf::int32 MsgCrowdFlowUpdate::nb_humains_vivants() const {
   return nb_humains_vivants_;
 }
-inline void MsgPopulationFlowUpdate::set_nb_humains_vivants(::google::protobuf::int32 value) {
+inline void MsgCrowdFlowUpdate::set_nb_humains_vivants(::google::protobuf::int32 value) {
   _set_bit(6);
   nb_humains_vivants_ = value;
 }
 
-// optional int32 nb_humains_morts = 8 [default = 0];
-inline bool MsgPopulationFlowUpdate::has_nb_humains_morts() const {
+// optional int32 nb_humains_morts = 8;
+inline bool MsgCrowdFlowUpdate::has_nb_humains_morts() const {
   return _has_bit(7);
 }
-inline void MsgPopulationFlowUpdate::clear_nb_humains_morts() {
+inline void MsgCrowdFlowUpdate::clear_nb_humains_morts() {
   nb_humains_morts_ = 0;
   _clear_bit(7);
 }
-inline ::google::protobuf::int32 MsgPopulationFlowUpdate::nb_humains_morts() const {
+inline ::google::protobuf::int32 MsgCrowdFlowUpdate::nb_humains_morts() const {
   return nb_humains_morts_;
 }
-inline void MsgPopulationFlowUpdate::set_nb_humains_morts(::google::protobuf::int32 value) {
+inline void MsgCrowdFlowUpdate::set_nb_humains_morts(::google::protobuf::int32 value) {
   _set_bit(7);
   nb_humains_morts_ = value;
 }
 
-// optional .Common.EnumPopulationAttitude attitude = 9;
-inline bool MsgPopulationFlowUpdate::has_attitude() const {
+// optional .Common.EnumCrowdAttitude attitude = 9;
+inline bool MsgCrowdFlowUpdate::has_attitude() const {
   return _has_bit(8);
 }
-inline void MsgPopulationFlowUpdate::clear_attitude() {
+inline void MsgCrowdFlowUpdate::clear_attitude() {
   attitude_ = 0;
   _clear_bit(8);
 }
-inline Common::EnumPopulationAttitude MsgPopulationFlowUpdate::attitude() const {
-  return static_cast< Common::EnumPopulationAttitude >(attitude_);
+inline Common::EnumCrowdAttitude MsgCrowdFlowUpdate::attitude() const {
+  return static_cast< Common::EnumCrowdAttitude >(attitude_);
 }
-inline void MsgPopulationFlowUpdate::set_attitude(Common::EnumPopulationAttitude value) {
-  GOOGLE_DCHECK(Common::EnumPopulationAttitude_IsValid(value));
+inline void MsgCrowdFlowUpdate::set_attitude(Common::EnumCrowdAttitude value) {
+  GOOGLE_DCHECK(Common::EnumCrowdAttitude_IsValid(value));
   _set_bit(8);
   attitude_ = value;
 }
 
 // -------------------------------------------------------------------
 
-// MsgPopulationKnowledgeCreation
+// MsgCrowdKnowledgeCreation
 
-// required .Common.PopulationKnowledgeId id = 1;
-inline bool MsgPopulationKnowledgeCreation::has_id() const {
+// required .Common.CrowdKnowledgeId knowledge = 1;
+inline bool MsgCrowdKnowledgeCreation::has_knowledge() const {
   return _has_bit(0);
 }
-inline void MsgPopulationKnowledgeCreation::clear_id() {
-  if (id_ != NULL) id_->::Common::PopulationKnowledgeId::Clear();
+inline void MsgCrowdKnowledgeCreation::clear_knowledge() {
+  if (knowledge_ != NULL) knowledge_->::Common::CrowdKnowledgeId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::PopulationKnowledgeId& MsgPopulationKnowledgeCreation::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::CrowdKnowledgeId& MsgCrowdKnowledgeCreation::knowledge() const {
+  return knowledge_ != NULL ? *knowledge_ : *default_instance_->knowledge_;
 }
-inline ::Common::PopulationKnowledgeId* MsgPopulationKnowledgeCreation::mutable_id() {
+inline ::Common::CrowdKnowledgeId* MsgCrowdKnowledgeCreation::mutable_knowledge() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::PopulationKnowledgeId;
-  return id_;
+  if (knowledge_ == NULL) knowledge_ = new ::Common::CrowdKnowledgeId;
+  return knowledge_;
 }
 
 // required .Common.KnowledgeGroupId knowledge_group = 2;
-inline bool MsgPopulationKnowledgeCreation::has_knowledge_group() const {
+inline bool MsgCrowdKnowledgeCreation::has_knowledge_group() const {
   return _has_bit(1);
 }
-inline void MsgPopulationKnowledgeCreation::clear_knowledge_group() {
+inline void MsgCrowdKnowledgeCreation::clear_knowledge_group() {
   if (knowledge_group_ != NULL) knowledge_group_->::Common::KnowledgeGroupId::Clear();
   _clear_bit(1);
 }
-inline const ::Common::KnowledgeGroupId& MsgPopulationKnowledgeCreation::knowledge_group() const {
+inline const ::Common::KnowledgeGroupId& MsgCrowdKnowledgeCreation::knowledge_group() const {
   return knowledge_group_ != NULL ? *knowledge_group_ : *default_instance_->knowledge_group_;
 }
-inline ::Common::KnowledgeGroupId* MsgPopulationKnowledgeCreation::mutable_knowledge_group() {
+inline ::Common::KnowledgeGroupId* MsgCrowdKnowledgeCreation::mutable_knowledge_group() {
   _set_bit(1);
   if (knowledge_group_ == NULL) knowledge_group_ = new ::Common::KnowledgeGroupId;
   return knowledge_group_;
 }
 
-// optional .Common.PopulationId population = 3;
-inline bool MsgPopulationKnowledgeCreation::has_population() const {
+// optional .Common.CrowdId crowd = 3;
+inline bool MsgCrowdKnowledgeCreation::has_crowd() const {
   return _has_bit(2);
 }
-inline void MsgPopulationKnowledgeCreation::clear_population() {
-  if (population_ != NULL) population_->::Common::PopulationId::Clear();
+inline void MsgCrowdKnowledgeCreation::clear_crowd() {
+  if (crowd_ != NULL) crowd_->::Common::CrowdId::Clear();
   _clear_bit(2);
 }
-inline const ::Common::PopulationId& MsgPopulationKnowledgeCreation::population() const {
-  return population_ != NULL ? *population_ : *default_instance_->population_;
+inline const ::Common::CrowdId& MsgCrowdKnowledgeCreation::crowd() const {
+  return crowd_ != NULL ? *crowd_ : *default_instance_->crowd_;
 }
-inline ::Common::PopulationId* MsgPopulationKnowledgeCreation::mutable_population() {
+inline ::Common::CrowdId* MsgCrowdKnowledgeCreation::mutable_crowd() {
   _set_bit(2);
-  if (population_ == NULL) population_ = new ::Common::PopulationId;
-  return population_;
+  if (crowd_ == NULL) crowd_ = new ::Common::CrowdId;
+  return crowd_;
 }
 
 // optional .Common.PartyId party = 4;
-inline bool MsgPopulationKnowledgeCreation::has_party() const {
+inline bool MsgCrowdKnowledgeCreation::has_party() const {
   return _has_bit(3);
 }
-inline void MsgPopulationKnowledgeCreation::clear_party() {
+inline void MsgCrowdKnowledgeCreation::clear_party() {
   if (party_ != NULL) party_->::Common::PartyId::Clear();
   _clear_bit(3);
 }
-inline const ::Common::PartyId& MsgPopulationKnowledgeCreation::party() const {
+inline const ::Common::PartyId& MsgCrowdKnowledgeCreation::party() const {
   return party_ != NULL ? *party_ : *default_instance_->party_;
 }
-inline ::Common::PartyId* MsgPopulationKnowledgeCreation::mutable_party() {
+inline ::Common::PartyId* MsgCrowdKnowledgeCreation::mutable_party() {
   _set_bit(3);
   if (party_ == NULL) party_ = new ::Common::PartyId;
   return party_;
@@ -28693,91 +29064,91 @@ inline ::Common::PartyId* MsgPopulationKnowledgeCreation::mutable_party() {
 
 // -------------------------------------------------------------------
 
-// MsgPopulationKnowledgeUpdate
+// MsgCrowdKnowledgeUpdate
 
-// required .Common.PopulationKnowledgeId id = 1;
-inline bool MsgPopulationKnowledgeUpdate::has_id() const {
+// required .Common.CrowdKnowledgeId knowledge = 1;
+inline bool MsgCrowdKnowledgeUpdate::has_knowledge() const {
   return _has_bit(0);
 }
-inline void MsgPopulationKnowledgeUpdate::clear_id() {
-  if (id_ != NULL) id_->::Common::PopulationKnowledgeId::Clear();
+inline void MsgCrowdKnowledgeUpdate::clear_knowledge() {
+  if (knowledge_ != NULL) knowledge_->::Common::CrowdKnowledgeId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::PopulationKnowledgeId& MsgPopulationKnowledgeUpdate::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::CrowdKnowledgeId& MsgCrowdKnowledgeUpdate::knowledge() const {
+  return knowledge_ != NULL ? *knowledge_ : *default_instance_->knowledge_;
 }
-inline ::Common::PopulationKnowledgeId* MsgPopulationKnowledgeUpdate::mutable_id() {
+inline ::Common::CrowdKnowledgeId* MsgCrowdKnowledgeUpdate::mutable_knowledge() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::PopulationKnowledgeId;
-  return id_;
+  if (knowledge_ == NULL) knowledge_ = new ::Common::CrowdKnowledgeId;
+  return knowledge_;
 }
 
 // required .Common.KnowledgeGroupId knowledge_group = 2;
-inline bool MsgPopulationKnowledgeUpdate::has_knowledge_group() const {
+inline bool MsgCrowdKnowledgeUpdate::has_knowledge_group() const {
   return _has_bit(1);
 }
-inline void MsgPopulationKnowledgeUpdate::clear_knowledge_group() {
+inline void MsgCrowdKnowledgeUpdate::clear_knowledge_group() {
   if (knowledge_group_ != NULL) knowledge_group_->::Common::KnowledgeGroupId::Clear();
   _clear_bit(1);
 }
-inline const ::Common::KnowledgeGroupId& MsgPopulationKnowledgeUpdate::knowledge_group() const {
+inline const ::Common::KnowledgeGroupId& MsgCrowdKnowledgeUpdate::knowledge_group() const {
   return knowledge_group_ != NULL ? *knowledge_group_ : *default_instance_->knowledge_group_;
 }
-inline ::Common::KnowledgeGroupId* MsgPopulationKnowledgeUpdate::mutable_knowledge_group() {
+inline ::Common::KnowledgeGroupId* MsgCrowdKnowledgeUpdate::mutable_knowledge_group() {
   _set_bit(1);
   if (knowledge_group_ == NULL) knowledge_group_ = new ::Common::KnowledgeGroupId;
   return knowledge_group_;
 }
 
-// optional int32 etat_domination = 3 [default = 0];
-inline bool MsgPopulationKnowledgeUpdate::has_etat_domination() const {
+// optional int32 etat_domination = 3;
+inline bool MsgCrowdKnowledgeUpdate::has_etat_domination() const {
   return _has_bit(2);
 }
-inline void MsgPopulationKnowledgeUpdate::clear_etat_domination() {
+inline void MsgCrowdKnowledgeUpdate::clear_etat_domination() {
   etat_domination_ = 0;
   _clear_bit(2);
 }
-inline ::google::protobuf::int32 MsgPopulationKnowledgeUpdate::etat_domination() const {
+inline ::google::protobuf::int32 MsgCrowdKnowledgeUpdate::etat_domination() const {
   return etat_domination_;
 }
-inline void MsgPopulationKnowledgeUpdate::set_etat_domination(::google::protobuf::int32 value) {
+inline void MsgCrowdKnowledgeUpdate::set_etat_domination(::google::protobuf::int32 value) {
   _set_bit(2);
   etat_domination_ = value;
 }
 
 // -------------------------------------------------------------------
 
-// MsgPopulationKnowledgeDestruction
+// MsgCrowdKnowledgeDestruction
 
-// required .Common.PopulationKnowledgeId id = 1;
-inline bool MsgPopulationKnowledgeDestruction::has_id() const {
+// required .Common.CrowdKnowledgeId knowledge = 1;
+inline bool MsgCrowdKnowledgeDestruction::has_knowledge() const {
   return _has_bit(0);
 }
-inline void MsgPopulationKnowledgeDestruction::clear_id() {
-  if (id_ != NULL) id_->::Common::PopulationKnowledgeId::Clear();
+inline void MsgCrowdKnowledgeDestruction::clear_knowledge() {
+  if (knowledge_ != NULL) knowledge_->::Common::CrowdKnowledgeId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::PopulationKnowledgeId& MsgPopulationKnowledgeDestruction::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::CrowdKnowledgeId& MsgCrowdKnowledgeDestruction::knowledge() const {
+  return knowledge_ != NULL ? *knowledge_ : *default_instance_->knowledge_;
 }
-inline ::Common::PopulationKnowledgeId* MsgPopulationKnowledgeDestruction::mutable_id() {
+inline ::Common::CrowdKnowledgeId* MsgCrowdKnowledgeDestruction::mutable_knowledge() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::PopulationKnowledgeId;
-  return id_;
+  if (knowledge_ == NULL) knowledge_ = new ::Common::CrowdKnowledgeId;
+  return knowledge_;
 }
 
 // required .Common.KnowledgeGroupId knowledge_group = 2;
-inline bool MsgPopulationKnowledgeDestruction::has_knowledge_group() const {
+inline bool MsgCrowdKnowledgeDestruction::has_knowledge_group() const {
   return _has_bit(1);
 }
-inline void MsgPopulationKnowledgeDestruction::clear_knowledge_group() {
+inline void MsgCrowdKnowledgeDestruction::clear_knowledge_group() {
   if (knowledge_group_ != NULL) knowledge_group_->::Common::KnowledgeGroupId::Clear();
   _clear_bit(1);
 }
-inline const ::Common::KnowledgeGroupId& MsgPopulationKnowledgeDestruction::knowledge_group() const {
+inline const ::Common::KnowledgeGroupId& MsgCrowdKnowledgeDestruction::knowledge_group() const {
   return knowledge_group_ != NULL ? *knowledge_group_ : *default_instance_->knowledge_group_;
 }
-inline ::Common::KnowledgeGroupId* MsgPopulationKnowledgeDestruction::mutable_knowledge_group() {
+inline ::Common::KnowledgeGroupId* MsgCrowdKnowledgeDestruction::mutable_knowledge_group() {
   _set_bit(1);
   if (knowledge_group_ == NULL) knowledge_group_ = new ::Common::KnowledgeGroupId;
   return knowledge_group_;
@@ -28785,88 +29156,88 @@ inline ::Common::KnowledgeGroupId* MsgPopulationKnowledgeDestruction::mutable_kn
 
 // -------------------------------------------------------------------
 
-// MsgPopulationConcentrationKnowledgeCreation
+// MsgCrowdConcentrationKnowledgeCreation
 
-// required .Common.PopulationConcentrationKnowledgeId id = 1;
-inline bool MsgPopulationConcentrationKnowledgeCreation::has_id() const {
+// required .Common.CrowdConcentrationKnowledgeId knowledge = 1;
+inline bool MsgCrowdConcentrationKnowledgeCreation::has_knowledge() const {
   return _has_bit(0);
 }
-inline void MsgPopulationConcentrationKnowledgeCreation::clear_id() {
-  if (id_ != NULL) id_->::Common::PopulationConcentrationKnowledgeId::Clear();
+inline void MsgCrowdConcentrationKnowledgeCreation::clear_knowledge() {
+  if (knowledge_ != NULL) knowledge_->::Common::CrowdConcentrationKnowledgeId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::PopulationConcentrationKnowledgeId& MsgPopulationConcentrationKnowledgeCreation::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::CrowdConcentrationKnowledgeId& MsgCrowdConcentrationKnowledgeCreation::knowledge() const {
+  return knowledge_ != NULL ? *knowledge_ : *default_instance_->knowledge_;
 }
-inline ::Common::PopulationConcentrationKnowledgeId* MsgPopulationConcentrationKnowledgeCreation::mutable_id() {
+inline ::Common::CrowdConcentrationKnowledgeId* MsgCrowdConcentrationKnowledgeCreation::mutable_knowledge() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::PopulationConcentrationKnowledgeId;
-  return id_;
+  if (knowledge_ == NULL) knowledge_ = new ::Common::CrowdConcentrationKnowledgeId;
+  return knowledge_;
 }
 
-// required .Common.PopulationKnowledgeId population = 2;
-inline bool MsgPopulationConcentrationKnowledgeCreation::has_population() const {
+// required .Common.CrowdKnowledgeId crowd = 2;
+inline bool MsgCrowdConcentrationKnowledgeCreation::has_crowd() const {
   return _has_bit(1);
 }
-inline void MsgPopulationConcentrationKnowledgeCreation::clear_population() {
-  if (population_ != NULL) population_->::Common::PopulationKnowledgeId::Clear();
+inline void MsgCrowdConcentrationKnowledgeCreation::clear_crowd() {
+  if (crowd_ != NULL) crowd_->::Common::CrowdKnowledgeId::Clear();
   _clear_bit(1);
 }
-inline const ::Common::PopulationKnowledgeId& MsgPopulationConcentrationKnowledgeCreation::population() const {
-  return population_ != NULL ? *population_ : *default_instance_->population_;
+inline const ::Common::CrowdKnowledgeId& MsgCrowdConcentrationKnowledgeCreation::crowd() const {
+  return crowd_ != NULL ? *crowd_ : *default_instance_->crowd_;
 }
-inline ::Common::PopulationKnowledgeId* MsgPopulationConcentrationKnowledgeCreation::mutable_population() {
+inline ::Common::CrowdKnowledgeId* MsgCrowdConcentrationKnowledgeCreation::mutable_crowd() {
   _set_bit(1);
-  if (population_ == NULL) population_ = new ::Common::PopulationKnowledgeId;
-  return population_;
+  if (crowd_ == NULL) crowd_ = new ::Common::CrowdKnowledgeId;
+  return crowd_;
 }
 
 // required .Common.KnowledgeGroupId knowledge_group = 3;
-inline bool MsgPopulationConcentrationKnowledgeCreation::has_knowledge_group() const {
+inline bool MsgCrowdConcentrationKnowledgeCreation::has_knowledge_group() const {
   return _has_bit(2);
 }
-inline void MsgPopulationConcentrationKnowledgeCreation::clear_knowledge_group() {
+inline void MsgCrowdConcentrationKnowledgeCreation::clear_knowledge_group() {
   if (knowledge_group_ != NULL) knowledge_group_->::Common::KnowledgeGroupId::Clear();
   _clear_bit(2);
 }
-inline const ::Common::KnowledgeGroupId& MsgPopulationConcentrationKnowledgeCreation::knowledge_group() const {
+inline const ::Common::KnowledgeGroupId& MsgCrowdConcentrationKnowledgeCreation::knowledge_group() const {
   return knowledge_group_ != NULL ? *knowledge_group_ : *default_instance_->knowledge_group_;
 }
-inline ::Common::KnowledgeGroupId* MsgPopulationConcentrationKnowledgeCreation::mutable_knowledge_group() {
+inline ::Common::KnowledgeGroupId* MsgCrowdConcentrationKnowledgeCreation::mutable_knowledge_group() {
   _set_bit(2);
   if (knowledge_group_ == NULL) knowledge_group_ = new ::Common::KnowledgeGroupId;
   return knowledge_group_;
 }
 
-// required .Common.PopulationConcentrationId concentration = 4;
-inline bool MsgPopulationConcentrationKnowledgeCreation::has_concentration() const {
+// required .Common.CrowdConcentrationId concentration = 4;
+inline bool MsgCrowdConcentrationKnowledgeCreation::has_concentration() const {
   return _has_bit(3);
 }
-inline void MsgPopulationConcentrationKnowledgeCreation::clear_concentration() {
-  if (concentration_ != NULL) concentration_->::Common::PopulationConcentrationId::Clear();
+inline void MsgCrowdConcentrationKnowledgeCreation::clear_concentration() {
+  if (concentration_ != NULL) concentration_->::Common::CrowdConcentrationId::Clear();
   _clear_bit(3);
 }
-inline const ::Common::PopulationConcentrationId& MsgPopulationConcentrationKnowledgeCreation::concentration() const {
+inline const ::Common::CrowdConcentrationId& MsgCrowdConcentrationKnowledgeCreation::concentration() const {
   return concentration_ != NULL ? *concentration_ : *default_instance_->concentration_;
 }
-inline ::Common::PopulationConcentrationId* MsgPopulationConcentrationKnowledgeCreation::mutable_concentration() {
+inline ::Common::CrowdConcentrationId* MsgCrowdConcentrationKnowledgeCreation::mutable_concentration() {
   _set_bit(3);
-  if (concentration_ == NULL) concentration_ = new ::Common::PopulationConcentrationId;
+  if (concentration_ == NULL) concentration_ = new ::Common::CrowdConcentrationId;
   return concentration_;
 }
 
 // optional .Common.MsgCoordLatLong position = 5;
-inline bool MsgPopulationConcentrationKnowledgeCreation::has_position() const {
+inline bool MsgCrowdConcentrationKnowledgeCreation::has_position() const {
   return _has_bit(4);
 }
-inline void MsgPopulationConcentrationKnowledgeCreation::clear_position() {
+inline void MsgCrowdConcentrationKnowledgeCreation::clear_position() {
   if (position_ != NULL) position_->::Common::MsgCoordLatLong::Clear();
   _clear_bit(4);
 }
-inline const ::Common::MsgCoordLatLong& MsgPopulationConcentrationKnowledgeCreation::position() const {
+inline const ::Common::MsgCoordLatLong& MsgCrowdConcentrationKnowledgeCreation::position() const {
   return position_ != NULL ? *position_ : *default_instance_->position_;
 }
-inline ::Common::MsgCoordLatLong* MsgPopulationConcentrationKnowledgeCreation::mutable_position() {
+inline ::Common::MsgCoordLatLong* MsgCrowdConcentrationKnowledgeCreation::mutable_position() {
   _set_bit(4);
   if (position_ == NULL) position_ = new ::Common::MsgCoordLatLong;
   return position_;
@@ -28874,207 +29245,207 @@ inline ::Common::MsgCoordLatLong* MsgPopulationConcentrationKnowledgeCreation::m
 
 // -------------------------------------------------------------------
 
-// MsgPopulationConcentrationKnowledgeUpdate
+// MsgCrowdConcentrationKnowledgeUpdate
 
-// required .Common.PopulationConcentrationKnowledgeId id = 1;
-inline bool MsgPopulationConcentrationKnowledgeUpdate::has_id() const {
+// required .Common.CrowdConcentrationKnowledgeId knowledge = 1;
+inline bool MsgCrowdConcentrationKnowledgeUpdate::has_knowledge() const {
   return _has_bit(0);
 }
-inline void MsgPopulationConcentrationKnowledgeUpdate::clear_id() {
-  if (id_ != NULL) id_->::Common::PopulationConcentrationKnowledgeId::Clear();
+inline void MsgCrowdConcentrationKnowledgeUpdate::clear_knowledge() {
+  if (knowledge_ != NULL) knowledge_->::Common::CrowdConcentrationKnowledgeId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::PopulationConcentrationKnowledgeId& MsgPopulationConcentrationKnowledgeUpdate::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::CrowdConcentrationKnowledgeId& MsgCrowdConcentrationKnowledgeUpdate::knowledge() const {
+  return knowledge_ != NULL ? *knowledge_ : *default_instance_->knowledge_;
 }
-inline ::Common::PopulationConcentrationKnowledgeId* MsgPopulationConcentrationKnowledgeUpdate::mutable_id() {
+inline ::Common::CrowdConcentrationKnowledgeId* MsgCrowdConcentrationKnowledgeUpdate::mutable_knowledge() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::PopulationConcentrationKnowledgeId;
-  return id_;
+  if (knowledge_ == NULL) knowledge_ = new ::Common::CrowdConcentrationKnowledgeId;
+  return knowledge_;
 }
 
-// required .Common.PopulationKnowledgeId population = 2;
-inline bool MsgPopulationConcentrationKnowledgeUpdate::has_population() const {
+// required .Common.CrowdKnowledgeId crowd = 2;
+inline bool MsgCrowdConcentrationKnowledgeUpdate::has_crowd() const {
   return _has_bit(1);
 }
-inline void MsgPopulationConcentrationKnowledgeUpdate::clear_population() {
-  if (population_ != NULL) population_->::Common::PopulationKnowledgeId::Clear();
+inline void MsgCrowdConcentrationKnowledgeUpdate::clear_crowd() {
+  if (crowd_ != NULL) crowd_->::Common::CrowdKnowledgeId::Clear();
   _clear_bit(1);
 }
-inline const ::Common::PopulationKnowledgeId& MsgPopulationConcentrationKnowledgeUpdate::population() const {
-  return population_ != NULL ? *population_ : *default_instance_->population_;
+inline const ::Common::CrowdKnowledgeId& MsgCrowdConcentrationKnowledgeUpdate::crowd() const {
+  return crowd_ != NULL ? *crowd_ : *default_instance_->crowd_;
 }
-inline ::Common::PopulationKnowledgeId* MsgPopulationConcentrationKnowledgeUpdate::mutable_population() {
+inline ::Common::CrowdKnowledgeId* MsgCrowdConcentrationKnowledgeUpdate::mutable_crowd() {
   _set_bit(1);
-  if (population_ == NULL) population_ = new ::Common::PopulationKnowledgeId;
-  return population_;
+  if (crowd_ == NULL) crowd_ = new ::Common::CrowdKnowledgeId;
+  return crowd_;
 }
 
 // required .Common.KnowledgeGroupId knowledge_group = 3;
-inline bool MsgPopulationConcentrationKnowledgeUpdate::has_knowledge_group() const {
+inline bool MsgCrowdConcentrationKnowledgeUpdate::has_knowledge_group() const {
   return _has_bit(2);
 }
-inline void MsgPopulationConcentrationKnowledgeUpdate::clear_knowledge_group() {
+inline void MsgCrowdConcentrationKnowledgeUpdate::clear_knowledge_group() {
   if (knowledge_group_ != NULL) knowledge_group_->::Common::KnowledgeGroupId::Clear();
   _clear_bit(2);
 }
-inline const ::Common::KnowledgeGroupId& MsgPopulationConcentrationKnowledgeUpdate::knowledge_group() const {
+inline const ::Common::KnowledgeGroupId& MsgCrowdConcentrationKnowledgeUpdate::knowledge_group() const {
   return knowledge_group_ != NULL ? *knowledge_group_ : *default_instance_->knowledge_group_;
 }
-inline ::Common::KnowledgeGroupId* MsgPopulationConcentrationKnowledgeUpdate::mutable_knowledge_group() {
+inline ::Common::KnowledgeGroupId* MsgCrowdConcentrationKnowledgeUpdate::mutable_knowledge_group() {
   _set_bit(2);
   if (knowledge_group_ == NULL) knowledge_group_ = new ::Common::KnowledgeGroupId;
   return knowledge_group_;
 }
 
-// optional .Common.PopulationConcentrationId concentration = 4;
-inline bool MsgPopulationConcentrationKnowledgeUpdate::has_concentration() const {
+// optional .Common.CrowdConcentrationId concentration = 4;
+inline bool MsgCrowdConcentrationKnowledgeUpdate::has_concentration() const {
   return _has_bit(3);
 }
-inline void MsgPopulationConcentrationKnowledgeUpdate::clear_concentration() {
-  if (concentration_ != NULL) concentration_->::Common::PopulationConcentrationId::Clear();
+inline void MsgCrowdConcentrationKnowledgeUpdate::clear_concentration() {
+  if (concentration_ != NULL) concentration_->::Common::CrowdConcentrationId::Clear();
   _clear_bit(3);
 }
-inline const ::Common::PopulationConcentrationId& MsgPopulationConcentrationKnowledgeUpdate::concentration() const {
+inline const ::Common::CrowdConcentrationId& MsgCrowdConcentrationKnowledgeUpdate::concentration() const {
   return concentration_ != NULL ? *concentration_ : *default_instance_->concentration_;
 }
-inline ::Common::PopulationConcentrationId* MsgPopulationConcentrationKnowledgeUpdate::mutable_concentration() {
+inline ::Common::CrowdConcentrationId* MsgCrowdConcentrationKnowledgeUpdate::mutable_concentration() {
   _set_bit(3);
-  if (concentration_ == NULL) concentration_ = new ::Common::PopulationConcentrationId;
+  if (concentration_ == NULL) concentration_ = new ::Common::CrowdConcentrationId;
   return concentration_;
 }
 
 // optional int32 nb_humains_vivants = 5;
-inline bool MsgPopulationConcentrationKnowledgeUpdate::has_nb_humains_vivants() const {
+inline bool MsgCrowdConcentrationKnowledgeUpdate::has_nb_humains_vivants() const {
   return _has_bit(4);
 }
-inline void MsgPopulationConcentrationKnowledgeUpdate::clear_nb_humains_vivants() {
+inline void MsgCrowdConcentrationKnowledgeUpdate::clear_nb_humains_vivants() {
   nb_humains_vivants_ = 0;
   _clear_bit(4);
 }
-inline ::google::protobuf::int32 MsgPopulationConcentrationKnowledgeUpdate::nb_humains_vivants() const {
+inline ::google::protobuf::int32 MsgCrowdConcentrationKnowledgeUpdate::nb_humains_vivants() const {
   return nb_humains_vivants_;
 }
-inline void MsgPopulationConcentrationKnowledgeUpdate::set_nb_humains_vivants(::google::protobuf::int32 value) {
+inline void MsgCrowdConcentrationKnowledgeUpdate::set_nb_humains_vivants(::google::protobuf::int32 value) {
   _set_bit(4);
   nb_humains_vivants_ = value;
 }
 
 // optional int32 nb_humains_morts = 6;
-inline bool MsgPopulationConcentrationKnowledgeUpdate::has_nb_humains_morts() const {
+inline bool MsgCrowdConcentrationKnowledgeUpdate::has_nb_humains_morts() const {
   return _has_bit(5);
 }
-inline void MsgPopulationConcentrationKnowledgeUpdate::clear_nb_humains_morts() {
+inline void MsgCrowdConcentrationKnowledgeUpdate::clear_nb_humains_morts() {
   nb_humains_morts_ = 0;
   _clear_bit(5);
 }
-inline ::google::protobuf::int32 MsgPopulationConcentrationKnowledgeUpdate::nb_humains_morts() const {
+inline ::google::protobuf::int32 MsgCrowdConcentrationKnowledgeUpdate::nb_humains_morts() const {
   return nb_humains_morts_;
 }
-inline void MsgPopulationConcentrationKnowledgeUpdate::set_nb_humains_morts(::google::protobuf::int32 value) {
+inline void MsgCrowdConcentrationKnowledgeUpdate::set_nb_humains_morts(::google::protobuf::int32 value) {
   _set_bit(5);
   nb_humains_morts_ = value;
 }
 
-// optional .Common.EnumPopulationAttitude attitude = 7;
-inline bool MsgPopulationConcentrationKnowledgeUpdate::has_attitude() const {
+// optional .Common.EnumCrowdAttitude attitude = 7;
+inline bool MsgCrowdConcentrationKnowledgeUpdate::has_attitude() const {
   return _has_bit(6);
 }
-inline void MsgPopulationConcentrationKnowledgeUpdate::clear_attitude() {
+inline void MsgCrowdConcentrationKnowledgeUpdate::clear_attitude() {
   attitude_ = 0;
   _clear_bit(6);
 }
-inline Common::EnumPopulationAttitude MsgPopulationConcentrationKnowledgeUpdate::attitude() const {
-  return static_cast< Common::EnumPopulationAttitude >(attitude_);
+inline Common::EnumCrowdAttitude MsgCrowdConcentrationKnowledgeUpdate::attitude() const {
+  return static_cast< Common::EnumCrowdAttitude >(attitude_);
 }
-inline void MsgPopulationConcentrationKnowledgeUpdate::set_attitude(Common::EnumPopulationAttitude value) {
-  GOOGLE_DCHECK(Common::EnumPopulationAttitude_IsValid(value));
+inline void MsgCrowdConcentrationKnowledgeUpdate::set_attitude(Common::EnumCrowdAttitude value) {
+  GOOGLE_DCHECK(Common::EnumCrowdAttitude_IsValid(value));
   _set_bit(6);
   attitude_ = value;
 }
 
 // optional int32 pertinence = 8;
-inline bool MsgPopulationConcentrationKnowledgeUpdate::has_pertinence() const {
+inline bool MsgCrowdConcentrationKnowledgeUpdate::has_pertinence() const {
   return _has_bit(7);
 }
-inline void MsgPopulationConcentrationKnowledgeUpdate::clear_pertinence() {
+inline void MsgCrowdConcentrationKnowledgeUpdate::clear_pertinence() {
   pertinence_ = 0;
   _clear_bit(7);
 }
-inline ::google::protobuf::int32 MsgPopulationConcentrationKnowledgeUpdate::pertinence() const {
+inline ::google::protobuf::int32 MsgCrowdConcentrationKnowledgeUpdate::pertinence() const {
   return pertinence_;
 }
-inline void MsgPopulationConcentrationKnowledgeUpdate::set_pertinence(::google::protobuf::int32 value) {
+inline void MsgCrowdConcentrationKnowledgeUpdate::set_pertinence(::google::protobuf::int32 value) {
   _set_bit(7);
   pertinence_ = value;
 }
 
 // optional bool est_percu = 9;
-inline bool MsgPopulationConcentrationKnowledgeUpdate::has_est_percu() const {
+inline bool MsgCrowdConcentrationKnowledgeUpdate::has_est_percu() const {
   return _has_bit(8);
 }
-inline void MsgPopulationConcentrationKnowledgeUpdate::clear_est_percu() {
+inline void MsgCrowdConcentrationKnowledgeUpdate::clear_est_percu() {
   est_percu_ = false;
   _clear_bit(8);
 }
-inline bool MsgPopulationConcentrationKnowledgeUpdate::est_percu() const {
+inline bool MsgCrowdConcentrationKnowledgeUpdate::est_percu() const {
   return est_percu_;
 }
-inline void MsgPopulationConcentrationKnowledgeUpdate::set_est_percu(bool value) {
+inline void MsgCrowdConcentrationKnowledgeUpdate::set_est_percu(bool value) {
   _set_bit(8);
   est_percu_ = value;
 }
 
 // -------------------------------------------------------------------
 
-// MsgPopulationConcentrationKnowledgeDestruction
+// MsgCrowdConcentrationKnowledgeDestruction
 
-// required .Common.PopulationConcentrationKnowledgeId id = 1;
-inline bool MsgPopulationConcentrationKnowledgeDestruction::has_id() const {
+// required .Common.CrowdConcentrationKnowledgeId knowledge = 1;
+inline bool MsgCrowdConcentrationKnowledgeDestruction::has_knowledge() const {
   return _has_bit(0);
 }
-inline void MsgPopulationConcentrationKnowledgeDestruction::clear_id() {
-  if (id_ != NULL) id_->::Common::PopulationConcentrationKnowledgeId::Clear();
+inline void MsgCrowdConcentrationKnowledgeDestruction::clear_knowledge() {
+  if (knowledge_ != NULL) knowledge_->::Common::CrowdConcentrationKnowledgeId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::PopulationConcentrationKnowledgeId& MsgPopulationConcentrationKnowledgeDestruction::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::CrowdConcentrationKnowledgeId& MsgCrowdConcentrationKnowledgeDestruction::knowledge() const {
+  return knowledge_ != NULL ? *knowledge_ : *default_instance_->knowledge_;
 }
-inline ::Common::PopulationConcentrationKnowledgeId* MsgPopulationConcentrationKnowledgeDestruction::mutable_id() {
+inline ::Common::CrowdConcentrationKnowledgeId* MsgCrowdConcentrationKnowledgeDestruction::mutable_knowledge() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::PopulationConcentrationKnowledgeId;
-  return id_;
+  if (knowledge_ == NULL) knowledge_ = new ::Common::CrowdConcentrationKnowledgeId;
+  return knowledge_;
 }
 
-// required .Common.PopulationKnowledgeId population = 2;
-inline bool MsgPopulationConcentrationKnowledgeDestruction::has_population() const {
+// required .Common.CrowdKnowledgeId crowd = 2;
+inline bool MsgCrowdConcentrationKnowledgeDestruction::has_crowd() const {
   return _has_bit(1);
 }
-inline void MsgPopulationConcentrationKnowledgeDestruction::clear_population() {
-  if (population_ != NULL) population_->::Common::PopulationKnowledgeId::Clear();
+inline void MsgCrowdConcentrationKnowledgeDestruction::clear_crowd() {
+  if (crowd_ != NULL) crowd_->::Common::CrowdKnowledgeId::Clear();
   _clear_bit(1);
 }
-inline const ::Common::PopulationKnowledgeId& MsgPopulationConcentrationKnowledgeDestruction::population() const {
-  return population_ != NULL ? *population_ : *default_instance_->population_;
+inline const ::Common::CrowdKnowledgeId& MsgCrowdConcentrationKnowledgeDestruction::crowd() const {
+  return crowd_ != NULL ? *crowd_ : *default_instance_->crowd_;
 }
-inline ::Common::PopulationKnowledgeId* MsgPopulationConcentrationKnowledgeDestruction::mutable_population() {
+inline ::Common::CrowdKnowledgeId* MsgCrowdConcentrationKnowledgeDestruction::mutable_crowd() {
   _set_bit(1);
-  if (population_ == NULL) population_ = new ::Common::PopulationKnowledgeId;
-  return population_;
+  if (crowd_ == NULL) crowd_ = new ::Common::CrowdKnowledgeId;
+  return crowd_;
 }
 
 // required .Common.KnowledgeGroupId knowledge_group = 3;
-inline bool MsgPopulationConcentrationKnowledgeDestruction::has_knowledge_group() const {
+inline bool MsgCrowdConcentrationKnowledgeDestruction::has_knowledge_group() const {
   return _has_bit(2);
 }
-inline void MsgPopulationConcentrationKnowledgeDestruction::clear_knowledge_group() {
+inline void MsgCrowdConcentrationKnowledgeDestruction::clear_knowledge_group() {
   if (knowledge_group_ != NULL) knowledge_group_->::Common::KnowledgeGroupId::Clear();
   _clear_bit(2);
 }
-inline const ::Common::KnowledgeGroupId& MsgPopulationConcentrationKnowledgeDestruction::knowledge_group() const {
+inline const ::Common::KnowledgeGroupId& MsgCrowdConcentrationKnowledgeDestruction::knowledge_group() const {
   return knowledge_group_ != NULL ? *knowledge_group_ : *default_instance_->knowledge_group_;
 }
-inline ::Common::KnowledgeGroupId* MsgPopulationConcentrationKnowledgeDestruction::mutable_knowledge_group() {
+inline ::Common::KnowledgeGroupId* MsgCrowdConcentrationKnowledgeDestruction::mutable_knowledge_group() {
   _set_bit(2);
   if (knowledge_group_ == NULL) knowledge_group_ = new ::Common::KnowledgeGroupId;
   return knowledge_group_;
@@ -29082,73 +29453,73 @@ inline ::Common::KnowledgeGroupId* MsgPopulationConcentrationKnowledgeDestructio
 
 // -------------------------------------------------------------------
 
-// MsgPopulationFlowKnowledgeCreation
+// MsgCrowdFlowKnowledgeCreation
 
-// required .Common.PopulationFlowKnowledgeId id = 1;
-inline bool MsgPopulationFlowKnowledgeCreation::has_id() const {
+// required .Common.CrowdFlowKnowledgeId knowledge = 1;
+inline bool MsgCrowdFlowKnowledgeCreation::has_knowledge() const {
   return _has_bit(0);
 }
-inline void MsgPopulationFlowKnowledgeCreation::clear_id() {
-  if (id_ != NULL) id_->::Common::PopulationFlowKnowledgeId::Clear();
+inline void MsgCrowdFlowKnowledgeCreation::clear_knowledge() {
+  if (knowledge_ != NULL) knowledge_->::Common::CrowdFlowKnowledgeId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::PopulationFlowKnowledgeId& MsgPopulationFlowKnowledgeCreation::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::CrowdFlowKnowledgeId& MsgCrowdFlowKnowledgeCreation::knowledge() const {
+  return knowledge_ != NULL ? *knowledge_ : *default_instance_->knowledge_;
 }
-inline ::Common::PopulationFlowKnowledgeId* MsgPopulationFlowKnowledgeCreation::mutable_id() {
+inline ::Common::CrowdFlowKnowledgeId* MsgCrowdFlowKnowledgeCreation::mutable_knowledge() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::PopulationFlowKnowledgeId;
-  return id_;
+  if (knowledge_ == NULL) knowledge_ = new ::Common::CrowdFlowKnowledgeId;
+  return knowledge_;
 }
 
-// required .Common.PopulationKnowledgeId population = 2;
-inline bool MsgPopulationFlowKnowledgeCreation::has_population() const {
+// required .Common.CrowdKnowledgeId crowd = 2;
+inline bool MsgCrowdFlowKnowledgeCreation::has_crowd() const {
   return _has_bit(1);
 }
-inline void MsgPopulationFlowKnowledgeCreation::clear_population() {
-  if (population_ != NULL) population_->::Common::PopulationKnowledgeId::Clear();
+inline void MsgCrowdFlowKnowledgeCreation::clear_crowd() {
+  if (crowd_ != NULL) crowd_->::Common::CrowdKnowledgeId::Clear();
   _clear_bit(1);
 }
-inline const ::Common::PopulationKnowledgeId& MsgPopulationFlowKnowledgeCreation::population() const {
-  return population_ != NULL ? *population_ : *default_instance_->population_;
+inline const ::Common::CrowdKnowledgeId& MsgCrowdFlowKnowledgeCreation::crowd() const {
+  return crowd_ != NULL ? *crowd_ : *default_instance_->crowd_;
 }
-inline ::Common::PopulationKnowledgeId* MsgPopulationFlowKnowledgeCreation::mutable_population() {
+inline ::Common::CrowdKnowledgeId* MsgCrowdFlowKnowledgeCreation::mutable_crowd() {
   _set_bit(1);
-  if (population_ == NULL) population_ = new ::Common::PopulationKnowledgeId;
-  return population_;
+  if (crowd_ == NULL) crowd_ = new ::Common::CrowdKnowledgeId;
+  return crowd_;
 }
 
 // required .Common.KnowledgeGroupId knowledge_group = 3;
-inline bool MsgPopulationFlowKnowledgeCreation::has_knowledge_group() const {
+inline bool MsgCrowdFlowKnowledgeCreation::has_knowledge_group() const {
   return _has_bit(2);
 }
-inline void MsgPopulationFlowKnowledgeCreation::clear_knowledge_group() {
+inline void MsgCrowdFlowKnowledgeCreation::clear_knowledge_group() {
   if (knowledge_group_ != NULL) knowledge_group_->::Common::KnowledgeGroupId::Clear();
   _clear_bit(2);
 }
-inline const ::Common::KnowledgeGroupId& MsgPopulationFlowKnowledgeCreation::knowledge_group() const {
+inline const ::Common::KnowledgeGroupId& MsgCrowdFlowKnowledgeCreation::knowledge_group() const {
   return knowledge_group_ != NULL ? *knowledge_group_ : *default_instance_->knowledge_group_;
 }
-inline ::Common::KnowledgeGroupId* MsgPopulationFlowKnowledgeCreation::mutable_knowledge_group() {
+inline ::Common::KnowledgeGroupId* MsgCrowdFlowKnowledgeCreation::mutable_knowledge_group() {
   _set_bit(2);
   if (knowledge_group_ == NULL) knowledge_group_ = new ::Common::KnowledgeGroupId;
   return knowledge_group_;
 }
 
-// required .Common.PopulationFlowId flow = 4;
-inline bool MsgPopulationFlowKnowledgeCreation::has_flow() const {
+// required .Common.CrowdFlowId flow = 4;
+inline bool MsgCrowdFlowKnowledgeCreation::has_flow() const {
   return _has_bit(3);
 }
-inline void MsgPopulationFlowKnowledgeCreation::clear_flow() {
-  if (flow_ != NULL) flow_->::Common::PopulationFlowId::Clear();
+inline void MsgCrowdFlowKnowledgeCreation::clear_flow() {
+  if (flow_ != NULL) flow_->::Common::CrowdFlowId::Clear();
   _clear_bit(3);
 }
-inline const ::Common::PopulationFlowId& MsgPopulationFlowKnowledgeCreation::flow() const {
+inline const ::Common::CrowdFlowId& MsgCrowdFlowKnowledgeCreation::flow() const {
   return flow_ != NULL ? *flow_ : *default_instance_->flow_;
 }
-inline ::Common::PopulationFlowId* MsgPopulationFlowKnowledgeCreation::mutable_flow() {
+inline ::Common::CrowdFlowId* MsgCrowdFlowKnowledgeCreation::mutable_flow() {
   _set_bit(3);
-  if (flow_ == NULL) flow_ = new ::Common::PopulationFlowId;
+  if (flow_ == NULL) flow_ = new ::Common::CrowdFlowId;
   return flow_;
 }
 
@@ -29220,241 +29591,241 @@ inline ::MsgsSimToClient::MsgFlowPart* SeqOfFlowPart::add_elem() {
 
 // -------------------------------------------------------------------
 
-// MsgPopulationFlowKnowledgeUpdate
+// MsgCrowdFlowKnowledgeUpdate
 
-// required .Common.PopulationFlowKnowledgeId id = 1;
-inline bool MsgPopulationFlowKnowledgeUpdate::has_id() const {
+// required .Common.CrowdFlowKnowledgeId knowledge = 1;
+inline bool MsgCrowdFlowKnowledgeUpdate::has_knowledge() const {
   return _has_bit(0);
 }
-inline void MsgPopulationFlowKnowledgeUpdate::clear_id() {
-  if (id_ != NULL) id_->::Common::PopulationFlowKnowledgeId::Clear();
+inline void MsgCrowdFlowKnowledgeUpdate::clear_knowledge() {
+  if (knowledge_ != NULL) knowledge_->::Common::CrowdFlowKnowledgeId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::PopulationFlowKnowledgeId& MsgPopulationFlowKnowledgeUpdate::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::CrowdFlowKnowledgeId& MsgCrowdFlowKnowledgeUpdate::knowledge() const {
+  return knowledge_ != NULL ? *knowledge_ : *default_instance_->knowledge_;
 }
-inline ::Common::PopulationFlowKnowledgeId* MsgPopulationFlowKnowledgeUpdate::mutable_id() {
+inline ::Common::CrowdFlowKnowledgeId* MsgCrowdFlowKnowledgeUpdate::mutable_knowledge() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::PopulationFlowKnowledgeId;
-  return id_;
+  if (knowledge_ == NULL) knowledge_ = new ::Common::CrowdFlowKnowledgeId;
+  return knowledge_;
 }
 
-// required .Common.PopulationKnowledgeId population = 2;
-inline bool MsgPopulationFlowKnowledgeUpdate::has_population() const {
+// required .Common.CrowdKnowledgeId crowd = 2;
+inline bool MsgCrowdFlowKnowledgeUpdate::has_crowd() const {
   return _has_bit(1);
 }
-inline void MsgPopulationFlowKnowledgeUpdate::clear_population() {
-  if (population_ != NULL) population_->::Common::PopulationKnowledgeId::Clear();
+inline void MsgCrowdFlowKnowledgeUpdate::clear_crowd() {
+  if (crowd_ != NULL) crowd_->::Common::CrowdKnowledgeId::Clear();
   _clear_bit(1);
 }
-inline const ::Common::PopulationKnowledgeId& MsgPopulationFlowKnowledgeUpdate::population() const {
-  return population_ != NULL ? *population_ : *default_instance_->population_;
+inline const ::Common::CrowdKnowledgeId& MsgCrowdFlowKnowledgeUpdate::crowd() const {
+  return crowd_ != NULL ? *crowd_ : *default_instance_->crowd_;
 }
-inline ::Common::PopulationKnowledgeId* MsgPopulationFlowKnowledgeUpdate::mutable_population() {
+inline ::Common::CrowdKnowledgeId* MsgCrowdFlowKnowledgeUpdate::mutable_crowd() {
   _set_bit(1);
-  if (population_ == NULL) population_ = new ::Common::PopulationKnowledgeId;
-  return population_;
+  if (crowd_ == NULL) crowd_ = new ::Common::CrowdKnowledgeId;
+  return crowd_;
 }
 
 // required .Common.KnowledgeGroupId knowledge_group = 3;
-inline bool MsgPopulationFlowKnowledgeUpdate::has_knowledge_group() const {
+inline bool MsgCrowdFlowKnowledgeUpdate::has_knowledge_group() const {
   return _has_bit(2);
 }
-inline void MsgPopulationFlowKnowledgeUpdate::clear_knowledge_group() {
+inline void MsgCrowdFlowKnowledgeUpdate::clear_knowledge_group() {
   if (knowledge_group_ != NULL) knowledge_group_->::Common::KnowledgeGroupId::Clear();
   _clear_bit(2);
 }
-inline const ::Common::KnowledgeGroupId& MsgPopulationFlowKnowledgeUpdate::knowledge_group() const {
+inline const ::Common::KnowledgeGroupId& MsgCrowdFlowKnowledgeUpdate::knowledge_group() const {
   return knowledge_group_ != NULL ? *knowledge_group_ : *default_instance_->knowledge_group_;
 }
-inline ::Common::KnowledgeGroupId* MsgPopulationFlowKnowledgeUpdate::mutable_knowledge_group() {
+inline ::Common::KnowledgeGroupId* MsgCrowdFlowKnowledgeUpdate::mutable_knowledge_group() {
   _set_bit(2);
   if (knowledge_group_ == NULL) knowledge_group_ = new ::Common::KnowledgeGroupId;
   return knowledge_group_;
 }
 
-// optional .Common.PopulationFlowId flow = 4;
-inline bool MsgPopulationFlowKnowledgeUpdate::has_flow() const {
+// optional .Common.CrowdFlowId flow = 4;
+inline bool MsgCrowdFlowKnowledgeUpdate::has_flow() const {
   return _has_bit(3);
 }
-inline void MsgPopulationFlowKnowledgeUpdate::clear_flow() {
-  if (flow_ != NULL) flow_->::Common::PopulationFlowId::Clear();
+inline void MsgCrowdFlowKnowledgeUpdate::clear_flow() {
+  if (flow_ != NULL) flow_->::Common::CrowdFlowId::Clear();
   _clear_bit(3);
 }
-inline const ::Common::PopulationFlowId& MsgPopulationFlowKnowledgeUpdate::flow() const {
+inline const ::Common::CrowdFlowId& MsgCrowdFlowKnowledgeUpdate::flow() const {
   return flow_ != NULL ? *flow_ : *default_instance_->flow_;
 }
-inline ::Common::PopulationFlowId* MsgPopulationFlowKnowledgeUpdate::mutable_flow() {
+inline ::Common::CrowdFlowId* MsgCrowdFlowKnowledgeUpdate::mutable_flow() {
   _set_bit(3);
-  if (flow_ == NULL) flow_ = new ::Common::PopulationFlowId;
+  if (flow_ == NULL) flow_ = new ::Common::CrowdFlowId;
   return flow_;
 }
 
 // optional .MsgsSimToClient.SeqOfFlowPart portions_flux = 5;
-inline bool MsgPopulationFlowKnowledgeUpdate::has_portions_flux() const {
+inline bool MsgCrowdFlowKnowledgeUpdate::has_portions_flux() const {
   return _has_bit(4);
 }
-inline void MsgPopulationFlowKnowledgeUpdate::clear_portions_flux() {
+inline void MsgCrowdFlowKnowledgeUpdate::clear_portions_flux() {
   if (portions_flux_ != NULL) portions_flux_->::MsgsSimToClient::SeqOfFlowPart::Clear();
   _clear_bit(4);
 }
-inline const ::MsgsSimToClient::SeqOfFlowPart& MsgPopulationFlowKnowledgeUpdate::portions_flux() const {
+inline const ::MsgsSimToClient::SeqOfFlowPart& MsgCrowdFlowKnowledgeUpdate::portions_flux() const {
   return portions_flux_ != NULL ? *portions_flux_ : *default_instance_->portions_flux_;
 }
-inline ::MsgsSimToClient::SeqOfFlowPart* MsgPopulationFlowKnowledgeUpdate::mutable_portions_flux() {
+inline ::MsgsSimToClient::SeqOfFlowPart* MsgCrowdFlowKnowledgeUpdate::mutable_portions_flux() {
   _set_bit(4);
   if (portions_flux_ == NULL) portions_flux_ = new ::MsgsSimToClient::SeqOfFlowPart;
   return portions_flux_;
 }
 
 // optional .Common.MsgHeading direction = 6;
-inline bool MsgPopulationFlowKnowledgeUpdate::has_direction() const {
+inline bool MsgCrowdFlowKnowledgeUpdate::has_direction() const {
   return _has_bit(5);
 }
-inline void MsgPopulationFlowKnowledgeUpdate::clear_direction() {
+inline void MsgCrowdFlowKnowledgeUpdate::clear_direction() {
   if (direction_ != NULL) direction_->::Common::MsgHeading::Clear();
   _clear_bit(5);
 }
-inline const ::Common::MsgHeading& MsgPopulationFlowKnowledgeUpdate::direction() const {
+inline const ::Common::MsgHeading& MsgCrowdFlowKnowledgeUpdate::direction() const {
   return direction_ != NULL ? *direction_ : *default_instance_->direction_;
 }
-inline ::Common::MsgHeading* MsgPopulationFlowKnowledgeUpdate::mutable_direction() {
+inline ::Common::MsgHeading* MsgCrowdFlowKnowledgeUpdate::mutable_direction() {
   _set_bit(5);
   if (direction_ == NULL) direction_ = new ::Common::MsgHeading;
   return direction_;
 }
 
 // optional int32 vitesse = 7;
-inline bool MsgPopulationFlowKnowledgeUpdate::has_vitesse() const {
+inline bool MsgCrowdFlowKnowledgeUpdate::has_vitesse() const {
   return _has_bit(6);
 }
-inline void MsgPopulationFlowKnowledgeUpdate::clear_vitesse() {
+inline void MsgCrowdFlowKnowledgeUpdate::clear_vitesse() {
   vitesse_ = 0;
   _clear_bit(6);
 }
-inline ::google::protobuf::int32 MsgPopulationFlowKnowledgeUpdate::vitesse() const {
+inline ::google::protobuf::int32 MsgCrowdFlowKnowledgeUpdate::vitesse() const {
   return vitesse_;
 }
-inline void MsgPopulationFlowKnowledgeUpdate::set_vitesse(::google::protobuf::int32 value) {
+inline void MsgCrowdFlowKnowledgeUpdate::set_vitesse(::google::protobuf::int32 value) {
   _set_bit(6);
   vitesse_ = value;
 }
 
 // optional int32 nb_humains_vivants = 8;
-inline bool MsgPopulationFlowKnowledgeUpdate::has_nb_humains_vivants() const {
+inline bool MsgCrowdFlowKnowledgeUpdate::has_nb_humains_vivants() const {
   return _has_bit(7);
 }
-inline void MsgPopulationFlowKnowledgeUpdate::clear_nb_humains_vivants() {
+inline void MsgCrowdFlowKnowledgeUpdate::clear_nb_humains_vivants() {
   nb_humains_vivants_ = 0;
   _clear_bit(7);
 }
-inline ::google::protobuf::int32 MsgPopulationFlowKnowledgeUpdate::nb_humains_vivants() const {
+inline ::google::protobuf::int32 MsgCrowdFlowKnowledgeUpdate::nb_humains_vivants() const {
   return nb_humains_vivants_;
 }
-inline void MsgPopulationFlowKnowledgeUpdate::set_nb_humains_vivants(::google::protobuf::int32 value) {
+inline void MsgCrowdFlowKnowledgeUpdate::set_nb_humains_vivants(::google::protobuf::int32 value) {
   _set_bit(7);
   nb_humains_vivants_ = value;
 }
 
 // optional int32 nb_humains_morts = 9;
-inline bool MsgPopulationFlowKnowledgeUpdate::has_nb_humains_morts() const {
+inline bool MsgCrowdFlowKnowledgeUpdate::has_nb_humains_morts() const {
   return _has_bit(8);
 }
-inline void MsgPopulationFlowKnowledgeUpdate::clear_nb_humains_morts() {
+inline void MsgCrowdFlowKnowledgeUpdate::clear_nb_humains_morts() {
   nb_humains_morts_ = 0;
   _clear_bit(8);
 }
-inline ::google::protobuf::int32 MsgPopulationFlowKnowledgeUpdate::nb_humains_morts() const {
+inline ::google::protobuf::int32 MsgCrowdFlowKnowledgeUpdate::nb_humains_morts() const {
   return nb_humains_morts_;
 }
-inline void MsgPopulationFlowKnowledgeUpdate::set_nb_humains_morts(::google::protobuf::int32 value) {
+inline void MsgCrowdFlowKnowledgeUpdate::set_nb_humains_morts(::google::protobuf::int32 value) {
   _set_bit(8);
   nb_humains_morts_ = value;
 }
 
-// optional .Common.EnumPopulationAttitude attitude = 10;
-inline bool MsgPopulationFlowKnowledgeUpdate::has_attitude() const {
+// optional .Common.EnumCrowdAttitude attitude = 10;
+inline bool MsgCrowdFlowKnowledgeUpdate::has_attitude() const {
   return _has_bit(9);
 }
-inline void MsgPopulationFlowKnowledgeUpdate::clear_attitude() {
+inline void MsgCrowdFlowKnowledgeUpdate::clear_attitude() {
   attitude_ = 0;
   _clear_bit(9);
 }
-inline Common::EnumPopulationAttitude MsgPopulationFlowKnowledgeUpdate::attitude() const {
-  return static_cast< Common::EnumPopulationAttitude >(attitude_);
+inline Common::EnumCrowdAttitude MsgCrowdFlowKnowledgeUpdate::attitude() const {
+  return static_cast< Common::EnumCrowdAttitude >(attitude_);
 }
-inline void MsgPopulationFlowKnowledgeUpdate::set_attitude(Common::EnumPopulationAttitude value) {
-  GOOGLE_DCHECK(Common::EnumPopulationAttitude_IsValid(value));
+inline void MsgCrowdFlowKnowledgeUpdate::set_attitude(Common::EnumCrowdAttitude value) {
+  GOOGLE_DCHECK(Common::EnumCrowdAttitude_IsValid(value));
   _set_bit(9);
   attitude_ = value;
 }
 
 // optional bool est_percu = 11;
-inline bool MsgPopulationFlowKnowledgeUpdate::has_est_percu() const {
+inline bool MsgCrowdFlowKnowledgeUpdate::has_est_percu() const {
   return _has_bit(10);
 }
-inline void MsgPopulationFlowKnowledgeUpdate::clear_est_percu() {
+inline void MsgCrowdFlowKnowledgeUpdate::clear_est_percu() {
   est_percu_ = false;
   _clear_bit(10);
 }
-inline bool MsgPopulationFlowKnowledgeUpdate::est_percu() const {
+inline bool MsgCrowdFlowKnowledgeUpdate::est_percu() const {
   return est_percu_;
 }
-inline void MsgPopulationFlowKnowledgeUpdate::set_est_percu(bool value) {
+inline void MsgCrowdFlowKnowledgeUpdate::set_est_percu(bool value) {
   _set_bit(10);
   est_percu_ = value;
 }
 
 // -------------------------------------------------------------------
 
-// MsgPopulationFlowKnowledgeDestruction
+// MsgCrowdFlowKnowledgeDestruction
 
-// required .Common.PopulationFlowKnowledgeId id = 1;
-inline bool MsgPopulationFlowKnowledgeDestruction::has_id() const {
+// required .Common.CrowdFlowKnowledgeId knowledge = 1;
+inline bool MsgCrowdFlowKnowledgeDestruction::has_knowledge() const {
   return _has_bit(0);
 }
-inline void MsgPopulationFlowKnowledgeDestruction::clear_id() {
-  if (id_ != NULL) id_->::Common::PopulationFlowKnowledgeId::Clear();
+inline void MsgCrowdFlowKnowledgeDestruction::clear_knowledge() {
+  if (knowledge_ != NULL) knowledge_->::Common::CrowdFlowKnowledgeId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::PopulationFlowKnowledgeId& MsgPopulationFlowKnowledgeDestruction::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::CrowdFlowKnowledgeId& MsgCrowdFlowKnowledgeDestruction::knowledge() const {
+  return knowledge_ != NULL ? *knowledge_ : *default_instance_->knowledge_;
 }
-inline ::Common::PopulationFlowKnowledgeId* MsgPopulationFlowKnowledgeDestruction::mutable_id() {
+inline ::Common::CrowdFlowKnowledgeId* MsgCrowdFlowKnowledgeDestruction::mutable_knowledge() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::PopulationFlowKnowledgeId;
-  return id_;
+  if (knowledge_ == NULL) knowledge_ = new ::Common::CrowdFlowKnowledgeId;
+  return knowledge_;
 }
 
-// required .Common.PopulationKnowledgeId population = 2;
-inline bool MsgPopulationFlowKnowledgeDestruction::has_population() const {
+// required .Common.CrowdKnowledgeId crowd = 2;
+inline bool MsgCrowdFlowKnowledgeDestruction::has_crowd() const {
   return _has_bit(1);
 }
-inline void MsgPopulationFlowKnowledgeDestruction::clear_population() {
-  if (population_ != NULL) population_->::Common::PopulationKnowledgeId::Clear();
+inline void MsgCrowdFlowKnowledgeDestruction::clear_crowd() {
+  if (crowd_ != NULL) crowd_->::Common::CrowdKnowledgeId::Clear();
   _clear_bit(1);
 }
-inline const ::Common::PopulationKnowledgeId& MsgPopulationFlowKnowledgeDestruction::population() const {
-  return population_ != NULL ? *population_ : *default_instance_->population_;
+inline const ::Common::CrowdKnowledgeId& MsgCrowdFlowKnowledgeDestruction::crowd() const {
+  return crowd_ != NULL ? *crowd_ : *default_instance_->crowd_;
 }
-inline ::Common::PopulationKnowledgeId* MsgPopulationFlowKnowledgeDestruction::mutable_population() {
+inline ::Common::CrowdKnowledgeId* MsgCrowdFlowKnowledgeDestruction::mutable_crowd() {
   _set_bit(1);
-  if (population_ == NULL) population_ = new ::Common::PopulationKnowledgeId;
-  return population_;
+  if (crowd_ == NULL) crowd_ = new ::Common::CrowdKnowledgeId;
+  return crowd_;
 }
 
 // required .Common.KnowledgeGroupId knowledge_group = 3;
-inline bool MsgPopulationFlowKnowledgeDestruction::has_knowledge_group() const {
+inline bool MsgCrowdFlowKnowledgeDestruction::has_knowledge_group() const {
   return _has_bit(2);
 }
-inline void MsgPopulationFlowKnowledgeDestruction::clear_knowledge_group() {
+inline void MsgCrowdFlowKnowledgeDestruction::clear_knowledge_group() {
   if (knowledge_group_ != NULL) knowledge_group_->::Common::KnowledgeGroupId::Clear();
   _clear_bit(2);
 }
-inline const ::Common::KnowledgeGroupId& MsgPopulationFlowKnowledgeDestruction::knowledge_group() const {
+inline const ::Common::KnowledgeGroupId& MsgCrowdFlowKnowledgeDestruction::knowledge_group() const {
   return knowledge_group_ != NULL ? *knowledge_group_ : *default_instance_->knowledge_group_;
 }
-inline ::Common::KnowledgeGroupId* MsgPopulationFlowKnowledgeDestruction::mutable_knowledge_group() {
+inline ::Common::KnowledgeGroupId* MsgCrowdFlowKnowledgeDestruction::mutable_knowledge_group() {
   _set_bit(2);
   if (knowledge_group_ == NULL) knowledge_group_ = new ::Common::KnowledgeGroupId;
   return knowledge_group_;
@@ -29630,61 +30001,61 @@ inline void MsgFolkCreation::set_edge_number(::google::protobuf::int32 value) {
 
 // MsgFolkGraphEdgeUpdate
 
-// required int32 oid = 1;
-inline bool MsgFolkGraphEdgeUpdate::has_oid() const {
+// required int32 folk = 1;
+inline bool MsgFolkGraphEdgeUpdate::has_folk() const {
   return _has_bit(0);
 }
-inline void MsgFolkGraphEdgeUpdate::clear_oid() {
-  oid_ = 0;
+inline void MsgFolkGraphEdgeUpdate::clear_folk() {
+  folk_ = 0;
   _clear_bit(0);
 }
-inline ::google::protobuf::int32 MsgFolkGraphEdgeUpdate::oid() const {
-  return oid_;
+inline ::google::protobuf::int32 MsgFolkGraphEdgeUpdate::folk() const {
+  return folk_;
 }
-inline void MsgFolkGraphEdgeUpdate::set_oid(::google::protobuf::int32 value) {
+inline void MsgFolkGraphEdgeUpdate::set_folk(::google::protobuf::int32 value) {
   _set_bit(0);
-  oid_ = value;
+  folk_ = value;
 }
 
-// required int32 shp_oid = 2;
-inline bool MsgFolkGraphEdgeUpdate::has_shp_oid() const {
+// required int32 shape_id = 2;
+inline bool MsgFolkGraphEdgeUpdate::has_shape_id() const {
   return _has_bit(1);
 }
-inline void MsgFolkGraphEdgeUpdate::clear_shp_oid() {
-  shp_oid_ = 0;
+inline void MsgFolkGraphEdgeUpdate::clear_shape_id() {
+  shape_id_ = 0;
   _clear_bit(1);
 }
-inline ::google::protobuf::int32 MsgFolkGraphEdgeUpdate::shp_oid() const {
-  return shp_oid_;
+inline ::google::protobuf::int32 MsgFolkGraphEdgeUpdate::shape_id() const {
+  return shape_id_;
 }
-inline void MsgFolkGraphEdgeUpdate::set_shp_oid(::google::protobuf::int32 value) {
+inline void MsgFolkGraphEdgeUpdate::set_shape_id(::google::protobuf::int32 value) {
   _set_bit(1);
-  shp_oid_ = value;
+  shape_id_ = value;
 }
 
-// repeated int32 population_occupation = 3;
-inline int MsgFolkGraphEdgeUpdate::population_occupation_size() const {
-  return population_occupation_.size();
+// repeated int32 crowd_occupation = 3;
+inline int MsgFolkGraphEdgeUpdate::crowd_occupation_size() const {
+  return crowd_occupation_.size();
 }
-inline void MsgFolkGraphEdgeUpdate::clear_population_occupation() {
-  population_occupation_.Clear();
+inline void MsgFolkGraphEdgeUpdate::clear_crowd_occupation() {
+  crowd_occupation_.Clear();
 }
 inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
-MsgFolkGraphEdgeUpdate::population_occupation() const {
-  return population_occupation_;
+MsgFolkGraphEdgeUpdate::crowd_occupation() const {
+  return crowd_occupation_;
 }
 inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
-MsgFolkGraphEdgeUpdate::mutable_population_occupation() {
-  return &population_occupation_;
+MsgFolkGraphEdgeUpdate::mutable_crowd_occupation() {
+  return &crowd_occupation_;
 }
-inline ::google::protobuf::int32 MsgFolkGraphEdgeUpdate::population_occupation(int index) const {
-  return population_occupation_.Get(index);
+inline ::google::protobuf::int32 MsgFolkGraphEdgeUpdate::crowd_occupation(int index) const {
+  return crowd_occupation_.Get(index);
 }
-inline void MsgFolkGraphEdgeUpdate::set_population_occupation(int index, ::google::protobuf::int32 value) {
-  population_occupation_.Set(index, value);
+inline void MsgFolkGraphEdgeUpdate::set_crowd_occupation(int index, ::google::protobuf::int32 value) {
+  crowd_occupation_.Set(index, value);
 }
-inline void MsgFolkGraphEdgeUpdate::add_population_occupation(::google::protobuf::int32 value) {
-  population_occupation_.Add(value);
+inline void MsgFolkGraphEdgeUpdate::add_crowd_occupation(::google::protobuf::int32 value) {
+  crowd_occupation_.Add(value);
 }
 
 // -------------------------------------------------------------------
@@ -29777,6 +30148,62 @@ inline ::std::string* MsgControlCheckPointSaveEnd::mutable_name() {
   }
   return name_;
 }
+
+// -------------------------------------------------------------------
+
+// MsgControlCheckPointListAck
+
+// -------------------------------------------------------------------
+
+// MsgControlCheckPointList
+
+// repeated string checkpoint = 1;
+inline int MsgControlCheckPointList::checkpoint_size() const {
+  return checkpoint_.size();
+}
+inline void MsgControlCheckPointList::clear_checkpoint() {
+  checkpoint_.Clear();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
+MsgControlCheckPointList::checkpoint() const {
+  return checkpoint_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::std::string>*
+MsgControlCheckPointList::mutable_checkpoint() {
+  return &checkpoint_;
+}
+inline const ::std::string& MsgControlCheckPointList::checkpoint(int index) const {
+  return checkpoint_.Get(index);
+}
+inline ::std::string* MsgControlCheckPointList::mutable_checkpoint(int index) {
+  return checkpoint_.Mutable(index);
+}
+inline void MsgControlCheckPointList::set_checkpoint(int index, const ::std::string& value) {
+  checkpoint_.Mutable(index)->assign(value);
+}
+inline void MsgControlCheckPointList::set_checkpoint(int index, const char* value) {
+  checkpoint_.Mutable(index)->assign(value);
+}
+inline void MsgControlCheckPointList::set_checkpoint(int index, const char* value, size_t size) {
+  checkpoint_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgControlCheckPointList::add_checkpoint() {
+  return checkpoint_.Add();
+}
+inline void MsgControlCheckPointList::add_checkpoint(const ::std::string& value) {
+  checkpoint_.Add()->assign(value);
+}
+inline void MsgControlCheckPointList::add_checkpoint(const char* value) {
+  checkpoint_.Add()->assign(value);
+}
+inline void MsgControlCheckPointList::add_checkpoint(const char* value, size_t size) {
+  checkpoint_.Add()->assign(reinterpret_cast<const char*>(value), size);
+}
+
+// -------------------------------------------------------------------
+
+// MsgControlCheckPointDeleteAck
 
 // -------------------------------------------------------------------
 
@@ -29967,75 +30394,75 @@ inline void MsgUrbanMagicActionAck::set_error_code(::MsgsSimToClient::MsgUrbanMa
 
 // -------------------------------------------------------------------
 
-// MsgUrbanAttributes_Architecture
+// UrbanAttributes_Architecture
 
 // required float height = 1;
-inline bool MsgUrbanAttributes_Architecture::has_height() const {
+inline bool UrbanAttributes_Architecture::has_height() const {
   return _has_bit(0);
 }
-inline void MsgUrbanAttributes_Architecture::clear_height() {
+inline void UrbanAttributes_Architecture::clear_height() {
   height_ = 0;
   _clear_bit(0);
 }
-inline float MsgUrbanAttributes_Architecture::height() const {
+inline float UrbanAttributes_Architecture::height() const {
   return height_;
 }
-inline void MsgUrbanAttributes_Architecture::set_height(float value) {
+inline void UrbanAttributes_Architecture::set_height(float value) {
   _set_bit(0);
   height_ = value;
 }
 
 // required int32 floor_number = 2;
-inline bool MsgUrbanAttributes_Architecture::has_floor_number() const {
+inline bool UrbanAttributes_Architecture::has_floor_number() const {
   return _has_bit(1);
 }
-inline void MsgUrbanAttributes_Architecture::clear_floor_number() {
+inline void UrbanAttributes_Architecture::clear_floor_number() {
   floor_number_ = 0;
   _clear_bit(1);
 }
-inline ::google::protobuf::int32 MsgUrbanAttributes_Architecture::floor_number() const {
+inline ::google::protobuf::int32 UrbanAttributes_Architecture::floor_number() const {
   return floor_number_;
 }
-inline void MsgUrbanAttributes_Architecture::set_floor_number(::google::protobuf::int32 value) {
+inline void UrbanAttributes_Architecture::set_floor_number(::google::protobuf::int32 value) {
   _set_bit(1);
   floor_number_ = value;
 }
 
 // required string roof_shape = 3;
-inline bool MsgUrbanAttributes_Architecture::has_roof_shape() const {
+inline bool UrbanAttributes_Architecture::has_roof_shape() const {
   return _has_bit(2);
 }
-inline void MsgUrbanAttributes_Architecture::clear_roof_shape() {
+inline void UrbanAttributes_Architecture::clear_roof_shape() {
   if (roof_shape_ != &_default_roof_shape_) {
     roof_shape_->clear();
   }
   _clear_bit(2);
 }
-inline const ::std::string& MsgUrbanAttributes_Architecture::roof_shape() const {
+inline const ::std::string& UrbanAttributes_Architecture::roof_shape() const {
   return *roof_shape_;
 }
-inline void MsgUrbanAttributes_Architecture::set_roof_shape(const ::std::string& value) {
+inline void UrbanAttributes_Architecture::set_roof_shape(const ::std::string& value) {
   _set_bit(2);
   if (roof_shape_ == &_default_roof_shape_) {
     roof_shape_ = new ::std::string;
   }
   roof_shape_->assign(value);
 }
-inline void MsgUrbanAttributes_Architecture::set_roof_shape(const char* value) {
+inline void UrbanAttributes_Architecture::set_roof_shape(const char* value) {
   _set_bit(2);
   if (roof_shape_ == &_default_roof_shape_) {
     roof_shape_ = new ::std::string;
   }
   roof_shape_->assign(value);
 }
-inline void MsgUrbanAttributes_Architecture::set_roof_shape(const char* value, size_t size) {
+inline void UrbanAttributes_Architecture::set_roof_shape(const char* value, size_t size) {
   _set_bit(2);
   if (roof_shape_ == &_default_roof_shape_) {
     roof_shape_ = new ::std::string;
   }
   roof_shape_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* MsgUrbanAttributes_Architecture::mutable_roof_shape() {
+inline ::std::string* UrbanAttributes_Architecture::mutable_roof_shape() {
   _set_bit(2);
   if (roof_shape_ == &_default_roof_shape_) {
     roof_shape_ = new ::std::string;
@@ -30044,40 +30471,40 @@ inline ::std::string* MsgUrbanAttributes_Architecture::mutable_roof_shape() {
 }
 
 // required string material = 4;
-inline bool MsgUrbanAttributes_Architecture::has_material() const {
+inline bool UrbanAttributes_Architecture::has_material() const {
   return _has_bit(3);
 }
-inline void MsgUrbanAttributes_Architecture::clear_material() {
+inline void UrbanAttributes_Architecture::clear_material() {
   if (material_ != &_default_material_) {
     material_->clear();
   }
   _clear_bit(3);
 }
-inline const ::std::string& MsgUrbanAttributes_Architecture::material() const {
+inline const ::std::string& UrbanAttributes_Architecture::material() const {
   return *material_;
 }
-inline void MsgUrbanAttributes_Architecture::set_material(const ::std::string& value) {
+inline void UrbanAttributes_Architecture::set_material(const ::std::string& value) {
   _set_bit(3);
   if (material_ == &_default_material_) {
     material_ = new ::std::string;
   }
   material_->assign(value);
 }
-inline void MsgUrbanAttributes_Architecture::set_material(const char* value) {
+inline void UrbanAttributes_Architecture::set_material(const char* value) {
   _set_bit(3);
   if (material_ == &_default_material_) {
     material_ = new ::std::string;
   }
   material_->assign(value);
 }
-inline void MsgUrbanAttributes_Architecture::set_material(const char* value, size_t size) {
+inline void UrbanAttributes_Architecture::set_material(const char* value, size_t size) {
   _set_bit(3);
   if (material_ == &_default_material_) {
     material_ = new ::std::string;
   }
   material_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* MsgUrbanAttributes_Architecture::mutable_material() {
+inline ::std::string* UrbanAttributes_Architecture::mutable_material() {
   _set_bit(3);
   if (material_ == &_default_material_) {
     material_ = new ::std::string;
@@ -30086,223 +30513,223 @@ inline ::std::string* MsgUrbanAttributes_Architecture::mutable_material() {
 }
 
 // required float occupation = 5;
-inline bool MsgUrbanAttributes_Architecture::has_occupation() const {
+inline bool UrbanAttributes_Architecture::has_occupation() const {
   return _has_bit(4);
 }
-inline void MsgUrbanAttributes_Architecture::clear_occupation() {
+inline void UrbanAttributes_Architecture::clear_occupation() {
   occupation_ = 0;
   _clear_bit(4);
 }
-inline float MsgUrbanAttributes_Architecture::occupation() const {
+inline float UrbanAttributes_Architecture::occupation() const {
   return occupation_;
 }
-inline void MsgUrbanAttributes_Architecture::set_occupation(float value) {
+inline void UrbanAttributes_Architecture::set_occupation(float value) {
   _set_bit(4);
   occupation_ = value;
 }
 
 // required float trafficability = 6;
-inline bool MsgUrbanAttributes_Architecture::has_trafficability() const {
+inline bool UrbanAttributes_Architecture::has_trafficability() const {
   return _has_bit(5);
 }
-inline void MsgUrbanAttributes_Architecture::clear_trafficability() {
+inline void UrbanAttributes_Architecture::clear_trafficability() {
   trafficability_ = 0;
   _clear_bit(5);
 }
-inline float MsgUrbanAttributes_Architecture::trafficability() const {
+inline float UrbanAttributes_Architecture::trafficability() const {
   return trafficability_;
 }
-inline void MsgUrbanAttributes_Architecture::set_trafficability(float value) {
+inline void UrbanAttributes_Architecture::set_trafficability(float value) {
   _set_bit(5);
   trafficability_ = value;
 }
 
 // -------------------------------------------------------------------
 
-// MsgUrbanAttributes_Structure
+// UrbanAttributes_Structure
 
 // required uint32 state = 1;
-inline bool MsgUrbanAttributes_Structure::has_state() const {
+inline bool UrbanAttributes_Structure::has_state() const {
   return _has_bit(0);
 }
-inline void MsgUrbanAttributes_Structure::clear_state() {
+inline void UrbanAttributes_Structure::clear_state() {
   state_ = 0u;
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 MsgUrbanAttributes_Structure::state() const {
+inline ::google::protobuf::uint32 UrbanAttributes_Structure::state() const {
   return state_;
 }
-inline void MsgUrbanAttributes_Structure::set_state(::google::protobuf::uint32 value) {
+inline void UrbanAttributes_Structure::set_state(::google::protobuf::uint32 value) {
   _set_bit(0);
   state_ = value;
 }
 
 // -------------------------------------------------------------------
 
-// MsgUrbanAttributes_Infrastructures
+// UrbanAttributes_Infrastructures
 
 // repeated .Common.ResourceNetwork resource_network = 1;
-inline int MsgUrbanAttributes_Infrastructures::resource_network_size() const {
+inline int UrbanAttributes_Infrastructures::resource_network_size() const {
   return resource_network_.size();
 }
-inline void MsgUrbanAttributes_Infrastructures::clear_resource_network() {
+inline void UrbanAttributes_Infrastructures::clear_resource_network() {
   resource_network_.Clear();
 }
 inline const ::google::protobuf::RepeatedPtrField< ::Common::ResourceNetwork >&
-MsgUrbanAttributes_Infrastructures::resource_network() const {
+UrbanAttributes_Infrastructures::resource_network() const {
   return resource_network_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::Common::ResourceNetwork >*
-MsgUrbanAttributes_Infrastructures::mutable_resource_network() {
+UrbanAttributes_Infrastructures::mutable_resource_network() {
   return &resource_network_;
 }
-inline const ::Common::ResourceNetwork& MsgUrbanAttributes_Infrastructures::resource_network(int index) const {
+inline const ::Common::ResourceNetwork& UrbanAttributes_Infrastructures::resource_network(int index) const {
   return resource_network_.Get(index);
 }
-inline ::Common::ResourceNetwork* MsgUrbanAttributes_Infrastructures::mutable_resource_network(int index) {
+inline ::Common::ResourceNetwork* UrbanAttributes_Infrastructures::mutable_resource_network(int index) {
   return resource_network_.Mutable(index);
 }
-inline ::Common::ResourceNetwork* MsgUrbanAttributes_Infrastructures::add_resource_network() {
+inline ::Common::ResourceNetwork* UrbanAttributes_Infrastructures::add_resource_network() {
   return resource_network_.Add();
 }
 
 // -------------------------------------------------------------------
 
-// MsgUrbanAttributes_RgbaColor
+// UrbanAttributes_RgbaColor
 
 // required int32 red = 1;
-inline bool MsgUrbanAttributes_RgbaColor::has_red() const {
+inline bool UrbanAttributes_RgbaColor::has_red() const {
   return _has_bit(0);
 }
-inline void MsgUrbanAttributes_RgbaColor::clear_red() {
+inline void UrbanAttributes_RgbaColor::clear_red() {
   red_ = 0;
   _clear_bit(0);
 }
-inline ::google::protobuf::int32 MsgUrbanAttributes_RgbaColor::red() const {
+inline ::google::protobuf::int32 UrbanAttributes_RgbaColor::red() const {
   return red_;
 }
-inline void MsgUrbanAttributes_RgbaColor::set_red(::google::protobuf::int32 value) {
+inline void UrbanAttributes_RgbaColor::set_red(::google::protobuf::int32 value) {
   _set_bit(0);
   red_ = value;
 }
 
 // required int32 green = 2;
-inline bool MsgUrbanAttributes_RgbaColor::has_green() const {
+inline bool UrbanAttributes_RgbaColor::has_green() const {
   return _has_bit(1);
 }
-inline void MsgUrbanAttributes_RgbaColor::clear_green() {
+inline void UrbanAttributes_RgbaColor::clear_green() {
   green_ = 0;
   _clear_bit(1);
 }
-inline ::google::protobuf::int32 MsgUrbanAttributes_RgbaColor::green() const {
+inline ::google::protobuf::int32 UrbanAttributes_RgbaColor::green() const {
   return green_;
 }
-inline void MsgUrbanAttributes_RgbaColor::set_green(::google::protobuf::int32 value) {
+inline void UrbanAttributes_RgbaColor::set_green(::google::protobuf::int32 value) {
   _set_bit(1);
   green_ = value;
 }
 
 // required int32 blue = 3;
-inline bool MsgUrbanAttributes_RgbaColor::has_blue() const {
+inline bool UrbanAttributes_RgbaColor::has_blue() const {
   return _has_bit(2);
 }
-inline void MsgUrbanAttributes_RgbaColor::clear_blue() {
+inline void UrbanAttributes_RgbaColor::clear_blue() {
   blue_ = 0;
   _clear_bit(2);
 }
-inline ::google::protobuf::int32 MsgUrbanAttributes_RgbaColor::blue() const {
+inline ::google::protobuf::int32 UrbanAttributes_RgbaColor::blue() const {
   return blue_;
 }
-inline void MsgUrbanAttributes_RgbaColor::set_blue(::google::protobuf::int32 value) {
+inline void UrbanAttributes_RgbaColor::set_blue(::google::protobuf::int32 value) {
   _set_bit(2);
   blue_ = value;
 }
 
 // required float alpha = 4;
-inline bool MsgUrbanAttributes_RgbaColor::has_alpha() const {
+inline bool UrbanAttributes_RgbaColor::has_alpha() const {
   return _has_bit(3);
 }
-inline void MsgUrbanAttributes_RgbaColor::clear_alpha() {
+inline void UrbanAttributes_RgbaColor::clear_alpha() {
   alpha_ = 0;
   _clear_bit(3);
 }
-inline float MsgUrbanAttributes_RgbaColor::alpha() const {
+inline float UrbanAttributes_RgbaColor::alpha() const {
   return alpha_;
 }
-inline void MsgUrbanAttributes_RgbaColor::set_alpha(float value) {
+inline void UrbanAttributes_RgbaColor::set_alpha(float value) {
   _set_bit(3);
   alpha_ = value;
 }
 
 // -------------------------------------------------------------------
 
-// MsgUrbanAttributes
+// UrbanAttributes
 
-// optional .MsgsSimToClient.MsgUrbanAttributes.Architecture architecture = 1;
-inline bool MsgUrbanAttributes::has_architecture() const {
+// optional .MsgsSimToClient.UrbanAttributes.Architecture architecture = 1;
+inline bool UrbanAttributes::has_architecture() const {
   return _has_bit(0);
 }
-inline void MsgUrbanAttributes::clear_architecture() {
-  if (architecture_ != NULL) architecture_->::MsgsSimToClient::MsgUrbanAttributes_Architecture::Clear();
+inline void UrbanAttributes::clear_architecture() {
+  if (architecture_ != NULL) architecture_->::MsgsSimToClient::UrbanAttributes_Architecture::Clear();
   _clear_bit(0);
 }
-inline const ::MsgsSimToClient::MsgUrbanAttributes_Architecture& MsgUrbanAttributes::architecture() const {
+inline const ::MsgsSimToClient::UrbanAttributes_Architecture& UrbanAttributes::architecture() const {
   return architecture_ != NULL ? *architecture_ : *default_instance_->architecture_;
 }
-inline ::MsgsSimToClient::MsgUrbanAttributes_Architecture* MsgUrbanAttributes::mutable_architecture() {
+inline ::MsgsSimToClient::UrbanAttributes_Architecture* UrbanAttributes::mutable_architecture() {
   _set_bit(0);
-  if (architecture_ == NULL) architecture_ = new ::MsgsSimToClient::MsgUrbanAttributes_Architecture;
+  if (architecture_ == NULL) architecture_ = new ::MsgsSimToClient::UrbanAttributes_Architecture;
   return architecture_;
 }
 
-// optional .MsgsSimToClient.MsgUrbanAttributes.Structure structure = 2;
-inline bool MsgUrbanAttributes::has_structure() const {
+// optional .MsgsSimToClient.UrbanAttributes.Structure structure = 2;
+inline bool UrbanAttributes::has_structure() const {
   return _has_bit(1);
 }
-inline void MsgUrbanAttributes::clear_structure() {
-  if (structure_ != NULL) structure_->::MsgsSimToClient::MsgUrbanAttributes_Structure::Clear();
+inline void UrbanAttributes::clear_structure() {
+  if (structure_ != NULL) structure_->::MsgsSimToClient::UrbanAttributes_Structure::Clear();
   _clear_bit(1);
 }
-inline const ::MsgsSimToClient::MsgUrbanAttributes_Structure& MsgUrbanAttributes::structure() const {
+inline const ::MsgsSimToClient::UrbanAttributes_Structure& UrbanAttributes::structure() const {
   return structure_ != NULL ? *structure_ : *default_instance_->structure_;
 }
-inline ::MsgsSimToClient::MsgUrbanAttributes_Structure* MsgUrbanAttributes::mutable_structure() {
+inline ::MsgsSimToClient::UrbanAttributes_Structure* UrbanAttributes::mutable_structure() {
   _set_bit(1);
-  if (structure_ == NULL) structure_ = new ::MsgsSimToClient::MsgUrbanAttributes_Structure;
+  if (structure_ == NULL) structure_ = new ::MsgsSimToClient::UrbanAttributes_Structure;
   return structure_;
 }
 
-// optional .MsgsSimToClient.MsgUrbanAttributes.RgbaColor color = 3;
-inline bool MsgUrbanAttributes::has_color() const {
+// optional .MsgsSimToClient.UrbanAttributes.RgbaColor color = 3;
+inline bool UrbanAttributes::has_color() const {
   return _has_bit(2);
 }
-inline void MsgUrbanAttributes::clear_color() {
-  if (color_ != NULL) color_->::MsgsSimToClient::MsgUrbanAttributes_RgbaColor::Clear();
+inline void UrbanAttributes::clear_color() {
+  if (color_ != NULL) color_->::MsgsSimToClient::UrbanAttributes_RgbaColor::Clear();
   _clear_bit(2);
 }
-inline const ::MsgsSimToClient::MsgUrbanAttributes_RgbaColor& MsgUrbanAttributes::color() const {
+inline const ::MsgsSimToClient::UrbanAttributes_RgbaColor& UrbanAttributes::color() const {
   return color_ != NULL ? *color_ : *default_instance_->color_;
 }
-inline ::MsgsSimToClient::MsgUrbanAttributes_RgbaColor* MsgUrbanAttributes::mutable_color() {
+inline ::MsgsSimToClient::UrbanAttributes_RgbaColor* UrbanAttributes::mutable_color() {
   _set_bit(2);
-  if (color_ == NULL) color_ = new ::MsgsSimToClient::MsgUrbanAttributes_RgbaColor;
+  if (color_ == NULL) color_ = new ::MsgsSimToClient::UrbanAttributes_RgbaColor;
   return color_;
 }
 
-// optional .MsgsSimToClient.MsgUrbanAttributes.Infrastructures infrastructures = 4;
-inline bool MsgUrbanAttributes::has_infrastructures() const {
+// optional .MsgsSimToClient.UrbanAttributes.Infrastructures infrastructures = 4;
+inline bool UrbanAttributes::has_infrastructures() const {
   return _has_bit(3);
 }
-inline void MsgUrbanAttributes::clear_infrastructures() {
-  if (infrastructures_ != NULL) infrastructures_->::MsgsSimToClient::MsgUrbanAttributes_Infrastructures::Clear();
+inline void UrbanAttributes::clear_infrastructures() {
+  if (infrastructures_ != NULL) infrastructures_->::MsgsSimToClient::UrbanAttributes_Infrastructures::Clear();
   _clear_bit(3);
 }
-inline const ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures& MsgUrbanAttributes::infrastructures() const {
+inline const ::MsgsSimToClient::UrbanAttributes_Infrastructures& UrbanAttributes::infrastructures() const {
   return infrastructures_ != NULL ? *infrastructures_ : *default_instance_->infrastructures_;
 }
-inline ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures* MsgUrbanAttributes::mutable_infrastructures() {
+inline ::MsgsSimToClient::UrbanAttributes_Infrastructures* UrbanAttributes::mutable_infrastructures() {
   _set_bit(3);
-  if (infrastructures_ == NULL) infrastructures_ = new ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures;
+  if (infrastructures_ == NULL) infrastructures_ = new ::MsgsSimToClient::UrbanAttributes_Infrastructures;
   return infrastructures_;
 }
 
@@ -30310,20 +30737,21 @@ inline ::MsgsSimToClient::MsgUrbanAttributes_Infrastructures* MsgUrbanAttributes
 
 // MsgUrbanCreation
 
-// required uint32 oid = 1;
-inline bool MsgUrbanCreation::has_oid() const {
+// required .Common.UrbanObjectId urban_object = 1;
+inline bool MsgUrbanCreation::has_urban_object() const {
   return _has_bit(0);
 }
-inline void MsgUrbanCreation::clear_oid() {
-  oid_ = 0u;
+inline void MsgUrbanCreation::clear_urban_object() {
+  if (urban_object_ != NULL) urban_object_->::Common::UrbanObjectId::Clear();
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 MsgUrbanCreation::oid() const {
-  return oid_;
+inline const ::Common::UrbanObjectId& MsgUrbanCreation::urban_object() const {
+  return urban_object_ != NULL ? *urban_object_ : *default_instance_->urban_object_;
 }
-inline void MsgUrbanCreation::set_oid(::google::protobuf::uint32 value) {
+inline ::Common::UrbanObjectId* MsgUrbanCreation::mutable_urban_object() {
   _set_bit(0);
-  oid_ = value;
+  if (urban_object_ == NULL) urban_object_ = new ::Common::UrbanObjectId;
+  return urban_object_;
 }
 
 // required string name = 2;
@@ -30385,57 +30813,76 @@ inline ::Common::MsgLocation* MsgUrbanCreation::mutable_location() {
   return location_;
 }
 
-// optional .MsgsSimToClient.MsgUrbanAttributes attributes = 4;
+// optional .MsgsSimToClient.UrbanAttributes attributes = 4;
 inline bool MsgUrbanCreation::has_attributes() const {
   return _has_bit(3);
 }
 inline void MsgUrbanCreation::clear_attributes() {
-  if (attributes_ != NULL) attributes_->::MsgsSimToClient::MsgUrbanAttributes::Clear();
+  if (attributes_ != NULL) attributes_->::MsgsSimToClient::UrbanAttributes::Clear();
   _clear_bit(3);
 }
-inline const ::MsgsSimToClient::MsgUrbanAttributes& MsgUrbanCreation::attributes() const {
+inline const ::MsgsSimToClient::UrbanAttributes& MsgUrbanCreation::attributes() const {
   return attributes_ != NULL ? *attributes_ : *default_instance_->attributes_;
 }
-inline ::MsgsSimToClient::MsgUrbanAttributes* MsgUrbanCreation::mutable_attributes() {
+inline ::MsgsSimToClient::UrbanAttributes* MsgUrbanCreation::mutable_attributes() {
   _set_bit(3);
-  if (attributes_ == NULL) attributes_ = new ::MsgsSimToClient::MsgUrbanAttributes;
+  if (attributes_ == NULL) attributes_ = new ::MsgsSimToClient::UrbanAttributes;
   return attributes_;
+}
+
+// optional .Common.UrbanObjectId parent = 5;
+inline bool MsgUrbanCreation::has_parent() const {
+  return _has_bit(4);
+}
+inline void MsgUrbanCreation::clear_parent() {
+  if (parent_ != NULL) parent_->::Common::UrbanObjectId::Clear();
+  _clear_bit(4);
+}
+inline const ::Common::UrbanObjectId& MsgUrbanCreation::parent() const {
+  return parent_ != NULL ? *parent_ : *default_instance_->parent_;
+}
+inline ::Common::UrbanObjectId* MsgUrbanCreation::mutable_parent() {
+  _set_bit(4);
+  if (parent_ == NULL) parent_ = new ::Common::UrbanObjectId;
+  return parent_;
 }
 
 // -------------------------------------------------------------------
 
 // MsgUrbanDetection
 
-// required uint32 oid = 1;
-inline bool MsgUrbanDetection::has_oid() const {
+// required .Common.UnitId observer = 1;
+inline bool MsgUrbanDetection::has_observer() const {
   return _has_bit(0);
 }
-inline void MsgUrbanDetection::clear_oid() {
-  oid_ = 0u;
+inline void MsgUrbanDetection::clear_observer() {
+  if (observer_ != NULL) observer_->::Common::UnitId::Clear();
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 MsgUrbanDetection::oid() const {
-  return oid_;
+inline const ::Common::UnitId& MsgUrbanDetection::observer() const {
+  return observer_ != NULL ? *observer_ : *default_instance_->observer_;
 }
-inline void MsgUrbanDetection::set_oid(::google::protobuf::uint32 value) {
+inline ::Common::UnitId* MsgUrbanDetection::mutable_observer() {
   _set_bit(0);
-  oid_ = value;
+  if (observer_ == NULL) observer_ = new ::Common::UnitId;
+  return observer_;
 }
 
-// required uint32 urban_oid = 2;
-inline bool MsgUrbanDetection::has_urban_oid() const {
+// required .Common.UrbanObjectId urban_object = 2;
+inline bool MsgUrbanDetection::has_urban_object() const {
   return _has_bit(1);
 }
-inline void MsgUrbanDetection::clear_urban_oid() {
-  urban_oid_ = 0u;
+inline void MsgUrbanDetection::clear_urban_object() {
+  if (urban_object_ != NULL) urban_object_->::Common::UrbanObjectId::Clear();
   _clear_bit(1);
 }
-inline ::google::protobuf::uint32 MsgUrbanDetection::urban_oid() const {
-  return urban_oid_;
+inline const ::Common::UrbanObjectId& MsgUrbanDetection::urban_object() const {
+  return urban_object_ != NULL ? *urban_object_ : *default_instance_->urban_object_;
 }
-inline void MsgUrbanDetection::set_urban_oid(::google::protobuf::uint32 value) {
+inline ::Common::UrbanObjectId* MsgUrbanDetection::mutable_urban_object() {
   _set_bit(1);
-  urban_oid_ = value;
+  if (urban_object_ == NULL) urban_object_ = new ::Common::UrbanObjectId;
+  return urban_object_;
 }
 
 // required .Common.EnumUnitVisibility visibility = 3;
@@ -30459,20 +30906,21 @@ inline void MsgUrbanDetection::set_visibility(Common::EnumUnitVisibility value) 
 
 // MsgUrbanUpdate
 
-// required uint32 oid = 1;
-inline bool MsgUrbanUpdate::has_oid() const {
+// required .Common.UrbanObjectId urban_object = 1;
+inline bool MsgUrbanUpdate::has_urban_object() const {
   return _has_bit(0);
 }
-inline void MsgUrbanUpdate::clear_oid() {
-  oid_ = 0u;
+inline void MsgUrbanUpdate::clear_urban_object() {
+  if (urban_object_ != NULL) urban_object_->::Common::UrbanObjectId::Clear();
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 MsgUrbanUpdate::oid() const {
-  return oid_;
+inline const ::Common::UrbanObjectId& MsgUrbanUpdate::urban_object() const {
+  return urban_object_ != NULL ? *urban_object_ : *default_instance_->urban_object_;
 }
-inline void MsgUrbanUpdate::set_oid(::google::protobuf::uint32 value) {
+inline ::Common::UrbanObjectId* MsgUrbanUpdate::mutable_urban_object() {
   _set_bit(0);
-  oid_ = value;
+  if (urban_object_ == NULL) urban_object_ = new ::Common::UrbanObjectId;
+  return urban_object_;
 }
 
 // optional .Common.MsgLocation location = 2;
@@ -30492,20 +30940,20 @@ inline ::Common::MsgLocation* MsgUrbanUpdate::mutable_location() {
   return location_;
 }
 
-// optional .MsgsSimToClient.MsgUrbanAttributes attributes = 3;
+// optional .MsgsSimToClient.UrbanAttributes attributes = 3;
 inline bool MsgUrbanUpdate::has_attributes() const {
   return _has_bit(2);
 }
 inline void MsgUrbanUpdate::clear_attributes() {
-  if (attributes_ != NULL) attributes_->::MsgsSimToClient::MsgUrbanAttributes::Clear();
+  if (attributes_ != NULL) attributes_->::MsgsSimToClient::UrbanAttributes::Clear();
   _clear_bit(2);
 }
-inline const ::MsgsSimToClient::MsgUrbanAttributes& MsgUrbanUpdate::attributes() const {
+inline const ::MsgsSimToClient::UrbanAttributes& MsgUrbanUpdate::attributes() const {
   return attributes_ != NULL ? *attributes_ : *default_instance_->attributes_;
 }
-inline ::MsgsSimToClient::MsgUrbanAttributes* MsgUrbanUpdate::mutable_attributes() {
+inline ::MsgsSimToClient::UrbanAttributes* MsgUrbanUpdate::mutable_attributes() {
   _set_bit(2);
-  if (attributes_ == NULL) attributes_ = new ::MsgsSimToClient::MsgUrbanAttributes;
+  if (attributes_ == NULL) attributes_ = new ::MsgsSimToClient::UrbanAttributes;
   return attributes_;
 }
 
@@ -30513,21 +30961,21 @@ inline ::MsgsSimToClient::MsgUrbanAttributes* MsgUrbanUpdate::mutable_attributes
 
 // MsgKnowledgeGroupCreation
 
-// required .Common.KnowledgeGroupId id = 1;
-inline bool MsgKnowledgeGroupCreation::has_id() const {
+// required .Common.KnowledgeGroupId knowledge_group = 1;
+inline bool MsgKnowledgeGroupCreation::has_knowledge_group() const {
   return _has_bit(0);
 }
-inline void MsgKnowledgeGroupCreation::clear_id() {
-  if (id_ != NULL) id_->::Common::KnowledgeGroupId::Clear();
+inline void MsgKnowledgeGroupCreation::clear_knowledge_group() {
+  if (knowledge_group_ != NULL) knowledge_group_->::Common::KnowledgeGroupId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::KnowledgeGroupId& MsgKnowledgeGroupCreation::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::KnowledgeGroupId& MsgKnowledgeGroupCreation::knowledge_group() const {
+  return knowledge_group_ != NULL ? *knowledge_group_ : *default_instance_->knowledge_group_;
 }
-inline ::Common::KnowledgeGroupId* MsgKnowledgeGroupCreation::mutable_id() {
+inline ::Common::KnowledgeGroupId* MsgKnowledgeGroupCreation::mutable_knowledge_group() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::KnowledgeGroupId;
-  return id_;
+  if (knowledge_group_ == NULL) knowledge_group_ = new ::Common::KnowledgeGroupId;
+  return knowledge_group_;
 }
 
 // required .Common.PartyId party = 2;
@@ -30626,21 +31074,21 @@ inline void MsgKnowledgeGroupCreation::set_jam(bool value) {
 
 // MsgKnowledgeGroupUpdate
 
-// required .Common.KnowledgeGroupId id = 1;
-inline bool MsgKnowledgeGroupUpdate::has_id() const {
+// required .Common.KnowledgeGroupId knowledge_group = 1;
+inline bool MsgKnowledgeGroupUpdate::has_knowledge_group() const {
   return _has_bit(0);
 }
-inline void MsgKnowledgeGroupUpdate::clear_id() {
-  if (id_ != NULL) id_->::Common::KnowledgeGroupId::Clear();
+inline void MsgKnowledgeGroupUpdate::clear_knowledge_group() {
+  if (knowledge_group_ != NULL) knowledge_group_->::Common::KnowledgeGroupId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::KnowledgeGroupId& MsgKnowledgeGroupUpdate::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::KnowledgeGroupId& MsgKnowledgeGroupUpdate::knowledge_group() const {
+  return knowledge_group_ != NULL ? *knowledge_group_ : *default_instance_->knowledge_group_;
 }
-inline ::Common::KnowledgeGroupId* MsgKnowledgeGroupUpdate::mutable_id() {
+inline ::Common::KnowledgeGroupId* MsgKnowledgeGroupUpdate::mutable_knowledge_group() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::KnowledgeGroupId;
-  return id_;
+  if (knowledge_group_ == NULL) knowledge_group_ = new ::Common::KnowledgeGroupId;
+  return knowledge_group_;
 }
 
 // optional .Common.PartyId party = 2;
@@ -30743,21 +31191,21 @@ inline ::std::string* MsgKnowledgeGroupUpdate::mutable_type() {
 
 // MsgKnowledgeGroupMagicActionAck
 
-// required .Common.KnowledgeGroupId id = 1;
-inline bool MsgKnowledgeGroupMagicActionAck::has_id() const {
+// required .Common.KnowledgeGroupId knowledge_group = 1;
+inline bool MsgKnowledgeGroupMagicActionAck::has_knowledge_group() const {
   return _has_bit(0);
 }
-inline void MsgKnowledgeGroupMagicActionAck::clear_id() {
-  if (id_ != NULL) id_->::Common::KnowledgeGroupId::Clear();
+inline void MsgKnowledgeGroupMagicActionAck::clear_knowledge_group() {
+  if (knowledge_group_ != NULL) knowledge_group_->::Common::KnowledgeGroupId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::KnowledgeGroupId& MsgKnowledgeGroupMagicActionAck::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::KnowledgeGroupId& MsgKnowledgeGroupMagicActionAck::knowledge_group() const {
+  return knowledge_group_ != NULL ? *knowledge_group_ : *default_instance_->knowledge_group_;
 }
-inline ::Common::KnowledgeGroupId* MsgKnowledgeGroupMagicActionAck::mutable_id() {
+inline ::Common::KnowledgeGroupId* MsgKnowledgeGroupMagicActionAck::mutable_knowledge_group() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::KnowledgeGroupId;
-  return id_;
+  if (knowledge_group_ == NULL) knowledge_group_ = new ::Common::KnowledgeGroupId;
+  return knowledge_group_;
 }
 
 // required .MsgsSimToClient.KnowledgeGroupAck.ErrorCode error_code = 2;
@@ -30781,21 +31229,21 @@ inline void MsgKnowledgeGroupMagicActionAck::set_error_code(::MsgsSimToClient::K
 
 // MsgKnowledgeGroupCreationAck
 
-// required .Common.KnowledgeGroupId id = 1;
-inline bool MsgKnowledgeGroupCreationAck::has_id() const {
+// required .Common.KnowledgeGroupId knowledge_group = 1;
+inline bool MsgKnowledgeGroupCreationAck::has_knowledge_group() const {
   return _has_bit(0);
 }
-inline void MsgKnowledgeGroupCreationAck::clear_id() {
-  if (id_ != NULL) id_->::Common::KnowledgeGroupId::Clear();
+inline void MsgKnowledgeGroupCreationAck::clear_knowledge_group() {
+  if (knowledge_group_ != NULL) knowledge_group_->::Common::KnowledgeGroupId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::KnowledgeGroupId& MsgKnowledgeGroupCreationAck::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::KnowledgeGroupId& MsgKnowledgeGroupCreationAck::knowledge_group() const {
+  return knowledge_group_ != NULL ? *knowledge_group_ : *default_instance_->knowledge_group_;
 }
-inline ::Common::KnowledgeGroupId* MsgKnowledgeGroupCreationAck::mutable_id() {
+inline ::Common::KnowledgeGroupId* MsgKnowledgeGroupCreationAck::mutable_knowledge_group() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::KnowledgeGroupId;
-  return id_;
+  if (knowledge_group_ == NULL) knowledge_group_ = new ::Common::KnowledgeGroupId;
+  return knowledge_group_;
 }
 
 // required .MsgsSimToClient.KnowledgeGroupAck.ErrorCode error_code = 2;
@@ -30819,21 +31267,21 @@ inline void MsgKnowledgeGroupCreationAck::set_error_code(::MsgsSimToClient::Know
 
 // MsgKnowledgeGroupUpdateAck
 
-// required .Common.KnowledgeGroupId id = 1;
-inline bool MsgKnowledgeGroupUpdateAck::has_id() const {
+// required .Common.KnowledgeGroupId knowledge_group = 1;
+inline bool MsgKnowledgeGroupUpdateAck::has_knowledge_group() const {
   return _has_bit(0);
 }
-inline void MsgKnowledgeGroupUpdateAck::clear_id() {
-  if (id_ != NULL) id_->::Common::KnowledgeGroupId::Clear();
+inline void MsgKnowledgeGroupUpdateAck::clear_knowledge_group() {
+  if (knowledge_group_ != NULL) knowledge_group_->::Common::KnowledgeGroupId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::KnowledgeGroupId& MsgKnowledgeGroupUpdateAck::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::KnowledgeGroupId& MsgKnowledgeGroupUpdateAck::knowledge_group() const {
+  return knowledge_group_ != NULL ? *knowledge_group_ : *default_instance_->knowledge_group_;
 }
-inline ::Common::KnowledgeGroupId* MsgKnowledgeGroupUpdateAck::mutable_id() {
+inline ::Common::KnowledgeGroupId* MsgKnowledgeGroupUpdateAck::mutable_knowledge_group() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::KnowledgeGroupId;
-  return id_;
+  if (knowledge_group_ == NULL) knowledge_group_ = new ::Common::KnowledgeGroupId;
+  return knowledge_group_;
 }
 
 // required .MsgsSimToClient.KnowledgeGroupAck.ErrorCode error_code = 2;
@@ -30857,21 +31305,21 @@ inline void MsgKnowledgeGroupUpdateAck::set_error_code(::MsgsSimToClient::Knowle
 
 // MsgKnowledgeGroupDestruction
 
-// required .Common.KnowledgeGroupId id = 1;
-inline bool MsgKnowledgeGroupDestruction::has_id() const {
+// required .Common.KnowledgeGroupId knowledge_group = 1;
+inline bool MsgKnowledgeGroupDestruction::has_knowledge_group() const {
   return _has_bit(0);
 }
-inline void MsgKnowledgeGroupDestruction::clear_id() {
-  if (id_ != NULL) id_->::Common::KnowledgeGroupId::Clear();
+inline void MsgKnowledgeGroupDestruction::clear_knowledge_group() {
+  if (knowledge_group_ != NULL) knowledge_group_->::Common::KnowledgeGroupId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::KnowledgeGroupId& MsgKnowledgeGroupDestruction::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::KnowledgeGroupId& MsgKnowledgeGroupDestruction::knowledge_group() const {
+  return knowledge_group_ != NULL ? *knowledge_group_ : *default_instance_->knowledge_group_;
 }
-inline ::Common::KnowledgeGroupId* MsgKnowledgeGroupDestruction::mutable_id() {
+inline ::Common::KnowledgeGroupId* MsgKnowledgeGroupDestruction::mutable_knowledge_group() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::KnowledgeGroupId;
-  return id_;
+  if (knowledge_group_ == NULL) knowledge_group_ = new ::Common::KnowledgeGroupId;
+  return knowledge_group_;
 }
 
 // required .Common.PartyId party = 2;
@@ -30893,141 +31341,141 @@ inline ::Common::PartyId* MsgKnowledgeGroupDestruction::mutable_party() {
 
 // -------------------------------------------------------------------
 
-// MsgControlGlobalMeteoAck
+// MsgControlGlobalWeatherAck
 
 // -------------------------------------------------------------------
 
-// MsgControlLocalMeteoAck
+// MsgControlLocalWeatherAck
 
 // -------------------------------------------------------------------
 
-// MsgControlGlobalMeteo
+// MsgControlGlobalWeather
 
-// required .Common.WeatherId id = 1;
-inline bool MsgControlGlobalMeteo::has_id() const {
+// required .Common.WeatherId weather = 1;
+inline bool MsgControlGlobalWeather::has_weather() const {
   return _has_bit(0);
 }
-inline void MsgControlGlobalMeteo::clear_id() {
-  if (id_ != NULL) id_->::Common::WeatherId::Clear();
+inline void MsgControlGlobalWeather::clear_weather() {
+  if (weather_ != NULL) weather_->::Common::WeatherId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::WeatherId& MsgControlGlobalMeteo::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::WeatherId& MsgControlGlobalWeather::weather() const {
+  return weather_ != NULL ? *weather_ : *default_instance_->weather_;
 }
-inline ::Common::WeatherId* MsgControlGlobalMeteo::mutable_id() {
+inline ::Common::WeatherId* MsgControlGlobalWeather::mutable_weather() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::WeatherId;
-  return id_;
+  if (weather_ == NULL) weather_ = new ::Common::WeatherId;
+  return weather_;
 }
 
-// required .Common.MsgMeteoAttributes attributes = 2;
-inline bool MsgControlGlobalMeteo::has_attributes() const {
+// required .Common.MsgWeatherAttributes attributes = 2;
+inline bool MsgControlGlobalWeather::has_attributes() const {
   return _has_bit(1);
 }
-inline void MsgControlGlobalMeteo::clear_attributes() {
-  if (attributes_ != NULL) attributes_->::Common::MsgMeteoAttributes::Clear();
+inline void MsgControlGlobalWeather::clear_attributes() {
+  if (attributes_ != NULL) attributes_->::Common::MsgWeatherAttributes::Clear();
   _clear_bit(1);
 }
-inline const ::Common::MsgMeteoAttributes& MsgControlGlobalMeteo::attributes() const {
+inline const ::Common::MsgWeatherAttributes& MsgControlGlobalWeather::attributes() const {
   return attributes_ != NULL ? *attributes_ : *default_instance_->attributes_;
 }
-inline ::Common::MsgMeteoAttributes* MsgControlGlobalMeteo::mutable_attributes() {
+inline ::Common::MsgWeatherAttributes* MsgControlGlobalWeather::mutable_attributes() {
   _set_bit(1);
-  if (attributes_ == NULL) attributes_ = new ::Common::MsgMeteoAttributes;
+  if (attributes_ == NULL) attributes_ = new ::Common::MsgWeatherAttributes;
   return attributes_;
 }
 
 // -------------------------------------------------------------------
 
-// MsgControlLocalMeteoCreation
+// MsgControlLocalWeatherCreation
 
-// required .Common.WeatherId id = 1;
-inline bool MsgControlLocalMeteoCreation::has_id() const {
+// required .Common.WeatherId weather = 1;
+inline bool MsgControlLocalWeatherCreation::has_weather() const {
   return _has_bit(0);
 }
-inline void MsgControlLocalMeteoCreation::clear_id() {
-  if (id_ != NULL) id_->::Common::WeatherId::Clear();
+inline void MsgControlLocalWeatherCreation::clear_weather() {
+  if (weather_ != NULL) weather_->::Common::WeatherId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::WeatherId& MsgControlLocalMeteoCreation::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::WeatherId& MsgControlLocalWeatherCreation::weather() const {
+  return weather_ != NULL ? *weather_ : *default_instance_->weather_;
 }
-inline ::Common::WeatherId* MsgControlLocalMeteoCreation::mutable_id() {
+inline ::Common::WeatherId* MsgControlLocalWeatherCreation::mutable_weather() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::WeatherId;
-  return id_;
+  if (weather_ == NULL) weather_ = new ::Common::WeatherId;
+  return weather_;
 }
 
 // optional .Common.MsgCoordLatLong top_left_coordinate = 2;
-inline bool MsgControlLocalMeteoCreation::has_top_left_coordinate() const {
+inline bool MsgControlLocalWeatherCreation::has_top_left_coordinate() const {
   return _has_bit(1);
 }
-inline void MsgControlLocalMeteoCreation::clear_top_left_coordinate() {
+inline void MsgControlLocalWeatherCreation::clear_top_left_coordinate() {
   if (top_left_coordinate_ != NULL) top_left_coordinate_->::Common::MsgCoordLatLong::Clear();
   _clear_bit(1);
 }
-inline const ::Common::MsgCoordLatLong& MsgControlLocalMeteoCreation::top_left_coordinate() const {
+inline const ::Common::MsgCoordLatLong& MsgControlLocalWeatherCreation::top_left_coordinate() const {
   return top_left_coordinate_ != NULL ? *top_left_coordinate_ : *default_instance_->top_left_coordinate_;
 }
-inline ::Common::MsgCoordLatLong* MsgControlLocalMeteoCreation::mutable_top_left_coordinate() {
+inline ::Common::MsgCoordLatLong* MsgControlLocalWeatherCreation::mutable_top_left_coordinate() {
   _set_bit(1);
   if (top_left_coordinate_ == NULL) top_left_coordinate_ = new ::Common::MsgCoordLatLong;
   return top_left_coordinate_;
 }
 
 // optional .Common.MsgCoordLatLong bottom_right_coordinate = 3;
-inline bool MsgControlLocalMeteoCreation::has_bottom_right_coordinate() const {
+inline bool MsgControlLocalWeatherCreation::has_bottom_right_coordinate() const {
   return _has_bit(2);
 }
-inline void MsgControlLocalMeteoCreation::clear_bottom_right_coordinate() {
+inline void MsgControlLocalWeatherCreation::clear_bottom_right_coordinate() {
   if (bottom_right_coordinate_ != NULL) bottom_right_coordinate_->::Common::MsgCoordLatLong::Clear();
   _clear_bit(2);
 }
-inline const ::Common::MsgCoordLatLong& MsgControlLocalMeteoCreation::bottom_right_coordinate() const {
+inline const ::Common::MsgCoordLatLong& MsgControlLocalWeatherCreation::bottom_right_coordinate() const {
   return bottom_right_coordinate_ != NULL ? *bottom_right_coordinate_ : *default_instance_->bottom_right_coordinate_;
 }
-inline ::Common::MsgCoordLatLong* MsgControlLocalMeteoCreation::mutable_bottom_right_coordinate() {
+inline ::Common::MsgCoordLatLong* MsgControlLocalWeatherCreation::mutable_bottom_right_coordinate() {
   _set_bit(2);
   if (bottom_right_coordinate_ == NULL) bottom_right_coordinate_ = new ::Common::MsgCoordLatLong;
   return bottom_right_coordinate_;
 }
 
-// optional .Common.MsgMeteoAttributes attributes = 4;
-inline bool MsgControlLocalMeteoCreation::has_attributes() const {
+// optional .Common.MsgWeatherAttributes attributes = 4;
+inline bool MsgControlLocalWeatherCreation::has_attributes() const {
   return _has_bit(3);
 }
-inline void MsgControlLocalMeteoCreation::clear_attributes() {
-  if (attributes_ != NULL) attributes_->::Common::MsgMeteoAttributes::Clear();
+inline void MsgControlLocalWeatherCreation::clear_attributes() {
+  if (attributes_ != NULL) attributes_->::Common::MsgWeatherAttributes::Clear();
   _clear_bit(3);
 }
-inline const ::Common::MsgMeteoAttributes& MsgControlLocalMeteoCreation::attributes() const {
+inline const ::Common::MsgWeatherAttributes& MsgControlLocalWeatherCreation::attributes() const {
   return attributes_ != NULL ? *attributes_ : *default_instance_->attributes_;
 }
-inline ::Common::MsgMeteoAttributes* MsgControlLocalMeteoCreation::mutable_attributes() {
+inline ::Common::MsgWeatherAttributes* MsgControlLocalWeatherCreation::mutable_attributes() {
   _set_bit(3);
-  if (attributes_ == NULL) attributes_ = new ::Common::MsgMeteoAttributes;
+  if (attributes_ == NULL) attributes_ = new ::Common::MsgWeatherAttributes;
   return attributes_;
 }
 
 // -------------------------------------------------------------------
 
-// MsgControlLocalMeteoDestruction
+// MsgControlLocalWeatherDestruction
 
-// required .Common.WeatherId id = 1;
-inline bool MsgControlLocalMeteoDestruction::has_id() const {
+// required .Common.WeatherId weather = 1;
+inline bool MsgControlLocalWeatherDestruction::has_weather() const {
   return _has_bit(0);
 }
-inline void MsgControlLocalMeteoDestruction::clear_id() {
-  if (id_ != NULL) id_->::Common::WeatherId::Clear();
+inline void MsgControlLocalWeatherDestruction::clear_weather() {
+  if (weather_ != NULL) weather_->::Common::WeatherId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::WeatherId& MsgControlLocalMeteoDestruction::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::WeatherId& MsgControlLocalWeatherDestruction::weather() const {
+  return weather_ != NULL ? *weather_ : *default_instance_->weather_;
 }
-inline ::Common::WeatherId* MsgControlLocalMeteoDestruction::mutable_id() {
+inline ::Common::WeatherId* MsgControlLocalWeatherDestruction::mutable_weather() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::WeatherId;
-  return id_;
+  if (weather_ == NULL) weather_ = new ::Common::WeatherId;
+  return weather_;
 }
 
 // -------------------------------------------------------------------
@@ -31068,21 +31516,21 @@ inline ::MsgsSimToClient::MsgAutomatOrderAck* MsgSimToClient_Content::mutable_au
   return automat_order_ack_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationOrderAck population_order_ack = 3;
-inline bool MsgSimToClient_Content::has_population_order_ack() const {
+// optional .MsgsSimToClient.MsgCrowdOrderAck crowd_order_ack = 3;
+inline bool MsgSimToClient_Content::has_crowd_order_ack() const {
   return _has_bit(2);
 }
-inline void MsgSimToClient_Content::clear_population_order_ack() {
-  if (population_order_ack_ != NULL) population_order_ack_->::MsgsSimToClient::MsgPopulationOrderAck::Clear();
+inline void MsgSimToClient_Content::clear_crowd_order_ack() {
+  if (crowd_order_ack_ != NULL) crowd_order_ack_->::MsgsSimToClient::MsgCrowdOrderAck::Clear();
   _clear_bit(2);
 }
-inline const ::MsgsSimToClient::MsgPopulationOrderAck& MsgSimToClient_Content::population_order_ack() const {
-  return population_order_ack_ != NULL ? *population_order_ack_ : *default_instance_->population_order_ack_;
+inline const ::MsgsSimToClient::MsgCrowdOrderAck& MsgSimToClient_Content::crowd_order_ack() const {
+  return crowd_order_ack_ != NULL ? *crowd_order_ack_ : *default_instance_->crowd_order_ack_;
 }
-inline ::MsgsSimToClient::MsgPopulationOrderAck* MsgSimToClient_Content::mutable_population_order_ack() {
+inline ::MsgsSimToClient::MsgCrowdOrderAck* MsgSimToClient_Content::mutable_crowd_order_ack() {
   _set_bit(2);
-  if (population_order_ack_ == NULL) population_order_ack_ = new ::MsgsSimToClient::MsgPopulationOrderAck;
-  return population_order_ack_;
+  if (crowd_order_ack_ == NULL) crowd_order_ack_ = new ::MsgsSimToClient::MsgCrowdOrderAck;
+  return crowd_order_ack_;
 }
 
 // optional .MsgsSimToClient.MsgFragOrderAck frag_order_ack = 4;
@@ -31187,21 +31635,21 @@ inline ::MsgsSimToClient::MsgObjectMagicActionAck* MsgSimToClient_Content::mutab
   return object_magic_action_ack_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationMagicActionAck population_magic_action_ack = 10;
-inline bool MsgSimToClient_Content::has_population_magic_action_ack() const {
+// optional .MsgsSimToClient.MsgCrowdMagicActionAck crowd_magic_action_ack = 10;
+inline bool MsgSimToClient_Content::has_crowd_magic_action_ack() const {
   return _has_bit(9);
 }
-inline void MsgSimToClient_Content::clear_population_magic_action_ack() {
-  if (population_magic_action_ack_ != NULL) population_magic_action_ack_->::MsgsSimToClient::MsgPopulationMagicActionAck::Clear();
+inline void MsgSimToClient_Content::clear_crowd_magic_action_ack() {
+  if (crowd_magic_action_ack_ != NULL) crowd_magic_action_ack_->::MsgsSimToClient::MsgCrowdMagicActionAck::Clear();
   _clear_bit(9);
 }
-inline const ::MsgsSimToClient::MsgPopulationMagicActionAck& MsgSimToClient_Content::population_magic_action_ack() const {
-  return population_magic_action_ack_ != NULL ? *population_magic_action_ack_ : *default_instance_->population_magic_action_ack_;
+inline const ::MsgsSimToClient::MsgCrowdMagicActionAck& MsgSimToClient_Content::crowd_magic_action_ack() const {
+  return crowd_magic_action_ack_ != NULL ? *crowd_magic_action_ack_ : *default_instance_->crowd_magic_action_ack_;
 }
-inline ::MsgsSimToClient::MsgPopulationMagicActionAck* MsgSimToClient_Content::mutable_population_magic_action_ack() {
+inline ::MsgsSimToClient::MsgCrowdMagicActionAck* MsgSimToClient_Content::mutable_crowd_magic_action_ack() {
   _set_bit(9);
-  if (population_magic_action_ack_ == NULL) population_magic_action_ack_ = new ::MsgsSimToClient::MsgPopulationMagicActionAck;
-  return population_magic_action_ack_;
+  if (crowd_magic_action_ack_ == NULL) crowd_magic_action_ack_ = new ::MsgsSimToClient::MsgCrowdMagicActionAck;
+  return crowd_magic_action_ack_;
 }
 
 // optional .MsgsSimToClient.MsgChangeDiplomacyAck change_diplomacy_ack = 11;
@@ -31493,38 +31941,38 @@ inline ::MsgsSimToClient::MsgControlCheckPointSaveEnd* MsgSimToClient_Content::m
   return control_checkpoint_save_end_;
 }
 
-// optional .Common.MsgFormationCreation formation_creation = 28;
+// optional .MsgsSimToClient.MsgFormationCreation formation_creation = 28;
 inline bool MsgSimToClient_Content::has_formation_creation() const {
   return _has_bit(27);
 }
 inline void MsgSimToClient_Content::clear_formation_creation() {
-  if (formation_creation_ != NULL) formation_creation_->::Common::MsgFormationCreation::Clear();
+  if (formation_creation_ != NULL) formation_creation_->::MsgsSimToClient::MsgFormationCreation::Clear();
   _clear_bit(27);
 }
-inline const ::Common::MsgFormationCreation& MsgSimToClient_Content::formation_creation() const {
+inline const ::MsgsSimToClient::MsgFormationCreation& MsgSimToClient_Content::formation_creation() const {
   return formation_creation_ != NULL ? *formation_creation_ : *default_instance_->formation_creation_;
 }
-inline ::Common::MsgFormationCreation* MsgSimToClient_Content::mutable_formation_creation() {
+inline ::MsgsSimToClient::MsgFormationCreation* MsgSimToClient_Content::mutable_formation_creation() {
   _set_bit(27);
-  if (formation_creation_ == NULL) formation_creation_ = new ::Common::MsgFormationCreation;
+  if (formation_creation_ == NULL) formation_creation_ = new ::MsgsSimToClient::MsgFormationCreation;
   return formation_creation_;
 }
 
-// optional .MsgsSimToClient.MsgTeamCreation side_creation = 29;
-inline bool MsgSimToClient_Content::has_side_creation() const {
+// optional .MsgsSimToClient.MsgPartyCreation party_creation = 29;
+inline bool MsgSimToClient_Content::has_party_creation() const {
   return _has_bit(28);
 }
-inline void MsgSimToClient_Content::clear_side_creation() {
-  if (side_creation_ != NULL) side_creation_->::MsgsSimToClient::MsgTeamCreation::Clear();
+inline void MsgSimToClient_Content::clear_party_creation() {
+  if (party_creation_ != NULL) party_creation_->::MsgsSimToClient::MsgPartyCreation::Clear();
   _clear_bit(28);
 }
-inline const ::MsgsSimToClient::MsgTeamCreation& MsgSimToClient_Content::side_creation() const {
-  return side_creation_ != NULL ? *side_creation_ : *default_instance_->side_creation_;
+inline const ::MsgsSimToClient::MsgPartyCreation& MsgSimToClient_Content::party_creation() const {
+  return party_creation_ != NULL ? *party_creation_ : *default_instance_->party_creation_;
 }
-inline ::MsgsSimToClient::MsgTeamCreation* MsgSimToClient_Content::mutable_side_creation() {
+inline ::MsgsSimToClient::MsgPartyCreation* MsgSimToClient_Content::mutable_party_creation() {
   _set_bit(28);
-  if (side_creation_ == NULL) side_creation_ = new ::MsgsSimToClient::MsgTeamCreation;
-  return side_creation_;
+  if (party_creation_ == NULL) party_creation_ = new ::MsgsSimToClient::MsgPartyCreation;
+  return party_creation_;
 }
 
 // optional .MsgsSimToClient.MsgAutomatCreation automat_creation = 30;
@@ -31816,38 +32264,38 @@ inline ::MsgsSimToClient::MsgStopUnitFire* MsgSimToClient_Content::mutable_stop_
   return stop_unit_fire_;
 }
 
-// optional .MsgsSimToClient.MsgStartPopulationFire start_population_fire = 47;
-inline bool MsgSimToClient_Content::has_start_population_fire() const {
+// optional .MsgsSimToClient.MsgStartCrowdFire start_crowd_fire = 47;
+inline bool MsgSimToClient_Content::has_start_crowd_fire() const {
   return _has_bit(46);
 }
-inline void MsgSimToClient_Content::clear_start_population_fire() {
-  if (start_population_fire_ != NULL) start_population_fire_->::MsgsSimToClient::MsgStartPopulationFire::Clear();
+inline void MsgSimToClient_Content::clear_start_crowd_fire() {
+  if (start_crowd_fire_ != NULL) start_crowd_fire_->::MsgsSimToClient::MsgStartCrowdFire::Clear();
   _clear_bit(46);
 }
-inline const ::MsgsSimToClient::MsgStartPopulationFire& MsgSimToClient_Content::start_population_fire() const {
-  return start_population_fire_ != NULL ? *start_population_fire_ : *default_instance_->start_population_fire_;
+inline const ::MsgsSimToClient::MsgStartCrowdFire& MsgSimToClient_Content::start_crowd_fire() const {
+  return start_crowd_fire_ != NULL ? *start_crowd_fire_ : *default_instance_->start_crowd_fire_;
 }
-inline ::MsgsSimToClient::MsgStartPopulationFire* MsgSimToClient_Content::mutable_start_population_fire() {
+inline ::MsgsSimToClient::MsgStartCrowdFire* MsgSimToClient_Content::mutable_start_crowd_fire() {
   _set_bit(46);
-  if (start_population_fire_ == NULL) start_population_fire_ = new ::MsgsSimToClient::MsgStartPopulationFire;
-  return start_population_fire_;
+  if (start_crowd_fire_ == NULL) start_crowd_fire_ = new ::MsgsSimToClient::MsgStartCrowdFire;
+  return start_crowd_fire_;
 }
 
-// optional .MsgsSimToClient.MsgStopPopulationFire stop_population_fire = 48;
-inline bool MsgSimToClient_Content::has_stop_population_fire() const {
+// optional .MsgsSimToClient.MsgStopCrowdFire stop_crowd_fire = 48;
+inline bool MsgSimToClient_Content::has_stop_crowd_fire() const {
   return _has_bit(47);
 }
-inline void MsgSimToClient_Content::clear_stop_population_fire() {
-  if (stop_population_fire_ != NULL) stop_population_fire_->::MsgsSimToClient::MsgStopPopulationFire::Clear();
+inline void MsgSimToClient_Content::clear_stop_crowd_fire() {
+  if (stop_crowd_fire_ != NULL) stop_crowd_fire_->::MsgsSimToClient::MsgStopCrowdFire::Clear();
   _clear_bit(47);
 }
-inline const ::MsgsSimToClient::MsgStopPopulationFire& MsgSimToClient_Content::stop_population_fire() const {
-  return stop_population_fire_ != NULL ? *stop_population_fire_ : *default_instance_->stop_population_fire_;
+inline const ::MsgsSimToClient::MsgStopCrowdFire& MsgSimToClient_Content::stop_crowd_fire() const {
+  return stop_crowd_fire_ != NULL ? *stop_crowd_fire_ : *default_instance_->stop_crowd_fire_;
 }
-inline ::MsgsSimToClient::MsgStopPopulationFire* MsgSimToClient_Content::mutable_stop_population_fire() {
+inline ::MsgsSimToClient::MsgStopCrowdFire* MsgSimToClient_Content::mutable_stop_crowd_fire() {
   _set_bit(47);
-  if (stop_population_fire_ == NULL) stop_population_fire_ = new ::MsgsSimToClient::MsgStopPopulationFire;
-  return stop_population_fire_;
+  if (stop_crowd_fire_ == NULL) stop_crowd_fire_ = new ::MsgsSimToClient::MsgStopCrowdFire;
+  return stop_crowd_fire_;
 }
 
 // optional .MsgsSimToClient.MsgExplosion explosion = 49;
@@ -32037,38 +32485,38 @@ inline ::MsgsSimToClient::MsgObjectDetection* MsgSimToClient_Content::mutable_ob
   return object_detection_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationConcentrationDetection population_concentration_detection = 60;
-inline bool MsgSimToClient_Content::has_population_concentration_detection() const {
+// optional .MsgsSimToClient.MsgCrowdConcentrationDetection crowd_concentration_detection = 60;
+inline bool MsgSimToClient_Content::has_crowd_concentration_detection() const {
   return _has_bit(59);
 }
-inline void MsgSimToClient_Content::clear_population_concentration_detection() {
-  if (population_concentration_detection_ != NULL) population_concentration_detection_->::MsgsSimToClient::MsgPopulationConcentrationDetection::Clear();
+inline void MsgSimToClient_Content::clear_crowd_concentration_detection() {
+  if (crowd_concentration_detection_ != NULL) crowd_concentration_detection_->::MsgsSimToClient::MsgCrowdConcentrationDetection::Clear();
   _clear_bit(59);
 }
-inline const ::MsgsSimToClient::MsgPopulationConcentrationDetection& MsgSimToClient_Content::population_concentration_detection() const {
-  return population_concentration_detection_ != NULL ? *population_concentration_detection_ : *default_instance_->population_concentration_detection_;
+inline const ::MsgsSimToClient::MsgCrowdConcentrationDetection& MsgSimToClient_Content::crowd_concentration_detection() const {
+  return crowd_concentration_detection_ != NULL ? *crowd_concentration_detection_ : *default_instance_->crowd_concentration_detection_;
 }
-inline ::MsgsSimToClient::MsgPopulationConcentrationDetection* MsgSimToClient_Content::mutable_population_concentration_detection() {
+inline ::MsgsSimToClient::MsgCrowdConcentrationDetection* MsgSimToClient_Content::mutable_crowd_concentration_detection() {
   _set_bit(59);
-  if (population_concentration_detection_ == NULL) population_concentration_detection_ = new ::MsgsSimToClient::MsgPopulationConcentrationDetection;
-  return population_concentration_detection_;
+  if (crowd_concentration_detection_ == NULL) crowd_concentration_detection_ = new ::MsgsSimToClient::MsgCrowdConcentrationDetection;
+  return crowd_concentration_detection_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationFlowDetection population_flow_detection = 61;
-inline bool MsgSimToClient_Content::has_population_flow_detection() const {
+// optional .MsgsSimToClient.MsgCrowdFlowDetection crowd_flow_detection = 61;
+inline bool MsgSimToClient_Content::has_crowd_flow_detection() const {
   return _has_bit(60);
 }
-inline void MsgSimToClient_Content::clear_population_flow_detection() {
-  if (population_flow_detection_ != NULL) population_flow_detection_->::MsgsSimToClient::MsgPopulationFlowDetection::Clear();
+inline void MsgSimToClient_Content::clear_crowd_flow_detection() {
+  if (crowd_flow_detection_ != NULL) crowd_flow_detection_->::MsgsSimToClient::MsgCrowdFlowDetection::Clear();
   _clear_bit(60);
 }
-inline const ::MsgsSimToClient::MsgPopulationFlowDetection& MsgSimToClient_Content::population_flow_detection() const {
-  return population_flow_detection_ != NULL ? *population_flow_detection_ : *default_instance_->population_flow_detection_;
+inline const ::MsgsSimToClient::MsgCrowdFlowDetection& MsgSimToClient_Content::crowd_flow_detection() const {
+  return crowd_flow_detection_ != NULL ? *crowd_flow_detection_ : *default_instance_->crowd_flow_detection_;
 }
-inline ::MsgsSimToClient::MsgPopulationFlowDetection* MsgSimToClient_Content::mutable_population_flow_detection() {
+inline ::MsgsSimToClient::MsgCrowdFlowDetection* MsgSimToClient_Content::mutable_crowd_flow_detection() {
   _set_bit(60);
-  if (population_flow_detection_ == NULL) population_flow_detection_ = new ::MsgsSimToClient::MsgPopulationFlowDetection;
-  return population_flow_detection_;
+  if (crowd_flow_detection_ == NULL) crowd_flow_detection_ = new ::MsgsSimToClient::MsgCrowdFlowDetection;
+  return crowd_flow_detection_;
 }
 
 // optional .Common.MsgUnitOrder unit_order = 62;
@@ -32105,21 +32553,21 @@ inline ::Common::MsgAutomatOrder* MsgSimToClient_Content::mutable_automat_order(
   return automat_order_;
 }
 
-// optional .Common.MsgPopulationOrder population_order = 64;
-inline bool MsgSimToClient_Content::has_population_order() const {
+// optional .Common.MsgCrowdOrder crowd_order = 64;
+inline bool MsgSimToClient_Content::has_crowd_order() const {
   return _has_bit(63);
 }
-inline void MsgSimToClient_Content::clear_population_order() {
-  if (population_order_ != NULL) population_order_->::Common::MsgPopulationOrder::Clear();
+inline void MsgSimToClient_Content::clear_crowd_order() {
+  if (crowd_order_ != NULL) crowd_order_->::Common::MsgCrowdOrder::Clear();
   _clear_bit(63);
 }
-inline const ::Common::MsgPopulationOrder& MsgSimToClient_Content::population_order() const {
-  return population_order_ != NULL ? *population_order_ : *default_instance_->population_order_;
+inline const ::Common::MsgCrowdOrder& MsgSimToClient_Content::crowd_order() const {
+  return crowd_order_ != NULL ? *crowd_order_ : *default_instance_->crowd_order_;
 }
-inline ::Common::MsgPopulationOrder* MsgSimToClient_Content::mutable_population_order() {
+inline ::Common::MsgCrowdOrder* MsgSimToClient_Content::mutable_crowd_order() {
   _set_bit(63);
-  if (population_order_ == NULL) population_order_ = new ::Common::MsgPopulationOrder;
-  return population_order_;
+  if (crowd_order_ == NULL) crowd_order_ = new ::Common::MsgCrowdOrder;
+  return crowd_order_;
 }
 
 // optional .MsgsSimToClient.MsgObjectCreation object_creation = 65;
@@ -32445,293 +32893,293 @@ inline ::MsgsSimToClient::MsgLogSupplyQuotas* MsgSimToClient_Content::mutable_lo
   return log_supply_quotas_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationCreation population_creation = 84;
-inline bool MsgSimToClient_Content::has_population_creation() const {
+// optional .MsgsSimToClient.MsgCrowdCreation crowd_creation = 84;
+inline bool MsgSimToClient_Content::has_crowd_creation() const {
   return _has_bit(83);
 }
-inline void MsgSimToClient_Content::clear_population_creation() {
-  if (population_creation_ != NULL) population_creation_->::MsgsSimToClient::MsgPopulationCreation::Clear();
+inline void MsgSimToClient_Content::clear_crowd_creation() {
+  if (crowd_creation_ != NULL) crowd_creation_->::MsgsSimToClient::MsgCrowdCreation::Clear();
   _clear_bit(83);
 }
-inline const ::MsgsSimToClient::MsgPopulationCreation& MsgSimToClient_Content::population_creation() const {
-  return population_creation_ != NULL ? *population_creation_ : *default_instance_->population_creation_;
+inline const ::MsgsSimToClient::MsgCrowdCreation& MsgSimToClient_Content::crowd_creation() const {
+  return crowd_creation_ != NULL ? *crowd_creation_ : *default_instance_->crowd_creation_;
 }
-inline ::MsgsSimToClient::MsgPopulationCreation* MsgSimToClient_Content::mutable_population_creation() {
+inline ::MsgsSimToClient::MsgCrowdCreation* MsgSimToClient_Content::mutable_crowd_creation() {
   _set_bit(83);
-  if (population_creation_ == NULL) population_creation_ = new ::MsgsSimToClient::MsgPopulationCreation;
-  return population_creation_;
+  if (crowd_creation_ == NULL) crowd_creation_ = new ::MsgsSimToClient::MsgCrowdCreation;
+  return crowd_creation_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationUpdate population_update = 85;
-inline bool MsgSimToClient_Content::has_population_update() const {
+// optional .MsgsSimToClient.MsgCrowdUpdate crowd_update = 85;
+inline bool MsgSimToClient_Content::has_crowd_update() const {
   return _has_bit(84);
 }
-inline void MsgSimToClient_Content::clear_population_update() {
-  if (population_update_ != NULL) population_update_->::MsgsSimToClient::MsgPopulationUpdate::Clear();
+inline void MsgSimToClient_Content::clear_crowd_update() {
+  if (crowd_update_ != NULL) crowd_update_->::MsgsSimToClient::MsgCrowdUpdate::Clear();
   _clear_bit(84);
 }
-inline const ::MsgsSimToClient::MsgPopulationUpdate& MsgSimToClient_Content::population_update() const {
-  return population_update_ != NULL ? *population_update_ : *default_instance_->population_update_;
+inline const ::MsgsSimToClient::MsgCrowdUpdate& MsgSimToClient_Content::crowd_update() const {
+  return crowd_update_ != NULL ? *crowd_update_ : *default_instance_->crowd_update_;
 }
-inline ::MsgsSimToClient::MsgPopulationUpdate* MsgSimToClient_Content::mutable_population_update() {
+inline ::MsgsSimToClient::MsgCrowdUpdate* MsgSimToClient_Content::mutable_crowd_update() {
   _set_bit(84);
-  if (population_update_ == NULL) population_update_ = new ::MsgsSimToClient::MsgPopulationUpdate;
-  return population_update_;
+  if (crowd_update_ == NULL) crowd_update_ = new ::MsgsSimToClient::MsgCrowdUpdate;
+  return crowd_update_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationConcentrationCreation population_concentration_creation = 86;
-inline bool MsgSimToClient_Content::has_population_concentration_creation() const {
+// optional .MsgsSimToClient.MsgCrowdConcentrationCreation crowd_concentration_creation = 86;
+inline bool MsgSimToClient_Content::has_crowd_concentration_creation() const {
   return _has_bit(85);
 }
-inline void MsgSimToClient_Content::clear_population_concentration_creation() {
-  if (population_concentration_creation_ != NULL) population_concentration_creation_->::MsgsSimToClient::MsgPopulationConcentrationCreation::Clear();
+inline void MsgSimToClient_Content::clear_crowd_concentration_creation() {
+  if (crowd_concentration_creation_ != NULL) crowd_concentration_creation_->::MsgsSimToClient::MsgCrowdConcentrationCreation::Clear();
   _clear_bit(85);
 }
-inline const ::MsgsSimToClient::MsgPopulationConcentrationCreation& MsgSimToClient_Content::population_concentration_creation() const {
-  return population_concentration_creation_ != NULL ? *population_concentration_creation_ : *default_instance_->population_concentration_creation_;
+inline const ::MsgsSimToClient::MsgCrowdConcentrationCreation& MsgSimToClient_Content::crowd_concentration_creation() const {
+  return crowd_concentration_creation_ != NULL ? *crowd_concentration_creation_ : *default_instance_->crowd_concentration_creation_;
 }
-inline ::MsgsSimToClient::MsgPopulationConcentrationCreation* MsgSimToClient_Content::mutable_population_concentration_creation() {
+inline ::MsgsSimToClient::MsgCrowdConcentrationCreation* MsgSimToClient_Content::mutable_crowd_concentration_creation() {
   _set_bit(85);
-  if (population_concentration_creation_ == NULL) population_concentration_creation_ = new ::MsgsSimToClient::MsgPopulationConcentrationCreation;
-  return population_concentration_creation_;
+  if (crowd_concentration_creation_ == NULL) crowd_concentration_creation_ = new ::MsgsSimToClient::MsgCrowdConcentrationCreation;
+  return crowd_concentration_creation_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationConcentrationDestruction population_concentration_destruction = 87;
-inline bool MsgSimToClient_Content::has_population_concentration_destruction() const {
+// optional .MsgsSimToClient.MsgCrowdConcentrationDestruction crowd_concentration_destruction = 87;
+inline bool MsgSimToClient_Content::has_crowd_concentration_destruction() const {
   return _has_bit(86);
 }
-inline void MsgSimToClient_Content::clear_population_concentration_destruction() {
-  if (population_concentration_destruction_ != NULL) population_concentration_destruction_->::MsgsSimToClient::MsgPopulationConcentrationDestruction::Clear();
+inline void MsgSimToClient_Content::clear_crowd_concentration_destruction() {
+  if (crowd_concentration_destruction_ != NULL) crowd_concentration_destruction_->::MsgsSimToClient::MsgCrowdConcentrationDestruction::Clear();
   _clear_bit(86);
 }
-inline const ::MsgsSimToClient::MsgPopulationConcentrationDestruction& MsgSimToClient_Content::population_concentration_destruction() const {
-  return population_concentration_destruction_ != NULL ? *population_concentration_destruction_ : *default_instance_->population_concentration_destruction_;
+inline const ::MsgsSimToClient::MsgCrowdConcentrationDestruction& MsgSimToClient_Content::crowd_concentration_destruction() const {
+  return crowd_concentration_destruction_ != NULL ? *crowd_concentration_destruction_ : *default_instance_->crowd_concentration_destruction_;
 }
-inline ::MsgsSimToClient::MsgPopulationConcentrationDestruction* MsgSimToClient_Content::mutable_population_concentration_destruction() {
+inline ::MsgsSimToClient::MsgCrowdConcentrationDestruction* MsgSimToClient_Content::mutable_crowd_concentration_destruction() {
   _set_bit(86);
-  if (population_concentration_destruction_ == NULL) population_concentration_destruction_ = new ::MsgsSimToClient::MsgPopulationConcentrationDestruction;
-  return population_concentration_destruction_;
+  if (crowd_concentration_destruction_ == NULL) crowd_concentration_destruction_ = new ::MsgsSimToClient::MsgCrowdConcentrationDestruction;
+  return crowd_concentration_destruction_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationConcentrationUpdate population_concentration_update = 88;
-inline bool MsgSimToClient_Content::has_population_concentration_update() const {
+// optional .MsgsSimToClient.MsgCrowdConcentrationUpdate crowd_concentration_update = 88;
+inline bool MsgSimToClient_Content::has_crowd_concentration_update() const {
   return _has_bit(87);
 }
-inline void MsgSimToClient_Content::clear_population_concentration_update() {
-  if (population_concentration_update_ != NULL) population_concentration_update_->::MsgsSimToClient::MsgPopulationConcentrationUpdate::Clear();
+inline void MsgSimToClient_Content::clear_crowd_concentration_update() {
+  if (crowd_concentration_update_ != NULL) crowd_concentration_update_->::MsgsSimToClient::MsgCrowdConcentrationUpdate::Clear();
   _clear_bit(87);
 }
-inline const ::MsgsSimToClient::MsgPopulationConcentrationUpdate& MsgSimToClient_Content::population_concentration_update() const {
-  return population_concentration_update_ != NULL ? *population_concentration_update_ : *default_instance_->population_concentration_update_;
+inline const ::MsgsSimToClient::MsgCrowdConcentrationUpdate& MsgSimToClient_Content::crowd_concentration_update() const {
+  return crowd_concentration_update_ != NULL ? *crowd_concentration_update_ : *default_instance_->crowd_concentration_update_;
 }
-inline ::MsgsSimToClient::MsgPopulationConcentrationUpdate* MsgSimToClient_Content::mutable_population_concentration_update() {
+inline ::MsgsSimToClient::MsgCrowdConcentrationUpdate* MsgSimToClient_Content::mutable_crowd_concentration_update() {
   _set_bit(87);
-  if (population_concentration_update_ == NULL) population_concentration_update_ = new ::MsgsSimToClient::MsgPopulationConcentrationUpdate;
-  return population_concentration_update_;
+  if (crowd_concentration_update_ == NULL) crowd_concentration_update_ = new ::MsgsSimToClient::MsgCrowdConcentrationUpdate;
+  return crowd_concentration_update_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationFlowCreation population_flow_creation = 89;
-inline bool MsgSimToClient_Content::has_population_flow_creation() const {
+// optional .MsgsSimToClient.MsgCrowdFlowCreation crowd_flow_creation = 89;
+inline bool MsgSimToClient_Content::has_crowd_flow_creation() const {
   return _has_bit(88);
 }
-inline void MsgSimToClient_Content::clear_population_flow_creation() {
-  if (population_flow_creation_ != NULL) population_flow_creation_->::MsgsSimToClient::MsgPopulationFlowCreation::Clear();
+inline void MsgSimToClient_Content::clear_crowd_flow_creation() {
+  if (crowd_flow_creation_ != NULL) crowd_flow_creation_->::MsgsSimToClient::MsgCrowdFlowCreation::Clear();
   _clear_bit(88);
 }
-inline const ::MsgsSimToClient::MsgPopulationFlowCreation& MsgSimToClient_Content::population_flow_creation() const {
-  return population_flow_creation_ != NULL ? *population_flow_creation_ : *default_instance_->population_flow_creation_;
+inline const ::MsgsSimToClient::MsgCrowdFlowCreation& MsgSimToClient_Content::crowd_flow_creation() const {
+  return crowd_flow_creation_ != NULL ? *crowd_flow_creation_ : *default_instance_->crowd_flow_creation_;
 }
-inline ::MsgsSimToClient::MsgPopulationFlowCreation* MsgSimToClient_Content::mutable_population_flow_creation() {
+inline ::MsgsSimToClient::MsgCrowdFlowCreation* MsgSimToClient_Content::mutable_crowd_flow_creation() {
   _set_bit(88);
-  if (population_flow_creation_ == NULL) population_flow_creation_ = new ::MsgsSimToClient::MsgPopulationFlowCreation;
-  return population_flow_creation_;
+  if (crowd_flow_creation_ == NULL) crowd_flow_creation_ = new ::MsgsSimToClient::MsgCrowdFlowCreation;
+  return crowd_flow_creation_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationFlowDestruction population_flow_destruction = 90;
-inline bool MsgSimToClient_Content::has_population_flow_destruction() const {
+// optional .MsgsSimToClient.MsgCrowdFlowDestruction crowd_flow_destruction = 90;
+inline bool MsgSimToClient_Content::has_crowd_flow_destruction() const {
   return _has_bit(89);
 }
-inline void MsgSimToClient_Content::clear_population_flow_destruction() {
-  if (population_flow_destruction_ != NULL) population_flow_destruction_->::MsgsSimToClient::MsgPopulationFlowDestruction::Clear();
+inline void MsgSimToClient_Content::clear_crowd_flow_destruction() {
+  if (crowd_flow_destruction_ != NULL) crowd_flow_destruction_->::MsgsSimToClient::MsgCrowdFlowDestruction::Clear();
   _clear_bit(89);
 }
-inline const ::MsgsSimToClient::MsgPopulationFlowDestruction& MsgSimToClient_Content::population_flow_destruction() const {
-  return population_flow_destruction_ != NULL ? *population_flow_destruction_ : *default_instance_->population_flow_destruction_;
+inline const ::MsgsSimToClient::MsgCrowdFlowDestruction& MsgSimToClient_Content::crowd_flow_destruction() const {
+  return crowd_flow_destruction_ != NULL ? *crowd_flow_destruction_ : *default_instance_->crowd_flow_destruction_;
 }
-inline ::MsgsSimToClient::MsgPopulationFlowDestruction* MsgSimToClient_Content::mutable_population_flow_destruction() {
+inline ::MsgsSimToClient::MsgCrowdFlowDestruction* MsgSimToClient_Content::mutable_crowd_flow_destruction() {
   _set_bit(89);
-  if (population_flow_destruction_ == NULL) population_flow_destruction_ = new ::MsgsSimToClient::MsgPopulationFlowDestruction;
-  return population_flow_destruction_;
+  if (crowd_flow_destruction_ == NULL) crowd_flow_destruction_ = new ::MsgsSimToClient::MsgCrowdFlowDestruction;
+  return crowd_flow_destruction_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationFlowUpdate population_flow_update = 91;
-inline bool MsgSimToClient_Content::has_population_flow_update() const {
+// optional .MsgsSimToClient.MsgCrowdFlowUpdate crowd_flow_update = 91;
+inline bool MsgSimToClient_Content::has_crowd_flow_update() const {
   return _has_bit(90);
 }
-inline void MsgSimToClient_Content::clear_population_flow_update() {
-  if (population_flow_update_ != NULL) population_flow_update_->::MsgsSimToClient::MsgPopulationFlowUpdate::Clear();
+inline void MsgSimToClient_Content::clear_crowd_flow_update() {
+  if (crowd_flow_update_ != NULL) crowd_flow_update_->::MsgsSimToClient::MsgCrowdFlowUpdate::Clear();
   _clear_bit(90);
 }
-inline const ::MsgsSimToClient::MsgPopulationFlowUpdate& MsgSimToClient_Content::population_flow_update() const {
-  return population_flow_update_ != NULL ? *population_flow_update_ : *default_instance_->population_flow_update_;
+inline const ::MsgsSimToClient::MsgCrowdFlowUpdate& MsgSimToClient_Content::crowd_flow_update() const {
+  return crowd_flow_update_ != NULL ? *crowd_flow_update_ : *default_instance_->crowd_flow_update_;
 }
-inline ::MsgsSimToClient::MsgPopulationFlowUpdate* MsgSimToClient_Content::mutable_population_flow_update() {
+inline ::MsgsSimToClient::MsgCrowdFlowUpdate* MsgSimToClient_Content::mutable_crowd_flow_update() {
   _set_bit(90);
-  if (population_flow_update_ == NULL) population_flow_update_ = new ::MsgsSimToClient::MsgPopulationFlowUpdate;
-  return population_flow_update_;
+  if (crowd_flow_update_ == NULL) crowd_flow_update_ = new ::MsgsSimToClient::MsgCrowdFlowUpdate;
+  return crowd_flow_update_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationKnowledgeCreation population_knowledge_creation = 92;
-inline bool MsgSimToClient_Content::has_population_knowledge_creation() const {
+// optional .MsgsSimToClient.MsgCrowdKnowledgeCreation crowd_knowledge_creation = 92;
+inline bool MsgSimToClient_Content::has_crowd_knowledge_creation() const {
   return _has_bit(91);
 }
-inline void MsgSimToClient_Content::clear_population_knowledge_creation() {
-  if (population_knowledge_creation_ != NULL) population_knowledge_creation_->::MsgsSimToClient::MsgPopulationKnowledgeCreation::Clear();
+inline void MsgSimToClient_Content::clear_crowd_knowledge_creation() {
+  if (crowd_knowledge_creation_ != NULL) crowd_knowledge_creation_->::MsgsSimToClient::MsgCrowdKnowledgeCreation::Clear();
   _clear_bit(91);
 }
-inline const ::MsgsSimToClient::MsgPopulationKnowledgeCreation& MsgSimToClient_Content::population_knowledge_creation() const {
-  return population_knowledge_creation_ != NULL ? *population_knowledge_creation_ : *default_instance_->population_knowledge_creation_;
+inline const ::MsgsSimToClient::MsgCrowdKnowledgeCreation& MsgSimToClient_Content::crowd_knowledge_creation() const {
+  return crowd_knowledge_creation_ != NULL ? *crowd_knowledge_creation_ : *default_instance_->crowd_knowledge_creation_;
 }
-inline ::MsgsSimToClient::MsgPopulationKnowledgeCreation* MsgSimToClient_Content::mutable_population_knowledge_creation() {
+inline ::MsgsSimToClient::MsgCrowdKnowledgeCreation* MsgSimToClient_Content::mutable_crowd_knowledge_creation() {
   _set_bit(91);
-  if (population_knowledge_creation_ == NULL) population_knowledge_creation_ = new ::MsgsSimToClient::MsgPopulationKnowledgeCreation;
-  return population_knowledge_creation_;
+  if (crowd_knowledge_creation_ == NULL) crowd_knowledge_creation_ = new ::MsgsSimToClient::MsgCrowdKnowledgeCreation;
+  return crowd_knowledge_creation_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationKnowledgeUpdate population_knowledge_update = 93;
-inline bool MsgSimToClient_Content::has_population_knowledge_update() const {
+// optional .MsgsSimToClient.MsgCrowdKnowledgeUpdate crowd_knowledge_update = 93;
+inline bool MsgSimToClient_Content::has_crowd_knowledge_update() const {
   return _has_bit(92);
 }
-inline void MsgSimToClient_Content::clear_population_knowledge_update() {
-  if (population_knowledge_update_ != NULL) population_knowledge_update_->::MsgsSimToClient::MsgPopulationKnowledgeUpdate::Clear();
+inline void MsgSimToClient_Content::clear_crowd_knowledge_update() {
+  if (crowd_knowledge_update_ != NULL) crowd_knowledge_update_->::MsgsSimToClient::MsgCrowdKnowledgeUpdate::Clear();
   _clear_bit(92);
 }
-inline const ::MsgsSimToClient::MsgPopulationKnowledgeUpdate& MsgSimToClient_Content::population_knowledge_update() const {
-  return population_knowledge_update_ != NULL ? *population_knowledge_update_ : *default_instance_->population_knowledge_update_;
+inline const ::MsgsSimToClient::MsgCrowdKnowledgeUpdate& MsgSimToClient_Content::crowd_knowledge_update() const {
+  return crowd_knowledge_update_ != NULL ? *crowd_knowledge_update_ : *default_instance_->crowd_knowledge_update_;
 }
-inline ::MsgsSimToClient::MsgPopulationKnowledgeUpdate* MsgSimToClient_Content::mutable_population_knowledge_update() {
+inline ::MsgsSimToClient::MsgCrowdKnowledgeUpdate* MsgSimToClient_Content::mutable_crowd_knowledge_update() {
   _set_bit(92);
-  if (population_knowledge_update_ == NULL) population_knowledge_update_ = new ::MsgsSimToClient::MsgPopulationKnowledgeUpdate;
-  return population_knowledge_update_;
+  if (crowd_knowledge_update_ == NULL) crowd_knowledge_update_ = new ::MsgsSimToClient::MsgCrowdKnowledgeUpdate;
+  return crowd_knowledge_update_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationKnowledgeDestruction population_knowledge_destruction = 94;
-inline bool MsgSimToClient_Content::has_population_knowledge_destruction() const {
+// optional .MsgsSimToClient.MsgCrowdKnowledgeDestruction crowd_knowledge_destruction = 94;
+inline bool MsgSimToClient_Content::has_crowd_knowledge_destruction() const {
   return _has_bit(93);
 }
-inline void MsgSimToClient_Content::clear_population_knowledge_destruction() {
-  if (population_knowledge_destruction_ != NULL) population_knowledge_destruction_->::MsgsSimToClient::MsgPopulationKnowledgeDestruction::Clear();
+inline void MsgSimToClient_Content::clear_crowd_knowledge_destruction() {
+  if (crowd_knowledge_destruction_ != NULL) crowd_knowledge_destruction_->::MsgsSimToClient::MsgCrowdKnowledgeDestruction::Clear();
   _clear_bit(93);
 }
-inline const ::MsgsSimToClient::MsgPopulationKnowledgeDestruction& MsgSimToClient_Content::population_knowledge_destruction() const {
-  return population_knowledge_destruction_ != NULL ? *population_knowledge_destruction_ : *default_instance_->population_knowledge_destruction_;
+inline const ::MsgsSimToClient::MsgCrowdKnowledgeDestruction& MsgSimToClient_Content::crowd_knowledge_destruction() const {
+  return crowd_knowledge_destruction_ != NULL ? *crowd_knowledge_destruction_ : *default_instance_->crowd_knowledge_destruction_;
 }
-inline ::MsgsSimToClient::MsgPopulationKnowledgeDestruction* MsgSimToClient_Content::mutable_population_knowledge_destruction() {
+inline ::MsgsSimToClient::MsgCrowdKnowledgeDestruction* MsgSimToClient_Content::mutable_crowd_knowledge_destruction() {
   _set_bit(93);
-  if (population_knowledge_destruction_ == NULL) population_knowledge_destruction_ = new ::MsgsSimToClient::MsgPopulationKnowledgeDestruction;
-  return population_knowledge_destruction_;
+  if (crowd_knowledge_destruction_ == NULL) crowd_knowledge_destruction_ = new ::MsgsSimToClient::MsgCrowdKnowledgeDestruction;
+  return crowd_knowledge_destruction_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationConcentrationKnowledgeCreation population_concentration_knowledge_creation = 95;
-inline bool MsgSimToClient_Content::has_population_concentration_knowledge_creation() const {
+// optional .MsgsSimToClient.MsgCrowdConcentrationKnowledgeCreation crowd_concentration_knowledge_creation = 95;
+inline bool MsgSimToClient_Content::has_crowd_concentration_knowledge_creation() const {
   return _has_bit(94);
 }
-inline void MsgSimToClient_Content::clear_population_concentration_knowledge_creation() {
-  if (population_concentration_knowledge_creation_ != NULL) population_concentration_knowledge_creation_->::MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation::Clear();
+inline void MsgSimToClient_Content::clear_crowd_concentration_knowledge_creation() {
+  if (crowd_concentration_knowledge_creation_ != NULL) crowd_concentration_knowledge_creation_->::MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation::Clear();
   _clear_bit(94);
 }
-inline const ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation& MsgSimToClient_Content::population_concentration_knowledge_creation() const {
-  return population_concentration_knowledge_creation_ != NULL ? *population_concentration_knowledge_creation_ : *default_instance_->population_concentration_knowledge_creation_;
+inline const ::MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation& MsgSimToClient_Content::crowd_concentration_knowledge_creation() const {
+  return crowd_concentration_knowledge_creation_ != NULL ? *crowd_concentration_knowledge_creation_ : *default_instance_->crowd_concentration_knowledge_creation_;
 }
-inline ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation* MsgSimToClient_Content::mutable_population_concentration_knowledge_creation() {
+inline ::MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation* MsgSimToClient_Content::mutable_crowd_concentration_knowledge_creation() {
   _set_bit(94);
-  if (population_concentration_knowledge_creation_ == NULL) population_concentration_knowledge_creation_ = new ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation;
-  return population_concentration_knowledge_creation_;
+  if (crowd_concentration_knowledge_creation_ == NULL) crowd_concentration_knowledge_creation_ = new ::MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation;
+  return crowd_concentration_knowledge_creation_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationConcentrationKnowledgeDestruction population_concentration_knowledge_destruction = 96;
-inline bool MsgSimToClient_Content::has_population_concentration_knowledge_destruction() const {
+// optional .MsgsSimToClient.MsgCrowdConcentrationKnowledgeDestruction crowd_concentration_knowledge_destruction = 96;
+inline bool MsgSimToClient_Content::has_crowd_concentration_knowledge_destruction() const {
   return _has_bit(95);
 }
-inline void MsgSimToClient_Content::clear_population_concentration_knowledge_destruction() {
-  if (population_concentration_knowledge_destruction_ != NULL) population_concentration_knowledge_destruction_->::MsgsSimToClient::MsgPopulationConcentrationKnowledgeDestruction::Clear();
+inline void MsgSimToClient_Content::clear_crowd_concentration_knowledge_destruction() {
+  if (crowd_concentration_knowledge_destruction_ != NULL) crowd_concentration_knowledge_destruction_->::MsgsSimToClient::MsgCrowdConcentrationKnowledgeDestruction::Clear();
   _clear_bit(95);
 }
-inline const ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeDestruction& MsgSimToClient_Content::population_concentration_knowledge_destruction() const {
-  return population_concentration_knowledge_destruction_ != NULL ? *population_concentration_knowledge_destruction_ : *default_instance_->population_concentration_knowledge_destruction_;
+inline const ::MsgsSimToClient::MsgCrowdConcentrationKnowledgeDestruction& MsgSimToClient_Content::crowd_concentration_knowledge_destruction() const {
+  return crowd_concentration_knowledge_destruction_ != NULL ? *crowd_concentration_knowledge_destruction_ : *default_instance_->crowd_concentration_knowledge_destruction_;
 }
-inline ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeDestruction* MsgSimToClient_Content::mutable_population_concentration_knowledge_destruction() {
+inline ::MsgsSimToClient::MsgCrowdConcentrationKnowledgeDestruction* MsgSimToClient_Content::mutable_crowd_concentration_knowledge_destruction() {
   _set_bit(95);
-  if (population_concentration_knowledge_destruction_ == NULL) population_concentration_knowledge_destruction_ = new ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeDestruction;
-  return population_concentration_knowledge_destruction_;
+  if (crowd_concentration_knowledge_destruction_ == NULL) crowd_concentration_knowledge_destruction_ = new ::MsgsSimToClient::MsgCrowdConcentrationKnowledgeDestruction;
+  return crowd_concentration_knowledge_destruction_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationConcentrationKnowledgeUpdate population_concentration_knowledge_update = 97;
-inline bool MsgSimToClient_Content::has_population_concentration_knowledge_update() const {
+// optional .MsgsSimToClient.MsgCrowdConcentrationKnowledgeUpdate crowd_concentration_knowledge_update = 97;
+inline bool MsgSimToClient_Content::has_crowd_concentration_knowledge_update() const {
   return _has_bit(96);
 }
-inline void MsgSimToClient_Content::clear_population_concentration_knowledge_update() {
-  if (population_concentration_knowledge_update_ != NULL) population_concentration_knowledge_update_->::MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate::Clear();
+inline void MsgSimToClient_Content::clear_crowd_concentration_knowledge_update() {
+  if (crowd_concentration_knowledge_update_ != NULL) crowd_concentration_knowledge_update_->::MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate::Clear();
   _clear_bit(96);
 }
-inline const ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate& MsgSimToClient_Content::population_concentration_knowledge_update() const {
-  return population_concentration_knowledge_update_ != NULL ? *population_concentration_knowledge_update_ : *default_instance_->population_concentration_knowledge_update_;
+inline const ::MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate& MsgSimToClient_Content::crowd_concentration_knowledge_update() const {
+  return crowd_concentration_knowledge_update_ != NULL ? *crowd_concentration_knowledge_update_ : *default_instance_->crowd_concentration_knowledge_update_;
 }
-inline ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate* MsgSimToClient_Content::mutable_population_concentration_knowledge_update() {
+inline ::MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate* MsgSimToClient_Content::mutable_crowd_concentration_knowledge_update() {
   _set_bit(96);
-  if (population_concentration_knowledge_update_ == NULL) population_concentration_knowledge_update_ = new ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate;
-  return population_concentration_knowledge_update_;
+  if (crowd_concentration_knowledge_update_ == NULL) crowd_concentration_knowledge_update_ = new ::MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate;
+  return crowd_concentration_knowledge_update_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationFlowKnowledgeCreation population_flow_knowledge_creation = 98;
-inline bool MsgSimToClient_Content::has_population_flow_knowledge_creation() const {
+// optional .MsgsSimToClient.MsgCrowdFlowKnowledgeCreation crowd_flow_knowledge_creation = 98;
+inline bool MsgSimToClient_Content::has_crowd_flow_knowledge_creation() const {
   return _has_bit(97);
 }
-inline void MsgSimToClient_Content::clear_population_flow_knowledge_creation() {
-  if (population_flow_knowledge_creation_ != NULL) population_flow_knowledge_creation_->::MsgsSimToClient::MsgPopulationFlowKnowledgeCreation::Clear();
+inline void MsgSimToClient_Content::clear_crowd_flow_knowledge_creation() {
+  if (crowd_flow_knowledge_creation_ != NULL) crowd_flow_knowledge_creation_->::MsgsSimToClient::MsgCrowdFlowKnowledgeCreation::Clear();
   _clear_bit(97);
 }
-inline const ::MsgsSimToClient::MsgPopulationFlowKnowledgeCreation& MsgSimToClient_Content::population_flow_knowledge_creation() const {
-  return population_flow_knowledge_creation_ != NULL ? *population_flow_knowledge_creation_ : *default_instance_->population_flow_knowledge_creation_;
+inline const ::MsgsSimToClient::MsgCrowdFlowKnowledgeCreation& MsgSimToClient_Content::crowd_flow_knowledge_creation() const {
+  return crowd_flow_knowledge_creation_ != NULL ? *crowd_flow_knowledge_creation_ : *default_instance_->crowd_flow_knowledge_creation_;
 }
-inline ::MsgsSimToClient::MsgPopulationFlowKnowledgeCreation* MsgSimToClient_Content::mutable_population_flow_knowledge_creation() {
+inline ::MsgsSimToClient::MsgCrowdFlowKnowledgeCreation* MsgSimToClient_Content::mutable_crowd_flow_knowledge_creation() {
   _set_bit(97);
-  if (population_flow_knowledge_creation_ == NULL) population_flow_knowledge_creation_ = new ::MsgsSimToClient::MsgPopulationFlowKnowledgeCreation;
-  return population_flow_knowledge_creation_;
+  if (crowd_flow_knowledge_creation_ == NULL) crowd_flow_knowledge_creation_ = new ::MsgsSimToClient::MsgCrowdFlowKnowledgeCreation;
+  return crowd_flow_knowledge_creation_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationFlowKnowledgeDestruction population_flow_knowledge_destruction = 99;
-inline bool MsgSimToClient_Content::has_population_flow_knowledge_destruction() const {
+// optional .MsgsSimToClient.MsgCrowdFlowKnowledgeDestruction crowd_flow_knowledge_destruction = 99;
+inline bool MsgSimToClient_Content::has_crowd_flow_knowledge_destruction() const {
   return _has_bit(98);
 }
-inline void MsgSimToClient_Content::clear_population_flow_knowledge_destruction() {
-  if (population_flow_knowledge_destruction_ != NULL) population_flow_knowledge_destruction_->::MsgsSimToClient::MsgPopulationFlowKnowledgeDestruction::Clear();
+inline void MsgSimToClient_Content::clear_crowd_flow_knowledge_destruction() {
+  if (crowd_flow_knowledge_destruction_ != NULL) crowd_flow_knowledge_destruction_->::MsgsSimToClient::MsgCrowdFlowKnowledgeDestruction::Clear();
   _clear_bit(98);
 }
-inline const ::MsgsSimToClient::MsgPopulationFlowKnowledgeDestruction& MsgSimToClient_Content::population_flow_knowledge_destruction() const {
-  return population_flow_knowledge_destruction_ != NULL ? *population_flow_knowledge_destruction_ : *default_instance_->population_flow_knowledge_destruction_;
+inline const ::MsgsSimToClient::MsgCrowdFlowKnowledgeDestruction& MsgSimToClient_Content::crowd_flow_knowledge_destruction() const {
+  return crowd_flow_knowledge_destruction_ != NULL ? *crowd_flow_knowledge_destruction_ : *default_instance_->crowd_flow_knowledge_destruction_;
 }
-inline ::MsgsSimToClient::MsgPopulationFlowKnowledgeDestruction* MsgSimToClient_Content::mutable_population_flow_knowledge_destruction() {
+inline ::MsgsSimToClient::MsgCrowdFlowKnowledgeDestruction* MsgSimToClient_Content::mutable_crowd_flow_knowledge_destruction() {
   _set_bit(98);
-  if (population_flow_knowledge_destruction_ == NULL) population_flow_knowledge_destruction_ = new ::MsgsSimToClient::MsgPopulationFlowKnowledgeDestruction;
-  return population_flow_knowledge_destruction_;
+  if (crowd_flow_knowledge_destruction_ == NULL) crowd_flow_knowledge_destruction_ = new ::MsgsSimToClient::MsgCrowdFlowKnowledgeDestruction;
+  return crowd_flow_knowledge_destruction_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationFlowKnowledgeUpdate population_flow_knowledge_update = 100;
-inline bool MsgSimToClient_Content::has_population_flow_knowledge_update() const {
+// optional .MsgsSimToClient.MsgCrowdFlowKnowledgeUpdate crowd_flow_knowledge_update = 100;
+inline bool MsgSimToClient_Content::has_crowd_flow_knowledge_update() const {
   return _has_bit(99);
 }
-inline void MsgSimToClient_Content::clear_population_flow_knowledge_update() {
-  if (population_flow_knowledge_update_ != NULL) population_flow_knowledge_update_->::MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate::Clear();
+inline void MsgSimToClient_Content::clear_crowd_flow_knowledge_update() {
+  if (crowd_flow_knowledge_update_ != NULL) crowd_flow_knowledge_update_->::MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate::Clear();
   _clear_bit(99);
 }
-inline const ::MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate& MsgSimToClient_Content::population_flow_knowledge_update() const {
-  return population_flow_knowledge_update_ != NULL ? *population_flow_knowledge_update_ : *default_instance_->population_flow_knowledge_update_;
+inline const ::MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate& MsgSimToClient_Content::crowd_flow_knowledge_update() const {
+  return crowd_flow_knowledge_update_ != NULL ? *crowd_flow_knowledge_update_ : *default_instance_->crowd_flow_knowledge_update_;
 }
-inline ::MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate* MsgSimToClient_Content::mutable_population_flow_knowledge_update() {
+inline ::MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate* MsgSimToClient_Content::mutable_crowd_flow_knowledge_update() {
   _set_bit(99);
-  if (population_flow_knowledge_update_ == NULL) population_flow_knowledge_update_ = new ::MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate;
-  return population_flow_knowledge_update_;
+  if (crowd_flow_knowledge_update_ == NULL) crowd_flow_knowledge_update_ = new ::MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate;
+  return crowd_flow_knowledge_update_;
 }
 
 // optional .MsgsSimToClient.MsgFolkCreation folk_creation = 101;
@@ -32768,38 +33216,38 @@ inline ::MsgsSimToClient::MsgFolkGraphUpdate* MsgSimToClient_Content::mutable_fo
   return folk_graph_update_;
 }
 
-// optional .MsgsSimToClient.MsgControlGlobalMeteoAck control_global_meteo_ack = 103;
-inline bool MsgSimToClient_Content::has_control_global_meteo_ack() const {
+// optional .MsgsSimToClient.MsgControlGlobalWeatherAck control_global_weather_ack = 103;
+inline bool MsgSimToClient_Content::has_control_global_weather_ack() const {
   return _has_bit(102);
 }
-inline void MsgSimToClient_Content::clear_control_global_meteo_ack() {
-  if (control_global_meteo_ack_ != NULL) control_global_meteo_ack_->::MsgsSimToClient::MsgControlGlobalMeteoAck::Clear();
+inline void MsgSimToClient_Content::clear_control_global_weather_ack() {
+  if (control_global_weather_ack_ != NULL) control_global_weather_ack_->::MsgsSimToClient::MsgControlGlobalWeatherAck::Clear();
   _clear_bit(102);
 }
-inline const ::MsgsSimToClient::MsgControlGlobalMeteoAck& MsgSimToClient_Content::control_global_meteo_ack() const {
-  return control_global_meteo_ack_ != NULL ? *control_global_meteo_ack_ : *default_instance_->control_global_meteo_ack_;
+inline const ::MsgsSimToClient::MsgControlGlobalWeatherAck& MsgSimToClient_Content::control_global_weather_ack() const {
+  return control_global_weather_ack_ != NULL ? *control_global_weather_ack_ : *default_instance_->control_global_weather_ack_;
 }
-inline ::MsgsSimToClient::MsgControlGlobalMeteoAck* MsgSimToClient_Content::mutable_control_global_meteo_ack() {
+inline ::MsgsSimToClient::MsgControlGlobalWeatherAck* MsgSimToClient_Content::mutable_control_global_weather_ack() {
   _set_bit(102);
-  if (control_global_meteo_ack_ == NULL) control_global_meteo_ack_ = new ::MsgsSimToClient::MsgControlGlobalMeteoAck;
-  return control_global_meteo_ack_;
+  if (control_global_weather_ack_ == NULL) control_global_weather_ack_ = new ::MsgsSimToClient::MsgControlGlobalWeatherAck;
+  return control_global_weather_ack_;
 }
 
-// optional .MsgsSimToClient.MsgControlLocalMeteoAck control_local_meteo_ack = 104;
-inline bool MsgSimToClient_Content::has_control_local_meteo_ack() const {
+// optional .MsgsSimToClient.MsgControlLocalWeatherAck control_local_weather_ack = 104;
+inline bool MsgSimToClient_Content::has_control_local_weather_ack() const {
   return _has_bit(103);
 }
-inline void MsgSimToClient_Content::clear_control_local_meteo_ack() {
-  if (control_local_meteo_ack_ != NULL) control_local_meteo_ack_->::MsgsSimToClient::MsgControlLocalMeteoAck::Clear();
+inline void MsgSimToClient_Content::clear_control_local_weather_ack() {
+  if (control_local_weather_ack_ != NULL) control_local_weather_ack_->::MsgsSimToClient::MsgControlLocalWeatherAck::Clear();
   _clear_bit(103);
 }
-inline const ::MsgsSimToClient::MsgControlLocalMeteoAck& MsgSimToClient_Content::control_local_meteo_ack() const {
-  return control_local_meteo_ack_ != NULL ? *control_local_meteo_ack_ : *default_instance_->control_local_meteo_ack_;
+inline const ::MsgsSimToClient::MsgControlLocalWeatherAck& MsgSimToClient_Content::control_local_weather_ack() const {
+  return control_local_weather_ack_ != NULL ? *control_local_weather_ack_ : *default_instance_->control_local_weather_ack_;
 }
-inline ::MsgsSimToClient::MsgControlLocalMeteoAck* MsgSimToClient_Content::mutable_control_local_meteo_ack() {
+inline ::MsgsSimToClient::MsgControlLocalWeatherAck* MsgSimToClient_Content::mutable_control_local_weather_ack() {
   _set_bit(103);
-  if (control_local_meteo_ack_ == NULL) control_local_meteo_ack_ = new ::MsgsSimToClient::MsgControlLocalMeteoAck;
-  return control_local_meteo_ack_;
+  if (control_local_weather_ack_ == NULL) control_local_weather_ack_ = new ::MsgsSimToClient::MsgControlLocalWeatherAck;
+  return control_local_weather_ack_;
 }
 
 // optional .MsgsSimToClient.MsgControlCheckPointSaveBegin control_checkpoint_save_begin = 105;
@@ -33125,55 +33573,55 @@ inline ::MsgsSimToClient::MsgActionCreateFireOrderAck* MsgSimToClient_Content::m
   return action_create_fire_order_ack_;
 }
 
-// optional .MsgsSimToClient.MsgControlGlobalMeteo control_global_meteo = 124;
-inline bool MsgSimToClient_Content::has_control_global_meteo() const {
+// optional .MsgsSimToClient.MsgControlGlobalWeather control_global_weather = 124;
+inline bool MsgSimToClient_Content::has_control_global_weather() const {
   return _has_bit(123);
 }
-inline void MsgSimToClient_Content::clear_control_global_meteo() {
-  if (control_global_meteo_ != NULL) control_global_meteo_->::MsgsSimToClient::MsgControlGlobalMeteo::Clear();
+inline void MsgSimToClient_Content::clear_control_global_weather() {
+  if (control_global_weather_ != NULL) control_global_weather_->::MsgsSimToClient::MsgControlGlobalWeather::Clear();
   _clear_bit(123);
 }
-inline const ::MsgsSimToClient::MsgControlGlobalMeteo& MsgSimToClient_Content::control_global_meteo() const {
-  return control_global_meteo_ != NULL ? *control_global_meteo_ : *default_instance_->control_global_meteo_;
+inline const ::MsgsSimToClient::MsgControlGlobalWeather& MsgSimToClient_Content::control_global_weather() const {
+  return control_global_weather_ != NULL ? *control_global_weather_ : *default_instance_->control_global_weather_;
 }
-inline ::MsgsSimToClient::MsgControlGlobalMeteo* MsgSimToClient_Content::mutable_control_global_meteo() {
+inline ::MsgsSimToClient::MsgControlGlobalWeather* MsgSimToClient_Content::mutable_control_global_weather() {
   _set_bit(123);
-  if (control_global_meteo_ == NULL) control_global_meteo_ = new ::MsgsSimToClient::MsgControlGlobalMeteo;
-  return control_global_meteo_;
+  if (control_global_weather_ == NULL) control_global_weather_ = new ::MsgsSimToClient::MsgControlGlobalWeather;
+  return control_global_weather_;
 }
 
-// optional .MsgsSimToClient.MsgControlLocalMeteoCreation control_local_meteo_creation = 125;
-inline bool MsgSimToClient_Content::has_control_local_meteo_creation() const {
+// optional .MsgsSimToClient.MsgControlLocalWeatherCreation control_local_weather_creation = 125;
+inline bool MsgSimToClient_Content::has_control_local_weather_creation() const {
   return _has_bit(124);
 }
-inline void MsgSimToClient_Content::clear_control_local_meteo_creation() {
-  if (control_local_meteo_creation_ != NULL) control_local_meteo_creation_->::MsgsSimToClient::MsgControlLocalMeteoCreation::Clear();
+inline void MsgSimToClient_Content::clear_control_local_weather_creation() {
+  if (control_local_weather_creation_ != NULL) control_local_weather_creation_->::MsgsSimToClient::MsgControlLocalWeatherCreation::Clear();
   _clear_bit(124);
 }
-inline const ::MsgsSimToClient::MsgControlLocalMeteoCreation& MsgSimToClient_Content::control_local_meteo_creation() const {
-  return control_local_meteo_creation_ != NULL ? *control_local_meteo_creation_ : *default_instance_->control_local_meteo_creation_;
+inline const ::MsgsSimToClient::MsgControlLocalWeatherCreation& MsgSimToClient_Content::control_local_weather_creation() const {
+  return control_local_weather_creation_ != NULL ? *control_local_weather_creation_ : *default_instance_->control_local_weather_creation_;
 }
-inline ::MsgsSimToClient::MsgControlLocalMeteoCreation* MsgSimToClient_Content::mutable_control_local_meteo_creation() {
+inline ::MsgsSimToClient::MsgControlLocalWeatherCreation* MsgSimToClient_Content::mutable_control_local_weather_creation() {
   _set_bit(124);
-  if (control_local_meteo_creation_ == NULL) control_local_meteo_creation_ = new ::MsgsSimToClient::MsgControlLocalMeteoCreation;
-  return control_local_meteo_creation_;
+  if (control_local_weather_creation_ == NULL) control_local_weather_creation_ = new ::MsgsSimToClient::MsgControlLocalWeatherCreation;
+  return control_local_weather_creation_;
 }
 
-// optional .MsgsSimToClient.MsgControlLocalMeteoDestruction control_local_meteo_destruction = 126;
-inline bool MsgSimToClient_Content::has_control_local_meteo_destruction() const {
+// optional .MsgsSimToClient.MsgControlLocalWeatherDestruction control_local_weather_destruction = 126;
+inline bool MsgSimToClient_Content::has_control_local_weather_destruction() const {
   return _has_bit(125);
 }
-inline void MsgSimToClient_Content::clear_control_local_meteo_destruction() {
-  if (control_local_meteo_destruction_ != NULL) control_local_meteo_destruction_->::MsgsSimToClient::MsgControlLocalMeteoDestruction::Clear();
+inline void MsgSimToClient_Content::clear_control_local_weather_destruction() {
+  if (control_local_weather_destruction_ != NULL) control_local_weather_destruction_->::MsgsSimToClient::MsgControlLocalWeatherDestruction::Clear();
   _clear_bit(125);
 }
-inline const ::MsgsSimToClient::MsgControlLocalMeteoDestruction& MsgSimToClient_Content::control_local_meteo_destruction() const {
-  return control_local_meteo_destruction_ != NULL ? *control_local_meteo_destruction_ : *default_instance_->control_local_meteo_destruction_;
+inline const ::MsgsSimToClient::MsgControlLocalWeatherDestruction& MsgSimToClient_Content::control_local_weather_destruction() const {
+  return control_local_weather_destruction_ != NULL ? *control_local_weather_destruction_ : *default_instance_->control_local_weather_destruction_;
 }
-inline ::MsgsSimToClient::MsgControlLocalMeteoDestruction* MsgSimToClient_Content::mutable_control_local_meteo_destruction() {
+inline ::MsgsSimToClient::MsgControlLocalWeatherDestruction* MsgSimToClient_Content::mutable_control_local_weather_destruction() {
   _set_bit(125);
-  if (control_local_meteo_destruction_ == NULL) control_local_meteo_destruction_ = new ::MsgsSimToClient::MsgControlLocalMeteoDestruction;
-  return control_local_meteo_destruction_;
+  if (control_local_weather_destruction_ == NULL) control_local_weather_destruction_ = new ::MsgsSimToClient::MsgControlLocalWeatherDestruction;
+  return control_local_weather_destruction_;
 }
 
 // -------------------------------------------------------------------
@@ -33241,8 +33689,8 @@ inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgObjectMagi
   return ::MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_descriptor();
 }
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode>() {
-  return ::MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgCrowdMagicActionAck_ErrorCode>() {
+  return ::MsgsSimToClient::MsgCrowdMagicActionAck_ErrorCode_descriptor();
 }
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode>() {
@@ -33285,8 +33733,8 @@ inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgUnitAttrib
   return ::MsgsSimToClient::MsgUnitAttributes_FireAvailability_descriptor();
 }
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgUnitAttributes_PopulationRoe>() {
-  return ::MsgsSimToClient::MsgUnitAttributes_PopulationRoe_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgUnitAttributes_CrowdRoe>() {
+  return ::MsgsSimToClient::MsgUnitAttributes_CrowdRoe_descriptor();
 }
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgUrbanMagicActionAck_ErrorCode>() {

@@ -14,7 +14,7 @@
 
 namespace Common
 {
-    class MsgPopulationOrder;
+    class MsgCrowdOrder;
 }
 
 namespace MsgsClientToSim
@@ -37,7 +37,7 @@ public:
     // @name Events
     //@{
     virtual void OnReceiveFragOrder( const MsgsClientToSim::MsgFragOrder& asn );
-            void OnReceiveMission  ( const Common::MsgPopulationOrder& asn );
+            void OnReceiveMission  ( const Common::MsgCrowdOrder& asn );
     //@}
 
     //! @name Operations

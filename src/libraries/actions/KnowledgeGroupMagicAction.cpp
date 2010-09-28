@@ -80,9 +80,9 @@ void KnowledgeGroupMagicAction::Publish( Publisher_ABC& publisher ) const
     MsgsClientToSim::MsgKnowledgeMagicAction_Type type =
         ( MsgsClientToSim::MsgKnowledgeMagicAction_Type ) GetType().GetId();
     simulation::KnowledgeMagicAction message;
-    message().mutable_id()->set_id( GetEntity().GetId() );
+    message().mutable_knowledge_group()->set_id( GetEntity().GetId() );
     message().set_type( type );
-    CommitTo( *message().mutable_parametres() );
+    CommitTo( *message().mutable_parameters() );
     message.Send( publisher );
     message().Clear();
 }

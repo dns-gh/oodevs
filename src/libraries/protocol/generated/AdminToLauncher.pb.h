@@ -23,6 +23,7 @@
 #include <google/protobuf/extension_set.h>
 #include <google/protobuf/generated_message_reflection.h>
 #include "Common.pb.h"
+#include "ClientToSim.pb.h"
 #include "Version.pb.h"
 
 namespace MsgsAdminToLauncher {
@@ -33,12 +34,33 @@ void protobuf_AssignDesc_AdminToLauncher_2eproto();
 void protobuf_ShutdownFile_AdminToLauncher_2eproto();
 
 class MsgConnectionRequest;
-class MsgExercicesListRequest;
 class MsgControlStart;
 class MsgControlStop;
+class MsgExercicesListRequest;
+class MsgProfilesListRequest;
+class MsgConnectedProfilesListRequest;
+class MsgAdminDirectoryChangeNotification;
 class MsgAdminToLauncher;
 class MsgAdminToLauncher_Content;
 
+enum MsgControlStart_GameMode {
+  MsgControlStart_GameMode_play = 0,
+  MsgControlStart_GameMode_replay = 1
+};
+bool MsgControlStart_GameMode_IsValid(int value);
+const MsgControlStart_GameMode MsgControlStart_GameMode_GameMode_MIN = MsgControlStart_GameMode_play;
+const MsgControlStart_GameMode MsgControlStart_GameMode_GameMode_MAX = MsgControlStart_GameMode_replay;
+
+const ::google::protobuf::EnumDescriptor* MsgControlStart_GameMode_descriptor();
+inline const ::std::string& MsgControlStart_GameMode_Name(MsgControlStart_GameMode value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    MsgControlStart_GameMode_descriptor(), value);
+}
+inline bool MsgControlStart_GameMode_Parse(
+    const ::std::string& name, MsgControlStart_GameMode* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<MsgControlStart_GameMode>(
+    MsgControlStart_GameMode_descriptor(), name, value);
+}
 // ===================================================================
 
 class MsgConnectionRequest : public ::google::protobuf::Message {
@@ -128,93 +150,6 @@ class MsgConnectionRequest : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgExercicesListRequest : public ::google::protobuf::Message {
- public:
-  MsgExercicesListRequest();
-  virtual ~MsgExercicesListRequest();
-  
-  MsgExercicesListRequest(const MsgExercicesListRequest& from);
-  
-  inline MsgExercicesListRequest& operator=(const MsgExercicesListRequest& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgExercicesListRequest& default_instance();
-  void Swap(MsgExercicesListRequest* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgExercicesListRequest* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgExercicesListRequest& from);
-  void MergeFrom(const MsgExercicesListRequest& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // optional int32 context = 1 [default = 0];
-  inline bool has_context() const;
-  inline void clear_context();
-  static const int kContextFieldNumber = 1;
-  inline ::google::protobuf::int32 context() const;
-  inline void set_context(::google::protobuf::int32 value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::google::protobuf::int32 context_;
-  friend void  protobuf_AddDesc_AdminToLauncher_2eproto();
-  friend void protobuf_AssignDesc_AdminToLauncher_2eproto();
-  friend void protobuf_ShutdownFile_AdminToLauncher_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgExercicesListRequest* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class MsgControlStart : public ::google::protobuf::Message {
  public:
   MsgControlStart();
@@ -266,6 +201,28 @@ class MsgControlStart : public ::google::protobuf::Message {
   
   // nested types ----------------------------------------------------
   
+  typedef MsgControlStart_GameMode GameMode;
+  static const GameMode play = MsgControlStart_GameMode_play;
+  static const GameMode replay = MsgControlStart_GameMode_replay;
+  static inline bool GameMode_IsValid(int value) {
+    return MsgControlStart_GameMode_IsValid(value);
+  }
+  static const GameMode GameMode_MIN =
+    MsgControlStart_GameMode_GameMode_MIN;
+  static const GameMode GameMode_MAX =
+    MsgControlStart_GameMode_GameMode_MAX;
+  static inline const ::google::protobuf::EnumDescriptor*
+  GameMode_descriptor() {
+    return MsgControlStart_GameMode_descriptor();
+  }
+  static inline const ::std::string& GameMode_Name(GameMode value) {
+    return MsgControlStart_GameMode_Name(value);
+  }
+  static inline bool GameMode_Parse(const ::std::string& name,
+      GameMode* value) {
+    return MsgControlStart_GameMode_Parse(name, value);
+  }
+  
   // accessors -------------------------------------------------------
   
   // required .Common.MsgExercise exercise = 1;
@@ -275,32 +232,52 @@ class MsgControlStart : public ::google::protobuf::Message {
   inline const ::Common::MsgExercise& exercise() const;
   inline ::Common::MsgExercise* mutable_exercise();
   
-  // optional bool with_3A = 2 [default = true];
-  inline bool has_with_3a() const;
-  inline void clear_with_3a();
-  static const int kWith3AFieldNumber = 2;
-  inline bool with_3a() const;
-  inline void set_with_3a(bool value);
+  // required .MsgsAdminToLauncher.MsgControlStart.GameMode mode = 2;
+  inline bool has_mode() const;
+  inline void clear_mode();
+  static const int kModeFieldNumber = 2;
+  inline ::MsgsAdminToLauncher::MsgControlStart_GameMode mode() const;
+  inline void set_mode(::MsgsAdminToLauncher::MsgControlStart_GameMode value);
   
-  // optional bool with_SIC = 3 [default = false];
-  inline bool has_with_sic() const;
-  inline void clear_with_sic();
-  static const int kWithSICFieldNumber = 3;
-  inline bool with_sic() const;
-  inline void set_with_sic(bool value);
+  // optional bool use_after_action_analysis = 3;
+  inline bool has_use_after_action_analysis() const;
+  inline void clear_use_after_action_analysis();
+  static const int kUseAfterActionAnalysisFieldNumber = 3;
+  inline bool use_after_action_analysis() const;
+  inline void set_use_after_action_analysis(bool value);
+  
+  // optional bool use_external_systems = 4;
+  inline bool has_use_external_systems() const;
+  inline void clear_use_external_systems();
+  static const int kUseExternalSystemsFieldNumber = 4;
+  inline bool use_external_systems() const;
+  inline void set_use_external_systems(bool value);
+  
+  // optional string checkpoint = 5;
+  inline bool has_checkpoint() const;
+  inline void clear_checkpoint();
+  static const int kCheckpointFieldNumber = 5;
+  inline const ::std::string& checkpoint() const;
+  inline void set_checkpoint(const ::std::string& value);
+  inline void set_checkpoint(const char* value);
+  inline void set_checkpoint(const char* value, size_t size);
+  inline ::std::string* mutable_checkpoint();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
   ::Common::MsgExercise* exercise_;
-  bool with_3a_;
-  bool with_sic_;
+  int mode_;
+  bool use_after_action_analysis_;
+  bool use_external_systems_;
+  ::std::string* checkpoint_;
+  static const ::std::string _default_checkpoint_;
   friend void  protobuf_AddDesc_AdminToLauncher_2eproto();
   friend void protobuf_AssignDesc_AdminToLauncher_2eproto();
   friend void protobuf_ShutdownFile_AdminToLauncher_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -405,6 +382,346 @@ class MsgControlStop : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class MsgExercicesListRequest : public ::google::protobuf::Message {
+ public:
+  MsgExercicesListRequest();
+  virtual ~MsgExercicesListRequest();
+  
+  MsgExercicesListRequest(const MsgExercicesListRequest& from);
+  
+  inline MsgExercicesListRequest& operator=(const MsgExercicesListRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgExercicesListRequest& default_instance();
+  void Swap(MsgExercicesListRequest* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgExercicesListRequest* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgExercicesListRequest& from);
+  void MergeFrom(const MsgExercicesListRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // optional int32 context = 1;
+  inline bool has_context() const;
+  inline void clear_context();
+  static const int kContextFieldNumber = 1;
+  inline ::google::protobuf::int32 context() const;
+  inline void set_context(::google::protobuf::int32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::int32 context_;
+  friend void  protobuf_AddDesc_AdminToLauncher_2eproto();
+  friend void protobuf_AssignDesc_AdminToLauncher_2eproto();
+  friend void protobuf_ShutdownFile_AdminToLauncher_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgExercicesListRequest* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgProfilesListRequest : public ::google::protobuf::Message {
+ public:
+  MsgProfilesListRequest();
+  virtual ~MsgProfilesListRequest();
+  
+  MsgProfilesListRequest(const MsgProfilesListRequest& from);
+  
+  inline MsgProfilesListRequest& operator=(const MsgProfilesListRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgProfilesListRequest& default_instance();
+  void Swap(MsgProfilesListRequest* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgProfilesListRequest* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgProfilesListRequest& from);
+  void MergeFrom(const MsgProfilesListRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // optional int32 context = 1;
+  inline bool has_context() const;
+  inline void clear_context();
+  static const int kContextFieldNumber = 1;
+  inline ::google::protobuf::int32 context() const;
+  inline void set_context(::google::protobuf::int32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::int32 context_;
+  friend void  protobuf_AddDesc_AdminToLauncher_2eproto();
+  friend void protobuf_AssignDesc_AdminToLauncher_2eproto();
+  friend void protobuf_ShutdownFile_AdminToLauncher_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgProfilesListRequest* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgConnectedProfilesListRequest : public ::google::protobuf::Message {
+ public:
+  MsgConnectedProfilesListRequest();
+  virtual ~MsgConnectedProfilesListRequest();
+  
+  MsgConnectedProfilesListRequest(const MsgConnectedProfilesListRequest& from);
+  
+  inline MsgConnectedProfilesListRequest& operator=(const MsgConnectedProfilesListRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgConnectedProfilesListRequest& default_instance();
+  void Swap(MsgConnectedProfilesListRequest* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgConnectedProfilesListRequest* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgConnectedProfilesListRequest& from);
+  void MergeFrom(const MsgConnectedProfilesListRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // optional int32 context = 1;
+  inline bool has_context() const;
+  inline void clear_context();
+  static const int kContextFieldNumber = 1;
+  inline ::google::protobuf::int32 context() const;
+  inline void set_context(::google::protobuf::int32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::int32 context_;
+  friend void  protobuf_AddDesc_AdminToLauncher_2eproto();
+  friend void protobuf_AssignDesc_AdminToLauncher_2eproto();
+  friend void protobuf_ShutdownFile_AdminToLauncher_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgConnectedProfilesListRequest* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgAdminDirectoryChangeNotification : public ::google::protobuf::Message {
+ public:
+  MsgAdminDirectoryChangeNotification();
+  virtual ~MsgAdminDirectoryChangeNotification();
+  
+  MsgAdminDirectoryChangeNotification(const MsgAdminDirectoryChangeNotification& from);
+  
+  inline MsgAdminDirectoryChangeNotification& operator=(const MsgAdminDirectoryChangeNotification& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgAdminDirectoryChangeNotification& default_instance();
+  void Swap(MsgAdminDirectoryChangeNotification* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgAdminDirectoryChangeNotification* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgAdminDirectoryChangeNotification& from);
+  void MergeFrom(const MsgAdminDirectoryChangeNotification& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  friend void  protobuf_AddDesc_AdminToLauncher_2eproto();
+  friend void protobuf_AssignDesc_AdminToLauncher_2eproto();
+  friend void protobuf_ShutdownFile_AdminToLauncher_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[1];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgAdminDirectoryChangeNotification* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class MsgAdminToLauncher_Content : public ::google::protobuf::Message {
  public:
   MsgAdminToLauncher_Content();
@@ -465,40 +782,96 @@ class MsgAdminToLauncher_Content : public ::google::protobuf::Message {
   inline const ::MsgsAdminToLauncher::MsgConnectionRequest& connection_request() const;
   inline ::MsgsAdminToLauncher::MsgConnectionRequest* mutable_connection_request();
   
-  // optional .MsgsAdminToLauncher.MsgExercicesListRequest exercise_list_request = 2;
-  inline bool has_exercise_list_request() const;
-  inline void clear_exercise_list_request();
-  static const int kExerciseListRequestFieldNumber = 2;
-  inline const ::MsgsAdminToLauncher::MsgExercicesListRequest& exercise_list_request() const;
-  inline ::MsgsAdminToLauncher::MsgExercicesListRequest* mutable_exercise_list_request();
-  
-  // optional .MsgsAdminToLauncher.MsgControlStart control_start = 3;
+  // optional .MsgsAdminToLauncher.MsgControlStart control_start = 2;
   inline bool has_control_start() const;
   inline void clear_control_start();
-  static const int kControlStartFieldNumber = 3;
+  static const int kControlStartFieldNumber = 2;
   inline const ::MsgsAdminToLauncher::MsgControlStart& control_start() const;
   inline ::MsgsAdminToLauncher::MsgControlStart* mutable_control_start();
   
-  // optional .MsgsAdminToLauncher.MsgControlStop control_stop = 4;
+  // optional .MsgsAdminToLauncher.MsgControlStop control_stop = 3;
   inline bool has_control_stop() const;
   inline void clear_control_stop();
-  static const int kControlStopFieldNumber = 4;
+  static const int kControlStopFieldNumber = 3;
   inline const ::MsgsAdminToLauncher::MsgControlStop& control_stop() const;
   inline ::MsgsAdminToLauncher::MsgControlStop* mutable_control_stop();
+  
+  // optional .MsgsAdminToLauncher.MsgExercicesListRequest exercise_list_request = 4;
+  inline bool has_exercise_list_request() const;
+  inline void clear_exercise_list_request();
+  static const int kExerciseListRequestFieldNumber = 4;
+  inline const ::MsgsAdminToLauncher::MsgExercicesListRequest& exercise_list_request() const;
+  inline ::MsgsAdminToLauncher::MsgExercicesListRequest* mutable_exercise_list_request();
+  
+  // optional .MsgsAdminToLauncher.MsgProfilesListRequest profile_list_request = 5;
+  inline bool has_profile_list_request() const;
+  inline void clear_profile_list_request();
+  static const int kProfileListRequestFieldNumber = 5;
+  inline const ::MsgsAdminToLauncher::MsgProfilesListRequest& profile_list_request() const;
+  inline ::MsgsAdminToLauncher::MsgProfilesListRequest* mutable_profile_list_request();
+  
+  // optional .MsgsAdminToLauncher.MsgConnectedProfilesListRequest connected_profile_list_request = 6;
+  inline bool has_connected_profile_list_request() const;
+  inline void clear_connected_profile_list_request();
+  static const int kConnectedProfileListRequestFieldNumber = 6;
+  inline const ::MsgsAdminToLauncher::MsgConnectedProfilesListRequest& connected_profile_list_request() const;
+  inline ::MsgsAdminToLauncher::MsgConnectedProfilesListRequest* mutable_connected_profile_list_request();
+  
+  // optional .MsgsAdminToLauncher.MsgAdminDirectoryChangeNotification notification = 7;
+  inline bool has_notification() const;
+  inline void clear_notification();
+  static const int kNotificationFieldNumber = 7;
+  inline const ::MsgsAdminToLauncher::MsgAdminDirectoryChangeNotification& notification() const;
+  inline ::MsgsAdminToLauncher::MsgAdminDirectoryChangeNotification* mutable_notification();
+  
+  // optional .MsgsClientToSim.MsgControlCheckPointSetFrequency control_checkpoint_set_frequency = 8;
+  inline bool has_control_checkpoint_set_frequency() const;
+  inline void clear_control_checkpoint_set_frequency();
+  static const int kControlCheckpointSetFrequencyFieldNumber = 8;
+  inline const ::MsgsClientToSim::MsgControlCheckPointSetFrequency& control_checkpoint_set_frequency() const;
+  inline ::MsgsClientToSim::MsgControlCheckPointSetFrequency* mutable_control_checkpoint_set_frequency();
+  
+  // optional .MsgsClientToSim.MsgControlCheckPointSaveNow control_checkpoint_save_now = 9;
+  inline bool has_control_checkpoint_save_now() const;
+  inline void clear_control_checkpoint_save_now();
+  static const int kControlCheckpointSaveNowFieldNumber = 9;
+  inline const ::MsgsClientToSim::MsgControlCheckPointSaveNow& control_checkpoint_save_now() const;
+  inline ::MsgsClientToSim::MsgControlCheckPointSaveNow* mutable_control_checkpoint_save_now();
+  
+  // optional .MsgsClientToSim.MsgControlCheckPointListRequest control_checkpoint_list_request = 10;
+  inline bool has_control_checkpoint_list_request() const;
+  inline void clear_control_checkpoint_list_request();
+  static const int kControlCheckpointListRequestFieldNumber = 10;
+  inline const ::MsgsClientToSim::MsgControlCheckPointListRequest& control_checkpoint_list_request() const;
+  inline ::MsgsClientToSim::MsgControlCheckPointListRequest* mutable_control_checkpoint_list_request();
+  
+  // optional .MsgsClientToSim.MsgControlCheckPointDeleteRequest control_checkpoint_delete_request = 11;
+  inline bool has_control_checkpoint_delete_request() const;
+  inline void clear_control_checkpoint_delete_request();
+  static const int kControlCheckpointDeleteRequestFieldNumber = 11;
+  inline const ::MsgsClientToSim::MsgControlCheckPointDeleteRequest& control_checkpoint_delete_request() const;
+  inline ::MsgsClientToSim::MsgControlCheckPointDeleteRequest* mutable_control_checkpoint_delete_request();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
   ::MsgsAdminToLauncher::MsgConnectionRequest* connection_request_;
-  ::MsgsAdminToLauncher::MsgExercicesListRequest* exercise_list_request_;
   ::MsgsAdminToLauncher::MsgControlStart* control_start_;
   ::MsgsAdminToLauncher::MsgControlStop* control_stop_;
+  ::MsgsAdminToLauncher::MsgExercicesListRequest* exercise_list_request_;
+  ::MsgsAdminToLauncher::MsgProfilesListRequest* profile_list_request_;
+  ::MsgsAdminToLauncher::MsgConnectedProfilesListRequest* connected_profile_list_request_;
+  ::MsgsAdminToLauncher::MsgAdminDirectoryChangeNotification* notification_;
+  ::MsgsClientToSim::MsgControlCheckPointSetFrequency* control_checkpoint_set_frequency_;
+  ::MsgsClientToSim::MsgControlCheckPointSaveNow* control_checkpoint_save_now_;
+  ::MsgsClientToSim::MsgControlCheckPointListRequest* control_checkpoint_list_request_;
+  ::MsgsClientToSim::MsgControlCheckPointDeleteRequest* control_checkpoint_delete_request_;
   friend void  protobuf_AddDesc_AdminToLauncher_2eproto();
   friend void protobuf_AssignDesc_AdminToLauncher_2eproto();
   friend void protobuf_ShutdownFile_AdminToLauncher_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(11 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -571,7 +944,7 @@ class MsgAdminToLauncher : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // optional int32 context = 1 [default = 0];
+  // optional int32 context = 1;
   inline bool has_context() const;
   inline void clear_context();
   static const int kContextFieldNumber = 1;
@@ -640,26 +1013,6 @@ inline ::Version::ProtocolVersion* MsgConnectionRequest::mutable_client_version(
 
 // -------------------------------------------------------------------
 
-// MsgExercicesListRequest
-
-// optional int32 context = 1 [default = 0];
-inline bool MsgExercicesListRequest::has_context() const {
-  return _has_bit(0);
-}
-inline void MsgExercicesListRequest::clear_context() {
-  context_ = 0;
-  _clear_bit(0);
-}
-inline ::google::protobuf::int32 MsgExercicesListRequest::context() const {
-  return context_;
-}
-inline void MsgExercicesListRequest::set_context(::google::protobuf::int32 value) {
-  _set_bit(0);
-  context_ = value;
-}
-
-// -------------------------------------------------------------------
-
 // MsgControlStart
 
 // required .Common.MsgExercise exercise = 1;
@@ -679,36 +1032,95 @@ inline ::Common::MsgExercise* MsgControlStart::mutable_exercise() {
   return exercise_;
 }
 
-// optional bool with_3A = 2 [default = true];
-inline bool MsgControlStart::has_with_3a() const {
+// required .MsgsAdminToLauncher.MsgControlStart.GameMode mode = 2;
+inline bool MsgControlStart::has_mode() const {
   return _has_bit(1);
 }
-inline void MsgControlStart::clear_with_3a() {
-  with_3a_ = true;
+inline void MsgControlStart::clear_mode() {
+  mode_ = 0;
   _clear_bit(1);
 }
-inline bool MsgControlStart::with_3a() const {
-  return with_3a_;
+inline ::MsgsAdminToLauncher::MsgControlStart_GameMode MsgControlStart::mode() const {
+  return static_cast< ::MsgsAdminToLauncher::MsgControlStart_GameMode >(mode_);
 }
-inline void MsgControlStart::set_with_3a(bool value) {
+inline void MsgControlStart::set_mode(::MsgsAdminToLauncher::MsgControlStart_GameMode value) {
+  GOOGLE_DCHECK(::MsgsAdminToLauncher::MsgControlStart_GameMode_IsValid(value));
   _set_bit(1);
-  with_3a_ = value;
+  mode_ = value;
 }
 
-// optional bool with_SIC = 3 [default = false];
-inline bool MsgControlStart::has_with_sic() const {
+// optional bool use_after_action_analysis = 3;
+inline bool MsgControlStart::has_use_after_action_analysis() const {
   return _has_bit(2);
 }
-inline void MsgControlStart::clear_with_sic() {
-  with_sic_ = false;
+inline void MsgControlStart::clear_use_after_action_analysis() {
+  use_after_action_analysis_ = false;
   _clear_bit(2);
 }
-inline bool MsgControlStart::with_sic() const {
-  return with_sic_;
+inline bool MsgControlStart::use_after_action_analysis() const {
+  return use_after_action_analysis_;
 }
-inline void MsgControlStart::set_with_sic(bool value) {
+inline void MsgControlStart::set_use_after_action_analysis(bool value) {
   _set_bit(2);
-  with_sic_ = value;
+  use_after_action_analysis_ = value;
+}
+
+// optional bool use_external_systems = 4;
+inline bool MsgControlStart::has_use_external_systems() const {
+  return _has_bit(3);
+}
+inline void MsgControlStart::clear_use_external_systems() {
+  use_external_systems_ = false;
+  _clear_bit(3);
+}
+inline bool MsgControlStart::use_external_systems() const {
+  return use_external_systems_;
+}
+inline void MsgControlStart::set_use_external_systems(bool value) {
+  _set_bit(3);
+  use_external_systems_ = value;
+}
+
+// optional string checkpoint = 5;
+inline bool MsgControlStart::has_checkpoint() const {
+  return _has_bit(4);
+}
+inline void MsgControlStart::clear_checkpoint() {
+  if (checkpoint_ != &_default_checkpoint_) {
+    checkpoint_->clear();
+  }
+  _clear_bit(4);
+}
+inline const ::std::string& MsgControlStart::checkpoint() const {
+  return *checkpoint_;
+}
+inline void MsgControlStart::set_checkpoint(const ::std::string& value) {
+  _set_bit(4);
+  if (checkpoint_ == &_default_checkpoint_) {
+    checkpoint_ = new ::std::string;
+  }
+  checkpoint_->assign(value);
+}
+inline void MsgControlStart::set_checkpoint(const char* value) {
+  _set_bit(4);
+  if (checkpoint_ == &_default_checkpoint_) {
+    checkpoint_ = new ::std::string;
+  }
+  checkpoint_->assign(value);
+}
+inline void MsgControlStart::set_checkpoint(const char* value, size_t size) {
+  _set_bit(4);
+  if (checkpoint_ == &_default_checkpoint_) {
+    checkpoint_ = new ::std::string;
+  }
+  checkpoint_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgControlStart::mutable_checkpoint() {
+  _set_bit(4);
+  if (checkpoint_ == &_default_checkpoint_) {
+    checkpoint_ = new ::std::string;
+  }
+  return checkpoint_;
 }
 
 // -------------------------------------------------------------------
@@ -734,6 +1146,70 @@ inline ::Common::MsgExercise* MsgControlStop::mutable_exercise() {
 
 // -------------------------------------------------------------------
 
+// MsgExercicesListRequest
+
+// optional int32 context = 1;
+inline bool MsgExercicesListRequest::has_context() const {
+  return _has_bit(0);
+}
+inline void MsgExercicesListRequest::clear_context() {
+  context_ = 0;
+  _clear_bit(0);
+}
+inline ::google::protobuf::int32 MsgExercicesListRequest::context() const {
+  return context_;
+}
+inline void MsgExercicesListRequest::set_context(::google::protobuf::int32 value) {
+  _set_bit(0);
+  context_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgProfilesListRequest
+
+// optional int32 context = 1;
+inline bool MsgProfilesListRequest::has_context() const {
+  return _has_bit(0);
+}
+inline void MsgProfilesListRequest::clear_context() {
+  context_ = 0;
+  _clear_bit(0);
+}
+inline ::google::protobuf::int32 MsgProfilesListRequest::context() const {
+  return context_;
+}
+inline void MsgProfilesListRequest::set_context(::google::protobuf::int32 value) {
+  _set_bit(0);
+  context_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgConnectedProfilesListRequest
+
+// optional int32 context = 1;
+inline bool MsgConnectedProfilesListRequest::has_context() const {
+  return _has_bit(0);
+}
+inline void MsgConnectedProfilesListRequest::clear_context() {
+  context_ = 0;
+  _clear_bit(0);
+}
+inline ::google::protobuf::int32 MsgConnectedProfilesListRequest::context() const {
+  return context_;
+}
+inline void MsgConnectedProfilesListRequest::set_context(::google::protobuf::int32 value) {
+  _set_bit(0);
+  context_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgAdminDirectoryChangeNotification
+
+// -------------------------------------------------------------------
+
 // MsgAdminToLauncher_Content
 
 // optional .MsgsAdminToLauncher.MsgConnectionRequest connection_request = 1;
@@ -753,62 +1229,181 @@ inline ::MsgsAdminToLauncher::MsgConnectionRequest* MsgAdminToLauncher_Content::
   return connection_request_;
 }
 
-// optional .MsgsAdminToLauncher.MsgExercicesListRequest exercise_list_request = 2;
-inline bool MsgAdminToLauncher_Content::has_exercise_list_request() const {
-  return _has_bit(1);
-}
-inline void MsgAdminToLauncher_Content::clear_exercise_list_request() {
-  if (exercise_list_request_ != NULL) exercise_list_request_->::MsgsAdminToLauncher::MsgExercicesListRequest::Clear();
-  _clear_bit(1);
-}
-inline const ::MsgsAdminToLauncher::MsgExercicesListRequest& MsgAdminToLauncher_Content::exercise_list_request() const {
-  return exercise_list_request_ != NULL ? *exercise_list_request_ : *default_instance_->exercise_list_request_;
-}
-inline ::MsgsAdminToLauncher::MsgExercicesListRequest* MsgAdminToLauncher_Content::mutable_exercise_list_request() {
-  _set_bit(1);
-  if (exercise_list_request_ == NULL) exercise_list_request_ = new ::MsgsAdminToLauncher::MsgExercicesListRequest;
-  return exercise_list_request_;
-}
-
-// optional .MsgsAdminToLauncher.MsgControlStart control_start = 3;
+// optional .MsgsAdminToLauncher.MsgControlStart control_start = 2;
 inline bool MsgAdminToLauncher_Content::has_control_start() const {
-  return _has_bit(2);
+  return _has_bit(1);
 }
 inline void MsgAdminToLauncher_Content::clear_control_start() {
   if (control_start_ != NULL) control_start_->::MsgsAdminToLauncher::MsgControlStart::Clear();
-  _clear_bit(2);
+  _clear_bit(1);
 }
 inline const ::MsgsAdminToLauncher::MsgControlStart& MsgAdminToLauncher_Content::control_start() const {
   return control_start_ != NULL ? *control_start_ : *default_instance_->control_start_;
 }
 inline ::MsgsAdminToLauncher::MsgControlStart* MsgAdminToLauncher_Content::mutable_control_start() {
-  _set_bit(2);
+  _set_bit(1);
   if (control_start_ == NULL) control_start_ = new ::MsgsAdminToLauncher::MsgControlStart;
   return control_start_;
 }
 
-// optional .MsgsAdminToLauncher.MsgControlStop control_stop = 4;
+// optional .MsgsAdminToLauncher.MsgControlStop control_stop = 3;
 inline bool MsgAdminToLauncher_Content::has_control_stop() const {
-  return _has_bit(3);
+  return _has_bit(2);
 }
 inline void MsgAdminToLauncher_Content::clear_control_stop() {
   if (control_stop_ != NULL) control_stop_->::MsgsAdminToLauncher::MsgControlStop::Clear();
-  _clear_bit(3);
+  _clear_bit(2);
 }
 inline const ::MsgsAdminToLauncher::MsgControlStop& MsgAdminToLauncher_Content::control_stop() const {
   return control_stop_ != NULL ? *control_stop_ : *default_instance_->control_stop_;
 }
 inline ::MsgsAdminToLauncher::MsgControlStop* MsgAdminToLauncher_Content::mutable_control_stop() {
-  _set_bit(3);
+  _set_bit(2);
   if (control_stop_ == NULL) control_stop_ = new ::MsgsAdminToLauncher::MsgControlStop;
   return control_stop_;
+}
+
+// optional .MsgsAdminToLauncher.MsgExercicesListRequest exercise_list_request = 4;
+inline bool MsgAdminToLauncher_Content::has_exercise_list_request() const {
+  return _has_bit(3);
+}
+inline void MsgAdminToLauncher_Content::clear_exercise_list_request() {
+  if (exercise_list_request_ != NULL) exercise_list_request_->::MsgsAdminToLauncher::MsgExercicesListRequest::Clear();
+  _clear_bit(3);
+}
+inline const ::MsgsAdminToLauncher::MsgExercicesListRequest& MsgAdminToLauncher_Content::exercise_list_request() const {
+  return exercise_list_request_ != NULL ? *exercise_list_request_ : *default_instance_->exercise_list_request_;
+}
+inline ::MsgsAdminToLauncher::MsgExercicesListRequest* MsgAdminToLauncher_Content::mutable_exercise_list_request() {
+  _set_bit(3);
+  if (exercise_list_request_ == NULL) exercise_list_request_ = new ::MsgsAdminToLauncher::MsgExercicesListRequest;
+  return exercise_list_request_;
+}
+
+// optional .MsgsAdminToLauncher.MsgProfilesListRequest profile_list_request = 5;
+inline bool MsgAdminToLauncher_Content::has_profile_list_request() const {
+  return _has_bit(4);
+}
+inline void MsgAdminToLauncher_Content::clear_profile_list_request() {
+  if (profile_list_request_ != NULL) profile_list_request_->::MsgsAdminToLauncher::MsgProfilesListRequest::Clear();
+  _clear_bit(4);
+}
+inline const ::MsgsAdminToLauncher::MsgProfilesListRequest& MsgAdminToLauncher_Content::profile_list_request() const {
+  return profile_list_request_ != NULL ? *profile_list_request_ : *default_instance_->profile_list_request_;
+}
+inline ::MsgsAdminToLauncher::MsgProfilesListRequest* MsgAdminToLauncher_Content::mutable_profile_list_request() {
+  _set_bit(4);
+  if (profile_list_request_ == NULL) profile_list_request_ = new ::MsgsAdminToLauncher::MsgProfilesListRequest;
+  return profile_list_request_;
+}
+
+// optional .MsgsAdminToLauncher.MsgConnectedProfilesListRequest connected_profile_list_request = 6;
+inline bool MsgAdminToLauncher_Content::has_connected_profile_list_request() const {
+  return _has_bit(5);
+}
+inline void MsgAdminToLauncher_Content::clear_connected_profile_list_request() {
+  if (connected_profile_list_request_ != NULL) connected_profile_list_request_->::MsgsAdminToLauncher::MsgConnectedProfilesListRequest::Clear();
+  _clear_bit(5);
+}
+inline const ::MsgsAdminToLauncher::MsgConnectedProfilesListRequest& MsgAdminToLauncher_Content::connected_profile_list_request() const {
+  return connected_profile_list_request_ != NULL ? *connected_profile_list_request_ : *default_instance_->connected_profile_list_request_;
+}
+inline ::MsgsAdminToLauncher::MsgConnectedProfilesListRequest* MsgAdminToLauncher_Content::mutable_connected_profile_list_request() {
+  _set_bit(5);
+  if (connected_profile_list_request_ == NULL) connected_profile_list_request_ = new ::MsgsAdminToLauncher::MsgConnectedProfilesListRequest;
+  return connected_profile_list_request_;
+}
+
+// optional .MsgsAdminToLauncher.MsgAdminDirectoryChangeNotification notification = 7;
+inline bool MsgAdminToLauncher_Content::has_notification() const {
+  return _has_bit(6);
+}
+inline void MsgAdminToLauncher_Content::clear_notification() {
+  if (notification_ != NULL) notification_->::MsgsAdminToLauncher::MsgAdminDirectoryChangeNotification::Clear();
+  _clear_bit(6);
+}
+inline const ::MsgsAdminToLauncher::MsgAdminDirectoryChangeNotification& MsgAdminToLauncher_Content::notification() const {
+  return notification_ != NULL ? *notification_ : *default_instance_->notification_;
+}
+inline ::MsgsAdminToLauncher::MsgAdminDirectoryChangeNotification* MsgAdminToLauncher_Content::mutable_notification() {
+  _set_bit(6);
+  if (notification_ == NULL) notification_ = new ::MsgsAdminToLauncher::MsgAdminDirectoryChangeNotification;
+  return notification_;
+}
+
+// optional .MsgsClientToSim.MsgControlCheckPointSetFrequency control_checkpoint_set_frequency = 8;
+inline bool MsgAdminToLauncher_Content::has_control_checkpoint_set_frequency() const {
+  return _has_bit(7);
+}
+inline void MsgAdminToLauncher_Content::clear_control_checkpoint_set_frequency() {
+  if (control_checkpoint_set_frequency_ != NULL) control_checkpoint_set_frequency_->::MsgsClientToSim::MsgControlCheckPointSetFrequency::Clear();
+  _clear_bit(7);
+}
+inline const ::MsgsClientToSim::MsgControlCheckPointSetFrequency& MsgAdminToLauncher_Content::control_checkpoint_set_frequency() const {
+  return control_checkpoint_set_frequency_ != NULL ? *control_checkpoint_set_frequency_ : *default_instance_->control_checkpoint_set_frequency_;
+}
+inline ::MsgsClientToSim::MsgControlCheckPointSetFrequency* MsgAdminToLauncher_Content::mutable_control_checkpoint_set_frequency() {
+  _set_bit(7);
+  if (control_checkpoint_set_frequency_ == NULL) control_checkpoint_set_frequency_ = new ::MsgsClientToSim::MsgControlCheckPointSetFrequency;
+  return control_checkpoint_set_frequency_;
+}
+
+// optional .MsgsClientToSim.MsgControlCheckPointSaveNow control_checkpoint_save_now = 9;
+inline bool MsgAdminToLauncher_Content::has_control_checkpoint_save_now() const {
+  return _has_bit(8);
+}
+inline void MsgAdminToLauncher_Content::clear_control_checkpoint_save_now() {
+  if (control_checkpoint_save_now_ != NULL) control_checkpoint_save_now_->::MsgsClientToSim::MsgControlCheckPointSaveNow::Clear();
+  _clear_bit(8);
+}
+inline const ::MsgsClientToSim::MsgControlCheckPointSaveNow& MsgAdminToLauncher_Content::control_checkpoint_save_now() const {
+  return control_checkpoint_save_now_ != NULL ? *control_checkpoint_save_now_ : *default_instance_->control_checkpoint_save_now_;
+}
+inline ::MsgsClientToSim::MsgControlCheckPointSaveNow* MsgAdminToLauncher_Content::mutable_control_checkpoint_save_now() {
+  _set_bit(8);
+  if (control_checkpoint_save_now_ == NULL) control_checkpoint_save_now_ = new ::MsgsClientToSim::MsgControlCheckPointSaveNow;
+  return control_checkpoint_save_now_;
+}
+
+// optional .MsgsClientToSim.MsgControlCheckPointListRequest control_checkpoint_list_request = 10;
+inline bool MsgAdminToLauncher_Content::has_control_checkpoint_list_request() const {
+  return _has_bit(9);
+}
+inline void MsgAdminToLauncher_Content::clear_control_checkpoint_list_request() {
+  if (control_checkpoint_list_request_ != NULL) control_checkpoint_list_request_->::MsgsClientToSim::MsgControlCheckPointListRequest::Clear();
+  _clear_bit(9);
+}
+inline const ::MsgsClientToSim::MsgControlCheckPointListRequest& MsgAdminToLauncher_Content::control_checkpoint_list_request() const {
+  return control_checkpoint_list_request_ != NULL ? *control_checkpoint_list_request_ : *default_instance_->control_checkpoint_list_request_;
+}
+inline ::MsgsClientToSim::MsgControlCheckPointListRequest* MsgAdminToLauncher_Content::mutable_control_checkpoint_list_request() {
+  _set_bit(9);
+  if (control_checkpoint_list_request_ == NULL) control_checkpoint_list_request_ = new ::MsgsClientToSim::MsgControlCheckPointListRequest;
+  return control_checkpoint_list_request_;
+}
+
+// optional .MsgsClientToSim.MsgControlCheckPointDeleteRequest control_checkpoint_delete_request = 11;
+inline bool MsgAdminToLauncher_Content::has_control_checkpoint_delete_request() const {
+  return _has_bit(10);
+}
+inline void MsgAdminToLauncher_Content::clear_control_checkpoint_delete_request() {
+  if (control_checkpoint_delete_request_ != NULL) control_checkpoint_delete_request_->::MsgsClientToSim::MsgControlCheckPointDeleteRequest::Clear();
+  _clear_bit(10);
+}
+inline const ::MsgsClientToSim::MsgControlCheckPointDeleteRequest& MsgAdminToLauncher_Content::control_checkpoint_delete_request() const {
+  return control_checkpoint_delete_request_ != NULL ? *control_checkpoint_delete_request_ : *default_instance_->control_checkpoint_delete_request_;
+}
+inline ::MsgsClientToSim::MsgControlCheckPointDeleteRequest* MsgAdminToLauncher_Content::mutable_control_checkpoint_delete_request() {
+  _set_bit(10);
+  if (control_checkpoint_delete_request_ == NULL) control_checkpoint_delete_request_ = new ::MsgsClientToSim::MsgControlCheckPointDeleteRequest;
+  return control_checkpoint_delete_request_;
 }
 
 // -------------------------------------------------------------------
 
 // MsgAdminToLauncher
 
-// optional int32 context = 1 [default = 0];
+// optional int32 context = 1;
 inline bool MsgAdminToLauncher::has_context() const {
   return _has_bit(0);
 }
@@ -848,6 +1443,10 @@ inline ::MsgsAdminToLauncher::MsgAdminToLauncher_Content* MsgAdminToLauncher::mu
 namespace google {
 namespace protobuf {
 
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::MsgsAdminToLauncher::MsgControlStart_GameMode>() {
+  return ::MsgsAdminToLauncher::MsgControlStart_GameMode_descriptor();
+}
 
 }  // namespace google
 }  // namespace protobuf

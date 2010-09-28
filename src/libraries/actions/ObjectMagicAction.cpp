@@ -86,7 +86,7 @@ void ObjectMagicAction::Publish( Publisher_ABC& publisher ) const
     simulation::ObjectMagicAction message;
     message().mutable_object()->set_id( objectId_ );
     message().set_type( type );
-    CommitTo( *message().mutable_parametres() );
+    CommitTo( *message().mutable_parameters() );
     message.Send( publisher );
     message().Clear();
 }

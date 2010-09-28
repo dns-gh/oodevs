@@ -16,13 +16,13 @@
 
 namespace Common
 {
-    enum EnumPopulationAttitude;
+    enum EnumCrowdAttitude;
 }
 
 namespace MsgsSimToClient
 {
-    class MsgPopulationFlowKnowledgeCreation;
-    class MsgPopulationFlowKnowledgeUpdate;
+    class MsgCrowdFlowKnowledgeCreation;
+    class MsgCrowdFlowKnowledgeUpdate;
 }
 
 namespace kernel
@@ -47,13 +47,13 @@ class PopulationFlowKnowledge : public SimpleEntity< >
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFlowKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const MsgsSimToClient::MsgPopulationFlowKnowledgeCreation& msg );
+             PopulationFlowKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const MsgsSimToClient::MsgCrowdFlowKnowledgeCreation& msg );
     virtual ~PopulationFlowKnowledge();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate& msg );
+    void Update( const MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate& msg );
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
@@ -92,7 +92,7 @@ private:
     unsigned int                           nSpeed_;
     unsigned long                          nNbrAliveHumans_;
     unsigned long                          nNbrDeadHumans_;
-    Common::EnumPopulationAttitude         nAttitude_;
+    Common::EnumCrowdAttitude              nAttitude_;
     bool                                   bPerceived_;
     T_Optionals                            optionals_;
     //@}

@@ -27,7 +27,7 @@ namespace kernel
 // Created: AGE 2006-03-10
 // =============================================================================
 class Fire_ABC : public kernel::Updatable_ABC< MsgsSimToClient::MsgStopUnitFire >
-               , public kernel::Updatable_ABC< MsgsSimToClient::MsgStopPopulationFire >
+               , public kernel::Updatable_ABC< MsgsSimToClient::MsgStopCrowdFire >
                , public kernel::Drawable_ABC
 {
 public:
@@ -40,7 +40,7 @@ public:
     //! @name Operations
     //@{
     virtual void DoUpdate( const MsgsSimToClient::MsgStopUnitFire& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgStopPopulationFire& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgStopCrowdFire& message );
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const = 0;
     //@}
 

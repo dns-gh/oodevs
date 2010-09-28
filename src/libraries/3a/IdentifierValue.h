@@ -33,32 +33,30 @@ struct IdentifierValue : public InstantValue< NumericValue >
     void Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
     {
             SET_OID( unit_order_ack, tasker().id );
-            SET_OID( unit_creation, id().id );
-            SET_OID( unit_attributes, id().id );
-            SET_OID( unit_pathfind, id().id );
-            SET_OID( unit_environment_type, id().id );
+            SET_OID( unit_creation, unit().id );
+            SET_OID( unit_attributes, unit().id );
+            SET_OID( unit_pathfind, unit().id );
+            SET_OID( unit_environment_type, unit().id );
             SET_OID( unit_change_superior, unit().id );
-            SET_OID( decisional_state, id().unit().id );
-            SET_OID( debug_points, id().unit().id );
-            SET_OID( unit_vision_cones, id().id );
+            SET_OID( unit_vision_cones, unit().id );
             SET_OID( unit_detection, observer().id );
             SET_OID( object_detection, observer().id );
-            SET_OID( population_concentration_detection, id().id );
-            SET_OID( population_flow_detection, id().id );
+            SET_OID( crowd_concentration_detection, observer().id );
+            SET_OID( crowd_flow_detection, observer().id );
             SET_OID( unit_order, tasker().id );
-            SET_OID( log_medical_handling_creation, id().id );
-            SET_OID( log_medical_handling_update, id().id );
-            SET_OID( log_medical_handling_destruction, id().id );
-            SET_OID( log_maintenance_handling_creation, id().id );
-            SET_OID( log_maintenance_handling_update, id().id );
-            SET_OID( log_maintenance_handling_destruction, id().id );
-            SET_OID( log_supply_handling_creation, id().id );
-            SET_OID( log_supply_handling_update, id().id );
-            SET_OID( log_supply_handling_destruction, id().id );
-            SET_OID( start_unit_fire, id().id );
-            SET_OID( stop_unit_fire, id().id );
-            SET_OID( start_population_fire, id().id );
-            SET_OID( stop_population_fire, id().id );
+            SET_OID( log_medical_handling_creation, request().id );
+            SET_OID( log_medical_handling_update, request().id );
+            SET_OID( log_medical_handling_destruction, request().id );
+            SET_OID( log_maintenance_handling_creation, request().id );
+            SET_OID( log_maintenance_handling_update, request().id );
+            SET_OID( log_maintenance_handling_destruction, request().id );
+            SET_OID( log_supply_handling_creation, request().id );
+            SET_OID( log_supply_handling_update, request().id );
+            SET_OID( log_supply_handling_destruction, request().id );
+            SET_OID( start_unit_fire, fire().id );
+            SET_OID( stop_unit_fire, fire().id );
+            SET_OID( start_crowd_fire, fire().id );
+            SET_OID( stop_crowd_fire, fire().id );
             // $$$$ AGE 2007-08-29: objets, ...
     }
     //@}

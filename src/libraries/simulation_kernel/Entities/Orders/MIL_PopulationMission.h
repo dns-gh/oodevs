@@ -14,7 +14,7 @@
 
 namespace Common
 {
-    class MsgPopulationOrder;
+    class MsgCrowdOrder;
 }
 
 class MIL_Population;
@@ -30,7 +30,7 @@ class MIL_PopulationMission : public MIL_Mission_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population, const Common::MsgPopulationOrder& asn );
+             MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population, const Common::MsgCrowdOrder& asn );
     virtual ~MIL_PopulationMission();
     //@}
 

@@ -35,7 +35,7 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 Agent::Agent( Model_ABC& model, const MsgsSimToClient::MsgUnitCreation& msg, const tools::Resolver_ABC< kernel::AgentType >& types )
-    : dispatcher::Agent_ABC         ( msg.id().id(), QString( msg.nom().c_str() ) )
+    : dispatcher::Agent_ABC         ( msg.unit().id(), QString( msg.nom().c_str() ) )
     , model_                        ( model )
     , type_                         ( types.Get( msg.type().id() ) )
     , name_                         ( msg.nom() )
@@ -71,7 +71,7 @@ Agent::Agent( Model_ABC& model, const MsgsSimToClient::MsgUnitCreation& msg, con
     , nOperationalState_            ( Common         ::operationnel )
     , nIndirectFireAvailability_    ( MsgsSimToClient::MsgUnitAttributes_FireAvailability_indisponible       )
     , nRoe_                         ( MsgsSimToClient::RulesOfEngagement_Value_tir_libre                     )
-    , nPopulationRoe_               ( MsgsSimToClient::MsgUnitAttributes_PopulationRoe_emploi_force_interdit )
+    , nPopulationRoe_               ( MsgsSimToClient::MsgUnitAttributes_CrowdRoe_emploi_force_interdit )
     , nTiredness_                   ( Common         ::normal      )
     , nMorale_                      ( Common         ::bon         )
     , nExperience_                  ( Common         ::experimente )
@@ -217,7 +217,7 @@ void Agent::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& asnMsg )
     UPDATE_ASN_ATTRIBUTE( etat_operationnel, nOperationalState_ );
     UPDATE_ASN_ATTRIBUTE( disponibilite_au_tir_indirect, nIndirectFireAvailability_ );
     UPDATE_ASN_ATTRIBUTE( roe, nRoe_ );
-    UPDATE_ASN_ATTRIBUTE( roe_population, nPopulationRoe_ );
+    UPDATE_ASN_ATTRIBUTE( roe_crowd, nPopulationRoe_ );
     UPDATE_ASN_ATTRIBUTE( fatigue, nTiredness_ );
     UPDATE_ASN_ATTRIBUTE( moral, nMorale_ );
     UPDATE_ASN_ATTRIBUTE( experience, nExperience_ );
@@ -369,7 +369,7 @@ void Agent::DoUpdate( const Common::MsgUnitOrder& message )
 void Agent::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::UnitCreation message;
-    message().mutable_id()->set_id( GetId() );
+    message().mutable_unit()->set_id( GetId() );
     message().mutable_type()->set_id( type_.GetId() );
     message().set_nom( name_ );
     message().mutable_automat()->set_id( automat_->GetId() );
@@ -385,7 +385,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     { // Attributes $$$
         client::UnitAttributes asn;
-        asn().mutable_id()->set_id( GetId() );
+        asn().mutable_unit()->set_id( GetId() );
         asn().mutable_position()->set_latitude( position_.X() );
         asn().mutable_position()->set_longitude( position_.Y() );
         asn().mutable_direction()->set_heading( nDirection_ );
@@ -441,7 +441,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn().set_etat_operationnel ( nOperationalState_ );
         asn().set_disponibilite_au_tir_indirect ( nIndirectFireAvailability_ );
         asn().set_roe ( nRoe_ );
-        asn().set_roe_population ( nPopulationRoe_ );
+        asn().set_roe_crowd( nPopulationRoe_ );
         asn().set_fatigue ( nTiredness_ );
         asn().set_moral ( nMorale_ );
         asn().set_experience ( nExperience_ );
@@ -506,7 +506,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 void Agent::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::UnitDestruction asn;
-    asn().mutable_id()->set_id( GetId() );
+    asn().mutable_unit()->set_id( GetId() );
     asn.Send( publisher );
 }
 

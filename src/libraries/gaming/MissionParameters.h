@@ -30,7 +30,7 @@ namespace Common
 {
     class MsgUnitOrder;
     class MsgAutomatOrder;
-    class MsgPopulationOrder;
+    class MsgCrowdOrder;
 }
 
 // =============================================================================
@@ -42,7 +42,7 @@ namespace Common
 class MissionParameters : public kernel::Extension_ABC
                         , public kernel::Updatable_ABC< Common::MsgUnitOrder >
                         , public kernel::Updatable_ABC< Common::MsgAutomatOrder >
-                        , public kernel::Updatable_ABC< Common::MsgPopulationOrder >
+                        , public kernel::Updatable_ABC< Common::MsgCrowdOrder >
                         , public tools::Resolver< actions::Action_ABC >
                         , public kernel::Drawable_ABC
 {
@@ -70,7 +70,7 @@ private:
     //@{
     virtual void DoUpdate( const Common::MsgUnitOrder& message );
     virtual void DoUpdate( const Common::MsgAutomatOrder& message );
-    virtual void DoUpdate( const Common::MsgPopulationOrder& message );
+    virtual void DoUpdate( const Common::MsgCrowdOrder& message );
     template< typename T >
     void UpdateMessage( const T& message );
     //@}

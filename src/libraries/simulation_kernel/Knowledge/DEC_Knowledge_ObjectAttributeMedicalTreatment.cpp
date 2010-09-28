@@ -170,7 +170,7 @@ void DEC_Knowledge_ObjectAttributeMedicalTreatment::UpdateOnCollision( const DEC
 // Name: DEC_Knowledge_ObjectAttributeMedicalTreatment::BuildMsgSpecificAttributes
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeMedicalTreatment::Send( Common::MsgObjectAttributes& asn ) const
+void DEC_Knowledge_ObjectAttributeMedicalTreatment::Send( Common::ObjectAttributes& asn ) const
 {
     asn.mutable_medical_treatment()->set_available_beds( availableBeds_ );
     asn.mutable_medical_treatment()->set_available_doctors( availableDoctors_ );

@@ -27,7 +27,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_PopulationKnowledgeParameter( DEC_Knowledge_Population* pKnowledge );
-             MIL_PopulationKnowledgeParameter( const Common::PopulationKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver );
+             MIL_PopulationKnowledgeParameter( const Common::CrowdKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver );
     virtual ~MIL_PopulationKnowledgeParameter();
     //@}
 
@@ -38,7 +38,7 @@ public:
 
     //! @name Conversions
     //@{
-    virtual bool ToPopulationKnowledge( Common::PopulationKnowledgeId& asn ) const;
+    virtual bool ToPopulationKnowledge( Common::CrowdKnowledgeId& asn ) const;
     virtual bool ToPopulationKnowledge( DEC_Knowledge_Population*& ) const;
     //@}
 

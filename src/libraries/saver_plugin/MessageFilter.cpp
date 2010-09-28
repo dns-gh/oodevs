@@ -38,7 +38,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgSimToClient& wrapper )
 {
  if( wrapper.message().has_unit_magic_action_ack()
     || wrapper.message().has_object_magic_action_ack()
-    || wrapper.message().has_population_magic_action_ack()
+    || wrapper.message().has_crowd_magic_action_ack()
     || wrapper.message().has_control_information()
     || wrapper.message().has_control_begin_tick()
     || wrapper.message().has_control_end_tick()
@@ -46,8 +46,8 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgSimToClient& wrapper )
     || wrapper.message().has_control_pause_ack()
     || wrapper.message().has_control_resume_ack()
     || wrapper.message().has_control_change_time_factor_ack()
-    || wrapper.message().has_control_global_meteo_ack()
-    || wrapper.message().has_control_local_meteo_ack()
+    || wrapper.message().has_control_global_weather_ack()
+    || wrapper.message().has_control_local_weather_ack()
     || wrapper.message().has_control_checkpoint_save_begin()
     || wrapper.message().has_control_checkpoint_save_end()
     || wrapper.message().has_control_checkpoint_set_frequency_ack()
@@ -66,16 +66,16 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgSimToClient& wrapper )
     if( wrapper.message().has_debug_points() ||
         wrapper.message().has_unit_vision_cones() ||
         wrapper.message().has_object_detection() ||
-        wrapper.message().has_population_concentration_detection() ||
-        wrapper.message().has_population_flow_detection() )
+        wrapper.message().has_crowd_concentration_detection() ||
+        wrapper.message().has_crowd_flow_detection() )
         return false;
     if( wrapper.message().has_unit_order() ||
         wrapper.message().has_automat_order() ||
-        wrapper.message().has_population_order() )
+        wrapper.message().has_crowd_order() )
         return true;
     if( wrapper.message().has_unit_order_ack() ||
         wrapper.message().has_automat_order_ack() ||
-        wrapper.message().has_population_order_ack() ||
+        wrapper.message().has_crowd_order_ack() ||
         wrapper.message().has_frag_order_ack() ||
         wrapper.message().has_set_automat_mode_ack() ||
         wrapper.message().has_change_diplomacy_ack() )
@@ -88,7 +88,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgSimToClient& wrapper )
         wrapper.message().has_log_supply_change_quotas_ack() ||
         wrapper.message().has_formation_creation() ||
         wrapper.message().has_knowledge_group_creation() ||
-        wrapper.message().has_side_creation() ||
+        wrapper.message().has_party_creation() ||
         wrapper.message().has_automat_creation() ||
         wrapper.message().has_unit_creation() ||
         wrapper.message().has_change_diplomacy() ||
@@ -101,8 +101,8 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgSimToClient& wrapper )
         wrapper.message().has_unit_detection() ||
         wrapper.message().has_start_unit_fire() ||
         wrapper.message().has_stop_unit_fire() ||
-        wrapper.message().has_start_population_fire() ||
-        wrapper.message().has_stop_population_fire() ||
+        wrapper.message().has_start_crowd_fire() ||
+        wrapper.message().has_stop_crowd_fire() ||
         wrapper.message().has_explosion() ||
         wrapper.message().has_start_fire_effect() ||
         wrapper.message().has_stop_fire_effect() ||
@@ -123,17 +123,17 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgSimToClient& wrapper )
         wrapper.message().has_log_supply_handling_destruction() ||
         wrapper.message().has_log_supply_state() ||
         wrapper.message().has_log_supply_quotas() ||
-        wrapper.message().has_population_creation() ||
-        wrapper.message().has_population_concentration_creation() ||
-        wrapper.message().has_population_concentration_destruction() ||
-        wrapper.message().has_population_flow_creation() ||
-        wrapper.message().has_population_flow_destruction() ||
-        wrapper.message().has_population_knowledge_creation() ||
-        wrapper.message().has_population_knowledge_destruction() ||
-        wrapper.message().has_population_concentration_knowledge_creation() ||
-        wrapper.message().has_population_concentration_knowledge_destruction() ||
-        wrapper.message().has_population_flow_knowledge_creation() ||
-        wrapper.message().has_population_flow_knowledge_destruction() ||
+        wrapper.message().has_crowd_creation() ||
+        wrapper.message().has_crowd_concentration_creation() ||
+        wrapper.message().has_crowd_concentration_destruction() ||
+        wrapper.message().has_crowd_flow_creation() ||
+        wrapper.message().has_crowd_flow_destruction() ||
+        wrapper.message().has_crowd_knowledge_creation() ||
+        wrapper.message().has_crowd_knowledge_destruction() ||
+        wrapper.message().has_crowd_concentration_knowledge_creation() ||
+        wrapper.message().has_crowd_concentration_knowledge_destruction() ||
+        wrapper.message().has_crowd_flow_knowledge_creation() ||
+        wrapper.message().has_crowd_flow_knowledge_destruction() ||
         wrapper.message().has_automat_attributes() )
         return true;
     if( wrapper.message().has_unit_attributes() )
@@ -144,18 +144,18 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgSimToClient& wrapper )
         return IsRelevant( wrapper.message().object_update() );
     if( wrapper.message().has_object_knowledge_update() )
         return IsRelevant( wrapper.message().object_knowledge_update() );
-    if( wrapper.message().has_population_update() )
-        return IsRelevant( wrapper.message().population_update() );
-    if( wrapper.message().has_population_concentration_update() )
-        return IsRelevant( wrapper.message().population_concentration_update() );
-    if( wrapper.message().has_population_flow_update() )
-        return IsRelevant( wrapper.message().population_flow_update() );
-    if( wrapper.message().has_population_knowledge_update() )
-        return IsRelevant( wrapper.message().population_knowledge_update() );
-    if( wrapper.message().has_population_concentration_knowledge_update() )
-        return IsRelevant( wrapper.message().population_concentration_knowledge_update() );
-    if( wrapper.message().has_population_flow_knowledge_update() )
-        return IsRelevant( wrapper.message().population_flow_knowledge_update() );
+    if( wrapper.message().has_crowd_update() )
+        return IsRelevant( wrapper.message().crowd_update() );
+    if( wrapper.message().has_crowd_concentration_update() )
+        return IsRelevant( wrapper.message().crowd_concentration_update() );
+    if( wrapper.message().has_crowd_flow_update() )
+        return IsRelevant( wrapper.message().crowd_flow_update() );
+    if( wrapper.message().has_crowd_knowledge_update() )
+        return IsRelevant( wrapper.message().crowd_knowledge_update() );
+    if( wrapper.message().has_crowd_concentration_knowledge_update() )
+        return IsRelevant( wrapper.message().crowd_concentration_knowledge_update() );
+    if( wrapper.message().has_crowd_flow_knowledge_update() )
+        return IsRelevant( wrapper.message().crowd_flow_knowledge_update() );
     return true;
 }
 
@@ -203,7 +203,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgUnitAttributes& messag
         || message.has_refugie_pris_en_compte()
         || message.has_surrendered_unit()
         || message.has_roe()
-        || message.has_roe_population()
+        || message.has_roe_crowd()
         || message.has_radio_receiver_disabled()
         || message.has_radio_emitter_disabled()
         || message.has_transporteurs_disponibles()
@@ -254,7 +254,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgObjectKnowledgeUpdate&
     return  message.has_attributes()
          || message.has_perceiving_automats()
          || message.has_location()
-         || message.has_id()
+         || message.has_knowledge()
          || message.has_perceived()
          || message.has_object()
 //         || message.has_relevance()
@@ -266,7 +266,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgObjectKnowledgeUpdate&
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgPopulationUpdate& )
+bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgCrowdUpdate& )
 {
     return true;
 }
@@ -275,7 +275,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgPopulationUpdate& )
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgPopulationConcentrationUpdate& )
+bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgCrowdConcentrationUpdate& )
 {
     return true;
 }
@@ -284,7 +284,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgPopulationConcentratio
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgPopulationFlowUpdate& )
+bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgCrowdFlowUpdate& )
 {
     return true;
 }
@@ -293,7 +293,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgPopulationFlowUpdate& 
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgPopulationKnowledgeUpdate& )
+bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgCrowdKnowledgeUpdate& )
 {
     return true;
 }
@@ -302,7 +302,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgPopulationKnowledgeUpd
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate& message )
+bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate& message )
 {
     return  message.has_attitude()
          || message.has_est_percu()
@@ -310,7 +310,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgPopulationConcentratio
          || message.has_nb_humains_vivants()
 //         || message.has_oid_concentration_reelle()
 //         || message.has_oid_connaissance_concentration()
-//         || message.has_oid_connaissance_population()
+//         || message.has_oid_connaissance_crowd()
 //         || message.has_oid_groupe_possesseur()
 //         || message.has_pertinence()
     ;
@@ -320,7 +320,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgPopulationConcentratio
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate& )
+bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate& )
 {
     return true;
 }

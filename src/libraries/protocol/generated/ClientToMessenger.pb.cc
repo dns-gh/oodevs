@@ -76,7 +76,7 @@ void protobuf_AssignDesc_ClientToMessenger_2eproto() {
   GOOGLE_CHECK(file != NULL);
   MsgLimaCreationRequest_descriptor_ = file->message_type(0);
   static const int MsgLimaCreationRequest_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLimaCreationRequest, tacticalline_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLimaCreationRequest, tactical_line_),
   };
   MsgLimaCreationRequest_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -122,7 +122,7 @@ void protobuf_AssignDesc_ClientToMessenger_2eproto() {
       sizeof(MsgLimaDestructionRequest));
   MsgLimitCreationRequest_descriptor_ = file->message_type(3);
   static const int MsgLimitCreationRequest_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLimitCreationRequest, tacticalline_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLimitCreationRequest, tactical_line_),
   };
   MsgLimitCreationRequest_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -238,7 +238,7 @@ void protobuf_AssignDesc_ClientToMessenger_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShapeUpdateRequest, shape_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShapeUpdateRequest, category_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShapeUpdateRequest, color_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShapeUpdateRequest, template__),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShapeUpdateRequest, pattern_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShapeUpdateRequest, points_),
   };
   MsgShapeUpdateRequest_reflection_ =
@@ -459,35 +459,35 @@ void protobuf_AddDesc_ClientToMessenger_2eproto() {
   ::Common::protobuf_AddDesc_Common_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\027ClientToMessenger.proto\022\025MsgsClientToM"
-    "essenger\032\014Common.proto\"G\n\026MsgLimaCreatio"
-    "nRequest\022-\n\014tacticalline\030\001 \002(\0132\027.Common."
-    "MsgTacticalLine\"j\n\024MsgLimaUpdateRequest\022"
-    "\"\n\002id\030\001 \002(\0132\026.Common.TacticalLineId\022.\n\rt"
-    "actical_line\030\002 \001(\0132\027.Common.MsgTacticalL"
-    "ine\"?\n\031MsgLimaDestructionRequest\022\"\n\002id\030\001"
-    " \002(\0132\026.Common.TacticalLineId\"H\n\027MsgLimit"
-    "CreationRequest\022-\n\014tacticalline\030\001 \002(\0132\027."
-    "Common.MsgTacticalLine\"k\n\025MsgLimitUpdate"
-    "Request\022\"\n\002id\030\001 \002(\0132\026.Common.TacticalLin"
-    "eId\022.\n\rtactical_line\030\002 \001(\0132\027.Common.MsgT"
-    "acticalLine\"@\n\032MsgLimitDestructionReques"
-    "t\022\"\n\002id\030\001 \002(\0132\026.Common.TacticalLineId\"O\n"
-    "\036MsgIntelligenceCreationRequest\022-\n\014intel"
-    "ligence\030\001 \002(\0132\027.Common.MsgIntelligence\"\241"
-    "\002\n\034MsgIntelligenceUpdateRequest\022,\n\014intel"
-    "ligence\030\001 \002(\0132\026.Common.IntelligenceId\022&\n"
-    "\tformation\030\002 \001(\0132\023.Common.FormationId\022\014\n"
-    "\004name\030\003 \001(\t\022\016\n\006nature\030\004 \001(\t\022&\n\005level\030\005 \001"
-    "(\0162\027.Common.EnumNatureLevel\022\020\n\010embarked\030"
-    "\006 \001(\010\022)\n\010location\030\007 \001(\0132\027.Common.MsgCoor"
-    "dLatLong\022(\n\tdiplomacy\030\010 \001(\0162\025.Common.Enu"
-    "mDiplomacy\"G\n!MsgIntelligenceDestruction"
-    "Request\022\"\n\002id\030\001 \002(\0132\026.Common.Intelligenc"
-    "eId\":\n\027MsgShapeCreationRequest\022\037\n\005shape\030"
-    "\001 \002(\0132\020.Common.MsgShape\"\232\001\n\025MsgShapeUpda"
-    "teRequest\022 \n\005shape\030\001 \002(\0132\021.Common.Drawin"
-    "gId\022\020\n\010category\030\002 \001(\t\022\r\n\005color\030\003 \001(\t\022\021\n\t"
-    "template_\030\004 \001(\t\022+\n\006points\030\005 \001(\0132\033.Common"
+    "essenger\032\014Common.proto\"H\n\026MsgLimaCreatio"
+    "nRequest\022.\n\rtactical_line\030\001 \002(\0132\027.Common"
+    ".MsgTacticalLine\"j\n\024MsgLimaUpdateRequest"
+    "\022\"\n\002id\030\001 \002(\0132\026.Common.TacticalLineId\022.\n\r"
+    "tactical_line\030\002 \001(\0132\027.Common.MsgTactical"
+    "Line\"?\n\031MsgLimaDestructionRequest\022\"\n\002id\030"
+    "\001 \002(\0132\026.Common.TacticalLineId\"I\n\027MsgLimi"
+    "tCreationRequest\022.\n\rtactical_line\030\001 \002(\0132"
+    "\027.Common.MsgTacticalLine\"k\n\025MsgLimitUpda"
+    "teRequest\022\"\n\002id\030\001 \002(\0132\026.Common.TacticalL"
+    "ineId\022.\n\rtactical_line\030\002 \001(\0132\027.Common.Ms"
+    "gTacticalLine\"@\n\032MsgLimitDestructionRequ"
+    "est\022\"\n\002id\030\001 \002(\0132\026.Common.TacticalLineId\""
+    "O\n\036MsgIntelligenceCreationRequest\022-\n\014int"
+    "elligence\030\001 \002(\0132\027.Common.MsgIntelligence"
+    "\"\241\002\n\034MsgIntelligenceUpdateRequest\022,\n\014int"
+    "elligence\030\001 \002(\0132\026.Common.IntelligenceId\022"
+    "&\n\tformation\030\002 \001(\0132\023.Common.FormationId\022"
+    "\014\n\004name\030\003 \001(\t\022\016\n\006nature\030\004 \001(\t\022&\n\005level\030\005"
+    " \001(\0162\027.Common.EnumNatureLevel\022\020\n\010embarke"
+    "d\030\006 \001(\010\022)\n\010location\030\007 \001(\0132\027.Common.MsgCo"
+    "ordLatLong\022(\n\tdiplomacy\030\010 \001(\0162\025.Common.E"
+    "numDiplomacy\"G\n!MsgIntelligenceDestructi"
+    "onRequest\022\"\n\002id\030\001 \002(\0132\026.Common.Intellige"
+    "nceId\":\n\027MsgShapeCreationRequest\022\037\n\005shap"
+    "e\030\001 \002(\0132\020.Common.MsgShape\"\230\001\n\025MsgShapeUp"
+    "dateRequest\022 \n\005shape\030\001 \002(\0132\021.Common.Draw"
+    "ingId\022\020\n\010category\030\002 \001(\t\022\r\n\005color\030\003 \001(\t\022\017"
+    "\n\007pattern\030\004 \001(\t\022+\n\006points\030\005 \001(\0132\033.Common"
     ".MsgCoordLatLongList\";\n\032MsgShapeDestruct"
     "ionRequest\022\035\n\002id\030\001 \002(\0132\021.Common.DrawingI"
     "d\"7\n\026MsgNoteCreationRequest\022\035\n\004note\030\001 \002("
@@ -581,7 +581,7 @@ struct StaticDescriptorInitializer_ClientToMessenger_2eproto {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int MsgLimaCreationRequest::kTacticallineFieldNumber;
+const int MsgLimaCreationRequest::kTacticalLineFieldNumber;
 #endif  // !_MSC_VER
 
 MsgLimaCreationRequest::MsgLimaCreationRequest() {
@@ -589,7 +589,7 @@ MsgLimaCreationRequest::MsgLimaCreationRequest() {
 }
 
 void MsgLimaCreationRequest::InitAsDefaultInstance() {
-  tacticalline_ = const_cast< ::Common::MsgTacticalLine*>(&::Common::MsgTacticalLine::default_instance());
+  tactical_line_ = const_cast< ::Common::MsgTacticalLine*>(&::Common::MsgTacticalLine::default_instance());
 }
 
 MsgLimaCreationRequest::MsgLimaCreationRequest(const MsgLimaCreationRequest& from) {
@@ -599,7 +599,7 @@ MsgLimaCreationRequest::MsgLimaCreationRequest(const MsgLimaCreationRequest& fro
 
 void MsgLimaCreationRequest::SharedCtor() {
   _cached_size_ = 0;
-  tacticalline_ = NULL;
+  tactical_line_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -609,7 +609,7 @@ MsgLimaCreationRequest::~MsgLimaCreationRequest() {
 
 void MsgLimaCreationRequest::SharedDtor() {
   if (this != default_instance_) {
-    delete tacticalline_;
+    delete tactical_line_;
   }
 }
 
@@ -631,7 +631,7 @@ MsgLimaCreationRequest* MsgLimaCreationRequest::New() const {
 void MsgLimaCreationRequest::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (_has_bit(0)) {
-      if (tacticalline_ != NULL) tacticalline_->::Common::MsgTacticalLine::Clear();
+      if (tactical_line_ != NULL) tactical_line_->::Common::MsgTacticalLine::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -644,14 +644,14 @@ bool MsgLimaCreationRequest::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required .Common.MsgTacticalLine tacticalline = 1;
+      // required .Common.MsgTacticalLine tactical_line = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_tacticalline()));
+             input, mutable_tactical_line()));
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -680,10 +680,10 @@ void MsgLimaCreationRequest::SerializeWithCachedSizes(
     return;
   }
   
-  // required .Common.MsgTacticalLine tacticalline = 1;
+  // required .Common.MsgTacticalLine tactical_line = 1;
   if (_has_bit(0)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      1, this->tacticalline(), output);
+      1, this->tactical_line(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -694,11 +694,11 @@ void MsgLimaCreationRequest::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgLimaCreationRequest::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required .Common.MsgTacticalLine tacticalline = 1;
+  // required .Common.MsgTacticalLine tactical_line = 1;
   if (_has_bit(0)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        1, this->tacticalline(), target);
+        1, this->tactical_line(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -712,11 +712,11 @@ int MsgLimaCreationRequest::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required .Common.MsgTacticalLine tacticalline = 1;
-    if (has_tacticalline()) {
+    // required .Common.MsgTacticalLine tactical_line = 1;
+    if (has_tactical_line()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->tacticalline());
+          this->tactical_line());
     }
     
   }
@@ -745,7 +745,7 @@ void MsgLimaCreationRequest::MergeFrom(const MsgLimaCreationRequest& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
-      mutable_tacticalline()->::Common::MsgTacticalLine::MergeFrom(from.tacticalline());
+      mutable_tactical_line()->::Common::MsgTacticalLine::MergeFrom(from.tactical_line());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -766,15 +766,15 @@ void MsgLimaCreationRequest::CopyFrom(const MsgLimaCreationRequest& from) {
 bool MsgLimaCreationRequest::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
   
-  if (has_tacticalline()) {
-    if (!this->tacticalline().IsInitialized()) return false;
+  if (has_tactical_line()) {
+    if (!this->tactical_line().IsInitialized()) return false;
   }
   return true;
 }
 
 void MsgLimaCreationRequest::Swap(MsgLimaCreationRequest* other) {
   if (other != this) {
-    std::swap(tacticalline_, other->tacticalline_);
+    std::swap(tactical_line_, other->tactical_line_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -1264,7 +1264,7 @@ void MsgLimaDestructionRequest::Swap(MsgLimaDestructionRequest* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int MsgLimitCreationRequest::kTacticallineFieldNumber;
+const int MsgLimitCreationRequest::kTacticalLineFieldNumber;
 #endif  // !_MSC_VER
 
 MsgLimitCreationRequest::MsgLimitCreationRequest() {
@@ -1272,7 +1272,7 @@ MsgLimitCreationRequest::MsgLimitCreationRequest() {
 }
 
 void MsgLimitCreationRequest::InitAsDefaultInstance() {
-  tacticalline_ = const_cast< ::Common::MsgTacticalLine*>(&::Common::MsgTacticalLine::default_instance());
+  tactical_line_ = const_cast< ::Common::MsgTacticalLine*>(&::Common::MsgTacticalLine::default_instance());
 }
 
 MsgLimitCreationRequest::MsgLimitCreationRequest(const MsgLimitCreationRequest& from) {
@@ -1282,7 +1282,7 @@ MsgLimitCreationRequest::MsgLimitCreationRequest(const MsgLimitCreationRequest& 
 
 void MsgLimitCreationRequest::SharedCtor() {
   _cached_size_ = 0;
-  tacticalline_ = NULL;
+  tactical_line_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1292,7 +1292,7 @@ MsgLimitCreationRequest::~MsgLimitCreationRequest() {
 
 void MsgLimitCreationRequest::SharedDtor() {
   if (this != default_instance_) {
-    delete tacticalline_;
+    delete tactical_line_;
   }
 }
 
@@ -1314,7 +1314,7 @@ MsgLimitCreationRequest* MsgLimitCreationRequest::New() const {
 void MsgLimitCreationRequest::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (_has_bit(0)) {
-      if (tacticalline_ != NULL) tacticalline_->::Common::MsgTacticalLine::Clear();
+      if (tactical_line_ != NULL) tactical_line_->::Common::MsgTacticalLine::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -1327,14 +1327,14 @@ bool MsgLimitCreationRequest::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required .Common.MsgTacticalLine tacticalline = 1;
+      // required .Common.MsgTacticalLine tactical_line = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_tacticalline()));
+             input, mutable_tactical_line()));
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -1363,10 +1363,10 @@ void MsgLimitCreationRequest::SerializeWithCachedSizes(
     return;
   }
   
-  // required .Common.MsgTacticalLine tacticalline = 1;
+  // required .Common.MsgTacticalLine tactical_line = 1;
   if (_has_bit(0)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      1, this->tacticalline(), output);
+      1, this->tactical_line(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -1377,11 +1377,11 @@ void MsgLimitCreationRequest::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgLimitCreationRequest::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required .Common.MsgTacticalLine tacticalline = 1;
+  // required .Common.MsgTacticalLine tactical_line = 1;
   if (_has_bit(0)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        1, this->tacticalline(), target);
+        1, this->tactical_line(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -1395,11 +1395,11 @@ int MsgLimitCreationRequest::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required .Common.MsgTacticalLine tacticalline = 1;
-    if (has_tacticalline()) {
+    // required .Common.MsgTacticalLine tactical_line = 1;
+    if (has_tactical_line()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->tacticalline());
+          this->tactical_line());
     }
     
   }
@@ -1428,7 +1428,7 @@ void MsgLimitCreationRequest::MergeFrom(const MsgLimitCreationRequest& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
-      mutable_tacticalline()->::Common::MsgTacticalLine::MergeFrom(from.tacticalline());
+      mutable_tactical_line()->::Common::MsgTacticalLine::MergeFrom(from.tactical_line());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -1449,15 +1449,15 @@ void MsgLimitCreationRequest::CopyFrom(const MsgLimitCreationRequest& from) {
 bool MsgLimitCreationRequest::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
   
-  if (has_tacticalline()) {
-    if (!this->tacticalline().IsInitialized()) return false;
+  if (has_tactical_line()) {
+    if (!this->tactical_line().IsInitialized()) return false;
   }
   return true;
 }
 
 void MsgLimitCreationRequest::Swap(MsgLimitCreationRequest* other) {
   if (other != this) {
-    std::swap(tacticalline_, other->tacticalline_);
+    std::swap(tactical_line_, other->tactical_line_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -3126,12 +3126,12 @@ void MsgShapeCreationRequest::Swap(MsgShapeCreationRequest* other) {
 
 const ::std::string MsgShapeUpdateRequest::_default_category_;
 const ::std::string MsgShapeUpdateRequest::_default_color_;
-const ::std::string MsgShapeUpdateRequest::_default_template__;
+const ::std::string MsgShapeUpdateRequest::_default_pattern_;
 #ifndef _MSC_VER
 const int MsgShapeUpdateRequest::kShapeFieldNumber;
 const int MsgShapeUpdateRequest::kCategoryFieldNumber;
 const int MsgShapeUpdateRequest::kColorFieldNumber;
-const int MsgShapeUpdateRequest::kTemplateFieldNumber;
+const int MsgShapeUpdateRequest::kPatternFieldNumber;
 const int MsgShapeUpdateRequest::kPointsFieldNumber;
 #endif  // !_MSC_VER
 
@@ -3154,7 +3154,7 @@ void MsgShapeUpdateRequest::SharedCtor() {
   shape_ = NULL;
   category_ = const_cast< ::std::string*>(&_default_category_);
   color_ = const_cast< ::std::string*>(&_default_color_);
-  template__ = const_cast< ::std::string*>(&_default_template__);
+  pattern_ = const_cast< ::std::string*>(&_default_pattern_);
   points_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -3170,8 +3170,8 @@ void MsgShapeUpdateRequest::SharedDtor() {
   if (color_ != &_default_color_) {
     delete color_;
   }
-  if (template__ != &_default_template__) {
-    delete template__;
+  if (pattern_ != &_default_pattern_) {
+    delete pattern_;
   }
   if (this != default_instance_) {
     delete shape_;
@@ -3210,8 +3210,8 @@ void MsgShapeUpdateRequest::Clear() {
       }
     }
     if (_has_bit(3)) {
-      if (template__ != &_default_template__) {
-        template__->clear();
+      if (pattern_ != &_default_pattern_) {
+        pattern_->clear();
       }
     }
     if (_has_bit(4)) {
@@ -3268,21 +3268,21 @@ bool MsgShapeUpdateRequest::MergePartialFromCodedStream(
         ::google::protobuf::internal::WireFormat::VerifyUTF8String(
           this->color().data(), this->color().length(),
           ::google::protobuf::internal::WireFormat::PARSE);
-        if (input->ExpectTag(34)) goto parse_template_;
+        if (input->ExpectTag(34)) goto parse_pattern;
         break;
       }
       
-      // optional string template_ = 4;
+      // optional string pattern = 4;
       case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-       parse_template_:
+       parse_pattern:
         DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-              input, this->mutable_template_()));
+              input, this->mutable_pattern()));
         ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-          this->template_().data(), this->template_().length(),
+          this->pattern().data(), this->pattern().length(),
           ::google::protobuf::internal::WireFormat::PARSE);
         if (input->ExpectTag(42)) goto parse_points;
         break;
@@ -3349,13 +3349,13 @@ void MsgShapeUpdateRequest::SerializeWithCachedSizes(
       3, this->color(), output);
   }
   
-  // optional string template_ = 4;
+  // optional string pattern = 4;
   if (_has_bit(3)) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->template_().data(), this->template_().length(),
+      this->pattern().data(), this->pattern().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      4, this->template_(), output);
+      4, this->pattern(), output);
   }
   
   // optional .Common.MsgCoordLatLongList points = 5;
@@ -3399,14 +3399,14 @@ void MsgShapeUpdateRequest::SerializeWithCachedSizes(
         3, this->color(), target);
   }
   
-  // optional string template_ = 4;
+  // optional string pattern = 4;
   if (_has_bit(3)) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->template_().data(), this->template_().length(),
+      this->pattern().data(), this->pattern().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        4, this->template_(), target);
+        4, this->pattern(), target);
   }
   
   // optional .Common.MsgCoordLatLongList points = 5;
@@ -3448,11 +3448,11 @@ int MsgShapeUpdateRequest::ByteSize() const {
           this->color());
     }
     
-    // optional string template_ = 4;
-    if (has_template_()) {
+    // optional string pattern = 4;
+    if (has_pattern()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->template_());
+          this->pattern());
     }
     
     // optional .Common.MsgCoordLatLongList points = 5;
@@ -3497,7 +3497,7 @@ void MsgShapeUpdateRequest::MergeFrom(const MsgShapeUpdateRequest& from) {
       set_color(from.color());
     }
     if (from._has_bit(3)) {
-      set_template_(from.template_());
+      set_pattern(from.pattern());
     }
     if (from._has_bit(4)) {
       mutable_points()->::Common::MsgCoordLatLongList::MergeFrom(from.points());
@@ -3535,7 +3535,7 @@ void MsgShapeUpdateRequest::Swap(MsgShapeUpdateRequest* other) {
     std::swap(shape_, other->shape_);
     std::swap(category_, other->category_);
     std::swap(color_, other->color_);
-    std::swap(template__, other->template__);
+    std::swap(pattern_, other->pattern_);
     std::swap(points_, other->points_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);

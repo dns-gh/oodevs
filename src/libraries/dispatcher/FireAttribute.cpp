@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: FireAttribute constructor
 // Created: RFT 2006-09-26
 // -----------------------------------------------------------------------------
-FireAttribute::FireAttribute( const Common::MsgObjectAttributes& asnMsg )
+FireAttribute::FireAttribute( const Common::ObjectAttributes& asnMsg )
     : heat_( asnMsg.fire().heat() )
     , nFireClass_( asnMsg.fire().class_id() )
 {
@@ -37,7 +37,7 @@ FireAttribute::~FireAttribute()
 // Name: FireAttribute::Update
 // Created: RFT 2006-09-26
 // -----------------------------------------------------------------------------
-void FireAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
+void FireAttribute::Update( const Common::ObjectAttributes& asnMsg )
 {
     if( asnMsg.has_fire() )
     {
@@ -50,7 +50,7 @@ void FireAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 // Name: FireAttribute::Send
 // Created: RFT 2006-09-27
 // -----------------------------------------------------------------------------
-void FireAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
+void FireAttribute::Send( Common::ObjectAttributes& asnMsg ) const
 {
     asnMsg.mutable_fire()->set_heat( heat_ );
     asnMsg.mutable_fire()->set_class_id( nFireClass_ );

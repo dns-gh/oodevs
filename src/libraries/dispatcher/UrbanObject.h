@@ -18,7 +18,7 @@ namespace MsgsSimToClient
 {
     class MsgUrbanCreation;
     class MsgUrbanUpdate;
-    class MsgUrbanAttributes;
+    class UrbanAttributes;
 }
 
 namespace kernel
@@ -68,7 +68,7 @@ private:
 
     //! @name Attributes
     //@{
-    void Initialize( const MsgsSimToClient::MsgUrbanAttributes& attributes );
+    void Initialize( const MsgsSimToClient::UrbanAttributes& attributes );
     void AddAttribute( UrbanObjectAttribute_ABC* attribute );
     //@}
 

@@ -45,7 +45,7 @@ void Fire_ABC::DoUpdate( const MsgsSimToClient::MsgStopUnitFire& message )
 // Name: Fire_ABC::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Fire_ABC::DoUpdate( const MsgsSimToClient::MsgStopPopulationFire& message )
+void Fire_ABC::DoUpdate( const MsgsSimToClient::MsgStopCrowdFire& message )
 {
     origin_.Update( message );
 }

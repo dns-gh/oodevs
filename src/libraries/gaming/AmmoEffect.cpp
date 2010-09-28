@@ -22,7 +22,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 AmmoEffect::AmmoEffect( const MsgsSimToClient::MsgStartFireEffect& message, Controller& controller, const CoordinateConverter_ABC& converter )
     : controller_( controller )
-    , id_( message.id().id() )
+    , id_( message.fire_effect().id() )
     , type_( message.type() )
     , ellipse_( message.location(), converter )
     , meteo_( weather::PHY_Lighting::jourSansNuage_, weather::PHY_Precipitation::none_ )
@@ -49,7 +49,7 @@ AmmoEffect::~AmmoEffect()
 // -----------------------------------------------------------------------------
 void AmmoEffect::Draw( const GlTools_ABC& tools ) const
 {
-    if( type_ == Common::fumigene )
+    if( type_ == Common::smoke )
         glColor4f( COLOR_SMOKE );
     else
         glColor4f( COLOR_LIGHT );

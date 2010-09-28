@@ -51,7 +51,7 @@ AgentFireResult* FireResultFactory::CreateFireResult( const MsgsSimToClient::Msg
 // Name: FireResultFactory::CreateFireResult
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-PopulationFireResult* FireResultFactory::CreateFireResult( const MsgsSimToClient::MsgPopulationFireDamages& message )
+PopulationFireResult* FireResultFactory::CreateFireResult( const MsgsSimToClient::MsgCrowdFireDamages& message )
 {
     return new PopulationFireResult( message, model_.agents_, simulation_.GetDateTime() );
 }

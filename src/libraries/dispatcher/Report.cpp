@@ -20,7 +20,7 @@ using namespace dispatcher;
 // Created: AGE 2007-10-19
 // -----------------------------------------------------------------------------
 Report::Report( Model_ABC& /*model*/, const MsgsSimToClient::MsgReport& report )
-    : SimpleEntity< >( report.id().id() )
+    : SimpleEntity< >( report.report().id() )
     , message_( report.New() )
 {
     *message_ = report;
@@ -62,8 +62,8 @@ void Report::SendCreation( ClientPublisher_ABC& publisher ) const
 void Report::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::InvalidateReport message;
-    message().mutable_id()->set_id( message_->id().id() );
-    *message().mutable_source() = message_->cr();
+    message().mutable_report()->set_id( message_->report().id() );
+    *message().mutable_source() = message_->source();
     message.Send( publisher );
 }
 

@@ -21,32 +21,33 @@ namespace MsgsMessengerToClient
 
 namespace MsgsSimToClient
 {
+    class MsgFormationCreation;
     class MsgUnitCreation;
     class MsgAutomatCreation;
     class MsgKnowledgeGroupCreation;
-    class MsgPopulationCreation;
-    class MsgPopulationFlowKnowledgeCreation;
+    class MsgCrowdCreation;
+    class MsgCrowdFlowKnowledgeCreation;
     class MsgLogMaintenanceHandlingCreation;
     class MsgLogMedicalHandlingCreation;
     class MsgLogSupplyHandlingCreation;
     class MsgUnitKnowledgeCreation;
     class MsgObjectKnowledgeCreation;
-    class MsgPopulationKnowledgeCreation;
-    class MsgPopulationConcentrationKnowledgeCreation;
-    class MsgPopulationFlowKnowledgeCreation;
+    class MsgCrowdKnowledgeCreation;
+    class MsgCrowdConcentrationKnowledgeCreation;
+    class MsgCrowdFlowKnowledgeCreation;
     class MsgLogMaintenanceHandlingCreation;
     class MsgLogMedicalHandlingCreation;
     class MsgLogSupplyHandlingCreation;
     class MsgReport;
-    class MsgTeamCreation;
+    class MsgPartyCreation;
     class MsgObjectCreation;
     class MsgLimaCreation;
-    class MsgPopulationCreation;
-    class MsgPopulationConcentrationCreation;
-    class MsgPopulationFlowCreation;
+    class MsgCrowdCreation;
+    class MsgCrowdConcentrationCreation;
+    class MsgCrowdFlowCreation;
     class MsgStartUnitFire;
     class MsgStartFireEffect;
-    class MsgStartPopulationFire;
+    class MsgStartCrowdFire;
     class MsgChangeDiplomacyAck;
     class MsgUrbanCreation;
     class MsgUrbanKnowledgeCreation;
@@ -55,7 +56,6 @@ namespace MsgsSimToClient
 namespace Common
 {
     class MsgIntelligenceCreation;
-    class MsgFormationCreation;
     class MsgChangeDiplomacy;
 }
 
@@ -78,28 +78,28 @@ namespace dispatcher
 class ReplaySynchronisations : public kernel::Extension_ABC
                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitCreation >
                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgAutomatCreation >
-                             , public kernel::Updatable_ABC< Common::MsgFormationCreation >
+                             , public kernel::Updatable_ABC< MsgsSimToClient::MsgFormationCreation >
                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgKnowledgeGroupCreation >
                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgReport >
-                             , public kernel::Updatable_ABC< MsgsSimToClient::MsgTeamCreation >
+                             , public kernel::Updatable_ABC< MsgsSimToClient::MsgPartyCreation >
                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectCreation >
                              , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgLimaCreation >
                              , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgLimitCreation >
-                             , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationCreation >
-                             , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationCreation >
-                             , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowCreation >
+                             , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdCreation >
+                             , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdConcentrationCreation >
+                             , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdFlowCreation >
                              , public kernel::Updatable_ABC< Common::MsgIntelligenceCreation >
                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitKnowledgeCreation >
                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectKnowledgeCreation >
-                             , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationKnowledgeCreation >
-                             , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation >
-                             , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowKnowledgeCreation >
+                             , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdKnowledgeCreation >
+                             , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation >
+                             , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdFlowKnowledgeCreation >
                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogMaintenanceHandlingCreation >
                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogMedicalHandlingCreation >
                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogSupplyHandlingCreation >
                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgStartUnitFire >
                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgStartFireEffect >
-                             , public kernel::Updatable_ABC< MsgsSimToClient::MsgStartPopulationFire >
+                             , public kernel::Updatable_ABC< MsgsSimToClient::MsgStartCrowdFire >
                              , public kernel::Updatable_ABC< Common::MsgChangeDiplomacy >
                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgChangeDiplomacyAck >
                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanCreation >
@@ -120,28 +120,28 @@ public:
 
     virtual void DoUpdate( const MsgsSimToClient::MsgUnitCreation& msg );
     virtual void DoUpdate( const MsgsSimToClient::MsgAutomatCreation& msg );
-    virtual void DoUpdate( const Common::MsgFormationCreation& msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgFormationCreation& msg );
     virtual void DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupCreation& msg );
     virtual void DoUpdate( const MsgsSimToClient::MsgReport& msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgTeamCreation& msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgPartyCreation& msg );
     virtual void DoUpdate( const MsgsSimToClient::MsgObjectCreation& msg );
     virtual void DoUpdate( const MsgsMessengerToClient::MsgLimaCreation& msg );
     virtual void DoUpdate( const MsgsMessengerToClient::MsgLimitCreation& msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationCreation& msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationCreation& msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationFlowCreation& msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdCreation& msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationCreation& msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdFlowCreation& msg );
     virtual void DoUpdate( const Common::MsgIntelligenceCreation& msg );
     virtual void DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeCreation& msg );
     virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeCreation& msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationKnowledgeCreation& msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation& msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationFlowKnowledgeCreation& msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdKnowledgeCreation& msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation& msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdFlowKnowledgeCreation& msg );
     virtual void DoUpdate( const MsgsSimToClient::MsgLogMaintenanceHandlingCreation& msg );
     virtual void DoUpdate( const MsgsSimToClient::MsgLogMedicalHandlingCreation& msg );
     virtual void DoUpdate( const MsgsSimToClient::MsgLogSupplyHandlingCreation& msg );
     virtual void DoUpdate( const MsgsSimToClient::MsgStartUnitFire& msg );
     virtual void DoUpdate( const MsgsSimToClient::MsgStartFireEffect& msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgStartPopulationFire& msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgStartCrowdFire& msg );
 
     virtual void DoUpdate( const Common::MsgChangeDiplomacy& msg );
     virtual void DoUpdate( const MsgsSimToClient::MsgChangeDiplomacyAck& msg );

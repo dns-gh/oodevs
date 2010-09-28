@@ -91,7 +91,7 @@ void AgentLogMedical::Update( const MsgsSimToClient::MsgLogMedicalState& asnMsg 
 void AgentLogMedical::Send( ClientPublisher_ABC& publisher ) const
 {
     client::LogMedicalState asn;
-    asn().mutable_id()->set_id( agent_.GetId() );
+    asn().mutable_unit()->set_id( agent_.GetId() );
     asn().set_chaine_activee ( bSystemEnabled_ );
 
     {

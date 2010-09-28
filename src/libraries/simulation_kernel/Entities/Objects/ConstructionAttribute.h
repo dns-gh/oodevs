@@ -41,7 +41,7 @@ public:
     //@{
              ConstructionAttribute();
              ConstructionAttribute( const PHY_DotationCategory& category, unsigned int nFullNbrDotation );
-             ConstructionAttribute( const PHY_DotationCategory& dotation, const Common::MsgObjectAttributes& asn );
+             ConstructionAttribute( const PHY_DotationCategory& dotation, const Common::ObjectAttributes& asn );
     virtual ~ConstructionAttribute();
     //@}
 
@@ -69,8 +69,8 @@ public:
 
     //! @name Network Update
     //@{
-    virtual void SendFullState( Common::MsgObjectAttributes& asn ) const;
-    virtual void SendUpdate( Common::MsgObjectAttributes& asn ) const;
+    virtual void SendFullState( Common::ObjectAttributes& asn ) const;
+    virtual void SendUpdate( Common::ObjectAttributes& asn ) const;
     virtual void OnUpdate( const Common::MsgMissionParameter_Value& attribute );
     //@}
 

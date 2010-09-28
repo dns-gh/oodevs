@@ -40,7 +40,7 @@ namespace
         void createUrbanKnowledge()
         {
             MsgsSimToClient::MsgUrbanKnowledgeCreation& message = *expected.mutable_message()->mutable_urban_knowledge_creation();
-            message.mutable_id()->set_id( 1 );
+            message.mutable_knowledge()->set_id( 1 );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_urban_block()->set_id( urban.GetId() );
             result.reset( new dispatcher::UrbanKnowledge( model, message ) );
@@ -79,7 +79,7 @@ BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeDestroyedWithoutAttributes, Fixture
 {
     createUrbanKnowledge();
     MsgsSimToClient::MsgUrbanKnowledgeDestruction& message = *expected.mutable_message()->mutable_urban_knowledge_destruction();
-    message.mutable_id()->set_id( 1 );
+    message.mutable_knowledge()->set_id( 1 );
     message.mutable_party()->set_id( side.GetId() );
     MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
     result->SendDestruction( publisher );
@@ -95,7 +95,7 @@ BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeUpdatedWithoutAttributes, Fixture )
     createUrbanKnowledge();
     {
         MsgsSimToClient::MsgUrbanKnowledgeUpdate& message = *expected.mutable_message()->mutable_urban_knowledge_update();
-        message.mutable_id()->set_id( 1 );
+        message.mutable_knowledge()->set_id( 1 );
         message.mutable_urban_block()->set_id( 0 );
         message.mutable_party()->set_id( side.GetId() );
         message.set_progress( 5 );
@@ -110,7 +110,7 @@ BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeUpdatedWithoutAttributes, Fixture )
     {
         expected.mutable_message()->Clear();
         MsgsSimToClient::MsgUrbanKnowledgeCreation& message = *expected.mutable_message()->mutable_urban_knowledge_creation();
-        message.mutable_id()->set_id( 1 );
+        message.mutable_knowledge()->set_id( 1 );
         message.mutable_party()->set_id( side.GetId() );
         message.mutable_urban_block()->set_id( 0 );
         MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );

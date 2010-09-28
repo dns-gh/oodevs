@@ -108,7 +108,7 @@ const kernel::Karma& Diplomacies::GetDiplomacy( const kernel::Entity_ABC& rhs ) 
 // Name: Diplomacies::DoUpdate
 // Created: AGE 2006-10-25
 // -----------------------------------------------------------------------------
-void Diplomacies::DoUpdate( const MsgsSimToClient::MsgTeamCreation& message )
+void Diplomacies::DoUpdate( const MsgsSimToClient::MsgPartyCreation& message )
 {
     switch( message.type() )
     {

@@ -21,11 +21,9 @@ namespace Common
 
 namespace MsgsSimToClient
 {
-    class MsgPopulationConcentrationKnowledgeCreation;
-    class MsgPopulationConcentrationKnowledgeUpdate;
+    class MsgCrowdConcentrationKnowledgeCreation;
+    class MsgCrowdConcentrationKnowledgeUpdate;
 }
-
-
 
 namespace kernel
 {
@@ -49,13 +47,13 @@ class PopulationConcentrationKnowledge : public SimpleEntity< >
 public:
     //! @name Constructors/Destructor
     //@{
-    PopulationConcentrationKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation& msg );
+    PopulationConcentrationKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation& msg );
     virtual ~PopulationConcentrationKnowledge();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate& msg );
+    void Update( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate& msg );
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
@@ -90,7 +88,7 @@ private:
     const Common::MsgCoordLatLong              position_;
     unsigned long                              nNbrAliveHumans_;
     unsigned long                              nNbrDeadHumans_;
-    Common::EnumPopulationAttitude               nAttitude_;
+    Common::EnumCrowdAttitude               nAttitude_;
     unsigned int                               nRelevance_;
     bool                                       bPerceived_;
     T_Optionals                                optionals_;

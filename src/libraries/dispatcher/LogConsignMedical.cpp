@@ -22,7 +22,7 @@ using namespace dispatcher;
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
 LogConsignMedical::LogConsignMedical( const Model& model, const MsgsSimToClient::MsgLogMedicalHandlingCreation& msg )
-    : SimpleEntity< >   ( msg.id().id() )
+    : SimpleEntity< >   ( msg.request().id() )
     , model_            ( model )
     , agent_            ( model.Agents().Get( msg.unit().id() ) )
     , nTickCreation_    ( msg.tick_creation() )
@@ -74,7 +74,7 @@ void LogConsignMedical::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::LogMedicalHandlingCreation asn;
 
-    asn().mutable_id()->set_id( GetId() );
+    asn().mutable_request()->set_id( GetId() );
     asn().mutable_unit()->set_id( agent_.GetId() );
     asn().set_tick_creation( nTickCreation_ );
     asn().set_rang( nRank_ );
@@ -94,7 +94,7 @@ void LogConsignMedical::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::LogMedicalHandlingUpdate asn;
 
-    asn().mutable_id()->set_id( GetId() );
+    asn().mutable_request()->set_id( GetId() );
     asn().mutable_unit()->set_id( agent_.GetId() );
 
 //    asn.set_oid_pion_log_traitantPresent( 1 );
@@ -121,7 +121,7 @@ void LogConsignMedical::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 void LogConsignMedical::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::LogMedicalHandlingDestruction asn;
-    asn().mutable_id()->set_id( GetId());
+    asn().mutable_request()->set_id( GetId());
     asn().mutable_unit()->set_id( agent_.GetId());
     asn.Send( publisher );
 }

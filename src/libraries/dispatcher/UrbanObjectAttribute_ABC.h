@@ -12,7 +12,7 @@
 
 namespace MsgsSimToClient
 {
-    class MsgUrbanAttributes;
+    class UrbanAttributes;
 }
 
 namespace dispatcher
@@ -35,8 +35,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Update( const MsgsSimToClient::MsgUrbanAttributes& message ) = 0;
-    virtual void Send  (       MsgsSimToClient::MsgUrbanAttributes& message ) const = 0;
+    virtual void Update( const MsgsSimToClient::UrbanAttributes& message ) = 0;
+    virtual void Send  (       MsgsSimToClient::UrbanAttributes& message ) const = 0;
     //@}
 };
 

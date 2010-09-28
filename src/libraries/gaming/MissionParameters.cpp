@@ -82,7 +82,7 @@ void MissionParameters::DoUpdate( const Common::MsgAutomatOrder& message )
 // Name: MsgMissionParameters::DoUpdate
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
-void MissionParameters::DoUpdate( const Common::MsgPopulationOrder& message )
+void MissionParameters::DoUpdate( const Common::MsgCrowdOrder& message )
 {
     UpdateMessage( message );
 }

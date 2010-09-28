@@ -148,7 +148,7 @@ bool TimeLimitedAttribute::IsTimeOver( unsigned int time ) const
 // Name: TimeLimitedAttribute::SendFullState
 // Created: JCR 2008-08-21
 // -----------------------------------------------------------------------------
-void TimeLimitedAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
+void TimeLimitedAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 {
     asn.mutable_activity_time()->set_value( nActivityTime_ );
 }
@@ -157,7 +157,7 @@ void TimeLimitedAttribute::SendFullState( Common::MsgObjectAttributes& asn ) con
 // Name: TimeLimitedAttribute::SendUpdate
 // Created: JCR 2008-08-21
 // -----------------------------------------------------------------------------
-void TimeLimitedAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
+void TimeLimitedAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
     if( NeedUpdate() )
     {

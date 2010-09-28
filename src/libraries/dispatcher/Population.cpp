@@ -26,8 +26,8 @@ using namespace dispatcher;
 // Name: Population constructor
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-Population::Population( Model_ABC& model, const MsgsSimToClient::MsgPopulationCreation& msg )
-    : dispatcher::Population_ABC( msg.id().id(), QString( msg.nom().c_str() ) )
+Population::Population( Model_ABC& model, const MsgsSimToClient::MsgCrowdCreation& msg )
+    : dispatcher::Population_ABC( msg.crowd().id(), QString( msg.nom().c_str() ) )
     , model_           ( model )
     , decisionalInfos_ ( model )
     , nType_           ( msg.type().id() )
@@ -53,7 +53,7 @@ Population::~Population()
 // Name: Population::DoUpdate
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Population::DoUpdate( const MsgsSimToClient::MsgPopulationCreation& /*message*/ )
+void Population::DoUpdate( const MsgsSimToClient::MsgCrowdCreation& /*message*/ )
 {
     decisionalInfos_.Clear();
 }
@@ -62,7 +62,7 @@ void Population::DoUpdate( const MsgsSimToClient::MsgPopulationCreation& /*messa
 // Name: Population::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::DoUpdate( const MsgsSimToClient::MsgPopulationUpdate& msg )
+void Population::DoUpdate( const MsgsSimToClient::MsgCrowdUpdate& msg )
 {
     if( msg.has_etat_domination() )
         nDominationState_ = msg.etat_domination();
@@ -72,9 +72,9 @@ void Population::DoUpdate( const MsgsSimToClient::MsgPopulationUpdate& msg )
 // Name: Population::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationCreation& msg )
+void Population::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationCreation& msg )
 {
-    if( ! FindConcentration( msg.id().id() ) )
+    if( ! FindConcentration( msg.concentration().id() ) )
     {
         PopulationConcentration* element = new PopulationConcentration( *this, msg );
         static_cast< Model* >( &model_ )->AddExtensions( *element ); // $$$$ SBO 2010-06-10: use population part factory or something
@@ -86,20 +86,20 @@ void Population::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationCrea
 // Name: Population::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationUpdate& msg )
+void Population::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationUpdate& msg )
 {
-    const_cast< kernel::PopulationConcentration_ABC& >( GetConcentration( msg.id().id() ) ).Update( msg );
+    const_cast< kernel::PopulationConcentration_ABC& >( GetConcentration( msg.concentration().id() ) ).Update( msg );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Population::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationDestruction& msg )
+void Population::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationDestruction& msg )
 {
-    if( const kernel::PopulationConcentration_ABC* concentration = FindConcentration( msg.id().id() ) )
+    if( const kernel::PopulationConcentration_ABC* concentration = FindConcentration( msg.concentration().id() ) )
     {
-        tools::Resolver< kernel::PopulationConcentration_ABC >::Remove( msg.id().id() );
+        tools::Resolver< kernel::PopulationConcentration_ABC >::Remove( msg.concentration().id() );
         delete concentration;
     }
 }
@@ -108,9 +108,9 @@ void Population::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationDest
 // Name: Population::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::DoUpdate( const MsgsSimToClient::MsgPopulationFlowCreation& msg )
+void Population::DoUpdate( const MsgsSimToClient::MsgCrowdFlowCreation& msg )
 {
-    if( !FindFlow( msg.id().id() ) )
+    if( !FindFlow( msg.flow().id() ) )
     {
         PopulationFlow* element = new PopulationFlow( *this, msg );
         static_cast< Model& >( model_ ).AddExtensions( *element ); // $$$$ SBO 2010-06-10: use population part factory or something
@@ -122,20 +122,20 @@ void Population::DoUpdate( const MsgsSimToClient::MsgPopulationFlowCreation& msg
 // Name: Population::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate& msg )
+void Population::DoUpdate( const MsgsSimToClient::MsgCrowdFlowUpdate& msg )
 {
-    const_cast< kernel::PopulationFlow_ABC& >( GetFlow( msg.id().id()) ).Update( msg );
+    const_cast< kernel::PopulationFlow_ABC& >( GetFlow( msg.flow().id()) ).Update( msg );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Population::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::DoUpdate( const MsgsSimToClient::MsgPopulationFlowDestruction& msg )
+void Population::DoUpdate( const MsgsSimToClient::MsgCrowdFlowDestruction& msg )
 {
-    if( const kernel::PopulationFlow_ABC* flow = FindFlow( msg.id().id() ) )
+    if( const kernel::PopulationFlow_ABC* flow = FindFlow( msg.flow().id() ) )
     {
-        tools::Resolver< kernel::PopulationFlow_ABC >::Remove( msg.id().id() );
+        tools::Resolver< kernel::PopulationFlow_ABC >::Remove( msg.flow().id() );
         delete flow;
     }
 }
@@ -144,7 +144,7 @@ void Population::DoUpdate( const MsgsSimToClient::MsgPopulationFlowDestruction& 
 // Name: Population::DoUpdate
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void Population::DoUpdate( const Common::MsgPopulationOrder& message )
+void Population::DoUpdate( const Common::MsgCrowdOrder& message )
 {
     order_.release();
     if( message.type().id() != 0 )
@@ -166,8 +166,8 @@ void Population::DoUpdate( const MsgsSimToClient::MsgDecisionalState& msg )
 // -----------------------------------------------------------------------------
 void Population::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    client::PopulationCreation asn;
-    asn().mutable_id()->set_id( GetId() );
+    client::CrowdCreation asn;
+    asn().mutable_crowd()->set_id( GetId() );
     asn().mutable_party()->set_id( side_.GetId() );
     asn().mutable_type()->set_id( nType_ );
     asn().set_nom( strName_ );
@@ -180,8 +180,8 @@ void Population::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void Population::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
-    client::PopulationUpdate asn;
-    asn().mutable_id()->set_id( GetId() );
+    client::CrowdUpdate asn;
+    asn().mutable_crowd()->set_id( GetId() );
     asn().set_etat_domination( nDominationState_ );
     asn.Send( publisher );
     if( order_.get() )

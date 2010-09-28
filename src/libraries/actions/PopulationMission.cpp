@@ -54,10 +54,9 @@ PopulationMission::~PopulationMission()
 // -----------------------------------------------------------------------------
 void PopulationMission::Publish( Publisher_ABC& publisher ) const
 {
-    simulation::PopulationOrder message;
+    simulation::CrowdOrder message;
     message().mutable_tasker()->set_id( GetEntity().GetId() );
     message().mutable_type()->set_id( GetType().GetId() );
     CommitTo( *message().mutable_parameters() );
     message.Send( publisher, 0 );
-    Clean( *message().mutable_parameters() );
 }

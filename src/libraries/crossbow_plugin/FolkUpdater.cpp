@@ -107,7 +107,7 @@ void FolkUpdater::Drop()
 // -----------------------------------------------------------------------------
 void FolkUpdater::Update( const MsgsSimToClient::MsgFolkGraphEdgeUpdate& msg )
 {
-    Edge& edge = edges_[msg.shp_oid()];
+    Edge& edge = edges_[msg.shape_id()];
     Update( edge, msg );
     if( ++updated_ >= edges_.size() )
     {
@@ -168,9 +168,9 @@ void FolkUpdater::Update( Edge& edge, const MsgsSimToClient::MsgFolkGraphEdgeUpd
     const unsigned size = activities_.size() * profiles_.size();
     int c = -1;
     edge.population_ = 0;
-    for( int i = 0; i < msg.population_occupation_size(); ++i )
+    for( int i = 0; i < msg.crowd_occupation_size(); ++i )
     {
-        const int individuals = msg.population_occupation( i );
+        const int individuals = msg.crowd_occupation( i );
         if( i % size == 0 )
             ++c;
         edge.population_    += individuals;

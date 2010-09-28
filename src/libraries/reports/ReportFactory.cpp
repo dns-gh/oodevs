@@ -106,15 +106,15 @@ QDateTime ReportFactory::GetTime( const Common::MsgDateTime& d ) const
 // -----------------------------------------------------------------------------
 Report* ReportFactory::CreateReport( const kernel::Entity_ABC& agent, const MsgsSimToClient::MsgReport& message ) const
 {
-    ReportTemplate* report = Find( message.cr_oid().id() );
+    ReportTemplate* report = Find( message.type().id() );
     if( !report )
         return 0;
     Report::E_Type type = Report::eRC;
-    if( message.type() == MsgsSimToClient::information )
+    if( message.category() == MsgsSimToClient::information )
         type = Report::eMessage;
-    else if( message.type() == MsgsSimToClient::exceptional_event )
+    else if( message.category() == MsgsSimToClient::exceptional_event )
         type = Report::eEvent;
-    else if( message.type() == MsgsSimToClient::warning )
+    else if( message.category() == MsgsSimToClient::warning )
         type = Report::eWarning;
     return new Report( agent, type, report->RenderMessage( message ), GetTime( message.time() ) );
 }
@@ -125,7 +125,7 @@ Report* ReportFactory::CreateReport( const kernel::Entity_ABC& agent, const Msgs
 // -----------------------------------------------------------------------------
 std::string ReportFactory::FormatReport( const MsgsSimToClient::MsgReport& message ) const
 {
-    ReportTemplate* report = Find( message.cr_oid().id() );
+    ReportTemplate* report = Find( message.type().id() );
     if( report )
         return report->RenderMessage( message ).ascii();
     return std::string();
@@ -158,8 +158,8 @@ QString ReportFactory::RenderParameter( const Common::MsgMissionParameter& value
             return rcResolver_.CreateLink( AgentKnowledge_ABC::typeName_, value.value().unitknowledge().id() );
         if( value.value().has_objectknowledge() )
             return rcResolver_.CreateLink( ObjectKnowledge_ABC::typeName_, value.value().objectknowledge().id() );
-        if( value.value().has_populationknowledge() )
-            return rcResolver_.CreateLink( PopulationKnowledge_ABC::typeName_, value.value().populationknowledge().id() );
+        if( value.value().has_crowdknowledge() )
+            return rcResolver_.CreateLink( PopulationKnowledge_ABC::typeName_, value.value().crowdknowledge().id() );
         if( value.value().has_equipmenttype() )
             return equipmentResolver_.Get( value.value().equipmenttype().id() ).GetName().c_str();
         if( value.value().has_resourcetype() )

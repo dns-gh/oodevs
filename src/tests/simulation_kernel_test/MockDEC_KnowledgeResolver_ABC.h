@@ -29,7 +29,7 @@ MOCK_BASE_CLASS( MockDEC_KnowledgeResolver_ABC, DEC_KnowledgeResolver_ABC )
     MOCK_METHOD_EXT( ResolveKnowledgeUrban, 1, boost::shared_ptr< DEC_Knowledge_Urban >( const Common::UrbanObjectKnowledgeId& ), ResolveKnowledgeUrbanFromMessage );
     MOCK_METHOD_EXT( ResolveKnowledgeUrban, 1, boost::shared_ptr< DEC_Knowledge_Urban >( unsigned int ), ResolveKnowledgeUrbanFromId );
 
-    MOCK_METHOD_EXT( ResolveKnowledgePopulation, 1, DEC_Knowledge_Population*( const Common::PopulationKnowledgeId& ), ResolveKnowledgePopulationFromMessage );
+    MOCK_METHOD_EXT( ResolveKnowledgePopulation, 1, DEC_Knowledge_Population*( const Common::CrowdKnowledgeId& ), ResolveKnowledgePopulationFromMessage );
     MOCK_METHOD_EXT( ResolveKnowledgePopulation, 1, DEC_Knowledge_Population*( unsigned int ), ResolveKnowledgePopulationFromId );
 };
 

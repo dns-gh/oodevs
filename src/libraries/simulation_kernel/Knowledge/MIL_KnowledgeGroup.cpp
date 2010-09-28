@@ -196,7 +196,7 @@ void MIL_KnowledgeGroup::Destroy()
         delete knowledgeBlackBoard_;
         // myself destruction
         client::KnowledgeGroupDestruction msg;
-        msg().mutable_id()->set_id( id_ );
+        msg().mutable_knowledge_group()->set_id( id_ );
         msg().mutable_party()->set_id( army_->GetID() );
         msg.Send( NET_Publisher_ABC::Publisher() );
         knowledgeBlackBoard_ = 0;
@@ -341,7 +341,7 @@ void MIL_KnowledgeGroup::SendCreation() const
 {
     assert( army_ );
     client::KnowledgeGroupCreation msg;
-    msg().mutable_id()->set_id( id_ );
+    msg().mutable_knowledge_group()->set_id( id_ );
     msg().mutable_party()->set_id( army_->GetID() );
     msg().set_type(GetType().GetName());
     // LTO begin
@@ -378,7 +378,7 @@ void MIL_KnowledgeGroup::UpdateKnowledgeGroup()
     if( hasBeenUpdated_ )
     {
         client::KnowledgeGroupUpdate message;
-        message().mutable_id()->set_id( id_ );
+        message().mutable_knowledge_group()->set_id( id_ );
         if( MIL_KnowledgeGroup* parent = GetParent() )
             message().mutable_parent()->set_id( parent->GetId() );
         else
@@ -626,17 +626,17 @@ void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupUpdate( const MsgsClientToSim
 {
     switch( message.type() )
     {
-    case MsgsClientToSim::MsgKnowledgeMagicAction_Type_enable :
-        hasBeenUpdated_ = OnReceiveMsgKnowledgeGroupEnable( message.parametres() ) || hasBeenUpdated_;
+    case MsgsClientToSim::MsgKnowledgeMagicAction::enable:
+        hasBeenUpdated_ = OnReceiveMsgKnowledgeGroupEnable( message.parameters() ) || hasBeenUpdated_;
         break;
-    case MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_side :
-        hasBeenUpdated_ = OnReceiveMsgKnowledgeGroupChangeSuperior( message.parametres(), armies, false ) || hasBeenUpdated_;
+    case MsgsClientToSim::MsgKnowledgeMagicAction::update_party:
+        hasBeenUpdated_ = OnReceiveMsgKnowledgeGroupChangeSuperior( message.parameters(), armies, false ) || hasBeenUpdated_;
         break;
-    case MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_side_parent :
-        hasBeenUpdated_ = OnReceiveMsgKnowledgeGroupChangeSuperior( message.parametres(), armies, true ) || hasBeenUpdated_;
+    case MsgsClientToSim::MsgKnowledgeMagicAction::update_party_parent:
+        hasBeenUpdated_ = OnReceiveMsgKnowledgeGroupChangeSuperior( message.parameters(), armies, true ) || hasBeenUpdated_;
         break;
-    case MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_type :
-        hasBeenUpdated_ = OnReceiveMsgKnowledgeGroupSetType( message.parametres() ) || hasBeenUpdated_;
+    case MsgsClientToSim::MsgKnowledgeMagicAction::update_type:
+        hasBeenUpdated_ = OnReceiveMsgKnowledgeGroupSetType( message.parameters() ) || hasBeenUpdated_;
         break;
     default:
         break;
@@ -662,13 +662,13 @@ bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior( const Common:
 {
     MIL_Army_ABC* pTargetArmy = armies.Find( message.elem( 0 ).value().party().id() );
     if( !pTargetArmy || *pTargetArmy != GetArmy() )
-        throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_error_invalid_camp );
+        throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck::ErrorCode >( MsgsSimToClient::KnowledgeGroupAck::error_invalid_camp );
     MIL_KnowledgeGroup* pNewParent = 0;
     if( hasParent )
     {
         pNewParent = pTargetArmy->FindKnowledgeGroup( message.elem( 1 ).value().knowledgegroup().id() );
         if( !pNewParent || pNewParent->IsJammed() )
-            throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_error_invalid_superior );
+            throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck::ErrorCode >( MsgsSimToClient::KnowledgeGroupAck::error_invalid_superior );
     }
     if( pNewParent )
     {

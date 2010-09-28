@@ -72,7 +72,7 @@ kernel::ObjectKnowledge_ABC* ObjectKnowledgeFactory::Create( const kernel::Entit
 // Name: ObjectKnowledgeFactory::Register
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void ObjectKnowledgeFactory::Register( kernel::ObjectKnowledge_ABC& knowledge, const Common::MsgObjectAttributes& attributes ) const
+void ObjectKnowledgeFactory::Register( kernel::ObjectKnowledge_ABC& knowledge, const Common::ObjectAttributes& attributes ) const
 {
     if( attributes.has_logistic() && knowledge.Retrieve< kernel::LogisticAttribute_ABC >() == 0 )
         knowledge.Attach< kernel::LogisticAttribute_ABC >( *new LogisticAttribute( controllers_.controller_, model_.agents_ ) );

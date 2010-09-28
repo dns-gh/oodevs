@@ -265,7 +265,7 @@ template <typename T>
 void DEC_MiscFunctions::DebugDrawPoints(const T& caller, std::vector< boost::shared_ptr< MT_Vector2D > > points )
 {
     client::DebugPoints message;
-    MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *message().mutable_id(), caller.GetID() );
+    MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *message().mutable_source(), caller.GetID() );
     NET_ASN_Tools::WriteCoordinates( points, *message().mutable_coordinates() );
     message.Send( NET_Publisher_ABC::Publisher() );
     delete message().mutable_coordinates();
@@ -280,7 +280,7 @@ void DEC_MiscFunctions::DebugDrawPoint( const T& caller, const MT_Vector2D* pPoi
 {
     assert( pPoint );
     client::DebugPoints message;
-    MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *message().mutable_id(), caller.GetID() );
+    MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *message().mutable_source(), caller.GetID() );
     NET_ASN_Tools::WritePoint( *pPoint, *message().mutable_coordinates()->add_elem() );
     message.Send( NET_Publisher_ABC::Publisher() );
 }

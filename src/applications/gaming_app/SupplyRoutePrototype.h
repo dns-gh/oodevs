@@ -21,7 +21,7 @@ namespace actions
     }
 }
 
-struct MsgObjectAttributesLogisticRoute;
+struct ObjectAttributesLogisticRoute;
 
 // =============================================================================
 /** @class  SupplyRoutePrototype
@@ -54,7 +54,7 @@ private:
     //! @name Member data
     //@{
     actions::parameters::ParameterList*& attributesList_;
-    MsgObjectAttributesLogisticRoute* attr_;
+    ObjectAttributesLogisticRoute* attr_;
     //@}
 };
 

@@ -22,7 +22,7 @@ namespace Common
 
 namespace MsgsSimToClient
 {
-    class MsgTeamCreation;
+    class MsgPartyCreation;
     class MsgChangeDiplomacyAck;
 }
 
@@ -44,7 +44,7 @@ class Side : public dispatcher::Team_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Side( const Model_ABC& model, const MsgsSimToClient::MsgTeamCreation& msg );
+             Side( const Model_ABC& model, const MsgsSimToClient::MsgPartyCreation& msg );
     virtual ~Side();
     //@}
 
@@ -86,7 +86,6 @@ private:
     //! @name Member data
     //@{
     const Model_ABC& model_;
-    const std::string name_;
     Common::EnumDiplomacy nType_;
     kernel::Karma karma_;
     T_Diplomacies diplomacies_;

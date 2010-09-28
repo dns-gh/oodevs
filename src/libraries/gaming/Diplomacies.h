@@ -23,7 +23,7 @@ namespace Common
 }
 namespace MsgsSimToClient
 {
-    class MsgTeamCreation;
+    class MsgPartyCreation;
 }
 
 namespace kernel
@@ -40,7 +40,7 @@ namespace kernel
 // Created: AGE 2006-02-14
 // =============================================================================
 class Diplomacies : public kernel::Diplomacies_ABC
-                  , public kernel::Updatable_ABC< MsgsSimToClient::MsgTeamCreation >
+                  , public kernel::Updatable_ABC< MsgsSimToClient::MsgPartyCreation >
                   , public kernel::Updatable_ABC< MsgsSimToClient::MsgChangeDiplomacyAck >
                   , public kernel::Updatable_ABC< Common::MsgChangeDiplomacy >
 {
@@ -72,7 +72,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgTeamCreation& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgPartyCreation& message );
     virtual void DoUpdate( const MsgsSimToClient::MsgChangeDiplomacyAck& message );
     virtual void DoUpdate( const Common::MsgChangeDiplomacy& message );
     template< typename T >

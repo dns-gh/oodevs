@@ -88,7 +88,7 @@ public:
     unsigned long id_;
     std::string category_;
     std::string color_;
-    std::string template_;
+    std::string pattern_;
     T_Points points_;
     //@}
 };

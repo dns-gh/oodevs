@@ -50,7 +50,7 @@ void Reports::DoUpdate( const MsgsSimToClient::MsgReport& message )
 {
     // $$$$ AGE 2007-04-20: limiter le nombre de reports ?
     Report* report = reportFactory_.CreateReport( agent_, message );
-    Register( message.id().id(), *report );
+    Register( message.report().id(), *report );
     controller_.Create( *report );
 }
 
@@ -60,8 +60,8 @@ void Reports::DoUpdate( const MsgsSimToClient::MsgReport& message )
 // -----------------------------------------------------------------------------
 void Reports::DoUpdate( const MsgsSimToClient::MsgInvalidateReport& message )
 {
-    delete Find( message.id().id() );
-    Remove( message.id().id() );
+    delete Find( message.report().id() );
+    Remove( message.report().id() );
     controller_.Update( *this );
 }
 

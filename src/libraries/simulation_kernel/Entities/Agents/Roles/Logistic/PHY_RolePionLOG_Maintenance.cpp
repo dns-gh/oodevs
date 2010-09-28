@@ -655,7 +655,7 @@ void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, Msgs
     for( PHY_Composante_ABC::CIT_ComposanteUseMap itData = data.begin(); itData != data.end(); ++itData )
     {
         MsgsSimToClient::MsgLogMaintenanceEquipmentAvailability& data = *asn.add_elem();
-        data.set_type_equipement( itData->first->GetMosID().id() );
+        data.mutable_equipment_type()->set_id( itData->first->GetMosID().id() );
         assert( itData->second.nNbrTotal_ );
         data.set_nbr_total( itData->second.nNbrTotal_ );
         data.set_nbr_au_travail( itData->second.nNbrUsed_ );
@@ -678,7 +678,7 @@ void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, Msgs
 void PHY_RolePionLOG_Maintenance::SendFullState( client::UnitAttributes& /*asnUnit*/ ) const
 {
     client::LogMaintenanceState asn;
-    asn().mutable_id()->set_id( pion_.GetID() );
+    asn().mutable_unit()->set_id( pion_.GetID() );
     asn().set_chaine_activee( bSystemEnabled_ );
     asn().set_regime_travail( pWorkRate_->GetAsnID() );
     asn().mutable_priorites();

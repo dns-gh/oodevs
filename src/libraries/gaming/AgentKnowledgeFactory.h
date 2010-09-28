@@ -40,7 +40,7 @@ public:
     //! @name Operations
     //@{
     virtual kernel::AgentKnowledge_ABC*      CreateAgentKnowledge     ( const kernel::KnowledgeGroup_ABC& group, const MsgsSimToClient::MsgUnitKnowledgeCreation& message );
-    virtual kernel::PopulationKnowledge_ABC* CreatePopulationKnowledge( const kernel::KnowledgeGroup_ABC& group, const MsgsSimToClient::MsgPopulationKnowledgeCreation& message );
+    virtual kernel::PopulationKnowledge_ABC* CreatePopulationKnowledge( const kernel::KnowledgeGroup_ABC& group, const MsgsSimToClient::MsgCrowdKnowledgeCreation& message );
     //@}
 
 private:

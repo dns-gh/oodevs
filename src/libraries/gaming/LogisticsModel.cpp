@@ -64,7 +64,7 @@ void LogisticsModel::Delete( unsigned long id )
 // -----------------------------------------------------------------------------
 void LogisticsModel::CreateMaintenanceConsign( const MsgsSimToClient::MsgLogMaintenanceHandlingCreation& message )
 {
-    tools::Resolver< LogMaintenanceConsign >::Register( message.id().id(), *factory_.CreateMaintenanceConsign( message ) );
+    tools::Resolver< LogMaintenanceConsign >::Register( message.request().id(), *factory_.CreateMaintenanceConsign( message ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,7 +91,7 @@ void LogisticsModel::DeleteMaintenanceConsign( unsigned long id )
 // -----------------------------------------------------------------------------
 void LogisticsModel::CreateMedicalConsign( const MsgsSimToClient::MsgLogMedicalHandlingCreation& message )
 {
-    tools::Resolver< LogMedicalConsign >::Register(  message.id().id(), *factory_.CreateMedicalConsign( message ) );
+    tools::Resolver< LogMedicalConsign >::Register( message.request().id(), *factory_.CreateMedicalConsign( message ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +118,7 @@ void LogisticsModel::DeleteMedicalConsign( unsigned long id )
 // -----------------------------------------------------------------------------
 void LogisticsModel::CreateSupplyConsign( const MsgsSimToClient::MsgLogSupplyHandlingCreation& message )
 {
-    tools::Resolver< LogSupplyConsign >::Register(  message.id().id(), *factory_.CreateSupplyConsign( message ) );
+    tools::Resolver< LogSupplyConsign >::Register(  message.request().id(), *factory_.CreateSupplyConsign( message ) );
 }
 
 // -----------------------------------------------------------------------------

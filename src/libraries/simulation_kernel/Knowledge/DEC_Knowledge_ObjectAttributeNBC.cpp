@@ -148,7 +148,7 @@ void DEC_Knowledge_ObjectAttributeNBC::UpdateOnCollision( const DEC_Knowledge_Ob
 // Name: DEC_Knowledge_ObjectAttributeNBC::BuildMsgSpecificAttributes
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeNBC::Send( Common::MsgObjectAttributes& message ) const
+void DEC_Knowledge_ObjectAttributeNBC::Send( Common::ObjectAttributes& message ) const
 {
     message.mutable_nbc()->set_danger_level( dangerLevel_ );
     message.mutable_nbc()->mutable_nbc_agents();

@@ -81,7 +81,7 @@ void MagicAction::Publish( Publisher_ABC& publisher ) const
         ( MsgsClientToSim::MsgMagicAction_Type ) GetType().GetId();
     simulation::MagicAction message;
     message().set_type( type );
-    CommitTo( *message().mutable_parametres() );
+    CommitTo( *message().mutable_parameters() );
     message.Send( publisher );
     message().Clear();
 }

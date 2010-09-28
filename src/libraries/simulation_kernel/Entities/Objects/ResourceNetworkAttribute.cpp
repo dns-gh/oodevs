@@ -56,7 +56,7 @@ ResourceNetworkAttribute& ResourceNetworkAttribute::operator=( const ResourceNet
 // Name: ResourceNetworkAttribute::SendFullState
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
-void ResourceNetworkAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
+void ResourceNetworkAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 {
     SendUpdate( asn );
 }
@@ -65,7 +65,7 @@ void ResourceNetworkAttribute::SendFullState( Common::MsgObjectAttributes& asn )
 // Name: ResourceNetworkAttribute::SendUpdate
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
-void ResourceNetworkAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
+void ResourceNetworkAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
     if( capacity_ )
         capacity_->SendState( asn );

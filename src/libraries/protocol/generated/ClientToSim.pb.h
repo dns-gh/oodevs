@@ -41,7 +41,9 @@ class MsgKnowledgeMagicAction;
 class MsgObjectMagicAction;
 class MsgMagicAction;
 class MsgControlCheckPointSetFrequency;
-class MsgControlToggleVisionCones;
+class MsgControlCheckPointDeleteRequest;
+class MsgControlCheckPointListRequest;
+class MsgControlEnableVisionCones;
 class MsgClientToSim;
 class MsgClientToSim_Content;
 
@@ -60,10 +62,10 @@ enum MsgUnitMagicAction_Type {
   MsgUnitMagicAction_Type_partial_recovery = 11,
   MsgUnitMagicAction_Type_unit_creation = 12,
   MsgUnitMagicAction_Type_create_fire_order = 13,
-  MsgUnitMagicAction_Type_population_total_destruction = 14,
-  MsgUnitMagicAction_Type_population_kill = 15,
-  MsgUnitMagicAction_Type_population_resurrect = 16,
-  MsgUnitMagicAction_Type_population_change_attitude = 17,
+  MsgUnitMagicAction_Type_crowd_total_destruction = 14,
+  MsgUnitMagicAction_Type_crowd_kill = 15,
+  MsgUnitMagicAction_Type_crowd_resurrect = 16,
+  MsgUnitMagicAction_Type_crowd_change_attitude = 17,
   MsgUnitMagicAction_Type_change_knowledge_group = 18,
   MsgUnitMagicAction_Type_change_logistic_links = 19,
   MsgUnitMagicAction_Type_unit_change_superior = 20,
@@ -89,8 +91,8 @@ inline bool MsgUnitMagicAction_Type_Parse(
 }
 enum MsgKnowledgeMagicAction_Type {
   MsgKnowledgeMagicAction_Type_enable = 0,
-  MsgKnowledgeMagicAction_Type_update_side = 1,
-  MsgKnowledgeMagicAction_Type_update_side_parent = 2,
+  MsgKnowledgeMagicAction_Type_update_party = 1,
+  MsgKnowledgeMagicAction_Type_update_party_parent = 2,
   MsgKnowledgeMagicAction_Type_update_type = 3
 };
 bool MsgKnowledgeMagicAction_Type_IsValid(int value);
@@ -159,15 +161,15 @@ inline bool MsgObjectMagicAction_Attribute_Parse(
     MsgObjectMagicAction_Attribute_descriptor(), name, value);
 }
 enum MsgMagicAction_Type {
-  MsgMagicAction_Type_global_meteo = 0,
-  MsgMagicAction_Type_local_meteo = 1,
+  MsgMagicAction_Type_global_weather = 0,
+  MsgMagicAction_Type_local_weather = 1,
   MsgMagicAction_Type_change_diplomacy = 2,
   MsgMagicAction_Type_create_knowledge_group = 3,
-  MsgMagicAction_Type_change_resource_links = 4
+  MsgMagicAction_Type_change_resource_network_properties = 4
 };
 bool MsgMagicAction_Type_IsValid(int value);
-const MsgMagicAction_Type MsgMagicAction_Type_Type_MIN = MsgMagicAction_Type_global_meteo;
-const MsgMagicAction_Type MsgMagicAction_Type_Type_MAX = MsgMagicAction_Type_change_resource_links;
+const MsgMagicAction_Type MsgMagicAction_Type_Type_MIN = MsgMagicAction_Type_global_weather;
+const MsgMagicAction_Type MsgMagicAction_Type_Type_MAX = MsgMagicAction_Type_change_resource_network_properties;
 
 const ::google::protobuf::EnumDescriptor* MsgMagicAction_Type_descriptor();
 inline const ::std::string& MsgMagicAction_Type_Name(MsgMagicAction_Type value) {
@@ -426,12 +428,12 @@ class MsgFragOrder : public ::google::protobuf::Message {
   inline const ::Common::FragOrderType& frag_order() const;
   inline ::Common::FragOrderType* mutable_frag_order();
   
-  // optional .Common.MsgMissionParameters parametres = 3;
-  inline bool has_parametres() const;
-  inline void clear_parametres();
-  static const int kParametresFieldNumber = 3;
-  inline const ::Common::MsgMissionParameters& parametres() const;
-  inline ::Common::MsgMissionParameters* mutable_parametres();
+  // optional .Common.MsgMissionParameters parameters = 3;
+  inline bool has_parameters() const;
+  inline void clear_parameters();
+  static const int kParametersFieldNumber = 3;
+  inline const ::Common::MsgMissionParameters& parameters() const;
+  inline ::Common::MsgMissionParameters* mutable_parameters();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
@@ -439,7 +441,7 @@ class MsgFragOrder : public ::google::protobuf::Message {
   
   ::Common::Tasker* tasker_;
   ::Common::FragOrderType* frag_order_;
-  ::Common::MsgMissionParameters* parametres_;
+  ::Common::MsgMissionParameters* parameters_;
   friend void  protobuf_AddDesc_ClientToSim_2eproto();
   friend void protobuf_AssignDesc_ClientToSim_2eproto();
   friend void protobuf_ShutdownFile_ClientToSim_2eproto();
@@ -726,10 +728,10 @@ class MsgUnitMagicAction : public ::google::protobuf::Message {
   static const Type partial_recovery = MsgUnitMagicAction_Type_partial_recovery;
   static const Type unit_creation = MsgUnitMagicAction_Type_unit_creation;
   static const Type create_fire_order = MsgUnitMagicAction_Type_create_fire_order;
-  static const Type population_total_destruction = MsgUnitMagicAction_Type_population_total_destruction;
-  static const Type population_kill = MsgUnitMagicAction_Type_population_kill;
-  static const Type population_resurrect = MsgUnitMagicAction_Type_population_resurrect;
-  static const Type population_change_attitude = MsgUnitMagicAction_Type_population_change_attitude;
+  static const Type crowd_total_destruction = MsgUnitMagicAction_Type_crowd_total_destruction;
+  static const Type crowd_kill = MsgUnitMagicAction_Type_crowd_kill;
+  static const Type crowd_resurrect = MsgUnitMagicAction_Type_crowd_resurrect;
+  static const Type crowd_change_attitude = MsgUnitMagicAction_Type_crowd_change_attitude;
   static const Type change_knowledge_group = MsgUnitMagicAction_Type_change_knowledge_group;
   static const Type change_logistic_links = MsgUnitMagicAction_Type_change_logistic_links;
   static const Type unit_change_superior = MsgUnitMagicAction_Type_unit_change_superior;
@@ -773,12 +775,12 @@ class MsgUnitMagicAction : public ::google::protobuf::Message {
   inline ::MsgsClientToSim::MsgUnitMagicAction_Type type() const;
   inline void set_type(::MsgsClientToSim::MsgUnitMagicAction_Type value);
   
-  // required .Common.MsgMissionParameters parametres = 3;
-  inline bool has_parametres() const;
-  inline void clear_parametres();
-  static const int kParametresFieldNumber = 3;
-  inline const ::Common::MsgMissionParameters& parametres() const;
-  inline ::Common::MsgMissionParameters* mutable_parametres();
+  // required .Common.MsgMissionParameters parameters = 3;
+  inline bool has_parameters() const;
+  inline void clear_parameters();
+  static const int kParametersFieldNumber = 3;
+  inline const ::Common::MsgMissionParameters& parameters() const;
+  inline ::Common::MsgMissionParameters* mutable_parameters();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
@@ -786,7 +788,7 @@ class MsgUnitMagicAction : public ::google::protobuf::Message {
   
   ::Common::UnitId* id_;
   int type_;
-  ::Common::MsgMissionParameters* parametres_;
+  ::Common::MsgMissionParameters* parameters_;
   friend void  protobuf_AddDesc_ClientToSim_2eproto();
   friend void protobuf_AssignDesc_ClientToSim_2eproto();
   friend void protobuf_ShutdownFile_ClientToSim_2eproto();
@@ -862,8 +864,8 @@ class MsgKnowledgeMagicAction : public ::google::protobuf::Message {
   
   typedef MsgKnowledgeMagicAction_Type Type;
   static const Type enable = MsgKnowledgeMagicAction_Type_enable;
-  static const Type update_side = MsgKnowledgeMagicAction_Type_update_side;
-  static const Type update_side_parent = MsgKnowledgeMagicAction_Type_update_side_parent;
+  static const Type update_party = MsgKnowledgeMagicAction_Type_update_party;
+  static const Type update_party_parent = MsgKnowledgeMagicAction_Type_update_party_parent;
   static const Type update_type = MsgKnowledgeMagicAction_Type_update_type;
   static inline bool Type_IsValid(int value) {
     return MsgKnowledgeMagicAction_Type_IsValid(value);
@@ -886,12 +888,12 @@ class MsgKnowledgeMagicAction : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.KnowledgeGroupId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::KnowledgeGroupId& id() const;
-  inline ::Common::KnowledgeGroupId* mutable_id();
+  // required .Common.KnowledgeGroupId knowledge_group = 1;
+  inline bool has_knowledge_group() const;
+  inline void clear_knowledge_group();
+  static const int kKnowledgeGroupFieldNumber = 1;
+  inline const ::Common::KnowledgeGroupId& knowledge_group() const;
+  inline ::Common::KnowledgeGroupId* mutable_knowledge_group();
   
   // required .MsgsClientToSim.MsgKnowledgeMagicAction.Type type = 2;
   inline bool has_type() const;
@@ -900,20 +902,20 @@ class MsgKnowledgeMagicAction : public ::google::protobuf::Message {
   inline ::MsgsClientToSim::MsgKnowledgeMagicAction_Type type() const;
   inline void set_type(::MsgsClientToSim::MsgKnowledgeMagicAction_Type value);
   
-  // required .Common.MsgMissionParameters parametres = 3;
-  inline bool has_parametres() const;
-  inline void clear_parametres();
-  static const int kParametresFieldNumber = 3;
-  inline const ::Common::MsgMissionParameters& parametres() const;
-  inline ::Common::MsgMissionParameters* mutable_parametres();
+  // required .Common.MsgMissionParameters parameters = 3;
+  inline bool has_parameters() const;
+  inline void clear_parameters();
+  static const int kParametersFieldNumber = 3;
+  inline const ::Common::MsgMissionParameters& parameters() const;
+  inline ::Common::MsgMissionParameters* mutable_parameters();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::KnowledgeGroupId* id_;
+  ::Common::KnowledgeGroupId* knowledge_group_;
   int type_;
-  ::Common::MsgMissionParameters* parametres_;
+  ::Common::MsgMissionParameters* parameters_;
   friend void  protobuf_AddDesc_ClientToSim_2eproto();
   friend void protobuf_AssignDesc_ClientToSim_2eproto();
   friend void protobuf_ShutdownFile_ClientToSim_2eproto();
@@ -1062,12 +1064,12 @@ class MsgObjectMagicAction : public ::google::protobuf::Message {
   inline ::MsgsClientToSim::MsgObjectMagicAction_Type type() const;
   inline void set_type(::MsgsClientToSim::MsgObjectMagicAction_Type value);
   
-  // required .Common.MsgMissionParameters parametres = 3;
-  inline bool has_parametres() const;
-  inline void clear_parametres();
-  static const int kParametresFieldNumber = 3;
-  inline const ::Common::MsgMissionParameters& parametres() const;
-  inline ::Common::MsgMissionParameters* mutable_parametres();
+  // required .Common.MsgMissionParameters parameters = 3;
+  inline bool has_parameters() const;
+  inline void clear_parameters();
+  static const int kParametersFieldNumber = 3;
+  inline const ::Common::MsgMissionParameters& parameters() const;
+  inline ::Common::MsgMissionParameters* mutable_parameters();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
@@ -1075,7 +1077,7 @@ class MsgObjectMagicAction : public ::google::protobuf::Message {
   
   ::Common::ObjectId* object_;
   int type_;
-  ::Common::MsgMissionParameters* parametres_;
+  ::Common::MsgMissionParameters* parameters_;
   friend void  protobuf_AddDesc_ClientToSim_2eproto();
   friend void protobuf_AssignDesc_ClientToSim_2eproto();
   friend void protobuf_ShutdownFile_ClientToSim_2eproto();
@@ -1150,11 +1152,11 @@ class MsgMagicAction : public ::google::protobuf::Message {
   // nested types ----------------------------------------------------
   
   typedef MsgMagicAction_Type Type;
-  static const Type global_meteo = MsgMagicAction_Type_global_meteo;
-  static const Type local_meteo = MsgMagicAction_Type_local_meteo;
+  static const Type global_weather = MsgMagicAction_Type_global_weather;
+  static const Type local_weather = MsgMagicAction_Type_local_weather;
   static const Type change_diplomacy = MsgMagicAction_Type_change_diplomacy;
   static const Type create_knowledge_group = MsgMagicAction_Type_create_knowledge_group;
-  static const Type change_resource_links = MsgMagicAction_Type_change_resource_links;
+  static const Type change_resource_network_properties = MsgMagicAction_Type_change_resource_network_properties;
   static inline bool Type_IsValid(int value) {
     return MsgMagicAction_Type_IsValid(value);
   }
@@ -1183,19 +1185,19 @@ class MsgMagicAction : public ::google::protobuf::Message {
   inline ::MsgsClientToSim::MsgMagicAction_Type type() const;
   inline void set_type(::MsgsClientToSim::MsgMagicAction_Type value);
   
-  // required .Common.MsgMissionParameters parametres = 2;
-  inline bool has_parametres() const;
-  inline void clear_parametres();
-  static const int kParametresFieldNumber = 2;
-  inline const ::Common::MsgMissionParameters& parametres() const;
-  inline ::Common::MsgMissionParameters* mutable_parametres();
+  // required .Common.MsgMissionParameters parameters = 2;
+  inline bool has_parameters() const;
+  inline void clear_parameters();
+  static const int kParametersFieldNumber = 2;
+  inline const ::Common::MsgMissionParameters& parameters() const;
+  inline ::Common::MsgMissionParameters* mutable_parameters();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
   int type_;
-  ::Common::MsgMissionParameters* parametres_;
+  ::Common::MsgMissionParameters* parameters_;
   friend void  protobuf_AddDesc_ClientToSim_2eproto();
   friend void protobuf_AssignDesc_ClientToSim_2eproto();
   friend void protobuf_ShutdownFile_ClientToSim_2eproto();
@@ -1305,14 +1307,14 @@ class MsgControlCheckPointSetFrequency : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgControlToggleVisionCones : public ::google::protobuf::Message {
+class MsgControlCheckPointDeleteRequest : public ::google::protobuf::Message {
  public:
-  MsgControlToggleVisionCones();
-  virtual ~MsgControlToggleVisionCones();
+  MsgControlCheckPointDeleteRequest();
+  virtual ~MsgControlCheckPointDeleteRequest();
   
-  MsgControlToggleVisionCones(const MsgControlToggleVisionCones& from);
+  MsgControlCheckPointDeleteRequest(const MsgControlCheckPointDeleteRequest& from);
   
-  inline MsgControlToggleVisionCones& operator=(const MsgControlToggleVisionCones& from) {
+  inline MsgControlCheckPointDeleteRequest& operator=(const MsgControlCheckPointDeleteRequest& from) {
     CopyFrom(from);
     return *this;
   }
@@ -1326,16 +1328,186 @@ class MsgControlToggleVisionCones : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgControlToggleVisionCones& default_instance();
-  void Swap(MsgControlToggleVisionCones* other);
+  static const MsgControlCheckPointDeleteRequest& default_instance();
+  void Swap(MsgControlCheckPointDeleteRequest* other);
   
   // implements Message ----------------------------------------------
   
-  MsgControlToggleVisionCones* New() const;
+  MsgControlCheckPointDeleteRequest* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgControlToggleVisionCones& from);
-  void MergeFrom(const MsgControlToggleVisionCones& from);
+  void CopyFrom(const MsgControlCheckPointDeleteRequest& from);
+  void MergeFrom(const MsgControlCheckPointDeleteRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required string checkpoint = 1;
+  inline bool has_checkpoint() const;
+  inline void clear_checkpoint();
+  static const int kCheckpointFieldNumber = 1;
+  inline const ::std::string& checkpoint() const;
+  inline void set_checkpoint(const ::std::string& value);
+  inline void set_checkpoint(const char* value);
+  inline void set_checkpoint(const char* value, size_t size);
+  inline ::std::string* mutable_checkpoint();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::std::string* checkpoint_;
+  static const ::std::string _default_checkpoint_;
+  friend void  protobuf_AddDesc_ClientToSim_2eproto();
+  friend void protobuf_AssignDesc_ClientToSim_2eproto();
+  friend void protobuf_ShutdownFile_ClientToSim_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgControlCheckPointDeleteRequest* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgControlCheckPointListRequest : public ::google::protobuf::Message {
+ public:
+  MsgControlCheckPointListRequest();
+  virtual ~MsgControlCheckPointListRequest();
+  
+  MsgControlCheckPointListRequest(const MsgControlCheckPointListRequest& from);
+  
+  inline MsgControlCheckPointListRequest& operator=(const MsgControlCheckPointListRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgControlCheckPointListRequest& default_instance();
+  void Swap(MsgControlCheckPointListRequest* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgControlCheckPointListRequest* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgControlCheckPointListRequest& from);
+  void MergeFrom(const MsgControlCheckPointListRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  friend void  protobuf_AddDesc_ClientToSim_2eproto();
+  friend void protobuf_AssignDesc_ClientToSim_2eproto();
+  friend void protobuf_ShutdownFile_ClientToSim_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[1];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgControlCheckPointListRequest* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgControlEnableVisionCones : public ::google::protobuf::Message {
+ public:
+  MsgControlEnableVisionCones();
+  virtual ~MsgControlEnableVisionCones();
+  
+  MsgControlEnableVisionCones(const MsgControlEnableVisionCones& from);
+  
+  inline MsgControlEnableVisionCones& operator=(const MsgControlEnableVisionCones& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgControlEnableVisionCones& default_instance();
+  void Swap(MsgControlEnableVisionCones* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgControlEnableVisionCones* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgControlEnableVisionCones& from);
+  void MergeFrom(const MsgControlEnableVisionCones& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -1388,7 +1560,7 @@ class MsgControlToggleVisionCones : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgControlToggleVisionCones* default_instance_;
+  static MsgControlEnableVisionCones* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -1494,12 +1666,12 @@ class MsgClientToSim_Content : public ::google::protobuf::Message {
   inline const ::MsgsClientToSim::MsgControlCheckPointSetFrequency& control_checkpoint_set_frequency() const;
   inline ::MsgsClientToSim::MsgControlCheckPointSetFrequency* mutable_control_checkpoint_set_frequency();
   
-  // optional .MsgsClientToSim.MsgControlToggleVisionCones control_toggle_vision_cones = 8;
+  // optional .MsgsClientToSim.MsgControlEnableVisionCones control_toggle_vision_cones = 8;
   inline bool has_control_toggle_vision_cones() const;
   inline void clear_control_toggle_vision_cones();
   static const int kControlToggleVisionConesFieldNumber = 8;
-  inline const ::MsgsClientToSim::MsgControlToggleVisionCones& control_toggle_vision_cones() const;
-  inline ::MsgsClientToSim::MsgControlToggleVisionCones* mutable_control_toggle_vision_cones();
+  inline const ::MsgsClientToSim::MsgControlEnableVisionCones& control_toggle_vision_cones() const;
+  inline ::MsgsClientToSim::MsgControlEnableVisionCones* mutable_control_toggle_vision_cones();
   
   // optional .Common.MsgUnitOrder unit_order = 9;
   inline bool has_unit_order() const;
@@ -1515,12 +1687,12 @@ class MsgClientToSim_Content : public ::google::protobuf::Message {
   inline const ::Common::MsgAutomatOrder& automat_order() const;
   inline ::Common::MsgAutomatOrder* mutable_automat_order();
   
-  // optional .Common.MsgPopulationOrder population_order = 11;
-  inline bool has_population_order() const;
-  inline void clear_population_order();
-  static const int kPopulationOrderFieldNumber = 11;
-  inline const ::Common::MsgPopulationOrder& population_order() const;
-  inline ::Common::MsgPopulationOrder* mutable_population_order();
+  // optional .Common.MsgCrowdOrder crowd_order = 11;
+  inline bool has_crowd_order() const;
+  inline void clear_crowd_order();
+  static const int kCrowdOrderFieldNumber = 11;
+  inline const ::Common::MsgCrowdOrder& crowd_order() const;
+  inline ::Common::MsgCrowdOrder* mutable_crowd_order();
   
   // optional .MsgsClientToSim.MsgFragOrder frag_order = 12;
   inline bool has_frag_order() const;
@@ -1582,10 +1754,10 @@ class MsgClientToSim_Content : public ::google::protobuf::Message {
   ::MsgsClientToSim::MsgControlDatetimeChange* control_date_time_change_;
   ::MsgsClientToSim::MsgControlCheckPointSaveNow* control_checkpoint_save_now_;
   ::MsgsClientToSim::MsgControlCheckPointSetFrequency* control_checkpoint_set_frequency_;
-  ::MsgsClientToSim::MsgControlToggleVisionCones* control_toggle_vision_cones_;
+  ::MsgsClientToSim::MsgControlEnableVisionCones* control_toggle_vision_cones_;
   ::Common::MsgUnitOrder* unit_order_;
   ::Common::MsgAutomatOrder* automat_order_;
-  ::Common::MsgPopulationOrder* population_order_;
+  ::Common::MsgCrowdOrder* crowd_order_;
   ::MsgsClientToSim::MsgFragOrder* frag_order_;
   ::MsgsClientToSim::MsgSetAutomatMode* set_automat_mode_;
   ::MsgsClientToSim::MsgUnitCreationRequest* unit_creation_request_;
@@ -1821,21 +1993,21 @@ inline ::Common::FragOrderType* MsgFragOrder::mutable_frag_order() {
   return frag_order_;
 }
 
-// optional .Common.MsgMissionParameters parametres = 3;
-inline bool MsgFragOrder::has_parametres() const {
+// optional .Common.MsgMissionParameters parameters = 3;
+inline bool MsgFragOrder::has_parameters() const {
   return _has_bit(2);
 }
-inline void MsgFragOrder::clear_parametres() {
-  if (parametres_ != NULL) parametres_->::Common::MsgMissionParameters::Clear();
+inline void MsgFragOrder::clear_parameters() {
+  if (parameters_ != NULL) parameters_->::Common::MsgMissionParameters::Clear();
   _clear_bit(2);
 }
-inline const ::Common::MsgMissionParameters& MsgFragOrder::parametres() const {
-  return parametres_ != NULL ? *parametres_ : *default_instance_->parametres_;
+inline const ::Common::MsgMissionParameters& MsgFragOrder::parameters() const {
+  return parameters_ != NULL ? *parameters_ : *default_instance_->parameters_;
 }
-inline ::Common::MsgMissionParameters* MsgFragOrder::mutable_parametres() {
+inline ::Common::MsgMissionParameters* MsgFragOrder::mutable_parameters() {
   _set_bit(2);
-  if (parametres_ == NULL) parametres_ = new ::Common::MsgMissionParameters;
-  return parametres_;
+  if (parameters_ == NULL) parameters_ = new ::Common::MsgMissionParameters;
+  return parameters_;
 }
 
 // -------------------------------------------------------------------
@@ -1969,42 +2141,42 @@ inline void MsgUnitMagicAction::set_type(::MsgsClientToSim::MsgUnitMagicAction_T
   type_ = value;
 }
 
-// required .Common.MsgMissionParameters parametres = 3;
-inline bool MsgUnitMagicAction::has_parametres() const {
+// required .Common.MsgMissionParameters parameters = 3;
+inline bool MsgUnitMagicAction::has_parameters() const {
   return _has_bit(2);
 }
-inline void MsgUnitMagicAction::clear_parametres() {
-  if (parametres_ != NULL) parametres_->::Common::MsgMissionParameters::Clear();
+inline void MsgUnitMagicAction::clear_parameters() {
+  if (parameters_ != NULL) parameters_->::Common::MsgMissionParameters::Clear();
   _clear_bit(2);
 }
-inline const ::Common::MsgMissionParameters& MsgUnitMagicAction::parametres() const {
-  return parametres_ != NULL ? *parametres_ : *default_instance_->parametres_;
+inline const ::Common::MsgMissionParameters& MsgUnitMagicAction::parameters() const {
+  return parameters_ != NULL ? *parameters_ : *default_instance_->parameters_;
 }
-inline ::Common::MsgMissionParameters* MsgUnitMagicAction::mutable_parametres() {
+inline ::Common::MsgMissionParameters* MsgUnitMagicAction::mutable_parameters() {
   _set_bit(2);
-  if (parametres_ == NULL) parametres_ = new ::Common::MsgMissionParameters;
-  return parametres_;
+  if (parameters_ == NULL) parameters_ = new ::Common::MsgMissionParameters;
+  return parameters_;
 }
 
 // -------------------------------------------------------------------
 
 // MsgKnowledgeMagicAction
 
-// required .Common.KnowledgeGroupId id = 1;
-inline bool MsgKnowledgeMagicAction::has_id() const {
+// required .Common.KnowledgeGroupId knowledge_group = 1;
+inline bool MsgKnowledgeMagicAction::has_knowledge_group() const {
   return _has_bit(0);
 }
-inline void MsgKnowledgeMagicAction::clear_id() {
-  if (id_ != NULL) id_->::Common::KnowledgeGroupId::Clear();
+inline void MsgKnowledgeMagicAction::clear_knowledge_group() {
+  if (knowledge_group_ != NULL) knowledge_group_->::Common::KnowledgeGroupId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::KnowledgeGroupId& MsgKnowledgeMagicAction::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::KnowledgeGroupId& MsgKnowledgeMagicAction::knowledge_group() const {
+  return knowledge_group_ != NULL ? *knowledge_group_ : *default_instance_->knowledge_group_;
 }
-inline ::Common::KnowledgeGroupId* MsgKnowledgeMagicAction::mutable_id() {
+inline ::Common::KnowledgeGroupId* MsgKnowledgeMagicAction::mutable_knowledge_group() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::KnowledgeGroupId;
-  return id_;
+  if (knowledge_group_ == NULL) knowledge_group_ = new ::Common::KnowledgeGroupId;
+  return knowledge_group_;
 }
 
 // required .MsgsClientToSim.MsgKnowledgeMagicAction.Type type = 2;
@@ -2024,21 +2196,21 @@ inline void MsgKnowledgeMagicAction::set_type(::MsgsClientToSim::MsgKnowledgeMag
   type_ = value;
 }
 
-// required .Common.MsgMissionParameters parametres = 3;
-inline bool MsgKnowledgeMagicAction::has_parametres() const {
+// required .Common.MsgMissionParameters parameters = 3;
+inline bool MsgKnowledgeMagicAction::has_parameters() const {
   return _has_bit(2);
 }
-inline void MsgKnowledgeMagicAction::clear_parametres() {
-  if (parametres_ != NULL) parametres_->::Common::MsgMissionParameters::Clear();
+inline void MsgKnowledgeMagicAction::clear_parameters() {
+  if (parameters_ != NULL) parameters_->::Common::MsgMissionParameters::Clear();
   _clear_bit(2);
 }
-inline const ::Common::MsgMissionParameters& MsgKnowledgeMagicAction::parametres() const {
-  return parametres_ != NULL ? *parametres_ : *default_instance_->parametres_;
+inline const ::Common::MsgMissionParameters& MsgKnowledgeMagicAction::parameters() const {
+  return parameters_ != NULL ? *parameters_ : *default_instance_->parameters_;
 }
-inline ::Common::MsgMissionParameters* MsgKnowledgeMagicAction::mutable_parametres() {
+inline ::Common::MsgMissionParameters* MsgKnowledgeMagicAction::mutable_parameters() {
   _set_bit(2);
-  if (parametres_ == NULL) parametres_ = new ::Common::MsgMissionParameters;
-  return parametres_;
+  if (parameters_ == NULL) parameters_ = new ::Common::MsgMissionParameters;
+  return parameters_;
 }
 
 // -------------------------------------------------------------------
@@ -2079,21 +2251,21 @@ inline void MsgObjectMagicAction::set_type(::MsgsClientToSim::MsgObjectMagicActi
   type_ = value;
 }
 
-// required .Common.MsgMissionParameters parametres = 3;
-inline bool MsgObjectMagicAction::has_parametres() const {
+// required .Common.MsgMissionParameters parameters = 3;
+inline bool MsgObjectMagicAction::has_parameters() const {
   return _has_bit(2);
 }
-inline void MsgObjectMagicAction::clear_parametres() {
-  if (parametres_ != NULL) parametres_->::Common::MsgMissionParameters::Clear();
+inline void MsgObjectMagicAction::clear_parameters() {
+  if (parameters_ != NULL) parameters_->::Common::MsgMissionParameters::Clear();
   _clear_bit(2);
 }
-inline const ::Common::MsgMissionParameters& MsgObjectMagicAction::parametres() const {
-  return parametres_ != NULL ? *parametres_ : *default_instance_->parametres_;
+inline const ::Common::MsgMissionParameters& MsgObjectMagicAction::parameters() const {
+  return parameters_ != NULL ? *parameters_ : *default_instance_->parameters_;
 }
-inline ::Common::MsgMissionParameters* MsgObjectMagicAction::mutable_parametres() {
+inline ::Common::MsgMissionParameters* MsgObjectMagicAction::mutable_parameters() {
   _set_bit(2);
-  if (parametres_ == NULL) parametres_ = new ::Common::MsgMissionParameters;
-  return parametres_;
+  if (parameters_ == NULL) parameters_ = new ::Common::MsgMissionParameters;
+  return parameters_;
 }
 
 // -------------------------------------------------------------------
@@ -2117,21 +2289,21 @@ inline void MsgMagicAction::set_type(::MsgsClientToSim::MsgMagicAction_Type valu
   type_ = value;
 }
 
-// required .Common.MsgMissionParameters parametres = 2;
-inline bool MsgMagicAction::has_parametres() const {
+// required .Common.MsgMissionParameters parameters = 2;
+inline bool MsgMagicAction::has_parameters() const {
   return _has_bit(1);
 }
-inline void MsgMagicAction::clear_parametres() {
-  if (parametres_ != NULL) parametres_->::Common::MsgMissionParameters::Clear();
+inline void MsgMagicAction::clear_parameters() {
+  if (parameters_ != NULL) parameters_->::Common::MsgMissionParameters::Clear();
   _clear_bit(1);
 }
-inline const ::Common::MsgMissionParameters& MsgMagicAction::parametres() const {
-  return parametres_ != NULL ? *parametres_ : *default_instance_->parametres_;
+inline const ::Common::MsgMissionParameters& MsgMagicAction::parameters() const {
+  return parameters_ != NULL ? *parameters_ : *default_instance_->parameters_;
 }
-inline ::Common::MsgMissionParameters* MsgMagicAction::mutable_parametres() {
+inline ::Common::MsgMissionParameters* MsgMagicAction::mutable_parameters() {
   _set_bit(1);
-  if (parametres_ == NULL) parametres_ = new ::Common::MsgMissionParameters;
-  return parametres_;
+  if (parameters_ == NULL) parameters_ = new ::Common::MsgMissionParameters;
+  return parameters_;
 }
 
 // -------------------------------------------------------------------
@@ -2156,20 +2328,70 @@ inline void MsgControlCheckPointSetFrequency::set_frequency(::google::protobuf::
 
 // -------------------------------------------------------------------
 
-// MsgControlToggleVisionCones
+// MsgControlCheckPointDeleteRequest
 
-// required bool vision_cones = 1;
-inline bool MsgControlToggleVisionCones::has_vision_cones() const {
+// required string checkpoint = 1;
+inline bool MsgControlCheckPointDeleteRequest::has_checkpoint() const {
   return _has_bit(0);
 }
-inline void MsgControlToggleVisionCones::clear_vision_cones() {
+inline void MsgControlCheckPointDeleteRequest::clear_checkpoint() {
+  if (checkpoint_ != &_default_checkpoint_) {
+    checkpoint_->clear();
+  }
+  _clear_bit(0);
+}
+inline const ::std::string& MsgControlCheckPointDeleteRequest::checkpoint() const {
+  return *checkpoint_;
+}
+inline void MsgControlCheckPointDeleteRequest::set_checkpoint(const ::std::string& value) {
+  _set_bit(0);
+  if (checkpoint_ == &_default_checkpoint_) {
+    checkpoint_ = new ::std::string;
+  }
+  checkpoint_->assign(value);
+}
+inline void MsgControlCheckPointDeleteRequest::set_checkpoint(const char* value) {
+  _set_bit(0);
+  if (checkpoint_ == &_default_checkpoint_) {
+    checkpoint_ = new ::std::string;
+  }
+  checkpoint_->assign(value);
+}
+inline void MsgControlCheckPointDeleteRequest::set_checkpoint(const char* value, size_t size) {
+  _set_bit(0);
+  if (checkpoint_ == &_default_checkpoint_) {
+    checkpoint_ = new ::std::string;
+  }
+  checkpoint_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgControlCheckPointDeleteRequest::mutable_checkpoint() {
+  _set_bit(0);
+  if (checkpoint_ == &_default_checkpoint_) {
+    checkpoint_ = new ::std::string;
+  }
+  return checkpoint_;
+}
+
+// -------------------------------------------------------------------
+
+// MsgControlCheckPointListRequest
+
+// -------------------------------------------------------------------
+
+// MsgControlEnableVisionCones
+
+// required bool vision_cones = 1;
+inline bool MsgControlEnableVisionCones::has_vision_cones() const {
+  return _has_bit(0);
+}
+inline void MsgControlEnableVisionCones::clear_vision_cones() {
   vision_cones_ = false;
   _clear_bit(0);
 }
-inline bool MsgControlToggleVisionCones::vision_cones() const {
+inline bool MsgControlEnableVisionCones::vision_cones() const {
   return vision_cones_;
 }
-inline void MsgControlToggleVisionCones::set_vision_cones(bool value) {
+inline void MsgControlEnableVisionCones::set_vision_cones(bool value) {
   _set_bit(0);
   vision_cones_ = value;
 }
@@ -2297,20 +2519,20 @@ inline ::MsgsClientToSim::MsgControlCheckPointSetFrequency* MsgClientToSim_Conte
   return control_checkpoint_set_frequency_;
 }
 
-// optional .MsgsClientToSim.MsgControlToggleVisionCones control_toggle_vision_cones = 8;
+// optional .MsgsClientToSim.MsgControlEnableVisionCones control_toggle_vision_cones = 8;
 inline bool MsgClientToSim_Content::has_control_toggle_vision_cones() const {
   return _has_bit(7);
 }
 inline void MsgClientToSim_Content::clear_control_toggle_vision_cones() {
-  if (control_toggle_vision_cones_ != NULL) control_toggle_vision_cones_->::MsgsClientToSim::MsgControlToggleVisionCones::Clear();
+  if (control_toggle_vision_cones_ != NULL) control_toggle_vision_cones_->::MsgsClientToSim::MsgControlEnableVisionCones::Clear();
   _clear_bit(7);
 }
-inline const ::MsgsClientToSim::MsgControlToggleVisionCones& MsgClientToSim_Content::control_toggle_vision_cones() const {
+inline const ::MsgsClientToSim::MsgControlEnableVisionCones& MsgClientToSim_Content::control_toggle_vision_cones() const {
   return control_toggle_vision_cones_ != NULL ? *control_toggle_vision_cones_ : *default_instance_->control_toggle_vision_cones_;
 }
-inline ::MsgsClientToSim::MsgControlToggleVisionCones* MsgClientToSim_Content::mutable_control_toggle_vision_cones() {
+inline ::MsgsClientToSim::MsgControlEnableVisionCones* MsgClientToSim_Content::mutable_control_toggle_vision_cones() {
   _set_bit(7);
-  if (control_toggle_vision_cones_ == NULL) control_toggle_vision_cones_ = new ::MsgsClientToSim::MsgControlToggleVisionCones;
+  if (control_toggle_vision_cones_ == NULL) control_toggle_vision_cones_ = new ::MsgsClientToSim::MsgControlEnableVisionCones;
   return control_toggle_vision_cones_;
 }
 
@@ -2348,21 +2570,21 @@ inline ::Common::MsgAutomatOrder* MsgClientToSim_Content::mutable_automat_order(
   return automat_order_;
 }
 
-// optional .Common.MsgPopulationOrder population_order = 11;
-inline bool MsgClientToSim_Content::has_population_order() const {
+// optional .Common.MsgCrowdOrder crowd_order = 11;
+inline bool MsgClientToSim_Content::has_crowd_order() const {
   return _has_bit(10);
 }
-inline void MsgClientToSim_Content::clear_population_order() {
-  if (population_order_ != NULL) population_order_->::Common::MsgPopulationOrder::Clear();
+inline void MsgClientToSim_Content::clear_crowd_order() {
+  if (crowd_order_ != NULL) crowd_order_->::Common::MsgCrowdOrder::Clear();
   _clear_bit(10);
 }
-inline const ::Common::MsgPopulationOrder& MsgClientToSim_Content::population_order() const {
-  return population_order_ != NULL ? *population_order_ : *default_instance_->population_order_;
+inline const ::Common::MsgCrowdOrder& MsgClientToSim_Content::crowd_order() const {
+  return crowd_order_ != NULL ? *crowd_order_ : *default_instance_->crowd_order_;
 }
-inline ::Common::MsgPopulationOrder* MsgClientToSim_Content::mutable_population_order() {
+inline ::Common::MsgCrowdOrder* MsgClientToSim_Content::mutable_crowd_order() {
   _set_bit(10);
-  if (population_order_ == NULL) population_order_ = new ::Common::MsgPopulationOrder;
-  return population_order_;
+  if (crowd_order_ == NULL) crowd_order_ = new ::Common::MsgCrowdOrder;
+  return crowd_order_;
 }
 
 // optional .MsgsClientToSim.MsgFragOrder frag_order = 12;

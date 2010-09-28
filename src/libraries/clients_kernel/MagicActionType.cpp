@@ -192,7 +192,7 @@ void MagicActionType::Initialize()
     {
         CreateOrderParameter( "Attributes", "list" );
     }
-    else if( name_ == "global_meteo" || name_ == "local_meteo" )
+    else if( name_ == "global_weather" || name_ == "local_weather" )
     {
         CreateOrderParameter( "Temperature", "numeric" );
         CreateOrderParameter( "WindSpeed", "numeric" );
@@ -209,7 +209,7 @@ void MagicActionType::Initialize()
         precipitation->AddValue( 5, "Neige"              );
         precipitation->AddValue( 6, "Fumigene"           );
 
-        if( name_ == "local_meteo" )
+        if( name_ == "local_weather" )
         {
             CreateOrderParameter( "StartTime", "datetime" );
             CreateOrderParameter( "EndTime", "datetime" );

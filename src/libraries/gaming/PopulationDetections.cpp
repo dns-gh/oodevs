@@ -46,9 +46,9 @@ PopulationDetections::~PopulationDetections()
 // Name: PopulationDetections::DoUpdate
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------
-void PopulationDetections::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationDetection& message )
+void PopulationDetections::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationDetection& message )
 {
-    const PopulationPart_ABC* pConcentration = & resolver_.Get( message.detected_population().id() ).GetConcentration( message.detected_concentration().id() );
+    const PopulationPart_ABC* pConcentration = & resolver_.Get( message.detected_crowd().id() ).GetConcentration( message.detected_concentration().id() );
     if( message.visibility() == Common::invisible )
         perceived_.erase( pConcentration );
     else
@@ -59,9 +59,9 @@ void PopulationDetections::DoUpdate( const MsgsSimToClient::MsgPopulationConcent
 // Name: PopulationDetections::DoUpdate
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------
-void PopulationDetections::DoUpdate( const MsgsSimToClient::MsgPopulationFlowDetection& message )
+void PopulationDetections::DoUpdate( const MsgsSimToClient::MsgCrowdFlowDetection& message )
 {
-    const PopulationPart_ABC* pFlow = & resolver_.Get( message.detected_population().id() ).GetFlow( message.detected_flow().id() );
+    const PopulationPart_ABC* pFlow = & resolver_.Get( message.detected_crowd().id() ).GetFlow( message.detected_flow().id() );
     if( message.visible_flow().location().coordinates().elem_size() )
         perceived_.insert( pFlow );
     else

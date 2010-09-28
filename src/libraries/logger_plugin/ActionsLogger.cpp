@@ -111,7 +111,7 @@ void ActionsLogger::Log( const Common::MsgAutomatOrder& message )
 // Name: ActionsLogger::Log
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-void ActionsLogger::Log( const Common::MsgPopulationOrder& message )
+void ActionsLogger::Log( const Common::MsgCrowdOrder& message )
 {
     if( message.has_type() && message.type().id() != 0 )
         LogAction( message );

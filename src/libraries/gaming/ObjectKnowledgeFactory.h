@@ -12,7 +12,7 @@
 
 namespace Common
 {
-    class MsgObjectAttributes;
+    class ObjectAttributes;
 }
 namespace MsgsSimToClient
 {
@@ -49,7 +49,7 @@ public:
     //! @name Operations
     //@{
     virtual kernel::ObjectKnowledge_ABC* Create( const kernel::Entity_ABC& owner, const MsgsSimToClient::MsgObjectKnowledgeCreation& message );
-    void Register( kernel::ObjectKnowledge_ABC& knowledge, const Common::MsgObjectAttributes& attributes ) const;
+    void Register( kernel::ObjectKnowledge_ABC& knowledge, const Common::ObjectAttributes& attributes ) const;
     //@}
 
 private:

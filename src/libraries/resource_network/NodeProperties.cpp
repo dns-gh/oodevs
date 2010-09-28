@@ -132,7 +132,7 @@ void NodeProperties::SetModifier( unsigned int modifier )
 // Name: NodeProperties::Serialize
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------
-void NodeProperties::Serialize( MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg ) const
+void NodeProperties::Serialize( MsgsSimToClient::UrbanAttributes_Infrastructures& msg ) const
 {
     // TODO sérialiser isFunctional_?
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
@@ -143,7 +143,7 @@ void NodeProperties::Serialize( MsgsSimToClient::MsgUrbanAttributes_Infrastructu
 // Name: NodeProperties::Serialize
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
-void NodeProperties::Serialize( Common::MsgObjectAttributeResourceNetwork& msg ) const
+void NodeProperties::Serialize( Common::ObjectAttributeResourceNetwork& msg ) const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Serialize( *msg.add_network() );

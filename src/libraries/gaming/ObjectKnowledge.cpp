@@ -32,7 +32,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 ObjectKnowledge::ObjectKnowledge( const Entity_ABC& owner, const MsgsSimToClient::MsgObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter,
                                  const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver )
-    : EntityImplementation< ObjectKnowledge_ABC >( controller, message.id().id(), "" )
+    : EntityImplementation< ObjectKnowledge_ABC >( controller, message.knowledge().id(), "" )
     , converter_     ( converter )
     , owner_         ( owner )
     , objectResolver_( objectResolver )

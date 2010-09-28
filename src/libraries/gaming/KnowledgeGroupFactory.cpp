@@ -56,7 +56,7 @@ kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::CreateKnowledgeGroup( const M
     (Entity_ABC*) &model_.teams_.Resolver< Team_ABC >::Get( message.party().id() );
     // LTO end
 
-    KnowledgeGroup* result = new KnowledgeGroup( message.id().id(), controllers_.controller_, message.type(), model_.static_.types_ );
+    KnowledgeGroup* result = new KnowledgeGroup( message.knowledge_group().id(), controllers_.controller_, message.type(), model_.static_.types_ );
     result->Attach( *new AgentKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );
     bool jam = message.has_jam() && message.jam();
     if( jam )

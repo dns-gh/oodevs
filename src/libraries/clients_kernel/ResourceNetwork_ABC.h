@@ -14,7 +14,7 @@
 
 namespace MsgsSimToClient
 {
-    class MsgUrbanAttributes_Infrastructures;
+    class UrbanAttributes_Infrastructures;
 }
 
 namespace kernel

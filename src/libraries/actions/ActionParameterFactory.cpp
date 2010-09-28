@@ -122,8 +122,8 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
         return new actions::parameters::AgentKnowledge( parameter, message.value().unitknowledge().id(), agentKnowledgeConverter_, entity, controller_ );
     if( message.value().has_objectknowledge() )
         return new actions::parameters::ObjectKnowledge( parameter, message.value().objectknowledge().id(), objectKnowledgeConverter_, entity, controller_ );
-    if( message.value().has_populationknowledge() )
-        return new actions::parameters::PopulationKnowledge( parameter, message.value().populationknowledge().id(), agentKnowledgeConverter_, entity, controller_ );
+    if( message.value().has_crowdknowledge() )
+        return new actions::parameters::PopulationKnowledge( parameter, message.value().crowdknowledge().id(), agentKnowledgeConverter_, entity, controller_ );
     if( message.value().has_unitlist() )
         return new actions::parameters::AgentList( parameter, message.value().unitlist(), entities_, controller_ );
     if( message.value().has_automatlist() )

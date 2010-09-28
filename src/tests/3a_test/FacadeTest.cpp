@@ -33,7 +33,7 @@ namespace
     {
         MsgSimToClient result;
         MsgUnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
-        attributes.mutable_id()->set_id( id );
+        attributes.mutable_unit()->set_id( id );
         attributes.set_etat_operationnel_brut( opstate );
         return result;
     }
@@ -56,7 +56,7 @@ namespace
     {
         MsgSimToClient result;
         MsgUnitCreation& message = *result.mutable_message()->mutable_unit_creation();
-        message.mutable_id()->set_id( id );
+        message.mutable_unit()->set_id( id );
         message.mutable_type()->set_id( 42 );
         message.set_nom( "test" );
         message.mutable_automat()->set_id( 12 );
@@ -164,7 +164,7 @@ namespace
     {
         MsgSimToClient result;
         MsgUnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
-        attributes.mutable_id()->set_id( id );
+        attributes.mutable_unit()->set_id( id );
         geocoord::MGRS mgrs( position );
         geocoord::Geodetic geodetic( mgrs );
         attributes.mutable_position()->set_latitude( geodetic.GetLatitude() * 180 / std::acos( -1. ) );
@@ -218,7 +218,7 @@ namespace
     {
         MsgSimToClient result;
         MsgUnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
-        attributes.mutable_id()->set_id( id );
+        attributes.mutable_unit()->set_id( id );
         attributes.set_embarque( mounted );
         return result;
     }
@@ -271,7 +271,7 @@ namespace
     {
         MsgSimToClient result;
         MsgLogMaintenanceHandlingCreation& creation = *result.mutable_message()->mutable_log_maintenance_handling_creation();
-        creation.mutable_id()->set_id( id );
+        creation.mutable_request()->set_id( id );
         creation.mutable_unit()->set_id( unit_id ) ;
         return result;
     }
@@ -280,7 +280,7 @@ namespace
     {
         MsgSimToClient result;
         MsgLogMaintenanceHandlingDestruction& destruction = *result.mutable_message()->mutable_log_maintenance_handling_destruction();
-        destruction.mutable_id()->set_id( id );
+        destruction.mutable_request()->set_id( id );
         return result;
     }
 }
@@ -367,7 +367,7 @@ namespace
     {
         MsgSimToClient result;
         MsgStartUnitFire& fire = *result.mutable_message()->mutable_start_unit_fire();
-        fire.mutable_id()->set_id( fire_id );
+        fire.mutable_fire()->set_id( fire_id );
         fire.mutable_firing_unit()->set_id( firer );
         return result;
     }
@@ -375,7 +375,7 @@ namespace
     {
         MsgSimToClient result;
         MsgStopUnitFire& fire = *result.mutable_message()->mutable_stop_unit_fire();
-        fire.mutable_id()->set_id( fire_id );
+        fire.mutable_fire()->set_id( fire_id );
         MsgUnitFireDamages& damage = *fire.mutable_units_damages()->add_elem();
         damage.mutable_equipments()->add_elem()->set_unavailable_nbr( damage_count );
         return result;
@@ -546,7 +546,7 @@ namespace
     {
         MsgSimToClient result;
         MsgUnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
-        attributes.mutable_id()->set_id( id );
+        attributes.mutable_unit()->set_id( id );
         ResourceDotations_ResourceDotation& resource = *attributes.mutable_dotation_eff_ressource()->add_elem();
         resource.mutable_type()->set_id( resourceId );
         resource.set_quantite_disponible( variation );
@@ -679,7 +679,7 @@ namespace
     {
         MsgSimToClient result;
         MsgUnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
-        attributes.mutable_id()->set_id( id );
+        attributes.mutable_unit()->set_id( id );
         EquipmentDotations_EquipmentDotation& equipment = *attributes.mutable_dotation_eff_materiel()->add_elem();
         equipment.mutable_type()->set_id( equipmentId );
         equipment.set_nb_disponibles( variation[0] );

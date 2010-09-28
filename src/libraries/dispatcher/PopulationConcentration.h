@@ -15,8 +15,8 @@
 
 namespace MsgsSimToClient
 {
-    class MsgPopulationConcentrationCreation;
-    class MsgPopulationConcentrationUpdate;
+    class MsgCrowdConcentrationCreation;
+    class MsgCrowdConcentrationUpdate;
 }
 
 namespace dispatcher
@@ -31,18 +31,18 @@ namespace dispatcher
 // =============================================================================
 class PopulationConcentration : public dispatcher::PopulationConcentration_ABC
                               , public kernel::Extension_ABC
-                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationUpdate >
+                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdConcentrationUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationConcentration( const Population& population, const MsgsSimToClient::MsgPopulationConcentrationCreation& msg );
+             PopulationConcentration( const Population& population, const MsgsSimToClient::MsgCrowdConcentrationCreation& msg );
     virtual ~PopulationConcentration();
     //@}
 
     //! @name Operations
     //@{
-    virtual void DoUpdate       ( const MsgsSimToClient::MsgPopulationConcentrationUpdate& msg );
+    virtual void DoUpdate       ( const MsgsSimToClient::MsgCrowdConcentrationUpdate& msg );
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
@@ -70,9 +70,9 @@ private:
     const unsigned long nID_;
     const Common::MsgCoordLatLong position_;
 
-    unsigned long                nNbrAliveHumans_;
-    unsigned long                nNbrDeadHumans_;
-    Common::EnumPopulationAttitude nAttitude_;
+    unsigned long             nNbrAliveHumans_;
+    unsigned long             nNbrDeadHumans_;
+    Common::EnumCrowdAttitude nAttitude_;
     //@}
 };
 

@@ -110,10 +110,10 @@ void DEC_Knowledge_ObjectAttributeMine::UpdateOnCollision( const DEC_Knowledge_O
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ObjectAttributeMine::MsgObjectAttributes
+// Name: DEC_Knowledge_ObjectAttributeMine::ObjectAttributes
 // Created: JCR 2008-06-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeMine::Send( Common::MsgObjectAttributes& asn ) const
+void DEC_Knowledge_ObjectAttributeMine::Send( Common::ObjectAttributes& asn ) const
 {
     asn.mutable_mine()->set_percentage( (unsigned int)( rMiningPercentage_ * 100. ) );
     asn.mutable_mine()->set_dotation_nbr( nNbrDotationForMining_ );

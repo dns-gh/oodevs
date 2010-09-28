@@ -58,7 +58,7 @@ public:
 
     virtual actions::Action_ABC* CreateAction( const Common::MsgUnitOrder& message ) const;
     virtual actions::Action_ABC* CreateAction( const Common::MsgAutomatOrder& message ) const;
-    virtual actions::Action_ABC* CreateAction( const Common::MsgPopulationOrder& message ) const;
+    virtual actions::Action_ABC* CreateAction( const Common::MsgCrowdOrder& message ) const;
     virtual actions::Action_ABC* CreateAction( const MsgsClientToSim::MsgFragOrder& message ) const;
     //@}
 

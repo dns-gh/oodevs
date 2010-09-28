@@ -37,9 +37,9 @@ PHY_ObjectExplosionFireResult::~PHY_ObjectExplosionFireResult()
 {
     {
         client::Explosion asnMsg;
-        asnMsg().mutable_id()->set_id( object_.GetID() );
+        asnMsg().mutable_object()->set_id( object_.GetID() );
         Serialize( *asnMsg().mutable_units_damages ()      );
-        Serialize( *asnMsg().mutable_populations_damages() );
+        Serialize( *asnMsg().mutable_crowds_damages() );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
 

@@ -13,7 +13,7 @@ import "Common.proto";
 
 // Phase lines
 message MsgLimaCreationRequest {
-   required Common.MsgTacticalLine tacticalline = 1;
+   required Common.MsgTacticalLine tactical_line = 1;
 }
 message MsgLimaUpdateRequest {
    required Common.TacticalLineId  id   = 1;
@@ -25,7 +25,7 @@ message MsgLimaDestructionRequest {
 
 // Limits
 message MsgLimitCreationRequest {
-   required Common.MsgTacticalLine tacticalline = 1;
+   required Common.MsgTacticalLine tactical_line = 1;
 }
 message MsgLimitUpdateRequest {
    required Common.TacticalLineId  id   = 1;
@@ -64,7 +64,7 @@ message MsgShapeUpdateRequest {
     required Common.DrawingId           shape     = 1;
     optional string                     category  = 2;
     optional string                     color     = 3;
-    optional string                     template_ = 4;
+    optional string                     pattern   = 4;
     optional Common.MsgCoordLatLongList points    = 5;
 }
 

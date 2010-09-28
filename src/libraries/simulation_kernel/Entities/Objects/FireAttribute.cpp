@@ -162,7 +162,7 @@ void FireAttribute::Register( MIL_Object_ABC& object ) const
 // Name: FireAttribute::SendFullState
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void FireAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
+void FireAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 {
 //    asn.set_firePresent( 1 );
     asn.mutable_fire()->set_heat( heat_ );
@@ -173,7 +173,7 @@ void FireAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 // Name: FireAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void FireAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
+void FireAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
     if( NeedUpdate() )
     {

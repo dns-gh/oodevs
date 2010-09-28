@@ -35,7 +35,7 @@ namespace script
 // Created: SBO 2008-11-18
 // =============================================================================
 class PopulationNotifier : public kernel::Extension_ABC
-                         , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowUpdate >
+                         , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdFlowUpdate >
 {
 public:
     //! @name Constructors/Destructor
@@ -53,7 +53,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdFlowUpdate& message );
     //@}
 
 private:

@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: MedicalTreatmentAttribute constructor
 // Created: RFT 2006-09-26
 // -----------------------------------------------------------------------------
-MedicalTreatmentAttribute::MedicalTreatmentAttribute( const Common::MsgObjectAttributes& message )
+MedicalTreatmentAttribute::MedicalTreatmentAttribute( const Common::ObjectAttributes& message )
     : beds_              ( 0 )
     , availableBeds_     ( 0 )
     , doctors_           ( 0 )
@@ -39,7 +39,7 @@ MedicalTreatmentAttribute::~MedicalTreatmentAttribute()
 // Name: MedicalTreatmentAttribute::Update
 // Created: RFT 2006-09-26
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::Update( const Common::MsgObjectAttributes& message )
+void MedicalTreatmentAttribute::Update( const Common::ObjectAttributes& message )
 {
     if( message.has_medical_treatment() )
     {
@@ -56,7 +56,7 @@ void MedicalTreatmentAttribute::Update( const Common::MsgObjectAttributes& messa
 // Name: MedicalTreatmentAttribute::Send
 // Created: RFT 2006-09-27
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::Send( Common::MsgObjectAttributes& message ) const
+void MedicalTreatmentAttribute::Send( Common::ObjectAttributes& message ) const
 {
     message.mutable_medical_treatment()->set_available_beds   ( availableBeds_ );
     message.mutable_medical_treatment()->set_available_doctors( availableDoctors_ );

@@ -29,7 +29,7 @@ class PopulationFireResult
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFireResult( const MsgsSimToClient::MsgPopulationFireDamages& message, const tools::Resolver_ABC< kernel::Population_ABC >& resolver, const QDateTime& time );
+             PopulationFireResult( const MsgsSimToClient::MsgCrowdFireDamages& message, const tools::Resolver_ABC< kernel::Population_ABC >& resolver, const QDateTime& time );
     virtual ~PopulationFireResult();
     //@}
 

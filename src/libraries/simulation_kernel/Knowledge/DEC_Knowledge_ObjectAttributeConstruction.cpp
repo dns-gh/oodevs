@@ -106,7 +106,7 @@ void DEC_Knowledge_ObjectAttributeConstruction::UpdateOnCollision( const DEC_Kno
 // Name: DEC_Knowledge_ObjectAttributeConstruction::BuildMsgAttribute
 // Created: JCR 2008-06-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeConstruction::Send( Common::MsgObjectAttributes& asn ) const
+void DEC_Knowledge_ObjectAttributeConstruction::Send( Common::ObjectAttributes& asn ) const
 {
     asn.mutable_construction()->set_percentage( int( rConstructionPercentage_ * 100) );
     asn.mutable_construction()->set_dotation_nbr( nNbrDotation_ );

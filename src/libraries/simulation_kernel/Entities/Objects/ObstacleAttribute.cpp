@@ -186,7 +186,7 @@ void ObstacleAttribute::Register( MIL_Object_ABC& object ) const
 // Name: ObstacleAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
+void ObstacleAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 {
     asn.mutable_obstacle()->set_type( obstacle_ );
     asn.mutable_obstacle()->set_activated( bActivated_ );
@@ -197,7 +197,7 @@ void ObstacleAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 // Name: ObstacleAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
+void ObstacleAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
     if( NeedUpdate() )
     {

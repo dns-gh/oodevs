@@ -210,7 +210,7 @@ void InputToxicCloudAttribute::Register( MIL_Object_ABC& object ) const
 // Name: InputToxicCloudAttribute::SendFullState
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void InputToxicCloudAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
+void InputToxicCloudAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 {
     if( bExport_ )
     {
@@ -228,7 +228,7 @@ void InputToxicCloudAttribute::SendFullState( Common::MsgObjectAttributes& asn )
 // Name: InputToxicCloudAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void InputToxicCloudAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
+void InputToxicCloudAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
     if( bExport_ && NeedUpdate() )
     {

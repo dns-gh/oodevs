@@ -35,8 +35,8 @@ class FireFactory;
 class Fires : public kernel::Extension_ABC
             , public kernel::Updatable_ABC< MsgsSimToClient::MsgStartUnitFire >
             , public kernel::Updatable_ABC< MsgsSimToClient::MsgStopUnitFire >
-            , public kernel::Updatable_ABC< MsgsSimToClient::MsgStartPopulationFire >
-            , public kernel::Updatable_ABC< MsgsSimToClient::MsgStopPopulationFire >
+            , public kernel::Updatable_ABC< MsgsSimToClient::MsgStartCrowdFire >
+            , public kernel::Updatable_ABC< MsgsSimToClient::MsgStopCrowdFire >
             , public tools::Resolver< Fire_ABC >
             , public kernel::Drawable_ABC
 {
@@ -67,8 +67,8 @@ private:
     void DestroyFire( const T& message );
     virtual void DoUpdate( const MsgsSimToClient::MsgStartUnitFire& message );
     virtual void DoUpdate( const MsgsSimToClient::MsgStopUnitFire& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgStartPopulationFire& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgStopPopulationFire& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgStartCrowdFire& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgStopCrowdFire& message );
     //@}
 
 private:

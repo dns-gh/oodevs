@@ -120,7 +120,7 @@ void DEC_Knowledge_ObjectAttributeBypass::UpdateOnCollision( const DEC_Knowledge
 // Name: DEC_Knowledge_ObjectAttributeBypass::Send
 // Created: JCR 2008-08-18
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeBypass::Send( Common::MsgObjectAttributes& asn ) const
+void DEC_Knowledge_ObjectAttributeBypass::Send( Common::ObjectAttributes& asn ) const
 {
     asn.mutable_bypass()->set_percentage( nBypassPercentage_ );
 }

@@ -53,7 +53,7 @@ MOCK_BASE_CLASS( MockModel, dispatcher::Model_ABC )
         else if( Formations().Find( id ) )
             tasker.mutable_formation()->set_id( id );
         else if( Populations().Find( id ) )
-            tasker.mutable_population()->set_id( id );
+            tasker.mutable_crowd()->set_id( id );
         else if( Agents().Find( id ) )
             tasker.mutable_unit()->set_id( id );
         else

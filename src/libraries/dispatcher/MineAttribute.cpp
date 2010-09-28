@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: MineAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-MineAttribute::MineAttribute( const Common::MsgObjectAttributes& asnMsg )
+MineAttribute::MineAttribute( const Common::ObjectAttributes& asnMsg )
     : dotation_( 0 )
     , nPercentageMining_( 0 )
     , nNbrDotationForMining_( 0 )
@@ -38,7 +38,7 @@ MineAttribute::~MineAttribute()
 // Name: MineAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void MineAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
+void MineAttribute::Update( const Common::ObjectAttributes& asnMsg )
 {
     if( asnMsg.has_mine()  )
     {
@@ -55,7 +55,7 @@ void MineAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 // Name: MineAttribute::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void MineAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
+void MineAttribute::Send( Common::ObjectAttributes& asnMsg ) const
 {
     asnMsg.mutable_mine()->mutable_resource()->set_id( dotation_ );
     asnMsg.mutable_mine()->set_dotation_nbr( nNbrDotationForMining_ );

@@ -257,7 +257,7 @@ void DEC_Knowledge_Urban::SendChangedState()
     if( bMustSend )
     {
         nTimeLastUpdate_ = GetCurrentTimeStep();
-        message().mutable_id()->set_id( nID_ );
+        message().mutable_knowledge()->set_id( nID_ );
         message().mutable_party()->set_id( army_->GetID() );
         message().mutable_urban_block()->set_id( object_->GetId() );
         message.Send( NET_Publisher_ABC::Publisher() );
@@ -271,7 +271,7 @@ void DEC_Knowledge_Urban::SendChangedState()
 void DEC_Knowledge_Urban::SendFullState()
 {
     client::UrbanKnowledgeUpdate message;
-    message().mutable_id()->set_id( nID_ );
+    message().mutable_knowledge()->set_id( nID_ );
     message().mutable_party()->set_id( army_->GetID() );
     message().mutable_urban_block()->set_id( object_->GetId() );
 
@@ -322,7 +322,7 @@ void DEC_Knowledge_Urban::SendStateToNewClient()
 void DEC_Knowledge_Urban::SendMsgCreation() const
 {
     client::UrbanKnowledgeCreation message;
-    message().mutable_id()->set_id( nID_ );
+    message().mutable_knowledge()->set_id( nID_ );
     message().mutable_party()->set_id( army_->GetID() );
     message().mutable_urban_block()->set_id( object_->GetId() );
 
@@ -336,7 +336,7 @@ void DEC_Knowledge_Urban::SendMsgCreation() const
 void DEC_Knowledge_Urban::SendMsgDestruction() const
 {
     client::UrbanKnowledgeDestruction message;
-    message().mutable_id()->set_id( nID_ );
+    message().mutable_knowledge()->set_id( nID_ );
     message().mutable_party()->set_id( army_->GetID() );
     message.Send( NET_Publisher_ABC::Publisher() );
 }

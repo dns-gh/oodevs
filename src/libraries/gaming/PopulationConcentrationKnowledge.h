@@ -33,13 +33,13 @@ namespace kernel
 // =============================================================================
 class PopulationConcentrationKnowledge : public PopulationPartKnowledge_ABC
                                        , public kernel::Drawable_ABC
-                                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate >
+                                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate >
 {
 public:
     //! @name Constructor/Destructor
     //@{
              PopulationConcentrationKnowledge( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::Population_ABC& popu,
-                 const MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation& message );
+                 const MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation& message );
     virtual ~PopulationConcentrationKnowledge();
     //@}
 
@@ -52,7 +52,7 @@ public:
 
     //! @name Network
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate& message );
     //@}
 
 private:

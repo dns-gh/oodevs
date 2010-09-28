@@ -26,14 +26,14 @@ class DelayAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DelayAttribute( const Common::MsgObjectAttributes& asnMsg );
+    explicit DelayAttribute( const Common::ObjectAttributes& asnMsg );
     virtual ~DelayAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const Common::MsgObjectAttributes& asnMsg );
-    virtual void Send  ( Common::MsgObjectAttributes& asnMsg ) const;
+    virtual void Update( const Common::ObjectAttributes& asnMsg );
+    virtual void Send  ( Common::ObjectAttributes& asnMsg ) const;
     //@}
 
 private:

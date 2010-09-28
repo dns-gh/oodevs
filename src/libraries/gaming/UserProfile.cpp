@@ -87,7 +87,7 @@ void UserProfile::RequestCreation()
 {
     authentication::ProfileCreationRequest message;
     message().mutable_profile()->set_login( login_.ascii() );
-    message().mutable_profile()->set_superviseur( supervision_ );
+    message().mutable_profile()->set_supervisor( supervision_ );
     message.Send( publisher_ );
 }
 
@@ -123,15 +123,15 @@ void UserProfile::RequestUpdate( const QString& newLogin )
     MsgsAuthenticationToClient::MsgProfile& profile = *message().mutable_profile();
     profile.set_login( newLogin.ascii() );
     profile.set_password( password_.ascii() );
-    profile.set_superviseur( supervision_ );
+    profile.set_supervisor( supervision_ );
     CopyList( readSides_, *profile.mutable_read_only_camps() );
     CopyList( writeSides_, *profile.mutable_read_write_camps() );
     CopyList( readFormations_, *profile.mutable_read_only_formations() );
     CopyList( writeFormations_, *profile.mutable_read_write_formations() );
     CopyList( readAutomats_, *profile.mutable_read_only_automates() );
     CopyList( writeAutomats_, *profile.mutable_read_write_automates() );
-    CopyList( readPopulations_, *profile.mutable_read_only_populations() );
-    CopyList( writePopulations_, *profile.mutable_read_write_populations() );
+    CopyList( readPopulations_, *profile.mutable_read_only_crowds() );
+    CopyList( writePopulations_, *profile.mutable_read_write_crowds() );
     message.Send( publisher_ );
 }
 
@@ -167,7 +167,7 @@ void UserProfile::SetProfile( const MsgsAuthenticationToClient::MsgProfile& prof
     login_ = profile.login().c_str();
     if( profile.has_password()  )
         password_ = profile.password().c_str();
-    supervision_ = profile.superviseur() != 0;
+    supervision_ = profile.supervisor();
 
     if( profile.has_read_only_camps()  )
         CopyList( profile.read_only_camps(), readSides_);
@@ -175,8 +175,8 @@ void UserProfile::SetProfile( const MsgsAuthenticationToClient::MsgProfile& prof
         CopyList( profile.read_only_formations(), readFormations_ );
     if( profile.has_read_only_automates()  )
         CopyList( profile.read_only_automates(), readAutomats_ );
-    if( profile.has_read_only_populations()  )
-        CopyList( profile.read_only_populations(), readPopulations_ );
+    if( profile.has_read_only_crowds()  )
+        CopyList( profile.read_only_crowds(), readPopulations_ );
 
     if( profile.has_read_write_camps()  )
         CopyList( profile.read_write_camps(), writeSides_);
@@ -184,8 +184,8 @@ void UserProfile::SetProfile( const MsgsAuthenticationToClient::MsgProfile& prof
         CopyList( profile.read_write_formations(), writeFormations_ );
     if( profile.has_read_write_automates()  )
         CopyList( profile.read_write_automates(), writeAutomats_ );
-    if( profile.has_read_write_populations()  )
-        CopyList( profile.read_write_populations(), writePopulations_ );
+    if( profile.has_read_write_crowds()  )
+        CopyList( profile.read_write_crowds(), writePopulations_ );
 
     if( registered_ )
         controller_.Update( *this );

@@ -26,7 +26,7 @@ using namespace dispatcher;
 // Created: SLG 2009-09-26
 // -----------------------------------------------------------------------------
 UrbanObject::UrbanObject( Model_ABC& /*model*/, const MsgsSimToClient::MsgUrbanCreation& msg )
-    : dispatcher::UrbanObject_ABC( msg.oid(), msg.name().c_str() )
+    : dispatcher::UrbanObject_ABC( msg.urban_object().id(), msg.name().c_str() )
     , strName_                   ( msg.name()  )
     , localisation_              ( msg.location() )
     , hasInfrastructures_        ( false )
@@ -55,7 +55,7 @@ UrbanObject::~UrbanObject()
 // Name: UrbanObject::Initialize
 // Created: SLG 2009-09-26
 // -----------------------------------------------------------------------------
-void UrbanObject::Initialize( const MsgsSimToClient::MsgUrbanAttributes& attributes )
+void UrbanObject::Initialize( const MsgsSimToClient::UrbanAttributes& attributes )
 {
     MSG_MSG_CREATION( color          , ColorAttribute );
     MSG_MSG_CREATION( architecture   , ArchitectureAttribute );
@@ -78,7 +78,7 @@ void UrbanObject::AddAttribute( UrbanObjectAttribute_ABC* attribute )
 void UrbanObject::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::UrbanCreation msg;
-    msg().set_oid( GetId() );
+    msg().mutable_urban_object()->set_id( GetId() );
     msg().set_name( strName_ );
     localisation_.Send( *msg().mutable_location() );
     std::for_each( attributes_.begin(), attributes_.end(),
@@ -93,7 +93,7 @@ void UrbanObject::SendCreation( ClientPublisher_ABC& publisher ) const
 void UrbanObject::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::UrbanUpdate msg;
-    msg().set_oid( GetId() );
+    msg().mutable_urban_object()->set_id( GetId() );
     if( optionals_.localisationPresent )
         localisation_.Send( *msg().mutable_location() );
     if( optionals_.attributesPresent )

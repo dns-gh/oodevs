@@ -745,7 +745,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PolygonListParameter_ToASN )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_PopulationKnowledgeParameter_ToASN )
 {
-    PopulationKnowledgeId asnIn;
+    CrowdKnowledgeId asnIn;
     asnIn.set_id( 0 );
     MockDEC_KnowledgeResolver_ABC resolver;
     MockMIL_Time_ABC time;
@@ -753,7 +753,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PopulationKnowledgeParameter_ToASN )
     DEC_Knowledge_Population knowledge; // $$$$ LDC: id == 0... :(
     MOCK_EXPECT( resolver, ResolveKnowledgePopulationFromMessage ).once().returns( &knowledge );
     MIL_PopulationKnowledgeParameter param( asnIn, resolver );
-    PopulationKnowledgeId asnOut;
+    CrowdKnowledgeId asnOut;
     BOOST_CHECK_EQUAL( true, param.ToPopulationKnowledge( asnOut ) );
     BOOST_CHECK_EQUAL( 0u, asnOut.id() ); // $$$$ LDC: = knowledge's id
 }

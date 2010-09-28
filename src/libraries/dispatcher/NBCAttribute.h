@@ -14,7 +14,7 @@
 
 namespace Common
 {
-    class MsgObjectAttributeNBC;
+    class ObjectAttributeNBC;
 }
 
 namespace dispatcher
@@ -31,14 +31,14 @@ class NBCAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit NBCAttribute( const Common::MsgObjectAttributes& asnMsg );
+    explicit NBCAttribute( const Common::ObjectAttributes& asnMsg );
     virtual ~NBCAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const Common::MsgObjectAttributes& asnMsg );
-    virtual void Send( Common::MsgObjectAttributes& asnMsg ) const;
+    virtual void Update( const Common::ObjectAttributes& asnMsg );
+    virtual void Send( Common::ObjectAttributes& asnMsg ) const;
     //@}
 
 private:
@@ -46,7 +46,7 @@ private:
     //@{
     unsigned int danger_;
     std::vector< unsigned int > agents_;
-    //Common::MsgObjectAttributeNBC nbc_; // XML reference - no resolved by dispatcher
+    //Common::ObjectAttributeNBC nbc_; // XML reference - no resolved by dispatcher
     //@
 };
 

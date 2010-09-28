@@ -82,7 +82,7 @@ void UnitMagicAction::Publish( Publisher_ABC& publisher ) const
     simulation::UnitMagicAction message;
     message().mutable_id()->set_id( GetEntity().GetId() );
     message().set_type( type );
-    CommitTo( *message().mutable_parametres() );
+    CommitTo( *message().mutable_parameters() );
     message.Send( publisher );
     if( type == MsgsClientToSim::MsgUnitMagicAction_Type_move_to )
         const_cast< kernel::Entity_ABC& >( GetEntity() ).Update( message() );

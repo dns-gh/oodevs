@@ -53,17 +53,17 @@ void HierarchicExtension_ABC::DoUpdate( const MsgsSimToClient::MsgUnitCreation& 
 // -----------------------------------------------------------------------------
 void HierarchicExtension_ABC::DoUpdate( const MsgsSimToClient::MsgAutomatCreation& message )
 {
-    if( message.has_oid_parent() && message.oid_parent().has_automat() )
-        superior_ = &automatResolver_.Get( message.oid_parent().automat().id() );
-    else if( message.has_oid_parent() && message.oid_parent().has_formation() )
-        superior_ = &formationResolver_.Get( message.oid_parent().formation().id() );
+    if( message.has_parent() && message.parent().has_automat() )
+        superior_ = &automatResolver_.Get( message.parent().automat().id() );
+    else if( message.has_parent() && message.parent().has_formation() )
+        superior_ = &formationResolver_.Get( message.parent().formation().id() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: HierarchicExtension_ABC::DoUpdate
 // Created: SBO 2007-04-12
 // -----------------------------------------------------------------------------
-void HierarchicExtension_ABC::DoUpdate( const Common::MsgFormationCreation& message )
+void HierarchicExtension_ABC::DoUpdate( const MsgsSimToClient::MsgFormationCreation& message )
 {
     if( message.has_parent()  )
         superior_ = &formationResolver_.Get( message.parent().id() );

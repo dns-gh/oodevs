@@ -26,7 +26,7 @@ Drawing::Drawing( unsigned int id, const MsgsClientToMessenger::MsgShapeCreation
     , id_       ( id )
     , category_ ( asn.shape().category() )
     , color_    ( asn.shape().color() )
-    , template_ ( asn.shape().template_() )
+    , pattern_  ( asn.shape().pattern() )
 {
     for( int i = 0; i < asn.shape().points().elem_size(); ++i )
         points_.push_back( asn.shape().points().elem(i) );
@@ -41,7 +41,7 @@ Drawing::Drawing( unsigned int id, xml::xistream& xis, const kernel::CoordinateC
     , id_       ( id )
     , category_ ( xis.attribute< std::string >( "category" ) )
     , color_    ( xis.attribute< std::string >( "color" ) )
-    , template_ ( xis.attribute< std::string >( "template" ) )
+    , pattern_  ( xis.attribute< std::string >( "template" ) )
 {
     xis >> xml::list( "point", *this, &Drawing::ReadPoint );
 }
@@ -55,7 +55,7 @@ Drawing::Drawing( unsigned int id, const Drawing& rhs )
     , id_       ( id )
     , category_ ( rhs.category_ )
     , color_    ( rhs.color_ )
-    , template_ ( rhs.template_ )
+    , pattern_  ( rhs.pattern_ )
     , points_   ( rhs.points_ )
 {
     // NOTHING
@@ -101,8 +101,8 @@ void Drawing::Update( const MsgsClientToMessenger::MsgShapeUpdateRequest& asn )
         category_ = asn.category();
     if( asn.has_color() )
         color_ = asn.color();
-    if( asn.has_template_() )
-        template_ = asn.template_();
+    if( asn.has_pattern() )
+        pattern_ = asn.pattern();
     if( asn.has_points() )
     {
         points_.clear();
@@ -119,9 +119,9 @@ void Drawing::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
 {
     plugins::messenger::ShapeCreation message;
     message().mutable_id()->set_id( id_ );
-    message().mutable_shape()->set_category( category_.c_str() );
-    message().mutable_shape()->set_color( color_.c_str() );
-    message().mutable_shape()->set_template_( template_.c_str() );
+    message().mutable_shape()->set_category( category_ );
+    message().mutable_shape()->set_color( color_ );
+    message().mutable_shape()->set_pattern( pattern_ );
     ::Common::MsgCoordLatLongList* points = message().mutable_shape()->mutable_points(); // required even if empty
     for (T_Points::const_iterator iter(points_.begin()); iter != points_.end(); ++iter)
         *points->add_elem() = *iter;        //const_cast< MsgCoordLatLong* >( &points_.front() );
@@ -137,9 +137,9 @@ void Drawing::SendUpdate( dispatcher::ClientPublisher_ABC& publisher ) const
     // $$$$ SBO 2008-06-09: keep track of updated fields...
     messenger::ShapeUpdate message;
     message().mutable_id()->set_id( id_ );
-    message().set_category( category_.c_str() );
-    message().set_color    ( color_.c_str() );
-    message().set_template_( template_.c_str() );
+    message().set_category( category_ );
+    message().set_color( color_ );
+    message().set_pattern( pattern_ );
     for (T_Points::const_iterator iter(points_.begin()); iter != points_.end(); ++iter)
         *message().mutable_points()->add_elem() = *iter;
     message.Send( publisher );
@@ -175,7 +175,7 @@ void Drawing::Serialize( xml::xostream& xos ) const
     xos << xml::start( "shape" )
             << xml::attribute( "category", category_ )
             << xml::attribute( "color", color_ )
-            << xml::attribute( "template", template_ );
+            << xml::attribute( "template", pattern_ );
     std::for_each( points_.begin(), points_.end(), boost::bind( &Drawing::SerializePoint, this, _1, boost::ref( xos ) ) );
     xos << xml::end;
 }

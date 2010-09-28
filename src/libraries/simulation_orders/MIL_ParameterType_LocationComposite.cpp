@@ -72,7 +72,7 @@ bool MIL_ParameterType_LocationComposite::Copy( const MIL_MissionParameter_ABC& 
         to.clear_value();
     else
         return true;
-    to.set_null_value( !from.ToPopulationKnowledge( *to.mutable_value()->mutable_populationknowledge() ) );
+    to.set_null_value( !from.ToPopulationKnowledge( *to.mutable_value()->mutable_crowdknowledge() ) );
     if( to.null_value() )
         to.clear_value();
     else

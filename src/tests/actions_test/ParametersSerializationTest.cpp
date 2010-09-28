@@ -536,7 +536,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_PopulationKnowledge )
     MOCK_EXPECT( knowledge, GetPopulationEntity ).returns( &population );
     std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "populationknowledge", input,
         bl::bind( bl::new_ptr< actions::parameters::PopulationKnowledge >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( converter ), bl::var( owner ), bl::var( controller ) ) ) );
-    BOOST_CHECK_EQUAL( 15u, message->value().populationknowledge().id() );
+    BOOST_CHECK_EQUAL( 15u, message->value().crowdknowledge().id() );
 }
 
 // -----------------------------------------------------------------------------

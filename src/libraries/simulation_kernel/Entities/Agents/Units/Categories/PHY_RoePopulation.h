@@ -52,7 +52,7 @@ public:
     //@{
     const std::string&                                      GetName () const;
           unsigned int                                      GetID   () const;
-          MsgsSimToClient::MsgUnitAttributes_PopulationRoe  GetAsnID() const;
+          MsgsSimToClient::MsgUnitAttributes_CrowdRoe  GetAsnID() const;
     //@}
 
     //! @name Operators
@@ -75,13 +75,13 @@ private:
     //@}
 
 private:
-    PHY_RoePopulation( const std::string& strName, E_Type nType, MsgsSimToClient::MsgUnitAttributes_PopulationRoe nAsnID );
+    PHY_RoePopulation( const std::string& strName, E_Type nType, MsgsSimToClient::MsgUnitAttributes_CrowdRoe nAsnID );
     virtual ~PHY_RoePopulation();
 
 private:
     const std::string             strName_;
     const E_Type                  nType_;
-    const MsgsSimToClient::MsgUnitAttributes_PopulationRoe nAsnID_;
+    const MsgsSimToClient::MsgUnitAttributes_CrowdRoe nAsnID_;
 
 private:
     static T_RoePopulationMap roePopulations_;

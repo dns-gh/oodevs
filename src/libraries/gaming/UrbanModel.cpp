@@ -66,7 +66,7 @@ namespace
             return;
         if( message.attributes().has_color() )
         {
-            const MsgsSimToClient::MsgUrbanAttributes_RgbaColor& color = message.attributes().color();
+            const MsgsSimToClient::UrbanAttributes::RgbaColor& color = message.attributes().color();
             urban::ColorAttribute* colorAttribute = new urban::ColorAttribute( object );
             colorAttribute->SetRed( static_cast< unsigned short >( color.red() ) );
             colorAttribute->SetGreen( static_cast< unsigned short >( color.green() ) );
@@ -76,7 +76,7 @@ namespace
         }
         if( message.attributes().has_architecture() )
         {
-            const MsgsSimToClient::MsgUrbanAttributes_Architecture& architecture = message.attributes().architecture();
+            const MsgsSimToClient::UrbanAttributes::Architecture& architecture = message.attributes().architecture();
             urban::Architecture* attribute = new urban::Architecture( object );
             attribute->SetHeight( architecture.height() );
             attribute->SetFloorNumber( architecture.floor_number() );
@@ -97,12 +97,12 @@ void UrbanModel::Create( const MsgsSimToClient::MsgUrbanCreation& message )
 {
     geometry::Polygon2f footPrint;
     std::string name( message.name() );
-    unsigned long id = message.oid();
+    unsigned long id = message.urban_object().id();
     for( int i = 0; i < message.location().coordinates().elem_size(); ++i )
         footPrint.Add( static_.coordinateConverter_.ConvertToXY( message.location().coordinates().elem( i ) ) );
     urban::TerrainObject_ABC* object = urbanModel_->GetFactory().CreateUrbanObject( id, name, &footPrint );
     AttachExtensions( *object, message );
-    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controller_, *object, message.oid(), QString( message.name().c_str() ) );
+    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controller_, *object, message.urban_object().id(), QString( message.name().c_str() ) );
     if( message.has_attributes() )
     {
         if( message.attributes().has_structure() )

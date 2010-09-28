@@ -20,13 +20,13 @@ message ObjectKnowledgeId                  { required uint32              id = 1
 message ObjectKnowledgeIdList              { repeated ObjectKnowledgeId elem = 1; }
 message PartyId                            { required uint32              id = 1; }
 message PartyIdList                        { repeated PartyId           elem = 1; }
-message PopulationId                       { required uint32              id = 1; }
-message PopulationIdList                   { repeated PopulationId      elem = 1; }
-message PopulationKnowledgeId              { required uint32              id = 1; }
-message PopulationConcentrationId          { required uint32              id = 1; }
-message PopulationConcentrationKnowledgeId { required uint32              id = 1; }
-message PopulationFlowId                   { required uint32              id = 1; }
-message PopulationFlowKnowledgeId          { required uint32              id = 1; }
+message CrowdId                            { required uint32              id = 1; }
+message CrowdIdList                        { repeated CrowdId           elem = 1; }
+message CrowdKnowledgeId                   { required uint32              id = 1; }
+message CrowdConcentrationId               { required uint32              id = 1; }
+message CrowdConcentrationKnowledgeId      { required uint32              id = 1; }
+message CrowdFlowId                        { required uint32              id = 1; }
+message CrowdFlowKnowledgeId               { required uint32              id = 1; }
 message UnitId                             { required uint32              id = 1; }
 message UnitIdList                         { repeated UnitId            elem = 1; }
 message UnitKnowledgeId                    { required uint32              id = 1; }
@@ -37,14 +37,20 @@ message UrbanObjectKnowledgeId             { required uint32              id = 1
 message Tasker {
     optional AutomatId    automat    = 1;
     optional FormationId  formation  = 2;
-    optional PopulationId population = 3;
+    optional CrowdId      crowd      = 3;
     optional UnitId       unit       = 4;
+}
+
+message ParentEntity {
+    optional AutomatId    automat    = 1;
+    optional FormationId  formation  = 2;
 }
 
 // messenger entities
 message DrawingId             { required uint32  id = 1; }
 message IntelligenceId        { required uint32  id = 1; }
 message TacticalLineId        { required uint32  id = 1; }
+message MarkerId              { required uint32  id = 1; }
 
 // reports
 message FireId                { required uint32 id = 1; }
@@ -65,7 +71,7 @@ message FragOrderType         { required uint32 id = 1; }
 message MissionType           { required uint32 id = 1; }
 message NBCAgentType          { required uint32 id = 1; }
 message ObjectType            { required string id = 1; } // should be an integer
-message PopulationType        { required uint32 id = 1; }
+message CrowdType             { required uint32 id = 1; }
 message ReportType            { required uint32 id = 1; }
 message ResourceType          { required uint32 id = 1; }
 message UnitType              { required uint32 id = 1; }
@@ -111,27 +117,12 @@ enum EnumPrecipitationType {
    neige                                            = 5;
 }
 
-enum EnumLightingType {
-   jour_sans_nuage_                                 = 0;
-   jour_peu_nuageux_                                = 1;
-   jour_moyennement_nuageux_                        = 2;
-   jour_assez_nuageux_                              = 3;
-   jour_tres_nuageux_                               = 4;
-   nuit_pleine_lune_                                = 5;
-   nuit_trois_quart_de_lune_                        = 6;
-   nuit_demi_lune_                                  = 7;
-   nuit_quart_de_lune_                              = 8;
-   nuit_nouvelle_lune_                              = 9;
-   eclairant_                                       = 10;
-   globalMeteoType_                                 = 11;
-}
-
 enum EnumFireEffectType {
-   fumigene                                         = 0;
-   eclairant                                        = 1;
+   smoke                                            = 0;
+   light                                            = 1;
 }
 
-enum MsgStartUnitFire_type {
+enum UnitFireType {
    direct                                           = 0;
    indirect                                         = 1;
 }
@@ -152,6 +143,21 @@ message MsgDotationQuota {
 
 message SeqOfDotationQuota {
    repeated MsgDotationQuota            elem                = 1;
+}
+
+enum EnumLightingType {
+   jour_sans_nuage                                 = 0;
+   jour_peu_nuageux                                = 1;
+   jour_moyennement_nuageux                        = 2;
+   jour_assez_nuageux                              = 3;
+   jour_tres_nuageux                               = 4;
+   nuit_pleine_lune                                = 5;
+   nuit_trois_quart_de_lune                        = 6;
+   nuit_demi_lune                                  = 7;
+   nuit_quart_de_lune                              = 8;
+   nuit_nouvelle_lune                              = 9;
+   eclairant                                       = 10;
+   global_weather                                  = 11;
 }
 
 message MsgAutomatChangeKnowledgeGroup {
@@ -181,14 +187,6 @@ message MsgAutomatChangeSuperior {
 message MsgUnitChangeSuperior {
    required UnitId    unit   = 1;
    required AutomatId parent = 2;
-}
-
-message MsgFormationCreation {
-   required FormationId      formation  = 1;
-   required PartyId          party      = 2;
-   optional FormationId      parent     = 3;
-   required EnumNatureLevel  level      = 4;
-   required string           name       = 5;
 }
 
 ///////////// end <only used by SimToClient> /////////////
@@ -248,6 +246,11 @@ enum EnumSimulationState {
    loading                                          = 3;
 }
 
+enum EnumDispatcherState {
+    available                                       = 0;
+    unavailable                                     = 1;
+}
+
 enum EnumMeetingEngagementStatus {
    none_meeting                                     = 0;
    etat_esquive                                     = 1;
@@ -266,7 +269,7 @@ enum EnumAutomatMode {
    debraye                                          = 1;
 }
 
-enum EnumPopulationAttitude{
+enum EnumCrowdAttitude{
    calme                                            = 0;
    agitee                                           = 1;
    excitee                                          = 2;
@@ -350,7 +353,7 @@ message MsgExercise  {
 }
 
 message MsgNetworkAddress  {
-   required string  IP      = 1; 
+   required string  ip      = 1; 
    required int32   port    = 2 [default = 8080]; 
 }
 
@@ -404,10 +407,10 @@ message ObstacleType
 message MsgPlannedWork {
    required string                            type                = 1;
    required MsgLocation                       position            = 2;
-   optional ObstacleType.DemolitionTargetType type_obstacle       = 3 [default = preliminary];
-   optional float                             densite             = 4 [default = 0];
+   optional ObstacleType.DemolitionTargetType type_obstacle       = 3;
+   optional float                             densite             = 4;
    optional AutomatId                         tc2                 = 5;
-   optional int32                             activity_time       = 6 [default = 0];
+   optional int32                             activity_time       = 6;
 }
 
 message MsgPlannedWorkList {
@@ -512,7 +515,7 @@ message MsgMissionParameter {
         optional UnitKnowledgeIdList         unitKnowledgeList           = 19;
         optional ObjectKnowledgeId           objectKnowledge             = 20;
         optional ObjectKnowledgeIdList       objectKnowledgeList         = 21;
-        optional PopulationKnowledgeId       populationKnowledge         = 22;
+        optional CrowdKnowledgeId            crowdKnowledge              = 22;
         optional MsgPlannedWork              plannedWork                 = 23;
         optional MsgPlannedWorkList          plannedWorkList             = 24;
         optional ResourceType                resourceType                = 25;
@@ -535,7 +538,7 @@ message MsgMissionParameter {
         optional KnowledgeGroupId            knowledgeGroup              = 42;
         repeated Value                       list                        = 43;
     }
-    optional bool  null_value = 1 [default = false];
+    optional bool  null_value = 1;
     optional Value value      = 2;
 }
 
@@ -544,24 +547,30 @@ message MsgMissionParameters {
 }
 
 message MsgUnitOrder {
-    required UnitId               tasker     = 1;
-    required MissionType          type       = 2;
-    optional MsgMissionParameters parameters = 3;
-    optional MsgDateTime          start_time = 4;
+    required UnitId               tasker         = 1;
+    required MissionType          type           = 2;
+    optional MsgMissionParameters parameters     = 3;
+    optional string               label          = 4;
+    optional MsgLocation          symbolLocation = 5;
+    optional MsgDateTime          start_time     = 6;
 }
 
 message MsgAutomatOrder {
-    required AutomatId            tasker     = 1;
-    required MissionType          type       = 2;
-    optional MsgMissionParameters parameters = 3;
-    optional MsgDateTime          start_time = 4;
+    required AutomatId            tasker         = 1;
+    required MissionType          type           = 2;
+    optional MsgMissionParameters parameters     = 3;
+    optional string               label          = 4;
+    optional MsgLocation          symbolLocation = 5;
+    optional MsgDateTime          start_time     = 6;
 }
 
-message MsgPopulationOrder {
-    required PopulationId         tasker     = 1;
-    required MissionType          type       = 2;
-    optional MsgMissionParameters parameters = 3;
-    optional MsgDateTime          start_time = 4;
+message MsgCrowdOrder {
+    required CrowdId              tasker         = 1;
+    required MissionType          type           = 2;
+    optional MsgMissionParameters parameters     = 3;
+    optional string               label          = 4;
+    optional MsgLocation          symbolLocation = 5;
+    optional MsgDateTime          start_time     = 6;
 }
 
 // Messenger common types
@@ -578,7 +587,7 @@ message MsgTacticalLine {
 message MsgShape {
    required string              category  = 1;
    required string              color     = 2;
-   required string              template_ = 3;
+   required string              pattern   = 3;
    required MsgCoordLatLongList points    = 4;
 }
 
@@ -593,115 +602,13 @@ message MsgTextMessage {
 }
 
 // Object attributes
-message MsgObjectAttributeConstruction {
-   optional ResourceType resource       = 1;
-   optional int32        dotation_nbr   = 2 [default = 0];
-   optional float        density        = 3 [default = 0];
-   optional int32        percentage     = 4 [default = 0];
-}
 
-message MsgObjectAttributeMine {
-   optional ResourceType resource       = 1;
-   optional int32        dotation_nbr   = 2 [default = 0];
-   optional float        density        = 3 [default = 0];
-   optional int32        percentage     = 4 [default = 0];
-}
-
-message MsgObjectAttributeLogistic {
-   required AutomatId tc2 = 1;
-}
-
-message MsgObjectAttributeInteractionHeight {
-   required float                       height              = 1;
-}
-
-message MsgObjectAttributeObstacle {
-   required ObstacleType.DemolitionTargetType type            = 1;
-   optional bool                              activated       = 2;
-   optional int32                             activation_time = 3;
-}
-
-message MsgObjectAttributeActivityTime {
-   required int32                       value               = 1;
-}
-
-message MsgObjectAttributeBypass {
-   optional int32                       percentage          = 1 [default = 0];
-}
-
-message MsgObjectAttributeEffectDelay {
-   required int32                       value               = 1;
-}
-
-message MsgObjectAttributeNBC {
-   required int32                danger_level        = 1;
-   repeated NBCAgentType         nbc_agents          = 2;
-}
-
-message StockResource {
-   required ResourceType         resource = 1;
-   required int32                current  = 2;
-   optional int32                maximum  = 3;
-}
-
-message MsgObjectAttributeStock {
-   repeated StockResource               resources           = 1;
-}
-
-message MsgObjectAttributeCrossingSite {
-   required int32                       width                   = 1;
-   required int32                       depth                   = 2;
-   required int32                       flow_rate               = 3;
-   required bool                        banks_require_fitting   = 4;
-}
-
-message MsgObjectAttributeSupplyRoute {
-   required bool                        equipped            = 1;
-   required int32                       max_weight          = 2;
-   required int32                       width               = 3;
-   required int32                       length              = 4;
-   required int32                       flow_rate           = 5;
-}
-
-message MsgLocatedQuantity{
-   required Common.MsgCoordLatLong      coordinate          = 1;
-   required float                       quantity            = 2;
-}
-
-message MsgLocatedQuantityList {
-   repeated MsgLocatedQuantity          elem                = 1;
-}
-
-message MsgObjectAttributeToxicCloud {
-   required MsgLocatedQuantityList      quantities          = 1;
-}
-
-message MsgObjectAttributeFire {
-   required int32                       class_id            = 1;
-   required int32                       heat                = 2;
-}
-
-message MsgObjectAttributeMedicalTreatment {
-   repeated uint32 type_id           = 1;
-   required int32  beds              = 2;
-   required int32  available_beds    = 3;
-   required int32  doctors           = 4;
-   required int32  available_doctors = 5;
-}
-
-message MsgObjectAttributeNBCType {
-   required NBCAgentType agent = 1;
-   required int32        concentration = 2;
-   required int32        source_life_duration = 3;
-}
-
-message MsgObjectAttributeSealOff {
-   required int32 level = 1;
-}
-
-message ResourceNetwork {
-    message Link {
-        enum TargetKind {
+message ResourceNetwork
+{
+    message Link
+    {
+        enum TargetKind
+        {
             urban  = 1;
             object = 2;
         }
@@ -720,30 +627,137 @@ message ResourceNetwork {
     optional bool                critical    = 8;
 }
 
-message MsgObjectAttributeResourceNetwork {
+message ObjectAttributeResourceNetwork {
    repeated ResourceNetwork network = 1;
 }
-   
-message MsgObjectAttributes {
-   optional MsgObjectAttributeConstruction      construction        = 1;
-   optional MsgObjectAttributeObstacle          obstacle            = 2;
-   optional MsgObjectAttributeMine              mine                = 3;
-   optional MsgObjectAttributeActivityTime      activity_time       = 4;
-   optional MsgObjectAttributeBypass            bypass              = 5;
-   optional MsgObjectAttributeLogistic          logistic            = 6;
-   optional MsgObjectAttributeNBC               nbc                 = 7;
-   optional MsgObjectAttributeCrossingSite      crossing_site       = 8;
-   optional MsgObjectAttributeSupplyRoute       supply_route        = 9;
-   optional MsgObjectAttributeToxicCloud        toxic_cloud         = 10;
-   optional MsgObjectAttributeFire              fire                = 11;
-   optional MsgObjectAttributeMedicalTreatment  medical_treatment   = 12;
-   optional MsgObjectAttributeInteractionHeight interaction_height  = 13;
-   optional MsgObjectAttributeStock             stock               = 14;
-   optional MsgObjectAttributeNBCType           nbc_agent           = 15;
-   optional MsgObjectAttributeEffectDelay       effect_delay        = 16;
-   optional MsgObjectAttributeSealOff           sealOff             = 17;
-   optional MsgObjectAttributeResourceNetwork   resource_networks   = 18;
+
+message ObjectAttributeConstruction {
+   optional ResourceType resource       = 1;
+   optional int32        dotation_nbr   = 2;
+   optional float        density        = 3;
+   optional int32        percentage     = 4;
 }
+
+message ObjectAttributeMine {
+   optional ResourceType resource       = 1;
+   optional int32        dotation_nbr   = 2;
+   optional float        density        = 3;
+   optional int32        percentage     = 4;
+}
+
+message ObjectAttributeLogistic {
+   required AutomatId tc2 = 1;
+}
+
+message ObjectAttributeInteractionHeight {
+   required float                       height              = 1;
+}
+
+message ObjectAttributeObstacle {
+   required ObstacleType.DemolitionTargetType type            = 1;
+   optional bool                              activated       = 2;
+   optional int32                             activation_time = 3;
+}
+
+message ObjectAttributeActivityTime {
+   required int32                       value               = 1;
+}
+
+message ObjectAttributeBypass {
+   required int32                       percentage          = 1;
+}
+
+message ObjectAttributeEffectDelay {
+   required int32                       value               = 1;
+}
+
+message ObjectAttributeNBC {
+   required int32                danger_level        = 1;
+   repeated NBCAgentType         nbc_agents          = 2;
+}
+
+message StockResource {
+   required ResourceType         resource = 1;
+   required int32                current  = 2;
+   optional int32                maximum  = 3;
+}
+
+message ObjectAttributeStock {
+   repeated StockResource               resources           = 1;
+}
+
+message ObjectAttributeCrossingSite {
+   required int32                       width                   = 1;
+   required int32                       depth                   = 2;
+   required int32                       flow_rate               = 3;
+   required bool                        banks_require_fitting   = 4;
+}
+
+message ObjectAttributeSupplyRoute {
+   required bool                        equipped            = 1;
+   required int32                       max_weight          = 2;
+   required int32                       width               = 3;
+   required int32                       length              = 4;
+   required int32                       flow_rate           = 5;
+}
+
+message MsgLocatedQuantity{
+   required Common.MsgCoordLatLong      coordinate          = 1;
+   required float                       quantity            = 2;
+}
+
+message MsgLocatedQuantityList {
+   repeated MsgLocatedQuantity          elem                = 1;
+}
+
+message ObjectAttributeToxicCloud {
+   required MsgLocatedQuantityList      quantities          = 1;
+}
+
+message ObjectAttributeFire {
+   required int32                       class_id            = 1;
+   required int32                       heat                = 2;
+}
+
+message ObjectAttributeMedicalTreatment {
+   repeated uint32 type_id           = 1;
+   required int32  beds              = 2;
+   required int32  available_beds    = 3;
+   required int32  doctors           = 4;
+   required int32  available_doctors = 5;
+}
+
+message ObjectAttributeNBCType {
+   required NBCAgentType agent = 1;
+   required int32        concentration = 2;
+   required int32        source_life_duration = 3;
+}
+
+message ObjectAttributeSealOff {
+   required int32 level = 1;
+}
+
+message ObjectAttributes {
+   optional ObjectAttributeConstruction      construction        = 1;
+   optional ObjectAttributeObstacle          obstacle            = 2;
+   optional ObjectAttributeMine              mine                = 3;
+   optional ObjectAttributeActivityTime      activity_time       = 4;
+   optional ObjectAttributeBypass            bypass              = 5;
+   optional ObjectAttributeLogistic          logistic            = 6;
+   optional ObjectAttributeNBC               nbc                 = 7;
+   optional ObjectAttributeCrossingSite      crossing_site       = 8;
+   optional ObjectAttributeSupplyRoute       supply_route        = 9;
+   optional ObjectAttributeToxicCloud        toxic_cloud         = 10;
+   optional ObjectAttributeFire              fire                = 11;
+   optional ObjectAttributeMedicalTreatment  medical_treatment   = 12;
+   optional ObjectAttributeInteractionHeight interaction_height  = 13;
+   optional ObjectAttributeStock             stock               = 14;
+   optional ObjectAttributeNBCType           nbc_agent           = 15;   
+   optional ObjectAttributeEffectDelay       effect_delay        = 16;
+   optional ObjectAttributeSealOff           seal_off            = 17;
+   optional ObjectAttributeResourceNetwork   resource_networks   = 18;     //not in scipio V1.stab
+}
+
 
 // LTO Begin
 message MsgNote {
@@ -755,8 +769,8 @@ message MsgNote {
 
 // LTO end
 
-// meteo
-message MsgMeteoAttributes {
+// weather
+message MsgWeatherAttributes {
    required int32                 temperature     = 1;
    required int32                 wind_speed      = 2;
    required MsgHeading            wind_direction  = 3;
@@ -764,4 +778,5 @@ message MsgMeteoAttributes {
    required int32                 cloud_ceiling   = 5;
    required int32                 cloud_density   = 6;
    required EnumPrecipitationType precipitation   = 7;
+   required EnumLightingType      lighting        = 8;
 }

@@ -161,7 +161,7 @@ private:
     Common::EnumOperationalStatus                           nOperationalState_;
     MsgsSimToClient::MsgUnitAttributes_FireAvailability     nIndirectFireAvailability_;
     MsgsSimToClient::RulesOfEngagement_Value                nRoe_;
-    MsgsSimToClient::MsgUnitAttributes_PopulationRoe        nPopulationRoe_;
+    MsgsSimToClient::MsgUnitAttributes_CrowdRoe             nPopulationRoe_;
     Common::EnumUnitTiredness                               nTiredness_;
     Common::EnumUnitMorale                                  nMorale_;
     Common::EnumUnitExperience                              nExperience_;

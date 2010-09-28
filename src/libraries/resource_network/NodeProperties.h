@@ -15,12 +15,12 @@
 
 namespace Common
 {
-    class MsgObjectAttributeResourceNetwork;
+    class ObjectAttributeResourceNetwork;
 }
 
 namespace MsgsSimToClient
 {
-    class MsgUrbanAttributes_Infrastructures;
+    class UrbanAttributes_Infrastructures;
 }
 
 namespace urban
@@ -67,8 +67,8 @@ public:
 
     //! @name Network
     //@{
-    void Serialize( MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg ) const;
-    void Serialize( Common::MsgObjectAttributeResourceNetwork& msg ) const;
+    void Serialize( MsgsSimToClient::UrbanAttributes_Infrastructures& msg ) const;
+    void Serialize( Common::ObjectAttributeResourceNetwork& msg ) const;
     void Update( const Common::MsgMissionParameter_Value& msg );
     //@}
 

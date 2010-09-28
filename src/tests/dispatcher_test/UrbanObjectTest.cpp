@@ -29,7 +29,7 @@ namespace
         void createUrbanObject()
         {
             MsgsSimToClient::MsgUrbanCreation& message = *expected.mutable_message()->mutable_urban_creation();
-            message.set_oid( 1 );
+            message.mutable_urban_object()->set_id( 1 );
             message.set_name( "test" );
             message.mutable_location()->set_type( Common::MsgLocation::point );
             message.mutable_location()->mutable_coordinates()->add_elem();
@@ -70,7 +70,7 @@ BOOST_FIXTURE_TEST_CASE( UrbanObject_IsUpdated, Fixture )
     {
         createUrbanObject();
         MsgsSimToClient::MsgUrbanUpdate& message = *expected.mutable_message()->mutable_urban_update();
-        message.set_oid( 1 );
+        message.mutable_urban_object()->set_id( 1 );
         message.mutable_location()->set_type( Common::MsgLocation::line );
         message.mutable_location()->mutable_coordinates()->add_elem();
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 1. );
@@ -84,7 +84,7 @@ BOOST_FIXTURE_TEST_CASE( UrbanObject_IsUpdated, Fixture )
     {
         expected.mutable_message()->Clear();
         MsgsSimToClient::MsgUrbanCreation& message = *expected.mutable_message()->mutable_urban_creation();
-        message.set_oid( 1 );
+        message.mutable_urban_object()->set_id( 1 );
         message.set_name( "test" );
         message.mutable_location()->set_type( Common::MsgLocation::line );
         message.mutable_location()->mutable_coordinates()->add_elem();
@@ -106,7 +106,7 @@ BOOST_FIXTURE_TEST_CASE( UrbanObject_IsUpdated_With_No_Optionals, Fixture )
     {
         createUrbanObject();
         MsgsSimToClient::MsgUrbanUpdate& message = *expected.mutable_message()->mutable_urban_update();
-        message.set_oid( 1 );
+        message.mutable_urban_object()->set_id( 1 );
         result->Update( message );
         MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
         result->SendFullUpdate( publisher );
@@ -115,7 +115,7 @@ BOOST_FIXTURE_TEST_CASE( UrbanObject_IsUpdated_With_No_Optionals, Fixture )
     {
         expected.mutable_message()->Clear();
         MsgsSimToClient::MsgUrbanCreation& message = *expected.mutable_message()->mutable_urban_creation();
-        message.set_oid( 1 );
+        message.mutable_urban_object()->set_id( 1 );
         message.set_name( "test" );
         message.mutable_location()->set_type( Common::MsgLocation::point );
         message.mutable_location()->mutable_coordinates()->add_elem();

@@ -15,6 +15,10 @@
 namespace Common
 {
     enum EnumNatureLevel;
+}
+
+namespace MsgsSimToClient
+{
     class MsgFormationCreation;
 }
 
@@ -34,7 +38,7 @@ class Formation : public dispatcher::Formation_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Formation( const Model_ABC& model, const Common::MsgFormationCreation& msg, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels );
+             Formation( const Model_ABC& model, const MsgsSimToClient::MsgFormationCreation& msg, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels );
     virtual ~Formation();
     //@}
 

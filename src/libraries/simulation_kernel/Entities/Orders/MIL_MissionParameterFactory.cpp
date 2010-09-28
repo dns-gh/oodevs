@@ -137,8 +137,8 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
         ptr = new MIL_ObjectKnowledgeParameter( message.objectknowledge(), resolver );
     else if( message.has_objectknowledgelist() )
         ptr = new MIL_ObjectKnowledgeListParameter( message.objectknowledgelist(), resolver );
-    else if( message.has_populationknowledge() )
-        ptr = new MIL_PopulationKnowledgeParameter( message.populationknowledge(), resolver );
+    else if( message.has_crowdknowledge() )
+        ptr = new MIL_PopulationKnowledgeParameter( message.crowdknowledge(), resolver );
     else if( message.has_plannedwork() )
         ptr = new MIL_PlannedWorkParameter( message.plannedwork(), entityManager );
     else if( message.has_plannedworklist() )

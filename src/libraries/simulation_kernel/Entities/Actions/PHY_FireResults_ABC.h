@@ -18,7 +18,7 @@
 
 namespace MsgsSimToClient
 {
-    class MsgPopulationsFireDamages;
+    class MsgCrowdsFireDamages;
     class MsgUnitsFireDamages;
 }
 
@@ -71,7 +71,7 @@ protected:
     //! @name Network tools
     //@{
     void Serialize( MsgsSimToClient::MsgUnitsFireDamages& asn ) const;
-    void Serialize( MsgsSimToClient::MsgPopulationsFireDamages& asn ) const;
+    void Serialize( MsgsSimToClient::MsgCrowdsFireDamages& asn ) const;
 
     static MIL_IDManager idManager_;
     //@}

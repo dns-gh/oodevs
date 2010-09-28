@@ -24,8 +24,8 @@ using namespace dispatcher;
 // Name: PopulationConcentrationKnowledge constructor
 // Created: NLD 2006-10-03
 // -----------------------------------------------------------------------------
-PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation& msg )
-    : SimpleEntity< >     ( msg.id().id() )
+PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation& msg )
+    : SimpleEntity< >     ( msg.knowledge().id() )
     , populationKnowledge_( populationKnowledge )
     , concentrationId_    ( msg.concentration().id() )
     , position_           ( msg.position() )
@@ -56,7 +56,7 @@ PopulationConcentrationKnowledge::~PopulationConcentrationKnowledge()
 // Name: PopulationConcentrationKnowledge::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationConcentrationKnowledge::Update( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate& msg )
+void PopulationConcentrationKnowledge::Update( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate& msg )
 {
     if( msg.has_concentration() )
         concentrationId_ = msg.concentration().id();
@@ -94,9 +94,9 @@ void PopulationConcentrationKnowledge::Update( const MsgsSimToClient::MsgPopulat
 // -----------------------------------------------------------------------------
 void PopulationConcentrationKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    client::PopulationConcentrationKnowledgeCreation asn;
-    asn().mutable_id()->set_id( GetId() );
-    asn().mutable_population()->set_id( populationKnowledge_.GetId() );
+    client::CrowdConcentrationKnowledgeCreation asn;
+    asn().mutable_knowledge()->set_id( GetId() );
+    asn().mutable_crowd()->set_id( populationKnowledge_.GetId() );
     if( populationKnowledge_.GetEntity()->FindConcentration( concentrationId_ ) )
         asn().mutable_concentration()->set_id( concentrationId_ );
     else
@@ -112,9 +112,9 @@ void PopulationConcentrationKnowledge::SendCreation( ClientPublisher_ABC& publis
 // -----------------------------------------------------------------------------
 void PopulationConcentrationKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
-    client::PopulationConcentrationKnowledgeUpdate asn;
-    asn().mutable_id()->set_id( GetId() );
-    asn().mutable_population()->set_id( populationKnowledge_.GetId() );
+    client::CrowdConcentrationKnowledgeUpdate asn;
+    asn().mutable_knowledge()->set_id( GetId() );
+    asn().mutable_crowd()->set_id( populationKnowledge_.GetId() );
     asn().mutable_knowledge_group()->set_id( populationKnowledge_.GetOwner().GetId() );
     if( populationKnowledge_.GetEntity()->FindConcentration( concentrationId_ ) )
         asn().mutable_concentration()->set_id( concentrationId_ );
@@ -139,9 +139,9 @@ void PopulationConcentrationKnowledge::SendFullUpdate( ClientPublisher_ABC& publ
 // -----------------------------------------------------------------------------
 void PopulationConcentrationKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    client::PopulationConcentrationKnowledgeDestruction asn;
-    asn().mutable_id()->set_id( GetId() );
-    asn().mutable_population()->set_id( populationKnowledge_.GetId() );
+    client::CrowdConcentrationKnowledgeDestruction asn;
+    asn().mutable_knowledge()->set_id( GetId() );
+    asn().mutable_crowd()->set_id( populationKnowledge_.GetId() );
     asn().mutable_knowledge_group()->set_id( populationKnowledge_.GetOwner().GetId() );
     asn.Send( publisher );
 }

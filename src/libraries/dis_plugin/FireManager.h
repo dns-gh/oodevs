@@ -49,9 +49,9 @@ private:
 
     //! @name Helpers
     //@{
-    void ReceiveFire( const MsgsSimToClient::MsgStartUnitFire& fire );
-    void ReceiveFire( const MsgsSimToClient::MsgStopUnitFire& fire );
-    void UpdateFireEffect( const MsgsSimToClient::MsgStartFireEffect& fire );
+    void ReceiveFire( const MsgsSimToClient::MsgStartUnitFire& message );
+    void ReceiveFire( const MsgsSimToClient::MsgStopUnitFire& message );
+    void UpdateFireEffect( const MsgsSimToClient::MsgStartFireEffect& message );
     void UpdateDetonations();
     void CreateFire( const Common::MsgCoordLatLong& position );
     //@}

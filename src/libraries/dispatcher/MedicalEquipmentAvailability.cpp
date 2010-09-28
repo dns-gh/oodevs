@@ -19,7 +19,7 @@ using namespace dispatcher;
 // Created: LGY 2010-07-07
 // -----------------------------------------------------------------------------
 MedicalEquipmentAvailability::MedicalEquipmentAvailability( const MsgsSimToClient::MsgLogMedicalEquipmentAvailability& asn )
-: nEquipmentType_( asn.type_equipement() )
+: nEquipmentType_( asn.equipment_type().id() )
 , nNbrTotal_     ( asn.nbr_total() )
 , nNbrAvailable_ ( asn.nbr_disponibles() )
 , nNbrWorking_   ( asn.nbr_au_travail() )
@@ -44,7 +44,7 @@ MedicalEquipmentAvailability::~MedicalEquipmentAvailability()
 // -----------------------------------------------------------------------------
 void MedicalEquipmentAvailability::Send( MsgsSimToClient::MsgLogMedicalEquipmentAvailability& asn ) const
 {
-    asn.set_type_equipement( nEquipmentType_ );
+    asn.mutable_equipment_type()->set_id( nEquipmentType_ );
     asn.set_nbr_total( nNbrTotal_ );
     asn.set_nbr_disponibles( nNbrAvailable_ );
     asn.set_nbr_au_travail( nNbrWorking_ );

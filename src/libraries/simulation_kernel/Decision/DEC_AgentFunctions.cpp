@@ -331,7 +331,7 @@ void DEC_AgentFunctions::DisableDiscreteMode( MIL_Agent_ABC& callerAgent )
 void DEC_AgentFunctions::DecisionalState( const MIL_Agent_ABC& callerAgent, const std::string& key, const std::string& value )
 {
     client::DecisionalState msg;
-    msg().mutable_id()->mutable_unit()->set_id( callerAgent.GetID() );
+    msg().mutable_source()->mutable_unit()->set_id( callerAgent.GetID() );
     msg().set_key   ( key.c_str() );
     msg().set_value ( value.c_str() );
     msg.Send( NET_Publisher_ABC::Publisher() );

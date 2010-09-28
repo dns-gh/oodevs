@@ -48,7 +48,7 @@ void PHY_FireResults_ABC::Serialize( MsgsSimToClient::MsgUnitsFireDamages& asn )
 // Name: PHY_FireResults_ABC::Serialize
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------
-void PHY_FireResults_ABC::Serialize( MsgsSimToClient::MsgPopulationsFireDamages& asn ) const
+void PHY_FireResults_ABC::Serialize( MsgsSimToClient::MsgCrowdsFireDamages& asn ) const
 {
     for( CIT_PopulationDamagesMap it = populationsDamages_.begin(); it != populationsDamages_.end(); ++it )
         it->second.Serialize( *it->first, *asn.add_elem() );

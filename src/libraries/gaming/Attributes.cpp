@@ -138,8 +138,8 @@ void Attributes::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
     if( message.has_roe()  )
         nRulesOfEngagementState_ = (E_Roe)message.roe();
 
-    if( message.has_roe_population()  )
-        nRulesOfEngagementPopulationState_ = (E_PopulationRoe)message.roe_population();
+    if( message.has_roe_crowd()  )
+        nRulesOfEngagementPopulationState_ = (E_PopulationRoe)message.roe_crowd();
 
     if( message.has_combat_de_rencontre()  )
         nCloseCombatState_ = (E_MeetingEngagementStatus)message.combat_de_rencontre();

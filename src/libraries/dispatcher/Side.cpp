@@ -25,10 +25,9 @@ using namespace dispatcher;
 // Name: Side constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-Side::Side( const Model_ABC& model, const MsgsSimToClient::MsgTeamCreation& msg )
-    : Team_ABC( msg.id().id(), QString( msg.nom().c_str() ) )
+Side::Side( const Model_ABC& model, const MsgsSimToClient::MsgPartyCreation& msg )
+    : Team_ABC( msg.party().id(), QString( msg.name().c_str() ) )
     , model_( model )
-    , name_( msg.nom() )
     , nType_( msg.type() )
 {
     switch( nType_ )
@@ -76,9 +75,9 @@ void Side::DoUpdate( const MsgsSimToClient::MsgChangeDiplomacyAck& asnMsg )
 // -----------------------------------------------------------------------------
 void Side::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    client::TeamCreation asn;
-    asn().mutable_id()->set_id( GetId() );
-    asn().set_nom( name_.c_str() );
+    client::PartyCreation asn;
+    asn().mutable_party()->set_id( GetId() );
+    asn().set_name( GetName() );
     asn().set_type( nType_ );
     asn.Send( publisher );
 }

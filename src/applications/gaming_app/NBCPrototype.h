@@ -20,8 +20,8 @@ namespace actions
     }
 }
 
-struct MsgObjectAttributesNbcZone;
-struct MsgObjectAttributesNbcCloud;
+struct ObjectAttributesNbcZone;
+struct ObjectAttributesNbcCloud;
 
 // =============================================================================
 /** @class  NBCPrototype

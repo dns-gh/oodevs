@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: ResourceNetworkAttribute constructor
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------
-ResourceNetworkAttribute::ResourceNetworkAttribute( const MsgsSimToClient::MsgUrbanAttributes& message )
+ResourceNetworkAttribute::ResourceNetworkAttribute( const MsgsSimToClient::UrbanAttributes& message )
 {
     Update( message );
 }
@@ -26,7 +26,7 @@ ResourceNetworkAttribute::ResourceNetworkAttribute( const MsgsSimToClient::MsgUr
 // Name: ResourceNetworkAttribute constructor
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
-ResourceNetworkAttribute::ResourceNetworkAttribute( const Common::MsgObjectAttributes& message )
+ResourceNetworkAttribute::ResourceNetworkAttribute( const Common::ObjectAttributes& message )
 {
     Update( message );
 }
@@ -44,7 +44,7 @@ ResourceNetworkAttribute::~ResourceNetworkAttribute()
 // Name: ResourceNetworkAttribute::Update
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------
-void ResourceNetworkAttribute::Update( const MsgsSimToClient::MsgUrbanAttributes& message )
+void ResourceNetworkAttribute::Update( const MsgsSimToClient::UrbanAttributes& message )
 {
     if( !message.has_infrastructures() )
         return;
@@ -56,7 +56,7 @@ void ResourceNetworkAttribute::Update( const MsgsSimToClient::MsgUrbanAttributes
 // Name: ResourceNetworkAttribute::Send
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------
-void ResourceNetworkAttribute::Send( MsgsSimToClient::MsgUrbanAttributes& message ) const
+void ResourceNetworkAttribute::Send( MsgsSimToClient::UrbanAttributes& message ) const
 {
     for( std::map< std::string, ResourceNetwork >::const_iterator it = resourceMap_.begin(); it != resourceMap_.end(); ++it )
         Send( *message.mutable_infrastructures()->add_resource_network(), it->second );
@@ -66,7 +66,7 @@ void ResourceNetworkAttribute::Send( MsgsSimToClient::MsgUrbanAttributes& messag
 // Name: ResourceNetworkAttribute::Update
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
-void ResourceNetworkAttribute::Update( const Common::MsgObjectAttributes& message )
+void ResourceNetworkAttribute::Update( const Common::ObjectAttributes& message )
 {
     if( !message.has_resource_networks() )
         return;
@@ -78,7 +78,7 @@ void ResourceNetworkAttribute::Update( const Common::MsgObjectAttributes& messag
 // Name: ResourceNetworkAttribute::Send
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
-void ResourceNetworkAttribute::Send( Common::MsgObjectAttributes& message ) const
+void ResourceNetworkAttribute::Send( Common::ObjectAttributes& message ) const
 {
     for( std::map< std::string, ResourceNetwork >::const_iterator it = resourceMap_.begin(); it != resourceMap_.end(); ++it )
         Send( *message.mutable_resource_networks()->add_network(), it->second );

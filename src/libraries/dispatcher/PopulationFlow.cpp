@@ -20,10 +20,10 @@ using namespace dispatcher;
 // Name: PopulationFlow constructor
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-PopulationFlow::PopulationFlow( const Population& population, const MsgsSimToClient::MsgPopulationFlowCreation& msg )
-    : dispatcher::PopulationFlow_ABC( msg.id().id() )
+PopulationFlow::PopulationFlow( const Population& population, const MsgsSimToClient::MsgCrowdFlowCreation& msg )
+    : dispatcher::PopulationFlow_ABC( msg.flow().id() )
     , population_     ( population )
-    , nID_            ( msg.id().id() )
+    , nID_            ( msg.flow().id() )
     , path_           ()
     , flow_           ()
     , nDirection_     ()
@@ -48,12 +48,12 @@ PopulationFlow::~PopulationFlow()
 // Name: PopulationFlow::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationFlow::DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate& msg )
+void PopulationFlow::DoUpdate( const MsgsSimToClient::MsgCrowdFlowUpdate& msg )
 {
     if( msg.has_itineraire()  )
         path_.Update( msg.itineraire().location() );
-    if( msg.has_flux()  )
-        flow_.Update( msg.flux().location() );
+    if( msg.has_parts()  )
+        flow_.Update( msg.parts().location() );
     if( msg.has_direction()  )
         nDirection_ = msg.direction().heading();
     if( msg.has_vitesse()  )
@@ -72,9 +72,9 @@ void PopulationFlow::DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate& m
 // -----------------------------------------------------------------------------
 void PopulationFlow::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    client::PopulationFlowCreation asn;
-    asn().mutable_id()->set_id( nID_ );
-    asn().mutable_population()->set_id( population_.GetId() );
+    client::CrowdFlowCreation asn;
+    asn().mutable_flow()->set_id( nID_ );
+    asn().mutable_crowd()->set_id( population_.GetId() );
     asn.Send( publisher );
 }
 
@@ -84,16 +84,16 @@ void PopulationFlow::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void PopulationFlow::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
-    client::PopulationFlowUpdate asn;
-    asn().mutable_id()->set_id( nID_ );
-    asn().mutable_population()->set_id( population_.GetId() );
+    client::CrowdFlowUpdate asn;
+    asn().mutable_flow()->set_id( nID_ );
+    asn().mutable_crowd()->set_id( population_.GetId() );
     asn().mutable_direction()->set_heading( nDirection_ );
     asn().set_vitesse( nSpeed_ );
     asn().set_attitude( nAttitude_ );
     asn().set_nb_humains_morts( nNbrDeadHumans_ );
     asn().set_nb_humains_vivants( nNbrAliveHumans_ );
     path_.Send( *asn().mutable_itineraire()->mutable_location() );
-    flow_.Send( *asn().mutable_flux()->mutable_location() );
+    flow_.Send( *asn().mutable_parts()->mutable_location() );
     asn.Send( publisher );
 }
 
@@ -103,9 +103,9 @@ void PopulationFlow::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void PopulationFlow::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    client::PopulationFlowDestruction destruction;
-    destruction().mutable_id()->set_id( nID_ );
-    destruction().mutable_population()->set_id( population_.GetId() );
+    client::CrowdFlowDestruction destruction;
+    destruction().mutable_flow()->set_id( nID_ );
+    destruction().mutable_crowd()->set_id( population_.GetId() );
     destruction.Send( publisher );
 }
 

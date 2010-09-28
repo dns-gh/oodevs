@@ -28,11 +28,11 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Automat::Automat( const MsgsSimToClient::MsgAutomatCreation& message, Controller& controller,
                   const tools::Resolver_ABC< kernel::AutomatType >& resolver )
-    : EntityImplementation< Automat_ABC >( controller, message.id().id(), QString( message.nom().c_str() ) )
+    : EntityImplementation< Automat_ABC >( controller, message.automat().id(), QString( message.nom().c_str() ) )
     , type_( resolver.Get( message.type().id() ) )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.id().id() );
+        name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.automat().id() );
     RegisterSelf( *this );
     PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     Attach( dictionary );

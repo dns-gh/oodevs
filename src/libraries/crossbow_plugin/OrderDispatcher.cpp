@@ -109,7 +109,7 @@ namespace
         explicit scoped_asn( OrderParameterSerializer& serializer ) : serializer_ ( serializer ) {}
         ~scoped_asn()
         {
-            CleanParameters( asn_().parametres );
+            CleanParameters( asn_().parameters );
         }
         typename AsnType::T_AsnMsgType& operator()()
         {
@@ -207,7 +207,7 @@ void OrderDispatcher::DispatchFragOrder( dispatcher::SimulationPublisher_ABC& pu
     model_.SetToTasker( *message().mutable_tasker(), targetId );
     //message().set_id( targetId );
     message().mutable_frag_order()->set_id( type->GetId() );
-    message().mutable_parametres(); // $$$$ SBO 2007-06-07: parameters not supported !
+    message().mutable_parameters(); // $$$$ SBO 2007-06-07: parameters not supported !
     message.Send( publisher, 0 );
 }
 

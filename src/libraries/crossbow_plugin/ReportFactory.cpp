@@ -64,17 +64,17 @@ void ReportFactory::ReadReport( xml::xistream& xis )
 std::string ReportFactory::CreateMessage( const MsgsSimToClient::MsgReport& message ) const
 {
     CIT_Templates it;
-    if( message.cr().has_automat() )
-        CIT_Templates it = templates_.find( message.cr().automat().id() );
-    else if( message.cr().has_population() )
-        CIT_Templates it = templates_.find( message.cr().population().id() );
-    else if( message.cr().has_unit() )
-        CIT_Templates it = templates_.find( message.cr().unit().id() );
-    else if( message.cr().has_formation() )
-        CIT_Templates it = templates_.find( message.cr().formation().id() );
+    if( message.source().has_automat() )
+        CIT_Templates it = templates_.find( message.source().automat().id() );
+    else if( message.source().has_crowd() )
+        CIT_Templates it = templates_.find( message.source().crowd().id() );
+    else if( message.source().has_unit() )
+        CIT_Templates it = templates_.find( message.source().unit().id() );
+    else if( message.source().has_formation() )
+        CIT_Templates it = templates_.find( message.source().formation().id() );
     else
         return "Unknown report";
-    return it->second->RenderMessage( message.parametres() );
+    return it->second->RenderMessage( message.parameters() );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,8 +99,8 @@ std::string ReportFactory::RenderParameter( const Common::MsgMissionParameter& v
     }
 //    else if( value.value().has_objectknowledge() )
 //        ss << value.value().objectknowledge(); // $$$$ SBO 2007-08-27: resolve...
-//    else if( value.value().has_populationknowledge() )
-//        ss << value.value().populationknowledge(); // $$$$ SBO 2007-08-27: resolve...
+//    else if( value.value().has_crowdknowledge() )
+//        ss << value.value().crowdknowledge(); // $$$$ SBO 2007-08-27: resolve...
 //    else if( value.value().has_equipmenttype() )
 //        ss << value.value().equipmenttype(); // $$$$ SBO 2007-08-27: resolve...
 //    else if( value.value().has_dotationtype() )

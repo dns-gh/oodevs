@@ -73,7 +73,7 @@ void AgentLogSupply::Update( const MsgsSimToClient::MsgLogSupplyState& asnMsg )
 void AgentLogSupply::Send( ClientPublisher_ABC& publisher ) const
 {
     client::LogSupplyState asn;
-    asn().mutable_id()->set_id( agent_.GetId() );
+    asn().mutable_unit()->set_id( agent_.GetId() );
     asn().set_chaine_activee( bSystemEnabled_ );
     {
         for( std::vector< T_Availability >::const_iterator it = convoyersAvailability_.begin(); it != convoyersAvailability_.end(); ++it )

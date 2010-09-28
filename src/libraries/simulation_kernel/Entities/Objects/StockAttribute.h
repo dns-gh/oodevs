@@ -17,8 +17,8 @@
 
 namespace Common
 {
-    class MsgObjectAttributes;
-    class MsgObjectAttributeStock;
+    class ObjectAttributes;
+    class ObjectAttributeStock;
 }
 
 namespace xml
@@ -65,9 +65,9 @@ public:
 
     //! @name Network Update
     //@{
-    void SendFullState( Common::MsgObjectAttributes& asn ) const;
-    void SendUpdate( Common::MsgObjectAttributes& asn ) const;
-    void OnUpdate( const Common::MsgObjectAttributes& asn );
+    void SendFullState( Common::ObjectAttributes& asn ) const;
+    void SendUpdate( Common::ObjectAttributes& asn ) const;
+    void OnUpdate( const Common::ObjectAttributes& asn );
     //@}
 
     //! @name ODB
@@ -91,7 +91,7 @@ public:
 
     //@{
     void LoadDotation( xml::xistream& xis );
-    void Send( Common::MsgObjectAttributeStock& attribute, bool send_max ) const;
+    void Send( Common::ObjectAttributeStock& attribute, bool send_max ) const;
     //@}
 
 private:

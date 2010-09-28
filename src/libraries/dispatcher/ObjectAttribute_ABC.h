@@ -12,7 +12,7 @@
 
 namespace Common
 {
-    class MsgObjectAttributes;
+    class ObjectAttributes;
 }
 
 namespace dispatcher
@@ -35,8 +35,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Update( const Common::MsgObjectAttributes& message ) = 0;
-    virtual void Send  ( Common::MsgObjectAttributes& message ) const = 0;
+    virtual void Update( const Common::ObjectAttributes& message ) = 0;
+    virtual void Send  ( Common::ObjectAttributes& message ) const = 0;
     //@}
 };
 

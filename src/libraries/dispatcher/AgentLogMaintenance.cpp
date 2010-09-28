@@ -89,7 +89,7 @@ void AgentLogMaintenance::Update( const MsgsSimToClient::MsgLogMaintenanceState&
 void AgentLogMaintenance::Send( ClientPublisher_ABC& publisher ) const
 {
     client::LogMaintenanceState asn;
-    asn().mutable_id()->set_id( agent_.GetId() );
+    asn().mutable_unit()->set_id( agent_.GetId() );
     asn().set_chaine_activee ( bSystemEnabled_ );
     {
         for( std::vector< MaintenanceEquipmentAvailability >::const_iterator it = repairersAvailability_.begin(); it != repairersAvailability_.end(); ++it )

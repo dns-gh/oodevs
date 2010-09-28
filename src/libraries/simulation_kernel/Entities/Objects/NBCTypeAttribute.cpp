@@ -54,7 +54,7 @@ NBCTypeAttribute::NBCTypeAttribute()
 // Name: NBCTypeAttribute constructor
 // Created: RFT 2008-07-21
 // -----------------------------------------------------------------------------
-NBCTypeAttribute::NBCTypeAttribute( const Common::MsgObjectAttributes& /*asn*/ )
+NBCTypeAttribute::NBCTypeAttribute( const Common::ObjectAttributes& /*asn*/ )
     : pAgent_            ( 0 )
     , concentration_     ( 0 )
     , width_             ( 0 )
@@ -160,7 +160,7 @@ void NBCTypeAttribute::Register( MIL_Object_ABC& object ) const
 // Name: NBCTypeAttribute::SendFullState
 // Created: RFT 2008-06-18
 // -----------------------------------------------------------------------------
-void NBCTypeAttribute::SendFullState( Common::MsgObjectAttributes& /*message*/ ) const
+void NBCTypeAttribute::SendFullState( Common::ObjectAttributes& /*message*/ ) const
 {
 //    asn.m.nbc_agentPresent      = 1;
 //    asn.nbc_agent.concentration = concentration_;
@@ -171,7 +171,7 @@ void NBCTypeAttribute::SendFullState( Common::MsgObjectAttributes& /*message*/ )
 // Name: NBCTypeAttribute::Send
 // Created: RFT 2008-06-09
 // -----------------------------------------------------------------------------
-void NBCTypeAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
+void NBCTypeAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
     if( NeedUpdate() )
     {

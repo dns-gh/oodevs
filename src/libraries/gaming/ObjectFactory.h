@@ -15,7 +15,7 @@
 
 namespace Common
 {
-    class MsgObjectAttributes;
+    class ObjectAttributes;
 }
 
 namespace kernel
@@ -55,7 +55,7 @@ private:
 
     //! @name
     //@{
-    void Register( kernel::Object_ABC& result, const Common::MsgObjectAttributes& attributes ) const;
+    void Register( kernel::Object_ABC& result, const Common::ObjectAttributes& attributes ) const;
     //@}
 
 private:

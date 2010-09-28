@@ -20,10 +20,10 @@ using namespace dispatcher;
 // Name: PopulationConcentration constructor
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-PopulationConcentration::PopulationConcentration( const Population& population, const MsgsSimToClient::MsgPopulationConcentrationCreation& msg )
-    : dispatcher::PopulationConcentration_ABC( msg.id().id() )
+PopulationConcentration::PopulationConcentration( const Population& population, const MsgsSimToClient::MsgCrowdConcentrationCreation& msg )
+    : dispatcher::PopulationConcentration_ABC( msg.concentration().id() )
     , population_     ( population )
-    , nID_            ( msg.id().id() )
+    , nID_            ( msg.concentration().id() )
     , position_       ( msg.position() )
     , nNbrAliveHumans_( 0 )
     , nNbrDeadHumans_ ( 0 )
@@ -45,7 +45,7 @@ PopulationConcentration::~PopulationConcentration()
 // Name: PopulationConcentration::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationConcentration::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationUpdate& msg )
+void PopulationConcentration::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationUpdate& msg )
 {
     if( msg.has_attitude()  )
         nAttitude_ = msg.attitude();
@@ -61,9 +61,9 @@ void PopulationConcentration::DoUpdate( const MsgsSimToClient::MsgPopulationConc
 // -----------------------------------------------------------------------------
 void PopulationConcentration::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    client::PopulationConcentrationCreation asn;
-    asn().mutable_id()->set_id( nID_ );
-    asn().mutable_population()->set_id( population_.GetId() );
+    client::CrowdConcentrationCreation asn;
+    asn().mutable_concentration()->set_id( nID_ );
+    asn().mutable_crowd()->set_id( population_.GetId() );
     *asn().mutable_position() = position_;
     asn.Send( publisher );
 }
@@ -74,9 +74,9 @@ void PopulationConcentration::SendCreation( ClientPublisher_ABC& publisher ) con
 // -----------------------------------------------------------------------------
 void PopulationConcentration::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
-    client::PopulationConcentrationUpdate asn;
-    asn().mutable_id()->set_id( nID_ );
-    asn().mutable_population()->set_id( population_.GetId() );
+    client::CrowdConcentrationUpdate asn;
+    asn().mutable_concentration()->set_id( nID_ );
+    asn().mutable_crowd()->set_id( population_.GetId() );
     asn().set_attitude( nAttitude_ );
     asn().set_nb_humains_morts( nNbrDeadHumans_ );
     asn().set_nb_humains_vivants( nNbrAliveHumans_ );
@@ -89,9 +89,9 @@ void PopulationConcentration::SendFullUpdate( ClientPublisher_ABC& publisher ) c
 // -----------------------------------------------------------------------------
 void PopulationConcentration::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    client::PopulationConcentrationDestruction destruction;
-    destruction().mutable_population()->set_id( population_.GetId() );
-    destruction().mutable_id()->set_id           ( nID_ );
+    client::CrowdConcentrationDestruction destruction;
+    destruction().mutable_crowd()->set_id( population_.GetId() );
+    destruction().mutable_concentration()->set_id( nID_ );
     destruction.Send( publisher );
 }
 

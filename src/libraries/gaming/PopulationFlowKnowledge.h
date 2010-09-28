@@ -20,8 +20,8 @@
 namespace MsgsSimToClient
 {
     class MsgFlowPart;
-    class MsgPopulationFlowKnowledgeCreation;
-    class MsgPopulationFlowKnowledgeUpdate;
+    class MsgCrowdFlowKnowledgeCreation;
+    class MsgCrowdFlowKnowledgeUpdate;
 }
 
 namespace kernel
@@ -37,7 +37,7 @@ namespace kernel
 // =============================================================================
 class PopulationFlowKnowledge : public PopulationPartKnowledge_ABC
                               , public kernel::Drawable_ABC
-                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate >
+                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate >
 {
 public:
     //! @name Types
@@ -56,7 +56,7 @@ public:
 public:
     //! @name Constructor/Destructor
     //@{
-             PopulationFlowKnowledge( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::Population_ABC& popu, const MsgsSimToClient::MsgPopulationFlowKnowledgeCreation& message );
+             PopulationFlowKnowledge( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::Population_ABC& popu, const MsgsSimToClient::MsgCrowdFlowKnowledgeCreation& message );
     virtual ~PopulationFlowKnowledge();
     //@}
 
@@ -69,7 +69,7 @@ public:
 
     //! @name Network
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate& message );
     //@}
 
 private:

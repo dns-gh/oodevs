@@ -265,9 +265,9 @@ void MIL_PopulationConcentration::SetPullingFlowsDensity( const MIL_Object_ABC& 
 // -----------------------------------------------------------------------------
 void MIL_PopulationConcentration::SendCreation() const
 {
-    client::PopulationConcentrationCreation asnMsg;
-    asnMsg().mutable_id()->set_id( GetID() );
-    asnMsg().mutable_population()->set_id( GetPopulation().GetID() );
+    client::CrowdConcentrationCreation asnMsg;
+    asnMsg().mutable_concentration()->set_id( GetID() );
+    asnMsg().mutable_crowd()->set_id( GetPopulation().GetID() );
     NET_ASN_Tools::WritePoint( position_, *asnMsg().mutable_position() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -278,9 +278,9 @@ void MIL_PopulationConcentration::SendCreation() const
 // -----------------------------------------------------------------------------
 void MIL_PopulationConcentration::SendDestruction() const
 {
-    client::PopulationConcentrationDestruction asnMsg;
-    asnMsg().mutable_id()->set_id( GetID() );
-    asnMsg().mutable_population()->set_id( GetPopulation().GetID() );
+    client::CrowdConcentrationDestruction asnMsg;
+    asnMsg().mutable_concentration()->set_id( GetID() );
+    asnMsg().mutable_crowd()->set_id( GetPopulation().GetID() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -290,9 +290,9 @@ void MIL_PopulationConcentration::SendDestruction() const
 // -----------------------------------------------------------------------------
 void MIL_PopulationConcentration::SendFullState( MIL_Population::sPeopleCounter& peopleCounter ) const
 {
-    client::PopulationConcentrationUpdate asnMsg;
-    asnMsg().mutable_id()->set_id( GetID() );
-    asnMsg().mutable_population()->set_id( GetPopulation().GetID() );
+    client::CrowdConcentrationUpdate asnMsg;
+    asnMsg().mutable_concentration()->set_id( GetID() );
+    asnMsg().mutable_crowd()->set_id( GetPopulation().GetID() );
     asnMsg().set_attitude          ( GetAttitude().GetAsnID() );
     asnMsg().set_nb_humains_morts  ( peopleCounter.GetBoundedPeople( GetNbrDeadHumans () ) );
     asnMsg().set_nb_humains_vivants( peopleCounter.GetBoundedPeople( GetNbrAliveHumans() ) );
@@ -309,9 +309,9 @@ void MIL_PopulationConcentration::SendChangedState( MIL_Population::sPeopleCount
     if( !HasChanged() )
         return;
 
-    client::PopulationConcentrationUpdate asnMsg;
-    asnMsg().mutable_id()->set_id( GetID() );
-    asnMsg().mutable_population()->set_id( GetPopulation().GetID() );
+    client::CrowdConcentrationUpdate asnMsg;
+    asnMsg().mutable_concentration()->set_id( GetID() );
+    asnMsg().mutable_crowd()->set_id( GetPopulation().GetID() );
 
     if( HasAttitudeChanged() )
     {

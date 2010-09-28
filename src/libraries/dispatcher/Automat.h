@@ -126,7 +126,6 @@ private:
     //@{
     Model_ABC&              model_;
     const unsigned long type_; // XML reference - no resolved by dispatcher
-    const std::string   name_;
     dispatcher::Team_ABC& team_;
     dispatcher::Formation_ABC* parentFormation_;
     dispatcher::Automat_ABC* parentAutomat_;

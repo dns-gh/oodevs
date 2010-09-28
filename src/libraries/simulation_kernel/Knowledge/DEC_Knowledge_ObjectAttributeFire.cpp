@@ -138,7 +138,7 @@ void DEC_Knowledge_ObjectAttributeFire::UpdateOnCollision( const DEC_Knowledge_O
 // Name: DEC_Knowledge_ObjectAttributeFire::BuildMsgSpecificAttributes
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeFire::Send( Common::MsgObjectAttributes& asn ) const
+void DEC_Knowledge_ObjectAttributeFire::Send( Common::ObjectAttributes& asn ) const
 {
     asn.mutable_fire()->set_class_id( pFireClass_? pFireClass_->GetID() : -1 );
     asn.mutable_fire()->set_heat( heat_ );

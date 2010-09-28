@@ -73,7 +73,7 @@ PHY_Meteo::PHY_Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& l
 // Name: PHY_Meteo constructor
 // Created: JVT 03-08-05
 //-----------------------------------------------------------------------------
-PHY_Meteo::PHY_Meteo( unsigned int id, const Common::MsgMeteoAttributes& asnMsg, MeteoManager_ABC* listener )
+PHY_Meteo::PHY_Meteo( unsigned int id, const Common::MsgWeatherAttributes& asnMsg, MeteoManager_ABC* listener )
     : pLighting_     ( &PHY_Lighting::jourSansNuage_ )
     , pPrecipitation_( &PHY_Precipitation::none_ )
     , nRefCount_     ( 0 )
@@ -129,7 +129,7 @@ PHY_Meteo::~PHY_Meteo()
 // Name: PHY_Meteo::Update
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
-void PHY_Meteo::Update( const Common::MsgMeteoAttributes& msg )
+void PHY_Meteo::Update( const Common::MsgWeatherAttributes& msg )
 {
     // Plancher de couverture nuageuse
     nPlancherCouvertureNuageuse_ = msg.cloud_floor();
@@ -273,9 +273,9 @@ void PHY_Meteo::UpdateMeteoPatch( int /*date*/, PHY_RawVisionData_ABC& /*dataVis
 // -----------------------------------------------------------------------------
 void PHY_Meteo::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
 {
-    client::ControlGlobalMeteo msg;
-    Common::MsgMeteoAttributes* att = msg().mutable_attributes();
-    msg().mutable_id()->set_id( id_ );
+    client::ControlGlobalWeather msg;
+    Common::MsgWeatherAttributes* att = msg().mutable_attributes();
+    msg().mutable_weather()->set_id( id_ );
     att->set_wind_speed( static_cast< int >( wind_.rWindSpeed_ / conversionFactor_ ) );
     att->mutable_wind_direction()->set_heading( 0 );
     att->set_cloud_floor( nPlancherCouvertureNuageuse_ );
@@ -283,7 +283,7 @@ void PHY_Meteo::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
     att->set_cloud_density( static_cast< int >( rDensiteCouvertureNuageuse_ * 100. + 0.01 ) );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( 0 );
-    //att->set_lighting( pLighting_->GetAsnID() );
+    att->set_lighting( pLighting_->GetAsnID() );
     msg.Send( publisher );
 }
 

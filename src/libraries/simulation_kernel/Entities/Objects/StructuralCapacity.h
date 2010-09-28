@@ -25,7 +25,7 @@ namespace xml
 
 namespace MsgsSimToClient
 {
-    class MsgUrbanAttributes;
+    class UrbanAttributes;
 }
 
 namespace urban
@@ -63,7 +63,7 @@ public:
     virtual void ProcessAgentInside( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ){};
     void ApplyIndirectFire( MIL_Object_ABC& object, const MT_Ellipse& attritionSurface, const PHY_DotationCategory& dotation );
     void ApplyDirectFire( const MIL_Object_ABC& object, const PHY_DotationCategory& dotation );
-    void SendState( MsgsSimToClient::MsgUrbanAttributes& message ) const;
+    void SendState( MsgsSimToClient::UrbanAttributes& message ) const;
     unsigned int GetStructuralState() const;
     const PHY_ComposanteState& ComputeComposanteState( const MIL_Object_ABC& object, const PHY_Protection& targetProtection );
     //@}

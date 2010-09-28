@@ -19,7 +19,7 @@ using namespace plugins;
 using namespace plugins::crossbow;
 
 
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributes& msg ){
+void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributes& msg ){
     if( msg.has_activity_time() )
         ObjectAttributeUpdater::UpdateObjectAttribute( db, objectId, msg.activity_time() );
     if( msg.has_bypass() )
@@ -52,7 +52,7 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
         ObjectAttributeUpdater::UpdateObjectAttribute( db, objectId, msg.toxic_cloud() );
 }
 
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeConstruction& construction ){
+void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeConstruction& construction ){
     InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Construction" ) );
 
     builder.SetId( "id" );
@@ -69,7 +69,7 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
     db.Execute( builder );
 }
 
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeObstacle& obstacle ){
+void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeObstacle& obstacle ){
     InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Obstacle" ) );
 
     builder.SetId( "id" );
@@ -81,7 +81,7 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
     db.Execute( builder );
 }
 
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeMine& mine ){
+void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeMine& mine ){
     InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Mine" ) );
 
     builder.SetId( "id" );
@@ -98,7 +98,7 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
     db.Execute( builder );
 }
 
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeActivityTime& activity_time ){
+void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeActivityTime& activity_time ){
     InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Activity_Time" ) );
 
     builder.SetId( "id" );
@@ -108,7 +108,7 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
     db.Execute( builder );
 }
 
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeBypass& bypass ){
+void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeBypass& bypass ){
     InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Bypass" ) );
 
     builder.SetId( "id" );
@@ -119,7 +119,7 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
     db.Execute( builder );
 }
 
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeLogistic& logistic ){
+void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeLogistic& logistic ){
     InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Logistic" ) );
 
     builder.SetId( "id" );
@@ -129,7 +129,7 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
     db.Execute( builder );
 }
 
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeNBC& nbc ){
+void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeNBC& nbc ){
     InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_NBC" ) );
 
     builder.SetId( "id" );
@@ -140,7 +140,7 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
     db.Execute( builder );
 }
 
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeCrossingSite& crossing_site ){
+void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeCrossingSite& crossing_site ){
     InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Crossing_Site" ) );
 
     builder.SetId( "id" );
@@ -153,7 +153,7 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
 
     db.Execute( builder );
 }
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeSupplyRoute& supply_route ){
+void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeSupplyRoute& supply_route ){
     InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_SupplyRoute" ) );
 
     builder.SetId( "id" );
@@ -166,7 +166,7 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
 
     db.Execute( builder );
 }
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeToxicCloud& /*toxic_cloud*/ ){
+void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeToxicCloud& /*toxic_cloud*/ ){
     InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Toxic_Cloud" ) );
 
     builder.SetId( "id" );
@@ -174,7 +174,7 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
     //toxic_cloud.quantities // list: todo
     db.Execute( builder );
 }
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeFire& fire ){
+void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeFire& fire ){
     InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Fire" ) );
 
     builder.SetId( "id" );
@@ -184,7 +184,7 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
 
     db.Execute( builder );
 }
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeMedicalTreatment& medical_treatment ){
+void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeMedicalTreatment& medical_treatment ){
     InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Medical_Treatment" ) );
 
     builder.SetId( "id" );
@@ -196,7 +196,7 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
 
     db.Execute( builder );
 }
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeInteractionHeight& interaction_height ){
+void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeInteractionHeight& interaction_height ){
     InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Interaction_Height" ) );
 
     builder.SetId( "id" );
@@ -205,7 +205,7 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
 
     db.Execute( builder );
 }
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeNBCType& nbc_agent ){
+void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeNBCType& nbc_agent ){
     InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_NBC_Type" ) );
 
     builder.SetId( "id" );
@@ -217,7 +217,7 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
     db.Execute( builder );
 }
 
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeStock& /*stock*/ ){
+void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeStock& /*stock*/ ){
     InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Stock" ) );
 
     builder.SetId( "id" );

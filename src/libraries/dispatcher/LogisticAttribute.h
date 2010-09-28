@@ -31,14 +31,14 @@ class LogisticAttribute : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticAttribute( const Model_ABC& model, const Common::MsgObjectAttributes& asnMsg );
+             LogisticAttribute( const Model_ABC& model, const Common::ObjectAttributes& asnMsg );
     virtual ~LogisticAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const Common::MsgObjectAttributes& asnMsg );
-    virtual void Send( Common::MsgObjectAttributes& asnMsg ) const;
+    virtual void Update( const Common::ObjectAttributes& asnMsg );
+    virtual void Send( Common::ObjectAttributes& asnMsg ) const;
     //@}
 
 private:

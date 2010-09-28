@@ -31,14 +31,14 @@ class ObstacleAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ObstacleAttribute( const Common::MsgObjectAttributes& message );
+    explicit ObstacleAttribute( const Common::ObjectAttributes& message );
     virtual ~ObstacleAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const Common::MsgObjectAttributes& message );
-    virtual void Send  ( Common::MsgObjectAttributes& message ) const;
+    virtual void Update( const Common::ObjectAttributes& message );
+    virtual void Send  ( Common::ObjectAttributes& message ) const;
     //@}
 
 private:

@@ -32,8 +32,8 @@ namespace kernel
 // Created: AGE 2006-02-27
 // =============================================================================
 class PopulationDetections : public kernel::Extension_ABC
-                           , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationDetection >
-                           , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowDetection >
+                           , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdConcentrationDetection >
+                           , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdFlowDetection >
                            , public kernel::Drawable_ABC
 {
 public:
@@ -57,8 +57,8 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationDetection& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationFlowDetection& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationDetection& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdFlowDetection& message );
     //@}
 
     //! @name Types

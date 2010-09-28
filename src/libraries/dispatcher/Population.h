@@ -15,20 +15,20 @@
 
 namespace Common
 {
-    class MsgPopulationOrder;
+    class MsgCrowdOrder;
 }
 
 namespace MsgsSimToClient
 {
     class MsgDecisionalState;
-    class MsgPopulationFlowCreation;
-    class MsgPopulationFlowUpdate;
-    class MsgPopulationFlowDestruction;
-    class MsgPopulationCreation;
-    class MsgPopulationUpdate;
-    class MsgPopulationConcentrationCreation;
-    class MsgPopulationConcentrationUpdate;
-    class MsgPopulationConcentrationDestruction;
+    class MsgCrowdFlowCreation;
+    class MsgCrowdFlowUpdate;
+    class MsgCrowdFlowDestruction;
+    class MsgCrowdCreation;
+    class MsgCrowdUpdate;
+    class MsgCrowdConcentrationCreation;
+    class MsgCrowdConcentrationUpdate;
+    class MsgCrowdConcentrationDestruction;
 }
 
 namespace dispatcher
@@ -48,36 +48,36 @@ namespace dispatcher
 // =============================================================================
 class Population : public dispatcher::Population_ABC
                  , public kernel::Extension_ABC
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationCreation >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationUpdate >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationCreation >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationUpdate >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationDestruction >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowCreation >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowUpdate >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowDestruction >
-                 , public kernel::Updatable_ABC< Common::MsgPopulationOrder >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdCreation >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdUpdate >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdConcentrationCreation >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdConcentrationUpdate >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdConcentrationDestruction >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdFlowCreation >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdFlowUpdate >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdFlowDestruction >
+                 , public kernel::Updatable_ABC< Common::MsgCrowdOrder >
                  , public kernel::Updatable_ABC< MsgsSimToClient::MsgDecisionalState >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Population( Model_ABC& model, const MsgsSimToClient::MsgPopulationCreation& msg );
+             Population( Model_ABC& model, const MsgsSimToClient::MsgCrowdCreation& msg );
     virtual ~Population();
     //@}
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationCreation&                 msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationUpdate&                   msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationCreation&    msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationUpdate&      msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationDestruction& msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationFlowCreation&             msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate&               msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationFlowDestruction&          msg );
-    virtual void DoUpdate( const Common::MsgPopulationOrder&                             msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgDecisionalState&                    msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdCreation&                 msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdUpdate&                   msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationCreation&    msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationUpdate&      msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationDestruction& msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdFlowCreation&             msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdFlowUpdate&               msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdFlowDestruction&          msg );
+    virtual void DoUpdate( const Common::MsgCrowdOrder&                             msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgDecisionalState&               msg );
 
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;

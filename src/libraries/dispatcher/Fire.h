@@ -22,7 +22,6 @@ namespace Common
 {
     class FireId;
     class UnitId;
-    enum  MsgStartUnitFire_type;
     class ResourceType;
     class MsgCoordLatLong;
 }
@@ -72,7 +71,7 @@ private:
     //@{
     Common::FireId                oid_tir_;
     Common::UnitId                tireur_;
-    Common::MsgStartUnitFire_type type_;
+    Common::UnitFireType          type_;
     bool                          munitionPresent_;
     Common::ResourceType          munition_;
     int                           typeCible_;

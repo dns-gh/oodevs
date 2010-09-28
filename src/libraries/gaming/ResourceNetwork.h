@@ -16,7 +16,7 @@
 
 namespace Common
 {
-    class MsgObjectAttributeResourceNetwork;
+    class ObjectAttributeResourceNetwork;
     class ResourceNetwork;
 }
 
@@ -36,7 +36,7 @@ namespace MsgsSimToClient
 {
     class MsgObjectUpdate;
     class MsgUrbanUpdate;
-    class MsgUrbanAttributes_Infrastructures;
+    class UrbanAttributes_Infrastructures;
 }
 
 // =============================================================================
@@ -52,8 +52,8 @@ class ResourceNetwork : public kernel::ResourceNetwork_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceNetwork( kernel::Controllers& controllers, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver, const MsgsSimToClient::MsgUrbanAttributes_Infrastructures& msg, kernel::PropertiesDictionary& dico );
-             ResourceNetwork( kernel::Controllers& controllers, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver, const Common::MsgObjectAttributeResourceNetwork& msg, kernel::PropertiesDictionary& dico );
+             ResourceNetwork( kernel::Controllers& controllers, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver, const MsgsSimToClient::UrbanAttributes_Infrastructures& msg, kernel::PropertiesDictionary& dico );
+             ResourceNetwork( kernel::Controllers& controllers, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver, const Common::ObjectAttributeResourceNetwork& msg, kernel::PropertiesDictionary& dico );
     virtual ~ResourceNetwork();
     //@}
 

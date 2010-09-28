@@ -181,9 +181,9 @@ void DEC_Knowledge_PopulationConcentrationPerception::UpdateOnNetwork() const
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationConcentrationPerception::SendStateToNewClient() const
 {
-    client::PopulationConcentrationDetection asn;
-    asn().mutable_id()->set_id( pPopulationKnowledge_->GetAgentPerceiving().GetID() );
-    asn().mutable_detected_population()->set_id( pPopulationKnowledge_->GetPopulationPerceived().GetID() );
+    client::CrowdConcentrationDetection asn;
+    asn().mutable_observer()->set_id( pPopulationKnowledge_->GetAgentPerceiving().GetID() );
+    asn().mutable_detected_crowd()->set_id( pPopulationKnowledge_->GetPopulationPerceived().GetID() );
     asn().mutable_detected_concentration()->set_id( pPopulationConcentrationPerceived_->GetID() );
     asn().set_visibility( Common::EnumUnitVisibility( pCurrentPerceptionLevel_->GetID() ) );
     asn.Send( NET_Publisher_ABC::Publisher() );

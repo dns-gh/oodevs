@@ -98,7 +98,7 @@ public:
     { throw; }
     virtual bool ToPathList( Common::MsgPathList& ) const
     { throw; }
-    virtual bool ToPopulationKnowledge( Common::PopulationKnowledgeId& ) const
+    virtual bool ToPopulationKnowledge( Common::CrowdKnowledgeId& ) const
     { throw; }
     virtual bool ToString( std::string& result ) const
     {

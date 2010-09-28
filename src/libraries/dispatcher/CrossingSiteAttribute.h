@@ -26,14 +26,14 @@ class CrossingSiteAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit CrossingSiteAttribute( const Common::MsgObjectAttributes& asnMsg );
+    explicit CrossingSiteAttribute( const Common::ObjectAttributes& asnMsg );
     virtual ~CrossingSiteAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const Common::MsgObjectAttributes& asnMsg );
-    virtual void Send  ( Common::MsgObjectAttributes& asnMsg ) const;
+    virtual void Update( const Common::ObjectAttributes& asnMsg );
+    virtual void Send  ( Common::ObjectAttributes& asnMsg ) const;
     //@}
 
 private:

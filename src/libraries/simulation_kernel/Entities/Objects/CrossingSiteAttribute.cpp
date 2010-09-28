@@ -127,7 +127,7 @@ void CrossingSiteAttribute::Register( MIL_Object_ABC& object ) const
 // Name: CrossingSiteAttribute::SendFullState
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void CrossingSiteAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
+void CrossingSiteAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 {
     asn.mutable_crossing_site()->set_width( int( rWidth_ ) );
     asn.mutable_crossing_site()->set_depth( int( rDepth_ ) );
@@ -139,7 +139,7 @@ void CrossingSiteAttribute::SendFullState( Common::MsgObjectAttributes& asn ) co
 // Name: CrossingSiteAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void CrossingSiteAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
+void CrossingSiteAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnCreation ) )
     {

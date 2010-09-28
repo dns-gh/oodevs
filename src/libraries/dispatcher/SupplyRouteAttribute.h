@@ -26,14 +26,14 @@ class SupplyRouteAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit SupplyRouteAttribute( const Common::MsgObjectAttributes& message );
+    explicit SupplyRouteAttribute( const Common::ObjectAttributes& message );
     virtual ~SupplyRouteAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const Common::MsgObjectAttributes& message );
-    virtual void Send  ( Common::MsgObjectAttributes& message ) const;
+    virtual void Update( const Common::ObjectAttributes& message );
+    virtual void Send  ( Common::ObjectAttributes& message ) const;
     //@}
 
 private:

@@ -196,7 +196,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowle
 // Name: DEC_PopulationKnowledge::ResolveKnowledgePopulation
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_PopulationKnowledge::ResolveKnowledgePopulation( const Common::PopulationKnowledgeId& /*asn*/ ) const
+DEC_Knowledge_Population* DEC_PopulationKnowledge::ResolveKnowledgePopulation( const Common::CrowdKnowledgeId& /*asn*/ ) const
 {
     return 0;
 }

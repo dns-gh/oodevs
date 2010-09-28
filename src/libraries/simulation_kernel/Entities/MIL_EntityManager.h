@@ -22,7 +22,7 @@ namespace Common
 {
     enum ObstacleType_DemolitionTargetType;
 
-    class MsgPopulationOrder;
+    class MsgCrowdOrder;
     class MsgUnitOrder;
     class MsgAutomatOrder;
     class MsgAutomatChangeKnowledgeGroup;
@@ -163,7 +163,7 @@ public:
     void OnReceiveMsgObjectMagicAction           ( const MsgsClientToSim::MsgObjectMagicAction&             message, unsigned int nCtx );
     void OnReceiveMsgUnitOrder                   ( const Common::MsgUnitOrder&                              message, unsigned int nCtx );
     void OnReceiveMsgAutomatOrder                ( const Common::MsgAutomatOrder&                           message, unsigned int nCtx );
-    void OnReceiveMsgPopulationOrder             ( const Common::MsgPopulationOrder&                        message, unsigned int nCtx );
+    void OnReceiveMsgCrowdOrder             ( const Common::MsgCrowdOrder&                        message, unsigned int nCtx );
     void OnReceiveMsgFragOrder                   ( const MsgsClientToSim::MsgFragOrder&                     message, unsigned int nCtx );
     void OnReceiveMsgSetAutomateMode             ( const MsgsClientToSim::MsgSetAutomatMode&                message, unsigned int nCtx );
     void OnReceiveMsgUnitCreationRequest         ( const MsgsClientToSim::MsgUnitCreationRequest&           message, unsigned int nCtx );

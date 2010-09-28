@@ -16,7 +16,7 @@
 
 namespace MsgsSimToClient
 {
-    class MsgTeamCreation;
+    class MsgPartyCreation;
 }
 
 // =============================================================================
@@ -30,7 +30,7 @@ class Team : public kernel::EntityImplementation< kernel::Team_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Team( const MsgsSimToClient::MsgTeamCreation& message, kernel::Controller& controller );
+             Team( const MsgsSimToClient::MsgPartyCreation& message, kernel::Controller& controller );
     virtual ~Team();
     //@}
 

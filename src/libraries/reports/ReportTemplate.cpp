@@ -52,9 +52,9 @@ QString ReportTemplate::RenderMessage( const MsgsSimToClient::MsgReport& message
 {
     QString messageStr = message_;
     unsigned int enums = 0;
-    if( message.has_parametres() )
+    if( message.has_parameters() )
     {
-        const Common::MsgMissionParameters& parameters = message.parametres();
+        const Common::MsgMissionParameters& parameters = message.parameters();
         for( int i = 0; i < parameters.elem_size(); ++i )
         {
             const Common::MsgMissionParameter& parameter = parameters.elem( i );

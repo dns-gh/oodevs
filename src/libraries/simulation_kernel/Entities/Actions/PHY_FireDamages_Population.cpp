@@ -37,7 +37,7 @@ PHY_FireDamages_Population::~PHY_FireDamages_Population()
 // Name: PHY_FireDamages_Population::Serialize
 // Created: JVT 04-03-29
 //-----------------------------------------------------------------------------
-void PHY_FireDamages_Population::Serialize( const MIL_Population& target, MsgsSimToClient::MsgPopulationFireDamages& asn ) const
+void PHY_FireDamages_Population::Serialize( const MIL_Population& target, MsgsSimToClient::MsgCrowdFireDamages& asn ) const
 {
     asn.mutable_target()->set_id( target.GetID() );
     asn.set_dead_nbr( nNbrKilledHumans_ );

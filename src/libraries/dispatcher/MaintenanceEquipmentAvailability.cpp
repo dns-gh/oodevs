@@ -19,7 +19,7 @@ using namespace dispatcher;
 // Created: LGY 2010-07-07
 // -----------------------------------------------------------------------------
 MaintenanceEquipmentAvailability::MaintenanceEquipmentAvailability( const MsgsSimToClient::MsgLogMaintenanceEquipmentAvailability& asn )
-: nEquipmentType_( asn.type_equipement() )
+: nEquipmentType_( asn.equipment_type().id() )
 , nNbrTotal_     ( asn.nbr_total() )
 , nNbrAvailable_ ( asn.nbr_disponibles() )
 , nNbrWorking_   ( asn.nbr_au_travail() )
@@ -44,13 +44,11 @@ MaintenanceEquipmentAvailability::~MaintenanceEquipmentAvailability()
 // -----------------------------------------------------------------------------
 void MaintenanceEquipmentAvailability::Send( MsgsSimToClient::MsgLogMaintenanceEquipmentAvailability& asn ) const
 {
-    asn.set_type_equipement( nEquipmentType_ );
+    asn.mutable_equipment_type()->set_id( nEquipmentType_ );
     asn.set_nbr_total( nNbrTotal_ );
     asn.set_nbr_disponibles( nNbrAvailable_ );
     asn.set_nbr_au_travail( nNbrWorking_ );
     asn.set_nbr_pretes( nNbrLent_ );
     if( nNbrResting_ != std::numeric_limits< unsigned int >::max() )
-    {        
         asn.set_nbr_au_repos( nNbrResting_ );
-    }   
 }

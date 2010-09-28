@@ -15,7 +15,7 @@
 
 namespace Common
 {
-    class MsgMeteoAttributes;
+    class MsgWeatherAttributes;
     class MsgMissionParameters;
 }
 
@@ -53,7 +53,7 @@ public:
 
     //! @name Operations
     //@{
-    void Commit( Common::MsgMeteoAttributes& att ) const;
+    void Commit( Common::MsgWeatherAttributes& att ) const;
     void Commit( Common::MsgMissionParameters& att ) const;
     void CreateParameters( actions::MagicAction& action, tools::Iterator< const kernel::OrderParameter& >& it );
     //@}

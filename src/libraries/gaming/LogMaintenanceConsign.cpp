@@ -29,7 +29,7 @@ using namespace kernel;
 LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const MsgsSimToClient::MsgLogMaintenanceHandlingCreation& message, const tools::Resolver_ABC< Agent_ABC >& resolver, const tools::Resolver_ABC< ComponentType >& componentResolver, const tools::Resolver_ABC< kernel::BreakdownType >& breakdownResolver )
     : controller_      ( controller )
     , resolver_        ( resolver )
-    , nID_             ( message.id().id() )
+    , nID_             ( message.request().id() )
     , consumer_        ( resolver_.Get( message.unit().id() ) )
     , pPionLogHandling_( 0 )
     , equipmentType_   ( & componentResolver.Get( message.equipement().id() ) )

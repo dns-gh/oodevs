@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: InfrastructuresAttribute constructor
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------
-InfrastructuresAttribute::InfrastructuresAttribute( const MsgsSimToClient::MsgUrbanAttributes& message )
+InfrastructuresAttribute::InfrastructuresAttribute( const MsgsSimToClient::UrbanAttributes& message )
 {
     Update( message );
 }
@@ -34,7 +34,7 @@ InfrastructuresAttribute::~InfrastructuresAttribute()
 // Name: InfrastructuresAttribute::Update
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------
-void InfrastructuresAttribute::Update( const MsgsSimToClient::MsgUrbanAttributes& message )
+void InfrastructuresAttribute::Update( const MsgsSimToClient::UrbanAttributes& message )
 {
     if( !message.has_infrastructures() )
         return;
@@ -46,7 +46,7 @@ void InfrastructuresAttribute::Update( const MsgsSimToClient::MsgUrbanAttributes
 // Name: InfrastructuresAttribute::Send
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------
-void InfrastructuresAttribute::Send( MsgsSimToClient::MsgUrbanAttributes& /*message*/ ) const
+void InfrastructuresAttribute::Send( MsgsSimToClient::UrbanAttributes& /*message*/ ) const
 {
     // TODO
 }

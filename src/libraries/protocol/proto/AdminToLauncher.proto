@@ -10,34 +10,57 @@
 package MsgsAdminToLauncher;
 
 import "Common.proto";
+import "ClientToSim.proto";
 import "Version.proto";
 
 message MsgConnectionRequest {
    required Version.ProtocolVersion client_version = 1;
 }
 
-message MsgExercicesListRequest {
-    optional int32   context = 1 [default = 0];
-}
-
 message MsgControlStart {
+   enum GameMode {
+        play  = 0;
+        replay = 1;
+    }
    required Common.MsgExercise exercise     = 1; 
-   optional bool	  with_3A  	= 2 [default = true];
-   optional bool	  with_SIC 	= 3 [default = false];
+   required GameMode            mode                      = 2;
+   optional bool	            use_after_action_analysis = 3;
+   optional bool	            use_external_systems 	  = 4;
+   optional string              checkpoint                = 5;
 }
 
 message MsgControlStop {
 	required Common.MsgExercise exercise = 1;
 }
 
+message MsgExercicesListRequest {
+    optional int32   context = 1;
+}
+
+message MsgProfilesListRequest {
+    optional int32 context = 1;
+}
+
+message MsgConnectedProfilesListRequest {
+    optional int32 context = 1;
+}
+
+message MsgAdminDirectoryChangeNotification {}
+
 message MsgAdminToLauncher {
     message Content {
         optional MsgConnectionRequest    connection_request = 1;
-        optional MsgExercicesListRequest exercise_list_request = 2;
-        optional MsgControlStart         control_start = 3;
-        optional MsgControlStop          control_stop = 4;
+        optional MsgControlStart                                   control_start                     = 2;
+        optional MsgControlStop                                    control_stop                      = 3;
+        optional MsgExercicesListRequest                           exercise_list_request             = 4;
+        optional MsgProfilesListRequest                            profile_list_request              = 5;
+        optional MsgConnectedProfilesListRequest                   connected_profile_list_request    = 6;
+        optional MsgAdminDirectoryChangeNotification               notification                      = 7;
+        optional MsgsClientToSim.MsgControlCheckPointSetFrequency  control_checkpoint_set_frequency  = 8;
+        optional MsgsClientToSim.MsgControlCheckPointSaveNow       control_checkpoint_save_now       = 9;
+        optional MsgsClientToSim.MsgControlCheckPointListRequest   control_checkpoint_list_request   = 10;
+        optional MsgsClientToSim.MsgControlCheckPointDeleteRequest control_checkpoint_delete_request = 11;
     }
-    optional int32   context = 1 [default = 0];
+    optional int32   context = 1;
     required Content message = 2;
 }
-

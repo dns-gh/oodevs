@@ -17,7 +17,7 @@
 
 namespace Common
 {
-    class MsgObjectAttributes;
+    class ObjectAttributes;
 }
 
 namespace MsgsSimToClient
@@ -70,7 +70,7 @@ private:
 
     //! @name Attributes
     //@{
-    void Initialize( Model_ABC& model, const Common::MsgObjectAttributes& attribute );
+    void Initialize( Model_ABC& model, const Common::ObjectAttributes& attribute );
     void AddAttribute( ObjectAttribute_ABC* attribute );
     //@}
 
@@ -90,7 +90,6 @@ private:
 
 private:
     const kernel::ObjectType& type_;
-    const std::string strName_;
     Localisation localisation_;
     dispatcher::Team_ABC& side_;
     T_ObjectAttributes attributes_;

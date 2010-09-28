@@ -844,7 +844,7 @@ void MIL_AutomateLOG::UpdateNetwork() const
 void MIL_AutomateLOG::SendQuotas() const
 {
     client::LogSupplyQuotas asn;
-    asn().mutable_id()->set_id( GetID() );
+    asn().mutable_automat()->set_id( GetID() );
     if( !stockQuotas_.empty() )
     {
         unsigned int i = 0;
@@ -893,7 +893,7 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( const MsgsClientToSim::Ms
     MIL_AutomateLOG* pNewMedicalSuperior     = 0;
     MIL_AutomateLOG* pNewSupplySuperior      = 0;
 
-    unsigned int tc2Id = msg.parametres().elem( 0 ).value().identifier();
+    unsigned int tc2Id = msg.parameters().elem( 0 ).value().identifier();
     if( tc2Id != ( unsigned int ) -1)
     {
         bNewTC2 = true;
@@ -905,7 +905,7 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( const MsgsClientToSim::Ms
         }
     }
 
-    unsigned int maintenanceId = msg.parametres().elem( 1 ).value().identifier();
+    unsigned int maintenanceId = msg.parameters().elem( 1 ).value().identifier();
     if( maintenanceId != ( unsigned int ) -1 )
     {
         bNewMaintenanceSuperior = true;
@@ -917,7 +917,7 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( const MsgsClientToSim::Ms
         }
     }
 
-    unsigned int santeId = msg.parametres().elem( 2 ).value().identifier();
+    unsigned int santeId = msg.parameters().elem( 2 ).value().identifier();
     if( santeId != ( unsigned int ) -1 )
     {
         bNewMedicalSuperior = true;
@@ -929,7 +929,7 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( const MsgsClientToSim::Ms
         }
     }
 
-    unsigned int supplyId = msg.parametres().elem( 3 ).value().identifier();
+    unsigned int supplyId = msg.parameters().elem( 3 ).value().identifier();
     if( supplyId != ( unsigned int ) -1 )
     {
         bNewSupplySuperior = true;

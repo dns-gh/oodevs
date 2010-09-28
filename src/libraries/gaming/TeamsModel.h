@@ -13,9 +13,9 @@
 #include "protocol/Protocol.h"
 #include "tools/Resolver.h"
 
-namespace Common
+namespace MsgsSimToClient
 {
-    class MsgTeamCreation;
+    class MsgPartyCreation;
     class MsgFormationCreation;
 }
 
@@ -49,8 +49,8 @@ public:
     //@{
     void Purge();
 
-    void CreateTeam( const MsgsSimToClient::MsgTeamCreation& message );
-    void CreateFormation( const Common::MsgFormationCreation& message );
+    void CreateTeam( const MsgsSimToClient::MsgPartyCreation& message );
+    void CreateFormation( const MsgsSimToClient::MsgFormationCreation& message );
 
     kernel::Team_ABC& GetTeam( unsigned long id );
     kernel::Team_ABC* FindTeam( const QString& team );

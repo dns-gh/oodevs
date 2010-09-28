@@ -28,7 +28,7 @@ MIL_PopulationKnowledgeParameter::MIL_PopulationKnowledgeParameter( DEC_Knowledg
 // Name: MIL_PopulationKnowledgeParameter constructor
 // Created: LDC 2009-06-04
 // -----------------------------------------------------------------------------
-MIL_PopulationKnowledgeParameter::MIL_PopulationKnowledgeParameter( const Common::PopulationKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver )
+MIL_PopulationKnowledgeParameter::MIL_PopulationKnowledgeParameter( const Common::CrowdKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver )
 : pKnowledgePopulation_( resolver.ResolveKnowledgePopulation( asn ) )
 {
     // NOTHING
@@ -56,7 +56,7 @@ bool MIL_PopulationKnowledgeParameter::IsOfType( const MIL_ParameterType_ABC& ty
 // Name: MIL_PopulationKnowledgeParameter::ToPopulationKnowledge
 // Created: LDC 2009-06-04
 // -----------------------------------------------------------------------------
-bool MIL_PopulationKnowledgeParameter::ToPopulationKnowledge( Common::PopulationKnowledgeId& asn ) const
+bool MIL_PopulationKnowledgeParameter::ToPopulationKnowledge( Common::CrowdKnowledgeId& asn ) const
 {
     asn.set_id( pKnowledgePopulation_->GetID() );
     return true;

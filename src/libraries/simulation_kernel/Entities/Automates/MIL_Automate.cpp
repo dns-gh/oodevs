@@ -545,7 +545,7 @@ void MIL_Automate::UpdateNetwork() const
     if( bAutomateModeChanged_ || GetRole< DEC_AutomateDecision >().HasStateChanged() )
     {
         client::AutomatAttributes msg;
-        msg().mutable_id()->set_id( nID_ );
+        msg().mutable_automat()->set_id( nID_ );
 
         if( bAutomateModeChanged_ )
         {
@@ -873,7 +873,7 @@ bool MIL_Automate::GetAlivePionsBarycenter( MT_Vector2D& barycenter ) const
 void MIL_Automate::SendCreation() const
 {
     client::AutomatCreation asn;
-    asn().mutable_id()->set_id( nID_ );
+    asn().mutable_automat()->set_id( nID_ );
     asn().mutable_type()->set_id( pType_->GetID() );
     asn().mutable_party()->set_id( GetArmy().GetID() );
     asn().mutable_knowledge_group()->set_id( GetKnowledgeGroup().GetId() );
@@ -881,9 +881,9 @@ void MIL_Automate::SendCreation() const
 
     assert( pParentAutomate_ || pParentFormation_ );
     if( pParentAutomate_ )
-        asn().mutable_oid_parent()->mutable_automat()->set_id( pParentAutomate_->GetID() );
+        asn().mutable_parent()->mutable_automat()->set_id( pParentAutomate_->GetID() );
     else if( pParentFormation_ )
-        asn().mutable_oid_parent()->mutable_formation()->set_id( pParentFormation_->GetID() );
+        asn().mutable_parent()->mutable_formation()->set_id( pParentFormation_->GetID() );
     asn.Send( NET_Publisher_ABC::Publisher() );
 
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
@@ -901,8 +901,7 @@ void MIL_Automate::SendFullState() const
 {
 
     client::AutomatAttributes asn;
-    asn().mutable_id()->set_id( nID_ );
-//    asn().set_etat_automatePresent( 1 );
+    asn().mutable_automat()->set_id( nID_ );
     asn().set_etat_automate( bEngaged_ ? Common::embraye : Common::debraye );
     GetRole< DEC_AutomateDecision >().SendFullState( asn );
     asn.Send( NET_Publisher_ABC::Publisher() );
@@ -955,7 +954,7 @@ void MIL_Automate::SendLogisticLinks() const
 void MIL_Automate::OnReceiveMsgSetAutomateMode( const MsgsClientToSim::MsgSetAutomatMode& asnMsg )
 {
     if( pParentAutomate_ && pParentAutomate_->IsEngaged() )
-        throw NET_AsnException< MsgsSimToClient::MsgSetAutomatModeAck_ErrorCode >( MsgsSimToClient::MsgSetAutomatModeAck_ErrorCode_error_not_allowed );
+        throw NET_AsnException< MsgsSimToClient::MsgSetAutomatModeAck_ErrorCode >( MsgsSimToClient::MsgSetAutomatModeAck::error_not_allowed );
     switch( asnMsg.mode() )
     {
         case Common::debraye: Disengage(); break;
@@ -973,7 +972,7 @@ void MIL_Automate::OnReceiveMsgUnitCreationRequest( const MsgsClientToSim::MsgUn
 {
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( msg.type().id() );
     if( !pType )
-        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_unit );
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_unit );
 
     MT_Vector2D position;
     NET_ASN_Tools::ReadPoint( msg.position(), position );
@@ -987,28 +986,28 @@ void MIL_Automate::OnReceiveMsgUnitCreationRequest( const MsgsClientToSim::MsgUn
 void MIL_Automate::OnReceiveMsgUnitCreationRequest( const MsgsClientToSim::MsgUnitMagicAction& msg )
 {
     if( msg.type() != MsgsClientToSim::MsgUnitMagicAction_Type_unit_creation )
-        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
 
-    if( !msg.has_parametres() || msg.parametres().elem_size() != 2)
-        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+    if( !msg.has_parameters() || msg.parameters().elem_size() != 2)
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
 
-    const Common::MsgMissionParameter& id = msg.parametres().elem( 0 );
+    const Common::MsgMissionParameter& id = msg.parameters().elem( 0 );
     if( !id.has_value() || !id.value().has_identifier() )
-        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
 
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( id.value().identifier() );
     if( !pType )
-        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_unit );
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_unit );
 
-    const Common::MsgMissionParameter& location = msg.parametres().elem( 1 );
+    const Common::MsgMissionParameter& location = msg.parameters().elem( 1 );
     if( !location.has_value() || !location.value().has_point() )
-        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
 
     const Common::MsgPoint& point = location.value().point();
 
     if( point.location().type() != Common::MsgLocation_Geometry_point
         || point.location().coordinates().elem_size() != 1 )
-        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
 
     MT_Vector2D position;
     MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem(0), position );
@@ -1025,11 +1024,11 @@ void MIL_Automate::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgUnitMa
     {
     case MsgsClientToSim::MsgUnitMagicAction_Type_surrender_to:
         {
-            const MIL_Army_ABC* pSurrenderedToArmy = armies.Find( msg.parametres().elem(0).value().party().id() );
+            const MIL_Army_ABC* pSurrenderedToArmy = armies.Find( msg.parameters().elem(0).value().party().id() );
             if( !pSurrenderedToArmy || *pSurrenderedToArmy == GetArmy() )
-                throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+                throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
             else if( IsSurrendered() )
-                throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_unit_surrendered );
+                throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_unit_surrendered );
             else
             {
                 Surrender( *pSurrenderedToArmy );
@@ -1056,20 +1055,20 @@ void MIL_Automate::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgUnitMa
 void MIL_Automate::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgUnitMagicAction& msg )
 {
     if( msg.type() != MsgsClientToSim::MsgUnitMagicAction_Type_move_to )
-        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
 
-    if( !msg.has_parametres() || msg.parametres().elem_size() != 1 )
-        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+    if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
 
-    const Common::MsgMissionParameter& parametre = msg.parametres().elem( 0 );
+    const Common::MsgMissionParameter& parametre = msg.parameters().elem( 0 );
     if( !parametre.has_value() || !parametre.value().has_point() )
-        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
 
     const Common::MsgPoint& point = parametre.value().point();
 
     if( point.location().type() != Common::MsgLocation_Geometry_point
         || point.location().coordinates().elem_size() != 1 )
-        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
 
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem(0), vPosTmp );
@@ -1090,24 +1089,24 @@ void MIL_Automate::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgUnit
 void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( const MsgsClientToSim::MsgUnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies  )
 {
     if( msg.type() != MsgsClientToSim::MsgUnitMagicAction_Type_change_knowledge_group )
-        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
 
-    if( !msg.has_parametres() || msg.parametres().elem_size() != 2 )
-        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+    if( !msg.has_parameters() || msg.parameters().elem_size() != 2 )
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
 
-    if( !msg.parametres().elem( 0 ).has_value() || !msg.parametres().elem( 0 ).value().has_knowledgegroup() )
-        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+    if( !msg.parameters().elem( 0 ).has_value() || !msg.parameters().elem( 0 ).value().has_knowledgegroup() )
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
 
-    if( !msg.parametres().elem( 1 ).has_value() || !msg.parametres().elem( 1 ).value().has_party() )
-        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+    if( !msg.parameters().elem( 1 ).has_value() || !msg.parameters().elem( 1 ).value().has_party() )
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
 
-    MIL_Army_ABC* pNewArmy = armies.Find( msg.parametres().elem( 1 ).value().party().id() );
+    MIL_Army_ABC* pNewArmy = armies.Find( msg.parameters().elem( 1 ).value().party().id() );
     if( !pNewArmy || *pNewArmy != GetArmy() )
-        throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_team_hierarchy );
+        throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck::ErrorCode >( MsgsSimToClient::HierarchyModificationAck::error_invalid_party_hierarchy );
 
-    MIL_KnowledgeGroup* pNewKnowledgeGroup = pNewArmy->FindKnowledgeGroup( msg.parametres().elem( 0 ).value().knowledgegroup().id() );
+    MIL_KnowledgeGroup* pNewKnowledgeGroup = pNewArmy->FindKnowledgeGroup( msg.parameters().elem( 0 ).value().knowledgegroup().id() );
     if( !pNewKnowledgeGroup )
-        throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_knowledge_group );
+        throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck::ErrorCode >( MsgsSimToClient::HierarchyModificationAck::error_invalid_knowledge_group );
 
     if( *pKnowledgeGroup_ != *pNewKnowledgeGroup )
     {
@@ -1124,9 +1123,9 @@ void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( const MsgsClientToSim::MsgU
 void MIL_Automate::OnReceiveMsgChangeLogisticLinks( const MsgsClientToSim::MsgUnitMagicAction& msg )
 {
     if( IsSurrendered() )
-        throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_unit_surrendered_hierarchy );
+        throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck::error_unit_surrendered_hierarchy );
 
-    unsigned int tc2Id = msg.parametres().elem( 0 ).value().identifier();
+    unsigned int tc2Id = msg.parameters().elem( 0 ).value().identifier();
     if( tc2Id != ( unsigned int ) -1 )
     {
         if( tc2Id == 0 )
@@ -1135,7 +1134,7 @@ void MIL_Automate::OnReceiveMsgChangeLogisticLinks( const MsgsClientToSim::MsgUn
         {
             MIL_Automate* pTC2 = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( tc2Id );
             if( !pTC2 || !pTC2->GetType().IsLogistic() )
-                throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate_tc2 );
+                throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck::error_invalid_automate_tc2 );
             pTC2_ = static_cast< MIL_AutomateLOG* >( pTC2 );
         }
     }
@@ -1147,13 +1146,13 @@ void MIL_Automate::OnReceiveMsgChangeLogisticLinks( const MsgsClientToSim::MsgUn
 // -----------------------------------------------------------------------------
 void MIL_Automate::OnReceiveMsgChangeSuperior( const MsgsClientToSim::MsgUnitMagicAction& msg, const tools::Resolver< MIL_Formation >& formations )
 {
-    if( msg.type() == MsgsClientToSim::MsgUnitMagicAction_Type_change_formation_superior )
+    if( msg.type() == MsgsClientToSim::MsgUnitMagicAction::change_formation_superior )
     {
-        MIL_Formation* pNewFormation = formations.Find( msg.parametres().elem( 0 ).value().formation().id() );
+        MIL_Formation* pNewFormation = formations.Find( msg.parameters().elem( 0 ).value().formation().id() );
         if( !pNewFormation )
-            throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_formation );
+            throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck::ErrorCode >( MsgsSimToClient::HierarchyModificationAck::error_invalid_formation );
         if( pNewFormation->GetArmy() != GetArmy() )
-            throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_teams_mismatched );
+            throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck::ErrorCode >( MsgsSimToClient::HierarchyModificationAck::error_parties_mismatched );
         if( pParentAutomate_ )
             pParentAutomate_->UnregisterAutomate( *this );
         if( pParentFormation_ )
@@ -1162,15 +1161,15 @@ void MIL_Automate::OnReceiveMsgChangeSuperior( const MsgsClientToSim::MsgUnitMag
         pParentFormation_ = pNewFormation;
         pNewFormation->RegisterAutomate( *this );
     }
-    else if( msg.type() == MsgsClientToSim::MsgUnitMagicAction_Type_change_automat_superior )
+    else if( msg.type() == MsgsClientToSim::MsgUnitMagicAction::change_automat_superior )
     {
-        MIL_Automate* pNewAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( msg.parametres().elem( 0 ).value().automat().id() );
+        MIL_Automate* pNewAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( msg.parameters().elem( 0 ).value().automat().id() );
         if( !pNewAutomate )
-            throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate );
+            throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck::ErrorCode >( MsgsSimToClient::HierarchyModificationAck::error_invalid_automate );
         if( pNewAutomate->GetArmy() != GetArmy() )
-            throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_teams_mismatched );
+            throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck::ErrorCode >( MsgsSimToClient::HierarchyModificationAck::error_parties_mismatched );
         if( pNewAutomate == this )
-            throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate );
+            throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck::ErrorCode >( MsgsSimToClient::HierarchyModificationAck::error_invalid_automate );
         if( pParentAutomate_ )
             pParentAutomate_->UnregisterAutomate( *this );
         if( pParentFormation_ )

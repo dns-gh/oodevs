@@ -15,7 +15,7 @@
 
 namespace Common
 {
-    class MsgMeteoAttributes;
+    class MsgWeatherAttributes;
 }
 
 namespace dispatcher
@@ -43,7 +43,7 @@ class MeteoData: public PHY_Meteo
 public:
     //! @name Constructors/Destructor
     //@{
-             MeteoData( unsigned int id, const geometry::Point2f& upLeft, const geometry::Point2f& downRight, const Common::MsgMeteoAttributes& attributes, MeteoModel_ABC& model, kernel::CoordinateConverter_ABC& converter );
+             MeteoData( unsigned int id, const geometry::Point2f& upLeft, const geometry::Point2f& downRight, const Common::MsgWeatherAttributes& attributes, MeteoModel_ABC& model, kernel::CoordinateConverter_ABC& converter );
     virtual ~MeteoData();
     //@}
 

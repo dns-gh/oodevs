@@ -24,7 +24,7 @@
 // Name: MIL_PopulationMission constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_PopulationMission::MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population, const Common::MsgPopulationOrder& asn )
+MIL_PopulationMission::MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population, const Common::MsgCrowdOrder& asn )
     : MIL_Mission_ABC       ( type, population.GetKnowledge(), asn.parameters() )
     , population_           ( population )
     , bDIABehaviorActivated_( false )
@@ -83,7 +83,7 @@ void MIL_PopulationMission::Stop( boost::shared_ptr< MIL_Mission_ABC > self )
 // static
 void MIL_PopulationMission::SendNoMission( const MIL_Population& population )
 {
-    client::PopulationOrder asn;
+    client::CrowdOrder asn;
     asn().mutable_tasker()->set_id( population.GetID() );
     asn().mutable_type()->set_id( 0 );
     NET_ASN_Tools::WriteGDH( MIL_AgentServer::GetWorkspace().GetRealTime(), *asn().mutable_start_time() );
@@ -96,7 +96,7 @@ void MIL_PopulationMission::SendNoMission( const MIL_Population& population )
 // -----------------------------------------------------------------------------
 void MIL_PopulationMission::Send() const
 {
-    client::PopulationOrder asn;
+    client::CrowdOrder asn;
     asn().mutable_tasker()->set_id( population_.GetID() );
     asn().mutable_type()->set_id( GetType().GetID() );
     Serialize( *asn().mutable_parameters() );

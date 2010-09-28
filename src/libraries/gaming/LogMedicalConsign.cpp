@@ -28,7 +28,7 @@ using namespace kernel;
 LogMedicalConsign::LogMedicalConsign( Controller& controller, const tools::Resolver_ABC< Agent_ABC >& resolver, const MsgsSimToClient::MsgLogMedicalHandlingCreation& message )
     : controller_      ( controller )
     , resolver_        ( resolver )
-    , nID_             ( message.id().id() )
+    , nID_             ( message.request().id() )
     , consumer_        ( resolver_.Get( message.unit().id() ) )
     , pPionLogHandling_( 0 )
     , wound_           ( E_HumanWound( message.blessure() ) )

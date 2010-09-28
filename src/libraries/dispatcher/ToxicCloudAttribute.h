@@ -27,14 +27,14 @@ class ToxicCloudAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ToxicCloudAttribute( const Common::MsgObjectAttributes& message );
+    explicit ToxicCloudAttribute( const Common::ObjectAttributes& message );
     virtual ~ToxicCloudAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const Common::MsgObjectAttributes& message );
-    virtual void Send  ( Common::MsgObjectAttributes& message ) const;
+    virtual void Update( const Common::ObjectAttributes& message );
+    virtual void Send  ( Common::ObjectAttributes& message ) const;
     //@}
 private:
     //! @name

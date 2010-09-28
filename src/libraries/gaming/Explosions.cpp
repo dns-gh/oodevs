@@ -49,8 +49,8 @@ void Explosions::UpdateData( const T& message )
     for( int i = 0; i < message.units_damages().elem_size(); ++i )
         Update( message.units_damages().elem( i ) );
 
-    for( int i = 0; i < message.populations_damages().elem_size(); ++i )
-        Update( message.populations_damages().elem( i ) );
+    for( int i = 0; i < message.crowds_damages().elem_size(); ++i )
+        Update( message.crowds_damages().elem( i ) );
 
     controller_.Update( *this );
 }
@@ -77,7 +77,7 @@ void Explosions::DoUpdate( const MsgsSimToClient::MsgStopUnitFire& message )
 // Name: Explosions::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Explosions::DoUpdate( const MsgsSimToClient::MsgStopPopulationFire& message )
+void Explosions::DoUpdate( const MsgsSimToClient::MsgStopCrowdFire& message )
 {
     for( int i = 0; i < message.units_damages().elem_size(); ++i )
         Update( message.units_damages().elem( i ) );
@@ -102,7 +102,7 @@ void Explosions::Update( const MsgsSimToClient::MsgUnitFireDamages& message )
 // Name: Explosions::Update
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Explosions::Update( const MsgsSimToClient::MsgPopulationFireDamages& message )
+void Explosions::Update( const MsgsSimToClient::MsgCrowdFireDamages& message )
 {
     populationExplosions_.push_back( factory_.CreateFireResult( message ) );
     if( populationExplosions_.size() > 20 )

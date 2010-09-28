@@ -38,7 +38,7 @@ LogSupplyConsign::LogSupplyConsign( Controller& controller, const tools::Resolve
     , resolver_             ( resolver )
     , agentResolver_        ( agentResolver )
     , dotationResolver_     ( dotationResolver )
-    , nID_                  ( message.id().id() )
+    , nID_                  ( message.request().id() )
     , consumer_             ( resolver.Get( message.consumer().id() ) )
     , pAutomateLogHandling_ ( 0 )
     , pPionLogConvoying_    ( 0 )

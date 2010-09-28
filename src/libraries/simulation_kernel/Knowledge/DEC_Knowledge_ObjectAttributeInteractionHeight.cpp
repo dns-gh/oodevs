@@ -85,7 +85,7 @@ void DEC_Knowledge_ObjectAttributeInteractionHeight::UpdateOnCollision( const DE
 // Name: DEC_Knowledge_ObjectAttributeInteractionHeight::Send
 // Created: LDC 2009-03-09
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeInteractionHeight::Send( Common::MsgObjectAttributes& asn ) const
+void DEC_Knowledge_ObjectAttributeInteractionHeight::Send( Common::ObjectAttributes& asn ) const
 {
     asn.mutable_interaction_height()->set_height( float( height_ ) );
 }

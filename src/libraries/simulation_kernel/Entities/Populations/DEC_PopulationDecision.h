@@ -17,7 +17,7 @@
 
 namespace client
 {
-    class PopulationUpdate;
+    class CrowdUpdate;
 }
 
 class MIL_Mission_ABC;
@@ -104,8 +104,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( client::PopulationUpdate& msg );
-    void SendFullState   ( client::PopulationUpdate& msg ) const;
+    void SendChangedState( client::CrowdUpdate& msg );
+    void SendFullState   ( client::CrowdUpdate& msg ) const;
     //@}
 
 protected:

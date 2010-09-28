@@ -26,14 +26,14 @@ class InfrastructuresAttribute : public UrbanObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit InfrastructuresAttribute( const MsgsSimToClient::MsgUrbanAttributes& message );
+    explicit InfrastructuresAttribute( const MsgsSimToClient::UrbanAttributes& message );
     virtual ~InfrastructuresAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const MsgsSimToClient::MsgUrbanAttributes& message );
-    virtual void Send  (       MsgsSimToClient::MsgUrbanAttributes& message ) const;
+    virtual void Update( const MsgsSimToClient::UrbanAttributes& message );
+    virtual void Send  (       MsgsSimToClient::UrbanAttributes& message ) const;
     //@}
 };
 

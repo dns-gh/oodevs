@@ -326,7 +326,7 @@ MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdate(
 // Created: JSR 2010-09-17
 // -----------------------------------------------------------------------------
 template < typename T >
-void UrbanObjectWrapper::SendCapacity( MsgsSimToClient::MsgUrbanAttributes& msg) const
+void UrbanObjectWrapper::SendCapacity( MsgsSimToClient::UrbanAttributes& msg) const
 {
     const T* capacity = Retrieve< T >();
     if( capacity )
@@ -342,7 +342,7 @@ void UrbanObjectWrapper::SendCreation() const
     if( object_->HasChild() )
         return;
     client::UrbanCreation message;
-    message().set_oid( object_->GetId() );
+    message().mutable_urban_object()->set_id( object_->GetId() );
     message().set_name( object_->GetName() );
     NET_ASN_Tools::WriteLocation( GetLocalisation(), *message().mutable_location() );
 
@@ -399,7 +399,7 @@ void UrbanObjectWrapper::UpdateState()
     if( pView_ && pView_->HideObject() )
         return;
     client::UrbanUpdate message;
-    message().set_oid( object_->GetId() );
+    message().mutable_urban_object()->set_id( object_->GetId() );
     SendCapacity< StructuralCapacity >( *message().mutable_attributes() );
     SendCapacity< ResourceNetworkCapacity >( *message().mutable_attributes() );
     message.Send( NET_Publisher_ABC::Publisher() );

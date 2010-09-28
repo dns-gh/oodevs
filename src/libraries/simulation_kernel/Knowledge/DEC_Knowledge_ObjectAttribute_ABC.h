@@ -12,7 +12,7 @@
 
 namespace Common
 {
-    class MsgObjectAttributes;
+    class ObjectAttributes;
 }
 
 class PHY_PerceptionLevel;
@@ -37,7 +37,7 @@ public:
     virtual void UpdateOnPerceptionLevel( const PHY_PerceptionLevel& currentPerceptionLevel ) = 0;
     virtual void UpdateOnPerception( const DEC_Knowledge_ObjectPerception& perception ) = 0;
     virtual void UpdateOnCollision( const DEC_Knowledge_ObjectCollision& collision  ) = 0;
-    virtual void Send( Common::MsgObjectAttributes& asn ) const = 0;
+    virtual void Send( Common::ObjectAttributes& asn ) const = 0;
     //@}
 
     //! @name CheckPoint / boost deserialize

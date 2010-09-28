@@ -119,10 +119,10 @@ kernel::Automat_ABC* AgentFactory::Create( const MsgsSimToClient::MsgAutomatCrea
     result->Attach< kernel::CommunicationHierarchies >( *new AutomatHierarchies        ( controllers_.controller_, *result, model_.knowledgeGroups_, dico ) );
     kernel::Entity_ABC* superior = 0;
 
-    if( message.oid_parent().has_formation() )
-        superior = & (( tools::Resolver< kernel::Formation_ABC >&)( model_.teams_ )) .Get( message.oid_parent().formation().id() );
+    if( message.parent().has_formation() )
+        superior = & (( tools::Resolver< kernel::Formation_ABC >&)( model_.teams_ )) .Get( message.parent().formation().id() );
     else
-        superior = & (( tools::Resolver< kernel::Automat_ABC >&)  ( model_.agents_ )).Get( message.oid_parent().automat().id() );
+        superior = & (( tools::Resolver< kernel::Automat_ABC >&)  ( model_.agents_ )).Get( message.parent().automat().id() );
     result->Attach< kernel::TacticalHierarchies >     ( *new AutomatTacticalHierarchies( controllers_.controller_, *result, *superior, model_.agents_, model_.teams_ ) );
     result->Attach( *new AutomatLives( *result ) );
     result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, result->GetType(), dico ) );
@@ -199,7 +199,7 @@ kernel::Agent_ABC* AgentFactory::Create( const MsgsSimToClient::MsgUnitCreation&
 // Name: AgentFactory::Create
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-kernel::Population_ABC* AgentFactory::Create( const MsgsSimToClient::MsgPopulationCreation& message )
+kernel::Population_ABC* AgentFactory::Create( const MsgsSimToClient::MsgCrowdCreation& message )
 {
     Population* result = new Population( message, controllers_, static_.coordinateConverter_, static_.types_ );
 

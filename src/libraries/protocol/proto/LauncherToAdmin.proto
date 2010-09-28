@@ -10,6 +10,8 @@
 package MsgsLauncherToAdmin;
 
 import "Common.proto"; 
+import "SimToClient.proto";
+import "AuthenticationToClient.proto";
 import "Version.proto";
 
 message MsgConnectionAck {
@@ -34,11 +36,28 @@ message MsgExercicesListResponse {
     repeated Common.MsgExercise exercise    = 2;
 }
 
+message MsgConnectedProfileList {
+    enum ErrorCode {
+        success = 0;
+        failure	= 1;
+    }
+    
+    enum Context {
+        spontaneous  = 0;
+        upon_request = 1;
+    }
+    
+    required ErrorCode                             error_code  = 1;
+    required Context                               context     = 2;
+    repeated MsgsAuthenticationToClient.MsgProfile exercise    = 3;
+}
+
 message MsgControlStartAck  {
     enum ErrorCode {
         success                  = 0;
         bad_exercise_name        = 1;
         exercise_already_running = 2;
+        invalid_checkpoint       = 3;
     }
     required ErrorCode          error_code = 1;
     required Common.MsgExercise exercise   = 2;
@@ -50,9 +69,15 @@ message MsgControlStopAck {
         bad_exercise_name    = 1; 
         exercise_not_running = 2;
     }
+    
     required ErrorCode                  error_code       = 1;
     required Common.MsgExercise         exercise         = 2;
     optional Common.EnumSimulationState simulation_state = 3;
+}
+
+message MsgSimulationComponentState {
+    required Common.EnumSimulationState simulation_state = 1;
+    optional Common.EnumDispatcherState dispatcher_state = 2;
 }
 
 message MsgLauncherToAdmin {
@@ -61,6 +86,21 @@ message MsgLauncherToAdmin {
         optional MsgExercicesListResponse   exercise_list_response = 2;
         optional MsgControlStartAck         control_start_ack      = 3;
         optional MsgControlStopAck          control_stop_ack       = 4;
+        optional MsgsSimToClient.MsgControlCheckPointSetFrequencyAck  control_checkpoint_set_frequency_ack  = 5;
+        optional Common.MsgUnitChangeSuperior                         unit_change_superior                  = 6;
+        optional Common.MsgAutomatChangeSuperior                      automat_change_superior               = 7;
+        optional MsgsSimToClient.MsgUnitCreation                      unit_creation                         = 8;
+        optional MsgsSimToClient.MsgAutomatCreation                   automat_creation                      = 9;
+        optional MsgConnectedProfileList                              connected_profile_list                = 10;
+        optional MsgsAuthenticationToClient.MsgProfileDescriptionList profiles_description                  = 11;
+        optional MsgsAuthenticationToClient.MsgProfileCreation        profile_creation                      = 12;
+        optional MsgsAuthenticationToClient.MsgProfileUpdate          profile_update                        = 13;
+        optional MsgsAuthenticationToClient.MsgProfileDestruction     profile_destruction                   = 14;
+        optional MsgSimulationComponentState                          simulation_component_state            = 15;
+        optional MsgsSimToClient.MsgControlCheckPointSaveNowAck       control_checkpoint_save_now_ack       = 16;
+        optional MsgsSimToClient.MsgControlCheckPointListAck          control_checkpoint_list_ack           = 17;
+        optional MsgsSimToClient.MsgControlCheckPointList             control_checkpoint_list               = 18;
+        optional MsgsSimToClient.MsgControlCheckPointDeleteAck        control_checkpoint_delete_ack         = 19;
     }
     optional int32   context = 1;
     required Content message = 2;

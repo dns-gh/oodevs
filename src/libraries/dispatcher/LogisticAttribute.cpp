@@ -19,7 +19,7 @@ using namespace dispatcher;
 // Name: LogisticAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-LogisticAttribute::LogisticAttribute( const Model_ABC& model, const Common::MsgObjectAttributes& asnMsg )
+LogisticAttribute::LogisticAttribute( const Model_ABC& model, const Common::ObjectAttributes& asnMsg )
     : automats_( model.Automats() )
     , pTC2_( 0 )
 {
@@ -39,7 +39,7 @@ LogisticAttribute::~LogisticAttribute()
 // Name: LogisticAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void LogisticAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
+void LogisticAttribute::Update( const Common::ObjectAttributes& asnMsg )
 {
     if ( asnMsg.has_logistic()  )
         pTC2_ = &automats_.Get( asnMsg.logistic().tc2().id() );    
@@ -49,7 +49,7 @@ void LogisticAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 // Name: LogisticAttribute::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void LogisticAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
+void LogisticAttribute::Send( Common::ObjectAttributes& asnMsg ) const
 {
     if( !pTC2_ )
         throw std::runtime_error( __FUNCTION__ ": logistic superior is not defined" );

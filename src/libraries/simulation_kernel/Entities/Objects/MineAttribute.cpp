@@ -173,7 +173,7 @@ void MineAttribute::Register( MIL_Object_ABC& object ) const
 // Name: MineAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void MineAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
+void MineAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 {
     if( dotation_ )
     {
@@ -187,7 +187,7 @@ void MineAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 // Name: MineAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void MineAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
+void MineAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
     if( NeedUpdate() )
     {

@@ -89,7 +89,7 @@ void InteractionHeightAttribute::Register( MIL_Object_ABC& object ) const
 // Name: InteractionHeightAttribute::SendFullState
 // Created: LDC 2009-03-09
 // -----------------------------------------------------------------------------
-void InteractionHeightAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
+void InteractionHeightAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 {
     asn.mutable_interaction_height()->set_height( float( height_ ) );
 }

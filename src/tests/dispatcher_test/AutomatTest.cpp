@@ -50,10 +50,10 @@ BOOST_AUTO_TEST_CASE( Automat_CanBeUnderAFormation )
         MsgsSimToClient::MsgSimToClient expected;
         expected.set_context( 0 );
         MsgsSimToClient::MsgAutomatCreation& message = *expected.mutable_message()->mutable_automat_creation();
-        message.mutable_id()->set_id( 1 );
+        message.mutable_automat()->set_id( 1 );
         message.mutable_type()->set_id( 42 );
         message.set_nom( "test" );
-        message.mutable_oid_parent()->mutable_formation()->set_id( formation.GetId() );
+        message.mutable_parent()->mutable_formation()->set_id( formation.GetId() );
         message.mutable_party()->set_id( side.GetId() );
         message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
 
@@ -107,10 +107,10 @@ BOOST_AUTO_TEST_CASE( Automat_CanBeUnderAnAutomat )
         MsgsSimToClient::MsgSimToClient expected;
         expected.set_context( 0 );
         MsgsSimToClient::MsgAutomatCreation& message = *expected.mutable_message()->mutable_automat_creation();
-        message.mutable_id()->set_id( 1 );
+        message.mutable_automat()->set_id( 1 );
         message.mutable_type()->set_id( 42 );
         message.set_nom( "test" );
-        message.mutable_oid_parent()->mutable_automat()->set_id( automat.GetId() );
+        message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
         message.mutable_party()->set_id( side.GetId() );
         message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
 
@@ -172,10 +172,10 @@ BOOST_AUTO_TEST_CASE( Automat_SuperiorCanBeChanged )
         {
             // creation
             MsgsSimToClient::MsgAutomatCreation message;
-            message.mutable_id()->set_id( 1 );
+            message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
-            message.mutable_oid_parent()->mutable_automat()->set_id( automat.GetId() );
+            message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
 
@@ -239,10 +239,10 @@ BOOST_AUTO_TEST_CASE( Automat_KnowledgeGroupCanBeChanged )
         {
             // creation
             MsgsSimToClient::MsgAutomatCreation message;
-            message.mutable_id()->set_id( 1 );
+            message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
-            message.mutable_oid_parent()->mutable_automat()->set_id( automat.GetId() );
+            message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup1.GetId() );
 
@@ -303,10 +303,10 @@ BOOST_AUTO_TEST_CASE( Automat_DecisionalStateCanBeChanged )
         {
             // creation
             MsgsSimToClient::MsgAutomatCreation message;
-            message.mutable_id()->set_id( 1 );
+            message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
-            message.mutable_oid_parent()->mutable_automat()->set_id( automat.GetId() );
+            message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
 
@@ -320,7 +320,7 @@ BOOST_AUTO_TEST_CASE( Automat_DecisionalStateCanBeChanged )
             MsgsSimToClient::MsgSimToClient expected;
             expected.set_context( 0 );
             MsgsSimToClient::MsgDecisionalState& message = *expected.mutable_message()->mutable_decisional_state();
-            message.mutable_id()->mutable_automat()->set_id( 1 );
+            message.mutable_source()->mutable_automat()->set_id( 1 );
             message.set_key( "my variable" );
             message.set_value( "my value" );
             automats.Get( 1 ).Update( message );
@@ -372,10 +372,10 @@ BOOST_AUTO_TEST_CASE( Automat_AttributesCanBeChanged )
         {
             // creation
             MsgsSimToClient::MsgAutomatCreation message;
-            message.mutable_id()->set_id( 1 );
+            message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
-            message.mutable_oid_parent()->mutable_automat()->set_id( automat.GetId() );
+            message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
 
@@ -389,7 +389,7 @@ BOOST_AUTO_TEST_CASE( Automat_AttributesCanBeChanged )
             MsgsSimToClient::MsgSimToClient expected;
             expected.set_context( 0 );
             MsgsSimToClient::MsgAutomatAttributes& message = *expected.mutable_message()->mutable_automat_attributes();
-            message.mutable_id()->set_id( 1 );
+            message.mutable_automat()->set_id( 1 );
             message.set_etat_automate( Common::debraye );
             message.set_rapport_de_force( MsgsSimToClient::ForceRatio::favorable );
             message.set_combat_de_rencontre( Common::etat_esquive );
@@ -445,10 +445,10 @@ BOOST_AUTO_TEST_CASE( Automat_LogSupplyQuotasCanBeChanged )
         {
             // creation
             MsgsSimToClient::MsgAutomatCreation message;
-            message.mutable_id()->set_id( 1 );
+            message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
-            message.mutable_oid_parent()->mutable_automat()->set_id( automat.GetId() );
+            message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
 
@@ -462,7 +462,7 @@ BOOST_AUTO_TEST_CASE( Automat_LogSupplyQuotasCanBeChanged )
             MsgsSimToClient::MsgSimToClient expected;
             expected.set_context( 0 );
             MsgsSimToClient::MsgLogSupplyQuotas& message = *expected.mutable_message()->mutable_log_supply_quotas();
-            message.mutable_id()->set_id( 1 );
+            message.mutable_automat()->set_id( 1 );
             message.mutable_quotas()->add_elem();
             message.mutable_quotas()->mutable_elem( 0 )->mutable_ressource_id()->set_id( 42 );
             message.mutable_quotas()->mutable_elem( 0 )->set_quota_disponible( 5112 );
@@ -518,10 +518,10 @@ BOOST_AUTO_TEST_CASE( Automat_LogisticLinksCanBeChanged )
         {
             // creation
             MsgsSimToClient::MsgAutomatCreation message;
-            message.mutable_id()->set_id( 1 );
+            message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
-            message.mutable_oid_parent()->mutable_automat()->set_id( automat.GetId() );
+            message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
 

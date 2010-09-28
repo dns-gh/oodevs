@@ -22,7 +22,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 IndirectFire::IndirectFire( const MsgsSimToClient::MsgStartUnitFire& message, const tools::Resolver_ABC< Agent_ABC >& resolver, const CoordinateConverter_ABC& converter )
     : Fire_ABC( resolver.Get( message.firing_unit().id() ) )
-    , id_( message.id().id() )
+    , id_( message.fire().id() )
     , target_( converter.ConvertToXY( message.target().position() ) )
 {
     if( !message.target().has_position() )

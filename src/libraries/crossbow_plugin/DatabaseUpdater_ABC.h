@@ -12,6 +12,7 @@
 
 namespace MsgsSimToClient
 {
+    class MsgFormationCreation;
     class MsgUnitCreation;
     class MsgUnitKnowledgeCreation;
     class MsgObjectCreation;
@@ -31,11 +32,6 @@ namespace MsgsMessengerToClient
 {
     class MsgLimitCreation;
     class MsgLimaCreation;
-}
-
-namespace Common
-{
-    class MsgFormationCreation;
 }
 
 namespace plugins
@@ -70,7 +66,7 @@ public:
     virtual void Update( const MsgsMessengerToClient::MsgLimitCreation& msg ) = 0;
     virtual void Update( const MsgsMessengerToClient::MsgLimaCreation& msg ) = 0;
     virtual void Update( const MsgsSimToClient::MsgObjectCreation& msg ) = 0;
-    virtual void Update( const Common::MsgFormationCreation& asn ) = 0;
+    virtual void Update( const MsgsSimToClient::MsgFormationCreation& asn ) = 0;
     virtual void Update( const MsgsSimToClient::MsgAutomatCreation& asn ) = 0;
     virtual void Update( const MsgsSimToClient::MsgObjectKnowledgeCreation& msg ) = 0;
 

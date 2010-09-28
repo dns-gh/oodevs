@@ -94,7 +94,7 @@ void VisionConesToggler::ToggleVisionCones()
 {
     if( simulation_ )
     {
-        simulation::ControlToggleVisionCones msg;
+        simulation::ControlEnableVisionCones msg;
         msg().set_vision_cones( displayCones_ || displaySurfaces_ || displayFog_ );
         msg.Send( publisher_ );
     }

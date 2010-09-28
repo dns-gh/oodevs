@@ -261,6 +261,16 @@ class MsgAuthenticationResponse : public ::google::protobuf::Message {
   inline const ::Common::MsgDateTime& restart_date_time() const;
   inline ::Common::MsgDateTime* mutable_restart_date_time();
   
+  // optional string terrain_name = 6;
+  inline bool has_terrain_name() const;
+  inline void clear_terrain_name();
+  static const int kTerrainNameFieldNumber = 6;
+  inline const ::std::string& terrain_name() const;
+  inline void set_terrain_name(const ::std::string& value);
+  inline void set_terrain_name(const char* value);
+  inline void set_terrain_name(const char* value, size_t size);
+  inline ::std::string* mutable_terrain_name();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -270,11 +280,13 @@ class MsgAuthenticationResponse : public ::google::protobuf::Message {
   ::MsgsAuthenticationToClient::MsgProfileDescriptionList* profiles_;
   ::Version::ProtocolVersion* server_version_;
   ::Common::MsgDateTime* restart_date_time_;
+  ::std::string* terrain_name_;
+  static const ::std::string _default_terrain_name_;
   friend void  protobuf_AddDesc_AuthenticationToClient_2eproto();
   friend void protobuf_AssignDesc_AuthenticationToClient_2eproto();
   friend void protobuf_ShutdownFile_AuthenticationToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -1053,26 +1065,26 @@ class MsgProfile : public ::google::protobuf::Message {
   inline const ::Common::PartyIdList& read_write_camps() const;
   inline ::Common::PartyIdList* mutable_read_write_camps();
   
-  // optional .Common.PopulationIdList read_only_populations = 9;
-  inline bool has_read_only_populations() const;
-  inline void clear_read_only_populations();
-  static const int kReadOnlyPopulationsFieldNumber = 9;
-  inline const ::Common::PopulationIdList& read_only_populations() const;
-  inline ::Common::PopulationIdList* mutable_read_only_populations();
+  // optional .Common.CrowdIdList read_only_crowds = 9;
+  inline bool has_read_only_crowds() const;
+  inline void clear_read_only_crowds();
+  static const int kReadOnlyCrowdsFieldNumber = 9;
+  inline const ::Common::CrowdIdList& read_only_crowds() const;
+  inline ::Common::CrowdIdList* mutable_read_only_crowds();
   
-  // optional .Common.PopulationIdList read_write_populations = 10;
-  inline bool has_read_write_populations() const;
-  inline void clear_read_write_populations();
-  static const int kReadWritePopulationsFieldNumber = 10;
-  inline const ::Common::PopulationIdList& read_write_populations() const;
-  inline ::Common::PopulationIdList* mutable_read_write_populations();
+  // optional .Common.CrowdIdList read_write_crowds = 10;
+  inline bool has_read_write_crowds() const;
+  inline void clear_read_write_crowds();
+  static const int kReadWriteCrowdsFieldNumber = 10;
+  inline const ::Common::CrowdIdList& read_write_crowds() const;
+  inline ::Common::CrowdIdList* mutable_read_write_crowds();
   
-  // required bool superviseur = 11;
-  inline bool has_superviseur() const;
-  inline void clear_superviseur();
-  static const int kSuperviseurFieldNumber = 11;
-  inline bool superviseur() const;
-  inline void set_superviseur(bool value);
+  // required bool supervisor = 11;
+  inline bool has_supervisor() const;
+  inline void clear_supervisor();
+  static const int kSupervisorFieldNumber = 11;
+  inline bool supervisor() const;
+  inline void set_supervisor(bool value);
   
   // optional .MsgsAuthenticationToClient.Role role = 12;
   inline bool has_role() const;
@@ -1095,9 +1107,9 @@ class MsgProfile : public ::google::protobuf::Message {
   ::Common::AutomatIdList* read_write_automates_;
   ::Common::PartyIdList* read_only_camps_;
   ::Common::PartyIdList* read_write_camps_;
-  ::Common::PopulationIdList* read_only_populations_;
-  ::Common::PopulationIdList* read_write_populations_;
-  bool superviseur_;
+  ::Common::CrowdIdList* read_only_crowds_;
+  ::Common::CrowdIdList* read_write_crowds_;
+  bool supervisor_;
   int role_;
   friend void  protobuf_AddDesc_AuthenticationToClient_2eproto();
   friend void protobuf_AssignDesc_AuthenticationToClient_2eproto();
@@ -1643,6 +1655,48 @@ inline ::Common::MsgDateTime* MsgAuthenticationResponse::mutable_restart_date_ti
   return restart_date_time_;
 }
 
+// optional string terrain_name = 6;
+inline bool MsgAuthenticationResponse::has_terrain_name() const {
+  return _has_bit(5);
+}
+inline void MsgAuthenticationResponse::clear_terrain_name() {
+  if (terrain_name_ != &_default_terrain_name_) {
+    terrain_name_->clear();
+  }
+  _clear_bit(5);
+}
+inline const ::std::string& MsgAuthenticationResponse::terrain_name() const {
+  return *terrain_name_;
+}
+inline void MsgAuthenticationResponse::set_terrain_name(const ::std::string& value) {
+  _set_bit(5);
+  if (terrain_name_ == &_default_terrain_name_) {
+    terrain_name_ = new ::std::string;
+  }
+  terrain_name_->assign(value);
+}
+inline void MsgAuthenticationResponse::set_terrain_name(const char* value) {
+  _set_bit(5);
+  if (terrain_name_ == &_default_terrain_name_) {
+    terrain_name_ = new ::std::string;
+  }
+  terrain_name_->assign(value);
+}
+inline void MsgAuthenticationResponse::set_terrain_name(const char* value, size_t size) {
+  _set_bit(5);
+  if (terrain_name_ == &_default_terrain_name_) {
+    terrain_name_ = new ::std::string;
+  }
+  terrain_name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgAuthenticationResponse::mutable_terrain_name() {
+  _set_bit(5);
+  if (terrain_name_ == &_default_terrain_name_) {
+    terrain_name_ = new ::std::string;
+  }
+  return terrain_name_;
+}
+
 // -------------------------------------------------------------------
 
 // MsgProfileCreation
@@ -2152,54 +2206,54 @@ inline ::Common::PartyIdList* MsgProfile::mutable_read_write_camps() {
   return read_write_camps_;
 }
 
-// optional .Common.PopulationIdList read_only_populations = 9;
-inline bool MsgProfile::has_read_only_populations() const {
+// optional .Common.CrowdIdList read_only_crowds = 9;
+inline bool MsgProfile::has_read_only_crowds() const {
   return _has_bit(8);
 }
-inline void MsgProfile::clear_read_only_populations() {
-  if (read_only_populations_ != NULL) read_only_populations_->::Common::PopulationIdList::Clear();
+inline void MsgProfile::clear_read_only_crowds() {
+  if (read_only_crowds_ != NULL) read_only_crowds_->::Common::CrowdIdList::Clear();
   _clear_bit(8);
 }
-inline const ::Common::PopulationIdList& MsgProfile::read_only_populations() const {
-  return read_only_populations_ != NULL ? *read_only_populations_ : *default_instance_->read_only_populations_;
+inline const ::Common::CrowdIdList& MsgProfile::read_only_crowds() const {
+  return read_only_crowds_ != NULL ? *read_only_crowds_ : *default_instance_->read_only_crowds_;
 }
-inline ::Common::PopulationIdList* MsgProfile::mutable_read_only_populations() {
+inline ::Common::CrowdIdList* MsgProfile::mutable_read_only_crowds() {
   _set_bit(8);
-  if (read_only_populations_ == NULL) read_only_populations_ = new ::Common::PopulationIdList;
-  return read_only_populations_;
+  if (read_only_crowds_ == NULL) read_only_crowds_ = new ::Common::CrowdIdList;
+  return read_only_crowds_;
 }
 
-// optional .Common.PopulationIdList read_write_populations = 10;
-inline bool MsgProfile::has_read_write_populations() const {
+// optional .Common.CrowdIdList read_write_crowds = 10;
+inline bool MsgProfile::has_read_write_crowds() const {
   return _has_bit(9);
 }
-inline void MsgProfile::clear_read_write_populations() {
-  if (read_write_populations_ != NULL) read_write_populations_->::Common::PopulationIdList::Clear();
+inline void MsgProfile::clear_read_write_crowds() {
+  if (read_write_crowds_ != NULL) read_write_crowds_->::Common::CrowdIdList::Clear();
   _clear_bit(9);
 }
-inline const ::Common::PopulationIdList& MsgProfile::read_write_populations() const {
-  return read_write_populations_ != NULL ? *read_write_populations_ : *default_instance_->read_write_populations_;
+inline const ::Common::CrowdIdList& MsgProfile::read_write_crowds() const {
+  return read_write_crowds_ != NULL ? *read_write_crowds_ : *default_instance_->read_write_crowds_;
 }
-inline ::Common::PopulationIdList* MsgProfile::mutable_read_write_populations() {
+inline ::Common::CrowdIdList* MsgProfile::mutable_read_write_crowds() {
   _set_bit(9);
-  if (read_write_populations_ == NULL) read_write_populations_ = new ::Common::PopulationIdList;
-  return read_write_populations_;
+  if (read_write_crowds_ == NULL) read_write_crowds_ = new ::Common::CrowdIdList;
+  return read_write_crowds_;
 }
 
-// required bool superviseur = 11;
-inline bool MsgProfile::has_superviseur() const {
+// required bool supervisor = 11;
+inline bool MsgProfile::has_supervisor() const {
   return _has_bit(10);
 }
-inline void MsgProfile::clear_superviseur() {
-  superviseur_ = false;
+inline void MsgProfile::clear_supervisor() {
+  supervisor_ = false;
   _clear_bit(10);
 }
-inline bool MsgProfile::superviseur() const {
-  return superviseur_;
+inline bool MsgProfile::supervisor() const {
+  return supervisor_;
 }
-inline void MsgProfile::set_superviseur(bool value) {
+inline void MsgProfile::set_supervisor(bool value) {
   _set_bit(10);
-  superviseur_ = value;
+  supervisor_ = value;
 }
 
 // optional .MsgsAuthenticationToClient.Role role = 12;

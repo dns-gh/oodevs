@@ -69,7 +69,7 @@ public:
     virtual bool ToObjectKnowledgeList( Common::ObjectKnowledgeIdList& asn ) const;
     virtual bool ToPath( Common::MsgPath& asn ) const;
     virtual bool ToPathList( Common::MsgPathList& asn ) const;
-    virtual bool ToPopulationKnowledge( Common::PopulationKnowledgeId& asn ) const;
+    virtual bool ToPopulationKnowledge( Common::CrowdKnowledgeId& asn ) const;
     virtual bool ToUrbanBlock( Common::UrbanObjectId& ) const;
     virtual bool ToList( std::vector< Common::MsgMissionParameter_Value >& ) const;
 

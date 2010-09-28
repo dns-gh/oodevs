@@ -80,7 +80,7 @@ BOOST_AUTO_TEST_CASE( Agent_IsCreatedUnderAnAutomat )
         MsgsSimToClient::MsgSimToClient expected;
         expected.set_context( 0 );
         MsgsSimToClient::MsgUnitCreation& message = *expected.mutable_message()->mutable_unit_creation();
-        message.mutable_id()->set_id( 1 );
+        message.mutable_unit()->set_id( 1 );
         message.mutable_type()->set_id( 42 );
         message.set_nom( "test" );
         message.mutable_automat()->set_id( automat.GetId() );
@@ -131,7 +131,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
             MsgsSimToClient::MsgSimToClient expected;
             expected.set_context( 0 );
             MsgsSimToClient::MsgUnitCreation& message = *expected.mutable_message()->mutable_unit_creation();
-            message.mutable_id()->set_id( 1 );
+            message.mutable_unit()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
             message.mutable_automat()->set_id( automat.GetId() );
@@ -148,7 +148,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
             expectedAttributes.set_context( 0 );
             {
                 MsgsSimToClient::MsgUnitAttributes& message = *expectedAttributes.mutable_message()->mutable_unit_attributes();
-                message.mutable_id()->set_id( 1 );
+                message.mutable_unit()->set_id( 1 );
 //            message.mutable_dotation_eff_personnel();
 //            message.mutable_dotation_eff_materiel();
 //            message.mutable_dotation_eff_ressource();
@@ -188,7 +188,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
                 message.set_etat_operationnel( Common::detruit_totalement );
                 message.set_disponibilite_au_tir_indirect( MsgsSimToClient::MsgUnitAttributes::pret_au_tir );
                 message.set_roe( MsgsSimToClient::RulesOfEngagement::tir_sur_riposte );
-                message.set_roe_population( MsgsSimToClient::MsgUnitAttributes::maintien_a_distance_par_moyens_non_letaux );
+                message.set_roe_crowd( MsgsSimToClient::MsgUnitAttributes::maintien_a_distance_par_moyens_non_letaux );
                 message.set_fatigue( Common::fatigue );
                 message.set_moral( Common::fanatique );
                 message.set_experience( Common::veteran );

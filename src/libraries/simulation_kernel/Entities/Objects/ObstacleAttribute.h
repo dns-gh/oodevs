@@ -54,8 +54,8 @@ public:
     void SetType( Common::ObstacleType_DemolitionTargetType obstacleType );
     virtual void Instanciate( DEC_Knowledge_Object& object ) const;
     virtual void Register( MIL_Object_ABC& object ) const;
-    virtual void SendFullState( Common::MsgObjectAttributes& asn ) const;
-    virtual void SendUpdate( Common::MsgObjectAttributes& asn ) const;
+    virtual void SendFullState( Common::ObjectAttributes& asn ) const;
+    virtual void SendUpdate( Common::ObjectAttributes& asn ) const;
     virtual void WriteODB( xml::xostream& xos ) const;
     //@}
 

@@ -17,9 +17,9 @@ namespace MsgsSimToClient
 {
     class MsgExplosion;
     class MsgStopUnitFire;
-    class MsgStopPopulationFire;
+    class MsgStopCrowdFire;
     class MsgUnitFireDamages;
-    class MsgPopulationFireDamages;
+    class MsgCrowdFireDamages;
 }
 
 #include <deque>
@@ -43,7 +43,7 @@ class PopulationFireResult;
 class Explosions : public kernel::Extension_ABC
                  , public kernel::Updatable_ABC< MsgsSimToClient::MsgExplosion >
                  , public kernel::Updatable_ABC< MsgsSimToClient::MsgStopUnitFire >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgStopPopulationFire >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgStopCrowdFire >
 {
 public:
     //! @name Constructors/Destructor
@@ -74,10 +74,10 @@ private:
     void UpdateData( const T& message );
     virtual void DoUpdate( const MsgsSimToClient::MsgExplosion& message );
     virtual void DoUpdate( const MsgsSimToClient::MsgStopUnitFire& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgStopPopulationFire& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgStopCrowdFire& message );
 
     void Update( const MsgsSimToClient::MsgUnitFireDamages& message );
-    void Update( const MsgsSimToClient::MsgPopulationFireDamages& message );
+    void Update( const MsgsSimToClient::MsgCrowdFireDamages& message );
     //@}
 
 public:

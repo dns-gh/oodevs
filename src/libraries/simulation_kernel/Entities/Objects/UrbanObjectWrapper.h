@@ -16,7 +16,7 @@ class MIL_ObjectBuilder_ABC;
 
 namespace MsgsSimToClient
 {
-    class MsgUrbanAttributes;
+    class UrbanAttributes;
 }
 
 namespace urban
@@ -99,7 +99,7 @@ public:
     virtual void SendFullState() const;
     virtual void UpdateState();
     template < typename T >
-    void SendCapacity( MsgsSimToClient::MsgUrbanAttributes& msg) const;
+    void SendCapacity( MsgsSimToClient::UrbanAttributes& msg) const;
     //@}
 
     //! @name Accessors

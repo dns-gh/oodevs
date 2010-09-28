@@ -69,20 +69,20 @@ SealOffAttribute& SealOffAttribute::operator=( const SealOffAttribute& rhs )
 // Name: SealOffAttribute::SendFullState
 // Created: MGD 2010-08-24
 // -----------------------------------------------------------------------------
-void SealOffAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
+void SealOffAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 {
-    asn.mutable_sealoff()->set_level( unsigned int( rSealOffLevel_ * 100 ) );
+    asn.mutable_seal_off()->set_level( unsigned int( rSealOffLevel_ * 100 ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SealOffAttribute::Send
 // Created: MGD 2010-08-24
 // -----------------------------------------------------------------------------
-void SealOffAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
+void SealOffAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnCreation ) | NeedUpdate( eOnUpdate ) )
     {
-        asn.mutable_sealoff()->set_level( unsigned int( rSealOffLevel_ * 100 ) );
+        asn.mutable_seal_off()->set_level( unsigned int( rSealOffLevel_ * 100 ) );
         Reset( eOnUpdate );
     }
 }

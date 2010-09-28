@@ -15,7 +15,7 @@
 
 namespace Common
 {
-    class MsgPopulationCreation;
+    class MsgCrowdCreation;
 }
 
 namespace MsgsSimToClient
@@ -66,7 +66,7 @@ public:
 
     kernel::Entity_ABC* FindAllAgent( unsigned long id ) const;
 
-    void CreatePopulation( const MsgsSimToClient::MsgPopulationCreation& message );
+    void CreatePopulation( const MsgsSimToClient::MsgCrowdCreation& message );
     kernel::Population_ABC& GetPopulation( unsigned long id );
     kernel::Population_ABC* FindPopulation( unsigned long id );
 

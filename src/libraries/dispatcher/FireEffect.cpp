@@ -20,8 +20,8 @@ using namespace dispatcher;
 // Created: AGE 2007-04-18
 // -----------------------------------------------------------------------------
 FireEffect::FireEffect( Model& , const MsgsSimToClient::MsgStartFireEffect& message )
-    : SimpleEntity< >( message.id().id() )
-    , id_            ( message.id().id() )
+    : SimpleEntity< >( message.fire_effect().id() )
+    , id_            ( message.fire_effect().id() )
     , localisation_  ( message.location() )
     , type_          ( message.type() )
 {
@@ -53,7 +53,7 @@ void FireEffect::SendFullUpdate( ClientPublisher_ABC& ) const
 void FireEffect::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::StartFireEffect asn;
-    asn().mutable_id()->set_id( id_ );
+    asn().mutable_fire_effect()->set_id( id_ );
     localisation_.Send( *asn().mutable_location() );
     asn().set_type ( type_ );
     asn.Send( publisher );
@@ -66,7 +66,7 @@ void FireEffect::SendCreation( ClientPublisher_ABC& publisher ) const
 void FireEffect::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::StopFireEffect asn;
-    asn().mutable_id()->set_id( id_ );
+    asn().mutable_fire_effect()->set_id( id_ );
     asn.Send( publisher );
 }
 

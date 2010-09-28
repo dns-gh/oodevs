@@ -37,7 +37,7 @@ using namespace dispatcher;
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
 ObjectKnowledge::ObjectKnowledge( const Model_ABC& model, const MsgsSimToClient::MsgObjectKnowledgeCreation& message )
-    : dispatcher::ObjectKnowledge_ABC( message.id().id() )
+    : dispatcher::ObjectKnowledge_ABC( message.knowledge().id() )
     , model_                         ( model )
     , team_                          ( model.Sides().Get( message.party().id() ) )
     , pObject_                       ( model.Objects().Find( message.object().id() ) )
@@ -76,7 +76,7 @@ ObjectKnowledge::~ObjectKnowledge()
 // Created: SBO 2010-06-09
 // -----------------------------------------------------------------------------
 template< typename T >
-void ObjectKnowledge::CreateOrUpdate( const Common::MsgObjectAttributes& message )
+void ObjectKnowledge::CreateOrUpdate( const Common::ObjectAttributes& message )
 {
     T_ObjectAttributes::iterator it;
     for( it = attributes_.begin(); it != attributes_.end(); ++it )
@@ -94,7 +94,7 @@ void ObjectKnowledge::CreateOrUpdate( const Common::MsgObjectAttributes& message
 // Created: SBO 2010-06-09
 // -----------------------------------------------------------------------------
 template< typename T >
-void ObjectKnowledge::CreateOrUpdate( const Common::MsgObjectAttributes& message, const Model_ABC& model )
+void ObjectKnowledge::CreateOrUpdate( const Common::ObjectAttributes& message, const Model_ABC& model )
 {
     T_ObjectAttributes::iterator it;
     for( it = attributes_.begin(); it != attributes_.end(); ++it )
@@ -111,7 +111,7 @@ void ObjectKnowledge::CreateOrUpdate( const Common::MsgObjectAttributes& message
 // Name: Object::Initialize
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::Initialize( const Model_ABC& model, const Common::MsgObjectAttributes& attributes )
+void ObjectKnowledge::Initialize( const Model_ABC& model, const Common::ObjectAttributes& attributes )
 {
     CHECK_MSG_ATTRIBUTE_CREATION( construction      , ConstructionAttribute );
     CHECK_MSG_ATTRIBUTE_CREATION( obstacle          , ObstacleAttribute );
@@ -212,7 +212,7 @@ void ObjectKnowledge::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate&
 void ObjectKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::ObjectKnowledgeCreation asn;
-    asn().mutable_id()->set_id( GetId() );
+    asn().mutable_knowledge()->set_id( GetId() );
     asn().mutable_party()->set_id( team_.GetId() );
     if( knowledgeGroup_ )
         asn().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
@@ -231,7 +231,7 @@ void ObjectKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 void ObjectKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::ObjectKnowledgeUpdate message;
-    message().mutable_id()->set_id( GetId() );
+    message().mutable_knowledge()->set_id( GetId() );
     message().mutable_party()->set_id( team_.GetId() );
     if( knowledgeGroup_ )
         message().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
@@ -261,7 +261,7 @@ void ObjectKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 void ObjectKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::ObjectKnowledgeDestruction asn;
-    asn().mutable_id()->set_id( GetId() );
+    asn().mutable_knowledge()->set_id( GetId() );
     asn().mutable_party()->set_id( team_.GetId());
     asn.Send( publisher );
 }

@@ -23,12 +23,12 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 DirectFire::DirectFire( const MsgsSimToClient::MsgStartUnitFire& message, const tools::Resolver_ABC< Agent_ABC >& agentResolver, const tools::Resolver_ABC< Population_ABC >& populationResolver )
     : Fire_ABC( agentResolver.Get( message.firing_unit().id() ) )
-    , id_( message.id().id() )
+    , id_( message.fire().id() )
 {
     if( message.target().has_unit() )
         target_ = & agentResolver.Get( message.target().unit().id() );
-    else if( message.target().has_population() )
-        target_ = & populationResolver.Get( message.target().population().id() );
+    else if( message.target().has_crowd() )
+        target_ = & populationResolver.Get( message.target().crowd().id() );
     else
         throw std::runtime_error( "DirectFire on position..." );
 

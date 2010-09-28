@@ -61,10 +61,10 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderKnowledgeGroup )
 //    army.verify();
 
     MsgsClientToSim::MsgKnowledgeMagicAction msg;
-    msg.mutable_id()->set_id( group2.GetId() );
-    msg.set_type( MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_side_parent );
-    msg.mutable_parametres()->add_elem()->mutable_value()->mutable_party()->set_id( army.GetID() );
-    msg.mutable_parametres()->add_elem()->mutable_value()->mutable_knowledgegroup()->set_id( group1.GetId() );
+    msg.mutable_knowledge_group()->set_id( group2.GetId() );
+    msg.set_type( MsgsClientToSim::MsgKnowledgeMagicAction::update_party_parent );
+    msg.mutable_parameters()->add_elem()->mutable_value()->mutable_party()->set_id( army.GetID() );
+    msg.mutable_parameters()->add_elem()->mutable_value()->mutable_knowledgegroup()->set_id( group1.GetId() );
 
     tools::Resolver< MIL_Army_ABC > armies;
     armies.Register( army.GetID(), army );
@@ -117,9 +117,9 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderArmy )
 //    group1.verify();
 
     MsgsClientToSim::MsgKnowledgeMagicAction msg;
-    msg.mutable_id()->set_id( group2.GetId() );
-    msg.set_type( MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_side );
-    msg.mutable_parametres()->add_elem()->mutable_value()->mutable_party()->set_id( army.GetID() );
+    msg.mutable_knowledge_group()->set_id( group2.GetId() );
+    msg.set_type( MsgsClientToSim::MsgKnowledgeMagicAction::update_party );
+    msg.mutable_parameters()->add_elem()->mutable_value()->mutable_party()->set_id( army.GetID() );
 
     tools::Resolver< MIL_Army_ABC > armies;
     armies.Register( army.GetID(), army );
@@ -176,11 +176,11 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorArmyUnderKnowledgeGroup )
     army.verify();
 
     MsgsClientToSim::MsgKnowledgeMagicAction msg;
-    msg.mutable_id()->set_id( group2.GetId() );
-    msg.set_type( MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_side_parent );
+    msg.mutable_knowledge_group()->set_id( group2.GetId() );
+    msg.set_type( MsgsClientToSim::MsgKnowledgeMagicAction::update_party_parent );
 
-    msg.mutable_parametres()->add_elem()->mutable_value()->mutable_party()->set_id( army.GetID() );
-    msg.mutable_parametres()->add_elem()->mutable_value()->mutable_knowledgegroup()->set_id( group1.GetId() );
+    msg.mutable_parameters()->add_elem()->mutable_value()->mutable_party()->set_id( army.GetID() );
+    msg.mutable_parameters()->add_elem()->mutable_value()->mutable_knowledgegroup()->set_id( group1.GetId() );
 
     tools::Resolver< MIL_Army_ABC > armies;
     armies.Register( army.GetID(), army );
@@ -230,10 +230,10 @@ BOOST_AUTO_TEST_CASE( ReceiveKnowledgeGroupSetType )
 
     // prepare message
     MsgsClientToSim::MsgKnowledgeMagicAction msg;
-    msg.mutable_id()->set_id( groupArmy.GetId() );
-    msg.set_type( MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_type );
-    const MIL_KnowledgeGroupType &kgType_new = *MIL_KnowledgeGroupType::FindType("TOTO");
-    msg.mutable_parametres()->add_elem()->mutable_value()->set_acharstr( kgType_new.GetName().c_str() );
+    msg.mutable_knowledge_group()->set_id( groupArmy.GetId() );
+    msg.set_type( MsgsClientToSim::MsgKnowledgeMagicAction::update_type );
+    const MIL_KnowledgeGroupType &kgType_new = *MIL_KnowledgeGroupType::FindType( "TOTO" );
+    msg.mutable_parameters()->add_elem()->mutable_value()->set_acharstr( kgType_new.GetName().c_str() );
 
     tools::Resolver< MIL_Army_ABC > armies;
     MOCK_EXPECT( army, GetID ).once().returns( 1u );

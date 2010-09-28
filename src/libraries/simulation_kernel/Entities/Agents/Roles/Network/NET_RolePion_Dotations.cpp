@@ -128,7 +128,7 @@ void NET_RolePion_Dotations::SendChangedState() const
         return;
 
     client::UnitAttributes msg;
-    msg().mutable_id()->set_id( pion_.GetID() );
+    msg().mutable_unit()->set_id( pion_.GetID() );
     pion_.Apply( &network::NetworkUnitMessageNotificationHandler_ABC::SendChangedState, msg );
 
     bool bIsDead = pion_.IsDead();
@@ -157,7 +157,7 @@ void NET_RolePion_Dotations::SendFullState() const
     // MsgUnitAttributes
 
     client::UnitAttributes msg;
-    msg().mutable_id()->set_id( pion_.GetID() );
+    msg().mutable_unit()->set_id( pion_.GetID() );
     msg().set_mort      ( bLastStateDead_ = pion_.IsDead() );
     msg().set_neutralise( bLastStateNeutralized_ = pion_.IsNeutralized() );
 

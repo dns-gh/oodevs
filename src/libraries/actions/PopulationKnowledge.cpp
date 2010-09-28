@@ -17,8 +17,6 @@ using namespace kernel;
 using namespace actions;
 using namespace parameters;
 
-using namespace Common;
-
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge constructor
 // Created: SBO 2007-05-24
@@ -71,20 +69,20 @@ void PopulationKnowledge::Accept( ParameterVisitor_ABC& visitor ) const
 // Name: PopulationKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::CommitTo( MsgMissionParameter& message ) const
+void PopulationKnowledge::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value ( !IsSet() );
     if( IsSet() )
-        Entity< PopulationKnowledge_ABC >::CommitTo< PopulationKnowledgeId >( *message.mutable_value()->mutable_populationknowledge() );
+        Entity< PopulationKnowledge_ABC >::CommitTo< Common::CrowdKnowledgeId >( *message.mutable_value()->mutable_crowdknowledge() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::CommitTo( PopulationKnowledgeId& message ) const
+void PopulationKnowledge::CommitTo( Common::CrowdKnowledgeId& message ) const
 {
-    Entity< PopulationKnowledge_ABC >::CommitTo< PopulationKnowledgeId >( message );
+    Entity< PopulationKnowledge_ABC >::CommitTo< Common::CrowdKnowledgeId >( message );
 }
 
 // -----------------------------------------------------------------------------

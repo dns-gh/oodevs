@@ -22,7 +22,7 @@
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
 Drawing::Drawing( kernel::Controller& controller, const MsgsMessengerToClient::MsgShapeCreation& message, const gui::DrawingTypes& types, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
-    : gui::DrawerShape( controller, message.id().id(), types.Get( message.shape().category().c_str() ).GetTemplate( message.shape().template_() ), QColor( QString( message.shape().color().c_str() ) ), proxy )
+    : gui::DrawerShape( controller, message.id().id(), types.Get( message.shape().category().c_str() ).GetTemplate( message.shape().pattern() ), QColor( QString( message.shape().color().c_str() ) ), proxy )
     , publisher_( publisher )
     , converter_( converter )
     , publishUpdate_( true )
@@ -89,7 +89,7 @@ void Drawing::Create()
     message().mutable_shape()->set_category( style_.GetCategory().ascii() );
     std::string color = color_.name().ascii();
     message().mutable_shape()->set_color( color.c_str() );
-    message().mutable_shape()->set_template_( style_.GetName().ascii() );
+    message().mutable_shape()->set_pattern( style_.GetName().ascii() );
     SerializeLocation( *message().mutable_shape()->mutable_points() );
     message.Send( publisher_ );
     delete this;
@@ -109,7 +109,7 @@ void Drawing::Update()
         message().set_category( style_.GetCategory().ascii() );
         std::string color = color_.name().ascii();
         message().set_color( color.c_str() );
-        message().set_template_( style_.GetName().ascii() );
+        message().set_pattern( style_.GetName().ascii() );
         SerializeLocation( *message().mutable_points() );
         message.Send( publisher_ );
     }

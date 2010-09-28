@@ -26,14 +26,14 @@ class ActivityTimeAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActivityTimeAttribute( const Common::MsgObjectAttributes& asnMsg );
+    explicit ActivityTimeAttribute( const Common::ObjectAttributes& asnMsg );
     virtual ~ActivityTimeAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const Common::MsgObjectAttributes& asnMsg );
-    virtual void Send  ( Common::MsgObjectAttributes& asnMsg ) const;
+    virtual void Update( const Common::ObjectAttributes& asnMsg );
+    virtual void Send  ( Common::ObjectAttributes& asnMsg ) const;
     //@}
 
 private:

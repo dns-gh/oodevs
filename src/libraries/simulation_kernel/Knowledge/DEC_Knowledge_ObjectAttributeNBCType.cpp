@@ -138,7 +138,7 @@ void DEC_Knowledge_ObjectAttributeNBCType::UpdateOnCollision( const DEC_Knowledg
 // Name: DEC_Knowledge_ObjectAttributeNBCType::BuildMsgSpecificAttributes
 // Created: RFT 2004-05-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeNBCType::Send( Common::MsgObjectAttributes& message ) const
+void DEC_Knowledge_ObjectAttributeNBCType::Send( Common::ObjectAttributes& message ) const
 {
     message.mutable_nbc_agent()->mutable_agent()->set_id( pAgent_? pAgent_->GetID() : -1 );
     message.mutable_nbc_agent()->set_concentration( concentration_ );

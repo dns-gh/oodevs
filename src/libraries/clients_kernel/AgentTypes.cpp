@@ -356,10 +356,10 @@ void AgentTypes::CreateMagicActionTypes()
     RegisterActionType( *new MagicActionType( "partial_recovery", MsgsClientToSim::MsgUnitMagicAction::partial_recovery ) );
     RegisterActionType( *new MagicActionType( "unit_creation", MsgsClientToSim::MsgUnitMagicAction::unit_creation ) );
     RegisterActionType( *new MagicActionType( "fire_order", MsgsClientToSim::MsgUnitMagicAction::create_fire_order ) );
-    RegisterActionType( *new MagicActionType( "population_total_destruction", MsgsClientToSim::MsgUnitMagicAction::population_total_destruction ) );
-    RegisterActionType( *new MagicActionType( "population_kill", MsgsClientToSim::MsgUnitMagicAction::population_kill ) );
-    RegisterActionType( *new MagicActionType( "population_resurrect", MsgsClientToSim::MsgUnitMagicAction::population_resurrect ) );
-    RegisterActionType( *new MagicActionType( "population_change_attitude", MsgsClientToSim::MsgUnitMagicAction::population_change_attitude ) );
+    RegisterActionType( *new MagicActionType( "population_total_destruction", MsgsClientToSim::MsgUnitMagicAction::crowd_total_destruction ) );
+    RegisterActionType( *new MagicActionType( "population_kill", MsgsClientToSim::MsgUnitMagicAction::crowd_kill ) );
+    RegisterActionType( *new MagicActionType( "population_resurrect", MsgsClientToSim::MsgUnitMagicAction::crowd_resurrect ) );
+    RegisterActionType( *new MagicActionType( "population_change_attitude", MsgsClientToSim::MsgUnitMagicAction::crowd_change_attitude ) );
     RegisterActionType( *new MagicActionType( "change_knowledge_group", MsgsClientToSim::MsgUnitMagicAction::change_knowledge_group ) );
     RegisterActionType( *new MagicActionType( "unit_change_superior", MsgsClientToSim::MsgUnitMagicAction::unit_change_superior ) );
     RegisterActionType( *new MagicActionType( "change_automat_superior", MsgsClientToSim::MsgUnitMagicAction::change_automat_superior ) );
@@ -370,8 +370,8 @@ void AgentTypes::CreateMagicActionTypes()
 
     // Knowledge Magic Actions
     RegisterActionType( *new MagicActionType( "knowledge_group_enable", MsgsClientToSim::MsgKnowledgeMagicAction::enable ) );
-    RegisterActionType( *new MagicActionType( "knowledge_group_update_side", MsgsClientToSim::MsgKnowledgeMagicAction::update_side ) );
-    RegisterActionType( *new MagicActionType( "knowledge_group_update_side_parent", MsgsClientToSim::MsgKnowledgeMagicAction::update_side_parent ) );
+    RegisterActionType( *new MagicActionType( "knowledge_group_update_side", MsgsClientToSim::MsgKnowledgeMagicAction::update_party ) );
+    RegisterActionType( *new MagicActionType( "knowledge_group_update_side_parent", MsgsClientToSim::MsgKnowledgeMagicAction::update_party_parent ) );
     RegisterActionType( *new MagicActionType( "knowledge_group_update_type", MsgsClientToSim::MsgKnowledgeMagicAction::update_type ) );
 
     // Object Magic Actions
@@ -380,9 +380,9 @@ void AgentTypes::CreateMagicActionTypes()
     RegisterActionType( *new MagicActionType( "destroy_object", MsgsClientToSim::MsgObjectMagicAction::destroy ) );
 
     // Other Magic Actions
-    RegisterActionType( *new MagicActionType( "global_meteo", MsgsClientToSim::MsgMagicAction::global_meteo ) );
-    RegisterActionType( *new MagicActionType( "local_meteo", MsgsClientToSim::MsgMagicAction::local_meteo ) );
+    RegisterActionType( *new MagicActionType( "global_weather", MsgsClientToSim::MsgMagicAction::global_weather ) );
+    RegisterActionType( *new MagicActionType( "local_weather", MsgsClientToSim::MsgMagicAction::local_weather ) );
     RegisterActionType( *new MagicActionType( "change_diplomacy", MsgsClientToSim::MsgMagicAction::change_diplomacy ) );
     RegisterActionType( *new MagicActionType( "create_knowledge_group", MsgsClientToSim::MsgMagicAction::create_knowledge_group ) );
-    RegisterActionType( *new MagicActionType( "change_resource_links", MsgsClientToSim::MsgMagicAction::change_resource_links ) );
+    RegisterActionType( *new MagicActionType( "change_resource_links", MsgsClientToSim::MsgMagicAction::change_resource_network_properties ) );
 }

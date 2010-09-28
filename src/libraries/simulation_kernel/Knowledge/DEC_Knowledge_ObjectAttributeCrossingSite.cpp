@@ -129,7 +129,7 @@ void DEC_Knowledge_ObjectAttributeCrossingSite::UpdateOnCollision( const DEC_Kno
 // Name: DEC_Knowledge_ObjectAttributeCrossingSite::BuildMsgSpecificAttributes
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeCrossingSite::Send( Common::MsgObjectAttributes& asn ) const
+void DEC_Knowledge_ObjectAttributeCrossingSite::Send( Common::ObjectAttributes& asn ) const
 {
     asn.mutable_crossing_site()->set_width( static_cast< int >( rWidth_ ) );
     asn.mutable_crossing_site()->set_depth( static_cast< int >( rDepth_ ) );

@@ -104,18 +104,18 @@ class MsgLimaCreationRequest : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.MsgTacticalLine tacticalline = 1;
-  inline bool has_tacticalline() const;
-  inline void clear_tacticalline();
-  static const int kTacticallineFieldNumber = 1;
-  inline const ::Common::MsgTacticalLine& tacticalline() const;
-  inline ::Common::MsgTacticalLine* mutable_tacticalline();
+  // required .Common.MsgTacticalLine tactical_line = 1;
+  inline bool has_tactical_line() const;
+  inline void clear_tactical_line();
+  static const int kTacticalLineFieldNumber = 1;
+  inline const ::Common::MsgTacticalLine& tactical_line() const;
+  inline ::Common::MsgTacticalLine* mutable_tactical_line();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::MsgTacticalLine* tacticalline_;
+  ::Common::MsgTacticalLine* tactical_line_;
   friend void  protobuf_AddDesc_ClientToMessenger_2eproto();
   friend void protobuf_AssignDesc_ClientToMessenger_2eproto();
   friend void protobuf_ShutdownFile_ClientToMessenger_2eproto();
@@ -373,18 +373,18 @@ class MsgLimitCreationRequest : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.MsgTacticalLine tacticalline = 1;
-  inline bool has_tacticalline() const;
-  inline void clear_tacticalline();
-  static const int kTacticallineFieldNumber = 1;
-  inline const ::Common::MsgTacticalLine& tacticalline() const;
-  inline ::Common::MsgTacticalLine* mutable_tacticalline();
+  // required .Common.MsgTacticalLine tactical_line = 1;
+  inline bool has_tactical_line() const;
+  inline void clear_tactical_line();
+  static const int kTacticalLineFieldNumber = 1;
+  inline const ::Common::MsgTacticalLine& tactical_line() const;
+  inline ::Common::MsgTacticalLine* mutable_tactical_line();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::MsgTacticalLine* tacticalline_;
+  ::Common::MsgTacticalLine* tactical_line_;
   friend void  protobuf_AddDesc_ClientToMessenger_2eproto();
   friend void protobuf_AssignDesc_ClientToMessenger_2eproto();
   friend void protobuf_ShutdownFile_ClientToMessenger_2eproto();
@@ -1081,15 +1081,15 @@ class MsgShapeUpdateRequest : public ::google::protobuf::Message {
   inline void set_color(const char* value, size_t size);
   inline ::std::string* mutable_color();
   
-  // optional string template_ = 4;
-  inline bool has_template_() const;
-  inline void clear_template_();
-  static const int kTemplateFieldNumber = 4;
-  inline const ::std::string& template_() const;
-  inline void set_template_(const ::std::string& value);
-  inline void set_template_(const char* value);
-  inline void set_template_(const char* value, size_t size);
-  inline ::std::string* mutable_template_();
+  // optional string pattern = 4;
+  inline bool has_pattern() const;
+  inline void clear_pattern();
+  static const int kPatternFieldNumber = 4;
+  inline const ::std::string& pattern() const;
+  inline void set_pattern(const ::std::string& value);
+  inline void set_pattern(const char* value);
+  inline void set_pattern(const char* value, size_t size);
+  inline ::std::string* mutable_pattern();
   
   // optional .Common.MsgCoordLatLongList points = 5;
   inline bool has_points() const;
@@ -1107,8 +1107,8 @@ class MsgShapeUpdateRequest : public ::google::protobuf::Message {
   static const ::std::string _default_category_;
   ::std::string* color_;
   static const ::std::string _default_color_;
-  ::std::string* template__;
-  static const ::std::string _default_template__;
+  ::std::string* pattern_;
+  static const ::std::string _default_pattern_;
   ::Common::MsgCoordLatLongList* points_;
   friend void  protobuf_AddDesc_ClientToMessenger_2eproto();
   friend void protobuf_AssignDesc_ClientToMessenger_2eproto();
@@ -1844,21 +1844,21 @@ class MsgClientToMessenger : public ::google::protobuf::Message {
 
 // MsgLimaCreationRequest
 
-// required .Common.MsgTacticalLine tacticalline = 1;
-inline bool MsgLimaCreationRequest::has_tacticalline() const {
+// required .Common.MsgTacticalLine tactical_line = 1;
+inline bool MsgLimaCreationRequest::has_tactical_line() const {
   return _has_bit(0);
 }
-inline void MsgLimaCreationRequest::clear_tacticalline() {
-  if (tacticalline_ != NULL) tacticalline_->::Common::MsgTacticalLine::Clear();
+inline void MsgLimaCreationRequest::clear_tactical_line() {
+  if (tactical_line_ != NULL) tactical_line_->::Common::MsgTacticalLine::Clear();
   _clear_bit(0);
 }
-inline const ::Common::MsgTacticalLine& MsgLimaCreationRequest::tacticalline() const {
-  return tacticalline_ != NULL ? *tacticalline_ : *default_instance_->tacticalline_;
+inline const ::Common::MsgTacticalLine& MsgLimaCreationRequest::tactical_line() const {
+  return tactical_line_ != NULL ? *tactical_line_ : *default_instance_->tactical_line_;
 }
-inline ::Common::MsgTacticalLine* MsgLimaCreationRequest::mutable_tacticalline() {
+inline ::Common::MsgTacticalLine* MsgLimaCreationRequest::mutable_tactical_line() {
   _set_bit(0);
-  if (tacticalline_ == NULL) tacticalline_ = new ::Common::MsgTacticalLine;
-  return tacticalline_;
+  if (tactical_line_ == NULL) tactical_line_ = new ::Common::MsgTacticalLine;
+  return tactical_line_;
 }
 
 // -------------------------------------------------------------------
@@ -1924,21 +1924,21 @@ inline ::Common::TacticalLineId* MsgLimaDestructionRequest::mutable_id() {
 
 // MsgLimitCreationRequest
 
-// required .Common.MsgTacticalLine tacticalline = 1;
-inline bool MsgLimitCreationRequest::has_tacticalline() const {
+// required .Common.MsgTacticalLine tactical_line = 1;
+inline bool MsgLimitCreationRequest::has_tactical_line() const {
   return _has_bit(0);
 }
-inline void MsgLimitCreationRequest::clear_tacticalline() {
-  if (tacticalline_ != NULL) tacticalline_->::Common::MsgTacticalLine::Clear();
+inline void MsgLimitCreationRequest::clear_tactical_line() {
+  if (tactical_line_ != NULL) tactical_line_->::Common::MsgTacticalLine::Clear();
   _clear_bit(0);
 }
-inline const ::Common::MsgTacticalLine& MsgLimitCreationRequest::tacticalline() const {
-  return tacticalline_ != NULL ? *tacticalline_ : *default_instance_->tacticalline_;
+inline const ::Common::MsgTacticalLine& MsgLimitCreationRequest::tactical_line() const {
+  return tactical_line_ != NULL ? *tactical_line_ : *default_instance_->tactical_line_;
 }
-inline ::Common::MsgTacticalLine* MsgLimitCreationRequest::mutable_tacticalline() {
+inline ::Common::MsgTacticalLine* MsgLimitCreationRequest::mutable_tactical_line() {
   _set_bit(0);
-  if (tacticalline_ == NULL) tacticalline_ = new ::Common::MsgTacticalLine;
-  return tacticalline_;
+  if (tactical_line_ == NULL) tactical_line_ = new ::Common::MsgTacticalLine;
+  return tactical_line_;
 }
 
 // -------------------------------------------------------------------
@@ -2357,46 +2357,46 @@ inline ::std::string* MsgShapeUpdateRequest::mutable_color() {
   return color_;
 }
 
-// optional string template_ = 4;
-inline bool MsgShapeUpdateRequest::has_template_() const {
+// optional string pattern = 4;
+inline bool MsgShapeUpdateRequest::has_pattern() const {
   return _has_bit(3);
 }
-inline void MsgShapeUpdateRequest::clear_template_() {
-  if (template__ != &_default_template__) {
-    template__->clear();
+inline void MsgShapeUpdateRequest::clear_pattern() {
+  if (pattern_ != &_default_pattern_) {
+    pattern_->clear();
   }
   _clear_bit(3);
 }
-inline const ::std::string& MsgShapeUpdateRequest::template_() const {
-  return *template__;
+inline const ::std::string& MsgShapeUpdateRequest::pattern() const {
+  return *pattern_;
 }
-inline void MsgShapeUpdateRequest::set_template_(const ::std::string& value) {
+inline void MsgShapeUpdateRequest::set_pattern(const ::std::string& value) {
   _set_bit(3);
-  if (template__ == &_default_template__) {
-    template__ = new ::std::string;
+  if (pattern_ == &_default_pattern_) {
+    pattern_ = new ::std::string;
   }
-  template__->assign(value);
+  pattern_->assign(value);
 }
-inline void MsgShapeUpdateRequest::set_template_(const char* value) {
+inline void MsgShapeUpdateRequest::set_pattern(const char* value) {
   _set_bit(3);
-  if (template__ == &_default_template__) {
-    template__ = new ::std::string;
+  if (pattern_ == &_default_pattern_) {
+    pattern_ = new ::std::string;
   }
-  template__->assign(value);
+  pattern_->assign(value);
 }
-inline void MsgShapeUpdateRequest::set_template_(const char* value, size_t size) {
+inline void MsgShapeUpdateRequest::set_pattern(const char* value, size_t size) {
   _set_bit(3);
-  if (template__ == &_default_template__) {
-    template__ = new ::std::string;
+  if (pattern_ == &_default_pattern_) {
+    pattern_ = new ::std::string;
   }
-  template__->assign(reinterpret_cast<const char*>(value), size);
+  pattern_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* MsgShapeUpdateRequest::mutable_template_() {
+inline ::std::string* MsgShapeUpdateRequest::mutable_pattern() {
   _set_bit(3);
-  if (template__ == &_default_template__) {
-    template__ = new ::std::string;
+  if (pattern_ == &_default_pattern_) {
+    pattern_ = new ::std::string;
   }
-  return template__;
+  return pattern_;
 }
 
 // optional .Common.MsgCoordLatLongList points = 5;

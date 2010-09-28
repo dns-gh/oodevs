@@ -12,22 +12,22 @@
 
 namespace Common
 {
-    class MsgObjectAttributes;
-    class MsgObjectAttributeConstruction;
-    class MsgObjectAttributeObstacle;
-    class MsgObjectAttributeMine;
-    class MsgObjectAttributeActivityTime;
-    class MsgObjectAttributeBypass;
-    class MsgObjectAttributeLogistic;
-    class MsgObjectAttributeNBC;
-    class MsgObjectAttributeCrossingSite;
-    class MsgObjectAttributeSupplyRoute;
-    class MsgObjectAttributeToxicCloud;
-    class MsgObjectAttributeFire;
-    class MsgObjectAttributeMedicalTreatment;
-    class MsgObjectAttributeInteractionHeight;
-    class MsgObjectAttributeNBCType;
-    class MsgObjectAttributeStock;
+    class ObjectAttributes;
+    class ObjectAttributeConstruction;
+    class ObjectAttributeObstacle;
+    class ObjectAttributeMine;
+    class ObjectAttributeActivityTime;
+    class ObjectAttributeBypass;
+    class ObjectAttributeLogistic;
+    class ObjectAttributeNBC;
+    class ObjectAttributeCrossingSite;
+    class ObjectAttributeSupplyRoute;
+    class ObjectAttributeToxicCloud;
+    class ObjectAttributeFire;
+    class ObjectAttributeMedicalTreatment;
+    class ObjectAttributeInteractionHeight;
+    class ObjectAttributeNBCType;
+    class ObjectAttributeStock;
 }
 
 namespace plugins
@@ -39,24 +39,24 @@ class InsertQueryBuilder;
 
 class ObjectAttributeUpdater{
 public:
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributes& msg );
+    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributes& msg );
 
 private:
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeConstruction& construction );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeObstacle&  obstacle );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeMine&  mine );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeActivityTime&  activity_time );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeBypass&  bypass );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeLogistic&  logistic );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeNBC&  nbc );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeCrossingSite&  crossing_site );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeSupplyRoute&  supply_route );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeToxicCloud&  toxic_cloud );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeFire&  fire );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeMedicalTreatment&  medical_treatment );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeInteractionHeight&  interaction_height );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeNBCType&  nbc_agent );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeStock & stock );
+    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeConstruction& construction );
+    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeObstacle&  obstacle );
+    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeMine&  mine );
+    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeActivityTime&  activity_time );
+    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeBypass&  bypass );
+    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeLogistic&  logistic );
+    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeNBC&  nbc );
+    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeCrossingSite&  crossing_site );
+    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeSupplyRoute&  supply_route );
+    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeToxicCloud&  toxic_cloud );
+    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeFire&  fire );
+    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeMedicalTreatment&  medical_treatment );
+    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeInteractionHeight&  interaction_height );
+    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeNBCType&  nbc_agent );
+    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeStock & stock );
 };
 
 }

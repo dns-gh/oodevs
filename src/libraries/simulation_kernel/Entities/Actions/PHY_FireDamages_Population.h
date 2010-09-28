@@ -15,7 +15,7 @@
 
 namespace MsgsSimToClient
 {
-    class MsgPopulationFireDamages;
+    class MsgCrowdFireDamages;
 }
 
 class MIL_Population;
@@ -43,7 +43,7 @@ public:
 
     //! @name Network
     //@{
-    void Serialize( const MIL_Population& target, MsgsSimToClient::MsgPopulationFireDamages& asn ) const;
+    void Serialize( const MIL_Population& target, MsgsSimToClient::MsgCrowdFireDamages& asn ) const;
     //@}
 
 private:

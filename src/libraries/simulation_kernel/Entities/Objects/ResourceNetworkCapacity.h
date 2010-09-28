@@ -15,12 +15,12 @@
 namespace Common
 {
     class MsgMissionParameter_Value;
-    class MsgObjectAttributes;
+    class ObjectAttributes;
 }
 
 namespace MsgsSimToClient
 {
-    class MsgUrbanAttributes;
+    class UrbanAttributes;
 }
 
 namespace resource
@@ -63,8 +63,8 @@ public:
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     void RegisterNode( unsigned int id, bool urban );
-    void SendState( MsgsSimToClient::MsgUrbanAttributes& message ) const;
-    void SendState( Common::MsgObjectAttributes& asn ) const;
+    void SendState( MsgsSimToClient::UrbanAttributes& message ) const;
+    void SendState( Common::ObjectAttributes& asn ) const;
     void SetModifier( unsigned int modifier ) const;
     //@}
 

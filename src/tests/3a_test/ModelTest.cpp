@@ -48,7 +48,7 @@ namespace
     MsgsSimToClient::MsgSimToClient MakeMessage( MsgsSimToClient::MsgUnitAttributes& attributes, unsigned long id = 0 )
     {
         MsgsSimToClient::MsgSimToClient result;
-        attributes.mutable_id()->set_id( id );
+        attributes.mutable_unit()->set_id( id );
         *result.mutable_message()->mutable_unit_attributes() = attributes;
         return result;
     }

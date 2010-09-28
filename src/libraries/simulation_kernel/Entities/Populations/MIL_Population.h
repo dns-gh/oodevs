@@ -21,7 +21,7 @@ namespace Common
     class MsgMagicActionPopulationKill;
     class MsgMagicActionPopulationMoveTo;
     class MsgMagicActionPopulationResurrect;
-    class MsgPopulationOrder;
+    class MsgCrowdOrder;
 }
 
 namespace MsgsClientToSim
@@ -143,14 +143,14 @@ public:
 
     //! @name Network
     //@{
-    void OnReceiveMsgOrder    ( const Common::MsgPopulationOrder& msg );
+    void OnReceiveMsgOrder    ( const Common::MsgCrowdOrder& msg );
     void OnReceiveMsgFragOrder( const MsgsClientToSim::MsgFragOrder&       msg );
     void SendCreation         () const;
     void SendFullState        () const;
     void UpdateNetwork        ();
 
-    void OnReceiveMsgPopulationMagicAction      ( const MsgsClientToSim::MsgUnitMagicAction& asnMsg );
-    void OnReceiveMsgPopulationMagicActionMoveTo( const MsgsClientToSim::MsgUnitMagicAction& asn );
+    void OnReceiveMsgCrowdMagicAction      ( const MsgsClientToSim::MsgUnitMagicAction& asnMsg );
+    void OnReceiveMsgCrowdMagicActionMoveTo( const MsgsClientToSim::MsgUnitMagicAction& asn );
     //@}
 
     //! @name CheckPoints

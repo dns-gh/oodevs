@@ -163,7 +163,7 @@ void StockAttribute::WriteODB( xml::xostream& xos ) const
 // Name: StockAttribute::Send
 // Created: JCR 2009-06-05
 // -----------------------------------------------------------------------------
-void StockAttribute::Send( Common::MsgObjectAttributeStock& attribute, bool send_max ) const
+void StockAttribute::Send( Common::ObjectAttributeStock& attribute, bool send_max ) const
 {
     int i = 0;
     for( CIT_DotationProgress it = stock_.begin(); it != stock_.end(); ++it, ++i )
@@ -180,7 +180,7 @@ void StockAttribute::Send( Common::MsgObjectAttributeStock& attribute, bool send
 // Name: StockAttribute::SendFullState
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void StockAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
+void StockAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 {
     if( stock_.size() > 0 )
         Send( *asn.mutable_stock(), true );
@@ -190,7 +190,7 @@ void StockAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 // Name: StockAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void StockAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
+void StockAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnCreation ) | NeedUpdate( eOnUpdate) )
     {
@@ -203,7 +203,7 @@ void StockAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 // Name: StockAttribute::OnMagicActionUpdate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void StockAttribute::OnUpdate( const Common::MsgObjectAttributes& asn )
+void StockAttribute::OnUpdate( const Common::ObjectAttributes& asn )
 {
     if( asn.has_stock() )
     {

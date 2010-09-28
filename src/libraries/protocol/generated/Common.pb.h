@@ -40,13 +40,13 @@ class ObjectKnowledgeId;
 class ObjectKnowledgeIdList;
 class PartyId;
 class PartyIdList;
-class PopulationId;
-class PopulationIdList;
-class PopulationKnowledgeId;
-class PopulationConcentrationId;
-class PopulationConcentrationKnowledgeId;
-class PopulationFlowId;
-class PopulationFlowKnowledgeId;
+class CrowdId;
+class CrowdIdList;
+class CrowdKnowledgeId;
+class CrowdConcentrationId;
+class CrowdConcentrationKnowledgeId;
+class CrowdFlowId;
+class CrowdFlowKnowledgeId;
 class UnitId;
 class UnitIdList;
 class UnitKnowledgeId;
@@ -54,9 +54,11 @@ class UnitKnowledgeIdList;
 class UrbanObjectId;
 class UrbanObjectKnowledgeId;
 class Tasker;
+class ParentEntity;
 class DrawingId;
 class IntelligenceId;
 class TacticalLineId;
+class MarkerId;
 class FireId;
 class FireEffectId;
 class ReportId;
@@ -71,7 +73,7 @@ class FragOrderType;
 class MissionType;
 class NBCAgentType;
 class ObjectType;
-class PopulationType;
+class CrowdType;
 class ReportType;
 class ResourceType;
 class UnitType;
@@ -87,7 +89,6 @@ class MsgAutomatChangeLogisticLinks;
 class MsgAutomatChangeSuperior_oid_superior;
 class MsgAutomatChangeSuperior;
 class MsgUnitChangeSuperior;
-class MsgFormationCreation;
 class MsgControlStop;
 class MsgControlPause;
 class MsgControlResume;
@@ -123,38 +124,38 @@ class MsgMissionParameter_Value;
 class MsgMissionParameters;
 class MsgUnitOrder;
 class MsgAutomatOrder;
-class MsgPopulationOrder;
+class MsgCrowdOrder;
 class MsgTacticalLine;
 class MsgTacticalLine_Diffusion;
 class MsgShape;
 class MsgChatTarget;
 class MsgTextMessage;
-class MsgObjectAttributeConstruction;
-class MsgObjectAttributeMine;
-class MsgObjectAttributeLogistic;
-class MsgObjectAttributeInteractionHeight;
-class MsgObjectAttributeObstacle;
-class MsgObjectAttributeActivityTime;
-class MsgObjectAttributeBypass;
-class MsgObjectAttributeEffectDelay;
-class MsgObjectAttributeNBC;
-class StockResource;
-class MsgObjectAttributeStock;
-class MsgObjectAttributeCrossingSite;
-class MsgObjectAttributeSupplyRoute;
-class MsgLocatedQuantity;
-class MsgLocatedQuantityList;
-class MsgObjectAttributeToxicCloud;
-class MsgObjectAttributeFire;
-class MsgObjectAttributeMedicalTreatment;
-class MsgObjectAttributeNBCType;
-class MsgObjectAttributeSealOff;
 class ResourceNetwork;
 class ResourceNetwork_Link;
-class MsgObjectAttributeResourceNetwork;
-class MsgObjectAttributes;
+class ObjectAttributeResourceNetwork;
+class ObjectAttributeConstruction;
+class ObjectAttributeMine;
+class ObjectAttributeLogistic;
+class ObjectAttributeInteractionHeight;
+class ObjectAttributeObstacle;
+class ObjectAttributeActivityTime;
+class ObjectAttributeBypass;
+class ObjectAttributeEffectDelay;
+class ObjectAttributeNBC;
+class StockResource;
+class ObjectAttributeStock;
+class ObjectAttributeCrossingSite;
+class ObjectAttributeSupplyRoute;
+class MsgLocatedQuantity;
+class MsgLocatedQuantityList;
+class ObjectAttributeToxicCloud;
+class ObjectAttributeFire;
+class ObjectAttributeMedicalTreatment;
+class ObjectAttributeNBCType;
+class ObjectAttributeSealOff;
+class ObjectAttributes;
 class MsgNote;
-class MsgMeteoAttributes;
+class MsgWeatherAttributes;
 
 enum MsgLocation_Geometry {
   MsgLocation_Geometry_circle = 0,
@@ -335,41 +336,13 @@ inline bool EnumPrecipitationType_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<EnumPrecipitationType>(
     EnumPrecipitationType_descriptor(), name, value);
 }
-enum EnumLightingType {
-  jour_sans_nuage_ = 0,
-  jour_peu_nuageux_ = 1,
-  jour_moyennement_nuageux_ = 2,
-  jour_assez_nuageux_ = 3,
-  jour_tres_nuageux_ = 4,
-  nuit_pleine_lune_ = 5,
-  nuit_trois_quart_de_lune_ = 6,
-  nuit_demi_lune_ = 7,
-  nuit_quart_de_lune_ = 8,
-  nuit_nouvelle_lune_ = 9,
-  eclairant_ = 10,
-  globalMeteoType_ = 11
-};
-bool EnumLightingType_IsValid(int value);
-const EnumLightingType EnumLightingType_MIN = jour_sans_nuage_;
-const EnumLightingType EnumLightingType_MAX = globalMeteoType_;
-
-const ::google::protobuf::EnumDescriptor* EnumLightingType_descriptor();
-inline const ::std::string& EnumLightingType_Name(EnumLightingType value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    EnumLightingType_descriptor(), value);
-}
-inline bool EnumLightingType_Parse(
-    const ::std::string& name, EnumLightingType* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<EnumLightingType>(
-    EnumLightingType_descriptor(), name, value);
-}
 enum EnumFireEffectType {
-  fumigene = 0,
-  eclairant = 1
+  smoke = 0,
+  light = 1
 };
 bool EnumFireEffectType_IsValid(int value);
-const EnumFireEffectType EnumFireEffectType_MIN = fumigene;
-const EnumFireEffectType EnumFireEffectType_MAX = eclairant;
+const EnumFireEffectType EnumFireEffectType_MIN = smoke;
+const EnumFireEffectType EnumFireEffectType_MAX = light;
 
 const ::google::protobuf::EnumDescriptor* EnumFireEffectType_descriptor();
 inline const ::std::string& EnumFireEffectType_Name(EnumFireEffectType value) {
@@ -381,23 +354,51 @@ inline bool EnumFireEffectType_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<EnumFireEffectType>(
     EnumFireEffectType_descriptor(), name, value);
 }
-enum MsgStartUnitFire_type {
+enum UnitFireType {
   direct = 0,
   indirect = 1
 };
-bool MsgStartUnitFire_type_IsValid(int value);
-const MsgStartUnitFire_type MsgStartUnitFire_type_MIN = direct;
-const MsgStartUnitFire_type MsgStartUnitFire_type_MAX = indirect;
+bool UnitFireType_IsValid(int value);
+const UnitFireType UnitFireType_MIN = direct;
+const UnitFireType UnitFireType_MAX = indirect;
 
-const ::google::protobuf::EnumDescriptor* MsgStartUnitFire_type_descriptor();
-inline const ::std::string& MsgStartUnitFire_type_Name(MsgStartUnitFire_type value) {
+const ::google::protobuf::EnumDescriptor* UnitFireType_descriptor();
+inline const ::std::string& UnitFireType_Name(UnitFireType value) {
   return ::google::protobuf::internal::NameOfEnum(
-    MsgStartUnitFire_type_descriptor(), value);
+    UnitFireType_descriptor(), value);
 }
-inline bool MsgStartUnitFire_type_Parse(
-    const ::std::string& name, MsgStartUnitFire_type* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<MsgStartUnitFire_type>(
-    MsgStartUnitFire_type_descriptor(), name, value);
+inline bool UnitFireType_Parse(
+    const ::std::string& name, UnitFireType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<UnitFireType>(
+    UnitFireType_descriptor(), name, value);
+}
+enum EnumLightingType {
+  jour_sans_nuage = 0,
+  jour_peu_nuageux = 1,
+  jour_moyennement_nuageux = 2,
+  jour_assez_nuageux = 3,
+  jour_tres_nuageux = 4,
+  nuit_pleine_lune = 5,
+  nuit_trois_quart_de_lune = 6,
+  nuit_demi_lune = 7,
+  nuit_quart_de_lune = 8,
+  nuit_nouvelle_lune = 9,
+  eclairant = 10,
+  global_weather = 11
+};
+bool EnumLightingType_IsValid(int value);
+const EnumLightingType EnumLightingType_MIN = jour_sans_nuage;
+const EnumLightingType EnumLightingType_MAX = global_weather;
+
+const ::google::protobuf::EnumDescriptor* EnumLightingType_descriptor();
+inline const ::std::string& EnumLightingType_Name(EnumLightingType value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    EnumLightingType_descriptor(), value);
+}
+inline bool EnumLightingType_Parse(
+    const ::std::string& name, EnumLightingType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<EnumLightingType>(
+    EnumLightingType_descriptor(), name, value);
 }
 enum EnumLogMaintenanceHandlingStatus {
   deplacement_vers_chaine = 0,
@@ -506,6 +507,24 @@ inline bool EnumSimulationState_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<EnumSimulationState>(
     EnumSimulationState_descriptor(), name, value);
 }
+enum EnumDispatcherState {
+  available = 0,
+  unavailable = 1
+};
+bool EnumDispatcherState_IsValid(int value);
+const EnumDispatcherState EnumDispatcherState_MIN = available;
+const EnumDispatcherState EnumDispatcherState_MAX = unavailable;
+
+const ::google::protobuf::EnumDescriptor* EnumDispatcherState_descriptor();
+inline const ::std::string& EnumDispatcherState_Name(EnumDispatcherState value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    EnumDispatcherState_descriptor(), value);
+}
+inline bool EnumDispatcherState_Parse(
+    const ::std::string& name, EnumDispatcherState* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<EnumDispatcherState>(
+    EnumDispatcherState_descriptor(), name, value);
+}
 enum EnumMeetingEngagementStatus {
   none_meeting = 0,
   etat_esquive = 1,
@@ -563,25 +582,25 @@ inline bool EnumAutomatMode_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<EnumAutomatMode>(
     EnumAutomatMode_descriptor(), name, value);
 }
-enum EnumPopulationAttitude {
+enum EnumCrowdAttitude {
   calme = 0,
   agitee = 1,
   excitee = 2,
   agressive = 3
 };
-bool EnumPopulationAttitude_IsValid(int value);
-const EnumPopulationAttitude EnumPopulationAttitude_MIN = calme;
-const EnumPopulationAttitude EnumPopulationAttitude_MAX = agressive;
+bool EnumCrowdAttitude_IsValid(int value);
+const EnumCrowdAttitude EnumCrowdAttitude_MIN = calme;
+const EnumCrowdAttitude EnumCrowdAttitude_MAX = agressive;
 
-const ::google::protobuf::EnumDescriptor* EnumPopulationAttitude_descriptor();
-inline const ::std::string& EnumPopulationAttitude_Name(EnumPopulationAttitude value) {
+const ::google::protobuf::EnumDescriptor* EnumCrowdAttitude_descriptor();
+inline const ::std::string& EnumCrowdAttitude_Name(EnumCrowdAttitude value) {
   return ::google::protobuf::internal::NameOfEnum(
-    EnumPopulationAttitude_descriptor(), value);
+    EnumCrowdAttitude_descriptor(), value);
 }
-inline bool EnumPopulationAttitude_Parse(
-    const ::std::string& name, EnumPopulationAttitude* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<EnumPopulationAttitude>(
-    EnumPopulationAttitude_descriptor(), name, value);
+inline bool EnumCrowdAttitude_Parse(
+    const ::std::string& name, EnumCrowdAttitude* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<EnumCrowdAttitude>(
+    EnumCrowdAttitude_descriptor(), name, value);
 }
 enum EnumUnitTiredness {
   normal = 0,
@@ -1634,14 +1653,14 @@ class PartyIdList : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class PopulationId : public ::google::protobuf::Message {
+class CrowdId : public ::google::protobuf::Message {
  public:
-  PopulationId();
-  virtual ~PopulationId();
+  CrowdId();
+  virtual ~CrowdId();
   
-  PopulationId(const PopulationId& from);
+  CrowdId(const CrowdId& from);
   
-  inline PopulationId& operator=(const PopulationId& from) {
+  inline CrowdId& operator=(const CrowdId& from) {
     CopyFrom(from);
     return *this;
   }
@@ -1655,16 +1674,16 @@ class PopulationId : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const PopulationId& default_instance();
-  void Swap(PopulationId* other);
+  static const CrowdId& default_instance();
+  void Swap(CrowdId* other);
   
   // implements Message ----------------------------------------------
   
-  PopulationId* New() const;
+  CrowdId* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const PopulationId& from);
-  void MergeFrom(const PopulationId& from);
+  void CopyFrom(const CrowdId& from);
+  void MergeFrom(const CrowdId& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -1717,18 +1736,18 @@ class PopulationId : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static PopulationId* default_instance_;
+  static CrowdId* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class PopulationIdList : public ::google::protobuf::Message {
+class CrowdIdList : public ::google::protobuf::Message {
  public:
-  PopulationIdList();
-  virtual ~PopulationIdList();
+  CrowdIdList();
+  virtual ~CrowdIdList();
   
-  PopulationIdList(const PopulationIdList& from);
+  CrowdIdList(const CrowdIdList& from);
   
-  inline PopulationIdList& operator=(const PopulationIdList& from) {
+  inline CrowdIdList& operator=(const CrowdIdList& from) {
     CopyFrom(from);
     return *this;
   }
@@ -1742,16 +1761,16 @@ class PopulationIdList : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const PopulationIdList& default_instance();
-  void Swap(PopulationIdList* other);
+  static const CrowdIdList& default_instance();
+  void Swap(CrowdIdList* other);
   
   // implements Message ----------------------------------------------
   
-  PopulationIdList* New() const;
+  CrowdIdList* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const PopulationIdList& from);
-  void MergeFrom(const PopulationIdList& from);
+  void CopyFrom(const CrowdIdList& from);
+  void MergeFrom(const CrowdIdList& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -1774,21 +1793,21 @@ class PopulationIdList : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // repeated .Common.PopulationId elem = 1;
+  // repeated .Common.CrowdId elem = 1;
   inline int elem_size() const;
   inline void clear_elem();
   static const int kElemFieldNumber = 1;
-  inline const ::google::protobuf::RepeatedPtrField< ::Common::PopulationId >& elem() const;
-  inline ::google::protobuf::RepeatedPtrField< ::Common::PopulationId >* mutable_elem();
-  inline const ::Common::PopulationId& elem(int index) const;
-  inline ::Common::PopulationId* mutable_elem(int index);
-  inline ::Common::PopulationId* add_elem();
+  inline const ::google::protobuf::RepeatedPtrField< ::Common::CrowdId >& elem() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Common::CrowdId >* mutable_elem();
+  inline const ::Common::CrowdId& elem(int index) const;
+  inline ::Common::CrowdId* mutable_elem(int index);
+  inline ::Common::CrowdId* add_elem();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::RepeatedPtrField< ::Common::PopulationId > elem_;
+  ::google::protobuf::RepeatedPtrField< ::Common::CrowdId > elem_;
   friend void  protobuf_AddDesc_Common_2eproto();
   friend void protobuf_AssignDesc_Common_2eproto();
   friend void protobuf_ShutdownFile_Common_2eproto();
@@ -1807,18 +1826,18 @@ class PopulationIdList : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static PopulationIdList* default_instance_;
+  static CrowdIdList* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class PopulationKnowledgeId : public ::google::protobuf::Message {
+class CrowdKnowledgeId : public ::google::protobuf::Message {
  public:
-  PopulationKnowledgeId();
-  virtual ~PopulationKnowledgeId();
+  CrowdKnowledgeId();
+  virtual ~CrowdKnowledgeId();
   
-  PopulationKnowledgeId(const PopulationKnowledgeId& from);
+  CrowdKnowledgeId(const CrowdKnowledgeId& from);
   
-  inline PopulationKnowledgeId& operator=(const PopulationKnowledgeId& from) {
+  inline CrowdKnowledgeId& operator=(const CrowdKnowledgeId& from) {
     CopyFrom(from);
     return *this;
   }
@@ -1832,16 +1851,16 @@ class PopulationKnowledgeId : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const PopulationKnowledgeId& default_instance();
-  void Swap(PopulationKnowledgeId* other);
+  static const CrowdKnowledgeId& default_instance();
+  void Swap(CrowdKnowledgeId* other);
   
   // implements Message ----------------------------------------------
   
-  PopulationKnowledgeId* New() const;
+  CrowdKnowledgeId* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const PopulationKnowledgeId& from);
-  void MergeFrom(const PopulationKnowledgeId& from);
+  void CopyFrom(const CrowdKnowledgeId& from);
+  void MergeFrom(const CrowdKnowledgeId& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -1894,18 +1913,18 @@ class PopulationKnowledgeId : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static PopulationKnowledgeId* default_instance_;
+  static CrowdKnowledgeId* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class PopulationConcentrationId : public ::google::protobuf::Message {
+class CrowdConcentrationId : public ::google::protobuf::Message {
  public:
-  PopulationConcentrationId();
-  virtual ~PopulationConcentrationId();
+  CrowdConcentrationId();
+  virtual ~CrowdConcentrationId();
   
-  PopulationConcentrationId(const PopulationConcentrationId& from);
+  CrowdConcentrationId(const CrowdConcentrationId& from);
   
-  inline PopulationConcentrationId& operator=(const PopulationConcentrationId& from) {
+  inline CrowdConcentrationId& operator=(const CrowdConcentrationId& from) {
     CopyFrom(from);
     return *this;
   }
@@ -1919,16 +1938,16 @@ class PopulationConcentrationId : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const PopulationConcentrationId& default_instance();
-  void Swap(PopulationConcentrationId* other);
+  static const CrowdConcentrationId& default_instance();
+  void Swap(CrowdConcentrationId* other);
   
   // implements Message ----------------------------------------------
   
-  PopulationConcentrationId* New() const;
+  CrowdConcentrationId* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const PopulationConcentrationId& from);
-  void MergeFrom(const PopulationConcentrationId& from);
+  void CopyFrom(const CrowdConcentrationId& from);
+  void MergeFrom(const CrowdConcentrationId& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -1981,18 +2000,18 @@ class PopulationConcentrationId : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static PopulationConcentrationId* default_instance_;
+  static CrowdConcentrationId* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class PopulationConcentrationKnowledgeId : public ::google::protobuf::Message {
+class CrowdConcentrationKnowledgeId : public ::google::protobuf::Message {
  public:
-  PopulationConcentrationKnowledgeId();
-  virtual ~PopulationConcentrationKnowledgeId();
+  CrowdConcentrationKnowledgeId();
+  virtual ~CrowdConcentrationKnowledgeId();
   
-  PopulationConcentrationKnowledgeId(const PopulationConcentrationKnowledgeId& from);
+  CrowdConcentrationKnowledgeId(const CrowdConcentrationKnowledgeId& from);
   
-  inline PopulationConcentrationKnowledgeId& operator=(const PopulationConcentrationKnowledgeId& from) {
+  inline CrowdConcentrationKnowledgeId& operator=(const CrowdConcentrationKnowledgeId& from) {
     CopyFrom(from);
     return *this;
   }
@@ -2006,16 +2025,16 @@ class PopulationConcentrationKnowledgeId : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const PopulationConcentrationKnowledgeId& default_instance();
-  void Swap(PopulationConcentrationKnowledgeId* other);
+  static const CrowdConcentrationKnowledgeId& default_instance();
+  void Swap(CrowdConcentrationKnowledgeId* other);
   
   // implements Message ----------------------------------------------
   
-  PopulationConcentrationKnowledgeId* New() const;
+  CrowdConcentrationKnowledgeId* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const PopulationConcentrationKnowledgeId& from);
-  void MergeFrom(const PopulationConcentrationKnowledgeId& from);
+  void CopyFrom(const CrowdConcentrationKnowledgeId& from);
+  void MergeFrom(const CrowdConcentrationKnowledgeId& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -2068,18 +2087,18 @@ class PopulationConcentrationKnowledgeId : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static PopulationConcentrationKnowledgeId* default_instance_;
+  static CrowdConcentrationKnowledgeId* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class PopulationFlowId : public ::google::protobuf::Message {
+class CrowdFlowId : public ::google::protobuf::Message {
  public:
-  PopulationFlowId();
-  virtual ~PopulationFlowId();
+  CrowdFlowId();
+  virtual ~CrowdFlowId();
   
-  PopulationFlowId(const PopulationFlowId& from);
+  CrowdFlowId(const CrowdFlowId& from);
   
-  inline PopulationFlowId& operator=(const PopulationFlowId& from) {
+  inline CrowdFlowId& operator=(const CrowdFlowId& from) {
     CopyFrom(from);
     return *this;
   }
@@ -2093,16 +2112,16 @@ class PopulationFlowId : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const PopulationFlowId& default_instance();
-  void Swap(PopulationFlowId* other);
+  static const CrowdFlowId& default_instance();
+  void Swap(CrowdFlowId* other);
   
   // implements Message ----------------------------------------------
   
-  PopulationFlowId* New() const;
+  CrowdFlowId* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const PopulationFlowId& from);
-  void MergeFrom(const PopulationFlowId& from);
+  void CopyFrom(const CrowdFlowId& from);
+  void MergeFrom(const CrowdFlowId& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -2155,18 +2174,18 @@ class PopulationFlowId : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static PopulationFlowId* default_instance_;
+  static CrowdFlowId* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class PopulationFlowKnowledgeId : public ::google::protobuf::Message {
+class CrowdFlowKnowledgeId : public ::google::protobuf::Message {
  public:
-  PopulationFlowKnowledgeId();
-  virtual ~PopulationFlowKnowledgeId();
+  CrowdFlowKnowledgeId();
+  virtual ~CrowdFlowKnowledgeId();
   
-  PopulationFlowKnowledgeId(const PopulationFlowKnowledgeId& from);
+  CrowdFlowKnowledgeId(const CrowdFlowKnowledgeId& from);
   
-  inline PopulationFlowKnowledgeId& operator=(const PopulationFlowKnowledgeId& from) {
+  inline CrowdFlowKnowledgeId& operator=(const CrowdFlowKnowledgeId& from) {
     CopyFrom(from);
     return *this;
   }
@@ -2180,16 +2199,16 @@ class PopulationFlowKnowledgeId : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const PopulationFlowKnowledgeId& default_instance();
-  void Swap(PopulationFlowKnowledgeId* other);
+  static const CrowdFlowKnowledgeId& default_instance();
+  void Swap(CrowdFlowKnowledgeId* other);
   
   // implements Message ----------------------------------------------
   
-  PopulationFlowKnowledgeId* New() const;
+  CrowdFlowKnowledgeId* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const PopulationFlowKnowledgeId& from);
-  void MergeFrom(const PopulationFlowKnowledgeId& from);
+  void CopyFrom(const CrowdFlowKnowledgeId& from);
+  void MergeFrom(const CrowdFlowKnowledgeId& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -2242,7 +2261,7 @@ class PopulationFlowKnowledgeId : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static PopulationFlowKnowledgeId* default_instance_;
+  static CrowdFlowKnowledgeId* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -2841,12 +2860,12 @@ class Tasker : public ::google::protobuf::Message {
   inline const ::Common::FormationId& formation() const;
   inline ::Common::FormationId* mutable_formation();
   
-  // optional .Common.PopulationId population = 3;
-  inline bool has_population() const;
-  inline void clear_population();
-  static const int kPopulationFieldNumber = 3;
-  inline const ::Common::PopulationId& population() const;
-  inline ::Common::PopulationId* mutable_population();
+  // optional .Common.CrowdId crowd = 3;
+  inline bool has_crowd() const;
+  inline void clear_crowd();
+  static const int kCrowdFieldNumber = 3;
+  inline const ::Common::CrowdId& crowd() const;
+  inline ::Common::CrowdId* mutable_crowd();
   
   // optional .Common.UnitId unit = 4;
   inline bool has_unit() const;
@@ -2861,7 +2880,7 @@ class Tasker : public ::google::protobuf::Message {
   
   ::Common::AutomatId* automat_;
   ::Common::FormationId* formation_;
-  ::Common::PopulationId* population_;
+  ::Common::CrowdId* crowd_;
   ::Common::UnitId* unit_;
   friend void  protobuf_AddDesc_Common_2eproto();
   friend void protobuf_AssignDesc_Common_2eproto();
@@ -2882,6 +2901,101 @@ class Tasker : public ::google::protobuf::Message {
   
   void InitAsDefaultInstance();
   static Tasker* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ParentEntity : public ::google::protobuf::Message {
+ public:
+  ParentEntity();
+  virtual ~ParentEntity();
+  
+  ParentEntity(const ParentEntity& from);
+  
+  inline ParentEntity& operator=(const ParentEntity& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ParentEntity& default_instance();
+  void Swap(ParentEntity* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ParentEntity* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ParentEntity& from);
+  void MergeFrom(const ParentEntity& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // optional .Common.AutomatId automat = 1;
+  inline bool has_automat() const;
+  inline void clear_automat();
+  static const int kAutomatFieldNumber = 1;
+  inline const ::Common::AutomatId& automat() const;
+  inline ::Common::AutomatId* mutable_automat();
+  
+  // optional .Common.FormationId formation = 2;
+  inline bool has_formation() const;
+  inline void clear_formation();
+  static const int kFormationFieldNumber = 2;
+  inline const ::Common::FormationId& formation() const;
+  inline ::Common::FormationId* mutable_formation();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::AutomatId* automat_;
+  ::Common::FormationId* formation_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ParentEntity* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -3143,6 +3257,93 @@ class TacticalLineId : public ::google::protobuf::Message {
   
   void InitAsDefaultInstance();
   static TacticalLineId* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MarkerId : public ::google::protobuf::Message {
+ public:
+  MarkerId();
+  virtual ~MarkerId();
+  
+  MarkerId(const MarkerId& from);
+  
+  inline MarkerId& operator=(const MarkerId& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MarkerId& default_instance();
+  void Swap(MarkerId* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MarkerId* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MarkerId& from);
+  void MergeFrom(const MarkerId& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required uint32 id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 id() const;
+  inline void set_id(::google::protobuf::uint32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::uint32 id_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MarkerId* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -4368,14 +4569,14 @@ class ObjectType : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class PopulationType : public ::google::protobuf::Message {
+class CrowdType : public ::google::protobuf::Message {
  public:
-  PopulationType();
-  virtual ~PopulationType();
+  CrowdType();
+  virtual ~CrowdType();
   
-  PopulationType(const PopulationType& from);
+  CrowdType(const CrowdType& from);
   
-  inline PopulationType& operator=(const PopulationType& from) {
+  inline CrowdType& operator=(const CrowdType& from) {
     CopyFrom(from);
     return *this;
   }
@@ -4389,16 +4590,16 @@ class PopulationType : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const PopulationType& default_instance();
-  void Swap(PopulationType* other);
+  static const CrowdType& default_instance();
+  void Swap(CrowdType* other);
   
   // implements Message ----------------------------------------------
   
-  PopulationType* New() const;
+  CrowdType* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const PopulationType& from);
-  void MergeFrom(const PopulationType& from);
+  void CopyFrom(const CrowdType& from);
+  void MergeFrom(const CrowdType& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -4451,7 +4652,7 @@ class PopulationType : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static PopulationType* default_instance_;
+  static CrowdType* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -5862,129 +6063,6 @@ class MsgUnitChangeSuperior : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgFormationCreation : public ::google::protobuf::Message {
- public:
-  MsgFormationCreation();
-  virtual ~MsgFormationCreation();
-  
-  MsgFormationCreation(const MsgFormationCreation& from);
-  
-  inline MsgFormationCreation& operator=(const MsgFormationCreation& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgFormationCreation& default_instance();
-  void Swap(MsgFormationCreation* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgFormationCreation* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgFormationCreation& from);
-  void MergeFrom(const MsgFormationCreation& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required .Common.FormationId formation = 1;
-  inline bool has_formation() const;
-  inline void clear_formation();
-  static const int kFormationFieldNumber = 1;
-  inline const ::Common::FormationId& formation() const;
-  inline ::Common::FormationId* mutable_formation();
-  
-  // required .Common.PartyId party = 2;
-  inline bool has_party() const;
-  inline void clear_party();
-  static const int kPartyFieldNumber = 2;
-  inline const ::Common::PartyId& party() const;
-  inline ::Common::PartyId* mutable_party();
-  
-  // optional .Common.FormationId parent = 3;
-  inline bool has_parent() const;
-  inline void clear_parent();
-  static const int kParentFieldNumber = 3;
-  inline const ::Common::FormationId& parent() const;
-  inline ::Common::FormationId* mutable_parent();
-  
-  // required .Common.EnumNatureLevel level = 4;
-  inline bool has_level() const;
-  inline void clear_level();
-  static const int kLevelFieldNumber = 4;
-  inline Common::EnumNatureLevel level() const;
-  inline void set_level(Common::EnumNatureLevel value);
-  
-  // required string name = 5;
-  inline bool has_name() const;
-  inline void clear_name();
-  static const int kNameFieldNumber = 5;
-  inline const ::std::string& name() const;
-  inline void set_name(const ::std::string& value);
-  inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
-  inline ::std::string* mutable_name();
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::Common::FormationId* formation_;
-  ::Common::PartyId* party_;
-  ::Common::FormationId* parent_;
-  int level_;
-  ::std::string* name_;
-  static const ::std::string _default_name_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgFormationCreation* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class MsgControlStop : public ::google::protobuf::Message {
  public:
   MsgControlStop();
@@ -6461,10 +6539,10 @@ class MsgNetworkAddress : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required string IP = 1;
+  // required string ip = 1;
   inline bool has_ip() const;
   inline void clear_ip();
-  static const int kIPFieldNumber = 1;
+  static const int kIpFieldNumber = 1;
   inline const ::std::string& ip() const;
   inline void set_ip(const ::std::string& value);
   inline void set_ip(const char* value);
@@ -7784,14 +7862,14 @@ class MsgPlannedWork : public ::google::protobuf::Message {
   inline const ::Common::MsgLocation& position() const;
   inline ::Common::MsgLocation* mutable_position();
   
-  // optional .Common.ObstacleType.DemolitionTargetType type_obstacle = 3 [default = preliminary];
+  // optional .Common.ObstacleType.DemolitionTargetType type_obstacle = 3;
   inline bool has_type_obstacle() const;
   inline void clear_type_obstacle();
   static const int kTypeObstacleFieldNumber = 3;
   inline ::Common::ObstacleType_DemolitionTargetType type_obstacle() const;
   inline void set_type_obstacle(::Common::ObstacleType_DemolitionTargetType value);
   
-  // optional float densite = 4 [default = 0];
+  // optional float densite = 4;
   inline bool has_densite() const;
   inline void clear_densite();
   static const int kDensiteFieldNumber = 4;
@@ -7805,7 +7883,7 @@ class MsgPlannedWork : public ::google::protobuf::Message {
   inline const ::Common::AutomatId& tc2() const;
   inline ::Common::AutomatId* mutable_tc2();
   
-  // optional int32 activity_time = 6 [default = 0];
+  // optional int32 activity_time = 6;
   inline bool has_activity_time() const;
   inline void clear_activity_time();
   static const int kActivityTimeFieldNumber = 6;
@@ -9091,12 +9169,12 @@ class MsgMissionParameter_Value : public ::google::protobuf::Message {
   inline const ::Common::ObjectKnowledgeIdList& objectknowledgelist() const;
   inline ::Common::ObjectKnowledgeIdList* mutable_objectknowledgelist();
   
-  // optional .Common.PopulationKnowledgeId populationKnowledge = 22;
-  inline bool has_populationknowledge() const;
-  inline void clear_populationknowledge();
-  static const int kPopulationKnowledgeFieldNumber = 22;
-  inline const ::Common::PopulationKnowledgeId& populationknowledge() const;
-  inline ::Common::PopulationKnowledgeId* mutable_populationknowledge();
+  // optional .Common.CrowdKnowledgeId crowdKnowledge = 22;
+  inline bool has_crowdknowledge() const;
+  inline void clear_crowdknowledge();
+  static const int kCrowdKnowledgeFieldNumber = 22;
+  inline const ::Common::CrowdKnowledgeId& crowdknowledge() const;
+  inline ::Common::CrowdKnowledgeId* mutable_crowdknowledge();
   
   // optional .Common.MsgPlannedWork plannedWork = 23;
   inline bool has_plannedwork() const;
@@ -9276,7 +9354,7 @@ class MsgMissionParameter_Value : public ::google::protobuf::Message {
   ::Common::UnitKnowledgeIdList* unitknowledgelist_;
   ::Common::ObjectKnowledgeId* objectknowledge_;
   ::Common::ObjectKnowledgeIdList* objectknowledgelist_;
-  ::Common::PopulationKnowledgeId* populationknowledge_;
+  ::Common::CrowdKnowledgeId* crowdknowledge_;
   ::Common::MsgPlannedWork* plannedwork_;
   ::Common::MsgPlannedWorkList* plannedworklist_;
   ::Common::ResourceType* resourcetype_;
@@ -9376,7 +9454,7 @@ class MsgMissionParameter : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // optional bool null_value = 1 [default = false];
+  // optional bool null_value = 1;
   inline bool has_null_value() const;
   inline void clear_null_value();
   static const int kNullValueFieldNumber = 1;
@@ -9582,10 +9660,27 @@ class MsgUnitOrder : public ::google::protobuf::Message {
   inline const ::Common::MsgMissionParameters& parameters() const;
   inline ::Common::MsgMissionParameters* mutable_parameters();
   
-  // optional .Common.MsgDateTime start_time = 4;
+  // optional string label = 4;
+  inline bool has_label() const;
+  inline void clear_label();
+  static const int kLabelFieldNumber = 4;
+  inline const ::std::string& label() const;
+  inline void set_label(const ::std::string& value);
+  inline void set_label(const char* value);
+  inline void set_label(const char* value, size_t size);
+  inline ::std::string* mutable_label();
+  
+  // optional .Common.MsgLocation symbolLocation = 5;
+  inline bool has_symbollocation() const;
+  inline void clear_symbollocation();
+  static const int kSymbolLocationFieldNumber = 5;
+  inline const ::Common::MsgLocation& symbollocation() const;
+  inline ::Common::MsgLocation* mutable_symbollocation();
+  
+  // optional .Common.MsgDateTime start_time = 6;
   inline bool has_start_time() const;
   inline void clear_start_time();
-  static const int kStartTimeFieldNumber = 4;
+  static const int kStartTimeFieldNumber = 6;
   inline const ::Common::MsgDateTime& start_time() const;
   inline ::Common::MsgDateTime* mutable_start_time();
   
@@ -9596,12 +9691,15 @@ class MsgUnitOrder : public ::google::protobuf::Message {
   ::Common::UnitId* tasker_;
   ::Common::MissionType* type_;
   ::Common::MsgMissionParameters* parameters_;
+  ::std::string* label_;
+  static const ::std::string _default_label_;
+  ::Common::MsgLocation* symbollocation_;
   ::Common::MsgDateTime* start_time_;
   friend void  protobuf_AddDesc_Common_2eproto();
   friend void protobuf_AssignDesc_Common_2eproto();
   friend void protobuf_ShutdownFile_Common_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -9693,10 +9791,27 @@ class MsgAutomatOrder : public ::google::protobuf::Message {
   inline const ::Common::MsgMissionParameters& parameters() const;
   inline ::Common::MsgMissionParameters* mutable_parameters();
   
-  // optional .Common.MsgDateTime start_time = 4;
+  // optional string label = 4;
+  inline bool has_label() const;
+  inline void clear_label();
+  static const int kLabelFieldNumber = 4;
+  inline const ::std::string& label() const;
+  inline void set_label(const ::std::string& value);
+  inline void set_label(const char* value);
+  inline void set_label(const char* value, size_t size);
+  inline ::std::string* mutable_label();
+  
+  // optional .Common.MsgLocation symbolLocation = 5;
+  inline bool has_symbollocation() const;
+  inline void clear_symbollocation();
+  static const int kSymbolLocationFieldNumber = 5;
+  inline const ::Common::MsgLocation& symbollocation() const;
+  inline ::Common::MsgLocation* mutable_symbollocation();
+  
+  // optional .Common.MsgDateTime start_time = 6;
   inline bool has_start_time() const;
   inline void clear_start_time();
-  static const int kStartTimeFieldNumber = 4;
+  static const int kStartTimeFieldNumber = 6;
   inline const ::Common::MsgDateTime& start_time() const;
   inline ::Common::MsgDateTime* mutable_start_time();
   
@@ -9707,12 +9822,15 @@ class MsgAutomatOrder : public ::google::protobuf::Message {
   ::Common::AutomatId* tasker_;
   ::Common::MissionType* type_;
   ::Common::MsgMissionParameters* parameters_;
+  ::std::string* label_;
+  static const ::std::string _default_label_;
+  ::Common::MsgLocation* symbollocation_;
   ::Common::MsgDateTime* start_time_;
   friend void  protobuf_AddDesc_Common_2eproto();
   friend void protobuf_AssignDesc_Common_2eproto();
   friend void protobuf_ShutdownFile_Common_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -9730,14 +9848,14 @@ class MsgAutomatOrder : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgPopulationOrder : public ::google::protobuf::Message {
+class MsgCrowdOrder : public ::google::protobuf::Message {
  public:
-  MsgPopulationOrder();
-  virtual ~MsgPopulationOrder();
+  MsgCrowdOrder();
+  virtual ~MsgCrowdOrder();
   
-  MsgPopulationOrder(const MsgPopulationOrder& from);
+  MsgCrowdOrder(const MsgCrowdOrder& from);
   
-  inline MsgPopulationOrder& operator=(const MsgPopulationOrder& from) {
+  inline MsgCrowdOrder& operator=(const MsgCrowdOrder& from) {
     CopyFrom(from);
     return *this;
   }
@@ -9751,16 +9869,16 @@ class MsgPopulationOrder : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgPopulationOrder& default_instance();
-  void Swap(MsgPopulationOrder* other);
+  static const MsgCrowdOrder& default_instance();
+  void Swap(MsgCrowdOrder* other);
   
   // implements Message ----------------------------------------------
   
-  MsgPopulationOrder* New() const;
+  MsgCrowdOrder* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgPopulationOrder& from);
-  void MergeFrom(const MsgPopulationOrder& from);
+  void CopyFrom(const MsgCrowdOrder& from);
+  void MergeFrom(const MsgCrowdOrder& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -9783,12 +9901,12 @@ class MsgPopulationOrder : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.PopulationId tasker = 1;
+  // required .Common.CrowdId tasker = 1;
   inline bool has_tasker() const;
   inline void clear_tasker();
   static const int kTaskerFieldNumber = 1;
-  inline const ::Common::PopulationId& tasker() const;
-  inline ::Common::PopulationId* mutable_tasker();
+  inline const ::Common::CrowdId& tasker() const;
+  inline ::Common::CrowdId* mutable_tasker();
   
   // required .Common.MissionType type = 2;
   inline bool has_type() const;
@@ -9804,10 +9922,27 @@ class MsgPopulationOrder : public ::google::protobuf::Message {
   inline const ::Common::MsgMissionParameters& parameters() const;
   inline ::Common::MsgMissionParameters* mutable_parameters();
   
-  // optional .Common.MsgDateTime start_time = 4;
+  // optional string label = 4;
+  inline bool has_label() const;
+  inline void clear_label();
+  static const int kLabelFieldNumber = 4;
+  inline const ::std::string& label() const;
+  inline void set_label(const ::std::string& value);
+  inline void set_label(const char* value);
+  inline void set_label(const char* value, size_t size);
+  inline ::std::string* mutable_label();
+  
+  // optional .Common.MsgLocation symbolLocation = 5;
+  inline bool has_symbollocation() const;
+  inline void clear_symbollocation();
+  static const int kSymbolLocationFieldNumber = 5;
+  inline const ::Common::MsgLocation& symbollocation() const;
+  inline ::Common::MsgLocation* mutable_symbollocation();
+  
+  // optional .Common.MsgDateTime start_time = 6;
   inline bool has_start_time() const;
   inline void clear_start_time();
-  static const int kStartTimeFieldNumber = 4;
+  static const int kStartTimeFieldNumber = 6;
   inline const ::Common::MsgDateTime& start_time() const;
   inline ::Common::MsgDateTime* mutable_start_time();
   
@@ -9815,15 +9950,18 @@ class MsgPopulationOrder : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::PopulationId* tasker_;
+  ::Common::CrowdId* tasker_;
   ::Common::MissionType* type_;
   ::Common::MsgMissionParameters* parameters_;
+  ::std::string* label_;
+  static const ::std::string _default_label_;
+  ::Common::MsgLocation* symbollocation_;
   ::Common::MsgDateTime* start_time_;
   friend void  protobuf_AddDesc_Common_2eproto();
   friend void protobuf_AssignDesc_Common_2eproto();
   friend void protobuf_ShutdownFile_Common_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -9837,7 +9975,7 @@ class MsgPopulationOrder : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgPopulationOrder* default_instance_;
+  static MsgCrowdOrder* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -10118,15 +10256,15 @@ class MsgShape : public ::google::protobuf::Message {
   inline void set_color(const char* value, size_t size);
   inline ::std::string* mutable_color();
   
-  // required string template_ = 3;
-  inline bool has_template_() const;
-  inline void clear_template_();
-  static const int kTemplateFieldNumber = 3;
-  inline const ::std::string& template_() const;
-  inline void set_template_(const ::std::string& value);
-  inline void set_template_(const char* value);
-  inline void set_template_(const char* value, size_t size);
-  inline ::std::string* mutable_template_();
+  // required string pattern = 3;
+  inline bool has_pattern() const;
+  inline void clear_pattern();
+  static const int kPatternFieldNumber = 3;
+  inline const ::std::string& pattern() const;
+  inline void set_pattern(const ::std::string& value);
+  inline void set_pattern(const char* value);
+  inline void set_pattern(const char* value, size_t size);
+  inline ::std::string* mutable_pattern();
   
   // required .Common.MsgCoordLatLongList points = 4;
   inline bool has_points() const;
@@ -10143,8 +10281,8 @@ class MsgShape : public ::google::protobuf::Message {
   static const ::std::string _default_category_;
   ::std::string* color_;
   static const ::std::string _default_color_;
-  ::std::string* template__;
-  static const ::std::string _default_template__;
+  ::std::string* pattern_;
+  static const ::std::string _default_pattern_;
   ::Common::MsgCoordLatLongList* points_;
   friend void  protobuf_AddDesc_Common_2eproto();
   friend void protobuf_AssignDesc_Common_2eproto();
@@ -10363,1967 +10501,6 @@ class MsgTextMessage : public ::google::protobuf::Message {
   
   void InitAsDefaultInstance();
   static MsgTextMessage* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgObjectAttributeConstruction : public ::google::protobuf::Message {
- public:
-  MsgObjectAttributeConstruction();
-  virtual ~MsgObjectAttributeConstruction();
-  
-  MsgObjectAttributeConstruction(const MsgObjectAttributeConstruction& from);
-  
-  inline MsgObjectAttributeConstruction& operator=(const MsgObjectAttributeConstruction& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgObjectAttributeConstruction& default_instance();
-  void Swap(MsgObjectAttributeConstruction* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgObjectAttributeConstruction* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgObjectAttributeConstruction& from);
-  void MergeFrom(const MsgObjectAttributeConstruction& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // optional .Common.ResourceType resource = 1;
-  inline bool has_resource() const;
-  inline void clear_resource();
-  static const int kResourceFieldNumber = 1;
-  inline const ::Common::ResourceType& resource() const;
-  inline ::Common::ResourceType* mutable_resource();
-  
-  // optional int32 dotation_nbr = 2 [default = 0];
-  inline bool has_dotation_nbr() const;
-  inline void clear_dotation_nbr();
-  static const int kDotationNbrFieldNumber = 2;
-  inline ::google::protobuf::int32 dotation_nbr() const;
-  inline void set_dotation_nbr(::google::protobuf::int32 value);
-  
-  // optional float density = 3 [default = 0];
-  inline bool has_density() const;
-  inline void clear_density();
-  static const int kDensityFieldNumber = 3;
-  inline float density() const;
-  inline void set_density(float value);
-  
-  // optional int32 percentage = 4 [default = 0];
-  inline bool has_percentage() const;
-  inline void clear_percentage();
-  static const int kPercentageFieldNumber = 4;
-  inline ::google::protobuf::int32 percentage() const;
-  inline void set_percentage(::google::protobuf::int32 value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::Common::ResourceType* resource_;
-  ::google::protobuf::int32 dotation_nbr_;
-  float density_;
-  ::google::protobuf::int32 percentage_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgObjectAttributeConstruction* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgObjectAttributeMine : public ::google::protobuf::Message {
- public:
-  MsgObjectAttributeMine();
-  virtual ~MsgObjectAttributeMine();
-  
-  MsgObjectAttributeMine(const MsgObjectAttributeMine& from);
-  
-  inline MsgObjectAttributeMine& operator=(const MsgObjectAttributeMine& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgObjectAttributeMine& default_instance();
-  void Swap(MsgObjectAttributeMine* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgObjectAttributeMine* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgObjectAttributeMine& from);
-  void MergeFrom(const MsgObjectAttributeMine& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // optional .Common.ResourceType resource = 1;
-  inline bool has_resource() const;
-  inline void clear_resource();
-  static const int kResourceFieldNumber = 1;
-  inline const ::Common::ResourceType& resource() const;
-  inline ::Common::ResourceType* mutable_resource();
-  
-  // optional int32 dotation_nbr = 2 [default = 0];
-  inline bool has_dotation_nbr() const;
-  inline void clear_dotation_nbr();
-  static const int kDotationNbrFieldNumber = 2;
-  inline ::google::protobuf::int32 dotation_nbr() const;
-  inline void set_dotation_nbr(::google::protobuf::int32 value);
-  
-  // optional float density = 3 [default = 0];
-  inline bool has_density() const;
-  inline void clear_density();
-  static const int kDensityFieldNumber = 3;
-  inline float density() const;
-  inline void set_density(float value);
-  
-  // optional int32 percentage = 4 [default = 0];
-  inline bool has_percentage() const;
-  inline void clear_percentage();
-  static const int kPercentageFieldNumber = 4;
-  inline ::google::protobuf::int32 percentage() const;
-  inline void set_percentage(::google::protobuf::int32 value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::Common::ResourceType* resource_;
-  ::google::protobuf::int32 dotation_nbr_;
-  float density_;
-  ::google::protobuf::int32 percentage_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgObjectAttributeMine* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgObjectAttributeLogistic : public ::google::protobuf::Message {
- public:
-  MsgObjectAttributeLogistic();
-  virtual ~MsgObjectAttributeLogistic();
-  
-  MsgObjectAttributeLogistic(const MsgObjectAttributeLogistic& from);
-  
-  inline MsgObjectAttributeLogistic& operator=(const MsgObjectAttributeLogistic& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgObjectAttributeLogistic& default_instance();
-  void Swap(MsgObjectAttributeLogistic* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgObjectAttributeLogistic* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgObjectAttributeLogistic& from);
-  void MergeFrom(const MsgObjectAttributeLogistic& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required .Common.AutomatId tc2 = 1;
-  inline bool has_tc2() const;
-  inline void clear_tc2();
-  static const int kTc2FieldNumber = 1;
-  inline const ::Common::AutomatId& tc2() const;
-  inline ::Common::AutomatId* mutable_tc2();
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::Common::AutomatId* tc2_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgObjectAttributeLogistic* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgObjectAttributeInteractionHeight : public ::google::protobuf::Message {
- public:
-  MsgObjectAttributeInteractionHeight();
-  virtual ~MsgObjectAttributeInteractionHeight();
-  
-  MsgObjectAttributeInteractionHeight(const MsgObjectAttributeInteractionHeight& from);
-  
-  inline MsgObjectAttributeInteractionHeight& operator=(const MsgObjectAttributeInteractionHeight& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgObjectAttributeInteractionHeight& default_instance();
-  void Swap(MsgObjectAttributeInteractionHeight* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgObjectAttributeInteractionHeight* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgObjectAttributeInteractionHeight& from);
-  void MergeFrom(const MsgObjectAttributeInteractionHeight& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required float height = 1;
-  inline bool has_height() const;
-  inline void clear_height();
-  static const int kHeightFieldNumber = 1;
-  inline float height() const;
-  inline void set_height(float value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  float height_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgObjectAttributeInteractionHeight* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgObjectAttributeObstacle : public ::google::protobuf::Message {
- public:
-  MsgObjectAttributeObstacle();
-  virtual ~MsgObjectAttributeObstacle();
-  
-  MsgObjectAttributeObstacle(const MsgObjectAttributeObstacle& from);
-  
-  inline MsgObjectAttributeObstacle& operator=(const MsgObjectAttributeObstacle& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgObjectAttributeObstacle& default_instance();
-  void Swap(MsgObjectAttributeObstacle* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgObjectAttributeObstacle* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgObjectAttributeObstacle& from);
-  void MergeFrom(const MsgObjectAttributeObstacle& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required .Common.ObstacleType.DemolitionTargetType type = 1;
-  inline bool has_type() const;
-  inline void clear_type();
-  static const int kTypeFieldNumber = 1;
-  inline ::Common::ObstacleType_DemolitionTargetType type() const;
-  inline void set_type(::Common::ObstacleType_DemolitionTargetType value);
-  
-  // optional bool activated = 2;
-  inline bool has_activated() const;
-  inline void clear_activated();
-  static const int kActivatedFieldNumber = 2;
-  inline bool activated() const;
-  inline void set_activated(bool value);
-  
-  // optional int32 activation_time = 3;
-  inline bool has_activation_time() const;
-  inline void clear_activation_time();
-  static const int kActivationTimeFieldNumber = 3;
-  inline ::google::protobuf::int32 activation_time() const;
-  inline void set_activation_time(::google::protobuf::int32 value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  int type_;
-  bool activated_;
-  ::google::protobuf::int32 activation_time_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgObjectAttributeObstacle* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgObjectAttributeActivityTime : public ::google::protobuf::Message {
- public:
-  MsgObjectAttributeActivityTime();
-  virtual ~MsgObjectAttributeActivityTime();
-  
-  MsgObjectAttributeActivityTime(const MsgObjectAttributeActivityTime& from);
-  
-  inline MsgObjectAttributeActivityTime& operator=(const MsgObjectAttributeActivityTime& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgObjectAttributeActivityTime& default_instance();
-  void Swap(MsgObjectAttributeActivityTime* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgObjectAttributeActivityTime* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgObjectAttributeActivityTime& from);
-  void MergeFrom(const MsgObjectAttributeActivityTime& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required int32 value = 1;
-  inline bool has_value() const;
-  inline void clear_value();
-  static const int kValueFieldNumber = 1;
-  inline ::google::protobuf::int32 value() const;
-  inline void set_value(::google::protobuf::int32 value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::google::protobuf::int32 value_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgObjectAttributeActivityTime* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgObjectAttributeBypass : public ::google::protobuf::Message {
- public:
-  MsgObjectAttributeBypass();
-  virtual ~MsgObjectAttributeBypass();
-  
-  MsgObjectAttributeBypass(const MsgObjectAttributeBypass& from);
-  
-  inline MsgObjectAttributeBypass& operator=(const MsgObjectAttributeBypass& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgObjectAttributeBypass& default_instance();
-  void Swap(MsgObjectAttributeBypass* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgObjectAttributeBypass* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgObjectAttributeBypass& from);
-  void MergeFrom(const MsgObjectAttributeBypass& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // optional int32 percentage = 1 [default = 0];
-  inline bool has_percentage() const;
-  inline void clear_percentage();
-  static const int kPercentageFieldNumber = 1;
-  inline ::google::protobuf::int32 percentage() const;
-  inline void set_percentage(::google::protobuf::int32 value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::google::protobuf::int32 percentage_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgObjectAttributeBypass* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgObjectAttributeEffectDelay : public ::google::protobuf::Message {
- public:
-  MsgObjectAttributeEffectDelay();
-  virtual ~MsgObjectAttributeEffectDelay();
-  
-  MsgObjectAttributeEffectDelay(const MsgObjectAttributeEffectDelay& from);
-  
-  inline MsgObjectAttributeEffectDelay& operator=(const MsgObjectAttributeEffectDelay& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgObjectAttributeEffectDelay& default_instance();
-  void Swap(MsgObjectAttributeEffectDelay* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgObjectAttributeEffectDelay* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgObjectAttributeEffectDelay& from);
-  void MergeFrom(const MsgObjectAttributeEffectDelay& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required int32 value = 1;
-  inline bool has_value() const;
-  inline void clear_value();
-  static const int kValueFieldNumber = 1;
-  inline ::google::protobuf::int32 value() const;
-  inline void set_value(::google::protobuf::int32 value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::google::protobuf::int32 value_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgObjectAttributeEffectDelay* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgObjectAttributeNBC : public ::google::protobuf::Message {
- public:
-  MsgObjectAttributeNBC();
-  virtual ~MsgObjectAttributeNBC();
-  
-  MsgObjectAttributeNBC(const MsgObjectAttributeNBC& from);
-  
-  inline MsgObjectAttributeNBC& operator=(const MsgObjectAttributeNBC& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgObjectAttributeNBC& default_instance();
-  void Swap(MsgObjectAttributeNBC* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgObjectAttributeNBC* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgObjectAttributeNBC& from);
-  void MergeFrom(const MsgObjectAttributeNBC& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required int32 danger_level = 1;
-  inline bool has_danger_level() const;
-  inline void clear_danger_level();
-  static const int kDangerLevelFieldNumber = 1;
-  inline ::google::protobuf::int32 danger_level() const;
-  inline void set_danger_level(::google::protobuf::int32 value);
-  
-  // repeated .Common.NBCAgentType nbc_agents = 2;
-  inline int nbc_agents_size() const;
-  inline void clear_nbc_agents();
-  static const int kNbcAgentsFieldNumber = 2;
-  inline const ::google::protobuf::RepeatedPtrField< ::Common::NBCAgentType >& nbc_agents() const;
-  inline ::google::protobuf::RepeatedPtrField< ::Common::NBCAgentType >* mutable_nbc_agents();
-  inline const ::Common::NBCAgentType& nbc_agents(int index) const;
-  inline ::Common::NBCAgentType* mutable_nbc_agents(int index);
-  inline ::Common::NBCAgentType* add_nbc_agents();
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::google::protobuf::int32 danger_level_;
-  ::google::protobuf::RepeatedPtrField< ::Common::NBCAgentType > nbc_agents_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgObjectAttributeNBC* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class StockResource : public ::google::protobuf::Message {
- public:
-  StockResource();
-  virtual ~StockResource();
-  
-  StockResource(const StockResource& from);
-  
-  inline StockResource& operator=(const StockResource& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const StockResource& default_instance();
-  void Swap(StockResource* other);
-  
-  // implements Message ----------------------------------------------
-  
-  StockResource* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const StockResource& from);
-  void MergeFrom(const StockResource& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required .Common.ResourceType resource = 1;
-  inline bool has_resource() const;
-  inline void clear_resource();
-  static const int kResourceFieldNumber = 1;
-  inline const ::Common::ResourceType& resource() const;
-  inline ::Common::ResourceType* mutable_resource();
-  
-  // required int32 current = 2;
-  inline bool has_current() const;
-  inline void clear_current();
-  static const int kCurrentFieldNumber = 2;
-  inline ::google::protobuf::int32 current() const;
-  inline void set_current(::google::protobuf::int32 value);
-  
-  // optional int32 maximum = 3;
-  inline bool has_maximum() const;
-  inline void clear_maximum();
-  static const int kMaximumFieldNumber = 3;
-  inline ::google::protobuf::int32 maximum() const;
-  inline void set_maximum(::google::protobuf::int32 value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::Common::ResourceType* resource_;
-  ::google::protobuf::int32 current_;
-  ::google::protobuf::int32 maximum_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static StockResource* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgObjectAttributeStock : public ::google::protobuf::Message {
- public:
-  MsgObjectAttributeStock();
-  virtual ~MsgObjectAttributeStock();
-  
-  MsgObjectAttributeStock(const MsgObjectAttributeStock& from);
-  
-  inline MsgObjectAttributeStock& operator=(const MsgObjectAttributeStock& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgObjectAttributeStock& default_instance();
-  void Swap(MsgObjectAttributeStock* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgObjectAttributeStock* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgObjectAttributeStock& from);
-  void MergeFrom(const MsgObjectAttributeStock& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // repeated .Common.StockResource resources = 1;
-  inline int resources_size() const;
-  inline void clear_resources();
-  static const int kResourcesFieldNumber = 1;
-  inline const ::google::protobuf::RepeatedPtrField< ::Common::StockResource >& resources() const;
-  inline ::google::protobuf::RepeatedPtrField< ::Common::StockResource >* mutable_resources();
-  inline const ::Common::StockResource& resources(int index) const;
-  inline ::Common::StockResource* mutable_resources(int index);
-  inline ::Common::StockResource* add_resources();
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::google::protobuf::RepeatedPtrField< ::Common::StockResource > resources_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgObjectAttributeStock* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgObjectAttributeCrossingSite : public ::google::protobuf::Message {
- public:
-  MsgObjectAttributeCrossingSite();
-  virtual ~MsgObjectAttributeCrossingSite();
-  
-  MsgObjectAttributeCrossingSite(const MsgObjectAttributeCrossingSite& from);
-  
-  inline MsgObjectAttributeCrossingSite& operator=(const MsgObjectAttributeCrossingSite& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgObjectAttributeCrossingSite& default_instance();
-  void Swap(MsgObjectAttributeCrossingSite* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgObjectAttributeCrossingSite* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgObjectAttributeCrossingSite& from);
-  void MergeFrom(const MsgObjectAttributeCrossingSite& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required int32 width = 1;
-  inline bool has_width() const;
-  inline void clear_width();
-  static const int kWidthFieldNumber = 1;
-  inline ::google::protobuf::int32 width() const;
-  inline void set_width(::google::protobuf::int32 value);
-  
-  // required int32 depth = 2;
-  inline bool has_depth() const;
-  inline void clear_depth();
-  static const int kDepthFieldNumber = 2;
-  inline ::google::protobuf::int32 depth() const;
-  inline void set_depth(::google::protobuf::int32 value);
-  
-  // required int32 flow_rate = 3;
-  inline bool has_flow_rate() const;
-  inline void clear_flow_rate();
-  static const int kFlowRateFieldNumber = 3;
-  inline ::google::protobuf::int32 flow_rate() const;
-  inline void set_flow_rate(::google::protobuf::int32 value);
-  
-  // required bool banks_require_fitting = 4;
-  inline bool has_banks_require_fitting() const;
-  inline void clear_banks_require_fitting();
-  static const int kBanksRequireFittingFieldNumber = 4;
-  inline bool banks_require_fitting() const;
-  inline void set_banks_require_fitting(bool value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::google::protobuf::int32 width_;
-  ::google::protobuf::int32 depth_;
-  ::google::protobuf::int32 flow_rate_;
-  bool banks_require_fitting_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgObjectAttributeCrossingSite* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgObjectAttributeSupplyRoute : public ::google::protobuf::Message {
- public:
-  MsgObjectAttributeSupplyRoute();
-  virtual ~MsgObjectAttributeSupplyRoute();
-  
-  MsgObjectAttributeSupplyRoute(const MsgObjectAttributeSupplyRoute& from);
-  
-  inline MsgObjectAttributeSupplyRoute& operator=(const MsgObjectAttributeSupplyRoute& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgObjectAttributeSupplyRoute& default_instance();
-  void Swap(MsgObjectAttributeSupplyRoute* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgObjectAttributeSupplyRoute* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgObjectAttributeSupplyRoute& from);
-  void MergeFrom(const MsgObjectAttributeSupplyRoute& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required bool equipped = 1;
-  inline bool has_equipped() const;
-  inline void clear_equipped();
-  static const int kEquippedFieldNumber = 1;
-  inline bool equipped() const;
-  inline void set_equipped(bool value);
-  
-  // required int32 max_weight = 2;
-  inline bool has_max_weight() const;
-  inline void clear_max_weight();
-  static const int kMaxWeightFieldNumber = 2;
-  inline ::google::protobuf::int32 max_weight() const;
-  inline void set_max_weight(::google::protobuf::int32 value);
-  
-  // required int32 width = 3;
-  inline bool has_width() const;
-  inline void clear_width();
-  static const int kWidthFieldNumber = 3;
-  inline ::google::protobuf::int32 width() const;
-  inline void set_width(::google::protobuf::int32 value);
-  
-  // required int32 length = 4;
-  inline bool has_length() const;
-  inline void clear_length();
-  static const int kLengthFieldNumber = 4;
-  inline ::google::protobuf::int32 length() const;
-  inline void set_length(::google::protobuf::int32 value);
-  
-  // required int32 flow_rate = 5;
-  inline bool has_flow_rate() const;
-  inline void clear_flow_rate();
-  static const int kFlowRateFieldNumber = 5;
-  inline ::google::protobuf::int32 flow_rate() const;
-  inline void set_flow_rate(::google::protobuf::int32 value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  bool equipped_;
-  ::google::protobuf::int32 max_weight_;
-  ::google::protobuf::int32 width_;
-  ::google::protobuf::int32 length_;
-  ::google::protobuf::int32 flow_rate_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgObjectAttributeSupplyRoute* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgLocatedQuantity : public ::google::protobuf::Message {
- public:
-  MsgLocatedQuantity();
-  virtual ~MsgLocatedQuantity();
-  
-  MsgLocatedQuantity(const MsgLocatedQuantity& from);
-  
-  inline MsgLocatedQuantity& operator=(const MsgLocatedQuantity& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgLocatedQuantity& default_instance();
-  void Swap(MsgLocatedQuantity* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgLocatedQuantity* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgLocatedQuantity& from);
-  void MergeFrom(const MsgLocatedQuantity& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required .Common.MsgCoordLatLong coordinate = 1;
-  inline bool has_coordinate() const;
-  inline void clear_coordinate();
-  static const int kCoordinateFieldNumber = 1;
-  inline const ::Common::MsgCoordLatLong& coordinate() const;
-  inline ::Common::MsgCoordLatLong* mutable_coordinate();
-  
-  // required float quantity = 2;
-  inline bool has_quantity() const;
-  inline void clear_quantity();
-  static const int kQuantityFieldNumber = 2;
-  inline float quantity() const;
-  inline void set_quantity(float value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::Common::MsgCoordLatLong* coordinate_;
-  float quantity_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgLocatedQuantity* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgLocatedQuantityList : public ::google::protobuf::Message {
- public:
-  MsgLocatedQuantityList();
-  virtual ~MsgLocatedQuantityList();
-  
-  MsgLocatedQuantityList(const MsgLocatedQuantityList& from);
-  
-  inline MsgLocatedQuantityList& operator=(const MsgLocatedQuantityList& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgLocatedQuantityList& default_instance();
-  void Swap(MsgLocatedQuantityList* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgLocatedQuantityList* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgLocatedQuantityList& from);
-  void MergeFrom(const MsgLocatedQuantityList& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // repeated .Common.MsgLocatedQuantity elem = 1;
-  inline int elem_size() const;
-  inline void clear_elem();
-  static const int kElemFieldNumber = 1;
-  inline const ::google::protobuf::RepeatedPtrField< ::Common::MsgLocatedQuantity >& elem() const;
-  inline ::google::protobuf::RepeatedPtrField< ::Common::MsgLocatedQuantity >* mutable_elem();
-  inline const ::Common::MsgLocatedQuantity& elem(int index) const;
-  inline ::Common::MsgLocatedQuantity* mutable_elem(int index);
-  inline ::Common::MsgLocatedQuantity* add_elem();
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::google::protobuf::RepeatedPtrField< ::Common::MsgLocatedQuantity > elem_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgLocatedQuantityList* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgObjectAttributeToxicCloud : public ::google::protobuf::Message {
- public:
-  MsgObjectAttributeToxicCloud();
-  virtual ~MsgObjectAttributeToxicCloud();
-  
-  MsgObjectAttributeToxicCloud(const MsgObjectAttributeToxicCloud& from);
-  
-  inline MsgObjectAttributeToxicCloud& operator=(const MsgObjectAttributeToxicCloud& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgObjectAttributeToxicCloud& default_instance();
-  void Swap(MsgObjectAttributeToxicCloud* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgObjectAttributeToxicCloud* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgObjectAttributeToxicCloud& from);
-  void MergeFrom(const MsgObjectAttributeToxicCloud& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required .Common.MsgLocatedQuantityList quantities = 1;
-  inline bool has_quantities() const;
-  inline void clear_quantities();
-  static const int kQuantitiesFieldNumber = 1;
-  inline const ::Common::MsgLocatedQuantityList& quantities() const;
-  inline ::Common::MsgLocatedQuantityList* mutable_quantities();
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::Common::MsgLocatedQuantityList* quantities_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgObjectAttributeToxicCloud* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgObjectAttributeFire : public ::google::protobuf::Message {
- public:
-  MsgObjectAttributeFire();
-  virtual ~MsgObjectAttributeFire();
-  
-  MsgObjectAttributeFire(const MsgObjectAttributeFire& from);
-  
-  inline MsgObjectAttributeFire& operator=(const MsgObjectAttributeFire& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgObjectAttributeFire& default_instance();
-  void Swap(MsgObjectAttributeFire* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgObjectAttributeFire* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgObjectAttributeFire& from);
-  void MergeFrom(const MsgObjectAttributeFire& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required int32 class_id = 1;
-  inline bool has_class_id() const;
-  inline void clear_class_id();
-  static const int kClassIdFieldNumber = 1;
-  inline ::google::protobuf::int32 class_id() const;
-  inline void set_class_id(::google::protobuf::int32 value);
-  
-  // required int32 heat = 2;
-  inline bool has_heat() const;
-  inline void clear_heat();
-  static const int kHeatFieldNumber = 2;
-  inline ::google::protobuf::int32 heat() const;
-  inline void set_heat(::google::protobuf::int32 value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::google::protobuf::int32 class_id_;
-  ::google::protobuf::int32 heat_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgObjectAttributeFire* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgObjectAttributeMedicalTreatment : public ::google::protobuf::Message {
- public:
-  MsgObjectAttributeMedicalTreatment();
-  virtual ~MsgObjectAttributeMedicalTreatment();
-  
-  MsgObjectAttributeMedicalTreatment(const MsgObjectAttributeMedicalTreatment& from);
-  
-  inline MsgObjectAttributeMedicalTreatment& operator=(const MsgObjectAttributeMedicalTreatment& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgObjectAttributeMedicalTreatment& default_instance();
-  void Swap(MsgObjectAttributeMedicalTreatment* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgObjectAttributeMedicalTreatment* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgObjectAttributeMedicalTreatment& from);
-  void MergeFrom(const MsgObjectAttributeMedicalTreatment& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // repeated uint32 type_id = 1;
-  inline int type_id_size() const;
-  inline void clear_type_id();
-  static const int kTypeIdFieldNumber = 1;
-  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >& type_id() const
-      ;
-  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >* mutable_type_id();
-  inline ::google::protobuf::uint32 type_id(int index) const;
-  inline void set_type_id(int index, ::google::protobuf::uint32 value);
-  inline void add_type_id(::google::protobuf::uint32 value);
-  
-  // required int32 beds = 2;
-  inline bool has_beds() const;
-  inline void clear_beds();
-  static const int kBedsFieldNumber = 2;
-  inline ::google::protobuf::int32 beds() const;
-  inline void set_beds(::google::protobuf::int32 value);
-  
-  // required int32 available_beds = 3;
-  inline bool has_available_beds() const;
-  inline void clear_available_beds();
-  static const int kAvailableBedsFieldNumber = 3;
-  inline ::google::protobuf::int32 available_beds() const;
-  inline void set_available_beds(::google::protobuf::int32 value);
-  
-  // required int32 doctors = 4;
-  inline bool has_doctors() const;
-  inline void clear_doctors();
-  static const int kDoctorsFieldNumber = 4;
-  inline ::google::protobuf::int32 doctors() const;
-  inline void set_doctors(::google::protobuf::int32 value);
-  
-  // required int32 available_doctors = 5;
-  inline bool has_available_doctors() const;
-  inline void clear_available_doctors();
-  static const int kAvailableDoctorsFieldNumber = 5;
-  inline ::google::protobuf::int32 available_doctors() const;
-  inline void set_available_doctors(::google::protobuf::int32 value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > type_id_;
-  ::google::protobuf::int32 beds_;
-  ::google::protobuf::int32 available_beds_;
-  ::google::protobuf::int32 doctors_;
-  ::google::protobuf::int32 available_doctors_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgObjectAttributeMedicalTreatment* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgObjectAttributeNBCType : public ::google::protobuf::Message {
- public:
-  MsgObjectAttributeNBCType();
-  virtual ~MsgObjectAttributeNBCType();
-  
-  MsgObjectAttributeNBCType(const MsgObjectAttributeNBCType& from);
-  
-  inline MsgObjectAttributeNBCType& operator=(const MsgObjectAttributeNBCType& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgObjectAttributeNBCType& default_instance();
-  void Swap(MsgObjectAttributeNBCType* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgObjectAttributeNBCType* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgObjectAttributeNBCType& from);
-  void MergeFrom(const MsgObjectAttributeNBCType& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required .Common.NBCAgentType agent = 1;
-  inline bool has_agent() const;
-  inline void clear_agent();
-  static const int kAgentFieldNumber = 1;
-  inline const ::Common::NBCAgentType& agent() const;
-  inline ::Common::NBCAgentType* mutable_agent();
-  
-  // required int32 concentration = 2;
-  inline bool has_concentration() const;
-  inline void clear_concentration();
-  static const int kConcentrationFieldNumber = 2;
-  inline ::google::protobuf::int32 concentration() const;
-  inline void set_concentration(::google::protobuf::int32 value);
-  
-  // required int32 source_life_duration = 3;
-  inline bool has_source_life_duration() const;
-  inline void clear_source_life_duration();
-  static const int kSourceLifeDurationFieldNumber = 3;
-  inline ::google::protobuf::int32 source_life_duration() const;
-  inline void set_source_life_duration(::google::protobuf::int32 value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::Common::NBCAgentType* agent_;
-  ::google::protobuf::int32 concentration_;
-  ::google::protobuf::int32 source_life_duration_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgObjectAttributeNBCType* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgObjectAttributeSealOff : public ::google::protobuf::Message {
- public:
-  MsgObjectAttributeSealOff();
-  virtual ~MsgObjectAttributeSealOff();
-  
-  MsgObjectAttributeSealOff(const MsgObjectAttributeSealOff& from);
-  
-  inline MsgObjectAttributeSealOff& operator=(const MsgObjectAttributeSealOff& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgObjectAttributeSealOff& default_instance();
-  void Swap(MsgObjectAttributeSealOff* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgObjectAttributeSealOff* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgObjectAttributeSealOff& from);
-  void MergeFrom(const MsgObjectAttributeSealOff& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required int32 level = 1;
-  inline bool has_level() const;
-  inline void clear_level();
-  static const int kLevelFieldNumber = 1;
-  inline ::google::protobuf::int32 level() const;
-  inline void set_level(::google::protobuf::int32 value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::google::protobuf::int32 level_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgObjectAttributeSealOff* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -12608,14 +10785,14 @@ class ResourceNetwork : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgObjectAttributeResourceNetwork : public ::google::protobuf::Message {
+class ObjectAttributeResourceNetwork : public ::google::protobuf::Message {
  public:
-  MsgObjectAttributeResourceNetwork();
-  virtual ~MsgObjectAttributeResourceNetwork();
+  ObjectAttributeResourceNetwork();
+  virtual ~ObjectAttributeResourceNetwork();
   
-  MsgObjectAttributeResourceNetwork(const MsgObjectAttributeResourceNetwork& from);
+  ObjectAttributeResourceNetwork(const ObjectAttributeResourceNetwork& from);
   
-  inline MsgObjectAttributeResourceNetwork& operator=(const MsgObjectAttributeResourceNetwork& from) {
+  inline ObjectAttributeResourceNetwork& operator=(const ObjectAttributeResourceNetwork& from) {
     CopyFrom(from);
     return *this;
   }
@@ -12629,16 +10806,16 @@ class MsgObjectAttributeResourceNetwork : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgObjectAttributeResourceNetwork& default_instance();
-  void Swap(MsgObjectAttributeResourceNetwork* other);
+  static const ObjectAttributeResourceNetwork& default_instance();
+  void Swap(ObjectAttributeResourceNetwork* other);
   
   // implements Message ----------------------------------------------
   
-  MsgObjectAttributeResourceNetwork* New() const;
+  ObjectAttributeResourceNetwork* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgObjectAttributeResourceNetwork& from);
-  void MergeFrom(const MsgObjectAttributeResourceNetwork& from);
+  void CopyFrom(const ObjectAttributeResourceNetwork& from);
+  void MergeFrom(const ObjectAttributeResourceNetwork& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -12694,18 +10871,18 @@ class MsgObjectAttributeResourceNetwork : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgObjectAttributeResourceNetwork* default_instance_;
+  static ObjectAttributeResourceNetwork* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgObjectAttributes : public ::google::protobuf::Message {
+class ObjectAttributeConstruction : public ::google::protobuf::Message {
  public:
-  MsgObjectAttributes();
-  virtual ~MsgObjectAttributes();
+  ObjectAttributeConstruction();
+  virtual ~ObjectAttributeConstruction();
   
-  MsgObjectAttributes(const MsgObjectAttributes& from);
+  ObjectAttributeConstruction(const ObjectAttributeConstruction& from);
   
-  inline MsgObjectAttributes& operator=(const MsgObjectAttributes& from) {
+  inline ObjectAttributeConstruction& operator=(const ObjectAttributeConstruction& from) {
     CopyFrom(from);
     return *this;
   }
@@ -12719,16 +10896,16 @@ class MsgObjectAttributes : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgObjectAttributes& default_instance();
-  void Swap(MsgObjectAttributes* other);
+  static const ObjectAttributeConstruction& default_instance();
+  void Swap(ObjectAttributeConstruction* other);
   
   // implements Message ----------------------------------------------
   
-  MsgObjectAttributes* New() const;
+  ObjectAttributeConstruction* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgObjectAttributes& from);
-  void MergeFrom(const MsgObjectAttributes& from);
+  void CopyFrom(const ObjectAttributeConstruction& from);
+  void MergeFrom(const ObjectAttributeConstruction& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -12751,154 +10928,2115 @@ class MsgObjectAttributes : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // optional .Common.MsgObjectAttributeConstruction construction = 1;
-  inline bool has_construction() const;
-  inline void clear_construction();
-  static const int kConstructionFieldNumber = 1;
-  inline const ::Common::MsgObjectAttributeConstruction& construction() const;
-  inline ::Common::MsgObjectAttributeConstruction* mutable_construction();
+  // optional .Common.ResourceType resource = 1;
+  inline bool has_resource() const;
+  inline void clear_resource();
+  static const int kResourceFieldNumber = 1;
+  inline const ::Common::ResourceType& resource() const;
+  inline ::Common::ResourceType* mutable_resource();
   
-  // optional .Common.MsgObjectAttributeObstacle obstacle = 2;
-  inline bool has_obstacle() const;
-  inline void clear_obstacle();
-  static const int kObstacleFieldNumber = 2;
-  inline const ::Common::MsgObjectAttributeObstacle& obstacle() const;
-  inline ::Common::MsgObjectAttributeObstacle* mutable_obstacle();
+  // optional int32 dotation_nbr = 2;
+  inline bool has_dotation_nbr() const;
+  inline void clear_dotation_nbr();
+  static const int kDotationNbrFieldNumber = 2;
+  inline ::google::protobuf::int32 dotation_nbr() const;
+  inline void set_dotation_nbr(::google::protobuf::int32 value);
   
-  // optional .Common.MsgObjectAttributeMine mine = 3;
-  inline bool has_mine() const;
-  inline void clear_mine();
-  static const int kMineFieldNumber = 3;
-  inline const ::Common::MsgObjectAttributeMine& mine() const;
-  inline ::Common::MsgObjectAttributeMine* mutable_mine();
+  // optional float density = 3;
+  inline bool has_density() const;
+  inline void clear_density();
+  static const int kDensityFieldNumber = 3;
+  inline float density() const;
+  inline void set_density(float value);
   
-  // optional .Common.MsgObjectAttributeActivityTime activity_time = 4;
-  inline bool has_activity_time() const;
-  inline void clear_activity_time();
-  static const int kActivityTimeFieldNumber = 4;
-  inline const ::Common::MsgObjectAttributeActivityTime& activity_time() const;
-  inline ::Common::MsgObjectAttributeActivityTime* mutable_activity_time();
-  
-  // optional .Common.MsgObjectAttributeBypass bypass = 5;
-  inline bool has_bypass() const;
-  inline void clear_bypass();
-  static const int kBypassFieldNumber = 5;
-  inline const ::Common::MsgObjectAttributeBypass& bypass() const;
-  inline ::Common::MsgObjectAttributeBypass* mutable_bypass();
-  
-  // optional .Common.MsgObjectAttributeLogistic logistic = 6;
-  inline bool has_logistic() const;
-  inline void clear_logistic();
-  static const int kLogisticFieldNumber = 6;
-  inline const ::Common::MsgObjectAttributeLogistic& logistic() const;
-  inline ::Common::MsgObjectAttributeLogistic* mutable_logistic();
-  
-  // optional .Common.MsgObjectAttributeNBC nbc = 7;
-  inline bool has_nbc() const;
-  inline void clear_nbc();
-  static const int kNbcFieldNumber = 7;
-  inline const ::Common::MsgObjectAttributeNBC& nbc() const;
-  inline ::Common::MsgObjectAttributeNBC* mutable_nbc();
-  
-  // optional .Common.MsgObjectAttributeCrossingSite crossing_site = 8;
-  inline bool has_crossing_site() const;
-  inline void clear_crossing_site();
-  static const int kCrossingSiteFieldNumber = 8;
-  inline const ::Common::MsgObjectAttributeCrossingSite& crossing_site() const;
-  inline ::Common::MsgObjectAttributeCrossingSite* mutable_crossing_site();
-  
-  // optional .Common.MsgObjectAttributeSupplyRoute supply_route = 9;
-  inline bool has_supply_route() const;
-  inline void clear_supply_route();
-  static const int kSupplyRouteFieldNumber = 9;
-  inline const ::Common::MsgObjectAttributeSupplyRoute& supply_route() const;
-  inline ::Common::MsgObjectAttributeSupplyRoute* mutable_supply_route();
-  
-  // optional .Common.MsgObjectAttributeToxicCloud toxic_cloud = 10;
-  inline bool has_toxic_cloud() const;
-  inline void clear_toxic_cloud();
-  static const int kToxicCloudFieldNumber = 10;
-  inline const ::Common::MsgObjectAttributeToxicCloud& toxic_cloud() const;
-  inline ::Common::MsgObjectAttributeToxicCloud* mutable_toxic_cloud();
-  
-  // optional .Common.MsgObjectAttributeFire fire = 11;
-  inline bool has_fire() const;
-  inline void clear_fire();
-  static const int kFireFieldNumber = 11;
-  inline const ::Common::MsgObjectAttributeFire& fire() const;
-  inline ::Common::MsgObjectAttributeFire* mutable_fire();
-  
-  // optional .Common.MsgObjectAttributeMedicalTreatment medical_treatment = 12;
-  inline bool has_medical_treatment() const;
-  inline void clear_medical_treatment();
-  static const int kMedicalTreatmentFieldNumber = 12;
-  inline const ::Common::MsgObjectAttributeMedicalTreatment& medical_treatment() const;
-  inline ::Common::MsgObjectAttributeMedicalTreatment* mutable_medical_treatment();
-  
-  // optional .Common.MsgObjectAttributeInteractionHeight interaction_height = 13;
-  inline bool has_interaction_height() const;
-  inline void clear_interaction_height();
-  static const int kInteractionHeightFieldNumber = 13;
-  inline const ::Common::MsgObjectAttributeInteractionHeight& interaction_height() const;
-  inline ::Common::MsgObjectAttributeInteractionHeight* mutable_interaction_height();
-  
-  // optional .Common.MsgObjectAttributeStock stock = 14;
-  inline bool has_stock() const;
-  inline void clear_stock();
-  static const int kStockFieldNumber = 14;
-  inline const ::Common::MsgObjectAttributeStock& stock() const;
-  inline ::Common::MsgObjectAttributeStock* mutable_stock();
-  
-  // optional .Common.MsgObjectAttributeNBCType nbc_agent = 15;
-  inline bool has_nbc_agent() const;
-  inline void clear_nbc_agent();
-  static const int kNbcAgentFieldNumber = 15;
-  inline const ::Common::MsgObjectAttributeNBCType& nbc_agent() const;
-  inline ::Common::MsgObjectAttributeNBCType* mutable_nbc_agent();
-  
-  // optional .Common.MsgObjectAttributeEffectDelay effect_delay = 16;
-  inline bool has_effect_delay() const;
-  inline void clear_effect_delay();
-  static const int kEffectDelayFieldNumber = 16;
-  inline const ::Common::MsgObjectAttributeEffectDelay& effect_delay() const;
-  inline ::Common::MsgObjectAttributeEffectDelay* mutable_effect_delay();
-  
-  // optional .Common.MsgObjectAttributeSealOff sealOff = 17;
-  inline bool has_sealoff() const;
-  inline void clear_sealoff();
-  static const int kSealOffFieldNumber = 17;
-  inline const ::Common::MsgObjectAttributeSealOff& sealoff() const;
-  inline ::Common::MsgObjectAttributeSealOff* mutable_sealoff();
-  
-  // optional .Common.MsgObjectAttributeResourceNetwork resource_networks = 18;
-  inline bool has_resource_networks() const;
-  inline void clear_resource_networks();
-  static const int kResourceNetworksFieldNumber = 18;
-  inline const ::Common::MsgObjectAttributeResourceNetwork& resource_networks() const;
-  inline ::Common::MsgObjectAttributeResourceNetwork* mutable_resource_networks();
+  // optional int32 percentage = 4;
+  inline bool has_percentage() const;
+  inline void clear_percentage();
+  static const int kPercentageFieldNumber = 4;
+  inline ::google::protobuf::int32 percentage() const;
+  inline void set_percentage(::google::protobuf::int32 value);
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::MsgObjectAttributeConstruction* construction_;
-  ::Common::MsgObjectAttributeObstacle* obstacle_;
-  ::Common::MsgObjectAttributeMine* mine_;
-  ::Common::MsgObjectAttributeActivityTime* activity_time_;
-  ::Common::MsgObjectAttributeBypass* bypass_;
-  ::Common::MsgObjectAttributeLogistic* logistic_;
-  ::Common::MsgObjectAttributeNBC* nbc_;
-  ::Common::MsgObjectAttributeCrossingSite* crossing_site_;
-  ::Common::MsgObjectAttributeSupplyRoute* supply_route_;
-  ::Common::MsgObjectAttributeToxicCloud* toxic_cloud_;
-  ::Common::MsgObjectAttributeFire* fire_;
-  ::Common::MsgObjectAttributeMedicalTreatment* medical_treatment_;
-  ::Common::MsgObjectAttributeInteractionHeight* interaction_height_;
-  ::Common::MsgObjectAttributeStock* stock_;
-  ::Common::MsgObjectAttributeNBCType* nbc_agent_;
-  ::Common::MsgObjectAttributeEffectDelay* effect_delay_;
-  ::Common::MsgObjectAttributeSealOff* sealoff_;
-  ::Common::MsgObjectAttributeResourceNetwork* resource_networks_;
+  ::Common::ResourceType* resource_;
+  ::google::protobuf::int32 dotation_nbr_;
+  float density_;
+  ::google::protobuf::int32 percentage_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ObjectAttributeConstruction* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ObjectAttributeMine : public ::google::protobuf::Message {
+ public:
+  ObjectAttributeMine();
+  virtual ~ObjectAttributeMine();
+  
+  ObjectAttributeMine(const ObjectAttributeMine& from);
+  
+  inline ObjectAttributeMine& operator=(const ObjectAttributeMine& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ObjectAttributeMine& default_instance();
+  void Swap(ObjectAttributeMine* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ObjectAttributeMine* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ObjectAttributeMine& from);
+  void MergeFrom(const ObjectAttributeMine& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // optional .Common.ResourceType resource = 1;
+  inline bool has_resource() const;
+  inline void clear_resource();
+  static const int kResourceFieldNumber = 1;
+  inline const ::Common::ResourceType& resource() const;
+  inline ::Common::ResourceType* mutable_resource();
+  
+  // optional int32 dotation_nbr = 2;
+  inline bool has_dotation_nbr() const;
+  inline void clear_dotation_nbr();
+  static const int kDotationNbrFieldNumber = 2;
+  inline ::google::protobuf::int32 dotation_nbr() const;
+  inline void set_dotation_nbr(::google::protobuf::int32 value);
+  
+  // optional float density = 3;
+  inline bool has_density() const;
+  inline void clear_density();
+  static const int kDensityFieldNumber = 3;
+  inline float density() const;
+  inline void set_density(float value);
+  
+  // optional int32 percentage = 4;
+  inline bool has_percentage() const;
+  inline void clear_percentage();
+  static const int kPercentageFieldNumber = 4;
+  inline ::google::protobuf::int32 percentage() const;
+  inline void set_percentage(::google::protobuf::int32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::ResourceType* resource_;
+  ::google::protobuf::int32 dotation_nbr_;
+  float density_;
+  ::google::protobuf::int32 percentage_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ObjectAttributeMine* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ObjectAttributeLogistic : public ::google::protobuf::Message {
+ public:
+  ObjectAttributeLogistic();
+  virtual ~ObjectAttributeLogistic();
+  
+  ObjectAttributeLogistic(const ObjectAttributeLogistic& from);
+  
+  inline ObjectAttributeLogistic& operator=(const ObjectAttributeLogistic& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ObjectAttributeLogistic& default_instance();
+  void Swap(ObjectAttributeLogistic* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ObjectAttributeLogistic* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ObjectAttributeLogistic& from);
+  void MergeFrom(const ObjectAttributeLogistic& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.AutomatId tc2 = 1;
+  inline bool has_tc2() const;
+  inline void clear_tc2();
+  static const int kTc2FieldNumber = 1;
+  inline const ::Common::AutomatId& tc2() const;
+  inline ::Common::AutomatId* mutable_tc2();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::AutomatId* tc2_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ObjectAttributeLogistic* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ObjectAttributeInteractionHeight : public ::google::protobuf::Message {
+ public:
+  ObjectAttributeInteractionHeight();
+  virtual ~ObjectAttributeInteractionHeight();
+  
+  ObjectAttributeInteractionHeight(const ObjectAttributeInteractionHeight& from);
+  
+  inline ObjectAttributeInteractionHeight& operator=(const ObjectAttributeInteractionHeight& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ObjectAttributeInteractionHeight& default_instance();
+  void Swap(ObjectAttributeInteractionHeight* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ObjectAttributeInteractionHeight* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ObjectAttributeInteractionHeight& from);
+  void MergeFrom(const ObjectAttributeInteractionHeight& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required float height = 1;
+  inline bool has_height() const;
+  inline void clear_height();
+  static const int kHeightFieldNumber = 1;
+  inline float height() const;
+  inline void set_height(float value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  float height_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ObjectAttributeInteractionHeight* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ObjectAttributeObstacle : public ::google::protobuf::Message {
+ public:
+  ObjectAttributeObstacle();
+  virtual ~ObjectAttributeObstacle();
+  
+  ObjectAttributeObstacle(const ObjectAttributeObstacle& from);
+  
+  inline ObjectAttributeObstacle& operator=(const ObjectAttributeObstacle& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ObjectAttributeObstacle& default_instance();
+  void Swap(ObjectAttributeObstacle* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ObjectAttributeObstacle* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ObjectAttributeObstacle& from);
+  void MergeFrom(const ObjectAttributeObstacle& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.ObstacleType.DemolitionTargetType type = 1;
+  inline bool has_type() const;
+  inline void clear_type();
+  static const int kTypeFieldNumber = 1;
+  inline ::Common::ObstacleType_DemolitionTargetType type() const;
+  inline void set_type(::Common::ObstacleType_DemolitionTargetType value);
+  
+  // optional bool activated = 2;
+  inline bool has_activated() const;
+  inline void clear_activated();
+  static const int kActivatedFieldNumber = 2;
+  inline bool activated() const;
+  inline void set_activated(bool value);
+  
+  // optional int32 activation_time = 3;
+  inline bool has_activation_time() const;
+  inline void clear_activation_time();
+  static const int kActivationTimeFieldNumber = 3;
+  inline ::google::protobuf::int32 activation_time() const;
+  inline void set_activation_time(::google::protobuf::int32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  int type_;
+  bool activated_;
+  ::google::protobuf::int32 activation_time_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ObjectAttributeObstacle* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ObjectAttributeActivityTime : public ::google::protobuf::Message {
+ public:
+  ObjectAttributeActivityTime();
+  virtual ~ObjectAttributeActivityTime();
+  
+  ObjectAttributeActivityTime(const ObjectAttributeActivityTime& from);
+  
+  inline ObjectAttributeActivityTime& operator=(const ObjectAttributeActivityTime& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ObjectAttributeActivityTime& default_instance();
+  void Swap(ObjectAttributeActivityTime* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ObjectAttributeActivityTime* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ObjectAttributeActivityTime& from);
+  void MergeFrom(const ObjectAttributeActivityTime& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required int32 value = 1;
+  inline bool has_value() const;
+  inline void clear_value();
+  static const int kValueFieldNumber = 1;
+  inline ::google::protobuf::int32 value() const;
+  inline void set_value(::google::protobuf::int32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::int32 value_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ObjectAttributeActivityTime* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ObjectAttributeBypass : public ::google::protobuf::Message {
+ public:
+  ObjectAttributeBypass();
+  virtual ~ObjectAttributeBypass();
+  
+  ObjectAttributeBypass(const ObjectAttributeBypass& from);
+  
+  inline ObjectAttributeBypass& operator=(const ObjectAttributeBypass& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ObjectAttributeBypass& default_instance();
+  void Swap(ObjectAttributeBypass* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ObjectAttributeBypass* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ObjectAttributeBypass& from);
+  void MergeFrom(const ObjectAttributeBypass& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required int32 percentage = 1;
+  inline bool has_percentage() const;
+  inline void clear_percentage();
+  static const int kPercentageFieldNumber = 1;
+  inline ::google::protobuf::int32 percentage() const;
+  inline void set_percentage(::google::protobuf::int32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::int32 percentage_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ObjectAttributeBypass* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ObjectAttributeEffectDelay : public ::google::protobuf::Message {
+ public:
+  ObjectAttributeEffectDelay();
+  virtual ~ObjectAttributeEffectDelay();
+  
+  ObjectAttributeEffectDelay(const ObjectAttributeEffectDelay& from);
+  
+  inline ObjectAttributeEffectDelay& operator=(const ObjectAttributeEffectDelay& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ObjectAttributeEffectDelay& default_instance();
+  void Swap(ObjectAttributeEffectDelay* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ObjectAttributeEffectDelay* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ObjectAttributeEffectDelay& from);
+  void MergeFrom(const ObjectAttributeEffectDelay& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required int32 value = 1;
+  inline bool has_value() const;
+  inline void clear_value();
+  static const int kValueFieldNumber = 1;
+  inline ::google::protobuf::int32 value() const;
+  inline void set_value(::google::protobuf::int32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::int32 value_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ObjectAttributeEffectDelay* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ObjectAttributeNBC : public ::google::protobuf::Message {
+ public:
+  ObjectAttributeNBC();
+  virtual ~ObjectAttributeNBC();
+  
+  ObjectAttributeNBC(const ObjectAttributeNBC& from);
+  
+  inline ObjectAttributeNBC& operator=(const ObjectAttributeNBC& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ObjectAttributeNBC& default_instance();
+  void Swap(ObjectAttributeNBC* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ObjectAttributeNBC* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ObjectAttributeNBC& from);
+  void MergeFrom(const ObjectAttributeNBC& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required int32 danger_level = 1;
+  inline bool has_danger_level() const;
+  inline void clear_danger_level();
+  static const int kDangerLevelFieldNumber = 1;
+  inline ::google::protobuf::int32 danger_level() const;
+  inline void set_danger_level(::google::protobuf::int32 value);
+  
+  // repeated .Common.NBCAgentType nbc_agents = 2;
+  inline int nbc_agents_size() const;
+  inline void clear_nbc_agents();
+  static const int kNbcAgentsFieldNumber = 2;
+  inline const ::google::protobuf::RepeatedPtrField< ::Common::NBCAgentType >& nbc_agents() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Common::NBCAgentType >* mutable_nbc_agents();
+  inline const ::Common::NBCAgentType& nbc_agents(int index) const;
+  inline ::Common::NBCAgentType* mutable_nbc_agents(int index);
+  inline ::Common::NBCAgentType* add_nbc_agents();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::int32 danger_level_;
+  ::google::protobuf::RepeatedPtrField< ::Common::NBCAgentType > nbc_agents_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ObjectAttributeNBC* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class StockResource : public ::google::protobuf::Message {
+ public:
+  StockResource();
+  virtual ~StockResource();
+  
+  StockResource(const StockResource& from);
+  
+  inline StockResource& operator=(const StockResource& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const StockResource& default_instance();
+  void Swap(StockResource* other);
+  
+  // implements Message ----------------------------------------------
+  
+  StockResource* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const StockResource& from);
+  void MergeFrom(const StockResource& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.ResourceType resource = 1;
+  inline bool has_resource() const;
+  inline void clear_resource();
+  static const int kResourceFieldNumber = 1;
+  inline const ::Common::ResourceType& resource() const;
+  inline ::Common::ResourceType* mutable_resource();
+  
+  // required int32 current = 2;
+  inline bool has_current() const;
+  inline void clear_current();
+  static const int kCurrentFieldNumber = 2;
+  inline ::google::protobuf::int32 current() const;
+  inline void set_current(::google::protobuf::int32 value);
+  
+  // optional int32 maximum = 3;
+  inline bool has_maximum() const;
+  inline void clear_maximum();
+  static const int kMaximumFieldNumber = 3;
+  inline ::google::protobuf::int32 maximum() const;
+  inline void set_maximum(::google::protobuf::int32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::ResourceType* resource_;
+  ::google::protobuf::int32 current_;
+  ::google::protobuf::int32 maximum_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static StockResource* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ObjectAttributeStock : public ::google::protobuf::Message {
+ public:
+  ObjectAttributeStock();
+  virtual ~ObjectAttributeStock();
+  
+  ObjectAttributeStock(const ObjectAttributeStock& from);
+  
+  inline ObjectAttributeStock& operator=(const ObjectAttributeStock& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ObjectAttributeStock& default_instance();
+  void Swap(ObjectAttributeStock* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ObjectAttributeStock* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ObjectAttributeStock& from);
+  void MergeFrom(const ObjectAttributeStock& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // repeated .Common.StockResource resources = 1;
+  inline int resources_size() const;
+  inline void clear_resources();
+  static const int kResourcesFieldNumber = 1;
+  inline const ::google::protobuf::RepeatedPtrField< ::Common::StockResource >& resources() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Common::StockResource >* mutable_resources();
+  inline const ::Common::StockResource& resources(int index) const;
+  inline ::Common::StockResource* mutable_resources(int index);
+  inline ::Common::StockResource* add_resources();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::RepeatedPtrField< ::Common::StockResource > resources_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ObjectAttributeStock* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ObjectAttributeCrossingSite : public ::google::protobuf::Message {
+ public:
+  ObjectAttributeCrossingSite();
+  virtual ~ObjectAttributeCrossingSite();
+  
+  ObjectAttributeCrossingSite(const ObjectAttributeCrossingSite& from);
+  
+  inline ObjectAttributeCrossingSite& operator=(const ObjectAttributeCrossingSite& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ObjectAttributeCrossingSite& default_instance();
+  void Swap(ObjectAttributeCrossingSite* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ObjectAttributeCrossingSite* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ObjectAttributeCrossingSite& from);
+  void MergeFrom(const ObjectAttributeCrossingSite& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required int32 width = 1;
+  inline bool has_width() const;
+  inline void clear_width();
+  static const int kWidthFieldNumber = 1;
+  inline ::google::protobuf::int32 width() const;
+  inline void set_width(::google::protobuf::int32 value);
+  
+  // required int32 depth = 2;
+  inline bool has_depth() const;
+  inline void clear_depth();
+  static const int kDepthFieldNumber = 2;
+  inline ::google::protobuf::int32 depth() const;
+  inline void set_depth(::google::protobuf::int32 value);
+  
+  // required int32 flow_rate = 3;
+  inline bool has_flow_rate() const;
+  inline void clear_flow_rate();
+  static const int kFlowRateFieldNumber = 3;
+  inline ::google::protobuf::int32 flow_rate() const;
+  inline void set_flow_rate(::google::protobuf::int32 value);
+  
+  // required bool banks_require_fitting = 4;
+  inline bool has_banks_require_fitting() const;
+  inline void clear_banks_require_fitting();
+  static const int kBanksRequireFittingFieldNumber = 4;
+  inline bool banks_require_fitting() const;
+  inline void set_banks_require_fitting(bool value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::int32 width_;
+  ::google::protobuf::int32 depth_;
+  ::google::protobuf::int32 flow_rate_;
+  bool banks_require_fitting_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ObjectAttributeCrossingSite* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ObjectAttributeSupplyRoute : public ::google::protobuf::Message {
+ public:
+  ObjectAttributeSupplyRoute();
+  virtual ~ObjectAttributeSupplyRoute();
+  
+  ObjectAttributeSupplyRoute(const ObjectAttributeSupplyRoute& from);
+  
+  inline ObjectAttributeSupplyRoute& operator=(const ObjectAttributeSupplyRoute& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ObjectAttributeSupplyRoute& default_instance();
+  void Swap(ObjectAttributeSupplyRoute* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ObjectAttributeSupplyRoute* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ObjectAttributeSupplyRoute& from);
+  void MergeFrom(const ObjectAttributeSupplyRoute& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required bool equipped = 1;
+  inline bool has_equipped() const;
+  inline void clear_equipped();
+  static const int kEquippedFieldNumber = 1;
+  inline bool equipped() const;
+  inline void set_equipped(bool value);
+  
+  // required int32 max_weight = 2;
+  inline bool has_max_weight() const;
+  inline void clear_max_weight();
+  static const int kMaxWeightFieldNumber = 2;
+  inline ::google::protobuf::int32 max_weight() const;
+  inline void set_max_weight(::google::protobuf::int32 value);
+  
+  // required int32 width = 3;
+  inline bool has_width() const;
+  inline void clear_width();
+  static const int kWidthFieldNumber = 3;
+  inline ::google::protobuf::int32 width() const;
+  inline void set_width(::google::protobuf::int32 value);
+  
+  // required int32 length = 4;
+  inline bool has_length() const;
+  inline void clear_length();
+  static const int kLengthFieldNumber = 4;
+  inline ::google::protobuf::int32 length() const;
+  inline void set_length(::google::protobuf::int32 value);
+  
+  // required int32 flow_rate = 5;
+  inline bool has_flow_rate() const;
+  inline void clear_flow_rate();
+  static const int kFlowRateFieldNumber = 5;
+  inline ::google::protobuf::int32 flow_rate() const;
+  inline void set_flow_rate(::google::protobuf::int32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  bool equipped_;
+  ::google::protobuf::int32 max_weight_;
+  ::google::protobuf::int32 width_;
+  ::google::protobuf::int32 length_;
+  ::google::protobuf::int32 flow_rate_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ObjectAttributeSupplyRoute* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgLocatedQuantity : public ::google::protobuf::Message {
+ public:
+  MsgLocatedQuantity();
+  virtual ~MsgLocatedQuantity();
+  
+  MsgLocatedQuantity(const MsgLocatedQuantity& from);
+  
+  inline MsgLocatedQuantity& operator=(const MsgLocatedQuantity& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgLocatedQuantity& default_instance();
+  void Swap(MsgLocatedQuantity* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgLocatedQuantity* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgLocatedQuantity& from);
+  void MergeFrom(const MsgLocatedQuantity& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.MsgCoordLatLong coordinate = 1;
+  inline bool has_coordinate() const;
+  inline void clear_coordinate();
+  static const int kCoordinateFieldNumber = 1;
+  inline const ::Common::MsgCoordLatLong& coordinate() const;
+  inline ::Common::MsgCoordLatLong* mutable_coordinate();
+  
+  // required float quantity = 2;
+  inline bool has_quantity() const;
+  inline void clear_quantity();
+  static const int kQuantityFieldNumber = 2;
+  inline float quantity() const;
+  inline void set_quantity(float value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::MsgCoordLatLong* coordinate_;
+  float quantity_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgLocatedQuantity* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgLocatedQuantityList : public ::google::protobuf::Message {
+ public:
+  MsgLocatedQuantityList();
+  virtual ~MsgLocatedQuantityList();
+  
+  MsgLocatedQuantityList(const MsgLocatedQuantityList& from);
+  
+  inline MsgLocatedQuantityList& operator=(const MsgLocatedQuantityList& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgLocatedQuantityList& default_instance();
+  void Swap(MsgLocatedQuantityList* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgLocatedQuantityList* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgLocatedQuantityList& from);
+  void MergeFrom(const MsgLocatedQuantityList& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // repeated .Common.MsgLocatedQuantity elem = 1;
+  inline int elem_size() const;
+  inline void clear_elem();
+  static const int kElemFieldNumber = 1;
+  inline const ::google::protobuf::RepeatedPtrField< ::Common::MsgLocatedQuantity >& elem() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Common::MsgLocatedQuantity >* mutable_elem();
+  inline const ::Common::MsgLocatedQuantity& elem(int index) const;
+  inline ::Common::MsgLocatedQuantity* mutable_elem(int index);
+  inline ::Common::MsgLocatedQuantity* add_elem();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::RepeatedPtrField< ::Common::MsgLocatedQuantity > elem_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgLocatedQuantityList* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ObjectAttributeToxicCloud : public ::google::protobuf::Message {
+ public:
+  ObjectAttributeToxicCloud();
+  virtual ~ObjectAttributeToxicCloud();
+  
+  ObjectAttributeToxicCloud(const ObjectAttributeToxicCloud& from);
+  
+  inline ObjectAttributeToxicCloud& operator=(const ObjectAttributeToxicCloud& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ObjectAttributeToxicCloud& default_instance();
+  void Swap(ObjectAttributeToxicCloud* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ObjectAttributeToxicCloud* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ObjectAttributeToxicCloud& from);
+  void MergeFrom(const ObjectAttributeToxicCloud& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.MsgLocatedQuantityList quantities = 1;
+  inline bool has_quantities() const;
+  inline void clear_quantities();
+  static const int kQuantitiesFieldNumber = 1;
+  inline const ::Common::MsgLocatedQuantityList& quantities() const;
+  inline ::Common::MsgLocatedQuantityList* mutable_quantities();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::MsgLocatedQuantityList* quantities_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ObjectAttributeToxicCloud* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ObjectAttributeFire : public ::google::protobuf::Message {
+ public:
+  ObjectAttributeFire();
+  virtual ~ObjectAttributeFire();
+  
+  ObjectAttributeFire(const ObjectAttributeFire& from);
+  
+  inline ObjectAttributeFire& operator=(const ObjectAttributeFire& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ObjectAttributeFire& default_instance();
+  void Swap(ObjectAttributeFire* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ObjectAttributeFire* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ObjectAttributeFire& from);
+  void MergeFrom(const ObjectAttributeFire& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required int32 class_id = 1;
+  inline bool has_class_id() const;
+  inline void clear_class_id();
+  static const int kClassIdFieldNumber = 1;
+  inline ::google::protobuf::int32 class_id() const;
+  inline void set_class_id(::google::protobuf::int32 value);
+  
+  // required int32 heat = 2;
+  inline bool has_heat() const;
+  inline void clear_heat();
+  static const int kHeatFieldNumber = 2;
+  inline ::google::protobuf::int32 heat() const;
+  inline void set_heat(::google::protobuf::int32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::int32 class_id_;
+  ::google::protobuf::int32 heat_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ObjectAttributeFire* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ObjectAttributeMedicalTreatment : public ::google::protobuf::Message {
+ public:
+  ObjectAttributeMedicalTreatment();
+  virtual ~ObjectAttributeMedicalTreatment();
+  
+  ObjectAttributeMedicalTreatment(const ObjectAttributeMedicalTreatment& from);
+  
+  inline ObjectAttributeMedicalTreatment& operator=(const ObjectAttributeMedicalTreatment& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ObjectAttributeMedicalTreatment& default_instance();
+  void Swap(ObjectAttributeMedicalTreatment* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ObjectAttributeMedicalTreatment* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ObjectAttributeMedicalTreatment& from);
+  void MergeFrom(const ObjectAttributeMedicalTreatment& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // repeated uint32 type_id = 1;
+  inline int type_id_size() const;
+  inline void clear_type_id();
+  static const int kTypeIdFieldNumber = 1;
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >& type_id() const
+      ;
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >* mutable_type_id();
+  inline ::google::protobuf::uint32 type_id(int index) const;
+  inline void set_type_id(int index, ::google::protobuf::uint32 value);
+  inline void add_type_id(::google::protobuf::uint32 value);
+  
+  // required int32 beds = 2;
+  inline bool has_beds() const;
+  inline void clear_beds();
+  static const int kBedsFieldNumber = 2;
+  inline ::google::protobuf::int32 beds() const;
+  inline void set_beds(::google::protobuf::int32 value);
+  
+  // required int32 available_beds = 3;
+  inline bool has_available_beds() const;
+  inline void clear_available_beds();
+  static const int kAvailableBedsFieldNumber = 3;
+  inline ::google::protobuf::int32 available_beds() const;
+  inline void set_available_beds(::google::protobuf::int32 value);
+  
+  // required int32 doctors = 4;
+  inline bool has_doctors() const;
+  inline void clear_doctors();
+  static const int kDoctorsFieldNumber = 4;
+  inline ::google::protobuf::int32 doctors() const;
+  inline void set_doctors(::google::protobuf::int32 value);
+  
+  // required int32 available_doctors = 5;
+  inline bool has_available_doctors() const;
+  inline void clear_available_doctors();
+  static const int kAvailableDoctorsFieldNumber = 5;
+  inline ::google::protobuf::int32 available_doctors() const;
+  inline void set_available_doctors(::google::protobuf::int32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > type_id_;
+  ::google::protobuf::int32 beds_;
+  ::google::protobuf::int32 available_beds_;
+  ::google::protobuf::int32 doctors_;
+  ::google::protobuf::int32 available_doctors_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ObjectAttributeMedicalTreatment* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ObjectAttributeNBCType : public ::google::protobuf::Message {
+ public:
+  ObjectAttributeNBCType();
+  virtual ~ObjectAttributeNBCType();
+  
+  ObjectAttributeNBCType(const ObjectAttributeNBCType& from);
+  
+  inline ObjectAttributeNBCType& operator=(const ObjectAttributeNBCType& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ObjectAttributeNBCType& default_instance();
+  void Swap(ObjectAttributeNBCType* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ObjectAttributeNBCType* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ObjectAttributeNBCType& from);
+  void MergeFrom(const ObjectAttributeNBCType& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.NBCAgentType agent = 1;
+  inline bool has_agent() const;
+  inline void clear_agent();
+  static const int kAgentFieldNumber = 1;
+  inline const ::Common::NBCAgentType& agent() const;
+  inline ::Common::NBCAgentType* mutable_agent();
+  
+  // required int32 concentration = 2;
+  inline bool has_concentration() const;
+  inline void clear_concentration();
+  static const int kConcentrationFieldNumber = 2;
+  inline ::google::protobuf::int32 concentration() const;
+  inline void set_concentration(::google::protobuf::int32 value);
+  
+  // required int32 source_life_duration = 3;
+  inline bool has_source_life_duration() const;
+  inline void clear_source_life_duration();
+  static const int kSourceLifeDurationFieldNumber = 3;
+  inline ::google::protobuf::int32 source_life_duration() const;
+  inline void set_source_life_duration(::google::protobuf::int32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::NBCAgentType* agent_;
+  ::google::protobuf::int32 concentration_;
+  ::google::protobuf::int32 source_life_duration_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ObjectAttributeNBCType* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ObjectAttributeSealOff : public ::google::protobuf::Message {
+ public:
+  ObjectAttributeSealOff();
+  virtual ~ObjectAttributeSealOff();
+  
+  ObjectAttributeSealOff(const ObjectAttributeSealOff& from);
+  
+  inline ObjectAttributeSealOff& operator=(const ObjectAttributeSealOff& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ObjectAttributeSealOff& default_instance();
+  void Swap(ObjectAttributeSealOff* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ObjectAttributeSealOff* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ObjectAttributeSealOff& from);
+  void MergeFrom(const ObjectAttributeSealOff& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required int32 level = 1;
+  inline bool has_level() const;
+  inline void clear_level();
+  static const int kLevelFieldNumber = 1;
+  inline ::google::protobuf::int32 level() const;
+  inline void set_level(::google::protobuf::int32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::int32 level_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ObjectAttributeSealOff* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ObjectAttributes : public ::google::protobuf::Message {
+ public:
+  ObjectAttributes();
+  virtual ~ObjectAttributes();
+  
+  ObjectAttributes(const ObjectAttributes& from);
+  
+  inline ObjectAttributes& operator=(const ObjectAttributes& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ObjectAttributes& default_instance();
+  void Swap(ObjectAttributes* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ObjectAttributes* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ObjectAttributes& from);
+  void MergeFrom(const ObjectAttributes& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // optional .Common.ObjectAttributeConstruction construction = 1;
+  inline bool has_construction() const;
+  inline void clear_construction();
+  static const int kConstructionFieldNumber = 1;
+  inline const ::Common::ObjectAttributeConstruction& construction() const;
+  inline ::Common::ObjectAttributeConstruction* mutable_construction();
+  
+  // optional .Common.ObjectAttributeObstacle obstacle = 2;
+  inline bool has_obstacle() const;
+  inline void clear_obstacle();
+  static const int kObstacleFieldNumber = 2;
+  inline const ::Common::ObjectAttributeObstacle& obstacle() const;
+  inline ::Common::ObjectAttributeObstacle* mutable_obstacle();
+  
+  // optional .Common.ObjectAttributeMine mine = 3;
+  inline bool has_mine() const;
+  inline void clear_mine();
+  static const int kMineFieldNumber = 3;
+  inline const ::Common::ObjectAttributeMine& mine() const;
+  inline ::Common::ObjectAttributeMine* mutable_mine();
+  
+  // optional .Common.ObjectAttributeActivityTime activity_time = 4;
+  inline bool has_activity_time() const;
+  inline void clear_activity_time();
+  static const int kActivityTimeFieldNumber = 4;
+  inline const ::Common::ObjectAttributeActivityTime& activity_time() const;
+  inline ::Common::ObjectAttributeActivityTime* mutable_activity_time();
+  
+  // optional .Common.ObjectAttributeBypass bypass = 5;
+  inline bool has_bypass() const;
+  inline void clear_bypass();
+  static const int kBypassFieldNumber = 5;
+  inline const ::Common::ObjectAttributeBypass& bypass() const;
+  inline ::Common::ObjectAttributeBypass* mutable_bypass();
+  
+  // optional .Common.ObjectAttributeLogistic logistic = 6;
+  inline bool has_logistic() const;
+  inline void clear_logistic();
+  static const int kLogisticFieldNumber = 6;
+  inline const ::Common::ObjectAttributeLogistic& logistic() const;
+  inline ::Common::ObjectAttributeLogistic* mutable_logistic();
+  
+  // optional .Common.ObjectAttributeNBC nbc = 7;
+  inline bool has_nbc() const;
+  inline void clear_nbc();
+  static const int kNbcFieldNumber = 7;
+  inline const ::Common::ObjectAttributeNBC& nbc() const;
+  inline ::Common::ObjectAttributeNBC* mutable_nbc();
+  
+  // optional .Common.ObjectAttributeCrossingSite crossing_site = 8;
+  inline bool has_crossing_site() const;
+  inline void clear_crossing_site();
+  static const int kCrossingSiteFieldNumber = 8;
+  inline const ::Common::ObjectAttributeCrossingSite& crossing_site() const;
+  inline ::Common::ObjectAttributeCrossingSite* mutable_crossing_site();
+  
+  // optional .Common.ObjectAttributeSupplyRoute supply_route = 9;
+  inline bool has_supply_route() const;
+  inline void clear_supply_route();
+  static const int kSupplyRouteFieldNumber = 9;
+  inline const ::Common::ObjectAttributeSupplyRoute& supply_route() const;
+  inline ::Common::ObjectAttributeSupplyRoute* mutable_supply_route();
+  
+  // optional .Common.ObjectAttributeToxicCloud toxic_cloud = 10;
+  inline bool has_toxic_cloud() const;
+  inline void clear_toxic_cloud();
+  static const int kToxicCloudFieldNumber = 10;
+  inline const ::Common::ObjectAttributeToxicCloud& toxic_cloud() const;
+  inline ::Common::ObjectAttributeToxicCloud* mutable_toxic_cloud();
+  
+  // optional .Common.ObjectAttributeFire fire = 11;
+  inline bool has_fire() const;
+  inline void clear_fire();
+  static const int kFireFieldNumber = 11;
+  inline const ::Common::ObjectAttributeFire& fire() const;
+  inline ::Common::ObjectAttributeFire* mutable_fire();
+  
+  // optional .Common.ObjectAttributeMedicalTreatment medical_treatment = 12;
+  inline bool has_medical_treatment() const;
+  inline void clear_medical_treatment();
+  static const int kMedicalTreatmentFieldNumber = 12;
+  inline const ::Common::ObjectAttributeMedicalTreatment& medical_treatment() const;
+  inline ::Common::ObjectAttributeMedicalTreatment* mutable_medical_treatment();
+  
+  // optional .Common.ObjectAttributeInteractionHeight interaction_height = 13;
+  inline bool has_interaction_height() const;
+  inline void clear_interaction_height();
+  static const int kInteractionHeightFieldNumber = 13;
+  inline const ::Common::ObjectAttributeInteractionHeight& interaction_height() const;
+  inline ::Common::ObjectAttributeInteractionHeight* mutable_interaction_height();
+  
+  // optional .Common.ObjectAttributeStock stock = 14;
+  inline bool has_stock() const;
+  inline void clear_stock();
+  static const int kStockFieldNumber = 14;
+  inline const ::Common::ObjectAttributeStock& stock() const;
+  inline ::Common::ObjectAttributeStock* mutable_stock();
+  
+  // optional .Common.ObjectAttributeNBCType nbc_agent = 15;
+  inline bool has_nbc_agent() const;
+  inline void clear_nbc_agent();
+  static const int kNbcAgentFieldNumber = 15;
+  inline const ::Common::ObjectAttributeNBCType& nbc_agent() const;
+  inline ::Common::ObjectAttributeNBCType* mutable_nbc_agent();
+  
+  // optional .Common.ObjectAttributeEffectDelay effect_delay = 16;
+  inline bool has_effect_delay() const;
+  inline void clear_effect_delay();
+  static const int kEffectDelayFieldNumber = 16;
+  inline const ::Common::ObjectAttributeEffectDelay& effect_delay() const;
+  inline ::Common::ObjectAttributeEffectDelay* mutable_effect_delay();
+  
+  // optional .Common.ObjectAttributeSealOff seal_off = 17;
+  inline bool has_seal_off() const;
+  inline void clear_seal_off();
+  static const int kSealOffFieldNumber = 17;
+  inline const ::Common::ObjectAttributeSealOff& seal_off() const;
+  inline ::Common::ObjectAttributeSealOff* mutable_seal_off();
+  
+  // optional .Common.ObjectAttributeResourceNetwork resource_networks = 18;
+  inline bool has_resource_networks() const;
+  inline void clear_resource_networks();
+  static const int kResourceNetworksFieldNumber = 18;
+  inline const ::Common::ObjectAttributeResourceNetwork& resource_networks() const;
+  inline ::Common::ObjectAttributeResourceNetwork* mutable_resource_networks();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::ObjectAttributeConstruction* construction_;
+  ::Common::ObjectAttributeObstacle* obstacle_;
+  ::Common::ObjectAttributeMine* mine_;
+  ::Common::ObjectAttributeActivityTime* activity_time_;
+  ::Common::ObjectAttributeBypass* bypass_;
+  ::Common::ObjectAttributeLogistic* logistic_;
+  ::Common::ObjectAttributeNBC* nbc_;
+  ::Common::ObjectAttributeCrossingSite* crossing_site_;
+  ::Common::ObjectAttributeSupplyRoute* supply_route_;
+  ::Common::ObjectAttributeToxicCloud* toxic_cloud_;
+  ::Common::ObjectAttributeFire* fire_;
+  ::Common::ObjectAttributeMedicalTreatment* medical_treatment_;
+  ::Common::ObjectAttributeInteractionHeight* interaction_height_;
+  ::Common::ObjectAttributeStock* stock_;
+  ::Common::ObjectAttributeNBCType* nbc_agent_;
+  ::Common::ObjectAttributeEffectDelay* effect_delay_;
+  ::Common::ObjectAttributeSealOff* seal_off_;
+  ::Common::ObjectAttributeResourceNetwork* resource_networks_;
   friend void  protobuf_AddDesc_Common_2eproto();
   friend void protobuf_AssignDesc_Common_2eproto();
   friend void protobuf_ShutdownFile_Common_2eproto();
@@ -12917,7 +13055,7 @@ class MsgObjectAttributes : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgObjectAttributes* default_instance_;
+  static ObjectAttributes* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -13044,14 +13182,14 @@ class MsgNote : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgMeteoAttributes : public ::google::protobuf::Message {
+class MsgWeatherAttributes : public ::google::protobuf::Message {
  public:
-  MsgMeteoAttributes();
-  virtual ~MsgMeteoAttributes();
+  MsgWeatherAttributes();
+  virtual ~MsgWeatherAttributes();
   
-  MsgMeteoAttributes(const MsgMeteoAttributes& from);
+  MsgWeatherAttributes(const MsgWeatherAttributes& from);
   
-  inline MsgMeteoAttributes& operator=(const MsgMeteoAttributes& from) {
+  inline MsgWeatherAttributes& operator=(const MsgWeatherAttributes& from) {
     CopyFrom(from);
     return *this;
   }
@@ -13065,16 +13203,16 @@ class MsgMeteoAttributes : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgMeteoAttributes& default_instance();
-  void Swap(MsgMeteoAttributes* other);
+  static const MsgWeatherAttributes& default_instance();
+  void Swap(MsgWeatherAttributes* other);
   
   // implements Message ----------------------------------------------
   
-  MsgMeteoAttributes* New() const;
+  MsgWeatherAttributes* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgMeteoAttributes& from);
-  void MergeFrom(const MsgMeteoAttributes& from);
+  void CopyFrom(const MsgWeatherAttributes& from);
+  void MergeFrom(const MsgWeatherAttributes& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -13146,6 +13284,13 @@ class MsgMeteoAttributes : public ::google::protobuf::Message {
   inline Common::EnumPrecipitationType precipitation() const;
   inline void set_precipitation(Common::EnumPrecipitationType value);
   
+  // required .Common.EnumLightingType lighting = 8;
+  inline bool has_lighting() const;
+  inline void clear_lighting();
+  static const int kLightingFieldNumber = 8;
+  inline Common::EnumLightingType lighting() const;
+  inline void set_lighting(Common::EnumLightingType value);
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -13157,11 +13302,12 @@ class MsgMeteoAttributes : public ::google::protobuf::Message {
   ::google::protobuf::int32 cloud_ceiling_;
   ::google::protobuf::int32 cloud_density_;
   int precipitation_;
+  int lighting_;
   friend void  protobuf_AddDesc_Common_2eproto();
   friend void protobuf_AssignDesc_Common_2eproto();
   friend void protobuf_ShutdownFile_Common_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -13175,7 +13321,7 @@ class MsgMeteoAttributes : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgMeteoAttributes* default_instance_;
+  static MsgWeatherAttributes* default_instance_;
 };
 // ===================================================================
 
@@ -13421,149 +13567,149 @@ inline ::Common::PartyId* PartyIdList::add_elem() {
 
 // -------------------------------------------------------------------
 
-// PopulationId
+// CrowdId
 
 // required uint32 id = 1;
-inline bool PopulationId::has_id() const {
+inline bool CrowdId::has_id() const {
   return _has_bit(0);
 }
-inline void PopulationId::clear_id() {
+inline void CrowdId::clear_id() {
   id_ = 0u;
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 PopulationId::id() const {
+inline ::google::protobuf::uint32 CrowdId::id() const {
   return id_;
 }
-inline void PopulationId::set_id(::google::protobuf::uint32 value) {
+inline void CrowdId::set_id(::google::protobuf::uint32 value) {
   _set_bit(0);
   id_ = value;
 }
 
 // -------------------------------------------------------------------
 
-// PopulationIdList
+// CrowdIdList
 
-// repeated .Common.PopulationId elem = 1;
-inline int PopulationIdList::elem_size() const {
+// repeated .Common.CrowdId elem = 1;
+inline int CrowdIdList::elem_size() const {
   return elem_.size();
 }
-inline void PopulationIdList::clear_elem() {
+inline void CrowdIdList::clear_elem() {
   elem_.Clear();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::Common::PopulationId >&
-PopulationIdList::elem() const {
+inline const ::google::protobuf::RepeatedPtrField< ::Common::CrowdId >&
+CrowdIdList::elem() const {
   return elem_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::Common::PopulationId >*
-PopulationIdList::mutable_elem() {
+inline ::google::protobuf::RepeatedPtrField< ::Common::CrowdId >*
+CrowdIdList::mutable_elem() {
   return &elem_;
 }
-inline const ::Common::PopulationId& PopulationIdList::elem(int index) const {
+inline const ::Common::CrowdId& CrowdIdList::elem(int index) const {
   return elem_.Get(index);
 }
-inline ::Common::PopulationId* PopulationIdList::mutable_elem(int index) {
+inline ::Common::CrowdId* CrowdIdList::mutable_elem(int index) {
   return elem_.Mutable(index);
 }
-inline ::Common::PopulationId* PopulationIdList::add_elem() {
+inline ::Common::CrowdId* CrowdIdList::add_elem() {
   return elem_.Add();
 }
 
 // -------------------------------------------------------------------
 
-// PopulationKnowledgeId
+// CrowdKnowledgeId
 
 // required uint32 id = 1;
-inline bool PopulationKnowledgeId::has_id() const {
+inline bool CrowdKnowledgeId::has_id() const {
   return _has_bit(0);
 }
-inline void PopulationKnowledgeId::clear_id() {
+inline void CrowdKnowledgeId::clear_id() {
   id_ = 0u;
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 PopulationKnowledgeId::id() const {
+inline ::google::protobuf::uint32 CrowdKnowledgeId::id() const {
   return id_;
 }
-inline void PopulationKnowledgeId::set_id(::google::protobuf::uint32 value) {
+inline void CrowdKnowledgeId::set_id(::google::protobuf::uint32 value) {
   _set_bit(0);
   id_ = value;
 }
 
 // -------------------------------------------------------------------
 
-// PopulationConcentrationId
+// CrowdConcentrationId
 
 // required uint32 id = 1;
-inline bool PopulationConcentrationId::has_id() const {
+inline bool CrowdConcentrationId::has_id() const {
   return _has_bit(0);
 }
-inline void PopulationConcentrationId::clear_id() {
+inline void CrowdConcentrationId::clear_id() {
   id_ = 0u;
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 PopulationConcentrationId::id() const {
+inline ::google::protobuf::uint32 CrowdConcentrationId::id() const {
   return id_;
 }
-inline void PopulationConcentrationId::set_id(::google::protobuf::uint32 value) {
+inline void CrowdConcentrationId::set_id(::google::protobuf::uint32 value) {
   _set_bit(0);
   id_ = value;
 }
 
 // -------------------------------------------------------------------
 
-// PopulationConcentrationKnowledgeId
+// CrowdConcentrationKnowledgeId
 
 // required uint32 id = 1;
-inline bool PopulationConcentrationKnowledgeId::has_id() const {
+inline bool CrowdConcentrationKnowledgeId::has_id() const {
   return _has_bit(0);
 }
-inline void PopulationConcentrationKnowledgeId::clear_id() {
+inline void CrowdConcentrationKnowledgeId::clear_id() {
   id_ = 0u;
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 PopulationConcentrationKnowledgeId::id() const {
+inline ::google::protobuf::uint32 CrowdConcentrationKnowledgeId::id() const {
   return id_;
 }
-inline void PopulationConcentrationKnowledgeId::set_id(::google::protobuf::uint32 value) {
+inline void CrowdConcentrationKnowledgeId::set_id(::google::protobuf::uint32 value) {
   _set_bit(0);
   id_ = value;
 }
 
 // -------------------------------------------------------------------
 
-// PopulationFlowId
+// CrowdFlowId
 
 // required uint32 id = 1;
-inline bool PopulationFlowId::has_id() const {
+inline bool CrowdFlowId::has_id() const {
   return _has_bit(0);
 }
-inline void PopulationFlowId::clear_id() {
+inline void CrowdFlowId::clear_id() {
   id_ = 0u;
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 PopulationFlowId::id() const {
+inline ::google::protobuf::uint32 CrowdFlowId::id() const {
   return id_;
 }
-inline void PopulationFlowId::set_id(::google::protobuf::uint32 value) {
+inline void CrowdFlowId::set_id(::google::protobuf::uint32 value) {
   _set_bit(0);
   id_ = value;
 }
 
 // -------------------------------------------------------------------
 
-// PopulationFlowKnowledgeId
+// CrowdFlowKnowledgeId
 
 // required uint32 id = 1;
-inline bool PopulationFlowKnowledgeId::has_id() const {
+inline bool CrowdFlowKnowledgeId::has_id() const {
   return _has_bit(0);
 }
-inline void PopulationFlowKnowledgeId::clear_id() {
+inline void CrowdFlowKnowledgeId::clear_id() {
   id_ = 0u;
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 PopulationFlowKnowledgeId::id() const {
+inline ::google::protobuf::uint32 CrowdFlowKnowledgeId::id() const {
   return id_;
 }
-inline void PopulationFlowKnowledgeId::set_id(::google::protobuf::uint32 value) {
+inline void CrowdFlowKnowledgeId::set_id(::google::protobuf::uint32 value) {
   _set_bit(0);
   id_ = value;
 }
@@ -13744,21 +13890,21 @@ inline ::Common::FormationId* Tasker::mutable_formation() {
   return formation_;
 }
 
-// optional .Common.PopulationId population = 3;
-inline bool Tasker::has_population() const {
+// optional .Common.CrowdId crowd = 3;
+inline bool Tasker::has_crowd() const {
   return _has_bit(2);
 }
-inline void Tasker::clear_population() {
-  if (population_ != NULL) population_->::Common::PopulationId::Clear();
+inline void Tasker::clear_crowd() {
+  if (crowd_ != NULL) crowd_->::Common::CrowdId::Clear();
   _clear_bit(2);
 }
-inline const ::Common::PopulationId& Tasker::population() const {
-  return population_ != NULL ? *population_ : *default_instance_->population_;
+inline const ::Common::CrowdId& Tasker::crowd() const {
+  return crowd_ != NULL ? *crowd_ : *default_instance_->crowd_;
 }
-inline ::Common::PopulationId* Tasker::mutable_population() {
+inline ::Common::CrowdId* Tasker::mutable_crowd() {
   _set_bit(2);
-  if (population_ == NULL) population_ = new ::Common::PopulationId;
-  return population_;
+  if (crowd_ == NULL) crowd_ = new ::Common::CrowdId;
+  return crowd_;
 }
 
 // optional .Common.UnitId unit = 4;
@@ -13776,6 +13922,44 @@ inline ::Common::UnitId* Tasker::mutable_unit() {
   _set_bit(3);
   if (unit_ == NULL) unit_ = new ::Common::UnitId;
   return unit_;
+}
+
+// -------------------------------------------------------------------
+
+// ParentEntity
+
+// optional .Common.AutomatId automat = 1;
+inline bool ParentEntity::has_automat() const {
+  return _has_bit(0);
+}
+inline void ParentEntity::clear_automat() {
+  if (automat_ != NULL) automat_->::Common::AutomatId::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::AutomatId& ParentEntity::automat() const {
+  return automat_ != NULL ? *automat_ : *default_instance_->automat_;
+}
+inline ::Common::AutomatId* ParentEntity::mutable_automat() {
+  _set_bit(0);
+  if (automat_ == NULL) automat_ = new ::Common::AutomatId;
+  return automat_;
+}
+
+// optional .Common.FormationId formation = 2;
+inline bool ParentEntity::has_formation() const {
+  return _has_bit(1);
+}
+inline void ParentEntity::clear_formation() {
+  if (formation_ != NULL) formation_->::Common::FormationId::Clear();
+  _clear_bit(1);
+}
+inline const ::Common::FormationId& ParentEntity::formation() const {
+  return formation_ != NULL ? *formation_ : *default_instance_->formation_;
+}
+inline ::Common::FormationId* ParentEntity::mutable_formation() {
+  _set_bit(1);
+  if (formation_ == NULL) formation_ = new ::Common::FormationId;
+  return formation_;
 }
 
 // -------------------------------------------------------------------
@@ -13834,6 +14018,26 @@ inline ::google::protobuf::uint32 TacticalLineId::id() const {
   return id_;
 }
 inline void TacticalLineId::set_id(::google::protobuf::uint32 value) {
+  _set_bit(0);
+  id_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MarkerId
+
+// required uint32 id = 1;
+inline bool MarkerId::has_id() const {
+  return _has_bit(0);
+}
+inline void MarkerId::clear_id() {
+  id_ = 0u;
+  _clear_bit(0);
+}
+inline ::google::protobuf::uint32 MarkerId::id() const {
+  return id_;
+}
+inline void MarkerId::set_id(::google::protobuf::uint32 value) {
   _set_bit(0);
   id_ = value;
 }
@@ -14146,20 +14350,20 @@ inline ::std::string* ObjectType::mutable_id() {
 
 // -------------------------------------------------------------------
 
-// PopulationType
+// CrowdType
 
 // required uint32 id = 1;
-inline bool PopulationType::has_id() const {
+inline bool CrowdType::has_id() const {
   return _has_bit(0);
 }
-inline void PopulationType::clear_id() {
+inline void CrowdType::clear_id() {
   id_ = 0u;
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 PopulationType::id() const {
+inline ::google::protobuf::uint32 CrowdType::id() const {
   return id_;
 }
-inline void PopulationType::set_id(::google::protobuf::uint32 value) {
+inline void CrowdType::set_id(::google::protobuf::uint32 value) {
   _set_bit(0);
   id_ = value;
 }
@@ -14728,120 +14932,6 @@ inline ::Common::AutomatId* MsgUnitChangeSuperior::mutable_parent() {
 
 // -------------------------------------------------------------------
 
-// MsgFormationCreation
-
-// required .Common.FormationId formation = 1;
-inline bool MsgFormationCreation::has_formation() const {
-  return _has_bit(0);
-}
-inline void MsgFormationCreation::clear_formation() {
-  if (formation_ != NULL) formation_->::Common::FormationId::Clear();
-  _clear_bit(0);
-}
-inline const ::Common::FormationId& MsgFormationCreation::formation() const {
-  return formation_ != NULL ? *formation_ : *default_instance_->formation_;
-}
-inline ::Common::FormationId* MsgFormationCreation::mutable_formation() {
-  _set_bit(0);
-  if (formation_ == NULL) formation_ = new ::Common::FormationId;
-  return formation_;
-}
-
-// required .Common.PartyId party = 2;
-inline bool MsgFormationCreation::has_party() const {
-  return _has_bit(1);
-}
-inline void MsgFormationCreation::clear_party() {
-  if (party_ != NULL) party_->::Common::PartyId::Clear();
-  _clear_bit(1);
-}
-inline const ::Common::PartyId& MsgFormationCreation::party() const {
-  return party_ != NULL ? *party_ : *default_instance_->party_;
-}
-inline ::Common::PartyId* MsgFormationCreation::mutable_party() {
-  _set_bit(1);
-  if (party_ == NULL) party_ = new ::Common::PartyId;
-  return party_;
-}
-
-// optional .Common.FormationId parent = 3;
-inline bool MsgFormationCreation::has_parent() const {
-  return _has_bit(2);
-}
-inline void MsgFormationCreation::clear_parent() {
-  if (parent_ != NULL) parent_->::Common::FormationId::Clear();
-  _clear_bit(2);
-}
-inline const ::Common::FormationId& MsgFormationCreation::parent() const {
-  return parent_ != NULL ? *parent_ : *default_instance_->parent_;
-}
-inline ::Common::FormationId* MsgFormationCreation::mutable_parent() {
-  _set_bit(2);
-  if (parent_ == NULL) parent_ = new ::Common::FormationId;
-  return parent_;
-}
-
-// required .Common.EnumNatureLevel level = 4;
-inline bool MsgFormationCreation::has_level() const {
-  return _has_bit(3);
-}
-inline void MsgFormationCreation::clear_level() {
-  level_ = 0;
-  _clear_bit(3);
-}
-inline Common::EnumNatureLevel MsgFormationCreation::level() const {
-  return static_cast< Common::EnumNatureLevel >(level_);
-}
-inline void MsgFormationCreation::set_level(Common::EnumNatureLevel value) {
-  GOOGLE_DCHECK(Common::EnumNatureLevel_IsValid(value));
-  _set_bit(3);
-  level_ = value;
-}
-
-// required string name = 5;
-inline bool MsgFormationCreation::has_name() const {
-  return _has_bit(4);
-}
-inline void MsgFormationCreation::clear_name() {
-  if (name_ != &_default_name_) {
-    name_->clear();
-  }
-  _clear_bit(4);
-}
-inline const ::std::string& MsgFormationCreation::name() const {
-  return *name_;
-}
-inline void MsgFormationCreation::set_name(const ::std::string& value) {
-  _set_bit(4);
-  if (name_ == &_default_name_) {
-    name_ = new ::std::string;
-  }
-  name_->assign(value);
-}
-inline void MsgFormationCreation::set_name(const char* value) {
-  _set_bit(4);
-  if (name_ == &_default_name_) {
-    name_ = new ::std::string;
-  }
-  name_->assign(value);
-}
-inline void MsgFormationCreation::set_name(const char* value, size_t size) {
-  _set_bit(4);
-  if (name_ == &_default_name_) {
-    name_ = new ::std::string;
-  }
-  name_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* MsgFormationCreation::mutable_name() {
-  _set_bit(4);
-  if (name_ == &_default_name_) {
-    name_ = new ::std::string;
-  }
-  return name_;
-}
-
-// -------------------------------------------------------------------
-
 // MsgControlStop
 
 // -------------------------------------------------------------------
@@ -14938,7 +15028,7 @@ inline void MsgExercise::set_running(bool value) {
 
 // MsgNetworkAddress
 
-// required string IP = 1;
+// required string ip = 1;
 inline bool MsgNetworkAddress::has_ip() const {
   return _has_bit(0);
 }
@@ -15397,7 +15487,7 @@ inline ::Common::MsgLocation* MsgPlannedWork::mutable_position() {
   return position_;
 }
 
-// optional .Common.ObstacleType.DemolitionTargetType type_obstacle = 3 [default = preliminary];
+// optional .Common.ObstacleType.DemolitionTargetType type_obstacle = 3;
 inline bool MsgPlannedWork::has_type_obstacle() const {
   return _has_bit(2);
 }
@@ -15414,7 +15504,7 @@ inline void MsgPlannedWork::set_type_obstacle(::Common::ObstacleType_DemolitionT
   type_obstacle_ = value;
 }
 
-// optional float densite = 4 [default = 0];
+// optional float densite = 4;
 inline bool MsgPlannedWork::has_densite() const {
   return _has_bit(3);
 }
@@ -15447,7 +15537,7 @@ inline ::Common::AutomatId* MsgPlannedWork::mutable_tc2() {
   return tc2_;
 }
 
-// optional int32 activity_time = 6 [default = 0];
+// optional int32 activity_time = 6;
 inline bool MsgPlannedWork::has_activity_time() const {
   return _has_bit(5);
 }
@@ -16316,21 +16406,21 @@ inline ::Common::ObjectKnowledgeIdList* MsgMissionParameter_Value::mutable_objec
   return objectknowledgelist_;
 }
 
-// optional .Common.PopulationKnowledgeId populationKnowledge = 22;
-inline bool MsgMissionParameter_Value::has_populationknowledge() const {
+// optional .Common.CrowdKnowledgeId crowdKnowledge = 22;
+inline bool MsgMissionParameter_Value::has_crowdknowledge() const {
   return _has_bit(21);
 }
-inline void MsgMissionParameter_Value::clear_populationknowledge() {
-  if (populationknowledge_ != NULL) populationknowledge_->::Common::PopulationKnowledgeId::Clear();
+inline void MsgMissionParameter_Value::clear_crowdknowledge() {
+  if (crowdknowledge_ != NULL) crowdknowledge_->::Common::CrowdKnowledgeId::Clear();
   _clear_bit(21);
 }
-inline const ::Common::PopulationKnowledgeId& MsgMissionParameter_Value::populationknowledge() const {
-  return populationknowledge_ != NULL ? *populationknowledge_ : *default_instance_->populationknowledge_;
+inline const ::Common::CrowdKnowledgeId& MsgMissionParameter_Value::crowdknowledge() const {
+  return crowdknowledge_ != NULL ? *crowdknowledge_ : *default_instance_->crowdknowledge_;
 }
-inline ::Common::PopulationKnowledgeId* MsgMissionParameter_Value::mutable_populationknowledge() {
+inline ::Common::CrowdKnowledgeId* MsgMissionParameter_Value::mutable_crowdknowledge() {
   _set_bit(21);
-  if (populationknowledge_ == NULL) populationknowledge_ = new ::Common::PopulationKnowledgeId;
-  return populationknowledge_;
+  if (crowdknowledge_ == NULL) crowdknowledge_ = new ::Common::CrowdKnowledgeId;
+  return crowdknowledge_;
 }
 
 // optional .Common.MsgPlannedWork plannedWork = 23;
@@ -16725,7 +16815,7 @@ inline ::Common::MsgMissionParameter_Value* MsgMissionParameter_Value::add_list(
 
 // MsgMissionParameter
 
-// optional bool null_value = 1 [default = false];
+// optional bool null_value = 1;
 inline bool MsgMissionParameter::has_null_value() const {
   return _has_bit(0);
 }
@@ -16842,19 +16932,78 @@ inline ::Common::MsgMissionParameters* MsgUnitOrder::mutable_parameters() {
   return parameters_;
 }
 
-// optional .Common.MsgDateTime start_time = 4;
-inline bool MsgUnitOrder::has_start_time() const {
+// optional string label = 4;
+inline bool MsgUnitOrder::has_label() const {
   return _has_bit(3);
+}
+inline void MsgUnitOrder::clear_label() {
+  if (label_ != &_default_label_) {
+    label_->clear();
+  }
+  _clear_bit(3);
+}
+inline const ::std::string& MsgUnitOrder::label() const {
+  return *label_;
+}
+inline void MsgUnitOrder::set_label(const ::std::string& value) {
+  _set_bit(3);
+  if (label_ == &_default_label_) {
+    label_ = new ::std::string;
+  }
+  label_->assign(value);
+}
+inline void MsgUnitOrder::set_label(const char* value) {
+  _set_bit(3);
+  if (label_ == &_default_label_) {
+    label_ = new ::std::string;
+  }
+  label_->assign(value);
+}
+inline void MsgUnitOrder::set_label(const char* value, size_t size) {
+  _set_bit(3);
+  if (label_ == &_default_label_) {
+    label_ = new ::std::string;
+  }
+  label_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgUnitOrder::mutable_label() {
+  _set_bit(3);
+  if (label_ == &_default_label_) {
+    label_ = new ::std::string;
+  }
+  return label_;
+}
+
+// optional .Common.MsgLocation symbolLocation = 5;
+inline bool MsgUnitOrder::has_symbollocation() const {
+  return _has_bit(4);
+}
+inline void MsgUnitOrder::clear_symbollocation() {
+  if (symbollocation_ != NULL) symbollocation_->::Common::MsgLocation::Clear();
+  _clear_bit(4);
+}
+inline const ::Common::MsgLocation& MsgUnitOrder::symbollocation() const {
+  return symbollocation_ != NULL ? *symbollocation_ : *default_instance_->symbollocation_;
+}
+inline ::Common::MsgLocation* MsgUnitOrder::mutable_symbollocation() {
+  _set_bit(4);
+  if (symbollocation_ == NULL) symbollocation_ = new ::Common::MsgLocation;
+  return symbollocation_;
+}
+
+// optional .Common.MsgDateTime start_time = 6;
+inline bool MsgUnitOrder::has_start_time() const {
+  return _has_bit(5);
 }
 inline void MsgUnitOrder::clear_start_time() {
   if (start_time_ != NULL) start_time_->::Common::MsgDateTime::Clear();
-  _clear_bit(3);
+  _clear_bit(5);
 }
 inline const ::Common::MsgDateTime& MsgUnitOrder::start_time() const {
   return start_time_ != NULL ? *start_time_ : *default_instance_->start_time_;
 }
 inline ::Common::MsgDateTime* MsgUnitOrder::mutable_start_time() {
-  _set_bit(3);
+  _set_bit(5);
   if (start_time_ == NULL) start_time_ = new ::Common::MsgDateTime;
   return start_time_;
 }
@@ -16914,91 +17063,209 @@ inline ::Common::MsgMissionParameters* MsgAutomatOrder::mutable_parameters() {
   return parameters_;
 }
 
-// optional .Common.MsgDateTime start_time = 4;
-inline bool MsgAutomatOrder::has_start_time() const {
+// optional string label = 4;
+inline bool MsgAutomatOrder::has_label() const {
   return _has_bit(3);
+}
+inline void MsgAutomatOrder::clear_label() {
+  if (label_ != &_default_label_) {
+    label_->clear();
+  }
+  _clear_bit(3);
+}
+inline const ::std::string& MsgAutomatOrder::label() const {
+  return *label_;
+}
+inline void MsgAutomatOrder::set_label(const ::std::string& value) {
+  _set_bit(3);
+  if (label_ == &_default_label_) {
+    label_ = new ::std::string;
+  }
+  label_->assign(value);
+}
+inline void MsgAutomatOrder::set_label(const char* value) {
+  _set_bit(3);
+  if (label_ == &_default_label_) {
+    label_ = new ::std::string;
+  }
+  label_->assign(value);
+}
+inline void MsgAutomatOrder::set_label(const char* value, size_t size) {
+  _set_bit(3);
+  if (label_ == &_default_label_) {
+    label_ = new ::std::string;
+  }
+  label_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgAutomatOrder::mutable_label() {
+  _set_bit(3);
+  if (label_ == &_default_label_) {
+    label_ = new ::std::string;
+  }
+  return label_;
+}
+
+// optional .Common.MsgLocation symbolLocation = 5;
+inline bool MsgAutomatOrder::has_symbollocation() const {
+  return _has_bit(4);
+}
+inline void MsgAutomatOrder::clear_symbollocation() {
+  if (symbollocation_ != NULL) symbollocation_->::Common::MsgLocation::Clear();
+  _clear_bit(4);
+}
+inline const ::Common::MsgLocation& MsgAutomatOrder::symbollocation() const {
+  return symbollocation_ != NULL ? *symbollocation_ : *default_instance_->symbollocation_;
+}
+inline ::Common::MsgLocation* MsgAutomatOrder::mutable_symbollocation() {
+  _set_bit(4);
+  if (symbollocation_ == NULL) symbollocation_ = new ::Common::MsgLocation;
+  return symbollocation_;
+}
+
+// optional .Common.MsgDateTime start_time = 6;
+inline bool MsgAutomatOrder::has_start_time() const {
+  return _has_bit(5);
 }
 inline void MsgAutomatOrder::clear_start_time() {
   if (start_time_ != NULL) start_time_->::Common::MsgDateTime::Clear();
-  _clear_bit(3);
+  _clear_bit(5);
 }
 inline const ::Common::MsgDateTime& MsgAutomatOrder::start_time() const {
   return start_time_ != NULL ? *start_time_ : *default_instance_->start_time_;
 }
 inline ::Common::MsgDateTime* MsgAutomatOrder::mutable_start_time() {
-  _set_bit(3);
+  _set_bit(5);
   if (start_time_ == NULL) start_time_ = new ::Common::MsgDateTime;
   return start_time_;
 }
 
 // -------------------------------------------------------------------
 
-// MsgPopulationOrder
+// MsgCrowdOrder
 
-// required .Common.PopulationId tasker = 1;
-inline bool MsgPopulationOrder::has_tasker() const {
+// required .Common.CrowdId tasker = 1;
+inline bool MsgCrowdOrder::has_tasker() const {
   return _has_bit(0);
 }
-inline void MsgPopulationOrder::clear_tasker() {
-  if (tasker_ != NULL) tasker_->::Common::PopulationId::Clear();
+inline void MsgCrowdOrder::clear_tasker() {
+  if (tasker_ != NULL) tasker_->::Common::CrowdId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::PopulationId& MsgPopulationOrder::tasker() const {
+inline const ::Common::CrowdId& MsgCrowdOrder::tasker() const {
   return tasker_ != NULL ? *tasker_ : *default_instance_->tasker_;
 }
-inline ::Common::PopulationId* MsgPopulationOrder::mutable_tasker() {
+inline ::Common::CrowdId* MsgCrowdOrder::mutable_tasker() {
   _set_bit(0);
-  if (tasker_ == NULL) tasker_ = new ::Common::PopulationId;
+  if (tasker_ == NULL) tasker_ = new ::Common::CrowdId;
   return tasker_;
 }
 
 // required .Common.MissionType type = 2;
-inline bool MsgPopulationOrder::has_type() const {
+inline bool MsgCrowdOrder::has_type() const {
   return _has_bit(1);
 }
-inline void MsgPopulationOrder::clear_type() {
+inline void MsgCrowdOrder::clear_type() {
   if (type_ != NULL) type_->::Common::MissionType::Clear();
   _clear_bit(1);
 }
-inline const ::Common::MissionType& MsgPopulationOrder::type() const {
+inline const ::Common::MissionType& MsgCrowdOrder::type() const {
   return type_ != NULL ? *type_ : *default_instance_->type_;
 }
-inline ::Common::MissionType* MsgPopulationOrder::mutable_type() {
+inline ::Common::MissionType* MsgCrowdOrder::mutable_type() {
   _set_bit(1);
   if (type_ == NULL) type_ = new ::Common::MissionType;
   return type_;
 }
 
 // optional .Common.MsgMissionParameters parameters = 3;
-inline bool MsgPopulationOrder::has_parameters() const {
+inline bool MsgCrowdOrder::has_parameters() const {
   return _has_bit(2);
 }
-inline void MsgPopulationOrder::clear_parameters() {
+inline void MsgCrowdOrder::clear_parameters() {
   if (parameters_ != NULL) parameters_->::Common::MsgMissionParameters::Clear();
   _clear_bit(2);
 }
-inline const ::Common::MsgMissionParameters& MsgPopulationOrder::parameters() const {
+inline const ::Common::MsgMissionParameters& MsgCrowdOrder::parameters() const {
   return parameters_ != NULL ? *parameters_ : *default_instance_->parameters_;
 }
-inline ::Common::MsgMissionParameters* MsgPopulationOrder::mutable_parameters() {
+inline ::Common::MsgMissionParameters* MsgCrowdOrder::mutable_parameters() {
   _set_bit(2);
   if (parameters_ == NULL) parameters_ = new ::Common::MsgMissionParameters;
   return parameters_;
 }
 
-// optional .Common.MsgDateTime start_time = 4;
-inline bool MsgPopulationOrder::has_start_time() const {
+// optional string label = 4;
+inline bool MsgCrowdOrder::has_label() const {
   return _has_bit(3);
 }
-inline void MsgPopulationOrder::clear_start_time() {
-  if (start_time_ != NULL) start_time_->::Common::MsgDateTime::Clear();
+inline void MsgCrowdOrder::clear_label() {
+  if (label_ != &_default_label_) {
+    label_->clear();
+  }
   _clear_bit(3);
 }
-inline const ::Common::MsgDateTime& MsgPopulationOrder::start_time() const {
+inline const ::std::string& MsgCrowdOrder::label() const {
+  return *label_;
+}
+inline void MsgCrowdOrder::set_label(const ::std::string& value) {
+  _set_bit(3);
+  if (label_ == &_default_label_) {
+    label_ = new ::std::string;
+  }
+  label_->assign(value);
+}
+inline void MsgCrowdOrder::set_label(const char* value) {
+  _set_bit(3);
+  if (label_ == &_default_label_) {
+    label_ = new ::std::string;
+  }
+  label_->assign(value);
+}
+inline void MsgCrowdOrder::set_label(const char* value, size_t size) {
+  _set_bit(3);
+  if (label_ == &_default_label_) {
+    label_ = new ::std::string;
+  }
+  label_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgCrowdOrder::mutable_label() {
+  _set_bit(3);
+  if (label_ == &_default_label_) {
+    label_ = new ::std::string;
+  }
+  return label_;
+}
+
+// optional .Common.MsgLocation symbolLocation = 5;
+inline bool MsgCrowdOrder::has_symbollocation() const {
+  return _has_bit(4);
+}
+inline void MsgCrowdOrder::clear_symbollocation() {
+  if (symbollocation_ != NULL) symbollocation_->::Common::MsgLocation::Clear();
+  _clear_bit(4);
+}
+inline const ::Common::MsgLocation& MsgCrowdOrder::symbollocation() const {
+  return symbollocation_ != NULL ? *symbollocation_ : *default_instance_->symbollocation_;
+}
+inline ::Common::MsgLocation* MsgCrowdOrder::mutable_symbollocation() {
+  _set_bit(4);
+  if (symbollocation_ == NULL) symbollocation_ = new ::Common::MsgLocation;
+  return symbollocation_;
+}
+
+// optional .Common.MsgDateTime start_time = 6;
+inline bool MsgCrowdOrder::has_start_time() const {
+  return _has_bit(5);
+}
+inline void MsgCrowdOrder::clear_start_time() {
+  if (start_time_ != NULL) start_time_->::Common::MsgDateTime::Clear();
+  _clear_bit(5);
+}
+inline const ::Common::MsgDateTime& MsgCrowdOrder::start_time() const {
   return start_time_ != NULL ? *start_time_ : *default_instance_->start_time_;
 }
-inline ::Common::MsgDateTime* MsgPopulationOrder::mutable_start_time() {
-  _set_bit(3);
+inline ::Common::MsgDateTime* MsgCrowdOrder::mutable_start_time() {
+  _set_bit(5);
   if (start_time_ == NULL) start_time_ = new ::Common::MsgDateTime;
   return start_time_;
 }
@@ -17209,46 +17476,46 @@ inline ::std::string* MsgShape::mutable_color() {
   return color_;
 }
 
-// required string template_ = 3;
-inline bool MsgShape::has_template_() const {
+// required string pattern = 3;
+inline bool MsgShape::has_pattern() const {
   return _has_bit(2);
 }
-inline void MsgShape::clear_template_() {
-  if (template__ != &_default_template__) {
-    template__->clear();
+inline void MsgShape::clear_pattern() {
+  if (pattern_ != &_default_pattern_) {
+    pattern_->clear();
   }
   _clear_bit(2);
 }
-inline const ::std::string& MsgShape::template_() const {
-  return *template__;
+inline const ::std::string& MsgShape::pattern() const {
+  return *pattern_;
 }
-inline void MsgShape::set_template_(const ::std::string& value) {
+inline void MsgShape::set_pattern(const ::std::string& value) {
   _set_bit(2);
-  if (template__ == &_default_template__) {
-    template__ = new ::std::string;
+  if (pattern_ == &_default_pattern_) {
+    pattern_ = new ::std::string;
   }
-  template__->assign(value);
+  pattern_->assign(value);
 }
-inline void MsgShape::set_template_(const char* value) {
+inline void MsgShape::set_pattern(const char* value) {
   _set_bit(2);
-  if (template__ == &_default_template__) {
-    template__ = new ::std::string;
+  if (pattern_ == &_default_pattern_) {
+    pattern_ = new ::std::string;
   }
-  template__->assign(value);
+  pattern_->assign(value);
 }
-inline void MsgShape::set_template_(const char* value, size_t size) {
+inline void MsgShape::set_pattern(const char* value, size_t size) {
   _set_bit(2);
-  if (template__ == &_default_template__) {
-    template__ = new ::std::string;
+  if (pattern_ == &_default_pattern_) {
+    pattern_ = new ::std::string;
   }
-  template__->assign(reinterpret_cast<const char*>(value), size);
+  pattern_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* MsgShape::mutable_template_() {
+inline ::std::string* MsgShape::mutable_pattern() {
   _set_bit(2);
-  if (template__ == &_default_template__) {
-    template__ = new ::std::string;
+  if (pattern_ == &_default_pattern_) {
+    pattern_ = new ::std::string;
   }
-  return template__;
+  return pattern_;
 }
 
 // required .Common.MsgCoordLatLongList points = 4;
@@ -17392,866 +17659,6 @@ inline ::std::string* MsgTextMessage::mutable_message() {
     message_ = new ::std::string;
   }
   return message_;
-}
-
-// -------------------------------------------------------------------
-
-// MsgObjectAttributeConstruction
-
-// optional .Common.ResourceType resource = 1;
-inline bool MsgObjectAttributeConstruction::has_resource() const {
-  return _has_bit(0);
-}
-inline void MsgObjectAttributeConstruction::clear_resource() {
-  if (resource_ != NULL) resource_->::Common::ResourceType::Clear();
-  _clear_bit(0);
-}
-inline const ::Common::ResourceType& MsgObjectAttributeConstruction::resource() const {
-  return resource_ != NULL ? *resource_ : *default_instance_->resource_;
-}
-inline ::Common::ResourceType* MsgObjectAttributeConstruction::mutable_resource() {
-  _set_bit(0);
-  if (resource_ == NULL) resource_ = new ::Common::ResourceType;
-  return resource_;
-}
-
-// optional int32 dotation_nbr = 2 [default = 0];
-inline bool MsgObjectAttributeConstruction::has_dotation_nbr() const {
-  return _has_bit(1);
-}
-inline void MsgObjectAttributeConstruction::clear_dotation_nbr() {
-  dotation_nbr_ = 0;
-  _clear_bit(1);
-}
-inline ::google::protobuf::int32 MsgObjectAttributeConstruction::dotation_nbr() const {
-  return dotation_nbr_;
-}
-inline void MsgObjectAttributeConstruction::set_dotation_nbr(::google::protobuf::int32 value) {
-  _set_bit(1);
-  dotation_nbr_ = value;
-}
-
-// optional float density = 3 [default = 0];
-inline bool MsgObjectAttributeConstruction::has_density() const {
-  return _has_bit(2);
-}
-inline void MsgObjectAttributeConstruction::clear_density() {
-  density_ = 0;
-  _clear_bit(2);
-}
-inline float MsgObjectAttributeConstruction::density() const {
-  return density_;
-}
-inline void MsgObjectAttributeConstruction::set_density(float value) {
-  _set_bit(2);
-  density_ = value;
-}
-
-// optional int32 percentage = 4 [default = 0];
-inline bool MsgObjectAttributeConstruction::has_percentage() const {
-  return _has_bit(3);
-}
-inline void MsgObjectAttributeConstruction::clear_percentage() {
-  percentage_ = 0;
-  _clear_bit(3);
-}
-inline ::google::protobuf::int32 MsgObjectAttributeConstruction::percentage() const {
-  return percentage_;
-}
-inline void MsgObjectAttributeConstruction::set_percentage(::google::protobuf::int32 value) {
-  _set_bit(3);
-  percentage_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// MsgObjectAttributeMine
-
-// optional .Common.ResourceType resource = 1;
-inline bool MsgObjectAttributeMine::has_resource() const {
-  return _has_bit(0);
-}
-inline void MsgObjectAttributeMine::clear_resource() {
-  if (resource_ != NULL) resource_->::Common::ResourceType::Clear();
-  _clear_bit(0);
-}
-inline const ::Common::ResourceType& MsgObjectAttributeMine::resource() const {
-  return resource_ != NULL ? *resource_ : *default_instance_->resource_;
-}
-inline ::Common::ResourceType* MsgObjectAttributeMine::mutable_resource() {
-  _set_bit(0);
-  if (resource_ == NULL) resource_ = new ::Common::ResourceType;
-  return resource_;
-}
-
-// optional int32 dotation_nbr = 2 [default = 0];
-inline bool MsgObjectAttributeMine::has_dotation_nbr() const {
-  return _has_bit(1);
-}
-inline void MsgObjectAttributeMine::clear_dotation_nbr() {
-  dotation_nbr_ = 0;
-  _clear_bit(1);
-}
-inline ::google::protobuf::int32 MsgObjectAttributeMine::dotation_nbr() const {
-  return dotation_nbr_;
-}
-inline void MsgObjectAttributeMine::set_dotation_nbr(::google::protobuf::int32 value) {
-  _set_bit(1);
-  dotation_nbr_ = value;
-}
-
-// optional float density = 3 [default = 0];
-inline bool MsgObjectAttributeMine::has_density() const {
-  return _has_bit(2);
-}
-inline void MsgObjectAttributeMine::clear_density() {
-  density_ = 0;
-  _clear_bit(2);
-}
-inline float MsgObjectAttributeMine::density() const {
-  return density_;
-}
-inline void MsgObjectAttributeMine::set_density(float value) {
-  _set_bit(2);
-  density_ = value;
-}
-
-// optional int32 percentage = 4 [default = 0];
-inline bool MsgObjectAttributeMine::has_percentage() const {
-  return _has_bit(3);
-}
-inline void MsgObjectAttributeMine::clear_percentage() {
-  percentage_ = 0;
-  _clear_bit(3);
-}
-inline ::google::protobuf::int32 MsgObjectAttributeMine::percentage() const {
-  return percentage_;
-}
-inline void MsgObjectAttributeMine::set_percentage(::google::protobuf::int32 value) {
-  _set_bit(3);
-  percentage_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// MsgObjectAttributeLogistic
-
-// required .Common.AutomatId tc2 = 1;
-inline bool MsgObjectAttributeLogistic::has_tc2() const {
-  return _has_bit(0);
-}
-inline void MsgObjectAttributeLogistic::clear_tc2() {
-  if (tc2_ != NULL) tc2_->::Common::AutomatId::Clear();
-  _clear_bit(0);
-}
-inline const ::Common::AutomatId& MsgObjectAttributeLogistic::tc2() const {
-  return tc2_ != NULL ? *tc2_ : *default_instance_->tc2_;
-}
-inline ::Common::AutomatId* MsgObjectAttributeLogistic::mutable_tc2() {
-  _set_bit(0);
-  if (tc2_ == NULL) tc2_ = new ::Common::AutomatId;
-  return tc2_;
-}
-
-// -------------------------------------------------------------------
-
-// MsgObjectAttributeInteractionHeight
-
-// required float height = 1;
-inline bool MsgObjectAttributeInteractionHeight::has_height() const {
-  return _has_bit(0);
-}
-inline void MsgObjectAttributeInteractionHeight::clear_height() {
-  height_ = 0;
-  _clear_bit(0);
-}
-inline float MsgObjectAttributeInteractionHeight::height() const {
-  return height_;
-}
-inline void MsgObjectAttributeInteractionHeight::set_height(float value) {
-  _set_bit(0);
-  height_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// MsgObjectAttributeObstacle
-
-// required .Common.ObstacleType.DemolitionTargetType type = 1;
-inline bool MsgObjectAttributeObstacle::has_type() const {
-  return _has_bit(0);
-}
-inline void MsgObjectAttributeObstacle::clear_type() {
-  type_ = 0;
-  _clear_bit(0);
-}
-inline ::Common::ObstacleType_DemolitionTargetType MsgObjectAttributeObstacle::type() const {
-  return static_cast< ::Common::ObstacleType_DemolitionTargetType >(type_);
-}
-inline void MsgObjectAttributeObstacle::set_type(::Common::ObstacleType_DemolitionTargetType value) {
-  GOOGLE_DCHECK(::Common::ObstacleType_DemolitionTargetType_IsValid(value));
-  _set_bit(0);
-  type_ = value;
-}
-
-// optional bool activated = 2;
-inline bool MsgObjectAttributeObstacle::has_activated() const {
-  return _has_bit(1);
-}
-inline void MsgObjectAttributeObstacle::clear_activated() {
-  activated_ = false;
-  _clear_bit(1);
-}
-inline bool MsgObjectAttributeObstacle::activated() const {
-  return activated_;
-}
-inline void MsgObjectAttributeObstacle::set_activated(bool value) {
-  _set_bit(1);
-  activated_ = value;
-}
-
-// optional int32 activation_time = 3;
-inline bool MsgObjectAttributeObstacle::has_activation_time() const {
-  return _has_bit(2);
-}
-inline void MsgObjectAttributeObstacle::clear_activation_time() {
-  activation_time_ = 0;
-  _clear_bit(2);
-}
-inline ::google::protobuf::int32 MsgObjectAttributeObstacle::activation_time() const {
-  return activation_time_;
-}
-inline void MsgObjectAttributeObstacle::set_activation_time(::google::protobuf::int32 value) {
-  _set_bit(2);
-  activation_time_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// MsgObjectAttributeActivityTime
-
-// required int32 value = 1;
-inline bool MsgObjectAttributeActivityTime::has_value() const {
-  return _has_bit(0);
-}
-inline void MsgObjectAttributeActivityTime::clear_value() {
-  value_ = 0;
-  _clear_bit(0);
-}
-inline ::google::protobuf::int32 MsgObjectAttributeActivityTime::value() const {
-  return value_;
-}
-inline void MsgObjectAttributeActivityTime::set_value(::google::protobuf::int32 value) {
-  _set_bit(0);
-  value_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// MsgObjectAttributeBypass
-
-// optional int32 percentage = 1 [default = 0];
-inline bool MsgObjectAttributeBypass::has_percentage() const {
-  return _has_bit(0);
-}
-inline void MsgObjectAttributeBypass::clear_percentage() {
-  percentage_ = 0;
-  _clear_bit(0);
-}
-inline ::google::protobuf::int32 MsgObjectAttributeBypass::percentage() const {
-  return percentage_;
-}
-inline void MsgObjectAttributeBypass::set_percentage(::google::protobuf::int32 value) {
-  _set_bit(0);
-  percentage_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// MsgObjectAttributeEffectDelay
-
-// required int32 value = 1;
-inline bool MsgObjectAttributeEffectDelay::has_value() const {
-  return _has_bit(0);
-}
-inline void MsgObjectAttributeEffectDelay::clear_value() {
-  value_ = 0;
-  _clear_bit(0);
-}
-inline ::google::protobuf::int32 MsgObjectAttributeEffectDelay::value() const {
-  return value_;
-}
-inline void MsgObjectAttributeEffectDelay::set_value(::google::protobuf::int32 value) {
-  _set_bit(0);
-  value_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// MsgObjectAttributeNBC
-
-// required int32 danger_level = 1;
-inline bool MsgObjectAttributeNBC::has_danger_level() const {
-  return _has_bit(0);
-}
-inline void MsgObjectAttributeNBC::clear_danger_level() {
-  danger_level_ = 0;
-  _clear_bit(0);
-}
-inline ::google::protobuf::int32 MsgObjectAttributeNBC::danger_level() const {
-  return danger_level_;
-}
-inline void MsgObjectAttributeNBC::set_danger_level(::google::protobuf::int32 value) {
-  _set_bit(0);
-  danger_level_ = value;
-}
-
-// repeated .Common.NBCAgentType nbc_agents = 2;
-inline int MsgObjectAttributeNBC::nbc_agents_size() const {
-  return nbc_agents_.size();
-}
-inline void MsgObjectAttributeNBC::clear_nbc_agents() {
-  nbc_agents_.Clear();
-}
-inline const ::google::protobuf::RepeatedPtrField< ::Common::NBCAgentType >&
-MsgObjectAttributeNBC::nbc_agents() const {
-  return nbc_agents_;
-}
-inline ::google::protobuf::RepeatedPtrField< ::Common::NBCAgentType >*
-MsgObjectAttributeNBC::mutable_nbc_agents() {
-  return &nbc_agents_;
-}
-inline const ::Common::NBCAgentType& MsgObjectAttributeNBC::nbc_agents(int index) const {
-  return nbc_agents_.Get(index);
-}
-inline ::Common::NBCAgentType* MsgObjectAttributeNBC::mutable_nbc_agents(int index) {
-  return nbc_agents_.Mutable(index);
-}
-inline ::Common::NBCAgentType* MsgObjectAttributeNBC::add_nbc_agents() {
-  return nbc_agents_.Add();
-}
-
-// -------------------------------------------------------------------
-
-// StockResource
-
-// required .Common.ResourceType resource = 1;
-inline bool StockResource::has_resource() const {
-  return _has_bit(0);
-}
-inline void StockResource::clear_resource() {
-  if (resource_ != NULL) resource_->::Common::ResourceType::Clear();
-  _clear_bit(0);
-}
-inline const ::Common::ResourceType& StockResource::resource() const {
-  return resource_ != NULL ? *resource_ : *default_instance_->resource_;
-}
-inline ::Common::ResourceType* StockResource::mutable_resource() {
-  _set_bit(0);
-  if (resource_ == NULL) resource_ = new ::Common::ResourceType;
-  return resource_;
-}
-
-// required int32 current = 2;
-inline bool StockResource::has_current() const {
-  return _has_bit(1);
-}
-inline void StockResource::clear_current() {
-  current_ = 0;
-  _clear_bit(1);
-}
-inline ::google::protobuf::int32 StockResource::current() const {
-  return current_;
-}
-inline void StockResource::set_current(::google::protobuf::int32 value) {
-  _set_bit(1);
-  current_ = value;
-}
-
-// optional int32 maximum = 3;
-inline bool StockResource::has_maximum() const {
-  return _has_bit(2);
-}
-inline void StockResource::clear_maximum() {
-  maximum_ = 0;
-  _clear_bit(2);
-}
-inline ::google::protobuf::int32 StockResource::maximum() const {
-  return maximum_;
-}
-inline void StockResource::set_maximum(::google::protobuf::int32 value) {
-  _set_bit(2);
-  maximum_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// MsgObjectAttributeStock
-
-// repeated .Common.StockResource resources = 1;
-inline int MsgObjectAttributeStock::resources_size() const {
-  return resources_.size();
-}
-inline void MsgObjectAttributeStock::clear_resources() {
-  resources_.Clear();
-}
-inline const ::google::protobuf::RepeatedPtrField< ::Common::StockResource >&
-MsgObjectAttributeStock::resources() const {
-  return resources_;
-}
-inline ::google::protobuf::RepeatedPtrField< ::Common::StockResource >*
-MsgObjectAttributeStock::mutable_resources() {
-  return &resources_;
-}
-inline const ::Common::StockResource& MsgObjectAttributeStock::resources(int index) const {
-  return resources_.Get(index);
-}
-inline ::Common::StockResource* MsgObjectAttributeStock::mutable_resources(int index) {
-  return resources_.Mutable(index);
-}
-inline ::Common::StockResource* MsgObjectAttributeStock::add_resources() {
-  return resources_.Add();
-}
-
-// -------------------------------------------------------------------
-
-// MsgObjectAttributeCrossingSite
-
-// required int32 width = 1;
-inline bool MsgObjectAttributeCrossingSite::has_width() const {
-  return _has_bit(0);
-}
-inline void MsgObjectAttributeCrossingSite::clear_width() {
-  width_ = 0;
-  _clear_bit(0);
-}
-inline ::google::protobuf::int32 MsgObjectAttributeCrossingSite::width() const {
-  return width_;
-}
-inline void MsgObjectAttributeCrossingSite::set_width(::google::protobuf::int32 value) {
-  _set_bit(0);
-  width_ = value;
-}
-
-// required int32 depth = 2;
-inline bool MsgObjectAttributeCrossingSite::has_depth() const {
-  return _has_bit(1);
-}
-inline void MsgObjectAttributeCrossingSite::clear_depth() {
-  depth_ = 0;
-  _clear_bit(1);
-}
-inline ::google::protobuf::int32 MsgObjectAttributeCrossingSite::depth() const {
-  return depth_;
-}
-inline void MsgObjectAttributeCrossingSite::set_depth(::google::protobuf::int32 value) {
-  _set_bit(1);
-  depth_ = value;
-}
-
-// required int32 flow_rate = 3;
-inline bool MsgObjectAttributeCrossingSite::has_flow_rate() const {
-  return _has_bit(2);
-}
-inline void MsgObjectAttributeCrossingSite::clear_flow_rate() {
-  flow_rate_ = 0;
-  _clear_bit(2);
-}
-inline ::google::protobuf::int32 MsgObjectAttributeCrossingSite::flow_rate() const {
-  return flow_rate_;
-}
-inline void MsgObjectAttributeCrossingSite::set_flow_rate(::google::protobuf::int32 value) {
-  _set_bit(2);
-  flow_rate_ = value;
-}
-
-// required bool banks_require_fitting = 4;
-inline bool MsgObjectAttributeCrossingSite::has_banks_require_fitting() const {
-  return _has_bit(3);
-}
-inline void MsgObjectAttributeCrossingSite::clear_banks_require_fitting() {
-  banks_require_fitting_ = false;
-  _clear_bit(3);
-}
-inline bool MsgObjectAttributeCrossingSite::banks_require_fitting() const {
-  return banks_require_fitting_;
-}
-inline void MsgObjectAttributeCrossingSite::set_banks_require_fitting(bool value) {
-  _set_bit(3);
-  banks_require_fitting_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// MsgObjectAttributeSupplyRoute
-
-// required bool equipped = 1;
-inline bool MsgObjectAttributeSupplyRoute::has_equipped() const {
-  return _has_bit(0);
-}
-inline void MsgObjectAttributeSupplyRoute::clear_equipped() {
-  equipped_ = false;
-  _clear_bit(0);
-}
-inline bool MsgObjectAttributeSupplyRoute::equipped() const {
-  return equipped_;
-}
-inline void MsgObjectAttributeSupplyRoute::set_equipped(bool value) {
-  _set_bit(0);
-  equipped_ = value;
-}
-
-// required int32 max_weight = 2;
-inline bool MsgObjectAttributeSupplyRoute::has_max_weight() const {
-  return _has_bit(1);
-}
-inline void MsgObjectAttributeSupplyRoute::clear_max_weight() {
-  max_weight_ = 0;
-  _clear_bit(1);
-}
-inline ::google::protobuf::int32 MsgObjectAttributeSupplyRoute::max_weight() const {
-  return max_weight_;
-}
-inline void MsgObjectAttributeSupplyRoute::set_max_weight(::google::protobuf::int32 value) {
-  _set_bit(1);
-  max_weight_ = value;
-}
-
-// required int32 width = 3;
-inline bool MsgObjectAttributeSupplyRoute::has_width() const {
-  return _has_bit(2);
-}
-inline void MsgObjectAttributeSupplyRoute::clear_width() {
-  width_ = 0;
-  _clear_bit(2);
-}
-inline ::google::protobuf::int32 MsgObjectAttributeSupplyRoute::width() const {
-  return width_;
-}
-inline void MsgObjectAttributeSupplyRoute::set_width(::google::protobuf::int32 value) {
-  _set_bit(2);
-  width_ = value;
-}
-
-// required int32 length = 4;
-inline bool MsgObjectAttributeSupplyRoute::has_length() const {
-  return _has_bit(3);
-}
-inline void MsgObjectAttributeSupplyRoute::clear_length() {
-  length_ = 0;
-  _clear_bit(3);
-}
-inline ::google::protobuf::int32 MsgObjectAttributeSupplyRoute::length() const {
-  return length_;
-}
-inline void MsgObjectAttributeSupplyRoute::set_length(::google::protobuf::int32 value) {
-  _set_bit(3);
-  length_ = value;
-}
-
-// required int32 flow_rate = 5;
-inline bool MsgObjectAttributeSupplyRoute::has_flow_rate() const {
-  return _has_bit(4);
-}
-inline void MsgObjectAttributeSupplyRoute::clear_flow_rate() {
-  flow_rate_ = 0;
-  _clear_bit(4);
-}
-inline ::google::protobuf::int32 MsgObjectAttributeSupplyRoute::flow_rate() const {
-  return flow_rate_;
-}
-inline void MsgObjectAttributeSupplyRoute::set_flow_rate(::google::protobuf::int32 value) {
-  _set_bit(4);
-  flow_rate_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// MsgLocatedQuantity
-
-// required .Common.MsgCoordLatLong coordinate = 1;
-inline bool MsgLocatedQuantity::has_coordinate() const {
-  return _has_bit(0);
-}
-inline void MsgLocatedQuantity::clear_coordinate() {
-  if (coordinate_ != NULL) coordinate_->::Common::MsgCoordLatLong::Clear();
-  _clear_bit(0);
-}
-inline const ::Common::MsgCoordLatLong& MsgLocatedQuantity::coordinate() const {
-  return coordinate_ != NULL ? *coordinate_ : *default_instance_->coordinate_;
-}
-inline ::Common::MsgCoordLatLong* MsgLocatedQuantity::mutable_coordinate() {
-  _set_bit(0);
-  if (coordinate_ == NULL) coordinate_ = new ::Common::MsgCoordLatLong;
-  return coordinate_;
-}
-
-// required float quantity = 2;
-inline bool MsgLocatedQuantity::has_quantity() const {
-  return _has_bit(1);
-}
-inline void MsgLocatedQuantity::clear_quantity() {
-  quantity_ = 0;
-  _clear_bit(1);
-}
-inline float MsgLocatedQuantity::quantity() const {
-  return quantity_;
-}
-inline void MsgLocatedQuantity::set_quantity(float value) {
-  _set_bit(1);
-  quantity_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// MsgLocatedQuantityList
-
-// repeated .Common.MsgLocatedQuantity elem = 1;
-inline int MsgLocatedQuantityList::elem_size() const {
-  return elem_.size();
-}
-inline void MsgLocatedQuantityList::clear_elem() {
-  elem_.Clear();
-}
-inline const ::google::protobuf::RepeatedPtrField< ::Common::MsgLocatedQuantity >&
-MsgLocatedQuantityList::elem() const {
-  return elem_;
-}
-inline ::google::protobuf::RepeatedPtrField< ::Common::MsgLocatedQuantity >*
-MsgLocatedQuantityList::mutable_elem() {
-  return &elem_;
-}
-inline const ::Common::MsgLocatedQuantity& MsgLocatedQuantityList::elem(int index) const {
-  return elem_.Get(index);
-}
-inline ::Common::MsgLocatedQuantity* MsgLocatedQuantityList::mutable_elem(int index) {
-  return elem_.Mutable(index);
-}
-inline ::Common::MsgLocatedQuantity* MsgLocatedQuantityList::add_elem() {
-  return elem_.Add();
-}
-
-// -------------------------------------------------------------------
-
-// MsgObjectAttributeToxicCloud
-
-// required .Common.MsgLocatedQuantityList quantities = 1;
-inline bool MsgObjectAttributeToxicCloud::has_quantities() const {
-  return _has_bit(0);
-}
-inline void MsgObjectAttributeToxicCloud::clear_quantities() {
-  if (quantities_ != NULL) quantities_->::Common::MsgLocatedQuantityList::Clear();
-  _clear_bit(0);
-}
-inline const ::Common::MsgLocatedQuantityList& MsgObjectAttributeToxicCloud::quantities() const {
-  return quantities_ != NULL ? *quantities_ : *default_instance_->quantities_;
-}
-inline ::Common::MsgLocatedQuantityList* MsgObjectAttributeToxicCloud::mutable_quantities() {
-  _set_bit(0);
-  if (quantities_ == NULL) quantities_ = new ::Common::MsgLocatedQuantityList;
-  return quantities_;
-}
-
-// -------------------------------------------------------------------
-
-// MsgObjectAttributeFire
-
-// required int32 class_id = 1;
-inline bool MsgObjectAttributeFire::has_class_id() const {
-  return _has_bit(0);
-}
-inline void MsgObjectAttributeFire::clear_class_id() {
-  class_id_ = 0;
-  _clear_bit(0);
-}
-inline ::google::protobuf::int32 MsgObjectAttributeFire::class_id() const {
-  return class_id_;
-}
-inline void MsgObjectAttributeFire::set_class_id(::google::protobuf::int32 value) {
-  _set_bit(0);
-  class_id_ = value;
-}
-
-// required int32 heat = 2;
-inline bool MsgObjectAttributeFire::has_heat() const {
-  return _has_bit(1);
-}
-inline void MsgObjectAttributeFire::clear_heat() {
-  heat_ = 0;
-  _clear_bit(1);
-}
-inline ::google::protobuf::int32 MsgObjectAttributeFire::heat() const {
-  return heat_;
-}
-inline void MsgObjectAttributeFire::set_heat(::google::protobuf::int32 value) {
-  _set_bit(1);
-  heat_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// MsgObjectAttributeMedicalTreatment
-
-// repeated uint32 type_id = 1;
-inline int MsgObjectAttributeMedicalTreatment::type_id_size() const {
-  return type_id_.size();
-}
-inline void MsgObjectAttributeMedicalTreatment::clear_type_id() {
-  type_id_.Clear();
-}
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-MsgObjectAttributeMedicalTreatment::type_id() const {
-  return type_id_;
-}
-inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-MsgObjectAttributeMedicalTreatment::mutable_type_id() {
-  return &type_id_;
-}
-inline ::google::protobuf::uint32 MsgObjectAttributeMedicalTreatment::type_id(int index) const {
-  return type_id_.Get(index);
-}
-inline void MsgObjectAttributeMedicalTreatment::set_type_id(int index, ::google::protobuf::uint32 value) {
-  type_id_.Set(index, value);
-}
-inline void MsgObjectAttributeMedicalTreatment::add_type_id(::google::protobuf::uint32 value) {
-  type_id_.Add(value);
-}
-
-// required int32 beds = 2;
-inline bool MsgObjectAttributeMedicalTreatment::has_beds() const {
-  return _has_bit(1);
-}
-inline void MsgObjectAttributeMedicalTreatment::clear_beds() {
-  beds_ = 0;
-  _clear_bit(1);
-}
-inline ::google::protobuf::int32 MsgObjectAttributeMedicalTreatment::beds() const {
-  return beds_;
-}
-inline void MsgObjectAttributeMedicalTreatment::set_beds(::google::protobuf::int32 value) {
-  _set_bit(1);
-  beds_ = value;
-}
-
-// required int32 available_beds = 3;
-inline bool MsgObjectAttributeMedicalTreatment::has_available_beds() const {
-  return _has_bit(2);
-}
-inline void MsgObjectAttributeMedicalTreatment::clear_available_beds() {
-  available_beds_ = 0;
-  _clear_bit(2);
-}
-inline ::google::protobuf::int32 MsgObjectAttributeMedicalTreatment::available_beds() const {
-  return available_beds_;
-}
-inline void MsgObjectAttributeMedicalTreatment::set_available_beds(::google::protobuf::int32 value) {
-  _set_bit(2);
-  available_beds_ = value;
-}
-
-// required int32 doctors = 4;
-inline bool MsgObjectAttributeMedicalTreatment::has_doctors() const {
-  return _has_bit(3);
-}
-inline void MsgObjectAttributeMedicalTreatment::clear_doctors() {
-  doctors_ = 0;
-  _clear_bit(3);
-}
-inline ::google::protobuf::int32 MsgObjectAttributeMedicalTreatment::doctors() const {
-  return doctors_;
-}
-inline void MsgObjectAttributeMedicalTreatment::set_doctors(::google::protobuf::int32 value) {
-  _set_bit(3);
-  doctors_ = value;
-}
-
-// required int32 available_doctors = 5;
-inline bool MsgObjectAttributeMedicalTreatment::has_available_doctors() const {
-  return _has_bit(4);
-}
-inline void MsgObjectAttributeMedicalTreatment::clear_available_doctors() {
-  available_doctors_ = 0;
-  _clear_bit(4);
-}
-inline ::google::protobuf::int32 MsgObjectAttributeMedicalTreatment::available_doctors() const {
-  return available_doctors_;
-}
-inline void MsgObjectAttributeMedicalTreatment::set_available_doctors(::google::protobuf::int32 value) {
-  _set_bit(4);
-  available_doctors_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// MsgObjectAttributeNBCType
-
-// required .Common.NBCAgentType agent = 1;
-inline bool MsgObjectAttributeNBCType::has_agent() const {
-  return _has_bit(0);
-}
-inline void MsgObjectAttributeNBCType::clear_agent() {
-  if (agent_ != NULL) agent_->::Common::NBCAgentType::Clear();
-  _clear_bit(0);
-}
-inline const ::Common::NBCAgentType& MsgObjectAttributeNBCType::agent() const {
-  return agent_ != NULL ? *agent_ : *default_instance_->agent_;
-}
-inline ::Common::NBCAgentType* MsgObjectAttributeNBCType::mutable_agent() {
-  _set_bit(0);
-  if (agent_ == NULL) agent_ = new ::Common::NBCAgentType;
-  return agent_;
-}
-
-// required int32 concentration = 2;
-inline bool MsgObjectAttributeNBCType::has_concentration() const {
-  return _has_bit(1);
-}
-inline void MsgObjectAttributeNBCType::clear_concentration() {
-  concentration_ = 0;
-  _clear_bit(1);
-}
-inline ::google::protobuf::int32 MsgObjectAttributeNBCType::concentration() const {
-  return concentration_;
-}
-inline void MsgObjectAttributeNBCType::set_concentration(::google::protobuf::int32 value) {
-  _set_bit(1);
-  concentration_ = value;
-}
-
-// required int32 source_life_duration = 3;
-inline bool MsgObjectAttributeNBCType::has_source_life_duration() const {
-  return _has_bit(2);
-}
-inline void MsgObjectAttributeNBCType::clear_source_life_duration() {
-  source_life_duration_ = 0;
-  _clear_bit(2);
-}
-inline ::google::protobuf::int32 MsgObjectAttributeNBCType::source_life_duration() const {
-  return source_life_duration_;
-}
-inline void MsgObjectAttributeNBCType::set_source_life_duration(::google::protobuf::int32 value) {
-  _set_bit(2);
-  source_life_duration_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// MsgObjectAttributeSealOff
-
-// required int32 level = 1;
-inline bool MsgObjectAttributeSealOff::has_level() const {
-  return _has_bit(0);
-}
-inline void MsgObjectAttributeSealOff::clear_level() {
-  level_ = 0;
-  _clear_bit(0);
-}
-inline ::google::protobuf::int32 MsgObjectAttributeSealOff::level() const {
-  return level_;
-}
-inline void MsgObjectAttributeSealOff::set_level(::google::protobuf::int32 value) {
-  _set_bit(0);
-  level_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -18467,340 +17874,1200 @@ inline void ResourceNetwork::set_critical(bool value) {
 
 // -------------------------------------------------------------------
 
-// MsgObjectAttributeResourceNetwork
+// ObjectAttributeResourceNetwork
 
 // repeated .Common.ResourceNetwork network = 1;
-inline int MsgObjectAttributeResourceNetwork::network_size() const {
+inline int ObjectAttributeResourceNetwork::network_size() const {
   return network_.size();
 }
-inline void MsgObjectAttributeResourceNetwork::clear_network() {
+inline void ObjectAttributeResourceNetwork::clear_network() {
   network_.Clear();
 }
 inline const ::google::protobuf::RepeatedPtrField< ::Common::ResourceNetwork >&
-MsgObjectAttributeResourceNetwork::network() const {
+ObjectAttributeResourceNetwork::network() const {
   return network_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::Common::ResourceNetwork >*
-MsgObjectAttributeResourceNetwork::mutable_network() {
+ObjectAttributeResourceNetwork::mutable_network() {
   return &network_;
 }
-inline const ::Common::ResourceNetwork& MsgObjectAttributeResourceNetwork::network(int index) const {
+inline const ::Common::ResourceNetwork& ObjectAttributeResourceNetwork::network(int index) const {
   return network_.Get(index);
 }
-inline ::Common::ResourceNetwork* MsgObjectAttributeResourceNetwork::mutable_network(int index) {
+inline ::Common::ResourceNetwork* ObjectAttributeResourceNetwork::mutable_network(int index) {
   return network_.Mutable(index);
 }
-inline ::Common::ResourceNetwork* MsgObjectAttributeResourceNetwork::add_network() {
+inline ::Common::ResourceNetwork* ObjectAttributeResourceNetwork::add_network() {
   return network_.Add();
 }
 
 // -------------------------------------------------------------------
 
-// MsgObjectAttributes
+// ObjectAttributeConstruction
 
-// optional .Common.MsgObjectAttributeConstruction construction = 1;
-inline bool MsgObjectAttributes::has_construction() const {
+// optional .Common.ResourceType resource = 1;
+inline bool ObjectAttributeConstruction::has_resource() const {
   return _has_bit(0);
 }
-inline void MsgObjectAttributes::clear_construction() {
-  if (construction_ != NULL) construction_->::Common::MsgObjectAttributeConstruction::Clear();
+inline void ObjectAttributeConstruction::clear_resource() {
+  if (resource_ != NULL) resource_->::Common::ResourceType::Clear();
   _clear_bit(0);
 }
-inline const ::Common::MsgObjectAttributeConstruction& MsgObjectAttributes::construction() const {
+inline const ::Common::ResourceType& ObjectAttributeConstruction::resource() const {
+  return resource_ != NULL ? *resource_ : *default_instance_->resource_;
+}
+inline ::Common::ResourceType* ObjectAttributeConstruction::mutable_resource() {
+  _set_bit(0);
+  if (resource_ == NULL) resource_ = new ::Common::ResourceType;
+  return resource_;
+}
+
+// optional int32 dotation_nbr = 2;
+inline bool ObjectAttributeConstruction::has_dotation_nbr() const {
+  return _has_bit(1);
+}
+inline void ObjectAttributeConstruction::clear_dotation_nbr() {
+  dotation_nbr_ = 0;
+  _clear_bit(1);
+}
+inline ::google::protobuf::int32 ObjectAttributeConstruction::dotation_nbr() const {
+  return dotation_nbr_;
+}
+inline void ObjectAttributeConstruction::set_dotation_nbr(::google::protobuf::int32 value) {
+  _set_bit(1);
+  dotation_nbr_ = value;
+}
+
+// optional float density = 3;
+inline bool ObjectAttributeConstruction::has_density() const {
+  return _has_bit(2);
+}
+inline void ObjectAttributeConstruction::clear_density() {
+  density_ = 0;
+  _clear_bit(2);
+}
+inline float ObjectAttributeConstruction::density() const {
+  return density_;
+}
+inline void ObjectAttributeConstruction::set_density(float value) {
+  _set_bit(2);
+  density_ = value;
+}
+
+// optional int32 percentage = 4;
+inline bool ObjectAttributeConstruction::has_percentage() const {
+  return _has_bit(3);
+}
+inline void ObjectAttributeConstruction::clear_percentage() {
+  percentage_ = 0;
+  _clear_bit(3);
+}
+inline ::google::protobuf::int32 ObjectAttributeConstruction::percentage() const {
+  return percentage_;
+}
+inline void ObjectAttributeConstruction::set_percentage(::google::protobuf::int32 value) {
+  _set_bit(3);
+  percentage_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// ObjectAttributeMine
+
+// optional .Common.ResourceType resource = 1;
+inline bool ObjectAttributeMine::has_resource() const {
+  return _has_bit(0);
+}
+inline void ObjectAttributeMine::clear_resource() {
+  if (resource_ != NULL) resource_->::Common::ResourceType::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::ResourceType& ObjectAttributeMine::resource() const {
+  return resource_ != NULL ? *resource_ : *default_instance_->resource_;
+}
+inline ::Common::ResourceType* ObjectAttributeMine::mutable_resource() {
+  _set_bit(0);
+  if (resource_ == NULL) resource_ = new ::Common::ResourceType;
+  return resource_;
+}
+
+// optional int32 dotation_nbr = 2;
+inline bool ObjectAttributeMine::has_dotation_nbr() const {
+  return _has_bit(1);
+}
+inline void ObjectAttributeMine::clear_dotation_nbr() {
+  dotation_nbr_ = 0;
+  _clear_bit(1);
+}
+inline ::google::protobuf::int32 ObjectAttributeMine::dotation_nbr() const {
+  return dotation_nbr_;
+}
+inline void ObjectAttributeMine::set_dotation_nbr(::google::protobuf::int32 value) {
+  _set_bit(1);
+  dotation_nbr_ = value;
+}
+
+// optional float density = 3;
+inline bool ObjectAttributeMine::has_density() const {
+  return _has_bit(2);
+}
+inline void ObjectAttributeMine::clear_density() {
+  density_ = 0;
+  _clear_bit(2);
+}
+inline float ObjectAttributeMine::density() const {
+  return density_;
+}
+inline void ObjectAttributeMine::set_density(float value) {
+  _set_bit(2);
+  density_ = value;
+}
+
+// optional int32 percentage = 4;
+inline bool ObjectAttributeMine::has_percentage() const {
+  return _has_bit(3);
+}
+inline void ObjectAttributeMine::clear_percentage() {
+  percentage_ = 0;
+  _clear_bit(3);
+}
+inline ::google::protobuf::int32 ObjectAttributeMine::percentage() const {
+  return percentage_;
+}
+inline void ObjectAttributeMine::set_percentage(::google::protobuf::int32 value) {
+  _set_bit(3);
+  percentage_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// ObjectAttributeLogistic
+
+// required .Common.AutomatId tc2 = 1;
+inline bool ObjectAttributeLogistic::has_tc2() const {
+  return _has_bit(0);
+}
+inline void ObjectAttributeLogistic::clear_tc2() {
+  if (tc2_ != NULL) tc2_->::Common::AutomatId::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::AutomatId& ObjectAttributeLogistic::tc2() const {
+  return tc2_ != NULL ? *tc2_ : *default_instance_->tc2_;
+}
+inline ::Common::AutomatId* ObjectAttributeLogistic::mutable_tc2() {
+  _set_bit(0);
+  if (tc2_ == NULL) tc2_ = new ::Common::AutomatId;
+  return tc2_;
+}
+
+// -------------------------------------------------------------------
+
+// ObjectAttributeInteractionHeight
+
+// required float height = 1;
+inline bool ObjectAttributeInteractionHeight::has_height() const {
+  return _has_bit(0);
+}
+inline void ObjectAttributeInteractionHeight::clear_height() {
+  height_ = 0;
+  _clear_bit(0);
+}
+inline float ObjectAttributeInteractionHeight::height() const {
+  return height_;
+}
+inline void ObjectAttributeInteractionHeight::set_height(float value) {
+  _set_bit(0);
+  height_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// ObjectAttributeObstacle
+
+// required .Common.ObstacleType.DemolitionTargetType type = 1;
+inline bool ObjectAttributeObstacle::has_type() const {
+  return _has_bit(0);
+}
+inline void ObjectAttributeObstacle::clear_type() {
+  type_ = 0;
+  _clear_bit(0);
+}
+inline ::Common::ObstacleType_DemolitionTargetType ObjectAttributeObstacle::type() const {
+  return static_cast< ::Common::ObstacleType_DemolitionTargetType >(type_);
+}
+inline void ObjectAttributeObstacle::set_type(::Common::ObstacleType_DemolitionTargetType value) {
+  GOOGLE_DCHECK(::Common::ObstacleType_DemolitionTargetType_IsValid(value));
+  _set_bit(0);
+  type_ = value;
+}
+
+// optional bool activated = 2;
+inline bool ObjectAttributeObstacle::has_activated() const {
+  return _has_bit(1);
+}
+inline void ObjectAttributeObstacle::clear_activated() {
+  activated_ = false;
+  _clear_bit(1);
+}
+inline bool ObjectAttributeObstacle::activated() const {
+  return activated_;
+}
+inline void ObjectAttributeObstacle::set_activated(bool value) {
+  _set_bit(1);
+  activated_ = value;
+}
+
+// optional int32 activation_time = 3;
+inline bool ObjectAttributeObstacle::has_activation_time() const {
+  return _has_bit(2);
+}
+inline void ObjectAttributeObstacle::clear_activation_time() {
+  activation_time_ = 0;
+  _clear_bit(2);
+}
+inline ::google::protobuf::int32 ObjectAttributeObstacle::activation_time() const {
+  return activation_time_;
+}
+inline void ObjectAttributeObstacle::set_activation_time(::google::protobuf::int32 value) {
+  _set_bit(2);
+  activation_time_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// ObjectAttributeActivityTime
+
+// required int32 value = 1;
+inline bool ObjectAttributeActivityTime::has_value() const {
+  return _has_bit(0);
+}
+inline void ObjectAttributeActivityTime::clear_value() {
+  value_ = 0;
+  _clear_bit(0);
+}
+inline ::google::protobuf::int32 ObjectAttributeActivityTime::value() const {
+  return value_;
+}
+inline void ObjectAttributeActivityTime::set_value(::google::protobuf::int32 value) {
+  _set_bit(0);
+  value_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// ObjectAttributeBypass
+
+// required int32 percentage = 1;
+inline bool ObjectAttributeBypass::has_percentage() const {
+  return _has_bit(0);
+}
+inline void ObjectAttributeBypass::clear_percentage() {
+  percentage_ = 0;
+  _clear_bit(0);
+}
+inline ::google::protobuf::int32 ObjectAttributeBypass::percentage() const {
+  return percentage_;
+}
+inline void ObjectAttributeBypass::set_percentage(::google::protobuf::int32 value) {
+  _set_bit(0);
+  percentage_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// ObjectAttributeEffectDelay
+
+// required int32 value = 1;
+inline bool ObjectAttributeEffectDelay::has_value() const {
+  return _has_bit(0);
+}
+inline void ObjectAttributeEffectDelay::clear_value() {
+  value_ = 0;
+  _clear_bit(0);
+}
+inline ::google::protobuf::int32 ObjectAttributeEffectDelay::value() const {
+  return value_;
+}
+inline void ObjectAttributeEffectDelay::set_value(::google::protobuf::int32 value) {
+  _set_bit(0);
+  value_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// ObjectAttributeNBC
+
+// required int32 danger_level = 1;
+inline bool ObjectAttributeNBC::has_danger_level() const {
+  return _has_bit(0);
+}
+inline void ObjectAttributeNBC::clear_danger_level() {
+  danger_level_ = 0;
+  _clear_bit(0);
+}
+inline ::google::protobuf::int32 ObjectAttributeNBC::danger_level() const {
+  return danger_level_;
+}
+inline void ObjectAttributeNBC::set_danger_level(::google::protobuf::int32 value) {
+  _set_bit(0);
+  danger_level_ = value;
+}
+
+// repeated .Common.NBCAgentType nbc_agents = 2;
+inline int ObjectAttributeNBC::nbc_agents_size() const {
+  return nbc_agents_.size();
+}
+inline void ObjectAttributeNBC::clear_nbc_agents() {
+  nbc_agents_.Clear();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Common::NBCAgentType >&
+ObjectAttributeNBC::nbc_agents() const {
+  return nbc_agents_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Common::NBCAgentType >*
+ObjectAttributeNBC::mutable_nbc_agents() {
+  return &nbc_agents_;
+}
+inline const ::Common::NBCAgentType& ObjectAttributeNBC::nbc_agents(int index) const {
+  return nbc_agents_.Get(index);
+}
+inline ::Common::NBCAgentType* ObjectAttributeNBC::mutable_nbc_agents(int index) {
+  return nbc_agents_.Mutable(index);
+}
+inline ::Common::NBCAgentType* ObjectAttributeNBC::add_nbc_agents() {
+  return nbc_agents_.Add();
+}
+
+// -------------------------------------------------------------------
+
+// StockResource
+
+// required .Common.ResourceType resource = 1;
+inline bool StockResource::has_resource() const {
+  return _has_bit(0);
+}
+inline void StockResource::clear_resource() {
+  if (resource_ != NULL) resource_->::Common::ResourceType::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::ResourceType& StockResource::resource() const {
+  return resource_ != NULL ? *resource_ : *default_instance_->resource_;
+}
+inline ::Common::ResourceType* StockResource::mutable_resource() {
+  _set_bit(0);
+  if (resource_ == NULL) resource_ = new ::Common::ResourceType;
+  return resource_;
+}
+
+// required int32 current = 2;
+inline bool StockResource::has_current() const {
+  return _has_bit(1);
+}
+inline void StockResource::clear_current() {
+  current_ = 0;
+  _clear_bit(1);
+}
+inline ::google::protobuf::int32 StockResource::current() const {
+  return current_;
+}
+inline void StockResource::set_current(::google::protobuf::int32 value) {
+  _set_bit(1);
+  current_ = value;
+}
+
+// optional int32 maximum = 3;
+inline bool StockResource::has_maximum() const {
+  return _has_bit(2);
+}
+inline void StockResource::clear_maximum() {
+  maximum_ = 0;
+  _clear_bit(2);
+}
+inline ::google::protobuf::int32 StockResource::maximum() const {
+  return maximum_;
+}
+inline void StockResource::set_maximum(::google::protobuf::int32 value) {
+  _set_bit(2);
+  maximum_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// ObjectAttributeStock
+
+// repeated .Common.StockResource resources = 1;
+inline int ObjectAttributeStock::resources_size() const {
+  return resources_.size();
+}
+inline void ObjectAttributeStock::clear_resources() {
+  resources_.Clear();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Common::StockResource >&
+ObjectAttributeStock::resources() const {
+  return resources_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Common::StockResource >*
+ObjectAttributeStock::mutable_resources() {
+  return &resources_;
+}
+inline const ::Common::StockResource& ObjectAttributeStock::resources(int index) const {
+  return resources_.Get(index);
+}
+inline ::Common::StockResource* ObjectAttributeStock::mutable_resources(int index) {
+  return resources_.Mutable(index);
+}
+inline ::Common::StockResource* ObjectAttributeStock::add_resources() {
+  return resources_.Add();
+}
+
+// -------------------------------------------------------------------
+
+// ObjectAttributeCrossingSite
+
+// required int32 width = 1;
+inline bool ObjectAttributeCrossingSite::has_width() const {
+  return _has_bit(0);
+}
+inline void ObjectAttributeCrossingSite::clear_width() {
+  width_ = 0;
+  _clear_bit(0);
+}
+inline ::google::protobuf::int32 ObjectAttributeCrossingSite::width() const {
+  return width_;
+}
+inline void ObjectAttributeCrossingSite::set_width(::google::protobuf::int32 value) {
+  _set_bit(0);
+  width_ = value;
+}
+
+// required int32 depth = 2;
+inline bool ObjectAttributeCrossingSite::has_depth() const {
+  return _has_bit(1);
+}
+inline void ObjectAttributeCrossingSite::clear_depth() {
+  depth_ = 0;
+  _clear_bit(1);
+}
+inline ::google::protobuf::int32 ObjectAttributeCrossingSite::depth() const {
+  return depth_;
+}
+inline void ObjectAttributeCrossingSite::set_depth(::google::protobuf::int32 value) {
+  _set_bit(1);
+  depth_ = value;
+}
+
+// required int32 flow_rate = 3;
+inline bool ObjectAttributeCrossingSite::has_flow_rate() const {
+  return _has_bit(2);
+}
+inline void ObjectAttributeCrossingSite::clear_flow_rate() {
+  flow_rate_ = 0;
+  _clear_bit(2);
+}
+inline ::google::protobuf::int32 ObjectAttributeCrossingSite::flow_rate() const {
+  return flow_rate_;
+}
+inline void ObjectAttributeCrossingSite::set_flow_rate(::google::protobuf::int32 value) {
+  _set_bit(2);
+  flow_rate_ = value;
+}
+
+// required bool banks_require_fitting = 4;
+inline bool ObjectAttributeCrossingSite::has_banks_require_fitting() const {
+  return _has_bit(3);
+}
+inline void ObjectAttributeCrossingSite::clear_banks_require_fitting() {
+  banks_require_fitting_ = false;
+  _clear_bit(3);
+}
+inline bool ObjectAttributeCrossingSite::banks_require_fitting() const {
+  return banks_require_fitting_;
+}
+inline void ObjectAttributeCrossingSite::set_banks_require_fitting(bool value) {
+  _set_bit(3);
+  banks_require_fitting_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// ObjectAttributeSupplyRoute
+
+// required bool equipped = 1;
+inline bool ObjectAttributeSupplyRoute::has_equipped() const {
+  return _has_bit(0);
+}
+inline void ObjectAttributeSupplyRoute::clear_equipped() {
+  equipped_ = false;
+  _clear_bit(0);
+}
+inline bool ObjectAttributeSupplyRoute::equipped() const {
+  return equipped_;
+}
+inline void ObjectAttributeSupplyRoute::set_equipped(bool value) {
+  _set_bit(0);
+  equipped_ = value;
+}
+
+// required int32 max_weight = 2;
+inline bool ObjectAttributeSupplyRoute::has_max_weight() const {
+  return _has_bit(1);
+}
+inline void ObjectAttributeSupplyRoute::clear_max_weight() {
+  max_weight_ = 0;
+  _clear_bit(1);
+}
+inline ::google::protobuf::int32 ObjectAttributeSupplyRoute::max_weight() const {
+  return max_weight_;
+}
+inline void ObjectAttributeSupplyRoute::set_max_weight(::google::protobuf::int32 value) {
+  _set_bit(1);
+  max_weight_ = value;
+}
+
+// required int32 width = 3;
+inline bool ObjectAttributeSupplyRoute::has_width() const {
+  return _has_bit(2);
+}
+inline void ObjectAttributeSupplyRoute::clear_width() {
+  width_ = 0;
+  _clear_bit(2);
+}
+inline ::google::protobuf::int32 ObjectAttributeSupplyRoute::width() const {
+  return width_;
+}
+inline void ObjectAttributeSupplyRoute::set_width(::google::protobuf::int32 value) {
+  _set_bit(2);
+  width_ = value;
+}
+
+// required int32 length = 4;
+inline bool ObjectAttributeSupplyRoute::has_length() const {
+  return _has_bit(3);
+}
+inline void ObjectAttributeSupplyRoute::clear_length() {
+  length_ = 0;
+  _clear_bit(3);
+}
+inline ::google::protobuf::int32 ObjectAttributeSupplyRoute::length() const {
+  return length_;
+}
+inline void ObjectAttributeSupplyRoute::set_length(::google::protobuf::int32 value) {
+  _set_bit(3);
+  length_ = value;
+}
+
+// required int32 flow_rate = 5;
+inline bool ObjectAttributeSupplyRoute::has_flow_rate() const {
+  return _has_bit(4);
+}
+inline void ObjectAttributeSupplyRoute::clear_flow_rate() {
+  flow_rate_ = 0;
+  _clear_bit(4);
+}
+inline ::google::protobuf::int32 ObjectAttributeSupplyRoute::flow_rate() const {
+  return flow_rate_;
+}
+inline void ObjectAttributeSupplyRoute::set_flow_rate(::google::protobuf::int32 value) {
+  _set_bit(4);
+  flow_rate_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgLocatedQuantity
+
+// required .Common.MsgCoordLatLong coordinate = 1;
+inline bool MsgLocatedQuantity::has_coordinate() const {
+  return _has_bit(0);
+}
+inline void MsgLocatedQuantity::clear_coordinate() {
+  if (coordinate_ != NULL) coordinate_->::Common::MsgCoordLatLong::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::MsgCoordLatLong& MsgLocatedQuantity::coordinate() const {
+  return coordinate_ != NULL ? *coordinate_ : *default_instance_->coordinate_;
+}
+inline ::Common::MsgCoordLatLong* MsgLocatedQuantity::mutable_coordinate() {
+  _set_bit(0);
+  if (coordinate_ == NULL) coordinate_ = new ::Common::MsgCoordLatLong;
+  return coordinate_;
+}
+
+// required float quantity = 2;
+inline bool MsgLocatedQuantity::has_quantity() const {
+  return _has_bit(1);
+}
+inline void MsgLocatedQuantity::clear_quantity() {
+  quantity_ = 0;
+  _clear_bit(1);
+}
+inline float MsgLocatedQuantity::quantity() const {
+  return quantity_;
+}
+inline void MsgLocatedQuantity::set_quantity(float value) {
+  _set_bit(1);
+  quantity_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgLocatedQuantityList
+
+// repeated .Common.MsgLocatedQuantity elem = 1;
+inline int MsgLocatedQuantityList::elem_size() const {
+  return elem_.size();
+}
+inline void MsgLocatedQuantityList::clear_elem() {
+  elem_.Clear();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Common::MsgLocatedQuantity >&
+MsgLocatedQuantityList::elem() const {
+  return elem_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Common::MsgLocatedQuantity >*
+MsgLocatedQuantityList::mutable_elem() {
+  return &elem_;
+}
+inline const ::Common::MsgLocatedQuantity& MsgLocatedQuantityList::elem(int index) const {
+  return elem_.Get(index);
+}
+inline ::Common::MsgLocatedQuantity* MsgLocatedQuantityList::mutable_elem(int index) {
+  return elem_.Mutable(index);
+}
+inline ::Common::MsgLocatedQuantity* MsgLocatedQuantityList::add_elem() {
+  return elem_.Add();
+}
+
+// -------------------------------------------------------------------
+
+// ObjectAttributeToxicCloud
+
+// required .Common.MsgLocatedQuantityList quantities = 1;
+inline bool ObjectAttributeToxicCloud::has_quantities() const {
+  return _has_bit(0);
+}
+inline void ObjectAttributeToxicCloud::clear_quantities() {
+  if (quantities_ != NULL) quantities_->::Common::MsgLocatedQuantityList::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::MsgLocatedQuantityList& ObjectAttributeToxicCloud::quantities() const {
+  return quantities_ != NULL ? *quantities_ : *default_instance_->quantities_;
+}
+inline ::Common::MsgLocatedQuantityList* ObjectAttributeToxicCloud::mutable_quantities() {
+  _set_bit(0);
+  if (quantities_ == NULL) quantities_ = new ::Common::MsgLocatedQuantityList;
+  return quantities_;
+}
+
+// -------------------------------------------------------------------
+
+// ObjectAttributeFire
+
+// required int32 class_id = 1;
+inline bool ObjectAttributeFire::has_class_id() const {
+  return _has_bit(0);
+}
+inline void ObjectAttributeFire::clear_class_id() {
+  class_id_ = 0;
+  _clear_bit(0);
+}
+inline ::google::protobuf::int32 ObjectAttributeFire::class_id() const {
+  return class_id_;
+}
+inline void ObjectAttributeFire::set_class_id(::google::protobuf::int32 value) {
+  _set_bit(0);
+  class_id_ = value;
+}
+
+// required int32 heat = 2;
+inline bool ObjectAttributeFire::has_heat() const {
+  return _has_bit(1);
+}
+inline void ObjectAttributeFire::clear_heat() {
+  heat_ = 0;
+  _clear_bit(1);
+}
+inline ::google::protobuf::int32 ObjectAttributeFire::heat() const {
+  return heat_;
+}
+inline void ObjectAttributeFire::set_heat(::google::protobuf::int32 value) {
+  _set_bit(1);
+  heat_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// ObjectAttributeMedicalTreatment
+
+// repeated uint32 type_id = 1;
+inline int ObjectAttributeMedicalTreatment::type_id_size() const {
+  return type_id_.size();
+}
+inline void ObjectAttributeMedicalTreatment::clear_type_id() {
+  type_id_.Clear();
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+ObjectAttributeMedicalTreatment::type_id() const {
+  return type_id_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+ObjectAttributeMedicalTreatment::mutable_type_id() {
+  return &type_id_;
+}
+inline ::google::protobuf::uint32 ObjectAttributeMedicalTreatment::type_id(int index) const {
+  return type_id_.Get(index);
+}
+inline void ObjectAttributeMedicalTreatment::set_type_id(int index, ::google::protobuf::uint32 value) {
+  type_id_.Set(index, value);
+}
+inline void ObjectAttributeMedicalTreatment::add_type_id(::google::protobuf::uint32 value) {
+  type_id_.Add(value);
+}
+
+// required int32 beds = 2;
+inline bool ObjectAttributeMedicalTreatment::has_beds() const {
+  return _has_bit(1);
+}
+inline void ObjectAttributeMedicalTreatment::clear_beds() {
+  beds_ = 0;
+  _clear_bit(1);
+}
+inline ::google::protobuf::int32 ObjectAttributeMedicalTreatment::beds() const {
+  return beds_;
+}
+inline void ObjectAttributeMedicalTreatment::set_beds(::google::protobuf::int32 value) {
+  _set_bit(1);
+  beds_ = value;
+}
+
+// required int32 available_beds = 3;
+inline bool ObjectAttributeMedicalTreatment::has_available_beds() const {
+  return _has_bit(2);
+}
+inline void ObjectAttributeMedicalTreatment::clear_available_beds() {
+  available_beds_ = 0;
+  _clear_bit(2);
+}
+inline ::google::protobuf::int32 ObjectAttributeMedicalTreatment::available_beds() const {
+  return available_beds_;
+}
+inline void ObjectAttributeMedicalTreatment::set_available_beds(::google::protobuf::int32 value) {
+  _set_bit(2);
+  available_beds_ = value;
+}
+
+// required int32 doctors = 4;
+inline bool ObjectAttributeMedicalTreatment::has_doctors() const {
+  return _has_bit(3);
+}
+inline void ObjectAttributeMedicalTreatment::clear_doctors() {
+  doctors_ = 0;
+  _clear_bit(3);
+}
+inline ::google::protobuf::int32 ObjectAttributeMedicalTreatment::doctors() const {
+  return doctors_;
+}
+inline void ObjectAttributeMedicalTreatment::set_doctors(::google::protobuf::int32 value) {
+  _set_bit(3);
+  doctors_ = value;
+}
+
+// required int32 available_doctors = 5;
+inline bool ObjectAttributeMedicalTreatment::has_available_doctors() const {
+  return _has_bit(4);
+}
+inline void ObjectAttributeMedicalTreatment::clear_available_doctors() {
+  available_doctors_ = 0;
+  _clear_bit(4);
+}
+inline ::google::protobuf::int32 ObjectAttributeMedicalTreatment::available_doctors() const {
+  return available_doctors_;
+}
+inline void ObjectAttributeMedicalTreatment::set_available_doctors(::google::protobuf::int32 value) {
+  _set_bit(4);
+  available_doctors_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// ObjectAttributeNBCType
+
+// required .Common.NBCAgentType agent = 1;
+inline bool ObjectAttributeNBCType::has_agent() const {
+  return _has_bit(0);
+}
+inline void ObjectAttributeNBCType::clear_agent() {
+  if (agent_ != NULL) agent_->::Common::NBCAgentType::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::NBCAgentType& ObjectAttributeNBCType::agent() const {
+  return agent_ != NULL ? *agent_ : *default_instance_->agent_;
+}
+inline ::Common::NBCAgentType* ObjectAttributeNBCType::mutable_agent() {
+  _set_bit(0);
+  if (agent_ == NULL) agent_ = new ::Common::NBCAgentType;
+  return agent_;
+}
+
+// required int32 concentration = 2;
+inline bool ObjectAttributeNBCType::has_concentration() const {
+  return _has_bit(1);
+}
+inline void ObjectAttributeNBCType::clear_concentration() {
+  concentration_ = 0;
+  _clear_bit(1);
+}
+inline ::google::protobuf::int32 ObjectAttributeNBCType::concentration() const {
+  return concentration_;
+}
+inline void ObjectAttributeNBCType::set_concentration(::google::protobuf::int32 value) {
+  _set_bit(1);
+  concentration_ = value;
+}
+
+// required int32 source_life_duration = 3;
+inline bool ObjectAttributeNBCType::has_source_life_duration() const {
+  return _has_bit(2);
+}
+inline void ObjectAttributeNBCType::clear_source_life_duration() {
+  source_life_duration_ = 0;
+  _clear_bit(2);
+}
+inline ::google::protobuf::int32 ObjectAttributeNBCType::source_life_duration() const {
+  return source_life_duration_;
+}
+inline void ObjectAttributeNBCType::set_source_life_duration(::google::protobuf::int32 value) {
+  _set_bit(2);
+  source_life_duration_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// ObjectAttributeSealOff
+
+// required int32 level = 1;
+inline bool ObjectAttributeSealOff::has_level() const {
+  return _has_bit(0);
+}
+inline void ObjectAttributeSealOff::clear_level() {
+  level_ = 0;
+  _clear_bit(0);
+}
+inline ::google::protobuf::int32 ObjectAttributeSealOff::level() const {
+  return level_;
+}
+inline void ObjectAttributeSealOff::set_level(::google::protobuf::int32 value) {
+  _set_bit(0);
+  level_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// ObjectAttributes
+
+// optional .Common.ObjectAttributeConstruction construction = 1;
+inline bool ObjectAttributes::has_construction() const {
+  return _has_bit(0);
+}
+inline void ObjectAttributes::clear_construction() {
+  if (construction_ != NULL) construction_->::Common::ObjectAttributeConstruction::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::ObjectAttributeConstruction& ObjectAttributes::construction() const {
   return construction_ != NULL ? *construction_ : *default_instance_->construction_;
 }
-inline ::Common::MsgObjectAttributeConstruction* MsgObjectAttributes::mutable_construction() {
+inline ::Common::ObjectAttributeConstruction* ObjectAttributes::mutable_construction() {
   _set_bit(0);
-  if (construction_ == NULL) construction_ = new ::Common::MsgObjectAttributeConstruction;
+  if (construction_ == NULL) construction_ = new ::Common::ObjectAttributeConstruction;
   return construction_;
 }
 
-// optional .Common.MsgObjectAttributeObstacle obstacle = 2;
-inline bool MsgObjectAttributes::has_obstacle() const {
+// optional .Common.ObjectAttributeObstacle obstacle = 2;
+inline bool ObjectAttributes::has_obstacle() const {
   return _has_bit(1);
 }
-inline void MsgObjectAttributes::clear_obstacle() {
-  if (obstacle_ != NULL) obstacle_->::Common::MsgObjectAttributeObstacle::Clear();
+inline void ObjectAttributes::clear_obstacle() {
+  if (obstacle_ != NULL) obstacle_->::Common::ObjectAttributeObstacle::Clear();
   _clear_bit(1);
 }
-inline const ::Common::MsgObjectAttributeObstacle& MsgObjectAttributes::obstacle() const {
+inline const ::Common::ObjectAttributeObstacle& ObjectAttributes::obstacle() const {
   return obstacle_ != NULL ? *obstacle_ : *default_instance_->obstacle_;
 }
-inline ::Common::MsgObjectAttributeObstacle* MsgObjectAttributes::mutable_obstacle() {
+inline ::Common::ObjectAttributeObstacle* ObjectAttributes::mutable_obstacle() {
   _set_bit(1);
-  if (obstacle_ == NULL) obstacle_ = new ::Common::MsgObjectAttributeObstacle;
+  if (obstacle_ == NULL) obstacle_ = new ::Common::ObjectAttributeObstacle;
   return obstacle_;
 }
 
-// optional .Common.MsgObjectAttributeMine mine = 3;
-inline bool MsgObjectAttributes::has_mine() const {
+// optional .Common.ObjectAttributeMine mine = 3;
+inline bool ObjectAttributes::has_mine() const {
   return _has_bit(2);
 }
-inline void MsgObjectAttributes::clear_mine() {
-  if (mine_ != NULL) mine_->::Common::MsgObjectAttributeMine::Clear();
+inline void ObjectAttributes::clear_mine() {
+  if (mine_ != NULL) mine_->::Common::ObjectAttributeMine::Clear();
   _clear_bit(2);
 }
-inline const ::Common::MsgObjectAttributeMine& MsgObjectAttributes::mine() const {
+inline const ::Common::ObjectAttributeMine& ObjectAttributes::mine() const {
   return mine_ != NULL ? *mine_ : *default_instance_->mine_;
 }
-inline ::Common::MsgObjectAttributeMine* MsgObjectAttributes::mutable_mine() {
+inline ::Common::ObjectAttributeMine* ObjectAttributes::mutable_mine() {
   _set_bit(2);
-  if (mine_ == NULL) mine_ = new ::Common::MsgObjectAttributeMine;
+  if (mine_ == NULL) mine_ = new ::Common::ObjectAttributeMine;
   return mine_;
 }
 
-// optional .Common.MsgObjectAttributeActivityTime activity_time = 4;
-inline bool MsgObjectAttributes::has_activity_time() const {
+// optional .Common.ObjectAttributeActivityTime activity_time = 4;
+inline bool ObjectAttributes::has_activity_time() const {
   return _has_bit(3);
 }
-inline void MsgObjectAttributes::clear_activity_time() {
-  if (activity_time_ != NULL) activity_time_->::Common::MsgObjectAttributeActivityTime::Clear();
+inline void ObjectAttributes::clear_activity_time() {
+  if (activity_time_ != NULL) activity_time_->::Common::ObjectAttributeActivityTime::Clear();
   _clear_bit(3);
 }
-inline const ::Common::MsgObjectAttributeActivityTime& MsgObjectAttributes::activity_time() const {
+inline const ::Common::ObjectAttributeActivityTime& ObjectAttributes::activity_time() const {
   return activity_time_ != NULL ? *activity_time_ : *default_instance_->activity_time_;
 }
-inline ::Common::MsgObjectAttributeActivityTime* MsgObjectAttributes::mutable_activity_time() {
+inline ::Common::ObjectAttributeActivityTime* ObjectAttributes::mutable_activity_time() {
   _set_bit(3);
-  if (activity_time_ == NULL) activity_time_ = new ::Common::MsgObjectAttributeActivityTime;
+  if (activity_time_ == NULL) activity_time_ = new ::Common::ObjectAttributeActivityTime;
   return activity_time_;
 }
 
-// optional .Common.MsgObjectAttributeBypass bypass = 5;
-inline bool MsgObjectAttributes::has_bypass() const {
+// optional .Common.ObjectAttributeBypass bypass = 5;
+inline bool ObjectAttributes::has_bypass() const {
   return _has_bit(4);
 }
-inline void MsgObjectAttributes::clear_bypass() {
-  if (bypass_ != NULL) bypass_->::Common::MsgObjectAttributeBypass::Clear();
+inline void ObjectAttributes::clear_bypass() {
+  if (bypass_ != NULL) bypass_->::Common::ObjectAttributeBypass::Clear();
   _clear_bit(4);
 }
-inline const ::Common::MsgObjectAttributeBypass& MsgObjectAttributes::bypass() const {
+inline const ::Common::ObjectAttributeBypass& ObjectAttributes::bypass() const {
   return bypass_ != NULL ? *bypass_ : *default_instance_->bypass_;
 }
-inline ::Common::MsgObjectAttributeBypass* MsgObjectAttributes::mutable_bypass() {
+inline ::Common::ObjectAttributeBypass* ObjectAttributes::mutable_bypass() {
   _set_bit(4);
-  if (bypass_ == NULL) bypass_ = new ::Common::MsgObjectAttributeBypass;
+  if (bypass_ == NULL) bypass_ = new ::Common::ObjectAttributeBypass;
   return bypass_;
 }
 
-// optional .Common.MsgObjectAttributeLogistic logistic = 6;
-inline bool MsgObjectAttributes::has_logistic() const {
+// optional .Common.ObjectAttributeLogistic logistic = 6;
+inline bool ObjectAttributes::has_logistic() const {
   return _has_bit(5);
 }
-inline void MsgObjectAttributes::clear_logistic() {
-  if (logistic_ != NULL) logistic_->::Common::MsgObjectAttributeLogistic::Clear();
+inline void ObjectAttributes::clear_logistic() {
+  if (logistic_ != NULL) logistic_->::Common::ObjectAttributeLogistic::Clear();
   _clear_bit(5);
 }
-inline const ::Common::MsgObjectAttributeLogistic& MsgObjectAttributes::logistic() const {
+inline const ::Common::ObjectAttributeLogistic& ObjectAttributes::logistic() const {
   return logistic_ != NULL ? *logistic_ : *default_instance_->logistic_;
 }
-inline ::Common::MsgObjectAttributeLogistic* MsgObjectAttributes::mutable_logistic() {
+inline ::Common::ObjectAttributeLogistic* ObjectAttributes::mutable_logistic() {
   _set_bit(5);
-  if (logistic_ == NULL) logistic_ = new ::Common::MsgObjectAttributeLogistic;
+  if (logistic_ == NULL) logistic_ = new ::Common::ObjectAttributeLogistic;
   return logistic_;
 }
 
-// optional .Common.MsgObjectAttributeNBC nbc = 7;
-inline bool MsgObjectAttributes::has_nbc() const {
+// optional .Common.ObjectAttributeNBC nbc = 7;
+inline bool ObjectAttributes::has_nbc() const {
   return _has_bit(6);
 }
-inline void MsgObjectAttributes::clear_nbc() {
-  if (nbc_ != NULL) nbc_->::Common::MsgObjectAttributeNBC::Clear();
+inline void ObjectAttributes::clear_nbc() {
+  if (nbc_ != NULL) nbc_->::Common::ObjectAttributeNBC::Clear();
   _clear_bit(6);
 }
-inline const ::Common::MsgObjectAttributeNBC& MsgObjectAttributes::nbc() const {
+inline const ::Common::ObjectAttributeNBC& ObjectAttributes::nbc() const {
   return nbc_ != NULL ? *nbc_ : *default_instance_->nbc_;
 }
-inline ::Common::MsgObjectAttributeNBC* MsgObjectAttributes::mutable_nbc() {
+inline ::Common::ObjectAttributeNBC* ObjectAttributes::mutable_nbc() {
   _set_bit(6);
-  if (nbc_ == NULL) nbc_ = new ::Common::MsgObjectAttributeNBC;
+  if (nbc_ == NULL) nbc_ = new ::Common::ObjectAttributeNBC;
   return nbc_;
 }
 
-// optional .Common.MsgObjectAttributeCrossingSite crossing_site = 8;
-inline bool MsgObjectAttributes::has_crossing_site() const {
+// optional .Common.ObjectAttributeCrossingSite crossing_site = 8;
+inline bool ObjectAttributes::has_crossing_site() const {
   return _has_bit(7);
 }
-inline void MsgObjectAttributes::clear_crossing_site() {
-  if (crossing_site_ != NULL) crossing_site_->::Common::MsgObjectAttributeCrossingSite::Clear();
+inline void ObjectAttributes::clear_crossing_site() {
+  if (crossing_site_ != NULL) crossing_site_->::Common::ObjectAttributeCrossingSite::Clear();
   _clear_bit(7);
 }
-inline const ::Common::MsgObjectAttributeCrossingSite& MsgObjectAttributes::crossing_site() const {
+inline const ::Common::ObjectAttributeCrossingSite& ObjectAttributes::crossing_site() const {
   return crossing_site_ != NULL ? *crossing_site_ : *default_instance_->crossing_site_;
 }
-inline ::Common::MsgObjectAttributeCrossingSite* MsgObjectAttributes::mutable_crossing_site() {
+inline ::Common::ObjectAttributeCrossingSite* ObjectAttributes::mutable_crossing_site() {
   _set_bit(7);
-  if (crossing_site_ == NULL) crossing_site_ = new ::Common::MsgObjectAttributeCrossingSite;
+  if (crossing_site_ == NULL) crossing_site_ = new ::Common::ObjectAttributeCrossingSite;
   return crossing_site_;
 }
 
-// optional .Common.MsgObjectAttributeSupplyRoute supply_route = 9;
-inline bool MsgObjectAttributes::has_supply_route() const {
+// optional .Common.ObjectAttributeSupplyRoute supply_route = 9;
+inline bool ObjectAttributes::has_supply_route() const {
   return _has_bit(8);
 }
-inline void MsgObjectAttributes::clear_supply_route() {
-  if (supply_route_ != NULL) supply_route_->::Common::MsgObjectAttributeSupplyRoute::Clear();
+inline void ObjectAttributes::clear_supply_route() {
+  if (supply_route_ != NULL) supply_route_->::Common::ObjectAttributeSupplyRoute::Clear();
   _clear_bit(8);
 }
-inline const ::Common::MsgObjectAttributeSupplyRoute& MsgObjectAttributes::supply_route() const {
+inline const ::Common::ObjectAttributeSupplyRoute& ObjectAttributes::supply_route() const {
   return supply_route_ != NULL ? *supply_route_ : *default_instance_->supply_route_;
 }
-inline ::Common::MsgObjectAttributeSupplyRoute* MsgObjectAttributes::mutable_supply_route() {
+inline ::Common::ObjectAttributeSupplyRoute* ObjectAttributes::mutable_supply_route() {
   _set_bit(8);
-  if (supply_route_ == NULL) supply_route_ = new ::Common::MsgObjectAttributeSupplyRoute;
+  if (supply_route_ == NULL) supply_route_ = new ::Common::ObjectAttributeSupplyRoute;
   return supply_route_;
 }
 
-// optional .Common.MsgObjectAttributeToxicCloud toxic_cloud = 10;
-inline bool MsgObjectAttributes::has_toxic_cloud() const {
+// optional .Common.ObjectAttributeToxicCloud toxic_cloud = 10;
+inline bool ObjectAttributes::has_toxic_cloud() const {
   return _has_bit(9);
 }
-inline void MsgObjectAttributes::clear_toxic_cloud() {
-  if (toxic_cloud_ != NULL) toxic_cloud_->::Common::MsgObjectAttributeToxicCloud::Clear();
+inline void ObjectAttributes::clear_toxic_cloud() {
+  if (toxic_cloud_ != NULL) toxic_cloud_->::Common::ObjectAttributeToxicCloud::Clear();
   _clear_bit(9);
 }
-inline const ::Common::MsgObjectAttributeToxicCloud& MsgObjectAttributes::toxic_cloud() const {
+inline const ::Common::ObjectAttributeToxicCloud& ObjectAttributes::toxic_cloud() const {
   return toxic_cloud_ != NULL ? *toxic_cloud_ : *default_instance_->toxic_cloud_;
 }
-inline ::Common::MsgObjectAttributeToxicCloud* MsgObjectAttributes::mutable_toxic_cloud() {
+inline ::Common::ObjectAttributeToxicCloud* ObjectAttributes::mutable_toxic_cloud() {
   _set_bit(9);
-  if (toxic_cloud_ == NULL) toxic_cloud_ = new ::Common::MsgObjectAttributeToxicCloud;
+  if (toxic_cloud_ == NULL) toxic_cloud_ = new ::Common::ObjectAttributeToxicCloud;
   return toxic_cloud_;
 }
 
-// optional .Common.MsgObjectAttributeFire fire = 11;
-inline bool MsgObjectAttributes::has_fire() const {
+// optional .Common.ObjectAttributeFire fire = 11;
+inline bool ObjectAttributes::has_fire() const {
   return _has_bit(10);
 }
-inline void MsgObjectAttributes::clear_fire() {
-  if (fire_ != NULL) fire_->::Common::MsgObjectAttributeFire::Clear();
+inline void ObjectAttributes::clear_fire() {
+  if (fire_ != NULL) fire_->::Common::ObjectAttributeFire::Clear();
   _clear_bit(10);
 }
-inline const ::Common::MsgObjectAttributeFire& MsgObjectAttributes::fire() const {
+inline const ::Common::ObjectAttributeFire& ObjectAttributes::fire() const {
   return fire_ != NULL ? *fire_ : *default_instance_->fire_;
 }
-inline ::Common::MsgObjectAttributeFire* MsgObjectAttributes::mutable_fire() {
+inline ::Common::ObjectAttributeFire* ObjectAttributes::mutable_fire() {
   _set_bit(10);
-  if (fire_ == NULL) fire_ = new ::Common::MsgObjectAttributeFire;
+  if (fire_ == NULL) fire_ = new ::Common::ObjectAttributeFire;
   return fire_;
 }
 
-// optional .Common.MsgObjectAttributeMedicalTreatment medical_treatment = 12;
-inline bool MsgObjectAttributes::has_medical_treatment() const {
+// optional .Common.ObjectAttributeMedicalTreatment medical_treatment = 12;
+inline bool ObjectAttributes::has_medical_treatment() const {
   return _has_bit(11);
 }
-inline void MsgObjectAttributes::clear_medical_treatment() {
-  if (medical_treatment_ != NULL) medical_treatment_->::Common::MsgObjectAttributeMedicalTreatment::Clear();
+inline void ObjectAttributes::clear_medical_treatment() {
+  if (medical_treatment_ != NULL) medical_treatment_->::Common::ObjectAttributeMedicalTreatment::Clear();
   _clear_bit(11);
 }
-inline const ::Common::MsgObjectAttributeMedicalTreatment& MsgObjectAttributes::medical_treatment() const {
+inline const ::Common::ObjectAttributeMedicalTreatment& ObjectAttributes::medical_treatment() const {
   return medical_treatment_ != NULL ? *medical_treatment_ : *default_instance_->medical_treatment_;
 }
-inline ::Common::MsgObjectAttributeMedicalTreatment* MsgObjectAttributes::mutable_medical_treatment() {
+inline ::Common::ObjectAttributeMedicalTreatment* ObjectAttributes::mutable_medical_treatment() {
   _set_bit(11);
-  if (medical_treatment_ == NULL) medical_treatment_ = new ::Common::MsgObjectAttributeMedicalTreatment;
+  if (medical_treatment_ == NULL) medical_treatment_ = new ::Common::ObjectAttributeMedicalTreatment;
   return medical_treatment_;
 }
 
-// optional .Common.MsgObjectAttributeInteractionHeight interaction_height = 13;
-inline bool MsgObjectAttributes::has_interaction_height() const {
+// optional .Common.ObjectAttributeInteractionHeight interaction_height = 13;
+inline bool ObjectAttributes::has_interaction_height() const {
   return _has_bit(12);
 }
-inline void MsgObjectAttributes::clear_interaction_height() {
-  if (interaction_height_ != NULL) interaction_height_->::Common::MsgObjectAttributeInteractionHeight::Clear();
+inline void ObjectAttributes::clear_interaction_height() {
+  if (interaction_height_ != NULL) interaction_height_->::Common::ObjectAttributeInteractionHeight::Clear();
   _clear_bit(12);
 }
-inline const ::Common::MsgObjectAttributeInteractionHeight& MsgObjectAttributes::interaction_height() const {
+inline const ::Common::ObjectAttributeInteractionHeight& ObjectAttributes::interaction_height() const {
   return interaction_height_ != NULL ? *interaction_height_ : *default_instance_->interaction_height_;
 }
-inline ::Common::MsgObjectAttributeInteractionHeight* MsgObjectAttributes::mutable_interaction_height() {
+inline ::Common::ObjectAttributeInteractionHeight* ObjectAttributes::mutable_interaction_height() {
   _set_bit(12);
-  if (interaction_height_ == NULL) interaction_height_ = new ::Common::MsgObjectAttributeInteractionHeight;
+  if (interaction_height_ == NULL) interaction_height_ = new ::Common::ObjectAttributeInteractionHeight;
   return interaction_height_;
 }
 
-// optional .Common.MsgObjectAttributeStock stock = 14;
-inline bool MsgObjectAttributes::has_stock() const {
+// optional .Common.ObjectAttributeStock stock = 14;
+inline bool ObjectAttributes::has_stock() const {
   return _has_bit(13);
 }
-inline void MsgObjectAttributes::clear_stock() {
-  if (stock_ != NULL) stock_->::Common::MsgObjectAttributeStock::Clear();
+inline void ObjectAttributes::clear_stock() {
+  if (stock_ != NULL) stock_->::Common::ObjectAttributeStock::Clear();
   _clear_bit(13);
 }
-inline const ::Common::MsgObjectAttributeStock& MsgObjectAttributes::stock() const {
+inline const ::Common::ObjectAttributeStock& ObjectAttributes::stock() const {
   return stock_ != NULL ? *stock_ : *default_instance_->stock_;
 }
-inline ::Common::MsgObjectAttributeStock* MsgObjectAttributes::mutable_stock() {
+inline ::Common::ObjectAttributeStock* ObjectAttributes::mutable_stock() {
   _set_bit(13);
-  if (stock_ == NULL) stock_ = new ::Common::MsgObjectAttributeStock;
+  if (stock_ == NULL) stock_ = new ::Common::ObjectAttributeStock;
   return stock_;
 }
 
-// optional .Common.MsgObjectAttributeNBCType nbc_agent = 15;
-inline bool MsgObjectAttributes::has_nbc_agent() const {
+// optional .Common.ObjectAttributeNBCType nbc_agent = 15;
+inline bool ObjectAttributes::has_nbc_agent() const {
   return _has_bit(14);
 }
-inline void MsgObjectAttributes::clear_nbc_agent() {
-  if (nbc_agent_ != NULL) nbc_agent_->::Common::MsgObjectAttributeNBCType::Clear();
+inline void ObjectAttributes::clear_nbc_agent() {
+  if (nbc_agent_ != NULL) nbc_agent_->::Common::ObjectAttributeNBCType::Clear();
   _clear_bit(14);
 }
-inline const ::Common::MsgObjectAttributeNBCType& MsgObjectAttributes::nbc_agent() const {
+inline const ::Common::ObjectAttributeNBCType& ObjectAttributes::nbc_agent() const {
   return nbc_agent_ != NULL ? *nbc_agent_ : *default_instance_->nbc_agent_;
 }
-inline ::Common::MsgObjectAttributeNBCType* MsgObjectAttributes::mutable_nbc_agent() {
+inline ::Common::ObjectAttributeNBCType* ObjectAttributes::mutable_nbc_agent() {
   _set_bit(14);
-  if (nbc_agent_ == NULL) nbc_agent_ = new ::Common::MsgObjectAttributeNBCType;
+  if (nbc_agent_ == NULL) nbc_agent_ = new ::Common::ObjectAttributeNBCType;
   return nbc_agent_;
 }
 
-// optional .Common.MsgObjectAttributeEffectDelay effect_delay = 16;
-inline bool MsgObjectAttributes::has_effect_delay() const {
+// optional .Common.ObjectAttributeEffectDelay effect_delay = 16;
+inline bool ObjectAttributes::has_effect_delay() const {
   return _has_bit(15);
 }
-inline void MsgObjectAttributes::clear_effect_delay() {
-  if (effect_delay_ != NULL) effect_delay_->::Common::MsgObjectAttributeEffectDelay::Clear();
+inline void ObjectAttributes::clear_effect_delay() {
+  if (effect_delay_ != NULL) effect_delay_->::Common::ObjectAttributeEffectDelay::Clear();
   _clear_bit(15);
 }
-inline const ::Common::MsgObjectAttributeEffectDelay& MsgObjectAttributes::effect_delay() const {
+inline const ::Common::ObjectAttributeEffectDelay& ObjectAttributes::effect_delay() const {
   return effect_delay_ != NULL ? *effect_delay_ : *default_instance_->effect_delay_;
 }
-inline ::Common::MsgObjectAttributeEffectDelay* MsgObjectAttributes::mutable_effect_delay() {
+inline ::Common::ObjectAttributeEffectDelay* ObjectAttributes::mutable_effect_delay() {
   _set_bit(15);
-  if (effect_delay_ == NULL) effect_delay_ = new ::Common::MsgObjectAttributeEffectDelay;
+  if (effect_delay_ == NULL) effect_delay_ = new ::Common::ObjectAttributeEffectDelay;
   return effect_delay_;
 }
 
-// optional .Common.MsgObjectAttributeSealOff sealOff = 17;
-inline bool MsgObjectAttributes::has_sealoff() const {
+// optional .Common.ObjectAttributeSealOff seal_off = 17;
+inline bool ObjectAttributes::has_seal_off() const {
   return _has_bit(16);
 }
-inline void MsgObjectAttributes::clear_sealoff() {
-  if (sealoff_ != NULL) sealoff_->::Common::MsgObjectAttributeSealOff::Clear();
+inline void ObjectAttributes::clear_seal_off() {
+  if (seal_off_ != NULL) seal_off_->::Common::ObjectAttributeSealOff::Clear();
   _clear_bit(16);
 }
-inline const ::Common::MsgObjectAttributeSealOff& MsgObjectAttributes::sealoff() const {
-  return sealoff_ != NULL ? *sealoff_ : *default_instance_->sealoff_;
+inline const ::Common::ObjectAttributeSealOff& ObjectAttributes::seal_off() const {
+  return seal_off_ != NULL ? *seal_off_ : *default_instance_->seal_off_;
 }
-inline ::Common::MsgObjectAttributeSealOff* MsgObjectAttributes::mutable_sealoff() {
+inline ::Common::ObjectAttributeSealOff* ObjectAttributes::mutable_seal_off() {
   _set_bit(16);
-  if (sealoff_ == NULL) sealoff_ = new ::Common::MsgObjectAttributeSealOff;
-  return sealoff_;
+  if (seal_off_ == NULL) seal_off_ = new ::Common::ObjectAttributeSealOff;
+  return seal_off_;
 }
 
-// optional .Common.MsgObjectAttributeResourceNetwork resource_networks = 18;
-inline bool MsgObjectAttributes::has_resource_networks() const {
+// optional .Common.ObjectAttributeResourceNetwork resource_networks = 18;
+inline bool ObjectAttributes::has_resource_networks() const {
   return _has_bit(17);
 }
-inline void MsgObjectAttributes::clear_resource_networks() {
-  if (resource_networks_ != NULL) resource_networks_->::Common::MsgObjectAttributeResourceNetwork::Clear();
+inline void ObjectAttributes::clear_resource_networks() {
+  if (resource_networks_ != NULL) resource_networks_->::Common::ObjectAttributeResourceNetwork::Clear();
   _clear_bit(17);
 }
-inline const ::Common::MsgObjectAttributeResourceNetwork& MsgObjectAttributes::resource_networks() const {
+inline const ::Common::ObjectAttributeResourceNetwork& ObjectAttributes::resource_networks() const {
   return resource_networks_ != NULL ? *resource_networks_ : *default_instance_->resource_networks_;
 }
-inline ::Common::MsgObjectAttributeResourceNetwork* MsgObjectAttributes::mutable_resource_networks() {
+inline ::Common::ObjectAttributeResourceNetwork* ObjectAttributes::mutable_resource_networks() {
   _set_bit(17);
-  if (resource_networks_ == NULL) resource_networks_ = new ::Common::MsgObjectAttributeResourceNetwork;
+  if (resource_networks_ == NULL) resource_networks_ = new ::Common::ObjectAttributeResourceNetwork;
   return resource_networks_;
 }
 
@@ -18952,120 +19219,137 @@ inline void MsgNote::set_parent(::google::protobuf::uint32 value) {
 
 // -------------------------------------------------------------------
 
-// MsgMeteoAttributes
+// MsgWeatherAttributes
 
 // required int32 temperature = 1;
-inline bool MsgMeteoAttributes::has_temperature() const {
+inline bool MsgWeatherAttributes::has_temperature() const {
   return _has_bit(0);
 }
-inline void MsgMeteoAttributes::clear_temperature() {
+inline void MsgWeatherAttributes::clear_temperature() {
   temperature_ = 0;
   _clear_bit(0);
 }
-inline ::google::protobuf::int32 MsgMeteoAttributes::temperature() const {
+inline ::google::protobuf::int32 MsgWeatherAttributes::temperature() const {
   return temperature_;
 }
-inline void MsgMeteoAttributes::set_temperature(::google::protobuf::int32 value) {
+inline void MsgWeatherAttributes::set_temperature(::google::protobuf::int32 value) {
   _set_bit(0);
   temperature_ = value;
 }
 
 // required int32 wind_speed = 2;
-inline bool MsgMeteoAttributes::has_wind_speed() const {
+inline bool MsgWeatherAttributes::has_wind_speed() const {
   return _has_bit(1);
 }
-inline void MsgMeteoAttributes::clear_wind_speed() {
+inline void MsgWeatherAttributes::clear_wind_speed() {
   wind_speed_ = 0;
   _clear_bit(1);
 }
-inline ::google::protobuf::int32 MsgMeteoAttributes::wind_speed() const {
+inline ::google::protobuf::int32 MsgWeatherAttributes::wind_speed() const {
   return wind_speed_;
 }
-inline void MsgMeteoAttributes::set_wind_speed(::google::protobuf::int32 value) {
+inline void MsgWeatherAttributes::set_wind_speed(::google::protobuf::int32 value) {
   _set_bit(1);
   wind_speed_ = value;
 }
 
 // required .Common.MsgHeading wind_direction = 3;
-inline bool MsgMeteoAttributes::has_wind_direction() const {
+inline bool MsgWeatherAttributes::has_wind_direction() const {
   return _has_bit(2);
 }
-inline void MsgMeteoAttributes::clear_wind_direction() {
+inline void MsgWeatherAttributes::clear_wind_direction() {
   if (wind_direction_ != NULL) wind_direction_->::Common::MsgHeading::Clear();
   _clear_bit(2);
 }
-inline const ::Common::MsgHeading& MsgMeteoAttributes::wind_direction() const {
+inline const ::Common::MsgHeading& MsgWeatherAttributes::wind_direction() const {
   return wind_direction_ != NULL ? *wind_direction_ : *default_instance_->wind_direction_;
 }
-inline ::Common::MsgHeading* MsgMeteoAttributes::mutable_wind_direction() {
+inline ::Common::MsgHeading* MsgWeatherAttributes::mutable_wind_direction() {
   _set_bit(2);
   if (wind_direction_ == NULL) wind_direction_ = new ::Common::MsgHeading;
   return wind_direction_;
 }
 
 // required int32 cloud_floor = 4;
-inline bool MsgMeteoAttributes::has_cloud_floor() const {
+inline bool MsgWeatherAttributes::has_cloud_floor() const {
   return _has_bit(3);
 }
-inline void MsgMeteoAttributes::clear_cloud_floor() {
+inline void MsgWeatherAttributes::clear_cloud_floor() {
   cloud_floor_ = 0;
   _clear_bit(3);
 }
-inline ::google::protobuf::int32 MsgMeteoAttributes::cloud_floor() const {
+inline ::google::protobuf::int32 MsgWeatherAttributes::cloud_floor() const {
   return cloud_floor_;
 }
-inline void MsgMeteoAttributes::set_cloud_floor(::google::protobuf::int32 value) {
+inline void MsgWeatherAttributes::set_cloud_floor(::google::protobuf::int32 value) {
   _set_bit(3);
   cloud_floor_ = value;
 }
 
 // required int32 cloud_ceiling = 5;
-inline bool MsgMeteoAttributes::has_cloud_ceiling() const {
+inline bool MsgWeatherAttributes::has_cloud_ceiling() const {
   return _has_bit(4);
 }
-inline void MsgMeteoAttributes::clear_cloud_ceiling() {
+inline void MsgWeatherAttributes::clear_cloud_ceiling() {
   cloud_ceiling_ = 0;
   _clear_bit(4);
 }
-inline ::google::protobuf::int32 MsgMeteoAttributes::cloud_ceiling() const {
+inline ::google::protobuf::int32 MsgWeatherAttributes::cloud_ceiling() const {
   return cloud_ceiling_;
 }
-inline void MsgMeteoAttributes::set_cloud_ceiling(::google::protobuf::int32 value) {
+inline void MsgWeatherAttributes::set_cloud_ceiling(::google::protobuf::int32 value) {
   _set_bit(4);
   cloud_ceiling_ = value;
 }
 
 // required int32 cloud_density = 6;
-inline bool MsgMeteoAttributes::has_cloud_density() const {
+inline bool MsgWeatherAttributes::has_cloud_density() const {
   return _has_bit(5);
 }
-inline void MsgMeteoAttributes::clear_cloud_density() {
+inline void MsgWeatherAttributes::clear_cloud_density() {
   cloud_density_ = 0;
   _clear_bit(5);
 }
-inline ::google::protobuf::int32 MsgMeteoAttributes::cloud_density() const {
+inline ::google::protobuf::int32 MsgWeatherAttributes::cloud_density() const {
   return cloud_density_;
 }
-inline void MsgMeteoAttributes::set_cloud_density(::google::protobuf::int32 value) {
+inline void MsgWeatherAttributes::set_cloud_density(::google::protobuf::int32 value) {
   _set_bit(5);
   cloud_density_ = value;
 }
 
 // required .Common.EnumPrecipitationType precipitation = 7;
-inline bool MsgMeteoAttributes::has_precipitation() const {
+inline bool MsgWeatherAttributes::has_precipitation() const {
   return _has_bit(6);
 }
-inline void MsgMeteoAttributes::clear_precipitation() {
+inline void MsgWeatherAttributes::clear_precipitation() {
   precipitation_ = 0;
   _clear_bit(6);
 }
-inline Common::EnumPrecipitationType MsgMeteoAttributes::precipitation() const {
+inline Common::EnumPrecipitationType MsgWeatherAttributes::precipitation() const {
   return static_cast< Common::EnumPrecipitationType >(precipitation_);
 }
-inline void MsgMeteoAttributes::set_precipitation(Common::EnumPrecipitationType value) {
+inline void MsgWeatherAttributes::set_precipitation(Common::EnumPrecipitationType value) {
   GOOGLE_DCHECK(Common::EnumPrecipitationType_IsValid(value));
   _set_bit(6);
   precipitation_ = value;
+}
+
+// required .Common.EnumLightingType lighting = 8;
+inline bool MsgWeatherAttributes::has_lighting() const {
+  return _has_bit(7);
+}
+inline void MsgWeatherAttributes::clear_lighting() {
+  lighting_ = 0;
+  _clear_bit(7);
+}
+inline Common::EnumLightingType MsgWeatherAttributes::lighting() const {
+  return static_cast< Common::EnumLightingType >(lighting_);
+}
+inline void MsgWeatherAttributes::set_lighting(Common::EnumLightingType value) {
+  GOOGLE_DCHECK(Common::EnumLightingType_IsValid(value));
+  _set_bit(7);
+  lighting_ = value;
 }
 
 
@@ -19108,16 +19392,16 @@ inline const EnumDescriptor* GetEnumDescriptor< Common::EnumPrecipitationType>()
   return Common::EnumPrecipitationType_descriptor();
 }
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< Common::EnumLightingType>() {
-  return Common::EnumLightingType_descriptor();
-}
-template <>
 inline const EnumDescriptor* GetEnumDescriptor< Common::EnumFireEffectType>() {
   return Common::EnumFireEffectType_descriptor();
 }
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< Common::MsgStartUnitFire_type>() {
-  return Common::MsgStartUnitFire_type_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< Common::UnitFireType>() {
+  return Common::UnitFireType_descriptor();
+}
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< Common::EnumLightingType>() {
+  return Common::EnumLightingType_descriptor();
 }
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< Common::EnumLogMaintenanceHandlingStatus>() {
@@ -19136,6 +19420,10 @@ inline const EnumDescriptor* GetEnumDescriptor< Common::EnumSimulationState>() {
   return Common::EnumSimulationState_descriptor();
 }
 template <>
+inline const EnumDescriptor* GetEnumDescriptor< Common::EnumDispatcherState>() {
+  return Common::EnumDispatcherState_descriptor();
+}
+template <>
 inline const EnumDescriptor* GetEnumDescriptor< Common::EnumMeetingEngagementStatus>() {
   return Common::EnumMeetingEngagementStatus_descriptor();
 }
@@ -19148,8 +19436,8 @@ inline const EnumDescriptor* GetEnumDescriptor< Common::EnumAutomatMode>() {
   return Common::EnumAutomatMode_descriptor();
 }
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< Common::EnumPopulationAttitude>() {
-  return Common::EnumPopulationAttitude_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< Common::EnumCrowdAttitude>() {
+  return Common::EnumCrowdAttitude_descriptor();
 }
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< Common::EnumUnitTiredness>() {

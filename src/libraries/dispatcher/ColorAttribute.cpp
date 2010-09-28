@@ -18,7 +18,7 @@ using namespace dispatcher;
 // Name: ColorAttribute constructor
 // Created: RPD 2010-01-06
 // -----------------------------------------------------------------------------
-ColorAttribute::ColorAttribute( const MsgsSimToClient::MsgUrbanAttributes& message )
+ColorAttribute::ColorAttribute( const MsgsSimToClient::UrbanAttributes& message )
     : color_( new ColorRGBA( static_cast< unsigned short >( message.color().red() ),
                              static_cast< unsigned short >( message.color().green() ),
                              static_cast< unsigned short >( message.color().blue() ),
@@ -40,7 +40,7 @@ ColorAttribute::~ColorAttribute()
 // Name: ColorAttribute::Update
 // Created: RPD 2010-01-06
 // -----------------------------------------------------------------------------
-void ColorAttribute::Update( const MsgsSimToClient::MsgUrbanAttributes& /*message*/ )
+void ColorAttribute::Update( const MsgsSimToClient::UrbanAttributes& /*message*/ )
 {
    // NOTHING
 }
@@ -49,9 +49,9 @@ void ColorAttribute::Update( const MsgsSimToClient::MsgUrbanAttributes& /*messag
 // Name: ColorAttribute::Send
 // Created: RPD 2010-01-06
 // -----------------------------------------------------------------------------
-void ColorAttribute::Send( MsgsSimToClient::MsgUrbanAttributes& message ) const
+void ColorAttribute::Send( MsgsSimToClient::UrbanAttributes& message ) const
 {
-    MsgsSimToClient::MsgUrbanAttributes_RgbaColor& color = *message.mutable_color();
+    MsgsSimToClient::UrbanAttributes_RgbaColor& color = *message.mutable_color();
     color.set_red( color_->Red() );
     color.set_green( color_->Green() );
     color.set_blue( color_->Blue() );

@@ -18,7 +18,7 @@ using namespace dispatcher;
 // Name: ActivityTimeAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-ActivityTimeAttribute::ActivityTimeAttribute( const Common::MsgObjectAttributes& asnMsg )
+ActivityTimeAttribute::ActivityTimeAttribute( const Common::ObjectAttributes& asnMsg )
     : nActivityTime_( 0 )
 {
     Update( asnMsg );
@@ -37,7 +37,7 @@ ActivityTimeAttribute::~ActivityTimeAttribute()
 // Name: ActivityTimeAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void ActivityTimeAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
+void ActivityTimeAttribute::Update( const Common::ObjectAttributes& asnMsg )
 {
     if( asnMsg.has_activity_time()  )
         nActivityTime_ = asnMsg.activity_time().value();
@@ -47,7 +47,7 @@ void ActivityTimeAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 // Name: ActivityTimeAttribute::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void ActivityTimeAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
+void ActivityTimeAttribute::Send( Common::ObjectAttributes& asnMsg ) const
 {
     asnMsg.mutable_activity_time()->set_value( nActivityTime_ );
 }

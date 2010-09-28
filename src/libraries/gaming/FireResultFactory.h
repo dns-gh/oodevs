@@ -35,7 +35,7 @@ public:
     //! @name Operations
     //@{
     virtual AgentFireResult*      CreateFireResult( const MsgsSimToClient::MsgUnitFireDamages& message );
-    virtual PopulationFireResult* CreateFireResult( const MsgsSimToClient::MsgPopulationFireDamages& message );
+    virtual PopulationFireResult* CreateFireResult( const MsgsSimToClient::MsgCrowdFireDamages& message );
     //@}
 
 private:

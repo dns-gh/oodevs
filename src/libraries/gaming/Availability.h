@@ -33,7 +33,7 @@ public:
              Availability();
              template< typename Message >
                  Availability( const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const Message& message )
-                : type_     ( & resolver.Get( message.type_equipement() ) )
+                : type_     ( & resolver.Get( message.equipment_type().id() ) )
                 , total_    ( message.nbr_total() )
                 , available_( message.nbr_disponibles() )
                 , atWork_   ( message.nbr_au_travail() )

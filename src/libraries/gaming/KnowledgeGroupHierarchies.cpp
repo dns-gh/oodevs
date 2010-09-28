@@ -48,13 +48,13 @@ void KnowledgeGroupHierarchies::DoUpdate( const MsgsSimToClient::MsgKnowledgeGro
             ChangeSuperior( &resolver_.Get( message.parent().id() ) );    
         else
         {
-            const kernel::Entity_ABC* top = &resolver_.Get( message.id().id() ).Retrieve< kernel::CommunicationHierarchies >()->GetTop();
+            const kernel::Entity_ABC* top = &resolver_.Get( message.knowledge_group().id() ).Retrieve< kernel::CommunicationHierarchies >()->GetTop();
             ChangeSuperior( const_cast< kernel::Entity_ABC* >( top ) );
         }
     }
     else if( message.has_party() )
     {
-        if( const kernel::Entity_ABC* top = &resolver_.Get( message.id().id() ).Retrieve< kernel::CommunicationHierarchies >()->GetTop() )
+        if( const kernel::Entity_ABC* top = &resolver_.Get( message.knowledge_group().id() ).Retrieve< kernel::CommunicationHierarchies >()->GetTop() )
             ChangeSuperior( const_cast< kernel::Entity_ABC* >( top ) );
     }
 }

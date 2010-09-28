@@ -29,14 +29,13 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 Automat::Automat( Model_ABC& model, const MsgsSimToClient::MsgAutomatCreation& msg )
-    : Automat_ABC       ( msg.id().id(), QString( msg.nom().c_str() ) )
+    : Automat_ABC       ( msg.automat().id(), QString( msg.nom().c_str() ) )
     , model_            ( model )
     , decisionalInfos_  ( model )
     , type_             ( msg.type().id() )
-    , name_             ( msg.nom().c_str() )
     , team_             ( model.Sides().Get( msg.party().id() ) )
-    , parentFormation_  ( msg.oid_parent().has_formation() ? &model.Formations().Get( msg.oid_parent().formation().id() ) : 0 )
-    , parentAutomat_    ( msg.oid_parent().has_automat()  ? &model.Automats().Get( msg.oid_parent().automat().id() ) : 0 )
+    , parentFormation_  ( msg.parent().has_formation() ? &model.Formations().Get( msg.parent().formation().id() ) : 0 )
+    , parentAutomat_    ( msg.parent().has_automat()  ? &model.Automats().Get( msg.parent().automat().id() ) : 0 )
     , knowledgeGroup_   ( &model.KnowledgeGroups().Get( msg.knowledge_group().id() ) )
     , pTC2_             ( 0 )
     , pLogMaintenance_  ( 0 )
@@ -120,11 +119,11 @@ void Automat::DoUpdate( const MsgsSimToClient::MsgAutomatCreation& msg )
 {
     ChangeKnowledgeGroup( msg.knowledge_group().id() );
     if( parentFormation_ && 
-        ( msg.oid_parent().has_automat()  || 
-        ( msg.oid_parent().has_formation() && msg.oid_parent().formation().id() != parentFormation_->GetId() ) ) )
-        ChangeSuperior( msg.oid_parent() );
-    if( parentAutomat_ && ( msg.oid_parent().has_formation() || ( msg.oid_parent().has_automat()  && msg.oid_parent().automat().id()  != parentAutomat_->GetId() ) ) )
-       ChangeSuperior( msg.oid_parent() );
+        ( msg.parent().has_automat()  || 
+        ( msg.parent().has_formation() && msg.parent().formation().id() != parentFormation_->GetId() ) ) )
+        ChangeSuperior( msg.parent() );
+    if( parentAutomat_ && ( msg.parent().has_formation() || ( msg.parent().has_automat()  && msg.parent().automat().id()  != parentAutomat_->GetId() ) ) )
+       ChangeSuperior( msg.parent() );
     decisionalInfos_.Clear();
 }
 
@@ -297,21 +296,21 @@ void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     {
         client::AutomatCreation asn;
-        asn().mutable_id()->set_id( GetId() );
+        asn().mutable_automat()->set_id( GetId() );
         asn().mutable_type()->set_id( type_ );
-        asn().set_nom( name_ );
+        asn().set_nom( GetName() );
         asn().mutable_party()->set_id( team_.GetId() );
         asn().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
 
         if( parentFormation_ )
-            asn().mutable_oid_parent()->mutable_formation()->set_id( parentFormation_->GetId() );
+            asn().mutable_parent()->mutable_formation()->set_id( parentFormation_->GetId() );
         if( parentAutomat_ )
-            asn().mutable_oid_parent()->mutable_automat()->set_id( parentAutomat_->GetId() );
+            asn().mutable_parent()->mutable_automat()->set_id( parentAutomat_->GetId() );
         asn.Send( publisher );
     }
     {
         client::LogSupplyQuotas asn;
-        asn().mutable_id()->set_id( GetId() );
+        asn().mutable_automat()->set_id( GetId() );
         quotas_.Apply( boost::bind( &::SerializeQuota, boost::ref( *asn().mutable_quotas() ), _1 ) );
         asn.Send( publisher );
     }
@@ -325,7 +324,7 @@ void Automat::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     {
         client::AutomatAttributes asn;
-        asn().mutable_id()->set_id( GetId() );
+        asn().mutable_automat()->set_id( GetId() );
         asn().set_etat_automate( nAutomatState_ );
         asn().set_rapport_de_force( nForceRatioState_);
         asn().set_combat_de_rencontre( nCloseCombatState_);

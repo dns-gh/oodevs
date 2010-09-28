@@ -199,7 +199,7 @@ void MedicalTreatmentAttribute::Register( MIL_Object_ABC& object ) const
 // Name: MedicalTreatmentAttribute::SendFullState
 // Created: RFT 2008-06-18
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
+void MedicalTreatmentAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 {
     asn.mutable_medical_treatment()->set_available_beds    ( availableBeds_ );
     asn.mutable_medical_treatment()->set_available_doctors ( availableDoctors_ );
@@ -214,7 +214,7 @@ void MedicalTreatmentAttribute::SendFullState( Common::MsgObjectAttributes& asn 
 // Name: MedicalTreatmentAttribute::Send
 // Created: RFT 2008-06-09
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
+void MedicalTreatmentAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
     if( NeedUpdate() )
     {

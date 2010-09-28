@@ -116,7 +116,7 @@ void DEC_Knowledge_ObjectAttributeObstacle::UpdateOnCollision( const DEC_Knowled
 // Name: DEC_Knowledge_ObjectAttributeObstacle::BuildMsgSpecificAttributes
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeObstacle::Send( Common::MsgObjectAttributes& asn ) const
+void DEC_Knowledge_ObjectAttributeObstacle::Send( Common::ObjectAttributes& asn ) const
 {
     asn.mutable_obstacle()->set_type( obstacle_ );
     asn.mutable_obstacle()->set_activated( bActivated_ );

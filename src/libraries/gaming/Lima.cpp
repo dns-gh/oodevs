@@ -61,11 +61,10 @@ void Lima::UpdateToSim( E_State state )
     case eStateCreated:
         {
             plugins::messenger::LimaCreationRequest message;
-            message().mutable_tacticalline()->set_name( GetName() );
-            WriteGeometry ( *message().mutable_tacticalline()->mutable_geometry() );
-            WriteDiffusion( *message().mutable_tacticalline()->mutable_diffusion() );
+            message().mutable_tactical_line()->set_name( GetName() );
+            WriteGeometry ( *message().mutable_tactical_line()->mutable_geometry() );
+            WriteDiffusion( *message().mutable_tactical_line()->mutable_diffusion() );
             Send( message );
-            message().mutable_tacticalline()->mutable_geometry()->mutable_coordinates()->mutable_elem()->Clear();
         }
         break;
     case eStateModified:
@@ -76,7 +75,6 @@ void Lima::UpdateToSim( E_State state )
             WriteGeometry ( *message().mutable_tactical_line()->mutable_geometry() );
             WriteDiffusion( *message().mutable_tactical_line()->mutable_diffusion() );
             Send( message );
-            message().mutable_tactical_line()->mutable_geometry()->mutable_coordinates()->mutable_elem()->Clear();
         }
         break;
     case eStateDeleted:

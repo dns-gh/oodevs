@@ -150,7 +150,7 @@ void AgentManipulator::Teleport( const dispatcher::Position& position )
     message().mutable_id()->set_id( agent_.GetId() );
     message().set_type( MsgsClientToSim::MsgUnitMagicAction_Type_move_to );
     Common::MsgPoint point;
-    Common::MsgMissionParameter& parameter = *message().mutable_parametres()->add_elem();
+    Common::MsgMissionParameter& parameter = *message().mutable_parameters()->add_elem();
     parameter.set_null_value( false );
     Common::MsgLocation& location = *parameter.mutable_value()->mutable_point()->mutable_location();
     location.set_type( Common::MsgLocation::point );
@@ -167,6 +167,6 @@ void AgentManipulator::RecoverAll()
     simulation::UnitMagicAction message;
     message().mutable_id()->set_id( agent_.GetId() );
     message().set_type( MsgsClientToSim::MsgUnitMagicAction_Type_recover_all );
-    message().mutable_parametres();
+    message().mutable_parameters();
     message.Send( publisher_ );
 }

@@ -29,14 +29,14 @@ class ColorAttribute : public UrbanObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ColorAttribute( const MsgsSimToClient::MsgUrbanAttributes& message );
+    explicit ColorAttribute( const MsgsSimToClient::UrbanAttributes& message );
     virtual ~ColorAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const MsgsSimToClient::MsgUrbanAttributes& message );
-    virtual void Send  ( MsgsSimToClient::MsgUrbanAttributes& message ) const;
+    virtual void Update( const MsgsSimToClient::UrbanAttributes& message );
+    virtual void Send  ( MsgsSimToClient::UrbanAttributes& message ) const;
     //@}
 
 private:

@@ -43,7 +43,7 @@ MIL_PopulationOrderManager::~MIL_PopulationOrderManager()
 // Name: MIL_PopulationOrderManager::OnReceiveMission
 // Created: NLD 2003-01-10
 //-----------------------------------------------------------------------------
-void MIL_PopulationOrderManager::OnReceiveMission( const Common::MsgPopulationOrder& asnMsg )
+void MIL_PopulationOrderManager::OnReceiveMission( const Common::MsgCrowdOrder& asnMsg )
 {
     const MIL_MissionType_ABC* pMissionType = MIL_PopulationMissionType::Find( asnMsg.type().id() );
     if( !pMissionType || !IsMissionAvailable( *pMissionType ) )

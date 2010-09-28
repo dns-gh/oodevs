@@ -16,14 +16,14 @@
 
 namespace MsgsSimToClient
 {
-    class MsgPopulationKnowledgeCreation;
-    class MsgPopulationKnowledgeUpdate;
-    class MsgPopulationConcentrationKnowledgeCreation;
-    class MsgPopulationConcentrationKnowledgeUpdate;
-    class MsgPopulationConcentrationKnowledgeDestruction;
-    class MsgPopulationFlowKnowledgeCreation;
-    class MsgPopulationFlowKnowledgeUpdate;
-    class MsgPopulationFlowKnowledgeDestruction;
+    class MsgCrowdKnowledgeCreation;
+    class MsgCrowdKnowledgeUpdate;
+    class MsgCrowdConcentrationKnowledgeCreation;
+    class MsgCrowdConcentrationKnowledgeUpdate;
+    class MsgCrowdConcentrationKnowledgeDestruction;
+    class MsgCrowdFlowKnowledgeCreation;
+    class MsgCrowdFlowKnowledgeUpdate;
+    class MsgCrowdFlowKnowledgeDestruction;
 }
 
 namespace kernel
@@ -52,20 +52,20 @@ class PopulationKnowledge : public SimpleEntity< kernel::PopulationKnowledge_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationKnowledge( Model& model, const MsgsSimToClient::MsgPopulationKnowledgeCreation& msg );
+             PopulationKnowledge( Model& model, const MsgsSimToClient::MsgCrowdKnowledgeCreation& msg );
     virtual ~PopulationKnowledge();
     //@}
 
     //! @name Operations
     //@{
     using kernel::Entity_ABC::Update;
-    void Update( const MsgsSimToClient::MsgPopulationKnowledgeUpdate&                   msg );
-    void Update( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation&    msg );
-    void Update( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate&      msg );
-    void Update( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeDestruction& msg );
-    void Update( const MsgsSimToClient::MsgPopulationFlowKnowledgeCreation&             msg );
-    void Update( const MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate&               msg );
-    void Update( const MsgsSimToClient::MsgPopulationFlowKnowledgeDestruction&          msg );
+    void Update( const MsgsSimToClient::MsgCrowdKnowledgeUpdate&                   msg );
+    void Update( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation&    msg );
+    void Update( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate&      msg );
+    void Update( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeDestruction& msg );
+    void Update( const MsgsSimToClient::MsgCrowdFlowKnowledgeCreation&             msg );
+    void Update( const MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate&               msg );
+    void Update( const MsgsSimToClient::MsgCrowdFlowKnowledgeDestruction&          msg );
 
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;

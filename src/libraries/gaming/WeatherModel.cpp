@@ -52,7 +52,7 @@ void WeatherModel::Purge()
 // -----------------------------------------------------------------------------
 void WeatherModel::CreateAmmoEffect( const MsgsSimToClient::MsgStartFireEffect& message )
 {
-    Register( message.id().id(), *new AmmoEffect( message, controllers_.controller_, model_.static_.coordinateConverter_ ) );
+    Register( message.fire_effect().id(), *new AmmoEffect( message, controllers_.controller_, model_.static_.coordinateConverter_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +61,7 @@ void WeatherModel::CreateAmmoEffect( const MsgsSimToClient::MsgStartFireEffect& 
 // -----------------------------------------------------------------------------
 void WeatherModel::DeleteAmmoEffect( const MsgsSimToClient::MsgStopFireEffect& message )
 {
-    AmmoEffect* effect = Find( message.id().id() );
-    Remove( message.id().id() );
+    AmmoEffect* effect = Find( message.fire_effect().id() );
+    Remove( message.fire_effect().id() );
     delete effect;
 }

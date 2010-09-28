@@ -65,12 +65,13 @@ void protobuf_AssignDesc_AuthenticationToClient_2eproto() {
       "AuthenticationToClient.proto");
   GOOGLE_CHECK(file != NULL);
   MsgAuthenticationResponse_descriptor_ = file->message_type(0);
-  static const int MsgAuthenticationResponse_offsets_[5] = {
+  static const int MsgAuthenticationResponse_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAuthenticationResponse, error_code_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAuthenticationResponse, profile_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAuthenticationResponse, profiles_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAuthenticationResponse, server_version_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAuthenticationResponse, restart_date_time_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAuthenticationResponse, terrain_name_),
   };
   MsgAuthenticationResponse_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -191,9 +192,9 @@ void protobuf_AssignDesc_AuthenticationToClient_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, read_write_automates_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, read_only_camps_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, read_write_camps_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, read_only_populations_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, read_write_populations_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, superviseur_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, read_only_crowds_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, read_write_crowds_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, supervisor_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, role_),
   };
   MsgProfile_reflection_ =
@@ -355,7 +356,7 @@ void protobuf_AddDesc_AuthenticationToClient_2eproto() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\034AuthenticationToClient.proto\022\032MsgsAuth"
     "enticationToClient\032\014Common.proto\032\rVersio"
-    "n.proto\"\274\003\n\031MsgAuthenticationResponse\022S\n"
+    "n.proto\"\322\003\n\031MsgAuthenticationResponse\022S\n"
     "\nerror_code\030\001 \002(\0162?.MsgsAuthenticationTo"
     "Client.MsgAuthenticationResponse.ErrorCo"
     "de\0227\n\007profile\030\002 \001(\0132&.MsgsAuthentication"
@@ -363,70 +364,70 @@ void protobuf_AddDesc_AuthenticationToClient_2eproto() {
     "MsgsAuthenticationToClient.MsgProfileDes"
     "criptionList\0220\n\016server_version\030\004 \002(\0132\030.V"
     "ersion.ProtocolVersion\022.\n\021restart_date_t"
-    "ime\030\005 \001(\0132\023.Common.MsgDateTime\"f\n\tErrorC"
-    "ode\022\013\n\007success\020\000\022\021\n\rinvalid_login\020\001\022\030\n\024t"
-    "oo_many_connections\020\002\022\037\n\033mismatched_prot"
-    "ocol_version\020\004\"M\n\022MsgProfileCreation\0227\n\007"
-    "profile\030\001 \002(\0132&.MsgsAuthenticationToClie"
-    "nt.MsgProfile\"\335\001\n\034MsgProfileCreationRequ"
-    "estAck\022\r\n\005login\030\001 \002(\t\022V\n\nerror_code\030\002 \002("
-    "\0162B.MsgsAuthenticationToClient.MsgProfil"
-    "eCreationRequestAck.ErrorCode\"V\n\tErrorCo"
-    "de\022\013\n\007success\020\000\022\021\n\rinvalid_login\020\001\022\024\n\020in"
-    "valid_password\020\002\022\023\n\017duplicate_login\020\003\"\356\001"
-    "\n\032MsgProfileUpdateRequestAck\022\r\n\005login\030\001 "
-    "\002(\t\022T\n\nerror_code\030\002 \002(\0162@.MsgsAuthentica"
-    "tionToClient.MsgProfileUpdateRequestAck."
-    "ErrorCode\"k\n\tErrorCode\022\013\n\007success\020\000\022\023\n\017i"
-    "nvalid_profile\020\001\022\021\n\rinvalid_login\020\002\022\024\n\020i"
-    "nvalid_password\020\003\022\023\n\017duplicate_login\020\004\"Z"
-    "\n\020MsgProfileUpdate\022\r\n\005login\030\001 \002(\t\0227\n\007pro"
-    "file\030\002 \002(\0132&.MsgsAuthenticationToClient."
-    "MsgProfile\"&\n\025MsgProfileDestruction\022\r\n\005l"
-    "ogin\030\001 \001(\t\"\307\001\n\037MsgProfileDestructionRequ"
-    "estAck\022Y\n\nerror_code\030\001 \002(\0162E.MsgsAuthent"
-    "icationToClient.MsgProfileDestructionReq"
-    "uestAck.ErrorCode\022\r\n\005login\030\002 \002(\t\":\n\tErro"
-    "rCode\022\013\n\007success\020\000\022\023\n\017invalid_profile\020\001\022"
-    "\013\n\007failure\020\002\"\232\004\n\nMsgProfile\022\r\n\005login\030\001 \002"
-    "(\t\022\020\n\010password\030\002 \001(\t\0225\n\024read_only_format"
-    "ions\030\003 \001(\0132\027.Common.FormationIdList\0226\n\025r"
-    "ead_write_formations\030\004 \001(\0132\027.Common.Form"
-    "ationIdList\0222\n\023read_only_automates\030\005 \001(\013"
-    "2\025.Common.AutomatIdList\0223\n\024read_write_au"
-    "tomates\030\006 \001(\0132\025.Common.AutomatIdList\022,\n\017"
-    "read_only_camps\030\007 \001(\0132\023.Common.PartyIdLi"
-    "st\022-\n\020read_write_camps\030\010 \001(\0132\023.Common.Pa"
-    "rtyIdList\0227\n\025read_only_populations\030\t \001(\013"
-    "2\030.Common.PopulationIdList\0228\n\026read_write"
-    "_populations\030\n \001(\0132\030.Common.PopulationId"
-    "List\022\023\n\013superviseur\030\013 \002(\010\022.\n\004role\030\014 \001(\0162"
-    " .MsgsAuthenticationToClient.Role\"\\\n\031Msg"
-    "ProfileDescriptionList\022?\n\004elem\030\001 \003(\01321.M"
-    "sgsAuthenticationToClient.MsgProfileDesc"
-    "ription\"L\n\025MsgProfileDescription\022\r\n\005logi"
-    "n\030\001 \002(\t\022\020\n\010password\030\002 \002(\010\022\022\n\nsupervisor\030"
-    "\003 \002(\010\"\342\005\n\031MsgAuthenticationToClient\022\017\n\007c"
-    "ontext\030\001 \001(\005\022N\n\007message\030\002 \002(\0132=.MsgsAuth"
-    "enticationToClient.MsgAuthenticationToCl"
-    "ient.Content\032\343\004\n\007Content\022V\n\027authenticati"
-    "on_response\030\001 \001(\01325.MsgsAuthenticationTo"
-    "Client.MsgAuthenticationResponse\022H\n\020prof"
-    "ile_creation\030\002 \001(\0132..MsgsAuthenticationT"
-    "oClient.MsgProfileCreation\022^\n\034profile_cr"
-    "eation_request_ack\030\003 \001(\01328.MsgsAuthentic"
-    "ationToClient.MsgProfileCreationRequestA"
-    "ck\022D\n\016profile_update\030\004 \001(\0132,.MsgsAuthent"
-    "icationToClient.MsgProfileUpdate\022Z\n\032prof"
-    "ile_update_request_ack\030\005 \001(\01326.MsgsAuthe"
-    "nticationToClient.MsgProfileUpdateReques"
-    "tAck\022N\n\023profile_destruction\030\006 \001(\01321.Msgs"
-    "AuthenticationToClient.MsgProfileDestruc"
-    "tion\022d\n\037profile_destruction_request_ack\030"
-    "\007 \001(\0132;.MsgsAuthenticationToClient.MsgPr"
-    "ofileDestructionRequestAck*Y\n\004Role\022\017\n\013su"
-    "perviseur\020\000\022\n\n\006anibas\020\001\022\t\n\005eniex\020\002\022\t\n\005di"
-    "rex\020\003\022\021\n\renvironnement\020\004\022\013\n\007analyse\020\005", 2957);
+    "ime\030\005 \001(\0132\023.Common.MsgDateTime\022\024\n\014terrai"
+    "n_name\030\006 \001(\t\"f\n\tErrorCode\022\013\n\007success\020\000\022\021"
+    "\n\rinvalid_login\020\001\022\030\n\024too_many_connection"
+    "s\020\002\022\037\n\033mismatched_protocol_version\020\004\"M\n\022"
+    "MsgProfileCreation\0227\n\007profile\030\001 \002(\0132&.Ms"
+    "gsAuthenticationToClient.MsgProfile\"\335\001\n\034"
+    "MsgProfileCreationRequestAck\022\r\n\005login\030\001 "
+    "\002(\t\022V\n\nerror_code\030\002 \002(\0162B.MsgsAuthentica"
+    "tionToClient.MsgProfileCreationRequestAc"
+    "k.ErrorCode\"V\n\tErrorCode\022\013\n\007success\020\000\022\021\n"
+    "\rinvalid_login\020\001\022\024\n\020invalid_password\020\002\022\023"
+    "\n\017duplicate_login\020\003\"\356\001\n\032MsgProfileUpdate"
+    "RequestAck\022\r\n\005login\030\001 \002(\t\022T\n\nerror_code\030"
+    "\002 \002(\0162@.MsgsAuthenticationToClient.MsgPr"
+    "ofileUpdateRequestAck.ErrorCode\"k\n\tError"
+    "Code\022\013\n\007success\020\000\022\023\n\017invalid_profile\020\001\022\021"
+    "\n\rinvalid_login\020\002\022\024\n\020invalid_password\020\003\022"
+    "\023\n\017duplicate_login\020\004\"Z\n\020MsgProfileUpdate"
+    "\022\r\n\005login\030\001 \002(\t\0227\n\007profile\030\002 \002(\0132&.MsgsA"
+    "uthenticationToClient.MsgProfile\"&\n\025MsgP"
+    "rofileDestruction\022\r\n\005login\030\001 \001(\t\"\307\001\n\037Msg"
+    "ProfileDestructionRequestAck\022Y\n\nerror_co"
+    "de\030\001 \002(\0162E.MsgsAuthenticationToClient.Ms"
+    "gProfileDestructionRequestAck.ErrorCode\022"
+    "\r\n\005login\030\002 \002(\t\":\n\tErrorCode\022\013\n\007success\020\000"
+    "\022\023\n\017invalid_profile\020\001\022\013\n\007failure\020\002\"\205\004\n\nM"
+    "sgProfile\022\r\n\005login\030\001 \002(\t\022\020\n\010password\030\002 \001"
+    "(\t\0225\n\024read_only_formations\030\003 \001(\0132\027.Commo"
+    "n.FormationIdList\0226\n\025read_write_formatio"
+    "ns\030\004 \001(\0132\027.Common.FormationIdList\0222\n\023rea"
+    "d_only_automates\030\005 \001(\0132\025.Common.AutomatI"
+    "dList\0223\n\024read_write_automates\030\006 \001(\0132\025.Co"
+    "mmon.AutomatIdList\022,\n\017read_only_camps\030\007 "
+    "\001(\0132\023.Common.PartyIdList\022-\n\020read_write_c"
+    "amps\030\010 \001(\0132\023.Common.PartyIdList\022-\n\020read_"
+    "only_crowds\030\t \001(\0132\023.Common.CrowdIdList\022."
+    "\n\021read_write_crowds\030\n \001(\0132\023.Common.Crowd"
+    "IdList\022\022\n\nsupervisor\030\013 \002(\010\022.\n\004role\030\014 \001(\016"
+    "2 .MsgsAuthenticationToClient.Role\"\\\n\031Ms"
+    "gProfileDescriptionList\022?\n\004elem\030\001 \003(\01321."
+    "MsgsAuthenticationToClient.MsgProfileDes"
+    "cription\"L\n\025MsgProfileDescription\022\r\n\005log"
+    "in\030\001 \002(\t\022\020\n\010password\030\002 \002(\010\022\022\n\nsupervisor"
+    "\030\003 \002(\010\"\342\005\n\031MsgAuthenticationToClient\022\017\n\007"
+    "context\030\001 \001(\005\022N\n\007message\030\002 \002(\0132=.MsgsAut"
+    "henticationToClient.MsgAuthenticationToC"
+    "lient.Content\032\343\004\n\007Content\022V\n\027authenticat"
+    "ion_response\030\001 \001(\01325.MsgsAuthenticationT"
+    "oClient.MsgAuthenticationResponse\022H\n\020pro"
+    "file_creation\030\002 \001(\0132..MsgsAuthentication"
+    "ToClient.MsgProfileCreation\022^\n\034profile_c"
+    "reation_request_ack\030\003 \001(\01328.MsgsAuthenti"
+    "cationToClient.MsgProfileCreationRequest"
+    "Ack\022D\n\016profile_update\030\004 \001(\0132,.MsgsAuthen"
+    "ticationToClient.MsgProfileUpdate\022Z\n\032pro"
+    "file_update_request_ack\030\005 \001(\01326.MsgsAuth"
+    "enticationToClient.MsgProfileUpdateReque"
+    "stAck\022N\n\023profile_destruction\030\006 \001(\01321.Msg"
+    "sAuthenticationToClient.MsgProfileDestru"
+    "ction\022d\n\037profile_destruction_request_ack"
+    "\030\007 \001(\0132;.MsgsAuthenticationToClient.MsgP"
+    "rofileDestructionRequestAck*Y\n\004Role\022\017\n\013s"
+    "uperviseur\020\000\022\n\n\006anibas\020\001\022\t\n\005eniex\020\002\022\t\n\005d"
+    "irex\020\003\022\021\n\renvironnement\020\004\022\013\n\007analyse\020\005", 2958);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "AuthenticationToClient.proto", &protobuf_RegisterTypes);
   MsgAuthenticationResponse::default_instance_ = new MsgAuthenticationResponse();
@@ -508,12 +509,14 @@ const MsgAuthenticationResponse_ErrorCode MsgAuthenticationResponse::mismatched_
 const MsgAuthenticationResponse_ErrorCode MsgAuthenticationResponse::ErrorCode_MIN;
 const MsgAuthenticationResponse_ErrorCode MsgAuthenticationResponse::ErrorCode_MAX;
 #endif  // _MSC_VER
+const ::std::string MsgAuthenticationResponse::_default_terrain_name_;
 #ifndef _MSC_VER
 const int MsgAuthenticationResponse::kErrorCodeFieldNumber;
 const int MsgAuthenticationResponse::kProfileFieldNumber;
 const int MsgAuthenticationResponse::kProfilesFieldNumber;
 const int MsgAuthenticationResponse::kServerVersionFieldNumber;
 const int MsgAuthenticationResponse::kRestartDateTimeFieldNumber;
+const int MsgAuthenticationResponse::kTerrainNameFieldNumber;
 #endif  // !_MSC_VER
 
 MsgAuthenticationResponse::MsgAuthenticationResponse() {
@@ -539,6 +542,7 @@ void MsgAuthenticationResponse::SharedCtor() {
   profiles_ = NULL;
   server_version_ = NULL;
   restart_date_time_ = NULL;
+  terrain_name_ = const_cast< ::std::string*>(&_default_terrain_name_);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -547,6 +551,9 @@ MsgAuthenticationResponse::~MsgAuthenticationResponse() {
 }
 
 void MsgAuthenticationResponse::SharedDtor() {
+  if (terrain_name_ != &_default_terrain_name_) {
+    delete terrain_name_;
+  }
   if (this != default_instance_) {
     delete profile_;
     delete profiles_;
@@ -584,6 +591,11 @@ void MsgAuthenticationResponse::Clear() {
     }
     if (_has_bit(4)) {
       if (restart_date_time_ != NULL) restart_date_time_->::Common::MsgDateTime::Clear();
+    }
+    if (_has_bit(5)) {
+      if (terrain_name_ != &_default_terrain_name_) {
+        terrain_name_->clear();
+      }
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -661,6 +673,22 @@ bool MsgAuthenticationResponse::MergePartialFromCodedStream(
        parse_restart_date_time:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_restart_date_time()));
+        if (input->ExpectTag(50)) goto parse_terrain_name;
+        break;
+      }
+      
+      // optional string terrain_name = 6;
+      case 6: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_terrain_name:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+              input, this->mutable_terrain_name()));
+        ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+          this->terrain_name().data(), this->terrain_name().length(),
+          ::google::protobuf::internal::WireFormat::PARSE);
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -719,6 +747,15 @@ void MsgAuthenticationResponse::SerializeWithCachedSizes(
       5, this->restart_date_time(), output);
   }
   
+  // optional string terrain_name = 6;
+  if (_has_bit(5)) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->terrain_name().data(), this->terrain_name().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      6, this->terrain_name(), output);
+  }
+  
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -759,6 +796,16 @@ void MsgAuthenticationResponse::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         5, this->restart_date_time(), target);
+  }
+  
+  // optional string terrain_name = 6;
+  if (_has_bit(5)) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->terrain_name().data(), this->terrain_name().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        6, this->terrain_name(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -806,6 +853,13 @@ int MsgAuthenticationResponse::ByteSize() const {
           this->restart_date_time());
     }
     
+    // optional string terrain_name = 6;
+    if (has_terrain_name()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->terrain_name());
+    }
+    
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -845,6 +899,9 @@ void MsgAuthenticationResponse::MergeFrom(const MsgAuthenticationResponse& from)
     }
     if (from._has_bit(4)) {
       mutable_restart_date_time()->::Common::MsgDateTime::MergeFrom(from.restart_date_time());
+    }
+    if (from._has_bit(5)) {
+      set_terrain_name(from.terrain_name());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -887,6 +944,7 @@ void MsgAuthenticationResponse::Swap(MsgAuthenticationResponse* other) {
     std::swap(profiles_, other->profiles_);
     std::swap(server_version_, other->server_version_);
     std::swap(restart_date_time_, other->restart_date_time_);
+    std::swap(terrain_name_, other->terrain_name_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -2484,9 +2542,9 @@ const int MsgProfile::kReadOnlyAutomatesFieldNumber;
 const int MsgProfile::kReadWriteAutomatesFieldNumber;
 const int MsgProfile::kReadOnlyCampsFieldNumber;
 const int MsgProfile::kReadWriteCampsFieldNumber;
-const int MsgProfile::kReadOnlyPopulationsFieldNumber;
-const int MsgProfile::kReadWritePopulationsFieldNumber;
-const int MsgProfile::kSuperviseurFieldNumber;
+const int MsgProfile::kReadOnlyCrowdsFieldNumber;
+const int MsgProfile::kReadWriteCrowdsFieldNumber;
+const int MsgProfile::kSupervisorFieldNumber;
 const int MsgProfile::kRoleFieldNumber;
 #endif  // !_MSC_VER
 
@@ -2501,8 +2559,8 @@ void MsgProfile::InitAsDefaultInstance() {
   read_write_automates_ = const_cast< ::Common::AutomatIdList*>(&::Common::AutomatIdList::default_instance());
   read_only_camps_ = const_cast< ::Common::PartyIdList*>(&::Common::PartyIdList::default_instance());
   read_write_camps_ = const_cast< ::Common::PartyIdList*>(&::Common::PartyIdList::default_instance());
-  read_only_populations_ = const_cast< ::Common::PopulationIdList*>(&::Common::PopulationIdList::default_instance());
-  read_write_populations_ = const_cast< ::Common::PopulationIdList*>(&::Common::PopulationIdList::default_instance());
+  read_only_crowds_ = const_cast< ::Common::CrowdIdList*>(&::Common::CrowdIdList::default_instance());
+  read_write_crowds_ = const_cast< ::Common::CrowdIdList*>(&::Common::CrowdIdList::default_instance());
 }
 
 MsgProfile::MsgProfile(const MsgProfile& from) {
@@ -2520,9 +2578,9 @@ void MsgProfile::SharedCtor() {
   read_write_automates_ = NULL;
   read_only_camps_ = NULL;
   read_write_camps_ = NULL;
-  read_only_populations_ = NULL;
-  read_write_populations_ = NULL;
-  superviseur_ = false;
+  read_only_crowds_ = NULL;
+  read_write_crowds_ = NULL;
+  supervisor_ = false;
   role_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -2545,8 +2603,8 @@ void MsgProfile::SharedDtor() {
     delete read_write_automates_;
     delete read_only_camps_;
     delete read_write_camps_;
-    delete read_only_populations_;
-    delete read_write_populations_;
+    delete read_only_crowds_;
+    delete read_write_crowds_;
   }
 }
 
@@ -2598,12 +2656,12 @@ void MsgProfile::Clear() {
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (_has_bit(8)) {
-      if (read_only_populations_ != NULL) read_only_populations_->::Common::PopulationIdList::Clear();
+      if (read_only_crowds_ != NULL) read_only_crowds_->::Common::CrowdIdList::Clear();
     }
     if (_has_bit(9)) {
-      if (read_write_populations_ != NULL) read_write_populations_->::Common::PopulationIdList::Clear();
+      if (read_write_crowds_ != NULL) read_write_crowds_->::Common::CrowdIdList::Clear();
     }
-    superviseur_ = false;
+    supervisor_ = false;
     role_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -2721,45 +2779,45 @@ bool MsgProfile::MergePartialFromCodedStream(
        parse_read_write_camps:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_read_write_camps()));
-        if (input->ExpectTag(74)) goto parse_read_only_populations;
+        if (input->ExpectTag(74)) goto parse_read_only_crowds;
         break;
       }
       
-      // optional .Common.PopulationIdList read_only_populations = 9;
+      // optional .Common.CrowdIdList read_only_crowds = 9;
       case 9: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-       parse_read_only_populations:
+       parse_read_only_crowds:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_read_only_populations()));
-        if (input->ExpectTag(82)) goto parse_read_write_populations;
+             input, mutable_read_only_crowds()));
+        if (input->ExpectTag(82)) goto parse_read_write_crowds;
         break;
       }
       
-      // optional .Common.PopulationIdList read_write_populations = 10;
+      // optional .Common.CrowdIdList read_write_crowds = 10;
       case 10: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-       parse_read_write_populations:
+       parse_read_write_crowds:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_read_write_populations()));
-        if (input->ExpectTag(88)) goto parse_superviseur;
+             input, mutable_read_write_crowds()));
+        if (input->ExpectTag(88)) goto parse_supervisor;
         break;
       }
       
-      // required bool superviseur = 11;
+      // required bool supervisor = 11;
       case 11: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           goto handle_uninterpreted;
         }
-       parse_superviseur:
+       parse_supervisor:
         DO_(::google::protobuf::internal::WireFormatLite::ReadBool(
-              input, &superviseur_));
+              input, &supervisor_));
         _set_bit(10);
         if (input->ExpectTag(96)) goto parse_role;
         break;
@@ -2861,21 +2919,21 @@ void MsgProfile::SerializeWithCachedSizes(
       8, this->read_write_camps(), output);
   }
   
-  // optional .Common.PopulationIdList read_only_populations = 9;
+  // optional .Common.CrowdIdList read_only_crowds = 9;
   if (_has_bit(8)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      9, this->read_only_populations(), output);
+      9, this->read_only_crowds(), output);
   }
   
-  // optional .Common.PopulationIdList read_write_populations = 10;
+  // optional .Common.CrowdIdList read_write_crowds = 10;
   if (_has_bit(9)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      10, this->read_write_populations(), output);
+      10, this->read_write_crowds(), output);
   }
   
-  // required bool superviseur = 11;
+  // required bool supervisor = 11;
   if (_has_bit(10)) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(11, this->superviseur(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteBool(11, this->supervisor(), output);
   }
   
   // optional .MsgsAuthenticationToClient.Role role = 12;
@@ -2954,23 +3012,23 @@ void MsgProfile::SerializeWithCachedSizes(
         8, this->read_write_camps(), target);
   }
   
-  // optional .Common.PopulationIdList read_only_populations = 9;
+  // optional .Common.CrowdIdList read_only_crowds = 9;
   if (_has_bit(8)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        9, this->read_only_populations(), target);
+        9, this->read_only_crowds(), target);
   }
   
-  // optional .Common.PopulationIdList read_write_populations = 10;
+  // optional .Common.CrowdIdList read_write_crowds = 10;
   if (_has_bit(9)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        10, this->read_write_populations(), target);
+        10, this->read_write_crowds(), target);
   }
   
-  // required bool superviseur = 11;
+  // required bool supervisor = 11;
   if (_has_bit(10)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(11, this->superviseur(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(11, this->supervisor(), target);
   }
   
   // optional .MsgsAuthenticationToClient.Role role = 12;
@@ -3048,22 +3106,22 @@ int MsgProfile::ByteSize() const {
     
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // optional .Common.PopulationIdList read_only_populations = 9;
-    if (has_read_only_populations()) {
+    // optional .Common.CrowdIdList read_only_crowds = 9;
+    if (has_read_only_crowds()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->read_only_populations());
+          this->read_only_crowds());
     }
     
-    // optional .Common.PopulationIdList read_write_populations = 10;
-    if (has_read_write_populations()) {
+    // optional .Common.CrowdIdList read_write_crowds = 10;
+    if (has_read_write_crowds()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->read_write_populations());
+          this->read_write_crowds());
     }
     
-    // required bool superviseur = 11;
-    if (has_superviseur()) {
+    // required bool supervisor = 11;
+    if (has_supervisor()) {
       total_size += 1 + 1;
     }
     
@@ -3125,13 +3183,13 @@ void MsgProfile::MergeFrom(const MsgProfile& from) {
   }
   if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from._has_bit(8)) {
-      mutable_read_only_populations()->::Common::PopulationIdList::MergeFrom(from.read_only_populations());
+      mutable_read_only_crowds()->::Common::CrowdIdList::MergeFrom(from.read_only_crowds());
     }
     if (from._has_bit(9)) {
-      mutable_read_write_populations()->::Common::PopulationIdList::MergeFrom(from.read_write_populations());
+      mutable_read_write_crowds()->::Common::CrowdIdList::MergeFrom(from.read_write_crowds());
     }
     if (from._has_bit(10)) {
-      set_superviseur(from.superviseur());
+      set_supervisor(from.supervisor());
     }
     if (from._has_bit(11)) {
       set_role(from.role());
@@ -3173,11 +3231,11 @@ bool MsgProfile::IsInitialized() const {
   if (has_read_write_camps()) {
     if (!this->read_write_camps().IsInitialized()) return false;
   }
-  if (has_read_only_populations()) {
-    if (!this->read_only_populations().IsInitialized()) return false;
+  if (has_read_only_crowds()) {
+    if (!this->read_only_crowds().IsInitialized()) return false;
   }
-  if (has_read_write_populations()) {
-    if (!this->read_write_populations().IsInitialized()) return false;
+  if (has_read_write_crowds()) {
+    if (!this->read_write_crowds().IsInitialized()) return false;
   }
   return true;
 }
@@ -3192,9 +3250,9 @@ void MsgProfile::Swap(MsgProfile* other) {
     std::swap(read_write_automates_, other->read_write_automates_);
     std::swap(read_only_camps_, other->read_only_camps_);
     std::swap(read_write_camps_, other->read_write_camps_);
-    std::swap(read_only_populations_, other->read_only_populations_);
-    std::swap(read_write_populations_, other->read_write_populations_);
-    std::swap(superviseur_, other->superviseur_);
+    std::swap(read_only_crowds_, other->read_only_crowds_);
+    std::swap(read_write_crowds_, other->read_write_crowds_);
+    std::swap(supervisor_, other->supervisor_);
     std::swap(role_, other->role_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);

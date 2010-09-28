@@ -33,7 +33,7 @@ using namespace kernel;
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
 AgentKnowledge::AgentKnowledge( const KnowledgeGroup_ABC& group, const MsgsSimToClient::MsgUnitKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< Agent_ABC >& resolver, const tools::Resolver_ABC< Team_ABC >& teamResolver )
-    : EntityImplementation< AgentKnowledge_ABC >( controller, message.id().id(), "" )
+    : EntityImplementation< AgentKnowledge_ABC >( controller, message.knowledge().id(), "" )
     , converter_   ( converter )
     , resolver_    ( resolver )
     , teamResolver_( teamResolver )

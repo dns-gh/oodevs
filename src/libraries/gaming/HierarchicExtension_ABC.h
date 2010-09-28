@@ -17,7 +17,6 @@
 
 namespace Common
 {
-    class MsgFormationCreation;
     class MsgUnitChangeSuperior;
     class MsgAutomatChangeSuperior;
 }
@@ -32,8 +31,9 @@ namespace kernel
 
 namespace MsgsSimToClient
 {
-    class MsgUnitCreation;
     class MsgAutomatCreation;
+    class MsgFormationCreation;
+    class MsgUnitCreation;
 }
 
 // =============================================================================
@@ -44,7 +44,7 @@ namespace MsgsSimToClient
 // =============================================================================
 class HierarchicExtension_ABC : public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitCreation >
                               , public kernel::Updatable_ABC< MsgsSimToClient::MsgAutomatCreation >
-                              , public kernel::Updatable_ABC< Common::MsgFormationCreation >
+                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgFormationCreation >
                               , public kernel::Updatable_ABC< Common::MsgUnitChangeSuperior >
                               , public kernel::Updatable_ABC< Common::MsgAutomatChangeSuperior >
 {
@@ -74,7 +74,7 @@ private:
     //@{
     virtual void DoUpdate( const MsgsSimToClient::MsgUnitCreation& message );
     virtual void DoUpdate( const MsgsSimToClient::MsgAutomatCreation& message );
-    virtual void DoUpdate( const Common::MsgFormationCreation& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgFormationCreation& message );
     virtual void DoUpdate( const Common::MsgUnitChangeSuperior& message );
     virtual void DoUpdate( const Common::MsgAutomatChangeSuperior& message );
 

@@ -81,12 +81,9 @@ void FolkModel::Update( const MsgsSimToClient::MsgFolkGraphUpdate& update )
 // -----------------------------------------------------------------------------
 void FolkModel::Update( const MsgsSimToClient::MsgFolkGraphEdgeUpdate& update )
 {
-    assert( update.population_occupation_size() == ( int )edgeSize_ );
-    assert( unsigned( update.shp_oid() ) < edgeCount_ );
-
     T_Values& values = *values_;
-    for( int i = 0; i < update.population_occupation_size(); ++i )
-        *values[ update.shp_oid() ].origin() = update.population_occupation( i );
+    for( int i = 0; i < update.crowd_occupation_size(); ++i )
+        *values[ update.shape_id() ].origin() = update.crowd_occupation( i );
     dirty_ = true;
 }
 

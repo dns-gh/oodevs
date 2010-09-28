@@ -27,14 +27,14 @@ class ArchitectureAttribute : public UrbanObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ArchitectureAttribute( const MsgsSimToClient::MsgUrbanAttributes& message );
+    explicit ArchitectureAttribute( const MsgsSimToClient::UrbanAttributes& message );
     virtual ~ArchitectureAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const MsgsSimToClient::MsgUrbanAttributes& message );
-    virtual void Send  (       MsgsSimToClient::MsgUrbanAttributes& message ) const;
+    virtual void Update( const MsgsSimToClient::UrbanAttributes& message );
+    virtual void Send  (       MsgsSimToClient::UrbanAttributes& message ) const;
     //@}
 
 private:

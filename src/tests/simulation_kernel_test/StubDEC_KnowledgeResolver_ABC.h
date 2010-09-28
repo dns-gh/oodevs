@@ -7,7 +7,7 @@ namespace Common
 {
     class UnitKnowledgeId;
     class ObjectKnowledgeId;
-    class PopulationKnowledgeId;
+    class CrowdKnowledgeId;
 }
 
 class StubDEC_KnowledgeResolver_ABC : public DEC_KnowledgeResolver_ABC
@@ -22,7 +22,7 @@ public:
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const Common::ObjectKnowledgeId& /*asn*/ ) const{ throw; }
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( unsigned int /*nID*/ ) const{ throw; }
 
-    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const Common::PopulationKnowledgeId& /*asn*/ ) const{ throw; }
+    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const Common::CrowdKnowledgeId& /*asn*/ ) const{ throw; }
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( unsigned int /*nID*/ ) const{ throw; }
 
     virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( const Common::UrbanObjectKnowledgeId& /*asn*/ ) const{ throw; }

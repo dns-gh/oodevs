@@ -29,9 +29,9 @@ BOOST_AUTO_TEST_CASE( Team_CanBeCreated )
     {
         MsgsSimToClient::MsgSimToClient expected;
         expected.set_context( 0 );
-        MsgsSimToClient::MsgTeamCreation& message = *expected.mutable_message()->mutable_side_creation();
-        message.mutable_id()->set_id( 1 );
-        message.set_nom( "test" );
+        MsgsSimToClient::MsgPartyCreation& message = *expected.mutable_message()->mutable_party_creation();
+        message.mutable_party()->set_id( 1 );
+        message.set_name( "test" );
         message.set_type( Common::friend_diplo );
 
         // creation
@@ -64,9 +64,9 @@ BOOST_AUTO_TEST_CASE( Team_DiplomacyCanBeChanged )
         {
             MsgsSimToClient::MsgSimToClient expected;
             expected.set_context( 0 );
-            MsgsSimToClient::MsgTeamCreation& message = *expected.mutable_message()->mutable_side_creation();
-            message.mutable_id()->set_id( 1 );
-            message.set_nom( "test" );
+            MsgsSimToClient::MsgPartyCreation& message = *expected.mutable_message()->mutable_party_creation();
+            message.mutable_party()->set_id( 1 );
+            message.set_name( "test" );
             message.set_type( Common::friend_diplo );
 
             // creation

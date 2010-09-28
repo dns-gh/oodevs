@@ -30,7 +30,7 @@
 MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MsgsClientToSim::MsgFragOrder& asn )
     : type_( type )
 {
-    MIL_MissionParameterFactory::Copy( asn.parametres(), parameters_, knowledgeResolver );
+    MIL_MissionParameterFactory::Copy( asn.parameters(), parameters_, knowledgeResolver );
 }
 
 // -----------------------------------------------------------------------------

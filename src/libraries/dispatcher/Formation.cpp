@@ -25,7 +25,7 @@ using namespace dispatcher;
 // Name: Formation constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-Formation::Formation( const Model_ABC& model, const Common::MsgFormationCreation& msg, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels )
+Formation::Formation( const Model_ABC& model, const MsgsSimToClient::MsgFormationCreation& msg, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels )
     : Formation_ABC( msg.formation().id(), QString(msg.name().c_str()) )
     , model_ ( model )
     , name_  ( msg.name() )

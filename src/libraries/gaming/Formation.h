@@ -14,7 +14,7 @@
 #include "clients_kernel/EntityImplementation.h"
 #include "tools/Resolver_ABC.h"
 
-namespace Common
+namespace MsgsSimToClient
 {
     class MsgFormationCreation;
 }
@@ -30,7 +30,7 @@ class Formation : public kernel::EntityImplementation< kernel::Formation_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Formation( const Common::MsgFormationCreation& message, kernel::Controller& controller, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& resolver );
+             Formation( const MsgsSimToClient::MsgFormationCreation& message, kernel::Controller& controller, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& resolver );
     virtual ~Formation();
     //@}
 

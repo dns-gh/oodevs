@@ -39,7 +39,7 @@ namespace Common
     class MsgUnitKnowledge;
     class ObjectKnowledgeId;
     class ObjectKnowledgeIdList;
-    class PopulationKnowledgeId;
+    class CrowdKnowledgeId;
     class ResourceType;
     class UnitId;
     class UnitIdList;
@@ -127,7 +127,7 @@ public:
     virtual bool ToObjectKnowledgeList( Common::ObjectKnowledgeIdList& asn ) const = 0;
     virtual bool ToPath( Common::MsgPath& asn ) const = 0;
     virtual bool ToPathList( Common::MsgPathList& asn ) const = 0;
-    virtual bool ToPopulationKnowledge( Common::PopulationKnowledgeId& asn ) const = 0;
+    virtual bool ToPopulationKnowledge( Common::CrowdKnowledgeId& asn ) const = 0;
     virtual bool ToString( std::string& asn ) const = 0;
     virtual bool ToUrbanBlock( Common::UrbanObjectId& ) const = 0;
     virtual bool ToList( std::vector< Common::MsgMissionParameter_Value >& ) const = 0;

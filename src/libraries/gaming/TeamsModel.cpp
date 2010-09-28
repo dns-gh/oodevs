@@ -51,12 +51,12 @@ void TeamsModel::Purge()
 // Name: TeamsModel::CreateTeam
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void TeamsModel::CreateTeam( const MsgsSimToClient::MsgTeamCreation& message )
+void TeamsModel::CreateTeam( const MsgsSimToClient::MsgPartyCreation& message )
 {
-    if( ! tools::Resolver< Team_ABC >::Find( message.id().id() ) )
+    if( ! tools::Resolver< Team_ABC >::Find( message.party().id() ) )
     {
         Team_ABC* team = factory_.CreateTeam( message );
-        tools::Resolver< Team_ABC >::Register( message.id().id(), *team );
+        tools::Resolver< Team_ABC >::Register( message.party().id(), *team );
     }
 }
 
@@ -64,7 +64,7 @@ void TeamsModel::CreateTeam( const MsgsSimToClient::MsgTeamCreation& message )
 // Name: TeamsModel::CreateFormation
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-void TeamsModel::CreateFormation( const Common::MsgFormationCreation& message )
+void TeamsModel::CreateFormation( const MsgsSimToClient::MsgFormationCreation& message )
 {
     if( ! tools::Resolver< Formation_ABC >::Find( message.formation().id() ) )
     {

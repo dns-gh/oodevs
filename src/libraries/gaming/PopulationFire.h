@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #ifndef __PopulationFire_h_
-#define __PopulationFire_h_
+#define __PopulationFiree_h_
 
 #include "Fire_ABC.h"
 #include "protocol/Protocol.h"
@@ -30,7 +30,7 @@ class PopulationFire : public Fire_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFire( const MsgsSimToClient::MsgStartPopulationFire& message, const tools::Resolver_ABC< kernel::Population_ABC >& resolver );
+             PopulationFire( const MsgsSimToClient::MsgStartCrowdFire& message, const tools::Resolver_ABC< kernel::Population_ABC >& resolver );
     virtual ~PopulationFire();
     //@}
 

@@ -23,7 +23,7 @@ namespace actions
 namespace Common
 {
     class MsgAutomatOrder;
-    class MsgPopulationOrder;
+    class MsgCrowdOrder;
     class MsgUnitOrder;
 }
 
@@ -78,7 +78,7 @@ public:
     //@{
     void Log( const Common::MsgUnitOrder& message );
     void Log( const Common::MsgAutomatOrder& message );
-    void Log( const Common::MsgPopulationOrder& message );
+    void Log( const Common::MsgCrowdOrder& message );
     void Log( const MsgsClientToSim::MsgFragOrder& message );
     //@}
 

@@ -25,7 +25,7 @@ using namespace dispatcher;
 // Created: MGD 2009-12-11
 // -----------------------------------------------------------------------------
 UrbanKnowledge::UrbanKnowledge( const Model_ABC& model, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message )
-    : dispatcher::UrbanKnowledge_ABC( message.id().id() )
+    : dispatcher::UrbanKnowledge_ABC( message.knowledge().id() )
     , model_                        ( model )
     , team_                         ( model.Sides().Get( message.party().id() ) )
     , pUrban_                       ( model.UrbanBlocks().Find( message.urban_block().id() ) )
@@ -97,7 +97,7 @@ void UrbanKnowledge::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& m
 void UrbanKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::UrbanKnowledgeCreation message;
-    message().mutable_id()->set_id( GetId() );
+    message().mutable_knowledge()->set_id( GetId() );
     message().mutable_party()->set_id( team_.GetId() );
     message().mutable_urban_block()->set_id( pUrban_ ? pUrban_->GetId() : 0 );
     message.Send( publisher );
@@ -110,7 +110,7 @@ void UrbanKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 void UrbanKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::UrbanKnowledgeUpdate message;
-    message().mutable_id()->set_id( GetId() );
+    message().mutable_knowledge()->set_id( GetId() );
     message().mutable_party()->set_id( team_.GetId() );
     message().mutable_urban_block()->set_id( pUrban_ ? pUrban_->GetId() : 0 );
     if( optionals_.perceivedPresent )
@@ -135,7 +135,7 @@ void UrbanKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 void UrbanKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::UrbanKnowledgeDestruction message;
-    message().mutable_id()->set_id( GetId() );
+    message().mutable_knowledge()->set_id( GetId() );
     message().mutable_party()->set_id( team_.GetId() );
     message.Send( publisher );
 }

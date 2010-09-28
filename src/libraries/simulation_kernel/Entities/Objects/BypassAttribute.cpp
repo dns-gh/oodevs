@@ -81,7 +81,7 @@ void BypassAttribute::Register( MIL_Object_ABC& object ) const
 // Name: BypassAttribute::SendFullState
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void BypassAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
+void BypassAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 {
     asn.mutable_bypass()->set_percentage( unsigned int( rBypass_ * 100. ) );
 }
@@ -90,7 +90,7 @@ void BypassAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 // Name: BypassAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void BypassAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
+void BypassAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( ) )
     {

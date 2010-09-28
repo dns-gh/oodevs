@@ -131,12 +131,12 @@ void LoggerPlugin::Receive( const MsgsSimToClient::MsgSimToClient& message )
     if( message.message().has_report() )
     {
         int id = 0;
-        if( message.message().report().cr().has_unit() )
-            id = message.message().report().cr().unit().id();
-        else if( message.message().report().cr().has_automat() )
-            id = message.message().report().cr().automat().id();
-        else if( message.message().report().cr().has_population() )
-            id = message.message().report().cr().population().id();
+        if( message.message().report().source().has_unit() )
+            id = message.message().report().source().unit().id();
+        else if( message.message().report().source().has_automat() )
+            id = message.message().report().source().automat().id();
+        else if( message.message().report().source().has_crowd() )
+            id = message.message().report().source().crowd().id();
         kernel::Entity_ABC* entity = Find( model_, id );
         std::string messageText = factory_.FormatReport( message.message().report() );
         *file_ << factory_.GetTime( message.message().report().time() ).toString( "hh:mm:ss" ).ascii()
@@ -150,8 +150,8 @@ void LoggerPlugin::Receive( const MsgsSimToClient::MsgSimToClient& message )
             id = message.message().trace().source().unit().id();
         else if( message.message().trace().source().has_automat() )
             id = message.message().trace().source().automat().id();
-        else if( message.message().trace().source().has_population() )
-            id = message.message().trace().source().population().id();
+        else if( message.message().trace().source().has_crowd() )
+            id = message.message().trace().source().crowd().id();
         kernel::Entity_ABC* entity = Find( model_, id );
         *file_ << date_
                << " Trace - " << ( entity ? entity->GetName() : "Unknown entity" ) << "[" << id << "] : "
@@ -181,12 +181,12 @@ void LoggerPlugin::Receive( const MsgsSimToClient::MsgSimToClient& message )
             FormatMission( automat->GetName().ascii(), message.message().automat_order().tasker().id(), message.message().automat_order().type().id() );
         actions_->Log( message.message().automat_order() );
     }
-    else if( message.message().has_population_order() )
+    else if( message.message().has_crowd_order() )
     {
-        kernel::Entity_ABC* population = model_.Populations().Find( message.message().population_order().tasker().id() );
+        kernel::Entity_ABC* population = model_.Populations().Find( message.message().crowd_order().tasker().id() );
         if( population )
-            FormatMission( population->GetName().ascii(), message.message().population_order().tasker().id(), message.message().population_order().type().id() );
-        actions_->Log( message.message().population_order() );
+            FormatMission( population->GetName().ascii(), message.message().crowd_order().tasker().id(), message.message().crowd_order().type().id() );
+        actions_->Log( message.message().crowd_order() );
     }
     else if( message.message().has_start_unit_fire() )
     {
@@ -196,8 +196,8 @@ void LoggerPlugin::Receive( const MsgsSimToClient::MsgSimToClient& message )
             kernel::Entity_ABC* target = 0;
             if( message.message().start_unit_fire().target().has_unit() )
                 target = model_.Agents().Find( message.message().start_unit_fire().target().unit().id() );
-            else if( message.message().start_unit_fire().target().has_population() )
-                target = model_.Populations().Find( message.message().start_unit_fire().target().population().id() );
+            else if( message.message().start_unit_fire().target().has_crowd() )
+                target = model_.Populations().Find( message.message().start_unit_fire().target().crowd().id() );
             *file_ << date_ << " Fire - " << agent->GetName() << "[" << message.message().start_unit_fire().firing_unit().id()
                    << "] : Fire on ";
             if( target )
@@ -212,19 +212,19 @@ void LoggerPlugin::Receive( const MsgsSimToClient::MsgSimToClient& message )
     {
         if( message.message().stop_unit_fire().has_units_damages() )
             LogUnitsFireDamages( message.message().stop_unit_fire().units_damages() );
-        if( message.message().stop_unit_fire().has_populations_damages() )
-            LogPopulationsFireDamages( message.message().stop_unit_fire().populations_damages() );
+        if( message.message().stop_unit_fire().has_crowds_damages() )
+            LogPopulationsFireDamages( message.message().stop_unit_fire().crowds_damages() );
     }
-    else if( message.message().has_start_population_fire() )
+    else if( message.message().has_start_crowd_fire() )
     {
-        kernel::Entity_ABC* agent = model_.Populations().Find( message.message().start_population_fire().firing_population().id() );
+        kernel::Entity_ABC* agent = model_.Populations().Find( message.message().start_crowd_fire().firing_crowd().id() );
         if( agent )
-            *file_ << date_ << " Fire - " << agent->GetName() << "[" << message.message().start_population_fire().firing_population().id() << "] " << std::endl;
+            *file_ << date_ << " Fire - " << agent->GetName() << "[" << message.message().start_crowd_fire().firing_crowd().id() << "] " << std::endl;
     }
-    else if( message.message().has_stop_population_fire() )
+    else if( message.message().has_stop_crowd_fire() )
     {
-        if( message.message().stop_population_fire().has_units_damages() )
-            LogUnitsFireDamages( message.message().stop_population_fire().units_damages() );
+        if( message.message().stop_crowd_fire().has_units_damages() )
+            LogUnitsFireDamages( message.message().stop_crowd_fire().units_damages() );
     }
 }
 
@@ -263,11 +263,11 @@ void LoggerPlugin::LogUnitsFireDamages( const MsgsSimToClient::MsgUnitsFireDamag
 // Name: LoggerPlugin::LogPopulationsFireDamages
 // Created: JSR 2010-08-04
 // -----------------------------------------------------------------------------
-void LoggerPlugin::LogPopulationsFireDamages( const MsgsSimToClient::MsgPopulationsFireDamages& populationsDamages )
+void LoggerPlugin::LogPopulationsFireDamages( const MsgsSimToClient::MsgCrowdsFireDamages& populationsDamages )
 {
     for( int i = 0; i < populationsDamages.elem_size(); ++i )
     {
-        const MsgsSimToClient::MsgPopulationFireDamages& damages = populationsDamages.elem( i );
+        const MsgsSimToClient::MsgCrowdFireDamages& damages = populationsDamages.elem( i );
         if( damages.has_target() && damages.has_dead_nbr() && damages.dead_nbr() > 0 )
         {
             kernel::Entity_ABC* target = model_.Populations().Find( damages.target().id() );

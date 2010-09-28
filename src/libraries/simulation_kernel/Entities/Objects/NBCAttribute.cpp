@@ -163,7 +163,7 @@ void NBCAttribute::Register( MIL_Object_ABC& object ) const
 // Name: NBCAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void NBCAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
+void NBCAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 {
     asn.mutable_nbc()->set_danger_level( danger_ );
     asn.mutable_nbc()->mutable_nbc_agents();
@@ -178,7 +178,7 @@ void NBCAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 // Name: NBCAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void NBCAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
+void NBCAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
     if( NeedUpdate() )
     {

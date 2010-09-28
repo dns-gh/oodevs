@@ -24,7 +24,7 @@ using namespace dispatcher;
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
 LogConsignSupply::LogConsignSupply( const Model& model, const MsgsSimToClient::MsgLogSupplyHandlingCreation& msg )
-    : SimpleEntity< >   ( msg.id().id() )
+    : SimpleEntity< >   ( msg.request().id() )
     , model_            ( model )
     , automat_          ( model.Automats().Get( msg.consumer().id() ) )
     , nTickCreation_    ( msg.tick_creation() )
@@ -82,7 +82,7 @@ void LogConsignSupply::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::LogSupplyHandlingCreation asn;
 
-    asn().mutable_id()->set_id( GetId() );
+    asn().mutable_request()->set_id( GetId() );
     asn().mutable_consumer()->set_id( automat_.GetId() );
     asn().set_tick_creation( nTickCreation_ );
     {
@@ -103,7 +103,7 @@ void LogConsignSupply::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::LogSupplyHandlingUpdate asn;
 
-    asn().mutable_id()->set_id( GetId() );
+    asn().mutable_request()->set_id( GetId() );
     asn().mutable_consumer()->set_id( automat_.GetId() );
 
 //    asn().set_oid_automate_log_traitantPresent( 1 );
@@ -132,7 +132,7 @@ void LogConsignSupply::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 void LogConsignSupply::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::LogSupplyHandlingDestruction asn;
-    asn().mutable_id()->set_id( GetId() );
+    asn().mutable_request()->set_id( GetId() );
     asn().mutable_consumer()->set_id( automat_.GetId() );
     asn.Send( publisher );
 }

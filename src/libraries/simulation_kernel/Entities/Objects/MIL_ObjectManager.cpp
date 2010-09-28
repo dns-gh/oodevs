@@ -279,7 +279,7 @@ void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( const MsgsClientToSim::Ms
 
     if( msg.type() == MsgsClientToSim::MsgObjectMagicAction::create )
     {
-        nErrorCode = CreateObject( msg.parametres(), armies );
+        nErrorCode = CreateObject( msg.parameters(), armies );
     }
     else if( msg.type() == MsgsClientToSim::MsgObjectMagicAction::destroy )
     {
@@ -297,7 +297,7 @@ void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( const MsgsClientToSim::Ms
             nErrorCode = MsgsSimToClient::MsgObjectMagicActionAck::error_invalid_object;
         else
         {
-            const Common::MsgMissionParameters& params = msg.parametres();
+            const Common::MsgMissionParameters& params = msg.parameters();
             if( params.elem_size() && params.elem( 0 ).has_value() && params.elem( 0 ).value().list_size() )
                 nErrorCode = pObject->OnUpdate( params.elem( 0 ).value() );
         }
@@ -315,7 +315,7 @@ void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( const MsgsClientToSim::Ms
 void MIL_ObjectManager::OnReceiveMsgChangeResourceLinks( const MsgsClientToSim::MsgMagicAction& message, unsigned int nCtx )
 {
     MsgsSimToClient::MsgMagicActionAck_ErrorCode nErrorCode = MsgsSimToClient::MsgMagicActionAck::no_error;
-    const Common::MsgMissionParameters& params = message.parametres();
+    const Common::MsgMissionParameters& params = message.parameters();
     unsigned int id = params.elem( 0 ).value().identifier();
     bool urban = params.elem( 1 ).value().abool();
     MIL_Object_ABC* object = 0;

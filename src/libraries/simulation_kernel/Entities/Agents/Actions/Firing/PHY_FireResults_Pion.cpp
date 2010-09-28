@@ -29,7 +29,7 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MI
     , nID_               ( idManager_.GetFreeId() )
 {
     client::StartUnitFire asnMsg;
-    asnMsg().mutable_id()->set_id( nID_ );
+    asnMsg().mutable_fire()->set_id( nID_ );
     asnMsg().mutable_firing_unit()->set_id( firer.GetID() );
     asnMsg().set_type( Common::direct );
     asnMsg().mutable_target()->mutable_unit()->set_id( target.GetID() );    
@@ -46,10 +46,10 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MI
     , nID_               ( idManager_.GetFreeId() )
 {
     client::StartUnitFire asnMsg;
-    asnMsg().mutable_id()->set_id( nID_ );
+    asnMsg().mutable_fire()->set_id( nID_ );
     asnMsg().mutable_firing_unit()->set_id(  firer.GetID() );
     asnMsg().set_type( Common::direct );
-    asnMsg().mutable_target()->mutable_population()->set_id( target.GetID() );
+    asnMsg().mutable_target()->mutable_crowd()->set_id( target.GetID() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -63,7 +63,7 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MT
     , nID_               ( idManager_.GetFreeId() )
 {
     client::StartUnitFire asnMsg;
-    asnMsg().mutable_id()->set_id( nID_ );
+    asnMsg().mutable_fire()->set_id( nID_ );
     asnMsg().mutable_firing_unit()->set_id(  firer.GetID() );
     asnMsg().set_type( Common::indirect );
     asnMsg().mutable_ammunition()->set_id( dotationCategory.GetMosID() );
@@ -80,9 +80,9 @@ PHY_FireResults_Pion::~PHY_FireResults_Pion()
 {
     {
         client::StopUnitFire asnMsg;
-        asnMsg().mutable_id()->set_id( nID_ );
+        asnMsg().mutable_fire()->set_id( nID_ );
         Serialize( *asnMsg().mutable_units_damages() );
-        Serialize( *asnMsg().mutable_populations_damages() );
+        Serialize( *asnMsg().mutable_crowds_damages() );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
 

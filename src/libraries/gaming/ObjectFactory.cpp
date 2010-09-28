@@ -87,7 +87,7 @@ kernel::Object_ABC* ObjectFactory::Create( const MsgsSimToClient::MsgObjectCreat
 // Name: ObjectFactory::Register
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void ObjectFactory::Register( kernel::Object_ABC& result, const Common::MsgObjectAttributes& attributes ) const
+void ObjectFactory::Register( kernel::Object_ABC& result, const Common::ObjectAttributes& attributes ) const
 {
     if( attributes.has_logistic()  )
         result.Attach< kernel::LogisticAttribute_ABC >( *new LogisticAttribute( controllers_.controller_, model_.agents_ ) );
@@ -131,7 +131,7 @@ void ObjectFactory::Register( kernel::Object_ABC& result, const Common::MsgObjec
     if( attributes.has_stock() )
         result.Attach< kernel::StockAttribute_ABC >( *new StockAttribute( controllers_.controller_, static_.objectTypes_ ) );
 
-    if( attributes.has_sealoff()  )
+    if( attributes.has_seal_off() )
         result.Attach< kernel::SealOffAttribute_ABC >( *new SealOffAttribute( controllers_.controller_ ) );
 
     if( attributes.has_resource_networks() )

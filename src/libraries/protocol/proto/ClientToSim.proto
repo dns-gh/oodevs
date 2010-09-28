@@ -22,7 +22,7 @@ message MsgControlCheckPointSaveNow {
 message MsgFragOrder {
    required Common.Tasker               tasker     = 1;
    required Common.FragOrderType        frag_order = 2;
-   optional Common.MsgMissionParameters parametres = 3;
+   optional Common.MsgMissionParameters parameters = 3;
 }
 
 message MsgSetAutomatMode {
@@ -53,10 +53,10 @@ message MsgUnitMagicAction {
         partial_recovery             = 11;
         unit_creation                = 12;
         create_fire_order            = 13;
-        population_total_destruction = 14;
-        population_kill              = 15;
-        population_resurrect         = 16;
-        population_change_attitude   = 17;
+        crowd_total_destruction      = 14;
+        crowd_kill                   = 15;
+        crowd_resurrect              = 16;
+        crowd_change_attitude        = 17;
         change_knowledge_group       = 18;
         change_logistic_links        = 19;
         unit_change_superior         = 20;
@@ -68,19 +68,19 @@ message MsgUnitMagicAction {
     }
    required Common.UnitId               id         = 1;
    required Type                        type       = 2;
-   required Common.MsgMissionParameters parametres = 3;
+   required Common.MsgMissionParameters parameters = 3;
 }
 
 message MsgKnowledgeMagicAction {
    enum Type {
         enable                 = 0;
-        update_side            = 1;
-        update_side_parent     = 2;
+        update_party           = 1;
+        update_party_parent    = 2;
         update_type            = 3;
     }
-   required Common.KnowledgeGroupId     id         = 1;
-   required Type                        type       = 2;
-   required Common.MsgMissionParameters parametres = 3;
+   required Common.KnowledgeGroupId     knowledge_group = 1;
+   required Type                        type            = 2;
+   required Common.MsgMissionParameters parameters      = 3;
 }
 
 message MsgObjectMagicAction {
@@ -111,27 +111,33 @@ message MsgObjectMagicAction {
    
    required Common.ObjectId             object     = 1;
    required Type                        type       = 2;
-   required Common.MsgMissionParameters parametres = 3;
+   required Common.MsgMissionParameters parameters = 3;
 }
 
 message MsgMagicAction {
    enum Type {
-        global_meteo           = 0;
-        local_meteo            = 1;
-        change_diplomacy       = 2;
-        create_knowledge_group = 3;
-        change_resource_links  = 4;
+        global_weather                      = 0;
+        local_weather                       = 1;
+        change_diplomacy                    = 2;
+        create_knowledge_group              = 3;
+        change_resource_network_properties  = 4;
     }
    required Type                        type       = 1;
-   required Common.MsgMissionParameters parametres = 2;
+   required Common.MsgMissionParameters parameters = 2;
 }
 
 message MsgControlCheckPointSetFrequency {
    required int32 frequency = 1;
 }
 
-message MsgControlToggleVisionCones {
-   required bool vision_cones = 1;
+message MsgControlCheckPointDeleteRequest {
+   required string checkpoint = 1;
+}
+
+message MsgControlCheckPointListRequest {}
+
+message MsgControlEnableVisionCones {
+    required bool vision_cones = 1;
 }
 
 message MsgClientToSim {
@@ -143,10 +149,10 @@ message MsgClientToSim {
        optional MsgControlDatetimeChange               control_date_time_change             = 5;
        optional MsgControlCheckPointSaveNow            control_checkpoint_save_now          = 6;
        optional MsgControlCheckPointSetFrequency       control_checkpoint_set_frequency     = 7;
-       optional MsgControlToggleVisionCones            control_toggle_vision_cones          = 8;
+       optional MsgControlEnableVisionCones            control_toggle_vision_cones          = 8;
        optional Common.MsgUnitOrder                    unit_order                           = 9;
        optional Common.MsgAutomatOrder                 automat_order                        = 10;
-       optional Common.MsgPopulationOrder              population_order                     = 11;
+       optional Common.MsgCrowdOrder                   crowd_order                          = 11;
        optional MsgFragOrder                           frag_order                           = 12;
        optional MsgSetAutomatMode                      set_automat_mode                     = 13;
        optional MsgUnitCreationRequest                 unit_creation_request                = 14;

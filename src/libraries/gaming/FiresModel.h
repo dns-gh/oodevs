@@ -40,11 +40,11 @@ public:
     void Purge();
 
     void AddFire        ( const MsgsSimToClient::MsgStartUnitFire& message );
-    void AddFire        ( const MsgsSimToClient::MsgStartPopulationFire& message );
+    void AddFire        ( const MsgsSimToClient::MsgStartCrowdFire& message );
     kernel::Entity_ABC* FindFirer( const MsgsSimToClient::MsgStopUnitFire& message );
-    kernel::Entity_ABC* FindFirer( const MsgsSimToClient::MsgStopPopulationFire& message );
+    kernel::Entity_ABC* FindFirer( const MsgsSimToClient::MsgStopCrowdFire& message );
     void RemoveFire     ( const MsgsSimToClient::MsgStopUnitFire& message );
-    void RemoveFire     ( const MsgsSimToClient::MsgStopPopulationFire& message );
+    void RemoveFire     ( const MsgsSimToClient::MsgStopCrowdFire& message );
     //@}
 
 private:

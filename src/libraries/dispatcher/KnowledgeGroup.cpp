@@ -24,7 +24,7 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 KnowledgeGroup::KnowledgeGroup( Model_ABC& model, const MsgsSimToClient::MsgKnowledgeGroupCreation& msg )
-    : KnowledgeGroup_ABC( msg.id().id() )
+    : KnowledgeGroup_ABC( msg.knowledge_group().id() )
     , model_( model )
     , team_( model_.Sides().Get( msg.party().id() ) )
     , parent_( msg.has_parent() ? &model_.KnowledgeGroups().Get( msg.parent().id() ) : 0 )
@@ -110,7 +110,7 @@ void KnowledgeGroup::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::KnowledgeGroupCreation message;
 
-    message().mutable_id()->set_id( GetId() );
+    message().mutable_knowledge_group()->set_id( GetId() );
     message().mutable_party()->set_id( team_.GetId() );
     // LTO begin
     message().set_type( type_ );
@@ -129,7 +129,7 @@ void KnowledgeGroup::SendCreation( ClientPublisher_ABC& publisher ) const
 void KnowledgeGroup::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::KnowledgeGroupUpdate message;
-    message().mutable_id()->set_id( GetId() );
+    message().mutable_knowledge_group()->set_id( GetId() );
     if( parent_ )
         message().mutable_parent()->set_id( parent_->GetId() );
     else
@@ -146,7 +146,7 @@ void KnowledgeGroup::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 void KnowledgeGroup::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::KnowledgeGroupDestruction message;
-    message().mutable_id()->set_id( GetId() );
+    message().mutable_knowledge_group()->set_id( GetId() );
     message().mutable_party()->set_id( team_.GetId() );
     message.Send( publisher );
 }

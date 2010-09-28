@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: BypassAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-BypassAttribute::BypassAttribute( const Common::MsgObjectAttributes& asnMsg )
+BypassAttribute::BypassAttribute( const Common::ObjectAttributes& asnMsg )
     : nPercentageBypassing_( asnMsg.bypass().percentage() )
 {
     // NOTHING
@@ -36,7 +36,7 @@ BypassAttribute::~BypassAttribute()
 // Name: BypassAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void BypassAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
+void BypassAttribute::Update( const Common::ObjectAttributes& asnMsg )
 {
     if( asnMsg.has_bypass()  )
         nPercentageBypassing_ = asnMsg.bypass().percentage();
@@ -46,7 +46,7 @@ void BypassAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 // Name: BypassAttribute::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void BypassAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
+void BypassAttribute::Send( Common::ObjectAttributes& asnMsg ) const
 {
     asnMsg.mutable_bypass()->set_percentage( nPercentageBypassing_ );
 }

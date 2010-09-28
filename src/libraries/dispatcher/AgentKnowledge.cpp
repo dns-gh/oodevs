@@ -24,7 +24,7 @@ using namespace dispatcher;
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
 AgentKnowledge::AgentKnowledge( Model& model, const MsgsSimToClient::MsgUnitKnowledgeCreation& message )
-    : dispatcher::AgentKnowledge_ABC( message.id().id() )
+    : dispatcher::AgentKnowledge_ABC( message.knowledge().id() )
     , model_                        ( model )
     , knowledgeGroup_               ( model.KnowledgeGroups().Get( message.knowledge_group().id() ) )
     , agent_                        ( model.Agents().Get( message.unit().id() ) )
@@ -147,7 +147,7 @@ void AgentKnowledge::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& me
 void AgentKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::UnitKnowledgeCreation message;
-    message().mutable_id()->set_id( GetId() );
+    message().mutable_knowledge()->set_id( GetId() );
     message().mutable_knowledge_group()->set_id( knowledgeGroup_.GetId() );
     message().mutable_unit()->set_id( agent_.GetId() );
     message().mutable_type()->set_id( type_.id() );
@@ -161,7 +161,7 @@ void AgentKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 void AgentKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::UnitKnowledgeUpdate message;
-    message().mutable_id()->set_id( GetId() );
+    message().mutable_knowledge()->set_id( GetId() );
     message().mutable_knowledge_group()->set_id( knowledgeGroup_.GetId() );
     SEND_ASN_ATTRIBUTE( message(), pertinence              , nRelevance_          );
     SEND_ASN_ATTRIBUTE( message(), identification_level    , nPerceptionLevel_    );
@@ -196,7 +196,7 @@ void AgentKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 void AgentKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::UnitKnowledgeDestruction message;
-    message().mutable_id()->set_id( GetId() );
+    message().mutable_knowledge()->set_id( GetId() );
     message().mutable_knowledge_group()->set_id( knowledgeGroup_.GetId() );
     message.Send( publisher );
 }

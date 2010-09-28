@@ -565,9 +565,9 @@ E_Tristate MIL_Army::IsNeutral( const MIL_Army_ABC& army ) const
 // -----------------------------------------------------------------------------
 void MIL_Army::SendCreation() const
 {
-    client::TeamCreation asn;
-    asn().mutable_id()->set_id( nID_ );
-    asn().set_nom( strName_.c_str() );
+    client::PartyCreation asn;
+    asn().mutable_party()->set_id( nID_ );
+    asn().set_name( strName_.c_str() );
     asn().set_type( Common::EnumDiplomacy( nType_ ) );
     asn.Send( NET_Publisher_ABC::Publisher() );
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )

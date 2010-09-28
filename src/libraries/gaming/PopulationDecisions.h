@@ -29,7 +29,7 @@ namespace kernel
 // Created: AGE 2006-04-10
 // =============================================================================
 class PopulationDecisions : public kernel::Extension_ABC
-    , public kernel::Updatable_ABC< Common::MsgPopulationOrder >
+    , public kernel::Updatable_ABC< Common::MsgCrowdOrder >
                           , public Decisions_ABC
 {
 public:
@@ -57,7 +57,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const Common::MsgPopulationOrder& message );
+    virtual void DoUpdate( const Common::MsgCrowdOrder& message );
     const kernel::DecisionalModel& GetDecisionalModel() const;
     //@}
 

@@ -453,7 +453,7 @@ void PHY_RolePionLOG_Supply::SendFullState( client::UnitAttributes& asnUnit ) co
     UNREFERENCED_PARAMETER( asnUnit );
 
     client::LogSupplyState asn;
-    asn().mutable_id()->set_id( pion_.GetID() );
+    asn().mutable_unit()->set_id( pion_.GetID() );
     asn().set_chaine_activee( bSystemEnabled_ );
 
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
@@ -490,7 +490,7 @@ void PHY_RolePionLOG_Supply::SendChangedState( client::UnitAttributes& asnUnit )
         return;
 
     client::LogSupplyState asn;
-    asn().mutable_id()->set_id( pion_.GetID() );
+    asn().mutable_unit()->set_id( pion_.GetID() );
     if( bHasChanged_ || bExternalMustChangeState_ )
     {
         asn().set_chaine_activee( bSystemEnabled_ );

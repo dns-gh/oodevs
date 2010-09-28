@@ -25,8 +25,8 @@ namespace MsgsSimToClient
     class MsgUnitVisionCones;
     class MsgUnitDetection;
     class MsgObjectDetection;
-    class MsgPopulationConcentrationDetection;
-    class MsgPopulationFlowDetection;
+    class MsgCrowdConcentrationDetection;
+    class MsgCrowdFlowDetection;
     class MsgDebugPoints;
     class MsgControlDatetimeChangeAck;
     class MsgControlInformation;
@@ -35,9 +35,10 @@ namespace MsgsSimToClient
     class MsgControlEndTick;
     class MsgControlSendCurrentStateEnd;
     class MsgAutomatCreation;
+    class MsgFormationCreation;
     class MsgUnitCreation;
     class MsgUnitDestruction;
-    class MsgTeamCreation;
+    class MsgPartyCreation;
     class MsgUnitAttributes;
     class MsgUnitMagicActionAck;
     class MsgUnitPathFind;
@@ -68,15 +69,15 @@ namespace MsgsSimToClient
     class MsgObjectKnowledgeCreation;
     class MsgObjectKnowledgeUpdate;
     class MsgObjectKnowledgeDestruction;
-    class MsgPopulationKnowledgeCreation;
-    class MsgPopulationKnowledgeUpdate;
-    class MsgPopulationKnowledgeDestruction;
-    class MsgPopulationConcentrationKnowledgeCreation;
-    class MsgPopulationConcentrationKnowledgeUpdate;
-    class MsgPopulationConcentrationKnowledgeDestruction;
-    class MsgPopulationFlowKnowledgeCreation;
-    class MsgPopulationFlowKnowledgeUpdate;
-    class MsgPopulationFlowKnowledgeDestruction;
+    class MsgCrowdKnowledgeCreation;
+    class MsgCrowdKnowledgeUpdate;
+    class MsgCrowdKnowledgeDestruction;
+    class MsgCrowdConcentrationKnowledgeCreation;
+    class MsgCrowdConcentrationKnowledgeUpdate;
+    class MsgCrowdConcentrationKnowledgeDestruction;
+    class MsgCrowdFlowKnowledgeCreation;
+    class MsgCrowdFlowKnowledgeUpdate;
+    class MsgCrowdFlowKnowledgeDestruction;
     class MsgAutomatOrderAck;
     class MsgUnitOrderAck;
     class MsgFragOrderAck;
@@ -96,18 +97,18 @@ namespace MsgsSimToClient
     class MsgExplosion;
     class MsgStartFireEffect;
     class MsgStopFireEffect;
-    class MsgStartPopulationFire;
-    class MsgStopPopulationFire;
-    class MsgPopulationCreation;
-    class MsgPopulationUpdate;
-    class MsgPopulationConcentrationCreation;
-    class MsgPopulationConcentrationDestruction;
-    class MsgPopulationConcentrationUpdate;
-    class MsgPopulationFlowCreation;
-    class MsgPopulationFlowDestruction;
-    class MsgPopulationFlowUpdate;
-    class MsgPopulationMagicActionAck;
-    class MsgPopulationOrderAck;
+    class MsgStartCrowdFire;
+    class MsgStopCrowdFire;
+    class MsgCrowdCreation;
+    class MsgCrowdUpdate;
+    class MsgCrowdConcentrationCreation;
+    class MsgCrowdConcentrationDestruction;
+    class MsgCrowdConcentrationUpdate;
+    class MsgCrowdFlowCreation;
+    class MsgCrowdFlowDestruction;
+    class MsgCrowdFlowUpdate;
+    class MsgCrowdMagicActionAck;
+    class MsgCrowdOrderAck;
     class MsgFolkCreation;
     class MsgFolkGraphUpdate;
     class MsgUrbanKnowledgeCreation;
@@ -122,9 +123,9 @@ namespace MsgsSimToClient
     class MsgUrbanCreation;
     class MsgUrbanUpdate;
     class MsgUrbanDetection;
-    class MsgControlGlobalMeteo;
-    class MsgControlLocalMeteoCreation;
-    class MsgControlLocalMeteoDestruction;
+    class MsgControlGlobalWeather;
+    class MsgControlLocalWeatherCreation;
+    class MsgControlLocalWeatherDestruction;
     class MsgControlPauseAck;
     class MsgControlResumeAck;
     class MsgControlChangeTimeFactorAck;
@@ -134,14 +135,13 @@ namespace MsgsSimToClient
 namespace Common
 {
     class MsgChangeDiplomacy;
-    class MsgFormationCreation;
     class MsgAutomatOrder;
     class MsgUnitOrder;
     class MsgUnitChangeSuperior;
     class MsgAutomatChangeSuperior;
     class MsgAutomatChangeKnowledgeGroup;
     class MsgAutomatChangeLogisticLinks;
-    class MsgPopulationOrder;
+    class MsgCrowdOrder;
     class MsgTextMessage;
 }
 
@@ -264,8 +264,8 @@ private:
     void OnReceiveMsgUnitVisionCones                       ( const MsgsSimToClient::MsgUnitVisionCones&                  message );
     void OnReceiveMsgUnitInterVisibility                   ( const MsgsSimToClient::MsgUnitDetection&                    message );
     void OnReceiveMsgObjectInterVisibility                 ( const MsgsSimToClient::MsgObjectDetection&                  message );
-    void OnReceiveMsgPopulationConcentrationInterVisibility( const MsgsSimToClient::MsgPopulationConcentrationDetection& message );
-    void OnReceiveMsgPopulationFlowInterVisibility         ( const MsgsSimToClient::MsgPopulationFlowDetection&          message );
+    void OnReceiveMsgCrowdConcentrationInterVisibility( const MsgsSimToClient::MsgCrowdConcentrationDetection& message );
+    void OnReceiveMsgCrowdFlowInterVisibility         ( const MsgsSimToClient::MsgCrowdFlowDetection&          message );
     void OnReceiveMsgDebugDrawPoints                       ( const MsgsSimToClient::MsgDebugPoints&                      message );
 
     // Control
@@ -290,9 +290,9 @@ private:
     void OnReceiveMsgUnitDestruction             ( const MsgsSimToClient::MsgUnitDestruction&                   message );
     void OnReceiveMsgChangeDiplomacy             ( const Common::MsgChangeDiplomacy&                            message );
     void OnReceiveMsgAuthenticationResponse      ( const MsgsAuthenticationToClient::MsgAuthenticationResponse& message );
-    void OnReceiveMsgControlMeteoGlobal          ( const MsgsSimToClient::MsgControlGlobalMeteo&                message );
-    void OnReceiveMsgControlMeteoLocalCreation   ( const MsgsSimToClient::MsgControlLocalMeteoCreation&         message );
-    void OnReceiveMsgControlMeteoLocalDestruction( const MsgsSimToClient::MsgControlLocalMeteoDestruction&      message );
+    void OnReceiveMsgControlMeteoGlobal          ( const MsgsSimToClient::MsgControlGlobalWeather&                message );
+    void OnReceiveMsgControlMeteoLocalCreation   ( const MsgsSimToClient::MsgControlLocalWeatherCreation&         message );
+    void OnReceiveMsgControlMeteoLocalDestruction( const MsgsSimToClient::MsgControlLocalWeatherDestruction&      message );
     void OnReceiveMsgSendCurrentStateEnd         ( const MsgsSimToClient::MsgControlSendCurrentStateEnd&        message );
 
     // Profiles
@@ -306,8 +306,8 @@ private:
     // Side/Formation/Knowledge Group creation
     void OnReceiveMsgKnowledgeGroupCreation   ( const MsgsSimToClient::MsgKnowledgeGroupCreation&    message );
     void OnReceiveMsgKnowledgeGroupDestruction( const MsgsSimToClient::MsgKnowledgeGroupDestruction& message );
-    void OnReceiveMsgTeamCreation             ( const MsgsSimToClient::MsgTeamCreation&              message );
-    void OnReceiveMsgFormationCreation        ( const Common::MsgFormationCreation&                  message );
+    void OnReceiveMsgPartyCreation             ( const MsgsSimToClient::MsgPartyCreation&              message );
+    void OnReceiveMsgFormationCreation        ( const MsgsSimToClient::MsgFormationCreation&                  message );
 
     // LTO begin
     void OnReceiveMsgKnowledgeGroupMagicActionAck( const MsgsSimToClient::MsgKnowledgeGroupMagicActionAck&   message, unsigned long nCtx );
@@ -377,15 +377,15 @@ private:
     void OnReceiveMsgObjectKnowledgeDestruction( const MsgsSimToClient::MsgObjectKnowledgeDestruction& message );
 
     // Knowledge population
-    void OnReceiveMsgPopulationKnowledgeCreation                ( const MsgsSimToClient::MsgPopulationKnowledgeCreation&                 message );
-    void OnReceiveMsgPopulationKnowledgeUpdate                  ( const MsgsSimToClient::MsgPopulationKnowledgeUpdate&                   message );
-    void OnReceiveMsgPopulationKnowledgeDestruction             ( const MsgsSimToClient::MsgPopulationKnowledgeDestruction&              message );
-    void OnReceiveMsgPopulationConcentrationKnowledgeCreation   ( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation&    message );
-    void OnReceiveMsgPopulationConcentrationKnowledgeUpdate     ( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate&      message );
-    void OnReceiveMsgPopulationConcentrationKnowledgeDestruction( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeDestruction& message );
-    void OnReceiveMsgPopulationFlowKnowledgeCreation            ( const MsgsSimToClient::MsgPopulationFlowKnowledgeCreation&             message );
-    void OnReceiveMsgPopulationFlowKnowledgeUpdate              ( const MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate&               message );
-    void OnReceiveMsgPopulationFlowKnowledgeDestruction         ( const MsgsSimToClient::MsgPopulationFlowKnowledgeDestruction&          message );
+    void OnReceiveMsgCrowdKnowledgeCreation                ( const MsgsSimToClient::MsgCrowdKnowledgeCreation&                 message );
+    void OnReceiveMsgCrowdKnowledgeUpdate                  ( const MsgsSimToClient::MsgCrowdKnowledgeUpdate&                   message );
+    void OnReceiveMsgCrowdKnowledgeDestruction             ( const MsgsSimToClient::MsgCrowdKnowledgeDestruction&              message );
+    void OnReceiveMsgCrowdConcentrationKnowledgeCreation   ( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation&    message );
+    void OnReceiveMsgCrowdConcentrationKnowledgeUpdate     ( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate&      message );
+    void OnReceiveMsgCrowdConcentrationKnowledgeDestruction( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeDestruction& message );
+    void OnReceiveMsgCrowdFlowKnowledgeCreation            ( const MsgsSimToClient::MsgCrowdFlowKnowledgeCreation&             message );
+    void OnReceiveMsgCrowdFlowKnowledgeUpdate              ( const MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate&               message );
+    void OnReceiveMsgCrowdFlowKnowledgeDestruction         ( const MsgsSimToClient::MsgCrowdFlowKnowledgeDestruction&          message );
 
     // Orders
     void OnReceiveMsgAutomatOrder          ( const Common::MsgAutomatOrder&                    message );
@@ -421,21 +421,21 @@ private:
     void OnReceiveMsgExplosion             ( const MsgsSimToClient::MsgExplosion&           message );
     void OnReceiveMsgStartFireEffect       ( const MsgsSimToClient::MsgStartFireEffect&     message );
     void OnReceiveMsgStopFireEffect        ( const MsgsSimToClient::MsgStopFireEffect&      message );
-    void OnReceiveMsgStartPopulationFire   ( const MsgsSimToClient::MsgStartPopulationFire& message );
-    void OnReceiveMsgStopPopulationFire    ( const MsgsSimToClient::MsgStopPopulationFire&  message );
+    void OnReceiveMsgStartCrowdFire   ( const MsgsSimToClient::MsgStartCrowdFire& message );
+    void OnReceiveMsgStopCrowdFire    ( const MsgsSimToClient::MsgStopCrowdFire&  message );
 
     // Population
-    void OnMsgPopulationCreation                ( const MsgsSimToClient::MsgPopulationCreation&                 message );
-    void OnMsgPopulationUpdate                  ( const MsgsSimToClient::MsgPopulationUpdate&                   message );
-    void OnMsgPopulationConcentrationCreation   ( const MsgsSimToClient::MsgPopulationConcentrationCreation&    message );
-    void OnMsgPopulationConcentrationDestruction( const MsgsSimToClient::MsgPopulationConcentrationDestruction& message );
-    void OnMsgPopulationConcentrationUpdate     ( const MsgsSimToClient::MsgPopulationConcentrationUpdate&      message );
-    void OnMsgPopulationFlowCreation            ( const MsgsSimToClient::MsgPopulationFlowCreation&             message );
-    void OnMsgPopulationFlowDestruction         ( const MsgsSimToClient::MsgPopulationFlowDestruction&          message );
-    void OnMsgPopulationFlowUpdate              ( const MsgsSimToClient::MsgPopulationFlowUpdate&               message );
-    void OnReceiveMsgPopulationMagicActionAck   ( const MsgsSimToClient::MsgPopulationMagicActionAck&           message, unsigned long nCtx );
-    void OnReceiveMsgPopulationOrderAck         ( const MsgsSimToClient::MsgPopulationOrderAck&                 message, unsigned long nCtx );
-    void OnReceiveMsgPopulationOrder            ( const Common::MsgPopulationOrder&                             message );
+    void OnMsgCrowdCreation                ( const MsgsSimToClient::MsgCrowdCreation&                 message );
+    void OnMsgCrowdUpdate                  ( const MsgsSimToClient::MsgCrowdUpdate&                   message );
+    void OnMsgCrowdConcentrationCreation   ( const MsgsSimToClient::MsgCrowdConcentrationCreation&    message );
+    void OnMsgCrowdConcentrationDestruction( const MsgsSimToClient::MsgCrowdConcentrationDestruction& message );
+    void OnMsgCrowdConcentrationUpdate     ( const MsgsSimToClient::MsgCrowdConcentrationUpdate&      message );
+    void OnMsgCrowdFlowCreation            ( const MsgsSimToClient::MsgCrowdFlowCreation&             message );
+    void OnMsgCrowdFlowDestruction         ( const MsgsSimToClient::MsgCrowdFlowDestruction&          message );
+    void OnMsgCrowdFlowUpdate              ( const MsgsSimToClient::MsgCrowdFlowUpdate&               message );
+    void OnReceiveMsgCrowdMagicActionAck   ( const MsgsSimToClient::MsgCrowdMagicActionAck&           message, unsigned long nCtx );
+    void OnReceiveMsgCrowdOrderAck         ( const MsgsSimToClient::MsgCrowdOrderAck&                 message, unsigned long nCtx );
+    void OnReceiveMsgCrowdOrder            ( const Common::MsgCrowdOrder&                             message );
 
     // Folk
     void OnReceiveMsgFolkCreation               ( const MsgsSimToClient::MsgFolkCreation&    message );

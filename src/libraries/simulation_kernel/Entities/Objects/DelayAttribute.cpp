@@ -121,7 +121,7 @@ void DelayAttribute::WriteODB( xml::xostream& xos ) const
 // Name: DelayAttribute::SendFullState
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-void DelayAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
+void DelayAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 {
     asn.mutable_effect_delay()->set_value( nDelay_ );
 }
@@ -130,7 +130,7 @@ void DelayAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 // Name: DelayAttribute::SendUpdate
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-void DelayAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
+void DelayAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
     if( NeedUpdate() )
     {

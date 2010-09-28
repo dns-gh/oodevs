@@ -17,12 +17,12 @@ namespace MsgsSimToClient
     class MsgUnitKnowledgeUpdate;
     class MsgObjectUpdate;
     class MsgObjectKnowledgeUpdate;
-    class MsgPopulationUpdate;
-    class MsgPopulationConcentrationUpdate;
-    class MsgPopulationFlowUpdate;
-    class MsgPopulationKnowledgeUpdate;
-    class MsgPopulationConcentrationKnowledgeUpdate;
-    class MsgPopulationFlowKnowledgeUpdate;
+    class MsgCrowdUpdate;
+    class MsgCrowdConcentrationUpdate;
+    class MsgCrowdFlowUpdate;
+    class MsgCrowdKnowledgeUpdate;
+    class MsgCrowdConcentrationKnowledgeUpdate;
+    class MsgCrowdFlowKnowledgeUpdate;
 }
 
 namespace plugins
@@ -56,12 +56,12 @@ private:
     bool IsRelevant( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message );
     bool IsRelevant( const MsgsSimToClient::MsgObjectUpdate& message );
     bool IsRelevant( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message );
-    bool IsRelevant( const MsgsSimToClient::MsgPopulationUpdate& message );
-    bool IsRelevant( const MsgsSimToClient::MsgPopulationConcentrationUpdate& message );
-    bool IsRelevant( const MsgsSimToClient::MsgPopulationFlowUpdate& message );
-    bool IsRelevant( const MsgsSimToClient::MsgPopulationKnowledgeUpdate& message );
-    bool IsRelevant( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate& message );
-    bool IsRelevant( const MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate& message );
+    bool IsRelevant( const MsgsSimToClient::MsgCrowdUpdate& message );
+    bool IsRelevant( const MsgsSimToClient::MsgCrowdConcentrationUpdate& message );
+    bool IsRelevant( const MsgsSimToClient::MsgCrowdFlowUpdate& message );
+    bool IsRelevant( const MsgsSimToClient::MsgCrowdKnowledgeUpdate& message );
+    bool IsRelevant( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate& message );
+    bool IsRelevant( const MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate& message );
     //@}
 
 private:

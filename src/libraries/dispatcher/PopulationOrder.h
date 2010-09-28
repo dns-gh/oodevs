@@ -14,7 +14,7 @@
 
 namespace Common
 {
-    class MsgPopulationOrder;
+    class MsgCrowdOrder;
 }
 
 namespace kernel
@@ -36,7 +36,7 @@ class PopulationOrder : public Order_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PopulationOrder( const Common::MsgPopulationOrder& asn );
+    explicit PopulationOrder( const Common::MsgCrowdOrder& asn );
     virtual ~PopulationOrder();
     //@}
 
@@ -56,7 +56,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< Common::MsgPopulationOrder > message_;
+    std::auto_ptr< Common::MsgCrowdOrder > message_;
     //@}
 };
 

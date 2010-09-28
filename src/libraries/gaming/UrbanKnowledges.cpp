@@ -47,8 +47,8 @@ UrbanKnowledges::~UrbanKnowledges()
 // -----------------------------------------------------------------------------
 void UrbanKnowledges::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeCreation& message )
 {
-    if( ! Find( message.id().id() ) )
-        Register( message.id().id(), * factory_.Create( team_, message ) );
+    if( ! Find( message.knowledge().id() ) )
+        Register( message.knowledge().id(), * factory_.Create( team_, message ) );
     controller_.Update( *this );
 }
 
@@ -58,7 +58,7 @@ void UrbanKnowledges::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeCreation
 // -----------------------------------------------------------------------------
 void UrbanKnowledges::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& message )
 {
-    Get( message.id().id() ).Update( message );
+    Get( message.knowledge().id() ).Update( message );
     controller_.Update( *this );
 }
 
@@ -68,7 +68,7 @@ void UrbanKnowledges::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& 
 // -----------------------------------------------------------------------------
 void UrbanKnowledges::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeDestruction& message )
 {
-    delete Find( message.id().id() );
-    Remove( message.id().id() );
+    delete Find( message.knowledge().id() );
+    Remove( message.knowledge().id() );
     controller_.Update( *this );
 }

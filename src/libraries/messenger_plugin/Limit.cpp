@@ -20,7 +20,7 @@ using namespace plugins::messenger;
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
 Limit::Limit( unsigned int id, const MsgsClientToMessenger::MsgLimitCreationRequest& message )
-    : TacticalLine_ABC( id, message.tacticalline() )
+    : TacticalLine_ABC( id, message.tactical_line() )
 {
     // NOTHING
 }

@@ -31,7 +31,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 UrbanKnowledge::UrbanKnowledge( const Team_ABC& owner, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message, Controller& controller,
                                 const tools::Resolver_ABC< urban::TerrainObject_ABC >& terrainObjectResolver )
-    : EntityImplementation< UrbanKnowledge_ABC >( controller, message.id().id(), "" )
+    : EntityImplementation< UrbanKnowledge_ABC >( controller, message.knowledge().id(), "" )
     , owner_                ( owner )
     , terrainObjectResolver_( terrainObjectResolver )
     , pRealUrban_           ( 0 )

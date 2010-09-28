@@ -14,7 +14,7 @@
 
 namespace Common
 {
-    class MsgObjectAttributes;
+    class ObjectAttributes;
     class MsgMissionParameter_Value;
 }
 
@@ -65,8 +65,8 @@ public:
 
     //! @name ASN Network update
     //@{
-    virtual void SendFullState( Common::MsgObjectAttributes& /*asn*/ ) const {} //<! Send update to asn client
-    virtual void SendUpdate( Common::MsgObjectAttributes& /*asn*/ ) const {} //<! Send update to asn client
+    virtual void SendFullState( Common::ObjectAttributes& /*asn*/ ) const {} //<! Send update to asn client
+    virtual void SendUpdate( Common::ObjectAttributes& /*asn*/ ) const {} //<! Send update to asn client
     virtual void OnUpdate( const Common::MsgMissionParameter_Value& /*attribute*/ ) {} //<! Update from asn msg
     virtual void Serialize( HLA_UpdateFunctor& /*functor*/ ) const {} //<! Send update to HLA client
     virtual void Deserialize( const hla::AttributeIdentifier& /*attributeID*/, hla::Deserializer /*deserializer*/ ) {} //<! Update from HLA

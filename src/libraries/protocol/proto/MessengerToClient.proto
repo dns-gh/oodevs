@@ -111,12 +111,13 @@ message MsgShapeUpdate {
    required Common.DrawingId           id        = 1;
    optional string                     category  = 2;
    optional string                     color     = 3;
-   optional string                     template_ = 4;
+   optional string                     pattern   = 4;
    optional Common.MsgCoordLatLongList points    = 5;
 }
 message MsgShapeDestruction {
    required Common.DrawingId id = 1;
 }
+
 message ShapeRequestAck {
     enum ErrorCode {
         no_error               = 0;

@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_CanBeUnderATeam )
         MsgsSimToClient::MsgSimToClient expected;
         expected.set_context( 0 );
         MsgsSimToClient::MsgKnowledgeGroupCreation& message = *expected.mutable_message()->mutable_knowledge_group_creation();
-        message.mutable_id()->set_id( 1 );
+        message.mutable_knowledge_group()->set_id( 1 );
         message.mutable_party()->set_id( side.GetId() );
         message.set_type( "Standard" );
         message.set_jam( true );
@@ -79,7 +79,7 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_AttributesCanBeChanged )
             MsgsSimToClient::MsgSimToClient expected;
             expected.set_context( 0 );
             MsgsSimToClient::MsgKnowledgeGroupCreation& message = *expected.mutable_message()->mutable_knowledge_group_creation();
-            message.mutable_id()->set_id( 1 );
+            message.mutable_knowledge_group()->set_id( 1 );
             message.mutable_party()->set_id( side.GetId() );
             message.set_type( "Standard" );
             message.set_jam( true );
@@ -91,7 +91,7 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_AttributesCanBeChanged )
             MsgsSimToClient::MsgSimToClient expected;
             expected.set_context( 0 );
             MsgsSimToClient::MsgKnowledgeGroupUpdate& message = *expected.mutable_message()->mutable_knowledge_group_update();
-            message.mutable_id()->set_id( 1 );
+            message.mutable_knowledge_group()->set_id( 1 );
             message.mutable_party()->set_id( side.GetId() );
             message.set_type( "GTIA" );
             message.set_enabled( false );
@@ -104,7 +104,7 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_AttributesCanBeChanged )
             MsgsSimToClient::MsgSimToClient expected;
             expected.set_context( 0 );
             MsgsSimToClient::MsgKnowledgeGroupCreation& message = *expected.mutable_message()->mutable_knowledge_group_creation();
-            message.mutable_id()->set_id( 1 );
+            message.mutable_knowledge_group()->set_id( 1 );
             message.mutable_party()->set_id( side.GetId() );
             message.set_type( "GTIA" );
             message.set_jam( true );

@@ -1226,7 +1226,7 @@ bool PHY_RolePion_Perceiver::HasDelayedPerceptions() const
 void PHY_RolePion_Perceiver::SendDebugState() const
 {
     client::UnitVisionCones message;
-    message().mutable_id()->set_id( pion_.GetID() );
+    message().mutable_unit()->set_id( pion_.GetID() );
     std::auto_ptr< detection::PerceptionDistanceComputer_ABC > algorithm = pion_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer();
     message().set_elongation( static_cast< float >( pion_.Execute( *algorithm ).GetElongationFactor() ) ); //@TODO MGD share
     message().mutable_cones();

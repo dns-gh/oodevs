@@ -48,10 +48,10 @@ void ObjectsModel::Purge()
 // -----------------------------------------------------------------------------
 void ObjectsModel::CreateObject( const MsgsSimToClient::MsgObjectCreation& message )
 {
-    if( ! tools::Resolver< Object_ABC >::Find( message.id().id() ) )
+    if( ! tools::Resolver< Object_ABC >::Find( message.object().id() ) )
     {
         Object_ABC* pObject = objectFactory_.Create( message );
-        tools::Resolver< Object_ABC >::Register( message.id().id(), *pObject );
+        tools::Resolver< Object_ABC >::Register( message.object().id(), *pObject );
     }
 }
 
