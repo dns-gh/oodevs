@@ -68,7 +68,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 elseif switch_1 == eRejoindrePosition then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     --[[// Progression
-]]--[[// si mission donnée par automate apres renforcement par anibas
+]]--[[// si pas de position de renforcement
 ]]if( self._namedParams.mission.lieuRenforcement_ == nil ) then
                         Activate( self.activations.BEH_Dep_Suivre, 1, { self._namedParams.mission.unite_, 100, } )
                     else
@@ -91,7 +91,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
 --[[// Renforcement
 ]]                    end
 
-                    Activate( self.activations.BEH_Dep_Pion_GEN_RenforcerSurPosition, 1, { self._namedParams.mission.unite_, self.bRenforceAutomate, self._namedParams.mission.lieuRenforcement_} )
+                    Activate( self.activations.BEH_Dep_Pion_GEN_RenforcerSurPosition, 1, { self._namedParams.mission.unite_, self.bRenforceAutomate, self._namedParams.mission.lieuRenforcement_, } )
                     _continue = false
                 --[[// Fin de la mission --> sur ordre
 ]]                cases_switch_1[2] = true
@@ -132,14 +132,21 @@ node "BEH_Dep_Pion_GEN_RenforcerSurPosition"
     activate = function( self )
         local Activate = Activate
         if( self._namedParams.bRenforceAutomate ) then
-            if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.lieuRenforcement ) < 800 ) then
-                Activate( self.activations.ACT_Misc_Pion_GEN_Renforcer, 1, { self._namedParams.unite, self._namedParams.bRenforceAutomate, } ) 
+            do
+                if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.lieuRenforcement ) < 800 ) then
+                    Activate( self.activations.ACT_Misc_Pion_GEN_Renforcer, 1, { self._namedParams.unite, self._namedParams.bRenforceAutomate, } )
+                end
+
             end
         else
-            if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.unite:DEC_Agent_Position() ) < 800 ) then
-                Activate( self.activations.ACT_Misc_Pion_GEN_Renforcer, 1, { self._namedParams.unite, self._namedParams.bRenforceAutomate, } ) 
+do
+                if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.unite:DEC_Agent_Position() ) < 800 ) then
+                    Activate( self.activations.ACT_Misc_Pion_GEN_Renforcer, 1, { self._namedParams.unite, self._namedParams.bRenforceAutomate, } )
+                end
+
             end
         end
+
     end,
 
 --[[// *****************************************************************************
