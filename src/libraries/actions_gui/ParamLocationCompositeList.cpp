@@ -49,12 +49,31 @@ void ParamLocationCompositeList::CommitTo( actions::ParameterContainer_ABC& acti
     CommitChildrenTo( *param );
     action.AddParameter( *param.release() );
 }
-   
+
+namespace
+{
+    class ChoiceVisitor : public kernel::ChoicesVisitor_ABC
+    {
+    public:
+        ChoiceVisitor( kernel::OrderParameter& parameter ) : parameter_( parameter ) {}
+        virtual ~ChoiceVisitor() {}
+        virtual void Visit( const std::string& type )
+        {
+            parameter_.AddChoice( type );
+        }
+    private:
+        kernel::OrderParameter& parameter_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: ParamLocationCompositeList::CreateElement
 // Created: LDC 2010-09-20
 // -----------------------------------------------------------------------------
 Param_ABC* ParamLocationCompositeList::CreateElement()
 {
-    return new ParamLocationComposite( kernel::OrderParameter( tools::translate( "ListParameter", "%1 (item %2)" ).arg( GetName() ).arg( ++count_ ).ascii(), "location", false ), builder_ );
+    kernel::OrderParameter parameter( tools::translate( "ListParameter", "%1 (item %2)" ).arg( GetName() ).arg( ++count_ ).ascii(), "location", false );
+    ChoiceVisitor chooser( parameter );
+    parameter_.Accept( chooser );
+    return new ParamLocationComposite( parameter, builder_ );
 }

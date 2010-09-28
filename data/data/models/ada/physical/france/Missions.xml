@@ -765,7 +765,16 @@
       <parameter dia-name="campRefugies_" name="Camp refugies" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" id="2010" name="TEST MoveToCompositeLocationList">
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="LocationComposite"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanBlock"/>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="ObjectKnowledge"/>
+        </choice>
+      </parameter>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveAlong" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveAlong" id="2012" name="TEST MoveAlongAgentKnowledgeList">
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="AgentKnowledge"/>

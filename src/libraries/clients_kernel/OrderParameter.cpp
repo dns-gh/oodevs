@@ -53,12 +53,7 @@ OrderParameter::OrderParameter( const std::string& name, const std::string& type
     , minOccurs_( 1 )
     , maxOccurs_( 1 )
 {
-    choices_.push_back( "point" );
-    choices_.push_back( "polygon" );
-    choices_.push_back( "urbanblock" );
-    choices_.push_back( "agent" );
-    choices_.push_back( "agentknowledge" );
-    choices_.push_back( "objectknowledge" );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -176,6 +171,15 @@ void OrderParameter::Accept( ChoicesVisitor_ABC& visitor ) const
 {
     for( std::vector< std::string >::const_iterator it = choices_.begin(); it != choices_.end(); ++it )
         visitor.Visit( *it );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderParameter::AddChoice
+// Created: LDC 2010-09-28
+// -----------------------------------------------------------------------------
+void OrderParameter::AddChoice( const std::string& choice )
+{
+    choices_.push_back( choice );
 }
 
 // -----------------------------------------------------------------------------

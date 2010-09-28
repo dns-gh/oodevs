@@ -66,6 +66,7 @@ public:
     void AddValue( int id, const std::string& name );
     virtual void Accept( OrderParameterValueVisitor_ABC& visitor ) const;
     virtual void Accept( ChoicesVisitor_ABC& visitor ) const;
+    void AddChoice( const std::string& choice );
     //@}
 
 private:
