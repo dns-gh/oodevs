@@ -95,6 +95,8 @@ class MsgControlResume;
 class MsgControlChangeTimeFactor;
 class MsgExercise;
 class MsgNetworkAddress;
+class RgbColor;
+class RgbaColor;
 class MsgCoordLatLong;
 class MsgCoordLatLongList;
 class MsgLocation;
@@ -6582,6 +6584,220 @@ class MsgNetworkAddress : public ::google::protobuf::Message {
   
   void InitAsDefaultInstance();
   static MsgNetworkAddress* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class RgbColor : public ::google::protobuf::Message {
+ public:
+  RgbColor();
+  virtual ~RgbColor();
+  
+  RgbColor(const RgbColor& from);
+  
+  inline RgbColor& operator=(const RgbColor& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const RgbColor& default_instance();
+  void Swap(RgbColor* other);
+  
+  // implements Message ----------------------------------------------
+  
+  RgbColor* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const RgbColor& from);
+  void MergeFrom(const RgbColor& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required int32 red = 1;
+  inline bool has_red() const;
+  inline void clear_red();
+  static const int kRedFieldNumber = 1;
+  inline ::google::protobuf::int32 red() const;
+  inline void set_red(::google::protobuf::int32 value);
+  
+  // required int32 green = 2;
+  inline bool has_green() const;
+  inline void clear_green();
+  static const int kGreenFieldNumber = 2;
+  inline ::google::protobuf::int32 green() const;
+  inline void set_green(::google::protobuf::int32 value);
+  
+  // required int32 blue = 3;
+  inline bool has_blue() const;
+  inline void clear_blue();
+  static const int kBlueFieldNumber = 3;
+  inline ::google::protobuf::int32 blue() const;
+  inline void set_blue(::google::protobuf::int32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::int32 red_;
+  ::google::protobuf::int32 green_;
+  ::google::protobuf::int32 blue_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static RgbColor* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class RgbaColor : public ::google::protobuf::Message {
+ public:
+  RgbaColor();
+  virtual ~RgbaColor();
+  
+  RgbaColor(const RgbaColor& from);
+  
+  inline RgbaColor& operator=(const RgbaColor& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const RgbaColor& default_instance();
+  void Swap(RgbaColor* other);
+  
+  // implements Message ----------------------------------------------
+  
+  RgbaColor* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const RgbaColor& from);
+  void MergeFrom(const RgbaColor& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required int32 red = 1;
+  inline bool has_red() const;
+  inline void clear_red();
+  static const int kRedFieldNumber = 1;
+  inline ::google::protobuf::int32 red() const;
+  inline void set_red(::google::protobuf::int32 value);
+  
+  // required int32 green = 2;
+  inline bool has_green() const;
+  inline void clear_green();
+  static const int kGreenFieldNumber = 2;
+  inline ::google::protobuf::int32 green() const;
+  inline void set_green(::google::protobuf::int32 value);
+  
+  // required int32 blue = 3;
+  inline bool has_blue() const;
+  inline void clear_blue();
+  static const int kBlueFieldNumber = 3;
+  inline ::google::protobuf::int32 blue() const;
+  inline void set_blue(::google::protobuf::int32 value);
+  
+  // required float alpha = 4;
+  inline bool has_alpha() const;
+  inline void clear_alpha();
+  static const int kAlphaFieldNumber = 4;
+  inline float alpha() const;
+  inline void set_alpha(float value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::int32 red_;
+  ::google::protobuf::int32 green_;
+  ::google::protobuf::int32 blue_;
+  float alpha_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static RgbaColor* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -15084,6 +15300,126 @@ inline ::google::protobuf::int32 MsgNetworkAddress::port() const {
 inline void MsgNetworkAddress::set_port(::google::protobuf::int32 value) {
   _set_bit(1);
   port_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// RgbColor
+
+// required int32 red = 1;
+inline bool RgbColor::has_red() const {
+  return _has_bit(0);
+}
+inline void RgbColor::clear_red() {
+  red_ = 0;
+  _clear_bit(0);
+}
+inline ::google::protobuf::int32 RgbColor::red() const {
+  return red_;
+}
+inline void RgbColor::set_red(::google::protobuf::int32 value) {
+  _set_bit(0);
+  red_ = value;
+}
+
+// required int32 green = 2;
+inline bool RgbColor::has_green() const {
+  return _has_bit(1);
+}
+inline void RgbColor::clear_green() {
+  green_ = 0;
+  _clear_bit(1);
+}
+inline ::google::protobuf::int32 RgbColor::green() const {
+  return green_;
+}
+inline void RgbColor::set_green(::google::protobuf::int32 value) {
+  _set_bit(1);
+  green_ = value;
+}
+
+// required int32 blue = 3;
+inline bool RgbColor::has_blue() const {
+  return _has_bit(2);
+}
+inline void RgbColor::clear_blue() {
+  blue_ = 0;
+  _clear_bit(2);
+}
+inline ::google::protobuf::int32 RgbColor::blue() const {
+  return blue_;
+}
+inline void RgbColor::set_blue(::google::protobuf::int32 value) {
+  _set_bit(2);
+  blue_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// RgbaColor
+
+// required int32 red = 1;
+inline bool RgbaColor::has_red() const {
+  return _has_bit(0);
+}
+inline void RgbaColor::clear_red() {
+  red_ = 0;
+  _clear_bit(0);
+}
+inline ::google::protobuf::int32 RgbaColor::red() const {
+  return red_;
+}
+inline void RgbaColor::set_red(::google::protobuf::int32 value) {
+  _set_bit(0);
+  red_ = value;
+}
+
+// required int32 green = 2;
+inline bool RgbaColor::has_green() const {
+  return _has_bit(1);
+}
+inline void RgbaColor::clear_green() {
+  green_ = 0;
+  _clear_bit(1);
+}
+inline ::google::protobuf::int32 RgbaColor::green() const {
+  return green_;
+}
+inline void RgbaColor::set_green(::google::protobuf::int32 value) {
+  _set_bit(1);
+  green_ = value;
+}
+
+// required int32 blue = 3;
+inline bool RgbaColor::has_blue() const {
+  return _has_bit(2);
+}
+inline void RgbaColor::clear_blue() {
+  blue_ = 0;
+  _clear_bit(2);
+}
+inline ::google::protobuf::int32 RgbaColor::blue() const {
+  return blue_;
+}
+inline void RgbaColor::set_blue(::google::protobuf::int32 value) {
+  _set_bit(2);
+  blue_ = value;
+}
+
+// required float alpha = 4;
+inline bool RgbaColor::has_alpha() const {
+  return _has_bit(3);
+}
+inline void RgbaColor::clear_alpha() {
+  alpha_ = 0;
+  _clear_bit(3);
+}
+inline float RgbaColor::alpha() const {
+  return alpha_;
+}
+inline void RgbaColor::set_alpha(float value) {
+  _set_bit(3);
+  alpha_ = value;
 }
 
 // -------------------------------------------------------------------

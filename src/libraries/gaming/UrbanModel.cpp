@@ -66,7 +66,7 @@ namespace
             return;
         if( message.attributes().has_color() )
         {
-            const MsgsSimToClient::UrbanAttributes::RgbaColor& color = message.attributes().color();
+            const Common::RgbaColor& color = message.attributes().color();
             urban::ColorAttribute* colorAttribute = new urban::ColorAttribute( object );
             colorAttribute->SetRed( static_cast< unsigned short >( color.red() ) );
             colorAttribute->SetGreen( static_cast< unsigned short >( color.green() ) );

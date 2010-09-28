@@ -357,6 +357,22 @@ message MsgNetworkAddress  {
    required int32   port    = 2 [default = 8080]; 
 }
 
+// Color
+message RgbColor
+{
+    required int32 red   = 1;
+    required int32 green = 2;
+    required int32 blue  = 3;	
+}
+
+message RgbaColor
+{
+    required int32 red   = 1;
+    required int32 green = 2;
+    required int32 blue  = 3;
+    required float alpha = 4;	
+}
+    
 // Geometry
 message MsgCoordLatLong {
     required double latitude  = 1;

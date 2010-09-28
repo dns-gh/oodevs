@@ -1129,17 +1129,11 @@ message UrbanAttributes {
     {
         repeated Common.ResourceNetwork resource_network = 1;
     }
-    message RgbaColor
-    {
-	    required int32 red   = 1;
-	    required int32 green = 2;
-	    required int32 blue  = 3;
-	    required float alpha = 4;	
-    }
-    optional Architecture    architecture    = 1;
-    optional Structure       structure       = 2;    
-    optional RgbaColor       color           = 3;
-    optional Infrastructures infrastructures = 4;
+
+    optional Architecture     architecture    = 1;
+    optional Structure        structure       = 2;    
+    optional Common.RgbaColor color           = 3;
+    optional Infrastructures  infrastructures = 4;
 }
 
 message MsgUrbanCreation {

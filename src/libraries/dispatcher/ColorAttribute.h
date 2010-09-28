@@ -49,7 +49,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ColorRGBA* color_;
+    std::auto_ptr< ColorRGBA > color_;
     //@}
 };
 

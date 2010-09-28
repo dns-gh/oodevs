@@ -193,7 +193,6 @@ class UrbanAttributes;
 class UrbanAttributes_Architecture;
 class UrbanAttributes_Structure;
 class UrbanAttributes_Infrastructures;
-class UrbanAttributes_RgbaColor;
 class MsgUrbanCreation;
 class MsgUrbanDetection;
 class MsgUrbanUpdate;
@@ -18030,117 +18029,6 @@ class UrbanAttributes_Infrastructures : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class UrbanAttributes_RgbaColor : public ::google::protobuf::Message {
- public:
-  UrbanAttributes_RgbaColor();
-  virtual ~UrbanAttributes_RgbaColor();
-  
-  UrbanAttributes_RgbaColor(const UrbanAttributes_RgbaColor& from);
-  
-  inline UrbanAttributes_RgbaColor& operator=(const UrbanAttributes_RgbaColor& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const UrbanAttributes_RgbaColor& default_instance();
-  void Swap(UrbanAttributes_RgbaColor* other);
-  
-  // implements Message ----------------------------------------------
-  
-  UrbanAttributes_RgbaColor* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const UrbanAttributes_RgbaColor& from);
-  void MergeFrom(const UrbanAttributes_RgbaColor& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required int32 red = 1;
-  inline bool has_red() const;
-  inline void clear_red();
-  static const int kRedFieldNumber = 1;
-  inline ::google::protobuf::int32 red() const;
-  inline void set_red(::google::protobuf::int32 value);
-  
-  // required int32 green = 2;
-  inline bool has_green() const;
-  inline void clear_green();
-  static const int kGreenFieldNumber = 2;
-  inline ::google::protobuf::int32 green() const;
-  inline void set_green(::google::protobuf::int32 value);
-  
-  // required int32 blue = 3;
-  inline bool has_blue() const;
-  inline void clear_blue();
-  static const int kBlueFieldNumber = 3;
-  inline ::google::protobuf::int32 blue() const;
-  inline void set_blue(::google::protobuf::int32 value);
-  
-  // required float alpha = 4;
-  inline bool has_alpha() const;
-  inline void clear_alpha();
-  static const int kAlphaFieldNumber = 4;
-  inline float alpha() const;
-  inline void set_alpha(float value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::google::protobuf::int32 red_;
-  ::google::protobuf::int32 green_;
-  ::google::protobuf::int32 blue_;
-  float alpha_;
-  friend void  protobuf_AddDesc_SimToClient_2eproto();
-  friend void protobuf_AssignDesc_SimToClient_2eproto();
-  friend void protobuf_ShutdownFile_SimToClient_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static UrbanAttributes_RgbaColor* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class UrbanAttributes : public ::google::protobuf::Message {
  public:
   UrbanAttributes();
@@ -18195,7 +18083,6 @@ class UrbanAttributes : public ::google::protobuf::Message {
   typedef UrbanAttributes_Architecture Architecture;
   typedef UrbanAttributes_Structure Structure;
   typedef UrbanAttributes_Infrastructures Infrastructures;
-  typedef UrbanAttributes_RgbaColor RgbaColor;
   
   // accessors -------------------------------------------------------
   
@@ -18213,12 +18100,12 @@ class UrbanAttributes : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::UrbanAttributes_Structure& structure() const;
   inline ::MsgsSimToClient::UrbanAttributes_Structure* mutable_structure();
   
-  // optional .MsgsSimToClient.UrbanAttributes.RgbaColor color = 3;
+  // optional .Common.RgbaColor color = 3;
   inline bool has_color() const;
   inline void clear_color();
   static const int kColorFieldNumber = 3;
-  inline const ::MsgsSimToClient::UrbanAttributes_RgbaColor& color() const;
-  inline ::MsgsSimToClient::UrbanAttributes_RgbaColor* mutable_color();
+  inline const ::Common::RgbaColor& color() const;
+  inline ::Common::RgbaColor* mutable_color();
   
   // optional .MsgsSimToClient.UrbanAttributes.Infrastructures infrastructures = 4;
   inline bool has_infrastructures() const;
@@ -18233,7 +18120,7 @@ class UrbanAttributes : public ::google::protobuf::Message {
   
   ::MsgsSimToClient::UrbanAttributes_Architecture* architecture_;
   ::MsgsSimToClient::UrbanAttributes_Structure* structure_;
-  ::MsgsSimToClient::UrbanAttributes_RgbaColor* color_;
+  ::Common::RgbaColor* color_;
   ::MsgsSimToClient::UrbanAttributes_Infrastructures* infrastructures_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -30595,74 +30482,6 @@ inline ::Common::ResourceNetwork* UrbanAttributes_Infrastructures::add_resource_
 
 // -------------------------------------------------------------------
 
-// UrbanAttributes_RgbaColor
-
-// required int32 red = 1;
-inline bool UrbanAttributes_RgbaColor::has_red() const {
-  return _has_bit(0);
-}
-inline void UrbanAttributes_RgbaColor::clear_red() {
-  red_ = 0;
-  _clear_bit(0);
-}
-inline ::google::protobuf::int32 UrbanAttributes_RgbaColor::red() const {
-  return red_;
-}
-inline void UrbanAttributes_RgbaColor::set_red(::google::protobuf::int32 value) {
-  _set_bit(0);
-  red_ = value;
-}
-
-// required int32 green = 2;
-inline bool UrbanAttributes_RgbaColor::has_green() const {
-  return _has_bit(1);
-}
-inline void UrbanAttributes_RgbaColor::clear_green() {
-  green_ = 0;
-  _clear_bit(1);
-}
-inline ::google::protobuf::int32 UrbanAttributes_RgbaColor::green() const {
-  return green_;
-}
-inline void UrbanAttributes_RgbaColor::set_green(::google::protobuf::int32 value) {
-  _set_bit(1);
-  green_ = value;
-}
-
-// required int32 blue = 3;
-inline bool UrbanAttributes_RgbaColor::has_blue() const {
-  return _has_bit(2);
-}
-inline void UrbanAttributes_RgbaColor::clear_blue() {
-  blue_ = 0;
-  _clear_bit(2);
-}
-inline ::google::protobuf::int32 UrbanAttributes_RgbaColor::blue() const {
-  return blue_;
-}
-inline void UrbanAttributes_RgbaColor::set_blue(::google::protobuf::int32 value) {
-  _set_bit(2);
-  blue_ = value;
-}
-
-// required float alpha = 4;
-inline bool UrbanAttributes_RgbaColor::has_alpha() const {
-  return _has_bit(3);
-}
-inline void UrbanAttributes_RgbaColor::clear_alpha() {
-  alpha_ = 0;
-  _clear_bit(3);
-}
-inline float UrbanAttributes_RgbaColor::alpha() const {
-  return alpha_;
-}
-inline void UrbanAttributes_RgbaColor::set_alpha(float value) {
-  _set_bit(3);
-  alpha_ = value;
-}
-
-// -------------------------------------------------------------------
-
 // UrbanAttributes
 
 // optional .MsgsSimToClient.UrbanAttributes.Architecture architecture = 1;
@@ -30699,20 +30518,20 @@ inline ::MsgsSimToClient::UrbanAttributes_Structure* UrbanAttributes::mutable_st
   return structure_;
 }
 
-// optional .MsgsSimToClient.UrbanAttributes.RgbaColor color = 3;
+// optional .Common.RgbaColor color = 3;
 inline bool UrbanAttributes::has_color() const {
   return _has_bit(2);
 }
 inline void UrbanAttributes::clear_color() {
-  if (color_ != NULL) color_->::MsgsSimToClient::UrbanAttributes_RgbaColor::Clear();
+  if (color_ != NULL) color_->::Common::RgbaColor::Clear();
   _clear_bit(2);
 }
-inline const ::MsgsSimToClient::UrbanAttributes_RgbaColor& UrbanAttributes::color() const {
+inline const ::Common::RgbaColor& UrbanAttributes::color() const {
   return color_ != NULL ? *color_ : *default_instance_->color_;
 }
-inline ::MsgsSimToClient::UrbanAttributes_RgbaColor* UrbanAttributes::mutable_color() {
+inline ::Common::RgbaColor* UrbanAttributes::mutable_color() {
   _set_bit(2);
-  if (color_ == NULL) color_ = new ::MsgsSimToClient::UrbanAttributes_RgbaColor;
+  if (color_ == NULL) color_ = new ::Common::RgbaColor;
   return color_;
 }
 

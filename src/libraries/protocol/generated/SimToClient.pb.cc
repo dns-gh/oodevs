@@ -517,9 +517,6 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* UrbanAttributes_Infrastructures_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   UrbanAttributes_Infrastructures_reflection_ = NULL;
-const ::google::protobuf::Descriptor* UrbanAttributes_RgbaColor_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  UrbanAttributes_RgbaColor_reflection_ = NULL;
 const ::google::protobuf::Descriptor* MsgUrbanCreation_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgUrbanCreation_reflection_ = NULL;
@@ -3377,24 +3374,6 @@ void protobuf_AssignDesc_SimToClient_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(UrbanAttributes_Infrastructures));
-  UrbanAttributes_RgbaColor_descriptor_ = UrbanAttributes_descriptor_->nested_type(3);
-  static const int UrbanAttributes_RgbaColor_offsets_[4] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UrbanAttributes_RgbaColor, red_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UrbanAttributes_RgbaColor, green_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UrbanAttributes_RgbaColor, blue_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UrbanAttributes_RgbaColor, alpha_),
-  };
-  UrbanAttributes_RgbaColor_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      UrbanAttributes_RgbaColor_descriptor_,
-      UrbanAttributes_RgbaColor::default_instance_,
-      UrbanAttributes_RgbaColor_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UrbanAttributes_RgbaColor, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UrbanAttributes_RgbaColor, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(UrbanAttributes_RgbaColor));
   MsgUrbanCreation_descriptor_ = file->message_type(154);
   static const int MsgUrbanCreation_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanCreation, urban_object_),
@@ -4138,8 +4117,6 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     UrbanAttributes_Infrastructures_descriptor_, &UrbanAttributes_Infrastructures::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    UrbanAttributes_RgbaColor_descriptor_, &UrbanAttributes_RgbaColor::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgUrbanCreation_descriptor_, &MsgUrbanCreation::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgUrbanDetection_descriptor_, &MsgUrbanDetection::default_instance());
@@ -4502,8 +4479,6 @@ void protobuf_ShutdownFile_SimToClient_2eproto() {
   delete UrbanAttributes_Structure_reflection_;
   delete UrbanAttributes_Infrastructures::default_instance_;
   delete UrbanAttributes_Infrastructures_reflection_;
-  delete UrbanAttributes_RgbaColor::default_instance_;
-  delete UrbanAttributes_RgbaColor_reflection_;
   delete MsgUrbanCreation::default_instance_;
   delete MsgUrbanCreation_reflection_;
   delete MsgUrbanDetection::default_instance_;
@@ -5207,318 +5182,316 @@ void protobuf_AddDesc_SimToClient_2eproto() {
     "nvalid_camp\020\003\022\036\n\032error_invalid_localisat"
     "ion\020\004\022%\n!error_missing_specific_attribut"
     "es\020\005\022%\n!error_invalid_specific_attribute"
-    "s\020\006\"\314\004\n\017UrbanAttributes\022C\n\014architecture\030"
+    "s\020\006\"\355\003\n\017UrbanAttributes\022C\n\014architecture\030"
     "\001 \001(\0132-.MsgsSimToClient.UrbanAttributes."
     "Architecture\022=\n\tstructure\030\002 \001(\0132*.MsgsSi"
-    "mToClient.UrbanAttributes.Structure\0229\n\005c"
-    "olor\030\003 \001(\0132*.MsgsSimToClient.UrbanAttrib"
-    "utes.RgbaColor\022I\n\017infrastructures\030\004 \001(\0132"
-    "0.MsgsSimToClient.UrbanAttributes.Infras"
-    "tructures\032\206\001\n\014Architecture\022\016\n\006height\030\001 \002"
-    "(\002\022\024\n\014floor_number\030\002 \002(\005\022\022\n\nroof_shape\030\003"
-    " \002(\t\022\020\n\010material\030\004 \002(\t\022\022\n\noccupation\030\005 \002"
-    "(\002\022\026\n\016trafficability\030\006 \002(\002\032\032\n\tStructure\022"
-    "\r\n\005state\030\001 \002(\r\032D\n\017Infrastructures\0221\n\020res"
-    "ource_network\030\001 \003(\0132\027.Common.ResourceNet"
-    "work\032D\n\tRgbaColor\022\013\n\003red\030\001 \002(\005\022\r\n\005green\030"
-    "\002 \002(\005\022\014\n\004blue\030\003 \002(\005\022\r\n\005alpha\030\004 \002(\002\"\321\001\n\020M"
-    "sgUrbanCreation\022+\n\014urban_object\030\001 \002(\0132\025."
-    "Common.UrbanObjectId\022\014\n\004name\030\002 \002(\t\022%\n\010lo"
-    "cation\030\003 \002(\0132\023.Common.MsgLocation\0224\n\natt"
-    "ributes\030\004 \001(\0132 .MsgsSimToClient.UrbanAtt"
-    "ributes\022%\n\006parent\030\005 \001(\0132\025.Common.UrbanOb"
-    "jectId\"\222\001\n\021MsgUrbanDetection\022 \n\010observer"
-    "\030\001 \002(\0132\016.Common.UnitId\022+\n\014urban_object\030\002"
-    " \002(\0132\025.Common.UrbanObjectId\022.\n\nvisibilit"
-    "y\030\003 \002(\0162\032.Common.EnumUnitVisibility\"\232\001\n\016"
-    "MsgUrbanUpdate\022+\n\014urban_object\030\001 \002(\0132\025.C"
-    "ommon.UrbanObjectId\022%\n\010location\030\002 \001(\0132\023."
-    "Common.MsgLocation\0224\n\nattributes\030\003 \001(\0132 "
-    ".MsgsSimToClient.UrbanAttributes\"\263\001\n\031Msg"
-    "KnowledgeGroupCreation\0221\n\017knowledge_grou"
-    "p\030\001 \002(\0132\030.Common.KnowledgeGroupId\022\036\n\005par"
-    "ty\030\002 \002(\0132\017.Common.PartyId\022(\n\006parent\030\003 \001("
-    "\0132\030.Common.KnowledgeGroupId\022\014\n\004type\030\004 \002("
-    "\t\022\013\n\003jam\030\005 \001(\010\"\265\001\n\027MsgKnowledgeGroupUpda"
-    "te\0221\n\017knowledge_group\030\001 \002(\0132\030.Common.Kno"
-    "wledgeGroupId\022\036\n\005party\030\002 \001(\0132\017.Common.Pa"
-    "rtyId\022(\n\006parent\030\003 \001(\0132\030.Common.Knowledge"
-    "GroupId\022\017\n\007enabled\030\004 \001(\010\022\014\n\004type\030\005 \001(\t\"\265"
-    "\001\n\021KnowledgeGroupAck\"\237\001\n\tErrorCode\022\014\n\010no"
-    "_error\020\000\022\026\n\022error_invalid_unit\020\001\022\032\n\026erro"
-    "r_invalid_superior\020\002\022\026\n\022error_invalid_ca"
-    "mp\020\003\022 \n\034error_invalid_knowledgegroup\020\004\022\026"
-    "\n\022error_invalid_type\020\005\"\226\001\n\037MsgKnowledgeG"
-    "roupMagicActionAck\0221\n\017knowledge_group\030\001 "
-    "\002(\0132\030.Common.KnowledgeGroupId\022@\n\nerror_c"
-    "ode\030\002 \002(\0162,.MsgsSimToClient.KnowledgeGro"
-    "upAck.ErrorCode\"\223\001\n\034MsgKnowledgeGroupCre"
-    "ationAck\0221\n\017knowledge_group\030\001 \002(\0132\030.Comm"
-    "on.KnowledgeGroupId\022@\n\nerror_code\030\002 \002(\0162"
-    ",.MsgsSimToClient.KnowledgeGroupAck.Erro"
-    "rCode\"\221\001\n\032MsgKnowledgeGroupUpdateAck\0221\n\017"
-    "knowledge_group\030\001 \002(\0132\030.Common.Knowledge"
-    "GroupId\022@\n\nerror_code\030\002 \002(\0162,.MsgsSimToC"
-    "lient.KnowledgeGroupAck.ErrorCode\"q\n\034Msg"
-    "KnowledgeGroupDestruction\0221\n\017knowledge_g"
-    "roup\030\001 \002(\0132\030.Common.KnowledgeGroupId\022\036\n\005"
-    "party\030\002 \002(\0132\017.Common.PartyId\"\034\n\032MsgContr"
-    "olGlobalWeatherAck\"\033\n\031MsgControlLocalWea"
-    "therAck\"o\n\027MsgControlGlobalWeather\022\"\n\007we"
-    "ather\030\001 \002(\0132\021.Common.WeatherId\0220\n\nattrib"
-    "utes\030\002 \002(\0132\034.Common.MsgWeatherAttributes"
-    "\"\346\001\n\036MsgControlLocalWeatherCreation\022\"\n\007w"
-    "eather\030\001 \002(\0132\021.Common.WeatherId\0224\n\023top_l"
-    "eft_coordinate\030\002 \001(\0132\027.Common.MsgCoordLa"
-    "tLong\0228\n\027bottom_right_coordinate\030\003 \001(\0132\027"
-    ".Common.MsgCoordLatLong\0220\n\nattributes\030\004 "
-    "\001(\0132\034.Common.MsgWeatherAttributes\"G\n!Msg"
-    "ControlLocalWeatherDestruction\022\"\n\007weathe"
-    "r\030\001 \002(\0132\021.Common.WeatherId\"\333H\n\016MsgSimToC"
-    "lient\022\017\n\007context\030\001 \001(\005\0228\n\007message\030\002 \002(\0132"
-    "\'.MsgsSimToClient.MsgSimToClient.Content"
-    "\032\375G\n\007Content\0228\n\016unit_order_ack\030\001 \001(\0132 .M"
-    "sgsSimToClient.MsgUnitOrderAck\022>\n\021automa"
-    "t_order_ack\030\002 \001(\0132#.MsgsSimToClient.MsgA"
-    "utomatOrderAck\022:\n\017crowd_order_ack\030\003 \001(\0132"
-    "!.MsgsSimToClient.MsgCrowdOrderAck\0228\n\016fr"
-    "ag_order_ack\030\004 \001(\0132 .MsgsSimToClient.Msg"
-    "FragOrderAck\022C\n\024set_automat_mode_ack\030\005 \001"
-    "(\0132%.MsgsSimToClient.MsgSetAutomatModeAc"
-    "k\022M\n\031unit_creation_request_ack\030\006 \001(\0132*.M"
-    "sgsSimToClient.MsgUnitCreationRequestAck"
-    "\022<\n\020magic_action_ack\030\007 \001(\0132\".MsgsSimToCl"
-    "ient.MsgMagicActionAck\022E\n\025unit_magic_act"
-    "ion_ack\030\010 \001(\0132&.MsgsSimToClient.MsgUnitM"
-    "agicActionAck\022I\n\027object_magic_action_ack"
-    "\030\t \001(\0132(.MsgsSimToClient.MsgObjectMagicA"
-    "ctionAck\022G\n\026crowd_magic_action_ack\030\n \001(\013"
-    "2\'.MsgsSimToClient.MsgCrowdMagicActionAc"
-    "k\022D\n\024change_diplomacy_ack\030\013 \001(\0132&.MsgsSi"
-    "mToClient.MsgChangeDiplomacyAck\022^\n\"autom"
-    "at_change_knowledge_group_ack\030\014 \001(\01322.Ms"
-    "gsSimToClient.MsgAutomatChangeKnowledgeG"
-    "roupAck\022\\\n!automat_change_logistic_links"
-    "_ack\030\r \001(\01321.MsgsSimToClient.MsgAutomatC"
-    "hangeLogisticLinksAck\022Q\n\033automat_change_"
-    "superior_ack\030\016 \001(\0132,.MsgsSimToClient.Msg"
-    "AutomatChangeSuperiorAck\022K\n\030unit_change_"
-    "superior_ack\030\017 \001(\0132).MsgsSimToClient.Msg"
-    "UnitChangeSuperiorAck\022J\n\030log_supply_push"
-    "_flow_ack\030\020 \001(\0132(.MsgsSimToClient.MsgLog"
-    "SupplyPushFlowAck\022R\n\034log_supply_change_q"
-    "uotas_ack\030\021 \001(\0132,.MsgsSimToClient.MsgLog"
-    "SupplyChangeQuotasAck\022C\n\023control_informa"
-    "tion\030\022 \001(\0132&.MsgsSimToClient.MsgControlI"
-    "nformation\022V\n\035control_profiling_informat"
-    "ion\030\023 \001(\0132/.MsgsSimToClient.MsgControlPr"
-    "ofilingInformation\022@\n\022control_begin_tick"
-    "\030\024 \001(\0132$.MsgsSimToClient.MsgControlBegin"
-    "Tick\022<\n\020control_end_tick\030\025 \001(\0132\".MsgsSim"
-    "ToClient.MsgControlEndTick\022<\n\020control_st"
-    "op_ack\030\026 \001(\0132\".MsgsSimToClient.MsgContro"
-    "lStopAck\022>\n\021control_pause_ack\030\027 \001(\0132#.Ms"
-    "gsSimToClient.MsgControlPauseAck\022@\n\022cont"
-    "rol_resume_ack\030\030 \001(\0132$.MsgsSimToClient.M"
-    "sgControlResumeAck\022V\n\036control_change_tim"
-    "e_factor_ack\030\031 \001(\0132..MsgsSimToClient.Msg"
-    "ControlChangeTimeFactorAck\022R\n\034control_da"
-    "te_time_change_ack\030\032 \001(\0132,.MsgsSimToClie"
-    "nt.MsgControlDatetimeChangeAck\022Q\n\033contro"
-    "l_checkpoint_save_end\030\033 \001(\0132,.MsgsSimToC"
-    "lient.MsgControlCheckPointSaveEnd\022A\n\022for"
-    "mation_creation\030\034 \001(\0132%.MsgsSimToClient."
-    "MsgFormationCreation\0229\n\016party_creation\030\035"
-    " \001(\0132!.MsgsSimToClient.MsgPartyCreation\022"
-    "=\n\020automat_creation\030\036 \001(\0132#.MsgsSimToCli"
-    "ent.MsgAutomatCreation\022A\n\022automat_attrib"
-    "utes\030\037 \001(\0132%.MsgsSimToClient.MsgAutomatA"
-    "ttributes\0227\n\runit_creation\030  \001(\0132 .MsgsS"
-    "imToClient.MsgUnitCreation\022;\n\017unit_attri"
-    "butes\030! \001(\0132\".MsgsSimToClient.MsgUnitAtt"
-    "ributes\0227\n\runit_pathfind\030\" \001(\0132 .MsgsSim"
-    "ToClient.MsgUnitPathFind\022=\n\020unit_destruc"
-    "tion\030# \001(\0132#.MsgsSimToClient.MsgUnitDest"
-    "ruction\022F\n\025unit_environment_type\030$ \001(\0132\'"
-    ".MsgsSimToClient.MsgUnitEnvironmentType\022"
-    "4\n\020change_diplomacy\030% \001(\0132\032.Common.MsgCh"
-    "angeDiplomacy\022;\n\024unit_change_superior\030& "
-    "\001(\0132\035.Common.MsgUnitChangeSuperior\022L\n\035au"
-    "tomat_change_logistic_links\030\' \001(\0132%.Comm"
-    "on.MsgAutomatChangeLogisticLinks\022N\n\036auto"
-    "mat_change_knowledge_group\030( \001(\0132&.Commo"
-    "n.MsgAutomatChangeKnowledgeGroup\022A\n\027auto"
-    "mat_change_superior\030) \001(\0132 .Common.MsgAu"
-    "tomatChangeSuperior\022J\n\027unit_knowledge_cr"
-    "eation\030* \001(\0132).MsgsSimToClient.MsgUnitKn"
-    "owledgeCreation\022F\n\025unit_knowledge_update"
-    "\030+ \001(\0132\'.MsgsSimToClient.MsgUnitKnowledg"
-    "eUpdate\022P\n\032unit_knowledge_destruction\030, "
-    "\001(\0132,.MsgsSimToClient.MsgUnitKnowledgeDe"
-    "struction\022:\n\017start_unit_fire\030- \001(\0132!.Msg"
-    "sSimToClient.MsgStartUnitFire\0228\n\016stop_un"
-    "it_fire\030. \001(\0132 .MsgsSimToClient.MsgStopU"
-    "nitFire\022<\n\020start_crowd_fire\030/ \001(\0132\".Msgs"
-    "SimToClient.MsgStartCrowdFire\022:\n\017stop_cr"
-    "owd_fire\0300 \001(\0132!.MsgsSimToClient.MsgStop"
-    "CrowdFire\0220\n\texplosion\0301 \001(\0132\035.MsgsSimTo"
-    "Client.MsgExplosion\022>\n\021start_fire_effect"
-    "\0302 \001(\0132#.MsgsSimToClient.MsgStartFireEff"
-    "ect\022<\n\020stop_fire_effect\0303 \001(\0132\".MsgsSimT"
-    "oClient.MsgStopFireEffect\022*\n\006report\0304 \001("
-    "\0132\032.MsgsSimToClient.MsgReport\022?\n\021invalid"
-    "ate_report\0305 \001(\0132$.MsgsSimToClient.MsgIn"
-    "validateReport\022(\n\005trace\0306 \001(\0132\031.MsgsSimT"
-    "oClient.MsgTrace\022=\n\020decisional_state\0307 \001"
-    "(\0132#.MsgsSimToClient.MsgDecisionalState\022"
-    "5\n\014debug_points\0308 \001(\0132\037.MsgsSimToClient."
-    "MsgDebugPoints\022>\n\021unit_vision_cones\0309 \001("
-    "\0132#.MsgsSimToClient.MsgUnitVisionCones\0229"
-    "\n\016unit_detection\030: \001(\0132!.MsgsSimToClient"
-    ".MsgUnitDetection\022=\n\020object_detection\030; "
-    "\001(\0132#.MsgsSimToClient.MsgObjectDetection"
-    "\022V\n\035crowd_concentration_detection\030< \001(\0132"
-    "/.MsgsSimToClient.MsgCrowdConcentrationD"
-    "etection\022D\n\024crowd_flow_detection\030= \001(\0132&"
-    ".MsgsSimToClient.MsgCrowdFlowDetection\022("
-    "\n\nunit_order\030> \001(\0132\024.Common.MsgUnitOrder"
-    "\022.\n\rautomat_order\030? \001(\0132\027.Common.MsgAuto"
-    "matOrder\022*\n\013crowd_order\030@ \001(\0132\025.Common.M"
-    "sgCrowdOrder\022;\n\017object_creation\030A \001(\0132\"."
-    "MsgsSimToClient.MsgObjectCreation\022A\n\022obj"
-    "ect_destruction\030B \001(\0132%.MsgsSimToClient."
-    "MsgObjectDestruction\0227\n\robject_update\030C "
-    "\001(\0132 .MsgsSimToClient.MsgObjectUpdate\022N\n"
-    "\031object_knowledge_creation\030D \001(\0132+.MsgsS"
-    "imToClient.MsgObjectKnowledgeCreation\022J\n"
-    "\027object_knowledge_update\030E \001(\0132).MsgsSim"
-    "ToClient.MsgObjectKnowledgeUpdate\022T\n\034obj"
-    "ect_knowledge_destruction\030F \001(\0132..MsgsSi"
-    "mToClient.MsgObjectKnowledgeDestruction\022"
-    "U\n\035log_medical_handling_creation\030G \001(\0132."
-    ".MsgsSimToClient.MsgLogMedicalHandlingCr"
-    "eation\022Q\n\033log_medical_handling_update\030H "
-    "\001(\0132,.MsgsSimToClient.MsgLogMedicalHandl"
-    "ingUpdate\022[\n log_medical_handling_destru"
-    "ction\030I \001(\01321.MsgsSimToClient.MsgLogMedi"
-    "calHandlingDestruction\022>\n\021log_medical_st"
-    "ate\030J \001(\0132#.MsgsSimToClient.MsgLogMedica"
-    "lState\022]\n!log_maintenance_handling_creat"
-    "ion\030K \001(\01322.MsgsSimToClient.MsgLogMainte"
-    "nanceHandlingCreation\022Y\n\037log_maintenance"
-    "_handling_update\030L \001(\01320.MsgsSimToClient"
-    ".MsgLogMaintenanceHandlingUpdate\022c\n$log_"
-    "maintenance_handling_destruction\030M \001(\01325"
-    ".MsgsSimToClient.MsgLogMaintenanceHandli"
-    "ngDestruction\022F\n\025log_maintenance_state\030N"
-    " \001(\0132\'.MsgsSimToClient.MsgLogMaintenance"
-    "State\022S\n\034log_supply_handling_creation\030O "
-    "\001(\0132-.MsgsSimToClient.MsgLogSupplyHandli"
-    "ngCreation\022O\n\032log_supply_handling_update"
-    "\030P \001(\0132+.MsgsSimToClient.MsgLogSupplyHan"
-    "dlingUpdate\022Y\n\037log_supply_handling_destr"
-    "uction\030Q \001(\01320.MsgsSimToClient.MsgLogSup"
-    "plyHandlingDestruction\022<\n\020log_supply_sta"
-    "te\030R \001(\0132\".MsgsSimToClient.MsgLogSupplyS"
-    "tate\022>\n\021log_supply_quotas\030S \001(\0132#.MsgsSi"
-    "mToClient.MsgLogSupplyQuotas\0229\n\016crowd_cr"
-    "eation\030T \001(\0132!.MsgsSimToClient.MsgCrowdC"
-    "reation\0225\n\014crowd_update\030U \001(\0132\037.MsgsSimT"
-    "oClient.MsgCrowdUpdate\022T\n\034crowd_concentr"
-    "ation_creation\030V \001(\0132..MsgsSimToClient.M"
-    "sgCrowdConcentrationCreation\022Z\n\037crowd_co"
-    "ncentration_destruction\030W \001(\01321.MsgsSimT"
-    "oClient.MsgCrowdConcentrationDestruction"
-    "\022P\n\032crowd_concentration_update\030X \001(\0132,.M"
-    "sgsSimToClient.MsgCrowdConcentrationUpda"
-    "te\022B\n\023crowd_flow_creation\030Y \001(\0132%.MsgsSi"
-    "mToClient.MsgCrowdFlowCreation\022H\n\026crowd_"
-    "flow_destruction\030Z \001(\0132(.MsgsSimToClient"
-    ".MsgCrowdFlowDestruction\022>\n\021crowd_flow_u"
-    "pdate\030[ \001(\0132#.MsgsSimToClient.MsgCrowdFl"
-    "owUpdate\022L\n\030crowd_knowledge_creation\030\\ \001"
-    "(\0132*.MsgsSimToClient.MsgCrowdKnowledgeCr"
-    "eation\022H\n\026crowd_knowledge_update\030] \001(\0132("
-    ".MsgsSimToClient.MsgCrowdKnowledgeUpdate"
-    "\022R\n\033crowd_knowledge_destruction\030^ \001(\0132-."
-    "MsgsSimToClient.MsgCrowdKnowledgeDestruc"
-    "tion\022g\n&crowd_concentration_knowledge_cr"
-    "eation\030_ \001(\01327.MsgsSimToClient.MsgCrowdC"
-    "oncentrationKnowledgeCreation\022m\n)crowd_c"
-    "oncentration_knowledge_destruction\030` \001(\013"
-    "2:.MsgsSimToClient.MsgCrowdConcentration"
-    "KnowledgeDestruction\022c\n$crowd_concentrat"
-    "ion_knowledge_update\030a \001(\01325.MsgsSimToCl"
-    "ient.MsgCrowdConcentrationKnowledgeUpdat"
-    "e\022U\n\035crowd_flow_knowledge_creation\030b \001(\013"
-    "2..MsgsSimToClient.MsgCrowdFlowKnowledge"
-    "Creation\022[\n crowd_flow_knowledge_destruc"
-    "tion\030c \001(\01321.MsgsSimToClient.MsgCrowdFlo"
-    "wKnowledgeDestruction\022Q\n\033crowd_flow_know"
-    "ledge_update\030d \001(\0132,.MsgsSimToClient.Msg"
-    "CrowdFlowKnowledgeUpdate\0227\n\rfolk_creatio"
-    "n\030e \001(\0132 .MsgsSimToClient.MsgFolkCreatio"
-    "n\022>\n\021folk_graph_update\030f \001(\0132#.MsgsSimTo"
-    "Client.MsgFolkGraphUpdate\022O\n\032control_glo"
-    "bal_weather_ack\030g \001(\0132+.MsgsSimToClient."
-    "MsgControlGlobalWeatherAck\022M\n\031control_lo"
-    "cal_weather_ack\030h \001(\0132*.MsgsSimToClient."
-    "MsgControlLocalWeatherAck\022U\n\035control_che"
-    "ckpoint_save_begin\030i \001(\0132..MsgsSimToClie"
-    "nt.MsgControlCheckPointSaveBegin\022b\n$cont"
-    "rol_checkpoint_set_frequency_ack\030j \001(\01324"
-    ".MsgsSimToClient.MsgControlCheckPointSet"
-    "FrequencyAck\022X\n\037control_checkpoint_save_"
-    "now_ack\030k \001(\0132/.MsgsSimToClient.MsgContr"
-    "olCheckPointSaveNowAck\022Z\n control_send_c"
-    "urrent_state_begin\030l \001(\01320.MsgsSimToClie"
-    "nt.MsgControlSendCurrentStateBegin\022V\n\036co"
-    "ntrol_send_current_state_end\030m \001(\0132..Msg"
-    "sSimToClient.MsgControlSendCurrentStateE"
-    "nd\0229\n\016urban_creation\030n \001(\0132!.MsgsSimToCl"
-    "ient.MsgUrbanCreation\0225\n\014urban_update\030o "
-    "\001(\0132\037.MsgsSimToClient.MsgUrbanUpdate\022L\n\030"
-    "urban_knowledge_creation\030p \001(\0132*.MsgsSim"
-    "ToClient.MsgUrbanKnowledgeCreation\022H\n\026ur"
-    "ban_knowledge_update\030q \001(\0132(.MsgsSimToCl"
-    "ient.MsgUrbanKnowledgeUpdate\022R\n\033urban_kn"
-    "owledge_destruction\030r \001(\0132-.MsgsSimToCli"
-    "ent.MsgUrbanKnowledgeDestruction\022-\n\016stoc"
-    "k_resource\030s \001(\0132\025.Common.StockResource\022"
-    ";\n\017urban_detection\030t \001(\0132\".MsgsSimToClie"
-    "nt.MsgUrbanDetection\022Z\n knowledge_group_"
-    "magic_action_ack\030u \001(\01320.MsgsSimToClient"
-    ".MsgKnowledgeGroupMagicActionAck\022L\n\030know"
-    "ledge_group_creation\030v \001(\0132*.MsgsSimToCl"
-    "ient.MsgKnowledgeGroupCreation\022H\n\026knowle"
-    "dge_group_update\030w \001(\0132(.MsgsSimToClient"
-    ".MsgKnowledgeGroupUpdate\022S\n\034knowledge_gr"
-    "oup_creation_ack\030x \001(\0132-.MsgsSimToClient"
-    ".MsgKnowledgeGroupCreationAck\022O\n\032knowled"
-    "ge_group_update_ack\030y \001(\0132+.MsgsSimToCli"
-    "ent.MsgKnowledgeGroupUpdateAck\022R\n\033knowle"
-    "dge_group_destruction\030z \001(\0132-.MsgsSimToC"
-    "lient.MsgKnowledgeGroupDestruction\022R\n\034ac"
-    "tion_create_fire_order_ack\030{ \001(\0132,.MsgsS"
-    "imToClient.MsgActionCreateFireOrderAck\022H"
-    "\n\026control_global_weather\030| \001(\0132(.MsgsSim"
-    "ToClient.MsgControlGlobalWeather\022W\n\036cont"
-    "rol_local_weather_creation\030} \001(\0132/.MsgsS"
-    "imToClient.MsgControlLocalWeatherCreatio"
-    "n\022]\n!control_local_weather_destruction\030~"
-    " \001(\01322.MsgsSimToClient.MsgControlLocalWe"
-    "atherDestruction*\217\002\n\033EnumLogSupplyHandli"
-    "ngStatus\022\035\n\031convoi_en_attente_camions\020\001\022"
-    "\027\n\023convoi_constitution\020\002\022,\n(convoi_depla"
-    "cement_vers_point_chargement\020\003\022\025\n\021convoi"
-    "_chargement\020\004\022.\n*convoi_deplacement_vers"
-    "_point_dechargement\020\005\022\027\n\023convoi_decharge"
-    "ment\020\006\022\035\n\031convoi_deplacement_retour\020\007\022\013\n"
-    "\007termine\020\010*V\n\033EnumUnitIdentificationLeve"
-    "l\022\016\n\nidentifiee\020\000\022\014\n\010reconnue\020\001\022\014\n\010detec"
-    "tee\020\002\022\013\n\007signale\020\003*V\n\016EnumReportType\022\017\n\013"
-    "information\020\000\022\017\n\013operational\020\001\022\025\n\021except"
-    "ional_event\020\002\022\013\n\007warning\020\003", 38826);
+    "mToClient.UrbanAttributes.Structure\022 \n\005c"
+    "olor\030\003 \001(\0132\021.Common.RgbaColor\022I\n\017infrast"
+    "ructures\030\004 \001(\01320.MsgsSimToClient.UrbanAt"
+    "tributes.Infrastructures\032\206\001\n\014Architectur"
+    "e\022\016\n\006height\030\001 \002(\002\022\024\n\014floor_number\030\002 \002(\005\022"
+    "\022\n\nroof_shape\030\003 \002(\t\022\020\n\010material\030\004 \002(\t\022\022\n"
+    "\noccupation\030\005 \002(\002\022\026\n\016trafficability\030\006 \002("
+    "\002\032\032\n\tStructure\022\r\n\005state\030\001 \002(\r\032D\n\017Infrast"
+    "ructures\0221\n\020resource_network\030\001 \003(\0132\027.Com"
+    "mon.ResourceNetwork\"\321\001\n\020MsgUrbanCreation"
+    "\022+\n\014urban_object\030\001 \002(\0132\025.Common.UrbanObj"
+    "ectId\022\014\n\004name\030\002 \002(\t\022%\n\010location\030\003 \002(\0132\023."
+    "Common.MsgLocation\0224\n\nattributes\030\004 \001(\0132 "
+    ".MsgsSimToClient.UrbanAttributes\022%\n\006pare"
+    "nt\030\005 \001(\0132\025.Common.UrbanObjectId\"\222\001\n\021MsgU"
+    "rbanDetection\022 \n\010observer\030\001 \002(\0132\016.Common"
+    ".UnitId\022+\n\014urban_object\030\002 \002(\0132\025.Common.U"
+    "rbanObjectId\022.\n\nvisibility\030\003 \002(\0162\032.Commo"
+    "n.EnumUnitVisibility\"\232\001\n\016MsgUrbanUpdate\022"
+    "+\n\014urban_object\030\001 \002(\0132\025.Common.UrbanObje"
+    "ctId\022%\n\010location\030\002 \001(\0132\023.Common.MsgLocat"
+    "ion\0224\n\nattributes\030\003 \001(\0132 .MsgsSimToClien"
+    "t.UrbanAttributes\"\263\001\n\031MsgKnowledgeGroupC"
+    "reation\0221\n\017knowledge_group\030\001 \002(\0132\030.Commo"
+    "n.KnowledgeGroupId\022\036\n\005party\030\002 \002(\0132\017.Comm"
+    "on.PartyId\022(\n\006parent\030\003 \001(\0132\030.Common.Know"
+    "ledgeGroupId\022\014\n\004type\030\004 \002(\t\022\013\n\003jam\030\005 \001(\010\""
+    "\265\001\n\027MsgKnowledgeGroupUpdate\0221\n\017knowledge"
+    "_group\030\001 \002(\0132\030.Common.KnowledgeGroupId\022\036"
+    "\n\005party\030\002 \001(\0132\017.Common.PartyId\022(\n\006parent"
+    "\030\003 \001(\0132\030.Common.KnowledgeGroupId\022\017\n\007enab"
+    "led\030\004 \001(\010\022\014\n\004type\030\005 \001(\t\"\265\001\n\021KnowledgeGro"
+    "upAck\"\237\001\n\tErrorCode\022\014\n\010no_error\020\000\022\026\n\022err"
+    "or_invalid_unit\020\001\022\032\n\026error_invalid_super"
+    "ior\020\002\022\026\n\022error_invalid_camp\020\003\022 \n\034error_i"
+    "nvalid_knowledgegroup\020\004\022\026\n\022error_invalid"
+    "_type\020\005\"\226\001\n\037MsgKnowledgeGroupMagicAction"
+    "Ack\0221\n\017knowledge_group\030\001 \002(\0132\030.Common.Kn"
+    "owledgeGroupId\022@\n\nerror_code\030\002 \002(\0162,.Msg"
+    "sSimToClient.KnowledgeGroupAck.ErrorCode"
+    "\"\223\001\n\034MsgKnowledgeGroupCreationAck\0221\n\017kno"
+    "wledge_group\030\001 \002(\0132\030.Common.KnowledgeGro"
+    "upId\022@\n\nerror_code\030\002 \002(\0162,.MsgsSimToClie"
+    "nt.KnowledgeGroupAck.ErrorCode\"\221\001\n\032MsgKn"
+    "owledgeGroupUpdateAck\0221\n\017knowledge_group"
+    "\030\001 \002(\0132\030.Common.KnowledgeGroupId\022@\n\nerro"
+    "r_code\030\002 \002(\0162,.MsgsSimToClient.Knowledge"
+    "GroupAck.ErrorCode\"q\n\034MsgKnowledgeGroupD"
+    "estruction\0221\n\017knowledge_group\030\001 \002(\0132\030.Co"
+    "mmon.KnowledgeGroupId\022\036\n\005party\030\002 \002(\0132\017.C"
+    "ommon.PartyId\"\034\n\032MsgControlGlobalWeather"
+    "Ack\"\033\n\031MsgControlLocalWeatherAck\"o\n\027MsgC"
+    "ontrolGlobalWeather\022\"\n\007weather\030\001 \002(\0132\021.C"
+    "ommon.WeatherId\0220\n\nattributes\030\002 \002(\0132\034.Co"
+    "mmon.MsgWeatherAttributes\"\346\001\n\036MsgControl"
+    "LocalWeatherCreation\022\"\n\007weather\030\001 \002(\0132\021."
+    "Common.WeatherId\0224\n\023top_left_coordinate\030"
+    "\002 \001(\0132\027.Common.MsgCoordLatLong\0228\n\027bottom"
+    "_right_coordinate\030\003 \001(\0132\027.Common.MsgCoor"
+    "dLatLong\0220\n\nattributes\030\004 \001(\0132\034.Common.Ms"
+    "gWeatherAttributes\"G\n!MsgControlLocalWea"
+    "therDestruction\022\"\n\007weather\030\001 \002(\0132\021.Commo"
+    "n.WeatherId\"\333H\n\016MsgSimToClient\022\017\n\007contex"
+    "t\030\001 \001(\005\0228\n\007message\030\002 \002(\0132\'.MsgsSimToClie"
+    "nt.MsgSimToClient.Content\032\375G\n\007Content\0228\n"
+    "\016unit_order_ack\030\001 \001(\0132 .MsgsSimToClient."
+    "MsgUnitOrderAck\022>\n\021automat_order_ack\030\002 \001"
+    "(\0132#.MsgsSimToClient.MsgAutomatOrderAck\022"
+    ":\n\017crowd_order_ack\030\003 \001(\0132!.MsgsSimToClie"
+    "nt.MsgCrowdOrderAck\0228\n\016frag_order_ack\030\004 "
+    "\001(\0132 .MsgsSimToClient.MsgFragOrderAck\022C\n"
+    "\024set_automat_mode_ack\030\005 \001(\0132%.MsgsSimToC"
+    "lient.MsgSetAutomatModeAck\022M\n\031unit_creat"
+    "ion_request_ack\030\006 \001(\0132*.MsgsSimToClient."
+    "MsgUnitCreationRequestAck\022<\n\020magic_actio"
+    "n_ack\030\007 \001(\0132\".MsgsSimToClient.MsgMagicAc"
+    "tionAck\022E\n\025unit_magic_action_ack\030\010 \001(\0132&"
+    ".MsgsSimToClient.MsgUnitMagicActionAck\022I"
+    "\n\027object_magic_action_ack\030\t \001(\0132(.MsgsSi"
+    "mToClient.MsgObjectMagicActionAck\022G\n\026cro"
+    "wd_magic_action_ack\030\n \001(\0132\'.MsgsSimToCli"
+    "ent.MsgCrowdMagicActionAck\022D\n\024change_dip"
+    "lomacy_ack\030\013 \001(\0132&.MsgsSimToClient.MsgCh"
+    "angeDiplomacyAck\022^\n\"automat_change_knowl"
+    "edge_group_ack\030\014 \001(\01322.MsgsSimToClient.M"
+    "sgAutomatChangeKnowledgeGroupAck\022\\\n!auto"
+    "mat_change_logistic_links_ack\030\r \001(\01321.Ms"
+    "gsSimToClient.MsgAutomatChangeLogisticLi"
+    "nksAck\022Q\n\033automat_change_superior_ack\030\016 "
+    "\001(\0132,.MsgsSimToClient.MsgAutomatChangeSu"
+    "periorAck\022K\n\030unit_change_superior_ack\030\017 "
+    "\001(\0132).MsgsSimToClient.MsgUnitChangeSuper"
+    "iorAck\022J\n\030log_supply_push_flow_ack\030\020 \001(\013"
+    "2(.MsgsSimToClient.MsgLogSupplyPushFlowA"
+    "ck\022R\n\034log_supply_change_quotas_ack\030\021 \001(\013"
+    "2,.MsgsSimToClient.MsgLogSupplyChangeQuo"
+    "tasAck\022C\n\023control_information\030\022 \001(\0132&.Ms"
+    "gsSimToClient.MsgControlInformation\022V\n\035c"
+    "ontrol_profiling_information\030\023 \001(\0132/.Msg"
+    "sSimToClient.MsgControlProfilingInformat"
+    "ion\022@\n\022control_begin_tick\030\024 \001(\0132$.MsgsSi"
+    "mToClient.MsgControlBeginTick\022<\n\020control"
+    "_end_tick\030\025 \001(\0132\".MsgsSimToClient.MsgCon"
+    "trolEndTick\022<\n\020control_stop_ack\030\026 \001(\0132\"."
+    "MsgsSimToClient.MsgControlStopAck\022>\n\021con"
+    "trol_pause_ack\030\027 \001(\0132#.MsgsSimToClient.M"
+    "sgControlPauseAck\022@\n\022control_resume_ack\030"
+    "\030 \001(\0132$.MsgsSimToClient.MsgControlResume"
+    "Ack\022V\n\036control_change_time_factor_ack\030\031 "
+    "\001(\0132..MsgsSimToClient.MsgControlChangeTi"
+    "meFactorAck\022R\n\034control_date_time_change_"
+    "ack\030\032 \001(\0132,.MsgsSimToClient.MsgControlDa"
+    "tetimeChangeAck\022Q\n\033control_checkpoint_sa"
+    "ve_end\030\033 \001(\0132,.MsgsSimToClient.MsgContro"
+    "lCheckPointSaveEnd\022A\n\022formation_creation"
+    "\030\034 \001(\0132%.MsgsSimToClient.MsgFormationCre"
+    "ation\0229\n\016party_creation\030\035 \001(\0132!.MsgsSimT"
+    "oClient.MsgPartyCreation\022=\n\020automat_crea"
+    "tion\030\036 \001(\0132#.MsgsSimToClient.MsgAutomatC"
+    "reation\022A\n\022automat_attributes\030\037 \001(\0132%.Ms"
+    "gsSimToClient.MsgAutomatAttributes\0227\n\run"
+    "it_creation\030  \001(\0132 .MsgsSimToClient.MsgU"
+    "nitCreation\022;\n\017unit_attributes\030! \001(\0132\".M"
+    "sgsSimToClient.MsgUnitAttributes\0227\n\runit"
+    "_pathfind\030\" \001(\0132 .MsgsSimToClient.MsgUni"
+    "tPathFind\022=\n\020unit_destruction\030# \001(\0132#.Ms"
+    "gsSimToClient.MsgUnitDestruction\022F\n\025unit"
+    "_environment_type\030$ \001(\0132\'.MsgsSimToClien"
+    "t.MsgUnitEnvironmentType\0224\n\020change_diplo"
+    "macy\030% \001(\0132\032.Common.MsgChangeDiplomacy\022;"
+    "\n\024unit_change_superior\030& \001(\0132\035.Common.Ms"
+    "gUnitChangeSuperior\022L\n\035automat_change_lo"
+    "gistic_links\030\' \001(\0132%.Common.MsgAutomatCh"
+    "angeLogisticLinks\022N\n\036automat_change_know"
+    "ledge_group\030( \001(\0132&.Common.MsgAutomatCha"
+    "ngeKnowledgeGroup\022A\n\027automat_change_supe"
+    "rior\030) \001(\0132 .Common.MsgAutomatChangeSupe"
+    "rior\022J\n\027unit_knowledge_creation\030* \001(\0132)."
+    "MsgsSimToClient.MsgUnitKnowledgeCreation"
+    "\022F\n\025unit_knowledge_update\030+ \001(\0132\'.MsgsSi"
+    "mToClient.MsgUnitKnowledgeUpdate\022P\n\032unit"
+    "_knowledge_destruction\030, \001(\0132,.MsgsSimTo"
+    "Client.MsgUnitKnowledgeDestruction\022:\n\017st"
+    "art_unit_fire\030- \001(\0132!.MsgsSimToClient.Ms"
+    "gStartUnitFire\0228\n\016stop_unit_fire\030. \001(\0132 "
+    ".MsgsSimToClient.MsgStopUnitFire\022<\n\020star"
+    "t_crowd_fire\030/ \001(\0132\".MsgsSimToClient.Msg"
+    "StartCrowdFire\022:\n\017stop_crowd_fire\0300 \001(\0132"
+    "!.MsgsSimToClient.MsgStopCrowdFire\0220\n\tex"
+    "plosion\0301 \001(\0132\035.MsgsSimToClient.MsgExplo"
+    "sion\022>\n\021start_fire_effect\0302 \001(\0132#.MsgsSi"
+    "mToClient.MsgStartFireEffect\022<\n\020stop_fir"
+    "e_effect\0303 \001(\0132\".MsgsSimToClient.MsgStop"
+    "FireEffect\022*\n\006report\0304 \001(\0132\032.MsgsSimToCl"
+    "ient.MsgReport\022?\n\021invalidate_report\0305 \001("
+    "\0132$.MsgsSimToClient.MsgInvalidateReport\022"
+    "(\n\005trace\0306 \001(\0132\031.MsgsSimToClient.MsgTrac"
+    "e\022=\n\020decisional_state\0307 \001(\0132#.MsgsSimToC"
+    "lient.MsgDecisionalState\0225\n\014debug_points"
+    "\0308 \001(\0132\037.MsgsSimToClient.MsgDebugPoints\022"
+    ">\n\021unit_vision_cones\0309 \001(\0132#.MsgsSimToCl"
+    "ient.MsgUnitVisionCones\0229\n\016unit_detectio"
+    "n\030: \001(\0132!.MsgsSimToClient.MsgUnitDetecti"
+    "on\022=\n\020object_detection\030; \001(\0132#.MsgsSimTo"
+    "Client.MsgObjectDetection\022V\n\035crowd_conce"
+    "ntration_detection\030< \001(\0132/.MsgsSimToClie"
+    "nt.MsgCrowdConcentrationDetection\022D\n\024cro"
+    "wd_flow_detection\030= \001(\0132&.MsgsSimToClien"
+    "t.MsgCrowdFlowDetection\022(\n\nunit_order\030> "
+    "\001(\0132\024.Common.MsgUnitOrder\022.\n\rautomat_ord"
+    "er\030? \001(\0132\027.Common.MsgAutomatOrder\022*\n\013cro"
+    "wd_order\030@ \001(\0132\025.Common.MsgCrowdOrder\022;\n"
+    "\017object_creation\030A \001(\0132\".MsgsSimToClient"
+    ".MsgObjectCreation\022A\n\022object_destruction"
+    "\030B \001(\0132%.MsgsSimToClient.MsgObjectDestru"
+    "ction\0227\n\robject_update\030C \001(\0132 .MsgsSimTo"
+    "Client.MsgObjectUpdate\022N\n\031object_knowled"
+    "ge_creation\030D \001(\0132+.MsgsSimToClient.MsgO"
+    "bjectKnowledgeCreation\022J\n\027object_knowled"
+    "ge_update\030E \001(\0132).MsgsSimToClient.MsgObj"
+    "ectKnowledgeUpdate\022T\n\034object_knowledge_d"
+    "estruction\030F \001(\0132..MsgsSimToClient.MsgOb"
+    "jectKnowledgeDestruction\022U\n\035log_medical_"
+    "handling_creation\030G \001(\0132..MsgsSimToClien"
+    "t.MsgLogMedicalHandlingCreation\022Q\n\033log_m"
+    "edical_handling_update\030H \001(\0132,.MsgsSimTo"
+    "Client.MsgLogMedicalHandlingUpdate\022[\n lo"
+    "g_medical_handling_destruction\030I \001(\01321.M"
+    "sgsSimToClient.MsgLogMedicalHandlingDest"
+    "ruction\022>\n\021log_medical_state\030J \001(\0132#.Msg"
+    "sSimToClient.MsgLogMedicalState\022]\n!log_m"
+    "aintenance_handling_creation\030K \001(\01322.Msg"
+    "sSimToClient.MsgLogMaintenanceHandlingCr"
+    "eation\022Y\n\037log_maintenance_handling_updat"
+    "e\030L \001(\01320.MsgsSimToClient.MsgLogMaintena"
+    "nceHandlingUpdate\022c\n$log_maintenance_han"
+    "dling_destruction\030M \001(\01325.MsgsSimToClien"
+    "t.MsgLogMaintenanceHandlingDestruction\022F"
+    "\n\025log_maintenance_state\030N \001(\0132\'.MsgsSimT"
+    "oClient.MsgLogMaintenanceState\022S\n\034log_su"
+    "pply_handling_creation\030O \001(\0132-.MsgsSimTo"
+    "Client.MsgLogSupplyHandlingCreation\022O\n\032l"
+    "og_supply_handling_update\030P \001(\0132+.MsgsSi"
+    "mToClient.MsgLogSupplyHandlingUpdate\022Y\n\037"
+    "log_supply_handling_destruction\030Q \001(\01320."
+    "MsgsSimToClient.MsgLogSupplyHandlingDest"
+    "ruction\022<\n\020log_supply_state\030R \001(\0132\".Msgs"
+    "SimToClient.MsgLogSupplyState\022>\n\021log_sup"
+    "ply_quotas\030S \001(\0132#.MsgsSimToClient.MsgLo"
+    "gSupplyQuotas\0229\n\016crowd_creation\030T \001(\0132!."
+    "MsgsSimToClient.MsgCrowdCreation\0225\n\014crow"
+    "d_update\030U \001(\0132\037.MsgsSimToClient.MsgCrow"
+    "dUpdate\022T\n\034crowd_concentration_creation\030"
+    "V \001(\0132..MsgsSimToClient.MsgCrowdConcentr"
+    "ationCreation\022Z\n\037crowd_concentration_des"
+    "truction\030W \001(\01321.MsgsSimToClient.MsgCrow"
+    "dConcentrationDestruction\022P\n\032crowd_conce"
+    "ntration_update\030X \001(\0132,.MsgsSimToClient."
+    "MsgCrowdConcentrationUpdate\022B\n\023crowd_flo"
+    "w_creation\030Y \001(\0132%.MsgsSimToClient.MsgCr"
+    "owdFlowCreation\022H\n\026crowd_flow_destructio"
+    "n\030Z \001(\0132(.MsgsSimToClient.MsgCrowdFlowDe"
+    "struction\022>\n\021crowd_flow_update\030[ \001(\0132#.M"
+    "sgsSimToClient.MsgCrowdFlowUpdate\022L\n\030cro"
+    "wd_knowledge_creation\030\\ \001(\0132*.MsgsSimToC"
+    "lient.MsgCrowdKnowledgeCreation\022H\n\026crowd"
+    "_knowledge_update\030] \001(\0132(.MsgsSimToClien"
+    "t.MsgCrowdKnowledgeUpdate\022R\n\033crowd_knowl"
+    "edge_destruction\030^ \001(\0132-.MsgsSimToClient"
+    ".MsgCrowdKnowledgeDestruction\022g\n&crowd_c"
+    "oncentration_knowledge_creation\030_ \001(\01327."
+    "MsgsSimToClient.MsgCrowdConcentrationKno"
+    "wledgeCreation\022m\n)crowd_concentration_kn"
+    "owledge_destruction\030` \001(\0132:.MsgsSimToCli"
+    "ent.MsgCrowdConcentrationKnowledgeDestru"
+    "ction\022c\n$crowd_concentration_knowledge_u"
+    "pdate\030a \001(\01325.MsgsSimToClient.MsgCrowdCo"
+    "ncentrationKnowledgeUpdate\022U\n\035crowd_flow"
+    "_knowledge_creation\030b \001(\0132..MsgsSimToCli"
+    "ent.MsgCrowdFlowKnowledgeCreation\022[\n cro"
+    "wd_flow_knowledge_destruction\030c \001(\01321.Ms"
+    "gsSimToClient.MsgCrowdFlowKnowledgeDestr"
+    "uction\022Q\n\033crowd_flow_knowledge_update\030d "
+    "\001(\0132,.MsgsSimToClient.MsgCrowdFlowKnowle"
+    "dgeUpdate\0227\n\rfolk_creation\030e \001(\0132 .MsgsS"
+    "imToClient.MsgFolkCreation\022>\n\021folk_graph"
+    "_update\030f \001(\0132#.MsgsSimToClient.MsgFolkG"
+    "raphUpdate\022O\n\032control_global_weather_ack"
+    "\030g \001(\0132+.MsgsSimToClient.MsgControlGloba"
+    "lWeatherAck\022M\n\031control_local_weather_ack"
+    "\030h \001(\0132*.MsgsSimToClient.MsgControlLocal"
+    "WeatherAck\022U\n\035control_checkpoint_save_be"
+    "gin\030i \001(\0132..MsgsSimToClient.MsgControlCh"
+    "eckPointSaveBegin\022b\n$control_checkpoint_"
+    "set_frequency_ack\030j \001(\01324.MsgsSimToClien"
+    "t.MsgControlCheckPointSetFrequencyAck\022X\n"
+    "\037control_checkpoint_save_now_ack\030k \001(\0132/"
+    ".MsgsSimToClient.MsgControlCheckPointSav"
+    "eNowAck\022Z\n control_send_current_state_be"
+    "gin\030l \001(\01320.MsgsSimToClient.MsgControlSe"
+    "ndCurrentStateBegin\022V\n\036control_send_curr"
+    "ent_state_end\030m \001(\0132..MsgsSimToClient.Ms"
+    "gControlSendCurrentStateEnd\0229\n\016urban_cre"
+    "ation\030n \001(\0132!.MsgsSimToClient.MsgUrbanCr"
+    "eation\0225\n\014urban_update\030o \001(\0132\037.MsgsSimTo"
+    "Client.MsgUrbanUpdate\022L\n\030urban_knowledge"
+    "_creation\030p \001(\0132*.MsgsSimToClient.MsgUrb"
+    "anKnowledgeCreation\022H\n\026urban_knowledge_u"
+    "pdate\030q \001(\0132(.MsgsSimToClient.MsgUrbanKn"
+    "owledgeUpdate\022R\n\033urban_knowledge_destruc"
+    "tion\030r \001(\0132-.MsgsSimToClient.MsgUrbanKno"
+    "wledgeDestruction\022-\n\016stock_resource\030s \001("
+    "\0132\025.Common.StockResource\022;\n\017urban_detect"
+    "ion\030t \001(\0132\".MsgsSimToClient.MsgUrbanDete"
+    "ction\022Z\n knowledge_group_magic_action_ac"
+    "k\030u \001(\01320.MsgsSimToClient.MsgKnowledgeGr"
+    "oupMagicActionAck\022L\n\030knowledge_group_cre"
+    "ation\030v \001(\0132*.MsgsSimToClient.MsgKnowled"
+    "geGroupCreation\022H\n\026knowledge_group_updat"
+    "e\030w \001(\0132(.MsgsSimToClient.MsgKnowledgeGr"
+    "oupUpdate\022S\n\034knowledge_group_creation_ac"
+    "k\030x \001(\0132-.MsgsSimToClient.MsgKnowledgeGr"
+    "oupCreationAck\022O\n\032knowledge_group_update"
+    "_ack\030y \001(\0132+.MsgsSimToClient.MsgKnowledg"
+    "eGroupUpdateAck\022R\n\033knowledge_group_destr"
+    "uction\030z \001(\0132-.MsgsSimToClient.MsgKnowle"
+    "dgeGroupDestruction\022R\n\034action_create_fir"
+    "e_order_ack\030{ \001(\0132,.MsgsSimToClient.MsgA"
+    "ctionCreateFireOrderAck\022H\n\026control_globa"
+    "l_weather\030| \001(\0132(.MsgsSimToClient.MsgCon"
+    "trolGlobalWeather\022W\n\036control_local_weath"
+    "er_creation\030} \001(\0132/.MsgsSimToClient.MsgC"
+    "ontrolLocalWeatherCreation\022]\n!control_lo"
+    "cal_weather_destruction\030~ \001(\01322.MsgsSimT"
+    "oClient.MsgControlLocalWeatherDestructio"
+    "n*\217\002\n\033EnumLogSupplyHandlingStatus\022\035\n\031con"
+    "voi_en_attente_camions\020\001\022\027\n\023convoi_const"
+    "itution\020\002\022,\n(convoi_deplacement_vers_poi"
+    "nt_chargement\020\003\022\025\n\021convoi_chargement\020\004\022."
+    "\n*convoi_deplacement_vers_point_decharge"
+    "ment\020\005\022\027\n\023convoi_dechargement\020\006\022\035\n\031convo"
+    "i_deplacement_retour\020\007\022\013\n\007termine\020\010*V\n\033E"
+    "numUnitIdentificationLevel\022\016\n\nidentifiee"
+    "\020\000\022\014\n\010reconnue\020\001\022\014\n\010detectee\020\002\022\013\n\007signal"
+    "e\020\003*V\n\016EnumReportType\022\017\n\013information\020\000\022\017"
+    "\n\013operational\020\001\022\025\n\021exceptional_event\020\002\022\013"
+    "\n\007warning\020\003", 38731);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "SimToClient.proto", &protobuf_RegisterTypes);
   OrderAck::default_instance_ = new OrderAck();
@@ -5683,7 +5656,6 @@ void protobuf_AddDesc_SimToClient_2eproto() {
   UrbanAttributes_Architecture::default_instance_ = new UrbanAttributes_Architecture();
   UrbanAttributes_Structure::default_instance_ = new UrbanAttributes_Structure();
   UrbanAttributes_Infrastructures::default_instance_ = new UrbanAttributes_Infrastructures();
-  UrbanAttributes_RgbaColor::default_instance_ = new UrbanAttributes_RgbaColor();
   MsgUrbanCreation::default_instance_ = new MsgUrbanCreation();
   MsgUrbanDetection::default_instance_ = new MsgUrbanDetection();
   MsgUrbanUpdate::default_instance_ = new MsgUrbanUpdate();
@@ -5863,7 +5835,6 @@ void protobuf_AddDesc_SimToClient_2eproto() {
   UrbanAttributes_Architecture::default_instance_->InitAsDefaultInstance();
   UrbanAttributes_Structure::default_instance_->InitAsDefaultInstance();
   UrbanAttributes_Infrastructures::default_instance_->InitAsDefaultInstance();
-  UrbanAttributes_RgbaColor::default_instance_->InitAsDefaultInstance();
   MsgUrbanCreation::default_instance_->InitAsDefaultInstance();
   MsgUrbanDetection::default_instance_->InitAsDefaultInstance();
   MsgUrbanUpdate::default_instance_->InitAsDefaultInstance();
@@ -54735,321 +54706,6 @@ void UrbanAttributes_Infrastructures::Swap(UrbanAttributes_Infrastructures* othe
 // -------------------------------------------------------------------
 
 #ifndef _MSC_VER
-const int UrbanAttributes_RgbaColor::kRedFieldNumber;
-const int UrbanAttributes_RgbaColor::kGreenFieldNumber;
-const int UrbanAttributes_RgbaColor::kBlueFieldNumber;
-const int UrbanAttributes_RgbaColor::kAlphaFieldNumber;
-#endif  // !_MSC_VER
-
-UrbanAttributes_RgbaColor::UrbanAttributes_RgbaColor() {
-  SharedCtor();
-}
-
-void UrbanAttributes_RgbaColor::InitAsDefaultInstance() {
-}
-
-UrbanAttributes_RgbaColor::UrbanAttributes_RgbaColor(const UrbanAttributes_RgbaColor& from) {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void UrbanAttributes_RgbaColor::SharedCtor() {
-  _cached_size_ = 0;
-  red_ = 0;
-  green_ = 0;
-  blue_ = 0;
-  alpha_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-UrbanAttributes_RgbaColor::~UrbanAttributes_RgbaColor() {
-  SharedDtor();
-}
-
-void UrbanAttributes_RgbaColor::SharedDtor() {
-  if (this != default_instance_) {
-  }
-}
-
-const ::google::protobuf::Descriptor* UrbanAttributes_RgbaColor::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return UrbanAttributes_RgbaColor_descriptor_;
-}
-
-const UrbanAttributes_RgbaColor& UrbanAttributes_RgbaColor::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_SimToClient_2eproto();  return *default_instance_;
-}
-
-UrbanAttributes_RgbaColor* UrbanAttributes_RgbaColor::default_instance_ = NULL;
-
-UrbanAttributes_RgbaColor* UrbanAttributes_RgbaColor::New() const {
-  return new UrbanAttributes_RgbaColor;
-}
-
-void UrbanAttributes_RgbaColor::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    red_ = 0;
-    green_ = 0;
-    blue_ = 0;
-    alpha_ = 0;
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool UrbanAttributes_RgbaColor::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 red = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
-              input, &red_));
-        _set_bit(0);
-        if (input->ExpectTag(16)) goto parse_green;
-        break;
-      }
-      
-      // required int32 green = 2;
-      case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_green:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
-              input, &green_));
-        _set_bit(1);
-        if (input->ExpectTag(24)) goto parse_blue;
-        break;
-      }
-      
-      // required int32 blue = 3;
-      case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_blue:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
-              input, &blue_));
-        _set_bit(2);
-        if (input->ExpectTag(37)) goto parse_alpha;
-        break;
-      }
-      
-      // required float alpha = 4;
-      case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
-          goto handle_uninterpreted;
-        }
-       parse_alpha:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadFloat(
-              input, &alpha_));
-        _set_bit(3);
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-      
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void UrbanAttributes_RgbaColor::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
-  if (raw_buffer != NULL) {
-    UrbanAttributes_RgbaColor::SerializeWithCachedSizesToArray(raw_buffer);
-    return;
-  }
-  
-  // required int32 red = 1;
-  if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->red(), output);
-  }
-  
-  // required int32 green = 2;
-  if (_has_bit(1)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->green(), output);
-  }
-  
-  // required int32 blue = 3;
-  if (_has_bit(2)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->blue(), output);
-  }
-  
-  // required float alpha = 4;
-  if (_has_bit(3)) {
-    ::google::protobuf::internal::WireFormatLite::WriteFloat(4, this->alpha(), output);
-  }
-  
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* UrbanAttributes_RgbaColor::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // required int32 red = 1;
-  if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->red(), target);
-  }
-  
-  // required int32 green = 2;
-  if (_has_bit(1)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->green(), target);
-  }
-  
-  // required int32 blue = 3;
-  if (_has_bit(2)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->blue(), target);
-  }
-  
-  // required float alpha = 4;
-  if (_has_bit(3)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(4, this->alpha(), target);
-  }
-  
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int UrbanAttributes_RgbaColor::ByteSize() const {
-  int total_size = 0;
-  
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 red = 1;
-    if (has_red()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->red());
-    }
-    
-    // required int32 green = 2;
-    if (has_green()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->green());
-    }
-    
-    // required int32 blue = 3;
-    if (has_blue()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->blue());
-    }
-    
-    // required float alpha = 4;
-    if (has_alpha()) {
-      total_size += 1 + 4;
-    }
-    
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  _cached_size_ = total_size;
-  return total_size;
-}
-
-void UrbanAttributes_RgbaColor::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const UrbanAttributes_RgbaColor* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const UrbanAttributes_RgbaColor*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void UrbanAttributes_RgbaColor::MergeFrom(const UrbanAttributes_RgbaColor& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from._has_bit(0)) {
-      set_red(from.red());
-    }
-    if (from._has_bit(1)) {
-      set_green(from.green());
-    }
-    if (from._has_bit(2)) {
-      set_blue(from.blue());
-    }
-    if (from._has_bit(3)) {
-      set_alpha(from.alpha());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void UrbanAttributes_RgbaColor::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void UrbanAttributes_RgbaColor::CopyFrom(const UrbanAttributes_RgbaColor& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool UrbanAttributes_RgbaColor::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
-  
-  return true;
-}
-
-void UrbanAttributes_RgbaColor::Swap(UrbanAttributes_RgbaColor* other) {
-  if (other != this) {
-    std::swap(red_, other->red_);
-    std::swap(green_, other->green_);
-    std::swap(blue_, other->blue_);
-    std::swap(alpha_, other->alpha_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata UrbanAttributes_RgbaColor::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = UrbanAttributes_RgbaColor_descriptor_;
-  metadata.reflection = UrbanAttributes_RgbaColor_reflection_;
-  return metadata;
-}
-
-
-// -------------------------------------------------------------------
-
-#ifndef _MSC_VER
 const int UrbanAttributes::kArchitectureFieldNumber;
 const int UrbanAttributes::kStructureFieldNumber;
 const int UrbanAttributes::kColorFieldNumber;
@@ -55063,7 +54719,7 @@ UrbanAttributes::UrbanAttributes() {
 void UrbanAttributes::InitAsDefaultInstance() {
   architecture_ = const_cast< ::MsgsSimToClient::UrbanAttributes_Architecture*>(&::MsgsSimToClient::UrbanAttributes_Architecture::default_instance());
   structure_ = const_cast< ::MsgsSimToClient::UrbanAttributes_Structure*>(&::MsgsSimToClient::UrbanAttributes_Structure::default_instance());
-  color_ = const_cast< ::MsgsSimToClient::UrbanAttributes_RgbaColor*>(&::MsgsSimToClient::UrbanAttributes_RgbaColor::default_instance());
+  color_ = const_cast< ::Common::RgbaColor*>(&::Common::RgbaColor::default_instance());
   infrastructures_ = const_cast< ::MsgsSimToClient::UrbanAttributes_Infrastructures*>(&::MsgsSimToClient::UrbanAttributes_Infrastructures::default_instance());
 }
 
@@ -55118,7 +54774,7 @@ void UrbanAttributes::Clear() {
       if (structure_ != NULL) structure_->::MsgsSimToClient::UrbanAttributes_Structure::Clear();
     }
     if (_has_bit(2)) {
-      if (color_ != NULL) color_->::MsgsSimToClient::UrbanAttributes_RgbaColor::Clear();
+      if (color_ != NULL) color_->::Common::RgbaColor::Clear();
     }
     if (_has_bit(3)) {
       if (infrastructures_ != NULL) infrastructures_->::MsgsSimToClient::UrbanAttributes_Infrastructures::Clear();
@@ -55159,7 +54815,7 @@ bool UrbanAttributes::MergePartialFromCodedStream(
         break;
       }
       
-      // optional .MsgsSimToClient.UrbanAttributes.RgbaColor color = 3;
+      // optional .Common.RgbaColor color = 3;
       case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -55221,7 +54877,7 @@ void UrbanAttributes::SerializeWithCachedSizes(
       2, this->structure(), output);
   }
   
-  // optional .MsgsSimToClient.UrbanAttributes.RgbaColor color = 3;
+  // optional .Common.RgbaColor color = 3;
   if (_has_bit(2)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       3, this->color(), output);
@@ -55255,7 +54911,7 @@ void UrbanAttributes::SerializeWithCachedSizes(
         2, this->structure(), target);
   }
   
-  // optional .MsgsSimToClient.UrbanAttributes.RgbaColor color = 3;
+  // optional .Common.RgbaColor color = 3;
   if (_has_bit(2)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
@@ -55294,7 +54950,7 @@ int UrbanAttributes::ByteSize() const {
           this->structure());
     }
     
-    // optional .MsgsSimToClient.UrbanAttributes.RgbaColor color = 3;
+    // optional .Common.RgbaColor color = 3;
     if (has_color()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -55340,7 +54996,7 @@ void UrbanAttributes::MergeFrom(const UrbanAttributes& from) {
       mutable_structure()->::MsgsSimToClient::UrbanAttributes_Structure::MergeFrom(from.structure());
     }
     if (from._has_bit(2)) {
-      mutable_color()->::MsgsSimToClient::UrbanAttributes_RgbaColor::MergeFrom(from.color());
+      mutable_color()->::Common::RgbaColor::MergeFrom(from.color());
     }
     if (from._has_bit(3)) {
       mutable_infrastructures()->::MsgsSimToClient::UrbanAttributes_Infrastructures::MergeFrom(from.infrastructures());
