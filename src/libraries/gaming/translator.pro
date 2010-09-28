@@ -46,6 +46,7 @@ Profile.cpp \
 Reinforcements.cpp \
 ResourceNetwork.cpp\
 Score.cpp \
+StructuralStateAttribute.cpp \
 StockAttribute.cpp \
 SupplyRouteAttribute.cpp \
 SupplyStates.cpp \

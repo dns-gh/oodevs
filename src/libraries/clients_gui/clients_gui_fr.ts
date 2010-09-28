@@ -61,7 +61,7 @@
     </message>
     <message>
         <source>PhysicalFeatures/Architecture/trafficability</source>
-        <translation>Eléments physiques/Architecture/traficabilité</translation>
+        <translation>Eléments physiques/Architecture/Traficabilité</translation>
     </message>
 </context>
 <context>
@@ -457,6 +457,37 @@
     </message>
 </context>
 <context>
+    <name>PresetDialog</name>
+    <message>
+        <source>Remane preset</source>
+        <translation type="unfinished">Renommer le dégradé</translation>
+    </message>
+    <message>
+        <source>New Name:</source>
+        <translation type="unfinished">Nouveau nom :</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuler</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">Attention</translation>
+    </message>
+    <message>
+        <source>Preset name is empty.</source>
+        <translation type="unfinished">Le nom du dégradé est vide.</translation>
+    </message>
+    <message>
+        <source>Preset name already exists.</source>
+        <translation type="unfinished">Le nom du dégradé existe déjà.</translation>
+    </message>
+</context>
+<context>
     <name>PropertiesPanel</name>
     <message>
         <source>Properties</source>
@@ -780,33 +811,6 @@ Please check access permissions or write protection.</source>
     <message>
         <source>Rename preset</source>
         <translation>Renommer le dégradé</translation>
-    </message>
-</context>
-<context>
-    <name>gui::PresetDialog</name>
-    <message>
-        <source>Remane preset</source>
-        <translation>Renommer le dégradé</translation>
-    </message>
-    <message>
-        <source>New Name:</source>
-        <translation>Nouveau nom :</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translation>Attention</translation>
-    </message>
-    <message>
-        <source>Preset name is empty.</source>
-        <translation>Le nom du dégradé est vide.</translation>
-    </message>
-    <message>
-        <source>Preset name already exists.</source>
-        <translation>Le nom du dégradé existe déjà.</translation>
     </message>
 </context>
 <context>

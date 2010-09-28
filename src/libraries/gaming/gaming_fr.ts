@@ -294,6 +294,13 @@
     </message>
 </context>
 <context>
+    <name>Block</name>
+    <message>
+        <source>Info/StructuralState</source>
+        <translation type="unfinished">Info/Etat Structurel</translation>
+    </message>
+</context>
+<context>
     <name>Decisions</name>
     <message>
         <source>Mission:</source>
