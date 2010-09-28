@@ -65,7 +65,7 @@ function Start()
                                 , model.types.units["</xsl:text><xsl:value-of select="$physical"/><xsl:text>"]
                                 </xsl:text>
                                 <xsl:choose>
-                                    <xsl:when test="../@file = 'BMPion.bms'">
+                                    <xsl:when test="contains(../@file, '.bms')">
                                         <xsl:text>, model.entities.automats["SGTIA"] )</xsl:text>
                                     </xsl:when>
                                     <xsl:otherwise>
