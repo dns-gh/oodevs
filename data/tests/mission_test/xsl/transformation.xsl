@@ -184,11 +184,11 @@ end
                 <xsl:text>    :With( Polygon.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", "</xsl:text><xsl:value-of select="@type"/><xsl:text>", { config.positions.destination[1], config.positions.destination[2], config.positions.destination[3] } ) )</xsl:text>
             </xsl:when>
 
-            <xsl:when test="@type = 'Polygon' and not(@max-occurs == '1')">
+            <xsl:when test="@type = 'Polygon' and not(@max-occurs = '1')">
                 <xsl:text>    :With( PolygonList.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", { config.positions.destination[1], config.positions.destination[2], config.positions.destination[3] } ) )</xsl:text>
             </xsl:when>
 
-            <xsl:when test="@type = 'GenObject' and not(@max-occurs == '1')">
+            <xsl:when test="@type = 'GenObject' and not(@max-occurs = '1')">
                 <xsl:text>    :With( GenObjectList.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", { config.positions.destination[1], config.positions.destination[2], config.positions.destination[3] } ) )</xsl:text>
             </xsl:when>
 
@@ -204,7 +204,7 @@ end
                 <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "</xsl:text><xsl:value-of select="@type"/><xsl:text>", value = config.id.blueUnit } )</xsl:text>
             </xsl:when>
 
-            <xsl:when test="(@type = 'Agent' or @type = 'AgentBM') and not(@max-occurs == '1')">
+            <xsl:when test="(@type = 'Agent' or @type = 'AgentBM') and not(@max-occurs = '1')">
                 <xsl:text>    :With( AgentList.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", "</xsl:text><xsl:value-of select="@type"/><xsl:text>", { config.id.blueUnit } ) )</xsl:text>
             </xsl:when>
 
@@ -232,7 +232,7 @@ end
                 <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "</xsl:text><xsl:value-of select="@type"/><xsl:text>", value = 61 } )</xsl:text>
             </xsl:when>
 
-            <xsl:when test="(@type = 'AgentKnowledge' or @type='AgentKnowledgeBM') and not(@max-occurs == '1')">
+            <xsl:when test="(@type = 'AgentKnowledge' or @type='AgentKnowledgeBM') and not(@max-occurs = '1')">
                 <xsl:text>    :With( AgentKnowledgeList.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", "</xsl:text><xsl:value-of select="@type"/><xsl:text>", { config.id.redUnit } ) )</xsl:text>
             </xsl:when>
 
@@ -240,7 +240,7 @@ end
                 <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = 'Automate', value = "10" } )</xsl:text>
             </xsl:when>
 
-            <xsl:when test="@type = '(AgentKnowledge' or @type = 'AgentKnowledgeBM') and not(@max-occurs != '1')">
+            <xsl:when test="(@type = 'AgentKnowledge' or @type = 'AgentKnowledgeBM') and not(@max-occurs != '1')">
                 <xsl:text>    :With( { name = "</xsl:text><xsl:value-of select="@name"/><xsl:text>", type = "</xsl:text><xsl:value-of select="@type"/><xsl:text>", value = config.id.redUnit } )</xsl:text>
             </xsl:when>
 
