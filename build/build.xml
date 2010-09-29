@@ -301,7 +301,7 @@
 
     <target name="application.dispatcher_dll.nocrossbow" description="build Sword Dispatcher dll without crossbow"
             depends="library.dispatcher,library.actions_static,library.clients_kernel,library.ENT,library.plugins.nocrossbow">
-        <build-lib name="dispatcher_dll" outtype="shared" mode="release" depends="boost,terrain,qt,xerces,xalan"
+        <build-lib name="dispatcher_dll" outtype="shared" mode="release" depends="boost,terrain,qt,xerces,xalan,openssl"
                    pattern="dispatcher-${platform}-mt@{suffix}" input="dispatcher_dll"
                    libs="HLA,libFedTime,masalloc,tools,libprotobuf,
                          directia-${platform}-mt-4_6,
@@ -394,7 +394,7 @@
 
     <!-- <crossbowed-applications> -->
     <target name="application.dispatcher_dll.crossbow" description="build Sword Dispatcher dll with crossbow" depends="library.dispatcher,library.actions_static,library.clients_kernel,library.ENT,library.plugins.crossbow">
-        <build-lib name="dispatcher_crossbow_dll" outtype="shared" mode="release" depends="boost,terrain,qt,xerces,xalan"
+        <build-lib name="dispatcher_crossbow_dll" outtype="shared" mode="release" depends="boost,terrain,qt,xerces,xalan,openssl"
             pattern="dispatcher-crossbow-${platform}-mt" input="dispatcher_dll"
             libs="HLA,libFedTime,masalloc,tools,libprotobuf,gdal_i,
                   directia-${platform}-mt-4_6,
@@ -668,14 +668,15 @@
         </build-test>
     </target>
 
-    <target name="plugins_test" depends="library.hla_plugin,library.tic_plugin,library.bml_plugin,library.crossbow_plugin">
-        <build-test name="plugins" depends="xerces,terrain,boost"
-            libs="directia-${platform}-mt-4_6,libprotobuf,
+    <target name="plugins_test" depends="library.hla_plugin,library.tic_plugin,library.bml_plugin,library.crossbow_plugin,library.timeline_plugin">
+        <build-test name="plugins" depends="xerces,terrain,boost,openssl"
+            libs="directia-${platform}-mt-4_6,libprotobuf,MT_Logger,
             lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
             lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix},
             lib${ant.project.name}_tic_plugin-${platform}-mt@{suffix},
             lib${ant.project.name}_bml_plugin-${platform}-mt@{suffix},
             lib${ant.project.name}_script_plugin-${platform}-mt@{suffix},
+            lib${ant.project.name}_timeline_plugin-${platform}-mt@{suffix},
             lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix},
             lib${ant.project.name}_protocol-${platform}-mt">
         </build-test>
@@ -982,6 +983,7 @@
         <update name="protobuf"/>
         <update name="vcredist" package="vcredist"/>
         <update name="system"/>
+        <update name="openssl"/>
         <update-database database="directia.core" dir="${data.dir}/data/models/ada/decisional/directia5/models/libs/core"/>
         <update name="models/military" package="net.masagroup.military" todir="${data.dir}/data/models/ada/decisional/directia5/models/libs/base"/>
         <antcall target="generate-data"/>
