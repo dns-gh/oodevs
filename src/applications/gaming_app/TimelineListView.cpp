@@ -15,6 +15,7 @@
 #include "actions/ActionTasker.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/OrderType.h"
 #include "clients_gui/ValuedListItem.h"
 #include <qpainter.h>
 
@@ -86,6 +87,11 @@ void TimelineListView::NotifyCreated( const Action_ABC& action )
         if( entity )
             name = entity->GetName();
    }
+    else if ((action.GetType().GetName()=="global_weather") || (action.GetType().GetName()=="local_weather"))
+    {
+        name = "Weather";
+    }
+
     gui::ValuedListItem* item = gui::FindItem( entity, firstChild() );
     if( !item )
         item = new TimeLineEntityListItem( this, lastItem() );
