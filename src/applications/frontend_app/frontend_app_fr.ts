@@ -423,6 +423,10 @@ Description: %3</translation>
         <source>Select an exercise to start</source>
         <translation>Sélectionnez un exercice à démarrer</translation>
     </message>
+    <message>
+        <source>ERP/Timeline Export</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TerrainCreationPanel</name>

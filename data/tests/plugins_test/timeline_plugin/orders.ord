@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="133" name="move" target="356" time="2008-08-11T08:12:20" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Route" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="polygon">
+          <point coordinates="31UBQ9190988580"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+</actions>

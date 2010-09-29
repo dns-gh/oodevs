@@ -98,22 +98,18 @@
         <translation>Activer l&apos;export Crossbow</translation>
     </message>
     <message>
-        <source>Geodatabase export:</source>
-        <translation>Export geodatabase:</translation>
-    </message>
-    <message>
         <source>GDB: filename.{gdb|mdb}
 SDE connection: sde://user:password@host:port/db_name.sword</source>
         <translation>GDB: filename.{gdb|mdb}(new line)
 Connexion SDE: sde://user:password@host:port/db_name.sword</translation>
     </message>
     <message>
-        <source>Geodatabase population export:</source>
-        <translation>Export population geodatabase:</translation>
+        <source>Feature database (manage geometry information):</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Geodatabase order import:</source>
-        <translation>Import ordres geodatabase:</translation>
+        <source>Flat database (manage no geometry information):</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

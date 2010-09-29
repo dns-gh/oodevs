@@ -257,6 +257,10 @@
         </copy>
     </target>
 
+    <target name="library.timeline_plugin" description="build Timeline interoperability dispatcher plugin" depends="library.dispatcher">
+        <build-lib name="timeline_plugin" pattern="lib${ant.project.name}_timeline_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
+    </target>
+
     <target name="library.score_plugin" description="build score_plugin static library" depends="library.dispatcher,library.3a,library.indicators">
         <build-lib name="score_plugin" depends="boost,qt" pattern="lib${ant.project.name}_score_plugin-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
@@ -268,7 +272,7 @@
     <target name="library.plugins.nocrossbow" description="build all dispatcher plugins"
             depends="library.messenger_plugin,library.tic_plugin,library.dis_plugin,library.hla_plugin,library.aar_plugin,
                      library.rights_plugin,library.saver_plugin,library.replay_plugin,library.3a,
-                     library.bml_plugin,library.script_plugin,library.score_plugin,library.logger_plugin"/>
+                     library.bml_plugin,library.script_plugin,library.timeline_plugin,library.score_plugin,library.logger_plugin"/>
 
     <target name="library.plugins.crossbow" description="build all dispatcher plugins" depends="library.plugins.nocrossbow,library.crossbow_plugin"/>
 
@@ -316,6 +320,7 @@
                          lib${ant.project.name}_logger_plugin-${platform}-mt@{suffix},
                          lib${ant.project.name}_messenger_plugin-${platform}-mt@{suffix},
                          lib${ant.project.name}_script_plugin-${platform}-mt@{suffix},
+                         lib${ant.project.name}_timeline_plugin-${platform}-mt@{suffix},
                          lib${ant.project.name}_3a-${platform}-mt@{suffix},
                          lib${ant.project.name}_score_plugin-${platform}-mt@{suffix},
                          lib${ant.project.name}_dispatcher-${platform}-mt@{suffix},
@@ -410,6 +415,7 @@
                   lib${ant.project.name}_script_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_3a-${platform}-mt@{suffix},
                   lib${ant.project.name}_score_plugin-${platform}-mt@{suffix},
+                  lib${ant.project.name}_timeline_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_dispatcher-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
