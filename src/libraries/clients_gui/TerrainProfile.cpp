@@ -91,7 +91,6 @@ void TerrainProfile::UpdateVision( const geometry::Point2f& from, const geometry
     VisionLine line( detection_, from, to, height );
     float yMax = -1, xMax = 0, x = 0;
     geometry::Point2f viewer, previous, current, maxpt;
-    bool first;
     while( ! line.IsDone() )
     {
         line.Increment();
