@@ -57,12 +57,14 @@ signals:
     //! @name Signals
     //@{
     void GradientChanged( const Gradient& );
+    void ToggleVariableGradient( bool state );
     //@}
 
 private slots:
     //! @name Slots
     //@{
     void OnSelectionChanged( const QColor& color );
+    void OnEnableVariableGradient( bool state );
     void OnColorChanged( const QColor& color );
     void OnGradientEdited( const Gradient& gradient );
 

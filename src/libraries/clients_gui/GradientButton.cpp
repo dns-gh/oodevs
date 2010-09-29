@@ -120,8 +120,9 @@ namespace
 // -----------------------------------------------------------------------------
 GradientButton::GradientButton( QWidget* parent, const ElevationResolver_ABC& resolver )
     : QCanvasView( new GradientCanvas( parent, colors_ ), parent )
-    , resolver_( resolver )
-    , selected_( 0 )
+    , resolver_    ( resolver )
+    , selected_    ( 0 )
+    , disableState_( true )
 {
     setFrameStyle( QFrame::Raised | QFrame::Box );
 
@@ -291,14 +292,15 @@ void GradientButton::ClearSelection()
 void GradientButton::Update()
 {
     canvas()->setAllChanged();
-    canvas()->update();
     Gradient gradient;
     QCanvasItemList list = canvas()->allItems();
     for( QCanvasItemList::iterator it = list.begin(); it != list.end(); ++it )
     {
-        const GradientItem* item = static_cast< const GradientItem* >( *it );
+        GradientItem* item = static_cast< GradientItem* >( *it );
+        item->ToggleScale( disableState_ );
         gradient.AddColor( item->GetPercentage() / 100.f, item->GetColor() );
     }
+    canvas()->update();
     emit GradientChanged( gradient );
 }
 
@@ -322,4 +324,14 @@ void GradientButton::resizeEvent( QResizeEvent* event )
 {
     QCanvasView::resizeEvent( event );
     canvas()->resize( event->size().width(), event->size().height() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GradientButton::OnEnableVariableGradient
+// Created: LGY 2010-09-29
+// -----------------------------------------------------------------------------
+void GradientButton::OnEnableVariableGradient( bool state )
+{
+    disableState_ = state;
+    Update();
 }

@@ -48,6 +48,12 @@ signals:
     void GradientChanged( const Gradient& );
     //@}
 
+private slots:
+    //! @name slots
+    //@{
+    void OnEnableVariableGradient( bool state );
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -80,6 +86,7 @@ private:
     const ElevationResolver_ABC& resolver_;
     T_Colors colors_;
     GradientItem* selected_;
+    bool disableState_;
     //@}
 };
 

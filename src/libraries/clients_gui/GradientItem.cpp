@@ -22,9 +22,10 @@ using namespace gui;
 GradientItem::GradientItem( QCanvas* canvas, const ElevationResolver_ABC& resolver,
                             unsigned short percentage, const QColor& color )
     : QCanvasLine( canvas )
-    , resolver_  ( resolver )
-    , percentage_( percentage )
-    , color_     ( color )
+    , resolver_    ( resolver )
+    , percentage_  ( percentage )
+    , color_       ( color )
+    , disableState_( true )
 {
     UpdatePosition();
     show();
@@ -98,10 +99,13 @@ void GradientItem::draw( QPainter& painter )
         setPen( QColor( Qt::black ) );
     QCanvasLine::draw( painter );
     painter.fillRect( startPoint().x() - 3, startPoint().y(), 7, 7, pen().color() );
-    QFont font( "Normal", 8, QFont::Light );
-    painter.setFont( font );
-    const unsigned int elevation = static_cast< unsigned int >( resolver_.Compute( percentage_ ) );
-    painter.drawText( GetX(), canvas()->rect().height() - 20, boost::lexical_cast< std::string >( elevation ).c_str() );
+    if( ! disableState_ )
+    {
+        QFont font( "Normal", 8, QFont::Light );
+        painter.setFont( font );
+        const unsigned int elevation = static_cast< unsigned int >( resolver_.Compute( percentage_ ) );
+        painter.drawText( GetX(), canvas()->rect().height() - 20, boost::lexical_cast< std::string >( elevation ).c_str() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -121,4 +125,13 @@ void GradientItem::UpdatePosition()
 {
     const unsigned short x = GetX();
     setPoints( x, 0, x, canvas()->rect().height() - 30 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GradientItem::ToggleScale
+// Created: LGY 2010-09-29
+// -----------------------------------------------------------------------------
+void GradientItem::ToggleScale( bool state )
+{
+    disableState_ = state;
 }

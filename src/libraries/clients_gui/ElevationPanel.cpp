@@ -51,6 +51,7 @@ ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel
         gradient_ = new GradientWidget( new QGroupBox( 1, Qt::Horizontal, tr( "Gradient map" ), box ), preferences_, controllers, resolver );
 
         connect( fitColorGradienttoViewPort_, SIGNAL( toggled( bool ) ), SLOT( OnEnableVariableGradient( bool ) ) );
+        connect( fitColorGradienttoViewPort_, SIGNAL( toggled( bool ) ), gradient_, SLOT( OnEnableVariableGradient( bool ) ) );
         connect( gradient_, SIGNAL( GradientChanged( const Gradient& ) ), SLOT( OnGradientChanged( const Gradient& ) ) );
     }
     {

@@ -64,6 +64,7 @@ GradientWidget::GradientWidget( QWidget* parent, GradientPreferences& preference
 
     connect( gradientEditor_, SIGNAL( SelectionChanged( const QColor& ) ), SLOT( OnSelectionChanged( const QColor& ) ) );
     connect( gradientEditor_, SIGNAL( GradientChanged( const Gradient& ) ), SLOT( OnGradientEdited( const Gradient& ) ) );
+    connect( this, SIGNAL( ToggleVariableGradient( bool ) ), gradientEditor_, SLOT( OnEnableVariableGradient( bool ) ) );
     connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChanged( const QColor& ) ) );
 
     connect( presetCombo_, SIGNAL( activated( int ) ), SLOT( OnPresetChanged() ) );
@@ -270,4 +271,13 @@ void GradientWidget::Select( const QString& presetName )
             OnPresetChanged();
             break;
         }
+}
+
+// -----------------------------------------------------------------------------
+// Name: GradientWidget::OnEnableVariableGradient
+// Created: LGY 2010-09-29
+// -----------------------------------------------------------------------------
+void GradientWidget::OnEnableVariableGradient( bool state )
+{
+    emit ToggleVariableGradient( state );
 }

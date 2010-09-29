@@ -33,6 +33,7 @@ public:
 
     //! @name Operations
     //@{
+    void ToggleScale( bool state );
     void SetColor( const QColor& color );
     QColor GetColor() const;
     unsigned short GetPercentage() const;
@@ -60,6 +61,7 @@ private:
     unsigned short percentage_;
     const ElevationResolver_ABC& resolver_;
     QColor color_;
+    bool disableState_;
     //@}
 };
 
