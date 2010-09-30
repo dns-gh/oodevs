@@ -649,7 +649,7 @@
     <name>UnitsPanel</name>
     <message>
         <source>Hierarchical view</source>
-        <translation>Vue hiérachique</translation>
+        <translation>Vue hiérarchique</translation>
     </message>
     <message>
         <source>Level</source>
