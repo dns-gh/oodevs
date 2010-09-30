@@ -47,13 +47,13 @@ namespace boost
     {
         template< typename Archive >
         inline
-            void serialize( Archive& file, dotation::PHY_RolePion_Dotations::T_DotationReservedMap& map, const unsigned int nVersion )
+            void serialize( Archive& file, dotation::PHY_RolePion_Dotations::T_DotationReservedMap& map, const uint nVersion )
         {
             split_free( file, map, nVersion );
         }
 
         template< typename Archive >
-        void save( Archive& file, const dotation::PHY_RolePion_Dotations::T_DotationReservedMap& map, const unsigned int )
+        void save( Archive& file, const dotation::PHY_RolePion_Dotations::T_DotationReservedMap& map, const uint )
         {
             unsigned size = map.size();
             file << size;
@@ -65,9 +65,9 @@ namespace boost
         }
 
         template< typename Archive >
-        void load( Archive& file, dotation::PHY_RolePion_Dotations::T_DotationReservedMap& map, const unsigned int )
+        void load( Archive& file, dotation::PHY_RolePion_Dotations::T_DotationReservedMap& map, const uint )
         {
-            unsigned int nNbr;
+            uint nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {

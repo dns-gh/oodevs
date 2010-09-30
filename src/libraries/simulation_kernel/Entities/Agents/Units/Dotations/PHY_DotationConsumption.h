@@ -12,8 +12,6 @@
 #ifndef __PHY_DotationConsumption_h_
 #define __PHY_DotationConsumption_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-
 namespace xml
 {
     class xistream;
@@ -28,7 +26,7 @@ class PHY_DotationCategory;
 class PHY_DotationConsumption : private boost::noncopyable
 {
 public:
-             PHY_DotationConsumption( const PHY_DotationCategory& category, xml::xistream& xis );
+     PHY_DotationConsumption( const PHY_DotationCategory& category, xml::xistream& xis );
     virtual ~PHY_DotationConsumption();
 
     //! @name Accessors
@@ -38,7 +36,7 @@ public:
 
 private:
     const PHY_DotationCategory& category_;
-    MT_Float rConsumption_;
+    MT_Float                    rConsumption_;
 };
 
 #endif // __PHY_DotationConsumption_h_

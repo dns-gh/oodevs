@@ -11,7 +11,6 @@
 #define __PHY_RoleInterface_ActiveProtection_h_
 
 #include "MT_Tools/Role_ABC.h"
-#include <boost/serialization/access.hpp>
 
 class PHY_DotationCategory;
 
@@ -58,7 +57,7 @@ private:
     //! @name Serialization
     //@{
     friend class boost::serialization::access;
-    template< typename Archive > void serialize( Archive& ar, const unsigned int )
+    template< typename Archive > void serialize( Archive& ar, const uint )
     {
         ar & boost::serialization::base_object< tools::Role_ABC >( *this );
     }

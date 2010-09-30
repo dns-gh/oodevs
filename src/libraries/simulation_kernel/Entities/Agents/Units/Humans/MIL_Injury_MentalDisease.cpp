@@ -71,7 +71,7 @@ MIL_Injury_MentalDisease::~MIL_Injury_MentalDisease( )
 // Name: PHY_Human::load
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
-void MIL_Injury_MentalDisease::load( MIL_CheckPointInArchive& file, const unsigned int )
+void MIL_Injury_MentalDisease::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> injuryID_
          >> injuryCategory_;
@@ -81,7 +81,7 @@ void MIL_Injury_MentalDisease::load( MIL_CheckPointInArchive& file, const unsign
 // Name: MIL_Injury_MentalDisease::save
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
-void MIL_Injury_MentalDisease::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+void MIL_Injury_MentalDisease::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     file << injuryID_
          << injuryCategory_;

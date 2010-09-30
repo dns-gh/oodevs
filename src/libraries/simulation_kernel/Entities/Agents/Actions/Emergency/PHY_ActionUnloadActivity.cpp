@@ -18,12 +18,13 @@
 // Created: JCR 2007-09-12
 // -----------------------------------------------------------------------------
 PHY_ActionUnloadActivity::PHY_ActionUnloadActivity( MIL_AgentPion& pion, const std::string& activity, double influence )
-    : PHY_DecisionCallbackAction_ABC( pion )
-    , pion_     ( pion )
-    , role_     ( pion.GetRole< PHY_RoleAction_FolkInfluence >() )
-    , activity_ ( activity )
-    , influence_( influence )
+    : PHY_DecisionCallbackAction_ABC      ( pion )
+    , pion_               ( pion )
+    , role_               ( pion.GetRole< PHY_RoleAction_FolkInfluence >() )
+    , activity_           ( activity )
+    , influence_          ( influence )
 {
+    const MT_Vector2D&  vPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
     Callback( static_cast<int>( PHY_RoleAction_FolkInfluence::eImpossible ) );
 }
 
@@ -42,7 +43,6 @@ PHY_ActionUnloadActivity::~PHY_ActionUnloadActivity()
 // -----------------------------------------------------------------------------
 void PHY_ActionUnloadActivity::StopAction()
 {
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +51,6 @@ void PHY_ActionUnloadActivity::StopAction()
 // -----------------------------------------------------------------------------
 void PHY_ActionUnloadActivity::Execute()
 {
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -60,5 +59,4 @@ void PHY_ActionUnloadActivity::Execute()
 // -----------------------------------------------------------------------------
 void PHY_ActionUnloadActivity::ExecuteSuspended()
 {
-    // NOTHING
 }

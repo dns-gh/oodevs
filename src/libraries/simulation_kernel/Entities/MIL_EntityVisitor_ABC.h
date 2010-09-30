@@ -10,6 +10,8 @@
 #ifndef __MIL_EntityVisitor_ABC_h_
 #define __MIL_EntityVisitor_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 // =============================================================================
 /** @class  MIL_EntityVisitor_ABC
     @brief  Population visitor base class

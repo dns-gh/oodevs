@@ -14,14 +14,12 @@
 #include "DEC_Path_ABC.h"
 #include "DEC_PathType.h"
 #include "DEC_PathFactory.h"
+#include "tools/MIL_Config.h"
 #include "simulation_terrain/TER_PathfinderThread.h"
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_World.h"
-#include "tools/MIL_Config.h"
 #include "tools/xmlcodecs.h"
 #include "MT_Tools/MT_FormatString.h"
-#include "MT_Tools/MT_ScipioException.h"
-#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -63,7 +61,7 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config )
     if( bUseInSameThread_ ) // juste one "thread" that will never start
         pathFindThreads_.push_back( & TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread( *this, true ) );
     else
-        for( unsigned int i = 0; i < config.GetPathFinderThreads(); ++i )
+        for( uint i = 0; i < config.GetPathFinderThreads(); ++i )
             pathFindThreads_.push_back( & TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread( *this ) );
 }
 

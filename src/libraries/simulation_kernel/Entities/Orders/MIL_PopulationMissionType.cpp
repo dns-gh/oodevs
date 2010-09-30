@@ -9,10 +9,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PopulationMissionType.h"
-#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
-MIL_MissionType_ABC::T_MissionIDMap MIL_PopulationMissionType::missionIDs_;
+MIL_MissionType_ABC::T_MissionIDMap   MIL_PopulationMissionType::missionIDs_;
 MIL_MissionType_ABC::T_MissionNameMap MIL_PopulationMissionType::missionNames_;
 
 struct MIL_PopulationMissionType::LoadingWrapper
@@ -30,7 +29,9 @@ struct MIL_PopulationMissionType::LoadingWrapper
 void MIL_PopulationMissionType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing population mission types" );
+
     LoadingWrapper loader;
+
     xis >> xml::start( "missions" )
             >> xml::start( "populations" )
                 >> xml::list( "mission", loader, &LoadingWrapper::ReadMission )

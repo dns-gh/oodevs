@@ -114,6 +114,7 @@ void RightsPlugin::OnReceive( const std::string& link, const MsgsClientToAuthent
 void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, const MsgsClientToAuthentication::MsgAuthenticationRequest& message )
 {
     ClientPublisher_ABC& client = base_.GetPublisher( link );
+
     ProtocolVersionChecker checker ( message.version() );
     authentication::AuthenticationResponse ack;
     ack().mutable_server_version()->set_value( ProtocolVersionChecker::GetCurrentProtocolVersion() );

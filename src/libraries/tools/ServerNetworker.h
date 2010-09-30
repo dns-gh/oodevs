@@ -84,6 +84,7 @@ private:
     virtual ObjectMessageCallback_ABC* Retrieve( unsigned long id );
     //@}
 
+private:
     //! @name Copy/Assignment
     //@{
     ServerNetworker( const ServerNetworker& );            //!< Copy constructor

@@ -18,7 +18,6 @@ class PHY_IndirectFireDotationClass;
 class PHY_DotationCategory;
 class MIL_Agent_ABC;
 class MIL_Effect_IndirectFire;
-class MT_Vector2D;
 
 namespace firing
 {

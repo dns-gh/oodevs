@@ -12,8 +12,6 @@
 #ifndef __PHY_WeaponDataType_IndirectFire_h_
 #define __PHY_WeaponDataType_IndirectFire_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-
 namespace xml
 {
     class xistream;
@@ -24,7 +22,6 @@ class MIL_AgentPion;
 class MIL_Effect_IndirectFire;
 class PHY_FireResults_ABC;
 class PHY_WeaponType;
-class MT_Vector2D;
 
 // =============================================================================
 // @class  PHY_WeaponDataType_IndirectFire
@@ -48,8 +45,8 @@ public:
 
     //! @name Operations
     //@{
-    void Fire( MIL_Effect_IndirectFire& effect, unsigned int nNbrAmmoReserved ) const;
-    void ThrowSmoke( MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo, PHY_FireResults_ABC& fireResult ) const;
+    void Fire( MIL_Effect_IndirectFire& effect, uint nNbrAmmoReserved ) const;
+    void ThrowSmoke( MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmo, PHY_FireResults_ABC& fireResult ) const;
     //@}
 
 private:

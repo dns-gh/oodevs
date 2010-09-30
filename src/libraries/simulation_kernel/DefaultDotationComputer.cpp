@@ -11,7 +11,6 @@
 #include "simulation_kernel/DefaultDotationComputer.h"
 #include "simulation_kernel/Entities/Agents/Units/Dotations/PHY_DotationGroupContainer.h"
 #include "simulation_kernel/Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
-#include <string>
 
 using namespace dotation;
 

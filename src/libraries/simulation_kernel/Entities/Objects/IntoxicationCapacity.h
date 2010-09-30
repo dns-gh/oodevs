@@ -21,7 +21,6 @@ namespace xml
 
 class MIL_Agent_ABC;
 class TER_Localisation;
-class MT_Vector2D;
 
 // =============================================================================
 /** @class  IntoxicationCapacity

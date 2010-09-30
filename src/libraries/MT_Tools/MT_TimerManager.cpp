@@ -11,7 +11,6 @@
 #include "MT_TimerManager.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <algorithm>
-#include <windows.h>
 
 //-----------------------------------------------------------------------------
 // Name: MT_TimerManager constructor

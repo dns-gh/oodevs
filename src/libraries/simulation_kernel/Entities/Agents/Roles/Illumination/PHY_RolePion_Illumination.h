@@ -13,7 +13,6 @@
 
 #include "PHY_RoleInterface_Illumination.h"
 #include <boost/serialization/export.hpp>
-#include <boost/serialization/split_member.hpp>
 
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;

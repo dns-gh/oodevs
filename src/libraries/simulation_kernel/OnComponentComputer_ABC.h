@@ -10,6 +10,8 @@
 #ifndef __OnComponentComputer_ABC_h_
 #define __OnComponentComputer_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 class PHY_ComposantePion;
 
 // =============================================================================

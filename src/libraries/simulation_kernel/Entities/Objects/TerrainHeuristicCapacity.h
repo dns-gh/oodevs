@@ -18,7 +18,6 @@ namespace xml
 }
 
 class TerrainData;
-class MT_Vector2D;
 
 // =============================================================================
 /** @class  TerrainHeuristicCapacity

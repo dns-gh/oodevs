@@ -12,8 +12,6 @@
 #ifndef __PHY_Weapon_h_
 #define __PHY_Weapon_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-
 class PHY_WeaponType;
 class PHY_Composante_ABC;
 class MIL_Agent_ABC;
@@ -24,7 +22,6 @@ class PHY_FireResults_ABC;
 class PHY_DotationCategory;
 class PHY_ComposanteType_ABC;
 class MIL_Time_ABC;
-class MT_Vector2D;
 
 // =============================================================================
 // @class  PHY_Weapon

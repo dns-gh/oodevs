@@ -13,7 +13,6 @@
 #define __PHY_RoleInterface_Reinforcement_h_
 
 #include "MT_Tools/Role_ABC.h"
-#include <boost/serialization/access.hpp>
 
 namespace client
 {
@@ -78,7 +77,7 @@ private:
     //! @name Serialization
     //@{
     friend class boost::serialization::access;
-    template< typename Archive > void serialize( Archive& ar, const unsigned int )
+    template< typename Archive > void serialize( Archive& ar, const uint )
     {
         ar & boost::serialization::base_object< tools::Role_ABC >( *this );
     }

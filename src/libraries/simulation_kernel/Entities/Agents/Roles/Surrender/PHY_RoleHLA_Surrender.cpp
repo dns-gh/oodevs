@@ -11,12 +11,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleHLA_Surrender.h"
-#include <string>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( surrender::PHY_RoleHLA_Surrender )
 
 namespace surrender
 {
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Surrender constructor
 // Created: NLD 2004-09-07
@@ -82,7 +82,7 @@ bool PHY_RoleHLA_Surrender::IsImprisoned( const MIL_Object_ABC& /*camp*/ )
 // -----------------------------------------------------------------------------
 void PHY_RoleHLA_Surrender::ChangeStatus( const std::vector< std::string >& statuses )
 {
-    bPrisoner_ = std::find( statuses.begin(), statuses.end(), "prisonnier" ) != statuses.end();
+    bPrisoner_    = std::find( statuses.begin(), statuses.end(), "prisonnier" ) != statuses.end();
     // $$$$ NLD 2007-02-14: Surrendered state
 }
 

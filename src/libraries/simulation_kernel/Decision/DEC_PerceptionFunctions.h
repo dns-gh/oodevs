@@ -9,8 +9,6 @@
 //
 //*****************************************************************************
 
-#include "MT_Tools/MT_Tools_Types.h"
-
 #ifndef __DEC_PerceptionFunctions_h_
 #define __DEC_PerceptionFunctions_h_
 
@@ -18,7 +16,6 @@ class DEC_Decision_ABC;
 class DEC_Knowledge_Urban;
 class MIL_Agent_ABC;
 class TER_Localisation;
-class MT_Vector2D;
 
 // =============================================================================
 // Created: JVT 04-05-18

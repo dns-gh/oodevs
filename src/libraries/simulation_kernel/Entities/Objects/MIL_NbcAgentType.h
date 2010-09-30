@@ -13,7 +13,6 @@
 #define __MIL_NbcAgentType_h_
 
 #include "MIL_Random.h"
-#include "MT_Tools/MT_Stl.h"
 
 namespace xml
 {

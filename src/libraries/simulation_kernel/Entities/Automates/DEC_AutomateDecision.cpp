@@ -10,11 +10,16 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+
 #include "DEC_AutomateDecision.h"
+
 #include "MIL_AutomateType.h"
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Tools.h"
-#include "Entities/Orders/MIL_MissionType_ABC.h"
+#include "Entities/Orders/MIL_AutomateMissionType.h"
+#include "Entities/Orders/MIL_FragOrder.h"
+#include "Entities/Orders/MIL_Mission_ABC.h"
+
 #include "Decision/DEC_AutomateFunctions.h"
 #include "Decision/DEC_OrdersFunctions.h"
 #include "Decision/DEC_GeometryFunctions.h"
@@ -27,33 +32,37 @@
 #include "Decision/DEC_ObjectFunctions.h"
 #include "Decision/DEC_IntelligenceFunctions.h"
 #include "Decision/DEC_CommunicationFunctions.h"
-#include "MT_Tools/MT_ScipioException.h"
-#include <boost/serialization/vector.hpp>
+
 #include <boost/bind.hpp>
 
+
+#include "protocol/ClientSenders.h"
+#include "protocol/SimulationSenders.h"
+
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_AutomateDecision )
+
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
 DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
-    : DEC_Decision            ( automate, database, gcMult, gcPause )
-    , nRulesOfEngagementState_( eRoeStateNone )
-    , nCloseCombatState_      ( eCloseCombatStateNone )
-    , nOperationalState_      ( eOpStateOperational )
-    , rDestruction_           ( 0 )
-    , bStateHasChanged_       ( true )
-    , bOrdreAttendre_         ( false )
-    , bOrdrePoursuivre_       ( false )
-    , bOrdreRalentir_         ( false )
-    , bOrdreDecrocher_        ( false )
-    , bOrdreTenirSurLR_       ( false )
-    , bOrdreTenir_            ( false )
-    , fuseau_                 ( 0 )
-    , eEtatEchelon_           ( 0 )
-    , eEtatDec_               ( 0 )
-    , eEtatLima_              ( 0 )
+    : DEC_Decision             ( automate, database, gcMult, gcPause )
+    , nRulesOfEngagementState_ ( eRoeStateNone         )
+    , nCloseCombatState_       ( eCloseCombatStateNone )
+    , nOperationalState_       ( eOpStateOperational   )
+    , rDestruction_            ( 0                     )
+    , bStateHasChanged_        ( true                  )
+    , bOrdreAttendre_          ( false                 )
+    , bOrdrePoursuivre_        ( false                 )
+    , bOrdreRalentir_          ( false                 )
+    , bOrdreDecrocher_         ( false                 )
+    , bOrdreTenirSurLR_        ( false                 )
+    , bOrdreTenir_             ( false                 )
+    , fuseau_                  ( 0 )
+    , eEtatEchelon_            ( 0 )
+    , eEtatDec_                ( 0 )
+    , eEtatLima_               ( 0 )
 {
     const DEC_Model_ABC& model = automate.GetType().GetModel();
     try
@@ -64,6 +73,7 @@ DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate, DEC_DataBase
     {
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, e.what() );
     }
+
     StartDefaultBehavior();
 }
 
@@ -73,8 +83,11 @@ DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate, DEC_DataBase
 // -----------------------------------------------------------------------------
 DEC_AutomateDecision::~DEC_AutomateDecision()
 {
-    // NOTHING
 }
+
+// =============================================================================
+// CHECKPOINTS
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::load
@@ -87,11 +100,17 @@ void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const unsigned i
          >> nRulesOfEngagementState_
          >> nCloseCombatState_
          >> nOperationalState_;
+
+    assert( pEntity_ );
+
     unsigned int nID;
     file >> nID;
+
     const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( nID );
     assert( pType );
+
     const DEC_Model_ABC& model = pType->GetModel();
+
     try
     {
         SetModel( model );
@@ -100,6 +119,7 @@ void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const unsigned i
     {
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, e.what() );
     }
+
     StartDefaultBehavior();
 }
 
@@ -118,6 +138,10 @@ void DEC_AutomateDecision::save( MIL_CheckPointOutArchive& file, const unsigned 
          << nOperationalState_
          << id;
 }
+
+// =============================================================================
+// TOOLS
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::EndCleanStateAfterCrash
@@ -208,6 +232,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
             boost::function < void ( const std::string& ) > ( boost::bind( &DEC_MiscFunctions::Debug< MIL_Automate > , boost::ref( GetAutomate()) , "Automate" , _1  ) );
     brain[ "DEC_Trace" ] =
         boost::function< void ( const std::string& ) >( boost::bind( &DEC_MiscFunctions::Trace< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) );
+
 
     // Objets
 
@@ -449,6 +474,14 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
     pEntity_->GetType().RegisterFunctions( brain, GetAutomate() );
 }
 
+// =============================================================================
+// UPDATE
+// =============================================================================
+
+// =============================================================================
+// OPERATIONS
+// =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::StartMissionMrtBehavior
 // Created: NLD 2004-09-03
@@ -477,6 +510,7 @@ void DEC_AutomateDecision::StopMissionMrtBehavior( const boost::shared_ptr< MIL_
 void DEC_AutomateDecision::StartMissionConduiteBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
     const std::string& strBehavior = mission->GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseCDT );
+
     ActivateOrder( strBehavior, mission );
 }
 
@@ -489,6 +523,10 @@ void DEC_AutomateDecision::StopMissionConduiteBehavior( const boost::shared_ptr<
     const std::string& strBehavior = mission->GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseCDT );
     StopMission( strBehavior );
 }
+
+// =============================================================================
+// NETWORK
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::SendFullState
@@ -582,6 +620,7 @@ void DEC_AutomateDecision::RegisterSelf( directia::brain::Brain& brain )
 {
     brain[ "myself" ] = (DEC_Decision_ABC*)this;
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::GeteEtatPhaseMission

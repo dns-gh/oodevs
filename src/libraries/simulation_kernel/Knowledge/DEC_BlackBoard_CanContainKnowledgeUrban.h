@@ -45,8 +45,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
 
-    void load( MIL_CheckPointInArchive&, const unsigned int );
-    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+    void load( MIL_CheckPointInArchive&, const uint );
+    void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
 
     //! @name Operations
@@ -57,7 +57,7 @@ public:
 
     //! @name Queries
     //@{
-    boost::shared_ptr< DEC_Knowledge_Urban > GetKnowledgeUrbanFromID( unsigned int nID ) const;
+    boost::shared_ptr< DEC_Knowledge_Urban > GetKnowledgeUrbanFromID( uint nID ) const;
     boost::shared_ptr< DEC_Knowledge_Urban > GetKnowledgeUrban( const urban::TerrainObject_ABC& object ) const;
     bool HasKnowledgeUrban( const urban::TerrainObject_ABC& object ) const;
 

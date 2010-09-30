@@ -11,7 +11,6 @@
 #include "DEC_BlackBoard_CanContainKnowledgeUrbanPerception.h"
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_UrbanPerception.h"
-#include "MT_Tools/MT_ScipioException.h"
 #include <urban/TerrainObject_ABC.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgeUrbanPerception )
@@ -39,9 +38,9 @@ DEC_BlackBoard_CanContainKnowledgeUrbanPerception::~DEC_BlackBoard_CanContainKno
 // Name: DEC_BlackBoard_CanContainKnowledgeUrbanPerception::load
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::load( MIL_CheckPointInArchive& file, const unsigned int )
+void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::load( MIL_CheckPointInArchive& file, const uint )
 {
-    unsigned int nNbr;
+    uint nNbr;
     file >> nNbr;
     while ( nNbr-- )
     {
@@ -55,7 +54,7 @@ void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::load( MIL_CheckPointInAr
 // Name: DEC_BlackBoard_CanContainKnowledgeUrbanPerception::save
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     const T_KnowledgeUrbanPerceptionMap::size_type size = knowledgeUrbanPerceptionMap_.size();
     file << size;

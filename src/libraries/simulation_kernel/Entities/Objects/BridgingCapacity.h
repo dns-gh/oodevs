@@ -12,7 +12,6 @@
 
 #include "ObjectCapacity_ABC.h"
 #include "MIL_DynamicPathDataHandler.h"
-#include "MT_Tools/MT_Vector2DTypes.h"
 
 namespace xml
 {

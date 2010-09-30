@@ -12,8 +12,6 @@
 #ifndef __DEC_LogisticFunctions_h_
 #define __DEC_LogisticFunctions_h_
 
-#include "MT_Tools/MT_Vector2DTypes.h"
-
 class DEC_Decision_ABC;
 class DEC_RolePion_Decision;
 class DEC_AutomateDecision;
@@ -23,13 +21,16 @@ class PHY_ComposanteTypePion;
 class PHY_ComposantePion;
 class PHY_HumanWound;
 
+namespace
+{
+    typedef bool (PHY_ComposantePion::*T_ComposantePredicate)() const;
+}
+
 // =============================================================================
 // Created: JVT 04-05-18
 // =============================================================================
 class DEC_LogisticFunctions
 {
-    typedef bool (PHY_ComposantePion::*T_ComposantePredicate)() const;
-
 public:
     //! @name Maintenance
     //@{

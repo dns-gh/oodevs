@@ -15,8 +15,6 @@
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
-#include "MT_Tools/MT_ScipioException.h"
-#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
 DEC_Agent_PathClass::T_Rules DEC_Agent_PathClass::rules_;

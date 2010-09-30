@@ -18,7 +18,6 @@
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Network/NET_AsnException.h"
-#include "MT_Tools/MT_ScipioException.h"
 #include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------

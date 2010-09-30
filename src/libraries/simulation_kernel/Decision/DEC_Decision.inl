@@ -10,32 +10,34 @@
 #include "DEC_Model_ABC.h"
 #include "Decision/DEC_DataBase.h"
 #include "Decision/DEC_PathFunctions.h"
-#include "Decision/DEC_DIAFunctions.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "MT_Tools/MT_CrashHandler.h"
 #include "MIL_Singletons.h"
+#include "MIL_Time_ABC.h"
+#include <fstream>
+#include "Decision/DEC_DIAFunctions.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision constructor
 // Created: LDC 2009-02-27
 // -----------------------------------------------------------------------------
-template< class T >
-DEC_Decision< T >::DEC_Decision( T& entity, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
-    : pEntity_ ( &entity )
-    , database_( database )
-    , gcPause_ ( gcPause)
-    , gcMult_  ( gcMult )
+template <class T>
+DEC_Decision<T>::DEC_Decision( T& entity, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
+: pEntity_( &entity )
+, database_( database )
+, gcPause_( gcPause)
+, gcMult_( gcMult )
 {
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision destructor
 // Created: LDC 2009-02-27
 // -----------------------------------------------------------------------------
-template< class T >
-DEC_Decision< T >::~DEC_Decision()
+template <class T>
+DEC_Decision<T>::~DEC_Decision()
 {
     // NOTHING
 }
@@ -58,8 +60,8 @@ namespace directia
 // Name: DEC_Decision::InitBrain
 // Created: MGD 2010-01-27
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::string& type, const std::string& includePath, const std::string& groupName )
+template <class T>
+void DEC_Decision<T>::InitBrain( const std::string& brainFile, const std::string& type, const std::string& includePath, const std::string& groupName )
 {
     brainFile_ = brainFile;
     modelName_ = type;
@@ -77,39 +79,39 @@ void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::stri
 
     bool newBrain = DEC_DecisionImpl::CreateBrain( pArchetypeBrain, pBrain_, includePath_, brainFile, isMasalife_ );
 
-    if( newBrain )
-    {
-        DEC_DecisionImpl::RegisterCommonUserFunctions( *pArchetypeBrain, isMasalife_ );
-        RegisterUserArchetypeFunctions( *pArchetypeBrain );
-    }
-
-    RegisterUserFunctions( *pBrain_ );
+	if( newBrain )
+	{
+		DEC_DecisionImpl::RegisterCommonUserFunctions( *pArchetypeBrain, isMasalife_ );
+		RegisterUserArchetypeFunctions( *pArchetypeBrain );
+	}
+    
+	RegisterUserFunctions( *pBrain_ );
 
     database_.InitKnowledges( *pBrain_ );//@TODO MGD Find a better way to merge dia4/dia5
     RegisterSelf( *pBrain_ );
 
-    //Enregistrement à la main de BreakForDebug
-    (*pBrain_)[ "BreakForDebug" ] =
+	//Enregistrement à la main de BreakForDebug
+	(*pBrain_)[ "BreakForDebug" ] =
         boost::function< void( const std::string& ) >( boost::bind( &DEC_DIAFunctions::BreakForDebug, pEntity_->GetID() ,_1 ) ) ;
 
     if( newBrain )
         DEC_DecisionImpl::IncludeFile( *pArchetypeBrain, brainFile ,includePath_, type, groupName );
 
-    pRefs_.reset( new ScriptRefs( *pBrain_) );
-    
-    if ( newBrain )//Call GC only for a new archetype
-    {
-        pRefs_->collectgarbage_("setpause", gcPause_);
-        pRefs_->collectgarbage_("setstepmul", gcMult_);
-    }
+	pRefs_.reset( new ScriptRefs( *pBrain_) );
+	
+	if ( newBrain )//Call GC only for a new archetype
+	{
+		pRefs_->collectgarbage_("setpause", gcPause_);
+		pRefs_->collectgarbage_("setstepmul", gcMult_);
+	}
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::SetModel
 // Created: LDC 2009-04-08
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::SetModel( const DEC_Model_ABC& model )
+template <class T>
+void DEC_Decision<T>::SetModel( const DEC_Model_ABC& model )
 {
     diaType_ = model.GetDIAType();
     InitBrain( model.GetScriptFile(), diaType_, model.GetIncludePath(), GetAutomate().GetName() );
@@ -119,8 +121,8 @@ void DEC_Decision< T >::SetModel( const DEC_Model_ABC& model )
 // Name: DEC_Decision::GetDIAType
 // Created: LDC 2009-07-09
 // -----------------------------------------------------------------------------
-template< class T >
-const std::string& DEC_Decision< T >::GetDIAType() const
+template <class T>
+const std::string& DEC_Decision<T>::GetDIAType() const
 {
     return diaType_;
 }   
@@ -129,8 +131,8 @@ const std::string& DEC_Decision< T >::GetDIAType() const
 // Name: DEC_Decision::UpdateDecision
 // Created: LDC 2009-02-27
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::UpdateDecision( float duration )
+template <class T>
+void DEC_Decision<T>::UpdateDecision( float duration )
 {
     try
     {
@@ -147,18 +149,18 @@ void DEC_Decision< T >::UpdateDecision( float duration )
 // Name: DEC_Decision::GarbageCollect
 // Created: LDC 2009-09-22
 // -----------------------------------------------------------------------------
-/*template< class T >
-void DEC_Decision< T >::GarbageCollect()
+/*template <class T>
+void DEC_Decision<T>::GarbageCollect()
 {
-    //pRefs_->collectgarbage_( pRefs_->step_ );
+	//pRefs_->collectgarbage_( pRefs_->step_ );
 }*/
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::Reset
 // Created: MGD 2010-01-27
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::Reset( std::string groupName )
+template <class T>
+void DEC_Decision<T>::Reset( std::string groupName )
 {
     StopDefaultBehavior();
     if( groupName != "" && !!pRefs_->cleanBrainBeforeDeletion_ )
@@ -171,14 +173,16 @@ void DEC_Decision< T >::Reset( std::string groupName )
 // Name: DEC_Decision::CleanStateAfterCrash
 // Created: LDC 2009-04-07
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::CleanStateAfterCrash()
-{
+template <class T>
+void DEC_Decision<T>::CleanStateAfterCrash()
+{    
     assert( false ); // To allow debugging ...
-    assert( pEntity_ );
+    assert( pEntity_ );   
     _clearfp();
+
 //    DEC_Tools::DisplayDiaStack( GetCurrentInstance(), GetCurrentDebugInfo() ); // $$$$ LDC: Is there a way to dump lua state?
 //    Reset();
+
     EndCleanStateAfterCrash();
 }
 
@@ -186,22 +190,22 @@ void DEC_Decision< T >::CleanStateAfterCrash()
 // Name: DEC_Decision::HandleUpdateDecisionError
 // Created: LDC 2009-03-02
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::HandleUpdateDecisionError()
+template <class T>
+void DEC_Decision<T>::HandleUpdateDecisionError()
 {
     assert( pEntity_ );
     LogCrash();
     CleanStateAfterCrash();
     MIL_Report::PostEvent( *pEntity_, MIL_Report::eReport_MissionImpossible_ );
-    pEntity_->GetOrderManager().CancelMission();
+    pEntity_->GetOrderManager().CancelMission();               
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::GetBrain
 // Created: LDC 2009-07-02
 // -----------------------------------------------------------------------------
-template< class T >
-directia::brain::Brain& DEC_Decision< T >::GetBrain()
+template <class T>
+directia::brain::Brain& DEC_Decision<T>::GetBrain()
 {
     return *pBrain_;
 }
@@ -210,8 +214,8 @@ directia::brain::Brain& DEC_Decision< T >::GetBrain()
 // Name: DEC_Decision::RemoveCallback
 // Created: LDC 2009-07-02
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::RemoveCallback( unsigned int actionId )
+template <class T>
+void DEC_Decision<T>::RemoveCallback( unsigned int actionId )
 {
     pRefs_->removeAction_( actionId );
 }
@@ -220,18 +224,22 @@ void DEC_Decision< T >::RemoveCallback( unsigned int actionId )
 // Name: DEC_Decision::LogCrash
 // Created: LDC 2009-03-02
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::LogCrash()
+template <class T>
+void DEC_Decision<T>::LogCrash()
 {
     MT_LOG_ERROR_MSG( "Entity " << pEntity_->GetID() << "('" << pEntity_->GetName() << "') : Mission '" << pEntity_->GetOrderManager().GetMissionName() << "' impossible" );
 }
+
+// =============================================================================
+// DEFAULT BEHAVIOR
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::StartDefaultBehavior
 // Created: LDC 2009-03-02
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::StartDefaultBehavior()
+template <class T>
+void DEC_Decision<T>::StartDefaultBehavior()
 {
     try
     {
@@ -243,12 +251,11 @@ void DEC_Decision< T >::StartDefaultBehavior()
     }
 }
 
-// -----------------------------------------------------------------------------
 // Name: DEC_Decision::StopDefaultBehavior
 // Created: LDC 2009-03-02
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::StopDefaultBehavior()
+template <class T>
+void DEC_Decision<T>::StopDefaultBehavior()
 {
     try
     {
@@ -265,8 +272,8 @@ void DEC_Decision< T >::StopDefaultBehavior()
 // Name: DEC_Decision::ActivateOrder
 // Created: LDC 2009-04-07
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::ActivateOrder( const std::string& strBehavior, const boost::shared_ptr< MIL_Mission_ABC > mission )
+template <class T>
+void DEC_Decision<T>::ActivateOrder( const std::string& strBehavior, const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
     pMission_ = mission;
     // Register mission parameters in the brain...
@@ -280,8 +287,8 @@ void DEC_Decision< T >::ActivateOrder( const std::string& strBehavior, const boo
 // Name: DEC_Decision::StopMission
 // Created: LDC 2009-04-07
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::StopMission( const std::string& strBehavior )
+template <class T>
+void DEC_Decision<T>::StopMission( const std::string& strBehavior )
 {
     try
     {
@@ -298,8 +305,8 @@ void DEC_Decision< T >::StopMission( const std::string& strBehavior )
 // Name: DEC_Decision::SetMission
 // Created: LDC 2009-04-09
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::SetMission( boost::shared_ptr< MIL_Mission_ABC > pMission )
+template <class T>
+void DEC_Decision<T>::SetMission( boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
     pMission_ = pMission;
 }
@@ -308,8 +315,8 @@ void DEC_Decision< T >::SetMission( boost::shared_ptr< MIL_Mission_ABC > pMissio
 // Name: DEC_Decision::GetMission
 // Created: LDC 2009-04-09
 // -----------------------------------------------------------------------------
-template< class T >
-boost::shared_ptr< MIL_Mission_ABC > DEC_Decision< T >::GetMission()
+template <class T>
+boost::shared_ptr< MIL_Mission_ABC > DEC_Decision<T>::GetMission()
 {
     return pMission_;
 }
@@ -318,8 +325,8 @@ boost::shared_ptr< MIL_Mission_ABC > DEC_Decision< T >::GetMission()
 // Name: DEC_Decision::CallbackKnowledge
 // Created: LDC 2009-07-06
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::CallbackKnowledge( unsigned int actionId, boost::shared_ptr< DEC_Knowledge_Object > value )
+template <class T>
+void DEC_Decision<T>::CallbackKnowledge( unsigned int actionId, boost::shared_ptr< DEC_Knowledge_Object > value )
 {
     pRefs_->knowledgeCallbackAction_( actionId, value );
 }
@@ -328,8 +335,8 @@ void DEC_Decision< T >::CallbackKnowledge( unsigned int actionId, boost::shared_
 // Name: DEC_Decision::CallbackPerception
 // Created: LDC 2009-07-21
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::CallbackPerception( int id )
+template <class T>
+void DEC_Decision<T>::CallbackPerception( int id )
 {
     pRefs_->callbackPerception_( id );
 }
@@ -338,8 +345,8 @@ void DEC_Decision< T >::CallbackPerception( int id )
 // Name: DEC_Decision::GetPion
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
-template< class T >
-MIL_AgentPion& DEC_Decision< T >::GetPion() const
+template <class T>
+MIL_AgentPion& DEC_Decision<T>::GetPion() const
 {
     throw std::runtime_error( "GetPion cannot be called for this Decision class" );
 }
@@ -348,8 +355,8 @@ MIL_AgentPion& DEC_Decision< T >::GetPion() const
 // Name: DEC_Decision::GetAutomate
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
-template< class T >
-MIL_Automate& DEC_Decision< T >::GetAutomate() const
+template <class T>
+MIL_Automate& DEC_Decision<T>::GetAutomate() const
 {
     throw std::runtime_error( "GetAutomate cannot be called for this Decision class" );
 }
@@ -358,8 +365,8 @@ MIL_Automate& DEC_Decision< T >::GetAutomate() const
 // Name: DEC_Decision::StartMissionBehavior
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > /*mission*/ )
+template <class T>
+void DEC_Decision<T>::StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > /*mission*/ )
 {
     throw std::runtime_error( "StartMissionBehavior cannot be called for this Decision class" );
 }
@@ -368,8 +375,8 @@ void DEC_Decision< T >::StartMissionBehavior( const boost::shared_ptr< MIL_Missi
 // Name: DEC_Decision::StopMissionBehavior
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::StopMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > /*mission*/ )
+template <class T>
+void DEC_Decision<T>::StopMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > /*mission*/ )
 {
     throw std::runtime_error( "StopMissionBehavior cannot be called for this Decision class" );
 }
@@ -378,8 +385,8 @@ void DEC_Decision< T >::StopMissionBehavior( const boost::shared_ptr< MIL_Missio
 // Name: DEC_Decision::GeteEtatPhaseMission
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
-template< class T >
-int DEC_Decision< T >::GeteEtatPhaseMission() const
+template <class T>
+int DEC_Decision<T>::GeteEtatPhaseMission() const
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
@@ -388,8 +395,8 @@ int DEC_Decision< T >::GeteEtatPhaseMission() const
 // Name: DEC_Decision::SeteEtatPhaseMission
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::SeteEtatPhaseMission( int /*value*/ )
+template <class T>
+void DEC_Decision<T>::SeteEtatPhaseMission( int /*value*/ )
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
@@ -398,8 +405,8 @@ void DEC_Decision< T >::SeteEtatPhaseMission( int /*value*/ )
 // Name: DEC_Decision::GeteEtatLima
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
-template< class T >
-int DEC_Decision< T >::GeteEtatLima() const
+template <class T>
+int DEC_Decision<T>::GeteEtatLima() const
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
@@ -408,8 +415,8 @@ int DEC_Decision< T >::GeteEtatLima() const
 // Name: DEC_Decision::SeteEtatLima
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::SeteEtatLima( int /*value*/ )
+template <class T>
+void DEC_Decision<T>::SeteEtatLima( int /*value*/ )
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
@@ -418,8 +425,8 @@ void DEC_Decision< T >::SeteEtatLima( int /*value*/ )
 // Name: DEC_Decision::GeteEtatDec
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
-template< class T >
-int DEC_Decision< T >::GeteEtatDec() const
+template <class T>
+int DEC_Decision<T>::GeteEtatDec() const
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
@@ -428,8 +435,8 @@ int DEC_Decision< T >::GeteEtatDec() const
 // Name: DEC_Decision::SeteEtatDec
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::SeteEtatDec( int /*value*/ )
+template <class T>
+void DEC_Decision<T>::SeteEtatDec( int /*value*/ )
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
@@ -438,8 +445,8 @@ void DEC_Decision< T >::SeteEtatDec( int /*value*/ )
 // Name: DEC_Decision::GeteEtatEchelon
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
-template< class T >
-int DEC_Decision< T >::GeteEtatEchelon() const
+template <class T>
+int DEC_Decision<T>::GeteEtatEchelon() const
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
@@ -448,8 +455,8 @@ int DEC_Decision< T >::GeteEtatEchelon() const
 // Name: DEC_Decision::SeteEtatEchelon
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::SeteEtatEchelon( int /*value*/ )
+template <class T>
+void DEC_Decision<T>::SeteEtatEchelon( int /*value*/ )
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
@@ -458,8 +465,8 @@ void DEC_Decision< T >::SeteEtatEchelon( int /*value*/ )
 // Name: DEC_Decision::GetbOrdreDecrocher
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
-template< class T >
-bool DEC_Decision< T >::GetbOrdreDecrocher() const
+template <class T>
+bool DEC_Decision<T>::GetbOrdreDecrocher() const
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
@@ -468,8 +475,8 @@ bool DEC_Decision< T >::GetbOrdreDecrocher() const
 // Name: DEC_Decision::SetbOrdreDecrocher
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::SetbOrdreDecrocher( bool /*value*/ )
+template <class T>
+void DEC_Decision<T>::SetbOrdreDecrocher( bool /*value*/ )
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
@@ -478,8 +485,8 @@ void DEC_Decision< T >::SetbOrdreDecrocher( bool /*value*/ )
 // Name: DEC_Decision::GetbOrdreTenirSurLR
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
-template< class T >
-bool DEC_Decision< T >::GetbOrdreTenirSurLR() const
+template <class T>
+bool DEC_Decision<T>::GetbOrdreTenirSurLR() const
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
@@ -488,8 +495,8 @@ bool DEC_Decision< T >::GetbOrdreTenirSurLR() const
 // Name: DEC_Decision::SetbOrdreTenirSurLR
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::SetbOrdreTenirSurLR( bool /*value*/ )
+template <class T>
+void DEC_Decision<T>::SetbOrdreTenirSurLR( bool /*value*/ )
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
@@ -498,8 +505,8 @@ void DEC_Decision< T >::SetbOrdreTenirSurLR( bool /*value*/ )
 // Name: DEC_Decision::GetbOrdreTenir
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
-template< class T >
-bool DEC_Decision< T >::GetbOrdreTenir() const
+template <class T>
+bool DEC_Decision<T>::GetbOrdreTenir() const
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
@@ -508,8 +515,8 @@ bool DEC_Decision< T >::GetbOrdreTenir() const
 // Name: DEC_Decision::SetbOrdreTenir
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::SetbOrdreTenir( bool /*value*/ )
+template <class T>
+void DEC_Decision<T>::SetbOrdreTenir( bool /*value*/ )
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
@@ -518,8 +525,8 @@ void DEC_Decision< T >::SetbOrdreTenir( bool /*value*/ )
 // Name: std::vector< DEC_Decision_ABC* > DEC_Decision::GetPionsWithPC
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
-template< class T >
-std::vector< DEC_Decision_ABC* > DEC_Decision< T >::GetPionsWithPC()
+template <class T>
+std::vector< DEC_Decision_ABC* > DEC_Decision<T>::GetPionsWithPC()
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
@@ -528,8 +535,8 @@ std::vector< DEC_Decision_ABC* > DEC_Decision< T >::GetPionsWithPC()
 // Name: DEC_Decision::IsNeutralized
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
-template< class T >
-bool DEC_Decision< T >::IsNeutralized() const
+template <class T>
+bool DEC_Decision<T>::IsNeutralized() const
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
@@ -538,8 +545,8 @@ bool DEC_Decision< T >::IsNeutralized() const
 // Name: DEC_Decision::IsMoving
 // Created: LDC 2009-07-29
 // -----------------------------------------------------------------------------
-template< class T >
-bool DEC_Decision< T >::IsMoving() const
+template <class T>
+bool DEC_Decision<T>::IsMoving() const
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
@@ -548,8 +555,8 @@ bool DEC_Decision< T >::IsMoving() const
 // Name: DEC_Decision::IsContaminated
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
-template< class T >
-bool DEC_Decision< T >::IsContaminated() const
+template <class T>
+bool DEC_Decision<T>::IsContaminated() const
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
@@ -558,8 +565,8 @@ bool DEC_Decision< T >::IsContaminated() const
 // Name: DEC_Decision::GetPosition
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
-template< class T >
-const MT_Vector2D* DEC_Decision< T >::GetPosition() const
+template <class T>
+const MT_Vector2D* DEC_Decision<T>::GetPosition() const
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
@@ -568,8 +575,8 @@ const MT_Vector2D* DEC_Decision< T >::GetPosition() const
 // Name: DEC_Decision::SetStateVariable
 // Created: LDC 2009-07-15
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::SetStateVariable( const std::string& name, float value )
+template <class T>
+void DEC_Decision<T>::SetStateVariable( const std::string& name, float value )
 {
     pRefs_->setStateVariable_( name, value );
 }
@@ -578,8 +585,8 @@ void DEC_Decision< T >::SetStateVariable( const std::string& name, float value )
 // Name: DEC_Decision::SetAmbianceMission
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::SetAmbianceMission( int value )
+template <class T>
+void DEC_Decision<T>::SetAmbianceMission( int value )
 {
     SetVariable( "myself.ambianceMission_", value );
 }
@@ -588,8 +595,8 @@ void DEC_Decision< T >::SetAmbianceMission( int value )
 // Name: DEC_Decision::SetAppuieFreinage
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::SetAppuieFreinage( bool value )
+template <class T>
+void DEC_Decision<T>::SetAppuieFreinage( bool value )
 {
     SetVariable( "myself.bAppuieFreinage_", value );
 }
@@ -598,8 +605,8 @@ void DEC_Decision< T >::SetAppuieFreinage( bool value )
 // Name: DEC_Decision::GetDemandeOrdreConduitePoursuivre(
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-template< class T >
-bool DEC_Decision< T >::GetDemandeOrdreConduitePoursuivre()
+template <class T>
+bool DEC_Decision<T>::GetDemandeOrdreConduitePoursuivre()
 {
     return GetScalarVariable<bool>( "myself.bDemandeOrdreConduitePoursuivre_" );
 }
@@ -608,8 +615,8 @@ bool DEC_Decision< T >::GetDemandeOrdreConduitePoursuivre()
 // Name: DEC_Decision::GetEnCoursExtractionPersonnel(
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-template< class T >
-bool DEC_Decision< T >::GetEnCoursExtractionPersonnel()
+template <class T>
+bool DEC_Decision<T>::GetEnCoursExtractionPersonnel()
 {
     return GetScalarVariable<bool>( "myself.bEnCoursExtractionPersonnel_" );
 }
@@ -618,8 +625,8 @@ bool DEC_Decision< T >::GetEnCoursExtractionPersonnel()
 // Name: DEC_Decision::GetEnExploitation(
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-template< class T >
-bool DEC_Decision< T >::GetEnExploitation()
+template <class T>
+bool DEC_Decision<T>::GetEnExploitation()
 {
     return GetScalarVariable<bool>( "myself.bEnExploitation_" );
 }
@@ -628,8 +635,8 @@ bool DEC_Decision< T >::GetEnExploitation()
 // Name: DEC_Decision::SetbEnExploitation
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::SetbEnExploitation( bool value )
+template <class T>
+void DEC_Decision<T>::SetbEnExploitation( bool value )
 {
     SetVariable( "myself.bEnExploitation_", value );
 }
@@ -638,8 +645,8 @@ void DEC_Decision< T >::SetbEnExploitation( bool value )
 // Name: DEC_Decision::GetEnPhaseRavitaillement(
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-template< class T >
-bool DEC_Decision< T >::GetEnPhaseRavitaillement()
+template <class T>
+bool DEC_Decision<T>::GetEnPhaseRavitaillement()
 {
     return GetScalarVariable<bool>( "myself.bEnPhaseRavitaillement_" );
 }
@@ -648,8 +655,8 @@ bool DEC_Decision< T >::GetEnPhaseRavitaillement()
 // Name: DEC_Decision::SetEnPhaseRavitaillement
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::SetEnPhaseRavitaillement( bool value )
+template <class T>
+void DEC_Decision<T>::SetEnPhaseRavitaillement( bool value )
 {
     SetVariable( "myself.bEnPhaseRavitaillement_", value );
 }
@@ -658,8 +665,8 @@ void DEC_Decision< T >::SetEnPhaseRavitaillement( bool value )
 // Name: DEC_Decision::GetMiseEnOeuvre(
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-template< class T >
-bool DEC_Decision< T >::GetMiseEnOeuvre()
+template <class T>
+bool DEC_Decision<T>::GetMiseEnOeuvre()
 {
     return GetScalarVariable<bool>( "myself.bMiseEnOeuvre_" );
 }
@@ -668,8 +675,8 @@ bool DEC_Decision< T >::GetMiseEnOeuvre()
 // Name: DEC_Decision::SetMiseEnOeuvre
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::SetMiseEnOeuvre( bool value )
+template <class T>
+void DEC_Decision<T>::SetMiseEnOeuvre( bool value )
 {
     SetVariable( "myself.bMiseEnOeuvre_", value );
 }
@@ -678,8 +685,8 @@ void DEC_Decision< T >::SetMiseEnOeuvre( bool value )
 // Name: DEC_Decision::GetEtatFeu
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-template< class T >
-int DEC_Decision< T >::GetEtatFeu()
+template <class T>
+int DEC_Decision<T>::GetEtatFeu()
 {
     return GetScalarVariable<int>( "myself.eEtatFeu_" );
 }
@@ -688,8 +695,8 @@ int DEC_Decision< T >::GetEtatFeu()
 // Name: DEC_Decision::GetListeEnisTirAutorise(
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-template< class T >
-std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > DEC_Decision< T >::GetListeEnisTirAutorise()
+template <class T>
+std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > DEC_Decision<T>::GetListeEnisTirAutorise()
 {
     return GetVariable< std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > >( "myself.listeEnisTirAutorise_" );
 }
@@ -698,8 +705,8 @@ std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > DEC_Decision< T >::GetLi
 // Name: DEC_Decision::SetListeEnisTirAutorise
 // Created: LDC 2009-12-09
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::SetListeEnisTirAutorise( const std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >& list )
+template <class T>
+void DEC_Decision<T>::SetListeEnisTirAutorise( const std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >& list )
 {
     SetVariable( "myself.listeEnisTirAutorise_", list );
 }
@@ -708,8 +715,8 @@ void DEC_Decision< T >::SetListeEnisTirAutorise( const std::vector< boost::share
 // Name: DEC_Decision::GetListePionsCoordination(
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-template< class T >
-std::vector<DEC_Decision_ABC*> DEC_Decision< T >::GetListePionsCoordination()
+template <class T>
+std::vector<DEC_Decision_ABC*> DEC_Decision<T>::GetListePionsCoordination()
 {
     return GetVariable< std::vector<DEC_Decision_ABC*> >( "myself.listePionsCoordination_" );
 }
@@ -718,8 +725,8 @@ std::vector<DEC_Decision_ABC*> DEC_Decision< T >::GetListePionsCoordination()
 // Name: DEC_Decision::GetObjMisEnCours(
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-template< class T >
-boost::shared_ptr< DEC_Knowledge_Object > DEC_Decision< T >::GetObjMisEnCours()
+template <class T>
+boost::shared_ptr< DEC_Knowledge_Object > DEC_Decision<T>::GetObjMisEnCours()
 {
     return GetVariable< boost::shared_ptr< DEC_Knowledge_Object > >( "myself.objMisEnCours_" );
 }
@@ -728,8 +735,8 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_Decision< T >::GetObjMisEnCours()
 // Name: DEC_Decision::SetObjMisEnCours
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::SetObjMisEnCours( boost::shared_ptr< DEC_Knowledge_Object > value )
+template <class T>
+void DEC_Decision<T>::SetObjMisEnCours( boost::shared_ptr< DEC_Knowledge_Object > value )
 {
     SetVariable( "myself.objMisEnCours_", value );
 }
@@ -738,8 +745,8 @@ void DEC_Decision< T >::SetObjMisEnCours( boost::shared_ptr< DEC_Knowledge_Objec
 // Name: DEC_Decision::GetObjectifCourant(
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-template< class T >
-boost::shared_ptr< MT_Vector2D > DEC_Decision< T >::GetObjectifCourant()
+template <class T>
+boost::shared_ptr< MT_Vector2D > DEC_Decision<T>::GetObjectifCourant()
 {
     return GetVariable< boost::shared_ptr< MT_Vector2D > >( "myself.objectifCourant_" );
 }
@@ -748,8 +755,8 @@ boost::shared_ptr< MT_Vector2D > DEC_Decision< T >::GetObjectifCourant()
 // Name: DEC_Decision::GetPlotRavitaillementAssigne(
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-template< class T >
-boost::shared_ptr< DEC_Knowledge_Object > DEC_Decision< T >::GetPlotRavitaillementAssigne()
+template <class T>
+boost::shared_ptr< DEC_Knowledge_Object > DEC_Decision<T>::GetPlotRavitaillementAssigne()
 {
     return GetVariable< boost::shared_ptr< DEC_Knowledge_Object > >( "myself.plotRavitaillementAssigne_" );
 }
@@ -758,8 +765,8 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_Decision< T >::GetPlotRavitailleme
 // Name: DEC_Decision::SetPlotRavitaillementAssigne
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::SetPlotRavitaillementAssigne( boost::shared_ptr< DEC_Knowledge_Object > value )
+template <class T>
+void DEC_Decision<T>::SetPlotRavitaillementAssigne( boost::shared_ptr< DEC_Knowledge_Object > value )
 {
     SetVariable( "myself.plotRavitaillementAssigne_", value );
 }
@@ -768,8 +775,8 @@ void DEC_Decision< T >::SetPlotRavitaillementAssigne( boost::shared_ptr< DEC_Kno
 // Name: DEC_Decision::GetPorteeAction(
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-template< class T >
-int DEC_Decision< T >::GetPorteeAction()
+template <class T>
+int DEC_Decision<T>::GetPorteeAction()
 {
     return GetScalarVariable<int>( "myself.porteeAction_" );
 }
@@ -778,8 +785,8 @@ int DEC_Decision< T >::GetPorteeAction()
 // Name: DEC_Decision::SetPorteeAmyself.rNiveauAlerteRavitaillement_ction
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::SetPorteeAction( int value )
+template <class T>
+void DEC_Decision<T>::SetPorteeAction( int value )
 {
     SetVariable( "myself.porteeAction_", value );
 }
@@ -788,8 +795,8 @@ void DEC_Decision< T >::SetPorteeAction( int value )
 // Name: DEC_Decision::GetNiveauAlerteRavitaillement(
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-template< class T >
-float DEC_Decision< T >::GetNiveauAlerteRavitaillement()
+template <class T>
+float DEC_Decision<T>::GetNiveauAlerteRavitaillement()
 {
     return GetScalarVariable<float>( "myself.rNiveauAlerteRavitaillement_" );
 }
@@ -798,8 +805,8 @@ float DEC_Decision< T >::GetNiveauAlerteRavitaillement()
 // Name: DEC_Decision::ClearListeEnisTirAutorise
 // Created: LDC 2010-04-27
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::ClearListeEnisTirAutorise()
+template <class T>
+void DEC_Decision<T>::ClearListeEnisTirAutorise()
 {
     const std::vector< int > list;
     SetVariable( "myself.listeEnisTirAutorise_", list );
@@ -809,8 +816,8 @@ void DEC_Decision< T >::ClearListeEnisTirAutorise()
 // Name: DEC_Decision::ClearListePionsCoordination
 // Created: LDC 2010-04-27
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::ClearListePionsCoordination()
+template <class T>
+void DEC_Decision<T>::ClearListePionsCoordination()
 {
     const std::vector< int > list;
     SetVariable( "myself.listePionsCoordination_", list );
@@ -820,8 +827,8 @@ void DEC_Decision< T >::ClearListePionsCoordination()
 // Name: DEC_Decision::ClearPlotsRavitaillement
 // Created: LDC 2010-04-27
 // -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::ClearPlotsRavitaillement()
+template <class T>
+void DEC_Decision<T>::ClearPlotsRavitaillement()
 {
     const std::vector< int > list;
     SetVariable( "myself.plotsRavitaillement_", list );
@@ -831,8 +838,8 @@ void DEC_Decision< T >::ClearPlotsRavitaillement()
 // Name: boost::shared_ptr< MT_Vector2D > DEC_Decision::GetLastPointOfPath
 // Created: LDC 2009-11-04
 // -----------------------------------------------------------------------------
-template< class T >
-boost::shared_ptr< MT_Vector2D > DEC_Decision< T >::GetLastPointOfPath( const MT_Float time, bool bBoundOnPath ) const
+template <class T>
+boost::shared_ptr< MT_Vector2D > DEC_Decision<T>::GetLastPointOfPath( const MT_Float time, bool bBoundOnPath ) const
 {
     return DEC_PathFunctions::ExtrapolatePosition( GetPion(), time, bBoundOnPath );
 }
@@ -841,8 +848,8 @@ boost::shared_ptr< MT_Vector2D > DEC_Decision< T >::GetLastPointOfPath( const MT
 // Name: boost::shared_ptr< MT_Vector2D > DEC_Decision::ExtrapolatePosition
 // Created: LDC 2009-11-04
 // -----------------------------------------------------------------------------
-template< class T >
-boost::shared_ptr< MT_Vector2D > DEC_Decision< T >::ExtrapolatePosition( const MT_Float time, bool bBoundOnPath ) const
+template <class T>
+boost::shared_ptr< MT_Vector2D > DEC_Decision<T>::ExtrapolatePosition( const MT_Float time, bool bBoundOnPath ) const
 {
     return DEC_PathFunctions::ExtrapolatePosition( GetPion(), time, bBoundOnPath );
 }
@@ -852,7 +859,7 @@ boost::shared_ptr< MT_Vector2D > DEC_Decision< T >::ExtrapolatePosition( const M
 // Created: SBO 2009-07-29
 // -----------------------------------------------------------------------------
 template< class T >
-bool DEC_Decision< T >::IsPC() const
+bool DEC_Decision<T>::IsPC() const
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
@@ -862,7 +869,7 @@ bool DEC_Decision< T >::IsPC() const
 // Created: SBO 2009-07-29
 // -----------------------------------------------------------------------------
 template< class T >
-bool DEC_Decision< T >::IsTransported() const
+bool DEC_Decision<T>::IsTransported() const
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
@@ -872,7 +879,7 @@ bool DEC_Decision< T >::IsTransported() const
 // Created: SBO 2009-07-29
 // -----------------------------------------------------------------------------
 template< class T >
-bool DEC_Decision< T >::IsFlying() const
+bool DEC_Decision<T>::IsFlying() const
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
@@ -882,7 +889,7 @@ bool DEC_Decision< T >::IsFlying() const
 // Created: SBO 2009-07-29
 // -----------------------------------------------------------------------------
 template< class T >
-MT_Float DEC_Decision< T >::GetMajorOperationalState() const
+MT_Float DEC_Decision<T>::GetMajorOperationalState() const
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
@@ -892,7 +899,7 @@ MT_Float DEC_Decision< T >::GetMajorOperationalState() const
 // Created: SBO 2009-07-29
 // -----------------------------------------------------------------------------
 template< class T >
-bool DEC_Decision< T >::IsAutomateEngaged() const
+bool DEC_Decision<T>::IsAutomateEngaged() const
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
@@ -902,7 +909,9 @@ bool DEC_Decision< T >::IsAutomateEngaged() const
 // Created: SBO 2009-07-29
 // -----------------------------------------------------------------------------
 template< class T >
-bool DEC_Decision< T >::IsDead() const
+bool DEC_Decision<T>::IsDead() const
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
+
+

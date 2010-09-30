@@ -13,7 +13,6 @@
 #define __PHY_RoleInterface_Surrender_h_
 
 #include "MT_Tools/Role_ABC.h"
-#include <boost/serialization/access.hpp>
 
 namespace client
 {
@@ -74,7 +73,7 @@ private:
     virtual void SendFullState   ( client::UnitAttributes& msg ) const = 0;
 
     friend class boost::serialization::access;
-    template< typename Archive > void serialize( Archive& ar, const unsigned int )
+    template< typename Archive > void serialize( Archive& ar, const uint )
     {
         ar & boost::serialization::base_object< tools::Role_ABC >( *this );
     }

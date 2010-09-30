@@ -10,6 +10,8 @@
 #ifndef __MIL_IntelligenceOrdersVisitor_ABC_h_
 #define __MIL_IntelligenceOrdersVisitor_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 // =============================================================================
 /** @class  MIL_IntelligenceOrdersVisitor_ABC
     @brief  MIL_IntelligenceOrdersVisitor_ABC

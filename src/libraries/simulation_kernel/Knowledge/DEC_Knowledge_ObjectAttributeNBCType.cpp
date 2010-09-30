@@ -56,7 +56,7 @@ DEC_Knowledge_ObjectAttributeNBCType::~DEC_Knowledge_ObjectAttributeNBCType()
 // Name: DEC_Knowledge_ObjectZoneNBC::load
 // Created: RFT 2005-03-25
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeNBCType::load( MIL_CheckPointInArchive& file, const unsigned int )
+void DEC_Knowledge_ObjectAttributeNBCType::load( MIL_CheckPointInArchive& file, const uint )
 {
     unsigned int nID;
     file >> boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
@@ -71,9 +71,9 @@ void DEC_Knowledge_ObjectAttributeNBCType::load( MIL_CheckPointInArchive& file, 
 // Name: DEC_Knowledge_ObjectZoneNBC::save
 // Created: RFT 2005-03-25
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeNBCType::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+void DEC_Knowledge_ObjectAttributeNBCType::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    unsigned int nID = ( pAgent_ ? pAgent_->GetID() : (unsigned int)-1 );
+    unsigned int nID = ( pAgent_ ? pAgent_->GetID() : (uint)-1 );
     file << boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
     file << const_cast< NBCTypeAttribute*& >( attr_ );
     file << nID

@@ -13,7 +13,6 @@
 namespace human
 {
     class HealComputer_ABC;
-
 // =============================================================================
 /** @class  HealableComputerFactory_ABC
     @brief  HealableComputerFactory_ABC

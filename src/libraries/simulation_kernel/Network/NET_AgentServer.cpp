@@ -12,9 +12,8 @@
 #include "simulation_kernel_pch.h"
 #include "NET_AgentServer.h"
 #include "NET_AS_MOSServerMsgMgr.h"
-#include "MIL_AgentServer.h"
 #include "tools/MIL_Config.h"
-#include "MT_Tools/MT_Logger.h"
+#include "MIL_AgentServer.h"
 
 using namespace tools;
 

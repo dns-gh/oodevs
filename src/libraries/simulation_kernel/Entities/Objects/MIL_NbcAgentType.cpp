@@ -14,10 +14,8 @@
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
-#include "MT_Tools/MT_ScipioException.h"
-#include "MT_Tools/MT_Logger.h"
-#include <xeumeuleu/xml.hpp>
 #include <numeric>
+#include <xeumeuleu/xml.hpp>
 
 MIL_NbcAgentType::T_NbcAgentTypeMap MIL_NbcAgentType::nbcAgentTypes_;
 MT_Float                            MIL_NbcAgentType::rCoefMaxSpeedModificator_      = 1.;
@@ -40,6 +38,7 @@ struct MIL_NbcAgentType::LoadingWrapper
 void MIL_NbcAgentType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing nbc types" );
+
     xis >> xml::start( "nbc" )
             >> xml::start( "nbc-suit" )
                 >> xml::attribute( "max-speed-modifier", rCoefMaxSpeedModificator_ )

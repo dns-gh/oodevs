@@ -12,9 +12,6 @@
 #ifndef __PHY_Tiredness_h_
 #define __PHY_Tiredness_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-#include "MT_Tools/MT_Stl.h"
-
 namespace Common
 {
     enum EnumUnitTiredness;
@@ -24,6 +21,7 @@ namespace xml
 {
     class xistream;
 }
+
 
 // =============================================================================
 // @class  PHY_Tiredness

@@ -16,13 +16,14 @@
 #include "MT_Tools/MT_Rect.h"
 
 class MT_Polyline;
-class MT_Droite;
 
 //*****************************************************************************
 // Created: JDY 03-05-19
 //*****************************************************************************
 class TER_Polygon
 {
+//    MT_BOOSTPOOLING_MEMBERS( TER_Polygon )
+
 public:
     // @name Constructors/Destructor
     //@{

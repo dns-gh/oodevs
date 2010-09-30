@@ -10,12 +10,11 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_ResourceNetworkType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
-#include "MT_Tools/MT_Logger.h"
 #include <boost/lexical_cast.hpp>
 #include <xeumeuleu/xml.hpp>
 
 PHY_ResourceNetworkType::T_ResourceNetworkMap PHY_ResourceNetworkType::resourceNetworks_;
-unsigned int PHY_ResourceNetworkType::nNextId_ = 0;
+unsigned int                                  PHY_ResourceNetworkType::nNextId_ = 0;
 
 struct PHY_ResourceNetworkType::LoadingWrapper
 {
@@ -32,6 +31,7 @@ struct PHY_ResourceNetworkType::LoadingWrapper
 void PHY_ResourceNetworkType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing resource networks" );
+
     LoadingWrapper loader;
     xis >> xml::start( "resource-networks" )
             >> xml::list( "resource-network", loader, &LoadingWrapper::ReadResourceNetwork )

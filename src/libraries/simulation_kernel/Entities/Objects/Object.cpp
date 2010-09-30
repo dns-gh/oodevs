@@ -28,14 +28,13 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "protocol/ClientSenders.h"
 #include "hla/HLA_Object_ABC.h"
 #include "hla/HLA_UpdateFunctor.h"
 #include <hla/Deserializer.h>
 #include <hla/AttributeIdentifier.h>
 #include <xeumeuleu/xml.hpp>
-#include <boost/serialization/vector.hpp>
 #include <boost/bind.hpp>
+#include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( Object )
 

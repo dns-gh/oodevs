@@ -13,7 +13,6 @@
 #define __PHY_RoleAction_Objects_DataComputerPionData_h_
 
 #include "Operation.h"
-#include "MT_Tools/MT_Tools_Types.h"
 
 class MIL_Object_ABC;
 class MIL_Agent_ABC;

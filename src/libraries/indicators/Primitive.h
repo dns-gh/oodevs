@@ -11,9 +11,7 @@
 #define __Primitive_h_
 
 #include <boost/shared_ptr.hpp>
-#pragma warning( push, 0 )
 #include <qstring.h>
-#pragma warning( pop )
 
 namespace kernel
 {

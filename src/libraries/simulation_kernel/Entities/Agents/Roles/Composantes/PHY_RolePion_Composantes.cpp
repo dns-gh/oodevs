@@ -24,23 +24,22 @@
 #include "Entities/Actions/PHY_FireResults_ABC.h"
 #include "Knowledge/DEC_Knowledge_AgentComposante.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
+#include "hla/HLA_UpdateFunctor.h"
+#include "protocol/ClientSenders.h"
+#include <xeumeuleu/xml.hpp>
+
 #include "simulation_kernel/TransportCapacityComputer_ABC.h"
 #include "simulation_kernel/TransportWeightComputer_ABC.h"
 #include "simulation_kernel/HumanLoadingTimeComputer_ABC.h"
 #include "simulation_kernel/LoadedStateConsistencyComputer_ABC.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
+
 #include "simulation_kernel/OnComponentComputer_ABC.h"
 #include "simulation_kernel/OnComponentLendedFunctorComputer_ABC.h"
 #include "simulation_kernel/ComponentsChangedNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
 #include "simulation_kernel/DotationsActionsNotificationHandler_ABC.h"
-#include "protocol/ClientSenders.h"
-#include "MT_Tools/MT_ScipioException.h"
-#include <hla/HLA_UpdateFunctor.h>
-#include <boost/serialization/vector.hpp>
-#include <boost/serialization/set.hpp>
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Composantes )
 
@@ -1388,14 +1387,17 @@ PHY_MaintenanceComposanteState* PHY_RolePion_Composantes::NotifyComposanteWaitin
     MIL_AutomateLOG* pTC2 = pion_.GetAutomate().GetTC2();
     if( !pTC2 )
         return 0;
+
     // Pas de RC si log non branchée ou si RC envoyé au tick précédent
     const unsigned int nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( nCurrentTick > ( nTickRcMaintenanceQuerySent_ + 1 ) || nTickRcMaintenanceQuerySent_ == 0 )
         MIL_Report::PostEvent( pion_, MIL_Report::eReport_EquipementEvacuationRequest );
     nTickRcMaintenanceQuerySent_ = nCurrentTick;
+
     PHY_MaintenanceComposanteState* pMaintenanceComposanteState = pTC2->MaintenanceHandleComposanteForTransport( pion_, composante );
     if( !pMaintenanceComposanteState )
         return 0;
+
     if( ! maintenanceComposanteStates_.insert( pMaintenanceComposanteState ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     return pMaintenanceComposanteState;

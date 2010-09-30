@@ -12,10 +12,8 @@
 
 #include "PHY_RoleInterface_TerrainAnalysis.h"
 #include "MovementHandler_ABC.h"
-#include "MT_Tools/MT_Vector2D.h"
 
 class MIL_Agent_ABC;
-
 // =============================================================================
 /** @class  PHY_RolePion_TerrainAnalysis
     @brief  PHY Role pion terrain analysis

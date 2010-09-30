@@ -22,7 +22,6 @@
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_DynamicData.h"
 #include "MT_Tools/MT_Polyline.h"
-#include "MT_Tools/MT_Droite.h"
 
 unsigned int MIL_Fuseau::nNbrMeterPerSample_ = 400; //$$$ A GICLER
 

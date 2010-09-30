@@ -14,7 +14,6 @@
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_ObjectPerception.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-#include "MT_Tools/MT_ScipioException.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgeObjectPerception )
 

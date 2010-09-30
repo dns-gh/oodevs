@@ -11,12 +11,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Location.h"
+#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
 #include "Knowledge/DEC_KS_PopulationInteraction.h"
-#include "MT_Tools/MT_Vector2D.h"
 #include "hla/HLA_UpdateFunctor.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/ClientSenders.h"

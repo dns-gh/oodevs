@@ -10,9 +10,6 @@
 #ifndef __DEC_Path_KnowledgeAgent_h_
 #define __DEC_Path_KnowledgeAgent_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-#include "MT_Tools/MT_Vector2D.h"
-
 class DEC_Knowledge_Agent;
 class DEC_Agent_PathClass;
 class MIL_Agent_ABC;

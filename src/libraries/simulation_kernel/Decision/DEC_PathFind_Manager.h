@@ -12,7 +12,6 @@
 #ifndef __DEC_PathFind_Manager_h_
 #define __DEC_PathFind_Manager_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
 #pragma warning( push, 1 )
 #pragma warning( disable : 4244 4275 )
 #include "tools/thread/MessageQueue_ABC.h"

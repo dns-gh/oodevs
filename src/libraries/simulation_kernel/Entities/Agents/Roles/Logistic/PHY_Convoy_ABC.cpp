@@ -19,11 +19,9 @@
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Orders/MIL_PionMissionType.h"
 #include "tools/MIL_Tools.h"
+#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "tools/xmlcodecs.h"
-#include "MT_Tools/MT_ScipioException.h"
-#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
-#include <boost/serialization/map.hpp>
 
 struct PHY_Convoy_ABC::LoadingWrapper
 {
@@ -46,6 +44,10 @@ const MIL_MissionType_ABC*                PHY_Convoy_ABC::pConvoyMissionType_ = 
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_Convoy_ABC )
 
+// =============================================================================
+//
+// =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: PHY_Convoy_ABC::Initialize
 // Created: NLD 2005-01-27
@@ -53,14 +55,18 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_Convoy_ABC )
 void PHY_Convoy_ABC::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing convoys" );
+
     xis >> xml::start( "supply" )
             >> xml::start( "convoys" );
+
     InitializeConvoyUnitType( xis );
     InitializeConvoyMission ( xis );
+
     InitializeInterpolatedTime ( xis, "constitution-times", formingTime_   );
     InitializeInterpolatedTime ( xis, "loading-times"     , loadingTime_   );
     InitializeInterpolatedTime ( xis, "unloading-times"   , unloadingTime_ );
     InitializeSpeedModificators( xis );
+
     xis     >> xml::end
         >> xml::end;
 }
@@ -299,9 +305,11 @@ bool PHY_Convoy_ABC::ReserveTransporters()
             MIL_AgentPion*      pConveyorPion = 0;
             if( !pConsign_->GetConvoyingAutomate().SupplyGetAvailableConvoyTransporter( pConveyorComp, pConveyorPion, dotationCategory ) )
                 break; // No more convoys
+
             PHY_Conveyor* pConveyor = new PHY_Conveyor( *pConveyorComp, *pConveyorPion );
             if( ! conveyors_.insert( std::make_pair( pConveyorComp, pConveyor ) ).second )
                 throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+
             const MT_Float rNbrConvoyed = pConveyor->Convoy( *pConsign_, dotationCategory, itMerchandise->second );
             if( rNbrConvoyed > 0. )
                 itMerchandise->second -= rNbrConvoyed;

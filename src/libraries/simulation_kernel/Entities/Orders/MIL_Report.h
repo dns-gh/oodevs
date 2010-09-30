@@ -10,9 +10,8 @@
 #ifndef __MIL_Report_h_
 #define __MIL_Report_h_
 
-#include "MIL_MissionParameterFactory.h"
 #include "MT_Tools/MT_IdentifierManager.h"
-#include "MT_Tools/MT_Tools_Types.h"
+#include "MIL_MissionParameterFactory.h"
 
 namespace xml
 {

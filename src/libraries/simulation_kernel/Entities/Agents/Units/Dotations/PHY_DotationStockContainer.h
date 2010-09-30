@@ -12,7 +12,6 @@
 #ifndef __PHY_DotationStockContainer_h_
 #define __PHY_DotationStockContainer_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/export.hpp>
 
 namespace client

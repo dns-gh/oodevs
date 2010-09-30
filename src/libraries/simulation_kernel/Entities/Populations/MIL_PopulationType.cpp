@@ -18,7 +18,6 @@
 #include "Decision/DEC_Tools.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "tools/MIL_Tools.h"
-#include "MT_Tools/MT_Logger.h"
 #include "MIL_AgentServer.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -41,16 +40,20 @@ struct MIL_PopulationType::LoadingWrapper
 void MIL_PopulationType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing population types" );
+
     xis >> xml::start( "populations" )
             >> xml::start( "reloading-time-effect" )
                 >> xml::attribute( "population-density", rEffectReloadingTimeDensity_ )
                 >> xml::attribute( "modifier", rEffectReloadingTimeFactor_ )
             >> xml::end;
+
     if( rEffectReloadingTimeDensity_ < 0 )
         xis.error( "reloading-time-effet: population-density < 0" );
     if( rEffectReloadingTimeFactor_ < 1 )
         xis.error( "reloading-time-effect: modifier < 1" );
+
     LoadingWrapper loader;
+
     xis     >> xml::list( "population", loader, &LoadingWrapper::ReadPopulation )
         >> xml::end;
 }

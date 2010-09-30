@@ -159,6 +159,7 @@ void XmlNode::SetStringValue( const std::string& path, const std::string& value 
     node->SetStringValue( element, value );
 }
 
+
 // -----------------------------------------------------------------------------
 // Name: XmlNode::GetStringValue
 // Created: RDS 2008-08-19
@@ -206,8 +207,8 @@ bool XmlNode::GetValue<bool>( const std::string& path ) const
             return false ;
         if( str =="true" )
             return true ;
-        return boost::lexical_cast< bool >( str );
+        return boost::lexical_cast<bool>(str);
     }
     else
-        throw std::exception( "XmlNode impossible to find path" );
+        throw ( std::exception( "XmlNode impossible to find path" ) ) ;
 }

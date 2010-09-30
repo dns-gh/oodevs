@@ -13,7 +13,6 @@
 #include "MIL_NBCType.h"
 #include "tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
-#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
 MIL_NBCType::T_NBCTypeMap MIL_NBCType::nbcAgentTypes_;
@@ -152,7 +151,7 @@ const MIL_NBCType* MIL_NBCType::Find( const std::string& strName )
 // Created: RFT 19/05/2008
 // Modified: none
 // -----------------------------------------------------------------------------
-const MIL_NBCType* MIL_NBCType::Find( unsigned int nID )
+const MIL_NBCType* MIL_NBCType::Find( uint nID )
 {
     for( CIT_NBCTypeMap it = nbcAgentTypes_.begin(); it != nbcAgentTypes_.end(); ++it )
         if( it->second->GetID() == nID )

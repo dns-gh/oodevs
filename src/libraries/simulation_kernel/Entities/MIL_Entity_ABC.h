@@ -12,6 +12,7 @@
 
 #include "MT_Tools/RoleContainer.h"
 #include "Entities/Actions/PHY_Actor.h"
+
 #pragma warning( push, 0 )
 #include <boost/archive/binary_oarchive_impl.hpp>
 #pragma warning( pop ) // $$$$ LDC Mandatory in order for is_abstract stuff below to compile
@@ -74,7 +75,7 @@ private:
 namespace boost {
 namespace serialization {
     template<>
-    struct is_abstract<const MIL_Entity_ABC> : boost::true_type {};
+    struct is_abstract<const MIL_Entity_ABC> : boost::true_type { } ;
 } // namespace serialization
 }
 

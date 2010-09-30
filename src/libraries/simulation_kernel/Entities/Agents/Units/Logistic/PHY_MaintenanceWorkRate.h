@@ -12,9 +12,6 @@
 #ifndef __PHY_MaintenanceWorkRate_h_
 #define __PHY_MaintenanceWorkRate_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-#include "MT_Tools/MT_Stl.h"
-
 namespace Common
 {
     enum EnumLogMaintenanceRegimeTravail;
@@ -78,7 +75,7 @@ private:
     const Common::EnumLogMaintenanceRegimeTravail asn_;
           MT_Float                              rWorkerRatio_;
           MT_Float                              rWorkTime_;
-          unsigned int                          nDelayBeforeWarningRC_;
+          unsigned int                                  nDelayBeforeWarningRC_;
 
 private:
     static T_WorkRateMap workRates_;

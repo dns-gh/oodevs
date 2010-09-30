@@ -13,7 +13,6 @@
 #define __PHY_RoleInterface_Perceiver_h_
 
 #include "MT_Tools/Role_ABC.h"
-#include "MT_Tools/MT_Vector2DTypes.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionSurfaceAgent.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionSurfaceObject.h"
 
@@ -179,7 +178,7 @@ private:
     //! @name Serialization
     //@{
     friend class boost::serialization::access;
-    template< typename Archive > void serialize( Archive& ar, const unsigned int )
+    template< typename Archive > void serialize( Archive& ar, const uint )
     {
         ar & boost::serialization::base_object< tools::Role_ABC >( *this );
     }

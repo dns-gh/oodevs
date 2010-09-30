@@ -14,7 +14,6 @@
 #include "MIL_AgentServer.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
 #include "simulation_kernel/UrbanModel.h"
-#include "MT_Tools/MT_ScipioException.h"
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/TerrainObjectVisitor_ABC.h>
@@ -70,7 +69,7 @@ DEC_BlackBoard_CanContainKnowledgeUrban::~DEC_BlackBoard_CanContainKnowledgeUrba
 // Name: DEC_BlackBoard_CanContainKnowledgeAgent::load
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgeUrban::load( MIL_CheckPointInArchive& file, const unsigned int )
+void DEC_BlackBoard_CanContainKnowledgeUrban::load( MIL_CheckPointInArchive& file, const uint )
 {
     unsigned int size = 0;
     file >> size;
@@ -87,7 +86,7 @@ void DEC_BlackBoard_CanContainKnowledgeUrban::load( MIL_CheckPointInArchive& fil
 // Name: DEC_BlackBoard_CanContainKnowledgeAgent::save
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgeUrban::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+void DEC_BlackBoard_CanContainKnowledgeUrban::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     unsigned int size = urbanMapFromConcrete_.size();
     file << size;
@@ -138,7 +137,7 @@ boost::shared_ptr< DEC_Knowledge_Urban > DEC_BlackBoard_CanContainKnowledgeUrban
 // Name: DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeUrbanFromID
 // Created: SLG 2010-02-01
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Urban > DEC_BlackBoard_CanContainKnowledgeUrban::GetKnowledgeUrbanFromID( unsigned int nMosID ) const
+boost::shared_ptr< DEC_Knowledge_Urban > DEC_BlackBoard_CanContainKnowledgeUrban::GetKnowledgeUrbanFromID( uint nMosID ) const
 {
     CIT_KnowledgeUrbanMap itKnowledge = urbanMapFromConcrete_.find( nMosID );
     return itKnowledge == urbanMapFromConcrete_.end() ? boost::shared_ptr< DEC_Knowledge_Urban >( ) : itKnowledge->second;

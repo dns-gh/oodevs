@@ -10,12 +10,6 @@
 #include "gaming_pch.h"
 #include "Profile.h"
 #include "AvailableProfile.h"
-#include "Tools.h"
-#include "Model.h"
-#include "TeamsModel.h"
-#include "AgentsModel.h"
-#include "Simulation.h"
-#include "Services.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -27,9 +21,15 @@
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "gaming/Tools.h"
+#include "gaming/Model.h"
+#include "gaming/TeamsModel.h"
+#include "gaming/AgentsModel.h"
 #include "protocol/ProtocolVersionChecker.h"
-#include "protocol/authenticationsenders.h"
+#include "Simulation.h"
+#include "Services.h"
 #include <boost/bind.hpp>
+#include "protocol/authenticationsenders.h"
 
 using namespace kernel;
 

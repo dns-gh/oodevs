@@ -30,6 +30,7 @@ class PHY_AmmoDotationClass;
 
 namespace dotation
 {
+
 // =============================================================================
 // @class  PHY_RoleInterface_Dotations
 // Created: JVT 2004-08-03
@@ -53,9 +54,13 @@ public:
     //! @name Operations
     //@{
     virtual const PHY_ConsumptionType& GetConsumptionMode() const = 0;
+    //@}
 
     virtual void ReadOverloading( xml::xistream& xis ) = 0;
+    //@}
 
+    //! @name Operations
+    //@{
     virtual void Update( bool bIsDead ) = 0;
     virtual void Clean() = 0;
     virtual bool HasChanged() const = 0;
@@ -104,7 +109,7 @@ private:
     //! @name Serialization
     //@{
     friend class boost::serialization::access;
-    template< typename Archive > void serialize( Archive& ar, const unsigned int )
+    template< typename Archive > void serialize( Archive& ar, const uint )
     {
         ar & boost::serialization::base_object< tools::Role_ABC >( *this );
     }

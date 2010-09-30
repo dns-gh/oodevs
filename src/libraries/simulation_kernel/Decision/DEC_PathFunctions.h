@@ -12,7 +12,6 @@
 #ifndef __DEC_PathFunctions_h_
 #define __DEC_PathFunctions_h_
 
-#include "MT_Tools/MT_Vector2DTypes.h"
 #include <boost/shared_ptr.hpp>
 
 class MIL_AgentPion;

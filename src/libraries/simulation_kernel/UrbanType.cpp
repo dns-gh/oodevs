@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "UrbanType.h"
-#include "MT_Tools/MT_Logger.h"
 #include <urban/StaticModel.h>
 #include <xeumeuleu/xml.hpp>
 

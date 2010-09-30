@@ -114,7 +114,7 @@ NBCTypeAttribute& NBCTypeAttribute::operator=( const NBCTypeAttribute& rhs )
 // Name: NBCTypeAttribute::load
 // Created: RFT 2008-07-03
 // -----------------------------------------------------------------------------
-void NBCTypeAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
+void NBCTypeAttribute::load( MIL_CheckPointInArchive& ar, const uint )
 {
     std::string agentName;
 
@@ -131,7 +131,7 @@ void NBCTypeAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 // Name: NBCTypeAttribute::save
 // Created: RFT 2008-07-03
 // -----------------------------------------------------------------------------
-void NBCTypeAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
+void NBCTypeAttribute::save( MIL_CheckPointOutArchive& ar, const uint ) const
 {
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     ar << pAgent_->GetName()

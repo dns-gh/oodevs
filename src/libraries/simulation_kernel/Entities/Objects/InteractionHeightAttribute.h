@@ -11,7 +11,6 @@
 #define __InteractionHeightAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/export.hpp>
 
 namespace xml

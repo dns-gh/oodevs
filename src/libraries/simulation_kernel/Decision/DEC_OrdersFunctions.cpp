@@ -15,7 +15,7 @@
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Orders/MIL_PionMissionType.h"
 #include "Entities/Orders/MIL_AutomateMissionType.h"
-#include "Entities/Orders/MIL_AutomateOrderManager.h"
+#include <boost/noncopyable.hpp>
 
 //-----------------------------------------------------------------------------
 // Name: DEC_OrdersFunctions::MRT_CreatePionMission

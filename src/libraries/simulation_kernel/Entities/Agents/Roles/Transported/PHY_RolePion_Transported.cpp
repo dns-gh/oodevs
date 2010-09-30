@@ -12,10 +12,10 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Transported.h"
 #include "AlgorithmsFactories.h"
+#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "MT_Tools/MT_Vector2D.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/LocationActionNotificationHandler_ABC.h"
 #include "simulation_kernel/MoveComputer_ABC.h"
@@ -168,6 +168,7 @@ void PHY_RolePion_Transported::UnloadFromTransport( const MIL_Agent_ABC& transpo
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Transported::DisableHumanTransporters( const MT_Vector2D& vPos )
 {
+
     if( vHumanTransporterPosition_.IsZero() )
     {
         pion_.Apply( &TransportNotificationHandler_ABC::ForceUnloadedState );

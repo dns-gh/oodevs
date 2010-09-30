@@ -27,8 +27,10 @@ int main( int argc, char** argv )
     std::auto_ptr< FlexLmLicense > license = FlexLmLicense::CheckLicense( "sword", 1.0f );
     expiration = license->GetExpirationDate().c_str();
 #endif
+
     QApplication::setStyle( "windowsxp" );
     Application app( argc, argv, expiration );
+
     BugTrap::Setup( tools::translate( "Application", "SWORD" ).ascii() )
             .SetEmail( tools::translate( "Application", "sword-ot@masagroup.net" ).ascii() )
             .SetVersion( QString( "%1 - " __TIMESTAMP__ ).arg( tools::AppVersion() ).ascii() );
@@ -42,6 +44,7 @@ int main( int argc, char** argv )
         QMessageBox::critical( 0, tools::translate( "Application", "Unhandled error" ), e.what() );
         throw;
     }
+
     return 0;
 }
 

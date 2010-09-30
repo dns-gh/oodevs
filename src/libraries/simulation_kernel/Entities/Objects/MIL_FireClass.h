@@ -10,7 +10,8 @@
 #ifndef __MIL_FireClass_h_
 #define __MIL_FireClass_h_
 
-#include "MT_Tools/MT_Stl.h"
+#include <map>
+#include <boost/noncopyable.hpp>
 
 namespace xml
 {

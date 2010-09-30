@@ -41,6 +41,7 @@ ConfigurationManipulator::ConfigurationManipulator( const tools::GeneralConfig& 
     // NOTHING
 }
 
+
 // -----------------------------------------------------------------------------
 // Name: ConfigurationManipulator destructor
 // Created: SBO 2008-02-25

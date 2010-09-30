@@ -13,6 +13,8 @@
 #include "PHY_RoleAction_Transport.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include <boost/serialization/export.hpp>
+
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "TransportCapacityComputerFactory_ABC.h"
 #include "TransportCapacityComputer_ABC.h"
@@ -26,10 +28,9 @@
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
-#include <boost/serialization/export.hpp>
-#include <boost/serialization/map.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( transport::PHY_RoleAction_Transport )
+BOOST_CLASS_EXPORT_IMPLEMENT( transport::PHY_RoleAction_Transport::sTransportData )
 
 using namespace transport;
 
@@ -68,6 +69,19 @@ PHY_RoleAction_Transport::sTransportData::sTransportData()
 // Name: PHY_RoleAction_Transport::sTransportData::sTransportData
 // Created: NLD 2005-04-18
 // -----------------------------------------------------------------------------
+PHY_RoleAction_Transport::sTransportData::sTransportData( const sTransportData& rhs )
+    : bTransportOnlyLoadable_( rhs.bTransportOnlyLoadable_ )
+    , rTotalWeight_          ( rhs.rTotalWeight_           )
+    , rRemainingWeight_      ( rhs.rRemainingWeight_       )
+    , rTransportedWeight_    ( rhs.rTransportedWeight_     )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Transport::sTransportData::sTransportData
+// Created: NLD 2005-04-18
+// -----------------------------------------------------------------------------
 PHY_RoleAction_Transport::sTransportData::sTransportData( MT_Float rTotalWeight, bool bTransportOnlyLoadable )
     : bTransportOnlyLoadable_( bTransportOnlyLoadable )
     , rTotalWeight_          ( rTotalWeight )
@@ -76,6 +90,21 @@ PHY_RoleAction_Transport::sTransportData::sTransportData( MT_Float rTotalWeight,
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Transport::sTransportData::serialize
+// Created: JVT 2005-03-30
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void PHY_RoleAction_Transport::sTransportData::serialize( Archive& file, const unsigned int )
+{
+    file & const_cast< bool& >    ( bTransportOnlyLoadable_ )
+         & const_cast< MT_Float& >( rTotalWeight_ )
+         & rRemainingWeight_
+         & rTransportedWeight_;
+}
+
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Transport constructor
@@ -116,6 +145,7 @@ void PHY_RoleAction_Transport::serialize( Archive& file, const unsigned int )
          & rWeightTransported_
          & transportedPions_;
 }
+
 
 // =============================================================================
 // LOADING

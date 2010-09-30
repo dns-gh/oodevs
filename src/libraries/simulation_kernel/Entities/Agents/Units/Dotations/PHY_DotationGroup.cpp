@@ -19,7 +19,6 @@
 #include "PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Roles/Logistic/PHY_SupplyDotationRequestContainer.h"
 #include <xeumeuleu/xml.hpp>
-#include <boost/serialization/split_free.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_DotationGroup )
 
@@ -58,44 +57,47 @@ PHY_DotationGroup::~PHY_DotationGroup()
     dotations_.clear();
 }
 
+// =============================================================================
+// CHECKPOINTS
+// =============================================================================
 namespace boost
 {
-namespace serialization
-{
-    template< typename Archive >
-    void serialize( Archive& file, PHY_DotationGroup::T_DotationMap& map, const unsigned int nVersion )
+    namespace serialization
     {
-        split_free( file, map, nVersion );
-    }
-
-    template< typename Archive >
-    void save( Archive& file, const PHY_DotationGroup::T_DotationMap& map, const unsigned int )
-    {
-        unsigned size = map.size();
-        file << size;
-        for( PHY_DotationGroup::CIT_DotationMap it = map.begin(); it != map.end(); ++it )
+        template< typename Archive >
+        inline
+        void serialize( Archive& file, PHY_DotationGroup::T_DotationMap& map, const unsigned int nVersion )
         {
-            unsigned id = it->first->GetMosID();
-            file << id;
-            file << it->second;
+            split_free( file, map, nVersion );
         }
-    }
 
-    template< typename Archive >
-    void load( Archive& file, PHY_DotationGroup::T_DotationMap& map, const unsigned int )
-    {
-        unsigned int nNbr;
-        file >> nNbr;
-        while ( nNbr-- )
+        template< typename Archive >
+        void save( Archive& file, const PHY_DotationGroup::T_DotationMap& map, const unsigned int )
         {
-            unsigned int nID;
-            file >> nID;
-            file >> map[ PHY_DotationType::FindDotationCategory( nID ) ];
+            unsigned size = map.size();
+            file << size;
+            for( PHY_DotationGroup::CIT_DotationMap it = map.begin(); it != map.end(); ++it )
+            {
+                unsigned id = it->first->GetMosID();
+                file << id;
+                file << it->second;
+            }
+        }
+
+        template< typename Archive >
+        void load( Archive& file, PHY_DotationGroup::T_DotationMap& map, const unsigned int )
+        {
+            unsigned int nNbr;
+            file >> nNbr;
+            while ( nNbr-- )
+            {
+                unsigned int nID;
+                file >> nID;
+                file >> map[ PHY_DotationType::FindDotationCategory( nID ) ];
+            }
         }
     }
 }
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationGroup::load
 // Created: JVT 2005-03-31
@@ -105,6 +107,7 @@ void PHY_DotationGroup::load( MIL_CheckPointInArchive& file, const unsigned int 
     unsigned int nID;
     file >> nID;
     pType_ = PHY_DotationType::FindDotationType( nID );
+
     file >> pGroupContainer_
          >> dotations_;
 }
@@ -120,6 +123,10 @@ void PHY_DotationGroup::save( MIL_CheckPointOutArchive& file, const unsigned int
          << pGroupContainer_
          << dotations_;
 }
+
+// =============================================================================
+// INIT
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationGroup::ReadValues

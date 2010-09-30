@@ -76,7 +76,7 @@ void KnowledgeGroupFactory::save( MIL_CheckPointOutArchive& file, const unsigned
 // Name: KnowledgeGroupFactory_ABC::load
 // Created: LDC 2010-03-04
 // -----------------------------------------------------------------------------
-void KnowledgeGroupFactory_ABC::load( MIL_CheckPointInArchive& file, const unsigned int )
+void KnowledgeGroupFactory_ABC::load( MIL_CheckPointInArchive& file, const uint )
 {
     unsigned int nNbr;
     file >> nNbr;
@@ -92,7 +92,7 @@ void KnowledgeGroupFactory_ABC::load( MIL_CheckPointInArchive& file, const unsig
 // Name: KnowledgeGroupFactory_ABC::save
 // Created: LDC 2010-03-04
 // -----------------------------------------------------------------------------
-void KnowledgeGroupFactory_ABC::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+void KnowledgeGroupFactory_ABC::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     unsigned int size = elements_.size();
     file << size;

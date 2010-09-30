@@ -13,11 +13,9 @@
 #define __DEC_Path_ABC_h_
 
 #include "simulation_terrain/TER_PathFindRequest_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 
 class DEC_PathSection_ABC;
 class TerrainData;
-class MT_Vector2D;
 
 // =============================================================================
 // @class  DEC_Path_ABC

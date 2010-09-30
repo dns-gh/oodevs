@@ -12,8 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_AmmoDotationClass.h"
 #include "protocol/protocol.h"
-#include "MT_Tools/MT_Logger.h"
-#include "MT_Tools/MT_Stl.h"
 
 const PHY_AmmoDotationClass PHY_AmmoDotationClass::obus_      ( "Obus"      , Common::obus        );
 const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileAir_( "MissileAir", Common::missile_air );
@@ -29,6 +27,7 @@ PHY_AmmoDotationClass::T_TypeMap PHY_AmmoDotationClass::types_;
 void PHY_AmmoDotationClass::Initialize()
 {
     MT_LOG_INFO_MSG( "Initializing ammo dotation classes" );
+
     types_[ obus_      .GetID() ] = &obus_;
     types_[ missileAir_.GetID() ] = &missileAir_;
     types_[ missileSol_.GetID() ] = &missileSol_;

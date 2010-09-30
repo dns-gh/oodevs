@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_HumanRank.h"
 #include "protocol/protocol.h"
-#include "MT_Tools/MT_Logger.h"
 
 PHY_HumanRank::T_HumanRankMap PHY_HumanRank::humanRanks_;
 const PHY_HumanRank           PHY_HumanRank::officier_       ( "Officier"       , eOfficier       , Common::officier    , true  );

@@ -10,7 +10,6 @@
 #include "MT_Tools_pch.h"
 #include "MT_Timer_ABC.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include <windows.h>
 
 namespace
 {

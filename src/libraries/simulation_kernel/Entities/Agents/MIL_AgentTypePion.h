@@ -11,9 +11,8 @@
 #define __MIL_AgentTypePion_h_
 
 #include "MIL.h"
-#include "MIL_AgentType_ABC.h"
-#include "MT_Tools/MT_Stl.h"
 #include <pathfind/TerrainData.h>
+#include "MIL_AgentType_ABC.h"
 
 namespace xml
 {
@@ -22,10 +21,10 @@ namespace xml
 
 namespace directia
 {
-namespace brain
-{
-    class Brain;
-}
+    namespace brain
+    {
+        class Brain;
+    }
 }
 
 class AlgorithmsFactories;

@@ -13,7 +13,7 @@
 #define __MT_V2D_h_
 
 #include "MT_Tools_Types.h"
-#include "MT_Stl.h"
+#include <vector>
 
 //=============================================================================
 // Created: FBD 02-03-01
@@ -39,8 +39,9 @@ public:
     MT_Vector2D&      Rotate90          ();
     MT_Vector2D       Rotated90         () const;
     MT_Vector2D&      Rotate180         ();
-    bool              IsZero() const;
-    void              Reset();
+    std::vector< MT_Float > ToStdVector() const;
+    bool            IsZero() const;
+    void            Reset();
 
     //! @name Operators
     //@{
@@ -90,17 +91,11 @@ struct vector2DLessXY : public std::binary_function< MT_Vector2D, MT_Vector2D, b
     }
 };
 
-namespace boost
-{
-namespace serialization
-{
-    template< typename Archive >
-    void serialize( Archive& file, MT_Vector2D& vect, const unsigned int )
-    {
-        file & vect.rX_ & vect.rY_;
-    }
-}
-}
+
+class MT_Droite;
+
+//$$$ DEGUEULASSE, COMME LE RESTE
+extern bool        MT_IsPointBetweenTwoLines( const MT_Droite& leftDroite, const MT_Droite& rightDroite, const MT_Vector2D& vPoint );
 
 #include "MT_Vector2D.inl"
 

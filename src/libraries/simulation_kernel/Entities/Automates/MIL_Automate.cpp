@@ -10,9 +10,12 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+
 #include "MIL_Automate.h"
+
 #include "MIL_AutomateType.h"
 #include "DEC_AutomateDecision.h"
+
 #include "Entities/MIL_Formation.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -26,7 +29,6 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/LogisticAttribute.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
-#include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army_ABC.h"
@@ -37,10 +39,10 @@
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
 #include "tools/MIL_Tools.h"
+#include <xeumeuleu/xml.h>
+
 #include "protocol/ClientSenders.h"
 #include "protocol/SimulationSenders.h"
-#include <xeumeuleu/xml.h>
-#include <boost/serialization/vector.hpp>
 
 using namespace Common;
 
@@ -89,7 +91,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , pParentAutomate_                   ( 0 )
     , bEngaged_                          ( true )
     , pKnowledgeGroup_                   ( 0 )
-    , pOrderManager_                     ( new MIL_AutomateOrderManager( *this ) )
+    , orderManager_                      ( *this )
     , pPionPC_                           ( 0 )
     , pions_                             ()
     , recycledPions_                     ()
@@ -101,7 +103,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , bDotationSupplyExplicitlyRequested_( false )
     , dotationSupplyStates_              ()
     , nTickRcDotationSupplyQuerySent_    ( 0 )
-    , pKnowledgeBlackBoard_              ( new DEC_KnowledgeBlackBoard_Automate( *this ) ) // $$$$ MCO : never deleted ?
+    , pKnowledgeBlackBoard_              ( new DEC_KnowledgeBlackBoard_Automate( *this ) )
     , pArmySurrenderedTo_                ( 0 )
 {
     Initialize( xis, database, gcPause, gcMult );
@@ -120,7 +122,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , pParentAutomate_                   ( &parent )
     , bEngaged_                          ( true )
     , pKnowledgeGroup_                   ( 0 )
-    , pOrderManager_                     ( new MIL_AutomateOrderManager( *this ) )
+    , orderManager_                      ( *this )
     , pPionPC_                           ( 0 )
     , pions_                             ()
     , recycledPions_                     ()
@@ -132,7 +134,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , bDotationSupplyExplicitlyRequested_( false )
     , dotationSupplyStates_              ( )
     , nTickRcDotationSupplyQuerySent_    ( 0 )
-    , pKnowledgeBlackBoard_              ( new DEC_KnowledgeBlackBoard_Automate( *this ) ) // $$$$ MCO : never deleted ?
+    , pKnowledgeBlackBoard_              ( new DEC_KnowledgeBlackBoard_Automate( *this ) )
     , pArmySurrenderedTo_                ( 0 )
 {
     Initialize( xis, database, gcPause, gcMult );
@@ -151,7 +153,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID )
     , pParentAutomate_                   ( 0 )
     , bEngaged_                          ( true )
     , pKnowledgeGroup_                   ( 0 )
-    , pOrderManager_                     ( new MIL_AutomateOrderManager( *this ) )
+    , orderManager_                      ( *this )
     , pPionPC_                           ( 0 )
     , pions_                             ()
     , recycledPions_                     ()
@@ -182,7 +184,6 @@ MIL_Automate::~MIL_Automate()
         pParentAutomate_->UnregisterAutomate( *this );
     if( pParentFormation_ )
         pParentFormation_->UnregisterAutomate( *this );
-    delete pOrderManager_;
 }
 
 // =============================================================================
@@ -496,12 +497,12 @@ void MIL_Automate::UpdateDecision( float duration )
 {
     try
     {
-        pOrderManager_->Update();
+        orderManager_.Update();
         GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
     }
     catch( std::runtime_error& /*e*/ )
     {
-        pOrderManager_->CancelMission();
+        orderManager_.CancelMission();
         MT_LOG_ERROR_MSG( "Entity " << GetID() << "('" << GetName() << "') : Mission impossible" );
     }
     //GetRole< DEC_Decision_ABC >().GarbageCollect();
@@ -647,7 +648,7 @@ void MIL_Automate::NotifyDotationSupplied( const PHY_SupplyDotationState& supply
 //-----------------------------------------------------------------------------
 void MIL_Automate::Disengage()
 {
-    pOrderManager_->CancelMission();
+    orderManager_.CancelMission();
     if( bEngaged_ )
     {
         bEngaged_             = false;
@@ -664,7 +665,7 @@ void MIL_Automate::Engage()
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         (**it).Engage();
 
-    pOrderManager_->CancelMission();
+    orderManager_.CancelMission();
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
         (**it).GetOrderManager().CancelMission();
 
@@ -764,7 +765,7 @@ void MIL_Automate::Surrender( const MIL_Army_ABC& amrySurrenderedTo )
     if( pArmySurrenderedTo_ )
         return;
 
-    pOrderManager_->CancelMission();
+    orderManager_.CancelMission();
     pArmySurrenderedTo_ = &amrySurrenderedTo;
     pTC2_               = 0;
 }
@@ -1077,7 +1078,7 @@ void MIL_Automate::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgUnit
         (**itPion).OnReceiveMsgMagicActionMoveTo( (**itPion).GetRole< PHY_RoleInterface_Location >().GetPosition() + vTranslation );
 
     GetRole< DEC_AutomateDecision >().Reset( GetName() );
-    pOrderManager_->CancelMission();
+    orderManager_.CancelMission();
 }
 
 
@@ -1203,7 +1204,7 @@ void MIL_Automate::OnReceiveMsgLogSupplyPushFlow( const Common::MsgMissionParame
 // -----------------------------------------------------------------------------
 void MIL_Automate::OnReceiveMsgOrder( const Common::MsgAutomatOrder& msg )
 {
-    pOrderManager_->OnReceiveMission( msg );
+    orderManager_.OnReceiveMission( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1212,188 +1213,5 @@ void MIL_Automate::OnReceiveMsgOrder( const Common::MsgAutomatOrder& msg )
 // -----------------------------------------------------------------------------
 void MIL_Automate::OnReceiveMsgFragOrder( const MsgsClientToSim::MsgFragOrder& msg )
 {
-    pOrderManager_->OnReceiveFragOrder( msg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::GetKnowledge
-// Created: NLD 2006-04-12
-// -----------------------------------------------------------------------------
-DEC_KnowledgeBlackBoard_Automate& MIL_Automate::GetKnowledge() const
-{
-    assert( pKnowledgeBlackBoard_ );
-    return *pKnowledgeBlackBoard_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::GetTC2
-// Created: NLD 2004-12-23
-// -----------------------------------------------------------------------------
-MIL_AutomateLOG* MIL_Automate::GetTC2() const
-{
-    return pTC2_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::GetNominalTC2
-// Created: NLD 2007-02-14
-// -----------------------------------------------------------------------------
-MIL_AutomateLOG* MIL_Automate::GetNominalTC2() const
-{
-    if( IsSurrendered() )
-        return 0;
-    return pNominalTC2_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::IsSurrendered
-// Created: NLD 2005-02-24
-// -----------------------------------------------------------------------------
-bool MIL_Automate::IsSurrendered() const
-{
-    return pArmySurrenderedTo_ != 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::GetArmySurrenderedTo
-// Created: NLD 2007-02-14
-// -----------------------------------------------------------------------------
-const MIL_Army_ABC* MIL_Automate::GetArmySurrenderedTo() const
-{
-    return pArmySurrenderedTo_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::GetID
-// Created: NLD 2004-08-17
-// -----------------------------------------------------------------------------
-unsigned int MIL_Automate::GetID() const
-{
-    return nID_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::GetType
-// Created: NLD 2004-08-17
-// -----------------------------------------------------------------------------
-const MIL_AutomateType& MIL_Automate::GetType() const
-{
-    assert( pType_ );
-    return *pType_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::GetPionPC
-// Created: NLD 2004-08-19
-// -----------------------------------------------------------------------------
-MIL_AgentPion& MIL_Automate::GetPionPC() const
-{
-    assert( pPionPC_ );
-    return *pPionPC_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::GetKnowledgeGroup
-// Created: NLD 2004-08-30
-// -----------------------------------------------------------------------------
-MIL_KnowledgeGroup& MIL_Automate::GetKnowledgeGroup() const
-{
-    assert( pKnowledgeGroup_ );
-    return *pKnowledgeGroup_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::GetOrderManager
-// Created: NLD 2004-09-06
-// -----------------------------------------------------------------------------
-const MIL_AutomateOrderManager& MIL_Automate::GetOrderManager() const
-{
-    return *pOrderManager_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::GetOrderManager
-// Created: NLD 2004-09-06
-// -----------------------------------------------------------------------------
-MIL_AutomateOrderManager& MIL_Automate::GetOrderManager()
-{
-    return *pOrderManager_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::GetPions
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-const MIL_Automate::T_PionVector& MIL_Automate::GetPions() const
-{
-    return pions_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::GetAutomates
-// Created: NLD 2007-04-03
-// -----------------------------------------------------------------------------
-const MIL_Automate::T_AutomateVector& MIL_Automate::GetAutomates() const
-{
-    return automates_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::GetParentAutomate
-// Created: NLD 2007-04-24
-// -----------------------------------------------------------------------------
-MIL_Automate* MIL_Automate::GetParentAutomate() const
-{
-    return pParentAutomate_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::IsEngaged
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-bool MIL_Automate::IsEngaged() const
-{
-    return bEngaged_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::RegisterPion
-// Created: NLD 2004-09-01
-// -----------------------------------------------------------------------------
-void MIL_Automate::RegisterPion( MIL_AgentPion& pion )
-{
-    assert( std::find( pions_.begin(), pions_.end(), &pion ) == pions_.end() );
-    pions_.push_back( &pion );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::UnregisterPion
-// Created: NLD 2004-09-01
-// -----------------------------------------------------------------------------
-void MIL_Automate::UnregisterPion( MIL_AgentPion& pion )
-{
-    IT_PionVector it = std::find( pions_.begin(), pions_.end(), &pion );
-    assert( it != pions_.end() );
-    pions_.erase( it );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::RegisterAutomate
-// Created: NLD 2007-03-29
-// -----------------------------------------------------------------------------
-void MIL_Automate::RegisterAutomate( MIL_Automate& automate )
-{
-    assert( std::find( automates_.begin(), automates_.end(), &automate ) == automates_.end() );
-    automates_.push_back( &automate );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::UnregisterAutomate
-// Created: NLD 2007-03-29
-// -----------------------------------------------------------------------------
-void MIL_Automate::UnregisterAutomate( MIL_Automate& automate )
-{
-    IT_AutomateVector it = std::find( automates_.begin(), automates_.end(), &automate );
-    assert( it != automates_.end() );
-    automates_.erase( it );
+    orderManager_.OnReceiveFragOrder( msg );
 }

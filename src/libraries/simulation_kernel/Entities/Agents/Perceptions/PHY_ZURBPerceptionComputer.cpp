@@ -33,6 +33,7 @@
 #pragma warning( disable : 4127 4100 )
 #include <boost/geometry/geometry.hpp>
 #pragma warning( pop )
+#include <boost/noncopyable.hpp>
 
 namespace bg = boost::geometry;
 // -----------------------------------------------------------------------------

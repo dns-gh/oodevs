@@ -13,6 +13,7 @@
 #include "MIL_PopulationFlow.h"
 #include "MIL_Population.h"
 #include "MIL_PopulationType.h"
+#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -25,12 +26,9 @@
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/PopulationCollisionNotificationHandler_ABC.h"
 #include "simulation_terrain/TER_World.h"
-#include "MT_Tools/MT_ScipioException.h"
 #include "tools/MIL_Tools.h"
 #include "tools/MIL_IDManager.h"
 #include <xeumeuleu/xml.hpp>
-#include <boost/serialization/vector.hpp>
-#include <boost/serialization/set.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PopulationConcentration )
 
@@ -176,6 +174,7 @@ void MIL_PopulationConcentration::MagicMove( const MT_Vector2D& destination )
         MIL_PopulationConcentration& newConcentration = GetPopulation().GetConcentration( destination );
         newConcentration.PushHumans( PullHumans( GetNbrHumans() ) );
     }
+
     if( pPullingFlow_ )
     {
         pPullingFlow_->UnregisterSourceConcentration( *this );
@@ -336,6 +335,7 @@ void MIL_PopulationConcentration::load( MIL_CheckPointInArchive& file, const uns
 {
     file >> boost::serialization::base_object< TER_PopulationConcentration_ABC >( *this );
     file >> boost::serialization::base_object< MIL_PopulationElement_ABC       >( *this );
+
     file >> position_
          >> location_
          >> pPullingFlow_
@@ -353,6 +353,7 @@ void MIL_PopulationConcentration::save( MIL_CheckPointOutArchive& file, const un
 {
     file << boost::serialization::base_object< TER_PopulationConcentration_ABC >( *this );
     file << boost::serialization::base_object< MIL_PopulationElement_ABC       >( *this );
+
     file << position_
          << location_
          << pPullingFlow_

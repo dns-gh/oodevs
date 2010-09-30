@@ -13,7 +13,6 @@
 #include "DEC_PopulationKnowledge.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
-#include <boost/serialization/split_free.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_PopulationKnowledge )
 

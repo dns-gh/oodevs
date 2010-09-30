@@ -10,7 +10,6 @@
 #ifndef __HumansComposante_ABC_h_
 #define __HumansComposante_ABC_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
 
 class Human_ABC;
 class PHY_HumanRank;

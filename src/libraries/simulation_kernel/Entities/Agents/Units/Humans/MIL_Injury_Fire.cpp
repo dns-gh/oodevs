@@ -15,6 +15,7 @@
 #include "Entities/Objects/MIL_FireClass.h"
 #include "Entities/Objects/MIL_MedicalTreatmentType.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanProtection.h"
+#include <boost/noncopyable.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Injury_Fire )
 
@@ -73,7 +74,7 @@ MIL_Injury_Fire::~MIL_Injury_Fire()
 // Name: PHY_Human::load
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
-void MIL_Injury_Fire::load( MIL_CheckPointInArchive& file, const unsigned int )
+void MIL_Injury_Fire::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> heat_
          >> const_cast < std::string& >( fireClass_ )
@@ -86,7 +87,7 @@ void MIL_Injury_Fire::load( MIL_CheckPointInArchive& file, const unsigned int )
 // Name: MIL_Injury_Fire::save
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
-void MIL_Injury_Fire::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+void MIL_Injury_Fire::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     file << heat_
          << fireClass_

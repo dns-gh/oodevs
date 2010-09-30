@@ -41,7 +41,7 @@ public:
 
     //! @name CheckPoint
     //@{
-    template< typename Archive > void serialize( Archive& file, const unsigned int );
+    template< typename Archive > void serialize( Archive& file, const uint );
     //@}
 
 protected:
@@ -56,7 +56,7 @@ protected:
 // Created: MGD 2009-10-24
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PopulationFactory_ABC::serialize( Archive& file, const unsigned int )
+void PopulationFactory_ABC::serialize( Archive& file, const uint )
 {
     file & elements_;
 }

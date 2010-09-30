@@ -9,17 +9,16 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_DotationCategory_IndirectObjectCreationFire.h"
-#include "MIL_AgentServer.h"
-#include "MIL_Singletons.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/ConstructionAttribute.h"
 #include "Entities/Objects/TimeLimitedAttribute.h"
 #include "Entities/Objects/TimeLimitedCapacity.h"
+#include "MIL_AgentServer.h"
+#include "MIL_Singletons.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "tools/xmlcodecs.h"
-#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -97,6 +96,7 @@ void PHY_DotationCategory_IndirectObjectCreationFire::ApplyEffect( const MIL_Age
     }
     catch( std::runtime_error& )
     {
+        // avoid crash if object cannot be created
         MT_LOG_ERROR_MSG( "Création de l'objet de type" << objectType_ << "impossible" );
     }
 }

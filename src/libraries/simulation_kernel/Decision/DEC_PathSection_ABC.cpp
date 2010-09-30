@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_PathSection_ABC.h"
 #include "DEC_Path_ABC.h"
-#include "MT_Tools/MT_Logger.h"
 #include <ctime>
 
 // -----------------------------------------------------------------------------
@@ -84,3 +83,5 @@ bool DEC_PathSection_ABC::ShouldEndComputation( float /*rCostToCurrentNode*/, fl
     }
     return false;
 }
+
+

@@ -13,7 +13,6 @@
 #define __PHY_HumanWound_h_
 
 #include "MIL_Random.h"
-#include "MT_Tools/MT_Stl.h"
 
 namespace Common
 {

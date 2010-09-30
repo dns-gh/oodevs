@@ -11,12 +11,12 @@
 #define __PHY_RoleHLA_Dotations_h_
 
 #include "PHY_RoleInterface_Dotations.h"
-#include "MT_Tools/MT_Tools_Types.h"
 
 class MIL_Entity_ABC;
 
 namespace dotation
 {
+
 // =============================================================================
 /** @class  PHY_RoleHLA_Dotations
     @brief  HLA role dotations

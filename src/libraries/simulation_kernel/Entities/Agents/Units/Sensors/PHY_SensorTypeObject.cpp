@@ -18,7 +18,6 @@
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -27,7 +26,8 @@
 // -----------------------------------------------------------------------------
 PHY_SensorTypeObject::PHY_SensorTypeObject( const PHY_SensorType& type, xml::xistream& xis )
     : type_        ( type )
-    , rMaxDistance_( 0 )
+    , objectData_  ( )
+    , rMaxDistance_( 0. )
 {
     xis >> xml::list( "object", *this, &PHY_SensorTypeObject::ReadObject );
 }
@@ -40,11 +40,14 @@ void PHY_SensorTypeObject::ReadObject( xml::xistream& xis )
 {
     std::string strType;
     xis >> xml::attribute( "type", strType );
+
     try
     {
         const MIL_ObjectType_ABC& objectType = MIL_ObjectFactory::FindType( strType );
+
         if( objectData_.size() <= objectType.GetID() )
             objectData_.resize( objectType.GetID() + 1, 0 );
+
         const PHY_SensorTypeObjectData* pObjectData = new PHY_SensorTypeObjectData( xis );
         objectData_[ objectType.GetID() ] = pObjectData;
         rMaxDistance_ = std::max( rMaxDistance_, pObjectData->GetMaxDistance() );

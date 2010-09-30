@@ -44,11 +44,11 @@ DEC_Knowledge_UrbanPerception::~DEC_Knowledge_UrbanPerception()
 // Name: DEC_Knowledge_UrbanPerception::load
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_UrbanPerception::load( MIL_CheckPointInArchive& file, const unsigned int )
+void DEC_Knowledge_UrbanPerception::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         >> const_cast< unsigned int& >( nID_ );
-    unsigned int nID;
+         >> const_cast< uint& >( nID_ );
+    uint nID;
     file >> nID;
     pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
     file >> nID;
@@ -59,7 +59,7 @@ void DEC_Knowledge_UrbanPerception::load( MIL_CheckPointInArchive& file, const u
 // Name: DEC_Knowledge_UrbanPerception::save
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_UrbanPerception::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+void DEC_Knowledge_UrbanPerception::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     unsigned current  = pCurrentPerceptionLevel_->GetID(),
              previous = pPreviousPerceptionLevel_->GetID();

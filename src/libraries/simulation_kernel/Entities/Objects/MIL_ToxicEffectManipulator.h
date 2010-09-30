@@ -10,8 +10,6 @@
 #ifndef __MIL_ToxicEffectManipulator_h_
 #define __MIL_ToxicEffectManipulator_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-
 class MIL_NbcAgentType;
 class PHY_HumanWound;
 

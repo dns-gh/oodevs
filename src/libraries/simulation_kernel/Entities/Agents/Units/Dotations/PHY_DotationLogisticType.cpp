@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_DotationLogisticType.h"
-#include "MT_Tools/MT_Logger.h"
 
 PHY_DotationLogisticType::T_DotationLogisticTypeMap PHY_DotationLogisticType::dotationLogisticTypes_;
 
@@ -28,6 +27,7 @@ PHY_DotationLogisticType PHY_DotationLogisticType::pieces_        ( "Pieces"    
 void PHY_DotationLogisticType::Initialize()
 {
     MT_LOG_INFO_MSG( "Initializing logistic dotation types" );
+
     dotationLogisticTypes_[ uniteEssence_  .GetName() ] = &uniteEssence_;
     dotationLogisticTypes_[ uniteFeuTD_    .GetName() ] = &uniteFeuTD_;
     dotationLogisticTypes_[ uniteFeuSansTD_.GetName() ] = &uniteFeuSansTD_;
@@ -83,8 +83,10 @@ const PHY_DotationLogisticType* PHY_DotationLogisticType::Find( const std::strin
 const PHY_DotationLogisticType* PHY_DotationLogisticType::Find( unsigned int nID )
 {
     for( CIT_DotationLogisticTypeMap it = dotationLogisticTypes_.begin(); it != dotationLogisticTypes_.end(); ++it )
+    {
         if( it->second->GetID() == nID )
             return it->second;
+    }
     return 0;
 }
 

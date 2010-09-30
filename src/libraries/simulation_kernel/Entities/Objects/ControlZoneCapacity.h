@@ -24,7 +24,6 @@ class MIL_Agent_ABC;
 class PHY_Composante_ABC;
 class MIL_Army_ABC;
 class PHY_Volume;
-class MT_Vector2D;
 
 // =============================================================================
 /** @class  ControlZoneCapacity

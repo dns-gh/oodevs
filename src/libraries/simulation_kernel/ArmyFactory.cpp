@@ -16,9 +16,9 @@
 #include "simulation_kernel/FormationFactory_ABC.h"
 #include "simulation_kernel/PopulationFactory_ABC.h"
 #include "simulation_kernel/knowledge/KnowledgeGroupFactory_ABC.h" // LTO
-#include "MT_Tools/MT_Logger.h"
+
+
 #include <xeumeuleu/xml.hpp>
-#include <boost/serialization/map.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ArmyFactory )
 
@@ -107,10 +107,12 @@ MIL_Army_ABC* ArmyFactory::Create( xml::xistream& xis )
 void ArmyFactory::InitializeDiplomacies()
 {
     MT_LOG_INFO_MSG( "Initializing armies diplomacies" );
+
     diplomacyConverter_->Register( "enemy"  , MIL_Army_ABC::eEnemy   );
     diplomacyConverter_->Register( "friend" , MIL_Army_ABC::eFriend  );
     diplomacyConverter_->Register( "neutral", MIL_Army_ABC::eNeutral );
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::load

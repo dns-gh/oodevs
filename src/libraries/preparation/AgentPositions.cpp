@@ -9,7 +9,6 @@
 
 #include "preparation_pch.h"
 #include "AgentPositions.h"
-#include "Tools.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
@@ -21,6 +20,8 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "Tools.h"
+#include <boost/ref.hpp>
 #include <xeumeuleu/xml.hpp>
 
 using namespace geometry;
@@ -31,11 +32,8 @@ namespace
     class MoveableProxy : public kernel::Moveable_ABC
     {
     public:
-        explicit MoveableProxy( kernel::Moveable_ABC& moveable )
-            : moveable_( &moveable )
-        {}
-        virtual ~MoveableProxy()
-        {}
+        explicit MoveableProxy( kernel::Moveable_ABC& moveable ) : moveable_( &moveable ) {}
+        virtual ~MoveableProxy() {}
 
         virtual void Move( const geometry::Point2f& position )
         {
@@ -61,12 +59,12 @@ namespace
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
 AgentPositions::AgentPositions( const Agent_ABC& agent, const CoordinateConverter_ABC& converter, Controller& controller, const Point2f& position, PropertiesDictionary& dico )
-    : agent_     ( agent )
-    , converter_ ( converter )
+    : agent_( agent )
+    , converter_( converter )
     , controller_( controller )
-    , moveable_  ( new MoveableProxy( *this ) ) // $$$$ _RC_ PHC 2010-06-25: code smell
-    , position_  ( position )
-    , height_    ( 0 )
+    , moveable_( new MoveableProxy( *this ) ) // $$$$ _RC_ PHC 2010-06-25: code smell
+    , position_( position )
+    , height_( 0 )
     , aggregated_( false )
 {
     CreateDictionary( dico );

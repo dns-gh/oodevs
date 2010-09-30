@@ -63,7 +63,7 @@ void PHY_RoleAction_InterfaceFlying::Fly()
 // Name: PHY_RoleAction_InterfaceFlying::SetFlyingHeight
 // Created: JVT 2004-11-02
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_InterfaceFlying::SetFlyingHeight( double /*rHeight*/)
+void PHY_RoleAction_InterfaceFlying::SetFlyingHeight( MT_Float /*rHeight*/)
 {
     // NOTHING
 }
@@ -81,7 +81,7 @@ bool PHY_RoleAction_InterfaceFlying::IsFlying() const
 // Name: PHY_RoleAction_InterfaceFlying::Apply
 // Created: NLD 2005-02-18
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_InterfaceFlying::Apply( double /*rHeight*/ )
+void PHY_RoleAction_InterfaceFlying::Apply( MT_Float /*rHeight*/ )
 {
     // NOTHING
 }

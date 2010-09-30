@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+
 #include "AutomateFactory.h"
 #include "Decision/DEC_Representations.h"
 #include "Entities/Automates/MIL_Automate.h"
@@ -16,8 +17,6 @@
 #include "simulation_kernel/Decision/DEC_DataBase.h"
 #include "tools/MIL_IDManager.h"
 #include <boost/serialization/export.hpp>
-#include <boost/serialization/vector.hpp>
-#include <boost/serialization/map.hpp>
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( AutomateFactory )
@@ -50,7 +49,7 @@ AutomateFactory::~AutomateFactory()
 // -----------------------------------------------------------------------------
 MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Automate& parent )
 {
-    unsigned int id;
+    uint id;
     std::string strType;
 
     xis >> xml::attribute( "id", id )
@@ -70,7 +69,7 @@ MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Automate& parent 
 // -----------------------------------------------------------------------------
 MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Formation& parent )
 {
-    unsigned int id;
+    uint id;
     std::string strType;
 
     xis >> xml::attribute( "id", id )

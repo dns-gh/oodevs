@@ -10,9 +10,7 @@
 #ifndef __EntityImplementation_h_
 #define __EntityImplementation_h_
 
-#pragma warning( push, 0 )
 #include <qstring.h>
-#pragma warning( pop )
 
 namespace kernel
 {

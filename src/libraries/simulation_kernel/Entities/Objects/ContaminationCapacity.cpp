@@ -18,7 +18,6 @@
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include <boost/ptr_container/serialize_ptr_vector.hpp>
-#include <boost/serialization/vector.hpp>
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ContaminationCapacity )

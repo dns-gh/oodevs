@@ -10,6 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+
 #include "PHY_WeaponType.h"
 #include "PHY_LauncherType.h"
 #include "PHY_WeaponDataType_IndirectFire.h"
@@ -22,10 +23,11 @@
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
+
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/DotationComputer_ABC.h"
 #include "simulation_kernel/DotationComputerFactory_ABC.h"
-#include "MT_Tools/MT_Logger.h"
+
 #include <xeumeuleu/xml.hpp>
 
 PHY_WeaponType::T_WeaponTypeMap PHY_WeaponType::weaponTypes_;
@@ -45,7 +47,10 @@ struct PHY_WeaponType::LoadingWrapper
 void PHY_WeaponType::Initialize( const MIL_Time_ABC& time, xml::xistream& xis, double timeFactor )
 {
     MT_LOG_INFO_MSG( "Initializing weapon types" );
+
     LoadingWrapper loader;
+
+    // Initialisation des composantes
     xis >> xml::start( "weapons" )
             >> xml::list( "weapon-system", loader, &LoadingWrapper::ReadWeapon, time, timeFactor )
         >> xml::end;
@@ -231,7 +236,7 @@ MT_Float PHY_WeaponType::GetPHModificator( const PHY_Posture& firerPosture, cons
 // Name: PHY_WeaponType::IndirectFire
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-void PHY_WeaponType::IndirectFire( MIL_Effect_IndirectFire& effect, unsigned int nNbrAmmoReserved ) const
+void PHY_WeaponType::IndirectFire( MIL_Effect_IndirectFire& effect, uint nNbrAmmoReserved ) const
 {
     assert( pIndirectFireData_ );
     pIndirectFireData_->Fire( effect, nNbrAmmoReserved );
@@ -261,7 +266,7 @@ void PHY_WeaponType::DirectFire( MIL_AgentPion& firer, MIL_PopulationElement_ABC
 // Name: PHY_WeaponType::ThrowSmoke
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_WeaponType::ThrowSmoke( MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo, PHY_FireResults_ABC& fireResult ) const
+void PHY_WeaponType::ThrowSmoke( MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmo, PHY_FireResults_ABC& fireResult ) const
 {
     assert( pIndirectFireData_ );
     pIndirectFireData_->ThrowSmoke( firer, vSourcePosition, vTargetPosition, nNbrAmmo, fireResult );

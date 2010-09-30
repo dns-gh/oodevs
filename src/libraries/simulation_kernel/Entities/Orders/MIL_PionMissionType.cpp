@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PionMissionType.h"
-#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
 MIL_MissionType_ABC::T_MissionIDMap   MIL_PionMissionType::missionIDs_;
@@ -35,7 +34,9 @@ struct MIL_PionMissionType::LoadingWrapper
 void MIL_PionMissionType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing pion mission types" );
+
     LoadingWrapper loader;
+
     xis >> xml::start( "missions" )
             >> xml::start( "units" )
                 >> xml::list( "mission", loader, &LoadingWrapper::ReadMission )

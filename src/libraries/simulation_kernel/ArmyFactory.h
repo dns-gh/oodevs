@@ -46,8 +46,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
 
-    void load( MIL_CheckPointInArchive&, const unsigned int );
-    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+    void load( MIL_CheckPointInArchive&, const uint );
+    void save( MIL_CheckPointOutArchive&, const uint ) const;
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const ArmyFactory* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, ArmyFactory* role, const unsigned int /*version*/ );

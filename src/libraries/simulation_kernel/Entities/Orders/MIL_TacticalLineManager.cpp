@@ -10,9 +10,9 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
+
 #include "MIL_TacticalLineManager.h"
 #include "TER_LimitData.h"
-#include "MT_Tools/MT_ScipioException.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_TacticalLineManager constructor

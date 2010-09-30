@@ -12,6 +12,7 @@
 
 #include "tools/Resolver.h"
 #include "protocol/Simulation.h"
+
 #pragma warning( push, 0 )
 #include <qstring.h>
 #include <qdatetime.h>

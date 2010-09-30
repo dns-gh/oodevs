@@ -12,14 +12,14 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_AgentDataDetection.h"
 #include "MIL_AgentServer.h"
-#include "DEC_Knowledge_AgentPerceptionDataDetection.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/MIL_Army_ABC.h"
-#include "Network/NET_ASN_Tools.h"
+#include "DEC_Knowledge_AgentPerceptionDataDetection.h"
 #include "tools/MIL_Tools.h"
+#include "Network/NET_ASN_Tools.h"
 #include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentDataDetection )

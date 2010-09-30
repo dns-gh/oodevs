@@ -20,7 +20,6 @@
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Units/Humans/MIL_Injury_ABC.h"
 #include "simulation_kernel/HumansActionsNotificationHandler_ABC.h"
-#include <boost/serialization/vector.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_HumansComposante )
 

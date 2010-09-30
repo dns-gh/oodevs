@@ -12,9 +12,6 @@
 #ifndef __PHY_WeaponType_h_
 #define __PHY_WeaponType_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-#include "MT_Tools/MT_Stl.h"
-
 namespace xml
 {
     class xistream;
@@ -36,7 +33,6 @@ class PHY_Composante_ABC;
 class PHY_FireResults_ABC;
 class MIL_Time_ABC;
 class MIL_EffectManager;
-class MT_Vector2D;
 
 // =============================================================================
 // @class  PHY_WeaponType
@@ -72,10 +68,10 @@ public:
 
     //! @name Operations
     //@{
-    void     IndirectFire       ( MIL_Effect_IndirectFire& effect, unsigned int nNbrAmmoReserved ) const;
-    void     DirectFire         ( MIL_AgentPion& firer, MIL_PopulationElement_ABC& target, unsigned int nNbrAmmoReserved, PHY_FireResults_ABC& fireResult ) const;
+    void     IndirectFire       ( MIL_Effect_IndirectFire& effect, uint nNbrAmmoReserved ) const;
+    void     DirectFire         ( MIL_AgentPion& firer, MIL_PopulationElement_ABC& target, uint nNbrAmmoReserved, PHY_FireResults_ABC& fireResult ) const;
     void     DirectFire         ( MIL_AgentPion& firer, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult, bool bUsePH ) const;
-    void     ThrowSmoke         ( MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo, PHY_FireResults_ABC& fireResult ) const;
+    void     ThrowSmoke         ( MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmo, PHY_FireResults_ABC& fireResult ) const;
 
     MT_Float GetDangerosity     ( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& compTarget, bool bUsePH ) const;
     MT_Float GetDangerosity     ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rDistBtwFirerAndTarget ) const;
@@ -91,6 +87,7 @@ public:
     MT_Float GetMinRangeToIndirectFire( const MIL_Agent_ABC& firer, bool bCheckDotationsAvailability ) const;
     MT_Float GetMaxRangeToIndirectFire() const;
     MT_Float GetMinRangeToIndirectFire() const;
+
 
     MT_Float GetPHModificator( const PHY_RoleInterface_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture ) const;
     MT_Float GetPHModificator( const PHY_Posture&          firerPosture, const PHY_Posture&               targetPosture ) const;

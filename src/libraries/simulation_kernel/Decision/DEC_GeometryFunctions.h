@@ -10,7 +10,6 @@
 #ifndef __DEC_GeometryFunctions_h_
 #define __DEC_GeometryFunctions_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/shared_ptr.hpp>
 
 class DEC_Decision_ABC;
@@ -26,17 +25,17 @@ class TER_Localisation;
 
 namespace directia
 {
-namespace brain
-{
-    class Brain;
-}
-namespace tools
-{
-namespace binders
-{
-    class ScriptRef;
-}
-}
+    namespace brain
+    {
+        class Brain;
+    }
+    namespace tools
+    {
+        namespace binders
+        {
+            class ScriptRef;
+        }
+    }
 }
 
 // =============================================================================

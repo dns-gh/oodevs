@@ -17,12 +17,12 @@
 // Name: PHY_ActionTriggerActivityInArea constructor
 // Created: JCR 2007-09-12
 // -----------------------------------------------------------------------------
-PHY_ActionTriggerActivityInArea::PHY_ActionTriggerActivityInArea( MIL_AgentPion& pion, const std::string& activity, double influence, const TER_Localisation* /*pLocalisation*/ )
-    : PHY_DecisionCallbackAction_ABC( pion )
-    , pion_     ( pion )
-    , role_     ( pion.GetRole< PHY_RoleAction_FolkInfluence >() )
-    , activity_ ( activity )
-    , influence_( influence )
+PHY_ActionTriggerActivityInArea::PHY_ActionTriggerActivityInArea( MIL_AgentPion& pion, const std::string& activity, double influence, const TER_Localisation* pLocalisation )
+    : PHY_DecisionCallbackAction_ABC      ( pion )
+    , pion_               ( pion )
+    , role_               ( pion.GetRole< PHY_RoleAction_FolkInfluence >() )
+    , activity_           ( activity )
+    , influence_          ( influence )
 {
     Callback( static_cast< int >( PHY_RoleAction_FolkInfluence::eImpossible ) );
 }
@@ -42,7 +42,6 @@ PHY_ActionTriggerActivityInArea::~PHY_ActionTriggerActivityInArea()
 // -----------------------------------------------------------------------------
 void PHY_ActionTriggerActivityInArea::StopAction()
 {
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +50,6 @@ void PHY_ActionTriggerActivityInArea::StopAction()
 // -----------------------------------------------------------------------------
 void PHY_ActionTriggerActivityInArea::Execute()
 {
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -60,5 +58,4 @@ void PHY_ActionTriggerActivityInArea::Execute()
 // -----------------------------------------------------------------------------
 void PHY_ActionTriggerActivityInArea::ExecuteSuspended()
 {
-    // NOTHING
 }

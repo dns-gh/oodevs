@@ -10,7 +10,9 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+
 #include "PHY_ActionControlZone.h"
+
 #include "PHY_RoleAction_DirectFiring.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -24,7 +26,6 @@
 #include "Decision/DEC_Tools.h"
 #include "MIL_AgentServer.h"
 #include "simulation_terrain/TER_Localisation.h"
-#include "MT_Tools/MT_Logger.h"
 
 using namespace firing;
 

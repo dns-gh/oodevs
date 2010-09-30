@@ -12,8 +12,6 @@
 #ifndef __PHY_DotationType_h_
 #define __PHY_DotationType_h_
 
-#include "MT_Tools/MT_Stl.h"
-
 namespace Common
 {
     enum EnumDotationFamily;

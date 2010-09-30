@@ -72,7 +72,7 @@ void PoisoningCapacity::InitializeData( xml::xistream& xis )
 // Created: RFT 2008-05-30
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PoisoningCapacity::serialize( Archive& file, const unsigned int )
+void PoisoningCapacity::serialize( Archive& file, const uint )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
 }

@@ -20,12 +20,14 @@ int WINAPI WinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
     std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword", 1.0f ) );
 #endif
+
     MT_ConsoleLogger        consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );
+
     int nResult = EXIT_SUCCESS;
     try
     {
-        App app( hinstance, hPrevInstance, lpCmdLine, nCmdShow );
+        App  app( hinstance, hPrevInstance, lpCmdLine, nCmdShow );
         app.Execute();
     }
     catch( std::exception& e )
@@ -33,6 +35,8 @@ int WINAPI WinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine
         MT_LOG_ERROR_MSG( e.what() );
         nResult = EXIT_FAILURE;
     }
+
     MT_LOG_UNREGISTER_LOGGER( consoleLogger );
     return nResult;
 }
+

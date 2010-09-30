@@ -10,6 +10,7 @@
 #ifndef __gaming_pch_h_
 #define __gaming_pch_h_
 
+
 #pragma warning( disable : 4290 )
 #pragma warning( disable : 4702 )
 
@@ -21,7 +22,8 @@
 #undef GetObject
 #undef GetMessage
 
-#pragma warning( push, 0 )
+#pragma warning( push )
+#pragma warning( disable : 4996 ) // $$$$ SBO 2008-05-13: vc80 deprecation
 #include <qstring.h>
 #include <qgl.h>
 #include <qdatetime.h>
@@ -45,6 +47,8 @@ typedef T_PointVector::const_iterator  CIT_PointVector;
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 
-#undef uint
+#ifdef uint
+# undef uint
+#endif
 
 #endif // __gaming_pch_h_

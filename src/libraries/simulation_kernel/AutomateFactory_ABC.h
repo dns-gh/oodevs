@@ -44,7 +44,7 @@ public:
 
     //! @name CheckPoint
     //@{
-    template< typename Archive > void serialize( Archive& file, const unsigned int );
+    template< typename Archive > void serialize( Archive& file, const uint );
     //@}
 };
 
@@ -60,7 +60,7 @@ namespace serialization {
 // Created: MGD 2009-10-24
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void AutomateFactory_ABC::serialize( Archive& file, const unsigned int )
+void AutomateFactory_ABC::serialize( Archive& file, const uint )
 {
     file & elements_;
 }

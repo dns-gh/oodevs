@@ -115,7 +115,7 @@ void StockAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
     while ( size-- )
     {
         std::string type;
-        unsigned int current, max;
+        uint current, max;
         ar >> type
            >> current >> max;
         const PHY_DotationCategory* dotation = PHY_DotationType::FindDotationCategory( type );

@@ -17,10 +17,10 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
+
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/DotationComputer_ABC.h"
 #include "simulation_kernel/DotationComputerFactory_ABC.h"
-#include "MT_Tools/MT_ScipioException.h"
 
 using namespace firing;
 
@@ -29,7 +29,8 @@ using namespace firing;
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
 PHY_DirectFireData::sComposanteWeapons::sComposanteWeapons()
-    : bIsFiring_( false )
+    : bIsFiring_   ( false )
+    , weaponsReady_()
 {
     // NOTHING
 }

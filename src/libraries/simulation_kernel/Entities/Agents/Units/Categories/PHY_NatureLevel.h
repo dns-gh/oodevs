@@ -12,8 +12,6 @@
 #ifndef __PHY_NatureLevel_h_
 #define __PHY_NatureLevel_h_
 
-#include "MT_Tools/MT_Stl.h"
-
 namespace Common
 {
     enum EnumNatureLevel;

@@ -13,7 +13,6 @@
 #define __DEC_Knowledge_RapFor_ABC_h_
 
 #include "DEC_Knowledge_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 
 namespace xml
 {

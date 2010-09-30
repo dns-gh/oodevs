@@ -15,13 +15,11 @@
 #include "protocol/ClientSenders.h"
 #include "tools/MIL_Tools.h"
 #include "tools/MIL_IDManager.h"
-#include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_FormatString.h"
-#include "MT_Tools/MT_Logger.h"
-#include <xeumeuleu/xml.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/convenience.hpp>
 #include <direct.h>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_CheckPointManager constructor

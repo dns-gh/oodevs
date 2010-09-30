@@ -10,9 +10,6 @@
 #ifndef __MIL_ObjectInteraction_h_
 #define __MIL_ObjectInteraction_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-#include <boost/serialization/split_member.hpp>
-
 class MIL_Agent_ABC;
 class TER_Localisation;
 class MIL_CheckPointOutArchive;

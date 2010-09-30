@@ -19,7 +19,6 @@
 #include "simulation_kernel/ConsumptionModeChangeRequest_ABC.h"
 #include "simulation_kernel/ObjectCollisionNotificationHandler_ABC.h"
 #include "simulation_kernel/LocationActionNotificationHandler_ABC.h"
-#include "MT_Tools/MT_ScipioException.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Reinforcement )
 

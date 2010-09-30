@@ -90,16 +90,17 @@
 #include "tools/MIL_IDManager.h"
 #include "tools/MIL_ProfilerMgr.h"
 #include "tools/MIL_Tools.h"
-#include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_FormatString.h"
-#include "protocol/ClientSenders.h"
-#include "protocol/protocol.h"
 #include <urban/ObjectVisitor_ABC.h>
 #include <xeumeuleu/xml.hpp>
-#pragma warning( push, 0 )
+#pragma warning( push )
+#pragma warning( disable: 4127 4512 4511 )
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #pragma warning( pop )
+
+#include "protocol/ClientSenders.h"
+#include "protocol/protocol.h"
 
 namespace bfs = boost::filesystem;
 
@@ -111,18 +112,20 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_EntityManager )
 
 namespace
 {
-    long TaskerToId( const Tasker& tasker )
-    {
-        if( tasker.has_unit() )
-            return tasker.unit().id();
-        if( tasker.has_automat() )
-            return tasker.automat().id();
-        if( tasker.has_crowd() )
-            return tasker.crowd().id();
-        if( tasker.has_formation() )
-            return tasker.formation().id();
-        throw std::exception( "Misformed tasker in protocol message" );
-    }
+
+long TaskerToId( const Tasker& tasker )
+{
+    if( tasker.has_unit() )
+        return tasker.unit().id();
+    if( tasker.has_automat() )
+        return tasker.automat().id();
+    if( tasker.has_crowd() )
+        return tasker.crowd().id();
+    if( tasker.has_formation() )
+        return tasker.formation().id();
+    throw( std::exception( "Misformed tasker in protocol message" ) );
+}
+
 }
 
 template< typename Archive >
@@ -224,6 +227,7 @@ MIL_EntityManager::~MIL_EntityManager()
     MIL_LimaFunction              ::Terminate();
     UrbanType                     ::Terminate();
     PHY_ResourceNetworkType       ::Terminate();
+
     delete pObjectManager_;
 }
 

@@ -66,6 +66,7 @@ private:
     //@}
 
 private:
+    const Config&                             config_;
     boost::shared_ptr< kernel::StaticModel >  staticModel_;
     boost::shared_ptr< Model >                model_;
     std::auto_ptr< CompositeRegistrable >     registrables_;

@@ -11,7 +11,6 @@
 #include "TER_Localisation.h"
 #include "TER_World.h"
 #include "MT_Tools/MT_Circle.h"
-#include "MT_Tools/MT_Droite.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_FormatString.h"
 #include <xeumeuleu/xml.hpp>

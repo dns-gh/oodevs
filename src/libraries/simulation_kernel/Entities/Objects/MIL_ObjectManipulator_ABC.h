@@ -10,8 +10,6 @@
 #ifndef __MIL_ObjectManipulator_ABC_h_
 #define __MIL_ObjectManipulator_ABC_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-
 class MIL_Agent_ABC;
 
 // =============================================================================

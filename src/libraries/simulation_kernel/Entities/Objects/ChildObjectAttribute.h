@@ -30,7 +30,7 @@ public:
 
     //! @name CheckPoint
     //@{
-    template< typename Archive > void serialize( Archive&, const unsigned int );
+    template< typename Archive > void serialize( Archive&, const uint );
     //@}
 
     //! @name From ObjectAttribute_ABC

@@ -40,7 +40,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const unsigned int );
+    template< typename Archive > void serialize( Archive&, const uint );
     //@}
 
     //! @name Operations
@@ -86,7 +86,7 @@ BOOST_CLASS_EXPORT_KEY( DEC_KS_UrbanKnowledgeSynthetizer )
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void DEC_KS_UrbanKnowledgeSynthetizer::serialize( Archive& archive, const unsigned int )
+void DEC_KS_UrbanKnowledgeSynthetizer::serialize( Archive& archive, const uint )
 {
     archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
             & pBlackBoard_;

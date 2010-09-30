@@ -310,7 +310,7 @@ void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, 
 // Name: PHY_DotationCategory::ApplyIndirectFireEffect
 // Created: MGD 2010-10-15
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const
+void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, uint nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const
 {
     assert( pIndirectFireData_ );
     const MT_Float rInterventionTypeFired = pIndirectFireData_->ConvertToInterventionType( nNbrAmmoFired );

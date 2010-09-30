@@ -13,7 +13,6 @@
 #define __DEC_KS_Perception_h_
 
 #include "DEC_KnowledgeSource_ABC.h"
-#include "MT_Tools/MT_Vector2DTypes.h"
 
 class DEC_KnowledgeBlackBoard_AgentPion;
 class DEC_Knowledge_AgentPerception;

@@ -11,7 +11,6 @@
 #define __BypassableCapacity_h_
 
 #include "ObjectCapacity_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 
 namespace xml
 {

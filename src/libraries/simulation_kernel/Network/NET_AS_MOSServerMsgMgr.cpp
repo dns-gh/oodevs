@@ -22,7 +22,6 @@
 #include "protocol/SimulationSenders.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/DispatcherSenders.h"
-#include "MT_Tools/MT_Logger.h"
 
 //-----------------------------------------------------------------------------
 // Name: NET_AS_MOSServerMsgMgr constructor
@@ -146,3 +145,4 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlClientAnnouncement( const std::stri
     MIL_AgentServer::GetWorkspace().SendStateToNewClient();
     client::ControlSendCurrentStateEnd().Send( NET_Publisher_ABC::Publisher() );
 }
+

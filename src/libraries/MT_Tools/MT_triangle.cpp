@@ -18,6 +18,8 @@
 #   include "MT_Triangle.inl"
 #endif  // _DEBUG
 
+//MT_BOOSTPOOLING_FUNCTIONS( MT_Triangle )
+
 //-----------------------------------------------------------------------------
 //  Name  :  MT_Triangle constructor
 // Created: FBD 02-07-01

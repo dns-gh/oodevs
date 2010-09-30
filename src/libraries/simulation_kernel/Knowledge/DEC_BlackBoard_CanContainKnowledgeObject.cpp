@@ -16,7 +16,6 @@
 #include "DEC_Knowledge_Object.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-#include "MT_Tools/MT_ScipioException.h"
 #include <boost/serialization/export.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgeObject )

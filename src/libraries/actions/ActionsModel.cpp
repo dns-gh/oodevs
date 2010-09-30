@@ -104,10 +104,12 @@ void ActionsModel::Destroy( const Action_ABC& action )
 void ActionsModel::Load( const std::string& filename, bool readonly /*= false*/ )
 {
     std::string errors;
+    
     xsl::xstringtransform xst( "resources/ordCompatibility.xsl" );
     xst << xml::xifstream( filename );
     std::string updatedFile = xst.str();
     xml::xistringstream xis( updatedFile );
+
     xis >> xml::start( "actions" )
             >> xml::list( "action", *this, &ActionsModel::ReadAction, readonly, errors )
         >> xml::end;
@@ -139,10 +141,7 @@ void ActionsModel::ReadAction( xml::xistream& xis, bool readonly, std::string& e
                 action.release();
             }
         }
-        catch( std::exception& )
-        {
-            // NOTHING
-        }
+        catch( std::exception& ) {}
     }
 }
 

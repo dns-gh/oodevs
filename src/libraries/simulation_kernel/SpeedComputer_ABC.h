@@ -10,6 +10,8 @@
 #ifndef __moving_SpeedComputer_ABC_H__
 #define __moving_SpeedComputer_ABC_H__
 
+#include <boost/noncopyable.hpp>
+
 class DEC_Knowledge_PopulationCollision;
 class MIL_Agent_ABC;
 class PHY_ComposantePion;

@@ -17,7 +17,6 @@
 #include "MIL_KnowledgeGroup.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/MIL_Army.h"
-#include "MT_Tools/MT_ScipioException.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgeAgent )
 

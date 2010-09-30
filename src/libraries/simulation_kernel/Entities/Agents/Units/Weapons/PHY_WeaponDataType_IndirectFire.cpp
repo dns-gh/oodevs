@@ -56,7 +56,7 @@ PHY_WeaponDataType_IndirectFire::~PHY_WeaponDataType_IndirectFire()
 // Name: PHY_WeaponDataType_IndirectFire::Fire
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------
-void PHY_WeaponDataType_IndirectFire::Fire( MIL_Effect_IndirectFire& effect, unsigned int nNbrAmmoReserved ) const
+void PHY_WeaponDataType_IndirectFire::Fire( MIL_Effect_IndirectFire& effect, uint nNbrAmmoReserved ) const
 {
     effect.NotifyAmmoFired( *this, nNbrAmmoReserved );
 }
@@ -65,7 +65,7 @@ void PHY_WeaponDataType_IndirectFire::Fire( MIL_Effect_IndirectFire& effect, uns
 // Name: PHY_WeaponDataType_IndirectFire::ThrowSmoke
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_WeaponDataType_IndirectFire::ThrowSmoke( MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo, PHY_FireResults_ABC& fireResult ) const
+void PHY_WeaponDataType_IndirectFire::ThrowSmoke( MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmo, PHY_FireResults_ABC& fireResult ) const
 {
     weaponType_.GetDotationCategory().ApplyIndirectFireEffect( firer, vSourcePosition, vTargetPosition, nNbrAmmo, fireResult );
 }

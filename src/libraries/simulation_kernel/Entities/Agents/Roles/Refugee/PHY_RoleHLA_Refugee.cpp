@@ -10,8 +10,8 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+
 #include "PHY_RoleHLA_Refugee.h"
-#include <string>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleHLA_Refugee )
 
@@ -56,6 +56,7 @@ void PHY_RoleHLA_Refugee::ChangeStatus( const std::vector< std::string >& status
 // Name: PHY_RoleHLA_Refugee::IsManaged
 // Created: NLD 2005-02-24
 // -----------------------------------------------------------------------------
+inline
 bool PHY_RoleHLA_Refugee::IsManaged() const
 {
     return bManaged_;

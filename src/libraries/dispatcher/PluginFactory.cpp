@@ -77,11 +77,8 @@ void PluginFactory::Instanciate()
     handler_.Add( new score::ScorePlugin( clients_, clients_, clients_, config_, registrables_ ) );
     handler_.Add( new logger::LoggerPlugin( model_, staticModel_, config_, services_ ) );
     xml::xifstream xis( config_.GetSessionFile() );
-    xis >> xml::start( "session" )
-            >> xml::start( "config" )
-                >> xml::start( "dispatcher" )
-                    >> xml::start( "plugins" )
-                        >> xml::list( *this, &PluginFactory::ReadPlugin );
+    xis >> xml::start( "session" ) >> xml::start( "config" ) >> xml::start( "dispatcher" ) >> xml::start( "plugins" )
+        >> xml::list( *this, &PluginFactory::ReadPlugin );
 }
 
 // -----------------------------------------------------------------------------

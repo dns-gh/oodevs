@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_Experience.h"
 #include "protocol/protocol.h"
-#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_Experience::T_ExperienceMap PHY_Experience::experiences_;
@@ -36,6 +35,7 @@ struct PHY_Experience::LoadingWrapper
 void PHY_Experience::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing experiences" );
+
     LoadingWrapper loader;
     xis >> xml::start( "humans-factors" )
             >> xml::start( "experience-factor" )

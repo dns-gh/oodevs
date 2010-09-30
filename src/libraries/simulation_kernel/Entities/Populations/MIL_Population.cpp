@@ -27,7 +27,6 @@
 #include "protocol/ClientSenders.h"
 #include "tools/MIL_Tools.h"
 #include <xeumeuleu/xml.hpp>
-#include <boost/serialization/vector.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Population )
 

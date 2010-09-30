@@ -20,10 +20,10 @@
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "Knowledge/QueryValidity.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
+#include "Knowledge/QueryValidity.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::DecisionalState

@@ -12,8 +12,6 @@
 #ifndef __PHY_RadarClass_h_
 #define __PHY_RadarClass_h_
 
-#include "MT_Tools/MT_Stl.h"
-
 // =============================================================================
 // @class  PHY_RadarClass
 // Created: JVT 2004-08-03

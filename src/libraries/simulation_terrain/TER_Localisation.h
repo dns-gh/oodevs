@@ -14,7 +14,6 @@
 
 #include "TER_Polygon.h"
 #include "MT_Tools/MT_Polyline.h"
-#include <boost/serialization/split_member.hpp>
 
 namespace xml
 {

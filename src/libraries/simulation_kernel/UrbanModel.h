@@ -10,9 +10,7 @@
 #ifndef __UrbanModel_h_
 #define __UrbanModel_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/export.hpp>
-#include <boost/serialization/split_member.hpp>
 
 namespace xml
 {
@@ -32,7 +30,6 @@ class MIL_Config;
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
 class UrbanObjectWrapper;
-class MT_Vector2D;
 
 // =============================================================================
 // @class  UrbanModel

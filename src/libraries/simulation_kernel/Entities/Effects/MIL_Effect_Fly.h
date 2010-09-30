@@ -13,7 +13,6 @@
 #define __MIL_Effect_Fly_h_
 
 #include "MIL_Effect_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 
 class PHY_RoleAction_InterfaceFlying;
 

@@ -11,9 +11,8 @@
 #include "PHY_Speeds.h"
 #include "tools/MIL_Tools.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
-#include "MT_Tools/MT_Logger.h"
-#include <xeumeuleu/xml.hpp>
 #include <algorithm>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Speeds constructor
@@ -351,5 +350,5 @@ MT_Float& PHY_Speeds::SpeedFor( const TerrainData& data )
 // -----------------------------------------------------------------------------
 void PHY_Speeds::DumpSpeeds( const TerrainData& ) const
 {
-    MT_LOG_INFO_MSG( "Speed dump not implemented..." ); // $$$$ AGE 2005-02-03:
+   MT_LOG_INFO_MSG( "Speed dump not implemented..." ); // $$$$ AGE 2005-02-03:
 }

@@ -17,7 +17,6 @@ namespace Common
     class MsgLimaOrder;
 }
 
-class MT_Line;
 class MIL_LimaFunction;
 struct ASN1T_LimaOrder;
 
@@ -54,10 +53,10 @@ public:
 
     //! @name Accessors
     //@{
-          unsigned int     GetID       () const;
+          unsigned int             GetID       () const;
     const T_PointVector&   GetPoints   () const;
     const T_LimaFunctions& GetFunctions() const;
-          unsigned int     GetSchedule () const;
+          unsigned int             GetSchedule () const;
     //@}
 
     //! @name Geometry $$$ BULLSHIT

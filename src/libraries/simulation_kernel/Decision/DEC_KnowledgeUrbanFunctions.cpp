@@ -30,6 +30,7 @@
 #include <urban/MaterialCompositionType.h>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/Architecture.h>
+#include <boost/noncopyable.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeUrbanFunctions::GetCurrentPerceptionLevel

@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_DirectionParameter.h"
-#include "MT_Tools/MT_Vector2D.h"
 #include "simulation_orders/MIL_ParameterType_Direction.h"
 #include "protocol/protocol.h"
 
@@ -31,6 +30,7 @@ MIL_DirectionParameter::MIL_DirectionParameter( boost::shared_ptr< MT_Vector2D >
 {
     double tan = dir->rY_ / dir->rX_;
     double atan = std::atan(tan);
+
     heading_ = (int)(atan * 360. / ( 2 * MT_PI ));
 }
 

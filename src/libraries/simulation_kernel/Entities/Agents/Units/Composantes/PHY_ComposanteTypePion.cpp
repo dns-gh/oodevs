@@ -38,10 +38,14 @@
 #include "protocol/protocol.h"
 #include "tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
-#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
+
 PHY_ComposanteTypePion::T_ComposanteTypeMap PHY_ComposanteTypePion::composantesTypes_;
+
+// =============================================================================
+// STATIC INITIALIZATION (MANAGER)
+// =============================================================================
 
 struct PHY_ComposanteTypePion::LoadingWrapper
 {
@@ -60,12 +64,16 @@ bool PHY_ComposanteTypePion::sNTICapability::CanRepair( const PHY_Breakdown& bre
 {
     if( breakdown.GetMaintenanceLevel() != *pMaintenanceLevel_ )
         return false;
+
     if( breakdown.AffectElectronic() && !bElectronic_ )
         return false;
+
     if( breakdown.AffectMobility() && !bMobility_ )
         return false;
+
     if( breakdown.GetTheoricRepairTime() > nMaxTime_ )
         return false;
+
     return true;
 }
 
@@ -76,7 +84,9 @@ bool PHY_ComposanteTypePion::sNTICapability::CanRepair( const PHY_Breakdown& bre
 void PHY_ComposanteTypePion::Initialize( const MIL_Time_ABC& time, xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing composante types" );
+
     LoadingWrapper loader;
+
     xis >> xml::start( "elements" )
             >> xml::list( "element", loader, &LoadingWrapper::ReadElement, time )
         >> xml::end;
@@ -110,6 +120,10 @@ void PHY_ComposanteTypePion::Terminate()
         delete itComposante->second;
     composantesTypes_.clear();
 }
+
+// =============================================================================
+// INITIALIZATION
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion constructor
@@ -159,10 +173,12 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const 
     xis >> xml::optional
             >> xml::attribute( "max-slope", rMaxSlope_ )
         >> xml::attribute( "weight", rWeight_ );
+
     if( rMaxSlope_ < 0 || rMaxSlope_ > 1 )
         xis.error( "element: max-slope not in [0..1]" );
     if( rWeight_ <= 0 )
         xis.error( "element: weight <= 0" );
+
     InitializeHumanProtections( xis );
     InitializeWeapons         ( xis );
     InitializeSensors         ( xis );
@@ -184,6 +200,7 @@ PHY_ComposanteTypePion::~PHY_ComposanteTypePion()
     for( CIT_ObjectDataVector itObjectData = objectData_.begin(); itObjectData != objectData_.end(); ++itObjectData )
         delete *itObjectData;
     objectData_.clear();
+
     for( CIT_ConsumptionVector itConsumption = consumptions_.begin(); itConsumption != consumptions_.end(); ++itConsumption )
         delete *itConsumption;
     consumptions_.clear();
@@ -197,11 +214,13 @@ void PHY_ComposanteTypePion::InitializeBreakdownTypes( xml::xistream& xis )
 {
     if( GetProtection().IsHuman() )
         return;
+
     attritionBreakdownTypeProbabilities_.clear();
     randomBreakdownTypeProbabilities_.clear();
     xis >> xml::start( "breakdowns" )
             >> xml::list( "breakdown", *this, &PHY_ComposanteTypePion::InitializeBreakdown );
     xis >> xml::end;
+
     if( randomBreakdownTypeProbabilities_.empty()
         || std::fabs( 1. - randomBreakdownTypeProbabilities_.back().rProbabilityBound_ ) > 0.01 )
         xis.error( "Total probability of random breakdowns is less than 100%" );
@@ -235,10 +254,12 @@ void PHY_ComposanteTypePion::InitializeRandomBreakdownTypes( xml::xistream& xis 
     const PHY_BreakdownType* pType = PHY_BreakdownType::Find( strBuf );
     if( !pType )
         xis.error( "Unknown breakdown type '" + strBuf + "'" );
+
     MT_Float rPercentage;
     xis >> xml::attribute( "percentage", rPercentage );
     if( rPercentage < 0 || rPercentage > 100 )
         xis.error( "random breakdown: percentage not in [0..100]" );
+
     rPercentage *= 0.01;
     if( !randomBreakdownTypeProbabilities_.empty() )
         rPercentage += randomBreakdownTypeProbabilities_.back().rProbabilityBound_;
@@ -256,10 +277,12 @@ void PHY_ComposanteTypePion::InitializeAttritionBreakdownTypes( xml::xistream& x
     const PHY_BreakdownType* pType = PHY_BreakdownType::Find( strBuf );
     if( !pType )
         xis.error( "Unknown breakdown type '" + strBuf + "'" );
+
     MT_Float rPercentage;
     xis >> xml::attribute( "percentage", rPercentage );
     if( rPercentage < 0 || rPercentage > 100 )
         xis.error( "attrition breakdown: percentage not in [0..100]" );
+
     rPercentage *= 0.01;
     if( !attritionBreakdownTypeProbabilities_.empty() )
         rPercentage += attritionBreakdownTypeProbabilities_.back().rProbabilityBound_;
@@ -283,19 +306,23 @@ void PHY_ComposanteTypePion::InitializeWeapons( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::ReadWeaponSystem( xml::xistream& xis )
 {
-    std::string strLauncher;
-    std::string strAmmunition;
-    bool bMajor = false;
-    xis >> xml::attribute( "launcher", strLauncher )
-        >> xml::attribute( "munition", strAmmunition )
-        >> xml::optional
-            >> xml::attribute( "major", bMajor );
-    const PHY_WeaponType* pWeaponType = PHY_WeaponType::FindWeaponType( strLauncher, strAmmunition );
-    if( !pWeaponType )
-        xis.error( "Unknown weapon type (" + strLauncher + ", " + strAmmunition + ")" );
-    if( weaponTypes_.find( pWeaponType ) != weaponTypes_.end() )
-        xis.error( "Weapon type (" + strLauncher + ", " + strAmmunition + ") already initialized" );
-    weaponTypes_[ pWeaponType ] = bMajor;
+        std::string strLauncher;
+        std::string strAmmunition;
+        bool        bMajor = false;
+
+        xis >> xml::attribute( "launcher", strLauncher )
+            >> xml::attribute( "munition", strAmmunition )
+            >> xml::optional
+                >> xml::attribute( "major", bMajor );
+
+        const PHY_WeaponType* pWeaponType = PHY_WeaponType::FindWeaponType( strLauncher, strAmmunition );
+        if( !pWeaponType )
+            xis.error( "Unknown weapon type (" + strLauncher + ", " + strAmmunition + ")" );
+
+        if( weaponTypes_.find( pWeaponType ) != weaponTypes_.end() )
+            xis.error( "Weapon type (" + strLauncher + ", " + strAmmunition + ") already initialized" );
+
+        weaponTypes_[ pWeaponType ] = bMajor;
 }
 
 // -----------------------------------------------------------------------------
@@ -316,6 +343,7 @@ void PHY_ComposanteTypePion::InitializeProtections( xml::xistream& xis )
 void PHY_ComposanteTypePion::ReadActiveProtection( xml::xistream& xis )
 {
     std::string strProtectionName;
+
     xis >> xml::attribute( "name", strProtectionName );
     const PHY_ActiveProtection* pProtection = PHY_ActiveProtection::Find( strProtectionName );
     if( !pProtection )
@@ -341,6 +369,7 @@ void PHY_ComposanteTypePion::InitializeHumanProtections( xml::xistream& xis )
 void PHY_ComposanteTypePion::ReadHumanProtection( xml::xistream& xis )
 {
     std::string strProtectionName;
+
     xis >> xml::attribute( "name", strProtectionName );
     const PHY_HumanProtection* pHumanProtection = PHY_HumanProtection::Find( strProtectionName );
     if( !pHumanProtection )
@@ -356,9 +385,11 @@ void PHY_ComposanteTypePion::ReadHumanProtection( xml::xistream& xis )
 void PHY_ComposanteTypePion::InitializeSensors( xml::xistream& xis )
 {
     rSensorRotationAngle_ = std::numeric_limits< MT_Float >::max();
+
     xis >> xml::start( "sensors" )
             >> xml::list( "sensor", *this, &PHY_ComposanteTypePion::ReadSensor )
         >> xml::end;
+
     if( rSensorRotationAngle_ == std::numeric_limits< MT_Float >::max() )
         rSensorRotationAngle_ = 0.;
     else
@@ -373,12 +404,16 @@ void PHY_ComposanteTypePion::ReadSensor( xml::xistream& xis )
 {
         std::string strSensor;
         xis >> xml::attribute( "type", strSensor );
+
         const PHY_SensorType* pSensorType = PHY_SensorType::FindSensorType( strSensor );
         if( !pSensorType )
             xis.error( "Unknown sensor type '" + strSensor + "'" );
+
         if( sensorTypes_.find( pSensorType ) != sensorTypes_.end() )
             xis.error( "Sensor type '" + strSensor + "' already defined" );
+
         xis >> xml::attribute( "height", sensorTypes_[ pSensorType ] );
+
         if( pSensorType->GetTypeAgent() )
             rSensorRotationAngle_ = std::min( rSensorRotationAngle_, pSensorType->GetTypeAgent()->GetAngle() );
 }
@@ -403,9 +438,11 @@ void PHY_ComposanteTypePion::ReadRadar( xml::xistream& xis )
 {
     std::string strRadar;
     xis >> xml::attribute( "type", strRadar );
+
     const PHY_RadarType* pRadarType = PHY_RadarType::Find( strRadar );
     if( !pRadarType )
         xis.error( "Unknown radar type" );
+
     if( radarTypes_.find( pRadarType ) != radarTypes_.end() )
         xis.error( "Radar type already defined" );
     radarTypes_.insert( pRadarType );
@@ -433,6 +470,7 @@ void PHY_ComposanteTypePion::ReadTransportCrew( xml::xistream& xis )
         xis.error( "crew: man-boarding-time < 0" );
     if( !tools::ReadTimeAttribute( xis, "man-unloading-time", rNbrHumansUnloadedPerTimeStep_ ) || rNbrHumansUnloadedPerTimeStep_ <= 0 )
         xis.error( "crew: man-unloading-time < 0" );
+
     rNbrHumansLoadedPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansLoadedPerTimeStep_   );
     rNbrHumansUnloadedPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansUnloadedPerTimeStep_ );
 }
@@ -450,6 +488,7 @@ void PHY_ComposanteTypePion::ReadTransportUnit( xml::xistream& xis )
       || rPionTransporterWeightLoadedPerTimeStep_ <= 0 )
         xis.error( "unit: ton-loading-time <= 0" );
     rPionTransporterWeightLoadedPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rPionTransporterWeightLoadedPerTimeStep_   );
+
     if( !tools::ReadTimeAttribute( xis, "ton-unloading-time", rPionTransporterWeightUnloadedPerTimeStep_ )
       || rPionTransporterWeightUnloadedPerTimeStep_ <= 0 )
         xis.error( "unit: ton-unloading-time <= 0" );
@@ -478,6 +517,7 @@ void PHY_ComposanteTypePion::ReadObject( xml::xistream& xis )
     try
     {
         const MIL_ObjectType_ABC& objectType = MIL_ObjectFactory::FindType( strType );
+
         if( objectData_.size() <= objectType.GetID() )
             objectData_.resize( objectType.GetID() + 1, 0 );
         const PHY_ComposanteTypeObjectData*& pObject = objectData_[ objectType.GetID() ];

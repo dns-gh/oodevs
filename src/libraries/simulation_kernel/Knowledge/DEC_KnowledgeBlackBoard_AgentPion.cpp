@@ -573,7 +573,7 @@ boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeBlackBoard_AgentPion::Reso
 // Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeUrban
 // Created: SLG 2010-02-01
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeUrban( unsigned int nID ) const
+boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeUrban( uint nID ) const
 {
     return pPion_->GetKnowledgeGroup().GetArmy().GetKnowledge().GetKnowledgeUrbanFromID( nID );
 }

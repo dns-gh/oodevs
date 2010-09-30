@@ -13,7 +13,6 @@
 #define __DEC_PathSection_ABC_h_
 
 #include "tools/thread/Handler_ABC.h"
-#include "MT_Tools/MT_Vector2D.h"
 #include <pathfind/TerrainPathPoint.h>
 #include <pathfind/TerrainPathfinder.h>
 #include <pathfind/AStarManagementCallback_ABC.h>
@@ -57,19 +56,18 @@ protected:
 private:
     //! @name Tools
     //@{
-    virtual void Handle( const TerrainPathPoint& point );
-
-    bool ShouldEndComputation( float rCostToCurrentNode, float rCostToGoalNode );
+    virtual void Handle              ( const TerrainPathPoint& point );
+            bool ShouldEndComputation( float rCostToCurrentNode, float rCostToGoalNode );
     //@}
 
 private:
     DEC_Path_ABC& path_;
-    MT_Vector2D startPoint_;
-    MT_Vector2D endPoint_;
-    unsigned int nComputationEndTime_;
+    MT_Vector2D   startPoint_;
+    MT_Vector2D   endPoint_;
+    unsigned int          nComputationEndTime_;
 
-    bool bCanceled_;
-    unsigned int nAddedPoints_;
+    bool          bCanceled_;
+    unsigned int  nAddedPoints_;
 };
 
 #include "DEC_PathSection_ABC.inl"

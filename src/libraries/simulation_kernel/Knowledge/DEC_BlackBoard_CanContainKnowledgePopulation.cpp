@@ -14,7 +14,6 @@
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_Population.h"
 #include "Entities/Populations/MIL_Population.h"
-#include "MT_Tools/MT_ScipioException.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgePopulation )
 BOOST_CLASS_TRACKING   ( DEC_BlackBoard_CanContainKnowledgePopulation, boost::serialization::track_never )
@@ -63,8 +62,10 @@ void DEC_BlackBoard_CanContainKnowledgePopulation::save( MIL_CheckPointOutArchiv
     const T_KnowledgePopulationMap::size_type size = knowledgePopulationMap_.size();
     file << size;
     for ( CIT_KnowledgePopulationMap it = knowledgePopulationMap_.begin(); it != knowledgePopulationMap_.end(); ++it )
+    {
         file << it->first
              << it->second;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -78,6 +79,7 @@ DEC_Knowledge_Population& DEC_BlackBoard_CanContainKnowledgePopulation::CreateKn
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     return *pKnowledge;
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgePopulation::DestroyKnowledgePopulation

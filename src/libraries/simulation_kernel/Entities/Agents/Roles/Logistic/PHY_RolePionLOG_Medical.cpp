@@ -34,7 +34,6 @@
 #include "simulation_kernel/OnComponentLendedFunctorComputer_ABC.h"
 #include "simulation_kernel/OnComponentLendedFunctorComputerFactory_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
-#include "MT_Tools/MT_ScipioException.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePionLOG_Medical )
 

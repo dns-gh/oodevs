@@ -11,9 +11,7 @@
 #define __FunctionParameter_h_
 
 #include "Element_ABC.h"
-#pragma warning( push, 0 )
 #include <qstring.h>
-#pragma warning( pop )
 
 namespace indicators
 {

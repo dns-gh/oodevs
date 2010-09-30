@@ -6,12 +6,20 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
+//
+// $Created: NLD 2004-04-06 $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_Path_KnowledgeAgent.cpp $
+// $Author: Age $
+// $Modtime: 8/03/05 18:54 $
+// $Revision: 8 $
+// $Workfile: DEC_Path_KnowledgeAgent.cpp $
+//
+// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Path_KnowledgeAgent.h"
 #include "DEC_Agent_PathClass.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
-#include "MT_Tools/MT_Line.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_KnowledgeAgent constructor
@@ -23,6 +31,7 @@ DEC_Path_KnowledgeAgent::DEC_Path_KnowledgeAgent( const DEC_Agent_PathClass& pat
 {
     if( rSecurityDistance_ < 1000. )
         rSecurityDistance_ = 1000.;
+
     rFactor_ = ( pathClass.GetEnemyCostOnContact() - pathClass.GetEnemyCostAtSecurityRange() ) / rSecurityDistance_;
     rOffset_ = pathClass.GetEnemyCostOnContact();
 }

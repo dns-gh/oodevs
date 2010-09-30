@@ -10,7 +10,17 @@
 #ifndef __TER_pch_h_
 #define __TER_pch_h_
 
-#pragma warning( push, 0 )
+#include <string>
+#include <vector>
+#include <cassert>
+
+#pragma warning( push )
+#pragma warning( disable : 4511 4512 4100 4244 4996 )
+
+#include <boost/pool/pool.hpp>
+#undef min
+#undef max
+
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/serialization/serialization.hpp>
@@ -20,8 +30,5 @@
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/string.hpp>
 #pragma warning( pop )
-#include <string>
-#include <vector>
-#include <cassert>
 
 #endif // __TER_pch_h_

@@ -41,13 +41,13 @@ class MIL_AutomateInjuredHuman : public MIL_Automate
 
 public:
              MIL_AutomateInjuredHuman(  const MIL_AutomateTypeInjuredHuman& type
-                                        , unsigned int nID, MIL_Formation& parent
+                                        , uint nID, MIL_Formation& parent
                                         , xml::xistream& xis
                                         , DEC_DataBase& database
                                         , unsigned int gcPause 
                                         , unsigned int gcMult );
              MIL_AutomateInjuredHuman(  const MIL_AutomateTypeInjuredHuman& type
-                                        , unsigned int nID, MIL_Automate&  parent
+                                        , uint nID, MIL_Automate&  parent
                                         , xml::xistream& xis
                                         , DEC_DataBase& database
                                         , unsigned int gcPause 
@@ -58,8 +58,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
 
-    void load( MIL_CheckPointInArchive&, const unsigned int );
-    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+    void load( MIL_CheckPointInArchive&, const uint );
+    void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
 
     //! @name Operations
@@ -95,7 +95,7 @@ private:
 
     //! @name Tools
     //@{
-    MIL_AutomateInjuredHuman* GetAutomateInjuredHuman( unsigned int nID ) const;
+    MIL_AutomateInjuredHuman* GetAutomateInjuredHuman( uint nID ) const;
     const MIL_AutomateType* RetrieveType() const;
     //@}
 

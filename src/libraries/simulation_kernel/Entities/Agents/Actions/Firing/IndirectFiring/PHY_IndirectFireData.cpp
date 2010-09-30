@@ -10,27 +10,28 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+
 #include "PHY_IndirectFireData.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
+
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/DotationComputer_ABC.h"
 #include "simulation_kernel/DotationComputerFactory_ABC.h"
-#include "MT_Tools/MT_ScipioException.h"
 
 using namespace firing;
-
 // -----------------------------------------------------------------------------
 // Name: PHY_IndirectFireData::sComposanteWeapons::sComposanteWeapons
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
 PHY_IndirectFireData::sComposanteWeapons::sComposanteWeapons()
-    : bIsFiring_( false )
+    : bIsFiring_   ( false )
+    , weaponsReady_()
 {
-    // NOTHING
+
 }
 
 // -----------------------------------------------------------------------------
@@ -39,13 +40,14 @@ PHY_IndirectFireData::sComposanteWeapons::sComposanteWeapons()
 // -----------------------------------------------------------------------------
 PHY_IndirectFireData::sComposanteWeapons::~sComposanteWeapons()
 {
-    // NOTHING
+
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_IndirectFireData::sComposanteWeapons::AddWeapon
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
+inline
 void PHY_IndirectFireData::sComposanteWeapons::AddWeapon( PHY_Weapon& weapon )
 {
     weapons_.push_back( &weapon );
@@ -54,6 +56,10 @@ void PHY_IndirectFireData::sComposanteWeapons::AddWeapon( PHY_Weapon& weapon )
     else
         bIsFiring_ = true;
 }
+
+// =============================================================================
+//
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_IndirectFireData constructor
@@ -66,7 +72,7 @@ PHY_IndirectFireData::PHY_IndirectFireData( MIL_Agent_ABC& firer, MIL_Effect_Ind
     , firer_                ( firer )
     , effect_               ( effect )
 {
-    // NOTHING
+
 }
 
 // -----------------------------------------------------------------------------
@@ -75,8 +81,11 @@ PHY_IndirectFireData::PHY_IndirectFireData( MIL_Agent_ABC& firer, MIL_Effect_Ind
 // -----------------------------------------------------------------------------
 PHY_IndirectFireData::~PHY_IndirectFireData()
 {
-    // NOTHING
 }
+
+// =============================================================================
+// OPERATIONS
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_IndirectFireData::AddWeapon
@@ -86,6 +95,7 @@ void PHY_IndirectFireData::operator() ( const PHY_ComposantePion& compFirer, PHY
 {
     if( !compFirer.CanFire() || !effect_.CanWeaponBeUsed( weapon ) )
         return;
+
     std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer = firer_.GetAlgorithms().dotationComputerFactory_->Create();
     firer_.Execute( *dotationComputer );
     if( !dotationComputer->HasDotation( weapon.GetDotationCategory() ) )
@@ -109,6 +119,7 @@ bool PHY_IndirectFireData::GetUnusedFirerWeapon( const PHY_ComposantePion*& pUnu
     pUnusedFirer       = 0;
     if( composantesWeapons_.empty() )
         return false;
+
     CIT_ComposanteWeaponsMap it = composantesWeapons_.begin();
     pUnusedFirerWeapon = it->second.GetUnusedWeapon();
     if( !pUnusedFirerWeapon )

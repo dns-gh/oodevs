@@ -11,11 +11,9 @@
 #define __MIL_IntelligenceOrder_h_
 
 #include "protocol/protocol.h"
-#include "MT_Tools/MT_Tools_Types.h"
 
 class MIL_Fuseau;
 class TER_Localisation;
-class MT_Vector2D;
 
 // =============================================================================
 /** @class  MIL_IntelligenceOrder

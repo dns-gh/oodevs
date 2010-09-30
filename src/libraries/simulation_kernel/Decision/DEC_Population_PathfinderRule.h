@@ -23,7 +23,6 @@
 #include <pathfind/TerrainData.h>
 
 class DEC_Population_Path;
-class MT_Vector2D;
 
 // =============================================================================
 // Created: AGE 2005-03-08

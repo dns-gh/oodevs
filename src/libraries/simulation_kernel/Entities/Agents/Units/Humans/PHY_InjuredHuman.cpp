@@ -102,7 +102,7 @@ PHY_InjuredHuman::~PHY_InjuredHuman()
 // Name: PHY_Human::load
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
-void PHY_InjuredHuman::load( MIL_CheckPointInArchive& file, const unsigned int )
+void PHY_InjuredHuman::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> lifeExpectancy_
          >> injuryCategory_
@@ -118,7 +118,7 @@ void PHY_InjuredHuman::load( MIL_CheckPointInArchive& file, const unsigned int )
 // Name: PHY_Human::save
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
-void PHY_InjuredHuman::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+void PHY_InjuredHuman::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     file << lifeExpectancy_
          << injuryCategory_

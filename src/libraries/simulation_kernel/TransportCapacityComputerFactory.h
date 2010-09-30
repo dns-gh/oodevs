@@ -32,7 +32,7 @@ public:
 
     //! @name Serialization
     //@{
-    template< typename Archive > void serialize( Archive&, const unsigned int ) {}
+    template< typename Archive > void serialize( Archive&, const uint ) {}
     //@}
 
     //! @name Operations

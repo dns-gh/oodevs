@@ -15,9 +15,8 @@
 #include "tools/MIL_Tools.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
-#include "MT_Tools/MT_Logger.h"
-#include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.hpp>
+#include "tools/xmlcodecs.h"
 
 MIL_FireClass::T_FireClassMap MIL_FireClass::classes_;
 unsigned int MIL_FireClass::length_;
@@ -31,7 +30,9 @@ unsigned int MIL_FireClass::width_;
 void MIL_FireClass::ReadClass( xml::xistream& xis )
 {
     std::string strName;
+
     xis >> xml::attribute( "name", strName );
+
     const MIL_FireClass*& pClass = classes_[ strName ];
     if( pClass )
         throw std::runtime_error( "Fire Class " + strName + " already exists" );
@@ -47,6 +48,7 @@ void MIL_FireClass::Initialize( xml::xistream& xis )
 {
     std::set< unsigned int > ids;
     MT_LOG_INFO_MSG( "Initializing fire classes" );
+
     xis >> xml::start( "fire-classes" )
             >> xml::start( "fire-surface" )
                 >> xml::attribute( "length", length_ )
@@ -54,6 +56,7 @@ void MIL_FireClass::Initialize( xml::xistream& xis )
             >> xml::end
             >> xml::list( "class", &ReadClass )
         >> xml::end;
+
     for( CIT_FireClassMap it = classes_.begin(); it != classes_.end(); ++it )
         if( ! ids.insert( it->second->GetID() ).second )
             throw std::runtime_error( "Fire Class id of " + it->second->GetName() + " already exists" );
@@ -75,7 +78,7 @@ MIL_FireClass::MIL_FireClass( const std::string& strName, xml::xistream& xis )
     , propagationThreshold_ ( 0 )
 {
     tools::ReadTimeAttribute( xis , "tempthreshold" , tempThreshold_ );
-    tempThreshold_ = ( unsigned int ) MIL_Tools::ConvertSecondsToSim( tempThreshold_ );
+    tempThreshold_ = ( uint ) MIL_Tools::ConvertSecondsToSim( tempThreshold_ );
 
     xis >> xml::attribute( "id"                     , nID_ )
         >> xml::attribute( "defaultheat"            , defaultHeat_ )

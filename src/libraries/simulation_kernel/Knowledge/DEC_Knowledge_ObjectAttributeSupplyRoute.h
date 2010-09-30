@@ -13,7 +13,6 @@
 #define __DEC_Knowledge_ObjectAttributeSupplyRoute_h_
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/export.hpp>
 
 class SupplyRouteAttribute;

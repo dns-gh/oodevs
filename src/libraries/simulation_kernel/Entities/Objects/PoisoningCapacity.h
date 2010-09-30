@@ -45,7 +45,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const unsigned int );
+    template< typename Archive > void serialize( Archive&, const uint );
     virtual void Register( MIL_Object_ABC& object );
     //@}
 

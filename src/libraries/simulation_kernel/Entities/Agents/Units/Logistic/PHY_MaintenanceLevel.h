@@ -12,8 +12,6 @@
 #ifndef __PHY_MaintenanceLevel_h_
 #define __PHY_MaintenanceLevel_h_
 
-#include "MT_Tools/MT_Stl.h"
-
 // =============================================================================
 // @class  PHY_MaintenanceLevel
 // Created: JVT 2004-08-03

@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Decision_ABC.h"
+#include "Entities/MIL_Entity_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision_ABC constructor

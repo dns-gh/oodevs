@@ -16,7 +16,6 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_AgentManager.h"
-#include <boost/serialization/set.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectInteraction constructor

@@ -25,7 +25,6 @@
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include "protocol/protocol.h"
-#include <boost/serialization/vector.hpp>
 
 using namespace hla;
 
@@ -127,6 +126,7 @@ void MIL_Object_ABC::load( MIL_CheckPointInArchive& file, const unsigned int )
     std::string type;
     file >> type;
     pType_ = &MIL_ObjectFactory::FindType( type );
+
     file >> pArmy_
          >> bMarkedForDestruction_
          >> bReadyForDeletion_;

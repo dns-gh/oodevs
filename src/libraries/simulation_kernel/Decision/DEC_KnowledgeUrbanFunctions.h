@@ -15,7 +15,6 @@
 class DEC_Decision_ABC;
 class DEC_Knowledge_Urban;
 class MIL_AgentPion;
-class MT_Vector2D;
 
 // =============================================================================
 /** @class  DEC_KnowledgeUrbanFunctions

@@ -24,7 +24,6 @@
 #include "Entities/MIL_Army.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_terrain/TER_World.h"
-#include <boost/serialization/vector.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC constructor
@@ -238,6 +237,7 @@ void MIL_PopulationElement_ABC::load( MIL_CheckPointInArchive& file, const unsig
          >> nNbrDeadHumans_
          >> rDensity_
          >> collidingAgents_;
+
     unsigned int nAttitudeID;
     file >> nAttitudeID;
     pAttitude_ = MIL_PopulationAttitude::Find( nAttitudeID );

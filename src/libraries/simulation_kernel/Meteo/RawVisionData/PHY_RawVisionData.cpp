@@ -13,15 +13,14 @@
 #include "PHY_RawVisionData.h"
 #include "PHY_AmmoEffect.h"
 #include "MIL_AgentServer.h"
-#include "MT_Tools/MT_ScipioException.h"
-#include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Ellipse.h"
-#include "MT_Tools/MT_Logger.h"
+#include "MT_Tools/MT_FormatString.h"
 #include "tools/InputBinaryStream.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_RawVisionData::sCell PHY_RawVisionData::emptyCell_;
 const weather::PHY_Meteo* PHY_RawVisionData::sCell::pGlobalMeteo_;
+
 
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::sCell::GetPrecipitation
@@ -32,6 +31,7 @@ const weather::PHY_Precipitation& PHY_RawVisionData::sCell::GetPrecipitation() c
     const weather::PHY_Precipitation& mainPrecipitation = pMeteo ? pMeteo->GetPrecipitation() : pGlobalMeteo_->GetPrecipitation();
     return pEffects ? pEffects->GetPrecipitation( mainPrecipitation ) : mainPrecipitation;
 }
+
 
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::GetLighting
@@ -54,13 +54,16 @@ PHY_RawVisionData::PHY_RawVisionData( weather::PHY_Meteo& globalMeteo, MIL_Confi
     , nNbrRow_( 0 )
 {
     MT_LOG_INFO_MSG( "Initializing vision data" );
+
     xml::xifstream xis( config.GetTerrainFile() );
     std::string strRawVisionDirectory;
     xis >> xml::start( "Terrain" )
         >> xml::content( "RawVision", strRawVisionDirectory );
+
     std::string detection = config.BuildTerrainChildFile( strRawVisionDirectory + "/detection.dat" );
     MIL_AgentServer::GetWorkspace().GetConfig().AddFileToCRC( detection );
     Read( detection );
+
     sCell::pGlobalMeteo_ = &globalMeteo;
 }
 
@@ -75,6 +78,7 @@ PHY_RawVisionData::~PHY_RawVisionData()
     delete [] ppCells_;
     ppCells_ = 0;
 }
+
 
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::RegisterMeteoPatch
@@ -112,6 +116,7 @@ void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft, con
     }
 }
 
+
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::UnregisterLocalMeteoPatch
 // Created: SLG 2010-03-19
@@ -123,6 +128,7 @@ void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft, c
     unsigned int nYEnd = std::min( GetRow( upLeft.Y() ),    nNbrRow_ - 1 );
     unsigned int nXBeg = std::min( GetCol( upLeft.X() ),    nNbrCol_ - 1 );
     unsigned int nYBeg = std::min( GetRow( downRight.Y() ), nNbrRow_ - 1 );
+
     // On remet éventuellement dans le bon sens
     if( nXEnd < nXBeg )
         std::swap( nXEnd, nXBeg );
@@ -149,10 +155,11 @@ void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft, c
 void PHY_RawVisionData::RegisterWeatherEffect( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& weaponClass )
 {
     const MT_Rect bb = surface.GetBoundingBox();
-    MT_Float x = floor( bb.GetLeft()   / rCellSize_ ) * rCellSize_;
+    MT_Float x          = floor( bb.GetLeft()   / rCellSize_ ) * rCellSize_;
     const MT_Float xMax = ceil ( bb.GetRight()  / rCellSize_ ) * rCellSize_;
     const MT_Float yMin = floor( bb.GetBottom() / rCellSize_ ) * rCellSize_;
     const MT_Float yMax = ceil ( bb.GetTop()    / rCellSize_ ) * rCellSize_;
+
     for ( ; x < xMax; x+=rCellSize_ )
         for ( MT_Float y = yMin; y < yMax; y+=rCellSize_ )
             if( surface.IsInside( MT_Vector2D( x, y ) ) )
@@ -210,6 +217,12 @@ void PHY_RawVisionData::UnregisterWeatherEffect( const MT_Ellipse& surface, cons
             }
 }
 
+
+
+//=============================================================================
+// IN/OUT
+//=============================================================================
+
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::Read
 // Created: JVT 02-12-11
@@ -241,6 +254,7 @@ bool PHY_RawVisionData::Read( const std::string& strFile )
                 throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Error reading file %s", strFile.c_str() ) );
         }
     }
+
     CalcMinMaxAltitude();
     return true;
 }
@@ -252,9 +266,10 @@ bool PHY_RawVisionData::Read( const std::string& strFile )
 //-----------------------------------------------------------------------------
 void PHY_RawVisionData::CalcMinMaxAltitude()
 {
-    short nMaxAltitude = std::numeric_limits< short >::min();
-    short nMinAltitude = std::numeric_limits< short >::max();
-    for ( unsigned int nX = 0; nX < nNbrCol_ ; ++nX  )
+    short nMaxAltitude = std::numeric_limits<short>::min();
+    short nMinAltitude = std::numeric_limits<short>::max();
+
+   for ( unsigned int nX = 0; nX < nNbrCol_ ; ++nX  )
     {
         for ( unsigned int nY = 0; nY < nNbrRow_ ; ++nY )
         {
@@ -265,6 +280,7 @@ void PHY_RawVisionData::CalcMinMaxAltitude()
                 nMaxAltitude = nAltitude;
         }
     }
-    rMaxAltitude_ = (MT_Float)nMaxAltitude;
-    rMinAltitude_ = (MT_Float)nMinAltitude;
+
+   rMaxAltitude_ = (MT_Float)nMaxAltitude;
+   rMinAltitude_ = (MT_Float)nMinAltitude;
 }

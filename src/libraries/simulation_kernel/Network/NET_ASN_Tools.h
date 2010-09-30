@@ -13,7 +13,6 @@
 #define __NET_ASN_Tools_h_
 
 #include "Knowledge/DEC_Knowledge_Def.h"
-#include "MT_Tools/MT_Vector2DTypes.h"
 
 namespace Common
 {

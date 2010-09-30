@@ -17,7 +17,6 @@
 #include "Decision/DEC_Rep_PathPoint_Front.h"
 #include "Decision/DEC_Rep_PathPoint_Special.h"
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
-#include "Entities/MIL_Army.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -26,7 +25,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
-#include "Entities/Orders/MIL_AutomateOrderManager.h"
+#include "Entities/MIL_Army.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -46,13 +45,19 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const T_PointVe
     : DEC_PathResult           ()
     , queryMaker_              ( queryMaker )
     , bRefine_                 ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
+    , fuseau_                  () //$$$ Debile
+    , automateFuseau_          () //$$$ Debile
     , vDirDanger_              ( queryMaker.GetOrderManager().GetDirDanger() )
     , unitSpeeds_              ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >() )
     , rMaxSlope_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
+    , pathKnowledgeAgents_     ()
+    , pathKnowledgeObjects_    ( )
     , rCostOutsideOfAllObjects_( 0. )
+    , pathKnowledgePopulations_()
     , pathType_                ( pathType )
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_      ( false )
+    , pathPoints_              ()
 {
     fuseau_         = queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
@@ -70,16 +75,23 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, std::vector< bo
     : DEC_PathResult           ()
     , queryMaker_              ( queryMaker )
     , bRefine_                 ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
+    , fuseau_                  () //$$$ Debile
+    , automateFuseau_          () //$$$ Debile
     , vDirDanger_              ( queryMaker.GetOrderManager().GetDirDanger() )
     , unitSpeeds_              ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >() )
     , rMaxSlope_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
+    , pathKnowledgeAgents_     ()
+    , pathKnowledgeObjects_    ( )
     , rCostOutsideOfAllObjects_( 0. )
+    , pathKnowledgePopulations_()
     , pathType_                ( pathType )
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_      ( false )
+    , pathPoints_              ()
 {
     fuseau_         = queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
+
     pathPoints_.reserve( 1 + points.size() );
     pathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = points.begin(); it != points.end(); ++it )
@@ -95,13 +107,19 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector
     : DEC_PathResult            ()
     , queryMaker_               ( queryMaker )
     , bRefine_                  ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
+    , fuseau_                   () //$$$ Debile
+    , automateFuseau_           () //$$$ Debile
     , vDirDanger_               ( queryMaker.GetOrderManager().GetDirDanger() )
     , unitSpeeds_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >() )
     , rMaxSlope_                ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
-    , rCostOutsideOfAllObjects_ ( 0. )
+    , pathKnowledgeAgents_      ()
+    , pathKnowledgeObjects_     ( )
+    , rCostOutsideOfAllObjects_( 0. )
+    , pathKnowledgePopulations_ ()
     , pathType_                 ( pathType )
     , pathClass_                ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_       ( false )
+    , pathPoints_               ()
 {
     fuseau_         = queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
@@ -119,14 +137,19 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector
     : DEC_PathResult           ()
     , queryMaker_              ( queryMaker )
     , bRefine_                 ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
+    , fuseau_                  () //$$$ Debile
+    , automateFuseau_          () //$$$ Debile
     , vDirDanger_              ( queryMaker.GetOrderManager().GetDirDanger() )
     , unitSpeeds_              ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >(), loaded )
     , rMaxSlope_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
+    , pathKnowledgeAgents_     ()
     , pathKnowledgeObjects_    ( )
     , rCostOutsideOfAllObjects_( 0. )
+    , pathKnowledgePopulations_()
     , pathType_                ( pathType )
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_      ( false )
+    , pathPoints_              ()
 {
     fuseau_         = queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
@@ -144,11 +167,16 @@ DEC_Agent_Path::DEC_Agent_Path( const DEC_Agent_Path& rhs )
     : DEC_PathResult           ()
     , queryMaker_              ( rhs.queryMaker_ )
     , bRefine_                 ( rhs.bRefine_ )
+    , fuseau_                  () //$$$ Debile
+    , automateFuseau_          () //$$$ Debile
     , vDirDanger_              ( rhs.vDirDanger_ )
  //   , unitSpeeds_               ( rhs.unitSpeeds_ ) $$$ TODO
     , unitSpeeds_              ( queryMaker_.GetRole< moving::PHY_RoleAction_Moving >() )
     , rMaxSlope_               ( rhs.rMaxSlope_ )
+    , pathKnowledgeAgents_     ()
+    , pathKnowledgeObjects_    ( )
     , rCostOutsideOfAllObjects_( 0. )
+    , pathKnowledgePopulations_()
     , pathType_                ( rhs.pathType_ )
     , pathClass_               ( rhs.pathClass_ )
     , bDecPointsInserted_      ( false )
@@ -182,6 +210,7 @@ DEC_Agent_Path::~DEC_Agent_Path()
 void DEC_Agent_Path::Initialize( const T_PointVector& points )
 {
     InitializePathKnowledges( points );
+
     assert( !points.empty() );
     const MT_Vector2D* pLastPoint = 0;
     for( CIT_PointVector itPoint = points.begin(); itPoint != points.end(); ++itPoint )
@@ -378,7 +407,7 @@ void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > 
 //----------------------------------------------------------------------------
 void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPointAvant )
 {
-    static const MT_Float rDist = 2000.;
+    static MT_Float rDist = 2000.;
     if( rDistSinceLastPointAvant > rDist )
     {
         InsertPointAvant( spottedPathPoint, itCurrent );

@@ -27,7 +27,6 @@
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
 #include "simulation_kernel/WeaponReloadingComputer_ABC.h"
-#include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_FormatString.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -327,6 +326,7 @@ MIL_KnowledgeGroup& PHY_RolePion_Communications::GetKnowledgeGroup() const
 {
     if (pJammingKnowledgeGroup_ == 0)
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Jamming knowledge group undefined for agent %d ", entity_.GetID() ) );
+
     return *pJammingKnowledgeGroup_;
 }
 

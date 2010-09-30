@@ -14,7 +14,6 @@
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
 #include <boost/serialization/export.hpp>
-#include <boost/serialization/split_member.hpp>
 
 class FireAttribute;
 class MIL_FireClass;
@@ -40,7 +39,6 @@ public:
 
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
-
     void Register( DEC_Knowledge_Object& knObject );
     //@}
 

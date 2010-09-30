@@ -10,7 +10,7 @@
 #ifndef __PHY_DotationGroupContainer_h_
 #define __PHY_DotationGroupContainer_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
+#include <boost/serialization/export.hpp>
 
 namespace client
 {
@@ -23,11 +23,6 @@ namespace xml
     class xistream;
 }
 
-namespace dotation
-{
-    class PHY_RoleInterface_Dotations;
-}
-
 class PHY_DotationType;
 class PHY_DotationGroup;
 class PHY_DotationCategory;
@@ -36,8 +31,11 @@ class PHY_Dotation;
 class PHY_SupplyDotationRequestContainer;
 class MIL_AutomateLOG;
 class PHY_AmmoDotationClass;
-class MIL_CheckPointOutArchive;
-class MIL_CheckPointInArchive;
+
+namespace dotation
+{
+    class PHY_RoleInterface_Dotations;
+}
 
 // =============================================================================
 // @class  PHY_DotationGroupContainer
@@ -55,8 +53,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    void serialize( MIL_CheckPointOutArchive& ar, unsigned int );
-    void serialize( MIL_CheckPointInArchive& ar, unsigned int );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
     //! @name Init
@@ -141,5 +138,7 @@ private:
     bool bInfiniteDotations_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_DotationGroupContainer )
 
 #endif // __PHY_DotationGroupContainer_h_

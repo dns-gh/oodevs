@@ -13,7 +13,6 @@
 #include <set>
 
 class TER_Localisation;
-class MT_Vector2D;
 
 // =============================================================================
 /** @class  MIL_PropagationManager

@@ -16,7 +16,6 @@
 #include "PHY_DotationCategory.h"
 #include "PHY_DotationLogisticType.h"
 #include "protocol/protocol.h"
-#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_DotationType* PHY_DotationType::munition_ = 0;
@@ -45,6 +44,7 @@ struct PHY_DotationType::LoadingWrapper
 void PHY_DotationType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing dotation types" );
+
     PHY_DotationType::munition_  = new PHY_DotationType( "munition" , eMunition , Common::munition , PHY_DotationLogisticType::uniteFeuSansTD_ );
     PHY_DotationType::carburant_ = new PHY_DotationType( "carburant", eCarburant, Common::carburant, PHY_DotationLogisticType::uniteEssence_   );
     PHY_DotationType::mine_      = new PHY_DotationType( "mine"     , eMine     , Common::mine     , PHY_DotationLogisticType::uniteFeuSansTD_ );
@@ -52,6 +52,7 @@ void PHY_DotationType::Initialize( xml::xistream& xis )
     PHY_DotationType::barbele_   = new PHY_DotationType( "barbele"  , eBarbele  , Common::barbele  , PHY_DotationLogisticType::uniteFeuSansTD_ );
     PHY_DotationType::piece_     = new PHY_DotationType( "piece"    , ePiece    , Common::piece    , PHY_DotationLogisticType::pieces_         );
     PHY_DotationType::ration_    = new PHY_DotationType( "ration"   , eRation   , Common::ration   , PHY_DotationLogisticType::uniteVivre_     );
+
     dotationTypes_[ munition_ ->GetName() ] = munition_;
     dotationTypes_[ carburant_->GetName() ] = carburant_;
     dotationTypes_[ mine_     ->GetName() ] = mine_;
@@ -59,7 +60,9 @@ void PHY_DotationType::Initialize( xml::xistream& xis )
     dotationTypes_[ barbele_  ->GetName() ] = barbele_;
     dotationTypes_[ piece_    ->GetName() ] = piece_;
     dotationTypes_[ ration_   ->GetName() ] = ration_;
+
     LoadingWrapper loader;
+
     xis >> xml::start( "dotations" )
             >> xml::list( "dotation", loader, &LoadingWrapper::ReadDotation )
         >> xml::end;

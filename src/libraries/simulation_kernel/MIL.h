@@ -1,11 +1,4 @@
-// *****************************************************************************
-//
-// This file is part of a MASA library or program.
-// Refer to the included end-user license agreement for restrictions.
-//
-// Copyright (c) 2010 MASA Group
-//
-// *****************************************************************************
+#pragma warning ( disable: 4786 ) // identifier was truncated to '255' characters in the debug information
 
 #ifndef __MIL_h_
 #define __MIL_h_
@@ -15,11 +8,19 @@
 #include "MT_Tools/MT_Vector3D.h"
 #include "MT_Tools/MT_Vector2D.h"
 
+namespace boost
+{
+    namespace archive
+    {
+        class binary_oarchive;
+        class binary_iarchive;
+    };
+};
+
 std::ostream& operator<<( std::ostream&, const MT_Vector3D& );
 std::ostream& operator<<( std::ostream&, const MT_Vector2D& );
 
-template< class T >
-std::ostream& operator<<( std::ostream& out, const std::vector< T >& vect )
+template< class T > std::ostream& operator << ( std::ostream& out, const std::vector< T >& vect )
 {
     out << "{ ";
     if( !vect.empty() )
@@ -31,9 +32,9 @@ std::ostream& operator<<( std::ostream& out, const std::vector< T >& vect )
 }
 
 template< class T, class U >
-std::pair< T, U >& operator+=( std::pair< T, U >& lhs, const std::pair< T, U >& rhs )
+std::pair< T, U >& operator += ( std::pair< T, U >& lhs, const std::pair< T, U >& rhs )
 {
-    lhs.first += rhs.first;
+    lhs.first  += rhs.first;
     lhs.second += rhs.second;
     return lhs;
 }
@@ -43,5 +44,7 @@ std::pair< T, U > operator+( const std::pair< T, U >& lhs, const std::pair< T, U
 {
     return std::make_pair( lhs.first + rhs.first, lhs.second + rhs.second );
 }
+
+#pragma warning( disable: 4355 )
 
 #endif // __MIL_h_

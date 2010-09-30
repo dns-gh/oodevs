@@ -31,8 +31,6 @@
 #include "simulation_kernel/FormationFactory_ABC.h"
 #include "simulation_kernel/PopulationFactory_ABC.h"
 #include "simulation_kernel/Knowledge/KnowledgeGroupFactory_ABC.h" // LTO
-#include "MT_Tools/MT_ScipioException.h"
-#include "MT_Tools/MT_Logger.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -163,11 +161,11 @@ namespace boost
 // Name: MIL_Army::load
 // Created: LDC 2010-02-22
 // -----------------------------------------------------------------------------
-void MIL_Army::load( MIL_CheckPointInArchive& file, const unsigned int )
+void MIL_Army::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> boost::serialization::base_object< MIL_Army_ABC >( *this );
     file >> const_cast< std::string& >( strName_ );
-    file >> const_cast< unsigned int& >( nID_ );
+    file >> const_cast< uint& >( nID_ );
     file >> nType_;
     file >> diplomacies_;
     {
@@ -217,11 +215,11 @@ void MIL_Army::load( MIL_CheckPointInArchive& file, const unsigned int )
 // Name: MIL_Army::save
 // Created: LDC 2010-02-22
 // -----------------------------------------------------------------------------
-void MIL_Army::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+void MIL_Army::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     file << boost::serialization::base_object< MIL_Army_ABC >( *this );
     file << const_cast< std::string& >( strName_ );
-    file << const_cast< unsigned int& >( nID_ );
+    file << const_cast< uint& >( nID_ );
     file << nType_;
     file << diplomacies_;
     {

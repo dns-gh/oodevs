@@ -9,10 +9,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AutomateMissionType.h"
-#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
-MIL_MissionType_ABC::T_MissionIDMap MIL_AutomateMissionType::missionIDs_;
+MIL_MissionType_ABC::T_MissionIDMap   MIL_AutomateMissionType::missionIDs_;
 MIL_MissionType_ABC::T_MissionNameMap MIL_AutomateMissionType::missionDiaIDs_;
 MIL_MissionType_ABC::T_MissionNameMap MIL_AutomateMissionType::missionNames_;
 
@@ -31,7 +30,9 @@ struct MIL_AutomateMissionType::LoadingWrapper
 void MIL_AutomateMissionType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing automate mission types" );
+
     LoadingWrapper loader;
+
     xis >> xml::start( "missions" )
             >> xml::start( "automats" )
                 >> xml::list( "mission", loader, &LoadingWrapper::ReadMission )

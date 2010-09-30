@@ -10,10 +10,9 @@
 #ifndef __DEC_PathWalker_h_
 #define __DEC_PathWalker_h_
 
+#include <pathfind/TerrainData.h>
 #include "DEC_PathResult.h"
 #include "Entities/Effects/MIL_Effect_Move.h"
-#include "MT_Tools/MT_Vector2D.h"
-#include <pathfind/TerrainData.h>
 #include <geometry/Types.h>
 #include <boost/shared_ptr.hpp>
 
